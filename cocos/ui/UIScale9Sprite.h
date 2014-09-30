@@ -248,7 +248,6 @@ namespace ui {
         Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets) const;
         
         virtual bool updateWithSprite(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
-        
         virtual bool updateWithSprite(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets);
         CC_DEPRECATED_ATTRIBUTE bool updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets);
 
@@ -388,7 +387,9 @@ namespace ui {
         bool _scale9Enabled;
         
         Size _topLeftSize;
+        Size _centerSize;
         Size _bottomRightSize;
+        Vec2 _centerOffset;
         
         /** Original sprite's size. */
         Size _originalSize;

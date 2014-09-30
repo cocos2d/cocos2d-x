@@ -33,9 +33,9 @@
 		<key>blocks9c.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{83,179},{80,70}}</string>
+			<string>{{103,189},{50,60}}</string>
 			<key>offset</key>
-			<string>{8,13}</string>
+			<string>{13,18}</string>
 			<key>rotated</key>
 			<false/>
 			<key>sourceColorRect</key>
@@ -46,9 +46,9 @@
 		<key>blocks9cr.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{93,71},{80,70}}</string>
+			<string>{{103,91},{50,60}}</string>
 			<key>offset</key>
-			<string>{8,13}</string>
+			<string>{13,18}</string>
 			<key>rotated</key>
 			<true/>
 			<key>sourceColorRect</key>

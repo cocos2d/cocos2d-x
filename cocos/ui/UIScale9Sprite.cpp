@@ -314,7 +314,8 @@ y+=ytranslate;         \
         
         // center center
         TRANSLATE_X(x, y, left_w);
-        Rect centerbounds = Rect(x, y, center_w, center_h);
+        Rect centerboundsorig = Rect(x, y, center_w, center_h);
+        Rect centerbounds = centerboundsorig;
         
         // center right
         TRANSLATE_X(x, y, center_w);
@@ -357,6 +358,7 @@ y+=ytranslate;         \
             CCLOG("Scale9Sprite capInsetsInternal > originalSize");
         
         Rect rotatedlefttopboundsorig = lefttopboundsorig;
+        Rect rotatedcenterboundsorig = centerboundsorig;
         Rect rotatedrightbottomboundsorig = rightbottomboundsorig;
         
         Rect rotatedcenterbounds = centerbounds;
@@ -376,6 +378,7 @@ y+=ytranslate;         \
             t = AffineTransformTranslate(t, originalRect.origin.x, originalRect.origin.y);
             
             rotatedlefttopboundsorig = RectApplyAffineTransform(rotatedlefttopboundsorig, t);
+            rotatedcenterboundsorig = RectApplyAffineTransform(rotatedcenterboundsorig, t);
             rotatedrightbottomboundsorig = RectApplyAffineTransform(rotatedrightbottomboundsorig, t);
             
             rotatedcenterbounds = RectApplyAffineTransform(rotatedcenterbounds, t);
@@ -401,6 +404,7 @@ y+=ytranslate;         \
             t = AffineTransformRotate(t, 1.57079633f);
             
             lefttopboundsorig = RectApplyAffineTransform(lefttopboundsorig, t);
+            centerboundsorig = RectApplyAffineTransform(centerboundsorig, t);
             rightbottomboundsorig = RectApplyAffineTransform(rightbottomboundsorig, t);
             
             centerbounds = RectApplyAffineTransform(centerbounds, t);
@@ -414,6 +418,7 @@ y+=ytranslate;         \
             centertopbounds = RectApplyAffineTransform(centertopbounds, t);
             
             rotatedlefttopboundsorig.origin = lefttopboundsorig.origin;
+            rotatedcenterboundsorig.origin = centerboundsorig.origin;
             rotatedrightbottomboundsorig.origin = rightbottomboundsorig.origin;
             
             rotatedcenterbounds.origin = centerbounds.origin;
@@ -430,7 +435,23 @@ y+=ytranslate;         \
         }
         
         _topLeftSize = rotatedlefttopboundsorig.size;
+        _centerSize = rotatedcenterboundsorig.size;
         _bottomRightSize = rotatedrightbottomboundsorig.size;
+        
+        if(_spriteFrameRotated)
+        {
+            float offsetx = (rotatedcenterbounds.origin.x + rotatedcenterbounds.size.height/2) - (rotatedcenterboundsorig.origin.x + rotatedcenterboundsorig.size.height/2);
+            float offsety = (rotatedcenterboundsorig.origin.y + rotatedcenterboundsorig.size.width/2)- (rotatedcenterbounds.origin.y + rotatedcenterbounds.size.width/2);
+            _centerOffset.x = -offsety;
+            _centerOffset.y = offsetx;
+        }
+        else
+        {
+            float offsetx = (rotatedcenterbounds.origin.x + rotatedcenterbounds.size.width/2) - (rotatedcenterboundsorig.origin.x + rotatedcenterboundsorig.size.width/2);
+            float offsety = (rotatedcenterboundsorig.origin.y + rotatedcenterboundsorig.size.height/2)- (rotatedcenterbounds.origin.y + rotatedcenterbounds.size.height/2);
+            _centerOffset.x = offsetx;
+            _centerOffset.y = offsety;
+        }
         
         // Centre
         if(rotatedcenterbounds.size.width > 0 && rotatedcenterbounds.size.height > 0 )
@@ -515,20 +536,11 @@ y+=ytranslate;         \
     {
         Size size = this->_contentSize;
         
-        if(_scale9Image)
-        {
-            float horizontalScale = size.width/_scale9Image->getContentSize().width;
-            float verticalScale = size.height/_scale9Image->getContentSize().height;
-            
-            _scale9Image->setScaleX(horizontalScale);
-            _scale9Image->setScaleY(verticalScale);
-        }
-        
         float sizableWidth = size.width - _topLeftSize.width - _bottomRightSize.width;
         float sizableHeight = size.height - _topLeftSize.height - _bottomRightSize.height;
         
-        float horizontalScale = _centre?(sizableWidth/_centre->getContentSize().width):.0f;
-        float verticalScale = _centre?(sizableHeight/_centre->getContentSize().height):.0f;
+        float horizontalScale = sizableWidth/_centerSize.width;
+        float verticalScale = sizableHeight/_centerSize.height;
         
         if(_centre)
         {
@@ -536,11 +548,13 @@ y+=ytranslate;         \
             _centre->setScaleY(verticalScale);
         }
         
-        float rescaledWidth = _centre?(_centre->getContentSize().width * horizontalScale):0;
-        float rescaledHeight = _centre?(_centre->getContentSize().height * verticalScale):0;
+        float rescaledWidth = _centerSize.width * horizontalScale;
+        float rescaledHeight = _centerSize.height * verticalScale;
         
         float leftWidth = _topLeftSize.width;
         float bottomHeight = _bottomRightSize.height;
+        
+        Vec2 centerOffset(_centerOffset.x * horizontalScale, _centerOffset.y * verticalScale);
         
         // Position corners
         if(_bottomLeft)
@@ -568,32 +582,32 @@ y+=ytranslate;         \
         if(_left)
         {
             _left->setAnchorPoint(Vec2(1,0.5));
-            _left->setPosition(leftWidth, bottomHeight+rescaledHeight/2);
+            _left->setPosition(leftWidth, bottomHeight+rescaledHeight/2 + centerOffset.y);
             _left->setScaleY(verticalScale);
         }
         if(_right)
         {
             _right->setAnchorPoint(Vec2(0,0.5));
-            _right->setPosition(leftWidth+rescaledWidth,bottomHeight+rescaledHeight/2);
+            _right->setPosition(leftWidth+rescaledWidth,bottomHeight+rescaledHeight/2 + centerOffset.y);
             _right->setScaleY(verticalScale);
         }
         if(_top)
         {
             _top->setAnchorPoint(Vec2(0.5,0));
-            _top->setPosition(leftWidth+rescaledWidth/2,bottomHeight+rescaledHeight);
+            _top->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,bottomHeight+rescaledHeight);
             _top->setScaleX(horizontalScale);
         }
         if(_bottom)
         {
             _bottom->setAnchorPoint(Vec2(0.5,1));
-            _bottom->setPosition(leftWidth+rescaledWidth/2,bottomHeight);
+            _bottom->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,bottomHeight);
             _bottom->setScaleX(horizontalScale);
         }
         // Position centre
         if(_centre)
         {
             _centre->setAnchorPoint(Vec2(0.5,0.5));
-            _centre->setPosition(leftWidth+rescaledWidth/2, bottomHeight+rescaledHeight/2);
+            _centre->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x, bottomHeight+rescaledHeight/2 + centerOffset.y);
             _centre->setScaleX(horizontalScale);
             _centre->setScaleY(verticalScale);
         }
