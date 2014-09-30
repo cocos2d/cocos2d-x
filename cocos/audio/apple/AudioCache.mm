@@ -103,14 +103,14 @@ void AudioCache::readDataTask()
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
     if(error) {
-        printf("%s: ExtAudioFileOpenURL FAILED, Error = %ld\n", __PRETTY_FUNCTION__, error);
+        printf("%s: ExtAudioFileOpenURL FAILED, Error = %ld\n", __PRETTY_FUNCTION__, (long)error);
         goto ExitThread;
     }
     
     // Get the audio data format
 	error = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileDataFormat, &thePropertySize, &theFileFormat);
 	if(error) {
-        printf("%s: ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %ld\n", __PRETTY_FUNCTION__, error);
+        printf("%s: ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %ld\n", __PRETTY_FUNCTION__, (long)error);
         goto ExitThread;
     }
 	if (theFileFormat.mChannelsPerFrame > 2)  {
@@ -133,7 +133,7 @@ void AudioCache::readDataTask()
     
     error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(outputFormat), &outputFormat);
     if(error) {
-        printf("%s: ExtAudioFileSetProperty FAILED, Error = %ld\n", __PRETTY_FUNCTION__, error);
+        printf("%s: ExtAudioFileSetProperty FAILED, Error = %ld\n", __PRETTY_FUNCTION__, (long)error);
         goto ExitThread;
     }
     
@@ -141,7 +141,7 @@ void AudioCache::readDataTask()
 	thePropertySize = sizeof(theFileLengthInFrames);
 	error = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileLengthFrames, &thePropertySize, &theFileLengthInFrames);
 	if(error) {
-        printf("%s: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld\n", __PRETTY_FUNCTION__, error);
+        printf("%s: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld\n", __PRETTY_FUNCTION__, (long)error);
         goto ExitThread;
     }
 	
