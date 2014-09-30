@@ -43,7 +43,9 @@ extern "C"
         if (pos != std::string::npos)
         {
             filename = filename.substr(0, pos);
-        } else {
+        }
+        else
+        {
             pos = filename.rfind(NOT_BYTECODE_FILE_EXT);
             if (pos == filename.length() - NOT_BYTECODE_FILE_EXT.length())
             {
