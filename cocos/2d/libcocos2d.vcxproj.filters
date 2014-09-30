@@ -1174,6 +1174,9 @@
     <ClCompile Include="..\ui\UIWebView.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
     <ClCompile Include="..\audio\AudioEngine.cpp">
       <Filter>audioengine</Filter>
     </ClCompile>
@@ -2319,6 +2322,9 @@
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\audio\include\AudioEngine.h">
       <Filter>audioengine</Filter>

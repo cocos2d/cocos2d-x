@@ -123,7 +123,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
     if(error) {
-        printf("%s: ExtAudioFileOpenURL FAILED, Error = %ld\n", __PRETTY_FUNCTION__, error);
+        printf("%s: ExtAudioFileOpenURL FAILED, Error = %ld\n", __PRETTY_FUNCTION__,(long) error);
         goto ExitBufferThread;
     }
     
