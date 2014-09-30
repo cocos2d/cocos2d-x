@@ -54,19 +54,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="cocos2d_wp8_headers.props" />
-    <Import Project="cocos2dx.props" />
+    <Import Project="cocos2d_winrt.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="cocos2d_wp8_headers.props" />
-    <Import Project="cocos2dx.props" />
+    <Import Project="cocos2d_winrt.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="cocos2d_wp8_headers.props" />
-    <Import Project="cocos2dx.props" />
+    <Import Project="cocos2d_winrt.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="cocos2d_wp8_headers.props" />
-    <Import Project="cocos2dx.props" />
+    <Import Project="cocos2d_winrt.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -705,8 +705,5 @@
     <None Include="..\renderer\ccShader_PositionTexture_uColor.vert" />
     <None Include="..\renderer\ccShader_Position_uColor.frag" />
     <None Include="..\renderer\ccShader_Position_uColor.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\renderer\CMakeLists.txt" />
   </ItemGroup>
 </Project>

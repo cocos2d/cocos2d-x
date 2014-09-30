@@ -185,6 +185,8 @@ cc.PLATFORM_OS_BLACKBERRY = 6
 cc.PLATFORM_OS_NACL    = 7
 cc.PLATFORM_OS_EMSCRIPTEN = 8
 cc.PLATFORM_OS_TIZEN   = 9
+cc.PLATFORM_OS_WINRT   = 10
+cc.PLATFORM_OS_WP8     = 11
 
 cc.LANGUAGE_ENGLISH    = 0
 cc.LANGUAGE_CHINESE    = 1
@@ -502,3 +504,22 @@ cc.ConfigType =
 
 cc.AUDIO_INVAILD_ID   = -1
 cc.AUDIO_TIME_UNKNOWN  = -1.0
+
+cc.CameraFlag = 
+{
+    DEFAULT = 1,
+    USER1 = 2,
+    USER2 = 4,
+    USER3 = 8,
+    USER4 = 16,
+    USER5 = 32,
+    USER6 = 64,
+    USER7 = 128,
+    USER8 = 256,
+}
+
+cc.BillBoard_Mode = 
+{
+    VIEW_POINT_ORIENTED = 0,
+    VIEW_PLANE_ORIENTED = 1,
+}

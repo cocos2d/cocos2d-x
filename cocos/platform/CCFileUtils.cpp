@@ -947,23 +947,15 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-	struct stat st;
-	if (stat(dirPath.c_str(), &st) == 0)
-    {
-        return S_ISDIR(st.st_mode);
-    }    
-	return false;
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	WIN32_FILE_ATTRIBUTE_DATA wfad;
-	if (GetFileAttributesExA(dirPath.c_str(), GetFileExInfoStandard, &wfad))
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    WIN32_FILE_ATTRIBUTE_DATA wfad;
+    std::wstring wdirPath(dirPath.begin(), dirPath.end());
+    if (GetFileAttributesEx(wdirPath.c_str(), GetFileExInfoStandard, &wfad))
 	{
 		return true;
 	}
 	return false;
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
     if (fAttrib != INVALID_FILE_ATTRIBUTES &&
         (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
@@ -971,7 +963,16 @@ bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 		return true;
     }
     return false;
+#else
+    struct stat st;
+    if (stat(dirPath.c_str(), &st) == 0)
+    {
+        return S_ISDIR(st.st_mode);
+    }
+    return false;
 #endif
+
+
 }
 
 bool FileUtils::isDirectoryExist(const std::string& dirPath)
@@ -1040,29 +1041,12 @@ bool FileUtils::createDirectory(const std::string& path)
             }
         }
     }
-    
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    DIR *dir = NULL;
-    
-    // Create path recursively
-    subpath = "";
-    for (int i = 0; i < dirs.size(); ++i) {
-        subpath += dirs[i];
-        dir = opendir(subpath.c_str());
-        if (!dir)
-        {
-            int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-            if (ret != 0 && (errno != EEXIST))
-            {
-                return false;
-            }
-        }
-    }
-    return true;
-#endif
+
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	WIN32_FILE_ATTRIBUTE_DATA wfad;
-	if (!(GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, &wfad)))
+    std::wstring wpath(path.begin(), path.end());
+    if (!(GetFileAttributesEx(wpath.c_str(), GetFileExInfoStandard, &wfad)))
 	{
 		subpath = "";
 		for(int i = 0 ; i < dirs.size() ; ++i)
@@ -1070,7 +1054,8 @@ bool FileUtils::createDirectory(const std::string& path)
 			subpath += dirs[i];
 			if (i > 0 && !isDirectoryExist(subpath))
 			{
-				BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
+                std::wstring wsubpath(subpath.begin(), subpath.end());
+                BOOL ret = CreateDirectory(wsubpath.c_str(), NULL);
 				if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
 				{
 					return false;
@@ -1079,8 +1064,7 @@ bool FileUtils::createDirectory(const std::string& path)
 		}
 	}
 	return true;
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
 		subpath = "";
@@ -1098,6 +1082,24 @@ bool FileUtils::createDirectory(const std::string& path)
 		}
     }
     return true;
+#else
+    DIR *dir = NULL;
+
+    // Create path recursively
+    subpath = "";
+    for (int i = 0; i < dirs.size(); ++i) {
+        subpath += dirs[i];
+        dir = opendir(subpath.c_str());
+        if (!dir)
+        {
+            int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
+            if (ret != 0 && (errno != EEXIST))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 #endif
 }
 
@@ -1110,21 +1112,13 @@ bool FileUtils::removeDirectory(const std::string& path)
     }
     
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    std::string command = "rm -r ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
-        return false;
-#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	std::string Files = path + "*.*";
+    std::wstring wpath = std::wstring(path.begin(), path.end());
+    std::wstring files = wpath +  L"*.*";
 	WIN32_FIND_DATA wfd;
-	HANDLE  search = FindFirstFileEx(Files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
+	HANDLE  search = FindFirstFileEx(files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
 	bool ret=true;   
-	std::string Tmp;   
 	if (search!=INVALID_HANDLE_VALUE)   
 	{   
 		bool find=true;   
@@ -1133,16 +1127,16 @@ bool FileUtils::removeDirectory(const std::string& path)
 			//. ..
 			if(wfd.cFileName[0]!='.')  
 			{   
-				Tmp = path + wfd.cFileName;   
+                std::wstring temp = wpath + wfd.cFileName;
 				if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 				{
-					Tmp += '/';
-					ret = ret && this->removeDirectory(Tmp);
+                    temp += '/';
+                    ret = ret && this->removeDirectory(std::string(temp.begin(), temp.end()));
 				}
 				else
 				{   
-					SetFileAttributes(Tmp.c_str(), FILE_ATTRIBUTE_NORMAL);
-					ret = ret && DeleteFile(Tmp.c_str());
+                    SetFileAttributes(temp.c_str(), FILE_ATTRIBUTE_NORMAL);
+                    ret = ret && DeleteFile(temp.c_str());
 				}
 			}
 			find = FindNextFile(search, &wfd);
@@ -1150,10 +1144,9 @@ bool FileUtils::removeDirectory(const std::string& path)
 		FindClose(search);
 	}
 	if (ret)
-		return RemoveDirectoryA(path.c_str());
+		return RemoveDirectory(wpath.c_str());
 	return false;
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	std::string command = "cmd /c rd /s /q ";
 	// Path may include space.
 	command += "\"" + path + "\"";
@@ -1162,14 +1155,8 @@ bool FileUtils::removeDirectory(const std::string& path)
 		return true;
 	else
 		return false;
-#endif
-}
-
-bool FileUtils::removeFile(const std::string &path)
-{
-    // Remove downloaded file
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    std::string command = "rm -f ";
+#else
+    std::string command = "rm -r ";
     // Path may include space.
     command += "\"" + path + "\"";
     if (system(command.c_str()) >= 0)
@@ -1177,14 +1164,20 @@ bool FileUtils::removeFile(const std::string &path)
     else
         return false;
 #endif
+}
+
+bool FileUtils::removeFile(const std::string &path)
+{
+    // Remove downloaded file
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	if (DeleteFileA(path.c_str()))
+    std::wstring wpath(path.begin(), path.end());
+    if (DeleteFile(wpath.c_str()))
 	{
 		return true;
 	}
 	return false;
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	std::string command = "cmd /c del /q ";
 	std::string win32path = path;
 	int len = win32path.length();
@@ -1201,6 +1194,14 @@ bool FileUtils::removeFile(const std::string &path)
 		return true;
 	else
 		return false;
+#else
+    std::string command = "rm -f ";
+    // Path may include space.
+    command += "\"" + path + "\"";
+    if (system(command.c_str()) >= 0)
+        return true;
+    else
+        return false;
 #endif
 }
 

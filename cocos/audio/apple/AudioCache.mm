@@ -21,11 +21,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
 #include "AudioCache.h"
-#include <thread>
+
+#import <Foundation/Foundation.h>
 #import <OpenAL/alc.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
+#include <thread>
 
 #define PCMDATA_CACHEMAXSIZE 1048576
 

@@ -130,6 +130,7 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
+  Classes/NewAudioEngineTest/NewAudioEngineTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
   Classes/InputTest/MouseTest.cpp

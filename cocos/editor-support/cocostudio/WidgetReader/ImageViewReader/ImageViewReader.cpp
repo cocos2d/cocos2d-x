@@ -110,9 +110,13 @@ namespace cocostudio
         
         const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, P_FileNameData);
         int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, P_ResourceType);
-        std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
-        imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
-        
+        const std::string& imageFilePath = DICTOOL->getStringValue_json(imageFileNameDic, P_Path);
+
+        if (!imageFilePath.empty()) {
+        	std::string imageFileName = this->getResourcePath(imageFileNameDic, P_Path, (Widget::TextureResType)imageFileNameType);
+        	imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+        }
+                
         
         bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, P_Scale9Enable);
         bool scale9Enable = false;

@@ -140,9 +140,11 @@ AudioEngineImpl::~AudioEngineImpl()
         
         alcMakeContextCurrent(nullptr);
         alcDestroyContext(s_ALContext);
+        s_ALContext = nullptr;
     }
     if (s_ALDevice) {
         alcCloseDevice(s_ALDevice);
+        s_ALDevice = nullptr;
     }
     if (_threadPool) {
         _threadPool->destroy();
@@ -150,13 +152,13 @@ AudioEngineImpl::~AudioEngineImpl()
     }
 
     mpg123_exit();
+    MPG123_LAZYINIT = true;
 }
 
 bool AudioEngineImpl::init()
 {
     bool ret = false;
     do{
-        //auto defName = alcGetString(nullptr, ALC_DEFAULT_DEVICE_SPECIFIER);
         s_ALDevice = alcOpenDevice(NULL);
         
         if (s_ALDevice) {
@@ -432,12 +434,6 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             break;
         }
         else {
-            if (player._audioCache->_bytesOfRead != player._audioCache->_pcmDataSize &&
-                (time * player._audioCache->_sampleRate * player._audioCache->_bytesPerFrame) > player._audioCache->_bytesOfRead) {
-                log("%s: audio id = %d\n", __FUNCTION__,audioID);
-                break;
-            }
-            
             alSourcef(player._alSource, AL_SEC_OFFSET, time);
             
             auto error = alGetError();
