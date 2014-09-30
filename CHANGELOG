@@ -1,4 +1,5 @@
 cocos2d-x-3.3
+    [NEW]           3d: added light support: direction light, point light, spot light and ambient light
     [NEW]           Audio: new audio supports Mac OS X
     [NEW]           Application: added openUrl()
     [NEW]           Armature: added getOffsetPoints()
