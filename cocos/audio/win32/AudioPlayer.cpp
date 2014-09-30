@@ -21,6 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "platform/CCPlatformConfig.h"
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "AudioPlayer.h"
 #include "AudioCache.h"

@@ -21,7 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "platform/CCPlatformConfig.h"
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "AudioCache.h"
 #include <thread>
 #include <algorithm>
@@ -29,7 +32,6 @@
 #include "mpg123.h"
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
-
 #include "base/ccUtils.h"
 
 #define PCMDATA_CACHEMAXSIZE 2621440

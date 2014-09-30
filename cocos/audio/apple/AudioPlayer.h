@@ -30,12 +30,9 @@
 
 #include <condition_variable>
 #include <mutex>
-<<<<<<< HEAD:cocos/audio/ios/AudioPlayer.h
 #include <string>
-#import <OpenAL/al.h>
-=======
 #include <thread>
->>>>>>> f1a01c54627e01cfeaa54332967695c8d33e3a00:cocos/audio/apple/AudioPlayer.h
+#import <OpenAL/al.h>
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
