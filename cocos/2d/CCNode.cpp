@@ -1100,6 +1100,19 @@ void Node::removeAllChildren()
     this->removeAllChildrenWithCleanup(true);
 }
 
+void Node::removeFromPhysicsWorld()
+{
+    if (_physicsBody != nullptr)
+    {
+        _physicsBody->removeFromWorld();
+    }
+
+    for (auto child : _children)
+    {
+        child->removeFromPhysicsWorld();
+    }
+}
+
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
@@ -1115,10 +1128,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         }
 
 #if CC_USE_PHYSICS
-        if (child->_physicsBody != nullptr)
-        {
-            child->_physicsBody->removeFromWorld();
-        }
+        child->removeFromPhysicsWorld();
 #endif
 
         if (cleanup)
@@ -1144,11 +1154,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
     }
     
 #if CC_USE_PHYSICS
-    if (child->_physicsBody != nullptr)
-    {
-        child->_physicsBody->removeFromWorld();
-    }
-    
+    child->removeFromPhysicsWorld();
 #endif
 
     // If you don't do cleanup, the child's actions will not get removed and the
