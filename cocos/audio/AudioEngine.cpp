@@ -21,6 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "platform/CCPlatformConfig.h"
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #include "audio/include/AudioEngine.h"
@@ -30,7 +33,7 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "android/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS|| CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-#include "ios/AudioEngine-inl.h"
+#include "apple/AudioEngine-inl.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001

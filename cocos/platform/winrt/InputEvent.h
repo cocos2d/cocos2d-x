@@ -99,6 +99,15 @@ public:
     virtual void execute();
 };
 
+class CustomInputEvent : public InputEvent
+{
+public:
+    CustomInputEvent(const std::function<void()>&);
+    virtual void execute();
+private:
+    std::function<void()> m_fun;
+};
+
 NS_CC_END
 
 #endif // #ifndef __INPUT_EVENT__

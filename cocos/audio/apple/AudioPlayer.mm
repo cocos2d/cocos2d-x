@@ -21,7 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#import <Foundation/Foundation.h>
+
 #include "AudioPlayer.h"
 #include "AudioCache.h"
 #include "platform/CCFileUtils.h"
@@ -61,7 +66,7 @@ bool AudioPlayer::play2d(AudioCache* cache)
     }
     _audioCache = cache;
     
-    alSourcei(_alSource, AL_BUFFER, NULL);
+    alSourcei(_alSource, AL_BUFFER, 0);
     alSourcef(_alSource, AL_PITCH, 1.0f);
     alSourcef(_alSource, AL_GAIN, _volume);
     
