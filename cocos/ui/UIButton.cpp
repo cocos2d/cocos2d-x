@@ -383,10 +383,10 @@ void Button::onPressStateChangedToNormal()
     _buttonDisableRenderer->setVisible(false);
     _state = State::NORMAL;
     
-    Color3B realBackgroundColor(multiplyColors(_normalBackgroundColor, getColor()));
-    GLubyte realBackgroundOpacity(multiplyOpacity(_normalBackgroundOpacity,getOpacity()));
-    Color3B realTitleColor(multiplyColors(_normalTitleColor, getColor()));
-    GLubyte realTitleOpacity(multiplyOpacity(_normalTitleOpacity,getOpacity()));
+    Color3B realBackgroundColor(multiplyColors(_normalBackgroundColor, _displayedColor));
+    GLubyte realBackgroundOpacity(multiplyOpacity(_normalBackgroundOpacity, _displayedOpacity));
+    Color3B realTitleColor(multiplyColors(_normalTitleColor, _displayedColor));
+    GLubyte realTitleOpacity(multiplyOpacity(_normalTitleOpacity, _displayedOpacity));
     
     if (_pressedActionEnabled)
     {
@@ -426,10 +426,10 @@ void Button::onPressStateChangedToPressed()
     _state = State::PRESSED;
     _buttonDisableRenderer->setVisible(false);
     
-    Color3B realBackgroundColor(multiplyColors(_pressedBackgroundColor, getColor()));
-    GLubyte realBackgroundOpacity(multiplyOpacity(_pressedBackgroundOpacity,getOpacity()));
-    Color3B realTitleColor(multiplyColors(_pressedTitleColor, getColor()));
-    GLubyte realTitleOpacity(multiplyOpacity(_pressedTitleOpacity,getOpacity()));
+    Color3B realBackgroundColor(multiplyColors(_pressedBackgroundColor, _displayedColor));
+    GLubyte realBackgroundOpacity(multiplyOpacity(_pressedBackgroundOpacity, _displayedOpacity));
+    Color3B realTitleColor(multiplyColors(_pressedTitleColor, _displayedColor));
+    GLubyte realTitleOpacity(multiplyOpacity(_pressedTitleOpacity, _displayedOpacity));
     
     Scale9Sprite* render = nullptr;
     if (_pressedTextureLoaded)
@@ -445,8 +445,8 @@ void Button::onPressStateChangedToPressed()
     {
         _buttonNormalRenderer->setVisible(true);
         _buttonClickedRenderer->setVisible(false);
-        _buttonNormalRenderer->setColor(multiplyColors(_normalBackgroundColor, getColor()));
-        _buttonNormalRenderer->setOpacity(multiplyOpacity(_normalBackgroundOpacity,getOpacity()));
+        _buttonNormalRenderer->setColor(multiplyColors(_normalBackgroundColor, _displayedColor));
+        _buttonNormalRenderer->setOpacity(multiplyOpacity(_normalBackgroundOpacity, _displayedOpacity));
         render = _buttonNormalRenderer;
     }
     if (_pressedActionEnabled)
@@ -493,10 +493,10 @@ void Button::onPressStateChangedToDisabled()
     _titleRenderer->setScaleX(_normalTextureScaleXInSize);
     _titleRenderer->setScaleY(_normalTextureScaleYInSize);
     
-    Color3B realBackgroundColor(multiplyColors(_disabledBackgroundColor, getColor()));
-    GLubyte realBackgroundOpacity(multiplyOpacity(_disabledBackgroundOpacity,getOpacity()));
-    Color3B realTitleColor(multiplyColors(_disabledTitleColor, getColor()));
-    GLubyte realTitleOpacity(multiplyOpacity(_disabledTitleOpacity,getOpacity()));
+    Color3B realBackgroundColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
+    GLubyte realBackgroundOpacity(multiplyOpacity(_disabledBackgroundOpacity,_displayedOpacity));
+    Color3B realTitleColor(multiplyColors(_disabledTitleColor, _displayedColor));
+    GLubyte realTitleOpacity(multiplyOpacity(_disabledTitleOpacity,_displayedOpacity));
     
     if (_disabledTextureLoaded)
     {
@@ -523,22 +523,22 @@ void Button::updateDisplayedOpacity(GLubyte parentOpacity)
             child->updateDisplayedOpacity(_displayedOpacity);
         }
     }
-    _buttonNormalRenderer->setOpacity(multiplyOpacity(_pressedBackgroundOpacity, _realOpacity));
-    _buttonNormalRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _realOpacity));
+    _buttonNormalRenderer->setOpacity(multiplyOpacity(_pressedBackgroundOpacity, _displayedOpacity));
+    _buttonNormalRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
     switch (_state) {
         case State::NORMAL:
-            _titleRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _realOpacity));
-            _buttonNormalRenderer->setOpacity(multiplyOpacity(_normalBackgroundOpacity, _realOpacity));
+            _titleRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
+            _buttonNormalRenderer->setOpacity(multiplyOpacity(_normalBackgroundOpacity, _displayedOpacity));
             break;
         case State::PRESSED:
-            _titleRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _realOpacity));
+            _titleRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
             if(!_pressedTextureLoaded)
-                _buttonNormalRenderer->setOpacity(multiplyOpacity(_pressedBackgroundOpacity, _realOpacity));
+                _buttonNormalRenderer->setOpacity(multiplyOpacity(_pressedBackgroundOpacity, _displayedOpacity));
             break;
         case State::DISABLED:
-            _titleRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _realOpacity));
+            _titleRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
             if(!_disabledTextureLoaded)
-                _buttonNormalRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _realOpacity));
+                _buttonNormalRenderer->setOpacity(multiplyOpacity(_disabledBackgroundOpacity, _displayedOpacity));
             break;
     }
 }
@@ -556,22 +556,22 @@ void Button::updateDisplayedColor(const Color3B& parentColor)
             child->updateDisplayedColor(_displayedColor);
         }
     }
-    _buttonNormalRenderer->setColor(multiplyColors(_pressedBackgroundColor, _realColor));
-    _buttonNormalRenderer->setColor(multiplyColors(_disabledBackgroundColor, _realColor));
+    _buttonNormalRenderer->setColor(multiplyColors(_pressedBackgroundColor, _displayedColor));
+    _buttonNormalRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
     switch (_state) {
         case State::NORMAL:
-            _titleRenderer->setColor(multiplyColors(_disabledBackgroundColor, _realColor));
-            _buttonNormalRenderer->setColor(multiplyColors(_normalBackgroundColor, _realColor));
+            _titleRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
+            _buttonNormalRenderer->setColor(multiplyColors(_normalBackgroundColor, _displayedColor));
             break;
         case State::PRESSED:
-            _titleRenderer->setColor(multiplyColors(_disabledBackgroundColor, _realColor));
+            _titleRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
             if(!_pressedTextureLoaded)
-                _buttonNormalRenderer->setColor(multiplyColors(_pressedBackgroundColor, _realColor));
+                _buttonNormalRenderer->setColor(multiplyColors(_pressedBackgroundColor, _displayedColor));
             break;
         case State::DISABLED:
-            _titleRenderer->setColor(multiplyColors(_disabledBackgroundColor, _realColor));
+            _titleRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
             if(!_disabledTextureLoaded)
-                _buttonNormalRenderer->setColor(multiplyColors(_disabledBackgroundColor, _realColor));
+                _buttonNormalRenderer->setColor(multiplyColors(_disabledBackgroundColor, _displayedColor));
             break;
     }
 }
@@ -866,7 +866,7 @@ void Button::setNormalBackgroundColor(const Color3B &color)
 {
     _normalBackgroundColor = color;
     if(_state == State::NORMAL)
-        _buttonNormalRenderer->setColor(multiplyColors(color,getColor()));
+        _buttonNormalRenderer->setColor(multiplyColors(color, _displayedColor));
 }
 
 const Color3B& Button::getNormalBackgroundColor() const
@@ -880,15 +880,15 @@ void Button::setPressedBackgroundColor(const Color3B &color)
     if(_state == State::PRESSED)
     {
         if(_pressedTextureLoaded)
-            _buttonClickedRenderer->setColor(multiplyColors(color,getColor()));
+            _buttonClickedRenderer->setColor(multiplyColors(color, _displayedColor));
         else
-            _buttonNormalRenderer->setColor(multiplyColors(color,getColor()));
+            _buttonNormalRenderer->setColor(multiplyColors(color, _displayedColor));
     }
 }
 
 const Color3B& Button::getPressedBackgroundColor() const
 {
-    return _buttonClickedRenderer->getColor();
+    return _pressedBackgroundColor;
 }
 
 void Button::setDisabledBackgroundColor(const Color3B &color)
@@ -897,15 +897,15 @@ void Button::setDisabledBackgroundColor(const Color3B &color)
     if(_state == State::DISABLED)
     {
         if(_pressedTextureLoaded)
-            _buttonDisableRenderer->setColor(multiplyColors(color,getColor()));
+            _buttonDisableRenderer->setColor(multiplyColors(color, _displayedColor));
         else
-            _buttonNormalRenderer->setColor(multiplyColors(color,getColor()));
+            _buttonNormalRenderer->setColor(multiplyColors(color, _displayedColor));
     }
 }
 
 const Color3B& Button::getDisabledBackgroundColor() const
 {
-    return _buttonDisableRenderer->getColor();
+    return _disabledBackgroundColor;
 }
 
 
@@ -913,7 +913,7 @@ void Button::setNormalBackgroundOpacity(GLubyte opacity)
 {
     _normalBackgroundOpacity = opacity;
     if(_state == State::NORMAL)
-        _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+        _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
 }
 
 GLubyte Button::getNormalBackgroundOpacity() const
@@ -927,9 +927,9 @@ void Button::setPressedBackgroundOpacity(GLubyte opacity)
     if(_state == State::PRESSED)
     {
         if(_pressedTextureLoaded)
-            _buttonClickedRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+            _buttonClickedRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
         else
-            _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+            _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
     }
 }
 
@@ -944,9 +944,9 @@ void Button::setDisabledBackgroundOpacity(GLubyte opacity)
     if(_state == State::DISABLED)
     {
         if(_pressedTextureLoaded)
-            _buttonDisableRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+            _buttonDisableRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
         else
-            _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+            _buttonNormalRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
     }
 }
 
@@ -960,7 +960,7 @@ void Button::setNormalTitleColor(const Color3B &color)
 {
     _normalTitleColor = color;
     if(_state == State::NORMAL)
-        _titleRenderer->setColor(multiplyColors(color,getColor()));
+        _titleRenderer->setColor(multiplyColors(color, _displayedColor));
 }
 
 const Color3B& Button::getNormalTitleColor() const
@@ -972,7 +972,7 @@ void Button::setPressedTitleColor(const Color3B &color)
 {
     _pressedTitleColor = color;
     if(_state == State::PRESSED)
-        _titleRenderer->setColor(multiplyColors(color,getColor()));
+        _titleRenderer->setColor(multiplyColors(color, _displayedColor));
 }
 
 const Color3B& Button::getPressedTitleColor() const
@@ -984,7 +984,7 @@ void Button::setDisabledTitleColor(const Color3B &color)
 {
     _disabledTitleColor = color;
     if(_state == State::DISABLED)
-        _titleRenderer->setColor(multiplyColors(color,getColor()));
+        _titleRenderer->setColor(multiplyColors(color, _displayedColor));
 }
 
 const Color3B& Button::getDisabledTitleColor() const
@@ -997,7 +997,7 @@ void Button::setNormalTitleOpacity(GLubyte opacity)
 {
     _normalTitleOpacity = opacity;
     if(_state == State::NORMAL)
-        _titleRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+        _titleRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
 }
 
 GLubyte Button::getNormalTitleOpacity() const
@@ -1009,7 +1009,7 @@ void Button::setPressedTitleOpacity(GLubyte opacity)
 {
     _pressedTitleOpacity = opacity;
     if(_state == State::PRESSED)
-        _titleRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+        _titleRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
 }
 
 GLubyte Button::getPressedTitleOpacity() const
@@ -1021,7 +1021,7 @@ void Button::setDisabledTitleOpacity(GLubyte opacity)
 {
     _disabledTitleOpacity = opacity;
     if(_state == State::DISABLED)
-        _titleRenderer->setOpacity(multiplyOpacity(opacity,getOpacity()));
+        _titleRenderer->setOpacity(multiplyOpacity(opacity, _displayedOpacity));
 }
 
 GLubyte Button::getDisabledTitleOpacity() const
