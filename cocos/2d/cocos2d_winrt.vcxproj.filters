@@ -602,6 +602,9 @@
     <ClCompile Include="..\base\ccRandom.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d.h" />
@@ -1243,6 +1246,9 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\base\ccRandom.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
