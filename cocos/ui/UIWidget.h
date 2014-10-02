@@ -544,6 +544,12 @@ public:
     void setLongPressTime(float time);
 
     /**
+     * @return  wheather this touch is long-pressed or not.
+     * It only works if you set _longPressTime >= 0, by calling setLongPressTime(time).
+     */
+    bool isLongPressedTouch() const;
+
+    /**
      *@return  whether the widget is focused or not
      */
     bool isFocused()const;
@@ -710,6 +716,7 @@ protected:
     Vec2 _touchEndPosition;
 
     float _longPressTime;
+    bool _longPressedTouch;
 
     bool _flippedX;
     bool _flippedY;

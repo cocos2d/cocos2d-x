@@ -74,14 +74,14 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            Button *btn = (Button*)pSender;
+            _displayValueLabel->setString(String::createWithFormat(btn->isLongPressedTouch() ? "Touch Up (LongPressed)" : "Touch Up")->getCString());
             ImageView* imageView = (ImageView*)_uiLayer->getChildByTag(12);
             imageView->setVisible(false);
             imageView->loadTexture("cocosui/ccicon.png");
             imageView->setOpacity(0);
             imageView->setVisible(true);
             imageView->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
-            Button *btn = (Button*)pSender;
             btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
         }
             break;
@@ -170,11 +170,12 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
-            Button *btn = (Button*)_uiLayer->getChildByName("normal");
-            btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
-            btn->loadTexturePressed("cocosui/animationbuttonpressed.png");
-            btn->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
+            Button *btn = (Button*)pSender;
+            _displayValueLabel->setString(String::createWithFormat(btn->isLongPressedTouch() ? "Touch Up (LongPressed)" : "Touch Up")->getCString());
+            Button *btn2 = (Button*)_uiLayer->getChildByName("normal");
+            btn2->loadTextureNormal("cocosui/animationbuttonnormal.png");
+            btn2->loadTexturePressed("cocosui/animationbuttonpressed.png");
+            btn2->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
         }
             break;
             

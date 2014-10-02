@@ -144,6 +144,7 @@ _touchBeganPosition(Vec2::ZERO),
 _touchMovePosition(Vec2::ZERO),
 _touchEndPosition(Vec2::ZERO),
 _longPressTime(0.0f),
+_longPressedTouch(false),
 _touchEventListener(nullptr),
 _touchEventSelector(nullptr),
 _actionTag(0),
@@ -691,9 +692,15 @@ void Widget::setLongPressTime(float time)
     _longPressTime = time;
 }
 
+bool Widget::isLongPressedTouch()const
+{
+    return _longPressedTouch;
+}
+
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     _hitted = false;
+    _longPressedTouch = false;
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
         _touchBeganPosition = touch->getLocation();
@@ -732,6 +739,7 @@ void Widget::checkLongPress(float dt)
         return;
     }
 
+    _longPressedTouch = true;
     longPressEvent();
 }
 
