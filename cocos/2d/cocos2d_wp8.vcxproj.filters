@@ -662,6 +662,9 @@
     <ClCompile Include="..\3d\CCBillBoard.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1363,6 +1366,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCBillBoard.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
