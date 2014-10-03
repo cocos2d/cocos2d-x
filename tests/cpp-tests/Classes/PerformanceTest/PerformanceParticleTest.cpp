@@ -149,7 +149,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     updateQuantityLabel();
     createParticleSystem();
 
-    schedule(schedule_selector(ParticleMainScene::step));
+    schedule(CC_SCHEDULE_SELECTOR(ParticleMainScene::step));
 }
 
 std::string ParticleMainScene::title() const

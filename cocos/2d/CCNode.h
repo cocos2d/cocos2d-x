@@ -1240,12 +1240,12 @@ public:
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
      // wrap this function into a selector via schedule_selector marco.
-     this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
+     this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
      * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
+     * @param repeat    The selector will be excuted (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
      * @lua NA
      */
@@ -1294,6 +1294,15 @@ public:
      * Schedules a lambda function. The scheduled lambda function will be called every frame
      *
      * @param callback      The lambda function to be scheduled
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, const std::string &key);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every "interval" seconds
+     *
+     * @param callback      The lambda function to be scheduled
      * @param interval      Callback interval time in seconds. 0 means every frame,
      * @param key           The key of the lambda function. To be used if you want to unschedule it
      * @lua NA
@@ -1304,8 +1313,8 @@ public:
      * Schedules a lambda function.
      *
      * @param callback  The lambda function to be schedule
-     * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
+     * @param interval  Tick interval in seconds. 0 means tick every frame.
+     * @param repeat    The selector will be executed (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
      * @param key       The key of the lambda function. To be used if you want to unschedule it
      * @lua NA
@@ -1334,7 +1343,9 @@ public:
      * Actions are not affected by this method.
      * @lua NA
      */
-    void unscheduleAllSelectors(void);
+    void unscheduleAllCallbacks();
+
+    CC_DEPRECATED_ATTRIBUTE void unscheduleAllSelectors() { unscheduleAllCallbacks(); }
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.

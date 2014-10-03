@@ -228,7 +228,7 @@ TileMapEditTestNew::TileMapEditTestNew()
     // If you are not going to use the Map, you can free it now
     // [tilemap releaseMap);
     // And if you are going to use, it you can access the data with:
-    schedule(schedule_selector(TileMapEditTestNew::updateMap), 0.2f);
+    schedule(CC_SCHEDULE_SELECTOR(TileMapEditTestNew::updateMap), 0.2f);
     
     addChild(map, 0, kTagTileMap);
     
@@ -395,13 +395,13 @@ TMXOrthoTest4New::TMXOrthoTest4New()
     sprite = layer->getTileAt(Vec2(s.width-1,s.height-1));
     sprite->setScale(2);
 
-    schedule( schedule_selector(TMXOrthoTest4New::removeSprite), 2 );
+    schedule( CC_SCHEDULE_SELECTOR(TMXOrthoTest4New::removeSprite), 2 );
 
 }
 
 void TMXOrthoTest4New::removeSprite(float dt)
 {
-    unschedule(schedule_selector(TMXOrthoTest4New::removeSprite));
+    unschedule(CC_SCHEDULE_SELECTOR(TMXOrthoTest4New::removeSprite));
 
     auto map = static_cast<cocos2d::experimental::TMXTiledMap*>( getChildByTag(kTagTileMap) );
     auto layer = map->getLayer("Layer 0");
@@ -477,9 +477,9 @@ TMXReadWriteTestNew::TMXReadWriteTestNew()
     _gid = layer->getTileGIDAt(Vec2(0,63));
     ////----CCLOG("Tile GID at:(0,63) is: %d", _gid);
 
-    schedule(schedule_selector(TMXReadWriteTestNew::updateCol), 2.0f); 
-    schedule(schedule_selector(TMXReadWriteTestNew::repaintWithGID), 2.05f);
-    schedule(schedule_selector(TMXReadWriteTestNew::removeTiles), 1.0f); 
+    schedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::updateCol), 2.0f); 
+    schedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::repaintWithGID), 2.05f);
+    schedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::removeTiles), 1.0f); 
 
     ////----CCLOG("++++atlas quantity: %d", layer->textureAtlas()->getTotalQuads());
     ////----CCLOG("++++children: %d", layer->getChildren()->count() );
@@ -537,7 +537,7 @@ void TMXReadWriteTestNew::repaintWithGID(float dt)
 
 void TMXReadWriteTestNew::removeTiles(float dt)
 {
-    unschedule(schedule_selector(TMXReadWriteTestNew::removeTiles));
+    unschedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::removeTiles));
 
     auto map = (cocos2d::experimental::TMXTiledMap*)getChildByTag(kTagTileMap);
     auto layer = (cocos2d::experimental::TMXLayer*)map->getChildByTag(0);
@@ -875,7 +875,7 @@ TMXIsoZorderNew::TMXIsoZorderNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
-    schedule( schedule_selector(TMXIsoZorderNew::repositionSprite) );
+    schedule( CC_SCHEDULE_SELECTOR(TMXIsoZorderNew::repositionSprite) );
 }
 
 TMXIsoZorderNew::~TMXIsoZorderNew()
@@ -885,7 +885,7 @@ TMXIsoZorderNew::~TMXIsoZorderNew()
 
 void TMXIsoZorderNew::onExit()
 {
-    unschedule(schedule_selector(TMXIsoZorderNew::repositionSprite));
+    unschedule(CC_SCHEDULE_SELECTOR(TMXIsoZorderNew::repositionSprite));
     TileDemoNew::onExit();
 }
 
@@ -941,7 +941,7 @@ TMXOrthoZorderNew::TMXOrthoZorderNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
-    schedule( schedule_selector(TMXOrthoZorderNew::repositionSprite));
+    schedule( CC_SCHEDULE_SELECTOR(TMXOrthoZorderNew::repositionSprite));
 }
 
 TMXOrthoZorderNew::~TMXOrthoZorderNew()
@@ -1003,7 +1003,7 @@ TMXIsoVertexZNew::TMXIsoVertexZNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
-    schedule( schedule_selector(TMXIsoVertexZNew::repositionSprite));
+    schedule( CC_SCHEDULE_SELECTOR(TMXIsoVertexZNew::repositionSprite));
     
 }
 
@@ -1075,7 +1075,7 @@ TMXOrthoVertexZNew::TMXOrthoVertexZNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
-    schedule(schedule_selector(TMXOrthoVertexZNew::repositionSprite));
+    schedule(CC_SCHEDULE_SELECTOR(TMXOrthoVertexZNew::repositionSprite));
     
 }
 
@@ -1241,7 +1241,7 @@ TMXOrthoFlipRunTimeTestNew::TMXOrthoFlipRunTimeTestNew()
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
 
-    schedule(schedule_selector(TMXOrthoFlipRunTimeTestNew::flipIt), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(TMXOrthoFlipRunTimeTestNew::flipIt), 1.0f);
 }
 
 std::string TMXOrthoFlipRunTimeTestNew::title() const

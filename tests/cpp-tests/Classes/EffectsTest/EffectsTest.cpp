@@ -371,7 +371,7 @@ TextLayer::TextLayer(void)
     addChild(label);
     label->setTag( kTagLabel );
     
-    schedule( schedule_selector(TextLayer::checkAnim) );
+    schedule( CC_SCHEDULE_SELECTOR(TextLayer::checkAnim) );
 }
 
 void TextLayer::checkAnim(float dt)
