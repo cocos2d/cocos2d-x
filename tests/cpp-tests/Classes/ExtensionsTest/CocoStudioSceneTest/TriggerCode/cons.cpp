@@ -24,7 +24,7 @@ TimeElapsed::~TimeElapsed(void)
 
 bool TimeElapsed::init()
 {
-	_scheduler->schedule(schedule_selector(TimeElapsed::update), this, 0.0f , kRepeatForever, 0.0f, false);
+	_scheduler->schedule(CC_SCHEDULE_SELECTOR(TimeElapsed::update), this, 0.0f , CC_REPEAT_FOREVER, 0.0f, false);
     return true;
 }
 
@@ -71,7 +71,7 @@ void TimeElapsed::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stE
 }
 void TimeElapsed::removeAll()
 {
-	_scheduler->unschedule(schedule_selector(TimeElapsed::update), this);
+	_scheduler->unschedule(CC_SCHEDULE_SELECTOR(TimeElapsed::update), this);
 }
 
 void TimeElapsed::update(float dt)

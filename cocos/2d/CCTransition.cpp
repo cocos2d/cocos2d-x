@@ -133,14 +133,14 @@ void TransitionScene::finish()
     _outScene->setAdditionalTransform(nullptr);
 
     //[self schedule:@selector(setNewScene:) interval:0];
-    this->schedule(schedule_selector(TransitionScene::setNewScene), 0);
+    this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
 void TransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
 
-    this->unschedule(schedule_selector(TransitionScene::setNewScene));
+    this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"
     Director *director = Director::getInstance();

@@ -35,7 +35,7 @@ SceneTestLayer1::SceneTestLayer1()
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
-    schedule( schedule_selector(SceneTestLayer1::testDealloc) );
+    schedule( CC_SCHEDULE_SELECTOR(SceneTestLayer1::testDealloc) );
 }
 
 void SceneTestLayer1::testDealloc(float dt)
@@ -120,7 +120,7 @@ SceneTestLayer2::SceneTestLayer2()
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
-    schedule( schedule_selector(SceneTestLayer2::testDealloc) );
+    schedule( CC_SCHEDULE_SELECTOR(SceneTestLayer2::testDealloc) );
 }
 
 void SceneTestLayer2::testDealloc(float dt)
@@ -180,7 +180,7 @@ bool SceneTestLayer3::init()
         this->addChild(menu);
         menu->alignItemsVertically();
 
-        this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
+        this->schedule(CC_SCHEDULE_SELECTOR(SceneTestLayer3::testDealloc));
 
         auto sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);

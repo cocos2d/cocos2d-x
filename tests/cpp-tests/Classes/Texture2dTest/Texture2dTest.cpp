@@ -1554,7 +1554,7 @@ void TextureAsync::onEnter()
     auto seq = Sequence::create(scale, scale_back, nullptr);
     label->runAction(RepeatForever::create(seq));
 
-    scheduleOnce(schedule_selector(TextureAsync::loadImages), 1.0f);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(TextureAsync::loadImages), 1.0f);
 }
 
 TextureAsync::~TextureAsync()

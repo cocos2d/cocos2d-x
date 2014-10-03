@@ -231,7 +231,7 @@ LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
     label2->setPosition( VisibleRect::center() );
     label3->setPosition( VisibleRect::rightTop() );
     
-    schedule( schedule_selector(LabelFNTColorAndOpacity::step) );//:@selector(step:)];
+    schedule( CC_SCHEDULE_SELECTOR(LabelFNTColorAndOpacity::step) );//:@selector(step:)];
 }
 
 void LabelFNTColorAndOpacity::step(float dt)
@@ -313,7 +313,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
     auto lastChar = (Sprite*) label2->getLetter(3);
     lastChar->runAction( rot_4ever->clone() );
     
-    schedule( schedule_selector(LabelFNTSpriteActions::step), 0.1f);
+    schedule( CC_SCHEDULE_SELECTOR(LabelFNTSpriteActions::step), 0.1f);
 }
 
 void LabelFNTSpriteActions::step(float dt)
@@ -504,7 +504,7 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
     addChild(label3, 0, kTagBitmapAtlas3);
     label3->setPosition(Vec2(s.width/2, 100));
 
-    schedule(schedule_selector(LabelFNTandTTFEmpty::updateStrings), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(LabelFNTandTTFEmpty::updateStrings), 1.0f);
 
     setEmpty = false;
 }
@@ -1356,7 +1356,7 @@ LabelCharMapTest::LabelCharMapTest()
     label2->setPosition( Vec2(10,200) );
     label2->setOpacity( 32 );
 
-    schedule(schedule_selector(LabelCharMapTest::step)); 
+    schedule(CC_SCHEDULE_SELECTOR(LabelCharMapTest::step)); 
 }
 
 void LabelCharMapTest::step(float dt)
@@ -1411,7 +1411,7 @@ LabelCharMapColorTest::LabelCharMapColorTest()
 
     _time = 0;
 
-    schedule( schedule_selector(LabelCharMapColorTest::step) ); //:@selector(step:)];
+    schedule( CC_SCHEDULE_SELECTOR(LabelCharMapColorTest::step) ); //:@selector(step:)];
 }
 
 void LabelCharMapColorTest::actionFinishCallback()

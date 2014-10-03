@@ -31,10 +31,10 @@ IntervalLayer::IntervalLayer()
     _label4 = Label::createWithBMFont("fonts/bitmapFontTest4.fnt", "0");
 
     scheduleUpdate();
-    schedule(schedule_selector(IntervalLayer::step1));
-    schedule(schedule_selector(IntervalLayer::step2), 0);
-    schedule(schedule_selector(IntervalLayer::step3), 1.0f);
-    schedule(schedule_selector(IntervalLayer::step4), 2.0f);
+    schedule(CC_SCHEDULE_SELECTOR(IntervalLayer::step1));
+    schedule(CC_SCHEDULE_SELECTOR(IntervalLayer::step2), 0);
+    schedule(CC_SCHEDULE_SELECTOR(IntervalLayer::step3), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(IntervalLayer::step4), 2.0f);
 
     _label0->setPosition(s.width*1/6, s.height/2);
     _label1->setPosition(s.width*2/6, s.height/2);

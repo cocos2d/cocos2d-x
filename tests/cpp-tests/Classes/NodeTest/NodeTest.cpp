@@ -76,8 +76,6 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeNormalizedPositionTest2),
     CL(NodeNormalizedPositionBugTest),
     CL(NodeNameTest),
-
-    CL(SchedulerCallbackTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -224,8 +222,8 @@ Test4::Test4()
     addChild(sp1, 0, 2);
     addChild(sp2, 0, 3);
     
-    schedule( schedule_selector(Test4::delay2), 2.0f); 
-    schedule( schedule_selector(Test4::delay4), 4.0f); 
+    schedule( CC_SCHEDULE_SELECTOR(Test4::delay2), 2.0f); 
+    schedule( CC_SCHEDULE_SELECTOR(Test4::delay4), 4.0f); 
 }
 
 void Test4::delay2(float dt)
@@ -237,7 +235,7 @@ void Test4::delay2(float dt)
 
 void Test4::delay4(float dt)
 {
-    unschedule(schedule_selector(Test4::delay4)); 
+    unschedule(CC_SCHEDULE_SELECTOR(Test4::delay4)); 
     removeChildByTag(3, false);
 }
 
@@ -273,7 +271,7 @@ Test5::Test5()
     sp1->runAction(forever);
     sp2->runAction(forever2);
     
-    schedule( schedule_selector(Test5::addAndRemove), 2.0f);
+    schedule( CC_SCHEDULE_SELECTOR(Test5::addAndRemove), 2.0f);
 }
 
 void Test5::addAndRemove(float dt)
@@ -333,7 +331,7 @@ Test6::Test6()
     sp2->runAction(forever2);
     sp21->runAction(forever21);
     
-    schedule( schedule_selector(Test6::addAndRemove), 2.0f);
+    schedule( CC_SCHEDULE_SELECTOR(Test6::addAndRemove), 2.0f);
 }
 
 void Test6::addAndRemove(float dt)
@@ -375,12 +373,12 @@ StressTest1::StressTest1()
     
     sp1->setPosition( Vec2(s.width/2, s.height/2) );        
 
-    schedule( schedule_selector(StressTest1::shouldNotCrash), 1.0f);
+    schedule( CC_SCHEDULE_SELECTOR(StressTest1::shouldNotCrash), 1.0f);
 }
 
 void StressTest1::shouldNotCrash(float dt)
 {
-    unschedule(schedule_selector(StressTest1::shouldNotCrash));
+    unschedule(CC_SCHEDULE_SELECTOR(StressTest1::shouldNotCrash));
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -444,14 +442,14 @@ StressTest2::StressTest2()
     fire->runAction( RepeatForever::create(copy_seq3) );
     sublayer->addChild(fire, 2);
             
-    schedule(schedule_selector(StressTest2::shouldNotLeak), 6.0f);
+    schedule(CC_SCHEDULE_SELECTOR(StressTest2::shouldNotLeak), 6.0f);
     
     addChild(sublayer, 0, kTagSprite1);
 }
 
 void StressTest2::shouldNotLeak(float dt)
 {
-    unschedule( schedule_selector(StressTest2::shouldNotLeak) );
+    unschedule( CC_SCHEDULE_SELECTOR(StressTest2::shouldNotLeak) );
     auto sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
     sublayer->removeAllChildrenWithCleanup(true); 
 }
@@ -475,10 +473,10 @@ SchedulerTest1::SchedulerTest1()
     addChild(layer, 0);
     //CCLOG("retain count after addChild is %d", layer->getReferenceCount());      // 2
     
-    layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
+    layer->schedule( CC_SCHEDULE_SELECTOR(SchedulerTest1::doSomething) );
     //CCLOG("retain count after schedule is %d", layer->getReferenceCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
     
-    layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
+    layer->unschedule(CC_SCHEDULE_SELECTOR(SchedulerTest1::doSomething));
     //CCLOG("retain count after unschedule is %d", layer->getReferenceCount());        // STILL 3!  (win32 is '2')
 }
 
@@ -1328,7 +1326,7 @@ void NodeNameTest::onEnter()
 {
     TestCocosNodeDemo::BaseTest::onEnter();
     
-    this->scheduleOnce(schedule_selector(NodeNameTest::test),0.05f);
+    this->scheduleOnce(CC_SCHEDULE_SELECTOR(NodeNameTest::test),0.05f);
 }
 
 void NodeNameTest::test(float dt)
