@@ -65,8 +65,6 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 
-
-
 /**
  Position of the FPS
  
