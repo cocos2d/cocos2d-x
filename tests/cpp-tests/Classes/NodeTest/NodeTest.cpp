@@ -64,6 +64,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeToWorld),
     CL(NodeToWorld3D),
     CL(SchedulerTest1),
+    CL(SchedulerCallbackTest),
     CL(CameraOrbitTest),
     // TODO: Camera has been removed from CCNode, add new feature to support it
     //CL(CameraZoomTest),
@@ -75,6 +76,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeNormalizedPositionTest2),
     CL(NodeNormalizedPositionBugTest),
     CL(NodeNameTest),
+
+    CL(SchedulerCallbackTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -487,6 +490,46 @@ void SchedulerTest1::doSomething(float dt)
 std::string SchedulerTest1::subtitle() const
 {
     return "cocosnode scheduler test #1";
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerCallbackTest
+//
+//------------------------------------------------------------------
+SchedulerCallbackTest::SchedulerCallbackTest()
+{
+    auto node = Node::create();
+    addChild(node, 0);
+    node->setName("a node");
+
+    _total = 0;
+    node->schedule([&](float dt) {
+        _total += dt;
+        log("hello world: %f - total: %f", dt, _total);
+    }
+                   ,0.5
+                   ,"some_key");
+
+
+    node->scheduleOnce([&](float dt) {
+        // the local variable "node" will go out of scope, so I have to get it from "this"
+        auto anode = this->getChildByName("a node");
+        anode->unschedule("some_key");
+    }
+                       ,5
+                       ,"ignore_key");
+}
+
+void SchedulerCallbackTest::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+    log("--onEnter-- Must be called before the scheduled lambdas");
+}
+
+std::string SchedulerCallbackTest::subtitle() const
+{
+    return "Node scheduler with lambda";
 }
 
 //------------------------------------------------------------------
