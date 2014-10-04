@@ -222,8 +222,8 @@ Test4::Test4()
     addChild(sp1, 0, 2);
     addChild(sp2, 0, 3);
     
-    schedule( CC_SCHEDULE_SELECTOR(Test4::delay2), 2.0f); 
-    schedule( CC_SCHEDULE_SELECTOR(Test4::delay4), 4.0f); 
+    schedule(CC_CALLBACK_1(Test4::delay2, this), 2.0f, "delay2_key");
+    schedule(CC_CALLBACK_1(Test4::delay4, this), 4.0f, "delay4_key");
 }
 
 void Test4::delay2(float dt)
@@ -235,7 +235,7 @@ void Test4::delay2(float dt)
 
 void Test4::delay4(float dt)
 {
-    unschedule(CC_SCHEDULE_SELECTOR(Test4::delay4)); 
+    unschedule("delay4_key");
     removeChildByTag(3, false);
 }
 
@@ -271,7 +271,7 @@ Test5::Test5()
     sp1->runAction(forever);
     sp2->runAction(forever2);
     
-    schedule( CC_SCHEDULE_SELECTOR(Test5::addAndRemove), 2.0f);
+    schedule(CC_CALLBACK_1(Test5::addAndRemove, this), 2.0f, "add_and_remove_key");
 }
 
 void Test5::addAndRemove(float dt)
@@ -331,7 +331,7 @@ Test6::Test6()
     sp2->runAction(forever2);
     sp21->runAction(forever21);
     
-    schedule( CC_SCHEDULE_SELECTOR(Test6::addAndRemove), 2.0f);
+    schedule(CC_CALLBACK_1(Test6::addAndRemove, this), 2.0f, "add_and_remove_key");
 }
 
 void Test6::addAndRemove(float dt)
@@ -373,12 +373,12 @@ StressTest1::StressTest1()
     
     sp1->setPosition( Vec2(s.width/2, s.height/2) );        
 
-    schedule( CC_SCHEDULE_SELECTOR(StressTest1::shouldNotCrash), 1.0f);
+    schedule(CC_CALLBACK_1(StressTest1::shouldNotCrash, this), 1.0f, "should_not_crash_key");
 }
 
 void StressTest1::shouldNotCrash(float dt)
 {
-    unschedule(CC_SCHEDULE_SELECTOR(StressTest1::shouldNotCrash));
+    unschedule("should_not_crash_key");
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -442,14 +442,14 @@ StressTest2::StressTest2()
     fire->runAction( RepeatForever::create(copy_seq3) );
     sublayer->addChild(fire, 2);
             
-    schedule(CC_SCHEDULE_SELECTOR(StressTest2::shouldNotLeak), 6.0f);
+    schedule(CC_CALLBACK_1(StressTest2::shouldNotLeak,this), 6.0f, "should_not_leak_key");
     
     addChild(sublayer, 0, kTagSprite1);
 }
 
 void StressTest2::shouldNotLeak(float dt)
 {
-    unschedule( CC_SCHEDULE_SELECTOR(StressTest2::shouldNotLeak) );
+    unschedule("should_not_leak_key");
     auto sublayer = static_cast<Layer*>( getChildByTag(kTagSprite1) );
     sublayer->removeAllChildrenWithCleanup(true); 
 }
@@ -473,10 +473,10 @@ SchedulerTest1::SchedulerTest1()
     addChild(layer, 0);
     //CCLOG("retain count after addChild is %d", layer->getReferenceCount());      // 2
     
-    layer->schedule( CC_SCHEDULE_SELECTOR(SchedulerTest1::doSomething) );
+    layer->schedule(CC_CALLBACK_1(SchedulerTest1::doSomething, this), "do_something_key");
     //CCLOG("retain count after schedule is %d", layer->getReferenceCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
     
-    layer->unschedule(CC_SCHEDULE_SELECTOR(SchedulerTest1::doSomething));
+    layer->unschedule("do_something_key");
     //CCLOG("retain count after unschedule is %d", layer->getReferenceCount());        // STILL 3!  (win32 is '2')
 }
 
@@ -1326,7 +1326,7 @@ void NodeNameTest::onEnter()
 {
     TestCocosNodeDemo::BaseTest::onEnter();
     
-    this->scheduleOnce(CC_SCHEDULE_SELECTOR(NodeNameTest::test),0.05f);
+    this->scheduleOnce(CC_CALLBACK_1(NodeNameTest::test, this), 0.05f, "test_key");
 }
 
 void NodeNameTest::test(float dt)
