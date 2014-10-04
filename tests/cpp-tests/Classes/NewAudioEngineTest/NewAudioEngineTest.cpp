@@ -474,7 +474,7 @@ bool AudioControlTest::init()
     timeLabel->setPosition(timeSliderPos.x - sliderSize.width / 2, timeSliderPos.y);
     addChild(timeLabel);
     
-    this->schedule(CC_SCHEDULE_SELECTOR(AudioControlTest::update), 0.1f);
+    this->schedule(CC_CALLBACK_1(AudioControlTest::update, this), 0.1f, "update_key");
     
     return ret;
 }
@@ -627,7 +627,7 @@ bool AudioProfileTest::init()
     addChild(timeSlider);
     _timeSlider = timeSlider;
     
-    this->schedule(CC_SCHEDULE_SELECTOR(AudioControlTest::update), 0.05f);
+    this->schedule(CC_CALLBACK_1(AudioProfileTest::update, this), 0.05f, "update_key");
     
     return ret;
 }
