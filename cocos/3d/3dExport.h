@@ -6,12 +6,15 @@
         #include <string.h>
     #endif
 
-    #if defined(_USE3DDLL)
-        #define CC_3D_DLL     __declspec(dllexport)
-    #else         /* use a DLL library */
-        #define CC_3D_DLL     __declspec(dllimport)
+    #if defined(CC_STATIC)
+        #define CC_3D_DLL
+    #else
+        #if defined(_USE3DDLL)
+            #define CC_3D_DLL     __declspec(dllexport)
+        #else         /* use a DLL library */
+            #define CC_3D_DLL     __declspec(dllimport)
+        #endif
     #endif
-
 
     /* Define NULL pointer value */
     #ifndef NULL
