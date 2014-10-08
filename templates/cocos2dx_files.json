@@ -2146,6 +2146,8 @@
         "external/tinyxml2/tinyxml2.cpp", 
         "external/tinyxml2/tinyxml2.h", 
         "external/unzip/CMakeLists.txt", 
+        "external/unzip/ioapi_mem.cpp", 
+        "external/unzip/ioapi_mem.h", 
         "external/unzip/ioapi.cpp", 
         "external/unzip/ioapi.h", 
         "external/unzip/unzip.cpp", 
