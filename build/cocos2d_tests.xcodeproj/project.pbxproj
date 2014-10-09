@@ -949,6 +949,10 @@
 		B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
 		BA4B67D219E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */; };
 		BA4B67D319E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */; };
+		BAF402E219E675F30060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
+		BAF402E319E675F30060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
+		BAF402E419E676370060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
+		BAF402E519E6764A0060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -2978,6 +2982,7 @@
 		B6C039D819C95D83007207DC /* LightTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightTest.h; path = LightTest/LightTest.h; sourceTree = "<group>"; };
 		BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManagerExTest.cpp; sourceTree = "<group>"; };
 		BA4B67D119E6699200BAF8F9 /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManagerExTest.h; sourceTree = "<group>"; };
+		BAF402E119E675F30060A895 /* Manifests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Manifests; path = "../tests/cpp-tests/Resources/Manifests"; sourceTree = "<group>"; };
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
@@ -6495,6 +6500,7 @@
 				1AC35CBA18CED84500F37B72 /* fonts */,
 				1AC35CBC18CED84500F37B72 /* hd */,
 				1AC35CBE18CED84500F37B72 /* Images */,
+				BAF402E119E675F30060A895 /* Manifests */,
 				1AC35CC118CED84500F37B72 /* Misc */,
 				1AC35CC318CED84500F37B72 /* Particles */,
 				1AC35CC618CED84500F37B72 /* Shaders */,
@@ -7645,6 +7651,7 @@
 				15D1FD47199863E800302043 /* DeprecatedCocoStudioClass.lua in Resources */,
 				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
+				BAF402E419E676370060A895 /* Manifests in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
 				15D1FD141998637C00302043 /* extern.lua in Resources */,
 				1AC35DBB18CEE65100F37B72 /* components in Resources */,
@@ -7733,6 +7740,7 @@
 				15C90B4C18E66C3100D69802 /* url.lua in Resources */,
 				15D1FD1B1998637C00302043 /* json.lua in Resources */,
 				1AC35DD618CEE65200F37B72 /* Misc in Resources */,
+				BAF402E519E6764A0060A895 /* Manifests in Resources */,
 				15D1FD3E199863CA00302043 /* DeprecatedCocosDenshionClass.lua in Resources */,
 				1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */,
 				C08689C418D370C90093E810 /* background.caf in Resources */,
@@ -7827,6 +7835,7 @@
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
+				BAF402E219E675F30060A895 /* Manifests in Resources */,
 				3E2F27BA19CFF52300E7C490 /* audio in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
@@ -7906,6 +7915,7 @@
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
+				BAF402E319E675F30060A895 /* Manifests in Resources */,
 				1AC35D0B18CED84500F37B72 /* zwoptex in Resources */,
 				1AC35CF518CED84500F37B72 /* Images in Resources */,
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
