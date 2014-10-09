@@ -200,7 +200,6 @@
         "cocos/2d/cocos2dx.props", 
         "cocos/2d/libcocos2d.vcxproj", 
         "cocos/2d/libcocos2d.vcxproj.filters", 
-        "cocos/3d/3dExport.h", 
         "cocos/3d/Android.mk", 
         "cocos/3d/CCAABB.cpp", 
         "cocos/3d/CCAABB.h", 
