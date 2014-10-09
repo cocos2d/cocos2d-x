@@ -1,18 +1,29 @@
-cocos2d-x-3.3
-    [NEW]           Audio: new audio supports Mac OS X
+cocos2d-x-3.3-beta1
+    [NEW]           3d: added light support: direction light, point light, spot light and ambient light
+    [NEW]           Audio: new audio supports Mac OS X and Windows
     [NEW]           Application: added openUrl()
+    [NEW]           Armature: added getOffsetPoints()
+    [NEW]           Lua-binding: added Camera3DTest ,BillBoradTest
+    [NEW]           Node: schedule/unschedule lambda functions
     [NEW]           Rect: added merge()
     [NEW]           Utils: added getCascadeBoundingBox()
     [NEW]           UI: `WebView` support on windows
+    [NEW]           WP8: enabled screen orientation change handling
     
-    [FIX]           Accelerometer: using Accelerometer will freeze app and then crash on WP8 
+    [FIX]           Accelerometer: using Accelerometer will freeze app and then crash on WP8
+    [FIX]           Action: kRepeatForever macro superseded by CC_REPEAT_FOREVER macro
     [FIX]           C++: remove armv7s in VALID_ARCHS for Xcode projects
+    [FIX]           Cocos Studio reader: UI animation playing crash if GUI JSON file is loaded again
+    [FIX]           Cocos Studio reader: improvement ImageViewReader don't necessary loadTexture when imageFilePath is empty
     [FIX]           EditBox: view rendereed in wrong position if click EditBox on iOS 8
     [FIX]           Label: getStringNumLines() may returns wrong result if label is dirty
-    [FIX]           Lua-binding: may crash if passing two-dimensional table from lua to c++
+    [FIX]           Lua-bindings: may crash if passing two-dimensional table from lua to c++
+    [FIX]           New audio: can not play audio after playing some times on Android
+    [FIX]           Node: macro scheduler_selector() superseded by CC_SCHEDULER_SELECTOR(). The same is true for the other schedule_ macros
+    [FIX]           Node: unscheduleAllSelectors() deprecated in favor of unscheudleAllCallbacks()
     [FIX]           TextFieldTTF: will get wrong characters if using Chinese input method on WP8
 
-cocos2d-x-3.3  Sep.20 2014
+cocos2d-x-3.3-beta0  Sep.20 2014
     [NEW]           3d: added `BillBoard`
     [NEW]           ActionManager: added removeAllActionsByTag()
     [NEW]           Audio: added new audio system for iOS and Android
@@ -270,7 +281,7 @@ cocos2d-x-3.1-alpha0 May.1 2014
      [NEW]          Android: Adds support for get response when Activity's onActivityResult is triggered
      [NEW]          Core: Adds RefPtr<T> smart pointer support
      [NEW]          Label: supports auto-culling
-     [NEW]          Math: New unified math library that supercedes Kazmath, CCGeometry and CCAffine*
+     [NEW]          Math: New unified math library that supersedes Kazmath, CCGeometry and CCAffine*
      [NEW]          Test: Adds a sample for making a outline sprite by using a custom shader
 
      [FIX]          Application: Application::run returns wrong value on Mac platform

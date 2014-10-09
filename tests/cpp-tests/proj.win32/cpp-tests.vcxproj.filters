@@ -325,11 +325,20 @@
     <Filter Include="Classes\Camera3DTest">
       <UniqueIdentifier>{7f85be1c-98c5-4412-afc5-6f39ae1452a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\LightTest">
+      <UniqueIdentifier>{9befe67d-c725-4807-885f-edee45f95951}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\BillBoardTest">
       <UniqueIdentifier>{54a30b92-ddfb-420e-908b-886c23c21cf1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIWebViewTest">
       <UniqueIdentifier>{a0b90b93-5575-4729-9afc-8a3839b378ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NewAudioEngineTest">
+      <UniqueIdentifier>{0ebafb87-26f5-4a07-b36f-1e4fa03afbe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\OpenURLTest">
+      <UniqueIdentifier>{fc47533b-f876-4254-b0f8-4af8f5e2837f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -443,9 +452,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
-      <Filter>Classes\OpenURLTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -870,8 +876,17 @@
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp">
       <Filter>Classes\BillBoardTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LightTest\LightTest.cpp">
+      <Filter>Classes\LightTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
+      <Filter>Classes\OpenURLTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -991,9 +1006,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
       <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
-      <Filter>Classes\OpenURLTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -1610,8 +1622,17 @@
     <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h">
       <Filter>Classes\BillBoardTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\LightTest\LightTest.h">
+      <Filter>Classes\LightTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
+      <Filter>Classes\OpenURLTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

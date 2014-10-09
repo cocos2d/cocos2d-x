@@ -51,33 +51,42 @@ namespace PhoneDirect3DXamlAppInterop
 #endif
         }
 
+        override protected void OnOrientationChanged(OrientationChangedEventArgs args)
+        {
+            base.OnOrientationChanged(args);
+            if (m_d3dInterop != null)
+            {
+                DisplayOrientations orientation = ConvertToNativeOrientation(args.Orientation);
+                m_d3dInterop.OnOrientationChanged(orientation);
+            }
+        }
+
+        private static DisplayOrientations ConvertToNativeOrientation(PageOrientation xamlOrientation)
+        {
+            switch (xamlOrientation)
+            {
+                case PageOrientation.Portrait:
+                case PageOrientation.PortraitUp:
+                    return DisplayOrientations.Portrait;
+                case PageOrientation.PortraitDown:
+                    return DisplayOrientations.PortraitFlipped;
+                case PageOrientation.Landscape:
+                case PageOrientation.LandscapeLeft:
+                    return DisplayOrientations.Landscape;
+                case PageOrientation.LandscapeRight:
+                    return DisplayOrientations.LandscapeFlipped;
+                default:
+                    return DisplayOrientations.Landscape;
+            }
+        }
+
         private void DrawingSurfaceBackground_Loaded(object sender, RoutedEventArgs e)
         {
             if (m_d3dInterop == null)
             {
                 PageOrientation pageOrientation = (PageOrientation)GetValue(OrientationProperty);
-                DisplayOrientations displayOrientation;
+                DisplayOrientations displayOrientation = ConvertToNativeOrientation(pageOrientation);
 
-                switch(pageOrientation)
-                {
-                    case PageOrientation.Portrait:
-                    case PageOrientation.PortraitUp:
-                        displayOrientation = DisplayOrientations.Portrait;
-                        break;
-                    case PageOrientation.PortraitDown:
-                        displayOrientation = DisplayOrientations.PortraitFlipped;
-                        break;
-                    case PageOrientation.Landscape:
-                    case PageOrientation.LandscapeLeft:
-                        displayOrientation = DisplayOrientations.Landscape;
-                        break;
-                    case PageOrientation.LandscapeRight:
-                        displayOrientation = DisplayOrientations.LandscapeFlipped;
-                        break;
-                    default:
-                        displayOrientation = DisplayOrientations.Landscape;
-                        break;
-                }
                 m_d3dInterop = new Direct3DInterop(displayOrientation);
 
                 // Set WindowBounds to size of DrawingSurface

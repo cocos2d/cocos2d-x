@@ -108,6 +108,8 @@ enum
     kUIS9BatchNodeBasic,
     kUIS9FrameNameSpriteSheet,
     kUIS9FrameNameSpriteSheetRotated,
+    kUIS9FrameNameSpriteSheetCropped,
+    kUIS9FrameNameSpriteSheetCroppedRotated,
     kUIS9BatchNodeScaledNoInsets,
     kUIS9FrameNameSpriteSheetScaledNoInsets,
     kUIS9FrameNameSpriteSheetRotatedScaledNoInsets,

@@ -11,6 +11,12 @@
 -- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
         
 --------------------------------
+--  render the scene 
+-- @function [parent=#Scene] render 
+-- @param self
+-- @param #cc.Renderer renderer
+        
+--------------------------------
 --  creates a new Scene object with a predefined Size 
 -- @function [parent=#Scene] createWithSize 
 -- @param self

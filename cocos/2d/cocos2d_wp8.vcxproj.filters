@@ -662,6 +662,9 @@
     <ClCompile Include="..\3d\CCBillBoard.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1364,6 +1367,9 @@
     <ClInclude Include="..\3d\CCBillBoard.h">
       <Filter>3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -1453,10 +1459,5 @@
     <None Include="..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
       <Filter>renderer\shaders</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\renderer\CMakeLists.txt">
-      <Filter>renderer</Filter>
-    </Text>
   </ItemGroup>
 </Project>

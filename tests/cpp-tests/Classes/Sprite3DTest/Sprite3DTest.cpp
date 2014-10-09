@@ -29,6 +29,7 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -309,6 +310,11 @@ void Sprite3DTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
+Sprite3DTestScene::Sprite3DTestScene()
+{
+    
+}
+
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
 {
     return std::get<0>(tuple1) < std::get<0>(tuple2);
@@ -552,7 +558,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
             _glProgramState->apply(transform);
  
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        glDrawElements(mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), mesh->getIndexFormat(), 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

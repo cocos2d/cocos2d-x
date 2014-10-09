@@ -123,6 +123,16 @@ void BackButtonEvent::execute()
     GLViewImpl::sharedOpenGLView()->OnBackKeyPress();
 }
 
+CustomInputEvent::CustomInputEvent(const std::function<void()>& fun)
+: m_fun(fun)
+{
+}
+void CustomInputEvent::execute()
+{
+    m_fun();
+}
+
+
 
 NS_CC_END
 

@@ -906,6 +906,7 @@ Developers:
         Add shadow, outline, glow filter support for UIText
         Fix UITextField IME can't auto detach
         Add getChildByName method for get a node that can be cast to Type T
+        Improvement ImageViewReader don't necessary loadTexture when imageFilePath is empty
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
@@ -933,6 +934,7 @@ Developers:
         Custom uniform search optimization
         Fixed compiling error on WP8.
         Added method for custom precompiled shader program loading on WP8
+        Enable screen orientation change handling on WP8
         
     chareice
         Make `setup.py` work on zsh
@@ -1017,6 +1019,12 @@ Developers:
         
     tttreal
         Fixed Label::getStringNumLines()
+        
+    hongliang-goudou
+        Fixed the bug that UI animation playing crash if GUI JSON file is loaded again
+        
+    yestein
+        Add Cocostudio Armature getOffsetPoints API for Lua
     
 Retired Core Developers:
     WenSheng Yang

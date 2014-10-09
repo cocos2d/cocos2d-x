@@ -31,8 +31,9 @@
 #include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
-#include "platform/CCPlatformMacros.h"
+#include "base/CCLight.h"
 #include "base/ccMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
@@ -166,6 +167,8 @@ Sprite3D::Sprite3D()
 : _skeleton(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _aabbDirty(true)
+, _lightMask(-1)
+, _shaderUsingLight(false)
 {
 }
 
@@ -299,25 +302,46 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& 
 }
 void Sprite3D::genGLProgramState()
 {
+    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
+    _shaderUsingLight = false;
+    for (const auto light : lights) {
+        _shaderUsingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
+        if (_shaderUsingLight)
+            break;
+    }
     std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
     for(auto& mesh : _meshVertexDatas)
     {
         bool textured = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
         && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+        bool hasNormal = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
         
         GLProgram* glProgram = nullptr;
+        const char* shader = nullptr;
         if(textured)
         {
             if (hasSkin)
-                glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
+            {
+                if (hasNormal && _shaderUsingLight)
+                    shader = GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
+                else
+                    shader = GLProgram::SHADER_3D_SKINPOSITION_TEXTURE;
+            }
             else
-                glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+            {
+                if (hasNormal && _shaderUsingLight)
+                    shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
+                else
+                    shader = GLProgram::SHADER_3D_POSITION_TEXTURE;
+            }
         }
         else
         {
-            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+            shader = GLProgram::SHADER_3D_POSITION;
         }
+        if (shader)
+            glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
         
         auto programstate = GLProgramState::create(glProgram);
         long offset = 0;
@@ -499,6 +523,17 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     Color4F color(getDisplayedColor());
     color.a = getDisplayedOpacity() / 255.0f;
     
+    //check light and determine the shader used
+    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
+    bool usingLight = false;
+    for (const auto light : lights) {
+        usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
+        if (usingLight)
+            break;
+    }
+    if (usingLight != _shaderUsingLight)
+        genGLProgramState();
+    
     int i = 0;
     for (auto& mesh : _meshes) {
         if (!mesh->isVisible())
@@ -513,6 +548,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         
         meshCommand.init(_globalZOrder, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
         
+        meshCommand.setLightMask(_lightMask);
+
         auto skin = mesh->getSkin();
         if (skin)
         {

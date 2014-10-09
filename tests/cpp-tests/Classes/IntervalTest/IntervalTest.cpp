@@ -7,8 +7,6 @@
 
 #define IDC_PAUSE    200
 
-
-
 IntervalLayer::IntervalLayer()
 {
     _time0 = _time1 = _time2 = _time3 = _time4 = 0.0f;
@@ -31,10 +29,37 @@ IntervalLayer::IntervalLayer()
     _label4 = Label::createWithBMFont("fonts/bitmapFontTest4.fnt", "0");
 
     scheduleUpdate();
-    schedule(schedule_selector(IntervalLayer::step1));
-    schedule(schedule_selector(IntervalLayer::step2), 0);
-    schedule(schedule_selector(IntervalLayer::step3), 1.0f);
-    schedule(schedule_selector(IntervalLayer::step4), 2.0f);
+    schedule([&](float dt){
+        _time1 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time1);
+        _label1->setString( str );
+    }, "step_1");
+
+    schedule([&](float dt){
+        _time2 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time2);
+        _label2->setString( str );
+    }, 0.5, "step_2");
+
+    schedule([&](float dt){
+        _time3 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time3);
+        _label3->setString( str );
+    }, 1, "step_3");
+
+    schedule([&](float dt){
+        _time4 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time4);
+        _label4->setString( str );
+    }, 2, "step_4");
 
     _label0->setPosition(s.width*1/6, s.height/2);
     _label1->setPosition(s.width*2/6, s.height/2);
@@ -83,42 +108,6 @@ void IntervalLayer::update(float dt)
     char time[10] = {0};
     sprintf(time, "%2.1f", _time0);
     _label0->setString(time);
-}
-
-void IntervalLayer::step1(float dt)
-{
-    _time1 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time1);
-    _label1->setString( str );
-}
-
-void IntervalLayer::step2(float dt)
-{
-    _time2 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time2);
-    _label2->setString( str ); 
-}
-
-void IntervalLayer::step3(float dt)
-{
-    _time3 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time3);
-    _label3->setString( str ); 
-}
-
-void IntervalLayer::step4(float dt)
-{
-    _time4 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time4);
-    _label4->setString( str ); 
 }
 
 void IntervalTestScene::runThisTest()

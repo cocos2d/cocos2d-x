@@ -215,7 +215,7 @@ void Node::cleanup()
 {
     // actions
     this->stopAllActions();
-    this->unscheduleAllSelectors();
+    this->unscheduleAllCallbacks();
 
 #if CC_ENABLE_SCRIPT_BINDING
     if ( _scriptType != kScriptTypeNone)
@@ -1481,7 +1481,7 @@ ssize_t Node::getNumberOfRunningActions() const
 void Node::setScheduler(Scheduler* scheduler)
 {
     if( scheduler != _scheduler ) {
-        this->unscheduleAllSelectors();
+        this->unscheduleAllCallbacks();
         CC_SAFE_RETAIN(scheduler);
         CC_SAFE_RELEASE(_scheduler);
         _scheduler = scheduler;
@@ -1491,6 +1491,11 @@ void Node::setScheduler(Scheduler* scheduler)
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
     return _scheduler->isScheduled(selector, this);
+}
+
+bool Node::isScheduled(const std::string &key)
+{
+    return _scheduler->isScheduled(key, this);
 }
 
 void Node::scheduleUpdate()
@@ -1529,12 +1534,12 @@ void Node::unscheduleUpdate()
 
 void Node::schedule(SEL_SCHEDULE selector)
 {
-    this->schedule(selector, 0.0f, kRepeatForever, 0.0f);
+    this->schedule(selector, 0.0f, CC_REPEAT_FOREVER, 0.0f);
 }
 
 void Node::schedule(SEL_SCHEDULE selector, float interval)
 {
-    this->schedule(selector, interval, kRepeatForever, 0.0f);
+    this->schedule(selector, interval, CC_REPEAT_FOREVER, 0.0f);
 }
 
 void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay)
@@ -1545,9 +1550,29 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     _scheduler->schedule(selector, this, interval , repeat, delay, !_running);
 }
 
+void Node::schedule(const std::function<void(float)> &callback, const std::string &key)
+{
+    _scheduler->schedule(callback, this, 0, !_running, key);
+}
+
+void Node::schedule(const std::function<void(float)> &callback, float interval, const std::string &key)
+{
+    _scheduler->schedule(callback, this, interval, !_running, key);
+}
+
+void Node::schedule(const std::function<void(float)>& callback, float interval, unsigned int repeat, float delay, const std::string &key)
+{
+    _scheduler->schedule(callback, this, interval, repeat, delay, !_running, key);
+}
+
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
 {
     this->schedule(selector, 0.0f, 0, delay);
+}
+
+void Node::scheduleOnce(const std::function<void(float)> &callback, float delay, const std::string &key)
+{
+    _scheduler->schedule(callback, this, 0, 0, delay, !_running, key);
 }
 
 void Node::unschedule(SEL_SCHEDULE selector)
@@ -1559,7 +1584,12 @@ void Node::unschedule(SEL_SCHEDULE selector)
     _scheduler->unschedule(selector, this);
 }
 
-void Node::unscheduleAllSelectors()
+void Node::unschedule(const std::string &key)
+{
+    _scheduler->unschedule(key, this);
+}
+
+void Node::unscheduleAllCallbacks()
 {
     _scheduler->unscheduleAllForTarget(this);
 }
