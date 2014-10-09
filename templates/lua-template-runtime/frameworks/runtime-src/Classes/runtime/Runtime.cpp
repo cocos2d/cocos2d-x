@@ -100,12 +100,11 @@ void startScript(string strDebugArg)
     engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-static bool resetLuaModule(string fileName)
+static void resetLuaModule(const string& fileName)
 {
     if (fileName.empty())
     {
-        CCLOG("fileName is null");
-        return false;
+        return;
     }
     auto engine = LuaEngine::getInstance();
     LuaStack* luaStack = engine->getLuaStack();
@@ -125,7 +124,7 @@ static bool resetLuaModule(string fileName)
         tableKey = replaceAll(tableKey, "\\", "/");
         tableKey.append(".lua");
         found = fileName.rfind(tableKey);
-        if (0 == found || ( found != std::string::npos && fileName.at(found - 1) == '/'))
+        if (0 == found || (found != std::string::npos && fileName.at(found - 1) == '/'))
         {
             lua_pushstring(stack, key.c_str());
             lua_pushnil(stack);
@@ -137,8 +136,8 @@ static bool resetLuaModule(string fileName)
         lua_pop(stack, 1);
     }
     lua_pop(stack, 2);
-    return true;
 }
+
 bool reloadScript(const string& file)
 {
     auto director = Director::getInstance();
@@ -150,10 +149,16 @@ bool reloadScript(const string& file)
     }
     FileUtils::getInstance()->purgeCachedEntries();
     string modulefile = file;
-    if (!resetLuaModule(modulefile))
+    
+    if (! modulefile.empty())
+    {
+        resetLuaModule(modulefile);
+    }
+    else
     {
         modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
     }
+    
     auto engine = LuaEngine::getInstance();
     LuaStack* luaStack = engine->getLuaStack();
     std::string require = "require \'" + modulefile + "\'";
