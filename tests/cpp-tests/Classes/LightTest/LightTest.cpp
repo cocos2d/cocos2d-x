@@ -65,7 +65,7 @@ LightTest::LightTest()
     _spotLightLabel = Label::createWithTTF(ttfConfig,"Spot Light OFF");
     _spotLightLabel->retain();
     auto menuItem3 = MenuItemLabel::create(_spotLightLabel, CC_CALLBACK_1(LightTest::SwitchLight,this,LightType::SPOT));
-    auto menu = Menu::create(menuItem0, menuItem1,menuItem2,menuItem3,NULL);
+    auto menu = Menu::create(menuItem0, menuItem1, menuItem2, menuItem3, nullptr);
     menu->setPosition(Vec2::ZERO);
     menuItem0->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
     menuItem0->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y-50) );
@@ -239,7 +239,7 @@ void LightTest::addLights()
         auto tintto2 = TintTo::create(4, 0, 255, 0);
         auto tintto3 = TintTo::create(4, 255, 0, 0);
         auto tintto4 = TintTo::create(4, 255, 255, 255);
-        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, nullptr);
         _ambientLight->runAction(RepeatForever::create(seq));
     }
 
@@ -248,7 +248,7 @@ void LightTest::addLights()
         auto tintto2 = TintTo::create(4, 0, 255, 0);
         auto tintto3 = TintTo::create(4, 0, 0, 255);
         auto tintto4 = TintTo::create(4, 255, 255, 255);
-        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, NULL);
+        auto seq = Sequence::create(tintto1,tintto2, tintto3, tintto4, nullptr);
         _directionalLight->runAction(RepeatForever::create(seq));
     }
 
@@ -257,7 +257,7 @@ void LightTest::addLights()
         auto tintto2 = TintTo::create(4, 0, 255, 0);
         auto tintto3 = TintTo::create(4, 0, 0, 255);
         auto tintto4 = TintTo::create(4, 255, 255, 255);
-        auto seq = Sequence::create(tintto2, tintto1, tintto3, tintto4, NULL);
+        auto seq = Sequence::create(tintto2, tintto1, tintto3, tintto4, nullptr);
         _pointLight->runAction(RepeatForever::create(seq));
     }
 
@@ -266,7 +266,7 @@ void LightTest::addLights()
         auto tintto2 = TintTo::create(4, 0, 255, 0);
         auto tintto3 = TintTo::create(4, 0, 0, 255);
         auto tintto4 = TintTo::create(4, 255, 255, 255);
-        auto seq = Sequence::create(tintto3, tintto2, tintto1, tintto4, NULL);
+        auto seq = Sequence::create(tintto3, tintto2, tintto1, tintto4, nullptr);
         _spotLight->runAction(RepeatForever::create(seq));
     }
 }

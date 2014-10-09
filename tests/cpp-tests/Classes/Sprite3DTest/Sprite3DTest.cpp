@@ -1021,7 +1021,7 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
     item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
     item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
-    auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
+    auto pMenu1 = CCMenu::create(item1, item2, item3, item4, item5, nullptr);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
     

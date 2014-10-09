@@ -1,18 +1,18 @@
 #.rst:
-# FindWebP
+# FindGLFW3
 # ------------
 #
-# Locate webp library
+# Locate glfw3 library
 #
 # This module defines
 #
 # ::
 #
-#   WEBP_LIBRARIES, the library to link against
-#   WEBP_FOUND, if false, do not try to link to FREETYPE
-#   WEBP_INCLUDE_DIRS, where to find headers.
+#   GLFW3_LIBRARIES, the library to link against
+#   GLFW3_FOUND, if false, do not try to link to FREETYPE
+#   GLFW3_INCLUDE_DIRS, where to find headers.
 #   This is the concatenation of the paths:
-#   WEBP_INCLUDE_DIR
+#   GLFW3_INCLUDE_DIR
 #
 #=============================================================================
 # Copyright 2014-2014 Martell Malone
@@ -27,10 +27,10 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
-FIND_PATH(WEBP_INCLUDE_DIR decode.h
+FIND_PATH(GLFW3_INCLUDE_DIR glfw3.h
   HINTS
-  ENV WEBP_DIR
-  PATH_SUFFIXES include/webp include
+  ENV GLFW3_DIR
+  PATH_SUFFIXES include/GLFW include
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -42,10 +42,10 @@ FIND_PATH(WEBP_INCLUDE_DIR decode.h
   /opt
 )
 
-FIND_LIBRARY(WEBP_LIBRARY 
-  NAMES WEBP libWEBP
+FIND_LIBRARY(GLFW3_LIBRARY 
+  NAMES glfw3 libglfw3 glfw
   HINTS
-  ENV WEBP_DIR
+  ENV GLFW3_DIR
   PATH_SUFFIXES lib
   PATHS
   ~/Library/Frameworks
@@ -58,12 +58,12 @@ FIND_LIBRARY(WEBP_LIBRARY
   /opt
 )
 
-set(WEBP_INCLUDE_DIRS "${WEBP_INCLUDE_DIR}")
-set(WEBP_LIBRARIES "${WEBP_LIBRARY}")
+set(GLFW3_INCLUDE_DIRS "${GLFW3_INCLUDE_DIR}")
+set(GLFW3_LIBRARIES "${GLFW3_LIBRARY}")
 
 INCLUDE(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
-# handle the QUIETLY and REQUIRED arguments and set WEBP_FOUND to TRUE if 
+# handle the QUIETLY and REQUIRED arguments and set GLFW3_FOUND to TRUE if 
 # all listed variables are TRUE
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(WebP DEFAULT_MSG WEBP_LIBRARIES WEBP_INCLUDE_DIR)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(GLFW3 DEFAULT_MSG GLFW3_LIBRARIES GLFW3_INCLUDE_DIR)
 
-MARK_AS_ADVANCED(WEBP_INCLUDE_DIR WEBP_LIBRARIES WEBP_LIBRARY)
+MARK_AS_ADVANCED(GLFW3_INCLUDE_DIR GLFW3_LIBRARIES GLFW3_LIBRARY)

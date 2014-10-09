@@ -27,11 +27,10 @@
 
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
-class CC_3D_DLL AABB
+class CC_DLL AABB
 {
 
 public:
