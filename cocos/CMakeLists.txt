@@ -95,16 +95,6 @@ if(MINGW)
 
 else()
 
-  if(LINUX)
-
-    find_package(GLFW3 REQUIRED)
-    message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
-    include_directories(${GLFW3_INCLUDE_DIRS})
-
-  endif(LINUX)
-
-
-
   #todo: provide prebuild versions of minizip for android ios mac and msvc
   #done: prebuilt version for mingw-w64 (linux distros should have them also)
   # check for opensuse the buildbot system arch and ubuntu
@@ -118,6 +108,7 @@ endif()
   include_directories(
     ../external/xxhash
     ../external/xxtea)
+
 
 add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
