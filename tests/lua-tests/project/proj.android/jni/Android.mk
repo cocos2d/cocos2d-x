@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := liblua_tests
 
 LOCAL_SRC_FILES += main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/lua_assetsmanager_test_sample.cpp
+                   ../../Classes/lua_assetsmanagerex_test_sample.cpp
 
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../Classes
