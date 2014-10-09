@@ -375,7 +375,7 @@ AssetsManagerEx::State AssetsManagerEx::getState() const
 
 void AssetsManagerEx::downloadVersion()
 {
-    if (_updateState != State::PREDOWNLOAD_VERSION)
+    if (_updateState > State::PREDOWNLOAD_VERSION)
         return;
 
     std::string versionUrl = _localManifest->getVersionFileUrl();
