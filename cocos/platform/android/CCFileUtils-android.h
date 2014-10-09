@@ -77,11 +77,6 @@ public:
 
     virtual std::string getWritablePath() const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
-
-    virtual bool createDirectories(const std::string& dirPath);
-    virtual bool createDirectory(const std::string& dirPath);
-    virtual bool isExist(const std::string& path);
-    virtual bool isDirectory(const std::string& dirPath);
     
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const;

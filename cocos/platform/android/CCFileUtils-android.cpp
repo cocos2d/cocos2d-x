@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
-#include "jni/JniHelper.h"
 
 #include <stdlib.h>
 
@@ -359,81 +358,6 @@ string FileUtilsAndroid::getWritablePath() const
         return "";
     }
 }
-
-#define COCOPLAY_UTILS_CLASS "com/chukong/cocoplay/utils/Utils"
-
-bool FileUtilsAndroid::createDirectories(const std::string& path)
-{
-    bool ret = false;
-    JniMethodInfo t;
-    
-    if (JniHelper::getStaticMethodInfo(t, COCOPLAY_UTILS_CLASS, "createDirectories", "(Ljava/lang/String;)Z"))
-    {
-        jstring stringArg = t.env->NewStringUTF(path.c_str());
-        
-        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
-        
-        t.env->DeleteLocalRef(stringArg);
-        t.env->DeleteLocalRef(t.classID);
-    }
-    
-    return ret;
-}
-
-bool FileUtilsAndroid::createDirectory(const std::string& path)
-{
-    bool ret = false;
-    JniMethodInfo t;
-    
-    if (JniHelper::getStaticMethodInfo(t, COCOPLAY_UTILS_CLASS, "createDirectory", "(Ljava/lang/String;)Z"))
-    {
-        jstring stringArg = t.env->NewStringUTF(path.c_str());
-        
-        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
-        
-        t.env->DeleteLocalRef(stringArg);
-        t.env->DeleteLocalRef(t.classID);
-    }
-    
-    return ret;
-}
-
-bool FileUtilsAndroid::isExist(const std::string& path)
-{
-    bool ret = false;
-    JniMethodInfo t;
-    
-    if (JniHelper::getStaticMethodInfo(t, COCOPLAY_UTILS_CLASS, "isExist", "(Ljava/lang/String;)Z"))
-    {
-        jstring stringArg = t.env->NewStringUTF(path.c_str());
-        
-        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
-        
-        t.env->DeleteLocalRef(stringArg);
-        t.env->DeleteLocalRef(t.classID);
-    }
-    
-    return ret;
-}
-
-bool FileUtilsAndroid::isDirectory(const std::string& path)
-{
-    bool ret = false;
-    JniMethodInfo t;
-    
-    if (JniHelper::getStaticMethodInfo(t, COCOPLAY_UTILS_CLASS, "isDirectory", "(Ljava/lang/String;)Z"))
-    {
-        jstring stringArg = t.env->NewStringUTF(path.c_str());
-        
-        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg);
-        
-        t.env->DeleteLocalRef(stringArg);
-        t.env->DeleteLocalRef(t.classID);
-    }
-    
-    return ret;
-}
-
 
 NS_CC_END
 
