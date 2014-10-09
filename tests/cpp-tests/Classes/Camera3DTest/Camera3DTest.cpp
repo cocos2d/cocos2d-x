@@ -278,7 +278,7 @@ void Camera3DTestDemo::onEnter()
     auto menuItem6 = MenuItemLabel::create(label6, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::ThirdCamera));
     auto label7 = Label::createWithTTF(ttfConfig,"first person");
     auto menuItem7 = MenuItemLabel::create(label7, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::FirstCamera));
-    auto menu = Menu::create(menuItem1,menuItem2,menuItem3,menuItem4,menuItem5,menuItem6,menuItem7,NULL);
+    auto menu = Menu::create(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, nullptr);
 
     menu->setPosition(Vec2::ZERO);
     menuItem1->setPosition(s.width-50, VisibleRect::top().y-50 );

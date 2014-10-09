@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15AE180619AAD2F700C27E9E /* 3dExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17E319AAD2F700C27E9E /* 3dExport.h */; };
-		15AE180719AAD2F700C27E9E /* 3dExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17E319AAD2F700C27E9E /* 3dExport.h */; };
 		15AE180819AAD2F700C27E9E /* CCAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17E419AAD2F700C27E9E /* CCAABB.cpp */; };
 		15AE180919AAD2F700C27E9E /* CCAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17E419AAD2F700C27E9E /* CCAABB.cpp */; };
 		15AE180A19AAD2F700C27E9E /* CCAABB.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17E519AAD2F700C27E9E /* CCAABB.h */; };
@@ -1841,7 +1839,6 @@
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		15AE17E319AAD2F700C27E9E /* 3dExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 3dExport.h; sourceTree = "<group>"; };
 		15AE17E419AAD2F700C27E9E /* CCAABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAABB.cpp; sourceTree = "<group>"; };
 		15AE17E519AAD2F700C27E9E /* CCAABB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAABB.h; sourceTree = "<group>"; };
 		15AE17E619AAD2F700C27E9E /* CCAnimate3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimate3D.cpp; sourceTree = "<group>"; };
@@ -4765,7 +4762,6 @@
 			children = (
 				B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */,
 				B60C5BD319AC68B10056FBDE /* CCBillBoard.h */,
-				15AE17E319AAD2F700C27E9E /* 3dExport.h */,
 				15AE17E419AAD2F700C27E9E /* CCAABB.cpp */,
 				15AE17E519AAD2F700C27E9E /* CCAABB.h */,
 				15AE17E619AAD2F700C27E9E /* CCAnimate3D.cpp */,
@@ -4894,7 +4890,6 @@
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				50ABBD911925AB4100A911A9 /* CCGLProgramCache.h in Headers */,
-				15AE180619AAD2F700C27E9E /* 3dExport.h in Headers */,
 				50ED2BDA19BE76D300A0AB90 /* UIVideoPlayer.h in Headers */,
 				15AE199919AAD39600C27E9E /* LoadingBarReader.h in Headers */,
 				15AE1A8F19AAD40300C27E9E /* b2RopeJoint.h in Headers */,
@@ -5616,7 +5611,6 @@
 				1A570313180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				1A087AEB1860400400196EF5 /* edtaa3func.h in Headers */,
 				B375107F1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
-				15AE180719AAD2F700C27E9E /* 3dExport.h in Headers */,
 				15AE1A2019AAD3A700C27E9E /* spine-cocos2dx.h in Headers */,
 				15AE185D19AAD31200C27E9E /* CocosDenshion.h in Headers */,
 				15AE194319AAD35100C27E9E /* CCColliderDetector.h in Headers */,
