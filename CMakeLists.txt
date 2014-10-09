@@ -122,12 +122,12 @@ else()
   message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
 endif()
 
-
 include_directories(
   ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/deprecated
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
@@ -197,7 +197,7 @@ if(NOT MINGW)
 #i.e we should not need to include an extra dir of /freetype2
 
   link_directories(
-
+    ${PLATFORM_LINK_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
@@ -214,6 +214,13 @@ if(NOT MINGW)
 
 endif()
 
+# build for 3rd party libraries
+if(LINUX)
+add_subdirectory(external/Box2D)
+add_subdirectory(external/unzip)
+add_subdirectory(external/xxhash)
+add_subdirectory(external/tinyxml2)
+endif()
 
 # libcocos2d.a
 add_subdirectory(cocos)
