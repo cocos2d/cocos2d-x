@@ -148,7 +148,7 @@ void SpotLight::setInnerAngle(float angle)
 void SpotLight::setOuterAngle(float angle)
 {
     _outerAngle = angle;
-    _cosInnerAngle = cosf(angle);
+    _cosOuterAngle = cosf(angle);
 }
 
 SpotLight::SpotLight()

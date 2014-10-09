@@ -238,7 +238,7 @@ public:
     float getOuterAngle() const { return _outerAngle; }
     
     /** get cos outAngle */
-    float getCosOuterAngle() const { return _cosInnerAngle; }
+    float getCosOuterAngle() const { return _cosOuterAngle; }
     
 CC_CONSTRUCTOR_ACCESS:
     SpotLight();
