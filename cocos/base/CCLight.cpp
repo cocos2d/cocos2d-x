@@ -69,19 +69,15 @@ void DirectionLight::setDirection(const Vec3 &dir)
 {
     setRotationFromDirection(dir);
 }
-const Vec3& DirectionLight::getDirection() const
+Vec3 DirectionLight::getDirection() const
 {
-    static Vec3 dir;
     Mat4 mat = getNodeToParentTransform();
-    dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
-    return dir;
+    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
-const Vec3& DirectionLight::getDirectionInWorld() const
+Vec3 DirectionLight::getDirectionInWorld() const
 {
-    static Vec3 dir;
     Mat4 mat = getNodeToWorldTransform();
-    dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
-    return dir;
+    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 DirectionLight::DirectionLight()
 {
@@ -131,20 +127,16 @@ void SpotLight::setDirection(const Vec3 &dir)
     setRotationFromDirection(dir);
 }
 
-const Vec3& SpotLight::getDirection() const
+Vec3 SpotLight::getDirection() const
 {
-    static Vec3 dir;
     Mat4 mat = getNodeToParentTransform();
-    dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
-    return dir;
+    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 
-const Vec3& SpotLight::getDirectionInWorld() const
+Vec3 SpotLight::getDirectionInWorld() const
 {
-    static Vec3 dir;
     Mat4 mat = getNodeToWorldTransform();
-    dir.set(-mat.m[8], -mat.m[9], -mat.m[10]);
-    return dir;
+    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 
 void SpotLight::setInnerAngle(float angle)
