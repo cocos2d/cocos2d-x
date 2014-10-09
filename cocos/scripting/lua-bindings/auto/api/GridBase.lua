@@ -12,7 +12,7 @@
         
 --------------------------------
 -- 
--- @function [parent=#GridBase] calculateVertexPoints 
+-- @function [parent=#GridBase] afterBlit 
 -- @param self
         
 --------------------------------
@@ -24,6 +24,11 @@
 --------------------------------
 -- 
 -- @function [parent=#GridBase] beforeDraw 
+-- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#GridBase] calculateVertexPoints 
 -- @param self
         
 --------------------------------
@@ -88,6 +93,11 @@
 -- @param #bool flipped
 -- @return bool#bool ret (retunr value: bool)
 
+--------------------------------
+-- 
+-- @function [parent=#GridBase] beforeBlit 
+-- @param self
+        
 --------------------------------
 -- 
 -- @function [parent=#GridBase] setReuseGrid 

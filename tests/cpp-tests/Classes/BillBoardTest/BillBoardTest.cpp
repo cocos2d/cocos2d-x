@@ -123,7 +123,7 @@ BillBoardTest::BillBoardTest()
     auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10));
     auto label2 = Label::createWithTTF(ttfConfig,"rotate-");
     auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10));
-    auto menu = Menu::create(menuItem1,menuItem2,NULL);
+    auto menu = Menu::create(menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-160) );
     menuItem2->setPosition( Vec2( s.width-80, VisibleRect::top().y-190) );
@@ -137,7 +137,7 @@ BillBoardTest::BillBoardTest()
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-100) );
     menuItem2->setPosition( Vec2( s.width-80, VisibleRect::top().y-130) );
     
-    menu = Menu::create(menuItem1,menuItem2,NULL);
+    menu = Menu::create(menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2(0,0));
     this->addChild(menu, 10);
     menuCallback_orientedPoint(nullptr);

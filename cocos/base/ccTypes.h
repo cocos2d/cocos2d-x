@@ -368,7 +368,7 @@ enum class CC_DLL TextVAlignment
 {
     TOP,
     CENTER,
-    BOTTOM,
+    BOTTOM
 };
 
 // FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
@@ -377,7 +377,7 @@ enum class CC_DLL TextHAlignment
 {
     LEFT,
     CENTER,
-    RIGHT,
+    RIGHT
 };
 
 // types for animation in particle systems

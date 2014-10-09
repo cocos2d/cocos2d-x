@@ -29,6 +29,7 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -309,6 +310,11 @@ void Sprite3DTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
+Sprite3DTestScene::Sprite3DTestScene()
+{
+    
+}
+
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
 {
     return std::get<0>(tuple1) < std::get<0>(tuple2);
@@ -552,7 +558,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
             _glProgramState->apply(transform);
  
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
-        glDrawElements(mesh->getPrimitiveType(), mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        glDrawElements(mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), mesh->getIndexFormat(), 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -1015,7 +1021,7 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
     item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
     item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
-    auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
+    auto pMenu1 = CCMenu::create(item1, item2, item3, item4, item5, nullptr);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
     
@@ -1232,6 +1238,7 @@ Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
     _labelCubeCount->setPosition(Vec2(s.width/2, s.height-90));
     addChild(_labelCubeCount);
     _hasCollider = false;
+    addOBBCallback(nullptr);
     scheduleUpdate();
 }
 std::string Sprite3DWithOBBPerfromanceTest::title() const

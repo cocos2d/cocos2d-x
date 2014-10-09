@@ -876,6 +876,11 @@
 		3E2BDAFF19C5E5B40055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
 		3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
 		3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */; };
+		3E2F27BA19CFF52300E7C490 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		3E2F27BB19CFF52A00E7C490 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		3E2F27BC19D00D7200E7C490 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		3E2F27BD19D00D7D00E7C490 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
 		3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		3E6177241960FAED00DE83F5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		3E6177251960FAED00DE83F5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -934,12 +939,16 @@
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
+		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B609E67319C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
-		BAF92D5219C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */; };
-		BAF92D5319C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */; };
+		B6C039D919C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
+		B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
+		BA4B67D219E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */; };
+		BA4B67D319E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -2960,11 +2969,15 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenURLTest.cpp; path = OpenURLTest/OpenURLTest.cpp; sourceTree = "<group>"; };
+		A5030C3419D059DA000E78E7 /* OpenURLTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenURLTest.h; path = OpenURLTest/OpenURLTest.h; sourceTree = "<group>"; };
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		B609E67119C18DAD003D0074 /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
-		BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManagerExTest.cpp; sourceTree = "<group>"; };
-		BAF92D5119C89BAC003BCFEF /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManagerExTest.h; sourceTree = "<group>"; };
+		B6C039D719C95D83007207DC /* LightTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightTest.cpp; path = LightTest/LightTest.cpp; sourceTree = "<group>"; };
+		B6C039D819C95D83007207DC /* LightTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightTest.h; path = LightTest/LightTest.h; sourceTree = "<group>"; };
+		BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManagerExTest.cpp; sourceTree = "<group>"; };
+		BA4B67D119E6699200BAF8F9 /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManagerExTest.h; sourceTree = "<group>"; };
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
@@ -5439,6 +5452,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B6C039D619C95D28007207DC /* LightTest */,
 				B609E67019C18D90003D0074 /* BillBoardTest */,
 				3E2BDACD19BEA3410055CDCD /* NewAudioEngineTest */,
 				3E9E75CB199324A8005B7047 /* Camera3DTest */,
@@ -5509,6 +5523,7 @@
 				1AC35B1718CECF0C00F37B72 /* UserDefaultTest */,
 				1AC35B1A18CECF0C00F37B72 /* VisibleRect.cpp */,
 				1AC35B1B18CECF0C00F37B72 /* VisibleRect.h */,
+				A5030C3219D059AB000E78E7 /* OpenURLTest */,
 				1AC35B1C18CECF0C00F37B72 /* ZwoptexTest */,
 			);
 			name = Classes;
@@ -5782,7 +5797,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
-				BAF92D4F19C89BAC003BCFEF /* AssetsManagerExTest */,
+				BA4B67CF19E6699200BAF8F9 /* AssetsManagerExTest */,
 				38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
@@ -7156,6 +7171,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A5030C3219D059AB000E78E7 /* OpenURLTest */ = {
+			isa = PBXGroup;
+			children = (
+				A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */,
+				A5030C3419D059DA000E78E7 /* OpenURLTest.h */,
+			);
+			name = OpenURLTest;
+			sourceTree = "<group>";
+		};
 		B609E67019C18D90003D0074 /* BillBoardTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -7165,11 +7189,20 @@
 			name = BillBoardTest;
 			sourceTree = "<group>";
 		};
-		BAF92D4F19C89BAC003BCFEF /* AssetsManagerExTest */ = {
+		B6C039D619C95D28007207DC /* LightTest */ = {
 			isa = PBXGroup;
 			children = (
-				BAF92D5019C89BAC003BCFEF /* AssetsManagerExTest.cpp */,
-				BAF92D5119C89BAC003BCFEF /* AssetsManagerExTest.h */,
+				B6C039D719C95D83007207DC /* LightTest.cpp */,
+				B6C039D819C95D83007207DC /* LightTest.h */,
+			);
+			name = LightTest;
+			sourceTree = "<group>";
+		};
+		BA4B67CF19E6699200BAF8F9 /* AssetsManagerExTest */ = {
+			isa = PBXGroup;
+			children = (
+				BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */,
+				BA4B67D119E6699200BAF8F9 /* AssetsManagerExTest.h */,
 			);
 			path = AssetsManagerExTest;
 			sourceTree = "<group>";
@@ -7293,6 +7326,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1ABCA2F118CD93590087CE3A /* Build configuration list for PBXNativeTarget "lua-tests iOS" */;
 			buildPhases = (
+				150906CB19CFCAF3002C4D97 /* ShellScript */,
 				1ABCA2C918CD93580087CE3A /* Sources */,
 				1ABCA2CA18CD93580087CE3A /* Frameworks */,
 				1ABCA2CB18CD93580087CE3A /* Resources */,
@@ -7609,6 +7643,7 @@
 				15D1FD2D1998637C00302043 /* OpenglConstants.lua in Resources */,
 				15D1FCF11998637C00302043 /* Cocos2d.lua in Resources */,
 				15D1FD47199863E800302043 /* DeprecatedCocoStudioClass.lua in Resources */,
+				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
 				15D1FD141998637C00302043 /* extern.lua in Resources */,
@@ -7639,6 +7674,7 @@
 				15C90B4918E66C2A00D69802 /* tp.lua in Resources */,
 				15D1FD281998637C00302043 /* Opengl.lua in Resources */,
 				1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */,
+				3E2F27BD19D00D7D00E7C490 /* background.wav in Resources */,
 				15C90B3F18E66C0C00D69802 /* ltn12.lua in Resources */,
 				15C90B4718E66C2400D69802 /* socket.lua in Resources */,
 				15C90B3A18E66BE200D69802 /* ftp.lua in Resources */,
@@ -7791,9 +7827,11 @@
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
+				3E2F27BA19CFF52300E7C490 /* audio in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
 				1AC35D0618CED84500F37B72 /* spine in Resources */,
+				3E2F27BB19CFF52A00E7C490 /* background.wav in Resources */,
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
 				1AC35CDE18CED84500F37B72 /* components in Resources */,
 				1AC35D0818CED84500F37B72 /* TileMaps in Resources */,
@@ -7904,6 +7942,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		150906CB19CFCAF3002C4D97 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "find ${SRCROOT}/../tests/lua-tests/src/ -name \"*\" -exec touch -cm {} \\;";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		15CBA020196EE56C005877BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -8011,6 +8065,7 @@
 				1AC35B2918CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
 				29080DA1191B595E0066F8DF /* GUIEditorTest.cpp in Sources */,
 				1AC35B3718CECF0C00F37B72 /* Bug-1159.cpp in Sources */,
+				A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */,
 				29080D1C191B574B0066F8DF /* UITest.cpp in Sources */,
 				1AC35C3118CECF0C00F37B72 /* PerformanceRendererTest.cpp in Sources */,
 				1AC35C4518CECF0C00F37B72 /* SceneTest.cpp in Sources */,
@@ -8056,6 +8111,7 @@
 				1AC35C4F18CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
 				29080D9D191B595E0066F8DF /* CustomParticleWidgetReader.cpp in Sources */,
 				1AC35C0318CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
+				B6C039D919C95D83007207DC /* LightTest.cpp in Sources */,
 				1AC35B5B18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				29080DD5191B595E0066F8DF /* UITextAtlasTest_Editor.cpp in Sources */,
 				1AC35BFF18CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
@@ -8143,8 +8199,10 @@
 				1AC35C4B18CECF0C00F37B72 /* ShaderTest2.cpp in Sources */,
 				38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				1AC35C6518CECF0C00F37B72 /* UnitTest.cpp in Sources */,
+				BA4B67D219E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */,
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
+				3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */,
 				1AC35C3918CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */,
 				1AC35B5318CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				29080DD3191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
@@ -8157,7 +8215,6 @@
 				1AC35C2918CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35CA618CECF1E00F37B72 /* main.cpp in Sources */,
 				1AC35BE918CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
-				BAF92D5219C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B7318CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
 				1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				1AC35C3518CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
@@ -8239,6 +8296,7 @@
 				1AC35C6018CECF0C00F37B72 /* Paddle.cpp in Sources */,
 				29080DBE191B595E0066F8DF /* UIPageViewTest.cpp in Sources */,
 				1AC35BDC18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
+				A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */,
 				1AC35B4C18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
 				1AC35C5218CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B7A18CECF0C00F37B72 /* EnemyController.cpp in Sources */,
@@ -8285,8 +8343,8 @@
 				1AC35C5E18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35B7C18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
 				1AC35BF418CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
-				BAF92D5319C89BAC003BCFEF /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B3618CECF0C00F37B72 /* TestEntries.cpp in Sources */,
+				BA4B67D319E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B2E18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				29080DCA191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35C1218CECF0C00F37B72 /* LabelTestNew.cpp in Sources */,
@@ -8361,6 +8419,7 @@
 				1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */,
 				1AC35C3618CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
+				B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */,
 				1AC35C3C18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
 				29080DA2191B595E0066F8DF /* GUIEditorTest.cpp in Sources */,
 				29080D94191B595E0066F8DF /* CustomImageTest.cpp in Sources */,
@@ -8583,6 +8642,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/base";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8609,6 +8669,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/base";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
@@ -8693,6 +8754,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8710,6 +8772,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
@@ -8730,6 +8793,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8751,6 +8815,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
@@ -8810,6 +8875,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8831,12 +8897,15 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.mac/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8850,6 +8919,8 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.mac/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
@@ -8876,6 +8947,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8895,6 +8967,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
@@ -8917,6 +8990,7 @@
 			buildSettings = {
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8925,6 +8999,7 @@
 			buildSettings = {
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
@@ -8933,6 +9008,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8946,6 +9023,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -8954,6 +9032,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
@@ -8968,6 +9048,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};

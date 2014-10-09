@@ -686,7 +686,6 @@ void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
     };
     
     auto glProgram= GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->retain();
     
     int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
@@ -718,7 +717,6 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
     };
 
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->retain();
 
     int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
@@ -919,7 +917,6 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     };
 
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->retain();
 
     int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
@@ -991,7 +988,7 @@ void ClippingToRenderTextureTest::setup()
 
     auto s = Director::getInstance()->getWinSize();
     // create menu, it's an autorelease object
-    auto menu = Menu::create(button, NULL);
+    auto menu = Menu::create(button, nullptr);
     menu->setPosition(Point(s.width/2, s.height/2));
     this->addChild(menu, 1);
 

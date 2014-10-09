@@ -175,6 +175,11 @@
 -- @param #function callback
         
 --------------------------------
+-- remove this node from physics world. it will remove all the physics bodies in it's children too.
+-- @function [parent=#Node] removeFromPhysicsWorld 
+-- @param self
+        
+--------------------------------
 -- removes all components
 -- @function [parent=#Node] removeAllComponents 
 -- @param self
@@ -336,6 +341,12 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- Resumes all scheduled selectors, actions and event listeners.<br>
+-- This method is called internally by onEnter
+-- @function [parent=#Node] resume 
+-- @param self
+        
+--------------------------------
 -- returns the rotation (X,Y,Z) in degrees.
 -- @function [parent=#Node] getRotation3D 
 -- @param self
@@ -361,12 +372,6 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- Resumes all scheduled selectors, actions and event listeners.<br>
--- This method is called internally by onEnter
--- @function [parent=#Node] resume 
--- @param self
         
 --------------------------------
 -- get the PhysicsBody the sprite have
@@ -620,13 +625,6 @@
 -- @param #string name
         
 --------------------------------
--- @overload self, cc.AffineTransform         
--- @overload self, mat4_table         
--- @function [parent=#Node] setAdditionalTransform
--- @param self
--- @param #mat4_table additionalTransform
-
---------------------------------
 -- 
 -- @function [parent=#Node] getDisplayedOpacity 
 -- @param self
@@ -752,6 +750,17 @@
 -- @function [parent=#Node] getParentToNodeTransform 
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- Checks whether a lambda function is scheduled.<br>
+-- param key      key of the callback<br>
+-- return Whether the lambda function selector is scheduled.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Node] isScheduled 
+-- @param self
+-- @param #string key
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Defines the oder in which the nodes are renderer.<br>

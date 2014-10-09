@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "Cocos2dRenderer.h"
 #include "cocos2d.h"
 #include "CCApplication.h"
-#include "CCGLView.h"
+#include "CCGLViewImpl.h"
 #include "AppDelegate.h"
 #include <ppltasks.h>
 
@@ -181,7 +181,12 @@ void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Coco
     }
 }
 
-
-
-
-
+void Cocos2dRenderer::SetXamlOpenURLDelegate(PhoneDirect3DXamlAppComponent::Cocos2dOpenURLDelegate^ delegate)
+{
+    m_openURLDelegate = delegate;
+    Application* app = Application::getInstance();
+    if (app)
+    {
+        app->SetXamlOpenURLDelegate(delegate);
+    }
+}

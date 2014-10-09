@@ -352,6 +352,11 @@ const Vec2& Armature::getAnchorPointInPoints() const
     return _realAnchorPointInPoints;
 }
 
+const Vec2& Armature::getOffsetPoints() const
+{
+    return _offsetPoint;
+}
+
 void Armature::setAnimation(ArmatureAnimation *animation)
 {
     _animation = animation;

@@ -513,7 +513,7 @@ void PhysicsDemoPyramidStack::onEnter()
     ball->setPosition(VisibleRect::bottom() + Vec2(0, 60));
     this->addChild(ball);
     
-    scheduleOnce(schedule_selector(PhysicsDemoPyramidStack::updateOnce), 3.0);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsDemoPyramidStack::updateOnce), 3.0);
 
     for(int i=0; i<14; i++)
     {
@@ -1649,7 +1649,7 @@ void PhysicsSetGravityEnableTest::onEnter()
     ball->getPhysicsBody()->setGravityEnable(false);
     addChild(ball);
     ball->getPhysicsBody()->setMass(50);
-    scheduleOnce(schedule_selector(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
 }
 
 void PhysicsSetGravityEnableTest::onScheduleOnce(float delta)
@@ -1750,7 +1750,7 @@ void PhysicsFixedUpdate::onEnter()
     
     addBall();
     
-    scheduleOnce(schedule_selector(PhysicsFixedUpdate::updateStart), 2);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsFixedUpdate::updateStart), 2);
 }
 
 void PhysicsFixedUpdate::addBall()

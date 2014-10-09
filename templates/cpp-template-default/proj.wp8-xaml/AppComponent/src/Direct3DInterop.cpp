@@ -109,6 +109,15 @@ void Direct3DInterop::OnPointerReleased(DrawingSurfaceManipulationHost^ sender, 
     cocos2d::GLViewImpl::sharedOpenGLView()->QueuePointerEvent(cocos2d::PointerEventType::PointerReleased, args);
 }
 
+void Direct3DInterop::OnOrientationChanged(Windows::Graphics::Display::DisplayOrientations orientation)
+{
+    std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::CustomInputEvent([this, orientation]()
+    {
+        m_renderer->OnOrientationChanged(orientation);
+    }));
+    cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
+}
+
 void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key)
 {
     std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::KeyboardEvent(key));
@@ -129,6 +138,11 @@ void Direct3DInterop::OnCocos2dEditboxEvent(Object^ sender, Platform::String^ ar
     cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
 }
 
+void Direct3DInterop::OnCocos2dOpenURL(Platform::String^ url)
+{
+    m_openURLDelegate->Invoke(url);
+}
+
 
 
 
@@ -142,13 +156,6 @@ HRESULT Direct3DInterop::PrepareResources(_In_ const LARGE_INTEGER* presentTarge
 HRESULT Direct3DInterop::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView)
 {
     m_renderer->UpdateDevice(device, context, renderTargetView);
-#if 0
-    if(mCurrentOrientation != WindowOrientation)
-    {
-        mCurrentOrientation = WindowOrientation;
-        m_renderer->OnOrientationChanged(mCurrentOrientation);
-    }  
-#endif // 0
 
     cocos2d::GLViewImpl::sharedOpenGLView()->ProcessEvents();
     m_renderer->Render();
@@ -174,12 +181,19 @@ void Direct3DInterop::SetCocos2dEditBoxDelegate(Cocos2dEditBoxDelegate ^ delegat
     m_renderer->SetXamlEditBoxDelegate(delegate);
 }
 
+void Direct3DInterop::SetCocos2dOpenURLDelegate(Cocos2dOpenURLDelegate ^ delegate)
+{
+    m_openURLDelegate = delegate;
+    m_renderer->SetXamlOpenURLDelegate(delegate);
+}
+
 
 bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
 {
+    Platform::String^ str;
     if(m_delegate)
     {
-        m_delegate->Invoke(event);
+        m_delegate->Invoke(event, str);
         return true;
     }
     return false;

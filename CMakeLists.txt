@@ -28,11 +28,23 @@ project (Cocos2d-X)
 
 # The version number
 set(COCOS2D_X_VERSION 3.3.0-beta0)
-#set(CMAKE_C_COMPILER_INIT g++)
 
-include(build/BuildHelpers.CMakeLists.txt)
+include(cmake/BuildHelpers.CMakeLists.txt)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 message(${BUILDING_STRING})
+
+option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
+option(USE_BOX2D "Use box2d for physics library" OFF)
+option(BUILD_STATIC "Build static libraries" ON)
+option(DEBUG_MODE "Debug or release?" ON)
+option(BUILD_EXTENSIONS "Build extension library" ON)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
+option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+option(BUILD_CPP_TESTS "Build TestCpp samples" ON)
+option(BUILD_LUA_LIBS "Build lua libraries" ON)
+option(BUILD_LUA_TESTS "Build TestLua samples" ON)
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -58,9 +70,22 @@ else()
   endif()
 endif(MSVC)
 
+if(BUILD_STATIC)
+ set (BUILD_TYPE STATIC)
+else()
+ set (BUILD_TYPE SHARED)
+endif()
+
 # Some macro definitions
 if(WINDOWS)
-  ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
+
+  if(BUILD_STATIC)
+    ADD_DEFINITIONS (-DCC_STATIC)
+  else()
+    ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
+  endif()
+
+  ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)
 elseif(MACOSX)
   ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
@@ -69,6 +94,9 @@ elseif(MACOSX)
 elseif(LINUX)
   ADD_DEFINITIONS(-DLINUX)
   set(PLATFORM_FOLDER linux)
+elseif(ANDROID)
+  ADD_DEFINITIONS (-DUSE_FILE32API)
+  set(PLATFORM_FOLDER android)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -94,18 +122,6 @@ else()
   message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
 endif()
 
-# Specific Include Directories
-if(LINUX)
-  set(PLATFORM_INCLUDE_DIR
-    /usr/include
-    /usr/include/GLFW
-    /usr/local/include/GLFW
-  )
-else()
-  set(PLATFORM_INCLUDE_DIR
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
-  )
-endif()
 
 include_directories(
   ${PLATFORM_INCLUDE_DIR}
@@ -125,7 +141,7 @@ if(LINUX)
   set(PLATFORM_FOLDER_ARCH
       ${PLATFORM_FOLDER}/${ARCH_DIR}
   )
-else()
+elseif(NOT MINGW)
   set(PLATFORM_FOLDER_ARCH
     ${PLATFORM_FOLDER}
   )
@@ -134,26 +150,88 @@ else()
   )
 endif()
 
-link_directories(
-  ${PLATFORM_LINK_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
+
+# NB
+# we need to return these to libraries to their official state rather than 
+# having our custom cocos2d namespace so that we may use system versions if 
+# the platform provides them. It is very important that this
+# is done before we make prebuilt versions of these two libs
+
+include_directories(
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/../external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/../external/xxhash
+
 )
+
+if(LINUX)
+
+  find_package(GLFW3 REQUIRED)
+  message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
+  include_directories(${GLFW3_INCLUDE_DIRS})
+
+endif(LINUX)
+
+
+if(NOT MINGW)
+
+  include_directories(
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
+
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
+  )
+
+#todo: fix location of freetype includes for linux android on cocos prebuilt repo
+#i.e we should not need to include an extra dir of /freetype2
+
+  link_directories(
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/prebuilt/${PLATFORM_FOLDER_ARCH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
+
+  )
+
+
+endif()
+
 
 # libcocos2d.a
 add_subdirectory(cocos)
 
+# build cpp tests
+if(BUILD_CPP_TESTS)
+  add_subdirectory(tests/cpp-empty-test)
+  add_subdirectory(tests/cpp-tests)
+endif(BUILD_CPP_TESTS)
+
 ## Scripting
-add_subdirectory(cocos/scripting/lua-bindings)
+if(BUILD_LUA_LIBS)
+    add_subdirectory(cocos/scripting/lua-bindings)
 
-# build tests
-add_subdirectory(tests/cpp-empty-test)
-add_subdirectory(tests/cpp-tests)
+  # build lua tests
+  if(BUILD_LUA_TESTS)
+    add_subdirectory(tests/lua-tests/project)
+    add_subdirectory(tests/lua-empty-test/project)
+  endif(BUILD_LUA_TESTS)
 
-add_subdirectory(tests/lua-tests/project)
-add_subdirectory(tests/lua-empty-test/project)
+endif(BUILD_LUA_LIBS)

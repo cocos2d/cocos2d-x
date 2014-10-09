@@ -165,7 +165,9 @@ std::string BundleReader::readString()
     }
 
     std::string str;
-    if (length > 0)
+    
+    ssize_t validLength = _length - _position;
+    if (length > 0 && length <= validLength)
     {
         str.resize(length);
         if (read(&str[0], 1, length) != length)
@@ -173,6 +175,7 @@ std::string BundleReader::readString()
             return std::string();
         }
     }
+    
     return str;
 }
 

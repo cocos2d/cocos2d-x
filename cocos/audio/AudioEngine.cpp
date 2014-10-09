@@ -21,7 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#include "platform/CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
@@ -29,8 +32,10 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "android/AudioEngine-inl.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-#include "ios/AudioEngine-inl.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+#include "apple/AudioEngine-inl.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include "win32/AudioEngine-win32.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
@@ -46,7 +51,7 @@ std::unordered_map<std::string,std::list<int>> AudioEngine::_audioPathIDMap;
 //profileName,ProfileHelper
 std::unordered_map<std::string, AudioEngine::ProfileHelper> AudioEngine::_audioPathProfileHelperMap;
 int AudioEngine::_maxInstances = MAX_AUDIOINSTANCES;
-AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper;
+AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper = nullptr;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
@@ -65,6 +70,8 @@ bool AudioEngine::lazyInit()
     {
         _audioEngineImpl = new (std::nothrow) AudioEngineImpl();
         if(!_audioEngineImpl ||  !_audioEngineImpl->init() ){
+            delete _audioEngineImpl;
+            _audioEngineImpl = nullptr;
            return false;
         }
     }
@@ -85,26 +92,26 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             break;
         }
 
-        ProfileHelper* manage = _defaultProfileHelper;
-        if (profile && profile != &manage->profile){
+        auto profileHelper = _defaultProfileHelper;
+        if (profile && profile != &profileHelper->profile){
             CC_ASSERT(!profile->name.empty());
-            manage = &_audioPathProfileHelperMap[profile->name];
-            manage->profile = *profile;
+            profileHelper = &_audioPathProfileHelperMap[profile->name];
+            profileHelper->profile = *profile;
         }
         
         if (_audioIDInfoMap.size() >= _maxInstances) {
             log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
             break;
         }
-        if (manage)
+        if (profileHelper)
         {
-             if(manage->profile.maxInstances != 0 && manage->audioIDs.size() >= manage->profile.maxInstances){
+             if(profileHelper->profile.maxInstances != 0 && profileHelper->audioIDs.size() >= profileHelper->profile.maxInstances){
                  log("Fail to play %s cause by limited max instance of AudioProfile",filePath.c_str());
                  break;
              }
-             if (manage->profile.minDelay > TIME_DELAY_PRECISION) {
+             if (profileHelper->profile.minDelay > TIME_DELAY_PRECISION) {
                  auto currTime = utils::gettime();
-                 if (manage->lastPlayTime > TIME_DELAY_PRECISION && currTime - manage->lastPlayTime <= manage->profile.minDelay) {
+                 if (profileHelper->lastPlayTime > TIME_DELAY_PRECISION && currTime - profileHelper->lastPlayTime <= profileHelper->profile.minDelay) {
                      log("Fail to play %s cause by limited minimum delay",filePath.c_str());
                      break;
                  }
@@ -130,11 +137,11 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             audioRef.is3dAudio = false;
             audioRef.filePath = &it->first;
 
-            if (manage) {
-                manage->lastPlayTime = utils::gettime();
-                manage->audioIDs.push_back(ret);
+            if (profileHelper) {
+                profileHelper->lastPlayTime = utils::gettime();
+                profileHelper->audioIDs.push_back(ret);
             }
-            audioRef.profileHelper = manage;
+            audioRef.profileHelper = profileHelper;
         }
     } while (0);
 
@@ -267,8 +274,11 @@ void AudioEngine::uncache(const std::string &filePath)
                 _audioIDInfoMap.erase(audioID);
             }
         }
-        _audioEngineImpl->uncache(filePath);
         _audioPathIDMap.erase(filePath);
+    }
+
+    if (_audioEngineImpl){
+        _audioEngineImpl->uncache(filePath);
     }
 }
 

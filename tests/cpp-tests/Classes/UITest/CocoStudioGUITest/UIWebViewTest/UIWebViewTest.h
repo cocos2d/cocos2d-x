@@ -37,9 +37,9 @@ public:
     UI_SCENE_CREATE_FUNC(WebViewTest);
     
     virtual bool init();
-    bool onWebViewShouldStartLoading(experimental::ui::WebView *sender, std::string url);
-    void onWebViewDidFinishLoading(experimental::ui::WebView *sender, std::string url);
-    void onWebViewDidFailLoading(experimental::ui::WebView *sender, std::string url);
+    bool onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url);
+    void onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url);
+    void onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url);
     
     
 private:

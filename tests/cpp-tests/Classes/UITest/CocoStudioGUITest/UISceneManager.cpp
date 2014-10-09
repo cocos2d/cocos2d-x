@@ -20,6 +20,8 @@
 #include "UIFocusTest/UIFocusTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "UIWebViewTest/UIWebViewTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
@@ -41,6 +43,7 @@ static const char* s_testArray[] =
     "UIButtonTestZoomScale",
     "UIButtonTextOnly",
     "UIButtonIgnoreContentSizeTest",
+    "UIButtonTitleEffectTest",
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     "UIEditBoxTest",
@@ -104,6 +107,8 @@ static const char* s_testArray[] =
     "UIFocusTest-ListView",
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest",
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     "UIWebViewTest",
 #endif
     "UIScale9SpriteTest",
@@ -112,6 +117,8 @@ static const char* s_testArray[] =
     "UIS9BatchNodeBasic",
     "UIS9FrameNameSpriteSheet",
     "UIS9FrameNameSpriteSheetRotated",
+    "UIS9FrameNameSpriteSheetCropped",
+    "UIS9FrameNameSpriteSheetCroppedRotated",
     "UIS9BatchNodeScaledNoInsets",
     "UIS9FrameNameSpriteSheetScaledNoInsets",
     "UIS9FrameNameSpriteSheetRotatedScaledNoInsets",
@@ -202,7 +209,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTextOnly::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonIgnoreContentSizeTest:
             return UIButtonIgnoreContentSizeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUIButtonTitleEffectTest:
+            return UIButtonTitleEffectTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -344,6 +352,8 @@ Scene *UISceneManager::currentUIScene()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         case KWebViewTest:
             return WebViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
@@ -359,6 +369,10 @@ Scene *UISceneManager::currentUIScene()
             return UIS9FrameNameSpriteSheet::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9FrameNameSpriteSheetRotated:
             return UIS9FrameNameSpriteSheetRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9FrameNameSpriteSheetCropped:
+            return UIS9FrameNameSpriteSheetCropped::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9FrameNameSpriteSheetCroppedRotated:
+            return UIS9FrameNameSpriteSheetCroppedRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9BatchNodeScaledNoInsets:
             return UIS9BatchNodeScaledNoInsets::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9FrameNameSpriteSheetScaledNoInsets:

@@ -1,56 +1,47 @@
-set(EXTENSIONS_SRC
-  assets-manager/AssetsManager.cpp
-  assets-manager/CCEventAssetsManager.cpp
-  assets-manager/CCEventListenerAssetsManager.cpp
-  assets-manager/Downloader.cpp
-  assets-manager/Manifest.cpp
-  GUI/CCControlExtension/CCControl.cpp
-  GUI/CCControlExtension/CCControlButton.cpp
-  GUI/CCControlExtension/CCControlColourPicker.cpp
-  GUI/CCControlExtension/CCControlHuePicker.cpp
-  GUI/CCControlExtension/CCControlPotentiometer.cpp
-  GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp
-  GUI/CCControlExtension/CCControlSlider.cpp
-  GUI/CCControlExtension/CCControlStepper.cpp
-  GUI/CCControlExtension/CCControlSwitch.cpp
-  GUI/CCControlExtension/CCControlUtils.cpp
-  GUI/CCControlExtension/CCInvocation.cpp
-  GUI/CCControlExtension/CCScale9Sprite.cpp
-  GUI/CCEditBox/CCEditBox.cpp
-  GUI/CCEditBox/CCEditBoxImplAndroid.cpp
-  GUI/CCEditBox/CCEditBoxImplNone.cpp
-  GUI/CCEditBox/CCEditBoxImplWin.cpp
-  GUI/CCScrollView/CCScrollView.cpp
-  GUI/CCScrollView/CCTableView.cpp
-  GUI/CCScrollView/CCTableViewCell.cpp
-  physics-nodes/CCPhysicsDebugNode.cpp
-  physics-nodes/CCPhysicsSprite.cpp
-)
+if(WINDOWS AND NOT BUILD_STATIC)
+  ADD_DEFINITIONS (-D_USREXDLL)
+endif()
 
-if(WIN32)
-  ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
+if(WINDOWS)
 
-  set(PLATFORM_EXTENSIONS_SRC
-    proj.win32/Win32InputBox.cpp
-  )
-elseif(APPLE)
+#  set(PLATFORM_EXTENSIONS_SRC
+#    ../extensions/proj.win32/Win32InputBox.cpp
+#  )
+  
+elseif(MACOSX)
 
 else()
-
+#  set(PLATFORM_EXTENSIONS_SRC
+#    ../../extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp)
 endif()
 
 include_directories(
-  ..
+  ../../extensions
 )
 
-add_library(extensions STATIC
-  ${EXTENSIONS_SRC}
+set(COCOS_EXTENSIONS_SRC
+
+  ../extensions/assets-manager/AssetsManager.cpp
+  ../extensions/assets-manager/AssetsManagerEx.cpp
+  ../extensions/assets-manager/CCEventAssetsManagerEx.cpp
+  ../extensions/assets-manager/CCEventListenerAssetsManagerEx.cpp
+  ../extensions/assets-manager/Downloader.cpp
+  ../extensions/assets-manager/Manifest.cpp
+  ../extensions/GUI/CCControlExtension/CCControl.cpp
+  ../extensions/GUI/CCControlExtension/CCControlButton.cpp
+  ../extensions/GUI/CCControlExtension/CCControlColourPicker.cpp
+  ../extensions/GUI/CCControlExtension/CCControlHuePicker.cpp
+  ../extensions/GUI/CCControlExtension/CCControlPotentiometer.cpp
+  ../extensions/GUI/CCControlExtension/CCControlSaturationBrightnessPicker.cpp
+  ../extensions/GUI/CCControlExtension/CCControlSlider.cpp
+  ../extensions/GUI/CCControlExtension/CCControlStepper.cpp
+  ../extensions/GUI/CCControlExtension/CCControlSwitch.cpp
+  ../extensions/GUI/CCControlExtension/CCControlUtils.cpp
+  ../extensions/GUI/CCControlExtension/CCInvocation.cpp
+  ../extensions/GUI/CCScrollView/CCScrollView.cpp
+  ../extensions/GUI/CCScrollView/CCTableView.cpp
+  ../extensions/GUI/CCScrollView/CCTableViewCell.cpp
+  ../extensions/physics-nodes/CCPhysicsDebugNode.cpp
+  ../extensions/physics-nodes/CCPhysicsSprite.cpp
   ${PLATFORM_EXTENSIONS_SRC}
 )
-
-set_target_properties(extensions
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-)
-

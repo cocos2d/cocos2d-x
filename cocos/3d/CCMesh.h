@@ -29,7 +29,6 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
-#include "3d/3dExport.h"
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
@@ -45,7 +44,7 @@ class GLProgram;
 /** 
  * Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
-class CC_3D_DLL Mesh : public Ref
+class CC_DLL Mesh : public Ref
 {
     friend class Sprite3D;
 public:

@@ -211,6 +211,9 @@
     <Filter Include="extension\GUI\CCControlExtensions">
       <UniqueIdentifier>{118d80ca-ccf2-480c-b87d-25220af23440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="audioengine">
+      <UniqueIdentifier>{e916e2b4-0a6e-4d25-8b36-66fa03719f48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1144,9 +1147,6 @@
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.cpp">
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui\proj.win32\Win32InputBox.cpp">
-      <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\win32\CCApplication-win32.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
@@ -1182,6 +1182,27 @@
     </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\Manifest.cpp">
       <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIWebView.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\AudioEngine.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioCache.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioEngine-win32.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioPlayer.cpp">
+      <Filter>audioengine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2287,9 +2308,6 @@
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCInvocation.h">
       <Filter>extension\GUI\CCControlExtensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui\proj.win32\Win32InputBox.h">
-      <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\win32\CCApplication-win32.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
@@ -2325,6 +2343,30 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\assets-manager\Manifest.h">
       <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIWebViewImpl-win32.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIWebView-inl.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIWebView.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\include\AudioEngine.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioCache.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioEngine-win32.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioPlayer.h">
+      <Filter>audioengine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

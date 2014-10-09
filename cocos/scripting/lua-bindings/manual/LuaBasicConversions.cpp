@@ -717,35 +717,74 @@ bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue, c
     
     if (ok)
     {
-        lua_pushstring(L, "a");
-        lua_gettable(L,lo);
-        outValue->a = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
-        lua_pop(L,1);
-        
-        lua_pushstring(L, "b");
-        lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
-        lua_pop(L,1);
-        
-        lua_pushstring(L, "c");
-        lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
-        lua_pop(L,1);
-        
-        lua_pushstring(L, "d");
-        lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
-        lua_pop(L,1);
-        
-        lua_pushstring(L, "tx");
-        lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
-        lua_pop(L,1);
-        
-        lua_pushstring(L, "ty");
-        lua_gettable(L,lo);
-        outValue->b = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
-        lua_pop(L,1);
+        do
+        {
+            lua_pushstring(L, "a");
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                ok = false;
+                lua_pop(L, 1);
+                break;
+            }
+            outValue->a = (float)lua_tonumber(L,-1);
+            
+            lua_pushstring(L, "b");
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                ok = false;
+                lua_pop(L, 1);
+                break;
+            }
+            outValue->b = (float)lua_tonumber(L,-1);
+            lua_pop(L,1);
+            
+            lua_pushstring(L, "c");
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                ok = false;
+                lua_pop(L, 1);
+                break;
+            }
+            outValue->c =(float)lua_tonumber(L,-1);
+            lua_pop(L,1);
+            
+            lua_pushstring(L, "d");
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                ok = false;
+                lua_pop(L, 1);
+                break;
+            }
+            outValue->d = (float)lua_tonumber(L,-1);
+            lua_pop(L,1);
+            
+            lua_pushstring(L, "tx");
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                ok = false;
+                lua_pop(L, 1);
+                break;
+            }
+            outValue->tx = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
+            lua_pop(L,1);
+            
+            lua_pushstring(L, "ty");
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                ok = false;
+                lua_pop(L, 1);
+                break;
+            }
+            outValue->ty = lua_isnil(L,-1) ? 0 : (float)lua_tonumber(L,-1);
+            lua_pop(L,1);
+        }
+        while (0);
     }
     return ok;
 }
@@ -1052,21 +1091,28 @@ bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* 
     
     if (ok)
     {
-        size_t len = lua_objlen(L, lo);
-        for (int i = 0; i < len; i++)
+        do
         {
-            lua_pushnumber(L,i + 1);
-            lua_gettable(L,lo);
-            if (tolua_isnumber(L, -1, 0, &tolua_err))
-            {
-                outValue->m[i] = tolua_tonumber(L, -1, 0);
+            size_t len = lua_objlen(L, lo);
+            if (len != 16) {
+                ok = false;
+                break;
             }
-            else
+            for (int i = 0; i < len; i++)
             {
-                outValue->m[i] = 0;
+                lua_pushnumber(L,i + 1);
+                lua_gettable(L,lo);
+                if (tolua_isnumber(L, -1, 0, &tolua_err))
+                {
+                    outValue->m[i] = tolua_tonumber(L, -1, 0);
+                }
+                else
+                {
+                    outValue->m[i] = 0;
+                }
+                lua_pop(L, 1);
             }
-            lua_pop(L, 1);
-        }
+        }while (0);
     }
     
     return ok;
@@ -1534,7 +1580,7 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const ch
                     {
                         lua_pop(L,1);
                         ValueMap dictVal;
-                        if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                        if (luaval_to_ccvaluemap(L, lua_gettop(L), &dictVal))
                         {
                             dict[stringKey] = Value(dictVal);
                         }
@@ -1543,7 +1589,7 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const ch
                     {
                         lua_pop(L,1);
                         ValueVector arrVal;
-                        if (luaval_to_ccvaluevector(L, -1, &arrVal))
+                        if (luaval_to_ccvaluevector(L, lua_gettop(L), &arrVal))
                         {
                             dict[stringKey] = Value(arrVal);
                         }
@@ -1622,7 +1668,7 @@ bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* r
                     {
                         lua_pop(L,1);
                         ValueMap dictVal;
-                        if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                        if (luaval_to_ccvaluemap(L, lua_gettop(L), &dictVal))
                         {
                             dict[intKey] = Value(dictVal);
                         }
@@ -1631,7 +1677,7 @@ bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* r
                     {
                         lua_pop(L,1);
                         ValueVector arrVal;
-                        if (luaval_to_ccvaluevector(L, -1, &arrVal))
+                        if (luaval_to_ccvaluevector(L, lua_gettop(L), &arrVal))
                         {
                             dict[intKey] = Value(arrVal);
                         }
@@ -1703,7 +1749,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                 {
                     lua_pop(L,1);
                     ValueMap dictVal;
-                    if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                    if (luaval_to_ccvaluemap(L, lua_gettop(L), &dictVal))
                     {
                         ret->push_back(Value(dictVal));
                     }
@@ -1712,7 +1758,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                 {
                     lua_pop(L,1);
                     ValueVector arrVal;
-                    if(luaval_to_ccvaluevector(L, -1, &arrVal))
+                    if(luaval_to_ccvaluevector(L, lua_gettop(L), &arrVal))
                     {
                         ret->push_back(Value(arrVal));
                     }

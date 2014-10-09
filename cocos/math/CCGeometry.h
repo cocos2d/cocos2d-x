@@ -183,6 +183,8 @@ public:
      * @lua NA
      */
     Rect unionWithRect(const Rect & rect) const;
+
+    void merge(const Rect& rect);
     
     static const Rect ZERO;
 };

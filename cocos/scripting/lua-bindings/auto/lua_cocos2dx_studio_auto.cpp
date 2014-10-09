@@ -10782,6 +10782,50 @@ int lua_cocos2dx_studio_Armature_getAnimation(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_studio_Armature_getOffsetPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::Armature* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Armature",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::Armature*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Armature_getOffsetPoints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        const cocos2d::Vec2& ret = cobj->getOffsetPoints();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Armature:getOffsetPoints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Armature_getOffsetPoints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_Armature_getBoneDic(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10953,6 +10997,7 @@ int lua_register_cocos2dx_studio_Armature(lua_State* tolua_S)
         tolua_function(tolua_S,"getArmatureData",lua_cocos2dx_studio_Armature_getArmatureData);
         tolua_function(tolua_S,"getVersion",lua_cocos2dx_studio_Armature_getVersion);
         tolua_function(tolua_S,"getAnimation",lua_cocos2dx_studio_Armature_getAnimation);
+        tolua_function(tolua_S,"getOffsetPoints",lua_cocos2dx_studio_Armature_getOffsetPoints);
         tolua_function(tolua_S,"getBoneDic",lua_cocos2dx_studio_Armature_getBoneDic);
         tolua_function(tolua_S,"create", lua_cocos2dx_studio_Armature_create);
     tolua_endmodule(tolua_S);

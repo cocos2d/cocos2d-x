@@ -26,7 +26,6 @@
 #define __CCMESHSKIN_H__
 
 #include "3d/CCBundle3DData.h"
-#include "3d/3dExport.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
@@ -41,7 +40,7 @@ class Skeleton3D;
  * MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
  * And it is responsible for computing matrix palletes that used by skin mesh rendering.
  */
-class CC_3D_DLL MeshSkin: public Ref
+class CC_DLL MeshSkin: public Ref
 {
 public:
     
