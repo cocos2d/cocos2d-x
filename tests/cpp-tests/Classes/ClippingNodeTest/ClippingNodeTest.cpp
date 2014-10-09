@@ -1092,7 +1092,7 @@ void ClippingToRenderTextureTest::reproduceBug()
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 
-    rt->beginWithClear(0.3, 0, 0, 1);
+    rt->beginWithClear(0.3f, 0, 0, 1);
     container->visit();
     rt->end();
 }

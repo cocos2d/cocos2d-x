@@ -429,7 +429,7 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
     
-    for(int i=0; i<numberOfPoints; i++,point++)
+    for(unsigned int i=0; i < numberOfPoints; i++,point++)
     {
         V2F_C4B_T2F a = {position[i], Color4B(color), Tex2F(0.0, 0.0) };
         *point = a;
@@ -480,8 +480,8 @@ void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool clos
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
  
-    int i;
-    for(i=0; i<numberOfPoints-1; i++)
+    unsigned int i = 0;
+    for(; i<numberOfPoints-1; i++)
     {
         V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
         V2F_C4B_T2F b = {poli[i+1], Color4B(color), Tex2F(0.0, 0.0)};

@@ -81,12 +81,13 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
         ssize_t size = 0;
 		unsigned char *pBytes = nullptr;
 		do {
-			std::string binaryFilePath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
-			pBytes = cocos2d::FileUtils::getInstance()->getFileData(binaryFilePath.c_str(), "rb", &size);
-			CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
-			CocoLoader tCocoLoader;
-			if (tCocoLoader.ReadCocoBinBuff((char*)pBytes))
-			{
+            std::string binaryFilePath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+            auto fileData = FileUtils::getInstance()->getDataFromFile(binaryFilePath);
+            auto fileDataBytes = fileData.getBytes();
+            CC_BREAK_IF(fileData.isNull());
+            CocoLoader tCocoLoader;
+            if (tCocoLoader.ReadCocoBinBuff((char*)fileDataBytes))
+            {
 				stExpCocoNode *tpRootCocoNode = tCocoLoader.GetRootCocoNode();
 				rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
 				if (rapidjson::kObjectType  == tType)

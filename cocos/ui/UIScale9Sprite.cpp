@@ -149,7 +149,8 @@ namespace ui {
     
     bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, const cocos2d::Rect &capInsets)
     {
-        return initWithBatchNode(batchnode, rect, false, capInsets);
+        auto sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return init(sprite, rect, false, capInsets);
     }
     
 #define    TRANSLATE_X(x, y, xtranslate) \
