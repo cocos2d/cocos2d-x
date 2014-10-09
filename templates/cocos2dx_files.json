@@ -50,6 +50,7 @@
         "cmake/BuildHelpers.CMakeLists.txt", 
         "cmake/Modules/CMakeParseArguments.cmake", 
         "cmake/Modules/FindChipmunk.cmake", 
+        "cmake/Modules/FindGLFW3.cmake", 
         "cmake/Modules/FindPackageHandleStandardArgs.cmake", 
         "cmake/Modules/FindPackageMessage.cmake", 
         "cmake/Modules/FindWebP.cmake", 
