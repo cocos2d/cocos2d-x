@@ -1,27 +1,27 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2010-2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #ifndef __CC_FILEUTILS_H__
 #define __CC_FILEUTILS_H__
 
@@ -49,18 +49,18 @@ public:
      *  Gets the instance of FileUtils.
      */
     static FileUtils* getInstance();
-
+    
     /**
      *  Destroys the instance of FileUtils.
      */
     static void destroyInstance();
-
+    
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
-
+    
     /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils() { destroyInstance(); }
-
+    
     /**
      *  The destructor of FileUtils.
      * @js NA
@@ -99,7 +99,7 @@ public:
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
     CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
-
+    
     /**
      *  Gets resource file data from a zip file.
      *
@@ -109,7 +109,7 @@ public:
      *  @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
      */
     virtual unsigned char* getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size);
-
+    
     
     /** Returns the fullpath for a given filename.
      
@@ -119,50 +119,50 @@ public:
      The file search is based on the array element order of search paths and resolution directories.
      
      For instance:
-
-     	We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
-     	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
-
-		If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
-     	Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
-
-     	    /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
-
-        If the filename contains relative path like "gamescene/uilayer/sprite.png",
-        and the mapping in fileLookup dictionary contains `key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
-        The file search order will be:
-
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
-
+     
+     We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
+     and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
+     to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
+     
+     If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
+     Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
+     
+     /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
+     /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
+     /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
+     /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
+     internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
+     internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
+     internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
+     internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
+     
+     If the filename contains relative path like "gamescene/uilayer/sprite.png",
+     and the mapping in fileLookup dictionary contains `key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
+     The file search order will be:
+     
+     /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
+     /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
+     /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
+     /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
+     internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
+     internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
+     internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
+     internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
+     
      If the new file can't be found on the file system, it will return the parameter filename directly.
      
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load different resources for a given file in the different platforms.
-
+     
      @since v2.1
      */
     virtual std::string fullPathForFilename(const std::string &filename);
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
-     * 
+     *
      * @note The plist file name should follow the format below:
-     * 
+     *
      * @code
      * <?xml version="1.0" encoding="UTF-8"?>
      * <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -193,7 +193,7 @@ public:
      */
     virtual void loadFilenameLookupDictionaryFromFile(const std::string &filename);
     
-    /** 
+    /**
      *  Sets the filenameLookup dictionary.
      *
      *  @param pFilenameLookupDict The dictionary for replacing filename.
@@ -211,8 +211,8 @@ public:
      *
      */
     virtual std::string fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile);
-
-    /** 
+    
+    /**
      *  Sets the array that contains the search order of the resources.
      *
      *  @param searchResolutionsOrder The source array that contains the search order of the resources.
@@ -222,14 +222,14 @@ public:
      *  @lua NA
      */
     virtual void setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder);
-
+    
     /**
-      * Append search order of the resources.
-      *
-      * @see setSearchResolutionsOrder(), fullPathForFilename().
-      * @since v2.1
-      */
-    virtual void addSearchResolutionsOrder(const std::string &order,const bool front=false);
+     * Append search order of the resources.
+     *
+     * @see setSearchResolutionsOrder(), fullPathForFilename().
+     * @since v2.1
+     */
+    virtual void addSearchResolutionsOrder(const std::string &order, const bool front=false);
     
     /**
      *  Gets the array that contains the search order of the resources.
@@ -240,9 +240,9 @@ public:
      */
     virtual const std::vector<std::string>& getSearchResolutionsOrder();
     
-    /** 
+    /**
      *  Sets the array of search paths.
-     * 
+     *
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
      *
@@ -262,21 +262,21 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
-      * Add search path.
-      *
-      * @since v2.1
-      */
+     * Add search path.
+     *
+     * @since v2.1
+     */
     void addSearchPath(const std::string & path, const bool front=false);
     
     /**
      *  Gets the array of search paths.
-     *  
+     *
      *  @return The array of search paths.
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchPaths() const;
-
+    
     /**
      *  Gets the writable path.
      *  @return  The path that can be write/read a file in
@@ -386,7 +386,7 @@ public:
 
     /** Returns the full path cache */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
-
+    
 protected:
     /**
      *  The default constructor.
@@ -468,7 +468,7 @@ protected:
      */
     ValueMap _filenameLookupDict;
     
-    /** 
+    /**
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
@@ -490,7 +490,7 @@ protected:
     std::string _defaultResRootPath;
     
     /**
-     *  The full path cache. When a file is found, it will be added into this cache. 
+     *  The full path cache. When a file is found, it will be added into this cache.
      *  This variable is used for improving the performance of file search.
      */
     std::unordered_map<std::string, std::string> _fullPathCache;

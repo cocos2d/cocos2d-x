@@ -22,6 +22,11 @@ include_directories(
 set(COCOS_EXTENSIONS_SRC
 
   ../extensions/assets-manager/AssetsManager.cpp
+  ../extensions/assets-manager/AssetsManagerEx.cpp
+  ../extensions/assets-manager/CCEventAssetsManagerEx.cpp
+  ../extensions/assets-manager/CCEventListenerAssetsManagerEx.cpp
+  ../extensions/assets-manager/Downloader.cpp
+  ../extensions/assets-manager/Manifest.cpp
   ../extensions/GUI/CCControlExtension/CCControl.cpp
   ../extensions/GUI/CCControlExtension/CCControlButton.cpp
   ../extensions/GUI/CCControlExtension/CCControlColourPicker.cpp
