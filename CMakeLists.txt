@@ -122,12 +122,19 @@ else()
   message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
 endif()
 
+if(LINUX)
+set(PLATFORM_INCLUDE_DIR
+    /usr/include/
+    /usr/local/include/GLFW
+)
+endif()
 
 include_directories(
   ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/deprecated
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
@@ -206,6 +213,13 @@ if(NOT MINGW)
 
 endif()
 
+# build for 3rd party libraries
+if(LINUX)
+add_subdirectory(external/Box2D)
+add_subdirectory(external/unzip)
+add_subdirectory(external/xxhash)
+add_subdirectory(external/tinyxml2)
+endif()
 
 # libcocos2d.a
 add_subdirectory(cocos)
