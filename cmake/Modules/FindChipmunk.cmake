@@ -2,7 +2,7 @@
 # FindChipmunk
 # ------------
 #
-# Locate FindChipmunk library
+# Locate Chipmunk library
 #
 # This module defines
 #

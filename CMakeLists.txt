@@ -164,6 +164,14 @@ include_directories(
 
 )
 
+if(LINUX)
+
+  find_package(GLFW3 REQUIRED)
+  message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
+  include_directories(${GLFW3_INCLUDE_DIRS})
+
+endif(LINUX)
+
 
 if(NOT MINGW)
 
