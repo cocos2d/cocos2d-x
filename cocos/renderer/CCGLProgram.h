@@ -87,14 +87,9 @@ public:
         VERTEX_ATTRIB_TEX_COORD1,
         VERTEX_ATTRIB_TEX_COORD2,
         VERTEX_ATTRIB_TEX_COORD3,
-        VERTEX_ATTRIB_TEX_COORD4,
-        VERTEX_ATTRIB_TEX_COORD5,
-        VERTEX_ATTRIB_TEX_COORD6,
-        VERTEX_ATTRIB_TEX_COORD7,
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
-
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -169,10 +164,6 @@ public:
     static const char* ATTRIBUTE_NAME_TEX_COORD1;
     static const char* ATTRIBUTE_NAME_TEX_COORD2;
     static const char* ATTRIBUTE_NAME_TEX_COORD3;
-    static const char* ATTRIBUTE_NAME_TEX_COORD4;
-    static const char* ATTRIBUTE_NAME_TEX_COORD5;
-    static const char* ATTRIBUTE_NAME_TEX_COORD6;
-    static const char* ATTRIBUTE_NAME_TEX_COORD7;
     static const char* ATTRIBUTE_NAME_NORMAL;
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;
