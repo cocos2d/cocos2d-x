@@ -2,16 +2,6 @@
 -- @module cc
 
 --------------------------------------------------------
--- the cc AABB
--- @field [parent=#cc] AABB#AABB AABB preloaded module
-
-
---------------------------------------------------------
--- the cc OBB
--- @field [parent=#cc] OBB#OBB OBB preloaded module
-
-
---------------------------------------------------------
 -- the cc Skeleton3D
 -- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
 
