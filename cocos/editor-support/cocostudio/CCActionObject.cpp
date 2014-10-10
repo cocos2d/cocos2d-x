@@ -220,11 +220,11 @@ void ActionObject::play()
     }
     if (_loop)
     {
-        _pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
+        _pScheduler->schedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this, 0.0f , CC_REPEAT_FOREVER, 0.0f, false);
     }
     else
     {
-        _pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f, false);
+        _pScheduler->schedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this, 0.0f, false);
     }
 }
 
@@ -245,7 +245,7 @@ void ActionObject::stop()
 	{
 		e->stopAction();
 	}
-	_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
+	_pScheduler->unschedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
 
@@ -283,7 +283,7 @@ void ActionObject::simulationActionUpdate(float dt)
 		}
 		else
 		{
-			_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
+			_pScheduler->unschedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this);
 		}
 	}
 }

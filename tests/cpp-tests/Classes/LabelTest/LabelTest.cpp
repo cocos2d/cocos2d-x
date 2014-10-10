@@ -1,7 +1,6 @@
 #include "LabelTest.h"
 #include "../testResource.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
+#include "cocos2d.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -257,8 +256,7 @@ LabelAtlasTest::LabelAtlasTest()
     label2->setPosition( Vec2(10,200) );
     label2->setOpacity( 32 );
 
-    schedule(schedule_selector(LabelAtlasTest::step)); 
-    
+    schedule(CC_CALLBACK_1(LabelAtlasTest::step, this), "step_key");
 }
 
 void LabelAtlasTest::step(float dt)
@@ -313,7 +311,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
 
     _time = 0;
     
-    schedule( schedule_selector(LabelAtlasColorTest::step) ); //:@selector(step:)];
+    schedule(CC_CALLBACK_1(LabelAtlasColorTest::step, this), "step_key");
 }
 
 void LabelAtlasColorTest::actionFinishCallback()
@@ -438,7 +436,7 @@ Atlas3::Atlas3()
     label2->setPosition( VisibleRect::center() );
     label3->setPosition( VisibleRect::rightTop() );
 
-    schedule( schedule_selector(Atlas3::step) );//:@selector(step:)];
+    schedule(CC_CALLBACK_1(Atlas3::step, this), "step_key");
 }
 
 void Atlas3::step(float dt)
@@ -534,7 +532,7 @@ Atlas4::Atlas4()
     auto lastChar = (Sprite*) label2->getChildByTag(3);
     lastChar->runAction( rot_4ever->clone() );
     
-    schedule( schedule_selector(Atlas4::step), 0.1f);
+    schedule(CC_CALLBACK_1(Atlas4::step, this), 0.1f, "step_key");
 }
 
 void Atlas4::step(float dt)
@@ -799,7 +797,7 @@ LabelsEmpty::LabelsEmpty()
     addChild(label3, 0, kTagBitmapAtlas3);
     label3->setPosition(Vec2(s.width/2, 0+100));
 
-    schedule(schedule_selector(LabelsEmpty::updateStrings), 1.0f);
+    schedule(CC_CALLBACK_1(LabelsEmpty::updateStrings, this), 1.0f, "update_strings_key");
 
     setEmpty = false;
 }

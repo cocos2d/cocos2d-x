@@ -36,109 +36,109 @@ import android.view.WindowManager;
 import android.os.Build.*;
 
 public class Cocos2dxAccelerometer implements SensorEventListener {
-	// ===========================================================
-	// Constants
-	// ===========================================================
+    // ===========================================================
+    // Constants
+    // ===========================================================
 
-	private static final String TAG = Cocos2dxAccelerometer.class.getSimpleName();
+    private static final String TAG = Cocos2dxAccelerometer.class.getSimpleName();
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	private final Context mContext;
-	private final SensorManager mSensorManager;
-	private final Sensor mAccelerometer;
-	private final int mNaturalOrientation;
+    private final Context mContext;
+    private final SensorManager mSensorManager;
+    private final Sensor mAccelerometer;
+    private final int mNaturalOrientation;
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
+    // ===========================================================
+    // Constructors
+    // ===========================================================
 
-	public Cocos2dxAccelerometer(final Context pContext) {
-		this.mContext = pContext;
+    public Cocos2dxAccelerometer(final Context pContext) {
+        this.mContext = pContext;
 
-		this.mSensorManager = (SensorManager) this.mContext.getSystemService(Context.SENSOR_SERVICE);
-		this.mAccelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        this.mSensorManager = (SensorManager) this.mContext.getSystemService(Context.SENSOR_SERVICE);
+        this.mAccelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-		final Display display = ((WindowManager) this.mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		this.mNaturalOrientation = display.getOrientation();
-	}
+        final Display display = ((WindowManager) this.mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        this.mNaturalOrientation = display.getOrientation();
+    }
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	public void enable() {
-		this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-	}
+    public void enable() {
+        this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+    }
 
         public void setInterval(float interval) {
-	        // Honeycomb version is 11
-	        if(android.os.Build.VERSION.SDK_INT < 11) {
-		    this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-		} else {
-		    //convert seconds to microseconds
-		    this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*100000));
-		}
-	}
+            // Honeycomb version is 11
+            if(android.os.Build.VERSION.SDK_INT < 11) {
+            this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        } else {
+            //convert seconds to microseconds
+            this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*100000));
+        }
+    }
       
-	public void disable() {
-		this.mSensorManager.unregisterListener(this);
-	}
+    public void disable() {
+        this.mSensorManager.unregisterListener(this);
+    }
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
 
-	@Override
-	public void onSensorChanged(final SensorEvent pSensorEvent) {
-		if (pSensorEvent.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
-			return;
-		}
+    @Override
+    public void onSensorChanged(final SensorEvent pSensorEvent) {
+        if (pSensorEvent.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
+            return;
+        }
 
-		float x = pSensorEvent.values[0];
-		float y = pSensorEvent.values[1];
-		final float z = pSensorEvent.values[2];
+        float x = pSensorEvent.values[0];
+        float y = pSensorEvent.values[1];
+        final float z = pSensorEvent.values[2];
 
-		/*
-		 * Because the axes are not swapped when the device's screen orientation
-		 * changes. So we should swap it here. In tablets such as Motorola Xoom,
-		 * the default orientation is landscape, so should consider this.
-		 */
-		final int orientation = this.mContext.getResources().getConfiguration().orientation;
+        /*
+         * Because the axes are not swapped when the device's screen orientation
+         * changes. So we should swap it here. In tablets such as Motorola Xoom,
+         * the default orientation is landscape, so should consider this.
+         */
+        final int orientation = this.mContext.getResources().getConfiguration().orientation;
 
-		if ((orientation == Configuration.ORIENTATION_LANDSCAPE) && (this.mNaturalOrientation != Surface.ROTATION_0)) {
-			final float tmp = x;
-			x = -y;
-			y = tmp;
-		} else if ((orientation == Configuration.ORIENTATION_PORTRAIT) && (this.mNaturalOrientation != Surface.ROTATION_0)) {
-			final float tmp = x;
-			x = y;
-			y = -tmp;
-		}		
-		
-		Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
-		
-		/*
-		if(BuildConfig.DEBUG) {
-			Log.d(TAG, "x = " + pSensorEvent.values[0] + " y = " + pSensorEvent.values[1] + " z = " + pSensorEvent.values[2]);
-		}
-		*/
-	}
+        if ((orientation == Configuration.ORIENTATION_LANDSCAPE) && (this.mNaturalOrientation != Surface.ROTATION_0)) {
+            final float tmp = x;
+            x = -y;
+            y = tmp;
+        } else if ((orientation == Configuration.ORIENTATION_PORTRAIT) && (this.mNaturalOrientation != Surface.ROTATION_0)) {
+            final float tmp = x;
+            x = y;
+            y = -tmp;
+        }       
+        
+        Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
+        
+        /*
+        if(BuildConfig.DEBUG) {
+            Log.d(TAG, "x = " + pSensorEvent.values[0] + " y = " + pSensorEvent.values[1] + " z = " + pSensorEvent.values[2]);
+        }
+        */
+    }
 
-	@Override
-	public void onAccuracyChanged(final Sensor pSensor, final int pAccuracy) {
-	}
+    @Override
+    public void onAccuracyChanged(final Sensor pSensor, final int pAccuracy) {
+    }
 
-	// ===========================================================
-	// Methods
+    // ===========================================================
+    // Methods
         // Native method called from Cocos2dxGLSurfaceView (To be in the same thread)
-	// ===========================================================
+    // ===========================================================
     
-	public static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);
+    public static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
 }

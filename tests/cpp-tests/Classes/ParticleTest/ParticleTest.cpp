@@ -900,7 +900,7 @@ void Issue870::onEnter()
     _emitter->retain();
 
     _index = 0;
-    schedule(schedule_selector(Issue870::updateQuads), 2.0f);
+    schedule(CC_SCHEDULE_SELECTOR(Issue870::updateQuads), 2.0f);
 }
 
 void Issue870::updateQuads(float dt)
@@ -1221,7 +1221,7 @@ void ParticleBatchHybrid::onEnter()
 
     addChild(batch, 10);
 
-     schedule(schedule_selector(ParticleBatchHybrid::switchRender), 2.0f);
+     schedule(CC_SCHEDULE_SELECTOR(ParticleBatchHybrid::switchRender), 2.0f);
 
      auto node = Node::create();
      addChild(node);
@@ -1338,7 +1338,7 @@ void ParticleReorder::onEnter()
         addChild(parent, 10, 1000+i);
     }
 
-    schedule(schedule_selector(ParticleReorder::reorderParticles), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(ParticleReorder::reorderParticles), 1.0f);
 }
 
 std::string ParticleReorder::title() const
@@ -1636,7 +1636,7 @@ void AddAndDeleteParticleSystems::onEnter()
 
     }
 
-    schedule(schedule_selector(AddAndDeleteParticleSystems::removeSystem), 0.5f);
+    schedule(CC_SCHEDULE_SELECTOR(AddAndDeleteParticleSystems::removeSystem), 0.5f);
     _emitter = nullptr;
 
 }
@@ -1787,7 +1787,7 @@ void ReorderParticleSystems::onEnter()
 
     }
 
-    schedule(schedule_selector(ReorderParticleSystems::reorderSystem), 2.0f);
+    schedule(CC_SCHEDULE_SELECTOR(ReorderParticleSystems::reorderSystem), 2.0f);
     _emitter = nullptr;
 
 }
@@ -1883,7 +1883,7 @@ void PremultipliedAlphaTest::onEnter()
     this->addChild(_emitter, 10);
     _hasEmitter = true;
     
-    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(PremultipliedAlphaTest::readdPaticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2
@@ -1955,7 +1955,7 @@ void ParticleVisibleTest::onEnter()
     
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
     
-    schedule(schedule_selector(ParticleVisibleTest::callback), 1);
+    schedule(CC_SCHEDULE_SELECTOR(ParticleVisibleTest::callback), 1);
     
     setEmitterPosition();
 }

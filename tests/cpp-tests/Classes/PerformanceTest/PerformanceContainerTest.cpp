@@ -190,7 +190,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         auto sched = director->getScheduler();
         
         CC_PROFILER_PURGE_ALL();
-        sched->schedule(schedule_selector(PerformanceContainerScene::dumpProfilerInfo), this, 2, false);
+        sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceContainerScene::dumpProfilerInfo), this, 2, false);
         
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -208,7 +208,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->unschedule(schedule_selector(PerformanceContainerScene::dumpProfilerInfo), this);
+        sched->unschedule(CC_SCHEDULE_SELECTOR(PerformanceContainerScene::dumpProfilerInfo), this);
         
         this->unscheduleUpdate();
         this->_startItem->setEnabled(true);

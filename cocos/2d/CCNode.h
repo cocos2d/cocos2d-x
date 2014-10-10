@@ -1195,6 +1195,16 @@ public:
     bool isScheduled(SEL_SCHEDULE selector);
 
     /**
+     * Checks whether a lambda function is scheduled.
+     *
+     * @param key      key of the callback
+     * @return Whether the lambda function selector is scheduled.
+     * @js NA
+     * @lua NA
+     */
+    bool isScheduled(const std::string &key);
+
+    /**
      * Schedules the "update" method.
      *
      * It will use the order number 0. This method will be called every frame.
@@ -1230,12 +1240,12 @@ public:
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
      // wrap this function into a selector via schedule_selector marco.
-     this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
+     this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
      * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
+     * @param repeat    The selector will be excuted (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
      * @lua NA
      */
@@ -1262,6 +1272,16 @@ public:
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /**
+     * Schedules a lambda function that runs only once, with a delay of 0 or larger
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param delay         The amount of time that the first tick will wait before execution.
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void scheduleOnce(const std::function<void(float)>& callback, float delay, const std::string &key);
+
+    /**
      * Schedules a custom selector, the scheduled selector will be ticked every frame
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
@@ -1269,6 +1289,37 @@ public:
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every frame
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, const std::string &key);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every "interval" seconds
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param interval      Callback interval time in seconds. 0 means every frame,
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, float interval, const std::string &key);
+
+    /**
+     * Schedules a lambda function.
+     *
+     * @param callback  The lambda function to be schedule
+     * @param interval  Tick interval in seconds. 0 means tick every frame.
+     * @param repeat    The selector will be executed (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
+     * @param delay     The amount of time that the first tick will wait before execution.
+     * @param key       The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, float interval, unsigned int repeat, float delay, const std::string &key);
 
     /**
      * Unschedules a custom selector.
@@ -1280,11 +1331,21 @@ public:
     void unschedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedule all scheduled selectors: custom selectors, and the 'update' selector.
+     * Unschedules a lambda function
+     *
+     * @param key      The key of the lambda function to be unscheduled
+     * @lua NA
+     */
+    void unschedule(const std::string &key);
+
+    /**
+     * Unschedule all scheduled selectors and lambda functions: custom selectors, and the 'update' selector and lambda functions
      * Actions are not affected by this method.
      * @lua NA
      */
-    void unscheduleAllSelectors(void);
+    void unscheduleAllCallbacks();
+
+    CC_DEPRECATED_ATTRIBUTE void unscheduleAllSelectors() { unscheduleAllCallbacks(); }
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1461,6 +1522,11 @@ public:
      *   get the PhysicsBody the sprite have
      */
     PhysicsBody* getPhysicsBody() const;
+    
+    /**
+     *   remove this node from physics world. it will remove all the physics bodies in it's children too.
+     */
+    void removeFromPhysicsWorld();
 
 #endif
     

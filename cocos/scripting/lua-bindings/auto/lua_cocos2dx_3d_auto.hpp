@@ -66,4 +66,14 @@ int register_all_cocos2dx_3d(lua_State* tolua_S);
 
 
 
+
+
+
+
+
+
+
+
+
+
 #endif // __cocos2dx_3d_h__

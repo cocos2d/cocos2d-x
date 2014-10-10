@@ -75,7 +75,7 @@ THE SOFTWARE.
 #endif
 
 // win32
-#if defined(WIN32) && defined(_WINDOWS)
+#if defined(_WIN32) && defined(_WINDOWS)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_WIN32
 #endif

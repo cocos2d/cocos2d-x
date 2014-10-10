@@ -1754,16 +1754,14 @@ void Issue1305::onEnter()
     centerSprites(0);
 
     _spriteTmp = Sprite::create("Images/grossini.png");
-    /* c++ can't support block, so we use CallFuncN instead.
-    [spriteTmp_ runAction:[CallBlockN actionWithBlock:^(Node* node) {
-        NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
-    }] );
-    */
-
     _spriteTmp->runAction(CallFunc::create(std::bind(&Issue1305::log, this, _spriteTmp)));
     _spriteTmp->retain();
 
-    scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
+    scheduleOnce([&](float dt) {
+        _spriteTmp->setPosition(250,250);
+        addChild(_spriteTmp);
+    },2 ,"update_key");
+
 }
 
 void Issue1305::log(Node* sender)
@@ -1776,12 +1774,6 @@ void Issue1305::onExit()
     _spriteTmp->stopAllActions();
     _spriteTmp->release();
     ActionsDemo::onExit();
-}
-
-void Issue1305::addSprite(float dt)
-{
-    _spriteTmp->setPosition(250,250);
-    addChild(_spriteTmp);
 }
 
 std::string Issue1305::title() const
@@ -2208,8 +2200,21 @@ void PauseResumeActions::onEnter()
     _grossini->runAction(RepeatForever::create(RotateBy::create(3, -360)));
     _kathia->runAction(RepeatForever::create(RotateBy::create(3, 360)));
     
-    this->schedule(schedule_selector(PauseResumeActions::pause), 3, false, 0);
-    this->schedule(schedule_selector(PauseResumeActions::resume), 5, false, 0);
+    this->schedule([&](float dt){
+        log("Pausing");
+        auto director = Director::getInstance();
+
+        _pausedTargets = director->getActionManager()->pauseAllRunningActions();
+    }
+                   ,3 ,false ,0 ,"pause_key");
+
+    this->schedule([&](float dt) {
+        log("Resuming");
+        auto director = Director::getInstance();
+        director->getActionManager()->resumeTargets(_pausedTargets);
+        _pausedTargets.clear();
+    }
+                   ,5 ,false ,0, "resume_key");
 }
 
 std::string PauseResumeActions::title() const
@@ -2220,22 +2225,6 @@ std::string PauseResumeActions::title() const
 std::string PauseResumeActions::subtitle() const
 {
     return "All actions pause at 3s and resume at 5s";
-}
-
-void PauseResumeActions::pause(float dt)
-{
-    log("Pausing");
-    auto director = Director::getInstance();
-
-    _pausedTargets = director->getActionManager()->pauseAllRunningActions();
-}
-
-void PauseResumeActions::resume(float dt)
-{
-    log("Resuming");
-    auto director = Director::getInstance();
-    director->getActionManager()->resumeTargets(_pausedTargets);
-    _pausedTargets.clear();
 }
 
 //------------------------------------------------------------------

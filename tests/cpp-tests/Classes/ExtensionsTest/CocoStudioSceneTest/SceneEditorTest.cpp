@@ -811,7 +811,7 @@ void TriggerTest::onEnter()
 	SceneEditorTestLayer::onEnter();
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
-    this->schedule(schedule_selector(TriggerTest::gameLogic));
+    this->schedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -827,7 +827,7 @@ void TriggerTest::onEnter()
 void TriggerTest::onExit()
 {
 	sendEvent(TRIGGEREVENT_LEAVESCENE);
-    this->unschedule(schedule_selector(TriggerTest::gameLogic));
+    this->unschedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);

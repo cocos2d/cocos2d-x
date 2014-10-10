@@ -278,7 +278,7 @@ void Camera3DTestDemo::onEnter()
     auto menuItem6 = MenuItemLabel::create(label6, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::ThirdCamera));
     auto label7 = Label::createWithTTF(ttfConfig,"first person");
     auto menuItem7 = MenuItemLabel::create(label7, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::FirstCamera));
-    auto menu = Menu::create(menuItem1,menuItem2,menuItem3,menuItem4,menuItem5,menuItem6,menuItem7,NULL);
+    auto menu = Menu::create(menuItem1, menuItem2, menuItem3, menuItem4, menuItem5, menuItem6, menuItem7, nullptr);
 
     menu->setPosition(Vec2::ZERO);
     menuItem1->setPosition(s.width-50, VisibleRect::top().y-50 );
@@ -289,7 +289,7 @@ void Camera3DTestDemo::onEnter()
     menuItem6->setPosition(VisibleRect::left().x+100, VisibleRect::top().y -100);
     menuItem7->setPosition(VisibleRect::left().x+100, VisibleRect::top().y -150);
     addChild(menu, 0);
-    schedule(schedule_selector(Camera3DTestDemo::updateCamera), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(Camera3DTestDemo::updateCamera), 0.0f);
     if (_camera == nullptr)
     {
         _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);

@@ -207,14 +207,14 @@ public:
      If paused is true, then it won't be called until it is resumed.
      If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdate' instead.
      If the 'callback' is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
+     repeat let the action be repeated repeat + 1 times, use CC_REPEAT_FOREVER to let the action run continuously
      delay is the amount of time the action will wait before it'll start
      @param key The key to identify the callback
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key);
 
-    /** Calls scheduleCallback with kRepeatForever and a 0 delay
+    /** Calls scheduleCallback with CC_REPEAT_FOREVER and a 0 delay
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key);
@@ -224,14 +224,14 @@ public:
      If paused is true, then it won't be called until it is resumed.
      If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdate' instead.
      If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
+     repeat let the action be repeated repeat + 1 times, use CC_REPEAT_FOREVER to let the action run continuously
      delay is the amount of time the action will wait before it'll start
      
      @since v3.0, repeat and delay added in v1.1
      */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
     
-    /** calls scheduleSelector with kRepeatForever and a 0 delay */
+    /** calls scheduleSelector with CC_REPEAT_FOREVER and a 0 delay */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     
     /** Schedules the 'update' selector for a given target with a given priority.
@@ -372,7 +372,7 @@ public:
      If paused is true, then it won't be called until it is resumed.
      If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdateForTarget:' instead.
      If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
+     repeat let the action be repeated repeat + 1 times, use CC_REPEAT_FOREVER to let the action run continuously
      delay is the amount of time the action will wait before it'll start
      @deprecated Please use 'Scheduler::schedule' instead.
      @since v0.99.3, repeat and delay added in v1.1
@@ -382,7 +382,7 @@ public:
         schedule(selector, target, interval, repeat, delay, paused);
     };
     
-    /** calls scheduleSelector with kRepeatForever and a 0 delay 
+    /** calls scheduleSelector with CC_REPEAT_FOREVER and a 0 delay 
      *  @deprecated Please use 'Scheduler::schedule' instead.
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)

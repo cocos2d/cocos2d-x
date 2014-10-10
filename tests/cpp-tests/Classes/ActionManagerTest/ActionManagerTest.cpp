@@ -216,12 +216,12 @@ void PauseTest::onEnter()
     auto director = Director::getInstance();
     director->getActionManager()->addAction(action, grossini, true);
 
-    schedule( schedule_selector(PauseTest::unpause), 3); 
+    schedule( CC_SCHEDULE_SELECTOR(PauseTest::unpause), 3); 
 }
 
 void PauseTest::unpause(float dt)
 {
-    unschedule( schedule_selector(PauseTest::unpause) );
+    unschedule( CC_SCHEDULE_SELECTOR(PauseTest::unpause) );
     auto node = getChildByTag( kTagGrossini );
     auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(node);
@@ -346,12 +346,12 @@ void ResumeTest::onEnter()
     director->getActionManager()->pauseTarget(pGrossini);
     pGrossini->runAction(RotateBy::create(2, 360));
 
-    this->schedule(schedule_selector(ResumeTest::resumeGrossini), 3.0f);
+    this->schedule(CC_SCHEDULE_SELECTOR(ResumeTest::resumeGrossini), 3.0f);
 }
 
 void ResumeTest::resumeGrossini(float time)
 {
-    this->unschedule(schedule_selector(ResumeTest::resumeGrossini));
+    this->unschedule(CC_SCHEDULE_SELECTOR(ResumeTest::resumeGrossini));
 
     auto pGrossini = getChildByTag(kTagGrossini);
     auto director = Director::getInstance();

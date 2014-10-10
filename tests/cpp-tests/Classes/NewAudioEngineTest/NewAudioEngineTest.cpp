@@ -21,7 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#include "platform/CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
 
@@ -431,7 +434,6 @@ bool AudioControlTest::init()
     volumeSlider->setPercent(100);
     volumeSlider->setCallBack([&](SliderEx* sender,float ratio,SliderEx::TouchEvent event){
         _volume = ratio;
-        log("_volume:%f,event:%d",_volume,event);
         if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
             AudioEngine::setVolume(_audioID, _volume);
         }
@@ -472,7 +474,7 @@ bool AudioControlTest::init()
     timeLabel->setPosition(timeSliderPos.x - sliderSize.width / 2, timeSliderPos.y);
     addChild(timeLabel);
     
-    this->schedule(schedule_selector(AudioControlTest::update), 0.1f);
+    this->schedule(CC_CALLBACK_1(AudioControlTest::update, this), 0.1f, "update_key");
     
     return ret;
 }
@@ -566,8 +568,6 @@ bool AudioProfileTest::init()
 #else
     _files[1] = "background.ogg";
 #endif
-    _files[2] = "background.wav";
-    _files[3] = "pew-pew-lei.wav";
     
     std::string fontFilePath = "fonts/arial.ttf";
     _minDelay = 1.0f;
@@ -578,7 +578,6 @@ bool AudioProfileTest::init()
     _audioProfile.minDelay = 1.0;
     
     Vec2 pos(0.5f,0.7f);
-    
     for(int index = 0; index < FILE_COUNT; ++index){
         sprintf(text,"play %s",_files[index].c_str());
         
@@ -604,7 +603,7 @@ bool AudioProfileTest::init()
         playItem->setTag(index);
         playItem->setNormalizedPosition(pos);
         this->addChild(playItem);
-        pos.y -= 0.1f;
+        pos.y -= 0.15f;
         
     }
     
@@ -628,7 +627,7 @@ bool AudioProfileTest::init()
     addChild(timeSlider);
     _timeSlider = timeSlider;
     
-    this->schedule(schedule_selector(AudioControlTest::update), 0.05f);
+    this->schedule(CC_CALLBACK_1(AudioProfileTest::update, this), 0.05f, "update_key");
     
     return ret;
 }
@@ -662,10 +661,10 @@ bool InvalidAudioFileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     auto playItem = TextButton::create("play unsupported media type", [&](TextButton* button){
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         AudioEngine::play2d("background.ogg");
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        AudioEngine::play2d("background.caf");
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+        AudioEngine::play2d("background.caf"); 
 #endif
     });
     playItem->setNormalizedPosition(Vec2(0.5f, 0.6f));

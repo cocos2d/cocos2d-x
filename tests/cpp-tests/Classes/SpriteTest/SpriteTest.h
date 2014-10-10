@@ -767,7 +767,6 @@ public:
     Sprite3DRotationTest();
     virtual std::string title() const override { return "3D Rotation Test"; };
     virtual std::string subtitle() const override { return "Rotation should based on the anchor point"; };
-    virtual void update(float delta) override;
     
 protected:
     Sprite* sprite1;
