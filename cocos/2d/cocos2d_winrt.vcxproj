@@ -455,6 +455,7 @@
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
+    <ClCompile Include="CCClippingRegionNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
     <ClCompile Include="CCComponentContainer.cpp" />
     <ClCompile Include="CCDrawingPrimitives.cpp" />
@@ -672,6 +673,7 @@
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
     <ClInclude Include="CCClippingNode.h" />
+    <ClInclude Include="CCClippingRegionNode.h" />
     <ClInclude Include="CCComponent.h" />
     <ClInclude Include="CCComponentContainer.h" />
     <ClInclude Include="CCDrawingPrimitives.h" />

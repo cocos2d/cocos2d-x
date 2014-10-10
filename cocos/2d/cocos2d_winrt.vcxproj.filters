@@ -155,6 +155,9 @@
     <ClCompile Include="CCClippingNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="CCClippingRegionNode.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
     <ClCompile Include="CCComponent.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -721,6 +724,9 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCClippingNode.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCClippingRegionNode.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCComponent.h">
