@@ -1,6 +1,7 @@
 
 
 #include "UIScrollViewTest_Editor.h"
+#include "VisibleRect.h"
 
 
 // UIScrollViewTest_Vertical_Editor
@@ -19,21 +20,66 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
-        
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/windows_ui_scrollview_editor_1.json"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/windows_ui_scrollview_editor_1.csb"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -75,10 +121,21 @@ bool UIScrollViewTest_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-       
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
@@ -102,21 +159,66 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
-        
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/windows_ui_scrollview_horizontal_editor_1.json"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/windows_ui_scrollview_horizontal_editor_1.csb"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -159,9 +261,21 @@ bool UIScrollViewTest_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
@@ -185,21 +299,66 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
-        
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/windows_ui_scrollview_both_editor_1.json"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/windows_ui_scrollview_both_editor_1.csb"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -240,9 +399,21 @@ bool UIScrollViewTest_Both_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
