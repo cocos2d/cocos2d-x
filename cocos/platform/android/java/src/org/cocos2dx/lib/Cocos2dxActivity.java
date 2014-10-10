@@ -226,7 +226,50 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         
         class cocos2dEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
         {
-            public int[] attribs;
+        	protected int[] configAttribs;
+        	public cocos2dEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
+        	{
+        		configAttribs = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
+        	}
+        	public cocos2dEGLConfigChooser(int[] attribs)
+        	{
+        		configAttribs = attribs;
+        	}
+        	
+            public EGLConfig selectConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs, int[] attribs)
+            {
+                for (EGLConfig config : configs) {
+                    int d = findConfigAttrib(egl, display, config,
+                            EGL10.EGL_DEPTH_SIZE, 0);
+                    int s = findConfigAttrib(egl, display, config,
+                            EGL10.EGL_STENCIL_SIZE, 0);
+                    if ((d >= attribs[4]) && (s >= attribs[5])) {
+                        int r = findConfigAttrib(egl, display, config,
+                                EGL10.EGL_RED_SIZE, 0);
+                        int g = findConfigAttrib(egl, display, config,
+                                 EGL10.EGL_GREEN_SIZE, 0);
+                        int b = findConfigAttrib(egl, display, config,
+                                  EGL10.EGL_BLUE_SIZE, 0);
+                        int a = findConfigAttrib(egl, display, config,
+                                EGL10.EGL_ALPHA_SIZE, 0);
+                        if ((r >= attribs[0]) && (g >= attribs[1])
+                                && (b >= attribs[2]) && (a >= attribs[3])) {
+                            return config;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            private int findConfigAttrib(EGL10 egl, EGLDisplay display,
+                    EGLConfig config, int attribute, int defaultValue) {
+            	int[] value = new int[1];
+                if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
+                    return value[0];
+                }
+                return defaultValue;
+            }
+            
             @Override
             public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) 
             {
@@ -235,12 +278,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 {
                     EGLConfig[] configs = new EGLConfig[numConfigs[0]];
                     int[] EGLattribs = {
-                            EGL10.EGL_RED_SIZE, attribs[0], 
-                            EGL10.EGL_GREEN_SIZE, attribs[1],
-                            EGL10.EGL_BLUE_SIZE, attribs[2],
-                            EGL10.EGL_ALPHA_SIZE, attribs[3],
-                            EGL10.EGL_DEPTH_SIZE, attribs[4],
-                            EGL10.EGL_STENCIL_SIZE,attribs[5],
+                            EGL10.EGL_RED_SIZE, configAttribs[0], 
+                            EGL10.EGL_GREEN_SIZE, configAttribs[1],
+                            EGL10.EGL_BLUE_SIZE, configAttribs[2],
+                            EGL10.EGL_ALPHA_SIZE, configAttribs[3],
+                            EGL10.EGL_DEPTH_SIZE, configAttribs[4],
+                            EGL10.EGL_STENCIL_SIZE,configAttribs[5],
+                            EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
                             EGL10.EGL_NONE
                                         };
                     int[] choosedConfigNum = new int[1];
@@ -248,7 +292,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                     egl.eglChooseConfig(display, EGLattribs, configs, numConfigs[0], choosedConfigNum);
                     if(choosedConfigNum[0]>0)
                     {
-                        return configs[0];
+                        return selectConfig(egl, display, configs, configAttribs);
                     }
                     else
                     {
@@ -259,6 +303,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                                 EGL10.EGL_ALPHA_SIZE, 0,
                                 EGL10.EGL_DEPTH_SIZE, 0,
                                 EGL10.EGL_STENCIL_SIZE,0,
+                                EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
                                 EGL10.EGL_NONE
                                             };
                         int[] defaultEGLattribsAlpha = {
@@ -268,17 +313,24 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                                 EGL10.EGL_ALPHA_SIZE, 4,
                                 EGL10.EGL_DEPTH_SIZE, 0,
                                 EGL10.EGL_STENCIL_SIZE,0,
+                                EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
                                 EGL10.EGL_NONE
                                             };
+                        int[] attribs = null;
                         //choose one can use
-                        if(this.attribs[3] == 0)
+                        if(this.configAttribs[3] == 0)
+                        {
                             egl.eglChooseConfig(display, defaultEGLattribs, configs, numConfigs[0], choosedConfigNum);
+                            attribs = new int[]{5,6,5,0,0,0};
+                        }
                         else
+                        {
                             egl.eglChooseConfig(display, defaultEGLattribsAlpha, configs, numConfigs[0], choosedConfigNum);
+                            attribs = new int[]{4,4,4,4,0,0};
+                        }
                         if(choosedConfigNum[0] > 0)
                         {
-                            Log.w(DEVICE_POLICY_SERVICE, "The EGLConfig can not be used for rendering, use a default one");
-                            return configs[0];
+                            return selectConfig(egl, display, configs, attribs);
                         }
                         else
                         {
@@ -290,9 +342,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
                 return null;
             }
+
         }
-        cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser();
-        chooser.attribs = this.glContextAttrs;
+        cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser(this.glContextAttrs);
         glSurfaceView.setEGLConfigChooser(chooser);
 
         return glSurfaceView;
