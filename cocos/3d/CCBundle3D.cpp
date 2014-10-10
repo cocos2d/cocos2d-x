@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "CCBundleReader.h"
 #include "base/CCData.h"
-#include "json/document.h"
+#include <rapidjson/document.h>
 
 #define BUNDLE_TYPE_SCENE               1
 #define BUNDLE_TYPE_NODE                2
