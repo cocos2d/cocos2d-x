@@ -617,6 +617,8 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             }
             
             pageView->addPage(outerBox);
+            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+
         });
         _uiLayer->addChild(button);
         
@@ -636,6 +638,8 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             {
                 CCLOG("There is no page to remove!");
             }
+            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+
         });
         _uiLayer->addChild(button2);
         
@@ -648,6 +652,8 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button3->addClickEventListener([=](Ref* sender)
         {
             pageView->removeAllPages();
+            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+
         });
         _uiLayer->addChild(button3);
 
