@@ -664,18 +664,6 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
     return false;
 }
 
-void UIPageViewDynamicAddAndRemoveTest::onButtonClicked(Ref* pSender, Widget::TouchEventType type)
-{
-    
-    if (type == Widget::TouchEventType::BEGAN)
-    {
-        
-    }
-    if (type == Widget::TouchEventType::ENDED) {
-        CCLOG("button clicked");
-    }
-}
-
 
 void UIPageViewDynamicAddAndRemoveTest::pageViewEvent(Ref *pSender, PageView::EventType type)
 {
