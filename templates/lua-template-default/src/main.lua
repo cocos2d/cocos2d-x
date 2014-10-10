@@ -41,16 +41,14 @@ local function main()
     --set FPS. the default value is 1.0/60 if you don't call this
     director:setAnimationInterval(1.0 / 60)
 
-	cc.FileUtils:getInstance():addSearchPath("src")
-	cc.FileUtils:getInstance():addSearchPath("res")
-	local schedulerID = 0
+    local schedulerID = 0
     --support debug
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
        (cc.PLATFORM_OS_MAC == targetPlatform) then
         cclog("result is ")
-		--require('debugger')()
+        --require('debugger')()
 
     end
     require "hello2"
@@ -236,11 +234,11 @@ local function main()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
 
-	if cc.Director:getInstance():getRunningScene() then
-		cc.Director:getInstance():replaceScene(sceneGame)
-	else
-		cc.Director:getInstance():runWithScene(sceneGame)
-	end
+    if cc.Director:getInstance():getRunningScene() then
+        cc.Director:getInstance():replaceScene(sceneGame)
+    else
+        cc.Director:getInstance():runWithScene(sceneGame)
+    end
 
 end
 
