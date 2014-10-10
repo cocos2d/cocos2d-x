@@ -194,7 +194,7 @@ private:
     Vec2 getPositionForIsoAt(const Vec2& pos);
     Vec2 getPositionForOrthoAt(const Vec2& pos);
     Vec2 getPositionForHexAt(const Vec2& pos);
-
+    Vec2 getPositionForStaggeredAt(const Vec2& pos);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
     /* optimization methods */
