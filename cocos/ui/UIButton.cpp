@@ -665,6 +665,10 @@ void Button::setTitleFontSize(float size)
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
     }
+    if (_ignoreSize) {
+        Size s = getVirtualRendererSize();
+        this->setContentSize(s);
+    }
     _fontSize = size;
 }
 
