@@ -151,16 +151,20 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             else
             {
                 StringUtils::trimUTF16Vector(last_word);
+                if (isStartOfLine)
+                    last_word.push_back(character);
 
                 last_word.push_back('\n');
-                
+
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
+                if (!isStartOfLine)
+                    --j;
+
                 isStartOfWord = false;
                 isStartOfLine = false;
                 startOfWord = -1;
                 startOfLine = -1;
-                --j;
             }
         }
         else

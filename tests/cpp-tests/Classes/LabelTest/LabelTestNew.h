@@ -509,6 +509,17 @@ private:
     Label* label;
 };
 
+class LabelIssue8492Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue8492Test);
+
+    LabelIssue8492Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // we don't support linebreak mode
 
 #endif
