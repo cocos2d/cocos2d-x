@@ -1,5 +1,9 @@
-require "Cocos2d"
-require "Cocos2dConstants"
+
+cc.FileUtils:getInstance():addSearchPath("src")
+cc.FileUtils:getInstance():addSearchPath("res")
+
+-- CC_USE_DEPRECATED_API = true
+require "cocos.init"
 
 -- cclog
 cclog = function(...)
@@ -42,12 +46,12 @@ local function main()
 	local schedulerID = 0
     --support debug
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or 
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
        (cc.PLATFORM_OS_MAC == targetPlatform) then
         cclog("result is ")
 		--require('debugger')()
-        
+
     end
     require "hello2"
     cclog("result is " .. myadd(1, 1))
@@ -168,7 +172,7 @@ local function main()
         listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
         local eventDispatcher = layerFarm:getEventDispatcher()
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layerFarm)
-        
+
         local function onNodeEvent(event)
            if "exit" == event then
                cc.Director:getInstance():getScheduler():unscheduleScriptEntry(schedulerID)
@@ -207,7 +211,7 @@ local function main()
         menuPopup:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
         menuPopup:setVisible(false)
         layerMenu:addChild(menuPopup)
-        
+
         -- add the left-bottom "tools" menu to invoke menuPopup
         local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
         menuToolsItem:setPosition(0, 0)
@@ -222,7 +226,7 @@ local function main()
     end
 
     -- play background music, preload effect
-    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3") 
+    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3")
     cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
     local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
@@ -231,7 +235,7 @@ local function main()
     local sceneGame = cc.Scene:create()
     sceneGame:addChild(createLayerFarm())
     sceneGame:addChild(createLayerMenu())
-	
+
 	if cc.Director:getInstance():getRunningScene() then
 		cc.Director:getInstance():replaceScene(sceneGame)
 	else
