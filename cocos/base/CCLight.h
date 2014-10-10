@@ -120,12 +120,12 @@ public:
     /**
      * Returns the Direction in parent.
      */
-    const Vec3& getDirection() const;
+    Vec3 getDirection() const;
     
     /**
      * Returns direction in world.
      */
-    const Vec3& getDirectionInWorld() const;
+    Vec3 getDirectionInWorld() const;
     
 CC_CONSTRUCTOR_ACCESS:
     DirectionLight();
@@ -190,12 +190,12 @@ public:
     /**
      * Returns the Direction in parent.
      */
-    const Vec3& getDirection() const;
+    Vec3 getDirection() const;
     
     /**
      * Returns direction in world.
      */
-    const Vec3& getDirectionInWorld() const;
+    Vec3 getDirectionInWorld() const;
     
     /**
      * Sets the range of point or spot light.
@@ -238,7 +238,7 @@ public:
     float getOuterAngle() const { return _outerAngle; }
     
     /** get cos outAngle */
-    float getCosOuterAngle() const { return _cosInnerAngle; }
+    float getCosOuterAngle() const { return _cosOuterAngle; }
     
 CC_CONSTRUCTOR_ACCESS:
     SpotLight();
