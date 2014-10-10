@@ -292,6 +292,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- param enable Unify Size of a widget<br>
+-- return void
+-- @function [parent=#Widget] setUnifySizeEnabled 
+-- @param self
+-- @param #bool enable
+        
+--------------------------------
 -- Return whether the widget is propagate touch events to its parents or not<br>
 -- since v3.3
 -- @function [parent=#Widget] isPropagateTouchEvents 
