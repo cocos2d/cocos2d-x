@@ -21,6 +21,9 @@
     <ClInclude Include="..\Classes\lua_module_register.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\lua_test_bindings.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -30,6 +33,9 @@
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\lua_assetsmanager_test_sample.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\lua_test_bindings.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>

@@ -374,11 +374,19 @@ void Button::onPressStateChangedToNormal()
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
-        _titleRenderer->stopAllActions();
-        _titleRenderer->setScaleX(_normalTextureScaleXInSize);
-        _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+        if (_scale9Enabled)
+        {
+            _buttonNormalRenderer->setColor(Color3B::WHITE);
+        }
+        else
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            
+            _titleRenderer->stopAllActions();
+            _titleRenderer->setScaleX(_normalTextureScaleXInSize);
+            _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+        }
     }
 }
 
@@ -630,6 +638,11 @@ void Button::setPressedActionEnabled(bool enabled)
 void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
+    if (_ignoreSize)
+    {
+        Size s = getVirtualRendererSize();
+        this->setContentSize(s);
+    }
 }
 
 const std::string& Button::getTitleText() const

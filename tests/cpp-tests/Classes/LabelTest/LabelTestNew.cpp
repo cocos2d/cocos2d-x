@@ -80,7 +80,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelIssue4428Test),
     CL(LabelIssue4999Test),
     CL(LabelLineHeightTest),
-    CL(LabelAdditionalKerningTest)
+    CL(LabelAdditionalKerningTest),
+    CL(LabelIssue8492Test)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1813,4 +1814,22 @@ std::string LabelAdditionalKerningTest::title() const
 std::string LabelAdditionalKerningTest::subtitle() const
 {
     return "Testing additional kerning of label";
+}
+
+LabelIssue8492Test::LabelIssue8492Test()
+{
+    auto label = Label::createWithBMFont("fonts/bitmapFontChinese.fnt", "中国中国中国中国中国");
+    label->setDimensions(5,100);
+    label->setPosition(VisibleRect::center());
+    addChild(label);
+}
+
+std::string LabelIssue8492Test::title() const
+{
+    return "Reorder issue #8492";
+}
+
+std::string LabelIssue8492Test::subtitle() const
+{
+    return "Work fine when dimensions are not enough to fit one character";
 }

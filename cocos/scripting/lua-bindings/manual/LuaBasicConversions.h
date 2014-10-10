@@ -235,6 +235,7 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
 extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttrib* ret, const char* funcName = "");
 extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
 extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
+extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outValue, const char* funcName = "");
 
 // from native
 extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
@@ -386,5 +387,6 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
+void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
 
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

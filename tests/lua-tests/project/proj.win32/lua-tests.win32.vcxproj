@@ -182,12 +182,14 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\lua_assetsmanager_test_sample.h" />
+    <ClInclude Include="..\Classes\lua_test_bindings.h" />
     <ClInclude Include="..\Classes\lua_module_register.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\lua_assetsmanager_test_sample.cpp" />
+    <ClCompile Include="..\Classes\lua_test_bindings.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
