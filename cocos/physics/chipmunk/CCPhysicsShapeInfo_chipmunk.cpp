@@ -26,7 +26,6 @@
 #if CC_USE_PHYSICS
 #include <algorithm>
 #include <unordered_map>
-#include "chipmunk.h"
 
 NS_CC_BEGIN
 
