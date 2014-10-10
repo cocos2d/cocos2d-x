@@ -55,6 +55,7 @@ static const char* s_testArray[] =
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
     "UIImageViewTest_ContentSize",
+    
     "UILoadingBarTest_Left",
     "UILoadingBarTest_Right",
     "UILoadingBarTest_Left_Scale9",
@@ -63,17 +64,17 @@ static const char* s_testArray[] =
     "UITextAtlasTest",
     "UITextTest",
     "UITextTest_LineWrap",
-    
     "UILabelTest_Effect",
-    
     "UITextTest_TTF",
     "UITextBMFontTest",
+    
     "UITextFieldTest",
     "UITextFieldTest_MaxLength",
     "UITextFieldTest_Password",
     "UITextFieldTest_LineWrap",
     "UITextFieldTest_TrueTypeFont",
     "UITextFieldTest_PlaceHolderColor",
+    
     "UILayoutTest",
     "UILayoutTest_Color",
     "UILayoutTest_Gradient",
@@ -90,15 +91,20 @@ static const char* s_testArray[] =
     "UIScrollViewTest_ScrollToPercentBothDirection",
     "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",
     "UIScrollViewNestTest",
+    
     "UIPageViewTest",
     "UIPageViewButtonTest",
     "UIPageViewCustomScrollThreshold",
     "UIPageViewTouchPropagationTest",
+    "UIPageViewDynamicAddAndRemoveTest",
+    
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
    
     "UIWidgetAddNodeTest",
+    
     "UIRichTextTest",
+    
     "UIFocusTest-HBox",
     "UIFocusTest-VBox",
     "UIFocusTest-NestedLayout1",
@@ -325,7 +331,8 @@ Scene *UISceneManager::currentUIScene()
             return UIPageViewCustomScrollThreshold::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewTouchPropagationTest:
             return UIPageViewTouchPropagationTest::sceneWithTitle(s_testArray[_currentUISceneId]);
-        
+        case kUIPageViewDynamicAddAndRemoveTest:
+            return UIPageViewDynamicAddAndRemoveTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
