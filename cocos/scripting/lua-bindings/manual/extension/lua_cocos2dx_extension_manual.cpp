@@ -957,9 +957,5 @@ int register_extension_module(lua_State* tolua_S)
         register_all_cocos2dx_extension_manual(tolua_S);
     }
     lua_pop(tolua_S, 1);
-    
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedExtensionClass");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedExtensionEnum");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedExtensionFunc");
     return 1;
 }
