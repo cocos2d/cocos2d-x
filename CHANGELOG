@@ -16,7 +16,7 @@ cocos2d-x-3.3-beta1
     [FIX]           Cocos Studio reader: UI animation playing crash if GUI JSON file is loaded again
     [FIX]           Cocos Studio reader: improvement ImageViewReader don't necessary loadTexture when imageFilePath is empty
     [FIX]           EditBox: view rendereed in wrong position if click EditBox on iOS 8
-    [FIX]           FileUtils: can not create files, remove directory on iOS devices
+    [FIX]           FileUtils: can not remove files/directory on iOS devices
     [FIX]           GLProgram: crashed on some Android devices that do not support more than 8 attributes
     [FIX]           Label: getStringNumLines() may returns wrong result if label is dirty
     [FIX]           Label: can not change opacity if using FNT font
@@ -30,6 +30,7 @@ cocos2d-x-3.3-beta1
     [FIX]           TextFieldTTF: will get wrong characters if using Chinese input method on WP8
     [FIX]           UI: Button: button remains gray when releasing it, this issue only happened if enable scale9 and only has one texture 
     [FIX]           UI: Button: when creating a button with a title only, button content size is not immediately updated
+    [FIX]           UI: EditBox: setMaxLength is invalid on mac
 
 cocos2d-x-3.3-beta0  Sep.20 2014
     [NEW]           3d: added `BillBoard`
