@@ -58,6 +58,8 @@
 		1503FAC418DA8B6C00F6518C /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB118DA8B6C00F6518C /* tp.lua */; };
 		1503FAC518DA8B6C00F6518C /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
 		1503FAC618DA8B6C00F6518C /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1503FAB218DA8B6C00F6518C /* url.lua */; };
+		150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
+		150F918919DA409F00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		15427B79198B879900DC375D /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
 		15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		15427B7D198B880100DC375D /* lua_cocos2dx_controller_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15427B7B198B880100DC375D /* lua_cocos2dx_controller_manual.cpp */; };
@@ -1158,6 +1160,8 @@
 		1503FAB018DA8B6C00F6518C /* socket.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = socket.lua; path = ../external/lua/luasocket/socket.lua; sourceTree = "<group>"; };
 		1503FAB118DA8B6C00F6518C /* tp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tp.lua; path = ../external/lua/luasocket/tp.lua; sourceTree = "<group>"; };
 		1503FAB218DA8B6C00F6518C /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = ../external/lua/luasocket/url.lua; sourceTree = "<group>"; };
+		150F918619DA409E00B89F57 /* lua_test_bindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_test_bindings.cpp; sourceTree = "<group>"; };
+		150F918719DA409E00B89F57 /* lua_test_bindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_test_bindings.h; sourceTree = "<group>"; };
 		15427B76198B750300DC375D /* lua_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_module_register.h; sourceTree = "<group>"; };
 		15427B77198B843300DC375D /* lua_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_module_register.h; sourceTree = "<group>"; };
 		15427B7B198B880100DC375D /* lua_cocos2dx_controller_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_cocos2dx_controller_manual.cpp; path = "../../../../cocos/scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.cpp"; sourceTree = "<group>"; };
@@ -6609,6 +6613,8 @@
 		1AC35D7C18CEE5B100F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				150F918619DA409E00B89F57 /* lua_test_bindings.cpp */,
+				150F918719DA409E00B89F57 /* lua_test_bindings.h */,
 				15427B76198B750300DC375D /* lua_module_register.h */,
 				1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */,
 				1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */,
@@ -7992,6 +7998,7 @@
 			files = (
 				1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
+				150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */,
 				1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */,
 				1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
 			);
@@ -8001,6 +8008,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				150F918919DA409F00B89F57 /* lua_test_bindings.cpp in Sources */,
 				1AC35DA518CEE5D100F37B72 /* main.m in Sources */,
 				1AC35DA418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */,

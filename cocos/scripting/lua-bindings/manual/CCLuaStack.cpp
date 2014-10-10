@@ -186,6 +186,7 @@ bool LuaStack::init(void)
     tolua_opengl_open(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_module_manual(_state);
+    register_all_cocos2dx_math_manual(_state);
     register_all_cocos2dx_experimental(_state);
     register_all_cocos2dx_experimental_manual(_state);
 
