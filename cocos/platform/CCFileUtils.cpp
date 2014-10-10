@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "tinyxml2.h"
 #include "unzip.h"
 #include <sys/stat.h>
+#include <ftw.h>
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
@@ -1103,6 +1104,16 @@ bool FileUtils::createDirectory(const std::string& path)
 #endif
 }
 
+int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+{
+    auto ret = remove(fpath);
+    if (ret) {
+        log("Fail to remove:%s ",fpath);
+    }
+    
+    return ret;
+}
+
 bool FileUtils::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
@@ -1156,13 +1167,10 @@ bool FileUtils::removeDirectory(const std::string& path)
 	else
 		return false;
 #else
-    std::string command = "rm -r ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
+    if (nftw(path.c_str(),unlink_cb, 64, FTW_DEPTH | FTW_PHYS))
         return false;
+    else
+        return true;
 #endif
 }
 
@@ -1195,13 +1203,11 @@ bool FileUtils::removeFile(const std::string &path)
 	else
 		return false;
 #else
-    std::string command = "rm -f ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
+    if (remove(path.c_str())) {
         return false;
+    } else {
+        return true;
+    }
 #endif
 }
 
