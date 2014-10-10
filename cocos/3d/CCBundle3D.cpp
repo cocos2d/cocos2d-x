@@ -1775,7 +1775,6 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
 
             if (modelnodedata->subMeshId == "" || modelnodedata->matrialId == "")
             {
-                std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
                 CCLOG("warning: Node %s part is missing meshPartId or materialId", nodedata->id.c_str());
                 return nullptr;
             }
