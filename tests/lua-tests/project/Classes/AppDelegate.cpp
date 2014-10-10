@@ -4,6 +4,7 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "lua_assetsmanager_test_sample.h"
 #include "lua_module_register.h"
+#include "lua_test_bindings.h"
 
 using namespace CocosDenshion;
 
@@ -43,6 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (lua_istable(L,-1))//stack:...,_G,
     {
         register_assetsmanager_test_sample(L);
+        register_test_binding(L);
     }
     lua_pop(L, 1);
     #endif
