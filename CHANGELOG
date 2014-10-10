@@ -17,6 +17,8 @@ cocos2d-x-3.3-beta1
     [FIX]           Cocos Studio reader: improvement ImageViewReader don't necessary loadTexture when imageFilePath is empty
     [FIX]           EditBox: view rendereed in wrong position if click EditBox on iOS 8
     [FIX]           Label: getStringNumLines() may returns wrong result if label is dirty
+    [FIX]           Label: can not change opacity if using FNT font
+    [FIX]           Label: endless loop if not using system font, and constrained length is less than one character width
     [FIX]           Lua-bindings: may crash if passing two-dimensional table from lua to c++
     [FIX]           New audio: can not play audio after playing some times on Android
     [FIX]           Node: macro scheduler_selector() superseded by CC_SCHEDULER_SELECTOR(). The same is true for the other schedule_ macros
