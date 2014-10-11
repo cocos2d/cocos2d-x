@@ -162,7 +162,7 @@ def copy_resources(target, app_android_root):
             copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
             copy_files(os.path.join(common_script_dir, "cocosbuilder"), assets_dir)
             copy_files(os.path.join(common_script_dir, "cocosdenshion"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "cocostudio"), assets_dir)
+            copy_files(os.path.join(common_script_dir, "cocosstudio"), assets_dir)
             copy_files(os.path.join(common_script_dir, "extension"), assets_dir)
             copy_files(os.path.join(common_script_dir, "network"), assets_dir)
             copy_files(os.path.join(common_script_dir, "ui"), assets_dir)
