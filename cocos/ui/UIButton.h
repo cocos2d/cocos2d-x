@@ -229,6 +229,7 @@ protected:
     
     virtual void adaptRenderers() override;
     void updateTitleLocation();
+    void updateContentSize();
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
