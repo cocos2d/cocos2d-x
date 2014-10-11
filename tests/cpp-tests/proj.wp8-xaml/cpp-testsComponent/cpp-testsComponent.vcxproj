@@ -89,7 +89,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -110,7 +110,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -131,7 +131,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WP8;_WINRT_DLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -216,8 +216,10 @@
     <ClCompile Include="..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="..\..\Classes\InputTest\MouseTest.cpp" />
     <ClCompile Include="..\..\Classes\LabelTest\LabelTestNew.cpp" />
+    <ClCompile Include="..\..\Classes\LightTest\LightTest.cpp" />
     <ClCompile Include="..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\..\Classes\NewRendererTest\NewRendererTest.cpp" />
+    <ClCompile Include="..\..\Classes\OpenURLTest\OpenURLTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
@@ -419,8 +421,10 @@
     <ClInclude Include="..\..\Classes\FileUtilsTest\FileUtilsTest.h" />
     <ClInclude Include="..\..\Classes\InputTest\MouseTest.h" />
     <ClInclude Include="..\..\Classes\LabelTest\LabelTestNew.h" />
+    <ClInclude Include="..\..\Classes\LightTest\LightTest.h" />
     <ClInclude Include="..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\..\Classes\NewRendererTest\NewRendererTest.h" />
+    <ClInclude Include="..\..\Classes\OpenURLTest\OpenURLTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceContainerTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />

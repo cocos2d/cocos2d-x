@@ -27,7 +27,6 @@
 
 #include "math/CCMath.h"
 #include "2d/CCNode.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
@@ -40,7 +39,7 @@ class Bone3D;
  *        auto attachNode = sprite->getAttachNode("left hand");
  *        attachNode->addChild(weapon);
  */
-class CC_3D_DLL AttachNode : public Node
+class CC_DLL AttachNode : public Node
 {
 public:
     /** 

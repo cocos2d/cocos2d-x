@@ -89,7 +89,7 @@ void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float del
 	_delay = delay;
 	_useDelay = (_delay > 0.0f) ? true : false;
 	_repeat = repeat;
-	_runForever = (_repeat == kRepeatForever) ? true : false;
+	_runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
 }
 
 void Timer::update(float dt)
@@ -277,7 +277,7 @@ void Scheduler::removeHashElement(_hashSelectorEntry *element)
 
 void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key)
 {
-    this->schedule(callback, target, interval, kRepeatForever, 0.0f, paused, key);
+    this->schedule(callback, target, interval, CC_REPEAT_FOREVER, 0.0f, paused, key);
 }
 
 void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key)
@@ -1031,7 +1031,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
 
 void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
 {
-    this->schedule(selector, target, interval, kRepeatForever, 0.0f, paused);
+    this->schedule(selector, target, interval, CC_REPEAT_FOREVER, 0.0f, paused);
 }
 
 bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)

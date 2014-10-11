@@ -6,12 +6,15 @@
         #include <string.h>
     #endif
 
-    #if defined(_USRSTUDIODLL)
-        #define CC_STUDIO_DLL     __declspec(dllexport)
-    #else         /* use a DLL library */
-        #define CC_STUDIO_DLL     __declspec(dllimport)
+    #if defined(CC_STATIC)
+        #define CC_STUDIO_DLL
+    #else
+        #if defined(_USRSTUDIODLL)
+            #define CC_STUDIO_DLL     __declspec(dllexport)
+        #else         /* use a DLL library */
+            #define CC_STUDIO_DLL     __declspec(dllimport)
+        #endif
     #endif
-
 
     /* Define NULL pointer value */
     #ifndef NULL

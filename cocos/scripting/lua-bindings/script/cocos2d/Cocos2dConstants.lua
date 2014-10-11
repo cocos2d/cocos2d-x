@@ -1,3 +1,4 @@
+
 cc = cc or {}
 
 cc.SPRITE_INDEX_NOT_INITIALIZED = 0xffffffff
@@ -185,6 +186,8 @@ cc.PLATFORM_OS_BLACKBERRY = 6
 cc.PLATFORM_OS_NACL    = 7
 cc.PLATFORM_OS_EMSCRIPTEN = 8
 cc.PLATFORM_OS_TIZEN   = 9
+cc.PLATFORM_OS_WINRT   = 10
+cc.PLATFORM_OS_WP8     = 11
 
 cc.LANGUAGE_ENGLISH    = 0
 cc.LANGUAGE_CHINESE    = 1
@@ -202,7 +205,7 @@ cc.LANGUAGE_ARABIC     = 11
 cc.NODE_ON_ENTER       = 0
 cc.NODE_ON_EXIT        = 1
 cc.NODE_ON_ENTER_TRANSITION_DID_FINISH = 2
-cc.NODE_ON_EXIT_TRANSITION_DID_START   = 3 
+cc.NODE_ON_EXIT_TRANSITION_DID_START   = 3
 cc.NODE_ON_CLEAN_UP    = 4
 
 cc.Handler = cc.Handler or {}
@@ -287,7 +290,7 @@ cc.GLYPHCOLLECTION_NEHE    = 1
 cc.GLYPHCOLLECTION_ASCII   = 2
 cc.GLYPHCOLLECTION_CUSTOM  = 3
 
-cc.ResolutionPolicy = 
+cc.ResolutionPolicy =
 {
     EXACT_FIT = 0,
     NO_BORDER = 1,
@@ -297,7 +300,7 @@ cc.ResolutionPolicy =
     UNKNOWN  = 5,
 }
 
-cc.LabelEffect = 
+cc.LabelEffect =
 {
     NORMAL  = 0,
     OUTLINE = 1,
@@ -494,7 +497,7 @@ cc.EventCode =
 cc.DIRECTOR_PROJECTION_2D = 0
 cc.DIRECTOR_PROJECTION_3D = 1
 
-cc.ConfigType = 
+cc.ConfigType =
 {
     NONE = 0,
     COCOSTUDIO = 1,
@@ -502,3 +505,49 @@ cc.ConfigType =
 
 cc.AUDIO_INVAILD_ID   = -1
 cc.AUDIO_TIME_UNKNOWN  = -1.0
+
+cc.CameraFlag =
+{
+    DEFAULT = 1,
+    USER1 = 2,
+    USER2 = 4,
+    USER3 = 8,
+    USER4 = 16,
+    USER5 = 32,
+    USER6 = 64,
+    USER7 = 128,
+    USER8 = 256,
+}
+
+cc.BillBoard_Mode =
+{
+    VIEW_POINT_ORIENTED = 0,
+    VIEW_PLANE_ORIENTED = 1,
+}
+
+cc.GLProgram_VERTEX_ATTRIB =
+{
+    POSITION = 0,
+    COLOR = 1,
+    TEX_COORD = 2,
+    TEX_COORD1 = 3,
+    TEX_COORD2 = 4,
+    TEX_COORD3 = 5,
+    TEX_COORD4 = 6,
+    TEX_COORD5 = 7,
+    TEX_COORD6 = 8,
+    TEX_COORD7 = 9,
+    NORMAL = 10,
+    BLEND_WEIGHT = 11,
+    BLEND_INDEX =12,
+    MAX = 13,
+    --backward compatibility
+    TEX_COORDS = 2,
+}
+
+cc.MATRIX_STACK_TYPE =
+{
+    MODELVIEW = 0,
+    PROJECTION = 1,
+    TEXTURE = 2,
+}

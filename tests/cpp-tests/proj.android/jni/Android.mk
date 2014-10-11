@@ -139,6 +139,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/LabelTest/LabelTest.cpp \
 ../../Classes/LabelTest/LabelTestNew.cpp \
 ../../Classes/LayerTest/LayerTest.cpp \
+../../Classes/LightTest/LightTest.cpp \
 ../../Classes/MenuTest/MenuTest.cpp \
 ../../Classes/MotionStreakTest/MotionStreakTest.cpp \
 ../../Classes/MutiTouchTest/MutiTouchTest.cpp \
@@ -186,6 +187,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UnitTest/UnitTest.cpp \
 ../../Classes/UITest/UITest.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
+../../Classes/OpenURLTest/OpenURLTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \

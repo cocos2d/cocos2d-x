@@ -144,7 +144,7 @@ const char * Application::getCurrentLanguageCode()
     // get the current language code.(such as English is "en", Chinese is "zh" and so on)
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
-    [languageCode getCString:code maxLength:2 encoding:NSASCIIStringEncoding];
+    [languageCode getCString:code maxLength:3 encoding:NSASCIIStringEncoding];
     code[2]='\0';
     return code;
 }
@@ -211,6 +211,13 @@ LanguageType Application::getCurrentLanguage()
         ret = LanguageType::POLISH;
     }
     return ret;
+}
+
+bool Application::openURL(const std::string &url)
+{
+    NSString* msg = [NSString stringWithCString:url.c_str() encoding:NSUTF8StringEncoding];
+    NSURL* nsUrl = [NSURL URLWithString:msg];
+    return [[NSWorkspace sharedWorkspace] openURL:nsUrl];
 }
 
 void Application::setResourceRootPath(const std::string& rootResDir)

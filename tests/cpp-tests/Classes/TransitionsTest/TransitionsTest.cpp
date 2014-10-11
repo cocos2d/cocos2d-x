@@ -151,7 +151,6 @@ class PageTransitionForward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, false);
     }
 };
@@ -161,7 +160,6 @@ class PageTransitionBackward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, true);
     }
 };
@@ -289,7 +287,7 @@ TestLayer1::TestLayer1(void)
 
     addChild(menu, 1);    
 
-    schedule( schedule_selector(TestLayer1::step), 1.0f); 
+    schedule( CC_SCHEDULE_SELECTOR(TestLayer1::step), 1.0f); 
 }
 
 TestLayer1::~TestLayer1(void)
@@ -419,7 +417,7 @@ TestLayer2::TestLayer2()
 
     addChild(menu, 1);    
 
-    schedule(schedule_selector(TestLayer2::step), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(TestLayer2::step), 1.0f);
 }
 
 TestLayer2::~TestLayer2()

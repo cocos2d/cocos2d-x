@@ -58,6 +58,12 @@ public:
 
     /** Returns the Command type */
     inline Type getType() const { return _type; }
+    
+    /** Retruns whether is transparent */
+    inline bool isTransparent() const { return _isTransparent; }
+    
+    /** set transparent flag */
+    inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
 
 protected:
     RenderCommand();
@@ -70,6 +76,9 @@ protected:
 
     // commands are sort by depth
     float _globalOrder;
+    
+    // transparent flag
+    bool  _isTransparent;
 };
 
 NS_CC_END

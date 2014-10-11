@@ -15,8 +15,10 @@ require "src/ActionsEaseTest/ActionsEaseTest"
 require "src/ActionsProgressTest/ActionsProgressTest"
 require "src/ActionsTest/ActionsTest"
 require "src/AssetsManagerTest/AssetsManagerTest"
+require "src/BillBoardTest/BillBoardTest"
 require "src/BugsTest/BugsTest"
 require "src/ByteCodeEncryptTest/ByteCodeEncryptTest"
+require "src/Camera3DTest/Camera3DTest"
 require "src/ClickAndMoveTest/ClickAndMoveTest"
 require "src/CocosDenshionTest/CocosDenshionTest"
 require "src/CocoStudioTest/CocoStudioTest"
@@ -66,7 +68,7 @@ local BeginPos = {x = 0, y = 0}
 
 local audioEndineSupported = false
 local currPlatform = cc.Application:getInstance():getTargetPlatform()
-if (cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
+if (cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
     audioEndineSupported = true
 end
 
@@ -80,8 +82,10 @@ local _allTests = {
     { isSupported = audioEndineSupported, name = "AudioEngineTest", create_func = AudioEngineTest},
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
+    { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
+    { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
     { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },

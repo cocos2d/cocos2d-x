@@ -232,7 +232,9 @@ void GridBase::afterDraw(cocos2d::Node *target)
     // restore projection for default FBO .fixed bug #543 #544
     //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
     //TODO:         Director::getInstance()->applyOrientation();
+    beforeBlit();
     blit();
+    afterBlit();
 }
 
 void GridBase::blit(void)
@@ -294,10 +296,11 @@ Grid3D* Grid3D::create(const Size& gridSize)
 
 
 Grid3D::Grid3D()
-    : _texCoordinates(nullptr)
-    , _vertices(nullptr)
-    , _originalVertices(nullptr)
-    , _indices(nullptr)
+: _texCoordinates(nullptr)
+, _vertices(nullptr)
+, _originalVertices(nullptr)
+, _indices(nullptr)
+, _needDepthTestForBlit(false)
 {
 
 }
@@ -308,6 +311,26 @@ Grid3D::~Grid3D(void)
     CC_SAFE_FREE(_vertices);
     CC_SAFE_FREE(_indices);
     CC_SAFE_FREE(_originalVertices);
+}
+
+void Grid3D::beforeBlit()
+{
+    if(_needDepthTestForBlit)
+    {
+        _oldDepthTestValue = glIsEnabled(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_TEST);
+    }
+}
+
+void Grid3D::afterBlit()
+{
+    if(_needDepthTestForBlit)
+    {
+        if(_oldDepthTestValue)
+            glEnable(GL_DEPTH_TEST);
+        else
+            glDisable(GL_DEPTH_TEST);
+    }
 }
 
 void Grid3D::blit(void)

@@ -237,7 +237,7 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
     _container->runAction(Sequence::create(scroll, expire, nullptr));
-    this->schedule(schedule_selector(ScrollView::performedAnimatedScroll));
+    this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
 }
 
 Vec2 ScrollView::getContentOffset()
@@ -401,7 +401,7 @@ void ScrollView::deaccelerateScrolling(float dt)
 {
     if (_dragging)
     {
-        this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
+        this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         return;
     }
     
@@ -432,14 +432,14 @@ void ScrollView::deaccelerateScrolling(float dt)
         newY >= maxInset.y || newY <= minInset.y ||
         newX >= maxInset.x || newX <= minInset.x)
     {
-        this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
+        this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
     }
 }
 
 void ScrollView::stoppedAnimatedScroll(Node * node)
 {
-    this->unschedule(schedule_selector(ScrollView::performedAnimatedScroll));
+    this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
     // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
     if (_delegate != nullptr)
     {
@@ -451,7 +451,7 @@ void ScrollView::performedAnimatedScroll(float dt)
 {
     if (_dragging)
     {
-        this->unschedule(schedule_selector(ScrollView::performedAnimatedScroll));
+        this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
         return;
     }
 
@@ -788,7 +788,7 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
     {
         if (_touches.size() == 1 && _touchMoved)
         {
-            this->schedule(schedule_selector(ScrollView::deaccelerateScrolling));
+            this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         }
         _touches.erase(touchIter);
     } 

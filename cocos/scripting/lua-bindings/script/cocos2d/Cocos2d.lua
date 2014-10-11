@@ -1,10 +1,11 @@
+
 cc = cc or {}
 
 function cc.clampf(value, min_inclusive, max_inclusive)
     -- body
     local temp = 0
     if min_inclusive > max_inclusive then
-        temp = min_inclusive 
+        temp = min_inclusive
         min_inclusive =  max_inclusive
         max_inclusive = temp
     end
@@ -110,7 +111,7 @@ function cc.pIsLineIntersect(A, B, C, D, s, t)
 
         return false, s, t
     end
-    
+
     s = s / denom
     t = t / denom
 
@@ -153,7 +154,7 @@ function cc.pFromSize(sz)
     return { x = sz.width, y = sz.height }
 end
 
-function cc.pLerp(pt1,pt2,alpha) 
+function cc.pLerp(pt1,pt2,alpha)
     return cc.pAdd(cc.pMul(pt1, 1.0 - alpha), cc.pMul(pt2,alpha) )
 end
 
@@ -166,13 +167,13 @@ function cc.pFuzzyEqual(pt1,pt2,variance)
 end
 
 function cc.pRotateByAngle(pt1, pt2, angle)
-    return cc.pAdd(pt2, cc.pRotate( cc.pSub(pt1, pt2),cc.pForAngle(angle)))    
+    return cc.pAdd(pt2, cc.pRotate( cc.pSub(pt1, pt2),cc.pForAngle(angle)))
 end
 
 function cc.pIsSegmentIntersect(pt1,pt2,pt3,pt4)
     local s,t,ret = 0,0,false
     ret,s,t =cc.pIsLineIntersect(pt1, pt2, pt3, pt4,s,t)
-    
+
     if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 0.0 then
         return true;
     end
@@ -182,7 +183,7 @@ end
 
 function cc.pGetIntersectPoint(pt1,pt2,pt3,pt4)
     local s,t, ret = 0,0,false
-    ret,s,t = cc.pIsLineIntersect(pt1,pt2,pt3,pt4,s,t) 
+    ret,s,t = cc.pIsLineIntersect(pt1,pt2,pt3,pt4,s,t)
     if ret then
         return cc.p(pt1.x + s * (pt2.x - pt1.x), pt1.y + s * (pt2.y - pt1.y))
     else
@@ -235,7 +236,7 @@ end
 
 function cc.rectContainsPoint( rect, point )
     local ret = false
-    
+
     if (point.x >= rect.x) and (point.x <= rect.x + rect.width) and
        (point.y >= rect.y) and (point.y <= rect.y + rect.height) then
         ret = true
@@ -361,4 +362,70 @@ end
 --PhysicsMaterial
 function cc.PhysicsMaterial(_density, _restitution, _friction)
 	return { density = _density, restitution = _restitution, friction = _friction }
+end
+
+function cc.vec3(_x, _y, _z)
+    return { x = _x, y = _y, z = _z }
+end
+
+function cc.vec4(_x, _y, _z, _w)
+    return { x = _x, y = _y, z = _z, w = _w }
+end
+
+function cc.vec3normalize(vec3)
+    local n = vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z
+    if n == 1.0 then
+        return vec3
+    end
+
+    n = math.sqrt(n)
+
+    if n < 2e-37 then
+        return vec3
+    end
+
+    n = 1.0 / n
+    return {x = vec3.x * n, y = vec3.y * n, z = vec3.z * n}
+end
+
+function cc.quaternion(_x, _y ,_z,_w)
+    return { x = _x, y = _y, z = _z, w = _w }
+end
+
+cc.mat4 = cc.mat4 or {}
+
+function cc.mat4.new(...)
+    local params = {...}
+    local size   = #params
+
+    local obj = {}
+
+    if 1 == size then
+        assert(type(params[1]) == "table" , "type of input params are wrong to new a mat4 when num of params is 1")
+        for i= 1, 16 do
+            if params[1][i] ~= nil then
+                obj[i] = params[1][i]
+            else
+                obj[i] = 0
+            end
+        end
+    elseif 16 == size then
+        if params[i] ~= nil then
+            mat4[i] = params[i]
+        else
+            mat4[i] = 0
+        end
+    end
+
+    setmetatable(obj, {__index = cc.mat4})
+
+    return obj
+end
+
+function cc.mat4.getInversed(self)
+    return mat4_getInversed(self)
+end
+
+function cc.mat4.transformVector(self, vector, dst)
+    return mat4_transformVector(self, vector, dst)
 end

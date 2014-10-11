@@ -33,9 +33,10 @@ THE SOFTWARE.
 
 namespace PhoneDirect3DXamlAppComponent
 {
-    public delegate void Cocos2dEventDelegate(Cocos2dEvent event);
+    public delegate void Cocos2dEventDelegate(Cocos2dEvent event, Platform::String^ text);
     public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);
     public delegate void Cocos2dEditBoxDelegate(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
+    public delegate void Cocos2dOpenURLDelegate(Platform::String^ url);
 }
 
 NS_CC_BEGIN
@@ -96,6 +97,15 @@ class BackButtonEvent : public InputEvent
 public:
     BackButtonEvent();
     virtual void execute();
+};
+
+class CustomInputEvent : public InputEvent
+{
+public:
+    CustomInputEvent(const std::function<void()>&);
+    virtual void execute();
+private:
+    std::function<void()> m_fun;
 };
 
 NS_CC_END

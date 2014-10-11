@@ -37,7 +37,7 @@ static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
-static const float ZOOM_ACTION_TIME_STEP = 0.05;
+static const float ZOOM_ACTION_TIME_STEP = 0.05f;
     
 IMPLEMENT_CLASS_GUI_INFO(Button)
     
@@ -374,11 +374,19 @@ void Button::onPressStateChangedToNormal()
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
-        _titleRenderer->stopAllActions();
-        _titleRenderer->setScaleX(_normalTextureScaleXInSize);
-        _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+        if (_scale9Enabled)
+        {
+            _buttonNormalRenderer->setColor(Color3B::WHITE);
+        }
+        else
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            
+            _titleRenderer->stopAllActions();
+            _titleRenderer->setScaleX(_normalTextureScaleXInSize);
+            _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+        }
     }
 }
 
@@ -630,6 +638,11 @@ void Button::setPressedActionEnabled(bool enabled)
 void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
+    if (_ignoreSize)
+    {
+        Size s = getVirtualRendererSize();
+        this->setContentSize(s);
+    }
 }
 
 const std::string& Button::getTitleText() const

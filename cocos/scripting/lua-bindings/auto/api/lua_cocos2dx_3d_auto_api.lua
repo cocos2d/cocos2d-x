@@ -31,4 +31,9 @@
 -- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
 
 
+--------------------------------------------------------
+-- the cc BillBoard
+-- @field [parent=#cc] BillBoard#BillBoard BillBoard preloaded module
+
+
 return nil

@@ -110,6 +110,21 @@ public:
      @since v2.0.0
      */
 	bool supportsShareableVAO() const;
+    
+    /** Max support directional light in shader, for Sprite3D
+     @since v3.3
+     */
+    int getMaxSupportDirLightInShader() const;
+    
+    /** Max support point light in shader, for Sprite3D
+     *since v3.3
+     */
+    int getMaxSupportPointLightInShader() const;
+    
+    /** Max support spot light in shader, for Sprite3D
+     *since v3.3
+     */
+    int getMaxSupportSpotLightInShader() const;
 
     /** returns whether or not an OpenGL is supported */
     bool checkForGLExtension(const std::string &searchName) const;
@@ -150,6 +165,9 @@ protected:
     GLint           _maxSamplesAllowed;
     GLint           _maxTextureUnits;
     char *          _glExtensions;
+    int             _maxDirLightInShader; //max support directional light in shader
+    int             _maxPointLightInShader; // max support point light in shader
+    int             _maxSpotLightInShader; // max support spot light in shader
 	
 	ValueMap        _valueDict;
 };

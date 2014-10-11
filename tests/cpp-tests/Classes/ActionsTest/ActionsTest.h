@@ -472,7 +472,6 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
     void log(Node* sender);
-    void addSprite(float dt);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
@@ -583,12 +582,7 @@ public:
     virtual ~PauseResumeActions();
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
-    virtual std::string title() const override;
-    
-    using Layer::pause;
-    void pause(float dt);
-    using Layer::resume;
-    void resume(float dt);
+    virtual std::string title() const override;    
 private:
     Vector<Node*> _pausedTargets;
 };

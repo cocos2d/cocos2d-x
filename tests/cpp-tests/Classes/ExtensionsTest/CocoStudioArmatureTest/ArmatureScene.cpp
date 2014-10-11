@@ -248,17 +248,17 @@ void TestAsynchronousLoading::onEnter()
 
 
     //! create a new thread to load data
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
 }
 
 std::string TestAsynchronousLoading::title() const
@@ -490,7 +490,7 @@ void TestChangeZorder::onEnter()
     armature->setScale(0.6f);
     addChild(armature, currentTag, currentTag);
 
-    schedule( schedule_selector(TestChangeZorder::changeZorder), 1);
+    schedule( CC_SCHEDULE_SELECTOR(TestChangeZorder::changeZorder), 1);
 
     currentTag = 0;
 }
@@ -585,7 +585,7 @@ void TestFrameEvent::onEnter()
     _gridNode->addChild(armature);
     addChild(_gridNode);
 
-    schedule( schedule_selector(TestFrameEvent::checkAction) );
+    schedule( CC_SCHEDULE_SELECTOR(TestFrameEvent::checkAction) );
 }
 std::string TestFrameEvent::title() const
 {
@@ -1567,7 +1567,7 @@ void TestLoadFromBinary::onTouchesEnded(const std::vector<Touch*>& touches, Even
         
 		for( int i = 0; i < BINARYFILECOUNT; i++)
 		{
-			ArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
+			ArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, CC_SCHEDULE_SELECTOR(TestLoadFromBinary::dataLoaded));
 		}
         
 	}

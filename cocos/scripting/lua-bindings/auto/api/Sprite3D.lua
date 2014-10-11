@@ -18,21 +18,27 @@
 -- @param #string texFile
 
 --------------------------------
+-- 
+-- @function [parent=#Sprite3D] getLightMask 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+        
+--------------------------------
 -- remove all attach nodes
 -- @function [parent=#Sprite3D] removeAllAttachNode 
 -- @param self
-        
---------------------------------
--- 
--- @function [parent=#Sprite3D] setBlendFunc 
--- @param self
--- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 -- get mesh
 -- @function [parent=#Sprite3D] getMesh 
 -- @param self
 -- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+--  light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff 
+-- @function [parent=#Sprite3D] setLightMask 
+-- @param self
+-- @param #unsigned int mask
         
 --------------------------------
 -- 

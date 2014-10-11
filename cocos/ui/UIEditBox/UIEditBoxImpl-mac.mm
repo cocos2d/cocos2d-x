@@ -29,10 +29,65 @@
 
 #include "base/CCDirector.h"
 #include "UIEditBox.h"
+#include "deprecated/CCString.h"
 
 
 #define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac*)editBox_)
 
+@interface CustomTextFieldFormatter : NSFormatter {
+    int maxLength;
+}
+- (void)setMaximumLength:(int)len;
+- (int)maximumLength;
+
+@end
+
+@implementation CustomTextFieldFormatter
+
+- (id)init {
+    
+    if(self = [super init]){
+        
+        maxLength = INT_MAX;
+    }
+    
+    return self;
+}
+
+- (void)setMaximumLength:(int)len {
+    maxLength = len;
+}
+
+- (int)maximumLength {
+    return maxLength;
+}
+
+- (NSString *)stringForObjectValue:(id)object {
+    return (NSString *)object;
+}
+
+- (BOOL)getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error {
+    *object = string;
+    return YES;
+}
+
+- (BOOL)isPartialStringValid:(NSString **)partialStringPtr
+       proposedSelectedRange:(NSRangePointer)proposedSelRangePtr
+              originalString:(NSString *)origString
+       originalSelectedRange:(NSRange)origSelRange
+            errorDescription:(NSString **)error {
+    if ([*partialStringPtr length] > maxLength) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (NSAttributedString *)attributedStringForObjectValue:(id)anObject withDefaultAttributes:(NSDictionary *)attributes {
+    return nil;
+}
+
+@end
 
 
 @implementation UIEditBoxImplMac
@@ -205,28 +260,6 @@
 #endif
 }
 
-/**
- * Delegate method called before the text has been changed.
- * @param textField The text field containing the text.
- * @param range The range of characters to be replaced.
- * @param string The replacement string.
- * @return YES if the specified text range should be replaced; otherwise, NO to keep the old text.
- */
-- (BOOL)textField:(NSTextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (getEditBoxImplMac()->getMaxLength() < 0)
-    {
-        return YES;
-    }
-    
-    NSUInteger oldLength = [[textField stringValue] length];
-    NSUInteger replacementLength = [string length];
-    NSUInteger rangeLength = range.length;
-    
-    NSUInteger newLength = oldLength - rangeLength + replacementLength;
-    
-    return newLength <= getEditBoxImplMac()->getMaxLength();
-}
 
 /**
  * Called each time when the text field's text has changed.
@@ -363,6 +396,10 @@ void EditBoxImplMac::setInputMode(EditBox::InputMode inputMode)
 void EditBoxImplMac::setMaxLength(int maxLength)
 {
     _maxTextLength = maxLength;
+    id formater =  [[[CustomTextFieldFormatter alloc]init] autorelease];
+    [formater setMaximumLength:maxLength];
+    [_sysEdit.secureTextField setFormatter:formater];
+    [_sysEdit.textField setFormatter:formater];
 }
 
 int EditBoxImplMac::getMaxLength()

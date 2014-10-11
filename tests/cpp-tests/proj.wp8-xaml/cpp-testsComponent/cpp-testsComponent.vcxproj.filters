@@ -325,6 +325,12 @@
     <Filter Include="Classes\BillBoardTest">
       <UniqueIdentifier>{4dadf399-3bf1-4d35-85d1-d8def766fe0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\OpenURLTest">
+      <UniqueIdentifier>{f3b97ed6-a90e-4abc-b916-f91da5de888d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LightTest">
+      <UniqueIdentifier>{a7609300-6bd1-4671-9a1d-0ab8a4c3f54d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -861,6 +867,12 @@
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\..\Classes\BillBoardTest\BillBoardTest.cpp">
       <Filter>Classes\BillBoardTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\OpenURLTest\OpenURLTest.cpp">
+      <Filter>Classes\OpenURLTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\LightTest\LightTest.cpp">
+      <Filter>Classes\LightTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1597,6 +1609,12 @@
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
     <ClInclude Include="..\..\Classes\BillBoardTest\BillBoardTest.h">
       <Filter>Classes\BillBoardTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\OpenURLTest\OpenURLTest.h">
+      <Filter>Classes\OpenURLTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\LightTest\LightTest.h">
+      <Filter>Classes\LightTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

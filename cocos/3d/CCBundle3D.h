@@ -26,7 +26,6 @@
 #define __CCBUNDLE3D_H__
 
 #include "3d/CCBundle3DData.h"
-#include "3d/3dExport.h"
 #include "3d/CCBundleReader.h"
 #include "json/document.h"
 
@@ -40,7 +39,7 @@ class Data;
  * c3t text file
  * c3b binary file
  */
-class CC_3D_DLL Bundle3D
+class CC_DLL Bundle3D
 {
 public:
     /**you can define yourself bundle and set it, use default bundle otherwise*/

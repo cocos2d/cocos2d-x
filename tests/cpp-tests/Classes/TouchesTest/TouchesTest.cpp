@@ -71,7 +71,7 @@ PongLayer::PongLayer()
         addChild(paddle);
     }
 
-    schedule( schedule_selector(PongLayer::doStep) );
+    schedule( CC_SCHEDULE_SELECTOR(PongLayer::doStep) );
 }
 
 PongLayer::~PongLayer()

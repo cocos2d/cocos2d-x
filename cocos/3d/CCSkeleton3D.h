@@ -26,7 +26,6 @@
 #define __CCSKELETON3D_H__
 
 #include "3d/CCBundle3DData.h"
-#include "3d/3dExport.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 
@@ -36,7 +35,7 @@ NS_CC_BEGIN
 /**
  * Defines a basic hierachial structure of transformation spaces.
  */
-class CC_3D_DLL Bone3D : public Ref
+class CC_DLL Bone3D : public Ref
 {
     friend class Skeleton3D;
     friend class MeshSkin;
@@ -179,7 +178,7 @@ protected:
  * Skeleton
  *
  */
-class CC_3D_DLL Skeleton3D: public Ref
+class CC_DLL Skeleton3D: public Ref
 {
 public:
     

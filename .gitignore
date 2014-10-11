@@ -140,3 +140,7 @@ project.properties
 /tools/fbx-conv/
 external/chipmunk
 tests/cpp-tests/Resources/audio
+/external/Box2D/
+/external/ConvertUTF/
+/external/audio/
+/external/xxtea/

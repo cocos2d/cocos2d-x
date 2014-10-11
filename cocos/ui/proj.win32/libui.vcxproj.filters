@@ -108,6 +108,15 @@
     <ClInclude Include="Win32InputBox.h">
       <Filter>UIWidgets\UIEditBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\UIWebView-inl.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIWebView.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIWebViewImpl-win32.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -190,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="Win32InputBox.cpp">
       <Filter>UIWidgets\UIEditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIWebView.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIWebViewImpl-win32.cpp">
+      <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

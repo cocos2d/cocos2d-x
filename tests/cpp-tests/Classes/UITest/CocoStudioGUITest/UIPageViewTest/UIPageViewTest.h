@@ -85,4 +85,19 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIPageViewDynamicAddAndRemoveTest : public UIScene
+{
+public:
+    UIPageViewDynamicAddAndRemoveTest();
+    ~UIPageViewDynamicAddAndRemoveTest();
+    bool init();
+    
+    void pageViewEvent(Ref* pSender, PageView::EventType type);
+    void onButtonClicked(Ref* pSender, Widget::TouchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIPageViewDynamicAddAndRemoveTest)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */

@@ -114,6 +114,7 @@ base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
 base/CCEventTouch.cpp \
 base/CCIMEDispatcher.cpp \
+base/CCLight.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
 base/ccRandom.cpp \
@@ -179,6 +180,7 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \
+../external/unzip/ioapi_mem.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
 ../external/edtaa3func/edtaa3func.cpp \
@@ -227,6 +229,10 @@ LOCAL_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+LOCAL_ARM_NEON  := true
+endif
+
 include $(BUILD_STATIC_LIBRARY)
 
 #==============================================================
@@ -234,7 +240,6 @@ include $(BUILD_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := cocos2dx_static
-
 LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_STATIC_LIBRARIES := cocostudio_static

@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionPageTurn3D.h"
+#include "2d/CCGrid.h"
 
 NS_CC_BEGIN
 
@@ -53,6 +54,13 @@ PageTurn3D *PageTurn3D::clone() const
 	a->initWithDuration(_duration, _gridSize);
 	a->autorelease();
 	return a;
+}
+
+GridBase* PageTurn3D::getGrid()
+{
+    auto result = Grid3D::create(_gridSize);
+    result->setNeedDepthTestForBlit(true);
+    return result;
 }
 
 /*

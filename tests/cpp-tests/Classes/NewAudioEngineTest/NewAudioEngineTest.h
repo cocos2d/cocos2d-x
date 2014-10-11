@@ -21,7 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#include "platform/CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #ifndef __NEWAUDIOENGINE_TEST_H_
 #define __NEWAUDIOENGINE_TEST_H_
 
@@ -109,7 +112,7 @@ public:
     virtual void update(float dt);
     
 private:
-    static const int FILE_COUNT = 4;
+    static const int FILE_COUNT = 2;
     std::string _files[FILE_COUNT];
     cocos2d::experimental::AudioProfile _audioProfile;
     

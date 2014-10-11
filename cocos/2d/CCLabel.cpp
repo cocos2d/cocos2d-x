@@ -1226,6 +1226,15 @@ void Label::computeStringNumLines()
     _currNumLines = quantityOfLines;
 }
 
+int Label::getStringNumLines() const {
+    if (_contentDirty)
+    {
+        const_cast<Label*>(this)->updateContent();
+    }
+
+    return _currNumLines;
+}
+
 int Label::getStringLength() const
 {
     return static_cast<int>(_currentUTF16String.length());
@@ -1239,13 +1248,11 @@ bool Label::isOpacityModifyRGB() const
 
 void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
-    _isOpacityModifyRGB = isOpacityModifyRGB;
-
-    for(const auto& child: _children) {
-        child->setOpacityModifyRGB(_isOpacityModifyRGB);
+    if (isOpacityModifyRGB != _isOpacityModifyRGB)
+    {
+        _isOpacityModifyRGB = isOpacityModifyRGB;
+        updateColor();
     }
-
-    _reusedLetter->setOpacityModifyRGB(true);
 }
 
 void Label::updateDisplayedColor(const Color3B& parentColor)

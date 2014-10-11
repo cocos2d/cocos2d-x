@@ -275,7 +275,6 @@ class PageTurn3DDemo : public PageTurn3D
 public:
     static ActionInterval* create(float t)
     {
-        Director::getInstance()->setDepthTest(true);
         return PageTurn3D::create(t, Size(15,10)); 
     }
 };
@@ -372,7 +371,7 @@ TextLayer::TextLayer(void)
     addChild(label);
     label->setTag( kTagLabel );
     
-    schedule( schedule_selector(TextLayer::checkAnim) );
+    schedule( CC_SCHEDULE_SELECTOR(TextLayer::checkAnim) );
 }
 
 void TextLayer::checkAnim(float dt)
