@@ -37,6 +37,8 @@ THE SOFTWARE.
 #include "platform/CCStdC.h"
 #endif
 
+typedef struct unz_file_info_s unz_file_info;
+
 namespace cocos2d
 {
     /* XXX: pragma pack ??? */
@@ -215,7 +217,6 @@ namespace cocos2d
     // forward declaration
     class ZipFilePrivate;
     struct unz_file_info_s;
-    typedef struct unz_file_info_s unz_file_info;
 
     /**
     * Zip file - reader helper class.
