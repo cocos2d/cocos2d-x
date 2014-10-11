@@ -1,3 +1,4 @@
+
 cc = cc or {}
 
 cc.SPRITE_INDEX_NOT_INITIALIZED = 0xffffffff
@@ -204,7 +205,7 @@ cc.LANGUAGE_ARABIC     = 11
 cc.NODE_ON_ENTER       = 0
 cc.NODE_ON_EXIT        = 1
 cc.NODE_ON_ENTER_TRANSITION_DID_FINISH = 2
-cc.NODE_ON_EXIT_TRANSITION_DID_START   = 3 
+cc.NODE_ON_EXIT_TRANSITION_DID_START   = 3
 cc.NODE_ON_CLEAN_UP    = 4
 
 cc.Handler = cc.Handler or {}
@@ -289,7 +290,7 @@ cc.GLYPHCOLLECTION_NEHE    = 1
 cc.GLYPHCOLLECTION_ASCII   = 2
 cc.GLYPHCOLLECTION_CUSTOM  = 3
 
-cc.ResolutionPolicy = 
+cc.ResolutionPolicy =
 {
     EXACT_FIT = 0,
     NO_BORDER = 1,
@@ -299,7 +300,7 @@ cc.ResolutionPolicy =
     UNKNOWN  = 5,
 }
 
-cc.LabelEffect = 
+cc.LabelEffect =
 {
     NORMAL  = 0,
     OUTLINE = 1,
@@ -496,7 +497,7 @@ cc.EventCode =
 cc.DIRECTOR_PROJECTION_2D = 0
 cc.DIRECTOR_PROJECTION_3D = 1
 
-cc.ConfigType = 
+cc.ConfigType =
 {
     NONE = 0,
     COCOSTUDIO = 1,
@@ -505,7 +506,7 @@ cc.ConfigType =
 cc.AUDIO_INVAILD_ID   = -1
 cc.AUDIO_TIME_UNKNOWN  = -1.0
 
-cc.CameraFlag = 
+cc.CameraFlag =
 {
     DEFAULT = 1,
     USER1 = 2,
@@ -518,7 +519,7 @@ cc.CameraFlag =
     USER8 = 256,
 }
 
-cc.BillBoard_Mode = 
+cc.BillBoard_Mode =
 {
     VIEW_POINT_ORIENTED = 0,
     VIEW_PLANE_ORIENTED = 1,
@@ -544,7 +545,7 @@ cc.GLProgram_VERTEX_ATTRIB =
     TEX_COORDS = 2,
 }
 
-cc.MATRIX_STACK_TYPE = 
+cc.MATRIX_STACK_TYPE =
 {
     MODELVIEW = 0,
     PROJECTION = 1,

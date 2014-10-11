@@ -808,7 +808,5 @@ int register_ui_moudle(lua_State* L)
     }
     lua_pop(L, 1);
     
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedUIEnum");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedUIFunc");
     return 1;
 }

@@ -1,3 +1,4 @@
+
 local dp_initialized = false
 local dp_shader      = nil
 local dp_colorLocation = -1
@@ -31,7 +32,7 @@ end
 local function setDrawProperty()
     gl.glEnableVertexAttribs( CCConstants.VERTEX_ATTRIB_FLAG_POSITION )
     dp_shader:use()
-    dp_shader:setUniformsForBuiltins()    
+    dp_shader:setUniformsForBuiltins()
     dp_shader:setUniformLocationWith4fv(dp_colorLocation, dp_color, 1)
 end
 
@@ -204,7 +205,7 @@ function ccDrawSolidPoly(points,numOfPoints,color)
 
     gl.glEnableVertexAttribs( CCConstants.VERTEX_ATTRIB_FLAG_POSITION )
     dp_shader:use()
-    dp_shader:setUniformsForBuiltins()    
+    dp_shader:setUniformsForBuiltins()
     dp_shader:setUniformLocationWith4fv(dp_colorLocation, color, 1)
 
     gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer.buffer_id)
@@ -316,7 +317,7 @@ function ccDrawQuadBezier(origin, control, destination, segments)
     local vertexBuffer = { }
 
     local function initBuffer()
-        local vertices = { } 
+        local vertices = { }
         local i = 1
         local t = 0.0
 
@@ -325,7 +326,7 @@ function ccDrawQuadBezier(origin, control, destination, segments)
             vertices[2 * i]     = math.pow(1 - t,2) * origin.y + 2.0 * (1 - t) * t * control.y + t * t * destination.y
             t = t + 1.0 / segments
         end
-        
+
         vertices[2 * (segments + 1) - 1] = destination.x
         vertices[2 * (segments + 1)]     = destination.y
 
@@ -353,7 +354,7 @@ function ccDrawCubicBezier(origin, control1, control2, destination, segments)
     local vertexBuffer = { }
 
     local function initBuffer()
-        local vertices = { } 
+        local vertices = { }
         local t = 0
         local i = 1
 
