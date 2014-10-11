@@ -648,7 +648,7 @@ std::string ZipFile::getNextFilename()
     if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
     std::string path;
     unz_file_info info;
-    getCurrentFileInfo(&path, (cocos2d::unz_file_info*)&info);
+    getCurrentFileInfo(&path, &info);
     return path;
 }
 
