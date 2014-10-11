@@ -29,7 +29,7 @@
 #include "../../cocos/ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 
-#include "../CSParseBinary.pb.h"
+#include "CSParseBinary.pb.h"
 #include "tinyxml2/tinyxml2.h"
 
 #include <fstream>

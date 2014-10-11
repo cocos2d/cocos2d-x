@@ -3,7 +3,7 @@
 #include "TextFieldReader.h"
 #include "ui/UITextField.h"
 #include "cocostudio/CocoLoader.h"
-#include "../../CSParseBinary.pb.h"
+#include "CSParseBinary.pb.h"
 #include "tinyxml2/tinyxml2.h"
 
 USING_NS_CC;
