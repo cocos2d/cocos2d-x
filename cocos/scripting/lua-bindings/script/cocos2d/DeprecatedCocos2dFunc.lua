@@ -1,9 +1,8 @@
-require "Cocos2d.lua"
+
 --tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")
 end
-
 
 --functions of CCDirector will be deprecated,begin
 local CCDirectorDeprecated = { }
@@ -308,7 +307,7 @@ rawset(_G,"ccc3",ccc3)
 local function ccp(x,y)
     deprecatedTip("ccp(x,y)","cc.p(x,y)")
     return cc.p(x,y)
-end 
+end
 rawset(_G,"ccp",ccp)
 
 local function CCSizeMake(width,height)
@@ -337,7 +336,7 @@ rawset(_G,"ccc4f",ccc4f)
 
 local function ccc4FFromccc4B(color4B)
     deprecatedTip("ccc4FFromccc4B(color4B)","cc.c4f(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)")
-    return cc.c4f(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)   
+    return cc.c4f(color4B.r/255.0, color4B.g/255.0, color4B.b/255.0, color4B.a/255.0)
 end
 rawset(_G,"ccc4FFromccc4B",ccc4FFromccc4B)
 
@@ -360,7 +359,7 @@ rawset(_G,"ccpLineIntersect",ccpLineIntersect)
 local function CCPointMake(x,y)
     deprecatedTip("CCPointMake(x,y)","cc.p(x,y)")
     return cc.p(x,y)
-end 
+end
 rawset(_G,"CCPointMake",CCPointMake)
 
 
@@ -494,7 +493,7 @@ rawset(_G,"ccpFromSize",ccpFromSize)
 
 local function ccpLerp(pt1,pt2,alpha)
     deprecatedTip("ccpLerp","cc.pLerp")
-    return cc.pLerp(pt1,pt2,alpha) 
+    return cc.pLerp(pt1,pt2,alpha)
 end
 rawset(_G,"ccpLerp",ccpLerp)
 
@@ -557,11 +556,11 @@ local function tex2(u,v)
     deprecatedTip("tex2(u,v)","cc.tex2f(u,v)")
     return cc.tex2f(u,v)
 end
-rawset(_G,"tex2",tex2) 
+rawset(_G,"tex2",tex2)
 
 local function ccc4BFromccc4F(color4F)
     deprecatedTip("ccc4BFromccc4F(color4F)","Color4B(color4F.r * 255.0, color4F.g * 255.0, color4F.b * 255.0, color4B.a * 255.0)")
-    return Color4B(color4F.r * 255.0, color4F.g * 255.0, color4F.b * 255.0, color4B.a * 255.0) 
+    return Color4B(color4F.r * 255.0, color4F.g * 255.0, color4F.b * 255.0, color4B.a * 255.0)
 end
 rawset(_G,"ccc4BFromccc4F",ccc4BFromccc4F)
 

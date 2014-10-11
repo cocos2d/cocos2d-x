@@ -39,7 +39,7 @@ Controller g_aTestNames[] = {
 	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
 	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
 	{ "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); } },
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
 #endif
 	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
@@ -70,6 +70,7 @@ Controller g_aTestNames[] = {
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
 	{ "Node: Label - Old API", [](){return new AtlasTestScene(); } },
 	{ "Node: Layer", [](){return new LayerTestScene();} },
+    { "Node: Light", [](){return new LightTestScene();} },
 	{ "Node: Menu", [](){return new MenuTestScene();} },
 	{ "Node: MotionStreak", [](){return new MotionStreakTestScene();} },
 	{ "Node: Node", [](){return new CocosNodeTestScene();} },
@@ -105,7 +106,7 @@ Controller g_aTestNames[] = {
 	{ "Transitions", [](){return new TransitionsTestScene();} },
     { "Unit Test", []() { return new UnitTestScene(); }},
     { "URL Open Test", []() { return new OpenURLTestScene(); } },
-    { "UserDefault", []() { return new UserDefaultTestScene(); } },
+	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
 	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
 };
 

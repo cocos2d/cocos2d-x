@@ -59,7 +59,7 @@ ControlStepper::ControlStepper()
 
 ControlStepper::~ControlStepper()
 {
-    unscheduleAllSelectors();
+    unscheduleAllCallbacks();
     
     CC_SAFE_RELEASE(_minusSprite);
     CC_SAFE_RELEASE(_plusSprite);
@@ -221,13 +221,13 @@ void ControlStepper::startAutorepeat()
 {
     _autorepeatCount    = -1;
     
-    this->schedule(schedule_selector(ControlStepper::update), kAutorepeatDeltaTime, kRepeatForever, kAutorepeatDeltaTime * 3);
+    this->schedule(CC_SCHEDULE_SELECTOR(ControlStepper::update), kAutorepeatDeltaTime, CC_REPEAT_FOREVER, kAutorepeatDeltaTime * 3);
 }
 
 /** Stop the autorepeat. */
 void ControlStepper::stopAutorepeat()
 {
-    this->unschedule(schedule_selector(ControlStepper::update));
+    this->unschedule(CC_SCHEDULE_SELECTOR(ControlStepper::update));
 }
 
 void ControlStepper::update(float dt)

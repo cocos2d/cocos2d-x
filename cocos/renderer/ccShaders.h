@@ -73,6 +73,10 @@ extern CC_DLL const GLchar * cc3D_PositionTex_vert;
 extern CC_DLL const GLchar * cc3D_SkinPositionTex_vert;
 extern CC_DLL const GLchar * cc3D_ColorTex_frag;
 extern CC_DLL const GLchar * cc3D_Color_frag;
+extern CC_DLL const GLchar * cc3D_PositionNormalTex_vert;
+extern CC_DLL const GLchar * cc3D_SkinPositionNormalTex_vert;
+extern CC_DLL const GLchar * cc3D_ColorNormalTex_frag;
+extern CC_DLL const GLchar * cc3D_ColorNormal_frag;
 // end of shaders group
 /// @}
 

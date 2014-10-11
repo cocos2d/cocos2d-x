@@ -37,6 +37,10 @@ THE SOFTWARE.
 #include "unzip.h"
 #include <sys/stat.h>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include <ftw.h>
+#endif
+
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
 #include <errno.h>
@@ -644,7 +648,12 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         file = unzOpen(zipFilePath.c_str());
         CC_BREAK_IF(!file);
 
+        // FIXME: Other platforms should use upstream minizip like mingw-w64  
+        #ifdef __MINGW32__
+        int ret = unzLocateFile(file, filename.c_str(), NULL);
+        #else
         int ret = unzLocateFile(file, filename.c_str(), 1);
+        #endif
         CC_BREAK_IF(UNZ_OK != ret);
 
         char filePathA[260];
@@ -1103,6 +1112,18 @@ bool FileUtils::createDirectory(const std::string& path)
 #endif
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+{
+    auto ret = remove(fpath);
+    if (ret) {
+        log("Fail to remove:%s ",fpath);
+    }
+    
+    return ret;
+}
+#endif
+
 bool FileUtils::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
@@ -1155,6 +1176,11 @@ bool FileUtils::removeDirectory(const std::string& path)
 		return true;
 	else
 		return false;
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    if (nftw(path.c_str(),unlink_cb, 64, FTW_DEPTH | FTW_PHYS))
+        return false;
+    else
+        return true;
 #else
     std::string command = "rm -r ";
     // Path may include space.
@@ -1195,13 +1221,11 @@ bool FileUtils::removeFile(const std::string &path)
 	else
 		return false;
 #else
-    std::string command = "rm -f ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
+    if (remove(path.c_str())) {
         return false;
+    } else {
+        return true;
+    }
 #endif
 }
 

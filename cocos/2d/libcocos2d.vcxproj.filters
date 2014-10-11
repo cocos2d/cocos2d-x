@@ -211,6 +211,9 @@
     <Filter Include="extension\GUI\CCControlExtensions">
       <UniqueIdentifier>{118d80ca-ccf2-480c-b87d-25220af23440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="audioengine">
+      <UniqueIdentifier>{e916e2b4-0a6e-4d25-8b36-66fa03719f48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -675,6 +678,9 @@
     </ClCompile>
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp">
       <Filter>external\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp">
+      <Filter>external\unzip</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\unzip\ioapi.cpp">
       <Filter>external\unzip</Filter>
@@ -1170,6 +1176,21 @@
     </ClCompile>
     <ClCompile Include="..\ui\UIWebView.cpp">
       <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\AudioEngine.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioCache.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioEngine-win32.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioPlayer.cpp">
+      <Filter>audioengine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1709,6 +1730,9 @@
       <Filter>external\unzip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\unzip\ioapi.h">
+      <Filter>external\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\unzip\ioapi_mem.h">
       <Filter>external\unzip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
@@ -2304,6 +2328,21 @@
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\include\AudioEngine.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioCache.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioEngine-win32.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioPlayer.h">
+      <Filter>audioengine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

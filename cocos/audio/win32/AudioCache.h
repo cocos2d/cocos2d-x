@@ -21,22 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+#include "platform/CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __AUDIO_CACHE_H_
 #define __AUDIO_CACHE_H_
 
-#import <OpenAL/al.h>
-#import <AudioToolbox/AudioToolbox.h>
-
 #include <string>
 #include <mutex>
 #include <vector>
-
 #include "CCPlatformMacros.h"
+#include "AL/al.h"
 
 #define QUEUEBUFFER_NUM 3
-#define QUEUEBUFFER_TIME_STEP 0.1
+#define QUEUEBUFFER_TIME_STEP 0.1f
 
 NS_CC_BEGIN
 namespace experimental{
@@ -44,50 +43,58 @@ namespace experimental{
 class AudioEngineImpl;
 class AudioPlayer;
 
-class AudioCache{
+class CC_DLL AudioCache{
 public:
+    enum class FileFormat
+    {
+        UNKNOWN,
+        OGG,
+        MP3
+    };
+
     AudioCache();
+    AudioCache(AudioCache&);
     ~AudioCache();
 
     void addCallbacks(const std::function<void()> &callback);
-    
-private:
-    
-    void readDataTask();
-    
+
+protected:
+    void readDataTask();  
     void invokingCallbacks();
-    
+
+    std::string _fileFullPath;
+    FileFormat _fileFormat;
     //pcm data related stuff
-    ALsizei _dataSize;
-    ALenum _format;
-    ALsizei _sampleRate;
+    size_t _pcmDataSize;
+    ALenum _alBufferFormat;
+
+    int _channels;
+    ALuint _sampleRate;
+    size_t _bytesPerFrame;
     float _duration;
-    int _bytesPerFrame;
-    AudioStreamBasicDescription outputFormat;
     
     /*Cache related stuff;
      * Cache pcm data when sizeInBytes less than PCMDATA_CACHEMAXSIZE
      */
     ALuint _alBufferId;
-    char* _pcmData;
-    SInt64 _bytesOfRead;
+    void* _pcmData;
+    size_t _bytesOfRead;
 
     /*Queue buffer related stuff
-     *  Streaming in openal when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
+     *  Streaming in OpenAL when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
      */
     char* _queBuffers[QUEUEBUFFER_NUM];
     ALsizei _queBufferSize[QUEUEBUFFER_NUM];
-    UInt32 _queBufferFrames;
-    UInt32 _queBufferBytes;
+    int _queBufferFrames;
+    int _queBufferBytes;
 
     bool _alBufferReady;
-    std::mutex _callbackMutex;
-    
+    std::mutex _callbackMutex; 
     std::vector< std::function<void()> > _callbacks;
-    std::mutex _readDataTaskMutex;
-    
-    bool _exitReadDataTask;
-    std::string _fileFullPath;
+
+    std::mutex _readDataTaskMutex;    
+
+    int _mp3Encoding;
     
     friend class AudioEngineImpl;
     friend class AudioPlayer;

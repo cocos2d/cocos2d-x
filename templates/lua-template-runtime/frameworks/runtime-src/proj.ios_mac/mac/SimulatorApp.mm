@@ -92,7 +92,7 @@ std::string getCurAppName(void)
     AppDelegate app;
     Application::getInstance()->run();
     // After run, application needs to be terminated immediately.
-    [NSApp terminate: self];
+    [[NSApplication sharedApplication] terminate: self];
 }
 
 
@@ -118,7 +118,7 @@ std::string getCurAppName(void)
     director->setOpenGLView(g_eglView);
 
     window = glfwGetCocoaWindow(g_eglView->getWindow());
-    [NSApp setDelegate: self];
+    [[NSApplication sharedApplication] setDelegate: self];
     
     [self createViewMenu];
     [self updateMenu];

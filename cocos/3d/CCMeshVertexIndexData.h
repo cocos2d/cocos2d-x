@@ -30,7 +30,6 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
-#include "3d/3dExport.h"
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"

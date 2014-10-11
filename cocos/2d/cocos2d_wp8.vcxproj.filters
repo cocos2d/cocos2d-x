@@ -382,6 +382,9 @@
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp">
       <Filter>external\tinyxml2</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp">
+      <Filter>external\unzip</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\external\unzip\ioapi.cpp">
       <Filter>external\unzip</Filter>
     </ClCompile>
@@ -661,6 +664,9 @@
     </ClCompile>
     <ClCompile Include="..\3d\CCBillBoard.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCLight.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1008,6 +1014,9 @@
     </ClInclude>
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h">
       <Filter>external\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\unzip\ioapi_mem.h">
+      <Filter>external\unzip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\unzip\ioapi.h">
       <Filter>external\unzip</Filter>
@@ -1363,6 +1372,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCBillBoard.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCLight.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -58,8 +58,6 @@ bool UIScale9SpriteTest::init()
         ui::Scale9Sprite *normalSprite2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         normalSprite2->setPosition(120, 270);
         normalSprite2->setScale9Enabled(false);
-//        normalSprite2->setContentSize(Size(100,100));
-//        normalSprite2->setAnchorPoint(Vec2(0.5,0.5));
         normalSprite2->setOpacity(100);
         this->addChild(normalSprite2);
         normalSprite2->setColor(Color3B::GREEN);
@@ -68,16 +66,15 @@ bool UIScale9SpriteTest::init()
         auto action2 = action->clone();
         ui::Scale9Sprite *sp1 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp1->setPosition(100, 160);
-        sp1->setScale(1.2);
+        sp1->setScale(1.2f);
         sp1->setContentSize(Size(100,100));
         sp1->setColor(Color3B::GREEN);
-//        sp1->setScale9Enabled(false);
         this->addChild(sp1);
         sp1->runAction((FiniteTimeAction*)action2);
         
         cocos2d::ui::Scale9Sprite *sp2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp2->setPosition(350, 160);
-        sp2->setPreferredSize(sp1->getContentSize() * 1.2);
+        sp2->setPreferredSize(sp1->getContentSize() * 1.2f);
         sp2->setColor(Color3B::GREEN);
         sp2->setContentSize(Size(100,100));
 
@@ -106,55 +103,41 @@ bool UIScale9SpriteHierarchialTest::init()
     {
         Size widgetSize = _widget->getContentSize();
         
-        auto moveTo = MoveBy::create(1.0, Vec2(30,0));
+        auto moveTo = MoveBy::create(1.0f, Vec2(30,0));
         auto moveBack = moveTo->reverse();
-        auto rotateBy = RotateBy::create(1.0, 180);
-        auto fadeOut = FadeOut::create(2.0);
+        auto rotateBy = RotateBy::create(1.0f, 180);
+        auto fadeOut = FadeOut::create(2.0f);
         auto action = Sequence::create(moveTo,moveBack, rotateBy,fadeOut, NULL);
-        
         
         Sprite *normalSprite1 = Sprite::create("cocosui/animationbuttonnormal.png");
         normalSprite1->setPosition(100, 270);
-        //        normalSprite1->setAnchorPoint(Vec2(0.5,0.5));
-        //        normalSprite1->setContentSize(Size(100,100));
-        
-//        Sprite *childSprite = Sprite::create("cocosui/animationbuttonnormal.png");
         normalSprite1->setCascadeColorEnabled(true);
         normalSprite1->setCascadeOpacityEnabled(true);
         normalSprite1->setColor(Color3B::GREEN);
-
-        
         
         this->addChild(normalSprite1);
         normalSprite1->runAction((FiniteTimeAction*)action->clone());
         
         ui::Scale9Sprite *normalSprite2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
-//        normalSprite2->setPosition(120, 270);
         normalSprite2->setScale9Enabled(false);
-        //        normalSprite2->setContentSize(Size(100,100));
-        //        normalSprite2->setAnchorPoint(Vec2(0.5,0.5));
         normalSprite2->setOpacity(100);
         normalSprite1->addChild(normalSprite2);
         
         auto action2 = action->clone();
         ui::Scale9Sprite *sp1 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp1->setPosition(200, 160);
-        sp1->setScale(1.2);
+        sp1->setScale(1.2f);
         sp1->setContentSize(Size(100,100));
         sp1->setColor(Color3B::GREEN);
-        //        sp1->setScale9Enabled(false);
         this->addChild(sp1);
         sp1->runAction((FiniteTimeAction*)action2);
         
         cocos2d::ui::Scale9Sprite *sp2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
-//        sp2->setPosition(350, 160);
-        sp2->setPreferredSize(sp1->getContentSize() * 1.2);
+        sp2->setPreferredSize(sp1->getContentSize() * 1.2f);
         sp2->setColor(Color3B::GREEN);
         sp2->setContentSize(Size(100,100));
         
         sp1->addChild(sp2);
-//        auto action3 = action->clone();
-//        sp2->runAction((FiniteTimeAction*)action3);
         
         return true;
     }
@@ -307,6 +290,48 @@ bool UIS9FrameNameSpriteSheetRotated::init()
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
 
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+        
+        blocks->setPosition(Vec2(x, y));
+        
+        this->addChild(blocks);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool UIS9FrameNameSpriteSheetCropped::init()
+{
+    if (UIScene::init()) {
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9c.png");
+        
+        blocks->setPosition(Vec2(x, y));
+        
+        this->addChild(blocks);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool UIS9FrameNameSpriteSheetCroppedRotated::init()
+{
+    if (UIScene::init()) {
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        
+        auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9cr.png");
         
         blocks->setPosition(Vec2(x, y));
         

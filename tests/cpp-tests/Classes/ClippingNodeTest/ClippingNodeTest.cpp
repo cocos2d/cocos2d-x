@@ -988,7 +988,7 @@ void ClippingToRenderTextureTest::setup()
 
     auto s = Director::getInstance()->getWinSize();
     // create menu, it's an autorelease object
-    auto menu = Menu::create(button, NULL);
+    auto menu = Menu::create(button, nullptr);
     menu->setPosition(Point(s.width/2, s.height/2));
     this->addChild(menu, 1);
 
@@ -1092,7 +1092,7 @@ void ClippingToRenderTextureTest::reproduceBug()
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 
-    rt->beginWithClear(0.3, 0, 0, 1);
+    rt->beginWithClear(0.3f, 0, 0, 1);
     container->visit();
     rt->end();
 }

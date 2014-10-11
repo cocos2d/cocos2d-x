@@ -1,6 +1,5 @@
-require "OpenglConstants"
 
-gl = gl or {}
+if not gl then return end
 
 --Create functions
 function  gl.createTexture()
@@ -112,7 +111,7 @@ function gl.bindTexture(target, texture)
     end
 
     gl._bindTexture(target,texture_id)
-end 
+end
 
 function gl.bindBuffer( target,buffer )
     local buffer_id = 0
@@ -211,7 +210,7 @@ function gl.linkProgram( program )
     gl._linkProgram(program_id)
 end
 
-function gl.getProgramParameter(program, e) 
+function gl.getProgramParameter(program, e)
     local program_id = 0
 
     if "number" == type(program) then
@@ -296,4 +295,3 @@ end
 function gl.glNodeCreate()
     return cc.GLNode:create()
 end
-

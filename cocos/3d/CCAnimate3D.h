@@ -29,7 +29,6 @@
 #include <unordered_map>
 
 #include "3d/CCAnimation3D.h"
-#include "3d/3dExport.h"
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "2d/CCActionInterval.h"
@@ -41,7 +40,7 @@ class Sprite3D;
 /**
  * Animate3D, Animates a Sprite3D given with an Animation3D
  */
-class CC_3D_DLL Animate3D: public ActionInterval
+class CC_DLL Animate3D: public ActionInterval
 {
 public:
     

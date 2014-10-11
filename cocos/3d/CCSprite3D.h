@@ -37,7 +37,6 @@
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCMeshVertexIndexData.h"
-#include "3d/3dExport.h"
 
 
 NS_CC_BEGIN
@@ -48,7 +47,7 @@ class MeshSkin;
 class AttachNode;
 struct NodeData;
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
-class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
+class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
@@ -112,6 +111,10 @@ public:
     void setCullFace(GLenum cullFace);
     // set cull face enable or not
     void setCullFaceEnabled(bool enable);
+    
+    /** light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff */
+    void setLightMask(unsigned int mask) { _lightMask = mask; }
+    unsigned int getLightMask() const { return _lightMask; }
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -162,6 +165,8 @@ protected:
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
     bool                         _aabbDirty;
+    unsigned int                 _lightMask;
+    bool                         _shaderUsingLight; // is current shader using light ?
 };
 
 ///////////////////////////////////////////////////////
@@ -208,7 +213,7 @@ protected:
     std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
-extern std::string CC_3D_DLL s_attributeNames[];//attribute names array
+extern std::string CC_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_

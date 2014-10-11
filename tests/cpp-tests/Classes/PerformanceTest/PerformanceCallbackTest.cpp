@@ -100,8 +100,8 @@ void PerformanceCallbackScene::onEnter()
         l->setPosition(Vec2(s.width/2, s.height-80));
     }
     
-    getScheduler()->schedule(schedule_selector(PerformanceCallbackScene::onUpdate), this, 0.0f, false);
-    getScheduler()->schedule(schedule_selector(PerformanceCallbackScene::dumpProfilerInfo), this, 2, false);
+    getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::onUpdate), this, 0.0f, false);
+    getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::dumpProfilerInfo), this, 2, false);
 }
 
 std::string PerformanceCallbackScene::title() const
@@ -160,7 +160,7 @@ void InvokeMemberFunctionPerfTest::onEnter()
     PerformanceCallbackScene::onEnter();
     _profileName = "InvokeMemberFunction";
     _target = this;
-    _selector = schedule_selector(InvokeMemberFunctionPerfTest::update);
+    _selector = CC_SCHEDULE_SELECTOR(InvokeMemberFunctionPerfTest::update);
 }
 
 std::string InvokeMemberFunctionPerfTest::title() const
