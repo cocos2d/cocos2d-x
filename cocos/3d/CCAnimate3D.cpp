@@ -64,23 +64,11 @@ Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float durat
 
 Animate3D* Animate3D::create(Animation3D* animation, int startFrame, int endFrame, float frameRate)
 {
-    auto animate = Animate3D::create(animation);
-    
-    float fullDuration = animation->getDuration();
     float perFrameTime = 1.f / frameRate;
     float fromTime = startFrame * perFrameTime;
     float duration = (endFrame - startFrame) * perFrameTime;
     
-    if (fromTime < 0)
-        fromTime = 0;
-    
-    if (duration > fullDuration - fromTime)
-        duration = fullDuration - fromTime;
-    
-    animate->_start = fromTime / fullDuration;
-    animate->_last = duration / fullDuration;
-    animate->setDuration(duration);
-    
+    auto animate = create(animation, fromTime, duration);
     return  animate;
 }
 
