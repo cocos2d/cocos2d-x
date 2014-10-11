@@ -37,6 +37,8 @@ bool UIButtonTest::init()
         
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
+              button->getContentSize().height);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
         button->setZoomScale(0.4);
@@ -632,7 +634,10 @@ bool UIButtonTextOnly::init()
         // Create the button
         auto button = Button::create();
         button->setNormalizedPosition(Vec2(0.5, 0.5));
+       
         button->setTitleText("PLAY GAME");
+        CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
+              button->getContentSize().height);
         button->setZoomScale(0.3);
         button->setPressedActionEnabled(true);
         button->addClickEventListener([this](Ref* sender) {

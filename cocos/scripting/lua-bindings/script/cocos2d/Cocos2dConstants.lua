@@ -523,3 +523,30 @@ cc.BillBoard_Mode =
     VIEW_POINT_ORIENTED = 0,
     VIEW_PLANE_ORIENTED = 1,
 }
+
+cc.GLProgram_VERTEX_ATTRIB =
+{
+    POSITION = 0,
+    COLOR = 1,
+    TEX_COORD = 2,
+    TEX_COORD1 = 3,
+    TEX_COORD2 = 4,
+    TEX_COORD3 = 5,
+    TEX_COORD4 = 6,
+    TEX_COORD5 = 7,
+    TEX_COORD6 = 8,
+    TEX_COORD7 = 9,
+    NORMAL = 10,
+    BLEND_WEIGHT = 11,
+    BLEND_INDEX =12,
+    MAX = 13,
+    --backward compatibility
+    TEX_COORDS = 2,
+}
+
+cc.MATRIX_STACK_TYPE = 
+{
+    MODELVIEW = 0,
+    PROJECTION = 1,
+    TEXTURE = 2,
+}

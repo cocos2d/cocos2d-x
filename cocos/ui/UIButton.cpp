@@ -638,6 +638,11 @@ void Button::setPressedActionEnabled(bool enabled)
 void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
+    if (_ignoreSize)
+    {
+        Size s = getVirtualRendererSize();
+        this->setContentSize(s);
+    }
 }
 
 const std::string& Button::getTitleText() const
