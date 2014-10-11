@@ -22,15 +22,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+// FIXME: hack, must be included before ziputils
+#include "unzip.h"
+#include "base/ZipUtils.h"
+
 #include <zlib.h>
 #include <assert.h>
 #include <stdlib.h>
 
-#include "base/ZipUtils.h"
 #include "base/CCData.h"
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
-#include "unzip.h"
 #include <map>
 
 NS_CC_BEGIN
@@ -645,7 +648,7 @@ std::string ZipFile::getNextFilename()
     if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
     std::string path;
     unz_file_info info;
-    getCurrentFileInfo(&path, &info);
+    getCurrentFileInfo(&path, (cocos2d::unz_file_info*)&info);
     return path;
 }
 
