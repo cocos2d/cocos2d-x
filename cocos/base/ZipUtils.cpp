@@ -36,6 +36,12 @@
 #include "platform/CCFileUtils.h"
 #include <map>
 
+// FIXME: Other platforms should use upstream minizip like mingw-w64  
+#ifdef __MINGW32__
+#define unzGoToFirstFile64(A,B,C,D) unzGoToFirstFile2(A,B,C,D, NULL, 0, NULL, 0)
+#define unzGoToNextFile64(A,B,C,D) unzGoToNextFile2(A,B,C,D, NULL, 0, NULL, 0)
+#endif
+
 NS_CC_BEGIN
 
 unsigned int ZipUtils::s_uEncryptedPvrKeyParts[4] = {0,0,0,0};
