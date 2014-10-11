@@ -28,7 +28,6 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "2d/CCSpriteBatchNode.h"
-#include "base/ccTypes.h"
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCFontAtlas.h"
 
@@ -91,6 +90,7 @@ public:
 
     /** Creates a label with an initial string,font file,font size, dimension in points, horizontal alignment and vertical alignment.
      * @warning Not support font name.
+     * @warning Cache textures for each different font size or font file.
      */
     static Label * createWithTTF(const std::string& text, const std::string& fontFile, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -98,6 +98,8 @@ public:
 
     /** Create a label with TTF configuration
      * @warning Not support font name.
+     * @warning Cache textures for each different font file when enable distance field.
+     * @warning Cache textures for each different font size or font file when disable distance field.
      */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::LEFT, int maxLineWidth = 0);
     
@@ -135,6 +137,17 @@ public:
     virtual void setString(const std::string& text) override;
 
     virtual const std::string& getString() const override {  return _originalUTF8String; }
+
+    /** Sets the text color of the label
+     * Only support for TTF and system font
+     * @warning Different from the color of Node.
+     */
+    virtual void setTextColor(const Color4B &color);
+    /** Returns the text color of this label
+     * Only support for TTF and system font
+     * @warning Different from the color of Node.
+     */
+    const Color4B& getTextColor() const { return _textColor;}
 
     /**
      * Enable shadow for the label
@@ -193,22 +206,34 @@ public:
     /** update content immediately.*/
     virtual void updateContent();
 
-    /** Sets the text color
-     *
-     */
-    virtual void setTextColor(const Color4B &color);
-
-    const Color4B& getTextColor() const { return _textColor;}
-
     virtual Sprite * getLetter(int lettetIndex);
 
     /** clip upper and lower margin for reduce height of label.
      */
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
     bool isClipMarginEnabled() const { return _clipEnabled; }
-    // font related stuff
-    int getCommonLineHeight() const;
-    
+
+    /** Sets the line height of the label
+      @warning Not support system font
+      @since v3.2.0
+     */
+    void setLineHeight(float height);
+    /** Returns the line height of this label
+      @warning Not support system font
+     */
+    float getLineHeight() const;
+
+    /** Sets the additional kerning of the label
+      @warning Not support system font
+      @since v3.2.0
+     */
+    void setAdditionalKerning(float space);
+    /** Returns the additional kerning of this label
+      @warning Not support system font
+      @since v3.2.0
+     */
+    float getAdditionalKerning() const;
+
     // string related stuff
     int getStringNumLines() const { return _currNumLines;}
     int getStringLength() const;
@@ -247,6 +272,20 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
+    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return getLineHeight();}
+
+CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js NA
+     */
+    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT,
+      TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Label();
+
 protected:
     void onDraw(const Mat4& transform, bool transformUpdated);
 
@@ -265,17 +304,6 @@ protected:
         CHARMAP,
         STRING_TEXTURE
     };
-
-    /**
-    * @js NA
-    */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT, 
-        TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
-    /**
-    * @js NA
-    * @lua NA
-    */
-    virtual ~Label();
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
@@ -331,6 +359,7 @@ protected:
     Rect _reusedRect;
     int _limitShowCount;
 
+    float _additionalKerning;
     float _commonLineHeight;
     bool  _lineBreakWithoutSpaces;
     int * _horizontalKernings;

@@ -25,6 +25,15 @@ SceneEditorTestLayer.title       =
     "Trigger Test",
 }
 
+SceneEditorTestLayer.loadtypeStr=
+{
+    "change to load \nwith binary file",
+    "change to load \nwith json file"
+}
+
+SceneEditorTestLayer.fileName = ""
+SceneEditorTestLayer.rootNode  = nil
+
 function SceneEditorTestLayer.extend(target)
     local t = tolua.getpeer(target)
     if not t then
@@ -70,9 +79,44 @@ function SceneEditorTestLayer:createTitle()
     title:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 30))
 end
 
+function SceneEditorTestLayer:loadFileChangeHelper(filePathName)
+    local indexTable = {}
+    local index = 0
+
+    while true do
+        index = string.find(filePathName, "%.", index + 1)
+        if nil == index then
+            break
+        end
+
+        indexTable[#indexTable + 1] = index
+    end
+
+    if #indexTable == 0 then
+        return filePathName
+    end
+    
+    local lastIndex = indexTable[#indexTable]
+    if lastIndex == 1 then
+        return filePathName
+    end
+    local renamePathName= string.sub(filePathName, 1, lastIndex - 1)
+
+    if self.isCsbLoad then
+        renamePathName = renamePathName .. ".csb"
+    else
+        renamePathName = renamePathName .. ".json"
+    end
+    print("renamePath is", renamePathName)
+    return renamePathName
+end
+
+function SceneEditorTestLayer:defaultPlay() 
+    
+end
+
 function SceneEditorTestLayer:createMenu()
     local menu = cc.Menu:create()
-
     local function pre()
         local scene = cc.Scene:create()
         scene:addChild(backSceneEditorTest())
@@ -118,6 +162,41 @@ function SceneEditorTestLayer:createMenu()
         end
     end
 
+    self.isCsbLoad = false
+    self.loadtypeLabel =  cc.Label:createWithSystemFont(self.loadtypeStr[1], "Arial", 12)
+    local function changeLoadTypeCallback(tag,sender)
+        self.isCsbLoad = not self.isCsbLoad
+        if self.isCsbLoad then
+            self.loadtypeLabel:setString(self.loadtypeStr[2])
+        else
+            self.loadtypeLabel:setString(self.loadtypeStr[1])
+        end
+
+        if sceneEditorTestIdx == #SceneEditorTestLayer.title then
+            ccs.TriggerMng.getInstance():removeAll()
+        end
+
+        SceneEditorTestLayer.fileName = self:loadFileChangeHelper(SceneEditorTestLayer.fileName)
+    
+        if SceneEditorTestLayer.rootNode ~= nil then
+            self:removeChild(SceneEditorTestLayer.rootNode, true)
+            SceneEditorTestLayer.rootNode = ccs.SceneReader:getInstance():createNodeWithSceneFile(SceneEditorTestLayer.fileName)
+            if SceneEditorTestLayer.rootNode == nil then
+                return
+            end
+            self:defaultPlay()
+            self:addChild(SceneEditorTestLayer.rootNode, 0, 1)
+        end
+    end
+
+    local loadTypeItem = cc.MenuItemLabel:create(self.loadtypeLabel)
+    loadTypeItem:registerScriptTapHandler(changeLoadTypeCallback)
+    local loadtypeMenu = cc.Menu:create()
+    loadtypeMenu:addChild(loadTypeItem)
+    loadtypeMenu:setPosition(cc.p(0,0))
+    loadTypeItem:setPosition(cc.p(VisibleRect:rightTop().x -80,VisibleRect:rightTop().y -30))
+    self:addChild(loadtypeMenu, 100)
+
     local backMenu = cc.Menu:create()
     cc.MenuItemFont:setFontName("Arial")
     cc.MenuItemFont:setFontSize(24)
@@ -145,7 +224,14 @@ end
 
 function LoadSceneEdtiorFileTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json")
+    SceneEditorTestLayer.fileName = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json"
+    SceneEditorTestLayer.rootNode = node
+    self:defaultPlay()
     return node
+end
+
+function LoadSceneEdtiorFileTest:defaultPlay()
+    
 end
 
 function LoadSceneEdtiorFileTest:onEnter()
@@ -191,13 +277,9 @@ end
 function SpriteComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.json")
     if nil ~= node then
-        local action1 = cc.Blink:create(2, 10)
-        local action2 = cc.Blink:create(2, 5)
-
-        local sister1 = node:getChildByTag(10003):getComponent("CCSprite")
-        sister1:getNode():runAction(action1)
-        local sister2 = node:getChildByTag(10004):getComponent("CCSprite")
-        sister2:getNode():runAction(action2)
+        SceneEditorTestLayer.fileName = "scenetest/SpriteComponentTest/SpriteComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+        self:defaultPlay()
     end
 
     return node
@@ -209,8 +291,19 @@ function SpriteComponentTest:onEnter()
     local root = self:createGameScene()
     if nil ~= root then
         self:addChild(root, 0, 1)
+    end 
+end
+
+function SpriteComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local action1 = cc.Blink:create(2, 10)
+        local action2 = cc.Blink:create(2, 5)
+
+        local sister1 = SceneEditorTestLayer.rootNode:getChildByTag(10003):getComponent("CCSprite")
+        sister1:getNode():runAction(action1)
+        local sister2 = SceneEditorTestLayer.rootNode:getChildByTag(10004):getComponent("CCSprite")
+        sister2:getNode():runAction(action2)
     end
-    
 end
 
 function SpriteComponentTest.create()
@@ -246,14 +339,23 @@ end
 function ArmatureComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.json")
     if nil ~= node then
+        SceneEditorTestLayer.fileName = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function ArmatureComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootName ~= nil then
         local blowFish = node:getChildByTag(10007):getComponent("CCArmature")
         blowFish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
 
         local butterflyfish = node:getChildByTag(10008):getComponent("CCArmature")
-        butterflyfish:getNode():runAction(CCMoveBy:create(10.0, cc.p(-1000.0, 0)))
+        butterflyfish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
     end
-
-    return node
 end
 
 function ArmatureComponentTest:onEnter()
@@ -299,23 +401,31 @@ end
 function UIComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json")
     if nil ~= node then
-        local render = node:getChildByTag(10025):getComponent("GUIComponent")
+        SceneEditorTestLayer.fileName = "scenetest/UIComponentTest/UIComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function UIComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local render = SceneEditorTestLayer.rootNode:getChildByTag(10025):getComponent("GUIComponent")
         local widget = render:getNode()
         local button = widget:getChildByName("Button_156")
         local function onTouch(sender, eventType)
             if eventType == ccui.TouchEventType.began then
-                local blowFish = node:getChildByTag(10010):getComponent("CCArmature")
+                local blowFish = SceneEditorTestLayer.rootNode:getChildByTag(10010):getComponent("CCArmature")
                 blowFish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
 
-                local butterflyfish = node:getChildByTag(10011):getComponent("CCArmature")
+                local butterflyfish = SceneEditorTestLayer.rootNode:getChildByTag(10011):getComponent("CCArmature")
                 butterflyfish:getNode():runAction(cc.MoveBy:create(10.0, cc.p(-1000.0, 0)))
             end
         end
 
         button:addTouchEventListener(onTouch)
     end
-
-    return node
 end
 
 function UIComponentTest:onEnter()
@@ -361,7 +471,18 @@ end
 function TmxMapComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.json")
     if nil ~= node then
-        local tmxMap = node:getChildByTag(10015):getComponent("CCTMXTiledMap")
+        SceneEditorTestLayer.fileName = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function TmxMapComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local tmxMap = SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCTMXTiledMap")
         local actionTo = cc.SkewTo:create(2, 0.0, 2.0)
         local rotateTo = cc.RotateTo:create(2, 61.0)
         local actionScaleTo = cc.ScaleTo:create(2, -0.44, 0.47)
@@ -374,8 +495,6 @@ function TmxMapComponentTest:createGameScene()
         tmxMap:getNode():runAction(cc.Sequence:create(rotateTo, rotateToBack))
         tmxMap:getNode():runAction(cc.Sequence:create(actionScaleTo, actionScaleToBack))
     end
-
-    return node
 end
 
 function TmxMapComponentTest:onEnter()
@@ -421,13 +540,22 @@ end
 function ParticleComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.json")
     if nil ~= node then
-        local particle = node:getChildByTag(10020):getComponent("CCParticleSystemQuad")
+        SceneEditorTestLayer.fileName = "scenetest/ParticleComponentTest/ParticleComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function ParticleComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local particle = SceneEditorTestLayer.rootNode:getChildByTag(10020):getComponent("CCParticleSystemQuad")
         local jump = cc.JumpBy:create(5, cc.p(-500,0), 50, 4)
         local action = cc.Sequence:create( jump, jump:reverse())
         particle:getNode():runAction(action)
     end
-
-    return node
 end
 
 function ParticleComponentTest:onEnter()
@@ -473,13 +601,24 @@ end
 function EffectComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.json")
     if nil ~= node then
-        local render = node:getChildByTag(10015):getComponent("CCArmature")
+        SceneEditorTestLayer.fileName = "scenetest/EffectComponentTest/EffectComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
+    end
+
+    return node
+end
+
+function EffectComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local render = SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCArmature")
         local armature = render:getNode()
         local function animationEvent(armatureBack,movementType,movementID)
             local id = movementID
             if movementType == ccs.MovementEventType.loopComplete then
                 if id == "Fire" then
-                    local audio = node:getChildByTag(10015):getComponent("CCComAudio")
+                    local audio = SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCComAudio")
                     audio:playEffect()
                 end
             end
@@ -487,8 +626,6 @@ function EffectComponentTest:createGameScene()
 
         armature:getAnimation():setMovementEventCallFunc(animationEvent)
     end
-
-    return node
 end
 
 function EffectComponentTest:onEnter()
@@ -534,11 +671,20 @@ end
 function BackgroundComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.json")
     if nil ~= node then
-        local audio = node:getComponent("CCBackgroundAudio")
-        audio:playBackgroundMusic()
+        SceneEditorTestLayer.fileName = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+
+        self:defaultPlay()
     end
 
     return node
+end
+
+function BackgroundComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local audio = SceneEditorTestLayer.rootNode:getComponent("CCBackgroundAudio")
+        audio:playBackgroundMusic()
+    end
 end
 
 function BackgroundComponentTest:onEnter()
@@ -583,9 +729,19 @@ end
 
 function AttributeComponentTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.json")
-    local attribute = node:getChildByTag(10015):getComponent("CCComAttribute")
-    print(string.format("Name: %s, HP: %f, MP: %f", attribute:getString("name"), attribute:getFloat("maxHP"), attribute:getFloat("maxMP")))
+    if nil ~= node then
+        SceneEditorTestLayer.fileName = "scenetest/AttributeComponentTest/AttributeComponentTest.json"
+        SceneEditorTestLayer.rootNode = node
+        self:defaultPlay()
+    end
     return node
+end
+
+function AttributeComponentTest:defaultPlay()
+    if SceneEditorTestLayer.rootNode ~= nil then
+        local attribute = SceneEditorTestLayer.rootNode:getChildByTag(10015):getComponent("CCComAttribute")
+        print(string.format("Name: %s, HP: %f, MP: %f", attribute:getString("name"), attribute:getFloat("maxHP"), attribute:getFloat("maxMP")))
+    end
 end
 
 function AttributeComponentTest:onEnter()
@@ -631,7 +787,12 @@ end
 
 function TriggerTest:createGameScene()
     local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.json")
+    if nil ~= node then
+        SceneEditorTestLayer.fileName = "scenetest/TriggerTest/TriggerTest.json"
+        SceneEditorTestLayer.rootNode = node
 
+        self:defaultPlay()
+    end
     return node
 end
 
@@ -658,6 +819,17 @@ function TriggerTest:onEnter()
     local root = self:createGameScene()
     if nil ~= root then
         self:addChild(root, 0, 1)
+        local function onTouchEvent(touch, event)
+            if eventType == "began" then
+                return self:onTouchBegan(touch, event)
+            elseif eventType == "moved" then
+                self:onTouchMoved(touch, event)
+            elseif eventType == "ended" then
+                self:onTouchEnded(touch, event)
+            elseif eventType == "cancelled" then
+                self:onTouchCancelled(touch, event)
+            end
+        end
         self._touchListener = nil
         local listener = cc.EventListenerTouchOneByOne:create()
         listener:setSwallowTouches(true)
@@ -668,20 +840,25 @@ function TriggerTest:onEnter()
         local eventDispatcher = self:getEventDispatcher()
         eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
         self._touchListener = listener
+
+        self:unscheduleUpdate()
         local function update(dt)
             ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_UPDATESCENE)
         end
         self:scheduleUpdateWithPriorityLua(update,0)
-        ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_ENTERSCENE)
-    end
-    
+    end    
+end
+
+function TriggerTest:defaultPlay()
+    ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_ENTERSCENE)
 end
 
 function TriggerTest:onExit()
-    ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_LEAVESCENE)
     self:unscheduleUpdate()
+    ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_LEAVESCENE)
     local dispatcher = self:getEventDispatcher()
     dispatcher:removeEventListener(self._touchListener)
+    self._touchListener = nil
     ccs.TriggerMng.destroyInstance()
     ccs.ArmatureDataManager:destroyInstance()
     ccs.SceneReader:destroyInstance()

@@ -24,6 +24,7 @@ bool ConfigParser::isInit()
 void ConfigParser::readConfig()
 {
     _isInit = true;
+    _consolePort = 6010;
     string filecfg = "config.json";
     
     string fileContent;
@@ -68,6 +69,9 @@ void ConfigParser::readConfig()
                 }
                 if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString()) {
                     _entryfile = objectInitView["entry"].GetString();
+                }
+                if (objectInitView.HasMember("consolePort")){
+                    _consolePort = objectInitView["consolePort"].GetUint();
                 }
             }
         }
@@ -123,6 +127,10 @@ bool ConfigParser::isLanscape()
     return _isLandscape;
 }
 
+int ConfigParser::getConsolePort()
+{
+    return _consolePort;
+}
 int ConfigParser::getScreenSizeCount(void)
 {
     return (int)_screenSizeArray.size();

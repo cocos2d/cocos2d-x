@@ -82,6 +82,9 @@
     <Filter Include="reader\WidgetReader\TextReader">
       <UniqueIdentifier>{695e45cf-2af5-4bdb-84a2-f0e9f3d77f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TimelineAction">
+      <UniqueIdentifier>{5f5a98dd-657c-4a9b-8862-c11555ad1293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CCComAttribute.cpp">
@@ -229,6 +232,24 @@
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCFrame.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoLoader.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCComAttribute.h">
@@ -354,9 +375,6 @@
     <ClInclude Include="..\CCActionObject.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="..\ObjectFactory.h">
-      <Filter>trigger</Filter>
-    </ClInclude>
     <ClInclude Include="..\TriggerBase.h">
       <Filter>trigger</Filter>
     </ClInclude>
@@ -415,5 +433,26 @@
       <Filter>reader\WidgetReader\PageViewReader</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\ActionTimeline\CCActionTimeline.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCFrame.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCNodeReader.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCTimeLine.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoLoader.h">
+      <Filter>json</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

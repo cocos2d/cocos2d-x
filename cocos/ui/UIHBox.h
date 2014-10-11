@@ -26,12 +26,13 @@
 #define __UIHBox_H__
 
 #include "ui/UILayout.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 namespace ui {
 
-class HBox : public Layout{
+class CC_GUI_DLL HBox : public Layout{
     
     
 public:

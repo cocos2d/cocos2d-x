@@ -16,18 +16,13 @@
 // version 0.9.0: Initial
 //
 
-#include <cstdlib>
-#include <cstring>
-#include <cassert>
+#include "CCObjLoader.h"
 
-#include <string>
-#include <vector>
-#include <map>
 #include <fstream>
 #include <sstream>
 
-#include "CCObjLoader.h"
 #include "platform/CCFileUtils.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -102,7 +97,7 @@ static inline int parseInt(const char*& token)
 static inline float parseFloat(const char*& token)
 {
     token += strspn(token, " \t");
-    float f = (float)atof(token);
+    float f = (float)utils::atof(token);
     token += strcspn(token, " \t\r");
     return f;
 }

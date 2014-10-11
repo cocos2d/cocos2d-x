@@ -26,6 +26,8 @@ THE SOFTWARE.
 #ifndef __SUPPORT_BASE64_H__
 #define __SUPPORT_BASE64_H__
 
+#include "platform/CCPlatformMacros.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif    
@@ -44,7 +46,7 @@ namespace cocos2d {
  *
  @since v0.8.1
  */
-int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char **out);
+int CC_DLL base64Decode(const unsigned char *in, unsigned int inLength, unsigned char **out);
     
 /**
  * Encodes bytes into a 64base encoded memory with terminating '\0' character. 
@@ -54,7 +56,7 @@ int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char *
  *
  @since v2.1.4
  */
-int base64Encode(const unsigned char *in, unsigned int inLength, char **out);
+int CC_DLL base64Encode(const unsigned char *in, unsigned int inLength, char **out);
 
 }//namespace   cocos2d 
 

@@ -25,9 +25,7 @@ THE SOFTWARE.
 #ifndef __CCTWEENFUNCTION_H__
 #define __CCTWEENFUNCTION_H__
 
-#include "base/CCPlatformMacros.h"
-#include "base/ccMacros.h"
-#include <math.h>
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -84,63 +82,63 @@ namespace tweenfunc {
     
     
     //tween functions for CCActionEase
-    float easeIn(float time, float rate);
-    float easeOut(float time, float rate);
-    float easeInOut(float time, float rate);
+    float CC_DLL easeIn(float time, float rate);
+    float CC_DLL easeOut(float time, float rate);
+    float CC_DLL easeInOut(float time, float rate);
     
-    float bezieratFunction( float a, float b, float c, float d, float t );
+    float CC_DLL bezieratFunction( float a, float b, float c, float d, float t );
     
-    float quadraticIn(float time);
-    float quadraticOut(float time);
-    float quadraticInOut(float time);
-    
-    
-    float tweenTo(float time, TweenType type, float *easingParam);
-    
-    float linear(float time);
+    float CC_DLL quadraticIn(float time);
+    float CC_DLL quadraticOut(float time);
+    float CC_DLL quadraticInOut(float time);
     
     
-    float sineEaseIn(float time);
-    float sineEaseOut(float time);
-    float sineEaseInOut(float time);
+    float CC_DLL tweenTo(float time, TweenType type, float *easingParam);
     
-    float quadEaseIn(float time);
-    float quadEaseOut(float time);
-    float quadEaseInOut(float time);
+    float CC_DLL linear(float time);
     
-    float cubicEaseIn(float time);
-    float cubicEaseOut(float time);
-    float cubicEaseInOut(float time);
     
-    float quartEaseIn(float time);
-    float quartEaseOut(float time);
-    float quartEaseInOut(float time);
+    float CC_DLL sineEaseIn(float time);
+    float CC_DLL sineEaseOut(float time);
+    float CC_DLL sineEaseInOut(float time);
     
-    float quintEaseIn(float time);
-    float quintEaseOut(float time);
-    float quintEaseInOut(float time);
+    float CC_DLL quadEaseIn(float time);
+    float CC_DLL quadEaseOut(float time);
+    float CC_DLL quadEaseInOut(float time);
     
-    float expoEaseIn(float time);
-    float expoEaseOut(float time);
-    float expoEaseInOut(float time);
+    float CC_DLL cubicEaseIn(float time);
+    float CC_DLL cubicEaseOut(float time);
+    float CC_DLL cubicEaseInOut(float time);
     
-    float circEaseIn(float time);
-    float circEaseOut(float time);
-    float circEaseInOut(float time);
+    float CC_DLL quartEaseIn(float time);
+    float CC_DLL quartEaseOut(float time);
+    float CC_DLL quartEaseInOut(float time);
     
-    float elasticEaseIn(float time, float period);
-    float elasticEaseOut(float time, float period);
-    float elasticEaseInOut(float time, float period);
+    float CC_DLL quintEaseIn(float time);
+    float CC_DLL quintEaseOut(float time);
+    float CC_DLL quintEaseInOut(float time);
     
-    float backEaseIn(float time);
-    float backEaseOut(float time);
-    float backEaseInOut(float time);
+    float CC_DLL expoEaseIn(float time);
+    float CC_DLL expoEaseOut(float time);
+    float CC_DLL expoEaseInOut(float time);
     
-    float bounceEaseIn(float time);
-    float bounceEaseOut(float time);
-    float bounceEaseInOut(float time);
+    float CC_DLL circEaseIn(float time);
+    float CC_DLL circEaseOut(float time);
+    float CC_DLL circEaseInOut(float time);
     
-    float customEase(float time, float *easingParam);
+    float CC_DLL elasticEaseIn(float time, float period);
+    float CC_DLL elasticEaseOut(float time, float period);
+    float CC_DLL elasticEaseInOut(float time, float period);
+    
+    float CC_DLL backEaseIn(float time);
+    float CC_DLL backEaseOut(float time);
+    float CC_DLL backEaseInOut(float time);
+    
+    float CC_DLL bounceEaseIn(float time);
+    float CC_DLL bounceEaseOut(float time);
+    float CC_DLL bounceEaseInOut(float time);
+    
+    float CC_DLL customEase(float time, float *easingParam);
 }
 
 NS_CC_END

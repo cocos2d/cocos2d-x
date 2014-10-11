@@ -32,21 +32,22 @@ THE SOFTWARE.
 #include <string>
 
 #include "2d/CCDrawingPrimitives.h"
-#include "2d/CCScene.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
+
 #include "2d/CCActionManager.h"
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCTransition.h"
 #include "2d/CCFontFreeType.h"
+#include "2d/CCLabelAtlas.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "base/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
@@ -54,14 +55,10 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
 #include "base/CCConsole.h"
-#include "base/CCTouch.h"
 #include "base/CCAutoreleasePool.h"
-#include "base/CCProfiling.h"
 #include "base/CCConfiguration.h"
-#include "base/CCNS.h"
-#include "math/CCMath.h"
-#include "CCApplication.h"
-#include "CCGLView.h"
+#include "platform/CCApplication.h"
+//#include "platform/CCGLViewImpl.h"
 
 /**
  Position of the FPS
@@ -75,7 +72,7 @@ THE SOFTWARE.
 using namespace std;
 
 NS_CC_BEGIN
-// XXX it should be a Director ivar. Move it there once support for multiple directors is added
+// FIXME: it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
 static DisplayLinkDirector *s_SharedDirector = nullptr;
@@ -136,19 +133,19 @@ bool Director::init(void)
     _contentScaleFactor = 1.0f;
 
     // scheduler
-    _scheduler = new Scheduler();
+    _scheduler = new (std::nothrow) Scheduler();
     // action manager
-    _actionManager = new ActionManager();
+    _actionManager = new (std::nothrow) ActionManager();
     _scheduler->scheduleUpdate(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
-    _eventDispatcher = new EventDispatcher();
-    _eventAfterDraw = new EventCustom(EVENT_AFTER_DRAW);
+    _eventDispatcher = new (std::nothrow) EventDispatcher();
+    _eventAfterDraw = new (std::nothrow) EventCustom(EVENT_AFTER_DRAW);
     _eventAfterDraw->setUserData(this);
-    _eventAfterVisit = new EventCustom(EVENT_AFTER_VISIT);
+    _eventAfterVisit = new (std::nothrow) EventCustom(EVENT_AFTER_VISIT);
     _eventAfterVisit->setUserData(this);
-    _eventAfterUpdate = new EventCustom(EVENT_AFTER_UPDATE);
+    _eventAfterUpdate = new (std::nothrow) EventCustom(EVENT_AFTER_UPDATE);
     _eventAfterUpdate->setUserData(this);
-    _eventProjectionChanged = new EventCustom(EVENT_PROJECTION_CHANGED);
+    _eventProjectionChanged = new (std::nothrow) EventCustom(EVENT_PROJECTION_CHANGED);
     _eventProjectionChanged->setUserData(this);
 
 
@@ -156,10 +153,10 @@ bool Director::init(void)
     initTextureCache();
     initMatrixStack();
 
-    _renderer = new Renderer;
+    _renderer = new (std::nothrow) Renderer;
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    _console = new Console;
+    _console = new (std::nothrow) Console;
 #endif
     return true;
 }
@@ -177,7 +174,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     
-
     delete _eventAfterUpdate;
     delete _eventAfterDraw;
     delete _eventAfterVisit;
@@ -191,11 +187,10 @@ Director::~Director(void)
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
-    // clean auto release pool
-    PoolManager::destroyInstance();
-
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
+
+    Configuration::destroyInstance();
 
     s_SharedDirector = nullptr;
 }
@@ -233,7 +228,7 @@ void Director::setDefaultValues(void)
 
     // PVR v2 has alpha premultiplied ?
     bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
-    Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
+    Image::setPVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
 void Director::setGLDefaultValues()
@@ -242,7 +237,7 @@ void Director::setGLDefaultValues()
     CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
+    // FIXME: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
     // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
@@ -265,7 +260,7 @@ void Director::drawScene()
 
     if (_openGLView)
     {
-        _openGLView->pollInputEvents();
+        _openGLView->pollEvents();
     }
 
     //tick before glClear: issue #533
@@ -278,33 +273,71 @@ void Director::drawScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
-     XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
+     * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
+     */
     if (_nextScene)
     {
         setNextScene();
     }
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    // draw the scene
+    
     if (_runningScene)
     {
-        _runningScene->visit(_renderer, Mat4::IDENTITY, false);
+        //clear draw stats
+        _renderer->clearDrawStats();
+        
+        Camera* defaultCamera = nullptr;
+        const auto& cameras = _runningScene->_cameras;
+        //draw with camera
+        for (size_t i = 0; i < cameras.size(); i++)
+        {
+            Camera::_visitingCamera = cameras[i];
+            if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
+            {
+                defaultCamera = Camera::_visitingCamera;
+                continue;
+            }
+            
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        //draw with default camera
+        if (defaultCamera)
+        {
+            Camera::_visitingCamera = defaultCamera;
+            pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+            
+            //visit the scene
+            _runningScene->visit(_renderer, Mat4::IDENTITY, 0);
+            _renderer->render();
+            
+            popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        }
+        Camera::_visitingCamera = nullptr;
+        
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, false);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     if (_displayStats)
     {
         showStats();
     }
-
     _renderer->render();
+
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -405,9 +438,9 @@ TextureCache* Director::getTextureCache() const
 void Director::initTextureCache()
 {
 #ifdef EMSCRIPTEN
-    _textureCache = new TextureCacheEmscripten();
+    _textureCache = new (std::nothrow) TextureCacheEmscripten();
 #else
-    _textureCache = new TextureCache();
+    _textureCache = new (std::nothrow) TextureCache();
 #endif // EMSCRIPTEN
 }
 
@@ -827,8 +860,13 @@ void Director::runWithScene(Scene *scene)
 
 void Director::replaceScene(Scene *scene)
 {
-    CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
+    
+    if (_runningScene == nullptr) {
+        runWithScene(scene);
+        return;
+    }
     
     if (scene == _nextScene)
         return;
@@ -970,13 +1008,24 @@ void Director::purgeDirector()
     FontFreeType::shutdownFreeType();
 
     // purge all managed caches
+    
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
     DrawPrimitives::free();
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
-    Configuration::destroyInstance();
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
@@ -1121,7 +1170,7 @@ void Director::calculateMPF()
 // returns the FPS image data pointer and len
 void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 {
-    // XXX fixed me if it should be used 
+    // FIXME: fixed me if it should be used 
     *datapointer = cc_fps_images_png;
     *length = cc_fps_images_len();
 }
@@ -1129,9 +1178,15 @@ void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 void Director::createStatsLabel()
 {
     Texture2D *texture = nullptr;
-
+    std::string fpsString = "00.0";
+    std::string drawBatchString = "000";
+    std::string drawVerticesString = "00000";
     if (_FPSLabel)
     {
+        fpsString = _FPSLabel->getString();
+        drawBatchString = _drawnBatchesLabel->getString();
+        drawVerticesString = _drawnVerticesLabel->getString();
+        
         CC_SAFE_RELEASE_NULL(_FPSLabel);
         CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
         CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
@@ -1145,7 +1200,7 @@ void Director::createStatsLabel()
     ssize_t dataLength = 0;
     getFPSImageData(&data, &dataLength);
 
-    Image* image = new Image();
+    Image* image = new (std::nothrow) Image();
     bool isOK = image->initWithImageData(data, dataLength);
     if (! isOK) {
         CCLOGERROR("%s", "Fails: init fps_images");
@@ -1168,19 +1223,19 @@ void Director::createStatsLabel()
     _FPSLabel = LabelAtlas::create();
     _FPSLabel->retain();
     _FPSLabel->setIgnoreContentScaleFactor(true);
-    _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
+    _FPSLabel->initWithString(fpsString, texture, 12, 32 , '.');
     _FPSLabel->setScale(scaleFactor);
 
     _drawnBatchesLabel = LabelAtlas::create();
     _drawnBatchesLabel->retain();
     _drawnBatchesLabel->setIgnoreContentScaleFactor(true);
-    _drawnBatchesLabel->initWithString("000", texture, 12, 32, '.');
+    _drawnBatchesLabel->initWithString(drawBatchString, texture, 12, 32, '.');
     _drawnBatchesLabel->setScale(scaleFactor);
 
     _drawnVerticesLabel = LabelAtlas::create();
     _drawnVerticesLabel->retain();
     _drawnVerticesLabel->setIgnoreContentScaleFactor(true);
-    _drawnVerticesLabel->initWithString("00000", texture, 12, 32, '.');
+    _drawnVerticesLabel->initWithString(drawVerticesString, texture, 12, 32, '.');
     _drawnVerticesLabel->setScale(scaleFactor);
 
 

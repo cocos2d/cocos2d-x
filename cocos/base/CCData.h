@@ -26,10 +26,10 @@
 #ifndef __CCDATA_H__
 #define __CCDATA_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <stdint.h> // for ssize_t on android
 #include <string>   // for ssize_t on linux
-#include "CCStdC.h" // for ssize_t on window
+#include "platform/CCStdC.h" // for ssize_t on window
 
 NS_CC_BEGIN
 
@@ -63,7 +63,7 @@ public:
      *        Developer should free the pointer after invoking this method.
      *  @see Data::fastSet
      */
-    void copy(unsigned char* bytes, const ssize_t size);
+    void copy(const unsigned char* bytes, const ssize_t size);
     
     /** Fast set the buffer pointer and its size. Please use it carefully.
      *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',

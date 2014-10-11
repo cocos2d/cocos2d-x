@@ -31,7 +31,7 @@ namespace ui {
 
 LinearHorizontalLayoutManager* LinearHorizontalLayoutManager::create()
 {
-    LinearHorizontalLayoutManager* exe = new LinearHorizontalLayoutManager();
+    LinearHorizontalLayoutManager* exe = new (std::nothrow) LinearHorizontalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -57,7 +57,7 @@ void LinearHorizontalLayoutManager::doLayout(LayoutProtocol* layout)
             {
                 LinearLayoutParameter::LinearGravity childGravity = layoutParameter->getGravity();
                 Vec2 ap = child->getAnchorPoint();
-                Size cs = child->getSize();
+                Size cs = child->getContentSize();
                 float finalPosX = leftBoundary + (ap.x * cs.width);
                 float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
                 switch (childGravity)
@@ -88,7 +88,7 @@ void LinearHorizontalLayoutManager::doLayout(LayoutProtocol* layout)
 //LinearVerticalLayoutManager
 LinearVerticalLayoutManager* LinearVerticalLayoutManager::create()
 {
-    LinearVerticalLayoutManager* exe = new LinearVerticalLayoutManager();
+    LinearVerticalLayoutManager* exe = new (std::nothrow) LinearVerticalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -135,7 +135,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                subWidget->setPosition(Vec2(finalPosX, finalPosY));
+                subWidget->setPosition(finalPosX, finalPosY);
                 topBoundary = subWidget->getPosition().y - subWidget->getAnchorPoint().y * subWidget->getContentSize().height - mg.bottom;
             }
         }
@@ -146,7 +146,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
 
 RelativeLayoutManager* RelativeLayoutManager::create()
 {
-    RelativeLayoutManager* exe = new RelativeLayoutManager();
+    RelativeLayoutManager* exe = new (std::nothrow) RelativeLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -206,7 +206,7 @@ Widget* RelativeLayoutManager::getRelativeWidget(Widget* widget)
 bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
 {
     Vec2 ap = _widget->getAnchorPoint();
-    Size cs = _widget->getSize();
+    Size cs = _widget->getContentSize();
     
     _finalPositionX = 0.0f;
     _finalPositionY = 0.0f;
@@ -280,7 +280,7 @@ bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtoc
                 {
                     return false;
                 }
-                Size rbs = relativeWidget->getSize();
+                Size rbs = relativeWidget->getContentSize();
                 float locationTop = relativeWidget->getTopBoundary();
                 
                 _finalPositionY = locationTop + ap.y * cs.height;
@@ -320,7 +320,7 @@ bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtoc
                 {
                     return false;
                 }
-                Size rbs = relativeWidget->getSize();
+                Size rbs = relativeWidget->getContentSize();
                 float locationLeft = relativeWidget->getLeftBoundary();
                 _finalPositionX = locationLeft - (1.0f - ap.x) * cs.width;
                 
@@ -360,7 +360,7 @@ bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtoc
                 {
                     return false;
                 }
-                Size rbs = relativeWidget->getSize();
+                Size rbs = relativeWidget->getContentSize();
                 float locationRight = relativeWidget->getRightBoundary();
                 _finalPositionX = locationRight + ap.x * cs.width;
                 
@@ -400,7 +400,7 @@ bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtoc
                 {
                     return false;
                 }
-                Size rbs = relativeWidget->getSize();
+                Size rbs = relativeWidget->getContentSize();
                 float locationBottom = relativeWidget->getBottomBoundary();
                 
                 _finalPositionY = locationBottom - (1.0f - ap.y) * cs.height;

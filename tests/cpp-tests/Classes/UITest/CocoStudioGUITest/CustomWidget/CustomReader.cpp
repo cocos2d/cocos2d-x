@@ -3,7 +3,7 @@
 #include "CustomReader.h"
 #include "CustomImageView.h"
 
-static CustomReader* _instanceCustomReader = NULL;
+static CustomReader* _instanceCustomReader = nullptr;
 
 CustomReader::CustomReader()
 {
@@ -19,7 +19,7 @@ CustomReader* CustomReader::getInstance()
 {
     if (!_instanceCustomReader)
     {
-        _instanceCustomReader = new CustomReader();
+        _instanceCustomReader = new (std::nothrow) CustomReader();
     }
     return _instanceCustomReader;
 }

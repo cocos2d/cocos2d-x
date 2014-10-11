@@ -2,18 +2,22 @@
 --------------------------------
 -- @module EventTouch
 -- @extend Event
+-- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#EventTouch] getEventCode 
 -- @param self
--- @return EventTouch::EventCode#EventTouch::EventCode ret (return value: cc.EventTouch::EventCode)
+-- @return int#int ret (return value: int)
         
 --------------------------------
+-- 
 -- @function [parent=#EventTouch] setEventCode 
 -- @param self
--- @param #cc.EventTouch::EventCode eventcode
+-- @param #int eventCode
         
 --------------------------------
+-- 
 -- @function [parent=#EventTouch] EventTouch 
 -- @param self
         

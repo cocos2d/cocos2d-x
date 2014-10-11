@@ -450,6 +450,7 @@ public:
     virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
 
+class Node;
 /**
  ScriptEngineManager is a singleton which holds an object instance of ScriptEngineProtocl
  It helps cocos2d-x and the user code to find back LuaEngine object
@@ -490,6 +491,21 @@ public:
      * @lua NA
      */
     static void destroyInstance();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static bool sendNodeEventToJS(Node* node, int action);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static bool sendNodeEventToJSExtended(Node* node, int action);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    static void sendNodeEventToLua(Node* node, int action);
     /**
      * @js NA
      * @lua NA

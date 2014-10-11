@@ -28,11 +28,17 @@ THE SOFTWARE.
 #ifndef __CCSCENE_H__
 #define __CCSCENE_H__
 
+#include <string>
 #include "2d/CCNode.h"
-#include "physics/CCPhysicsWorld.h"
 
 NS_CC_BEGIN
 
+class Camera;
+class EventListenerCustom;
+class EventCustom;
+#if CC_USE_PHYSICS
+class PhysicsWorld;
+#endif
 /**
  * @addtogroup scene
  * @{
@@ -58,10 +64,13 @@ public:
     static Scene *createWithSize(const Size& size);
 
     // Overrides
-    virtual Scene *getScene() override;
+    virtual Scene *getScene() const override;
 
     using Node::addChild;
     virtual std::string getDescription() const override;
+    
+    /** get all cameras */
+    const std::vector<Camera*>& getCameras() const { return _cameras; }
     
 CC_CONSTRUCTOR_ACCESS:
     Scene();
@@ -69,11 +78,20 @@ CC_CONSTRUCTOR_ACCESS:
     
     bool init();
     bool initWithSize(const Size& size);
+    
+    void onProjectionChanged(EventCustom* event);
 
 protected:
     friend class Node;
     friend class ProtectedNode;
     friend class SpriteBatchNode;
+    friend class Camera;
+    friend class Director;
+    friend class Renderer;
+    
+    std::vector<Camera*> _cameras; //weak ref to Camera
+    Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
+    EventListenerCustom*       _event;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
@@ -81,6 +99,7 @@ private:
 #if CC_USE_PHYSICS
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void update(float delta) override;
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     static Scene *createWithPhysics();

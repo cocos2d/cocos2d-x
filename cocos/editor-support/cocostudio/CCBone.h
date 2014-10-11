@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "cocostudio/CCTween.h"
 #include "cocostudio/CCDecorativeDisplay.h"
 #include "cocostudio/CCDisplayManager.h"
+#include "cocostudio/CocosStudioExport.h"
 #include "2d/CCNode.h"
 #include "math/CCMath.h"
 
@@ -37,7 +38,7 @@ namespace cocostudio {
 
 class Armature;
 
-class Bone : public cocos2d::Node
+class CC_STUDIO_DLL Bone : public cocos2d::Node
 {
 public:
     /**
@@ -207,9 +208,6 @@ public:
 
     virtual FrameData *getTweenData() const { return _tweenData; }
 
-    virtual void setName(const std::string &name) { _name = name; }
-    virtual const std::string getName() const { return _name; }
-
     virtual BaseData *getWorldInfo() const { return _worldInfo; }
 protected:
     void applyParentTransform(Bone *parent);
@@ -241,8 +239,6 @@ protected:
 
     //! Used for making tween effect in every frame
     FrameData *_tweenData;
-
-    std::string _name;
 
     Bone *_parentBone;	               //! A weak reference to its parent
     bool _boneTransformDirty;          //! Whether or not transform dirty

@@ -163,6 +163,11 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCFrame.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp" />
+    <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -193,6 +198,7 @@
     <ClCompile Include="..\CCTransformHelp.cpp" />
     <ClCompile Include="..\CCTween.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
+    <ClCompile Include="..\CocoLoader.cpp" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\TriggerBase.cpp" />
     <ClCompile Include="..\TriggerMng.cpp" />
@@ -229,6 +235,12 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\ActionTimeline\CCActionTimeline.h" />
+    <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="..\ActionTimeline\CCFrame.h" />
+    <ClInclude Include="..\ActionTimeline\CCNodeReader.h" />
+    <ClInclude Include="..\ActionTimeline\CCTimeLine.h" />
+    <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />
@@ -260,8 +272,8 @@
     <ClInclude Include="..\CCTransformHelp.h" />
     <ClInclude Include="..\CCTween.h" />
     <ClInclude Include="..\CCUtilMath.h" />
+    <ClInclude Include="..\CocoLoader.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
-    <ClInclude Include="..\ObjectFactory.h" />
     <ClInclude Include="..\TriggerBase.h" />
     <ClInclude Include="..\TriggerMng.h" />
     <ClInclude Include="..\TriggerObj.h" />

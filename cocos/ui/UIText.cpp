@@ -54,7 +54,7 @@ Text::~Text()
 
 Text* Text::create()
 {
-    Text* widget = new Text();
+    Text* widget = new (std::nothrow) Text();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -75,7 +75,7 @@ bool Text::init()
     
 Text* Text::create(const std::string &textContent, const std::string &fontName, int fontSize)
 {
-    Text *text = new Text;
+    Text *text = new (std::nothrow) Text;
     if (text && text->init(textContent, fontName, fontSize)) {
         text->autorelease();
         return text;
@@ -207,6 +207,16 @@ TextVAlignment Text::getTextVerticalAlignment()const
 {
     return _labelRenderer->getVerticalAlignment();
 }
+    
+void Text::setTextColor(const Color4B color)
+{
+    _labelRenderer->setTextColor(color);
+}
+    
+const Color4B& Text::getTextColor() const
+{
+    return _labelRenderer->getTextColor();
+}
 
 void Text::setTouchScaleChangeEnabled(bool enable)
 {
@@ -282,7 +292,7 @@ void Text::adaptRenderers()
     }
 }
 
-const Size& Text::getVirtualRendererSize() const
+Size Text::getVirtualRendererSize() const
 {
     return _labelRenderer->getContentSize();
 }
@@ -296,21 +306,20 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _labelRenderer->setDimensions(0,0);
         _labelRenderer->setScale(1.0f);
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
     else
     {
-        _labelRenderer->setDimensions(_size.width,_size.height);
+        _labelRenderer->setDimensions(_contentSize.width,_contentSize.height);
         Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _labelRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = _size.width / textureSize.width;
-        float scaleY = _size.height / textureSize.height;
+        float scaleX = _contentSize.width / textureSize.width;
+        float scaleY = _contentSize.height / textureSize.height;
         _labelRenderer->setScaleX(scaleX);
         _labelRenderer->setScaleY(scaleY);
         _normalScaleValueX = scaleX;
@@ -354,7 +363,7 @@ void Text::copySpecialProperties(Widget *widget)
     if (label)
     {
         setFontName(label->_fontName);
-        setFontSize(label->_labelRenderer->getSystemFontSize());
+        setFontSize(label->getFontSize());
         setString(label->getString());
         setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
         setTextHorizontalAlignment(label->_labelRenderer->getHorizontalAlignment());

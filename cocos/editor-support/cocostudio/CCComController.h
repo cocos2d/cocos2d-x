@@ -27,11 +27,12 @@ THE SOFTWARE.
 
 #include "CCComBase.h"
 #include "cocostudio/CCInputDelegate.h"
+#include "cocostudio/CocosStudioExport.h"
 #include "2d/CCComponent.h"
 
 namespace cocostudio {
 
-class ComController : public cocos2d::Component, public InputDelegate
+class CC_STUDIO_DLL ComController : public cocos2d::Component, public InputDelegate
 {
 
     DECLARE_CLASS_COMPONENT_INFO

@@ -35,7 +35,8 @@ public:
     bool init();
     
     void pageViewEvent(Ref* pSender, PageView::EventType type);
-    
+    virtual void switchLoadMethod(Ref* pSender);
+    void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIPageViewTest_Editor)
     Text* _displayValueLabel;

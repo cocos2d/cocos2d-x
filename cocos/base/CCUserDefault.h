@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __SUPPORT_CCUSERDEFAULT_H__
 #define __SUPPORT_CCUSERDEFAULT_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <string>
 #include "base/CCData.h"
 
@@ -173,7 +173,7 @@ public:
     /**
      * @js NA
      */
-    const static std::string& getXMLFilePath();
+    static const std::string& getXMLFilePath();
     /**
      * @js NA
      */

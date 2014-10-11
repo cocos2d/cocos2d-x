@@ -9,7 +9,7 @@ namespace cocosbuilder {
 
 void MenuItemLoader::onHandlePropTypeBlock(Node * pNode, Node * pParent, const char * pPropertyName, BlockData * pBlockData, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_BLOCK) == 0) {
-        if (NULL != pBlockData) // Add this condition to allow MenuItemImage without target/selector predefined 
+        if (nullptr != pBlockData) // Add this condition to allow MenuItemImage without target/selector predefined 
         {
             ((MenuItem *)pNode)->setCallback( std::bind( pBlockData->mSELMenuHandler, pBlockData->_target, std::placeholders::_1) );
 //            ((MenuItem *)pNode)->setTarget(pBlockData->_target, pBlockData->mSELMenuHandler);

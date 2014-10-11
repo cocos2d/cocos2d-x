@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "AssetsManager.h"
-#include "cocos2d.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
@@ -37,6 +36,10 @@
 #include <dirent.h>
 #endif
 
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "base/CCUserDefault.h"
+#include "platform/CCFileUtils.h"
 
 #include "unzip.h"
 
@@ -77,7 +80,7 @@ struct ProgressMessage
 
 // Implementation of AssetsManager
 
-AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* versionFileUrl/* =NULL */, const char* storagePath/* =NULL */)
+AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* versionFileUrl/* =nullptr */, const char* storagePath/* =nullptr */)
 :  _storagePath(storagePath)
 , _version("")
 , _packageUrl(packageUrl)
@@ -159,6 +162,7 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(_curl, CURLOPT_FOLLOWLOCATION, 1 );
     res = curl_easy_perform(_curl);
     
     if (res != 0)
@@ -209,6 +213,8 @@ void AssetsManager::downloadAndUncompress()
         if (! uncompress())
         {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            	UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),"");
+                UserDefault::getInstance()->flush();
                 if (this->_delegate)
                     this->_delegate->onError(ErrorCode::UNCOMPRESS);
             });
@@ -309,9 +315,9 @@ bool AssetsManager::uncompress()
                                   &fileInfo,
                                   fileName,
                                   MAX_FILENAME,
-                                  NULL,
+                                  nullptr,
                                   0,
-                                  NULL,
+                                  nullptr,
                                   0) != UNZ_OK)
         {
             CCLOG("can not read file info");
@@ -455,7 +461,7 @@ bool AssetsManager::createDirectory(const char *path)
     
     return true;
 #else
-    BOOL ret = CreateDirectoryA(path, NULL);
+    BOOL ret = CreateDirectoryA(path, nullptr);
 	if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
 	{
 		return false;
@@ -525,6 +531,7 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(_curl, CURLOPT_FOLLOWLOCATION, 1 );
 
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
@@ -620,8 +627,8 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
         SuccessCallback successCallback;
     };
 
-    auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
-    auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
+    auto* manager = new (std::nothrow) AssetsManager(packageUrl,versionFileUrl,storagePath);
+    auto* delegate = new (std::nothrow) DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
     manager->setDelegate(delegate);
     manager->_shouldDeleteDelegateWhenExit = true;
     manager->autorelease();
@@ -632,7 +639,7 @@ void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *dir = NULL;
+    DIR *dir = nullptr;
     
     dir = opendir (_storagePath.c_str());
     if (!dir)

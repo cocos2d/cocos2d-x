@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __UILABEL_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
@@ -38,7 +39,7 @@ namespace ui {
  *@js 
  *@lua NA
  */
-class Text : public Widget
+class CC_GUI_DLL Text : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -138,7 +139,7 @@ public:
     bool isTouchScaleChangeEnabled()const;
 
     //override "getVirtualRendererSize" method of widget.
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -159,6 +160,10 @@ public:
     void setTextVerticalAlignment(TextVAlignment alignment);
 
     TextVAlignment getTextVerticalAlignment()const;
+    
+    void setTextColor(const Color4B color);
+    
+    const Color4B& getTextColor() const;
     
     /**
      * Enable shadow for the label

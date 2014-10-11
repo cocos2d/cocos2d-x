@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
-
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -42,7 +42,7 @@ struct RelativeData
 /**
  *	@brief	format and manage armature configuration and armature animation
  */
-class  ArmatureDataManager : public cocos2d::Ref
+class CC_STUDIO_DLL ArmatureDataManager : public cocos2d::Ref
 {
 public:
 	/** @deprecated Use getInstance() instead */

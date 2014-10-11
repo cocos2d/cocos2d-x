@@ -56,28 +56,5 @@ public:
     void BackCallback(Ref* pSender);
 };
 
-/*
-class CocosGUITestScene : public TestScene
-{
-public:
-	CocosGUITestScene(bool portrait = false);
-    virtual ~CocosGUITestScene();
-	virtual void runThisTest();
-    
-	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Ref* sender);    
-    
-    void load(Ref* pSender, int count);
-    void loadTextureCallBack(Ref *obj);
-    
-    void menuCallback(Ref* pSender);
-    
-    UILayer* _ul;
-    
-    LabelTTF* _label;
-    
-    Menu* _itemMenu;
-};
- */
 
 #endif /* defined(__TestCpp__CocosGUIScene__) */

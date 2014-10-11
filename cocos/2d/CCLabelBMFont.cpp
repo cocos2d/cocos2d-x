@@ -31,8 +31,7 @@ http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
 http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
-#include "CCLabelBMFont.h"
-#include "2d/CCDrawingPrimitives.h"
+#include "2d/CCLabelBMFont.h"
 #include "deprecated/CCString.h"
 #include "2d/CCSprite.h"
 
@@ -54,7 +53,7 @@ NS_CC_BEGIN
 
 LabelBMFont * LabelBMFont::create()
 {
-    LabelBMFont * pRet = new LabelBMFont();
+    LabelBMFont * pRet = new (std::nothrow) LabelBMFont();
     if (pRet)
     {
         pRet->autorelease();
@@ -67,7 +66,7 @@ LabelBMFont * LabelBMFont::create()
 //LabelBMFont - Creation & Init
 LabelBMFont *LabelBMFont::create(const std::string& str, const std::string& fntFile, float width /* = 0 */, TextHAlignment alignment /* = TextHAlignment::LEFT */,const Vec2& imageOffset /* = Vec2::ZERO */)
 {
-    LabelBMFont *ret = new LabelBMFont();
+    LabelBMFont *ret = new (std::nothrow) LabelBMFont();
     if(ret && ret->initWithString(str, fntFile, width, alignment,imageOffset))
     {
         ret->autorelease();
@@ -99,6 +98,11 @@ LabelBMFont::LabelBMFont()
     this->addChild(_label);
     this->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     _cascadeOpacityEnabled = true;
+    
+#if CC_LABELBMFONT_DEBUG_DRAW
+    _debugDrawNode = DrawNode::create();
+    addChild(_debugDrawNode);
+#endif
 }
 
 LabelBMFont::~LabelBMFont()
@@ -204,26 +208,15 @@ const Size& LabelBMFont::getContentSize() const
 
 Rect LabelBMFont::getBoundingBox() const
 {
-    return _label->getBoundingBox();
+    return Node::getBoundingBox();
 }
 #if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     Node::draw(renderer, transform, transformUpdated);
 
-    _customDebugDrawCommand.init(_globalZOrder);
-    _customDebugDrawCommand.func = CC_CALLBACK_0(LabelBMFont::drawDebugData, this,transform,transformUpdated);
-    renderer->addCommand(&_customDebugDrawCommand);
-}
-
-void LabelBMFont::drawDebugData(const Mat4& transform, bool transformUpdated)
-{
-    Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
+    _debugDrawNode->clear();
     auto size = getContentSize();
-
     Vec2 vertices[4]=
     {
         Vec2::ZERO,
@@ -231,10 +224,7 @@ void LabelBMFont::drawDebugData(const Mat4& transform, bool transformUpdated)
         Vec2(size.width, size.height),
         Vec2(0, size.height)
     };
-    
-    DrawPrimitives::drawPoly(vertices, 4, true);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 }
 #endif
 

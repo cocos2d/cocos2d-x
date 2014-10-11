@@ -34,7 +34,7 @@ void Bug422Layer::reset()
     auto item1 = MenuItemFont::create("One", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
     log("MenuItemFont: %p", item1);
 	MenuItem *item2 = MenuItemFont::create("Two", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
-    auto menu = Menu::create(item1, item2, NULL);
+    auto menu = Menu::create(item1, item2, nullptr);
     menu->alignItemsVertically();
 
     float x = CCRANDOM_0_1() * 50;

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CCDEVICE_H__
 #define __CCDEVICE_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "base/CCData.h"
 
@@ -65,6 +65,8 @@ public:
     static void setAccelerometerInterval(float interval);
 
     static Data getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha);
+    
+    static void setKeepScreenOn(bool value);
 
 private:
     CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);

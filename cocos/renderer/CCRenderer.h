@@ -29,15 +29,17 @@
 #include <vector>
 #include <stack>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
 class EventListenerCustom;
 class QuadCommand;
+class TrianglesCommand;
+class MeshCommand;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
@@ -59,6 +61,22 @@ protected:
     std::vector<RenderCommand*> _queuePosZ;
 };
 
+//render queue for transparency object, NOTE that the _globalOrder of RenderCommand is the distance to the camera when added to the transparent queue
+class TransparentRenderQueue {
+public:
+    void push_back(RenderCommand* command);
+    ssize_t size() const
+    {
+        return _queueCmd.size();
+    }
+    void sort();
+    RenderCommand* operator[](ssize_t index) const;
+    void clear();
+    
+protected:
+    std::vector<RenderCommand*> _queueCmd;
+};
+
 struct RenderStackElement
 {
     int renderQueueID;
@@ -71,16 +89,18 @@ class GroupCommandManager;
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
  */
-class Renderer
+class CC_DLL Renderer
 {
 public:
-    static const int VBO_SIZE = 65536 / 6;
+    static const int VBO_SIZE = 65536;
+    static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
+    
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 
     Renderer();
     ~Renderer();
 
-    //TODO manage GLView inside Render itself
+    //TODO: manage GLView inside Render itself
     void initGLView();
 
     /** Adds a `RenderComamnd` into the renderer */
@@ -88,6 +108,9 @@ public:
 
     /** Adds a `RenderComamnd` into the renderer specifying a particular render queue ID */
     void addCommand(RenderCommand* command, int renderQueue);
+    
+    /** add transprent command */
+    void addCommandToTransparentQueue(RenderCommand* command);
 
     /** Pushes a group into the render queue */
     void pushGroup(int renderQueueID);
@@ -112,6 +135,8 @@ public:
     ssize_t getDrawnVertices() const { return _drawnVertices; }
     /* RenderCommands (except) QuadCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
+    /* clear draw stats */
+    void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
@@ -120,7 +145,6 @@ public:
 
 protected:
 
-    void setupIndices();
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
     void setupVBOAndVAO();
@@ -132,24 +156,33 @@ protected:
     //Draw the previews queued quads and flush previous context
     void flush();
     
+    void flush2D();
+    
+    void flush3D();
+    
     void visitRenderQueue(const RenderQueue& queue);
+    
+    void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
-    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
+    void fillVerticesAndIndices(const TrianglesCommand* cmd);
 
     std::stack<int> _commandGroupStack;
     
     std::vector<RenderQueue> _renderGroups;
+    TransparentRenderQueue   _transparentRenderGroups; //transparency objects
 
     uint32_t _lastMaterialID;
 
-    std::vector<QuadCommand*> _batchedQuadCommands;
+    MeshCommand*              _lastBatchedMeshCommand;
+    std::vector<TrianglesCommand*> _batchedCommands;
 
-    V3F_C4B_T2F_Quad _quads[VBO_SIZE];
-    GLushort _indices[6 * VBO_SIZE];
+    V3F_C4B_T2F _verts[VBO_SIZE];
+    GLushort _indices[INDEX_VBO_SIZE];
     GLuint _quadVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
-    int _numQuads;
+    int _filledVertex;
+    int _filledIndex;
     
     bool _glViewAssigned;
 

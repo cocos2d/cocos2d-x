@@ -27,6 +27,7 @@
                "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
                "proj.wp8-xaml/App/PROJECT_NAME.csproj",
+               "proj.wp8-xaml/App/Properties/WMAppManifest.xml",
                "proj.wp8-xaml/PROJECT_NAME.sln",
                "proj.android/.project",
                "proj.android/.cproject",
@@ -43,6 +44,18 @@
             "src_package_name":"org.cocos2dx.hellocpp",
             "files":[
                "proj.android/AndroidManifest.xml"
+            ]
+         },
+         "project_replace_mac_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellocpp",
+            "files": [
+               "proj.ios_mac/mac/Info.plist"
+            ]
+         },
+         "project_replace_ios_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellocpp",
+            "files": [
+               "proj.ios_mac/ios/Info.plist"
             ]
          }
       }

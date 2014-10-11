@@ -44,7 +44,7 @@ namespace network {
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class HttpClient
+class CC_DLL HttpClient
 {
 public:
     /** Return the shared instance **/
@@ -55,6 +55,13 @@ public:
 
     /** Enable cookie support. **/
     void enableCookies(const char* cookieFile);
+    
+    /**
+     * Set root certificate path for SSL verification.
+     * @param caFile a full path of root certificate.
+     *               if it is empty, SSL verification is disabled.
+     */
+    void setSSLVerification(const std::string& caFile);
         
     /**
      * Add a get request to task queue
@@ -62,6 +69,13 @@ public:
                       please make sure request->_requestData is clear before calling "send" here.
      */
     void send(HttpRequest* request);
+
+    /**
+     * Immediate send a request
+     * @param request a HttpRequest object, which includes url, response callback etc.
+                      please make sure request->_requestData is clear before calling "sendImmediate" here.
+     */
+    void sendImmediate(HttpRequest* request);
   
     
     /**
@@ -101,6 +115,7 @@ private:
      */
     bool lazyInitThreadSemphore();
     void networkThread();
+    void networkThreadAlone(HttpRequest* request);
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
     

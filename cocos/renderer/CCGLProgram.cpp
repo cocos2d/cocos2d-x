@@ -33,11 +33,9 @@ THE SOFTWARE.
 #endif
 
 #include "base/CCDirector.h"
-#include "base/ccMacros.h"
 #include "base/uthash.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
-#include "CCGL.h"
 
 #include "deprecated/CCString.h"
 
@@ -73,6 +71,7 @@ const char* GLProgram::SHADER_NAME_LABEL_OUTLINE = "ShaderLabelOutline";
 
 const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
 const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
+const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTexture";
 
 
 // uniform names
@@ -93,8 +92,16 @@ const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
 const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD1 = "a_texCoord1";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD2 = "a_texCoord2";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD3 = "a_texCoord3";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD4 = "a_texCoord4";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD5 = "a_texCoord5";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD6 = "a_texCoord6";
+const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD7 = "a_texCoord7";
 const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
-
+const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
+const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
 
 GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
@@ -252,7 +259,7 @@ bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArr
     haveProgram = CCPrecompiledShaders::getInstance()->loadProgram(_program, vShaderByteArray, fShaderByteArray);
 
     CHECK_GL_ERROR_DEBUG();
-    _hashForUniforms = NULL;
+    _hashForUniforms = nullptr;
 
     CHECK_GL_ERROR_DEBUG();  
 
@@ -279,6 +286,13 @@ void GLProgram::bindPredefinedVertexAttribs()
         {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION},
         {GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD4, GLProgram::VERTEX_ATTRIB_TEX_COORD4},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD5, GLProgram::VERTEX_ATTRIB_TEX_COORD5},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD6, GLProgram::VERTEX_ATTRIB_TEX_COORD6},
+        {GLProgram::ATTRIBUTE_NAME_TEX_COORD7, GLProgram::VERTEX_ATTRIB_TEX_COORD7},
         {GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
     };
 
@@ -309,7 +323,7 @@ void GLProgram::parseVertexAttribs()
 			for(int i = 0; i < activeAttributes; ++i)
 			{
 				// Query attribute info.
-				glGetActiveAttrib(_program, i, length, NULL, &attribute.size, &attribute.type, attribName);
+				glGetActiveAttrib(_program, i, length, nullptr, &attribute.size, &attribute.type, attribName);
 				attribName[length] = '\0';
                 attribute.name = std::string(attribName);
 
@@ -341,7 +355,7 @@ void GLProgram::parseUniforms()
 			for(int i = 0; i < activeUniforms; ++i)
 			{
 				// Query uniform info.
-				glGetActiveUniform(_program, i, length, NULL, &uniform.size, &uniform.type, uniformName);
+				glGetActiveUniform(_program, i, length, nullptr, &uniform.size, &uniform.type, uniformName);
 				uniformName[length] = '\0';
 
                 // Only add uniforms that are not built-in.
@@ -359,6 +373,12 @@ void GLProgram::parseUniforms()
                     }
                     uniform.name = std::string(uniformName);
                     uniform.location = glGetUniformLocation(_program, uniformName);
+                    GLenum __gl_error_code = glGetError(); 
+                    if (__gl_error_code != GL_NO_ERROR) 
+                    { 
+                        CCLOG("error: 0x%x", (int)__gl_error_code);
+                    } 
+                    assert(__gl_error_code == GL_NO_ERROR);
                     
                     _userUniforms[uniform.name] = uniform;
                 }

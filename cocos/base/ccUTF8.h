@@ -26,7 +26,7 @@
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include <vector>
 #include <string>
 
@@ -133,7 +133,7 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL int cc_wcslen(const unsigned short* str);
  *  @deprecated Please use `StringUtils::trimUTF16Vector` instead
  */
 
-CC_DEPRECATED_ATTRIBUTE void cc_utf8_trim_ws(std::vector<unsigned short>* str);
+CC_DEPRECATED_ATTRIBUTE CC_DLL void cc_utf8_trim_ws(std::vector<unsigned short>* str);
 
 /**
  * Whether the character is a whitespace character.
@@ -144,7 +144,7 @@ CC_DEPRECATED_ATTRIBUTE void cc_utf8_trim_ws(std::vector<unsigned short>* str);
  *
  * @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
  * */
-CC_DEPRECATED_ATTRIBUTE bool isspace_unicode(unsigned short ch);
+CC_DEPRECATED_ATTRIBUTE CC_DLL bool isspace_unicode(unsigned short ch);
 
 /**
  * Whether the character is a Chinese/Japanese/Korean character.
@@ -156,7 +156,7 @@ CC_DEPRECATED_ATTRIBUTE bool isspace_unicode(unsigned short ch);
  * @see http://www.searchtb.com/2012/04/chinese_encode.html
  * @see http://tieba.baidu.com/p/748765987
  * */
-CC_DEPRECATED_ATTRIBUTE bool iscjk_unicode(unsigned short ch);
+CC_DEPRECATED_ATTRIBUTE CC_DLL bool iscjk_unicode(unsigned short ch);
 
 /**
  * Returns the length of the string in characters.
@@ -166,7 +166,7 @@ CC_DEPRECATED_ATTRIBUTE bool iscjk_unicode(unsigned short ch);
  * @deprecated Please use `StringUtils::getCharacterCountInUTF8String` instead
  * @returns the length of the string in characters
  **/
-CC_DEPRECATED_ATTRIBUTE long cc_utf8_strlen (const char * p, int max = -1);
+CC_DEPRECATED_ATTRIBUTE CC_DLL long cc_utf8_strlen (const char * p, int max = -1);
 
 /**
  * Find the last character that is not equal to the character given.
@@ -176,13 +176,13 @@ CC_DEPRECATED_ATTRIBUTE long cc_utf8_strlen (const char * p, int max = -1);
  * @deprecated Please use `StringUtils::getIndexOfLastNotChar16` instead
  * @returns the index of the last character that is not \p c.
  * */
-CC_DEPRECATED_ATTRIBUTE unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c);
+CC_DEPRECATED_ATTRIBUTE CC_DLL unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c);
 
 /**
  *  @brief Gets `unsigned short` vector from a given utf16 string
  *  @deprecated Please use `StringUtils::getChar16VectorFromUTF16String` instead
  */
-CC_DEPRECATED_ATTRIBUTE std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
+CC_DEPRECATED_ATTRIBUTE CC_DLL std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
 
 /**
  * Creates an utf8 string from a c string. The result will be null terminated.
@@ -194,7 +194,7 @@ CC_DEPRECATED_ATTRIBUTE std::vector<unsigned short> cc_utf16_vec_from_utf16_str(
  * @returns the newly created utf16 string, it must be released with `delete[]`,
  *          If an error occurs, %NULL will be returned.
  * */
-CC_DEPRECATED_ATTRIBUTE unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = nullptr);
+CC_DEPRECATED_ATTRIBUTE CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = nullptr);
 
 /**
  * Converts a string from UTF-16 to UTF-8. The result will be null terminated.
@@ -207,7 +207,7 @@ CC_DEPRECATED_ATTRIBUTE unsigned short* cc_utf8_to_utf16(const char* str_old, in
  * @returns a pointer to a newly allocated UTF-8 string. This value must be
  *          released with `delete[]`. If an error occurs, %NULL will be returned.
  **/
-CC_DEPRECATED_ATTRIBUTE char * cc_utf16_to_utf8 (const unsigned short  *str,
+CC_DEPRECATED_ATTRIBUTE CC_DLL char * cc_utf16_to_utf8 (const unsigned short  *str,
                   int             len = -1,
                   long            *items_read = nullptr,
                   long            *items_written = nullptr);

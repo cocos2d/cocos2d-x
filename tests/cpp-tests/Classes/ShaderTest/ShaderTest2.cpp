@@ -222,7 +222,7 @@ Effect::Effect()
 : _glprogramstate(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backgroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+    _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
                                                           auto glProgram = _glprogramstate->getGLProgram();
@@ -297,8 +297,8 @@ public:
     {
         initGLProgramState("Shaders/example_outline.fsh");
 
-        Vec3 color(1.0, 0.2, 0.3);
-        GLfloat radius = 0.01;
+        Vec3 color(1.0f, 0.2f, 0.3f);
+        GLfloat radius = 0.01f;
         GLfloat threshold = 1.75;
 
         _glprogramstate->setUniformVec3("u_outlineColor", color);
@@ -456,7 +456,7 @@ EffectSpriteTest::EffectSpriteTest()
                                               _sprite->setEffect(_effects.at(_vectorIndex));
                                           });
 
-        auto menu = Menu::create(itemPrev, itemNext, NULL);
+        auto menu = Menu::create(itemPrev, itemNext, nullptr);
         menu->alignItemsHorizontally();
         menu->setScale(0.5);
         menu->setAnchorPoint(Vec2(0,0));
@@ -469,9 +469,9 @@ EffectSpriteTest::EffectSpriteTest()
 
         auto jump = JumpBy::create(4, Vec2(s.width,0), 100, 4);
         auto rot = RotateBy::create(4, 720);
-        auto spawn = Spawn::create(jump, rot, NULL);
+        auto spawn = Spawn::create(jump, rot, nullptr);
         auto rev = spawn->reverse();
-        auto seq = Sequence::create(spawn, rev, NULL);
+        auto seq = Sequence::create(spawn, rev, nullptr);
         auto repeat = RepeatForever::create(seq);
         _sprite->runAction(repeat);
 

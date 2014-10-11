@@ -24,12 +24,12 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
-#include "CCGLView.h"
 #include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
 #include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
 
 #include <algorithm>
@@ -52,10 +52,7 @@ static float convertDistanceFromPointToInch(float pointDis)
 
 
 ScrollView::ScrollView()
-: _zoomScale(0.0f)
-, _minZoomScale(0.0f)
-, _maxZoomScale(0.0f)
-, _delegate(nullptr)
+: _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
 , _container(nullptr)
@@ -66,6 +63,7 @@ ScrollView::ScrollView()
 , _minScale(0.0f)
 , _maxScale(0.0f)
 , _touchListener(nullptr)
+, _scissorRestored(false)
 {
 
 }
@@ -75,9 +73,9 @@ ScrollView::~ScrollView()
 
 }
 
-ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
+ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
     {
         pRet->autorelease();
@@ -91,7 +89,7 @@ ScrollView* ScrollView::create(Size size, Node* container/* = NULL*/)
 
 ScrollView* ScrollView::create()
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -104,7 +102,7 @@ ScrollView* ScrollView::create()
 }
 
 
-bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
+bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
 {
     if (Layer::init())
     {
@@ -123,12 +121,12 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
-        _delegate = NULL;
+        _delegate = nullptr;
         _bounceable = true;
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
         _direction  = Direction::BOTH;
-        _container->setPosition(Vec2(0.0f, 0.0f));
+        _container->setPosition(0.0f, 0.0f);
         _touchLength = 0.0f;
         
         this->addChild(_container);
@@ -142,7 +140,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
 
 bool ScrollView::init()
 {
-    return this->initWithViewSize(Size(200, 200), NULL);
+    return this->initWithViewSize(Size(200, 200), nullptr);
 }
 
 bool ScrollView::isNodeVisible(Node* node)
@@ -225,7 +223,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 
         _container->setPosition(offset);
 
-        if (_delegate != NULL)
+        if (_delegate != nullptr)
         {
             _delegate->scrollViewDidScroll(this);   
         }
@@ -269,7 +267,7 @@ void ScrollView::setZoomScale(float s)
         newCenter = _container->convertToWorldSpace(oldCenter);
         
         const Vec2 offset = center - newCenter;
-        if (_delegate != NULL)
+        if (_delegate != nullptr)
         {
             _delegate->scrollViewDidZoom(this);
         }
@@ -329,9 +327,9 @@ Node * ScrollView::getContainer()
 
 void ScrollView::setContainer(Node * pContainer)
 {
-    // Make sure that '_container' has a non-NULL value since there are
+    // Make sure that '_container' has a non-nullptr value since there are
     // lots of logic that use '_container'.
-    if (NULL == pContainer)
+    if (nullptr == pContainer)
         return;
 
     this->removeAllChildrenWithCleanup(true);
@@ -343,6 +341,19 @@ void ScrollView::setContainer(Node * pContainer)
     this->addChild(this->_container);
 
     this->setViewSize(this->_viewSize);
+}
+
+bool ScrollView::hasVisibleParents() const
+{
+    auto parent = this->getParent();
+    for( auto c = parent; c != nullptr; c = c->getParent() )
+    {
+        if( !c->isVisible() )
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 void ScrollView::relocateContainer(bool animated)
@@ -430,7 +441,7 @@ void ScrollView::stoppedAnimatedScroll(Node * node)
 {
     this->unschedule(schedule_selector(ScrollView::performedAnimatedScroll));
     // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
-    if (_delegate != NULL)
+    if (_delegate != nullptr)
     {
         _delegate->scrollViewDidScroll(this);
     }
@@ -444,7 +455,7 @@ void ScrollView::performedAnimatedScroll(float dt)
         return;
     }
 
-    if (_delegate != NULL)
+    if (_delegate != nullptr)
     {
         _delegate->scrollViewDidScroll(this);
     }
@@ -458,7 +469,7 @@ const Size& ScrollView::getContentSize() const
 
 void ScrollView::setContentSize(const Size & size)
 {
-    if (this->getContainer() != NULL)
+    if (this->getContainer() != nullptr)
     {
         this->getContainer()->setContentSize(size);
 		this->updateInset();
@@ -467,7 +478,7 @@ void ScrollView::setContentSize(const Size & size)
 
 void ScrollView::updateInset()
 {
-	if (this->getContainer() != NULL)
+	if (this->getContainer() != nullptr)
 	{
 		_maxInset = this->maxContainerOffset();
 		_maxInset = Vec2(_maxInset.x + _viewSize.width * INSET_RATIO,
@@ -487,6 +498,18 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
         _container->addChild(child, zOrder, tag);
     } else {
         Layer::addChild(child, zOrder, tag);
+    }
+}
+
+void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
+{
+    if (_container != child)
+    {
+        _container->addChild(child, zOrder, name);
+    }
+    else
+    {
+        Layer::addChild(child, zOrder, name);
     }
 }
 
@@ -555,10 +578,10 @@ void ScrollView::onAfterDraw()
 
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-	// quick return if not visible
-	if (!isVisible())
+    // quick return if not visible
+    if (!isVisible())
     {
-		return;
+        return;
     }
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -572,49 +595,50 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     this->beforeDraw();
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
-	if (!_children.empty())
+    if (!_children.empty())
     {
-		int i=0;
+        int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children.size(); i++ )
+        for( ; i < _children.size(); i++ )
         {
-			Node *child = _children.at(i);
-			if ( child->getLocalZOrder() < 0 )
+            Node *child = _children.at(i);
+            if ( child->getLocalZOrder() < 0 )
             {
-				child->visit(renderer, _modelViewTransform, flags);
-			}
+                child->visit(renderer, _modelViewTransform, flags);
+            }
             else
             {
-				break;
+                break;
             }
-		}
+        }
 		
 		// this draw
-		this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
         
-		// draw children zOrder >= 0
-		for( ; i < _children.size(); i++ )
+        // draw children zOrder >= 0
+        for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
 			child->visit(renderer, _modelViewTransform, flags);
-		}
-        
-	}
-    else
+        }
+    }
+    else if (visibleByCamera)
     {
-		this->draw(renderer, _modelViewTransform, flags);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     this->afterDraw();
 
-	director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 {
-    if (!this->isVisible())
+    if (!this->isVisible() || !this->hasVisibleParents())
     {
         return false;
     }
@@ -800,7 +824,7 @@ Rect ScrollView::getViewRect()
     float scaleX = this->getScaleX();
     float scaleY = this->getScaleY();
     
-    for (Node *p = _parent; p != NULL; p = p->getParent()) {
+    for (Node *p = _parent; p != nullptr; p = p->getParent()) {
         scaleX *= p->getScaleX();
         scaleY *= p->getScaleY();
     }

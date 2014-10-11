@@ -33,9 +33,7 @@ import java.lang.Runnable;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.preference.PreferenceManager.OnActivityResultListener;
@@ -93,7 +91,6 @@ public class Cocos2dxHelper {
     		Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
     
             Cocos2dxBitmap.setContext(activity);
-            Cocos2dxETCLoader.setContext(activity);
             sActivity = activity;
 
             sInited = true;
@@ -168,6 +165,10 @@ public class Cocos2dxHelper {
 	public static void disableAccelerometer() {
 		Cocos2dxHelper.sAccelerometerEnabled = false;
 		Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+	}
+	
+	public static void setKeepScreenOn(boolean value) {
+		((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
 	}
 
 	public static void preloadBackgroundMusic(final String pPath) {

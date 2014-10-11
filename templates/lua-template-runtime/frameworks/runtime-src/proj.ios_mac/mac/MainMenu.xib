@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">13C64</string>
+		<string key="IBDocument.SystemVersion">13D65</string>
 		<string key="IBDocument.InterfaceBuilderVersion">5056</string>
-		<string key="IBDocument.AppKitVersion">1265.19</string>
-		<string key="IBDocument.HIToolboxVersion">697.40</string>
+		<string key="IBDocument.AppKitVersion">1265.20</string>
+		<string key="IBDocument.HIToolboxVersion">698.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">5056</string>
@@ -164,14 +164,6 @@
 						<object class="NSMenu" key="NSSubmenu" id="775420212">
 							<string key="NSTitle">File</string>
 							<array class="NSMutableArray" key="NSMenuItems">
-								<object class="NSMenuItem" id="536376121">
-									<reference key="NSMenu" ref="775420212"/>
-									<string key="NSTitle">ChangeProject</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="415077826"/>
-									<reference key="NSMixedImage" ref="266121528"/>
-								</object>
 								<object class="NSMenuItem" id="908501198">
 									<reference key="NSMenu" ref="775420212"/>
 									<string key="NSTitle">Close</string>
@@ -299,6 +291,14 @@
 									<reference key="NSOnImage" ref="415077826"/>
 									<reference key="NSMixedImage" ref="266121528"/>
 								</object>
+								<object class="NSMenuItem" id="834755239">
+									<reference key="NSMenu" ref="201383158"/>
+									<string key="NSTitle">Keep Window Top</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="415077826"/>
+									<reference key="NSMixedImage" ref="266121528"/>
+								</object>
 							</array>
 						</object>
 					</object>
@@ -388,14 +388,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">onChangeProject:</string>
-						<reference key="source" ref="37508903"/>
-						<reference key="destination" ref="536376121"/>
-					</object>
-					<string key="id">KV1-nK-nLn</string>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">onFileClose:</string>
 						<reference key="source" ref="37508903"/>
 						<reference key="destination" ref="908501198"/>
@@ -457,6 +449,14 @@
 						<reference key="destination" ref="675525235"/>
 					</object>
 					<string key="id">XXg-eJ-YSn</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onSetTop:</string>
+						<reference key="source" ref="37508903"/>
+						<reference key="destination" ref="834755239"/>
+					</object>
+					<string key="id">jvv-x1-KeN</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -594,15 +594,9 @@
 						<string key="id">81</string>
 						<reference key="object" ref="775420212"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="536376121"/>
 							<reference ref="908501198"/>
 						</array>
 						<reference key="parent" ref="131023520"/>
-					</object>
-					<object class="IBObjectRecord">
-						<string key="id">UUd-nT-0Tr</string>
-						<reference key="object" ref="536376121"/>
-						<reference key="parent" ref="775420212"/>
 					</object>
 					<object class="IBObjectRecord">
 						<string key="id">611</string>
@@ -687,6 +681,7 @@
 						<reference key="object" ref="201383158"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="675525235"/>
+							<reference ref="834755239"/>
 						</array>
 						<reference key="parent" ref="638304486"/>
 					</object>
@@ -717,6 +712,11 @@
 						<string key="id">536</string>
 						<reference key="object" ref="234942004"/>
 						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">CXy-V7-NaY</string>
+						<reference key="object" ref="834755239"/>
+						<reference key="parent" ref="201383158"/>
 					</object>
 				</array>
 			</object>
@@ -761,6 +761,7 @@
 				<boolean value="NO" key="81.showNotes"/>
 				<string key="83.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="83.showNotes"/>
+				<string key="CXy-V7-NaY.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="GS6-Lb-ftA.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="GS6-Lb-ftA.showNotes"/>
 				<string key="GU5-eI-OTq.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -777,8 +778,6 @@
 				<boolean value="NO" key="QB8-6D-hAr.showNotes"/>
 				<string key="TOj-vg-cDm.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="TOj-vg-cDm.showNotes"/>
-				<string key="UUd-nT-0Tr.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="UUd-nT-0Tr.showNotes"/>
 				<string key="XG8-CE-veT.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="XG8-CE-veT.showNotes"/>
 				<string key="YN2-V8-ty0.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -801,7 +800,68 @@
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">AppController</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="onFileClose:">id</string>
+						<string key="onRelaunch:">id</string>
+						<string key="onScreenLandscape:">id</string>
+						<string key="onScreenPortait:">id</string>
+						<string key="onScreenZoomOut:">id</string>
+						<string key="onSetTop:">id</string>
+						<string key="onViewChangeFrameSize:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="onFileClose:">
+							<string key="name">onFileClose:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onRelaunch:">
+							<string key="name">onRelaunch:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onScreenLandscape:">
+							<string key="name">onScreenLandscape:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onScreenPortait:">
+							<string key="name">onScreenPortait:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onScreenZoomOut:">
+							<string key="name">onScreenZoomOut:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onSetTop:">
+							<string key="name">onSetTop:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="onViewChangeFrameSize:">
+							<string key="name">onViewChangeFrameSize:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">menu</string>
+						<string key="NS.object.0">NSMenu</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">menu</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">menu</string>
+							<string key="candidateClassName">NSMenu</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AppController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
@@ -811,7 +871,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1070" key="NS.object.0"/>
+			<real value="1080" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>

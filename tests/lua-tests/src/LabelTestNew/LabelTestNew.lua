@@ -119,12 +119,18 @@ function LabelFNTSpriteActions.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     LabelFNTSpriteActions.layer = layer
+    
+    local s = cc.Director:getInstance():getWinSize()
+    
+    local drawNode = cc.DrawNode:create()
+    drawNode:drawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2), cc.c4f(1,1,1,1))
+    drawNode:drawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height), cc.c4f(1,1,1,1))
+    layer:addChild(drawNode, -10)
 
     -- Upper Label
     local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt", "Bitmap Font Atlas")
     layer:addChild(label)
 
-    local s = cc.Director:getInstance():getWinSize()
 
     label:setPosition( cc.p(s.width/2, s.height/2) )
     label:setAnchorPoint( cc.p(0.5, 0.5) )
@@ -172,12 +178,6 @@ function LabelFNTSpriteActions.create()
     Helper.titleLabel:setString("New Label + .FNT file")
     Helper.subtitleLabel:setString( "Using fonts as Sprite objects. Some characters should rotate.")
     return layer
-end
-
-function LabelFNTSpriteActions.draw()
-    local s = cc.Director:getInstance():getWinSize()
-    cc.DrawPrimitives.drawLine( cc.p(0, s.height/2), cc.p(s.width, s.height/2) )
-    cc.DrawPrimitives.drawLine( cc.p(s.width/2, 0), cc.p(s.width/2, s.height) )
 end
 
 function LabelFNTSpriteActions.step(dt)
@@ -531,7 +531,7 @@ function LabelTTFUnicodeChinese.create()
 
     local s = cc.Director:getInstance():getWinSize()
     local ttfConfig = {}
-    ttfConfig.fontFilePath="fonts/wt021.ttf"
+    ttfConfig.fontFilePath="fonts/HKYuanMini.ttf"
     ttfConfig.fontSize=28
     ttfConfig.glyphs=cc.GLYPHCOLLECTION_CUSTOM
     ttfConfig.customGlyphs="美好的一天啊"
@@ -858,7 +858,7 @@ function LabelTTFUnicodeNew.create()
     layer:addChild(label2)
     label2:setPosition(cc.p(s.width/2, vSize - vStep * 5.5))
     
-    ttfConfig.fontFilePath = "fonts/wt021.ttf"
+    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf"
     ttfConfig.glyphs = cc.GLYPHCOLLECTION_CUSTOM
     ttfConfig.customGlyphs = "美好的一天"
     local label3 = cc.Label:createWithTTF(ttfConfig, "美好的一天", cc.TEXT_ALIGNMENT_CENTER, s.width)
@@ -1022,7 +1022,7 @@ function LabelTTFCJKWrappingTest.create()
 
     local size = cc.Director:getInstance():getVisibleSize()
     local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/wt021.ttf"
+    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf"
     ttfConfig.fontSize = 25
     ttfConfig.glyphs = cc.GLYPHCOLLECTION_DYNAMIC
     ttfConfig.customGlyphs = nil
@@ -1085,7 +1085,7 @@ function LabelTTFFontsTestNew.create()
         "fonts/Abduction.ttf",
         "fonts/American Typewriter.ttf",
         "fonts/Paint Boy.ttf",
-        "fonts/Schwarzwald Regular.ttf",
+        "fonts/Schwarzwald.ttf",
         "fonts/Scissor Cuts.ttf",
     }
     local ttfConfig = {}
@@ -1292,32 +1292,6 @@ function LabelCrashTest.create()
     label1:setPosition( cc.p(s.width/2, s.height/2) )
     label1:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(label1)
-
-    return layer
-end
-
-
-
-
---------------------------------------------------------
------ LabelTTFLargeText
---------------------------------------------------------
-local LabelTTFLargeText = {}
-function LabelTTFLargeText.create()
-    local layer = cc.Layer:create()
-    Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("New Label + .TTF")
-    Helper.subtitleLabel:setString("Uses the new Label with TTF. Testing large text")
-
-    local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/wt021.ttf"
-    ttfConfig.fontSize     = 18
-    ttfConfig.glyphs       = cc.GLYPHCOLLECTION_DYNAMIC
-    local s = cc.Director:getInstance():getWinSize()
-    local text = cc.FileUtils:getInstance():getStringFromFile("commonly_used_words.txt")
-    local label = cc.Label:createWithTTF(ttfConfig, text, cc.TEXT_ALIGNMENT_CENTER, s.width)
-    label:setPosition( cc.p(s.width/2, s.height/2) )
-    layer:addChild(label)
 
     return layer
 end
@@ -1678,6 +1652,21 @@ function LabelTTFOldNew.create()
     label1:setPosition(cc.p(s.width/2, delta * 2))
     label1:setColor(cc.c3b(255, 0, 0))
 
+    local labelSize = label1:getContentSize()
+    local origin    = cc.Director:getInstance():getWinSize()
+    origin.width = origin.width   / 2 - (labelSize.width / 2)
+    origin.height = origin.height / 2 - (labelSize.height / 2)
+    local vertices = 
+    {
+        cc.p(origin.width, origin.height),
+        cc.p(labelSize.width + origin.width, origin.height),
+        cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+        cc.p(origin.width, labelSize.height + origin.height),
+    }
+    local drawNode = cc.DrawNode:create()
+    drawNode:drawPoly(vertices, 4, true, cc.c4f(1,0,0,1))
+    layer:addChild(drawNode)
+
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"
     ttfConfig.fontSize     = 24
@@ -1685,54 +1674,20 @@ function LabelTTFOldNew.create()
     layer:addChild(label2, 0, kTagBitmapAtlas2)
     label2:setPosition(cc.p(s.width/2, delta * 2))
 
-    local function onDraw(transform, transformUpdated)
-        kmGLPushMatrix()
-        kmGLLoadMatrix(transform)
-
-        local label1 = layer:getChildByTag(kTagBitmapAtlas1)
-        local labelSize = label1:getContentSize()
-        local origin    = cc.Director:getInstance():getWinSize()
-    
-        origin.width = origin.width   / 2 - (labelSize.width / 2)
-        origin.height = origin.height / 2 - (labelSize.height / 2)
-
-        local vertices = 
-        {
-            cc.p(origin.width, origin.height),
-            cc.p(labelSize.width + origin.width, origin.height),
-            cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
-            cc.p(origin.width, labelSize.height + origin.height),
-        }
-    
-        cc.DrawPrimitives.drawColor4B(255, 0, 0, 255)
-        cc.DrawPrimitives.drawPoly(vertices, 4, true)
-
-        local label2 = layer:getChildByTag(kTagBitmapAtlas2)
-        labelSize = label2:getContentSize()
-        origin    = cc.Director:getInstance():getWinSize()
-
-        origin.width = origin.width   / 2 - (labelSize.width / 2)
-        origin.height = origin.height / 2 - (labelSize.height / 2)
-
-        local vertices2 =
-        {
-            cc.p(origin.width, origin.height),
-            cc.p(labelSize.width + origin.width, origin.height),
-            cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
-            cc.p(origin.width, labelSize.height + origin.height),
-        }
-        cc.DrawPrimitives.drawColor4B(255, 255, 255, 255)
-        cc.DrawPrimitives.drawPoly(vertices2, 4, true)
-    
-        kmGLPopMatrix()
-    end
-
-    local glNode  = gl.glNodeCreate()
-    glNode:setContentSize(cc.size(s.width, s.height))
-    glNode:setAnchorPoint(cc.p(0.5, 0.5))
-    glNode:setPosition( s.width / 2, s.height / 2)
-    glNode:registerScriptDrawHandler(onDraw)
-    layer:addChild(glNode,-10)
+    labelSize = label2:getContentSize()
+    origin    = cc.Director:getInstance():getWinSize()
+    origin.width = origin.width   / 2 - (labelSize.width / 2)
+    origin.height = origin.height / 2 - (labelSize.height / 2)
+    local vertices2 =
+    {
+        cc.p(origin.width, origin.height),
+        cc.p(labelSize.width + origin.width, origin.height),
+        cc.p(labelSize.width + origin.width, labelSize.height + origin.height),
+        cc.p(origin.width, labelSize.height + origin.height),
+    }
+    local drawNode2 = cc.DrawNode:create()
+    drawNode2:drawPoly(vertices2, 4, true, cc.c4f(1,1,1,1))
+    layer:addChild(drawNode2)
 
     return layer
 end
@@ -1751,7 +1706,6 @@ function LabelTestNew()
         LabelFNTOffset.create,
         LabelFNTColor.create,
         LabelTTFLongLineWrapping.create,
-        LabelTTFLargeText.create,
         LabelTTFColor.create,
         LabelFNTHundredLabels.create,
         LabelFNTMultiLine.create,

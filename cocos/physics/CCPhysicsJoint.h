@@ -42,7 +42,7 @@ class PhysicsBodyInfo;
 /*
  * @brief An PhysicsJoint object connects two physics bodies together.
  */
-class PhysicsJoint
+class CC_DLL PhysicsJoint
 {
 protected:
     PhysicsJoint();
@@ -97,7 +97,7 @@ protected:
 /*
  * @brief A fixed joint fuses the two bodies together at a reference point. Fixed joints are useful for creating complex shapes that can be broken apart later.
  */
-class PhysicsJointFixed : public PhysicsJoint
+class CC_DLL PhysicsJointFixed : public PhysicsJoint
 {
 public:
     static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr);
@@ -113,7 +113,7 @@ protected:
 /*
  * @brief A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
  */
-class PhysicsJointLimit : public PhysicsJoint
+class CC_DLL PhysicsJointLimit : public PhysicsJoint
 {
 public:
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
@@ -139,7 +139,7 @@ protected:
 /*
  * @brief A pin joint allows the two bodies to independently rotate around the anchor point as if pinned together.
  */
-class PhysicsJointPin : public PhysicsJoint
+class CC_DLL PhysicsJointPin : public PhysicsJoint
 {
 public:
     static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr);
@@ -153,7 +153,7 @@ protected:
 };
 
 /** Set the fixed distance with two bodies */
-class PhysicsJointDistance : public PhysicsJoint
+class CC_DLL PhysicsJointDistance : public PhysicsJoint
 {
 public:
     static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
@@ -170,7 +170,7 @@ protected:
 };
 
 /** Connecting two physics bodies together with a spring. */
-class PhysicsJointSpring : public PhysicsJoint
+class CC_DLL PhysicsJointSpring : public PhysicsJoint
 {
 public:
     static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float stiffness, float damping);
@@ -194,7 +194,7 @@ protected:
 };
 
 /** Attach body a to a line, and attach body b to a dot */
-class PhysicsJointGroove : public PhysicsJoint
+class CC_DLL PhysicsJointGroove : public PhysicsJoint
 {
 public:
     static PhysicsJointGroove* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& grooveA, const Vec2& grooveB, const Vec2& anchr2);
@@ -215,7 +215,7 @@ protected:
 };
 
 /** Likes a spring joint, but works with rotary */
-class PhysicsJointRotarySpring : public PhysicsJoint
+class CC_DLL PhysicsJointRotarySpring : public PhysicsJoint
 {
 public:
     static PhysicsJointRotarySpring* construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping);
@@ -236,7 +236,7 @@ protected:
 };
 
 /** Likes a limit joint, but works with rotary */
-class PhysicsJointRotaryLimit : public PhysicsJoint
+class CC_DLL PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
     static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b, float min, float max);
@@ -256,7 +256,7 @@ protected:
 };
 
 /** Works like a socket wrench. */
-class PhysicsJointRatchet : public PhysicsJoint
+class CC_DLL PhysicsJointRatchet : public PhysicsJoint
 {
 public:
     static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
@@ -277,7 +277,7 @@ protected:
 };
 
 /** Keeps the angular velocity ratio of a pair of bodies constant. */
-class PhysicsJointGear : public PhysicsJoint
+class CC_DLL PhysicsJointGear : public PhysicsJoint
 {
 public:
     static PhysicsJointGear* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratio);
@@ -296,7 +296,7 @@ protected:
 };
 
 /** Keeps the relative angular velocity of a pair of bodies constant */
-class PhysicsJointMotor : public PhysicsJoint
+class CC_DLL PhysicsJointMotor : public PhysicsJoint
 {
 public:
     static PhysicsJointMotor* construct(PhysicsBody* a, PhysicsBody* b, float rate);

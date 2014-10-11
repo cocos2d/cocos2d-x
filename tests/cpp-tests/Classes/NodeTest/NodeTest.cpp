@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "NodeTest.h"
+#include <regex>
 #include "../testResource.h"
 
 enum 
@@ -51,8 +52,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(CameraTest1),
-    //Camera has been removed from CCNode
-    //todo add new feature to support it
+    // TODO: Camera has been removed from CCNode, add new feature to support it
     // CL(CameraTest2),
     CL(CameraCenterTest),
     CL(Test2),
@@ -65,8 +65,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeToWorld3D),
     CL(SchedulerTest1),
     CL(CameraOrbitTest),
-    //Camera has been removed from CCNode
-    //todo add new feature to support it
+    // TODO: Camera has been removed from CCNode, add new feature to support it
     //CL(CameraZoomTest),
     CL(ConvertToNode),
     CL(NodeOpaqueTest),
@@ -74,6 +73,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeGlobalZValueTest),
     CL(NodeNormalizedPositionTest1),
     CL(NodeNormalizedPositionTest2),
+    CL(NodeNormalizedPositionBugTest),
+    CL(NodeNameTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -127,7 +128,7 @@ void TestCocosNodeDemo::onEnter()
 
 void TestCocosNodeDemo::restartCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild(restartCocosNodeAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -136,7 +137,7 @@ void TestCocosNodeDemo::restartCallback(Ref* sender)
 
 void TestCocosNodeDemo::nextCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild( nextCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -144,7 +145,7 @@ void TestCocosNodeDemo::nextCallback(Ref* sender)
 
 void TestCocosNodeDemo::backCallback(Ref* sender)
 {
-    auto s = new CocosNodeTestScene();//CCScene::create();
+    auto s = new (std::nothrow) CocosNodeTestScene();//CCScene::create();
     s->addChild( backCocosNodeAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -181,12 +182,12 @@ void Test2::onEnter()
     auto a1 = RotateBy::create(2, 360);
     auto a2 = ScaleBy::create(2, 2);
     
-    auto action1 = RepeatForever::create( Sequence::create(a1, a2, a2->reverse(), NULL) );
+    auto action1 = RepeatForever::create( Sequence::create(a1, a2, a2->reverse(), nullptr) );
     auto action2 = RepeatForever::create( Sequence::create(
 																	a1->clone(),
 																	a2->clone(),
 																	a2->reverse(),
-																	NULL)
+																	nullptr)
 												);
     
     sp2->setAnchorPoint(Vec2(0,0));
@@ -258,7 +259,7 @@ Test5::Test5()
 
     auto rot = RotateBy::create(2, 360);
     auto rot_back = rot->reverse();
-    auto forever = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto forever = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     auto forever2 = forever->clone();
     forever->setTag(101);
     forever2->setTag(102);
@@ -313,7 +314,7 @@ Test6::Test6()
         
     auto rot = RotateBy::create(2, 360);
     auto rot_back = rot->reverse();
-    auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, NULL));
+    auto forever1 = RepeatForever::create(Sequence::create(rot, rot_back, nullptr));
     auto forever11 = forever1->clone();
 
     auto forever2 = forever1->clone();
@@ -392,7 +393,7 @@ void StressTest1::shouldNotCrash(float dt)
     runAction( Sequence::create(
                             RotateBy::create(2, 360),
                             CallFuncN::create(CC_CALLBACK_1(StressTest1::removeMe, this)),
-                            NULL) );
+                            nullptr) );
     
     addChild(explosion);
 }
@@ -427,7 +428,7 @@ StressTest2::StressTest2()
     auto move = MoveBy::create(3, Vec2(350,0));
     auto move_ease_inout3 = EaseInOut::create(move->clone(), 2.0f);
     auto move_ease_inout_back3 = move_ease_inout3->reverse();
-    auto seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, NULL);
+    auto seq3 = Sequence::create( move_ease_inout3, move_ease_inout_back3, nullptr);
     sp1->runAction( RepeatForever::create(seq3) );
     sublayer->addChild(sp1, 1);
 
@@ -506,7 +507,7 @@ NodeToWorld::NodeToWorld()
     auto backSize = back->getContentSize();
     
     auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     menu->alignItemsVertically();
     menu->setPosition( Vec2(backSize.width/2, backSize.height/2));
     back->addChild(menu);
@@ -517,7 +518,7 @@ NodeToWorld::NodeToWorld()
     
     auto move = MoveBy::create(3, Vec2(200,0));
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     auto fe2 = RepeatForever::create(seq);
     back->runAction(fe2);
 }
@@ -552,7 +553,7 @@ NodeToWorld3D::NodeToWorld3D()
     auto backSize = back->getContentSize();
 
     auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     menu->alignItemsVertically();
     menu->setPosition( Vec2(backSize.width/2, backSize.height/2));
     back->addChild(menu);
@@ -563,7 +564,7 @@ NodeToWorld3D::NodeToWorld3D()
 
     auto move = MoveBy::create(3, Vec2(200,0));
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     auto fe2 = RepeatForever::create(seq);
     back->runAction(fe2);
 
@@ -883,7 +884,7 @@ std::string ConvertToNode::subtitle() const
 
 NodeOpaqueTest::NodeOpaqueTest()
 {
-    Sprite *background = NULL;
+    Sprite *background = nullptr;
 
     for (int i = 0; i < 50; i++)
     {
@@ -908,7 +909,7 @@ std::string NodeOpaqueTest::subtitle() const
 
 NodeNonOpaqueTest::NodeNonOpaqueTest()
 {
-    Sprite *background = NULL;
+    Sprite *background = nullptr;
 
     for (int i = 0; i < 50; i++)
     {
@@ -987,7 +988,7 @@ class MySprite : public Sprite
 public:
     static MySprite* create(const std::string &spritefilename)
     {
-        auto sprite = new MySprite;
+        auto sprite = new (std::nothrow) MySprite;
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 
@@ -1227,8 +1228,245 @@ void NodeNormalizedPositionTest2::update(float dt)
 
     Size s = Size(_copyContentSize.width*norm, _copyContentSize.height*norm);
     setContentSize(s);
-
     CCLOG("s: %f,%f", s.width, s.height);
+}
+
+
+//------------------------------------------------------------------
+//
+// NodeNormalizedPositionBugTest
+//
+//------------------------------------------------------------------
+NodeNormalizedPositionBugTest::NodeNormalizedPositionBugTest()
+: _accum(0)
+{
+    Vec2 position;
+   
+    position = Vec2(0.5,0.5);
+
+    
+    sprite = Sprite::create("Images/grossini.png");
+    sprite->setNormalizedPosition(position);
+    addChild(sprite);
+    
+    scheduleUpdate();
+}
+
+std::string NodeNormalizedPositionBugTest::title() const
+{
+    return "NodeNormalizedPositionBugTest";
+}
+
+std::string NodeNormalizedPositionBugTest::subtitle() const
+{
+    return "When changing sprite normalizedPosition, the sprite doesn't move!";
+}
+
+void NodeNormalizedPositionBugTest::update(float dt)
+{
+    _accum += dt;
+    
+    // for 5 seconds
+    float norm = clampf(sinf(_accum), 0, 1.0);
+    sprite->setNormalizedPosition(Vec2(norm,norm));
+}
+
+std::string NodeNameTest::title() const
+{
+    return "getName()/setName()/getChildByName()/enumerateChildren()";
+}
+
+std::string NodeNameTest::subtitle() const
+{
+    return "see console";
+}
+
+void NodeNameTest::onEnter()
+{
+    TestCocosNodeDemo::BaseTest::onEnter();
+    
+    this->scheduleOnce(schedule_selector(NodeNameTest::test),0.05f);
+}
+
+void NodeNameTest::test(float dt)
+{
+    auto parent = Node::create();
+    
+    // setName(), getName() and getChildByName()
+    char name[20];
+    for (int i = 0; i < 10; ++i)
+    {
+        sprintf(name, "node%d", i);
+        auto node = Node::create();
+        node->setName(name);
+        parent->addChild(node);
+    }
+    
+    for (int i = 0; i < 10; ++i)
+    {
+        sprintf(name, "node%d", i);
+        auto node = parent->getChildByName(name);
+        log("find child: %s", node->getName().c_str());
+    }
+    
+    // enumerateChildren()
+    // name = regular expression
+    int i = 0;
+    parent = Node::create();
+    for (int i = 0; i < 100; ++i)
+    {
+        auto node = Node::create();
+        sprintf(name, "node%d", i);
+        node->setName(name);
+        parent->addChild(node);
+    }
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 100, "");
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    
+    // enumerateChildren
+    // name = node[[digit]]+/node
+    
+    parent = Node::create();
+    for (int i = 0; i < 100; ++i)
+    {
+        auto node = Node::create();
+        sprintf(name, "node%d", i);
+        node->setName(name);
+        parent->addChild(node);
+        
+        for (int j = 0; j < 100; ++j)
+        {
+            auto child = Node::create();
+            child->setName("node");
+            node->addChild(child);
+        }
+    }
+    
+    i = 0;
+    parent->enumerateChildren("node1/node", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 100, "");
+    
+    i = 0;
+    parent->enumerateChildren("node1/node", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    // search from root
+    parent = Node::create();
+    for (int i = 0; i < 100; ++i)
+    {
+        auto node = Node::create();
+        sprintf(name, "node%d", i);
+        node->setName(name);
+        parent->addChild(node);
+        
+        for (int j = 0; j < 100; ++j)
+        {
+            auto child = Node::create();
+            child->setName("node");
+            node->addChild(child);
+        }
+    }
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10000, "");
+    
+    i = 0;
+    parent->enumerateChildren("node[[:digit:]]+/node", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    // search from parent
+    // name is xxx/..
+    i = 0;
+    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    i = 0;
+    parent->enumerateChildren("node/..", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10000, "");
+    
+    // name = //xxx : search recursively
+    parent = Node::create();
+    for (int j = 0; j < 100; j++)
+    {
+        auto node = Node::create();
+        sprintf(name, "node%d", j);
+        node->setName(name);
+        parent->addChild(node);
+        
+        for (int k = 0; k < 100; ++k)
+        {
+            auto child = Node::create();
+            sprintf(name, "node%d", k);
+            child->setName(name);
+            node->addChild(child);
+        }
+    }
+    
+    i = 0;
+    parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10100, ""); // 10000(children) + 100(parent)
+    
+    i = 0;
+    parent->enumerateChildren("//node[[:digit:]]+", [&i](Node* node) -> bool {
+        ++i;
+        return true;
+    });
+    CCAssert(i == 1, "");
+    
+    i = 0;
+    parent->enumerateChildren("//node[[:digit:]]+/..", [&i](Node* node) -> bool {
+        ++i;
+        return false;
+    });
+    CCAssert(i == 10000, "");
+    
+    // utils::findChildren()
+    
+    parent = Node::create();
+    for (int i = 0; i < 50; ++i)
+    {
+        auto child = Node::create();
+        child->setName("node");
+        parent->addChild(child);
+    }
+    auto findChildren = utils::findChildren(*parent, "node");
+    CCAssert(findChildren.size() == 50, "");
+    
 }
 
 ///

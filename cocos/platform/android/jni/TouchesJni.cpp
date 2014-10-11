@@ -23,7 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCDirector.h"
 #include "base/CCEventKeyboard.h"
-#include "CCGLView.h"
+#include "base/CCEventDispatcher.h"
+#include "platform/android/CCGLViewImpl-android.h"
 
 #include <android/log.h>
 #include <jni.h>

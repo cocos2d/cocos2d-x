@@ -30,7 +30,7 @@ bool UIScene::init()
         _uiLayer->addChild(_widget);
         
         Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _widget->getSize();
+        Size rootSize = _widget->getContentSize();
         _uiLayer->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                     (screenSize.height - rootSize.height) / 2));
         
@@ -82,7 +82,7 @@ void UIScene::toCocosGUITestScene(Ref* sender, Widget::TouchEventType type)
     {
         UISceneManager::purgeUISceneManager();
         
-        CocosGUITestScene* pScene = new CocosGUITestScene();
+        CocosGUITestScene* pScene = new (std::nothrow) CocosGUITestScene();
         pScene->runThisTest();
         pScene->release();
     }
