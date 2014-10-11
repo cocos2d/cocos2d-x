@@ -619,8 +619,15 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
         CCASSERT(pos.equals(Vec2::ZERO), "offset for hexagonal map not implemented yet");
         break;
     case TMXOrientationStaggered:
-        //FIXME: change to staggered implementation here
-        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        {
+            float diffX = 0;
+            if ((int)abs(pos.y) % 2 == 1)
+            {
+                diffX = _mapTileSize.width/2;
+            }
+            ret = Vec2(pos.x * _mapTileSize.width + diffX,
+                         (-pos.y) * _mapTileSize.height/2);
+        }
         break;
     }
     return ret;    
@@ -675,9 +682,13 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
 
 Vec2 TMXLayer::getPositionForStaggeredAt(const Vec2 &pos)
 {
-    //FIXME: change to staggered implementation here
-    return Vec2(pos.x * _mapTileSize.width,
-                (_layerSize.height - pos.y - 1) * _mapTileSize.height);
+    float diffX = 0;
+    if ((int)pos.y % 2 == 1)
+    {
+        diffX = _mapTileSize.width/2;
+    }
+    return Vec2(pos.x * _mapTileSize.width + diffX,
+                (_layerSize.height - pos.y - 1) * _mapTileSize.height/2);
 }
 
 int TMXLayer::getVertexZForPos(const Vec2& pos)
@@ -696,7 +707,6 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
             ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationStaggered:
-            //FIXME: change to staggered implementation here
             ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationHex:
