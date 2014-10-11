@@ -81,22 +81,31 @@ bool FileUtilsAndroid::init()
     return FileUtils::init();
 }
 
-static std::string removeRelativePath(const std::string &filename)
+std::string FileUtilsAndroid::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename)
 {
-    std::string newFileName = filename;
-    auto pos = newFileName.find("../");
+    std::string ret = directory;
+    if (directory.size() && directory[directory.size()-1] != '/'){
+        ret += '/';
+    }
+    ret += filename;
+    
+    auto pos = ret.find("../");
     while (pos > 1 && pos != std::string::npos)
     {
-        auto posf = newFileName.rfind('/',pos - 2);
+        auto posf = ret.rfind('/',pos - 2);
         if (posf == std::string::npos)
-            newFileName = newFileName.erase(0,pos + 3);
+            ret = ret.erase(0,pos + 3);
         else
-            newFileName = newFileName.erase((int)posf,pos + 2 - posf );
+            ret = ret.erase((int)posf,pos + 2 - posf );
 
-        pos = newFileName.find("../");
+        pos = ret.find("../");
     }
     
-    return newFileName;
+    // if the file doesn't exist, return an empty string
+    if (!isFileExistInternal(ret)) {
+        ret = "";
+    }
+    return ret;
 }
 
 bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
@@ -117,7 +126,7 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
         if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
 
         if (FileUtilsAndroid::assetmanager) {
-            AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, removeRelativePath(s).c_str(), AASSET_MODE_UNKNOWN);
+            AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, s, AASSET_MODE_UNKNOWN);
             if (aa)
             {
                 bFound = true;
@@ -184,7 +193,7 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
         // read asset data
         AAsset* asset =
             AAssetManager_open(FileUtilsAndroid::assetmanager,
-                               removeRelativePath(relativePath).c_str(),
+                               relativePath.c_str(),
                                AASSET_MODE_UNKNOWN);
         if (nullptr == asset) {
             LOGD("asset is nullptr");
@@ -305,7 +314,7 @@ unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const 
         // read asset data
         AAsset* asset =
             AAssetManager_open(FileUtilsAndroid::assetmanager,
-                               removeRelativePath(relativePath).c_str(),
+                               relativePath.c_str(),
                                AASSET_MODE_UNKNOWN);
         if (nullptr == asset) {
             LOGD("asset is nullptr");
