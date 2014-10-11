@@ -7,6 +7,9 @@ import sys
 import os, os.path
 import shutil
 from optparse import OptionParser
+import json
+
+BUILD_CFIG_FILE="build-cfg.json"
 
 def get_num_of_cpu():
 	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
@@ -114,9 +117,23 @@ def copy_resources(app_android_root):
 
     # copy resources
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
-    if os.path.isdir(resources_dir):
-        copy_files(resources_dir, assets_dir)
+    cfg_path = os.path.join(app_android_root, BUILD_CFIG_FILE)
+    try:
+        f = open(cfg_path)
+        cfg = json.load(f, encoding='utf8')
+        f.close()
+    except Exception:
+        print "Configuration file \"%s\" is not existed or broken!" % cfg_path
+        sys.exit()
+
+    copy_resources = cfg["copy_resources"]
+    for subdir in copy_resources:
+        from_dir = os.path.join(app_android_root, subdir['from'])
+        to_dir = os.path.join(assets_dir, subdir['to'])
+        if not os.path.isdir(to_dir):
+            os.mkdir(to_dir)
+        if os.path.isdir(from_dir):
+            copy_files(from_dir, to_dir)
 
 def build(ndk_build_param,android_platform,build_mode):
 
