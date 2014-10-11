@@ -147,6 +147,8 @@ DrawNode::~DrawNode()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glDeleteVertexArrays(1, &_vao);
+        glDeleteVertexArrays(1, &_vaoGLLine);
+        glDeleteVertexArrays(1, &_vaoGLPoint);
         GL::bindVAO(0);
         _vao = 0;
     }
