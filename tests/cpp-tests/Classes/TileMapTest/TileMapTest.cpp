@@ -30,6 +30,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] = {
     CLN(TMXIsoZorder),
     CLN(TMXOrthoZorder),
+    CLN(TMXStaggeredTest),
     CLN(TMXIsoVertexZ),
     CLN(TMXOrthoVertexZ),
     CLN(TMXOrthoTest),
@@ -316,6 +317,33 @@ void TMXOrthoTest::onExit()
 std::string TMXOrthoTest::title() const
 {
     return "TMX Orthogonal test";
+}
+
+TMXStaggeredTest::TMXStaggeredTest()
+{
+    
+    auto map = TMXTiledMap::create("TileMaps/test-staggered.tmx");
+    
+    addChild(map, 0, kTagTileMap);
+ 
+}
+
+void TMXStaggeredTest::onEnter()
+{
+    TileDemo::onEnter();
+    
+    Director::getInstance()->setProjection(Director::Projection::_3D);
+}
+
+void TMXStaggeredTest::onExit()
+{
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    TileDemo::onExit();
+}
+
+std::string TMXStaggeredTest::title() const
+{
+    return "TMX Staggered test";
 }
 
 //------------------------------------------------------------------
