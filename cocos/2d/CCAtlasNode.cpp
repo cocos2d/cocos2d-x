@@ -216,7 +216,15 @@ void AtlasNode::setBlendFunc(const BlendFunc &blendFunc)
 void AtlasNode::updateBlendFunc()
 {
     if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() )
+    {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        setOpacityModifyRGB(false);
+    }
+    else
+    {
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        setOpacityModifyRGB(true);
+    }
 }
 
 void AtlasNode::setTexture(Texture2D *texture)

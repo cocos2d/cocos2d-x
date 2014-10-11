@@ -812,6 +812,7 @@ Developers:
         Added getAllTouches() in GLViewProtocol
         Precompiled headers improvements
         Added Application::openUrl for all supported platforms ecept WP8 and WinRT
+        Scale9Sprite capInsets set fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView

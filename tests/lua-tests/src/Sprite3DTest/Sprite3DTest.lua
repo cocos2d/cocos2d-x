@@ -630,6 +630,245 @@ function Sprite3DReskinTest.create()
 end
 
 ----------------------------------------
+----Sprite3DWithOBBPerfromanceTest
+----------------------------------------
+local Sprite3DWithOBBPerfromanceTest = class("Sprite3DWithOBBPerfromanceTest",function()
+    return cc.Layer:create()
+end)
+
+function Sprite3DWithOBBPerfromanceTest:ctor()
+    self._obb = {}
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(function (touches, event)
+        for i,touch in ipairs(touches) do
+            local location = touch:getLocationInView()
+            if nil ~= self._obb and #self._obb > 0 then
+                self._intersetList = {}
+                local ray = cc.Ray:new()
+                self:calculateRayByLocationInView(ray, location)
+
+                for idx,value in ipairs(self._obb) do
+                    if ray:intersects(value) then
+                        table.insert(self._intersetList, idx)
+                        return
+                    end
+                end
+            end
+        end
+    end,cc.Handler.EVENT_TOUCHES_BEGAN)
+
+    listener:registerScriptHandler(function (touches, event)
+        
+    end,cc.Handler.EVENT_TOUCHES_ENDED)
+
+    listener:registerScriptHandler(function (touches, event)
+        for i,touch in ipairs(touches) do
+            local location = touch:getLocation()
+
+            for idx,value in ipairs(self._obb) do
+                for lstIdx,lstValue in ipairs(self._intersetList) do
+                    if idx == lstValue then
+                        self._obb[idx]._center = cc.vec3(location.x,location.y,0)
+                    end
+                end
+            end
+        end
+    end,cc.Handler.EVENT_TOUCHES_MOVED)
+
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
+
+    local s = cc.Director:getInstance():getWinSize()
+    self:initDrawBox()
+
+    self:addNewSpriteWithCoords(cc.p(s.width/2, s.height/2))
+
+    cc.MenuItemFont:setFontName("fonts/arial.ttf")
+    cc.MenuItemFont:setFontSize(65)
+
+    local decrease =  cc.MenuItemFont:create(" - ")
+    decrease:registerScriptTapHandler(function(tag, sender)
+        self:delOBBWithCount(10)
+    end)
+    decrease:setColor(cc.c3b(0, 200, 20))
+
+    local increase =  cc.MenuItemFont:create(" + ")
+    increase:registerScriptTapHandler(function(tag, sender)
+        self:addOBBWithCount(10)
+    end)
+    increase:setColor(cc.c3b(0, 200, 20))
+
+    local menu = cc.Menu:create(decrease, increase)
+    menu:alignItemsHorizontally()
+    menu:setPosition(cc.p(s.width/2, s.height - 90))
+    self:addChild(menu, 1)
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/Marker Felt.ttf"
+    ttfConfig.fontSize = 30
+    self._labelCubeCount = cc.Label:createWithTTF(ttfConfig,"0 cubes")
+    self._labelCubeCount:setColor(cc.c3b(0,200,20))
+    self._labelCubeCount:setPosition(cc.p(s.width/2, s.height-90))
+    self:addChild(self._labelCubeCount)
+
+    self:addOBBWithCount(10)
+    self:scheduleUpdateWithPriorityLua(function(dt)
+        self._labelCubeCount:setString(string.format("%u cubes", #self._obb))
+        if nil ~= self._drawDebug then
+            self._drawDebug:clear()
+            local mat = self._sprite:getNodeToWorldTransform()
+
+            self._obbt._xAxis = cc.vec3(mat[1], mat[2], mat[3])
+            self._obbt._xAxis = cc.vec3normalize(self._obbt._xAxis)
+
+            self._obbt._yAxis = cc.vec3(mat[5], mat[6], mat[7])
+            self._obbt._yAxis = cc.vec3normalize(self._obbt._yAxis)
+
+            self._obbt._zAxis = cc.vec3(-mat[9], -mat[10], -mat[11])
+            self._obbt._zAxis = cc.vec3normalize(self._obbt._zAxis)
+
+            self._obbt._center = self._sprite:getPosition3D()
+
+            local corners = {}
+            for i=1,8 do
+                corners[i] = {}
+            end
+            corners = self._obbt:getCorners(corners)
+            self._drawDebug:drawCube(corners, cc.c4f(0, 0, 1, 1))
+        end
+
+        if #self._obb > 0 then
+            self._drawOBB:clear()
+
+            for i= 1, #self._obb do
+                local corners = {}
+                for i=1,8 do
+                    corners[i] = {}
+                end
+
+                corners = self._obb[i]:getCorners(corners)
+                if self._obbt:intersects(self._obb[i]) then
+                    self._drawOBB:drawCube(corners, cc.c4f(1, 0, 0, 1))
+                else
+                    self._drawOBB:drawCube(corners, cc.c4f(0, 1, 0, 1))
+                end
+
+            end
+        end
+    end, 0)
+end
+
+function Sprite3DWithOBBPerfromanceTest:addOBBWithCount( value )
+    for i=1,value do
+        local randompos = cc.p(math.random() * cc.Director:getInstance():getWinSize().width, math.random() * cc.Director:getInstance():getWinSize().height)
+        local extents = cc.vec3(10, 10, 10)
+        local aabb = cc.AABB:new({x = -10, y = -10, z = -10}, extents)
+        local obb = cc.OBB:new(aabb)
+        obb._center = cc.vec3(randompos.x,randompos.y,0)
+        table.insert(self._obb, obb)
+    end
+end
+
+function Sprite3DWithOBBPerfromanceTest:delOBBWithCount( value )
+    if #self._obb >= 10 then
+        for i= 1, 10 do
+            table.remove(self._obb)
+        end
+        self._drawOBB:clear()
+    end
+end
+
+function Sprite3DWithOBBPerfromanceTest:initDrawBox()
+    self._drawOBB = cc.DrawNode3D:create()
+    self:addChild(self._drawOBB )
+end
+
+function Sprite3DWithOBBPerfromanceTest:unproject( viewProjection, viewport, src, dst)
+    assert(viewport.width ~= 0.0 and viewport.height ~= 0)
+    local screen = cc.vec4(src.x / viewport.width, (viewport.height - src.y) / viewport.height, src.z, 1.0)
+    screen.x = screen.x * 2.0 - 1.0
+    screen.y = screen.y * 2.0 - 1.0
+    screen.z = screen.z * 2.0 - 1.0
+    local inversed = cc.mat4.new(viewProjection:getInversed())
+    screen = inversed:transformVector(screen, screen)
+    if screen.w ~= 0.0 then
+        screen.x = screen.x / screen.w
+        screen.y = screen.y / screen.w
+        screen.z = screen.z / screen.w
+    end
+
+    dst.x = screen.x
+    dst.y = screen.y
+    dst.z = screen.z
+    return viewport, src, dst
+end
+
+function Sprite3DWithOBBPerfromanceTest:calculateRayByLocationInView(ray, location)
+    local dir = cc.Director:getInstance()
+    local view = dir:getWinSize()
+    local mat = cc.mat4.new(dir:getMatrix(cc.MATRIX_STACK_TYPE.PROJECTION))
+    local src = cc.vec3(location.x, location.y, -1)
+    local nearPoint = {}
+    view, src, nearPoint = self:unproject(mat, view, src, nearPoint)
+    src = cc.vec3(location.x, location.y, 1)
+    local farPoint = {}
+    view, src, farPoint = self:unproject(mat, view, src, farPoint)
+    local direction = {}
+    direction.x = farPoint.x - nearPoint.x
+    direction.y = farPoint.y - nearPoint.y
+    direction.z = farPoint.z - nearPoint.z
+    direction   = cc.vec3normalize(direction)
+    
+    ray._origin    = nearPoint
+    ray._direction = direction
+end
+
+function Sprite3DWithOBBPerfromanceTest:addNewSpriteWithCoords(vec2)
+    local fileName = "Sprite3DTest/tortoise.c3b"
+    local sprite = cc.Sprite3D:create(fileName)
+    sprite:setScale(0.1)
+    local s = cc.Director:getInstance():getWinSize()
+    sprite:setPosition(cc.p(s.width * 4.0 / 5.0, s.height / 2.0))
+    self:addChild(sprite)
+    self._sprite = sprite
+    local animation = cc.Animation3D:create(fileName)
+    if  nil ~= animation then
+        local animate = cc.Animate3D:create(animation, 0.0, 1.933)
+        sprite:runAction(cc.RepeatForever:create(animate))
+    end
+    
+    self._moveAction = cc.MoveTo:create(4.0, cc.p(s.width / 5.0, s.height / 2.0))
+    self._moveAction:retain()
+    local function reachEndCallBack()
+        self._sprite:stopActionByTag(100)
+        local inverse = self._moveAction:reverse()
+        inverse:retain()
+        self._moveAction:release()
+        self._moveAction = inverse
+        local rot = cc.RotateBy:create(1.0, { x = 0.0, y = 180.0, z = 0.0})
+        local seq = cc.Sequence:create(rot, self._moveAction, cc.CallFunc:create(reachEndCallBack))
+        seq:setTag(100)
+        self._sprite:runAction(seq)
+    end
+    local seq = cc.Sequence:create(self._moveAction, cc.CallFunc:create(reachEndCallBack))
+    seq:setTag(100)
+    sprite:runAction(seq)
+ 
+    local aabb = self._sprite:getAABB()
+    self._obbt = cc.OBB:new(aabb)
+    
+    self._drawDebug = cc.DrawNode3D:create()
+    self:addChild(self._drawDebug)
+end
+
+function Sprite3DWithOBBPerfromanceTest.create()
+    local layer = Sprite3DWithOBBPerfromanceTest.new()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("OBB Collison Perfromance Test")
+    return layer
+end
+
+----------------------------------------
 ----Sprite3DMirrorTest
 ----------------------------------------
 local Sprite3DMirrorTest = {}
@@ -680,7 +919,6 @@ function Sprite3DMirrorTest.create()
     return layer
 end
 
-
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
@@ -692,6 +930,7 @@ function Sprite3DTest()
         Animate3DTest.create,
         AttachmentTest.create,
         Sprite3DReskinTest.create,
+        Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
     }
 

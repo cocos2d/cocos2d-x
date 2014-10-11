@@ -647,8 +647,5 @@ int register_cocostudio_module(lua_State* L)
         lua_register_cocos2dx_coco_studio_CustomGUIReader(L);
     }
     lua_pop(L, 1);
-
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocoStudioClass");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocoStudioFunc");
     return 1;
 }

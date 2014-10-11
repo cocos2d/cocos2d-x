@@ -33,7 +33,7 @@
             "to": ""
         },
         {
-            "from": "../../../../cocos/scripting/lua-bindings/script/cocostudio",
+            "from": "../../../../cocos/scripting/lua-bindings/script/cocosstudio",
             "to": ""
         },
         {
