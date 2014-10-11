@@ -279,6 +279,9 @@ namespace cocostudio
         
         if (scale9Enable)
         {
+            button->setUnifySizeEnabled(false);
+            button->ignoreContentAdaptWithSize(false);
+            
             float cx = options.capinsetsx();
             float cy = options.capinsetsy();
             float cw = options.capinsetswidth();
@@ -672,6 +675,9 @@ namespace cocostudio
         
         if (scale9Enabled)
         {
+            button->setUnifySizeEnabled(false);
+            button->ignoreContentAdaptWithSize(false);
+            
             button->setCapInsets(Rect(cx, cy, cw, ch));
             button->setContentSize(Size(swf, shf));
         }
