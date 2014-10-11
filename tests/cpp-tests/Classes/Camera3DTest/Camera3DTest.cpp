@@ -260,7 +260,7 @@ void Camera3DTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
     _curState=State_None;
-    addNewSpriteWithCoords( Vec3(0,0,0),"Sprite3DTest/girl.c3b",true,0.2,true);
+    addNewSpriteWithCoords( Vec3(0,0,0),"Sprite3DTest/girl.c3b",true,0.2f,true);
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"zoom out");
     auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::scaleCameraCallback,this,1));
@@ -392,15 +392,15 @@ void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2
              Vec3 cameraRightDir;
              _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
               cameraDir.normalize();
-             cameraDir.y=0;
+             cameraDir.y = 0;
              _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
              cameraRightDir.normalize();
-             cameraRightDir.y=0;
-             Vec3 cameraPos=  _camera->getPosition3D();
-             cameraPos+=cameraDir*newPos.y*0.1;
-             cameraPos+=cameraRightDir*newPos.x*0.1;
+             cameraRightDir.y = 0;
+             Vec3 cameraPos = _camera->getPosition3D();
+             cameraPos += cameraDir*newPos.y * 0.1f;
+             cameraPos += cameraRightDir * newPos.x * 0.1f;
             _camera->setPosition3D(cameraPos);
-             if(_sprite3D &&  _cameraType==CameraType::FirstCamera)
+             if(_sprite3D &&  _cameraType == CameraType::FirstCamera)
             {
                 _sprite3D->setPosition3D(Vec3(_camera->getPositionX(),0,_camera->getPositionZ()));
                 _targetPos=_sprite3D->getPosition3D();
