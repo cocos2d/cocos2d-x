@@ -1,5 +1,5 @@
 
-#include "CCClippingRegionNode.h"
+#include "CCClippingRectangleNode.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
 #include "math/Vec2.h"
@@ -7,9 +7,9 @@
 
 NS_CC_BEGIN
 
-ClippingRegionNode* ClippingRegionNode::create(const Rect& clippingRegion)
+ClippingRectangleNode* ClippingRectangleNode::create(const Rect& clippingRegion)
 {
-    ClippingRegionNode* node = new ClippingRegionNode();
+    ClippingRectangleNode* node = new ClippingRectangleNode();
     if (node && node->init()) {
         node->setClippingRegion(clippingRegion);
         node->autorelease();
@@ -20,9 +20,9 @@ ClippingRegionNode* ClippingRegionNode::create(const Rect& clippingRegion)
     return node;
 }
 
-ClippingRegionNode* ClippingRegionNode::create()
+ClippingRectangleNode* ClippingRectangleNode::create()
 {
-    ClippingRegionNode* node = new ClippingRegionNode();
+    ClippingRectangleNode* node = new ClippingRectangleNode();
     if (node && node->init()) {
         node->autorelease();
     } else {
@@ -32,12 +32,12 @@ ClippingRegionNode* ClippingRegionNode::create()
     return node;
 }
 
-void ClippingRegionNode::setClippingRegion(const Rect &clippingRegion)
+void ClippingRectangleNode::setClippingRegion(const Rect &clippingRegion)
 {
     _clippingRegion = clippingRegion;
 }
 
-void ClippingRegionNode::onBeforeVisitScissor()
+void ClippingRectangleNode::onBeforeVisitScissor()
 {
     if (_clippingEnabled) {
         glEnable(GL_SCISSOR_TEST);
@@ -60,7 +60,7 @@ void ClippingRegionNode::onBeforeVisitScissor()
     }
 }
 
-void ClippingRegionNode::onAfterVisitScissor()
+void ClippingRectangleNode::onAfterVisitScissor()
 {
     if (_clippingEnabled)
     {
@@ -68,16 +68,16 @@ void ClippingRegionNode::onAfterVisitScissor()
     }
 }
 
-void ClippingRegionNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void ClippingRectangleNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
-    _beforeVisitCmdScissor.func = CC_CALLBACK_0(ClippingRegionNode::onBeforeVisitScissor, this);
+    _beforeVisitCmdScissor.func = CC_CALLBACK_0(ClippingRectangleNode::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
     
     Node::visit(renderer, parentTransform, parentFlags);
     
     _afterVisitCmdScissor.init(_globalZOrder);
-    _afterVisitCmdScissor.func = CC_CALLBACK_0(ClippingRegionNode::onAfterVisitScissor, this);
+    _afterVisitCmdScissor.func = CC_CALLBACK_0(ClippingRectangleNode::onAfterVisitScissor, this);
     renderer->addCommand(&_afterVisitCmdScissor);
 }
 

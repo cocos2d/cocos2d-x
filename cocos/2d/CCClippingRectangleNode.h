@@ -25,8 +25,8 @@
  *
  */
 
-#ifndef __MISCNODE_CCCLIPPING_REGION_NODE_H__
-#define __MISCNODE_CCCLIPPING_REGION_NODE_H__
+#ifndef __MISCNODE_CCCLIPPING_RECTANGLE_NODE_H__
+#define __MISCNODE_CCCLIPPING_RECTANGLE_NODE_H__
 
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
@@ -34,11 +34,11 @@
 
 NS_CC_BEGIN
 
-class CC_DLL ClippingRegionNode : public Node
+class CC_DLL ClippingRectangleNode : public Node
 {    
 public:
-    static ClippingRegionNode* create(const Rect& clippingRegion);
-    static ClippingRegionNode* create();
+    static ClippingRectangleNode* create(const Rect& clippingRegion);
+    static ClippingRectangleNode* create();
     
     const Rect& getClippingRegion() const {
         return _clippingRegion;
@@ -56,7 +56,7 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
 protected:
-    ClippingRegionNode()
+    ClippingRectangleNode()
     : _clippingEnabled(true)
     {
     }
