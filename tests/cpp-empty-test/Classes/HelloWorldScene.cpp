@@ -73,10 +73,6 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite);
     
-    auto map = TMXTiledMap::create("test/test.tmx");
-    map->setPosition(Vec2(visibleSize/2));
-    this->addChild(map);
-    
     return true;
 }
 
