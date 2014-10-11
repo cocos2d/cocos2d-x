@@ -1,9 +1,5 @@
 
 const char* cc3D_PositionNormalTex_vert = STRINGIFY(
-\n#define MAX_DIRECTIONAL_LIGHT_NUM 1 \n
-\n#define MAX_POINT_LIGHT_NUM 1 \n
-\n#define MAX_SPOT_LIGHT_NUM 1 \n
-\n#define MAX_AMBIENT_LIGHT_NUM 1 \n
 
 \n#if (MAX_POINT_LIGHT_NUM > 0)\n
 uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
@@ -55,10 +51,6 @@ void main(void)
 );
 
 const char* cc3D_SkinPositionNormalTex_vert = STRINGIFY(
-\n#define MAX_DIRECTIONAL_LIGHT_NUM 1 \n
-\n#define MAX_POINT_LIGHT_NUM 1 \n
-\n#define MAX_SPOT_LIGHT_NUM 1 \n
-\n#define MAX_AMBIENT_LIGHT_NUM 1 \n
 
 \n#if (MAX_POINT_LIGHT_NUM > 0)\n
 uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
