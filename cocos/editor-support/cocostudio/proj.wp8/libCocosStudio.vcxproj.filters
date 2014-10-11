@@ -241,14 +241,17 @@
     <ClCompile Include="..\ActionTimeline\CCFrame.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoLoader.cpp">
       <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CSParseBinary.pb.cc">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CSLoader.cpp">
+      <Filter>TimelineAction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,9 +445,6 @@
     <ClInclude Include="..\ActionTimeline\CCFrame.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="..\ActionTimeline\CCNodeReader.h">
-      <Filter>TimelineAction</Filter>
-    </ClInclude>
     <ClInclude Include="..\ActionTimeline\CCTimeLine.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
@@ -453,6 +453,12 @@
     </ClInclude>
     <ClInclude Include="..\CocoLoader.h">
       <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CSParseBinary.pb.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CSLoader.h">
+      <Filter>TimelineAction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

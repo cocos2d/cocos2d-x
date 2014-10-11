@@ -895,9 +895,6 @@
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
@@ -1191,6 +1188,15 @@
     </ClCompile>
     <ClCompile Include="..\audio\win32\AudioPlayer.cpp">
       <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\CSParseBinary.pb.cc">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UILayoutComponent.cpp">
+      <Filter>ui\Layouts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1981,9 +1987,6 @@
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
@@ -2343,6 +2346,15 @@
     </ClInclude>
     <ClInclude Include="..\audio\win32\AudioPlayer.h">
       <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CSParseBinary.pb.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UILayoutComponent.h">
+      <Filter>ui\Layouts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

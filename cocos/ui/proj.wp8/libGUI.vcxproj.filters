@@ -96,6 +96,9 @@
     <ClInclude Include="..\UIEditBox\UIEditBoxImpl-wp8.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\UILayoutComponent.h">
+      <Filter>Layouts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ui\UILayout.cpp">
@@ -175,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="..\UIEditBox\UIEditBoxImpl-wp8.cpp">
       <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UILayoutComponent.cpp">
+      <Filter>Layouts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
