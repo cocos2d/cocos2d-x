@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -121,7 +121,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\protocolBuf\prebuilt\win32\debug\*.*" "
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
-      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;protocolbuffer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;protocolbuffer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
