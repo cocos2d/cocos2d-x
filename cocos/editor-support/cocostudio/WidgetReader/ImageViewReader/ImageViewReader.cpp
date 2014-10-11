@@ -180,6 +180,8 @@ namespace cocostudio
         
         if (scale9Enable)
         {
+            imageView->setUnifySizeEnabled(false);
+            imageView->ignoreContentAdaptWithSize(false);
             
             float swf = options.has_scale9width() ? options.scale9width() : 80.0f;
             float shf = options.has_scale9height() ? options.scale9height() : 80.0f;
