@@ -74,14 +74,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\protocolBuf\win32;$(EngineRoot)external\protocolBuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -97,7 +100,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\protocolBuf\win32;$(EngineRoot)external\protocolBuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -116,7 +119,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\protocolBuf\win32;$(EngineRoot)external\protocolBuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
@@ -136,7 +139,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\protocolBuf\win32;$(EngineRoot)external\protocolBuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -163,11 +166,24 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite.cc" />
     <ClCompile Include="..\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="..\ActionTimeline\CCActionTimelineCache.cpp" />
     <ClCompile Include="..\ActionTimeline\CCFrame.cpp" />
-    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp" />
+    <ClCompile Include="..\ActionTimeline\CSLoader.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -199,6 +215,7 @@
     <ClCompile Include="..\CCTween.cpp" />
     <ClCompile Include="..\CCUtilMath.cpp" />
     <ClCompile Include="..\CocoLoader.cpp" />
+    <ClCompile Include="..\CSParseBinary.pb.cc" />
     <ClCompile Include="..\DictionaryHelper.cpp" />
     <ClCompile Include="..\TriggerBase.cpp" />
     <ClCompile Include="..\TriggerMng.cpp" />
@@ -235,12 +252,35 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\..\..\..\external\protocolBuf\win32\config.h" />
     <ClInclude Include="..\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="..\ActionTimeline\CCActionTimelineCache.h" />
     <ClInclude Include="..\ActionTimeline\CCFrame.h" />
-    <ClInclude Include="..\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\ActionTimeline\CCTimelineMacro.h" />
+    <ClInclude Include="..\ActionTimeline\CSLoader.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />
@@ -273,6 +313,7 @@
     <ClInclude Include="..\CCTween.h" />
     <ClInclude Include="..\CCUtilMath.h" />
     <ClInclude Include="..\CocoLoader.h" />
+    <ClInclude Include="..\CSParseBinary.pb.h" />
     <ClInclude Include="..\DictionaryHelper.h" />
     <ClInclude Include="..\TriggerBase.h" />
     <ClInclude Include="..\TriggerMng.h" />

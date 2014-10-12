@@ -85,6 +85,15 @@
     <Filter Include="TimelineAction">
       <UniqueIdentifier>{5f5a98dd-657c-4a9b-8862-c11555ad1293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="json\protocolBuf">
+      <UniqueIdentifier>{b4299b06-bcd4-4478-a38a-bfacea23d5fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\protocolBuf\io">
+      <UniqueIdentifier>{133b3cc5-9d12-48fe-9732-0d9a4e29f260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\protocolBuf\stubs">
+      <UniqueIdentifier>{f125eae6-6a01-4e02-9f19-693bcadcb616}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CCComAttribute.cpp">
@@ -241,14 +250,56 @@
     <ClCompile Include="..\ActionTimeline\CCFrame.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\ActionTimeline\CCNodeReader.cpp">
-      <Filter>TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="..\ActionTimeline\CCTimeLine.cpp">
       <Filter>TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="..\CocoLoader.cpp">
       <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CSParseBinary.pb.cc">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionTimeline\CSLoader.cpp">
+      <Filter>TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set.cc">
+      <Filter>json\protocolBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_util.cc">
+      <Filter>json\protocolBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message_lite.cc">
+      <Filter>json\protocolBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\repeated_field.cc">
+      <Filter>json\protocolBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite.cc">
+      <Filter>json\protocolBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream.cc">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl.cc">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\common.cc">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\once.cc">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stringprintf.cc">
+      <Filter>json\protocolBuf\stubs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,9 +493,6 @@
     <ClInclude Include="..\ActionTimeline\CCFrame.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="..\ActionTimeline\CCNodeReader.h">
-      <Filter>TimelineAction</Filter>
-    </ClInclude>
     <ClInclude Include="..\ActionTimeline\CCTimeLine.h">
       <Filter>TimelineAction</Filter>
     </ClInclude>
@@ -453,6 +501,81 @@
     </ClInclude>
     <ClInclude Include="..\CocoLoader.h">
       <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CSParseBinary.pb.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ActionTimeline\CSLoader.h">
+      <Filter>TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\extension_set.h">
+      <Filter>json\protocolBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\generated_message_util.h">
+      <Filter>json\protocolBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\message_lite.h">
+      <Filter>json\protocolBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\repeated_field.h">
+      <Filter>json\protocolBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite.h">
+      <Filter>json\protocolBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\wire_format_lite_inl.h">
+      <Filter>json\protocolBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream.h">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\coded_stream_inl.h">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream.h">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>json\protocolBuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\common.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\hash.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\map-util.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\once.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\platform_macros.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stl_util.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\stringprintf.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\template_util.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\src\google\protobuf\stubs\type_traits.h">
+      <Filter>json\protocolBuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\protocolBuf\win32\config.h">
+      <Filter>json\protocolBuf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
