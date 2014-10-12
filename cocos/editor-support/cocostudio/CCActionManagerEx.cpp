@@ -103,7 +103,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
                 ActionObject* action = new (std::nothrow) ActionObject();
                 action->autorelease();
                 
-                action->initWithBinary(cocoLoader, actionNode->GetChildArray(cocoLoader), root);
+                action->initWithBinary(cocoLoader, &actionNode->GetChildArray(cocoLoader)[i], root);
                 
                 actionList.pushBack(action);
             }
