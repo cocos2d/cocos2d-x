@@ -217,9 +217,6 @@
     <Filter Include="external\protocolBuf">
       <UniqueIdentifier>{cca5b284-43d5-4f19-8a3f-41011ca8fb78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="external\protocolBuf\win32">
-      <UniqueIdentifier>{26f61f04-86c1-42d5-b14b-d5e1ae3c5f4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="external\protocolBuf\google">
       <UniqueIdentifier>{4055fd20-df3e-469e-8e5f-e49635ecaa6d}</UniqueIdentifier>
     </Filter>
@@ -2478,9 +2475,6 @@
     <ClInclude Include="..\..\external\protocolBuf\src\google\protobuf\stubs\type_traits.h">
       <Filter>external\protocolBuf\google\protobuf\stubs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\protocolBuf\src\google\protobuf\config.h">
-      <Filter>external\protocolBuf\google\protobuf</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\external\protocolBuf\src\google\protobuf\extension_set.h">
       <Filter>external\protocolBuf\google\protobuf</Filter>
     </ClInclude>
@@ -2499,9 +2493,6 @@
     <ClInclude Include="..\..\external\protocolBuf\src\google\protobuf\wire_format_lite_inl.h">
       <Filter>external\protocolBuf\google\protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\protocolBuf\win32\config.h">
-      <Filter>external\protocolBuf\win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary.pb.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
@@ -2510,6 +2501,9 @@
     </ClInclude>
     <ClInclude Include="..\ui\UILayoutComponent.h">
       <Filter>ui\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protocolBuf\win32\config.h">
+      <Filter>external\protocolBuf\google\protobuf</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
