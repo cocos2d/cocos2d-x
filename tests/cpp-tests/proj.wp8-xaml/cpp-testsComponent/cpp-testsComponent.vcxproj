@@ -102,10 +102,10 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;protocolbuffer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\angle\prebuilt\$(Platform);$(EngineRoot)\external\curl\prebuilt\wp8\$(Platform);$(EngineRoot)external\websockets\prebuilt\wp8\$(Platform);$(EngineRoot)external\protocolBuf\prebuilt\wp8\$(Platform)\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\angle\prebuilt\$(Platform);$(EngineRoot)\external\curl\prebuilt\wp8\$(Platform);$(EngineRoot)external\websockets\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,10 +123,10 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;protocolbuffer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;libGLESv2_phone.lib;libEGL_phone.lib;xaudio2.lib;libwebsockets.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>ole32.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\angle\prebuilt\$(Platform);$(EngineRoot)\external\curl\prebuilt\wp8\$(Platform);$(EngineRoot)external\websockets\prebuilt\wp8\$(Platform);$(EngineRoot)external\protocolBuf\prebuilt\wp8\$(Platform)\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\angle\prebuilt\$(Platform);$(EngineRoot)\external\curl\prebuilt\wp8\$(Platform);$(EngineRoot)external\websockets\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
