@@ -37,12 +37,11 @@ THE SOFTWARE.
 #include "platform/CCStdC.h"
 #endif
 
+namespace cocos2d
+{
 #ifndef _unz64_H
 typedef struct unz_file_info_s unz_file_info;
 #endif
-
-namespace cocos2d
-{
     /* XXX: pragma pack ??? */
     /** @struct CCZHeader
     */

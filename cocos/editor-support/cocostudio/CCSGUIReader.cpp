@@ -356,10 +356,7 @@ WidgetReaderProtocol* WidgetPropertiesReader::createWidgetReaderProtocol(const s
     
     return dynamic_cast<WidgetReaderProtocol*>(object);
 }
-    
-   
 
-    
 Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
 {
     std::string jsonpath;
@@ -368,17 +365,18 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
 //    jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     size_t pos = jsonpath.find_last_of('/');
     m_strFilePath = jsonpath.substr(0,pos+1);
-    ssize_t nSize = 0;
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(fullPath, "rb", &nSize);
+    auto fileData = FileUtils::getInstance()->getDataFromFile(fullPath);
+    auto fileDataBytes = fileData.getBytes();
+    auto fileDataSize = fileData.getSize();
     
     const char* fileVersion = "";
     ui::Widget* widget = nullptr;
 
-    if (pBuffer != nullptr && nSize > 0)
+    if (fileDataBytes != nullptr && fileDataSize > 0)
     {
         CocoLoader	tCocoLoader;
-        if(true == tCocoLoader.ReadCocoBinBuff((char*)pBuffer))
+        if(true == tCocoLoader.ReadCocoBinBuff((char*)fileDataBytes))
         {
             stExpCocoNode*	tpRootCocoNode = tCocoLoader.GetRootCocoNode();
             
@@ -423,8 +421,6 @@ Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
             }
         }
     }
-    
-    CC_SAFE_DELETE_ARRAY(pBuffer);
     
     return widget;
    

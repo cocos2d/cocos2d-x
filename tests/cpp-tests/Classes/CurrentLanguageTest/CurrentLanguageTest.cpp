@@ -8,6 +8,13 @@ CurrentLanguageTest::CurrentLanguageTest()
 
     auto labelLanguage = Label::createWithTTF("", "fonts/arial.ttf", 20);
     labelLanguage->setPosition(VisibleRect::center());
+    
+    auto labelLanguageCode = Label::createWithTTF("", "fonts/arial.ttf", 20);
+    labelLanguageCode->setPosition(VisibleRect::center().x, VisibleRect::center().y-50);
+    
+    const char* currentLanguageCode = Application::getInstance()->getCurrentLanguageCode();
+    
+    labelLanguageCode->setString(currentLanguageCode);
 
     LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
     switch (currentLanguageType)
@@ -63,6 +70,7 @@ CurrentLanguageTest::CurrentLanguageTest()
     }
 
     addChild(labelLanguage);
+    addChild(labelLanguageCode);
 }
 
 void CurrentLanguageTestScene::runThisTest()
