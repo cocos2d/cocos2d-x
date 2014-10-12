@@ -287,8 +287,8 @@ void StopAllActionsTest::onEnter()
     auto pRepeatMove = RepeatForever::create(pSequenceMove);
     pRepeatMove->setTag(kTagSequence);
     
-    auto pScale1 = ScaleBy::create(2, 1.5);
-    auto pScale2 = ScaleBy::create(2, 1.0/1.5);
+    auto pScale1 = ScaleBy::create(2, 1.5f);
+    auto pScale2 = ScaleBy::create(2, 1.0f/1.5f);
     auto pSequenceScale = Sequence::createWithTwoActions(pScale1, pScale2);
     auto pRepeatScale = RepeatForever::create(pSequenceScale);
     pRepeatScale->setTag(kTagSequence);

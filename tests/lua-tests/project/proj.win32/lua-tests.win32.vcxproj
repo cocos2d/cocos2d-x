@@ -112,7 +112,7 @@
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosstudio" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
@@ -167,7 +167,7 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosstudio" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y

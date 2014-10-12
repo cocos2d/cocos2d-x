@@ -61,24 +61,35 @@ ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
 ActionTimeline/CSLoader.cpp \
 CSParseBinary.pb.cc \
+../../../external/protocolBuf/src/google/protobuf/extension_set.cc \
+../../../external/protocolBuf/src/google/protobuf/generated_message_util.cc \
+../../../external/protocolBuf/src/google/protobuf/message_lite.cc \
+../../../external/protocolBuf/src/google/protobuf/repeated_field.cc \
+../../../external/protocolBuf/src/google/protobuf/wire_format_lite.cc \
+../../../external/protocolBuf/src/google/protobuf/io/coded_stream.cc \
+../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream.cc \
+../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream_impl.cc \
+../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream_impl_lite.cc \
+../../../external/protocolBuf/src/google/protobuf/stubs/common.cc \
+../../../external/protocolBuf/src/google/protobuf/stubs/once.cc \
+../../../external/protocolBuf/src/google/protobuf/stubs/stringprintf.cc \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../../../external
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/../../../external \
+$(LOCAL_PATH)/../../../external/protocolBuf/src/google/protobuf \
+$(LOCAL_PATH)/../../../external/protocolBuf/src \
 $(LOCAL_PATH)/.. \
 $(LOCAL_PATH)/../.. \
 $(LOCAL_PATH)/WidgetReader \
 $(LOCAL_PATH)/../../platform/android \
 $(LOCAL_PATH)/../../../external/tinyxml2 \
-$(LOCAL_PATH)/../../../external/protocolBuf/include \
-$(LOCAL_PATH)/../../../external/protocolBuf/include/google/protobuf \
 
 LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
-LOCAL_STATIC_LIBRARIES += cocos_protocolBuffer_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_STATIC_LIBRARIES += cocos_extension_static
 LOCAL_STATIC_LIBRARIES += cocos2dx_internal_static

@@ -3,7 +3,7 @@
 #include "ButtonReader.h"
 #include "ui/UIButton.h"
 #include "cocostudio/CocoLoader.h"
-#include "CSParseBinary.pb.h"
+#include "cocostudio/CSParseBinary.pb.h"
 #include "tinyxml2/tinyxml2.h"
 
 USING_NS_CC;

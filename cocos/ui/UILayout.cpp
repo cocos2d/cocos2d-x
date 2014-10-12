@@ -1772,17 +1772,14 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
         else
         {
             CCASSERT(0, "invalid layout type");
+            return false;
         }
-        
     }
     else
     {
         return isWidgetAncestorSupportLoopFocus(parent, direction);
     }
 }
-
-
-
 
 Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
 {
