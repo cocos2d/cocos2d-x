@@ -69,6 +69,7 @@ Camera::Camera()
 : _cameraFlag(1)
 , _scene(nullptr)
 , _viewProjectionDirty(true)
+, _normalizedViewPortRect(0.0f, 0.0f, 1.0f, 1.0f)
 {
     
 }
@@ -243,6 +244,11 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     }
     
     dst->set(screen.x, screen.y, screen.z);
+}
+
+void Camera::setNormalizedViewPortRect(float x, float y, float width, float height)
+{
+    _normalizedViewPortRect.setRect(x, y, width, height);
 }
 
 void Camera::onEnter()

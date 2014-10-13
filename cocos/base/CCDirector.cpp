@@ -424,7 +424,13 @@ void Director::setViewport()
 {
     if (_openGLView)
     {
-        _openGLView->setViewPortInPoints(0, 0, _winSizeInPoints.width, _winSizeInPoints.height);
+        if (Camera::getVisitingCamera())
+        {
+            const auto& viewrect = Camera::getVisitingCamera()->getNormalizeViewPortRect();
+            _openGLView->setViewPortInPoints(_winSizeInPoints.width * viewrect.origin.x, _winSizeInPoints.height * viewrect.origin.y, _winSizeInPoints.width * viewrect.size.width, _winSizeInPoints.height  * viewrect.size.height);
+        }
+        else
+            _openGLView->setViewPortInPoints(0, 0, _winSizeInPoints.width, _winSizeInPoints.height);
     }
 }
 

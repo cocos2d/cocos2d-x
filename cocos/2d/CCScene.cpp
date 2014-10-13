@@ -129,6 +129,8 @@ void Scene::render(Renderer* renderer)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
+    bool viewportchanged = false;
+    Rect viewrect(0.0f, 0.0f, 1.0f, 1.0f);
     for (const auto& camera : _cameras)
     {
         Camera::_visitingCamera = camera;
@@ -143,6 +145,15 @@ void Scene::render(Renderer* renderer)
         
         //visit the scene
         visit(renderer, Mat4::IDENTITY, 0);
+        const auto& cameraViewRect = camera->getNormalizeViewPortRect();
+        if (viewrect.origin.x != cameraViewRect.origin.x || viewrect.origin.y != cameraViewRect.origin.y
+            || viewrect.size.width != cameraViewRect.size.width || viewrect.size.height != cameraViewRect.size.height)
+        {
+            director->setViewport();
+            viewrect = cameraViewRect;
+            viewportchanged = true;
+        }
+        
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -156,11 +167,23 @@ void Scene::render(Renderer* renderer)
         
         //visit the scene
         visit(renderer, Mat4::IDENTITY, 0);
+        const auto& cameraViewRect = defaultCamera->getNormalizeViewPortRect();
+        if (viewrect.origin.x != cameraViewRect.origin.x || viewrect.origin.y != cameraViewRect.origin.y
+            || viewrect.size.width != cameraViewRect.size.width || viewrect.size.height != cameraViewRect.size.height)
+        {
+            director->setViewport();
+            viewrect = cameraViewRect;
+            viewportchanged = true;
+        }
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
     Camera::_visitingCamera = nullptr;
+    
+    // reset view port
+    if (viewportchanged)
+        director->setViewport();
 }
 
 #if CC_USE_PHYSICS
