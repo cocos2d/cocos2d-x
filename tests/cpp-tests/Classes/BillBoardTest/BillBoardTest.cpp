@@ -90,31 +90,41 @@ BillBoardTest::BillBoardTest()
         _layerBillBorad->addChild(_camera);
     }
 
-    std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
-    for (unsigned int i = 0; i < 4; ++i)
-    {
-        Layer *layer = Layer::create();
-        auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
-        billboard->setScale(0.5f);
-        billboard->setPosition3D(Vec3(0.0f, 0.0f,  CCRANDOM_MINUS1_1() * 150.0f));
-        billboard->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
-        billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
-        _billboards.push_back(billboard);
-        layer->addChild(billboard);
-        _layerBillBorad->addChild(layer);
-        layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1(), Vec3(0.0f, 45.0f, 0.0f) ) ) );
-    }
+    //std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
+    //for (unsigned int i = 0; i < 4; ++i)
+    //{
+    //    Layer *layer = Layer::create();
+    //    auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
+    //    billboard->setScale(0.5f);
+    //    billboard->setPosition3D(Vec3(0.0f, 0.0f,  CCRANDOM_MINUS1_1() * 150.0f));
+    //    billboard->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+    //    billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
+    //    _billboards.push_back(billboard);
+    //    layer->addChild(billboard);
+    //    _layerBillBorad->addChild(layer);
+    //    layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1(), Vec3(0.0f, 45.0f, 0.0f) ) ) );
+    //}
 
-    addNewBillBoradWithCoords(Vec3(20,5,0));
-    addNewBillBoradWithCoords(Vec3(60,5,0));
-    addNewBillBoradWithCoords(Vec3(100,5,0));
-    addNewBillBoradWithCoords(Vec3(140,5,0));
-    addNewBillBoradWithCoords(Vec3(180,5,0));
-    addNewAniBillBoradWithCoords(Vec3(-20,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-60,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-100,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-140,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-180,0,0));
+	{
+		auto sprite = Sprite3D::create("Sprite3DTest/orc.c3t");
+		auto billboard = BillBoard::create("Images/Icon.png");
+		billboard->setScale(0.5f);
+		sprite->addChild(billboard);
+		sprite->runAction( RepeatForever::create( RotateBy::create( 10.0f, Vec3(0.0f, 360.0f, 0.0f) ) ) );
+		_billboards.push_back(billboard);
+		_layerBillBorad->addChild(sprite);
+	}
+
+    //addNewBillBoradWithCoords(Vec3(20,5,0));
+    //addNewBillBoradWithCoords(Vec3(60,5,0));
+    //addNewBillBoradWithCoords(Vec3(100,5,0));
+    //addNewBillBoradWithCoords(Vec3(140,5,0));
+    //addNewBillBoradWithCoords(Vec3(180,5,0));
+    //addNewAniBillBoradWithCoords(Vec3(-20,0,0));
+    //addNewAniBillBoradWithCoords(Vec3(-60,0,0));
+    //addNewAniBillBoradWithCoords(Vec3(-100,0,0));
+    //addNewAniBillBoradWithCoords(Vec3(-140,0,0));
+    //addNewAniBillBoradWithCoords(Vec3(-180,0,0));
     _camera->setPosition3D(Vec3(0, 130, 230));
     _camera->lookAt(Vec3(0,0,100), Vec3(0,1,0));
 
