@@ -177,6 +177,11 @@
 
 
 --------------------------------------------------------
+-- the ccs NodeReader
+-- @field [parent=#ccs] NodeReader#NodeReader NodeReader preloaded module
+
+
+--------------------------------------------------------
 -- the ccs ActionTimelineCache
 -- @field [parent=#ccs] ActionTimelineCache#ActionTimelineCache ActionTimelineCache preloaded module
 

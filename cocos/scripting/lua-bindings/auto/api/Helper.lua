@@ -17,12 +17,6 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
--- @function [parent=#Helper] doLayout 
--- @param self
--- @param #cc.Node rootNode
-        
---------------------------------
 -- Finds a widget whose tag equals to param tag from root widget.<br>
 -- param root      widget which will be seeked.<br>
 -- tag             tag value.<br>
