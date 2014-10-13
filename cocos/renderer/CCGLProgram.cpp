@@ -360,7 +360,7 @@ void GLProgram::parseUniforms()
                 if(strncmp("CC_", uniformName, 3) != 0) {
 
                     // remove possible array '[]' from uniform name
-                    if(uniform.size > 1 && length > 3)
+                    if(length > 3)
                     {
                         char* c = strrchr(uniformName, '[');
                         if(c)

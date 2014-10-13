@@ -48,32 +48,33 @@ static GLenum s_cullFace = 0;
 static bool   s_depthTestEnabled = false;
 static bool   s_depthWriteEnabled = false;
 
-struct DirectionLightUniformNames
-{
-    std::string color;
-    std::string dir;
-};
+static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
+static std::vector<Vec3> s_dirLightUniformColorValues;
+static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
+static std::vector<Vec3> s_dirLightUniformDirValues;
 
-struct PointLightUniformNames
-{
-    std::string color;
-    std::string position;
-    std::string rangeInverse;
-};
+static const char          *s_pointLightUniformColorName = "u_PointLightSourceColor";
+static std::vector<Vec3> s_pointLightUniformColorValues;
+static const char          *s_pointLightUniformPositionName = "u_PointLightSourcePosition";
+static std::vector<Vec3> s_pointLightUniformPositionValues;
+static const char          *s_pointLightUniformRangeInverseName = "u_PointLightSourceRangeInverse";
+static std::vector<float> s_pointLightUniformRangeInverseValues;
 
-struct SpotLightUniformNames
-{
-    std::string color;
-    std::string position;
-    std::string dir;
-    std::string innerAngleCos;
-    std::string outerAngleCos;
-    std::string rangeInverse;
-};
+static const char          *s_spotLightUniformColorName = "u_SpotLightSourceColor";
+static std::vector<Vec3> s_spotLightUniformColorValues;
+static const char          *s_spotLightUniformPositionName = "u_SpotLightSourcePosition";
+static std::vector<Vec3> s_spotLightUniformPositionValues;
+static const char          *s_spotLightUniformDirName = "u_SpotLightSourceDirection";
+static std::vector<Vec3> s_spotLightUniformDirValues;
+static const char          *s_spotLightUniformInnerAngleCosName = "u_SpotLightSourceInnerAngleCos";
+static std::vector<float> s_spotLightUniformInnerAngleCosValues;
+static const char          *s_spotLightUniformOuterAngleCosName = "u_SpotLightSourceOuterAngleCos";
+static std::vector<float> s_spotLightUniformOuterAngleCosValues;
+static const char          *s_spotLightUniformRangeInverseName = "u_SpotLightSourceRangeInverse";
+static std::vector<float> s_spotLightUniformRangeInverseValues;
 
-static std::vector<DirectionLightUniformNames> s_dirLightUniformNames;
-static std::vector<PointLightUniformNames> s_pointLightUniformNames;
-static std::vector<SpotLightUniformNames> s_spotLightUniformNames;
+static const char          *s_ambientLightUniformColorName = "u_AmbientLightSourceColor";
+
 
 MeshCommand::MeshCommand()
 : _textureID(0)
@@ -123,7 +124,6 @@ void MeshCommand::init(float globalOrder,
     _indexCount = indexCount;
     _mv.set(mv);
 
-    setLightUniformNames();
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
@@ -251,12 +251,12 @@ void MeshCommand::batchDraw()
         _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
         
     }
-
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
-        setLightUniforms();
     
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
+
+    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+        setLightUniforms();
     
     // Draw
     glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -294,11 +294,11 @@ void MeshCommand::execute()
         _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
         
     }
+    
+    _glProgramState->apply(_mv);   
 
     if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
         setLightUniforms();
-    
-    _glProgramState->apply(_mv);   
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
@@ -354,8 +354,11 @@ void MeshCommand::setLightUniforms()
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
     auto &lights = scene->getLights();
+    auto glProgram = _glProgramState->getGLProgram();
     if (_glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
     {
+        resetLightUniformValues();
+
         GLint enabledDirLightNum = 0;
         GLint enabledPointLightNum = 0;
         GLint enabledSpotLightNum = 0;
@@ -370,43 +373,50 @@ void MeshCommand::setLightUniforms()
                 {
                     case LightType::DIRECTIONAL:
                     {
-                        CCASSERT(enabledDirLightNum < maxDirLight, "");
-                        auto dirLight = static_cast<DirectionLight *>(light);
-                        Vec3 dir = dirLight->getDirectionInWorld();
-                        dir.normalize();
-                        const Color3B &col = dirLight->getDisplayedColor();
-                        _glProgramState->setUniformVec3(s_dirLightUniformNames[enabledDirLightNum].color, Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity));
-                        _glProgramState->setUniformVec3(s_dirLightUniformNames[enabledDirLightNum].dir, dir);
-                        ++enabledDirLightNum;
+                        if(enabledDirLightNum < maxDirLight)
+                        {
+                            auto dirLight = static_cast<DirectionLight *>(light);
+                            Vec3 dir = dirLight->getDirectionInWorld();
+                            dir.normalize();
+                            const Color3B &col = dirLight->getDisplayedColor();
+                            s_dirLightUniformColorValues[enabledDirLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_dirLightUniformDirValues[enabledDirLightNum] = dir;
+                            ++enabledDirLightNum;
+                        }
+                        
                     }
                         break;
                     case LightType::POINT:
                     {
-                        CCASSERT(enabledPointLightNum < maxPointLight, "");
-                        auto pointLight = static_cast<PointLight *>(light);
-                        Mat4 mat= pointLight->getNodeToWorldTransform();
-                        const Color3B &col = pointLight->getDisplayedColor();
-                        _glProgramState->setUniformVec3(s_pointLightUniformNames[enabledPointLightNum].color, Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity));
-                        _glProgramState->setUniformVec3(s_pointLightUniformNames[enabledPointLightNum].position, Vec3(mat.m[12], mat.m[13], mat.m[14]));
-                        _glProgramState->setUniformFloat(s_pointLightUniformNames[enabledPointLightNum].rangeInverse, 1.0f / pointLight->getRange());
-                        ++enabledPointLightNum;
+                        if(enabledPointLightNum < maxPointLight)
+                        {
+                            auto pointLight = static_cast<PointLight *>(light);
+                            Mat4 mat= pointLight->getNodeToWorldTransform();
+                            const Color3B &col = pointLight->getDisplayedColor();
+                            s_pointLightUniformColorValues[enabledPointLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_pointLightUniformPositionValues[enabledPointLightNum] = Vec3(mat.m[12], mat.m[13], mat.m[14]);
+                            s_pointLightUniformRangeInverseValues[enabledPointLightNum] = 1.0f / pointLight->getRange();
+                            ++enabledPointLightNum;
+                        }
                     }
                         break;
                     case LightType::SPOT:
                     {
-                        CCASSERT(enabledSpotLightNum < maxSpotLight, "");
-                        auto spotLight = static_cast<SpotLight *>(light);
-                        Vec3 dir = spotLight->getDirectionInWorld();
-                        dir.normalize();
-                        Mat4 mat= light->getNodeToWorldTransform();
-                        const Color3B &col = spotLight->getDisplayedColor();
-                        _glProgramState->setUniformVec3(s_spotLightUniformNames[enabledSpotLightNum].color, Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity));
-                        _glProgramState->setUniformVec3(s_spotLightUniformNames[enabledSpotLightNum].position, Vec3(mat.m[12], mat.m[13], mat.m[14]));
-                        _glProgramState->setUniformVec3(s_spotLightUniformNames[enabledSpotLightNum].dir, dir);
-                        _glProgramState->setUniformFloat(s_spotLightUniformNames[enabledSpotLightNum].innerAngleCos, spotLight->getCosInnerAngle());
-                        _glProgramState->setUniformFloat(s_spotLightUniformNames[enabledSpotLightNum].outerAngleCos, spotLight->getCosOuterAngle());
-                        _glProgramState->setUniformFloat(s_spotLightUniformNames[enabledSpotLightNum].rangeInverse, 1.0f / spotLight->getRange());
-                        ++enabledSpotLightNum;
+                        if(enabledSpotLightNum < maxSpotLight)
+                        {
+                            auto spotLight = static_cast<SpotLight *>(light);
+                            Vec3 dir = spotLight->getDirectionInWorld();
+                            dir.normalize();
+                            Mat4 mat= light->getNodeToWorldTransform();
+                            const Color3B &col = spotLight->getDisplayedColor();
+                            s_spotLightUniformColorValues[enabledSpotLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_spotLightUniformPositionValues[enabledSpotLightNum] = Vec3(mat.m[12], mat.m[13], mat.m[14]);
+                            s_spotLightUniformDirValues[enabledSpotLightNum] = dir;
+                            s_spotLightUniformInnerAngleCosValues[enabledSpotLightNum] = spotLight->getCosInnerAngle();
+                            s_spotLightUniformOuterAngleCosValues[enabledSpotLightNum] = spotLight->getCosOuterAngle();
+                            s_spotLightUniformRangeInverseValues[enabledSpotLightNum] = 1.0f / spotLight->getRange();
+                            ++enabledSpotLightNum;
+                        }
                     }
                         break;
                     case LightType::AMBIENT:
@@ -422,30 +432,30 @@ void MeshCommand::setLightUniforms()
             }
         }
         
-        for (unsigned short i = enabledDirLightNum; i < maxDirLight; ++i)
+        if (0 < maxDirLight)
         {
-            _glProgramState->setUniformVec3(s_dirLightUniformNames[i].color, Vec3::ZERO);
-            _glProgramState->setUniformVec3(s_dirLightUniformNames[i].dir, Vec3::ZERO);
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_dirLightUniformColorName), (GLfloat*)(&s_dirLightUniformColorValues[0]), s_dirLightUniformColorValues.size());
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_dirLightUniformDirName), (GLfloat*)(&s_dirLightUniformDirValues[0]), s_dirLightUniformDirValues.size());
         }
-        
-        for (unsigned short i = enabledPointLightNum; i < maxPointLight; ++i)
+
+        if (0 < maxPointLight)
         {
-            _glProgramState->setUniformVec3(s_pointLightUniformNames[i].color, Vec3::ZERO);
-            _glProgramState->setUniformVec3(s_pointLightUniformNames[i].position, Vec3::ZERO);
-            _glProgramState->setUniformFloat(s_pointLightUniformNames[i].rangeInverse, 0.0f);
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_pointLightUniformColorName), (GLfloat*)(&s_pointLightUniformColorValues[0]), s_pointLightUniformColorValues.size());
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_pointLightUniformPositionName), (GLfloat*)(&s_pointLightUniformPositionValues[0]), s_pointLightUniformPositionValues.size());
+            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_pointLightUniformRangeInverseName), (GLfloat*)(&s_pointLightUniformRangeInverseValues[0]), s_pointLightUniformRangeInverseValues.size());
         }
-        
-        for (unsigned short i = enabledSpotLightNum; i < maxSpotLight; ++i)
+
+        if (0 < maxSpotLight)
         {
-            _glProgramState->setUniformVec3(s_spotLightUniformNames[i].color, Vec3::ZERO);
-            _glProgramState->setUniformVec3(s_spotLightUniformNames[i].position, Vec3::ZERO);
-            _glProgramState->setUniformVec3(s_spotLightUniformNames[i].dir, Vec3::ZERO);
-            _glProgramState->setUniformFloat(s_spotLightUniformNames[i].innerAngleCos, 0.0f);
-            _glProgramState->setUniformFloat(s_spotLightUniformNames[i].outerAngleCos, 0.0f);
-            _glProgramState->setUniformFloat(s_spotLightUniformNames[i].rangeInverse, 0.0f);
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_spotLightUniformColorName), (GLfloat*)(&s_spotLightUniformColorValues[0]), s_spotLightUniformColorValues.size());
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_spotLightUniformPositionName), (GLfloat*)(&s_spotLightUniformPositionValues[0]), s_spotLightUniformPositionValues.size());
+            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_spotLightUniformDirName), (GLfloat*)(&s_spotLightUniformDirValues[0]), s_spotLightUniformDirValues.size());
+            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_spotLightUniformInnerAngleCosName), (GLfloat*)(&s_spotLightUniformInnerAngleCosValues[0]), s_spotLightUniformInnerAngleCosValues.size());
+            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_spotLightUniformOuterAngleCosName), (GLfloat*)(&s_spotLightUniformOuterAngleCosValues[0]), s_spotLightUniformOuterAngleCosValues.size());
+            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_spotLightUniformRangeInverseName), (GLfloat*)(&s_spotLightUniformRangeInverseValues[0]), s_spotLightUniformRangeInverseValues.size());
         }
-        
-        _glProgramState->setUniformVec3("u_AmbientLightSourceColor", ambientColor);
+
+        glProgram->setUniformLocationWith3f(glProgram->getUniformLocationForName(s_ambientLightUniformColorName), ambientColor.x, ambientColor.y, ambientColor.z);
     }
     else // normal does not exist
     {
@@ -470,64 +480,30 @@ void MeshCommand::setLightUniforms()
         {
             ambient.x /= 255.f; ambient.y /= 255.f; ambient.z /= 255.f;
         }
-        _glProgramState->setUniformVec4("u_color", Vec4(_displayColor.x * ambient.x, _displayColor.y * ambient.y, _displayColor.z * ambient.z, _displayColor.w));
+        glProgram->setUniformLocationWith4f(glProgram->getUniformLocationForName("u_color"), _displayColor.x * ambient.x, _displayColor.y * ambient.y, _displayColor.z * ambient.z, _displayColor.w);
     }
 }
 
-void MeshCommand::setLightUniformNames()
+void MeshCommand::resetLightUniformValues()
 {
     const auto& conf = Configuration::getInstance();
     int maxDirLight = conf->getMaxSupportDirLightInShader();
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
-    if (s_dirLightUniformNames.size() != maxDirLight)
-    {
-        s_dirLightUniformNames.resize(maxDirLight);
-        char str[64];
-        for (unsigned int i = 0; i < maxDirLight; ++i)
-        {
-            sprintf(str, "u_DirLightSourceColor[%d]", i);
-            s_dirLightUniformNames[i].color = str;
-            sprintf(str, "u_DirLightSourceDirection[%d]", i);
-            s_dirLightUniformNames[i].dir = str;
-        }
-    }
 
-    if (s_pointLightUniformNames.size() != maxPointLight)
-    {
-        s_pointLightUniformNames.resize(maxPointLight);
-        char str[64];
-        for (unsigned int i = 0; i < maxPointLight; ++i)
-        {
-            sprintf(str, "u_PointLightSourceColor[%d]", i);
-            s_pointLightUniformNames[i].color = str;
-            sprintf(str, "u_PointLightSourcePosition[%d]", i);
-            s_pointLightUniformNames[i].position = str;
-            sprintf(str, "u_PointLightSourceRangeInverse[%d]", i);
-            s_pointLightUniformNames[i].rangeInverse = str;
-        }
-    }
+    s_dirLightUniformColorValues.assign(maxDirLight, Vec3::ZERO);
+    s_dirLightUniformDirValues.assign(maxDirLight, Vec3::ZERO);
 
-    if (s_spotLightUniformNames.size() != maxSpotLight)
-    {
-        s_spotLightUniformNames.resize(maxSpotLight);
-        char str[64];
-        for (unsigned int i = 0; i < maxSpotLight; ++i)
-        {
-            sprintf(str, "u_SpotLightSourceColor[%d]", i);
-            s_spotLightUniformNames[i].color = str;
-            sprintf(str, "u_SpotLightSourcePosition[%d]", i);
-            s_spotLightUniformNames[i].position = str;
-            sprintf(str, "u_SpotLightSourceDirection[%d]", i);
-            s_spotLightUniformNames[i].dir = str;
-            sprintf(str, "u_SpotLightSourceInnerAngleCos[%d]", i);
-            s_spotLightUniformNames[i].innerAngleCos = str;
-            sprintf(str, "u_SpotLightSourceOuterAngleCos[%d]", i);
-            s_spotLightUniformNames[i].outerAngleCos = str;
-            sprintf(str, "u_SpotLightSourceRangeInverse[%d]", i);
-            s_spotLightUniformNames[i].rangeInverse = str;
-        }
-    }
+    s_pointLightUniformColorValues.assign(maxPointLight, Vec3::ZERO);
+    s_pointLightUniformPositionValues.assign(maxPointLight, Vec3::ZERO);
+    s_pointLightUniformRangeInverseValues.assign(maxPointLight, 0.0f);
+
+    s_spotLightUniformColorValues.assign(maxSpotLight, Vec3::ZERO);
+    s_spotLightUniformPositionValues.assign(maxSpotLight, Vec3::ZERO);
+    s_spotLightUniformDirValues.assign(maxSpotLight, Vec3::ZERO);
+    s_spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 0.0f);
+    s_spotLightUniformOuterAngleCosValues.assign(maxSpotLight, 0.0f);
+    s_spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
