@@ -55,6 +55,15 @@
     <Filter Include="2d">
       <UniqueIdentifier>{fdee8fd3-05f9-46a1-aa15-6ceb16358145}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\protobuf-lite">
+      <UniqueIdentifier>{85e8e428-d95d-4ca2-9765-c27ce7571bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\protobuf-lite\io">
+      <UniqueIdentifier>{f57aa1db-2f62-429c-bdf2-c772da13b9fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\protobuf-lite\stubs">
+      <UniqueIdentifier>{f8d8f14c-cf4b-41a4-8948-6abdb29edcad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -667,6 +676,45 @@
     </ClCompile>
     <ClCompile Include="..\base\CCLight.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.cc">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.cc">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\common.cc">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\once.cc">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.cc">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\extension_set.cc">
+      <Filter>external\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.cc">
+      <Filter>external\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\message_lite.cc">
+      <Filter>external\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\repeated_field.cc">
+      <Filter>external\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.cc">
+      <Filter>external\protobuf-lite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1375,6 +1423,72 @@
     </ClInclude>
     <ClInclude Include="..\base\CCLight.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.h">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream_inl.h">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.h">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>external\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\common.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\hash.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\map-util.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\once.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\platform_macros.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stl_util.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\template_util.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\type_traits.h">
+      <Filter>external\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\extension_set.h">
+      <Filter>external\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.h">
+      <Filter>external\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\message_lite.h">
+      <Filter>external\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\repeated_field.h">
+      <Filter>external\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.h">
+      <Filter>external\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite_inl.h">
+      <Filter>external\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\win32\config.h">
+      <Filter>external\protobuf-lite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
