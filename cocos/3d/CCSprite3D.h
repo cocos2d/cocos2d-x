@@ -137,7 +137,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     /**generate default GLProgramState*/
-    void genGLProgramState();
+    void genGLProgramState(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);

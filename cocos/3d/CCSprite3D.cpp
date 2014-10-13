@@ -300,15 +300,10 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& 
         createAttachSprite3DNode(it,matrialdatas);
     }
 }
-void Sprite3D::genGLProgramState()
+void Sprite3D::genGLProgramState(bool useLight)
 {
-    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
-    _shaderUsingLight = false;
-    for (const auto light : lights) {
-        _shaderUsingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
-        if (_shaderUsingLight)
-            break;
-    }
+    _shaderUsingLight = useLight;
+    
     std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
     for(auto& mesh : _meshVertexDatas)
     {
@@ -532,7 +527,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             break;
     }
     if (usingLight != _shaderUsingLight)
-        genGLProgramState();
+        genGLProgramState(usingLight);
     
     int i = 0;
     for (auto& mesh : _meshes) {
