@@ -465,6 +465,13 @@ void Button::updateTitleLocation()
     _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
 }
 
+void Button::updateContentSize()
+{
+  if (_ignoreSize) {
+      this->setContentSize(getVirtualRendererSize());
+  }
+}
+
 void Button::onSizeChanged()
 {
     Widget::onSizeChanged();
@@ -638,11 +645,7 @@ void Button::setPressedActionEnabled(bool enabled)
 void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
-    if (_ignoreSize)
-    {
-        Size s = getVirtualRendererSize();
-        this->setContentSize(s);
-    }
+    updateContentSize();
 }
 
 const std::string& Button::getTitleText() const
@@ -670,6 +673,7 @@ void Button::setTitleFontSize(float size)
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
     }
+    updateContentSize();
     _fontSize = size;
 }
 
