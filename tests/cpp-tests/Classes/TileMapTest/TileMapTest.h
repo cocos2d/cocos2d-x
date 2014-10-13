@@ -48,6 +48,16 @@ public:
     virtual void onExit() override;
 };
 
+class TMXStaggeredTest : public TileDemo
+{
+public:
+    TMXStaggeredTest(void);
+    virtual std::string title() const override;
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+};
+
 class TMXOrthoTest2 : public TileDemo
 {
 public:
