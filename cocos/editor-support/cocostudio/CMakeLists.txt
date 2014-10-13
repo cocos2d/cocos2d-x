@@ -61,19 +61,6 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
   editor-support/cocostudio/ActionTimeline/CSLoader.cpp
   editor-support/cocostudio/CSParseBinary.pb.cc
-  ../../../external/protocolBuf/src/google/protobuf/extension_set.cc
-  ../../../external/protocolBuf/src/google/protobuf/generated_message_util.cc
-  ../../../external/protocolBuf/src/google/protobuf/message_lite.cc
-  ../../../external/protocolBuf/src/google/protobuf/repeated_field.cc
-  ../../../external/protocolBuf/src/google/protobuf/wire_format_lite.cc
-  ../../../external/protocolBuf/src/google/protobuf/io/coded_stream.cc
-  ../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream.cc
-  ../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream_impl.cc
-  ../../../external/protocolBuf/src/google/protobuf/io/zero_copy_stream_impl_lite.cc
-  ../../../external/protocolBuf/src/google/protobuf/stubs/common.cc
-  ../../../external/protocolBuf/src/google/protobuf/stubs/once.cc
-  ../../../external/protocolBuf/src/google/protobuf/stubs/stringprintf.cc
-
 )
 
 include_directories( editor-support )
