@@ -1026,6 +1026,9 @@ Developers:
         
     yestein
         Add Cocostudio Armature getOffsetPoints API for Lua
+        
+    coldfog
+        Fix bug that ActionManagerEx::initWithBinary can only load one UI animation
     
 Retired Core Developers:
     WenSheng Yang
