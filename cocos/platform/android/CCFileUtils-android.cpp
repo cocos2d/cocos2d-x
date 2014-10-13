@@ -81,6 +81,33 @@ bool FileUtilsAndroid::init()
     return FileUtils::init();
 }
 
+std::string FileUtilsAndroid::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename)
+{
+    std::string ret = directory;
+    if (directory.size() && directory[directory.size()-1] != '/'){
+        ret += '/';
+    }
+    ret += filename;
+    
+    auto pos = ret.find("../");
+    while (pos > 1 && pos != std::string::npos)
+    {
+        auto posf = ret.rfind('/',pos - 2);
+        if (posf == std::string::npos)
+            ret = ret.erase(0,pos + 3);
+        else
+            ret = ret.erase((int)posf,pos + 2 - posf );
+
+        pos = ret.find("../");
+    }
+    
+    // if the file doesn't exist, return an empty string
+    if (!isFileExistInternal(ret)) {
+        ret = "";
+    }
+    return ret;
+}
+
 bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
 {
     if (strFilePath.empty())
