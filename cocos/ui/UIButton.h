@@ -45,6 +45,13 @@ class CC_GUI_DLL Button : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
+    
+    enum class State
+    {
+        NORMAL,
+        PRESSED,
+        DISABLED
+    };
 
     /**
      * Default constructor
@@ -70,7 +77,7 @@ public:
      */
     static Button* create(const std::string& normalImage,
                           const std::string& selectedImage = "",
-                          const std::string& disableImage = "",
+                          const std::string& disabledImage = "",
                           TextureResType texType = TextureResType::LOCAL);
     
     /**
@@ -205,6 +212,36 @@ public:
      */
     float getZoomScale()const;
     
+    void setNormalBackgroundColor(const Color3B &color);
+    const Color3B& getNormalBackgroundColor() const;
+    void setPressedBackgroundColor(const Color3B &color);
+    const Color3B& getPressedBackgroundColor() const;
+    void setDisabledBackgroundColor(const Color3B &color);
+    const Color3B& getDisabledBackgroundColor() const;
+    
+    void setNormalBackgroundOpacity(GLubyte opacity);
+    GLubyte getNormalBackgroundOpacity() const;
+    void setPressedBackgroundOpacity(GLubyte opacity);
+    GLubyte getPressedBackgroundOpacity() const;
+    void setDisabledBackgroundOpacity(GLubyte opacity);
+    GLubyte getDisabledBackgroundOpacity() const;
+    
+    void setNormalTitleColor(const Color3B &color);
+    const Color3B& getNormalTitleColor() const;
+    void setPressedTitleColor(const Color3B &color);
+    const Color3B& getPressedTitleColor() const;
+    void setDisabledTitleColor(const Color3B &color);
+    const Color3B& getDisabledTitleColor() const;
+    
+    void setNormalTitleOpacity(GLubyte opacity);
+    GLubyte getNormalTitleOpacity() const;
+    void setPressedTitleOpacity(GLubyte opacity);
+    GLubyte getPressedTitleOpacity() const;
+    void setDisabledTitleOpacity(GLubyte opacity);
+    GLubyte getDisabledTitleOpacity() const;
+    
+    State getState() const { return _state; }
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& normalImage,
@@ -232,6 +269,9 @@ protected:
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    
+    void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    void updateDisplayedColor(const Color3B& parentColor) override;
    
 protected:
     Scale9Sprite* _buttonNormalRenderer;
@@ -259,12 +299,32 @@ protected:
     float _normalTextureScaleYInSize;
     float _pressedTextureScaleXInSize;
     float _pressedTextureScaleYInSize;
+    
+    State _state;
+    
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;
+    
     bool _normalTextureAdaptDirty;
     bool _pressedTextureAdaptDirty;
     bool _disabledTextureAdaptDirty;
+    
+    Color3B _normalBackgroundColor;
+    Color3B _pressedBackgroundColor;
+    Color3B _disabledBackgroundColor;
+    
+    GLubyte _normalBackgroundOpacity;
+    GLubyte _pressedBackgroundOpacity;
+    GLubyte _disabledBackgroundOpacity;
+
+    Color3B _normalTitleColor;
+    Color3B _pressedTitleColor;
+    Color3B _disabledTitleColor;
+    
+    GLubyte _normalTitleOpacity;
+    GLubyte _pressedTitleOpacity;
+    GLubyte _disabledTitleOpacity;
 
 private:
     enum class FontType
