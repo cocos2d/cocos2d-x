@@ -324,12 +324,29 @@ void Button::setCapInsets(const Rect &capInsets)
 
 void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
 {
-    _capInsetsNormal = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_normalTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_normalTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsNormal = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonNormalRenderer->setCapInsets(capInsets);
+    _buttonNormalRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsNormalRenderer()const
@@ -339,12 +356,29 @@ const Rect& Button::getCapInsetsNormalRenderer()const
 
 void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
 {
-    _capInsetsPressed = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_pressedTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_pressedTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsPressed = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonClickedRenderer->setCapInsets(capInsets);
+    _buttonClickedRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsPressedRenderer()const
@@ -354,12 +388,29 @@ const Rect& Button::getCapInsetsPressedRenderer()const
 
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
 {
-    _capInsetsDisabled = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_disabledTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_disabledTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsDisabled = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonDisableRenderer->setCapInsets(capInsets);
+    _buttonDisableRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsDisabledRenderer()const
