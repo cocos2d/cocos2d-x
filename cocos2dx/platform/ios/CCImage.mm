@@ -221,7 +221,14 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         
         // create the font   
         id font = [UIFont fontWithName:fntName size:nSize];
-        
+		
+		[CCCustomBehaviorProvider sharedCustomBehaviorProvider].customDynamicLineBreak.textWithDynamicLineBreakIndicators = str;
+		[CCCustomBehaviorProvider sharedCustomBehaviorProvider].customDynamicLineBreak.font = font;
+		NSString *dynamicLineBreakString = [[CCCustomBehaviorProvider sharedCustomBehaviorProvider].customDynamicLineBreak dynamicLineBreakWithLabelWidth:constrainSize.width];
+		if (dynamicLineBreakString) {
+			str = dynamicLineBreakString;
+		}
+		
         if (font)
         {
             dim = _calculateStringSize(str, font, &constrainSize);
@@ -389,13 +396,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
         {
             textOrigingY = startH - shadowStrokePaddingY;
         }
-        
-        [CCCustomBehaviorProvider sharedCustomBehaviorProvider].customDynamicLineBreak.textWithDynamicLineBreakIndicators = str;
-        [CCCustomBehaviorProvider sharedCustomBehaviorProvider].customDynamicLineBreak.font = font;
-        NSString *dynamicLineBreakString = [[CCCustomBehaviorProvider sharedCustomBehaviorProvider].customDynamicLineBreak dynamicLineBreakWithLabelWidth:textWidth];
-        if (dynamicLineBreakString) {
-            str = dynamicLineBreakString;
-        }
+		
         // actually draw the text in the context
 		// XXX: ios7 casting
         [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
