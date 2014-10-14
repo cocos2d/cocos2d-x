@@ -1,5 +1,5 @@
 
-if(MACOSX)
+if(MACOSX OR APPLE)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-apple.mm)
 endif()
