@@ -126,7 +126,7 @@ elseif(WINDOWS)
 elseif(LINUX)
   set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets
   fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
-elseif(MACOSX)
+elseif(APPLE)
 
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
