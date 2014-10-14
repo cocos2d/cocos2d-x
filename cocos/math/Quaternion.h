@@ -302,6 +302,11 @@ public:
      * @return The angle (in radians).
      */
     float toAxisAngle(Vec3* e) const;
+    
+    /**
+     * Converts to Euler angle in degree, order is z, y, x
+     */
+    void toEulerAngle(Vec3* angle) const;
 
     /**
      * Interpolates between two quaternions using linear interpolation.
