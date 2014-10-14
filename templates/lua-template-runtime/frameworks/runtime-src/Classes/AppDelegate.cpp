@@ -13,10 +13,6 @@ using namespace std;
 
 AppDelegate::AppDelegate()
 {
-#if (COCOS2D_DEBUG > 0)
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    initRuntime();
-#endif
 }
 
 AppDelegate::~AppDelegate()
@@ -37,6 +33,11 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+#if (COCOS2D_DEBUG > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    initRuntime();
+#endif
+    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
