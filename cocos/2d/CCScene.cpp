@@ -51,6 +51,8 @@ Scene::Scene()
     _defaultCamera = Camera::create();
     addChild(_defaultCamera);
     
+    _leftVRCamera = _rightVRCamera = nullptr;
+    
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
 }
@@ -186,11 +188,40 @@ void Scene::render(Renderer* renderer)
         director->setViewport();
 }
 
-void Scene::enableVR(float eyedistance, CameraFlag cameraflag)
+void Scene::enableVR(float distanceBetweenEyes, CameraFlag cameraflag)
 {
-    auto s = Director::getInstance()->getWinSize();
-    float ratio = (GLfloat)s.width * 2.0f / s.height;
-    auto camera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
+    if (_leftVRCamera == nullptr)
+    {
+        auto s = Director::getInstance()->getWinSize();
+        float ratio = (GLfloat)s.width * 2.0f / s.height;
+        _leftVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
+        _rightVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
+        
+        addChild(_leftVRCamera);
+        addChild(_rightVRCamera);
+    }
+    _leftVRCamera->setCameraFlag(cameraflag);
+    _rightVRCamera->setCameraFlag(cameraflag);
+    
+    setVRHeadPosAndRot(_defaultCamera->getPosition3D(), _defaultCamera->getRotation3D());
+}
+
+void Scene::setVRHeadPosAndRot(const Vec3& pos, const Vec3& rot)
+{
+    if (_leftVRCamera && _rightVRCamera)
+    {
+        float distanceBetweenEyes = (_leftVRCamera->getPosition3D() - _rightVRCamera->getPosition3D()).length();
+        
+        _leftVRCamera->setRotation3D(rot);
+        _rightVRCamera->setRotation3D(rot);
+        auto mat = _leftVRCamera->getNodeToWorldTransform();
+        Vec3 offset(mat.m[0], mat.m[1], mat.m[2]);
+        offset.normalize();
+        offset *= distanceBetweenEyes / 2.f;
+        
+        _leftVRCamera->setPosition3D(pos - offset);
+        _rightVRCamera->setPosition3D(pos + offset);
+    }
 }
 
 #if CC_USE_PHYSICS
