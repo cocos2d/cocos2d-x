@@ -111,15 +111,7 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\network\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosbuilder\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extension\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocostudio\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y</Command>
+      <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
@@ -179,14 +171,7 @@ mkdir "$(LocalDebuggerWorkingDirectory)\res"
 xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /e /Y
 xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /e /Y
 copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\config.json" /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\external\lua\luasocket\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\network\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosbuilder\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extension\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocostudio\*.lua" "$(LocalDebuggerWorkingDirectory)" /e /Y</Command>
+</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
