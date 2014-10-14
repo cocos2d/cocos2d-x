@@ -546,7 +546,15 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
         
-        meshCommand.init(_globalZOrder, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
+		float globalZ = _globalZOrder;
+		if (mesh->_isTransparent)
+		{
+			Vec4 local_pos(_position.x,_position.y,_positionZ,1);
+			Vec4 result = Camera::getVisitingCamera()->getViewMatrix() *getNodeToWorldTransform()* local_pos;
+			globalZ = -result.z;
+		}
+
+        meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
         
         meshCommand.setLightMask(_lightMask);
 
