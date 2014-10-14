@@ -122,8 +122,11 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 break;
             }
 #endif
+
+#ifndef WP8_SHADER_COMPILER
 	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
+#endif
 		});
 	}
 }
