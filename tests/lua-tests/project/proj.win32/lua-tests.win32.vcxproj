@@ -112,7 +112,7 @@
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosstudio" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
@@ -167,7 +167,7 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\" /e /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosstudio" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
@@ -182,12 +182,14 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\lua_assetsmanager_test_sample.h" />
+    <ClInclude Include="..\Classes\lua_test_bindings.h" />
     <ClInclude Include="..\Classes\lua_module_register.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\lua_assetsmanager_test_sample.cpp" />
+    <ClCompile Include="..\Classes\lua_test_bindings.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -37,7 +37,7 @@ static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
-static const float ZOOM_ACTION_TIME_STEP = 0.05;
+static const float ZOOM_ACTION_TIME_STEP = 0.05f;
     
 IMPLEMENT_CLASS_GUI_INFO(Button)
     
@@ -465,6 +465,13 @@ void Button::updateTitleLocation()
     _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
 }
 
+void Button::updateContentSize()
+{
+  if (_ignoreSize) {
+      this->setContentSize(getVirtualRendererSize());
+  }
+}
+
 void Button::onSizeChanged()
 {
     Widget::onSizeChanged();
@@ -638,6 +645,7 @@ void Button::setPressedActionEnabled(bool enabled)
 void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
+    updateContentSize();
 }
 
 const std::string& Button::getTitleText() const
@@ -665,6 +673,7 @@ void Button::setTitleFontSize(float size)
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
     }
+    updateContentSize();
     _fontSize = size;
 }
 

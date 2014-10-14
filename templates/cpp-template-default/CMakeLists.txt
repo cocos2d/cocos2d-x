@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 set(APP_NAME MyGame)
 project (${APP_NAME})
 
-include(cocos2d/build/BuildHelpers.CMakeLists.txt)
+include(cocos2d/cmake/BuildHelpers.CMakeLists.txt)
 
 option(DEBUG_MODE "Debug or release?" ON)
 
@@ -120,6 +120,7 @@ include_directories(
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
   ${COCOS2D_ROOT}/external/edtaa3func
+  ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
   ${COCOS2D_ROOT}/external/jpeg/include/linux
   ${COCOS2D_ROOT}/external/tiff/include/linux
   ${COCOS2D_ROOT}/external/webp/include/linux
@@ -145,6 +146,14 @@ link_directories(
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/chipmunk/prebuilt/linux/${ARCH_DIR}
 )
+endif()
+
+# build for 3rd party libraries
+if(LINUX)
+add_subdirectory(${COCOS2D_ROOT}/external/Box2D)
+add_subdirectory(${COCOS2D_ROOT}/external/unzip)
+add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
+add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
 endif()
 
 # libcocos2d

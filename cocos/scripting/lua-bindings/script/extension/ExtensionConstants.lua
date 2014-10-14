@@ -1,3 +1,4 @@
+
 cc = cc or {}
 
 cc.CONTROL_STATE_NORMAL  = 1

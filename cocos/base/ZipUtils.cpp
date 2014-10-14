@@ -22,16 +22,25 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+// FIXME: hack, must be included before ziputils
+#include "unzip.h"
+#include "base/ZipUtils.h"
+
 #include <zlib.h>
 #include <assert.h>
 #include <stdlib.h>
 
-#include "base/ZipUtils.h"
 #include "base/CCData.h"
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
-#include "unzip.h"
 #include <map>
+
+// FIXME: Other platforms should use upstream minizip like mingw-w64  
+#ifdef __MINGW32__
+#define unzGoToFirstFile64(A,B,C,D) unzGoToFirstFile2(A,B,C,D, NULL, 0, NULL, 0)
+#define unzGoToNextFile64(A,B,C,D) unzGoToNextFile2(A,B,C,D, NULL, 0, NULL, 0)
+#endif
 
 NS_CC_BEGIN
 
@@ -484,6 +493,8 @@ void ZipUtils::setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2,
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256
 
+static const std::string emptyFilename("");
+
 struct ZipEntryInfo
 {
     unz_file_pos pos;
@@ -499,6 +510,23 @@ public:
     typedef std::unordered_map<std::string, struct ZipEntryInfo> FileListContainer;
     FileListContainer fileList;
 };
+
+ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
+{
+    ZipFile *zip = new ZipFile();
+    if (zip && zip->initWithBuffer(buffer, size)) {
+        return zip;
+    } else {
+        if (zip) delete zip;
+        return nullptr;
+    }
+}
+
+ZipFile::ZipFile()
+: _data(new ZipFilePrivate)
+{
+    _data->zipFile = nullptr;
+}
 
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
@@ -610,6 +638,47 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
     } while (0);
     
     return buffer;
+}
+
+std::string ZipFile::getFirstFilename()
+{
+    if (unzGoToFirstFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
+std::string ZipFile::getNextFilename()
+{
+    if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
+int ZipFile::getCurrentFileInfo(std::string *filename, unz_file_info *info)
+{
+    char path[FILENAME_MAX + 1];
+    int ret = unzGetCurrentFileInfo(_data->zipFile, info, path, sizeof(path), nullptr, 0, nullptr, 0);
+    if (ret != UNZ_OK) {
+        *filename = emptyFilename;
+    } else {
+        filename->assign(path);
+    }
+    return ret;
+}
+
+bool ZipFile::initWithBuffer(const void *buffer, uLong size)
+{
+    if (!buffer || size == 0) return false;
+    
+    _data->zipFile = unzOpenBuffer(buffer, size);
+    if (!_data->zipFile) return false;
+    
+    setFilter(emptyFilename);
+    return true;
 }
 
 NS_CC_END

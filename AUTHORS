@@ -812,6 +812,7 @@ Developers:
         Added getAllTouches() in GLViewProtocol
         Precompiled headers improvements
         Added Application::openUrl for all supported platforms ecept WP8 and WinRT
+        Scale9Sprite capInsets set fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -1025,6 +1026,9 @@ Developers:
         
     yestein
         Add Cocostudio Armature getOffsetPoints API for Lua
+        
+    coldfog
+        Fix bug that ActionManagerEx::initWithBinary can only load one UI animation
     
 Retired Core Developers:
     WenSheng Yang
