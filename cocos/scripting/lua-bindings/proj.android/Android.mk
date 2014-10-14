@@ -101,6 +101,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../network \
                     $(LOCAL_PATH)/../../../editor-support/cocosbuilder \
                     $(LOCAL_PATH)/../../../editor-support/cocostudio \
+                    $(LOCAL_PATH)/../../../editor-support/cocostudio\ActionTimeline \
                     $(LOCAL_PATH)/../../../editor-support/spine \
                     $(LOCAL_PATH)/../../../ui \
                     $(LOCAL_PATH)/../../../../extensions \
