@@ -77,7 +77,7 @@ def close_db(db):
 
 def save_build_stats(db, pr, filename, size):
     cursor = db.cursor()
-    sql = "INSERT INTO \"%s\" (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
+    sql = "INSERT INTO `%s` (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
     print sql
     cursor.execute(sql)
     db.commit()
