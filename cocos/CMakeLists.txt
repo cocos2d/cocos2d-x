@@ -25,6 +25,8 @@
 
 # this CMakeLists is to generate libcocos2d.a
 
+cmake_minimum_required(VERSION 2.7)
+
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 endif()
@@ -73,6 +75,19 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
     )
+
+if(MACOSX OR APPLE)
+
+  include(FindFreetype REQUIRED)
+  IF(NOT FREETYPE_FOUND)
+    FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype freetype.dll PATHS "../external/freetype2/prebuilt/mac" "../external/freetype2/prebuilt/ios" DOC "Freetype includes")
+    find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/mac" "../external/freetype2/include/mac/freetype" "../external/freetype2/include/ios" "../external/freetype2/include/ios/freetype" DOC "Freetype includes")
+  ENDIF(NOT FREETYPE_FOUND)
+
+  find_package(Freetype)
+  include_directories(${FREETYPE_INCLUDE_DIRS})
+
+endif()
 
 if(MINGW)
   find_package(Freetype REQUIRED)
@@ -126,8 +141,8 @@ elseif(WINDOWS)
 elseif(LINUX)
   set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets
   fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
-elseif(MACOSX)
-
+elseif(MACOSX OR APPLE)
+ set (CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
  FIND_LIBRARY(COCOA_LIBRARY Cocoa)

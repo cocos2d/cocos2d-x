@@ -1,5 +1,5 @@
 include_directories(
-  ../external/ConvertUTF
+  ../external/ConvertUTF, .
 )
 
 set(COCOS_2D_SRC
