@@ -1,7 +1,7 @@
 #ifndef __CCLIBGUI_H__
 #define __CCLIBGUI_H__
 
-#if defined(WIN32) && defined(_WINDOWS)
+#if (defined(WIN32) && defined(_WINDOWS)) || defined(WINRT) || defined(WP8)
     #ifdef __MINGW32__
         #include <string.h>
     #endif
