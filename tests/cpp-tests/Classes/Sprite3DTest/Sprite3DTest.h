@@ -321,6 +321,20 @@ protected:
     cocos2d::Sprite3D* _mirrorSprite;
 };
 
+class VRTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(VRTest);
+    VRTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+};
+
 class Sprite3DTestScene : public TestScene
 {
 public:

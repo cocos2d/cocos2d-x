@@ -1528,3 +1528,28 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
     }
     _mirrorSprite = sprite;
 }
+
+VRTest::VRTest()
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    _sprite = Sprite3D::create(fileName);
+    _sprite->setScale(5);
+    _sprite->setRotation3D(Vec3(0,180,0));
+    addChild(_sprite);
+    _sprite->setPosition( Vec2( p.x - 80, p.y) );
+}
+
+std::string VRTest::title() const
+{
+    return "Test VR";
+}
+
+std::string VRTest::subtitle() const
+{
+    return "";
+}
+
+void VRTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
