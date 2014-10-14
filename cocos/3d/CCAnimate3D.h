@@ -57,7 +57,7 @@ public:
     static Animate3D* create(Animation3D* animation, float fromTime, float duration);
     
     /**
-     * create Animate3D by frame section
+     * create Animate3D by frame section, [startFrame, endFrame)
      * @param animation used to generate animate3D
      * @param startFrame
      * @param endFrame
