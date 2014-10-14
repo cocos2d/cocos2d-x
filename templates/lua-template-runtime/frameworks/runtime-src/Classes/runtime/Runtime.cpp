@@ -1032,7 +1032,7 @@ public:
                 dReplyParse.Accept(writer);
                 string msgContent = buffer.GetString();
                 char msgLength[64] = {0x1, 0};
-                sprintf(msgLength + 1, "%zu:", msgContent.size());
+                sprintf(msgLength + 1, "%d:", msgContent.size());
                 
                 string msg(msgLength + msgContent);
                 
