@@ -8,46 +8,6 @@
                 "from": "cocos/scripting/lua-bindings/script",
                 "to": "src/cocos",
                 "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/cocos2d",
-                "to": "src/cocos/cocos2d",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/cocosbuilder",
-                "to": "src/cocos/cocosbuilder",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/cocosdenshion",
-                "to": "src/cocos/cocosdenshion",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/cocosstudio",
-                "to": "src/cocos/cocosstudio",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/controller",
-                "to": "src/cocos/controller",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/extension",
-                "to": "src/cocos/extension",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/network",
-                "to": "src/cocos/network",
-                "exclude": []
-            },
-            {
-                "from": "cocos/scripting/lua-bindings/script/ui",
-                "to": "src/cocos/ui",
-                "exclude": []
             }
          ]
       },

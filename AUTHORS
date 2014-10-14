@@ -662,6 +662,7 @@ Developers:
         Added HttpClient::sendImmediate()
         Added operator == != for Value
         Replace dynamic_cast to std::is_base_of in object_to_luaval
+        Added support normalize path on android
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID

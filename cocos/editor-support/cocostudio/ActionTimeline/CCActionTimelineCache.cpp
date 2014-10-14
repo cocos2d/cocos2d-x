@@ -23,13 +23,18 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionTimelineCache.h"
-#include "CCNodeReader.h"
+#include "CSLoader.h"
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
 #include "platform/CCFileUtils.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCSpriteFrame.h"
+
+#include "cocostudio/CSParseBinary.pb.h"
+#include "tinyxml2/tinyxml2.h"
+
+#include <fstream>
 
 using namespace cocos2d;
 
@@ -120,7 +125,28 @@ void ActionTimelineCache::removeAction(const std::string& fileName)
     }
 }
 
-ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
+ActionTimeline* ActionTimelineCache::createAction(const std::string& filename)
+{
+    std::string path = filename;
+    size_t pos = path.find_last_of('.');
+    std::string suffix = path.substr(pos + 1, path.length());
+    CCLOG("suffix = %s", suffix.c_str());
+    
+    ActionTimelineCache* cache = ActionTimelineCache::getInstance();
+    
+    if (suffix == "csb")
+    {
+        return cache->createActionFromProtocolBuffers(filename);
+    }
+    else if (suffix == "json" || suffix == "ExportJson")
+    {
+        return cache->createActionFromJson(filename);
+    }
+    
+    return nullptr;
+}
+
+ActionTimeline* ActionTimelineCache::createActionFromJson(const std::string& fileName)
 {
     ActionTimeline* action = _animationActions.at(fileName);
     if (action == nullptr)
@@ -172,6 +198,59 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithContent(const std::s
 
     _animationActions.insert(fileName, action);
 
+    return action;
+}
+    
+ActionTimeline* ActionTimelineCache::createActionFromProtocolBuffers(const std::string &fileName)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == NULL)
+    {
+        action = loadAnimationActionWithFileFromProtocolBuffers(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromProtocolBuffers(const std::string &fileName)
+{
+    // if already exists an action with filename, then return this action
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action)
+        return action;
+    
+    std::string path = fileName;
+    //    int pos = path.find_last_of('/');
+    //	_protocolBuffersPath = path.substr(0, pos + 1);
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+    Data content = FileUtils::getInstance()->getDataFromFile(fullPath);
+    protocolbuffers::CSParseBinary gpbwp;
+    //    protocolbuffers::GUIProtocolBuffersProtobuf gpbwp;
+    if (!gpbwp.ParseFromArray(content.getBytes(), content.getSize()))
+    {
+        return NULL;
+    }
+
+
+    const protocolbuffers::NodeAction& actionProtobuf = gpbwp.action();
+    
+    action = ActionTimeline::create();
+    
+    action->setDuration(actionProtobuf.duration());
+    action->setTimeSpeed((actionProtobuf.has_speed()) ? actionProtobuf.speed() : 1.0f);
+    
+    int timelineLength = actionProtobuf.timelines_size();
+    for (int i = 0; i < timelineLength; i++)
+    {
+        const protocolbuffers::TimeLine& timelineProtobuf = actionProtobuf.timelines(i);
+        Timeline* timeline = loadTimelineFromProtocolBuffers(timelineProtobuf);
+        
+        if (timeline)
+            action->addTimeline(timeline);
+    }
+    
+    _animationActions.insert(fileName, action);
+    
     return action;
 }
 
@@ -342,7 +421,7 @@ Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
         SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
         if(spriteFrame == nullptr)
         {
-            std::string jsonPath = NodeReader::getInstance()->getJsonPath();
+            std::string jsonPath = CSLoader::getInstance()->getJsonPath();
             path = jsonPath + texture;
         }
 
@@ -370,6 +449,819 @@ Frame* ActionTimelineCache::loadZOrderFrame(const rapidjson::Value& json)
     int zorder = DICTOOL->getIntValue_json(json, Value);
     frame->setZOrder(zorder);
 
+    return frame;
+}
+    
+Timeline*  ActionTimelineCache::loadTimelineFromProtocolBuffers(const protocolbuffers::TimeLine &timelineProtobuf)
+{
+    Timeline* timeline = NULL;
+    
+    // get frame type
+    const char* frameType = timelineProtobuf.frametype().c_str();
+    if(frameType == NULL)
+        return NULL;
+    
+    CCLOG("frameType = %s", frameType);
+    
+    if(frameType)
+    {
+        timeline = Timeline::create();
+        
+        int actionTag = timelineProtobuf.actiontag();
+        timeline->setActionTag(actionTag);
+        
+        
+        int length = timelineProtobuf.frames_size();
+        for (int i = 0; i < length; i++)
+        {
+            const protocolbuffers::Frame& frameProtobuf = timelineProtobuf.frames(i);
+            
+            Frame* frame = NULL;
+            
+            if (strcmp(FrameType_VisibleFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLineBoolFrame& visibleFrame = frameProtobuf.visibleframe();
+                frame = loadVisibleFrameFromProtocolBuffers(visibleFrame);
+            }
+            else if (strcmp(FrameType_PositionFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLinePointFrame& positionFrame = frameProtobuf.positionframe();
+                frame = loadPositionFrameFromProtocolBuffers(positionFrame);
+            }
+            else if (strcmp(FrameType_ScaleFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLinePointFrame& scaleFrame = frameProtobuf.scaleframe();
+                frame = loadScaleFrameFromProtocolBuffers(scaleFrame);
+            }
+            else if (strcmp(FrameType_RotationSkewFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLinePointFrame& rotationSkewFrame = frameProtobuf.rotationskewframe();
+                frame = loadRotationSkewFrameFromProtocolBuffers(rotationSkewFrame);
+            }
+            else if (strcmp(FrameType_AnchorFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLinePointFrame& anchorFrame = frameProtobuf.anchorpointframe();
+                frame = loadAnchorPointFrameFromProtocolBuffers(anchorFrame);
+            }
+            else if (strcmp(FrameType_ColorFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLineColorFrame& colorFrame = frameProtobuf.colorframe();
+                frame = loadColorFrameFromProtocolBuffers(colorFrame);
+            }
+            else if (strcmp(FrameType_TextureFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLineTextureFrame& textureFrame = frameProtobuf.textureframe();
+                frame = loadTextureFrameFromProtocolBuffers(textureFrame);
+            }
+            else if (strcmp(FrameType_EventFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLineStringFrame& eventFrame = frameProtobuf.eventframe();
+                frame = loadEventFrameFromProtocolBuffers(eventFrame);
+            }
+            else if (strcmp(FrameType_ZOrderFrame, frameType) == 0)
+            {
+                const protocolbuffers::TimeLineIntFrame& zOrderFrame = frameProtobuf.zorderframe();
+                frame = loadZOrderFrameFromProtocolBuffers(zOrderFrame);
+            }
+            
+            timeline->addFrame(frame);
+        }
+    }
+    
+    return timeline;
+}
+
+Frame* ActionTimelineCache::loadVisibleFrameFromProtocolBuffers(const protocolbuffers::TimeLineBoolFrame &frameProtobuf)
+{
+    VisibleFrame* frame = VisibleFrame::create();
+    
+    bool visible = frameProtobuf.value();
+    frame->setVisible(visible);
+    
+    CCLOG("visible = %d", visible);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadPositionFrameFromProtocolBuffers(const protocolbuffers::TimeLinePointFrame &frameProtobuf)
+{
+    PositionFrame* frame = PositionFrame::create();
+    
+    float x = frameProtobuf.x();
+    float y = frameProtobuf.y();
+    frame->setPosition(Vec2(x,y));
+    
+    CCLOG("x = %f", x);
+    CCLOG("y = %f", y);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadScaleFrameFromProtocolBuffers(const protocolbuffers::TimeLinePointFrame &frameProtobuf)
+{
+    ScaleFrame* frame = ScaleFrame::create();
+    
+    float scalex = frameProtobuf.x();
+    float scaley = frameProtobuf.y();
+    
+    frame->setScaleX(scalex);
+    frame->setScaleY(scaley);
+    
+    CCLOG("scalex = %f", scalex);
+    CCLOG("scaley = %f", scaley);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadRotationSkewFrameFromProtocolBuffers(const protocolbuffers::TimeLinePointFrame &frameProtobuf)
+{
+    RotationSkewFrame* frame = RotationSkewFrame::create();
+    
+    float skewx = frameProtobuf.x();
+    float skewy = frameProtobuf.y();
+    
+    frame->setSkewX(skewx);
+    frame->setSkewY(skewy);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadAnchorPointFrameFromProtocolBuffers(const protocolbuffers::TimeLinePointFrame &frameProtobuf)
+{
+    AnchorPointFrame* frame = AnchorPointFrame::create();
+    
+    float anchorx = frameProtobuf.x();
+    float anchory = frameProtobuf.y();
+    
+    frame->setAnchorPoint(Vec2(anchorx, anchory));
+    
+    CCLOG("anchorx = %f", anchorx);
+    CCLOG("anchory = %f", anchory);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadColorFrameFromProtocolBuffers(const protocolbuffers::TimeLineColorFrame &frameProtobuf)
+{
+    ColorFrame* frame = ColorFrame::create();
+    
+    GLubyte alpha = (GLubyte)frameProtobuf.alpha();
+    GLubyte red   = (GLubyte)frameProtobuf.red();
+    GLubyte green = (GLubyte)frameProtobuf.green();
+    GLubyte blue  = (GLubyte)frameProtobuf.blue();
+    
+    frame->setAlpha(alpha);
+    frame->setColor(Color3B(red, green, blue));
+    
+    CCLOG("alpha = %d", alpha);
+    CCLOG("red = %d", red);
+    CCLOG("green = %d", green);
+    CCLOG("blue = %d", blue);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadTextureFrameFromProtocolBuffers(const protocolbuffers::TimeLineTextureFrame &frameProtobuf)
+{
+    TextureFrame* frame = TextureFrame::create();
+    
+    const char* texture = frameProtobuf.filepath().c_str();
+    
+    if (texture != NULL)
+        frame->setTextureName(texture);
+    
+    CCLOG("texture = %s", texture);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadEventFrameFromProtocolBuffers(const protocolbuffers::TimeLineStringFrame &frameProtobuf)
+{
+    EventFrame* frame = EventFrame::create();
+    
+    const char* evnt = frameProtobuf.value().c_str();
+    
+    if (evnt != NULL)
+        frame->setEvent(evnt);
+    
+    CCLOG("evnt = %s", evnt);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadZOrderFrameFromProtocolBuffers(const protocolbuffers::TimeLineIntFrame &frameProtobuf)
+{
+    ZOrderFrame* frame = ZOrderFrame::create();
+    
+    int zorder = frameProtobuf.value();
+    frame->setZOrder(zorder);
+    
+    CCLOG("zorder = %d", zorder);
+    
+    int frameIndex = frameProtobuf.has_frameindex() ? frameProtobuf.frameindex() : 0;
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = (frameProtobuf.has_tween() ? frameProtobuf.tween() : false);
+    frame->setTween(tween);
+    
+    return frame;
+}
+    
+ActionTimeline* ActionTimelineCache::createActionFromXML(const std::string &fileName)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == nullptr)
+    {
+        action = loadAnimationActionWithFileFromXML(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromXML(const std::string &fileName)
+{
+    // if already exists an action with filename, then return this action
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action)
+        return action;
+    
+    // Read content from file
+    // xml read
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName).c_str();
+    ssize_t size;
+    std::string content =(char*)FileUtils::getInstance()->getFileData(fullpath, "r", &size);
+    
+    // xml parse
+    tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+    document->Parse(content.c_str());
+    
+    const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
+    CCLOG("rootElement name = %s", rootElement->Name());
+    
+    const tinyxml2::XMLElement* element = rootElement->FirstChildElement();
+    
+    bool createEnabled = false;
+    std::string rootType = "";
+    
+    while (element)
+    {
+        CCLOG("entity name = %s", element->Name());
+        
+        if (strcmp("Content", element->Name()) == 0)
+        {
+            const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+            
+            if (!attribute)
+            {
+                createEnabled = true;
+            }
+        }
+        
+        if (createEnabled)
+        {
+            break;
+        }
+        
+        const tinyxml2::XMLElement* child = element->FirstChildElement();
+        if (child)
+        {
+            element = child;
+        }
+        else
+        {
+            element = element->NextSiblingElement();
+        }
+    }
+    
+    
+    // serialize
+    if (createEnabled)
+    {
+        const tinyxml2::XMLElement* child = element->FirstChildElement();
+        
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "Animation") // action
+            {
+                const tinyxml2::XMLElement* animation = child;
+                action = loadActionTimelineFromXML(animation);
+            }
+            
+            child = child->NextSiblingElement();
+        }
+    }
+    
+    return action;
+}
+
+ActionTimeline* ActionTimelineCache::loadActionTimelineFromXML(const tinyxml2::XMLElement *animationElement)
+{
+    ActionTimeline* action = ActionTimeline::create();
+    CCLOG("animationElement name = %s", animationElement->Name());
+    
+    // ActionTimeline
+    const tinyxml2::XMLAttribute* attribute = animationElement->FirstAttribute();
+    
+    // attibutes
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "Duration")
+        {
+            action->setDuration(atoi(value.c_str()));
+        }
+        else if (name == "Speed")
+        {
+            action->setTimeSpeed(atof(value.c_str()));
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    // all Timeline
+    const tinyxml2::XMLElement* timelineElement = animationElement->FirstChildElement();
+    while (timelineElement)
+    {
+        Timeline* timeline = loadTimelineFromXML(timelineElement);
+        if (timeline)
+        {
+            action->addTimeline(timeline);
+        }
+        
+        //            protocolbuffers::TimeLine* timeLine = nodeAction->add_timelines();
+        //            convertTimelineProtocolBuffers(timeLine, timelineElement);
+        
+        timelineElement = timelineElement->NextSiblingElement();
+    }
+    
+    return action;
+}
+
+Timeline* ActionTimelineCache::loadTimelineFromXML(const tinyxml2::XMLElement *timelineElement)
+{
+    Timeline* timeline = nullptr;
+    
+    // TimelineData attrsibutes
+    int actionTag = 0;
+    std::string frameType = "";
+    const tinyxml2::XMLAttribute* attribute = timelineElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "ActionTag")
+        {
+            actionTag = atoi(value.c_str());
+        }
+        else if (name == "FrameType")
+        {
+            frameType = value;
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    if (frameType != "")
+    {
+        timeline = Timeline::create();
+        timeline->setActionTag(actionTag);
+    }
+    
+    // all Frame
+    const tinyxml2::XMLElement* frameElement = timelineElement->FirstChildElement();
+    while (frameElement)
+    {
+        Frame* frame = nullptr;
+        
+        if (frameType == FrameType_VisibleFrame)
+        {
+            frame = loadVisibleFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_PositionFrame)
+        {
+            frame = loadPositionFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_ScaleFrame)
+        {
+            frame = loadScaleFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_RotationSkewFrame)
+        {
+            frame = loadRotationSkewFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_AnchorFrame)
+        {
+            frame = loadAnchorPointFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_ColorFrame)
+        {
+            frame = loadColorFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_TextureFrame)
+        {
+            frame = loadTextureFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_EventFrame)
+        {
+            frame = loadEventFrameFromXML(frameElement);
+        }
+        else if (frameType == FrameType_ZOrderFrame)
+        {
+            frame = loadZOrderFrameFromXML(frameElement);
+        }
+        
+        if (frame)
+        {
+            timeline->addFrame(frame);
+        }
+        
+        frameElement = frameElement->NextSiblingElement();
+    }
+    
+    return timeline;
+}
+
+Frame* ActionTimelineCache::loadVisibleFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    VisibleFrame* frame = VisibleFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "Value")
+        {
+            frame->setVisible((value == "True") ? true : false);
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadPositionFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    PositionFrame* frame = PositionFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            frame->setX(atof(value.c_str()));
+        }
+        else if (name == "Y")
+        {
+            frame->setY(atof(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadScaleFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    ScaleFrame* frame = ScaleFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            frame->setScaleX(atof(value.c_str()));
+        }
+        else if (name == "Y")
+        {
+            frame->setScaleY(atof(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadRotationSkewFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    RotationSkewFrame* frame = RotationSkewFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            frame->setSkewX(atof(value.c_str()));
+        }
+        else if (name == "Y")
+        {
+            frame->setSkewY(atof(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadAnchorPointFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    AnchorPointFrame* frame = AnchorPointFrame::create();
+    
+    float anchor_x = 0.5f, anchor_y = 0.5f;
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "X")
+        {
+            anchor_x = atof(value.c_str());
+        }
+        else if (name == "Y")
+        {
+            anchor_y = atof(value.c_str());
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    frame->setAnchorPoint(Vec2(anchor_x, anchor_y));
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadColorFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    ColorFrame* frame = ColorFrame::create();
+    
+    int red = 255, green = 255, blue = 255;
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Alpha")
+        {
+            frame->setAlpha(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    // color
+    const tinyxml2::XMLElement* child = frameElement->FirstChildElement();
+    while (child)
+    {
+        const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "R")
+            {
+                red = atoi(value.c_str());
+            }
+            else if (name == "G")
+            {
+                green = atoi(value.c_str());
+            }
+            else if (name == "B")
+            {
+                blue = atoi(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        child = child->NextSiblingElement();
+    }
+    
+    frame->setColor(Color3B(red, green, blue));
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadTextureFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    TextureFrame* frame = TextureFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "Path") // to be gonna modify
+        {
+            frame->setTextureName(value);
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadEventFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    EventFrame* frame = EventFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "EventStr") // to be gonna modify
+        {
+            frame->setEvent(value);
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadZOrderFrameFromXML(const tinyxml2::XMLElement *frameElement)
+{
+    ZOrderFrame* frame = ZOrderFrame::create();
+    
+    frame->setTween(true);
+    
+    const tinyxml2::XMLAttribute* attribute = frameElement->FirstAttribute();
+    while (attribute)
+    {
+        std::string name = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (name == "zorder") // to be gonna modify
+        {
+            frame->setZOrder(atoi(value.c_str()));
+        }
+        else if (name == "FrameIndex")
+        {
+            frame->setFrameIndex(atoi(value.c_str()));
+        }
+        else if (name == "Tween")
+        {
+            frame->setTween((value == "True") ? true : false);
+        }
+        
+        attribute = attribute->Next();
+    }
+    
     return frame;
 }
 

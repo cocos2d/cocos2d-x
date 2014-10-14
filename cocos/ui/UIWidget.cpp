@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventFocus.h"
 #include "base/CCEventDispatcher.h"
+#include "ui/UILayoutComponent.h"
 
 NS_CC_BEGIN
 
@@ -135,6 +136,7 @@ Widget* Widget::_focusedWidget = nullptr;
 Widget::FocusNavigationController* Widget::_focusNavigationController = nullptr;
     
 Widget::Widget():
+_unifySize(false),
 _enabled(true),
 _bright(true),
 _touchEnabled(false),
@@ -217,8 +219,13 @@ bool Widget::init()
 
 void Widget::onEnter()
 {
-    updateSizeAndPosition();
     ProtectedNode::onEnter();
+    if (_positionType == PositionType::PERCENT
+        || _sizeType == SizeType::PERCENT) {
+        if (_parent) {
+            Helper::doLayout(_parent);
+        }
+    }
 }
 
 void Widget::onExit()
@@ -250,40 +257,33 @@ void Widget::initRenderer()
 {
 }
     
+LayoutComponent* Widget::getOrCreateLayoutComponent()
+{
+    auto layoutComponent = this->getComponent(__LAYOUT_COMPONENT_NAME);
+    if (nullptr == layoutComponent)
+    {
+        LayoutComponent *component = LayoutComponent::create();
+        this->addComponent(component);
+        layoutComponent = component;
+    }
+    
+    return (LayoutComponent*)layoutComponent;
+}
+   
 void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
     ProtectedNode::setContentSize(contentSize);
     
     _customSize = contentSize;
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        //unify Size logic
+    }
+    else if (_ignoreSize)
     {
         _contentSize = getVirtualRendererSize();
     }
     
-    if (_running)
-    {
-        Widget* widgetParent = getWidgetParent();
-        Size pSize;
-        if (widgetParent)
-        {
-            pSize = widgetParent->getContentSize();
-        }
-        else
-        {
-            pSize = _parent->getContentSize();
-        }
-        float spx = 0.0f;
-        float spy = 0.0f;
-        if (pSize.width > 0.0f)
-        {
-            spx = _customSize.width / pSize.width;
-        }
-        if (pSize.height > 0.0f)
-        {
-            spy = _customSize.height / pSize.height;
-        }
-        _sizePercent = Vec2(spx, spy);
-    }
     onSizeChanged();
 }
 
@@ -294,29 +294,15 @@ void Widget::setSize(const Size &size)
 
 void Widget::setSizePercent(const Vec2 &percent)
 {
-    _sizePercent = percent;
-    Size cSize = _customSize;
-    if (_running)
+
+    auto component = this->getOrCreateLayoutComponent();
+    component->setUsingPercentContentSize(true);
+    component->setPercentContentSize(percent);
+    
+    if (nullptr != _parent)
     {
-        Widget* widgetParent = getWidgetParent();
-        if (widgetParent)
-        {
-            cSize = Size(widgetParent->getContentSize().width * percent.x , widgetParent->getContentSize().height * percent.y);
-        }
-        else
-        {
-            cSize = Size(_parent->getContentSize().width * percent.x , _parent->getContentSize().height * percent.y);
-        }
+        Helper::doLayout(_parent);
     }
-    if (_ignoreSize)
-    {
-        this->setContentSize(getVirtualRendererSize());
-    }
-    else
-    {
-        this->setContentSize(cSize);
-    }
-    _customSize = cSize;
 }
 
 void Widget::updateSizeAndPosition()
@@ -401,6 +387,17 @@ void Widget::updateSizeAndPosition(const cocos2d::Size &parentSize)
 void Widget::setSizeType(SizeType type)
 {
     _sizeType = type;
+    
+    auto component = this->getOrCreateLayoutComponent();
+
+    if (_sizeType == Widget::SizeType::PERCENT)
+    {
+        component->setUsingPercentContentSize(true);
+    }
+    else
+    {
+        component->setUsingPercentContentSize(false);
+    }
 }
 
 Widget::SizeType Widget::getSizeType() const
@@ -410,6 +407,11 @@ Widget::SizeType Widget::getSizeType() const
 
 void Widget::ignoreContentAdaptWithSize(bool ignore)
 {
+    if (_unifySize)
+    {
+        this->setContentSize(_customSize);
+        return;
+    }
     if (_ignoreSize == ignore)
     {
         return;
@@ -441,9 +443,11 @@ const Size& Widget::getCustomSize() const
     return _customSize;
 }
 
-const Vec2& Widget::getSizePercent() const
+const Vec2& Widget::getSizePercent()
 {
-    return _sizePercent;
+    auto component = this->getOrCreateLayoutComponent();
+
+    return component->getPercentContentSize();
 }
 
 Vec2 Widget::getWorldPosition()const
@@ -458,14 +462,7 @@ Node* Widget::getVirtualRenderer()
 
 void Widget::onSizeChanged()
 {
-    for (auto& child : getChildren())
-    {
-        Widget* widgetChild = dynamic_cast<Widget*>(child);
-        if (widgetChild)
-        {
-            widgetChild->updateSizeAndPosition();
-        }
-    }
+    Helper::doLayout(this);
 }
 
 Size Widget::getVirtualRendererSize() const
@@ -475,6 +472,11 @@ Size Widget::getVirtualRendererSize() const
     
 void Widget::updateContentSizeWithTextureSize(const cocos2d::Size &size)
 {
+    if (_unifySize)
+    {
+        this->setContentSize(size);
+        return;
+    }
     if (_ignoreSize)
     {
         this->setContentSize(size);
@@ -912,47 +914,36 @@ void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
 
 void Widget::setPosition(const Vec2 &pos)
 {
-    if (_running)
-    {
-        Widget* widgetParent = getWidgetParent();
-        if (widgetParent)
-        {
-            Size pSize = widgetParent->getContentSize();
-            if (pSize.width <= 0.0f || pSize.height <= 0.0f)
-            {
-                _positionPercent = Vec2::ZERO;
-            }
-            else
-            {
-                _positionPercent = Vec2(pos.x / pSize.width, pos.y / pSize.height);
-            }
-        }
-    }
     ProtectedNode::setPosition(pos);
+    _positionType = PositionType::ABSOLUTE;
+    
 }
 
 void Widget::setPositionPercent(const Vec2 &percent)
 {
-    _positionPercent = percent;
-    if (_running)
-    {
-        Widget* widgetParent = getWidgetParent();
-        if (widgetParent)
-        {
-            Size parentSize = widgetParent->getContentSize();
-            Vec2 absPos = Vec2(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-            setPosition(absPos);
-        }
-    }
+    this->setNormalizedPosition(percent);
+    _positionType = PositionType::PERCENT;
 }
 
 const Vec2& Widget::getPositionPercent()const{
-    return _positionPercent;
+    return this->getNormalizedPosition();
 }
 
 void Widget::setPositionType(PositionType type)
 {
     _positionType = type;
+    if (type == Widget::PositionType::ABSOLUTE)
+    {
+        Vec2 oldPosition = this->getPosition();
+        this->setPosition(this->getPosition() + Vec2(10,0));
+        this->setPosition(oldPosition);
+    }
+    else
+    {
+        Vec2 oldNormalizedPosition = this->getNormalizedPosition();
+        this->setNormalizedPosition(oldNormalizedPosition + Vec2(0.2,0.1));
+        this->setNormalizedPosition(oldNormalizedPosition);
+    }
 }
 
 Widget::PositionType Widget::getPositionType() const
@@ -1273,6 +1264,16 @@ void Widget::enableDpadNavigation(bool enable)
 }
 
 
+bool Widget::isUnifySizeEnabled()const
+{
+    return _unifySize;
 }
 
+void Widget::setUnifySizeEnabled(bool enable)
+{
+    _unifySize = enable;
+}
+
+
+}
 NS_CC_END

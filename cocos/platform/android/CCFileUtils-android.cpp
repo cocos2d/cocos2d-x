@@ -81,6 +81,58 @@ bool FileUtilsAndroid::init()
     return FileUtils::init();
 }
 
+std::string FileUtilsAndroid::getNewFilename(const std::string &filename) const
+{
+    std::string newFileName = FileUtils::getNewFilename(filename);
+    // ../xxx do not fix this path
+    auto pos = newFileName.find("../");
+    if (pos == std::string::npos || pos == 0)
+    {
+        return newFileName;
+    }
+
+    std::vector<std::string> v(3);
+    v.resize(0);
+    auto change = false;
+    size_t size = newFileName.size();
+    size_t idx = 0;
+    bool noexit = true;
+    while (noexit)
+    {
+        pos = newFileName.find('/', idx);
+        std::string tmp;
+        if (pos == std::string::npos)
+        {
+            tmp = newFileName.substr(idx, size - idx);
+            noexit = false;
+        }else
+        {
+            tmp = newFileName.substr(idx, pos - idx + 1);
+        }
+        auto t = v.size();
+        if (t > 0 && v[t-1].compare("../") != 0 &&
+             (tmp.compare("../") == 0 || tmp.compare("..") == 0))
+        {
+            v.pop_back();
+            change = true;
+        }else
+        {
+            v.push_back(tmp);
+        }
+        idx = pos + 1;
+    }
+    
+    if (change)
+    {
+        newFileName.clear();
+        for (auto &s : v)
+        {
+            newFileName.append(s);
+        }
+    }
+    return newFileName;
+}
+
 bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
 {
     if (strFilePath.empty())
