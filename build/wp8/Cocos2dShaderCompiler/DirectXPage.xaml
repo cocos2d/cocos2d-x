@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="Cocos2dShaderCompiler.DirectXPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Cocos2dShaderCompiler"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="40,100,0,0" Height="50" VerticalAlignment="Top">
+            <TextBlock Text="Save file to cocos\platform\wp8\shaders\precompiledshaders.h" FontSize="36"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="40,100,0,0" Height="50" VerticalAlignment="Top">
+            <TextBlock Text="Result: " FontSize="36"/>
+            <TextBlock Text="" FontSize="36" x:Name="ResultText" />
+        </StackPanel>
+        <Button Margin="40,100,0,0" x:Name="compileButton" Content="Compile" Width="150" Click="OnCompile" />
+        </StackPanel>
+    </Grid>
+</Page>
