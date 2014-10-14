@@ -107,7 +107,6 @@ endif()
 
   #todo: provide prebuild versions of the xx libs for all platforms
   include_directories(
-    ../external/protobuf-lite/src
     ../external/xxhash
     ../external/xxtea)
 
