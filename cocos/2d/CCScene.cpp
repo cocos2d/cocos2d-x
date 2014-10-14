@@ -186,6 +186,13 @@ void Scene::render(Renderer* renderer)
         director->setViewport();
 }
 
+void Scene::enableVR(float eyedistance, CameraFlag cameraflag)
+{
+    auto s = Director::getInstance()->getWinSize();
+    float ratio = (GLfloat)s.width * 2.0f / s.height;
+    auto camera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
+}
+
 #if CC_USE_PHYSICS
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
