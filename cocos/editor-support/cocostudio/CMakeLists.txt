@@ -58,9 +58,9 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimeline.cpp
   editor-support/cocostudio/ActionTimeline/CCFrame.cpp
-  editor-support/cocostudio/ActionTimeline/CCNodeReader.cpp
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
-
+  editor-support/cocostudio/ActionTimeline/CSLoader.cpp
+  editor-support/cocostudio/CSParseBinary.pb.cc
 )
 
 include_directories( editor-support )

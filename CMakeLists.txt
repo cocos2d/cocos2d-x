@@ -220,6 +220,7 @@ add_subdirectory(external/Box2D)
 add_subdirectory(external/unzip)
 add_subdirectory(external/xxhash)
 add_subdirectory(external/tinyxml2)
+add_subdirectory(external/protobuf-lite)
 endif()
 
 # libcocos2d.a
