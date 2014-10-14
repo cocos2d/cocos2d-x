@@ -51,6 +51,7 @@ LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../../../../external/lua/luasocket/inet.c \
                    ../../../../external/lua/luasocket/io.c \
                    ../../../../external/lua/luasocket/luasocket.c \
+                   ../../../../external/lua/luasocket/luasocket_scripts.c \
                    ../../../../external/lua/luasocket/mime.c \
                    ../../../../external/lua/luasocket/options.c \
                    ../../../../external/lua/luasocket/select.c \
@@ -76,12 +77,18 @@ LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
                    ../manual/spine/LuaSkeletonAnimation.cpp \
                    ../auto/lua_cocos2dx_spine_auto.cpp
 
-
 #ui
 LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
                    ../manual/ui/lua_cocos2dx_ui_manual.cpp \
                    ../auto/lua_cocos2dx_experimental_video_auto.cpp \
                    ../auto/lua_cocos2dx_ui_auto.cpp
+
+#quick
+LOCAL_SRC_FILES += ../../../../external/lua/quick/lua_cocos2dx_quick_manual.cpp \
+                   ../../../../external/lua/quick/LuaEventNode.cpp \
+                   ../../../../external/lua/quick/LuaNodeManager.cpp \
+                   ../../../../external/lua/quick/LuaTouchEventManager.cpp \
+                   ../../../../external/lua/quick/LuaTouchTargetNode.cpp
 
 #extension
 LOCAL_SRC_FILES += ../manual/extension/lua_cocos2dx_extension_manual.cpp \
@@ -113,7 +120,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../manual/platform/android/jni \
                     $(LOCAL_PATH)/../../../../external/xxtea \
                     $(LOCAL_PATH)/../../../.. \
-                    $(LOCAL_PATH)/../../../../external/lua
+                    $(LOCAL_PATH)/../../../../external/lua \
+                    $(LOCAL_PATH)/../../../../external/lua/quick
 
 
 
@@ -131,6 +139,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/spine \
                            $(LOCAL_PATH)/../manual/extension \
                            $(LOCAL_PATH)/../manual/ui \
+                           $(LOCAL_PATH)/../../../../external/lua/quick \
                            $(LOCAL_PATH)/../../../..
 
 

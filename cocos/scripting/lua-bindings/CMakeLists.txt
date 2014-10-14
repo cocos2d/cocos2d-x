@@ -42,6 +42,7 @@ if(MACOSX)
         ${cocos_root}/external/lua/luasocket/inet.c
         ${cocos_root}/external/lua/luasocket/io.c
         ${cocos_root}/external/lua/luasocket/luasocket.c
+        ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
         ${cocos_root}/external/lua/luasocket/mime.c
         ${cocos_root}/external/lua/luasocket/options.c
         ${cocos_root}/external/lua/luasocket/select.c

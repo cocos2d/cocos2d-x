@@ -35,6 +35,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     lua_State* L = engine->getLuaStack()->getLuaState();
     lua_module_register(L);
+
+    // If you want to use Quick-Cocos2d-X, please uncomment below code
+    // register_all_quick_manual(L);
+
     if (engine->executeScriptFile("src/main.lua")) {
         return false;
     }
