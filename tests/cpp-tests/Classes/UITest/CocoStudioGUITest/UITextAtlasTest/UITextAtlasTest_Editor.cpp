@@ -7,21 +7,66 @@ void UITextAtlasTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.json"));
-        
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelAtlas_Editor/windows_ui_labelatlas_editor_1.json"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILabelAtlas_Editor/windows_ui_labelatlas_editor_1.csb"));
+            
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -44,10 +89,14 @@ bool UITextAtlasTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb");        
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-      
+        
         this->configureGUIScene();
+        
         return true;
     }
     

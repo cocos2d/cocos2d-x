@@ -317,6 +317,10 @@ void CheckBox::onPressStateChangedToNormal()
     _backGroundSelectedBoxRenderer->setVisible(false);
     _backGroundBoxDisabledRenderer->setVisible(false);
     _frontCrossDisabledRenderer->setVisible(false);
+    if (_isSelected)
+    {
+        _frontCrossRenderer->setVisible(true);
+    }
 }
 
 void CheckBox::onPressStateChangedToPressed()
