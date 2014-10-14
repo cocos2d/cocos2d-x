@@ -1,8 +1,8 @@
 
 /* lua_debugger.h.h */
 
-#ifndef __LUA_MODULES_6138519995EA0D10EABE8E26B195D5DB_H_
-#define __LUA_MODULES_6138519995EA0D10EABE8E26B195D5DB_H_
+#ifndef __LUA_MODULES_865AA78CBE5B66EE51A8CB6690FEE443_H_
+#define __LUA_MODULES_865AA78CBE5B66EE51A8CB6690FEE443_H_
 
 #if __cplusplus
 extern "C" {
@@ -10,7 +10,7 @@ extern "C" {
 
 #include "lua.h"
 
-void luaopen_debugger(lua_State* L);
+void luaopen_lua_debugger(lua_State* L);
 
 /*
 int luaopen_lua_m_debugger(lua_State* L);
@@ -20,4 +20,4 @@ int luaopen_lua_m_debugger(lua_State* L);
 }
 #endif
 
-#endif /* __LUA_MODULES_6138519995EA0D10EABE8E26B195D5DB_H_ */
+#endif /* __LUA_MODULES_865AA78CBE5B66EE51A8CB6690FEE443_H_ */

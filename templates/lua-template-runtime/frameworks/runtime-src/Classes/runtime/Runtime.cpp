@@ -93,7 +93,6 @@ void startScript(string strDebugArg)
     if (!strDebugArg.empty())
     {
         // open debugger.lua module
-        luaopen_debugger(engine->getLuaStack()->getLuaState());
         engine->executeString(strDebugArg.c_str());
     }
     cocos2d::log("debug args = %s", strDebugArg.c_str());
@@ -1221,7 +1220,8 @@ void initRuntime()
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     register_runtime_override_function(engine->getLuaStack()->getLuaState());
-    
+    luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
+
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();
