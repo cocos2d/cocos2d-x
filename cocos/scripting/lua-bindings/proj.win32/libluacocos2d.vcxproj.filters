@@ -70,6 +70,9 @@
     <Filter Include="luasocket">
       <UniqueIdentifier>{617e3909-01ff-4c11-bae5-790787963c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="quick">
+      <UniqueIdentifier>{e6d6c5da-e7da-40cf-bde0-f383f9dd9dbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
@@ -222,6 +225,9 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket.c">
       <Filter>luasocket</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_scripts.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\external\lua\luasocket\mime.c">
       <Filter>luasocket</Filter>
     </ClCompile>
@@ -245,6 +251,21 @@
     </ClCompile>
     <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp">
       <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp">
+      <Filter>quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.cpp">
+      <Filter>quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.cpp">
+      <Filter>quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp">
+      <Filter>quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp">
+      <Filter>quick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,6 +422,9 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket.h">
       <Filter>luasocket</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_scripts.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\luasocket\mime.h">
       <Filter>luasocket</Filter>
     </ClInclude>
@@ -427,6 +451,21 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h">
       <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h">
+      <Filter>quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h">
+      <Filter>quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.h">
+      <Filter>quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.hpp">
+      <Filter>quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h">
+      <Filter>quick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
