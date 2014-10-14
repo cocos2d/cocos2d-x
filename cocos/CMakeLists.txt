@@ -53,7 +53,7 @@ include(editor-support/spine/CMakeLists.txt)
 include(../extensions/CMakeLists.txt)
 
 set(COCOS_EDITOR_SUPPORT_SRC
-  ${COCOS_CCB_SRC}  
+  ${COCOS_CCB_SRC}
   ${COCOS_CS_SRC}
   ${COCOS_SPINE_SRC}
 )

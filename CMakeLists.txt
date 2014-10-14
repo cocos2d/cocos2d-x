@@ -152,8 +152,8 @@ endif()
 
 
 # NB
-# we need to return these to libraries to their official state rather than 
-# having our custom cocos2d namespace so that we may use system versions if 
+# we need to return these to libraries to their official state rather than
+# having our custom cocos2d namespace so that we may use system versions if
 # the platform provides them. It is very important that this
 # is done before we make prebuilt versions of these two libs
 
@@ -188,8 +188,7 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
-
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
   )
 
