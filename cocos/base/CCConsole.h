@@ -102,6 +102,8 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
+    
+    std::vector<std::string>& getLocalIPList(){return _localIPList;};
  
 protected:
     void loop();
@@ -123,12 +125,17 @@ protected:
     void commandDirector(int fd, const std::string &args);
     void commandTouch(int fd, const std::string &args);
     void commandUpload(int fd);
+
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
+    void queryLocalIP();
+    int broadcastLocalIP();
+#endif
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;
     std::vector<int> _fds;
     std::thread _thread;
-
+    std::thread _broadcast;
     fd_set _read_set;
 
     bool _running;
@@ -144,6 +151,9 @@ protected:
     std::vector<std::string> _DebugStrings;
 
     intptr_t _touchId;
+	float _x;
+    float _y;
+    std::vector<std::string> _localIPList;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };

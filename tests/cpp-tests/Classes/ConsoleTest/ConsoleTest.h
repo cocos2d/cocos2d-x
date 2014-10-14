@@ -45,6 +45,40 @@ public:
     virtual void backCallback(Ref* sender) override;
 };
 
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8))
+class ConsoleRemoteControl : public BaseTestConsole
+{
+public:
+    CREATE_FUNC(ConsoleRemoteControl);
+
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void sendTouchCommand(const std::vector<Touch*>& touches, std::string& cmd);
+
+protected:
+    ConsoleRemoteControl();
+    virtual ~ConsoleRemoteControl();
+    int startListenRemoteConsole();
+    void connectRemoteConsole(std::string& ip);
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    cocos2d::Console *_console;
+    int _sfd;
+    cocos2d::Label *_labelSubTitle;
+    bool _connected;
+#endif
+
+private:
+    std::thread _listenThread;
+    EventListenerTouchAllAtOnce* _listener;
+    bool _endListen;
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleRemoteControl);
+};
+#endif
 
 class ConsoleCustomCommand : public BaseTestConsole
 {
@@ -83,6 +117,7 @@ protected:
     void uploadFile();
     std::string _src_file_path;
     std::string _target_file_name;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleUploadFile);
 };
