@@ -121,7 +121,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     return vertexdata;
 }
 
-const AABB MeshVertexData::calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index)
+AABB MeshVertexData::calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index)
 {
     AABB aabb;
     stride /= 4;
