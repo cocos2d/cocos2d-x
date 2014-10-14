@@ -223,10 +223,9 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	#include "platform/winrt/CCApplication.h"
-	#include "platform/winrt/CCGLViewImpl.h"
+	#include "platform/winrt/CCGLViewImpl-winrt.h"
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
