@@ -133,10 +133,10 @@ void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
     rotation.m[11] = 0;
     Quaternion  quaternion;
     Quaternion::createFromRotationMatrix(rotation,&quaternion);
-    float fRoll  = atan2(2 * (quaternion.w * quaternion.z + quaternion.x * quaternion.y) , 1 - 2 * (quaternion.z * quaternion.z + quaternion.x * quaternion.x));
-    float fPitch = asin(clampf(2 * (quaternion.w * quaternion.x - quaternion.y * quaternion.z) , -1.0f , 1.0f));
-    float fYaw   = atan2(2 * (quaternion.w * quaternion.y + quaternion.z * quaternion.x) , 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y));
-    setRotation3D(Vec3(CC_RADIANS_TO_DEGREES(fPitch),CC_RADIANS_TO_DEGREES(fYaw),CC_RADIANS_TO_DEGREES(fRoll)));
+    
+    Vec3 EulerAngle;
+    quaternion.toEulerAngle(&EulerAngle);
+    setRotation3D(EulerAngle);
 }
 
 const Mat4& Camera::getViewProjectionMatrix() const
