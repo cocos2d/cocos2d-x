@@ -53,7 +53,7 @@ include(editor-support/spine/CMakeLists.txt)
 include(../extensions/CMakeLists.txt)
 
 set(COCOS_EDITOR_SUPPORT_SRC
-  ${COCOS_CCB_SRC}  
+  ${COCOS_CCB_SRC}
   ${COCOS_CS_SRC}
   ${COCOS_SPINE_SRC}
 )
@@ -107,6 +107,7 @@ endif()
 
   #todo: provide prebuild versions of the xx libs for all platforms
   include_directories(
+    ../external/protobuf-lite/src
     ../external/xxhash
     ../external/xxtea)
 

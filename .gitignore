@@ -144,3 +144,4 @@ tests/cpp-tests/Resources/audio
 /external/ConvertUTF/
 /external/audio/
 /external/xxtea/
+/external/protobuf-lite/
