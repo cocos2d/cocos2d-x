@@ -86,6 +86,8 @@ public:
      */
     void enableVR(float distanceBetweenEyes, CameraFlag cameraflag);
     
+    void disableVR();
+    
     /**
      * set head position and rotation, it is valid when VR is enabled
      * @param pos The position of head.

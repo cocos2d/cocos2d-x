@@ -62,7 +62,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
-    CL(Sprite3DMirrorTest)
+    CL(Sprite3DMirrorTest),
+    CL(VRTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1536,7 +1537,16 @@ VRTest::VRTest()
     _sprite->setScale(5);
     _sprite->setRotation3D(Vec3(0,180,0));
     addChild(_sprite);
-    _sprite->setPosition( Vec2( p.x - 80, p.y) );
+    auto s = Director::getInstance()->getWinSize();
+    Vec2 p(s.width/2, s.height/2);
+    _sprite->setPosition( Vec2( p.x, p.y) );
+    _sprite->setCameraMask(2);
+}
+
+void VRTest::onEnter()
+{
+    Sprite3DTestDemo::onEnter();
+    getScene()->enableVR(0.1f, CameraFlag::USER1);
 }
 
 std::string VRTest::title() const

@@ -193,17 +193,31 @@ void Scene::enableVR(float distanceBetweenEyes, CameraFlag cameraflag)
     if (_leftVRCamera == nullptr)
     {
         auto s = Director::getInstance()->getWinSize();
-        float ratio = (GLfloat)s.width * 2.0f / s.height;
+        float ratio = (GLfloat)s.width * 0.5f / s.height;
         _leftVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
         _rightVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
         
+        _leftVRCamera->setNormalizedViewPortRect(0.f, 0.f, 0.5f, 1.f);
+        _rightVRCamera->setNormalizedViewPortRect(0.5f, 0.f, 0.5f, 1.f);
         addChild(_leftVRCamera);
         addChild(_rightVRCamera);
+        _leftVRCamera->setScene(this);
+        _rightVRCamera->setScene(this);
     }
     _leftVRCamera->setCameraFlag(cameraflag);
     _rightVRCamera->setCameraFlag(cameraflag);
     
     setVRHeadPosAndRot(_defaultCamera->getPosition3D(), _defaultCamera->getRotation3D());
+}
+
+void Scene::disableVR()
+{
+    if (_leftVRCamera && _rightVRCamera)
+    {
+        removeChild(_leftVRCamera);
+        removeChild(_rightVRCamera);
+        _leftVRCamera = _rightVRCamera = nullptr;
+    }
 }
 
 void Scene::setVRHeadPosAndRot(const Vec3& pos, const Vec3& rot)
