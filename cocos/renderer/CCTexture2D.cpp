@@ -1370,7 +1370,7 @@ Texture2D::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
 
 unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) const
 {
-    if (format == PixelFormat::NONE)
+    if (format == PixelFormat::NONE || format == PixelFormat::DEFAULT)
     {
         return 0;
     }
