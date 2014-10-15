@@ -329,6 +329,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
+    virtual void onExit() override;
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     

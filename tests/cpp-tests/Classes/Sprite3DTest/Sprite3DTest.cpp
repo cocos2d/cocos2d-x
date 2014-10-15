@@ -1534,19 +1534,25 @@ VRTest::VRTest()
 {
     std::string fileName = "Sprite3DTest/orc.c3b";
     _sprite = Sprite3D::create(fileName);
-    _sprite->setScale(5);
+    _sprite->setScale(8);
     _sprite->setRotation3D(Vec3(0,180,0));
     addChild(_sprite);
     auto s = Director::getInstance()->getWinSize();
     Vec2 p(s.width/2, s.height/2);
-    _sprite->setPosition( Vec2( p.x, p.y) );
+    _sprite->setPosition( Vec2( p.x, p.y - 40) );
     _sprite->setCameraMask(2);
 }
 
 void VRTest::onEnter()
 {
     Sprite3DTestDemo::onEnter();
-    getScene()->enableVR(0.1f, CameraFlag::USER1);
+    getScene()->enableVR(0.2f, CameraFlag::USER1);
+}
+
+void VRTest::onExit()
+{
+    Sprite3DTestDemo::onExit();
+    getScene()->disableVR();
 }
 
 std::string VRTest::title() const
