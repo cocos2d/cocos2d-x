@@ -451,8 +451,7 @@ bool AssetsManager::uncompress()
 bool AssetsManager::createDirectory(const char *path)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#pragma message("warning: AssetsManager::createDirectory() not implemented for CC_PLATFORM_WINRT//WP8 " __FILE__ " : " __FUNCTION__)
-    return false;
+    return FileUtils::getInstance()->createDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     BOOL ret = CreateDirectoryA(path, nullptr);
     if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
@@ -644,7 +643,7 @@ void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#pragma message("warning: AssetsManager::createStoragePath() not implemented for CC_PLATFORM_WINRT/WP8 " __FILE__ " : " __FUNCTION__)
+    FileUtils::getInstance()->createDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
@@ -667,7 +666,7 @@ void AssetsManager::destroyStoragePath()
     
     // Remove downloaded files
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#pragma message("warning: AssetsManager::destroyStoragePath() not implemented for CC_PLATFORM_WINRT/WP8 " __FILE__ " : " __FUNCTION__)
+    FileUtils::getInstance()->removeDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     string command = "rd /s /q ";
     // Path may include space.
