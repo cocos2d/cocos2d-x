@@ -1,21 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="src\Cocos2dRenderer.cpp">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3DContentProvider.cpp">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Direct3DInterop.cpp">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\DirectXBase.cpp">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\EditBoxEvent.cpp">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
@@ -23,26 +22,28 @@
     <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="src\Cocos2dRenderer.h">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3DContentProvider.h">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Direct3DInterop.h">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectXBase.h">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectXHelper.h">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\EditBoxEvent.h">
-      <Filter>platform_src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
@@ -50,27 +51,25 @@
     <ClInclude Include="..\..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="platform_src">
-      <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes">
       <UniqueIdentifier>{ddb0f381-1dc4-44a0-ab28-0f672a551265}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\cocos2d\external\wp8-specific\angle\prebuilt\Win32\libEGL_phone.dll" />
-    <None Include="..\..\cocos2d\external\wp8-specific\angle\prebuilt\Win32\libGLESv2_phone.dll" />
-    <None Include="..\..\cocos2d\external\wp8-specific\angle\prebuilt\ARM\libEGL_phone.dll" />
-    <None Include="..\..\cocos2d\external\wp8-specific\angle\prebuilt\ARM\libGLESv2_phone.dll" />
-    <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\win32\libcurl.dll" />
-    <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\win32\libeay32.dll" />
-    <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\win32\ssleay32.dll" />
-    <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\arm\libcurl.dll" />
-    <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\arm\libeay32.dll" />
-    <None Include="..\..\cocos2d\external\curl\prebuilt\wp8\arm\ssleay32.dll" />
-    <None Include="..\..\cocos2d\external\websockets\prebuilt\wp8\win32\libwebsockets.dll" />
-    <None Include="..\..\cocos2d\external\websockets\prebuilt\wp8\arm\libwebsockets.dll" />
+    <None Include="$(AngleBinPath)libEGL_phone.dll" />
+    <None Include="$(AngleBinPath)libGLESv2_phone.dll" />
+    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
+    <None Include="$(SQLiteBinPath)sqlite3.dll" />
+    <None Include="$(CurlBinPath)libcurl.dll" />
+    <None Include="$(CurlBinPath)libeay32.dll" />
+    <None Include="$(CurlBinPath)ssleay32.dll" />
   </ItemGroup>
 </Project>
