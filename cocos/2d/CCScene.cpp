@@ -190,9 +190,9 @@ void Scene::render(Renderer* renderer)
 
 void Scene::enableVR(float distanceBetweenEyes, CameraFlag cameraflag)
 {
+    auto s = Director::getInstance()->getWinSize();
     if (_leftVRCamera == nullptr)
     {
-        auto s = Director::getInstance()->getWinSize();
         float ratio = (GLfloat)s.width * 0.5f / s.height;
         _leftVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
         _rightVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
@@ -207,7 +207,7 @@ void Scene::enableVR(float distanceBetweenEyes, CameraFlag cameraflag)
     _leftVRCamera->setCameraFlag(cameraflag);
     _rightVRCamera->setCameraFlag(cameraflag);
     
-    setVRHeadPosAndFocus(_defaultCamera->getPosition3D(), Vec3(0.f, 0.f, 0.f));
+    setVRHeadPosAndFocus(_defaultCamera->getPosition3D(), Vec3(s.width / 2.f, s.height / 2.f, 0.f));
 }
 
 void Scene::disableVR()
