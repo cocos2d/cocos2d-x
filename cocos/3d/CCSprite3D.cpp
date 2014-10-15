@@ -576,32 +576,25 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         auto programstate = mesh->getGLProgramState();
         auto& meshCommand = mesh->getMeshCommand();
-        
-        if(dummy_texture<0)
-		{
-			dummy_texture = dummyTextureInit();
-		}
-		
 	#ifdef NDEBUG
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
 	#else
-		GLuint textureID = 0;
+        GLuint textureID = 0;
 		if(mesh->getTexture())
 		{
-			textureID = mesh->getTexture()->getName();
+            textureID = mesh->getTexture()->getName();
 		}else
 		{ //let the mesh use a dummy texture instead of the missing or crashing texture file
-			auto texture = getDummyTexture();
-			textureID = texture->getName();
-			mesh->setTexture(texture);
+            auto texture = getDummyTexture();
+            textureID = texture->getName();
+            mesh->setTexture(texture);
 		}
 	#endif
-        
-		float globalZ = _globalZOrder;
-		if (mesh->_isTransparent)
-		{	// use the view matrix for Applying to recalculating transparent mesh's Z-Order
-			Mat4 result = Camera::getVisitingCamera()->getViewMatrix() *transform;
-			globalZ = -result.m[14];//fetch the Z from the result matrix
+        float globalZ = _globalZOrder;
+        if (mesh->_isTransparent)
+        {   // use the view matrix for Applying to recalculating transparent mesh's Z-Order
+        	Mat4 result = Camera::getVisitingCamera()->getViewMatrix() *transform;
+            globalZ = -result.m[14];//fetch the Z from the result matrix
 		}
 
         meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
