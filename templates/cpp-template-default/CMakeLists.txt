@@ -188,7 +188,7 @@ include_directories(
   ${COCOS2D_ROOT}/external/spidermonkey/include/liniosux
   ${COCOS2D_ROOT}/external/xxhash
 )
-elseif(APPLE) #assumed linux
+elseif(APPLE)
 include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
