@@ -196,110 +196,114 @@ tolua_lerror:
 
 static int tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00(lua_State* tolua_S)
 {
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-         !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-        	LUA_NUMBER scale = tolua_tonumber(tolua_S, 2, 1);
-        	self->timeScale = scale;
-        }
-    }
     return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setTimeScale'.",&tolua_err);
-    return 0;
-#endif
+//#ifndef TOLUA_RELEASE
+//    tolua_Error tolua_err;
+//    if (
+//        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
+//        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+//         !tolua_isnoobj(tolua_S,3,&tolua_err)
+//        )
+//        goto tolua_lerror;
+//    else
+//#endif
+//    {
+//    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+//        if (NULL != self ) {
+//        	LUA_NUMBER scale = tolua_tonumber(tolua_S, 2, 1);
+//        	self->timeScale = scale;
+//        }
+//    }
+//    return 0;
+//#ifndef TOLUA_RELEASE
+//tolua_lerror:
+//    tolua_error(tolua_S,"#ferror in function 'setTimeScale'.",&tolua_err);
+//    return 0;
+//#endif
 }
 
 static int tolua_Cocos2d_CCSkeletonAnimation_setDebugSlots00(lua_State* tolua_S)
 {
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
-        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
-         !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-        	bool debugSlots = tolua_toboolean(tolua_S, 2, 1);
-        	self->debugSlots = debugSlots;
-        }
-    }
     return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setDebugSlots'.",&tolua_err);
-    return 0;
-#endif
+//#ifndef TOLUA_RELEASE
+//    tolua_Error tolua_err;
+//    if (
+//        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
+//        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+//         !tolua_isnoobj(tolua_S,3,&tolua_err)
+//        )
+//        goto tolua_lerror;
+//    else
+//#endif
+//    {
+//    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+//        if (NULL != self ) {
+//        	bool debugSlots = tolua_toboolean(tolua_S, 2, 1);
+//        	self->debugSlots = debugSlots;
+//        }
+//    }
+//    return 0;
+//#ifndef TOLUA_RELEASE
+//tolua_lerror:
+//    tolua_error(tolua_S,"#ferror in function 'setDebugSlots'.",&tolua_err);
+//    return 0;
+//#endif
 }
 
 static int tolua_Cocos2d_CCSkeletonAnimation_setDebugBones00(lua_State* tolua_S)
 {
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
-        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
-         !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-        	bool debugBones = tolua_toboolean(tolua_S, 2, 1);
-        	self->debugBones = debugBones;
-        }
-    }
     return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setDebugBones'.",&tolua_err);
-    return 0;
-#endif
+//#ifndef TOLUA_RELEASE
+//    tolua_Error tolua_err;
+//    if (
+//        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
+//        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+//         !tolua_isnoobj(tolua_S,3,&tolua_err)
+//        )
+//        goto tolua_lerror;
+//    else
+//#endif
+//    {
+//    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+//        if (NULL != self ) {
+//        	bool debugBones = tolua_toboolean(tolua_S, 2, 1);
+//        	self->debugBones = debugBones;
+//        }
+//    }
+//    return 0;
+//#ifndef TOLUA_RELEASE
+//tolua_lerror:
+//    tolua_error(tolua_S,"#ferror in function 'setDebugBones'.",&tolua_err);
+//    return 0;
+//#endif
 }
 
 static int tolua_Cocos2d_CCSkeletonAnimation_setPremultipliedAlpha00(lua_State* tolua_S)
 {
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
-        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
-         !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-        	bool premultipliedAlpha = tolua_toboolean(tolua_S, 2, 1);
-        	self->premultipliedAlpha = premultipliedAlpha;
-        }
-    }
     return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setPremultipliedAlpha'.",&tolua_err);
-    return 0;
-#endif
+//#ifndef TOLUA_RELEASE
+//    tolua_Error tolua_err;
+//    if (
+//        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
+//        !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+//         !tolua_isnoobj(tolua_S,3,&tolua_err)
+//        )
+//        goto tolua_lerror;
+//    else
+//#endif
+//    {
+//    	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
+//        if (NULL != self ) {
+//        	bool premultipliedAlpha = tolua_toboolean(tolua_S, 2, 1);
+//        	self->premultipliedAlpha = premultipliedAlpha;
+//        }
+//    }
+//    return 0;
+//#ifndef TOLUA_RELEASE
+//tolua_lerror:
+//    tolua_error(tolua_S,"#ferror in function 'setPremultipliedAlpha'.",&tolua_err);
+//    return 0;
+//#endif
 }
 
 
