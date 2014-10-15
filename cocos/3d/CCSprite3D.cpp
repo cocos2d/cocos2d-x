@@ -515,6 +515,23 @@ void Sprite3D::removeAllAttachNode()
     _attachments.clear();
 }
 
+#ifndef NDEBUG
+static GLuint getDummyTextureIndex()
+{
+	static GLuint dummy_texture=-1;
+	if(dummy_texture<0)
+	{
+		unsigned short tex =255;
+		glGenTextures(1,&dummy_texture);
+		glBindTexture(GL_TEXTURE_2D,dummy_texture);
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST); 
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,1,1,0,GL_RED,GL_UNSIGNED_BYTE,&tex);
+	}
+	return dummy_texture;
+}
+#endif
+
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_skeleton)
@@ -544,7 +561,16 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         auto programstate = mesh->getGLProgramState();
         auto& meshCommand = mesh->getMeshCommand();
         
+        if(dummy_texture<0)
+		{
+			dummy_texture = dummyTextureInit();
+		}
+		
+	#ifdef NDEBUG
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
+	#else
+		GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : getDummyTextureIndex();
+	#endif
         
 		float globalZ = _globalZOrder;
 		if (mesh->_isTransparent)
