@@ -5,7 +5,7 @@ end
 
 ccs = ccs or {}
 
-require "cocos.cocosstudio.StudioConstants"
+require "cocos.cocostudio.StudioConstants"
 
 function ccs.sendTriggerEvent(event)
     local triggerObjArr = ccs.TriggerMng.getInstance():get(event)

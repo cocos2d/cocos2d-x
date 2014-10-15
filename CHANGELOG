@@ -3,6 +3,7 @@ cocos2d-x-3.3-beta1
     [NEW]           Audio: new audio supports Mac OS X and Windows
     [NEW]           Application: added openUrl()
     [NEW]           Armature: added getOffsetPoints()
+    [NEW]           C++: added ClippingRectangleNode
     [NEW]           Lua-binding: added Camera3DTest ,BillBoradTest
     [NEW]           Node: schedule/unschedule lambda functions
     [NEW]           Rect: added merge()

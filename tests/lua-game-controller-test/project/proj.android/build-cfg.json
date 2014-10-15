@@ -14,12 +14,8 @@
             "to": "res"
         },
         {
-            "from": "../../../../cocos/scripting/lua-bindings/script/cocos2d",
-            "to": ""
-        },
-        {
-            "from": "../../../../cocos/scripting/lua-bindings/script/controller",
-            "to": ""
+            "from": "../../../../cocos/scripting/lua-bindings/script/",
+            "to": "src/cocos"
         },
         {
             "from": "../../../game-controller-test/Resources",
