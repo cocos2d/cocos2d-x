@@ -5,6 +5,10 @@ collectgarbage("setstepmul", 5000)
 
 ----------------
 -- run
+cc.FileUtils:getInstance():addSearchPath("src")
+-- CC_USE_DEPRECATED_API = true
+require "cocos.init"
+
 local director = cc.Director:getInstance()
 local glView   = director:getOpenGLView()
 if nil == glView then
@@ -71,7 +75,7 @@ end
 addSearchPath("res/", screenSize.height)
 addSearchPath("", screenSize.height)
 
-require "src/mainMenu"
+require "mainMenu"
 
 local scene = cc.Scene:create()
 scene:addChild(CreateTestMenu())

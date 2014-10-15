@@ -126,6 +126,7 @@ THE SOFTWARE.
 #include "2d/CCMenu.h"
 #include "2d/CCMenuItem.h"
 #include "2d/CCClippingNode.h"
+#include "2d/CCClippingRectangleNode.h"
 #include "2d/CCMotionStreak.h"
 #include "2d/CCProgressTimer.h"
 #include "2d/CCRenderTexture.h"

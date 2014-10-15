@@ -1,5 +1,3 @@
-require "CocoStudio"
-
 local TMoveBy = class("TMoveBy")
 TMoveBy._tag = -1
 TMoveBy._duration = 0
