@@ -56,11 +56,11 @@ void Cocos2dRenderer::CreateGLResources()
         GLViewImpl* glview = GLViewImpl::create("Test Cpp");
 	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height,m_orientation);
         director->setOpenGLView(glview);
-        CCApplication::getInstance()->run();
         glview->SetXamlEventDelegate(m_delegate);
         glview->SetXamlMessageBoxDelegate(m_messageBoxDelegate);
         glview->SetXamlEditBoxDelegate(m_editBoxDelegate);
-   }
+        CCApplication::getInstance()->run();
+    }
     else
     {
         cocos2d::GL::invalidateStateCache();
@@ -71,7 +71,7 @@ void Cocos2dRenderer::CreateGLResources()
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
         director->setGLDefaultValues();
-  }
+    }
 
     m_loadingComplete = true;
 }
