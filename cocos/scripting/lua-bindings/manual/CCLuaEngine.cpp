@@ -770,11 +770,11 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type,void* data)
                 return handleTableViewEvent(type, data);
             }
             break;
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_PROGRESS:
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_ERROR:
+        case ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_SUCCESS:
             {
-                return handleAssetsManagerEvent(type, data);
+                return handleAssetsManagerExEvent(type, data);
             }
             break;
         case ScriptHandlerMgr::HandlerType::ARMATURE_EVENT:
@@ -947,7 +947,7 @@ int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType handlerType,vo
     return ret;
 }
 
-int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data)
+int LuaEngine::handleAssetsManagerExEvent(ScriptHandlerMgr::HandlerType type,void* data)
 {
     if (nullptr == data)
         return 0;
@@ -956,35 +956,35 @@ int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void*
     if (nullptr == eventData->nativeObject || nullptr == eventData->value)
         return 0;
     
-    LuaAssetsManagerEventData* assetsManagerData = static_cast<LuaAssetsManagerEventData*>(eventData->value);
+//    LuaAssetsManagerEventData* assetsManagerData = static_cast<LuaAssetsManagerEventData*>(eventData->value);
+//    
+//    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, type);
+//    
+//    if (0 == handler)
+//        return 0;
+//    
+//    int ret = 0;
+//    switch (type)
+//    {
+//        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
+//        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
+//            {
+//                _stack->pushInt(assetsManagerData->value);
+//                ret = _stack->executeFunctionByHandler(handler, 1);
+//            }
+//            break;
+//            
+//        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
+//            {
+//                ret = _stack->executeFunctionByHandler(handler, 0);
+//            }
+//            break;
+//            
+//        default:
+//            break;
+//    }
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, type);
-    
-    if (0 == handler)
-        return 0;
-    
-    int ret = 0;
-    switch (type)
-    {
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS:
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR:
-            {
-                _stack->pushInt(assetsManagerData->value);
-                ret = _stack->executeFunctionByHandler(handler, 1);
-            }
-            break;
-            
-        case ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS:
-            {
-                ret = _stack->executeFunctionByHandler(handler, 0);
-            }
-            break;
-            
-        default:
-            break;
-    }
-    
-    return ret;
+    return 0;
 }
 
 int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* data)

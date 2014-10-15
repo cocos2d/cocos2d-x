@@ -700,8 +700,8 @@
 		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
-		1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
-		1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
+		1AC35D8318CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */; };
+		1AC35D8418CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */; };
 		1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D8718CEE5D100F37B72 /* AppController.mm */; };
 		1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */; };
 		1AC35D9A18CEE5D100F37B72 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8918CEE5D100F37B72 /* Default.png */; };
@@ -957,6 +957,12 @@
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B6C039D919C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
 		B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
+		BA4B67D219E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */; };
+		BA4B67D319E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */; };
+		BAF402E219E675F30060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
+		BAF402E319E675F30060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
+		BAF402E419E676370060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
+		BAF402E519E6764A0060A895 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = BAF402E119E675F30060A895 /* Manifests */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -2782,8 +2788,8 @@
 		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
-		1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
+		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanagerex_test_sample.cpp; sourceTree = "<group>"; };
+		1AC35D8018CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanagerex_test_sample.h; sourceTree = "<group>"; };
 		1AC35D8618CEE5D100F37B72 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1AC35D8718CEE5D100F37B72 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -2986,6 +2992,9 @@
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
 		B6C039D719C95D83007207DC /* LightTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightTest.cpp; path = LightTest/LightTest.cpp; sourceTree = "<group>"; };
 		B6C039D819C95D83007207DC /* LightTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightTest.h; path = LightTest/LightTest.h; sourceTree = "<group>"; };
+		BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManagerExTest.cpp; sourceTree = "<group>"; };
+		BA4B67D119E6699200BAF8F9 /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManagerExTest.h; sourceTree = "<group>"; };
+		BAF402E119E675F30060A895 /* Manifests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Manifests; path = "../tests/cpp-tests/Resources/Manifests"; sourceTree = "<group>"; };
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
@@ -5805,6 +5814,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				BA4B67CF19E6699200BAF8F9 /* AssetsManagerExTest */,
 				38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
@@ -6502,6 +6512,7 @@
 				1AC35CBA18CED84500F37B72 /* fonts */,
 				1AC35CBC18CED84500F37B72 /* hd */,
 				1AC35CBE18CED84500F37B72 /* Images */,
+				BAF402E119E675F30060A895 /* Manifests */,
 				1AC35CC118CED84500F37B72 /* Misc */,
 				1AC35CC318CED84500F37B72 /* Particles */,
 				1AC35CC618CED84500F37B72 /* Shaders */,
@@ -6631,8 +6642,8 @@
 				15427B76198B750300DC375D /* lua_module_register.h */,
 				1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */,
 				1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */,
-				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */,
-				1AC35D8018CEE5B100F37B72 /* lua_assetsmanager_test_sample.h */,
+				1AC35D7F18CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp */,
+				1AC35D8018CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.h */,
 			);
 			name = Classes;
 			path = "../tests/lua-tests/project/Classes";
@@ -7207,6 +7218,15 @@
 			name = LightTest;
 			sourceTree = "<group>";
 		};
+		BA4B67CF19E6699200BAF8F9 /* AssetsManagerExTest */ = {
+			isa = PBXGroup;
+			children = (
+				BA4B67D019E6699200BAF8F9 /* AssetsManagerExTest.cpp */,
+				BA4B67D119E6699200BAF8F9 /* AssetsManagerExTest.h */,
+			);
+			path = AssetsManagerExTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -7654,6 +7674,7 @@
 				15D1FCF11998637C00302043 /* Cocos2d.lua in Resources */,
 				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
+				BAF402E419E676370060A895 /* Manifests in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
 				1529F05C19ED88830064B9B1 /* tp.lua in Resources */,
 				15D1FD141998637C00302043 /* extern.lua in Resources */,
@@ -7739,6 +7760,7 @@
 				15D1FD111998637C00302043 /* DrawPrimitives.lua in Resources */,
 				15D1FD1B1998637C00302043 /* json.lua in Resources */,
 				1AC35DD618CEE65200F37B72 /* Misc in Resources */,
+				BAF402E519E6764A0060A895 /* Manifests in Resources */,
 				15D1FD3E199863CA00302043 /* DeprecatedCocosDenshionClass.lua in Resources */,
 				1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */,
 				C08689C418D370C90093E810 /* background.caf in Resources */,
@@ -7835,6 +7857,7 @@
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
+				BAF402E219E675F30060A895 /* Manifests in Resources */,
 				3E2F27BA19CFF52300E7C490 /* audio in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
@@ -7914,6 +7937,7 @@
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
+				BAF402E319E675F30060A895 /* Manifests in Resources */,
 				1AC35D0B18CED84500F37B72 /* zwoptex in Resources */,
 				1AC35CF518CED84500F37B72 /* Images in Resources */,
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
@@ -8030,7 +8054,7 @@
 				1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */,
 				1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */,
-				1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
+				1AC35D8318CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8044,7 +8068,7 @@
 				1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */,
 				1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */,
-				1AC35D8418CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
+				1AC35D8418CEE5B100F37B72 /* lua_assetsmanagerex_test_sample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8209,6 +8233,7 @@
 				1AC35C4B18CECF0C00F37B72 /* ShaderTest2.cpp in Sources */,
 				38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				1AC35C6518CECF0C00F37B72 /* UnitTest.cpp in Sources */,
+				BA4B67D219E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */,
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
 				3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */,
@@ -8353,6 +8378,7 @@
 				1AC35B7C18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
 				1AC35BF418CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
 				1AC35B3618CECF0C00F37B72 /* TestEntries.cpp in Sources */,
+				BA4B67D319E6699200BAF8F9 /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B2E18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				29080DCA191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35C1218CECF0C00F37B72 /* LabelTestNew.cpp in Sources */,
