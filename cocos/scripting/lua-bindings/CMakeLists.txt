@@ -12,6 +12,7 @@ include_directories(
   ${cocos_root}/cocos/3d
   ${cocos_root}/cocos/editor-support/spine
   ${cocos_root}/cocos/editor-support/cocostudio
+  ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline
   ${cocos_root}/cocos/editor-support/cocosbuilder
   ${cocos_root}/cocos/editor-support
   ${cocos_root}/cocos/platform
@@ -42,6 +43,7 @@ if(MACOSX)
         ${cocos_root}/external/lua/luasocket/inet.c
         ${cocos_root}/external/lua/luasocket/io.c
         ${cocos_root}/external/lua/luasocket/luasocket.c
+        ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
         ${cocos_root}/external/lua/luasocket/mime.c
         ${cocos_root}/external/lua/luasocket/options.c
         ${cocos_root}/external/lua/luasocket/select.c

@@ -294,6 +294,11 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Label] requestSystemFontRefresh 
+-- @param self
+        
+--------------------------------
+-- 
 -- @function [parent=#Label] createWithBMFont 
 -- @param self
 -- @param #string bmfontFilePath

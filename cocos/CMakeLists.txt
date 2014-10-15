@@ -53,7 +53,7 @@ include(editor-support/spine/CMakeLists.txt)
 include(../extensions/CMakeLists.txt)
 
 set(COCOS_EDITOR_SUPPORT_SRC
-  ${COCOS_CCB_SRC}  
+  ${COCOS_CCB_SRC}
   ${COCOS_CS_SRC}
   ${COCOS_SPINE_SRC}
 )
@@ -125,7 +125,7 @@ elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
   set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets
-  fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB})
+  fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
 elseif(MACOSX)
 
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )

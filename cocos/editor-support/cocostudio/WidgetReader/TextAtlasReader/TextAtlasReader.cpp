@@ -3,6 +3,8 @@
 #include "TextAtlasReader.h"
 #include "ui/UITextAtlas.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary.pb.h"
+#include "tinyxml2/tinyxml2.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -131,4 +133,137 @@ namespace cocostudio
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
     }
+    
+    void TextAtlasReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        
+        TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
+        const protocolbuffers::TextAtlasOptions& options = nodeTree.textatlasoptions();
+        //        bool sv = DICTOOL->checkObjectExist_json(options, P_StringValue);
+        //        bool cmf = DICTOOL->checkObjectExist_json(options, P_CharMapFile);
+        //        bool iw = DICTOOL->checkObjectExist_json(options, P_ItemWidth);
+        //        bool ih = DICTOOL->checkObjectExist_json(options, P_ItemHeight);
+        //        bool scm = DICTOOL->checkObjectExist_json(options, P_StartCharMap);
+        
+        const protocolbuffers::ResourceData& cmftDic = options.charmapfiledata();
+        int cmfType = cmftDic.resourcetype();
+        switch (cmfType)
+        {
+            case 0:
+            {
+                std::string tp_c = jsonPath;
+                const char* cmfPath = cmftDic.path().c_str();
+                const char* cmf_tp = tp_c.append(cmfPath).c_str();
+                std::string stringValue = options.has_stringvalue() ? options.stringvalue() : "12345678";
+                int itemWidth = options.has_itemwidth() ? options.itemwidth() : 24;
+                int itemHeight = options.has_itemheight() ? options.itemheight() : 32;
+                labelAtlas->setProperty(stringValue,
+                                        cmf_tp,
+                                        itemWidth,
+                                        itemHeight,
+                                        options.startcharmap().c_str());
+                break;
+            }
+            case 1:
+                CCLOG("Wrong res type of LabelAtlas!");
+                break;
+            default:
+                break;
+        }
+        
+        
+        // other commonly protperties
+        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
+    }
+    
+    void TextAtlasReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        std::string stringValue = "", startChar = "";
+        int itemWidth = 0, itemHeight = 0;
+        int resourceType = 0;
+        std::string path = "", plistFile = "";
+        
+        int opacity = 255;
+        
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "LabelText")
+            {
+                stringValue = value;
+            }
+            else if (name == "CharWidth")
+            {
+                itemWidth = atoi(value.c_str());
+            }
+            else if (name == "CharHeight")
+            {
+                itemHeight = atoi(value.c_str());
+            }
+            else if (name == "StartChar")
+            {
+                startChar = value;
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "LabelAtlasFileImage_CNB")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        labelAtlas->setProperty(stringValue, xmlPath + path, itemWidth, itemHeight, startChar);
+        
+        labelAtlas->setOpacity(opacity);
+    }
+    
 }

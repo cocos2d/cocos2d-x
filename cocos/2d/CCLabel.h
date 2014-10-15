@@ -131,6 +131,7 @@ public:
     virtual void setSystemFontSize(float fontSize);
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
+    virtual void requestSystemFontRefresh() { _systemFontDirty = true;}
     /** changes the string to render
     * @warning It is as expensive as changing the string if you haven't set up TTF/BMFont/CharMap for the label.
     */

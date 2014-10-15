@@ -69,4 +69,6 @@
 
 #define CC_VIDEOPLAYER_DEBUG_DRAW  0
 
+#define __LAYOUT_COMPONENT_NAME "__ui_layout"
+
 #endif /* defined(__TestCpp__GUIDefine__) */

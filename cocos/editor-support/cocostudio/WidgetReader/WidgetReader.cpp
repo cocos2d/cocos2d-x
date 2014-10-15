@@ -3,6 +3,9 @@
 #include "WidgetReader.h"
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
+#include "cocostudio/CSParseBinary.pb.h"
+#include "tinyxml2/tinyxml2.h"
+#include "../ActionTimeline/CCActionTimeline.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -352,6 +355,411 @@ namespace cocostudio
         }
         
         this->endSetBasicProperties(widget);
+    }
+    
+    void WidgetReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        
+        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
+        
+        widget->setCascadeColorEnabled(true);
+        widget->setCascadeOpacityEnabled(true);
+        
+        widget->setUnifySizeEnabled(true);
+        
+        bool ignoreSizeExsit = options.has_ignoresize();
+        if (ignoreSizeExsit)
+        {
+            widget->ignoreContentAdaptWithSize(options.ignoresize());
+        }
+        
+        widget->setSizeType((Widget::SizeType)options.sizetype());
+        widget->setPositionType((Widget::PositionType)options.positiontype());
+        
+        widget->setSizePercent(Vec2(options.sizepercentx(), options.sizepercenty()));
+        widget->setPositionPercent(Vec2(options.positionpercentx(), options.positionpercenty()));
+        
+        float w = options.width();
+        float h = options.height();
+        widget->setContentSize(Size(w, h));
+        
+        widget->setTag(options.tag());
+        widget->setActionTag(options.actiontag());
+        widget->setTouchEnabled(options.touchable());
+        const char* name = options.name().c_str();
+        const char* widgetName = name ? name : "default";
+        widget->setName(widgetName);
+        
+        float x = options.x();
+        float y = options.y();
+        widget->setPosition(Vec2(x, y));
+        
+		if(options.has_alpha())
+		{
+			widget->setOpacity(options.alpha());
+		}
+        
+        widget->setScaleX(options.has_scalex() ? options.scalex() : 1.0);
+        
+        
+        widget->setScaleY(options.has_scaley() ? options.scaley() : 1.0);
+        
+        
+//        widget->setRotation(options.has_rotation() ? options.rotation() : 0.0);
+
+		widget->setRotationSkewX(options.has_rotationskewx() ? options.rotationskewx() : 0.0);
+
+		widget->setRotationSkewY(options.has_rotationskewy() ? options.rotationskewy() : 0.0);
+        
+        bool vb = options.has_visible();
+        if (vb)
+        {
+            widget->setVisible(options.visible());
+        }
+        
+        int z = options.zorder();
+        widget->setLocalZOrder(z);        
+        
+        
+        bool layout = options.has_layoutparameter();
+        if (layout)
+        {
+            
+            const protocolbuffers::LayoutParameter& layoutParameterDic = options.layoutparameter();;
+            int paramType = layoutParameterDic.type();
+            
+            LayoutParameter* parameter = nullptr;
+            switch (paramType)
+            {
+                case 0:
+                    break;
+                case 1:
+                {
+                    parameter = LinearLayoutParameter::create();
+                    int gravity = layoutParameterDic.gravity();
+                    ((LinearLayoutParameter*)parameter)->setGravity((cocos2d::ui::LinearLayoutParameter::LinearGravity)gravity);
+                    break;
+                }
+                case 2:
+                {
+                    parameter = RelativeLayoutParameter::create();
+                    RelativeLayoutParameter* rParameter = (RelativeLayoutParameter*)parameter;
+                    const char* relativeName = layoutParameterDic.relativename().c_str();
+                    rParameter->setRelativeName(relativeName);
+                    const char* relativeToName = layoutParameterDic.relativetoname().c_str();
+                    rParameter->setRelativeToWidgetName(relativeToName);
+                    int align = layoutParameterDic.align();
+                    rParameter->setAlign((cocos2d::ui::RelativeLayoutParameter::RelativeAlign)align);
+                    break;
+                }
+                default:
+                    break;
+            }
+            if (parameter)
+            {
+                float mgl = layoutParameterDic.marginleft();
+                float mgt = layoutParameterDic.margintop();
+                float mgr = layoutParameterDic.marginright();
+                float mgb = layoutParameterDic.margindown();
+                parameter->setMargin(Margin(mgl, mgt, mgr, mgb));
+                widget->setLayoutParameter(parameter);
+            }
+        }
+        
+    }
+    
+    void WidgetReader::setColorPropsFromProtocolBuffers(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
+        
+       
+        bool isColorRExists = options.has_colorr();
+        bool isColorGExists = options.has_colorg();
+        bool isColorBExists = options.has_colorb();
+        
+        int colorR = options.colorr();
+        int colorG = options.colorg();
+        int colorB = options.colorb();
+        
+        if (isColorRExists && isColorGExists && isColorBExists)
+        {
+            widget->setColor(Color3B(colorR, colorG, colorB));
+        }
+        
+        setAnchorPointForWidget(widget, nodeTree);
+        
+        bool flipX = options.flipx();
+        bool flipY = options.flipy();
+        widget->setFlippedX(flipX);
+        widget->setFlippedY(flipY);
+    }
+    
+    void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    {
+        widget->setTouchEnabled(false);
+        
+        widget->setCascadeColorEnabled(true);
+        widget->setCascadeOpacityEnabled(true);
+        
+        widget->setUnifySizeEnabled(true);
+        
+        widget->setScale(0.0f, 0.0f);
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "Name")
+            {
+                const char* widgetName = value.c_str() ? value.c_str() :"default";
+                widget->setName(widgetName);
+            }
+            else if (name == "ActionTag")
+            {
+                int actionTag = atoi(value.c_str());
+                widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
+            }
+            else if (name == "RotationSkewX")
+            {
+                widget->setRotationSkewX(atof(value.c_str()));
+            }
+            else if (name == "RotationSkewY")
+            {
+                widget->setRotationSkewY(atof(value.c_str()));
+            }
+            else if (name == "Rotation")
+            {
+//                widget->setRotation(atoi(value.c_str()));
+            }
+            else if (name == "ZOrder")
+            {
+                widget->setLocalZOrder(atoi(value.c_str()));
+            }
+            else if (name == "Visible")
+            {
+                widget->setVisible((value == "True") ? true : false);
+            }
+            else if (name == "VisibleForFrame")
+            {
+//                widget->setVisible((value == "True") ? true : false);
+            }
+            else if (name == "Alpha")
+            {
+                widget->setOpacity(atoi(value.c_str()));
+            }
+            else if (name == "Tag")
+            {
+                widget->setTag(atoi(value.c_str()));
+            }
+            else if (name == "FlipX")
+            {
+                widget->setFlippedX((value == "True") ? true : false);
+            }
+            else if (name == "FlipY")
+            {
+                widget->setFlippedY((value == "True") ? true : false);
+            }
+            else if (name == "TouchEnable")
+            {
+                widget->setTouchEnabled((value == "True") ? true : false);
+            }
+            else if (name == "ControlSizeType")
+            {
+                widget->ignoreContentAdaptWithSize((value == "Auto") ? true : false);
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            if (name == "Children")
+            {
+                break;
+            }
+            else if (name == "Position")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        widget->setPositionX(atof(value.c_str()));
+                    }
+                    else if (name == "Y")
+                    {
+                        widget->setPositionY(atof(value.c_str()));
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "Scale")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "ScaleX")
+                    {
+                        widget->setScaleX(atof(value.c_str()));
+                    }
+                    else if (name == "ScaleY")
+                    {
+                        widget->setScaleY(atof(value.c_str()));
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "AnchorPoint")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float anchor_x = 0.0f, anchor_y = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "ScaleX")
+                    {
+                        anchor_x = atof(value.c_str());
+                    }
+                    else if (name == "ScaleY")
+                    {
+                        anchor_y = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setAnchorPoint(Vec2(anchor_x, anchor_y));
+            }
+            else if (name == "CColor")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                int red = 255, green = 255, blue = 255;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        widget->setOpacity(atoi(value.c_str()));
+                    }
+                    else if (name == "R")
+                    {
+                        red = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        green = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        blue = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setColor(Color3B(red, green, blue));
+            }
+            else if (name == "Size")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
+                
+                while (attribute)
+                {
+                    std::string name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                widget->setContentSize(Size(width, height));
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+    }
+    
+    void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    {
+        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
+        
+        bool isAnchorPointXExists = options.has_anchorpointx();
+        float anchorPointXInFile;
+        if (isAnchorPointXExists)
+        {
+            anchorPointXInFile = options.anchorpointx();
+        }
+        else
+        {
+            anchorPointXInFile = widget->getAnchorPoint().x;
+        }
+        
+        bool isAnchorPointYExists = options.has_anchorpointy();
+        float anchorPointYInFile;
+        if (isAnchorPointYExists)
+        {
+            anchorPointYInFile = options.anchorpointy();
+        }
+        else
+        {
+            anchorPointYInFile = widget->getAnchorPoint().y;
+        }
+        
+        if (isAnchorPointXExists || isAnchorPointYExists)
+        {
+            widget->setAnchorPoint(Vec2(anchorPointXInFile, anchorPointYInFile));
+        }
+    }
+    
+    std::string WidgetReader::getResourcePath(const std::string &path, cocos2d::ui::Widget::TextureResType texType)
+    {
+        std::string filePath = GUIReader::getInstance()->getFilePath();
+        const char* imageFileName = path.c_str();
+        std::string imageFileName_tp;
+        if (nullptr != imageFileName && 0 != strcmp("", imageFileName))
+        {
+            if (texType == ui::Widget::TextureResType::LOCAL) {
+                imageFileName_tp = filePath + imageFileName;
+            }
+            else if(texType == ui::Widget::TextureResType::PLIST){
+                imageFileName_tp = imageFileName;
+            }
+            else{
+                CCASSERT(0, "invalid TextureResType!!!");
+            }
+        }
+        return imageFileName_tp;
     }
     
 }
