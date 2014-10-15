@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "ui/UILoadingBar.h"
 #include "ui/UIScale9Sprite.h"
 #include "2d/CCSprite.h"
+#include "2d/CCSpriteFrameCache.h"
 
 NS_CC_BEGIN
 
@@ -41,6 +42,7 @@ _totalLength(0),
 _barRenderer(nullptr),
 _renderBarTexType(TextureResType::LOCAL),
 _barRendererTextureSize(Size::ZERO),
+_barRendererTextureRect(Rect::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
@@ -143,6 +145,14 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     }
     
     _barRendererTextureSize = _barRenderer->getContentSize();
+
+    SpriteFrameCache *cache = SpriteFrameCache::getInstance();
+    SpriteFrame *spriteFrame = cache->getSpriteFrameByName(texture);
+
+    if (spriteFrame)
+    {
+        _barRendererTextureRect = spriteFrame->getRect();
+    }
     
     switch (_direction)
     {
@@ -231,8 +241,11 @@ void LoadingBar::setPercent(float percent)
     {
         Sprite* spriteRenderer = _barRenderer->getSprite();
         Rect rect = spriteRenderer->getTextureRect();
-        rect.size.width = _barRendererTextureSize.width * res;
-        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
+        rect.size = _barRendererTextureRect.size;
+        rect.size.width *= res;
+        Size size = _barRendererTextureSize;
+        size.width = rect.size.width + _barRendererTextureSize.width - _barRendererTextureRect.size.width;
+        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), size);
     }
 }
 
