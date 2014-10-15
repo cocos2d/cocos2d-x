@@ -37,6 +37,10 @@ THE SOFTWARE.
 #include "unzip.h"
 #include <sys/stat.h>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include <regex>
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include <ftw.h>
 #endif

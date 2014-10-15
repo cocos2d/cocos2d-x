@@ -1,4 +1,4 @@
-#include "lua_assetsmanagerex_test_sample.h"
+#include "lua_assetsmanager_test_sample.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -141,7 +141,7 @@ tolua_lerror:
 #endif
 }
 
-int register_assetsmanagerex_test_sample(lua_State* L)
+int register_assetsmanager_test_sample(lua_State* L)
 {
     tolua_open(L);
     tolua_module(L, NULL, 0);
