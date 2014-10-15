@@ -21,6 +21,7 @@ set(COCOS_2D_SRC
   2d/CCAnimation.cpp
   2d/CCAtlasNode.cpp
   2d/CCClippingNode.cpp
+  2d/CCClippingRectangleNode.cpp
   2d/CCComponentContainer.cpp
   2d/CCComponent.cpp
   2d/CCDrawingPrimitives.cpp
