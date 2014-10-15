@@ -17,7 +17,7 @@ elseif(IOS)
     proj.ios/RootViewController.mm
   )
 
-elseif(MACOSX)
+elseif(MACOSX OR APPLE)
   set(PLATFORM_SRC
     proj.mac/main.cpp
   )

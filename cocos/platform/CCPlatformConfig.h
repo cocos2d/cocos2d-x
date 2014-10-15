@@ -57,7 +57,7 @@ THE SOFTWARE.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
 
 // mac
-#if defined(CC_TARGET_OS_MAC)
+#if defined(CC_TARGET_OS_MAC) || defined(__APPLE__)
 #undef  CC_TARGET_PLATFORM
 #define CC_TARGET_PLATFORM         CC_PLATFORM_MAC
 #endif

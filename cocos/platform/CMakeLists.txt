@@ -10,7 +10,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/desktop/CCGLViewImpl-desktop.cpp
 )
 
-elseif(MACOSX)
+elseif(MACOSX OR APPLE)
 
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/mac/CCApplication-mac.mm
