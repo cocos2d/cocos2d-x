@@ -157,22 +157,12 @@ def copy_resources(target, app_android_root):
         os.mkdir(assets_src_dir)
         copy_files(src_dir, assets_src_dir)
 
-        common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
-        if target == "lua-tests":
-            copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "cocosbuilder"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "cocosdenshion"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "cocosstudio"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "extension"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "network"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "ui"), assets_dir)
-        elif target == "lua-empty-test":
-            copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "cocosdenshion"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "network"), assets_dir)
-        elif target == "lua-game-controller-test":
-            copy_files(os.path.join(common_script_dir, "cocos2d"), assets_dir)
-            copy_files(os.path.join(common_script_dir, "controller"), assets_dir)
+        common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script/")
+        cocos_src_dir = os.path.join(assets_src_dir,"cocos")
+        if os.path.exists(cocos_src_dir):
+            shutil.rmtree(cocos_src_dir)
+        os.mkdir(cocos_src_dir)
+        copy_files(common_script_dir, cocos_src_dir)
 
         luasocket_script_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
         for root, dirs, files in os.walk(luasocket_script_dir):

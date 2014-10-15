@@ -1,6 +1,3 @@
-require("experimentalUIConstants")
-
-
 local visibleRect = cc.Director:getInstance():getOpenGLView():getVisibleRect()
 local centerPos   = cc.p(visibleRect.x + visibleRect.width / 2,visibleRect.y + visibleRect.height /2)
 

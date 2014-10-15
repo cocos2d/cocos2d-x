@@ -477,6 +477,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
+    <ClCompile Include="CCClippingRectangleNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
     <ClCompile Include="CCComponentContainer.cpp" />
     <ClCompile Include="CCDrawingPrimitives.cpp" />
@@ -896,6 +897,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
     <ClInclude Include="CCClippingNode.h" />
+    <ClInclude Include="CCClippingRectangleNode.h" />
     <ClInclude Include="CCComponent.h" />
     <ClInclude Include="CCComponentContainer.h" />
     <ClInclude Include="CCDrawingPrimitives.h" />
