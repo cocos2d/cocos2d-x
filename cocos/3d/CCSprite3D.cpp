@@ -576,8 +576,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 		if (mesh->_isTransparent)
 		{
 			Vec4 local_pos(_position.x,_position.y,_positionZ,1);
-			Vec4 result = Camera::getVisitingCamera()->getViewMatrix() *getNodeToWorldTransform()* local_pos;
-			globalZ = -result.z;
+			Mat4 result = Camera::getVisitingCamera()->getViewMatrix() *transform;
+			globalZ = -result.m[14];
 		}
 
         meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
