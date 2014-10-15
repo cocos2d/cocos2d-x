@@ -184,13 +184,13 @@ namespace cocostudio
             
             if (name == "LabelBMFontFile_CNB")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 int resourceType = 0;
                 std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "Path")

@@ -234,11 +234,11 @@ namespace cocostudio
             
             if (name == "LabelAtlasFileImage_CNB")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "Path")
