@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -108,13 +108,8 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosstudio" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
+      <Command>if not exist "$(ProjectDir)..\..\src\cocos" mkdir "$(ProjectDir)..\..\src\cocos"
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\src\cocos" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
       <Message>copy files</Message>
@@ -163,13 +158,8 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\cocosstudio" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\" /e /Y
+      <Command>if not exist "$(ProjectDir)..\..\src\cocos" mkdir "$(ProjectDir)..\..\src\cocos"
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\..\src\cocos" /e /Y
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
 xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
       <Message>copy files</Message>
