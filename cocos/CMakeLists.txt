@@ -25,7 +25,7 @@
 
 # this CMakeLists is to generate libcocos2d.a
 
-cmake_minimum_required(VERSION 2.7)
+cmake_minimum_required(VERSION 2.8)
 
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
