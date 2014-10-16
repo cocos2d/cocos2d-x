@@ -363,7 +363,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             }
             
             auto cmd = static_cast<TrianglesCommand*>(command);
-            //Batch quads
+            //Batch Triangles
             if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
             {
                 CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
@@ -551,7 +551,7 @@ void Renderer::clean()
         _renderGroups[j].clear();
     }
 
-    // Clear batch quad commands
+    // Clear batch commands
     _batchedCommands.clear();
     _batchQuadCommands.clear();
     _filledVertex = 0;
@@ -686,7 +686,7 @@ void Renderer::drawBatchedTriangles()
         indexToDraw += cmd->getIndexCount();
     }
 
-    //Draw any remaining quad
+    //Draw any remaining triangles
     if(indexToDraw > 0)
     {
         glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
