@@ -81,7 +81,7 @@ THE SOFTWARE.
 #endif
 
 // linux
-#if defined(LINUX)
+#if defined(LINUX) && !defined(__APPLE__)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
 #endif
