@@ -1,26 +1,26 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2013 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef _CAMERA3D_TEST_H_
 #define _CAMERA3D_TEST_H_
@@ -56,7 +56,7 @@ public:
     CREATE_FUNC(Camera3DTestDemo);
     Camera3DTestDemo(void);
     virtual ~Camera3DTestDemo(void);
-
+    
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void backCallback(Ref* sender);
@@ -77,6 +77,16 @@ public:
     void updateState(float elapsedTime);
     bool isState(unsigned int state,unsigned int bit) const;
     void reachEndCallBack();
+    
+    bool onTouchesZoomOut(Touch* touch, Event* event);
+    void onTouchesZoomOutEnd(Touch* touch, Event* event);
+    bool onTouchesZoomIn(Touch* touch, Event* event);
+    void onTouchesZoomInEnd(Touch* touch, Event* event);
+    
+    bool onTouchesRotateLeft(Touch* touch, Event* event);
+    void onTouchesRotateLeftEnd(Touch* touch, Event* event);
+    bool onTouchesRotateRight(Touch* touch, Event* event);
+    void onTouchesRotateRightEnd(Touch* touch, Event* event);
 protected:
     std::string    _title;
     Layer*         _layer3D;
@@ -88,6 +98,14 @@ protected:
     unsigned int   _curState;
     Camera*      _camera;
     MoveTo* _moveAction;
+    bool _bZoomOut;
+    bool _bZoomIn;
+    bool _bRotateLeft;
+    bool _bRotateRight;
+    Label* _RotateRightlabel;
+    Label* _RotateLeftlabel;
+    Label* _ZoomInlabel;
+    Label* _ZoomOutlabel;
 };
 class Camera3DTestScene : public TestScene
 {
