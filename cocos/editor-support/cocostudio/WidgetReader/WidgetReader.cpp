@@ -539,7 +539,7 @@ namespace cocostudio
             }
             else if (name == "Rotation")
             {
-//                widget->setRotation(atoi(value.c_str()));
+
             }
             else if (name == "ZOrder")
             {
@@ -547,7 +547,7 @@ namespace cocostudio
             }
             else if (name == "Visible")
             {
-//                widget->setVisible((value == "True") ? true : false);
+
             }
             else if (name == "VisibleForFrame")
             {

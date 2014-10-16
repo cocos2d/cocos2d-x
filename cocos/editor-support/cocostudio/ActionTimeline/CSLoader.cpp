@@ -1587,7 +1587,7 @@ void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLEl
         }
         else if (name == "Rotation")
         {
-//            node->setRotation(atoi(value.c_str()));
+
         }
         else if (name == "ZOrder")
         {
@@ -1595,7 +1595,7 @@ void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLEl
         }
         else if (name == "Visible")
         {
-//            node->setVisible((value == "True") ? true : false);
+            
         }
         else if (name == "VisibleForFrame")
         {
