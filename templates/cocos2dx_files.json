@@ -4636,6 +4636,7 @@
         "cocos/scripting/lua-bindings/auto/api/CatmullRomTo.lua", 
         "cocos/scripting/lua-bindings/auto/api/CheckBox.lua", 
         "cocos/scripting/lua-bindings/auto/api/ClippingNode.lua", 
+        "cocos/scripting/lua-bindings/auto/api/ClippingRectangleNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/ColorFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/ComAttribute.lua", 
         "cocos/scripting/lua-bindings/auto/api/ComAudio.lua", 
