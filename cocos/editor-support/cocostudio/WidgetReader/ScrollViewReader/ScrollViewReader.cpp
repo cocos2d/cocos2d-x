@@ -210,8 +210,14 @@ namespace cocostudio
         
         bool flipX = widgetOptions.flipx();
         bool flipY = widgetOptions.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        if (flipX)
+        {
+            widget->setFlippedX(flipX);
+        }
+        if (flipY)
+        {
+            widget->setFlippedY(flipY);
+        }
     }
     
     void ScrollViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)

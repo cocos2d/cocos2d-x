@@ -364,6 +364,7 @@ namespace cocostudio
         
         widget->setCascadeColorEnabled(true);
         widget->setCascadeOpacityEnabled(true);
+        widget->setAnchorPoint(Vec2::ZERO);
         
         widget->setUnifySizeEnabled(true);
         
@@ -490,8 +491,14 @@ namespace cocostudio
         
         bool flipX = options.flipx();
         bool flipY = options.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        if (flipX)
+        {
+            widget->setFlippedX(flipX);
+        }
+        if (flipY)
+        {
+            widget->setFlippedY(flipY);
+        }
     }
     
     void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
@@ -540,11 +547,11 @@ namespace cocostudio
             }
             else if (name == "Visible")
             {
-                widget->setVisible((value == "True") ? true : false);
+//                widget->setVisible((value == "True") ? true : false);
             }
             else if (name == "VisibleForFrame")
             {
-//                widget->setVisible((value == "True") ? true : false);
+                widget->setVisible((value == "True") ? true : false);
             }
             else if (name == "Alpha")
             {
