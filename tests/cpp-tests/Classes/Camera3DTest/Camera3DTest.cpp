@@ -263,7 +263,6 @@ void Camera3DTestDemo::onEnter()
 {
     BaseTest::onEnter();
     _sprite3D=nullptr;
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(Camera3DTestDemo::onTouchesBegan, this);
