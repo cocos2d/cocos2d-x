@@ -141,6 +141,7 @@ Renderer::Renderer()
 ,_lastBatchedMeshCommand(nullptr)
 ,_filledVertex(0)
 ,_filledIndex(0)
+,_numberQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -281,7 +282,7 @@ void Renderer::setupVBOAndVAO()
 void Renderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-
+    glGenBuffers(2, &_quadbuffersVBO[0]);
     mapBuffers();
 }
 
