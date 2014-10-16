@@ -54,43 +54,43 @@ static int SendSpineEventToLua(int nHandler, spine::SkeletonAnimation* node, int
 
     int nRet = 0;
 
-	spTrackEntry* entry = spAnimationState_getCurrent(node->state, trackIndex);
-	std::string animationName = (entry && entry->animation) ? entry->animation->name : "";
-	std::string eventType = "";
+//	spTrackEntry* entry = spAnimationState_getCurrent(node->state, trackIndex);
+//	std::string animationName = (entry && entry->animation) ? entry->animation->name : "";
+//	std::string eventType = "";
+//
+//	switch (type) {
+//	case ANIMATION_START:
+//		eventType = "start";
+//		break;
+//	case ANIMATION_END:
+//		eventType = "end";
+//		break;
+//	case ANIMATION_COMPLETE:
+//		eventType = "complete";
+//		break;
+//	case ANIMATION_EVENT:
+//		eventType = "event";
+//		break;
+//	}
 
-	switch (type) {
-	case ANIMATION_START:
-		eventType = "start";
-		break;
-	case ANIMATION_END:
-		eventType = "end";
-		break;
-	case ANIMATION_COMPLETE:
-		eventType = "complete";
-		break;
-	case ANIMATION_EVENT:
-		eventType = "event";
-		break;
-	}
-
-	LuaValueDict spineEvent;
-	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("type", LuaValue::stringValue(eventType)));
-	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("trackIndex", LuaValue::intValue(trackIndex)));
-	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("animation", LuaValue::stringValue(animationName)));
-	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("loopCount", LuaValue::intValue(loopCount)));
-
-	if (NULL != event) {
-		LuaValueDict eventData;
-		eventData.insert(eventData.end(), LuaValueDict::value_type("name", LuaValue::stringValue(event->data->name)));
-		eventData.insert(eventData.end(), LuaValueDict::value_type("intValue", LuaValue::intValue(event->intValue)));
-		eventData.insert(eventData.end(), LuaValueDict::value_type("floatValue", LuaValue::floatValue(event->floatValue)));
-		eventData.insert(eventData.end(), LuaValueDict::value_type("stringValue", LuaValue::stringValue(event->stringValue)));
-		spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("eventData", LuaValue::dictValue(eventData)));
-	}
-
-	pStack->pushLuaValueDict(spineEvent);
-    nRet = pStack->executeFunctionByHandler(nHandler, 1);
-    pStack->clean();
+//	LuaValueDict spineEvent;
+//	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("type", LuaValue::stringValue(eventType)));
+//	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("trackIndex", LuaValue::intValue(trackIndex)));
+//	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("animation", LuaValue::stringValue(animationName)));
+//	spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("loopCount", LuaValue::intValue(loopCount)));
+//
+//	if (NULL != event) {
+//		LuaValueDict eventData;
+//		eventData.insert(eventData.end(), LuaValueDict::value_type("name", LuaValue::stringValue(event->data->name)));
+//		eventData.insert(eventData.end(), LuaValueDict::value_type("intValue", LuaValue::intValue(event->intValue)));
+//		eventData.insert(eventData.end(), LuaValueDict::value_type("floatValue", LuaValue::floatValue(event->floatValue)));
+//		eventData.insert(eventData.end(), LuaValueDict::value_type("stringValue", LuaValue::stringValue(event->stringValue)));
+//		spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("eventData", LuaValue::dictValue(eventData)));
+//	}
+//
+//	pStack->pushLuaValueDict(spineEvent);
+//    nRet = pStack->executeFunctionByHandler(nHandler, 1);
+//    pStack->clean();
     return nRet;
 
 }
@@ -98,7 +98,7 @@ static int SendSpineEventToLua(int nHandler, spine::SkeletonAnimation* node, int
 LuaSkeletonAnimation::LuaSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale)
 : spine::SkeletonAnimation(skeletonDataFile, atlasFile, scale)
 {
-	this->setAnimationListener(this, animationStateEvent_selector(LuaSkeletonAnimation::animationStateEvent));
+	//this->setAnimationListener(this, animationStateEvent_selector(LuaSkeletonAnimation::animationStateEvent));
 }
 
 

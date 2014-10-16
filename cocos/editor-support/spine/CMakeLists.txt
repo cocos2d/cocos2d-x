@@ -1,32 +1,36 @@
 
 set(COCOS_SPINE_SRC
 
-  editor-support/spine/Animation.cpp
-  editor-support/spine/AnimationState.cpp
-  editor-support/spine/AnimationStateData.cpp
-  editor-support/spine/Atlas.cpp
-  editor-support/spine/AtlasAttachmentLoader.cpp
-  editor-support/spine/Attachment.cpp
-  editor-support/spine/AttachmentLoader.cpp
-  editor-support/spine/Bone.cpp
-  editor-support/spine/BoneData.cpp
-  editor-support/spine/BoundingBoxAttachment.cpp
-  editor-support/spine/CCSkeleton.cpp
-  editor-support/spine/CCSkeletonAnimation.cpp
-  editor-support/spine/Event.cpp
-  editor-support/spine/EventData.cpp
-  editor-support/spine/Json.cpp
-  editor-support/spine/RegionAttachment.cpp
-  editor-support/spine/Skeleton.cpp
-  editor-support/spine/SkeletonBounds.cpp
-  editor-support/spine/SkeletonData.cpp
-  editor-support/spine/SkeletonJson.cpp
-  editor-support/spine/Skin.cpp
-  editor-support/spine/Slot.cpp
-  editor-support/spine/SlotData.cpp
-  editor-support/spine/extension.cpp
+  editor-support/spine/Animation.c
+  editor-support/spine/AnimationState.c
+  editor-support/spine/AnimationStateData.c
+  editor-support/spine/Atlas.c
+  editor-support/spine/AtlasAttachmentLoader.c
+  editor-support/spine/Attachment.c
+  editor-support/spine/AttachmentLoader.c
+  editor-support/spine/Bone.c
+  editor-support/spine/BoneData.c
+  editor-support/spine/BoundingBoxAttachment.c
+  editor-support/spine/Event.c
+  editor-support/spine/EventData.c
+  editor-support/spine/extension.c
+  editor-support/spine/IkConstraint.c
+  editor-support/spine/IkConstraintData.c
+  editor-support/spine/Json.c
+  editor-support/spine/MeshAttachment.c
+  editor-support/spine/PolygonBatch.cpp
+  editor-support/spine/RegionAttachment.c
+  editor-support/spine/Skeleton.c
+  editor-support/spine/SkeletonAnimation.cpp
+  editor-support/spine/SkeletonBounds.c
+  editor-support/spine/SkeletonData.c
+  editor-support/spine/SkeletonJson.c
+  editor-support/spine/SkeletonRenderer.cpp
+  editor-support/spine/Skin.c
+  editor-support/spine/SkinnedMeshAttachment.c
+  editor-support/spine/Slot.c
+  editor-support/spine/SlotData.c
   editor-support/spine/spine-cocos2dx.cpp
-
 )
 
 include_directories( editor-support )
