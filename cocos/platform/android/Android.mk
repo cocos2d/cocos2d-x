@@ -35,4 +35,6 @@ LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
                        -lz \
                        -landroid
 
+LOCAL_CPPFLAGS := -Wno-extern-c-compat
+
 include $(BUILD_STATIC_LIBRARY)
