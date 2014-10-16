@@ -89,7 +89,7 @@
     <ClInclude Include="..\Slot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="..\..\..\platform\winrt\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -169,7 +169,7 @@
     <ClCompile Include="..\BoneData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="..\..\..\platform\winrt\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
