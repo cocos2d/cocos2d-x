@@ -219,13 +219,10 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromProtocolBuff
         return action;
     
     std::string path = fileName;
-    //    int pos = path.find_last_of('/');
-    //	_protocolBuffersPath = path.substr(0, pos + 1);
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
     Data content = FileUtils::getInstance()->getDataFromFile(fullPath);
     protocolbuffers::CSParseBinary gpbwp;
-    //    protocolbuffers::GUIProtocolBuffersProtobuf gpbwp;
     if (!gpbwp.ParseFromArray(content.getBytes(), (int)content.getSize()))
     {
         return NULL;
@@ -838,9 +835,6 @@ ActionTimeline* ActionTimelineCache::loadActionTimelineFromXML(const tinyxml2::X
         {
             action->addTimeline(timeline);
         }
-        
-        //            protocolbuffers::TimeLine* timeLine = nodeAction->add_timelines();
-        //            convertTimelineProtocolBuffers(timeLine, timelineElement);
         
         timelineElement = timelineElement->NextSiblingElement();
     }
