@@ -1017,6 +1017,11 @@
 
 
 --------------------------------------------------------
+-- the cc ClippingRectangleNode
+-- @field [parent=#cc] ClippingRectangleNode#ClippingRectangleNode ClippingRectangleNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc MotionStreak
 -- @field [parent=#cc] MotionStreak#MotionStreak MotionStreak preloaded module
 
