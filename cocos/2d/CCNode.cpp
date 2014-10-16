@@ -1100,6 +1100,7 @@ void Node::removeAllChildren()
     this->removeAllChildrenWithCleanup(true);
 }
 
+#if CC_USE_PHYSICS
 void Node::removeFromPhysicsWorld()
 {
     if (_physicsBody != nullptr)
@@ -1112,6 +1113,7 @@ void Node::removeFromPhysicsWorld()
         child->removeFromPhysicsWorld();
     }
 }
+#endif
 
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
