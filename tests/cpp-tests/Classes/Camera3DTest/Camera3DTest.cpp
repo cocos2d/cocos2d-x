@@ -371,8 +371,6 @@ void Camera3DTestDemo::onEnter()
     line->drawLine(Vec3(0, 0, 0),Vec3(0,50,0),Color4F(0,1,0,1));
     _layer3D->addChild(line);
     _layer3D->setCameraMask(2);
-    
-    
 }
 void Camera3DTestDemo::onExit()
 {
@@ -436,7 +434,6 @@ void Camera3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2
     {
         auto touch = item;
         auto location = touch->getLocation();
-        
     }
 }
 void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
