@@ -1,5 +1,6 @@
 #include "ExtensionsTest.h"
 #include "../testResource.h"
+#include "AssetsManagerExTest/AssetsManagerExTest.h"
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
@@ -29,6 +30,10 @@ static struct {
 	const char *name;
 	std::function<void(Ref* sender)> callback;
 } g_extensionsTests[] = {
+	{ "AssetsManagerExTest", [](Ref* sender) {
+        AssetsManagerExLoaderScene *scene = new AssetsManagerExLoaderScene();
+        scene->runThisTest();
+    } },
 	{ "NotificationCenterTest", [](Ref* sender) { runNotificationCenterTest(); }
 	},
 	{ "CCControlButtonTest", [](Ref *sender){
