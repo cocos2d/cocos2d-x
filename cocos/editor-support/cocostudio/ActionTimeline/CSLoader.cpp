@@ -1555,17 +1555,9 @@ void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLEl
         {
             node->setRotationSkewY(atof(value.c_str()));
         }
-        else if (name == "Rotation")
-        {
-
-        }
         else if (name == "ZOrder")
         {
             node->setZOrder(atoi(value.c_str()));
-        }
-        else if (name == "Visible")
-        {
-            
         }
         else if (name == "VisibleForFrame")
         {

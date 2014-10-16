@@ -534,17 +534,9 @@ namespace cocostudio
             {
                 widget->setRotationSkewY(atof(value.c_str()));
             }
-            else if (name == "Rotation")
-            {
-
-            }
             else if (name == "ZOrder")
             {
                 widget->setLocalZOrder(atoi(value.c_str()));
-            }
-            else if (name == "Visible")
-            {
-
             }
             else if (name == "VisibleForFrame")
             {
