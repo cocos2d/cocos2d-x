@@ -45,7 +45,8 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- 
+--  Returns the Console <br>
+-- since v3.0
 -- @function [parent=#Director] getConsole 
 -- @param self
 -- @return Console#Console ret (return value: cc.Console)
