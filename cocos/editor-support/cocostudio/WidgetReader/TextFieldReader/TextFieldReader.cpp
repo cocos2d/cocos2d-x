@@ -165,7 +165,7 @@ namespace cocostudio
             textField->setPlaceHolder(placeholder);
         }
         std::string text = options.has_text() ? options.text() : "Text Field";
-        textField->setText(text);
+        textField->setString(text);
         
         int fontSize = options.has_fontsize() ? options.fontsize() : 20;
         textField->setFontSize(fontSize);
@@ -244,7 +244,7 @@ namespace cocostudio
             }
             else if (name == "LabelText")
             {
-                textField->setText(value);
+                textField->setString(value);
             }
             else if (name == "FontSize")
             {
@@ -300,11 +300,11 @@ namespace cocostudio
             
             if (name == "Size")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "X")
@@ -321,13 +321,13 @@ namespace cocostudio
             }
             else if (name == "FontResource")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 int resourceType = 0;
                 std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "Path")

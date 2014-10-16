@@ -78,8 +78,6 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
     }
     else if(file_extension == ".CSB")
     {
-        ssize_t size = 0;
-		unsigned char *pBytes = nullptr;
 		do {
             std::string binaryFilePath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
             auto fileData = FileUtils::getInstance()->getDataFromFile(binaryFilePath);
