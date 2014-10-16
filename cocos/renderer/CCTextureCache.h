@@ -269,7 +269,7 @@ protected:
     FontDefinition            _fontDefinition;
 };
 
-class VolatileTextureMgr
+class CC_DLL VolatileTextureMgr
 {
 public:
     static void addImageTexture(Texture2D *tt, const std::string& imageFileName);

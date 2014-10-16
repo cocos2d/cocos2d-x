@@ -75,7 +75,7 @@ void TrianglesCommand::generateMaterialID()
     
     if(_glProgramState->getUniformCount() > 0)
     {
-        _materialID = TrianglesCommand::MATERIAL_ID_DO_NOT_BATCH;
+        _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
     }
     else
     {

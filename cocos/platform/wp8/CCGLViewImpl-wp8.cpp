@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLViewImpl.h"
+#include "CCGLViewImpl-wp8.h"
 #include "deprecated/CCSet.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"

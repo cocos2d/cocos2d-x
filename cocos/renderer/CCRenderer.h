@@ -96,7 +96,8 @@ public:
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
     
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
-
+    static const int MATERIAL_ID_DO_NOT_BATCH = 0;
+    
     Renderer();
     ~Renderer();
 
@@ -147,7 +148,7 @@ protected:
     void setupVBOAndVAO();
     void setupVBO();
     void mapBuffers();
-
+    void drawBatchedTriangles();
     void drawBatchedQuads();
 
     //Draw the previews queued quads and flush previous context
@@ -162,7 +163,8 @@ protected:
     void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
-
+    void fillQuads(const QuadCommand* cmd);
+    
     std::stack<int> _commandGroupStack;
     
     std::vector<RenderQueue> _renderGroups;
@@ -172,14 +174,24 @@ protected:
 
     MeshCommand*              _lastBatchedMeshCommand;
     std::vector<TrianglesCommand*> _batchedCommands;
-
+    std::vector<QuadCommand*> _batchQuadCommands;
+    
+    
+    //for TrianglesCommand
     V3F_C4B_T2F _verts[VBO_SIZE];
     GLushort _indices[INDEX_VBO_SIZE];
-    GLuint _quadVAO;
+    GLuint _buffersVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
     int _filledVertex;
     int _filledIndex;
+    
+    //for QuadCommand
+    V3F_C4B_T2F _quadVerts[VBO_SIZE];
+    GLushort _quadIndices[INDEX_VBO_SIZE];
+    GLuint _quadVAO;
+    GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
+    int _numberQuads;
     
     bool _glViewAssigned;
 

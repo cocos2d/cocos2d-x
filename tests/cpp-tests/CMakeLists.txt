@@ -49,6 +49,7 @@ set(TESTS_SRC
   Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp
+  Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
   Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp
   Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp
   Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp

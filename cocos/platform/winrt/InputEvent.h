@@ -48,7 +48,7 @@ enum PointerEventType
     PointerReleased,
 };
 
-class InputEvent
+class CC_DLL InputEvent
 {
 public:
     InputEvent() {};
@@ -57,7 +57,7 @@ public:
 };
 
 
-class AccelerometerEvent : public InputEvent
+class CC_DLL AccelerometerEvent : public InputEvent
 {
 public:
     AccelerometerEvent(const cocos2d::Acceleration& event);
@@ -67,7 +67,7 @@ private:
     cocos2d::Acceleration m_event;
 };
 
-class PointerEvent : public InputEvent
+class CC_DLL PointerEvent : public InputEvent
 {
 public:
     PointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
@@ -79,7 +79,7 @@ private:
     Platform::Agile<Windows::UI::Core::PointerEventArgs> m_args;
 };
 
-class KeyboardEvent : public InputEvent
+class CC_DLL KeyboardEvent : public InputEvent
 
 {
 public:
@@ -92,14 +92,14 @@ private:
     Platform::Agile<Platform::String> m_text;
 };
 
-class BackButtonEvent : public InputEvent
+class CC_DLL BackButtonEvent : public InputEvent
 {
 public:
     BackButtonEvent();
     virtual void execute();
 };
 
-class CustomInputEvent : public InputEvent
+class CC_DLL CustomInputEvent : public InputEvent
 {
 public:
     CustomInputEvent(const std::function<void()>&);

@@ -15,15 +15,13 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\lua_assetsmanager_test_sample.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\lua_module_register.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\lua_test_bindings.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\lua_assetsmanager_test_sample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -32,11 +30,9 @@
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\lua_assetsmanager_test_sample.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\lua_test_bindings.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\lua_assetsmanager_test_sample.cpp" />
   </ItemGroup>
 </Project>

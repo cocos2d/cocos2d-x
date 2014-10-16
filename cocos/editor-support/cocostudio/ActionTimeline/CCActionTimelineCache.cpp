@@ -226,7 +226,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromProtocolBuff
     Data content = FileUtils::getInstance()->getDataFromFile(fullPath);
     protocolbuffers::CSParseBinary gpbwp;
     //    protocolbuffers::GUIProtocolBuffersProtobuf gpbwp;
-    if (!gpbwp.ParseFromArray(content.getBytes(), content.getSize()))
+    if (!gpbwp.ParseFromArray(content.getBytes(), (int)content.getSize()))
     {
         return NULL;
     }
@@ -1142,7 +1142,7 @@ Frame* ActionTimelineCache::loadColorFrameFromXML(const tinyxml2::XMLElement *fr
     const tinyxml2::XMLElement* child = frameElement->FirstChildElement();
     while (child)
     {
-        const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+        attribute = child->FirstAttribute();
         while (attribute)
         {
             std::string name = attribute->Name();
