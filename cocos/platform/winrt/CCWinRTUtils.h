@@ -43,9 +43,11 @@ std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
 std::string PlatformStringToString(Platform::String^ s);
 Platform::String^ PlatformStringFromString(const std::string& s);
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
 float ConvertDipsToPixels(float dips);
 float getScaledDPIValue(float v);
+#endif
 
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 
