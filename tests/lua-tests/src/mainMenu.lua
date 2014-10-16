@@ -8,6 +8,7 @@ require "ActionsEaseTest/ActionsEaseTest"
 require "ActionsProgressTest/ActionsProgressTest"
 require "ActionsTest/ActionsTest"
 require "AssetsManagerTest/AssetsManagerTest"
+require "AssetsManagerExTest/AssetsManagerExTest"
 require "BillBoardTest/BillBoardTest"
 require "BugsTest/BugsTest"
 require "ByteCodeEncryptTest/ByteCodeEncryptTest"
@@ -72,6 +73,7 @@ local _allTests = {
     { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
     { isSupported = true,  name = "AssetsManagerTest"      , create_func   =         AssetsManagerTestMain      },
+    { isSupported = true,  name = "AssetsManagerExTest"      , create_func   =         AssetsManagerExTestMain  },
     { isSupported = audioEndineSupported, name = "AudioEngineTest", create_func = AudioEngineTest},
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },

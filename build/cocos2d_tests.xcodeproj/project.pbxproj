@@ -50,6 +50,11 @@
 		15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15B0870D195AD52000D6F62B /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
+		15B3709319EE5D1000ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
+		15B3709419EE5D1000ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
+		15B3709819EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */; };
+		15B3709919EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */; };
+		15B3709A19EE5EED00ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -998,6 +1003,9 @@
 		15427B77198B843300DC375D /* lua_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_module_register.h; sourceTree = "<group>"; };
 		15427B7B198B880100DC375D /* lua_cocos2dx_controller_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_cocos2dx_controller_manual.cpp; path = "../../../../cocos/scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.cpp"; sourceTree = "<group>"; };
 		15427B7C198B880100DC375D /* lua_cocos2dx_controller_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = lua_cocos2dx_controller_manual.hpp; path = "../../../../cocos/scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"; sourceTree = "<group>"; };
+		15B3709219EE5D1000ABE682 /* Manifests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Manifests; path = "../tests/cpp-tests/Resources/Manifests"; sourceTree = "<group>"; };
+		15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManagerExTest.cpp; sourceTree = "<group>"; };
+		15B3709719EE5DBA00ABE682 /* AssetsManagerExTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManagerExTest.h; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -2978,6 +2986,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15B3709519EE5DBA00ABE682 /* AssetsManagerExTest */ = {
+			isa = PBXGroup;
+			children = (
+				15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */,
+				15B3709719EE5DBA00ABE682 /* AssetsManagerExTest.h */,
+			);
+			path = AssetsManagerExTest;
+			sourceTree = "<group>";
+		};
 		15CBA087196EE66D005877BB /* lua-game-controller-test */ = {
 			isa = PBXGroup;
 			children = (
@@ -5540,6 +5557,7 @@
 		1AC359B418CECF0B00F37B72 /* ExtensionsTest */ = {
 			isa = PBXGroup;
 			children = (
+				15B3709519EE5DBA00ABE682 /* AssetsManagerExTest */,
 				38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */,
 				1AC359B518CECF0B00F37B72 /* CocosBuilderTest */,
 				1AC359DC18CECF0B00F37B72 /* CocoStudioArmatureTest */,
@@ -6222,6 +6240,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15B3709219EE5D1000ABE682 /* Manifests */,
 				3E2BDB0019C5E5D40055CDCD /* background.wav */,
 				3E2BDAD119BEA3E20055CDCD /* audio */,
 				38FA2E75194AECF800FF2BE4 /* ActionTimeline */,
@@ -7349,6 +7368,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B3709A19EE5EED00ABE682 /* Manifests in Resources */,
 				15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */,
 				15B0870D195AD52000D6F62B /* ActionTimeline in Resources */,
 				15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */,
@@ -7407,6 +7427,7 @@
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
+				15B3709319EE5D1000ABE682 /* Manifests in Resources */,
 				3E2F27BA19CFF52300E7C490 /* audio in Resources */,
 				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
@@ -7486,6 +7507,7 @@
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
+				15B3709419EE5D1000ABE682 /* Manifests in Resources */,
 				1AC35D0B18CED84500F37B72 /* zwoptex in Resources */,
 				1AC35CF518CED84500F37B72 /* Images in Resources */,
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
@@ -7859,6 +7881,7 @@
 				1AC35C4B18CECF0C00F37B72 /* ShaderTest2.cpp in Sources */,
 				38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				1AC35C6518CECF0C00F37B72 /* UnitTest.cpp in Sources */,
+				15B3709819EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */,
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
 				3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */,
@@ -8003,6 +8026,7 @@
 				1AC35B7C18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
 				1AC35BF418CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
 				1AC35B3618CECF0C00F37B72 /* TestEntries.cpp in Sources */,
+				15B3709919EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */,
 				1AC35B2E18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				29080DCA191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35C1218CECF0C00F37B72 /* LabelTestNew.cpp in Sources */,

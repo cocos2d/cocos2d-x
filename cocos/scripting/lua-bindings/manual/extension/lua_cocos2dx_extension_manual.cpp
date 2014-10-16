@@ -366,35 +366,35 @@ public:
     
     virtual void onProgress(int percent) override
     {
-//        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
-//        if (0 != handler)
-//        {
-//            LuaAssetsManagerEventData eventData(percent);
-//            BasicScriptData data((void*)this,&eventData);
-//            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_PROGRESS, (void*)&data);
-//        }
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
+        if (0 != handler)
+        {
+            LuaAssetsManagerEventData eventData(percent);
+            BasicScriptData data((void*)this,&eventData);
+            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS, (void*)&data);
+        }
     }
     
     virtual void onSuccess() override
     {
-//        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS);
-//        if (0 != handler)
-//        {
-//            LuaAssetsManagerEventData eventData;
-//            BasicScriptData data((void*)this,&eventData);
-//            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_SUCCESS, (void*)&data);
-//        }
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS);
+        if (0 != handler)
+        {
+            LuaAssetsManagerEventData eventData;
+            BasicScriptData data((void*)this,&eventData);
+            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS, (void*)&data);
+        }
     }
     
     virtual void onError(AssetsManager::ErrorCode errorCode) override
     {
-//        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR);
-//        if (0 != handler)
-//        {
-//            LuaAssetsManagerEventData eventData((int)errorCode);
-//            BasicScriptData data((void*)this,&eventData);
-//            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_ERROR, (void*)&data);
-//        }
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR);
+        if (0 != handler)
+        {
+            LuaAssetsManagerEventData eventData((int)errorCode);
+            BasicScriptData data((void*)this,&eventData);
+            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR, (void*)&data);
+        }
     }
 };
 
@@ -445,7 +445,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         }
         
         LUA_FUNCTION handler = toluafix_ref_function(L, 2, 0);
-        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGEREX_PROGRESS);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType) ((int)tolua_tonumber(L,3,0) + (int)ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
             
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)delegate, handler, handlerType);
         return 0;

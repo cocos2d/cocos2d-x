@@ -447,20 +447,20 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     if (res == CURLE_OK)
     {
         _fileUtils->renameFile(data.path, data.name + TEMP_EXT, data.name);
-    }
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-        if (!ptr.expired())
-        {
-            std::shared_ptr<Downloader> downloader = ptr.lock();
-            
-            auto successCB = downloader->getSuccessCallback();
-            if (successCB != nullptr)
+        
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            if (!ptr.expired())
             {
-                successCB(data.url, data.path + data.name, data.customId);
+                std::shared_ptr<Downloader> downloader = ptr.lock();
+                
+                auto successCB = downloader->getSuccessCallback();
+                if (successCB != nullptr)
+                {
+                    successCB(data.url, data.path + data.name, data.customId);
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 void Downloader::batchDownloadAsync(const DownloadUnits &units, const std::string &batchId/* = ""*/)

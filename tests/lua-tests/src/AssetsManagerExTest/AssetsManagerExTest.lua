@@ -57,7 +57,7 @@ function AMTestScene1.create()
         local  progress = cc.Label:createWithTTF(ttfConfig, "0%", cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
-        am = cc.AssetsManagerEx:create("Manifests/AMTestScene1/project.manifest", "LuaTests/AssetsManagerExTest/scene1")
+        am = cc.AssetsManagerEx:create("Manifests/AMTestScene1/project.manifest", cc.FileUtils:getInstance():getWritablePath() .. "LuaTests/AssetsManagerExTest/scene1")
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
@@ -154,7 +154,7 @@ function AMTestScene2.create()
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
 
-        am = cc.AssetsManagerEx:create("Manifests/AMTestScene2/project.manifest", "LuaTests/AssetsManagerExTest/scene2")
+        am = cc.AssetsManagerEx:create("Manifests/AMTestScene2/project.manifest", cc.FileUtils:getInstance():getWritablePath() .. "LuaTests/AssetsManagerExTest/scene2")
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
@@ -250,7 +250,7 @@ function AMTestScene3.create()
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
 
-        am = cc.AssetsManagerEx:create("Manifests/AMTestScene3/project.manifest", "LuaTests/AssetsManagerExTest/scene3")
+        am = cc.AssetsManagerEx:create("Manifests/AMTestScene3/project.manifest", cc.FileUtils:getInstance():getWritablePath() .. "LuaTests/AssetsManagerExTest/scene3")
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then

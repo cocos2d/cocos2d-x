@@ -35,6 +35,16 @@ extern "C" {
 TOLUA_API int  register_all_cocos2dx_extension_manual(lua_State* tolua_S);
 TOLUA_API int  register_extension_module(lua_State* tolua_S);
 
+struct LuaAssetsManagerEventData
+{
+    int value;
+    
+    LuaAssetsManagerEventData(int _value = 0):value(_value)
+    {
+    }
+};
+
+
 struct LuaTableViewEventData
 {
     void* value;
