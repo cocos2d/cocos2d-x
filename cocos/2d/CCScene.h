@@ -93,7 +93,7 @@ public:
      * @param pos The position of head.
      * @param rot The rotation of head.
      */
-    void setVRHeadPosAndFocus(const Vec3& pos, const Vec3& focus);
+    void setVRHeadPosAndRot(const Vec3& pos, const Vec3& rot);
     
 CC_CONSTRUCTOR_ACCESS:
     Scene();

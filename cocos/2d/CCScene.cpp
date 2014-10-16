@@ -145,8 +145,7 @@ void Scene::render(Renderer* renderer)
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
-        //visit the scene
-        visit(renderer, Mat4::IDENTITY, 0);
+        
         const auto& cameraViewRect = camera->getNormalizeViewPortRect();
         if (viewrect.origin.x != cameraViewRect.origin.x || viewrect.origin.y != cameraViewRect.origin.y
             || viewrect.size.width != cameraViewRect.size.width || viewrect.size.height != cameraViewRect.size.height)
@@ -155,7 +154,8 @@ void Scene::render(Renderer* renderer)
             viewrect = cameraViewRect;
             viewportchanged = true;
         }
-        
+        //visit the scene
+        visit(renderer, Mat4::IDENTITY, 0);
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -207,7 +207,10 @@ void Scene::enableVR(float distanceBetweenEyes, CameraFlag cameraflag)
     _leftVRCamera->setCameraFlag(cameraflag);
     _rightVRCamera->setCameraFlag(cameraflag);
     
-    setVRHeadPosAndFocus(_defaultCamera->getPosition3D(), Vec3(s.width / 2.f, s.height / 2.f, 0.f));
+    _leftVRCamera->setPosition3D(_defaultCamera->getPosition3D() - Vec3(distanceBetweenEyes / 2.f, 0.f, 0.f));
+    _rightVRCamera->setPosition3D(_defaultCamera->getPosition3D() + Vec3(distanceBetweenEyes / 2.f, 0.f, 0.f));
+    
+    setVRHeadPosAndRot(_defaultCamera->getPosition3D(), _defaultCamera->getRotation3D());
 }
 
 void Scene::disableVR()
@@ -220,32 +223,21 @@ void Scene::disableVR()
     }
 }
 
-void Scene::setVRHeadPosAndFocus(const Vec3& pos, const Vec3& focus)
+void Scene::setVRHeadPosAndRot(const Vec3& pos, const Vec3& rot)
 {
     if (_leftVRCamera && _rightVRCamera)
     {
         float distanceBetweenEyes = (_leftVRCamera->getPosition3D() - _rightVRCamera->getPosition3D()).length();
         
-        Mat4 mat;
-        Mat4::createLookAt(pos, focus, Vec3::UNIT_Y, &mat);
+        _leftVRCamera->setRotation3D(rot);
+        _rightVRCamera->setRotation3D(rot);
+        auto mat = _leftVRCamera->getNodeToParentTransform();
         Vec3 offset(mat.m[0], mat.m[1], mat.m[2]);
         offset.normalize();
         offset *= distanceBetweenEyes / 2.f;
         
         _leftVRCamera->setPosition3D(pos - offset);
         _rightVRCamera->setPosition3D(pos + offset);
-        
-        Mat4::createLookAt(_leftVRCamera->getPosition3D(), focus, Vec3::UNIT_Y, &mat);
-        Quaternion quat;
-        Quaternion::createFromRotationMatrix(mat,&quat);
-        Vec3 rot;
-        quat.toEulerAngle(&rot);
-        _leftVRCamera->setRotation3D(rot);
-        
-        Mat4::createLookAt(_rightVRCamera->getPosition3D(), focus, Vec3::UNIT_Y, &mat);
-        Quaternion::createFromRotationMatrix(mat,&quat);
-        quat.toEulerAngle(&rot);
-        _rightVRCamera->setRotation3D(rot);
     }
 }
 

@@ -1531,22 +1531,51 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
 }
 
 VRTest::VRTest()
+: _velocity(Vec3::ZERO)
+, _moveTowardZ(true)
 {
-    std::string fileName = "Sprite3DTest/orc.c3b";
+    std::string fileName = "Sprite3DTest/girl.c3b";
     _sprite = Sprite3D::create(fileName);
-    _sprite->setScale(8);
-    _sprite->setRotation3D(Vec3(0,180,0));
+    _sprite->setScale(0.2f);
     addChild(_sprite);
     auto s = Director::getInstance()->getWinSize();
     Vec2 p(s.width/2, s.height/2);
-    _sprite->setPosition( Vec2( p.x, p.y - 40) );
     _sprite->setCameraMask(2);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        _sprite->runAction(RepeatForever::create(animate));
+    }
+    _rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    _rot->retain();
+    _drawDebug = DrawNode3D::create();
+    _drawDebug->setCameraMask(2);
+    addChild(_drawDebug);
+    
+    _start.set(s.width * 0.5f + 20, s.height * 0.5f - 10, -50.f);
+    _end.set(s.width * 0.5f, s.height * 0.5f - 10, 50.f);
+    _velocity = (_end - _start).getNormalized() * 10;
+    _sprite->setPosition3D(_start);
+    
+    scheduleUpdate();
+}
+
+VRTest::~VRTest()
+{
+    unscheduleUpdate();
+    _rot->release();
 }
 
 void VRTest::onEnter()
 {
     Sprite3DTestDemo::onEnter();
-    getScene()->enableVR(0.2f, CameraFlag::USER1);
+    auto scene = getScene();
+    scene->enableVR(10.f, CameraFlag::USER1);
+    auto s = Director::getInstance()->getWinSize();
+    scene->setVRHeadPosAndRot(Vec3(s.width / 2.f, s.height / 2.f, 100), Vec3::ZERO);
 }
 
 void VRTest::onExit()
@@ -1568,4 +1597,54 @@ std::string VRTest::subtitle() const
 void VRTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     
+}
+
+void VRTest::update(float dt)
+{
+    Vec3 delta = _velocity * dt;
+    
+    Vec3 pos = _sprite->getPosition3D();
+    pos += delta;
+    if (_moveTowardZ)
+    {
+        if (pos.z > _end.z)
+        {
+            pos = _end;
+            _moveTowardZ = false;
+            _velocity = -_velocity;
+            _sprite->runAction(_rot);
+        }
+    }
+    else
+    {
+        if (pos.z < _start.z)
+        {
+            pos = _start;
+            _moveTowardZ = true;
+            _velocity = -_velocity;
+            _sprite->runAction(_rot);
+        }
+    }
+    _sprite->setPosition3D(pos);
+    
+    //draw ground
+    if (_drawDebug)
+    {
+        //there is problem on draw the grid in the view port
+//        auto s = Director::getInstance()->getWinSize();
+//        _drawDebug->clear();
+//        //draw x
+//        float centerx = s.width / 2.f;
+//        float centery = s.height / 2.f - 10;
+//        
+//        for( int j =-10; j<=10 ;j++)
+//        {
+//            _drawDebug->drawLine(Vec3(-100 + centerx, centery, 10*j),Vec3(100 + centerx,centery,10*j),Color4F(1,0,0,1));
+//        }
+//        //draw z
+//        for( int j =-10; j<=10 ;j++)
+//        {
+//            _drawDebug->drawLine(Vec3(10*j + centerx, centery, -100),Vec3(10*j + centerx,centery,100),Color4F(0,0,1,1));
+//        }
+    }
 }
