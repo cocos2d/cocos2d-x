@@ -149,7 +149,7 @@ std::string Helper::getSubStringOfUTF8String(const std::string& str, std::string
     return str.substr(min,max);
 }
 
-void changeLayoutSystemActiveState(bool bActive)
+void Helper::changeLayoutSystemActiveState(bool bActive)
 {
     _activeLayout = bActive;
 }
