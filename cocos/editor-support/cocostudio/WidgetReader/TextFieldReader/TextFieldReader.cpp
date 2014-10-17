@@ -174,19 +174,7 @@ namespace cocostudio
         std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
         textField->setFontName(fontName);
         
-        //        bool tsw = options.has_touchsizewidth();
-        //        bool tsh = options.has_touchsizeheight();
-        //        if (tsw && tsh)
-        //        {
-        //            textField->setTouchSize(Size(options.touchsizewidth(), options.touchsizeheight()));
-        //        }
-        
-        //        float dw = DICTOOL->getFloatValue_json(options, "width");
-        //        float dh = DICTOOL->getFloatValue_json(options, "height");
-        //        if (dw > 0.0f || dh > 0.0f)
-        //        {
-        //            //textField->setSize(Size(dw, dh));
-        //        }
+
         bool maxLengthEnable = options.maxlengthenable();
         textField->setMaxLengthEnabled(maxLengthEnable);
         
@@ -273,16 +261,6 @@ namespace cocostudio
             else if (name == "IsCustomSize")
             {
                 isCustomSize = ((value == "True") ? true : false);
-//                if (value == "Custom")
-//                {
-//                    float areaWidth = 0.0f;
-//                    objectData->QueryFloatAttribute("Width", &areaWidth);
-//                    
-//                    float areaHeight = 0.0f;
-//                    objectData->QueryFloatAttribute("Height", &areaHeight);
-//                    
-//                    textField->setTextAreaSize(Size(areaWidth, areaHeight));
-//                }
             }
             else if (name == "Alpha")
             {

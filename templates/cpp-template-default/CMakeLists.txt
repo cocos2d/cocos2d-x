@@ -20,13 +20,18 @@ if (MSVC)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS")
 
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
+  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -stdlib=libc++ -Wno-deprecated-declarations -Wno-reorder")
+
 elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
 	set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-
 endif()
 
 # architecture
@@ -36,7 +41,34 @@ else()
 set(ARCH_DIR "32-bit")
 endif()
 
-if( UNIX ) #assume linux
+if( APPLE AND IOS )
+include_directories(Classes)
+set(GAME_SRC
+  proj.ios_mac/ios/main.m
+  proj.ios_mac/ios/RootViewController.mm
+  proj.ios_mac/ios/AppController.mm
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
+)
+set(GAME_HEADERS
+  Classes/AppDelegate.h
+  Classes/HelloWorldScene.h
+  proj.ios_mac/ios/RootViewController.h
+  proj.ios_mac/ios/AppController.h
+)
+elseif(APPLE) #desktop
+include_directories(Classes)
+include(Classes/CMakeLists.txt)
+set(GAME_SRC
+  proj.ios_mac/mac/main.cpp
+  Classes/AppDelegate.cpp
+  Classes/HelloWorldScene.cpp
+)
+set(GAME_HEADERS
+  Classes/AppDelegate.h
+  Classes/HelloWorldScene.h
+)
+elseif( UNIX AND NOT APPLE) #assume linux
 set(GAME_SRC
   proj.linux/main.cpp
   Classes/AppDelegate.cpp
@@ -132,9 +164,61 @@ include_directories(
   ${COCOS2D_ROOT}/external/linux-specific/fmod/include/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/xxhash
 )
+elseif(APPLE AND IOS)
+include_directories(
+  /usr/local/include/GLFW
+  /usr/include/GLFW
+  ${COCOS2D_ROOT}
+  ${COCOS2D_ROOT}/cocos
+  ${COCOS2D_ROOT}/cocos/audio/include
+  ${COCOS2D_ROOT}/cocos/platform
+  ${COCOS2D_ROOT}/cocos/platform/ios
+  ${COCOS2D_ROOT}/cocos/editor-support
+  ${COCOS2D_ROOT}/extensions
+  ${COCOS2D_ROOT}/external
+  ${COCOS2D_ROOT}/external/edtaa3func
+  ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
+  ${COCOS2D_ROOT}/external/jpeg/include/ios
+  ${COCOS2D_ROOT}/external/tiff/include/ios
+  ${COCOS2D_ROOT}/external/webp/include/ios
+  ${COCOS2D_ROOT}/external/tinyxml2
+  ${COCOS2D_ROOT}/external/unzip
+  ${COCOS2D_ROOT}/external/freetype2/include/ios
+  ${COCOS2D_ROOT}/external/websockets/include/ios
+  ${COCOS2D_ROOT}/external/spidermonkey/include/liniosux
+  ${COCOS2D_ROOT}/external/xxhash
+)
+elseif(APPLE)
+include_directories(
+  /usr/local/include/GLFW
+  /usr/include/GLFW
+  ${COCOS2D_ROOT}
+  ${COCOS2D_ROOT}/cocos
+  ${COCOS2D_ROOT}/cocos/audio/include
+  ${COCOS2D_ROOT}/cocos/platform
+  ${COCOS2D_ROOT}/cocos/platform/mac
+  ${COCOS2D_ROOT}/cocos/editor-support
+  ${COCOS2D_ROOT}/extensions
+  ${COCOS2D_ROOT}/external
+  ${COCOS2D_ROOT}/external/edtaa3func
+  ${COCOS2D_ROOT}/external/chipmunk/include/chipmunk
+  ${COCOS2D_ROOT}/external/jpeg/include/mac
+  ${COCOS2D_ROOT}/external/tiff/include/mac
+  ${COCOS2D_ROOT}/external/webp/include/mac
+  ${COCOS2D_ROOT}/external/tinyxml2
+  ${COCOS2D_ROOT}/external/unzip
+  ${COCOS2D_ROOT}/external/freetype2/include/mac
+  ${COCOS2D_ROOT}/external/websockets/include/mac
+  ${COCOS2D_ROOT}/external/spidermonkey/include/liniosux
+  ${COCOS2D_ROOT}/external/xxhash
+)
+endif()
 
+if(NOT APPLE)
 ADD_DEFINITIONS(-DLINUX)
+endif()
 
+if(LINUX)
 link_directories(
   /usr/local/lib
   ${COCOS2D_ROOT}/external/jpeg/prebuilt/linux/${ARCH_DIR}
@@ -146,10 +230,42 @@ link_directories(
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/chipmunk/prebuilt/linux/${ARCH_DIR}
 )
+elseif(APPLE AND IOS)
+link_directories(
+  /usr/local/lib
+    ${COCOS2D_ROOT}/external/jpeg/prebuilt/ios
+    ${COCOS2D_ROOT}/external/tiff/prebuilt/ios
+    ${COCOS2D_ROOT}/external/webp/prebuilt/ios
+    ${COCOS2D_ROOT}/external/freetype2/prebuilt/ios
+    ${COCOS2D_ROOT}/external/websockets/prebuilt/ios
+    ${COCOS2D_ROOT}/external/chipmunk/prebuilt/ios
+)
+elseif(APPLE)
+if(IOS)
+link_directories(
+/usr/local/lib
+  ${COCOS2D_ROOT}/external/jpeg/prebuilt/ios
+  ${COCOS2D_ROOT}/external/tiff/prebuilt/ios
+  ${COCOS2D_ROOT}/external/webp/prebuilt/ios
+  ${COCOS2D_ROOT}/external/freetype2/prebuilt/ios
+  ${COCOS2D_ROOT}/external/websockets/prebuilt/ios
+  ${COCOS2D_ROOT}/external/chipmunk/prebuilt/ios
+)
+else()
+link_directories(
+/usr/local/lib
+  ${COCOS2D_ROOT}/external/jpeg/prebuilt/mac
+  ${COCOS2D_ROOT}/external/tiff/prebuilt/mac
+  ${COCOS2D_ROOT}/external/webp/prebuilt/mac
+  ${COCOS2D_ROOT}/external/freetype2/prebuilt/mac
+  ${COCOS2D_ROOT}/external/websockets/prebuilt/mac
+  ${COCOS2D_ROOT}/external/chipmunk/prebuilt/mac
+)
+endif()
 endif()
 
 # build for 3rd party libraries
-if(LINUX)
+if(LINUX OR APPLE)
 add_subdirectory(${COCOS2D_ROOT}/external/Box2D)
 add_subdirectory(${COCOS2D_ROOT}/external/unzip)
 add_subdirectory(${COCOS2D_ROOT}/external/xxhash)
@@ -159,8 +275,11 @@ endif()
 # libcocos2d
 add_subdirectory(${COCOS2D_ROOT}/cocos)
 
-
+if(GAME_HEADERS)
+add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
+else()
 add_executable(${APP_NAME} ${GAME_SRC})
+endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
 

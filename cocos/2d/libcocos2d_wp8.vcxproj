@@ -171,6 +171,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManager.h" />
+    <ClInclude Include="..\..\extensions\assets-manager\AssetsManagerEx.h" />
+    <ClInclude Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.h" />
+    <ClInclude Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h" />
+    <ClInclude Include="..\..\extensions\assets-manager\Downloader.h" />
+    <ClInclude Include="..\..\extensions\assets-manager\Manifest.h" />
     <ClInclude Include="..\..\extensions\cocos-ext.h" />
     <ClInclude Include="..\..\extensions\ExtensionMacros.h" />
     <ClInclude Include="..\..\extensions\GUI\CCControlExtension\CCControl.h" />
@@ -538,6 +543,7 @@
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
     <ClInclude Include="CCClippingNode.h" />
+    <ClInclude Include="CCClippingRectangleNode.h" />
     <ClInclude Include="CCComponent.h" />
     <ClInclude Include="CCComponentContainer.h" />
     <ClInclude Include="CCDrawingPrimitives.h" />
@@ -590,6 +596,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp" />
+    <ClCompile Include="..\..\extensions\assets-manager\AssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\extensions\assets-manager\Downloader.cpp" />
+    <ClCompile Include="..\..\extensions\assets-manager\Manifest.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -990,6 +1001,7 @@
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
+    <ClCompile Include="CCClippingRectangleNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
     <ClCompile Include="CCComponentContainer.cpp" />
     <ClCompile Include="CCDrawingPrimitives.cpp" />

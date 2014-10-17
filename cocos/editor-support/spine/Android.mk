@@ -38,9 +38,7 @@ spine-cocos2dx.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../platform/android
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 

@@ -334,6 +334,9 @@
     <Filter Include="Classes\UITest\CocosStudioGUITest\UIEditBoxTest">
       <UniqueIdentifier>{af74683d-52b5-41a8-b153-62d2609b0035}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\AssetsManagerExLoaderScene">
+      <UniqueIdentifier>{1cefd884-4b0a-4952-bbcb-0b03be19330b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -878,6 +881,9 @@
     <ClCompile Include="..\..\..\..\cocos\platform\winrt\pch.cpp" />
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
       <Filter>Classes\UITest\CocosStudioGUITest\UIEditBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExLoaderScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1622,6 +1628,9 @@
     <ClInclude Include="..\..\..\..\cocos\platform\winrt\pch.h" />
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
       <Filter>Classes\UITest\CocosStudioGUITest\UIEditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExLoaderScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -75,7 +75,6 @@ namespace cocostudio
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue(cocoLoader);
-//            CCLOG("Button: key = %s, value = %d", key.c_str(), i);
 
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER

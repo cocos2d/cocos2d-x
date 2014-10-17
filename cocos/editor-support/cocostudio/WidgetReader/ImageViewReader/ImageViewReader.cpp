@@ -199,14 +199,6 @@ namespace cocostudio
         
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-
-		bool flipX   = options.flippedx();
-		bool flipY   = options.flippedy();
-    
-		if(flipX != false)
-			imageView->setFlippedX(flipX);
-		if(flipY != false)
-			imageView->setFlippedY(flipY);
     }
     
     void ImageViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)

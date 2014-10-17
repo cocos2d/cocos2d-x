@@ -171,15 +171,6 @@ namespace cocostudio
         int opacity = widgetOptions.has_alpha() ? widgetOptions.alpha() : 255;
         listView->setOpacity(opacity);
         
-//        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
-//        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
-//        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
-//        listView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
-//        
-//        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
-//        listView->setBackGroundImageOpacity(bgimgopacity);
-        
-        
         
         
         
@@ -204,8 +195,14 @@ namespace cocostudio
         
         bool flipX = widgetOptions.flipx();
         bool flipY = widgetOptions.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        if (flipX)
+        {
+            widget->setFlippedX(flipX);
+        }
+        if (flipY)
+        {
+            widget->setFlippedY(flipY);
+        }
     }
     
     void ListViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
@@ -600,8 +597,6 @@ namespace cocostudio
             }
         }
         
-//        listView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-//        listView->setBackGroundImageOpacity(bgimg_opacity);
     }
     
 }

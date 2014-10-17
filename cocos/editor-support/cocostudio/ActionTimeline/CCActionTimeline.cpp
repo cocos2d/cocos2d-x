@@ -210,6 +210,7 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
 void ActionTimeline::startWithTarget(Node *target)
 {
     Action::startWithTarget(target);
+    this->setTag(target->getTag());
 
     foreachNodeDescendant(target, 
         [this, target](Node* child)
