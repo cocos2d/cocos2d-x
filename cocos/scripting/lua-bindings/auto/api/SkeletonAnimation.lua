@@ -74,14 +74,4 @@
 -- @function [parent=#SkeletonAnimation] clearTrack 
 -- @param self
         
---------------------------------
--- @overload self, string, string, float         
--- @overload self, string, spAtlas, float         
--- @function [parent=#SkeletonAnimation] createWithFile
--- @param self
--- @param #string skeletonDataFile
--- @param #spAtlas atlas
--- @param #float scale
--- @return SkeletonAnimation#SkeletonAnimation ret (retunr value: sp.SkeletonAnimation)
-
 return nil

@@ -161,6 +161,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\OpenalSoft\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\MP3Decoder\prebuilt\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\OggDecoder\prebuilt\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
@@ -463,7 +464,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UITextField.cpp" />
     <ClCompile Include="..\ui\UIVBox.cpp" />
     <ClCompile Include="..\ui\UIWebView.cpp" />
-    <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp" />
     <ClCompile Include="..\ui\UIWidget.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
@@ -888,7 +888,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UIVBox.h" />
     <ClInclude Include="..\ui\UIWebView-inl.h" />
     <ClInclude Include="..\ui\UIWebView.h" />
-    <ClInclude Include="..\ui\UIWebViewImpl-win32.h" />
     <ClInclude Include="..\ui\UIWidget.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />

@@ -697,23 +697,14 @@ Node* CSLoader::createNodeFromProtocolBuffers(const std::string &filename)
 Node* CSLoader::nodeFromProtocolBuffersFile(const std::string &fileName)
 {
     std::string path = fileName;
-//    int pos = path.find_last_of('/');
-    //    _protocolBuffersPath = path.substr(0, pos + 1);
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
     Data content = FileUtils::getInstance()->getDataFromFile(fullPath);
     protocolbuffers::CSParseBinary gpbwp;
-    //    protocolbuffers::GUIProtocolBuffersProtobuf gpbwp;
     if (!gpbwp.ParseFromArray(content.getBytes(), (int)content.getSize()))
     {
         return NULL;
     }
-    /*
-     CCLog("dataScale = %d", gpbwp.datascale());
-     CCLog("designHeight = %d", gpbwp.designheight());
-     CCLog("designWidth = %d", gpbwp.designwidth());
-     CCLog("version = %s", gpbwp.version().c_str());
-     */
     
     // decode plist
     int textureSize = gpbwp.textures_size();
@@ -1014,7 +1005,6 @@ void CSLoader::setPropsForSpriteFromProtocolBuffers(cocos2d::Node *node,
             
         case 1:
         {
-			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(_protocolBuffersPath + fileNameData.plistfile());
             std::string path = fileNameData.path();
 			if (path != "")
 			{
@@ -1279,27 +1269,6 @@ Node* CSLoader::nodeFromXMLFile(const std::string &fileName)
                 createEnabled = true;
                 rootType = "NodeObjectData";
             }
-            //
-            
-            //
-            //            while (attribute)
-            //            {
-            //                std::string name = attribute->Name();
-            //                std::string value = attribute->Value();
-            //                CCLOG("attribute name = %s, value = %s", name, value);
-            //                if (name == "")
-            //                {
-            //                    serializeEnabled = true;
-            //                    rootType = (strcmp("", value) == 0) ? "Node" : value;
-            //                }
-            //
-            //                if (serializeEnabled)
-            //                {
-            //                    break;
-            //                }
-            //
-            //                attribute = attribute->Next();
-            //            }
             //
         }
         
@@ -1585,21 +1554,13 @@ void CSLoader::setPropsForNodeFromXML(cocos2d::Node *node, const tinyxml2::XMLEl
         {
             node->setRotationSkewY(atof(value.c_str()));
         }
-        else if (name == "Rotation")
-        {
-//            node->setRotation(atoi(value.c_str()));
-        }
         else if (name == "ZOrder")
         {
             node->setZOrder(atoi(value.c_str()));
         }
-        else if (name == "Visible")
-        {
-            node->setVisible((value == "True") ? true : false);
-        }
         else if (name == "VisibleForFrame")
         {
-//            node->setVisible((value == "True") ? true : false);
+            node->setVisible((value == "True") ? true : false);
         }
         else if (name == "Alpha")
         {

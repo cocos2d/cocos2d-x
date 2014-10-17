@@ -434,25 +434,25 @@ void MeshCommand::setLightUniforms()
         
         if (0 < maxDirLight)
         {
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_dirLightUniformColorName), (GLfloat*)(&s_dirLightUniformColorValues[0]), s_dirLightUniformColorValues.size());
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_dirLightUniformDirName), (GLfloat*)(&s_dirLightUniformDirValues[0]), s_dirLightUniformDirValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_dirLightUniformColorName), (GLfloat*)(&s_dirLightUniformColorValues[0]), (unsigned int)s_dirLightUniformColorValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_dirLightUniformDirName), (GLfloat*)(&s_dirLightUniformDirValues[0]), (unsigned int)s_dirLightUniformDirValues.size());
         }
 
         if (0 < maxPointLight)
         {
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_pointLightUniformColorName), (GLfloat*)(&s_pointLightUniformColorValues[0]), s_pointLightUniformColorValues.size());
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_pointLightUniformPositionName), (GLfloat*)(&s_pointLightUniformPositionValues[0]), s_pointLightUniformPositionValues.size());
-            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_pointLightUniformRangeInverseName), (GLfloat*)(&s_pointLightUniformRangeInverseValues[0]), s_pointLightUniformRangeInverseValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_pointLightUniformColorName), (GLfloat*)(&s_pointLightUniformColorValues[0]), (unsigned int)s_pointLightUniformColorValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_pointLightUniformPositionName), (GLfloat*)(&s_pointLightUniformPositionValues[0]), (unsigned int)s_pointLightUniformPositionValues.size());
+            glProgram->setUniformLocationWith1fv((GLint)glProgram->getUniformLocationForName(s_pointLightUniformRangeInverseName), (GLfloat*)(&s_pointLightUniformRangeInverseValues[0]), (unsigned int)s_pointLightUniformRangeInverseValues.size());
         }
 
         if (0 < maxSpotLight)
         {
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_spotLightUniformColorName), (GLfloat*)(&s_spotLightUniformColorValues[0]), s_spotLightUniformColorValues.size());
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_spotLightUniformPositionName), (GLfloat*)(&s_spotLightUniformPositionValues[0]), s_spotLightUniformPositionValues.size());
-            glProgram->setUniformLocationWith3fv(glProgram->getUniformLocationForName(s_spotLightUniformDirName), (GLfloat*)(&s_spotLightUniformDirValues[0]), s_spotLightUniformDirValues.size());
-            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_spotLightUniformInnerAngleCosName), (GLfloat*)(&s_spotLightUniformInnerAngleCosValues[0]), s_spotLightUniformInnerAngleCosValues.size());
-            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_spotLightUniformOuterAngleCosName), (GLfloat*)(&s_spotLightUniformOuterAngleCosValues[0]), s_spotLightUniformOuterAngleCosValues.size());
-            glProgram->setUniformLocationWith1fv(glProgram->getUniformLocationForName(s_spotLightUniformRangeInverseName), (GLfloat*)(&s_spotLightUniformRangeInverseValues[0]), s_spotLightUniformRangeInverseValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_spotLightUniformColorName), (GLfloat*)(&s_spotLightUniformColorValues[0]), (unsigned int)s_spotLightUniformColorValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_spotLightUniformPositionName), (GLfloat*)(&s_spotLightUniformPositionValues[0]), (unsigned int)s_spotLightUniformPositionValues.size());
+            glProgram->setUniformLocationWith3fv((GLint)glProgram->getUniformLocationForName(s_spotLightUniformDirName), (GLfloat*)(&s_spotLightUniformDirValues[0]), (unsigned int)s_spotLightUniformDirValues.size());
+            glProgram->setUniformLocationWith1fv((GLint)glProgram->getUniformLocationForName(s_spotLightUniformInnerAngleCosName), (GLfloat*)(&s_spotLightUniformInnerAngleCosValues[0]), (unsigned int)s_spotLightUniformInnerAngleCosValues.size());
+            glProgram->setUniformLocationWith1fv((GLint)glProgram->getUniformLocationForName(s_spotLightUniformOuterAngleCosName), (GLfloat*)(&s_spotLightUniformOuterAngleCosValues[0]), (unsigned int)s_spotLightUniformOuterAngleCosValues.size());
+            glProgram->setUniformLocationWith1fv((GLint)glProgram->getUniformLocationForName(s_spotLightUniformRangeInverseName), (GLfloat*)(&s_spotLightUniformRangeInverseValues[0]), (unsigned int)s_spotLightUniformRangeInverseValues.size());
         }
 
         glProgram->setUniformLocationWith3f(glProgram->getUniformLocationForName(s_ambientLightUniformColorName), ambientColor.x, ambientColor.y, ambientColor.z);

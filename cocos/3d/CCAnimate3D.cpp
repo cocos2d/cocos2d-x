@@ -62,6 +62,16 @@ Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float durat
     return  animate;
 }
 
+Animate3D* Animate3D::createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate)
+{
+    float perFrameTime = 1.f / frameRate;
+    float fromTime = startFrame * perFrameTime;
+    float duration = (endFrame - startFrame) * perFrameTime;
+    
+    auto animate = create(animation, fromTime, duration);
+    return  animate;
+}
+
 /** returns a clone of action */
 Animate3D* Animate3D::clone() const
 {
