@@ -510,6 +510,22 @@ void Sprite3D::removeAllAttachNode()
     _attachments.clear();
 }
 
+#ifndef NDEBUG
+//Generate a dummy texture when the texture file is missing
+static Texture2D * getDummyTexture()
+{
+    static Texture2D * texture=NULL;
+    if(!texture)
+    {
+        unsigned char data[] ={255,0,0,255};//1*1 pure red picture
+        Image * image =new Image();
+        image->initWithRawData(data,sizeof(data),1,1,sizeof(unsigned char));
+        texture=TextureCache::sharedTextureCache()->addImage(image,"");
+    }
+    return texture;
+}
+#endif
+
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_skeleton)
@@ -538,10 +554,27 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         auto programstate = mesh->getGLProgramState();
         auto& meshCommand = mesh->getMeshCommand();
-        
+#ifdef NDEBUG
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
-        
-        meshCommand.init(_globalZOrder, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
+#else
+        GLuint textureID = 0;
+        if(mesh->getTexture())
+        {
+            textureID = mesh->getTexture()->getName();
+        }else
+        { //let the mesh use a dummy texture instead of the missing or crashing texture file
+            auto texture = getDummyTexture();
+            textureID = texture->getName();
+            mesh->setTexture(texture);
+        }
+#endif
+        float globalZ = _globalZOrder;
+        if (mesh->_isTransparent)
+        {   // use the view matrix for Applying to recalculating transparent mesh's Z-Order
+            Mat4 result = Camera::getVisitingCamera()->getViewMatrix() *transform;
+            globalZ = -result.m[14];//fetch the Z from the result matrix
+        }
+        meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
         
         meshCommand.setLightMask(_lightMask);
 
