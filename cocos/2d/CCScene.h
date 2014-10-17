@@ -30,10 +30,10 @@ THE SOFTWARE.
 
 #include <string>
 #include "2d/CCNode.h"
+#include "base/CCCamera.h"
 
 NS_CC_BEGIN
 
-class Camera;
 class BaseLight;
 class Renderer;
 class EventListenerCustom;
