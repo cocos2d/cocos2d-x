@@ -1470,7 +1470,9 @@ void ScrollView::handlePressLogic(Touch *touch)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
-    Vec2 delta = touch->getLocation() - touch->getPreviousLocation();
+    Vec2 touchPositionInNodeSpace = this->convertToNodeSpace(touch->getLocation());
+    Vec2 previousTouchPositionInNodeSpace = this->convertToNodeSpace(touch->getPreviousLocation());
+    Vec2 delta = touchPositionInNodeSpace - previousTouchPositionInNodeSpace;
     switch (_direction)
     {
         case Direction::VERTICAL: // vertical

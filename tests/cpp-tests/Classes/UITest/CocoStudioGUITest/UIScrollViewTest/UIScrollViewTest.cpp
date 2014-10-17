@@ -39,7 +39,7 @@ bool UIScrollViewTest_Vertical::init()
         
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
-        scrollView->setContentSize(Size(280.0f, 150.0f));
+        scrollView->setContentSize(Size(280.0f, 100.0f));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -71,7 +71,8 @@ bool UIScrollViewTest_Vertical::init()
         
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
         scrollView->addChild(imageView);            
-        
+      
+ 
         return true;
     }
     

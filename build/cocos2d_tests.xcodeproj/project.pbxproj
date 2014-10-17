@@ -2621,12 +2621,12 @@
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
-		29080D1A191B574B0066F8DF /* UITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITest.cpp; path = ../UITest.cpp; sourceTree = "<group>"; };
-		29080D1B191B574B0066F8DF /* UITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITest.h; path = ../UITest.h; sourceTree = "<group>"; };
+		29080D1A191B574B0066F8DF /* UITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITest.cpp; path = UITest/UITest.cpp; sourceTree = "<group>"; };
+		29080D1B191B574B0066F8DF /* UITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITest.h; path = UITest/UITest.h; sourceTree = "<group>"; };
 		29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUIScene.cpp; sourceTree = "<group>"; };
 		29080D20191B595E0066F8DF /* CocosGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUIScene.h; sourceTree = "<group>"; };
-		29080D21191B595E0066F8DF /* CocoStudioGUITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudioGUITest.cpp; sourceTree = "<group>"; };
-		29080D22191B595E0066F8DF /* CocoStudioGUITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoStudioGUITest.h; sourceTree = "<group>"; };
+		29080D21191B595E0066F8DF /* CocoStudioGUITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CocoStudioGUITest.cpp; path = UITest/CocoStudioGUITest/CocoStudioGUITest.cpp; sourceTree = "<group>"; };
+		29080D22191B595E0066F8DF /* CocoStudioGUITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocoStudioGUITest.h; path = UITest/CocoStudioGUITest/CocoStudioGUITest.h; sourceTree = "<group>"; };
 		29080D23191B595E0066F8DF /* CustomGUIScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CustomGUIScene.cpp; path = ../CustomGUIScene.cpp; sourceTree = "<group>"; };
 		29080D24191B595E0066F8DF /* CustomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomGUIScene.h; path = ../CustomGUIScene.h; sourceTree = "<group>"; };
 		29080D27191B595E0066F8DF /* CustomImageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomImageTest.cpp; sourceTree = "<group>"; };
@@ -6483,14 +6483,6 @@
 		29080D17191B571F0066F8DF /* UITest */ = {
 			isa = PBXGroup;
 			children = (
-				29080D1E191B595E0066F8DF /* CocoStudioGUITest */,
-			);
-			name = UITest;
-			sourceTree = "<group>";
-		};
-		29080D1E191B595E0066F8DF /* CocoStudioGUITest */ = {
-			isa = PBXGroup;
-			children = (
 				29080D1A191B574B0066F8DF /* UITest.cpp */,
 				29080D1B191B574B0066F8DF /* UITest.h */,
 				29080D21191B595E0066F8DF /* CocoStudioGUITest.cpp */,
@@ -6499,8 +6491,7 @@
 				29FBBBFB196A9ECD00E65826 /* CocostudioParserTest */,
 				29080D25191B595E0066F8DF /* CustomTest */,
 			);
-			name = CocoStudioGUITest;
-			path = UITest/CocoStudioGUITest;
+			name = UITest;
 			sourceTree = "<group>";
 		};
 		29080D25191B595E0066F8DF /* CustomTest */ = {
@@ -6512,7 +6503,8 @@
 				29080D26191B595E0066F8DF /* CustomImageTest */,
 				29080D29191B595E0066F8DF /* CustomParticleWidgetTest */,
 			);
-			path = CustomTest;
+			name = CustomTest;
+			path = UITest/CocoStudioGUITest/CustomTest;
 			sourceTree = "<group>";
 		};
 		29080D26191B595E0066F8DF /* CustomImageTest */ = {
@@ -6732,6 +6724,24 @@
 			name = UIWebViewTest;
 			sourceTree = "<group>";
 		};
+		29AAE28519F0BD02004F5A18 /* UIScale9SpriteTest */ = {
+			isa = PBXGroup;
+			children = (
+				295824571987415900F9746D /* UIScale9SpriteTest.cpp */,
+				295824581987415900F9746D /* UIScale9SpriteTest.h */,
+			);
+			name = UIScale9SpriteTest;
+			sourceTree = "<group>";
+		};
+		29AAE28619F0BD12004F5A18 /* UIEditBoxTest */ = {
+			isa = PBXGroup;
+			children = (
+				292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */,
+				292CF01319A1965E00E8E6A0 /* UIEditBoxTest.h */,
+			);
+			name = UIEditBoxTest;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -6806,17 +6816,13 @@
 				29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */,
 				29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */,
 			);
-			path = CocostudioParserTest;
+			name = CocostudioParserTest;
+			path = UITest/CocoStudioGUITest/CocostudioParserTest;
 			sourceTree = "<group>";
 		};
 		29FBBC00196A9F0D00E65826 /* UIAndEditorTests */ = {
 			isa = PBXGroup;
 			children = (
-				298D7F6C19AC31C000FF096D /* UIWebViewTest */,
-				295824571987415900F9746D /* UIScale9SpriteTest.cpp */,
-				295824581987415900F9746D /* UIScale9SpriteTest.h */,
-				292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */,
-				292CF01319A1965E00E8E6A0 /* UIEditBoxTest.h */,
 				29080D1F191B595E0066F8DF /* CocosGUIScene.cpp */,
 				29080D20191B595E0066F8DF /* CocosGUIScene.h */,
 				29080D37191B595E0066F8DF /* GUIEditorTest.cpp */,
@@ -6829,6 +6835,9 @@
 				29080D67191B595E0066F8DF /* UISceneManager.h */,
 				29080D68191B595E0066F8DF /* UISceneManager_Editor.cpp */,
 				29080D69191B595E0066F8DF /* UISceneManager_Editor.h */,
+				29AAE28619F0BD12004F5A18 /* UIEditBoxTest */,
+				29AAE28519F0BD02004F5A18 /* UIScale9SpriteTest */,
+				298D7F6C19AC31C000FF096D /* UIWebViewTest */,
 				29080D6A191B595E0066F8DF /* UIScrollViewTest */,
 				29080D6F191B595E0066F8DF /* UISliderTest */,
 				29080D74191B595E0066F8DF /* UITextAtlasTest */,
@@ -6848,6 +6857,7 @@
 				3EA0FB6F191C844400B170C8 /* UIVideoPlayerTest */,
 			);
 			name = UIAndEditorTests;
+			path = UITest/CocoStudioGUITest;
 			sourceTree = "<group>";
 		};
 		38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */ = {
