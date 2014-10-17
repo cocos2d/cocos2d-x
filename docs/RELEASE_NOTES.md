@@ -2,7 +2,7 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.3beta0 Release Notes](#user-content-cocos2d-x-v33beta0-release-notes)
+- [cocos2d-x v3.3rc0 Release Notes](#user-content-cocos2d-x-v33rc0-release-notes)
 - [Misc Information](#user-content-misc-information)
 - [Requirements](#user-content-requirements)
 	- [Runtime Requirements](#user-content-runtime-requirements)
@@ -15,17 +15,25 @@
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
 - [Highlights of v3.3beta0](#user-content-highlights-of-v33beta0)
 - [Features in detail](#user-content-features-in-detail)
+- [Highlights of v3.3beta0](#user-content-highlights-of-v33beta0-1)
+- [Features in detail](#user-content-features-in-detail-1)
+	- [BillBoard](#user-content-billboard)
+	- [Triangles command](#user-content-triangles-command)
+	- [WebView](#user-content-webview)
+	- [New audio](#user-content-new-audio)
+- [Highlights of v3.3alpha0](#user-content-highlights-of-v33alpha0)
+- [Features in detail](#user-content-features-in-detail-2)
 	- [Camera](#user-content-camera)
 	- [Reskin](#user-content-reskin)
 	- [Attachment](#user-content-attachment)
 	- [Better support for FBX](#user-content-better-support-for-fbx)
 	- [New fbx-conv](#user-content-new-fbx-conv)
 	- [AABB, OBB and Ray](#user-content-aabb-obb-and-ray)
-	- [BillBoard](#user-content-billboard)
+	- [ui::Scale9Sprite](#user-content-uiscale9sprite)
+	- [c++11 random support](#user-content-c11-random-support)
+	- [RenderTexture save function](#user-content-rendertexture-save-function)
 	- [Primitive](#user-content-primitive)
-	- [Triangles command](#user-content-triangles-command)
-	- [WebView](#user-content-webview)
-	- [New audio](#user-content-new-audio)
+	- [Consistent way to set GL context attributes](#user-content-consistent-way-to-set-gl-context-attributes)
 	- [Only two libraries left](#user-content-only-two-libraries-left)
 
 # Misc Information
