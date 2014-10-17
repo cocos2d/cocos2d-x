@@ -91,6 +91,7 @@ static const char* s_testArray[] =
     "UIScrollViewTest_ScrollToPercentBothDirection",
     "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",
     "UIScrollViewNestTest",
+    "UIScrollViewRotated",
     
     "UIPageViewTest",
     "UIPageViewButtonTest",
@@ -323,6 +324,9 @@ Scene *UISceneManager::currentUIScene()
             return UIScrollViewTest_ScrollToPercentBothDirection_Bounce::sceneWithTitle(s_testArray[_currentUISceneId]);                    
         case kUIScrollViewNestTest:
             return UIScrollViewNestTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIScrollViewRotated:
+            return UIScrollViewRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewButtonTest:

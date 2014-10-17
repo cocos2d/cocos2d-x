@@ -82,6 +82,8 @@ enum
     kUIScrollViewTest_ScrollToPercentBothDirection,
     kUIScrollViewTest_ScrollToPercentBothDirection_Bounce,
     kUIScrollViewNestTest,
+    kUIScrollViewRotated,
+    
     kUIPageViewTest,
     kUIPageViewButtonTest,
     kUIPageViewCustomScrollThreshold,
