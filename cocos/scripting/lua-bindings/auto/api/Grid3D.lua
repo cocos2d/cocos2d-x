@@ -24,7 +24,7 @@
 -- @param #size_table gridSize
 -- @param #cc.Texture2D texture
 -- @param #bool flipped
--- @return Grid3D#Grid3D ret (retunr value: cc.Grid3D)
+-- @return Grid3D#Grid3D ret (return value: cc.Grid3D)
 
 --------------------------------
 -- 

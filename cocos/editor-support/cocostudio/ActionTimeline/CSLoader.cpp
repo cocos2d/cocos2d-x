@@ -1005,7 +1005,6 @@ void CSLoader::setPropsForSpriteFromProtocolBuffers(cocos2d::Node *node,
             
         case 1:
         {
-			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(_protocolBuffersPath + fileNameData.plistfile());
             std::string path = fileNameData.path();
 			if (path != "")
 			{

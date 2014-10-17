@@ -34,7 +34,7 @@
 -- @function [parent=#ClippingRectangleNode] create
 -- @param self
 -- @param #rect_table clippingRegion
--- @return ClippingRectangleNode#ClippingRectangleNode ret (retunr value: cc.ClippingRectangleNode)
+-- @return ClippingRectangleNode#ClippingRectangleNode ret (return value: cc.ClippingRectangleNode)
 
 --------------------------------
 -- 

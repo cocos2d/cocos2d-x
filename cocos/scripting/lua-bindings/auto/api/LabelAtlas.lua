@@ -21,7 +21,7 @@
 -- @param #int itemWidth
 -- @param #int itemHeight
 -- @param #int startCharMap
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -45,7 +45,7 @@
 -- @param #int itemWidth
 -- @param #int itemHeight
 -- @param #int startCharMap
--- @return LabelAtlas#LabelAtlas ret (retunr value: cc.LabelAtlas)
+-- @return LabelAtlas#LabelAtlas ret (return value: cc.LabelAtlas)
 
 --------------------------------
 -- 

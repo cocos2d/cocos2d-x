@@ -63,6 +63,6 @@
 -- @param #vec2_table anchr2
 -- @param #float min
 -- @param #float max
--- @return PhysicsJointLimit#PhysicsJointLimit ret (retunr value: cc.PhysicsJointLimit)
+-- @return PhysicsJointLimit#PhysicsJointLimit ret (return value: cc.PhysicsJointLimit)
 
 return nil

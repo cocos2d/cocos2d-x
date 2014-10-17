@@ -21,7 +21,7 @@
 -- @function [parent=#Node] removeComponent
 -- @param self
 -- @param #string name
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- set the PhysicsBody that let the sprite effect with physics<br>
@@ -68,7 +68,7 @@
 -- @overload self         
 -- @function [parent=#Node] getChildren
 -- @param self
--- @return array_table#array_table ret (retunr value: array_table)
+-- @return array_table#array_table ret (return value: array_table)
 
 --------------------------------
 -- 
@@ -643,7 +643,7 @@
 -- @overload self         
 -- @function [parent=#Node] getScheduler
 -- @param self
--- @return Scheduler#Scheduler ret (retunr value: cc.Scheduler)
+-- @return Scheduler#Scheduler ret (return value: cc.Scheduler)
 
 --------------------------------
 -- 
@@ -686,7 +686,7 @@
 -- @overload self         
 -- @function [parent=#Node] getParent
 -- @param self
--- @return Node#Node ret (retunr value: cc.Node)
+-- @return Node#Node ret (return value: cc.Node)
 
 --------------------------------
 -- Gets position Z coordinate of this node.<br>
@@ -1038,7 +1038,7 @@
 -- @overload self         
 -- @function [parent=#Node] getActionManager
 -- @param self
--- @return ActionManager#ActionManager ret (retunr value: cc.ActionManager)
+-- @return ActionManager#ActionManager ret (return value: cc.ActionManager)
 
 --------------------------------
 -- Allocates and initializes a node.<br>

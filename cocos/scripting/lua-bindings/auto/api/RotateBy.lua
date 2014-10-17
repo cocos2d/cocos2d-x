@@ -13,7 +13,7 @@
 -- @param #float duration
 -- @param #float deltaAngleZ_X
 -- @param #float deltaAngleZ_Y
--- @return RotateBy#RotateBy ret (retunr value: cc.RotateBy)
+-- @return RotateBy#RotateBy ret (return value: cc.RotateBy)
 
 --------------------------------
 -- 
