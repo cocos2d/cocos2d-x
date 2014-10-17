@@ -12,7 +12,7 @@
 -- @param #char jsonName
 -- @param #char actionName
 -- @param #cc.CallFunc func
--- @return ActionObject#ActionObject ret (retunr value: ccs.ActionObject)
+-- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
 
 --------------------------------
 -- Gets an ActionObject with a name.<br>

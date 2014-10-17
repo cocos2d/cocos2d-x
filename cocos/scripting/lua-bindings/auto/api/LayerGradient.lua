@@ -87,7 +87,7 @@
 -- @param #color4b_table start
 -- @param #color4b_table end
 -- @param #vec2_table v
--- @return LayerGradient#LayerGradient ret (retunr value: cc.LayerGradient)
+-- @return LayerGradient#LayerGradient ret (return value: cc.LayerGradient)
 
 --------------------------------
 -- 
