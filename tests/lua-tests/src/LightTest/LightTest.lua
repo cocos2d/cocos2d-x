@@ -109,20 +109,15 @@ function LightTest:init()
         end
     
         if nil ~= self._pointLight then
-          -- math.cos((angleDelta + 2.0 * delta) / 180 * math.pi))
             self._pointLight:setPositionX(100.0 * math.cos(angleDelta + 2.0 * delta))
             self._pointLight:setPositionY(100.0)
-            --math.sin((angleDelta + 2.0 * delta) / 180 * math.pi)
             self._pointLight:setPositionZ(100.0 * math.sin(angleDelta + 2.0 * delta))
         end
     
         if nil ~= self._spotLight then
-          --math.cos((angleDelta + 4.0 * delta) / 180 * math.pi))
             self._spotLight:setPositionX(100.0 * math.cos(angleDelta + 4.0 * delta))
             self._spotLight:setPositionY(100.0)
-            --math.sin((angleDelta + 4.0 * delta) / 180 * math.pi)
             self._spotLight:setPositionZ(100.0 * math.sin(angleDelta + 4.0 * delta))
-            --cc.vec3(-math.cos((angleDelta + 4.0 * delta) / 180 * math.pi), -1.0, -math.sin((angleDelta + 4.0 * delta) / 180 * math.pi))
             self._spotLight:setDirection(cc.vec3(-math.cos(angleDelta + 4.0 * delta), -1.0, -math.sin(angleDelta + 4.0 * delta)))
         end
     
