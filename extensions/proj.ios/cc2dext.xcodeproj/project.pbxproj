@@ -1249,9 +1249,10 @@
 					"$(SRCROOT)/../../cocos2dx/platform/third_party/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7s armv7 i386";
 			};
 			name = Debug;
 		};
@@ -1300,9 +1301,11 @@
 					"$(SRCROOT)/../../cocos2dx/platform/third_party/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7s armv7 i386";
 			};
 			name = Release;
 		};
