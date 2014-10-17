@@ -267,6 +267,12 @@ function CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache()
 end
 CCSpriteFrameCache.purgeSharedSpriteFrameCache = CCSpriteFrameCacheDeprecated.purgeSharedSpriteFrameCache
 
+function CCSpriteFrameCacheDeprecated.addSpriteFramesWithFile(self,...)
+    deprecatedTip("CCSpriteFrameCache:addSpriteFramesWithFile","CCSpriteFrameCache:addSpriteFrames")
+    return self:addSpriteFrames(...)
+end
+rawset(CCSpriteFrameCache,"addSpriteFramesWithFile",CCSpriteFrameCacheDeprecated.addSpriteFramesWithFile)
+
 function CCSpriteFrameCacheDeprecated.getSpriteFrameByName(self,...)
     deprecatedTip("CCSpriteFrameCache:getSpriteFrameByName","CCSpriteFrameCache:getSpriteFrame")
     return self:getSpriteFrame(...)
