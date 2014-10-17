@@ -225,7 +225,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00(lua_State* tol
     	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
             int handler = (  toluafix_ref_function(tolua_S,2,0));
-            spEventType eventType = (spEventType)(tolua_tonumber(tolua_S, 3, 0));
+            spEventType eventType = static_cast<spEventType>((int)tolua_tonumber(tolua_S, 3, 0));
             
             switch (eventType) {
                 case spEventType::SP_ANIMATION_START:
@@ -288,7 +288,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00(lua_State* t
     {
     	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
-            spEventType eventType = (spEventType)(tolua_tonumber(tolua_S, 2, 0));
+            spEventType eventType = static_cast<spEventType>((int)tolua_tonumber(tolua_S, 2, 0));
             ScriptHandlerMgr::HandlerType handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_START;
             switch (eventType) {
                 case spEventType::SP_ANIMATION_START:
