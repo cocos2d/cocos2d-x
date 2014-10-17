@@ -143,22 +143,20 @@ namespace cocostudio
         int opacity = widgetOptions.has_alpha() ? widgetOptions.alpha() : 255;
         pageView->setOpacity(opacity);
         
-//        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
-//        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
-//        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
-//        pageView->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
-//        
-//        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
-//        pageView->setBackGroundImageOpacity(bgimgopacity);
-        
         
         // other commonly protperties
         setAnchorPointForWidget(widget, nodeTree);
         
         bool flipX = widgetOptions.flipx();
         bool flipY = widgetOptions.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        if (flipX)
+        {
+            widget->setFlippedX(flipX);
+        }
+        if (flipY)
+        {
+            widget->setFlippedY(flipY);
+        }
     }
     
     void PageViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
@@ -458,10 +456,7 @@ namespace cocostudio
                 pageView->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
                 pageView->setContentSize(Size(width, height));
             }
-        }
-        
-//        pageView->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-//        pageView->setBackGroundImageOpacity(bgimg_opacity);
+        }        
         
     }
     

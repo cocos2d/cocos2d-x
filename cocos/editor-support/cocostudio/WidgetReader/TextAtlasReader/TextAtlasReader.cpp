@@ -142,11 +142,7 @@ namespace cocostudio
         
         TextAtlas* labelAtlas = static_cast<TextAtlas*>(widget);
         const protocolbuffers::TextAtlasOptions& options = nodeTree.textatlasoptions();
-        //        bool sv = DICTOOL->checkObjectExist_json(options, P_StringValue);
-        //        bool cmf = DICTOOL->checkObjectExist_json(options, P_CharMapFile);
-        //        bool iw = DICTOOL->checkObjectExist_json(options, P_ItemWidth);
-        //        bool ih = DICTOOL->checkObjectExist_json(options, P_ItemHeight);
-        //        bool scm = DICTOOL->checkObjectExist_json(options, P_StartCharMap);
+
         
         const protocolbuffers::ResourceData& cmftDic = options.charmapfiledata();
         int cmfType = cmftDic.resourcetype();

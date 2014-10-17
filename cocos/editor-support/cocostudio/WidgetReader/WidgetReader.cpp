@@ -364,6 +364,7 @@ namespace cocostudio
         
         widget->setCascadeColorEnabled(true);
         widget->setCascadeOpacityEnabled(true);
+        widget->setAnchorPoint(Vec2::ZERO);
         
         widget->setUnifySizeEnabled(true);
         
@@ -403,9 +404,6 @@ namespace cocostudio
         
         
         widget->setScaleY(options.has_scaley() ? options.scaley() : 1.0);
-        
-        
-//        widget->setRotation(options.has_rotation() ? options.rotation() : 0.0);
 
 		widget->setRotationSkewX(options.has_rotationskewx() ? options.rotationskewx() : 0.0);
 
@@ -490,8 +488,14 @@ namespace cocostudio
         
         bool flipX = options.flipx();
         bool flipY = options.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        if (flipX)
+        {
+            widget->setFlippedX(flipX);
+        }
+        if (flipY)
+        {
+            widget->setFlippedY(flipY);
+        }
     }
     
     void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
@@ -530,21 +534,13 @@ namespace cocostudio
             {
                 widget->setRotationSkewY(atof(value.c_str()));
             }
-            else if (name == "Rotation")
-            {
-//                widget->setRotation(atoi(value.c_str()));
-            }
             else if (name == "ZOrder")
             {
                 widget->setLocalZOrder(atoi(value.c_str()));
             }
-            else if (name == "Visible")
-            {
-                widget->setVisible((value == "True") ? true : false);
-            }
             else if (name == "VisibleForFrame")
             {
-//                widget->setVisible((value == "True") ? true : false);
+                widget->setVisible((value == "True") ? true : false);
             }
             else if (name == "Alpha")
             {
