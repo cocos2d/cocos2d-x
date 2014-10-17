@@ -249,30 +249,18 @@ namespace cocostudio
         
 		const protocolbuffers::ResourceData& normalDic = options.normaldata();
         int normalType = normalDic.resourcetype();
-		if (normalType == 1)
-		{
-			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + normalDic.plistfile());			
-		}
         std::string normalTexturePath = this->getResourcePath(normalDic.path(), (Widget::TextureResType)normalType);		
         button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
         
         
         const protocolbuffers::ResourceData& pressedDic = options.presseddata();
         int pressedType = pressedDic.resourcetype();
-		if (pressedType == 1)
-		{
-			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + pressedDic.plistfile());			
-		}
         std::string pressedTexturePath = this->getResourcePath(pressedDic.path(), (Widget::TextureResType)pressedType);
         button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
         
         
         const protocolbuffers::ResourceData& disabledDic = options.disableddata();
         int disabledType = disabledDic.resourcetype();
-		if (disabledType == 1)
-		{
-			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + disabledDic.plistfile());			
-		}
         std::string disabledTexturePath = this->getResourcePath(disabledDic.path(), (Widget::TextureResType)disabledType);
         button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
         
