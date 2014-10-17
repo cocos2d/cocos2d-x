@@ -14,7 +14,7 @@
 -- @param #float sx
 -- @param #float sy
 -- @param #float sz
--- @return ScaleTo#ScaleTo ret (retunr value: cc.ScaleTo)
+-- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
 
 --------------------------------
 -- 

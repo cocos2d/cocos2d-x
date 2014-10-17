@@ -18,7 +18,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #float defaultValue
--- @return float#float ret (retunr value: float)
+-- @return float#float ret (return value: float)
 
 --------------------------------
 -- @overload self, char, bool         
@@ -27,7 +27,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #bool defaultValue
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- brief Set double value by key.<br>
@@ -52,7 +52,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #string defaultValue
--- @return string#string ret (retunr value: string)
+-- @return string#string ret (return value: string)
 
 --------------------------------
 -- brief Set string value by key.<br>
@@ -75,7 +75,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #int defaultValue
--- @return int#int ret (retunr value: int)
+-- @return int#int ret (return value: int)
 
 --------------------------------
 -- @overload self, char, double         
@@ -84,7 +84,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #double defaultValue
--- @return double#double ret (retunr value: double)
+-- @return double#double ret (return value: double)
 
 --------------------------------
 -- brief Set bool value by key.<br>

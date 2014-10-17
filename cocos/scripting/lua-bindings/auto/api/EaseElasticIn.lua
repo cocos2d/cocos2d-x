@@ -11,7 +11,7 @@
 -- @param self
 -- @param #cc.ActionInterval action
 -- @param #float period
--- @return EaseElasticIn#EaseElasticIn ret (retunr value: cc.EaseElasticIn)
+-- @return EaseElasticIn#EaseElasticIn ret (return value: cc.EaseElasticIn)
 
 --------------------------------
 -- 
