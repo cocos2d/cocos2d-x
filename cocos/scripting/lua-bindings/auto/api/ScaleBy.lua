@@ -14,7 +14,7 @@
 -- @param #float sx
 -- @param #float sy
 -- @param #float sz
--- @return ScaleBy#ScaleBy ret (retunr value: cc.ScaleBy)
+-- @return ScaleBy#ScaleBy ret (return value: cc.ScaleBy)
 
 --------------------------------
 -- 

@@ -25,7 +25,7 @@
 -- @param #string filename
 -- @param #rect_table rect
 -- @param #int mode
--- @return BillBoard#BillBoard ret (retunr value: cc.BillBoard)
+-- @return BillBoard#BillBoard ret (return value: cc.BillBoard)
 
 --------------------------------
 -- Creates a BillBoard with a Texture2D object.<br>

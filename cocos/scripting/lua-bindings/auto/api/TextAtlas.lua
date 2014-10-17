@@ -50,7 +50,7 @@
 -- @param #int itemWidth
 -- @param #int itemHeight
 -- @param #string startCharMap
--- @return TextAtlas#TextAtlas ret (retunr value: ccui.TextAtlas)
+-- @return TextAtlas#TextAtlas ret (return value: ccui.TextAtlas)
 
 --------------------------------
 -- 

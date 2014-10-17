@@ -92,7 +92,7 @@
 -- @param self
 -- @param #string modelPath
 -- @param #string texturePath
--- @return Sprite3D#Sprite3D ret (retunr value: cc.Sprite3D)
+-- @return Sprite3D#Sprite3D ret (return value: cc.Sprite3D)
 
 --------------------------------
 -- Returns 2d bounding-box<br>

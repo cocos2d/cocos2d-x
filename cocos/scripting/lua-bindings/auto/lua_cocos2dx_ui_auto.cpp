@@ -16600,7 +16600,7 @@ int lua_cocos2dx_ui_Helper_getSubStringOfUTF8String(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_ui_Helper_doLayout(lua_State* tolua_S)
+int lua_cocos2dx_ui_Helper_changeLayoutSystemActiveState(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16617,53 +16617,18 @@ int lua_cocos2dx_ui_Helper_doLayout(lua_State* tolua_S)
 
     if (argc == 1)
     {
-        cocos2d::Node* arg0;
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        bool arg0;
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "ccui.Helper:changeLayoutSystemActiveState");
         if(!ok)
             return 0;
-        cocos2d::ui::Helper::doLayout(arg0);
+        cocos2d::ui::Helper::changeLayoutSystemActiveState(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:doLayout",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:changeLayoutSystemActiveState",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_doLayout'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
-    {
-        cocos2d::ui::Widget* arg0;
-        int arg1;
-        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0);
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.Helper:seekWidgetByTag");
-        if(!ok)
-            return 0;
-        cocos2d::ui::Widget* ret = cocos2d::ui::Helper::seekWidgetByTag(arg0, arg1);
-        object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:seekWidgetByTag",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_seekWidgetByTag'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_changeLayoutSystemActiveState'.",&tolua_err);
 #endif
     return 0;
 }
@@ -16737,6 +16702,73 @@ int lua_cocos2dx_ui_Helper_seekWidgetByName(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        cocos2d::ui::Widget* arg0;
+        int arg1;
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0);
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.Helper:seekWidgetByTag");
+        if(!ok)
+            return 0;
+        cocos2d::ui::Widget* ret = cocos2d::ui::Helper::seekWidgetByTag(arg0, arg1);
+        object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:seekWidgetByTag",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_seekWidgetByTag'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ui_Helper_doLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::Node* arg0;
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::ui::Helper::doLayout(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:doLayout",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_doLayout'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_ui_Helper_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Helper)");
@@ -16750,10 +16782,11 @@ int lua_register_cocos2dx_ui_Helper(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Helper");
         tolua_function(tolua_S,"getSubStringOfUTF8String", lua_cocos2dx_ui_Helper_getSubStringOfUTF8String);
-        tolua_function(tolua_S,"doLayout", lua_cocos2dx_ui_Helper_doLayout);
-        tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
+        tolua_function(tolua_S,"changeLayoutSystemActiveState", lua_cocos2dx_ui_Helper_changeLayoutSystemActiveState);
         tolua_function(tolua_S,"seekActionWidgetByActionTag", lua_cocos2dx_ui_Helper_seekActionWidgetByActionTag);
         tolua_function(tolua_S,"seekWidgetByName", lua_cocos2dx_ui_Helper_seekWidgetByName);
+        tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
+        tolua_function(tolua_S,"doLayout", lua_cocos2dx_ui_Helper_doLayout);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::ui::Helper).name();
     g_luaType[typeName] = "ccui.Helper";

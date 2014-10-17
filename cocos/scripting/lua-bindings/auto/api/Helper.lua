@@ -18,20 +18,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Helper] doLayout 
+-- @function [parent=#Helper] changeLayoutSystemActiveState 
 -- @param self
--- @param #cc.Node rootNode
-        
---------------------------------
--- Finds a widget whose tag equals to param tag from root widget.<br>
--- param root      widget which will be seeked.<br>
--- tag             tag value.<br>
--- return finded result.
--- @function [parent=#Helper] seekWidgetByTag 
--- @param self
--- @param #ccui.Widget root
--- @param #int tag
--- @return Widget#Widget ret (return value: ccui.Widget)
+-- @param #bool bActive
         
 --------------------------------
 -- 
@@ -51,5 +40,22 @@
 -- @param #ccui.Widget root
 -- @param #string name
 -- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
+-- Finds a widget whose tag equals to param tag from root widget.<br>
+-- param root      widget which will be seeked.<br>
+-- tag             tag value.<br>
+-- return finded result.
+-- @function [parent=#Helper] seekWidgetByTag 
+-- @param self
+-- @param #ccui.Widget root
+-- @param #int tag
+-- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
+-- 
+-- @function [parent=#Helper] doLayout 
+-- @param self
+-- @param #cc.Node rootNode
         
 return nil

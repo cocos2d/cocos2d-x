@@ -88,7 +88,7 @@
 -- @param #string skeletonDataFile
 -- @param #spAtlas atlas
 -- @param #float scale
--- @return SkeletonRenderer#SkeletonRenderer ret (retunr value: sp.SkeletonRenderer)
+-- @return SkeletonRenderer#SkeletonRenderer ret (return value: sp.SkeletonRenderer)
 
 --------------------------------
 -- 
