@@ -15,7 +15,7 @@
 -- @overload self         
 -- @function [parent=#AnimationFrame] getUserInfo
 -- @param self
--- @return map_table#map_table ret (retunr value: map_table)
+-- @return map_table#map_table ret (return value: map_table)
 
 --------------------------------
 --  Sets the units of time the frame takes 

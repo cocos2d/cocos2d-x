@@ -68,7 +68,7 @@
 -- @param self
 -- @param #float x
 -- @param #float y
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- Change display by index. You can just use this method to change display in the display list.<br>

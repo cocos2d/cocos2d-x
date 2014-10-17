@@ -181,6 +181,6 @@
 -- @function [parent=#AudioEngine] getProfile
 -- @param self
 -- @param #int audioID
--- @return experimental::AudioProfile#experimental::AudioProfile ret (retunr value: cc.experimental::AudioProfile)
+-- @return experimental::AudioProfile#experimental::AudioProfile ret (return value: cc.experimental::AudioProfile)
 
 return nil

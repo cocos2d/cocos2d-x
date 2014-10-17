@@ -24,7 +24,7 @@
 -- @param #float duration
 -- @param #size_table gridSize
 -- @param #unsigned int seed
--- @return TurnOffTiles#TurnOffTiles ret (retunr value: cc.TurnOffTiles)
+-- @return TurnOffTiles#TurnOffTiles ret (return value: cc.TurnOffTiles)
 
 --------------------------------
 -- 

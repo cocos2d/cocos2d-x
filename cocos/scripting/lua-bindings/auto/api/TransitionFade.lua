@@ -12,6 +12,6 @@
 -- @param #float duration
 -- @param #cc.Scene scene
 -- @param #color3b_table color
--- @return TransitionFade#TransitionFade ret (retunr value: cc.TransitionFade)
+-- @return TransitionFade#TransitionFade ret (return value: cc.TransitionFade)
 
 return nil

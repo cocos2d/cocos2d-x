@@ -9,7 +9,7 @@
 -- @overload self         
 -- @function [parent=#Animate] getAnimation
 -- @param self
--- @return Animation#Animation ret (retunr value: cc.Animation)
+-- @return Animation#Animation ret (return value: cc.Animation)
 
 --------------------------------
 --  sets the Animation object to be animated 

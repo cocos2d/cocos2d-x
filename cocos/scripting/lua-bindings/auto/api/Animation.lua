@@ -102,7 +102,7 @@
 -- @param #array_table arrayOfAnimationFrameNames
 -- @param #float delayPerUnit
 -- @param #unsigned int loops
--- @return Animation#Animation ret (retunr value: cc.Animation)
+-- @return Animation#Animation ret (return value: cc.Animation)
 
 --------------------------------
 -- 

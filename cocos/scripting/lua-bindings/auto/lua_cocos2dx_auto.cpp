@@ -60865,7 +60865,7 @@ int lua_register_cocos2dx_SpriteFrameCache(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"SpriteFrameCache");
         tolua_function(tolua_S,"addSpriteFramesWithFileContent",lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFileContent);
-        tolua_function(tolua_S,"addSpriteFramesWithFile",lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile);
+        tolua_function(tolua_S,"addSpriteFrames",lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile);
         tolua_function(tolua_S,"addSpriteFrame",lua_cocos2dx_SpriteFrameCache_addSpriteFrame);
         tolua_function(tolua_S,"removeUnusedSpriteFrames",lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames);
         tolua_function(tolua_S,"getSpriteFrame",lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName);

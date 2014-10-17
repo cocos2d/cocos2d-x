@@ -435,7 +435,7 @@
 -- @param self
 -- @param #float mass
 -- @param #float moment
--- @return PhysicsBody#PhysicsBody ret (retunr value: cc.PhysicsBody)
+-- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
 
 --------------------------------
 --  Create a body contains a EdgeBox shape. 
