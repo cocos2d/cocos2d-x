@@ -64,7 +64,7 @@ public:
      * @param frameRate default is 30 per second
      * @return Animate3D created using animate
      */
-    static Animate3D* create(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
+    static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
     
     //
     // Overrides
