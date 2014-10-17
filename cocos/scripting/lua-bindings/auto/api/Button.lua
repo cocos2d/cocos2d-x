@@ -189,7 +189,7 @@
 -- @param #string selectedImage
 -- @param #string disableImage
 -- @param #int texType
--- @return Button#Button ret (retunr value: ccui.Button)
+-- @return Button#Button ret (return value: ccui.Button)
 
 --------------------------------
 -- 

@@ -196,7 +196,7 @@
 -- @param self
 -- @param #string filename
 -- @param #rect_table rect
--- @return Sprite#Sprite ret (retunr value: cc.Sprite)
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
 
 --------------------------------
 -- @overload self, cc.Texture2D, rect_table, bool         
@@ -206,7 +206,7 @@
 -- @param #cc.Texture2D texture
 -- @param #rect_table rect
 -- @param #bool rotated
--- @return Sprite#Sprite ret (retunr value: cc.Sprite)
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
 
 --------------------------------
 -- Creates a sprite with an sprite frame name.<br>

@@ -91,7 +91,7 @@
 -- @param #size_table gridSize
 -- @param #cc.Texture2D texture
 -- @param #bool flipped
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -123,6 +123,6 @@
 -- @param #size_table gridSize
 -- @param #cc.Texture2D texture
 -- @param #bool flipped
--- @return GridBase#GridBase ret (retunr value: cc.GridBase)
+-- @return GridBase#GridBase ret (return value: cc.GridBase)
 
 return nil

@@ -10,7 +10,7 @@
 -- @function [parent=#VBox] create
 -- @param self
 -- @param #size_table size
--- @return VBox#VBox ret (retunr value: ccui.VBox)
+-- @return VBox#VBox ret (return value: ccui.VBox)
 
 --------------------------------
 -- Default constructor

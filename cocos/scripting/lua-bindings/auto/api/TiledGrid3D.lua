@@ -12,7 +12,7 @@
 -- @param #size_table gridSize
 -- @param #cc.Texture2D texture
 -- @param #bool flipped
--- @return TiledGrid3D#TiledGrid3D ret (retunr value: cc.TiledGrid3D)
+-- @return TiledGrid3D#TiledGrid3D ret (return value: cc.TiledGrid3D)
 
 --------------------------------
 -- 

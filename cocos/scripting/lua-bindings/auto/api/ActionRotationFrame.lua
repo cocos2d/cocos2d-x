@@ -18,7 +18,7 @@
 -- @param self
 -- @param #float duration
 -- @param #ccs.ActionFrame srcFrame
--- @return ActionInterval#ActionInterval ret (retunr value: cc.ActionInterval)
+-- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
 
 --------------------------------
 -- Gets the rotate action rotation.<br>
