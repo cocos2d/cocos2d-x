@@ -131,7 +131,6 @@ void Scene::render(Renderer* renderer)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
-    bool viewportchanged = false;
     Rect viewrect(0.0f, 0.0f, 1.0f, 1.0f);
     for (const auto& camera : _cameras)
     {
@@ -152,7 +151,6 @@ void Scene::render(Renderer* renderer)
         {
             director->setViewport();
             viewrect = cameraViewRect;
-            viewportchanged = true;
         }
         //visit the scene
         visit(renderer, Mat4::IDENTITY, 0);
@@ -175,7 +173,6 @@ void Scene::render(Renderer* renderer)
         {
             director->setViewport();
             viewrect = cameraViewRect;
-            viewportchanged = true;
         }
         renderer->render();
         
@@ -184,7 +181,7 @@ void Scene::render(Renderer* renderer)
     Camera::_visitingCamera = nullptr;
     
     // reset view port
-    if (viewportchanged)
+    if (viewrect.origin.x != 0.f || viewrect.origin.y != 0.f || viewrect.size.width != 1.f|| viewrect.size.height != 1.f)
         director->setViewport();
 }
 
