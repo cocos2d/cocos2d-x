@@ -53,7 +53,7 @@
 -- @function [parent=#Skin] create
 -- @param self
 -- @param #string pszFileName
--- @return Skin#Skin ret (retunr value: ccs.Skin)
+-- @return Skin#Skin ret (return value: ccs.Skin)
 
 --------------------------------
 -- 

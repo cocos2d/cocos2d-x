@@ -159,7 +159,7 @@
 -- @param #size_table size
 -- @param #string pNormal9SpriteBg
 -- @param #int texType
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- Set a text in the edit box that acts as a placeholder when an<br>
@@ -224,7 +224,7 @@
 -- @param #ccui.Scale9Sprite normalSprite
 -- @param #ccui.Scale9Sprite pressedSprite
 -- @param #ccui.Scale9Sprite disabledSprite
--- @return EditBox#EditBox ret (retunr value: ccui.EditBox)
+-- @return EditBox#EditBox ret (return value: ccui.EditBox)
 
 --------------------------------
 -- 

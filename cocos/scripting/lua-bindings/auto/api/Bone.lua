@@ -94,7 +94,7 @@
 -- @function [parent=#Bone] init
 -- @param self
 -- @param #string name
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- Set parent bone.<br>
@@ -209,7 +209,7 @@
 -- @function [parent=#Bone] create
 -- @param self
 -- @param #string name
--- @return Bone#Bone ret (retunr value: ccs.Bone)
+-- @return Bone#Bone ret (return value: ccs.Bone)
 
 --------------------------------
 -- 

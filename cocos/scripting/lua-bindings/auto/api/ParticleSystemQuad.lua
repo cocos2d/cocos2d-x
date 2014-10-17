@@ -37,7 +37,7 @@
 -- @function [parent=#ParticleSystemQuad] create
 -- @param self
 -- @param #map_table dictionary
--- @return ParticleSystemQuad#ParticleSystemQuad ret (retunr value: cc.ParticleSystemQuad)
+-- @return ParticleSystemQuad#ParticleSystemQuad ret (return value: cc.ParticleSystemQuad)
 
 --------------------------------
 --  creates a Particle Emitter with a number of particles 

@@ -36,7 +36,7 @@
 -- @param #cc.Animation3D animation
 -- @param #float fromTime
 -- @param #float duration
--- @return Animate3D#Animate3D ret (retunr value: cc.Animate3D)
+-- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
 
 --------------------------------
 --  animate transistion time 

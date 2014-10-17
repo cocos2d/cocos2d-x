@@ -24,7 +24,7 @@
 -- @param self
 -- @param #cc.Image image
 -- @param #int format
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 --  Gets max S 
@@ -57,7 +57,7 @@
 -- @function [parent=#Texture2D] getBitsPerPixelForFormat
 -- @param self
 -- @param #int format
--- @return unsigned int#unsigned int ret (retunr value: unsigned int)
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
 
 --------------------------------
 --  Gets the texture name 
@@ -76,7 +76,7 @@
 -- @param #size_table dimensions
 -- @param #int hAlignment
 -- @param #int vAlignment
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 --  Sets max T 

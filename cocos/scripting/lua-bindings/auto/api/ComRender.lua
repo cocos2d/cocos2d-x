@@ -23,7 +23,7 @@
 -- @param self
 -- @param #cc.Node node
 -- @param #char comName
--- @return ComRender#ComRender ret (retunr value: ccs.ComRender)
+-- @return ComRender#ComRender ret (return value: ccs.ComRender)
 
 --------------------------------
 -- 
