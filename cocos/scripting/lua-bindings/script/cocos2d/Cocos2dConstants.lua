@@ -273,6 +273,10 @@ cc.Handler.EVENT_CONTROLLER_KEYDOWN = 60
 cc.Handler.EVENT_CONTROLLER_KEYUP = 61
 cc.Handler.EVENT_CONTROLLER_KEYREPEAT = 62
 cc.Handler.EVENT_CONTROLLER_AXIS = 63
+cc.Handler.EVENT_SPINE_ANIMATION_START = 64
+cc.Handler.EVENT_SPINE_ANIMATION_END = 65
+cc.Handler.EVENT_SPINE_ANIMATION_COMPLETE = 66
+cc.Handler.EVENT_SPINE_ANIMATION_EVENT = 67
 
 
 cc.EVENT_UNKNOWN = 0
@@ -477,7 +481,6 @@ cc.KeyCodeKey =
 
 cc.KeyCode =
 {
-
 }
 
 for k,v in ipairs(cc.KeyCodeKey) do
@@ -485,6 +488,28 @@ for k,v in ipairs(cc.KeyCodeKey) do
 end
 
 cc.KeyCode.KEY_BACK = cc.KeyCode.KEY_ESCAPE
+
+cc.EventAssetsManagerEx =
+{
+    EventCode = 
+    {
+        ERROR_NO_LOCAL_MANIFEST = 0,
+        ERROR_DOWNLOAD_MANIFEST = 1,
+        ERROR_PARSE_MANIFEST = 2,
+        NEW_VERSION_FOUND = 3,
+        ALREADY_UP_TO_DATE = 4,
+        UPDATE_PROGRESSION = 5,
+        ASSET_UPDATED = 6,
+        ERROR_UPDATING = 7,
+        UPDATE_FINISHED = 8,
+    },
+}
+
+cc.AssetsManagerExStatic =
+{
+    VERSION_ID  = "@version",
+    MANIFEST_ID = "@manifest",
+}
 
 cc.EventCode =
 {

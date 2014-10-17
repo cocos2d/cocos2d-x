@@ -855,6 +855,7 @@ Developers:
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
         Fixed link error with Xcode 6 when building with 32-bit architecture
+        Fixed CMake for Mac OS X
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile

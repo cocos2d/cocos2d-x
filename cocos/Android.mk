@@ -190,13 +190,15 @@ physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
+                    $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/base \
+                    $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/nslog 
+                    $(LOCAL_PATH)/../external/nslog
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
@@ -244,12 +246,11 @@ LOCAL_MODULE := cocos2dx_static
 LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_STATIC_LIBRARIES := cocostudio_static
-LOCAL_STATIC_LIBRARIES += audioengine_static
-LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += cocosbuilder_static
+LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
-LOCAL_STATIC_LIBRARIES += box2d_static
+LOCAL_STATIC_LIBRARIES += audioengine_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
@@ -272,5 +273,3 @@ $(call import-module,Box2D)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,protobuf-lite)
-
-

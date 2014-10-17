@@ -38,10 +38,17 @@ extern "C" {
 #define Json_Array 5
 #define Json_Object 6
 
+#ifndef SPINE_JSON_HAVE_PREV
+/* Spine doesn't use the "prev" link in the Json sibling lists. */
+#define SPINE_JSON_HAVE_PREV 0
+#endif
+
 /* The Json structure: */
 typedef struct Json {
 	struct Json* next;
+#if SPINE_JSON_HAVE_PREV
 	struct Json* prev; /* next/prev allow you to walk array/object chains. Alternatively, use getSize/getItem */
+#endif
 	struct Json* child; /* An array or object item will have a child pointer pointing to a chain of the items in the array/object. */
 
 	int type; /* The type of the item, as above. */

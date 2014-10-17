@@ -34,6 +34,8 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+SubmissionInfo
+Generated Files
 
 # Ignore files build by ndk and eclipse
 libs/
@@ -133,7 +135,9 @@ project.properties
 /external/websockets/
 /external/win32-specific/
 /external/winrt-specific/
+/external/winrt_8.1-specific/
 /external/wp8-specific/
+/external/wp_8.1-specific/
 /external/version.json
 /templates/lua-template-runtime/runtime
 /v*-deps-*.zip

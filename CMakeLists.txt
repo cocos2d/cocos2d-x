@@ -87,7 +87,7 @@ if(WINDOWS)
 
   ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)
-elseif(MACOSX)
+elseif(MACOSX OR APPLE)
   ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
   ADD_DEFINITIONS (-DUSE_FILE32API)
   set(PLATFORM_FOLDER mac)
@@ -164,13 +164,13 @@ include_directories(
 
 )
 
-if(LINUX)
+if(LINUX OR APPLE)
 
   find_package(GLFW3 REQUIRED)
   message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
 
-endif(LINUX)
+endif(LINUX OR APPLE)
 
 
 if(NOT MINGW)
@@ -214,7 +214,7 @@ if(NOT MINGW)
 endif()
 
 # build for 3rd party libraries
-if(LINUX)
+if(LINUX OR APPLE)
 add_subdirectory(external/Box2D)
 add_subdirectory(external/unzip)
 add_subdirectory(external/xxhash)

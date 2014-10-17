@@ -32,9 +32,6 @@ NS_CC_BEGIN
 class CC_DLL TrianglesCommand : public RenderCommand
 {
 public:
-    static const int MATERIAL_ID_DO_NOT_BATCH = 0;
-    
-public:
     struct Triangles
     {
         V3F_C4B_T2F* verts;

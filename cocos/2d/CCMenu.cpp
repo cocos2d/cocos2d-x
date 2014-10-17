@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "deprecated/CCString.h"
 
 #include <vector>
-#include <stdarg.h>
 
 using namespace std;
 

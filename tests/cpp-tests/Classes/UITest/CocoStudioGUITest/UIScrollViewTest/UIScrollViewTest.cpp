@@ -39,7 +39,7 @@ bool UIScrollViewTest_Vertical::init()
         
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
-        scrollView->setContentSize(Size(280.0f, 150.0f));
+        scrollView->setContentSize(Size(280.0f, 100.0f));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -71,7 +71,8 @@ bool UIScrollViewTest_Vertical::init()
         
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
         scrollView->addChild(imageView);            
-        
+      
+ 
         return true;
     }
     
@@ -419,6 +420,84 @@ bool UIScrollViewNestTest::init()
 
         
         scrollView->addChild(sc);
+        
+        return true;
+    }
+    
+    return false;
+}
+// UIScrollViewRotated
+
+UIScrollViewRotated::UIScrollViewRotated()
+: _displayValueLabel(nullptr)
+{
+}
+
+UIScrollViewRotated::~UIScrollViewRotated()
+{
+}
+
+bool UIScrollViewRotated::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the scrollview alert will be displayed
+        _displayValueLabel = Text::create("Move by vertical direction", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+                                             widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("ScrollView vertical", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+        
+        // Create the scrollview by vertical
+        ui::ScrollView* scrollView = ui::ScrollView::create();
+        scrollView->setContentSize(Size(280.0f, 150.0f));
+        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        Size backgroundSize = background->getContentSize();
+        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                     (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
+                                     (widgetSize.height - backgroundSize.height) / 2.0f +
+                                     (backgroundSize.height - scrollView->getContentSize().height) / 2.0f + 100) );
+        scrollView->setRotation(45);
+        _uiLayer->addChild(scrollView);
+        
+        ImageView* imageView = ImageView::create("cocosui/ccicon.png");
+        
+        float innerWidth = scrollView->getContentSize().width;
+        float innerHeight = scrollView->getContentSize().height + imageView->getContentSize().height;
+        
+        scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
+        
+        Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(innerWidth / 2.0f, scrollView->getInnerContainerSize().height - button->getContentSize().height / 2.0f));
+        scrollView->addChild(button);
+        
+        Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+        titleButton->setTitleText("Title Button");
+        titleButton->setPosition(Vec2(innerWidth / 2.0f, button->getBottomBoundary() - button->getContentSize().height));
+        scrollView->addChild(titleButton);
+        
+        Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button_scale9->setScale9Enabled(true);
+        button_scale9->setContentSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
+        button_scale9->setPosition(Vec2(innerWidth / 2.0f, titleButton->getBottomBoundary() - titleButton->getContentSize().height));
+        scrollView->addChild(button_scale9);
+        
+        imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
+        scrollView->addChild(imageView);
+        
+     
         
         return true;
     }
