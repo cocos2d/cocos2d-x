@@ -31,6 +31,7 @@
 #include "3d/CCSprite3D.h"
 #include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
+#include "ui/UISlider.h"
 #include "DrawNode3D.h"
 
 #include <algorithm>
@@ -1555,12 +1556,49 @@ VRTest::VRTest()
     _drawDebug->setCameraMask(2);
     addChild(_drawDebug);
     
-    _start.set(s.width * 0.5f + 20, s.height * 0.5f - 10, -50.f);
-    _end.set(s.width * 0.5f, s.height * 0.5f - 10, 50.f);
+    _start.set(s.width * 0.5f + 20, s.height * 0.5f - 10, -40.f);
+    _end.set(s.width * 0.5f, s.height * 0.5f - 10, 60.f);
     _velocity = (_end - _start).getNormalized() * 10;
     _sprite->setPosition3D(_start);
     
+    //add slider
+    ui::Slider* slider = ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPercent(50);
+    slider->setPosition(Vec2(s.width / 2.0f, s.height * 0.2f));
+    slider->setTag(100);
+    addChild(slider);
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 10);
+    auto label = Label::createWithTTF(ttfCount,"distance between eyes: 5");
+    label->setTag(101);
+    addChild(label);
+    label->setPosition(s.width/3.f, s.height / 3.f);
+    
+    slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
+        
+        if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
+        {
+            ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
+            float p = slider->getPercent() / 100.0f;
+            auto scene = getScene();
+            scene->enableVR(p * 10, CameraFlag::USER1);
+            auto s = Director::getInstance()->getWinSize();
+            scene->setVRHeadPosAndRot(Vec3(s.width / 2.f, s.height / 2.f, 100), Vec3::ZERO);
+            
+            auto label = static_cast<Label*>(getChildByTag(101));
+            char str[50];
+            sprintf(str, "distance between eyes: %.2f", p*10);
+            label->setString(str);
+        }
+    });
+    
     scheduleUpdate();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(VRTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 VRTest::~VRTest()
@@ -1573,9 +1611,12 @@ void VRTest::onEnter()
 {
     Sprite3DTestDemo::onEnter();
     auto scene = getScene();
-    scene->enableVR(10.f, CameraFlag::USER1);
+    scene->enableVR(5.f, CameraFlag::USER1);
     auto s = Director::getInstance()->getWinSize();
     scene->setVRHeadPosAndRot(Vec3(s.width / 2.f, s.height / 2.f, 100), Vec3::ZERO);
+    
+//    ui::Slider* slider = static_cast<ui::Slider*>(getChildByTag(100));
+//    slider->setPercent(50);
 }
 
 void VRTest::onExit()
@@ -1591,12 +1632,24 @@ std::string VRTest::title() const
 
 std::string VRTest::subtitle() const
 {
-    return "";
+    return "Tap to show or hide UI ";
 }
 
 void VRTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    
+    static bool showUI = true;
+    showUI = !showUI;
+    auto scene = getScene();
+    if (showUI)
+    {
+        scene->setCameraMask(0);
+        _sprite->setCameraMask(2);
+    }
+    else
+    {
+        scene->setCameraMask(1);
+        _sprite->setCameraMask(2);
+    }
 }
 
 void VRTest::update(float dt)
