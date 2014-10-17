@@ -81,7 +81,7 @@
 -- @param self
 -- @param #string name
 -- @param #ccs.Bone parentBone
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -154,7 +154,7 @@
 -- @param self
 -- @param #string name
 -- @param #ccs.Bone parentBone
--- @return Armature#Armature ret (retunr value: ccs.Armature)
+-- @return Armature#Armature ret (return value: ccs.Armature)
 
 --------------------------------
 -- 

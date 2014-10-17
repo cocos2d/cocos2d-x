@@ -170,7 +170,7 @@
 -- @param #int itemWidth
 -- @param #int itemHeight
 -- @param #int startCharMap
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -324,7 +324,7 @@
 -- @param #int itemWidth
 -- @param #int itemHeight
 -- @param #int startCharMap
--- @return Label#Label ret (retunr value: cc.Label)
+-- @return Label#Label ret (return value: cc.Label)
 
 --------------------------------
 --  Creates a label with an initial string,font[font name or font file],font size, dimension in points, horizontal alignment and vertical alignment.<br>

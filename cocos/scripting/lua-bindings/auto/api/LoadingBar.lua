@@ -76,7 +76,7 @@
 -- @param self
 -- @param #string textureName
 -- @param #float percentage
--- @return LoadingBar#LoadingBar ret (retunr value: ccui.LoadingBar)
+-- @return LoadingBar#LoadingBar ret (return value: ccui.LoadingBar)
 
 --------------------------------
 -- 
