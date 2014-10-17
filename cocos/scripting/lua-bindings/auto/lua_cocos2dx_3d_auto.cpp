@@ -1754,6 +1754,59 @@ int lua_cocos2dx_3d_Animate3D_getTransitionTime(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_3d_Animate3D_createWithFrames(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 3)
+    {
+        cocos2d::Animation3D* arg0;
+        int arg1;
+        int arg2;
+        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Animate3D:createWithFrames");
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.Animate3D:createWithFrames");
+        if(!ok)
+            return 0;
+        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2);
+        object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
+        return 1;
+    }
+    if (argc == 4)
+    {
+        cocos2d::Animation3D* arg0;
+        int arg1;
+        int arg2;
+        double arg3;
+        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Animate3D:createWithFrames");
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.Animate3D:createWithFrames");
+        ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.Animate3D:createWithFrames");
+        if(!ok)
+            return 0;
+        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2, arg3);
+        object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Animate3D:createWithFrames",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Animate3D_createWithFrames'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_3d_Animate3D_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Animate3D)");
@@ -1772,6 +1825,7 @@ int lua_register_cocos2dx_3d_Animate3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getWeight",lua_cocos2dx_3d_Animate3D_getWeight);
         tolua_function(tolua_S,"create", lua_cocos2dx_3d_Animate3D_create);
         tolua_function(tolua_S,"getTransitionTime", lua_cocos2dx_3d_Animate3D_getTransitionTime);
+        tolua_function(tolua_S,"createWithFrames", lua_cocos2dx_3d_Animate3D_createWithFrames);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Animate3D).name();
     g_luaType[typeName] = "cc.Animate3D";
