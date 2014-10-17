@@ -5119,6 +5119,7 @@
         "cocos/scripting/lua-bindings/script/network/DeprecatedNetworkEnum.lua", 
         "cocos/scripting/lua-bindings/script/network/DeprecatedNetworkFunc.lua", 
         "cocos/scripting/lua-bindings/script/network/NetworkConstants.lua", 
+        "cocos/scripting/lua-bindings/script/spine/SpineConstants.lua", 
         "cocos/scripting/lua-bindings/script/ui/DeprecatedUIEnum.lua", 
         "cocos/scripting/lua-bindings/script/ui/DeprecatedUIFunc.lua", 
         "cocos/scripting/lua-bindings/script/ui/GuiConstants.lua", 
