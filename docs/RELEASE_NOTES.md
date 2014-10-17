@@ -125,7 +125,7 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# Highlights of v3.3beta0
+# Highlights of v3.3rc0
 
 TBD
 
