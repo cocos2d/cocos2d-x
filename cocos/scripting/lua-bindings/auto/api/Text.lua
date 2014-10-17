@@ -157,7 +157,7 @@
 -- @param #string textContent
 -- @param #string fontName
 -- @param #int fontSize
--- @return Text#Text ret (retunr value: ccui.Text)
+-- @return Text#Text ret (return value: ccui.Text)
 
 --------------------------------
 -- 

@@ -53,7 +53,7 @@
 -- @function [parent=#ClippingNode] create
 -- @param self
 -- @param #cc.Node stencil
--- @return ClippingNode#ClippingNode ret (retunr value: cc.ClippingNode)
+-- @return ClippingNode#ClippingNode ret (return value: cc.ClippingNode)
 
 --------------------------------
 -- 

@@ -38,7 +38,7 @@
 -- @param self
 -- @param #string text
 -- @param #string filename
--- @return TextBMFont#TextBMFont ret (retunr value: ccui.TextBMFont)
+-- @return TextBMFont#TextBMFont ret (return value: ccui.TextBMFont)
 
 --------------------------------
 -- 
