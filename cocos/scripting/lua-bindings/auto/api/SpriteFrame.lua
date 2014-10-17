@@ -116,7 +116,7 @@
 -- @param #bool rotated
 -- @param #vec2_table offset
 -- @param #size_table originalSize
--- @return SpriteFrame#SpriteFrame ret (retunr value: cc.SpriteFrame)
+-- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
 
 --------------------------------
 -- @overload self, cc.Texture2D, rect_table, bool, vec2_table, size_table         
@@ -128,6 +128,6 @@
 -- @param #bool rotated
 -- @param #vec2_table offset
 -- @param #size_table originalSize
--- @return SpriteFrame#SpriteFrame ret (retunr value: cc.SpriteFrame)
+-- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
 
 return nil

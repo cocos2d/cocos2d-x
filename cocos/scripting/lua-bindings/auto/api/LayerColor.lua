@@ -33,7 +33,7 @@
 -- @param #color4b_table color
 -- @param #float width
 -- @param #float height
--- @return LayerColor#LayerColor ret (retunr value: cc.LayerColor)
+-- @return LayerColor#LayerColor ret (return value: cc.LayerColor)
 
 --------------------------------
 -- 

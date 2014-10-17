@@ -9,7 +9,7 @@
 -- @overload self         
 -- @function [parent=#TargetedAction] getForcedTarget
 -- @param self
--- @return Node#Node ret (retunr value: cc.Node)
+-- @return Node#Node ret (return value: cc.Node)
 
 --------------------------------
 --  Sets the target that the action will be forced to run with 
