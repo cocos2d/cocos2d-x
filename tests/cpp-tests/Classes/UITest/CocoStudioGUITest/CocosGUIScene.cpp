@@ -30,7 +30,7 @@ g_guisTests[] =
         }
     },
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     {
         "WebViewTest",
         [](Ref* sender)
@@ -211,7 +211,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
             sceneManager->setMinUISceneId(kUIScrollViewTest_Vertical);
-            sceneManager->setMaxUISceneId(kUIScrollViewNestTest);
+            sceneManager->setMaxUISceneId(kUIScrollViewRotated);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

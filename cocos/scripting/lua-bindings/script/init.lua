@@ -2,19 +2,24 @@
 require "cocos.cocos2d.Cocos2d"
 require "cocos.cocos2d.Cocos2dConstants"
 require "cocos.cocos2d.extern"
+require "cocos.cocos2d.bitExtend"
 
 -- opengl
 require "cocos.cocos2d.Opengl"
 require "cocos.cocos2d.OpenglConstants"
 
+-- cocosbuilder
+require "cocos.cocosbuilder.CCBReaderLoad"
+
 -- cocosdenshion
 require "cocos.cocosdenshion.AudioEngine"
 
 -- cocosstudio
-require "cocos.cocosstudio.CocosStudio"
+require "cocos.cocostudio.CocoStudio"
 
 -- ui
 require "cocos.ui.GuiConstants"
+require "cocos.ui.experimentalUIConstants"
 
 -- extensions
 require "cocos.extension.ExtensionConstants"
@@ -29,8 +34,8 @@ if CC_USE_DEPRECATED_API then
     require "cocos.cocos2d.DeprecatedCocos2dFunc"
 
     -- register_cocostudio_module
-    require "cocos.cocosstudio.DeprecatedCocoStudioClass"
-    require "cocos.cocosstudio.DeprecatedCocoStudioFunc"
+    require "cocos.cocostudio.DeprecatedCocoStudioClass"
+    require "cocos.cocostudio.DeprecatedCocoStudioFunc"
 
     -- register_cocosbuilder_module
     require "cocos.cocosbuilder.DeprecatedCocosBuilderClass"

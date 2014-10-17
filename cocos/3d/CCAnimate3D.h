@@ -55,6 +55,17 @@ public:
      * @return Animate3D created using animate
      */
     static Animate3D* create(Animation3D* animation, float fromTime, float duration);
+    
+    /**
+     * create Animate3D by frame section, [startFrame, endFrame)
+     * @param animation used to generate animate3D
+     * @param startFrame
+     * @param endFrame
+     * @param frameRate default is 30 per second
+     * @return Animate3D created using animate
+     */
+    static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
+    
     //
     // Overrides
     //

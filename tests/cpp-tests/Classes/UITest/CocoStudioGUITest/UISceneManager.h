@@ -82,6 +82,8 @@ enum
     kUIScrollViewTest_ScrollToPercentBothDirection,
     kUIScrollViewTest_ScrollToPercentBothDirection_Bounce,
     kUIScrollViewNestTest,
+    kUIScrollViewRotated,
+    
     kUIPageViewTest,
     kUIPageViewButtonTest,
     kUIPageViewCustomScrollThreshold,
@@ -100,7 +102,7 @@ enum
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     KWebViewTest,
 #endif
     kUIScale9SpriteTest,

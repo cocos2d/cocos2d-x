@@ -1282,8 +1282,10 @@ void DisplayLinkDirector::startAnimation()
 
     _invalid = false;
 
+#ifndef WP8_SHADER_COMPILER
     Application::getInstance()->setAnimationInterval(_animationInterval);
-    
+#endif
+
     // fix issue #3509, skip one fps to avoid incorrect time calculation.
     setNextDeltaTimeZero(true);
 }

@@ -28,12 +28,17 @@
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "xxhash.h"
-#include "renderer/CCRenderer.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
+
 QuadCommand::QuadCommand()
-:_quads(nullptr)
+:_materialID(0)
+,_textureID(0)
+,_glProgramState(nullptr)
+,_blendType(BlendFunc::DISABLE)
+,_quads(nullptr)
 ,_quadsCount(0)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
@@ -43,49 +48,53 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
-
+    
     _globalOrder = globalOrder;
-
+    
     _quadsCount = quadCount;
     _quads = quad;
     
-    //generate triangles
-    {
-        static std::vector<GLushort> QUADINDICESMAX;
-        if(QUADINDICESMAX.size() == 0)
-        {
-            QUADINDICESMAX.resize(Renderer::INDEX_VBO_SIZE);
-            for(ssize_t i = 0; i < Renderer::INDEX_VBO_SIZE / 6; ++i)
-            {
-                QUADINDICESMAX[ 6 * i + 0] = 4 * i + 0;
-                QUADINDICESMAX[ 6 * i + 1] = 4 * i + 1;
-                QUADINDICESMAX[ 6 * i + 2] = 4 * i + 2;
-                QUADINDICESMAX[ 6 * i + 3] = 4 * i + 3;
-                QUADINDICESMAX[ 6 * i + 4] = 4 * i + 2;
-                QUADINDICESMAX[ 6 * i + 5] = 4 * i + 1;
-            }
-        }
-        
-        _triangles.vertCount = quadCount * 4;
-        _triangles.indexCount = quadCount * 6;
-        _triangles.indices = &QUADINDICESMAX[0];
-        _triangles.verts = &quad->tl;
-    }
-
     _mv = mv;
-
+    
     if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst || _glProgramState != glProgramState) {
-
+        
         _textureID = textureID;
         _blendType = blendType;
         _glProgramState = glProgramState;
-
+        
         generateMaterialID();
     }
 }
 
 QuadCommand::~QuadCommand()
 {
+}
+
+void QuadCommand::generateMaterialID()
+{
+    
+    if(_glProgramState->getUniformCount() > 0)
+    {
+        _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+    }
+    else
+    {
+        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
+        int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
+        
+        _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+    }
+}
+
+void QuadCommand::useMaterial() const
+{
+    //Set texture
+    GL::bindTexture2D(_textureID);
+    
+    //set blend mode
+    GL::blendFunc(_blendType.src, _blendType.dst);
+    
+    _glProgramState->apply(_mv);
 }
 
 NS_CC_END

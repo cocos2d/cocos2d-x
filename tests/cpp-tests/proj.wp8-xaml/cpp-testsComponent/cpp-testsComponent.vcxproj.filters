@@ -329,7 +329,13 @@
       <UniqueIdentifier>{f3b97ed6-a90e-4abc-b916-f91da5de888d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\LightTest">
-      <UniqueIdentifier>{a7609300-6bd1-4671-9a1d-0ab8a4c3f54d}</UniqueIdentifier>
+      <UniqueIdentifier>{e5476084-161e-4bfc-9f08-1dcd000dd122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUITest\UIEditBoxTest">
+      <UniqueIdentifier>{af74683d-52b5-41a8-b153-62d2609b0035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\AssetsManagerExLoaderScene">
+      <UniqueIdentifier>{1cefd884-4b0a-4952-bbcb-0b03be19330b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -675,7 +681,6 @@
     <ClCompile Include="..\..\Classes\ConfigurationTest\ConfigurationTest.cpp">
       <Filter>Classes\ConfigurationTest</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
@@ -864,7 +869,6 @@
     <ClCompile Include="..\..\Classes\Camera3DTest\Camera3DTest.cpp">
       <Filter>Classes\Camera3DTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\..\Classes\BillBoardTest\BillBoardTest.cpp">
       <Filter>Classes\BillBoardTest</Filter>
     </ClCompile>
@@ -873,6 +877,13 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\LightTest\LightTest.cpp">
       <Filter>Classes\LightTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\cocos\platform\winrt\pch.cpp" />
+    <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
+      <Filter>Classes\UITest\CocosStudioGUITest\UIEditBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExLoaderScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1416,7 +1427,6 @@
     <ClInclude Include="..\..\Classes\ShaderTest\ShaderTest2.h">
       <Filter>Classes\ShaderTest</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
@@ -1606,7 +1616,6 @@
     <ClInclude Include="..\..\Classes\Camera3DTest\Camera3DTest.h">
       <Filter>Classes\Camera3DTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
     <ClInclude Include="..\..\Classes\BillBoardTest\BillBoardTest.h">
       <Filter>Classes\BillBoardTest</Filter>
     </ClInclude>
@@ -1616,19 +1625,21 @@
     <ClInclude Include="..\..\Classes\LightTest\LightTest.h">
       <Filter>Classes\LightTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\cocos\platform\winrt\pch.h" />
+    <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
+      <Filter>Classes\UITest\CocosStudioGUITest\UIEditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExLoaderScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libcurl.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libeay32.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\ssleay32.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\ARM\libEGL_phone.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\ARM\libGLESv2_phone.dll" />
-    <None Include="..\..\..\..\external\websockets\prebuilt\wp8\arm\libwebsockets.dll" />
-    <None Include="..\..\..\..\external\websockets\prebuilt\wp8\win32\libwebsockets.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\win32\libcurl.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\win32\libeay32.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\win32\ssleay32.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\Win32\libEGL_phone.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\Win32\libGLESv2_phone.dll" />
+    <None Include="$(AngleBinPath)libEGL_phone.dll" />
+    <None Include="$(AngleBinPath)libGLESv2_phone.dll" />
+    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
+    <None Include="$(SQLiteBinPath)sqlite3.dll" />
+    <None Include="$(CurlBinPath)libcurl.dll" />
+    <None Include="$(CurlBinPath)libeay32.dll" />
+    <None Include="$(CurlBinPath)ssleay32.dll" />
   </ItemGroup>
 </Project>

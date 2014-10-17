@@ -449,22 +449,20 @@ namespace cocostudio
         int opacity = widgetOptions.has_alpha() ? widgetOptions.alpha() : 255;
         panel->setOpacity(opacity);
         
-//        int bgimgcr = widgetOptions.has_colorr() ? widgetOptions.colorr() : 255;
-//        int bgimgcg = widgetOptions.has_colorg() ? widgetOptions.colorg() : 255;
-//        int bgimgcb = widgetOptions.has_colorb() ? widgetOptions.colorb() : 255;
-//        panel->setBackGroundImageColor(Color3B(bgimgcr, bgimgcg, bgimgcb));
-//        
-//        int bgimgopacity = widgetOptions.has_opacity() ? widgetOptions.opacity() : 255;
-//        panel->setBackGroundImageOpacity(bgimgopacity);
-        
         
         // other commonly protperties
         setAnchorPointForWidget(widget, nodeTree);
         
         bool flipX = widgetOptions.flipx();
         bool flipY = widgetOptions.flipy();
-        widget->setFlippedX(flipX);
-        widget->setFlippedY(flipY);
+        if (flipX)
+        {
+            widget->setFlippedX(flipX);
+        }
+        if (flipY)
+        {
+            widget->setFlippedY(flipY);
+        }
     }
     
     void LayoutReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
@@ -547,11 +545,11 @@ namespace cocostudio
             
             if (name == "Size")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "X")
@@ -568,11 +566,11 @@ namespace cocostudio
             }
             else if (name == "CColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "R")
@@ -596,11 +594,11 @@ namespace cocostudio
             }
             else if (name == "SingleColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "R")
@@ -621,11 +619,11 @@ namespace cocostudio
             }
             else if (name == "EndColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "R")
@@ -646,10 +644,10 @@ namespace cocostudio
             }
             else if (name == "FirstColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "R")
@@ -670,10 +668,10 @@ namespace cocostudio
             }
             else if (name == "ColorVector")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "ScaleX")
@@ -690,11 +688,11 @@ namespace cocostudio
             }
             else if (name == "FileData")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "Path")
@@ -768,7 +766,5 @@ namespace cocostudio
             }
         }
         
-//        panel->setBackGroundImageColor(Color3B(bgimg_red, bgimg_green, bgimg_blue));
-//        panel->setBackGroundImageOpacity(bgimg_opacity);
     }
 }

@@ -12,12 +12,12 @@
     <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
+    <ClCompile Include="..\..\..\..\cocos\platform\winrt\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -29,26 +29,21 @@
     <ClInclude Include="..\..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DContentProvider.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
+    <ClInclude Include="..\..\..\..\cocos\platform\winrt\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\Win32\libGLESv2_phone.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\Win32\libEGL_phone.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\win32\libcurl.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\win32\libeay32.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\win32\ssleay32.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\ARM\libEGL_phone.dll" />
-    <None Include="..\..\..\..\external\wp8-specific\angle\prebuilt\ARM\libGLESv2_phone.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libcurl.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\libeay32.dll" />
-    <None Include="..\..\..\..\external\curl\prebuilt\wp8\arm\ssleay32.dll" />
-    <None Include="..\..\..\..\external\websockets\prebuilt\wp8\win32\libwebsockets.dll" />
-    <None Include="..\..\..\..\external\websockets\prebuilt\wp8\arm\libwebsockets.dll" />
+    <None Include="$(AngleBinPath)libEGL_phone.dll" />
+    <None Include="$(AngleBinPath)libGLESv2_phone.dll" />
+    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
+    <None Include="$(SQLiteBinPath)sqlite3.dll" />
+    <None Include="$(CurlBinPath)libcurl.dll" />
+    <None Include="$(CurlBinPath)libeay32.dll" />
+    <None Include="$(CurlBinPath)ssleay32.dll" />
   </ItemGroup>
 </Project>

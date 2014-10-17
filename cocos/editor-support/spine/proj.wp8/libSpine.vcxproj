@@ -52,20 +52,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
-    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+    <Import Project="..\..\..\2d\wp8_props\cocos2d_wp8.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
-    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+    <Import Project="..\..\..\2d\wp8_props\cocos2d_wp8.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
-    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+    <Import Project="..\..\..\2d\wp8_props\cocos2d_wp8.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <Import Project="..\..\..\2d\cocos2d_wp8_headers.props" />
-    <Import Project="..\..\..\2d\cocos2d_winrt.props" />
+    <Import Project="..\..\..\2d\wp8_props\cocos2d_wp8.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -74,13 +70,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -94,12 +91,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -113,13 +111,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WP8;_DEBUG;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -133,12 +132,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <PreprocessorDefinitions>_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\editor-support;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <PreprocessorDefinitions>WP8;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -158,10 +158,6 @@
       <Private>false</Private>
     </Reference>
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
   <ItemGroup>
     <ClInclude Include="..\Animation.h" />
     <ClInclude Include="..\AnimationState.h" />
@@ -173,55 +169,192 @@
     <ClInclude Include="..\Bone.h" />
     <ClInclude Include="..\BoneData.h" />
     <ClInclude Include="..\BoundingBoxAttachment.h" />
-    <ClInclude Include="..\CCSkeleton.h" />
-    <ClInclude Include="..\CCSkeletonAnimation.h" />
-    <ClInclude Include="..\extension.h" />
     <ClInclude Include="..\Event.h" />
     <ClInclude Include="..\EventData.h" />
+    <ClInclude Include="..\extension.h" />
+    <ClInclude Include="..\IkConstraint.h" />
+    <ClInclude Include="..\IkConstraintData.h" />
     <ClInclude Include="..\Json.h" />
+    <ClInclude Include="..\MeshAttachment.h" />
+    <ClInclude Include="..\PolygonBatch.h" />
     <ClInclude Include="..\RegionAttachment.h" />
     <ClInclude Include="..\Skeleton.h" />
+    <ClInclude Include="..\SkeletonAnimation.h" />
     <ClInclude Include="..\SkeletonBounds.h" />
     <ClInclude Include="..\SkeletonData.h" />
     <ClInclude Include="..\SkeletonJson.h" />
+    <ClInclude Include="..\SkeletonRenderer.h" />
     <ClInclude Include="..\Skin.h" />
+    <ClInclude Include="..\SkinnedMeshAttachment.h" />
     <ClInclude Include="..\Slot.h" />
     <ClInclude Include="..\SlotData.h" />
     <ClInclude Include="..\spine-cocos2dx.h" />
     <ClInclude Include="..\spine.h" />
-    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Animation.cpp" />
-    <ClCompile Include="..\AnimationState.cpp" />
-    <ClCompile Include="..\AnimationStateData.cpp" />
-    <ClCompile Include="..\Atlas.cpp" />
-    <ClCompile Include="..\AtlasAttachmentLoader.cpp" />
-    <ClCompile Include="..\Attachment.cpp" />
-    <ClCompile Include="..\AttachmentLoader.cpp" />
-    <ClCompile Include="..\Bone.cpp" />
-    <ClCompile Include="..\BoneData.cpp" />
-    <ClCompile Include="..\BoundingBoxAttachment.cpp" />
-    <ClCompile Include="..\CCSkeleton.cpp" />
-    <ClCompile Include="..\CCSkeletonAnimation.cpp" />
-    <ClCompile Include="..\extension.cpp" />
-    <ClCompile Include="..\Event.cpp" />
-    <ClCompile Include="..\EventData.cpp" />
-    <ClCompile Include="..\Json.cpp" />
-    <ClCompile Include="..\RegionAttachment.cpp" />
-    <ClCompile Include="..\Skeleton.cpp" />
-    <ClCompile Include="..\SkeletonBounds.cpp" />
-    <ClCompile Include="..\SkeletonData.cpp" />
-    <ClCompile Include="..\SkeletonJson.cpp" />
-    <ClCompile Include="..\Skin.cpp" />
-    <ClCompile Include="..\Slot.cpp" />
-    <ClCompile Include="..\SlotData.cpp" />
-    <ClCompile Include="..\spine-cocos2dx.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    <ClCompile Include="..\Animation.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
     </ClCompile>
+    <ClCompile Include="..\AnimationState.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\AnimationStateData.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Atlas.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\AtlasAttachmentLoader.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Attachment.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\AttachmentLoader.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Bone.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\BoneData.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\BoundingBoxAttachment.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Event.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\EventData.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\extension.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\IkConstraint.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\IkConstraintData.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Json.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\MeshAttachment.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\PolygonBatch.cpp" />
+    <ClCompile Include="..\RegionAttachment.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Skeleton.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonAnimation.cpp" />
+    <ClCompile Include="..\SkeletonBounds.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonData.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonJson.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonRenderer.cpp" />
+    <ClCompile Include="..\Skin.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\SkinnedMeshAttachment.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\Slot.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\SlotData.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="..\spine-cocos2dx.cpp" />
   </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

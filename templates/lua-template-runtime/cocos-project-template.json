@@ -26,14 +26,35 @@
                 ]
             },
             {
-                "from": "external/win32-specific/zlib/prebuilt",
+                "from": "external/win32-specific/icon/prebuilt",
                 "to": "runtime/win32",
                 "include": [
                     "*.dll"
                 ]
             },
             {
-                "from": "external/win32-specific/icon/prebuilt",
+                "from": "external/win32-specific/MP3Decoder/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/OggDecoder/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/OpenalSoft/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/zlib/prebuilt",
                 "to": "runtime/win32",
                 "include": [
                     "*.dll"

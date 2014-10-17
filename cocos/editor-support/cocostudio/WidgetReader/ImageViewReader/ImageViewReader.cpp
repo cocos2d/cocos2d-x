@@ -199,14 +199,6 @@ namespace cocostudio
         
         // other commonly protperties
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-
-		bool flipX   = options.flippedx();
-		bool flipY   = options.flippedy();
-    
-		if(flipX != false)
-			imageView->setFlippedX(flipX);
-		if(flipY != false)
-			imageView->setFlippedY(flipY);
     }
     
     void ImageViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
@@ -269,11 +261,11 @@ namespace cocostudio
             
             if (name == "Size" && scale9Enabled)
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "X")
@@ -290,13 +282,13 @@ namespace cocostudio
             }
             else if (name == "FileData")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 int resourceType = 0;
                 std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "Path")

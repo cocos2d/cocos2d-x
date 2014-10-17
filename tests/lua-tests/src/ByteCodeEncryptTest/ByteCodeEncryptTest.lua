@@ -1,8 +1,8 @@
 local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 local isIOS64bit     = cc.Application:getInstance():isIOS64bit()
 if cc.PLATFORM_OS_LINUX ~= targetPlatform and isIOS64bit ~= true then
-require("src/ByteCodeEncryptTest/ByteCodeTest")
-require("src/ByteCodeEncryptTest/ByteCodeAndEncryptTest")
+require("ByteCodeEncryptTest/ByteCodeTest")
+require("ByteCodeEncryptTest/ByteCodeAndEncryptTest")
 end
 
 local LINE_SPACE = 40

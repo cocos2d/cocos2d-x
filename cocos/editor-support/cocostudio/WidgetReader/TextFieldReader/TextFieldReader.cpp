@@ -165,7 +165,7 @@ namespace cocostudio
             textField->setPlaceHolder(placeholder);
         }
         std::string text = options.has_text() ? options.text() : "Text Field";
-        textField->setText(text);
+        textField->setString(text);
         
         int fontSize = options.has_fontsize() ? options.fontsize() : 20;
         textField->setFontSize(fontSize);
@@ -174,19 +174,7 @@ namespace cocostudio
         std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
         textField->setFontName(fontName);
         
-        //        bool tsw = options.has_touchsizewidth();
-        //        bool tsh = options.has_touchsizeheight();
-        //        if (tsw && tsh)
-        //        {
-        //            textField->setTouchSize(Size(options.touchsizewidth(), options.touchsizeheight()));
-        //        }
-        
-        //        float dw = DICTOOL->getFloatValue_json(options, "width");
-        //        float dh = DICTOOL->getFloatValue_json(options, "height");
-        //        if (dw > 0.0f || dh > 0.0f)
-        //        {
-        //            //textField->setSize(Size(dw, dh));
-        //        }
+
         bool maxLengthEnable = options.maxlengthenable();
         textField->setMaxLengthEnabled(maxLengthEnable);
         
@@ -244,7 +232,7 @@ namespace cocostudio
             }
             else if (name == "LabelText")
             {
-                textField->setText(value);
+                textField->setString(value);
             }
             else if (name == "FontSize")
             {
@@ -273,16 +261,6 @@ namespace cocostudio
             else if (name == "IsCustomSize")
             {
                 isCustomSize = ((value == "True") ? true : false);
-//                if (value == "Custom")
-//                {
-//                    float areaWidth = 0.0f;
-//                    objectData->QueryFloatAttribute("Width", &areaWidth);
-//                    
-//                    float areaHeight = 0.0f;
-//                    objectData->QueryFloatAttribute("Height", &areaHeight);
-//                    
-//                    textField->setTextAreaSize(Size(areaWidth, areaHeight));
-//                }
             }
             else if (name == "Alpha")
             {
@@ -300,11 +278,11 @@ namespace cocostudio
             
             if (name == "Size")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "X")
@@ -321,13 +299,13 @@ namespace cocostudio
             }
             else if (name == "FontResource")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                attribute = child->FirstAttribute();
                 int resourceType = 0;
                 std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
-                    std::string name = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
                     if (name == "Path")

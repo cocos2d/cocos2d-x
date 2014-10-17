@@ -101,6 +101,7 @@ Platform::String^ PlatformStringFromString(const std::string& s)
     return ref new Platform::String(ws.data(), ws.length());
 }
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
 float ConvertDipsToPixels(float dips)
 {
@@ -112,9 +113,12 @@ float getScaledDPIValue(float v) {
 	auto dipFactor = DisplayProperties::LogicalDpi / 96.0f;
 	return v * dipFactor;
 }
+#endif
+
 
 void CC_DLL CCLogIPAddresses()
 {
+#ifndef WP8_SHADER_COMPILER
     auto hostnames = NetworkInformation::GetHostNames();
     int length = hostnames->Size;
 
@@ -127,6 +131,7 @@ void CC_DLL CCLogIPAddresses()
             CCLog("IP Address: %s:", s.c_str());
         }
     }
+#endif
 }
 
 std::string CC_DLL getDeviceIPAddresses()

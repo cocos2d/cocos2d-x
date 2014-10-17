@@ -33,6 +33,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RawStencilBufferTest5),
     CL(RawStencilBufferTest6),
     CL(ClippingToRenderTextureTest),
+    CL(ClippingRectangleNodeTest),
 };
 
 static int sceneIdx=-1;
@@ -1095,6 +1096,32 @@ void ClippingToRenderTextureTest::reproduceBug()
     rt->beginWithClear(0.3f, 0, 0, 1);
     container->visit();
     rt->end();
+}
+
+// ClippingRectangleNodeDemo
+
+std::string ClippingRectangleNodeTest::title() const
+{
+	return "ClippingRectangleNode Test";
+}
+
+std::string ClippingRectangleNodeTest::subtitle() const
+{
+	return "more effectively";
+}
+
+void ClippingRectangleNodeTest::setup()
+{
+    auto clipper = ClippingRectangleNode::create();
+    clipper->setClippingRegion(Rect(this->getContentSize().width / 2 - 100, this->getContentSize().height / 2 - 100, 200, 200));
+    clipper->setTag( kTagClipperNode );
+    this->addChild(clipper);
+    
+    auto content = Sprite::create(s_back2);
+    content->setTag( kTagContentNode );
+    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
+    clipper->addChild(content);
 }
 
 

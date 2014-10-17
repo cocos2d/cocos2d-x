@@ -175,7 +175,7 @@ public:
      * @lua initWithString
      */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CCGLProgram with precompiled shader program */
     static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
@@ -343,7 +343,7 @@ protected:
     struct _hashUniformEntry* _hashForUniforms;
     bool              _hasShaderCompiler;
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     std::string       _shaderId;
 #endif
 

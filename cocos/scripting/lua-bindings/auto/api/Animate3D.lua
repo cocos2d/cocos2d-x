@@ -45,6 +45,21 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- create Animate3D by frame section, [startFrame, endFrame)<br>
+-- param animation used to generate animate3D<br>
+-- param startFrame<br>
+-- param endFrame<br>
+-- param frameRate default is 30 per second<br>
+-- return Animate3D created using animate
+-- @function [parent=#Animate3D] createWithFrames 
+-- @param self
+-- @param #cc.Animation3D animation
+-- @param #int startFrame
+-- @param #int endFrame
+-- @param #float frameRate
+-- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
+        
+--------------------------------
 -- 
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self
