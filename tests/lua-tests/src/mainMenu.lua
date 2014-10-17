@@ -62,7 +62,7 @@ local BeginPos = {x = 0, y = 0}
 
 local audioEndineSupported = false
 local currPlatform = cc.Application:getInstance():getTargetPlatform()
-if (cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
+if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
     audioEndineSupported = true
 end
 
