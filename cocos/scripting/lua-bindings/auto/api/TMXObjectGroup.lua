@@ -36,7 +36,7 @@
 -- @overload self         
 -- @function [parent=#TMXObjectGroup] getObjects
 -- @param self
--- @return array_table#array_table ret (retunr value: array_table)
+-- @return array_table#array_table ret (return value: array_table)
 
 --------------------------------
 -- 
@@ -49,7 +49,7 @@
 -- @overload self         
 -- @function [parent=#TMXObjectGroup] getProperties
 -- @param self
--- @return map_table#map_table ret (retunr value: map_table)
+-- @return map_table#map_table ret (return value: map_table)
 
 --------------------------------
 -- 

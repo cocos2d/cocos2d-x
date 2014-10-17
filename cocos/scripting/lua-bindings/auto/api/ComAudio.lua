@@ -101,7 +101,7 @@
 -- @param self
 -- @param #char pszFilePath
 -- @param #bool bLoop
--- @return unsigned int#unsigned int ret (retunr value: unsigned int)
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
 
 --------------------------------
 -- 
