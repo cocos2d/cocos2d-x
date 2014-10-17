@@ -521,7 +521,7 @@ int lua_cocos2dx_DrawNode3D_drawCube(lua_State* L)
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L, 2);
-#ifndef TOLUA_RELEASE
+#if COCOS2D_DEBUG >= 1
             if (!tolua_istable(L, -1, 0, &tolua_err))
             {
                 lua_pop(L, 1);
@@ -530,7 +530,7 @@ int lua_cocos2dx_DrawNode3D_drawCube(lua_State* L)
 #endif
             ok &= luaval_to_vec3(L, lua_gettop(L), &vec3);
             
-#ifndef TOLUA_RELEASE
+#if COCOS2D_DEBUG >= 1
             if (!ok)
             {
                 lua_pop(L, 1);

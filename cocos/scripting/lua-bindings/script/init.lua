@@ -2,6 +2,7 @@
 require "cocos.cocos2d.Cocos2d"
 require "cocos.cocos2d.Cocos2dConstants"
 require "cocos.cocos2d.extern"
+require "cocos.cocos2d.bitExtend"
 
 -- opengl
 require "cocos.cocos2d.Opengl"
