@@ -186,7 +186,7 @@ function TestActionTimeline.extend(target)
 end
 
 function TestActionTimeline:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
+    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
     local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
     local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
@@ -239,7 +239,7 @@ function TestChangePlaySection.extend(target)
 end
 
 function TestChangePlaySection:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
+    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
     local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
     local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
@@ -306,7 +306,7 @@ function TestTimelineFrameEvent.extend(target)
 end
 
 function TestTimelineFrameEvent:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
+    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
     local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
     local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
@@ -374,7 +374,7 @@ function TestTimelinePerformance.extend(target)
 end
 
 function TestTimelinePerformance:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
+    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
     for i = 1,100 do
         local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
