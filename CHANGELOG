@@ -3,6 +3,7 @@ cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           Added ClippingRectangleNode
     [NEW]           Added AssetsManagerEx, which is more powerful than AssetsManager
     [NEW]           Added a test case of sprite lamp effect
+    [NEW]           Animate3D: can create with start frame and end frame
     [NEW]           Audio: new audio supports Mac OS X and Windows
     [NEW]           Application: added openUrl()
     [NEW]           Armature: added getOffsetPoints()
