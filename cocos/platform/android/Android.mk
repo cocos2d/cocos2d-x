@@ -37,4 +37,6 @@ LOCAL_EXPORT_LDLIBS := -lGLESv1_CM \
 
 LOCAL_CPPFLAGS := -Wno-extern-c-compat
 
+LOCAL_EXPORT_CPPFLAGS := -Wno-extern-c-compat
+
 include $(BUILD_STATIC_LIBRARY)
