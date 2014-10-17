@@ -6,7 +6,7 @@ LOCAL_MODULE := cocos_localstorage_static
 LOCAL_MODULE_FILENAME := liblocalstorage
 
 LOCAL_SRC_FILES := LocalStorage.cpp \
-LocalStorageAndroid.cpp 
+LocalStorage-android.cpp 
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
