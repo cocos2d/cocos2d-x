@@ -321,6 +321,10 @@ protected:
     cocos2d::Sprite3D* _mirrorSprite;
 };
 
+
+/**
+ * This test is for 3d glass, you can get 3d scene using Google Cardboard or VR from Nibiru
+ */
 class VRTest : public Sprite3DTestDemo
 {
 public:
