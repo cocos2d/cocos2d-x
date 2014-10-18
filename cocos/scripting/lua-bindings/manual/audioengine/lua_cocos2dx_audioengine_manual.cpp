@@ -23,9 +23,10 @@
  ****************************************************************************/
 #include "platform/CCPlatformConfig.h"
 
+#include "lua_cocos2dx_audioengine_manual.h"
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "lua_cocos2dx_audioengine_manual.h"
 #include "lua_cocos2dx_audioengine_auto.hpp"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -316,6 +317,13 @@ int register_audioengine_module(lua_State* L)
     }
     lua_pop(L, 1);
     
+    return 1;
+}
+
+#else
+
+int register_audioengine_module(lua_State* L)
+{
     return 1;
 }
 
