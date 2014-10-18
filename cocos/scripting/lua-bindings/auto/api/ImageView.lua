@@ -53,7 +53,7 @@
 -- @param self
 -- @param #string imageFileName
 -- @param #int texType
--- @return ImageView#ImageView ret (retunr value: ccui.ImageView)
+-- @return ImageView#ImageView ret (return value: ccui.ImageView)
 
 --------------------------------
 -- 

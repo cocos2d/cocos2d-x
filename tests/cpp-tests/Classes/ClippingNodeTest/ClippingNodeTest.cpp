@@ -979,12 +979,16 @@ std::string ClippingToRenderTextureTest::subtitle() const
 void ClippingToRenderTextureTest::setup()
 {
     auto button = MenuItemFont::create("Reproduce bug", [&](Ref *sender) {
+        std::vector<Node*> nodes;
         enumerateChildren("remove me [0-9]", [&](Node *node) {
-            this->removeChild(node);
-            this->reproduceBug();
+            nodes.push_back(node);
             return false;
+        });
+        for (auto node : nodes)
+        {
+            this->removeChild(node);
         }
-                          );
+        this->reproduceBug();
     });
 
     auto s = Director::getInstance()->getWinSize();

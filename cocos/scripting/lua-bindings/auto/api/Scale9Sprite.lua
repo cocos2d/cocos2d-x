@@ -20,7 +20,7 @@
 -- @param #vec2_table offset
 -- @param #size_table originalSize
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- Returns the flag which indicates whether the widget is flipped horizontally or not.<br>
@@ -71,7 +71,7 @@
 -- @param self
 -- @param #string spriteFrameName
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -98,7 +98,7 @@
 -- @param #vec2_table offset
 -- @param #size_table originalSize
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -164,7 +164,7 @@
 -- @param #string file
 -- @param #rect_table rect
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -185,7 +185,7 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -233,7 +233,7 @@
 -- @param #string file
 -- @param #rect_table rect
 -- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- @overload self, string, rect_table         
@@ -242,7 +242,7 @@
 -- @param self
 -- @param #string spriteFrameName
 -- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- @overload self, cc.SpriteFrame, rect_table         
@@ -251,7 +251,7 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- 

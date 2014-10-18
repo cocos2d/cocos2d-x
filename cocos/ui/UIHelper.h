@@ -81,6 +81,7 @@ public:
     
     static void doLayout(Node *rootNode);
 
+    static void changeLayoutSystemActiveState(bool bActive);
 };
 }
 
