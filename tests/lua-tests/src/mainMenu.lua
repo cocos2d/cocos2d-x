@@ -27,6 +27,7 @@ require "KeypadTest/KeypadTest"
 require "LabelTest/LabelTest"
 require "LabelTestNew/LabelTestNew"
 require "LayerTest/LayerTest"
+require "LightTest/LightTest"
 require "MenuTest/MenuTest"
 require "MotionStreakTest/MotionStreakTest"
 require "NewEventDispatcherTest/NewEventDispatcherTest"
@@ -99,6 +100,7 @@ local _allTests = {
     { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
     { isSupported = true,  name = "LabelTestNew"           , create_func   =                 LabelTestNew      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
+    { isSupported = true,  name = "LightTest"          , create_func   =                 LightTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
