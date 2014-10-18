@@ -82,6 +82,13 @@
                 ]
             },
             {
+                "from": "external/sqlite3/libraries/win32",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
                 "from": "external/tiff/prebuilt/win32",
                 "to": "runtime/win32",
                 "include": [
