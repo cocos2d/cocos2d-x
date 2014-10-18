@@ -10466,49 +10466,6 @@ int lua_cocos2dx_studio_Armature_setParentBone(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_studio_Armature_drawContour(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::Armature* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.Armature",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::Armature*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Armature_drawContour'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->drawContour();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Armature:drawContour",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Armature_drawContour'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_studio_Armature_setBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10990,7 +10947,6 @@ int lua_register_cocos2dx_studio_Armature(lua_State* tolua_S)
         tolua_function(tolua_S,"getBatchNode",lua_cocos2dx_studio_Armature_getBatchNode);
         tolua_function(tolua_S,"init",lua_cocos2dx_studio_Armature_init);
         tolua_function(tolua_S,"setParentBone",lua_cocos2dx_studio_Armature_setParentBone);
-        tolua_function(tolua_S,"drawContour",lua_cocos2dx_studio_Armature_drawContour);
         tolua_function(tolua_S,"setBatchNode",lua_cocos2dx_studio_Armature_setBatchNode);
         tolua_function(tolua_S,"setArmatureData",lua_cocos2dx_studio_Armature_setArmatureData);
         tolua_function(tolua_S,"addBone",lua_cocos2dx_studio_Armature_addBone);
