@@ -26,7 +26,7 @@ void UIButtonTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/windows_UIButton_Editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton/windows_UIButton_Editor_1.json"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -38,7 +38,7 @@ void UIButtonTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/windows_UIButton_Editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIButton/windows_UIButton_Editor_1.csb"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -110,7 +110,7 @@ bool UIButtonTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIButton_Editor/crossplatform_UIButton_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIButton/crossplatform_UIButton_Editor_1.csb");
         Node* child = node->getChildByTag(4);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

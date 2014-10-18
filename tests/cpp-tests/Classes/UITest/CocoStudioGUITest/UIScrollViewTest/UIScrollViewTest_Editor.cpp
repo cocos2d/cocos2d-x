@@ -26,7 +26,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/windows_ui_scrollview_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView/Vertical/windows_ui_scrollview_editor_1.json"));
             
             _touchGroup->addChild(_layout);
             
@@ -39,7 +39,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/windows_ui_scrollview_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView/Vertical/windows_ui_scrollview_editor_1.csb"));
             
             _touchGroup->addChild(_layout);
             
@@ -52,7 +52,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Vertical/crossplatform_UIScrollView_Vertical_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -67,7 +67,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Vertical/crossplatform_UIScrollView_Vertical_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -121,7 +121,7 @@ bool UIScrollViewTest_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Vertical/crossplatform_UIScrollView_Vertical_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -165,7 +165,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/windows_ui_scrollview_horizontal_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView/Horizontal/windows_ui_scrollview_horizontal_editor_1.json"));
             
             _touchGroup->addChild(_layout);
             
@@ -178,7 +178,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/windows_ui_scrollview_horizontal_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView/Horizontal/windows_ui_scrollview_horizontal_editor_1.csb"));
             
             _touchGroup->addChild(_layout);
             
@@ -191,7 +191,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Horizontal/crossplatform_UIScrollView_Horizontal_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -206,7 +206,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Horizontal/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -261,7 +261,7 @@ bool UIScrollViewTest_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Horizontal/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -305,7 +305,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/windows_ui_scrollview_both_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView/Both/windows_ui_scrollview_both_editor_1.json"));
             
             _touchGroup->addChild(_layout);
             
@@ -318,7 +318,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/windows_ui_scrollview_both_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView/Both/windows_ui_scrollview_both_editor_1.csb"));
             
             _touchGroup->addChild(_layout);
             
@@ -331,7 +331,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/crossplatform_UIScrollView_Both_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -346,7 +346,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/crossplatform_UIScrollView_Both_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -399,7 +399,7 @@ bool UIScrollViewTest_Both_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/crossplatform_UIScrollView_Both_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
