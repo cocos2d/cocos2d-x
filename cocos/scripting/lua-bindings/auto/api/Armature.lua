@@ -91,11 +91,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#Armature] drawContour 
--- @param self
-        
---------------------------------
--- 
 -- @function [parent=#Armature] setBatchNode 
 -- @param self
 -- @param #ccs.BatchNode batchNode
