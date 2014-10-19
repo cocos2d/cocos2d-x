@@ -42,6 +42,8 @@ THE SOFTWARE.
 #include <agile.h>
 #include <DirectXMath.h>
 
+#include <EGL/egl.h>
+
 
 NS_CC_BEGIN
 
@@ -59,8 +61,6 @@ public:
     virtual void swapBuffers();
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    const Mat4& getOrientationMatrix() const;
-    const Mat4& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
     Size getRenerTargetSize() const { return Size(m_width, m_height); }
@@ -71,8 +71,7 @@ public:
     void ShowKeyboard(Windows::Foundation::Rect r);
     void HideKeyboard(Windows::Foundation::Rect r);
 
-    // WP8 XAML app
-    virtual bool Create(float width, float height, Windows::Graphics::Display::DisplayOrientations orientation);
+    virtual bool Create(float width, float height ,Windows::Graphics::Display::DisplayOrientations orientation);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -116,9 +115,6 @@ public:
 	static GLViewImpl* sharedOpenGLView();
 
     void ProcessEvents();
-    void AddPointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-
-
 
 protected:
     GLViewImpl();
@@ -144,7 +140,6 @@ private:
 
 	void OnRendering();
 	void UpdateWindowSize();
-    void UpdateOrientationMatrix();
 
     cocos2d::Vec2 TransformToOrientation(Windows::Foundation::Point point);
  	cocos2d::Vec2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
@@ -162,9 +157,6 @@ private:
 	bool m_lastPointValid;
 	bool m_windowClosed;
 	bool m_windowVisible;
-    Mat4 m_orientationMatrix;
-    Mat4 m_reverseOrientationMatrix;
-
 
     bool m_running;
 	bool m_initialized;

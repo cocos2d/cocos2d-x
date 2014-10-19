@@ -24,7 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLViewImpl-winrt.h"
-#include "deprecated/CCSet.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
@@ -153,15 +152,13 @@ Platform::String^ GLViewImpl::stringToPlatformString(std::string strSrc)
 
 void GLViewImpl::swapBuffers()
 {
-    //eglSwapBuffers(m_eglDisplay, m_eglSurface);  
+    
 }
 
 
 bool GLViewImpl::isOpenGLReady()
 {
     return true;
-	// TODO: need to revisit this
-    //return (m_eglDisplay && m_orientation != DisplayOrientations::None);
 }
 
 void GLViewImpl::end()
@@ -345,9 +342,12 @@ void GLViewImpl::UpdateOrientation(DisplayOrientations orientation)
 // called by size change from WP8 XAML
 void GLViewImpl::UpdateForWindowSizeChange(float width, float height)
 {
-    m_width = width;
-    m_height = height;
-    UpdateWindowSize();
+    if (width != m_width || height != m_height)
+    {
+        m_width = width;
+        m_height = height;
+        UpdateWindowSize();
+    }
 }
 
 #if 0
@@ -371,18 +371,9 @@ void GLViewImpl::UpdateWindowSize()
 {
     float width, height;
 
-    if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
-    {
-        width = m_height;
-        height = m_width;
-    }
-    else
-    {
-        width = m_width;
-        height = m_height;
-    }
+    width = m_width;
+    height = m_height;
 
-    UpdateOrientationMatrix();
 
     //CCSize designSize = getDesignResolutionSize();
     if(!m_initialized)
@@ -403,45 +394,15 @@ void GLViewImpl::UpdateWindowSize()
 	}
 }
 
-const Mat4& GLViewImpl::getOrientationMatrix() const 
-{
-    return m_orientationMatrix;
-};
-
-
-void GLViewImpl::UpdateOrientationMatrix()
-{
-    kmMat4Identity(&m_orientationMatrix);
-    kmMat4Identity(&m_reverseOrientationMatrix);
-    switch(m_orientation)
-	{
-		case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
-			kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(M_PI));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(-M_PI));
-			break;
-
-		case Windows::Graphics::Display::DisplayOrientations::Landscape:
-            kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(-M_PI_2));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(M_PI_2));
-			break;
-			
-		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-            kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(M_PI_2));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(-M_PI_2));
-			break;
-
-        default:
-            break;
-	}
-}
-
 cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
 {
     cocos2d::Vec2 returnValue;
 
     float x = p.X;
     float y = p.Y;  
+    returnValue = Vec2(x, y);
 
+#if 0
     switch (m_orientation)
     {
         case DisplayOrientations::Portrait:
@@ -458,6 +419,7 @@ cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
             returnValue = Vec2(m_height - y, x);
             break;
     }
+#endif
 
 	float zoomFactor = GLViewImpl::sharedOpenGLView()->getFrameZoomFactor();
 	if(zoomFactor > 0.0f) {
@@ -473,48 +435,23 @@ cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
 Vec2 GLViewImpl::GetPoint(PointerEventArgs^ args) {
 
 	return TransformToOrientation(args->CurrentPoint->Position);
-
 }
 
 
 void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
-    switch(m_orientation)
-	{
-		case DisplayOrientations::Landscape:
-		case DisplayOrientations::LandscapeFlipped:
-            glViewport((GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLsizei)(h * _scaleY),
-                       (GLsizei)(w * _scaleX));
-			break;
-
-        default:
-            glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLsizei)(w * _scaleX),
-                       (GLsizei)(h * _scaleY));
-	}
+    glViewport((GLint) (x * _scaleX + _viewPortRect.origin.x),
+        (GLint) (y * _scaleY + _viewPortRect.origin.y),
+        (GLsizei) (w * _scaleX),
+        (GLsizei) (h * _scaleY));
 }
 
 void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 {
-    switch(m_orientation)
-	{
-		case DisplayOrientations::Landscape:
-		case DisplayOrientations::LandscapeFlipped:
-            glScissor((GLint)(y * _scaleX + _viewPortRect.origin.y),
-                       (GLint)((_viewPortRect.size.width - ((x + w) * _scaleX)) + _viewPortRect.origin.x),
-                       (GLsizei)(h * _scaleY),
-                       (GLsizei)(w * _scaleX));
-			break;
-
-        default:
-            glScissor((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLsizei)(w * _scaleX),
-                       (GLsizei)(h * _scaleY));
-	}
+    glScissor((GLint) (x * _scaleX + _viewPortRect.origin.x),
+        (GLint) (y * _scaleY + _viewPortRect.origin.y),
+        (GLsizei) (w * _scaleX),
+        (GLsizei) (h * _scaleY));
 }
 
 void GLViewImpl::QueueBackKeyPress()
