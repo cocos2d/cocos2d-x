@@ -499,7 +499,7 @@ LayerColor * LayerColor::create(const Color4B& color)
 bool LayerColor::init()
 {
     Size s = Director::getInstance()->getWinSize();
-    return initWithColor(Color4B(0,0,0,0), s.width, s.height);
+    return initWithColor(Color4B(0,0,0,255), s.width, s.height);
 }
 
 bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
