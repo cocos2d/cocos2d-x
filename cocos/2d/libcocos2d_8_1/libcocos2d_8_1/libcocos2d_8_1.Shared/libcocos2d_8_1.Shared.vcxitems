@@ -867,6 +867,9 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTextureColor_noMVP.vert" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTexture_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTexture_uColor.vert" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor-no-gl_PointSize.vert">
+      <FileType>Document</FileType>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.vert" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />

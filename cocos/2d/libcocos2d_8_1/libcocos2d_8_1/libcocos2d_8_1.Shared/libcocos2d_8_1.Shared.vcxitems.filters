@@ -2686,5 +2686,8 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
       <Filter>renderer</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor-no-gl_PointSize.vert">
+      <Filter>renderer</Filter>
+    </None>
   </ItemGroup>
 </Project>
