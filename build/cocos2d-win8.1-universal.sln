@@ -37,12 +37,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine.Windows", "..\coco
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine.WindowsPhone", "..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj", "{CC1DA216-A80D-4BE4-B309-ACB6AF313AFF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-empty-test", "cpp-empty-test", "{B70EF25E-E352-4020-BCDF-388973E44637}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Shared", "..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems", "{A3AD93E4-0B2F-4C58-9181-69BED2E42E3E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Windows", "..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Windows\HelloCpp.Windows.vcxproj", "{79A8FCDA-4B12-4DD1-B676-FF148D651638}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.WindowsPhone", "..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.WindowsPhone\HelloCpp.WindowsPhone.vcxproj", "{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{9335005f-678e-4e8e-9b84-50037216aec8}*SharedItemsImports = 4
 		..\tests\cpp-tests\proj.win8.1-universal\cpp-tests.Shared\cpp-tests.Shared.vcxitems*{15247c71-5289-4913-b88f-e253cc353720}*SharedItemsImports = 4
+		..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
 		..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{cc1da216-a80d-4be4-b309-acb6af313aff}*SharedItemsImports = 4
 		..\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{4a3c6ba8-c227-498b-aa21-40bda27b461f}*SharedItemsImports = 9
+		..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{79a8fcda-4b12-4dd1-b676-ff148d651638}*SharedItemsImports = 4
 		..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{adafd00d-a0d6-46ef-9f0b-ea2880bfe1de}*SharedItemsImports = 9
 		..\tests\cpp-tests\proj.win8.1-universal\cpp-tests.Shared\cpp-tests.Shared.vcxitems*{be3a1791-5bce-4cea-92cd-0e2d86dde27a}*SharedItemsImports = 9
 		..\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{5d6f020f-7e72-4494-90a0-2df11d235df9}*SharedItemsImports = 9
@@ -51,6 +61,7 @@ Global
 		..\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{22f798d8-bfff-4754-996f-a5395343d5ec}*SharedItemsImports = 4
 		..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{f3550fe0-c795-44f6-8feb-093eb68143ae}*SharedItemsImports = 4
 		..\tests\cpp-tests\proj.win8.1-universal\cpp-tests.Shared\cpp-tests.Shared.vcxitems*{f2bae06b-caae-43ee-b21b-57fa48db04fa}*SharedItemsImports = 4
+		..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{396fe85e-bb05-4b92-bccb-f89aed4ea41a}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -159,6 +170,38 @@ Global
 		{CC1DA216-A80D-4BE4-B309-ACB6AF313AFF}.Release|Win32.ActiveCfg = Release|Win32
 		{CC1DA216-A80D-4BE4-B309-ACB6AF313AFF}.Release|Win32.Build.0 = Release|Win32
 		{CC1DA216-A80D-4BE4-B309-ACB6AF313AFF}.Release|x64.ActiveCfg = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|ARM.ActiveCfg = Debug|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|ARM.Build.0 = Debug|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|ARM.Deploy.0 = Debug|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|Win32.ActiveCfg = Debug|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|Win32.Build.0 = Debug|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|Win32.Deploy.0 = Debug|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|x64.ActiveCfg = Debug|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|x64.Build.0 = Debug|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|x64.Deploy.0 = Debug|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|ARM.ActiveCfg = Release|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|ARM.Build.0 = Release|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|ARM.Deploy.0 = Release|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|Win32.ActiveCfg = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|Win32.Build.0 = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|Win32.Deploy.0 = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|x64.ActiveCfg = Release|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|x64.Build.0 = Release|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|x64.Deploy.0 = Release|x64
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|ARM.Build.0 = Debug|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|Win32.Build.0 = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|Win32.Deploy.0 = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|x64.ActiveCfg = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|ARM.ActiveCfg = Release|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|ARM.Build.0 = Release|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|ARM.Deploy.0 = Release|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|Win32.ActiveCfg = Release|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|Win32.Build.0 = Release|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|Win32.Deploy.0 = Release|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,5 +221,8 @@ Global
 		{ADAFD00D-A0D6-46EF-9F0B-EA2880BFE1DE} = {6FEB795C-C98C-4C8C-A88B-A35DEE205348}
 		{F3550FE0-C795-44F6-8FEB-093EB68143AE} = {6FEB795C-C98C-4C8C-A88B-A35DEE205348}
 		{CC1DA216-A80D-4BE4-B309-ACB6AF313AFF} = {6FEB795C-C98C-4C8C-A88B-A35DEE205348}
+		{A3AD93E4-0B2F-4C58-9181-69BED2E42E3E} = {B70EF25E-E352-4020-BCDF-388973E44637}
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638} = {B70EF25E-E352-4020-BCDF-388973E44637}
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A} = {B70EF25E-E352-4020-BCDF-388973E44637}
 	EndGlobalSection
 EndGlobal
