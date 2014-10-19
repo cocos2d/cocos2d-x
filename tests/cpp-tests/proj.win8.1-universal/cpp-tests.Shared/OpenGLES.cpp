@@ -36,8 +36,13 @@ void OpenGLES::Initialize()
         // This can be used to configure D3D11. For example, EGL_PLATFORM_ANGLE_TYPE_D3D11_FL9_3_ANGLE could be used.
         // This would ask the graphics card to use D3D11 Feature Level 9_3 instead of Feature Level 11_0+.
         // On Windows Phone, this would allow the Phone Emulator to act more like the GPUs that are available on real Phone devices.
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+        EGL_PLATFORM_ANGLE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_TYPE_D3D11_FL9_3_ANGLE,
+        EGL_NONE,
+#else
         EGL_PLATFORM_ANGLE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_TYPE_D3D11_ANGLE,
         EGL_NONE,
+#endif
     };
 
     const EGLint contextAttributes[] = 

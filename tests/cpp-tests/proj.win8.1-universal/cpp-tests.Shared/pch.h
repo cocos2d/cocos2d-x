@@ -19,9 +19,10 @@
 #include <EGL/eglplatform.h>
 #include <angle_windowsstore.h>
 
-#include "OpenGLES.h"
-#include "HelloTriangleRenderer.h"
-#include "App.xaml.h"
+
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+
+#include "OpenGLES.h"
+#include "App.xaml.h"
