@@ -433,6 +433,8 @@ bool TextureCache::reloadTexture(const std::string& fileName)
             CC_BREAK_IF(!bRet);
             
             ret = texture->initWithImage(image);
+            
+            CC_SAFE_RELEASE(image);
         } while (0);
     }
 
