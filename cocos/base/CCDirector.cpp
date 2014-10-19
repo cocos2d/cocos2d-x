@@ -1084,7 +1084,6 @@ bool Director::calculateStats()
     ++_frames;
     _accumDt += _deltaTime;
     
-
     if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
     {
         _frameRate = _frames / _accumDt;
