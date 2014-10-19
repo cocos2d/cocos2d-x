@@ -405,7 +405,8 @@ protected:
     
     void setNextScene();
     
-    void showStats();
+    bool calculateStats();
+    void showStats(bool wasFpsRecalculated);
     void createStatsLabel();
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, ssize_t* length);

@@ -298,10 +298,12 @@ void Director::drawScene()
     {
         _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
+    
+    bool wasFpsRecalculated = calculateStats();
 
     if (_displayStats)
     {
-        showStats();
+        showStats(wasFpsRecalculated);
     }
     _renderer->render();
 
@@ -317,10 +319,7 @@ void Director::drawScene()
         _openGLView->swapBuffers();
     }
 
-    if (_displayStats)
-    {
-        calculateMPF();
-    }
+    calculateMPF();
 }
 
 void Director::calculateDeltaTime()
@@ -1080,26 +1079,37 @@ void Director::resume()
     setNextDeltaTimeZero(true);
 }
 
+bool Director::calculateStats()
+{
+    ++_frames;
+    _accumDt += _deltaTime;
+    
+
+    if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
+    {
+        _frameRate = _frames / _accumDt;
+        _frames = 0;
+        _accumDt = 0;
+        
+        return true;
+    }
+    
+    return false;
+}
+
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
-void Director::showStats()
+void Director::showStats(bool wasFpsRecalculated)
 {
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
-
-    ++_frames;
-    _accumDt += _deltaTime;
     
     if (_displayStats && _FPSLabel && _drawnBatchesLabel && _drawnVerticesLabel)
     {
         char buffer[30];
 
-        if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
+        if (wasFpsRecalculated)
         {
-            _frameRate = _frames / _accumDt;
-            _frames = 0;
-            _accumDt = 0;
-
             sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
             _FPSLabel->setString(buffer);
         }
