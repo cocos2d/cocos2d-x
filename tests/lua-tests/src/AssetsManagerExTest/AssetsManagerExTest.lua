@@ -24,9 +24,9 @@ local storagePaths =
 
 local backgroundPaths = 
 {
-    "Images/background1.jpg", 
-    "Images/background2.jpg", 
-    "Images/background3.png"
+    "Images/assetMgrBackground1.jpg",
+    "Images/assetMgrBackground2.png",
+    "Images/assetMgrBackground3.png"
 }
 
 -------------------------------------
