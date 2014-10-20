@@ -216,6 +216,16 @@ void LuaMinXmlHttpRequest::_sendRequest()
                 _status    = 0;
                 _statusText.clear();
             }
+            // TODO: call back lua function
+            int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
+            
+            if (0 != handler)
+            {
+                CCLOG("come in handler, handler is %d", handler);
+                cocos2d::CommonScriptData data(handler,"");
+                cocos2d::ScriptEvent event(cocos2d::ScriptEventType::kCommonEvent,(void*)&data);
+                cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            }
             return;
         }
         
