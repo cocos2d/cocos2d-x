@@ -47,7 +47,6 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Platform;
 using namespace Microsoft::WRL;
-using namespace PhoneDirect3DXamlAppComponent;
 
 
 NS_CC_BEGIN

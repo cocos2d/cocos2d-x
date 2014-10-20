@@ -35,9 +35,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-using namespace PhoneDirect3DXamlAppComponent;
-
-
 AccelerometerEvent::AccelerometerEvent(const Acceleration& event)
     : m_event(event)
 {
@@ -137,8 +134,6 @@ void CustomInputEvent::execute()
 {
     m_fun();
 }
-
-
 
 NS_CC_END
 
