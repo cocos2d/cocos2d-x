@@ -103,7 +103,7 @@
 -- @param #cc.Sprite progressSprite
 -- @param #cc.Sprite thumbSprite
 -- @param #cc.Sprite selectedThumbSprite
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -159,7 +159,7 @@
 -- @param #cc.Sprite pogressSprite
 -- @param #cc.Sprite thumbSprite
 -- @param #cc.Sprite selectedThumbSprite
--- @return ControlSlider#ControlSlider ret (retunr value: cc.ControlSlider)
+-- @return ControlSlider#ControlSlider ret (return value: cc.ControlSlider)
 
 --------------------------------
 -- js ctor

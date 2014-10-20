@@ -27,7 +27,7 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/windows_ui_loadingbar_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar/windows_ui_loadingbar_editor_1.json"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -39,7 +39,7 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar_Editor/windows_ui_loadingbar_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar/windows_ui_loadingbar_editor_1.csb"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -51,7 +51,7 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar/crossplatform_UILoadingBar_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -66,7 +66,7 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar/crossplatform_UILoadingBar_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -111,7 +111,7 @@ bool UILoadingBarTest_Editor::init()
     {
         scheduleUpdate();
         
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar/crossplatform_UILoadingBar_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

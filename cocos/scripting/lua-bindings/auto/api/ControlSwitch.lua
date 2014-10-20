@@ -35,7 +35,7 @@
 -- @param #cc.Sprite thumbSprite
 -- @param #cc.Label onLabel
 -- @param #cc.Label offLabel
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -61,7 +61,7 @@
 -- @param #cc.Sprite thumbSprite
 -- @param #cc.Label onLabel
 -- @param #cc.Label offLabel
--- @return ControlSwitch#ControlSwitch ret (retunr value: cc.ControlSwitch)
+-- @return ControlSwitch#ControlSwitch ret (return value: cc.ControlSwitch)
 
 --------------------------------
 -- 

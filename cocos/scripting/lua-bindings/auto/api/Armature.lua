@@ -81,18 +81,13 @@
 -- @param self
 -- @param #string name
 -- @param #ccs.Bone parentBone
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
 -- @function [parent=#Armature] setParentBone 
 -- @param self
 -- @param #ccs.Bone parentBone
-        
---------------------------------
--- 
--- @function [parent=#Armature] drawContour 
--- @param self
         
 --------------------------------
 -- 
@@ -154,7 +149,7 @@
 -- @param self
 -- @param #string name
 -- @param #ccs.Bone parentBone
--- @return Armature#Armature ret (retunr value: ccs.Armature)
+-- @return Armature#Armature ret (return value: ccs.Armature)
 
 --------------------------------
 -- 

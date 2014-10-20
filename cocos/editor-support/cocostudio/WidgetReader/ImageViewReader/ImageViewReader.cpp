@@ -161,10 +161,6 @@ namespace cocostudio
         
         const protocolbuffers::ResourceData& imageFileNameDic = options.filenamedata();
         int imageFileNameType = imageFileNameDic.resourcetype();
-		if (imageFileNameType == 1)
-		{
-			SpriteFrameCache::getInstance()->addSpriteFramesWithFile(protocolBuffersPath + imageFileNameDic.plistfile());			
-		}
         std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
         imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         

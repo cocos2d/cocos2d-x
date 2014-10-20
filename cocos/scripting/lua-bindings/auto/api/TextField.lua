@@ -240,7 +240,7 @@
 -- @param #string placeholder
 -- @param #string fontName
 -- @param #int fontSize
--- @return TextField#TextField ret (retunr value: ccui.TextField)
+-- @return TextField#TextField ret (return value: ccui.TextField)
 
 --------------------------------
 -- 

@@ -14,7 +14,7 @@ void UIImageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIImageView_Editor/windows_ui_ImageView_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIImageView/windows_ui_ImageView_editor_1.json"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -26,7 +26,7 @@ void UIImageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIImageView_Editor/windows_ui_ImageView_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIImageView/windows_ui_ImageView_editor_1.csb"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -38,7 +38,7 @@ void UIImageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView/crossplatform_UIImageView_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -53,7 +53,7 @@ void UIImageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView/crossplatform_UIImageView_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -89,7 +89,7 @@ bool UIImageViewTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView/crossplatform_UIImageView_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

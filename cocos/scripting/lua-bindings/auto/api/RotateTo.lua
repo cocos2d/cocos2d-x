@@ -13,7 +13,7 @@
 -- @param #float duration
 -- @param #float dstAngleX
 -- @param #float dstAngleY
--- @return RotateTo#RotateTo ret (retunr value: cc.RotateTo)
+-- @return RotateTo#RotateTo ret (return value: cc.RotateTo)
 
 --------------------------------
 -- 

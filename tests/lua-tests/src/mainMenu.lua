@@ -27,6 +27,7 @@ require "KeypadTest/KeypadTest"
 require "LabelTest/LabelTest"
 require "LabelTestNew/LabelTestNew"
 require "LayerTest/LayerTest"
+require "LightTest/LightTest"
 require "MenuTest/MenuTest"
 require "MotionStreakTest/MotionStreakTest"
 require "NewEventDispatcherTest/NewEventDispatcherTest"
@@ -62,7 +63,7 @@ local BeginPos = {x = 0, y = 0}
 
 local audioEndineSupported = false
 local currPlatform = cc.Application:getInstance():getTargetPlatform()
-if (cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
+if (cc.PLATFORM_OS_WINDOWS == currPlatform or cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == currPlatform or cc.PLATFORM_OS_IPAD == currPlatform or cc.PLATFORM_OS_ANDROID == currPlatform) then
     audioEndineSupported = true
 end
 
@@ -99,6 +100,7 @@ local _allTests = {
     { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
     { isSupported = true,  name = "LabelTestNew"           , create_func   =                 LabelTestNew      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
+    { isSupported = true,  name = "LightTest"          , create_func   =                 LightTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },

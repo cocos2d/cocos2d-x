@@ -27,7 +27,7 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/windows_ui_pageview_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView/windows_ui_pageview_editor_1.json"));
             
             _touchGroup->addChild(_layout);
             
@@ -40,7 +40,7 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView_Editor/windows_ui_pageview_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView/windows_ui_pageview_editor_1.csb"));
             
             _touchGroup->addChild(_layout);
             
@@ -53,7 +53,7 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView/crossplatform_UIPageView_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -68,7 +68,7 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView/crossplatform_UIPageView_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -122,7 +122,7 @@ bool UIPageViewTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIPageView/crossplatform_UIPageView_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

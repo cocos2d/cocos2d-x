@@ -88,6 +88,7 @@ set(lua_bindings_manual_files
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
     manual/video/lua_cocos2dx_experimental_video_manual.cpp
+    manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     )
 
 set(lua_bindings_auto_files
@@ -103,6 +104,7 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_spine_auto.cpp
     auto/lua_cocos2dx_studio_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
+    auto/lua_cocos2dx_audioengine_auto.cpp
     )
 
 if(MACOSX)

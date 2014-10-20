@@ -140,7 +140,7 @@
 -- @overload self         
 -- @function [parent=#ControlButton] getCurrentTitle
 -- @param self
--- @return string#string ret (retunr value: string)
+-- @return string#string ret (return value: string)
 
 --------------------------------
 -- 
@@ -297,7 +297,7 @@
 -- @param #string title
 -- @param #string fontName
 -- @param #float fontSize
--- @return ControlButton#ControlButton ret (retunr value: cc.ControlButton)
+-- @return ControlButton#ControlButton ret (return value: cc.ControlButton)
 
 --------------------------------
 -- 

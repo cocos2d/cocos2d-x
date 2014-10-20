@@ -1276,100 +1276,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTrack(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_spine_SkeletonAnimation_createWithFile(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-
-    do 
-    {
-        if (argc == 2)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            spine::SkeletonAnimation* ret = spine::SkeletonAnimation::createWithFile(arg0, arg1);
-            object_to_luaval<spine::SkeletonAnimation>(tolua_S, "sp.SkeletonAnimation",(spine::SkeletonAnimation*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 3)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            double arg2;
-            ok &= luaval_to_number(tolua_S, 4,&arg2, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            spine::SkeletonAnimation* ret = spine::SkeletonAnimation::createWithFile(arg0, arg1, arg2);
-            object_to_luaval<spine::SkeletonAnimation>(tolua_S, "sp.SkeletonAnimation",(spine::SkeletonAnimation*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 2)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            spAtlas* arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
-		ok = false;
-            if (!ok) { break; }
-            spine::SkeletonAnimation* ret = spine::SkeletonAnimation::createWithFile(arg0, arg1);
-            object_to_luaval<spine::SkeletonAnimation>(tolua_S, "sp.SkeletonAnimation",(spine::SkeletonAnimation*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 3)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            spAtlas* arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
-		ok = false;
-            if (!ok) { break; }
-            double arg2;
-            ok &= luaval_to_number(tolua_S, 4,&arg2, "sp.SkeletonAnimation:createWithFile");
-            if (!ok) { break; }
-            spine::SkeletonAnimation* ret = spine::SkeletonAnimation::createWithFile(arg0, arg1, arg2);
-            object_to_luaval<spine::SkeletonAnimation>(tolua_S, "sp.SkeletonAnimation",(spine::SkeletonAnimation*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "sp.SkeletonAnimation:createWithFile",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_spine_SkeletonAnimation_createWithFile'.",&tolua_err);
-#endif
-    return 0;
-}
 static int lua_cocos2dx_spine_SkeletonAnimation_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (SkeletonAnimation)");
@@ -1393,7 +1299,6 @@ int lua_register_cocos2dx_spine_SkeletonAnimation(lua_State* tolua_S)
         tolua_function(tolua_S,"setEndListener",lua_cocos2dx_spine_SkeletonAnimation_setEndListener);
         tolua_function(tolua_S,"clearTracks",lua_cocos2dx_spine_SkeletonAnimation_clearTracks);
         tolua_function(tolua_S,"clearTrack",lua_cocos2dx_spine_SkeletonAnimation_clearTrack);
-        tolua_function(tolua_S,"createWithFile", lua_cocos2dx_spine_SkeletonAnimation_createWithFile);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(spine::SkeletonAnimation).name();
     g_luaType[typeName] = "sp.SkeletonAnimation";
