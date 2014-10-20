@@ -127,7 +127,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.3rc0
 
-* 3d: added light support: including direction light, point light, spot light and ambient light
+* 3d: added light support: including directional light, point light, spot light and ambient light
 * New audio: more platfroms supported(Mac OS X and Windows)
 * Spine runtime: updated to v2.0.18
 * Application: added openURL()
@@ -140,7 +140,47 @@ Please refer to this document: [ReadMe](../README.md)
 
 ## Light
 
-TBD
+To make 3d objects looks realistic, we add lights to this version. cocos2d-x supports four types of lights, direction light, point light, spot light and ambient light.
+
+`DirectionLight` is meant to represent an extremely distant light source (like the sun or moon). Rays cast from directional lights run parallel in a single direction from every point in the sky, and are typically used to simulate the sun light.
+
+The following code can add a directional light to the scene,
+
+```c++
+auto directionalLight = DirectionLight::create(Vec3(-1.0f, -1.0f, 0.0f), Color3B(200, 200, 200));
+addChild(directionalLight);
+```
+
+The light is enabled by default. And it can be disabled using the following code,
+
+```c++
+directionalLight->setEnabled(false);
+```
+
+You can also set a light flag to the light.
+
+```c++
+directionalLight->setLightFlag(LightFlag::LIGHT0);
+```
+
+Then the 3d sprite whose light mask AND light flag is none zero can effect by the light.
+
+`PointLight` casts illumination outward in every direction from a single, infinitely small point in 3D space. It is useful for simulating any omnidirectional light source.
+
+`SpotLight` emits a cone shaped light field from a single point in space. It can be used to simulate desk lamps, overhead cone lighting, etc. Note that `SpotLight` will take more GPU time.
+
+`AmbientLight` casts soft rays in every direction.
+
+Note that we use forward render method, the number of lights can effect the performance. You can set the max number of lights supported in the shader in a the configuration file.
+
+```c++
+<key>cocos2d.x.3d.max_dir_light_in_shader</key>
+<integer>1</integer>
+<key>cocos2d.x.3d.max_point_light_in_shader</key>
+<integer>1</integer>
+<key>cocos2d.x.3d.max_spot_light_in_shader</key>
+<integer>1</integer>
+```
 
 ## Spine runtime
 
@@ -304,7 +344,7 @@ Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAu
 
 ## Camera
 
-This version of camera is powerful then previous one. And you can add it as a child anywhere. If you want to let a Node to be visited by a camera, Node's camera mask should include Camera's flag:
+This version of camera is powerful than previous one. And you can add it as a child anywhere. If you want to let a Node to be visited by a camera, Node's camera mask should include Camera's flag:
 
 ```c++
 // let sprite to be visited by a camera

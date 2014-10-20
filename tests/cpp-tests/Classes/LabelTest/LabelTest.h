@@ -293,12 +293,12 @@ public:
     bool _drag;
 };
 
-class LabelTTFA8Test : public AtlasDemo
+class LabelTTFOpacityTest : public AtlasDemo
 {
 public:
-    CREATE_FUNC(LabelTTFA8Test);
+    CREATE_FUNC(LabelTTFOpacityTest);
 
-    LabelTTFA8Test();
+    LabelTTFOpacityTest();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
