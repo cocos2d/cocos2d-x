@@ -135,7 +135,7 @@ Please refer to this document: [ReadMe](../README.md)
 * TileMap: supported staggered tile map
 * Added `ClippingRectangNode`, it is more effecient for renctangle clipping
 * Node: schedule/unschedule lambda functions
-* Facebook SDK support in plugin-x, `it is a beta version because Facebook guys will help to improve it`
+* Facebook platform support in plugin-x, all features has been added, but the API needs to be polished with Facebook guys
 
 # Features in detail
 
