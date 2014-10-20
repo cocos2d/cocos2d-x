@@ -25,7 +25,6 @@
 
 #include "BillBoardTest.h"
 #include "3d/CCBillBoard.h"
-#include "base/CCCamera.h"
 
 #include <algorithm>
 #include "../testResource.h"

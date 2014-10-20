@@ -31,7 +31,7 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
-#include "base/CCLight.h"
+#include "2d/CCLight.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"

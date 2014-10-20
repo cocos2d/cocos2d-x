@@ -24,6 +24,7 @@ cocos2d.cpp \
 2d/CCAnimation.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \
+2d/CCCamera.cpp \
 2d/CCClippingNode.cpp \
 2d/CCClippingRectangleNode.cpp \
 2d/CCComponent.cpp \
@@ -45,6 +46,7 @@ cocos2d.cpp \
 2d/CCLabelTTF.cpp \
 2d/CCLabelTextFormatter.cpp \
 2d/CCLayer.cpp \
+2d/CCLight.cpp \
 2d/CCMenu.cpp \
 2d/CCMenuItem.cpp \
 2d/CCMotionStreak.cpp \
@@ -91,7 +93,6 @@ math/Vec2.cpp \
 math/Vec3.cpp \
 math/Vec4.cpp \
 base/CCAutoreleasePool.cpp \
-base/CCCamera.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
 base/CCData.cpp \
@@ -115,7 +116,6 @@ base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
 base/CCEventTouch.cpp \
 base/CCIMEDispatcher.cpp \
-base/CCLight.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
 base/ccRandom.cpp \

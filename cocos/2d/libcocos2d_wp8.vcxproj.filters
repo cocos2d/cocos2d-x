@@ -286,6 +286,9 @@
     <ClCompile Include="CCAtlasNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="CCCamera.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
     <ClCompile Include="CCClippingNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -350,6 +353,9 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCLayer.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLight.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCMenu.cpp">
@@ -493,9 +499,6 @@
     <ClCompile Include="..\base\CCAutoreleasePool.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCCamera.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\ccCArray.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -563,9 +566,6 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCIMEDispatcher.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\CCLight.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCNS.cpp">
@@ -1343,6 +1343,9 @@
     <ClInclude Include="CCAtlasNode.h">
       <Filter>2d</Filter>
     </ClInclude>
+    <ClInclude Include="CCCamera.h">
+      <Filter>2d</Filter>
+    </ClInclude>
     <ClInclude Include="CCClippingNode.h">
       <Filter>2d</Filter>
     </ClInclude>
@@ -1407,6 +1410,9 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLayer.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLight.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCMenu.h">
@@ -1556,9 +1562,6 @@
     <ClInclude Include="..\base\CCAutoreleasePool.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCCamera.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\ccCArray.h">
       <Filter>base</Filter>
     </ClInclude>
@@ -1635,9 +1638,6 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCIMEDispatcher.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCLight.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\ccMacros.h">
