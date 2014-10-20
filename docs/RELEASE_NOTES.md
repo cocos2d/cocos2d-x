@@ -141,7 +141,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 ## Light
 
-To make 3d objects looks Realistic, we add lights to this version. cocos2d-x supports four types of lights, direction light, point light, spot light and ambient light.
+To make 3d objects looks realistic, we add lights to this version. cocos2d-x supports four types of lights, directional light, point light, spot light and ambient light.
 
 `DirectionLight` is meant to represent an extremely distant light source (like the sun or moon). Rays cast from directional lights run parallel in a single direction from every point in the sky, and are typically used to simulate the sun light.
 
@@ -168,7 +168,7 @@ Then the 3d sprite whose light mask AND light flag is none zero can effect by th
 
 `PointLight` casts illumination outward in every direction from a single, infinitely small point in 3D space. It is useful for simulating any omnidirectional light source.
 
-`SpotLight` emits a cone shaped light field from a single point in space. It can be used to simulate desk lamps, overhead cone lighting, etc. Note that 'SpotLight' will take more GPU time.
+`SpotLight` emits a cone shaped light field from a single point in space. It can be used to simulate desk lamps, overhead cone lighting, etc. Note that `SpotLight` will take more GPU time.
 
 `AmbientLight` casts soft rays in every direction.
 
