@@ -123,6 +123,7 @@ Build Requirements
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 * Python 2.7.5
+* NDK r9d is required to build Android games
 
 
 Runtime Requirements
