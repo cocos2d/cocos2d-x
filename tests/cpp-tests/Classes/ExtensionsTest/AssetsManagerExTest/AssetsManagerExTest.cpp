@@ -4,7 +4,7 @@
 
 const char* sceneManifests[] = {"AMTestScene1/project.manifest", "AMTestScene2/project.manifest", "AMTestScene3/project.manifest"};
 const char* storagePaths[] = {"CppTests/AssetsManagerExTest/scene1/", "CppTests/AssetsManagerExTest/scene2/", "CppTests/AssetsManagerExTest/scene3"};
-const char* backgroundPaths[] = {"Images/background1.jpg", "Images/background2.jpg", "Images/background3.png"};
+const char* backgroundPaths[] = {"Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png"};
 
 AssetsManagerExTestLayer::AssetsManagerExTestLayer(const std::string& spritePath)
 : _spritePath(spritePath)
