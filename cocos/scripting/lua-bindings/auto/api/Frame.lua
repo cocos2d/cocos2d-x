@@ -24,6 +24,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Frame] isEnterWhenPassed 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Frame] getFrameIndex 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
