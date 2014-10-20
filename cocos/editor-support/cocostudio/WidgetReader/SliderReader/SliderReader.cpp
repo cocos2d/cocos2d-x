@@ -199,6 +199,10 @@ namespace cocostudio
 		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
         
         bool barTextureScale9Enable = options.scale9enable();
+        if (barTextureScale9Enable)
+        {
+            slider->setUnifySizeEnabled(false);
+        }
         slider->setScale9Enabled(barTextureScale9Enable);
         
         slider->setPercent(options.percent());
