@@ -114,7 +114,7 @@ protected:
     bool loadMaterialDataJson(MaterialData* materialdata){return true;}
     bool loadMaterialDataJson_0_1(MaterialData* materialdata){return true;}
     bool loadMaterialDataJson_0_2(MaterialData* materialdata){return true;}
-    bool loadAnimationDataJson(Animation3DData* animationdata);
+    bool loadAnimationDataJson(const std::string& id,Animation3DData* animationdata);
     /**
      * load data in binary
      * @param path The c3b file path
@@ -145,7 +145,7 @@ protected:
      * load animation data in binary
      * @param animationdata The animation data pointer
      */
-    bool loadAnimationDataBinary(Animation3DData* animationdata);
+    bool loadAnimationDataBinary(const std::string& id,Animation3DData* animationdata);
 
     bool checkIsBone(const std::string& name);
 
