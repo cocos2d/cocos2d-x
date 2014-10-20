@@ -127,11 +127,63 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.3rc0
 
-TBD
+* 3d: added light support: including direction light, point light, spot light and ambient light
+* New audio: more platfroms supported(Mac OS X and Windows)
+* Spine runtime: updated to v2.0.18
+* Application: added openURL()
+* Added `AssetsManagerEx`, it is an enhancement version of `AssetsManager`
+* TileMap: supported staggered tile map
+* Added `ClippingRectangNode`, it is more effecient for renctangle clipping
+* Node: schedule/unschedule lambda functions
 
 # Features in detail
 
+## Light
+
 TBD
+
+## Spine runtime
+
+Spine runtime is updated to latest version `v2.0.18`. This version supports `Free-Form-Deformation(FFD)`, which allows meshes to stretch, squash, blend and bounce in ways that aren't possible using rectangle images.
+
+`Spine rutnime has updated its license which only allows engine to use unmodified version even it has bugs. So you guys don't send pull requests for spine runtime, we can not merge them.`
+
+Please refer to `tests/cpp-tests/Classes/SpineTest/SpineTest.cpp` for usage.
+
+## AssetsManagerEx
+
+`AssetsMangerEx` is an enhancement version of `AssetsManager`.
+
+TBD
+
+## Application::openURL
+
+Because in iOS, there is an function named `openURL` in `UIApplication`, so we added this function in Application too. You can use this function to open a url.
+
+```c++
+Application::getInstance()->openURL("http://www.cocos2d-x.org/");
+```
+
+## ClippingRectangleNode
+
+`ClippingRectangleNode` is a lite version of `ClippingNode`. Compared to `ClippingNode`, there re some pros and cons:
+
+* pros
+    * it doesn't depend on stencil buffer, which means it can run on more Android devices
+    * it is more efficient
+    
+* cons
+    * it can only used to clip rectangle area
+    
+```c++
+auto clipper = ClippingRectangleNode::create();
+clipper->setClippingRegion(0, 0, 200, 200);
+this->addChild(clipper);
+
+auto content = Sprite::create("MyPicture.png");
+...
+clipper->addChild(content);
+```
 
 # Highlights of v3.3beta0
 
