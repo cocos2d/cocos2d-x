@@ -31,8 +31,8 @@
 #include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
-#include "base/CCLight.h"
-#include "base/CCCamera.h"
+#include "2d/CCLight.h"
+#include "2d/CCCamera.h"
 #include "base/ccMacros.h"
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCFileUtils.h"

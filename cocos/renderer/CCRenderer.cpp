@@ -40,7 +40,7 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "2d/CCScene.h"
 
 NS_CC_BEGIN

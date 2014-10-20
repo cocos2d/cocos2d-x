@@ -1,4 +1,4 @@
-#include "base/CCLight.h"
+#include "2d/CCLight.h"
 #include "2d/CCScene.h"
 
 NS_CC_BEGIN
