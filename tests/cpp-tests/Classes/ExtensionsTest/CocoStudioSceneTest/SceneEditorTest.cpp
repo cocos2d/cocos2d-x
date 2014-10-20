@@ -214,6 +214,7 @@ void SceneEditorTestLayer::changeLoadTypeCallback(cocos2d::Ref *pSender)
 	
 	if(_rootNode != nullptr)
 	{
+        ActionManagerEx::getInstance()->releaseActions();
 		this->removeChild(_rootNode);
 		_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
 		if (_rootNode == nullptr)

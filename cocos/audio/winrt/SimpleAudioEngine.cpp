@@ -1,52 +1,51 @@
-/****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) Microsoft Open Technologies, Inc.
+/*
+* cocos2d-x   http://www.cocos2d-x.org
+*
+* Copyright (c) 2010-2011 - cocos2d-x community
+* 
+* Portions Copyright (c) Microsoft Open Technologies, Inc.
+* All Rights Reserved
+* 
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. 
+* You may obtain a copy of the License at 
+* 
+* http://www.apache.org/licenses/LICENSE-2.0 
+* 
+* Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+* See the License for the specific language governing permissions and limitations under the License.
+*/
 
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
 #include "SimpleAudioEngine.h"
 #include "Audio.h"
 
 #include <map>
-
 //#include "CCCommon.h"
 using namespace std;
 
 namespace CocosDenshion {
 
-
-
 Audio* s_audioController = NULL;
-// a flag that if the s_audioController should be re-initialiezed
-// see also in SimpleAudioEngine::end() in this file
-bool s_bAudioControllerNeedReInitialize = true;
+bool s_initialized = false;
+
+SimpleAudioEngine* SimpleAudioEngine::getInstance()
+{
+    static SimpleAudioEngine s_SharedEngine;
+    return &s_SharedEngine;
+}
+
 
 static Audio* sharedAudioController()
 {
-    if ((! s_audioController) || s_bAudioControllerNeedReInitialize)
+    if (! s_audioController || !s_initialized)
     {
-        s_audioController = new Audio;
+        if(s_audioController == NULL)
+        {
+            s_audioController = new Audio;
+        }
         s_audioController->Initialize();
         s_audioController->CreateResources();
-		s_bAudioControllerNeedReInitialize = false;
+        s_initialized = true;
     }
 
     return s_audioController;
@@ -60,28 +59,15 @@ SimpleAudioEngine::~SimpleAudioEngine()
 {
 }
 
-SimpleAudioEngine* SimpleAudioEngine::sharedEngine()
-{
-    static SimpleAudioEngine s_SharedEngine;
-    return &s_SharedEngine;
-}
 
 void SimpleAudioEngine::end()
 {
     sharedAudioController()->StopBackgroundMusic(true);
-    sharedAudioController()->StopAllSoundEffects();
+    sharedAudioController()->StopAllSoundEffects(true);
     sharedAudioController()->ReleaseResources();
-	//set here to tell the s_bAudioControllerNeedReInitialize should be re-initialized
-	s_bAudioControllerNeedReInitialize = true;
+    s_initialized = false;
 }
 
-
-#if 0
-void SimpleAudioEngine::render()
-{
-    sharedAudioController()->Render();
-}
-#endif
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -132,11 +118,11 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 // effect function
 //////////////////////////////////////////////////////////////////////////
 
-unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
+unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,float pitch, float pan, float gain)
 {
     unsigned int sound;
     sharedAudioController()->PlaySoundEffect(pszFilePath, bLoop, sound);
-
+    // TODO: need to support playEffect parameters
     return sound;
 }
 
@@ -172,12 +158,12 @@ void SimpleAudioEngine::resumeAllEffects()
 
 void SimpleAudioEngine::stopAllEffects()
 {
-    sharedAudioController()->StopAllSoundEffects();
+    sharedAudioController()->StopAllSoundEffects(false);
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 {
-
+    UNUSED_PARAM(pszFilePath);
 }
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)

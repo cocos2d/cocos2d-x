@@ -25,6 +25,8 @@
 
 # this CMakeLists is to generate libcocos2d.a
 
+cmake_minimum_required(VERSION 2.8)
+
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 endif()
@@ -53,7 +55,7 @@ include(editor-support/spine/CMakeLists.txt)
 include(../extensions/CMakeLists.txt)
 
 set(COCOS_EDITOR_SUPPORT_SRC
-  ${COCOS_CCB_SRC}  
+  ${COCOS_CCB_SRC}
   ${COCOS_CS_SRC}
   ${COCOS_SPINE_SRC}
 )
@@ -73,6 +75,25 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
     )
+
+if(MACOSX OR APPLE)
+  include(FindFreetype REQUIRED)
+
+  if(NOT FREETYPE_FOUND)
+    if(IOS)
+      FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype PATHS "../external/freetype2/prebuilt/ios" DOC "Freetype includes")
+      find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/ios" "../external/freetype2/include/ios/freetype" DOC "Freetype includes")
+
+    elseif()
+      FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype PATHS "../external/freetype2/prebuilt/mac" DOC "Freetype includes")
+      find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/mac" "../external/freetype2/include/mac/freetype" DOC "Freetype includes")
+    endif(IOS)
+  endif(NOT FREETYPE_FOUND)
+
+  find_package(Freetype REQUIRED)
+  include_directories(${FREETYPE_INCLUDE_DIRS})
+
+endif()
 
 if(MINGW)
   find_package(Freetype REQUIRED)
@@ -125,9 +146,8 @@ elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
   set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets
-  fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB})
-elseif(MACOSX)
-
+  fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
+elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
  FIND_LIBRARY(COCOA_LIBRARY Cocoa)
@@ -141,7 +161,7 @@ elseif(MACOSX)
 
   set(PLATFORM_SPECIFIC_LIBS
     z jpeg png webp tiff curl glfw3
-    websockets
+    websockets freetype
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
     ${OPENAL_LIBRARY}

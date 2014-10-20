@@ -94,7 +94,7 @@ protected:
     
     void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
 
-    void setLightUniformNames();
+    void resetLightUniformValues();
 
     GLuint _textureID;
     GLProgramState* _glProgramState;

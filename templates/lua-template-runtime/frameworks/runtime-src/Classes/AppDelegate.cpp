@@ -13,10 +13,6 @@ using namespace std;
 
 AppDelegate::AppDelegate()
 {
-#if (COCOS2D_DEBUG > 0)
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    initRuntime();
-#endif
 }
 
 AppDelegate::~AppDelegate()
@@ -37,6 +33,11 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+#if (COCOS2D_DEBUG > 0)
+    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    initRuntime();
+#endif
+    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();    
@@ -57,6 +58,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     lua_State* L = engine->getLuaStack()->getLuaState();
     lua_module_register(L);
+
+    // If you want to use Quick-Cocos2d-X, please uncomment below code
+    // register_all_quick_manual(L);
 
     LuaStack* stack = engine->getLuaStack();
     stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));

@@ -2,6 +2,13 @@
       "do_default":{
          "exclude_from_template":[
             "frameworks/runtime-src"
+         ],
+         "append_dir": [
+            {
+                "from": "cocos/scripting/lua-bindings/script",
+                "to": "src/cocos",
+                "exclude": []
+            }
          ]
       },
       "do_add_native_support":{

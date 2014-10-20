@@ -46,6 +46,7 @@ set(COCOS_UI_SRC
   ui/UIWebView.cpp
   ui/UIWidget.cpp
   ui/UIEditBox/UIEditBox.cpp
+  ui/UILayoutComponent.cpp
   ${COCOS_UI_SPECIFIC_SRC}
 
 )

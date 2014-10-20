@@ -87,7 +87,7 @@ if(WINDOWS)
 
   ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)
-elseif(MACOSX)
+elseif(MACOSX OR APPLE)
   ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
   ADD_DEFINITIONS (-DUSE_FILE32API)
   set(PLATFORM_FOLDER mac)
@@ -152,8 +152,8 @@ endif()
 
 
 # NB
-# we need to return these to libraries to their official state rather than 
-# having our custom cocos2d namespace so that we may use system versions if 
+# we need to return these to libraries to their official state rather than
+# having our custom cocos2d namespace so that we may use system versions if
 # the platform provides them. It is very important that this
 # is done before we make prebuilt versions of these two libs
 
@@ -164,13 +164,13 @@ include_directories(
 
 )
 
-if(LINUX)
+if(LINUX OR APPLE)
 
   find_package(GLFW3 REQUIRED)
   message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
 
-endif(LINUX)
+endif(LINUX OR APPLE)
 
 
 if(NOT MINGW)
@@ -188,8 +188,7 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
-
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
   )
 
@@ -215,11 +214,12 @@ if(NOT MINGW)
 endif()
 
 # build for 3rd party libraries
-if(LINUX)
+if(LINUX OR APPLE)
 add_subdirectory(external/Box2D)
 add_subdirectory(external/unzip)
 add_subdirectory(external/xxhash)
 add_subdirectory(external/tinyxml2)
+add_subdirectory(external/protobuf-lite)
 endif()
 
 # libcocos2d.a

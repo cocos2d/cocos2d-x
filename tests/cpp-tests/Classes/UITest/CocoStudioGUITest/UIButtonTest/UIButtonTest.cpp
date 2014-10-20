@@ -37,9 +37,11 @@ bool UIButtonTest::init()
         
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
+              button->getContentSize().height);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
-        button->setZoomScale(0.4);
+        button->setZoomScale(0.4f);
         button->setPressedActionEnabled(true);
         _uiLayer->addChild(button);
         button->setOpacity(100);
@@ -304,8 +306,8 @@ bool UIButtonTest_Title::init()
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);
         
-        button->runAction(RepeatForever::create(Sequence::create(ScaleTo::create(1., 1.2),
-                                                                 ScaleTo::create(1.0, 1.0),nullptr)));
+        button->runAction(RepeatForever::create(Sequence::create(ScaleTo::create(1.0f, 1.2f),
+                                                                 ScaleTo::create(1.0f, 1.0f),nullptr)));
         
         
         TextBMFont *text = TextBMFont::create("BMFont", "cocosui/bitmapFontTest2.fnt");
@@ -392,7 +394,7 @@ bool UIButtonTestRemoveSelf::init()
         _uiLayer->addChild(alert);
         
         Layout *layout = Layout::create();
-        layout->setContentSize(widgetSize * 0.6);
+        layout->setContentSize(widgetSize * 0.6f);
         layout->setBackGroundColor(Color3B::GREEN);
         layout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
         layout->setBackGroundColorOpacity(100);
@@ -631,9 +633,12 @@ bool UIButtonTextOnly::init()
         
         // Create the button
         auto button = Button::create();
-        button->setNormalizedPosition(Vec2(0.5, 0.5));
+        button->setNormalizedPosition(Vec2(0.5f, 0.5f));
+       
         button->setTitleText("PLAY GAME");
-        button->setZoomScale(0.3);
+        CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
+              button->getContentSize().height);
+        button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
         button->addClickEventListener([this](Ref* sender) {
             CCLOG("clicked!");
@@ -682,13 +687,13 @@ bool UIButtonIgnoreContentSizeTest::init()
                                      "cocosui/animationbuttonpressed.png");
         button->ignoreContentAdaptWithSize(false);
         button->setContentSize(Size(200,100));
-        button->setNormalizedPosition(Vec2(0.3, 0.5));
+        button->setNormalizedPosition(Vec2(0.3f, 0.5f));
         button->setTitleText("PLAY GAME");
-        button->setZoomScale(0.3);
+        button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
         button->addClickEventListener([=](Ref* sender) {
             CCLOG("clicked!");
-            button->setScale(1.2);
+            button->setScale(1.2f);
         });
         _uiLayer->addChild(button);
         
@@ -697,12 +702,12 @@ bool UIButtonIgnoreContentSizeTest::init()
                                      "cocosui/animationbuttonpressed.png");
         button2->ignoreContentAdaptWithSize(false);
         button2->setContentSize(Size(200,100));
-        button2->setNormalizedPosition(Vec2(0.8, 0.5));
+        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
         button2->setTitleText("PLAY GAME");
-        button2->setZoomScale(0.3);
+        button2->setZoomScale(0.3f);
         button2->setPressedActionEnabled(true);
         button2->addClickEventListener([=](Ref* sender) {
-            button2->runAction(ScaleTo::create(1.0, 1.2));
+            button2->runAction(ScaleTo::create(1.0f, 1.2f));
             CCLOG("clicked!");
         });
         _uiLayer->addChild(button2);
@@ -748,11 +753,11 @@ bool UIButtonTitleEffectTest::init()
         // Create the button
         auto button = Button::create("cocosui/animationbuttonnormal.png",
                                      "cocosui/animationbuttonpressed.png");
-        button->setNormalizedPosition(Vec2(0.3, 0.5));
+        button->setNormalizedPosition(Vec2(0.3f, 0.5f));
         button->setTitleText("PLAY GAME");
         button->setTitleFontName("fonts/Marker Felt.ttf");
-        button->setZoomScale(0.3);
-        button->setScale(2.0);
+        button->setZoomScale(0.3f);
+        button->setScale(2.0f);
         button->setPressedActionEnabled(true);
         Label *title = button->getTitleRenderer();
         button->setTitleColor(Color3B::RED);
@@ -764,7 +769,7 @@ bool UIButtonTitleEffectTest::init()
         // Create the button
         auto button2 = Button::create("cocosui/animationbuttonnormal.png",
                                       "cocosui/animationbuttonpressed.png");
-        button2->setNormalizedPosition(Vec2(0.8, 0.5));
+        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
         button2->setTitleText("PLAY GAME");
         auto title2 = button2->getTitleRenderer();
         title2->enableOutline(Color4B::GREEN, 3);

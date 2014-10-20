@@ -331,8 +331,8 @@
     <Filter Include="Classes\BillBoardTest">
       <UniqueIdentifier>{54a30b92-ddfb-420e-908b-886c23c21cf1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIWebViewTest">
-      <UniqueIdentifier>{a0b90b93-5575-4729-9afc-8a3839b378ac}</UniqueIdentifier>
+    <Filter Include="Classes\ExtensionsTest\AssetsManagerExTest">
+      <UniqueIdentifier>{f6c2eb6d-ad25-4287-a2a4-1c0d7382a49f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\NewAudioEngineTest">
       <UniqueIdentifier>{0ebafb87-26f5-4a07-b36f-1e4fa03afbe8}</UniqueIdentifier>
@@ -876,11 +876,11 @@
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp">
       <Filter>Classes\BillBoardTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\LightTest\LightTest.cpp">
       <Filter>Classes\LightTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
       <Filter>Classes\NewAudioEngineTest</Filter>
@@ -1622,11 +1622,11 @@
     <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h">
       <Filter>Classes\BillBoardTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\LightTest\LightTest.h">
       <Filter>Classes\LightTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIWebViewTest\UIWebViewTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIWebViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
       <Filter>Classes\NewAudioEngineTest</Filter>

@@ -662,6 +662,7 @@ Developers:
         Added HttpClient::sendImmediate()
         Added operator == != for Value
         Replace dynamic_cast to std::is_base_of in object_to_luaval
+        Added support normalize path on android
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -812,6 +813,7 @@ Developers:
         Added getAllTouches() in GLViewProtocol
         Precompiled headers improvements
         Added Application::openUrl for all supported platforms ecept WP8 and WinRT
+        Scale9Sprite capInsets set fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -853,6 +855,7 @@ Developers:
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
         Fixed link error with Xcode 6 when building with 32-bit architecture
+        Fixed CMake for Mac OS X
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -1025,6 +1028,9 @@ Developers:
         
     yestein
         Add Cocostudio Armature getOffsetPoints API for Lua
+        
+    coldfog
+        Fix bug that ActionManagerEx::initWithBinary can only load one UI animation
     
 Retired Core Developers:
     WenSheng Yang

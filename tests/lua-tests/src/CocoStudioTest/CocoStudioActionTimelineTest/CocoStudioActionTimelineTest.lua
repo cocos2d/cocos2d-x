@@ -59,7 +59,7 @@ end
 
 function TimelineTestLayer.title(idx)
     if TimelineTestIndex.TEST_ACTION_TIMELINE == idx then
-        return "CSArmature Test Bed"
+        return "Test ActionTimeline"
     elseif TimelineTestIndex.TEST_CHANGE_PLAY_SECTION == idx then
         return "Test Change Play Section"
     elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
@@ -188,14 +188,14 @@ end
 function TestActionTimeline:onEnter()
     cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = ccs.NodeReader:getInstance():createNode("ActionTimeline/boy_1.ExportJson")
-    local action = ccs.ActionTimelineCache:getInstance():createAction("ActionTimeline/boy_1.ExportJson")
+    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
 
     node:runAction(action)
     action:gotoFrameAndPlay(0, 60, true)
 
-    node:setScale(0.4)
-    node:setPosition(0, 0)
+    node:setScale(0.2)
+    node:setPosition(150, 100)
 
     self:addChild(node)
 end
@@ -241,8 +241,8 @@ end
 function TestChangePlaySection:onEnter()
     cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = ccs.NodeReader:getInstance():createNode("ActionTimeline/boy_1.ExportJson")
-    local action = ccs.ActionTimelineCache:getInstance():createAction("ActionTimeline/boy_1.ExportJson")
+    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
 
     node:runAction(action)
     action:gotoFrameAndPlay(70, action:getDuration(), true)
@@ -308,8 +308,8 @@ end
 function TestTimelineFrameEvent:onEnter()
     cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = ccs.NodeReader:getInstance():createNode("ActionTimeline/boy_1.ExportJson")
-    local action = ccs.ActionTimelineCache:getInstance():createAction("ActionTimeline/boy_1.ExportJson")
+    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
 
     node:runAction(action)
     action:gotoFrameAndPlay(0, 60, true)
@@ -377,8 +377,8 @@ function TestTimelinePerformance:onEnter()
     cc.SpriteFrameCache:getInstance():addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
     for i = 1,100 do
-        local node = ccs.NodeReader:getInstance():createNode("ActionTimeline/boy_1.ExportJson")
-        local action = ccs.ActionTimelineCache:getInstance():createAction("ActionTimeline/boy_1.ExportJson")
+        local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
+        local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
 
         node:runAction(action)
         action:gotoFrameAndPlay(70, action:getDuration(), true)

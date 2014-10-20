@@ -21,20 +21,64 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     _count = 0;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/windows_ui_loadingbar_editor_1.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar_Editor/windows_ui_loadingbar_editor_1.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -67,10 +111,14 @@ bool UILoadingBarTest_Editor::init()
     {
         scheduleUpdate();
         
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-
+        
         this->configureGUIScene();
+        
         return true;
     }
     

@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
 #include "CCPrecompiledShaders.h"
 #endif
 
@@ -100,10 +100,6 @@ const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD1 = "a_texCoord1";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD2 = "a_texCoord2";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD3 = "a_texCoord3";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD4 = "a_texCoord4";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD5 = "a_texCoord5";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD6 = "a_texCoord6";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD7 = "a_texCoord7";
 const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
@@ -181,7 +177,7 @@ GLProgram::~GLProgram()
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     GLboolean hasCompiler = false;
     glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
     _hasShaderCompiler = (hasCompiler == GL_TRUE);
@@ -230,14 +226,14 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     
     CHECK_GL_ERROR_DEBUG();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     _shaderId = CCPrecompiledShaders::getInstance()->addShaders(vShaderByteArray, fShaderByteArray);
 #endif
 
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 GLProgram* GLProgram::createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
     auto ret = new (std::nothrow) GLProgram();
@@ -294,10 +290,6 @@ void GLProgram::bindPredefinedVertexAttribs()
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD4, GLProgram::VERTEX_ATTRIB_TEX_COORD4},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD5, GLProgram::VERTEX_ATTRIB_TEX_COORD5},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD6, GLProgram::VERTEX_ATTRIB_TEX_COORD6},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD7, GLProgram::VERTEX_ATTRIB_TEX_COORD7},
         {GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
     };
 
@@ -368,7 +360,7 @@ void GLProgram::parseUniforms()
                 if(strncmp("CC_", uniformName, 3) != 0) {
 
                     // remove possible array '[]' from uniform name
-                    if(uniform.size > 1 && length > 3)
+                    if(length > 3)
                     {
                         char* c = strrchr(uniformName, '[');
                         if(c)
@@ -537,7 +529,7 @@ bool GLProgram::link()
 {
     CCASSERT(_program != 0, "Cannot link invalid program");
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     if(!_hasShaderCompiler)
     {
         // precompiled shader program is already linked
@@ -570,7 +562,7 @@ bool GLProgram::link()
     
     _vertShader = _fragShader = 0;
     
-#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     
     if (status == GL_FALSE)
@@ -581,7 +573,7 @@ bool GLProgram::link()
     }
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     if (status == GL_TRUE)
     {
         CCPrecompiledShaders::getInstance()->addProgram(_program, _shaderId);

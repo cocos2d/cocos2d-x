@@ -115,7 +115,7 @@ CC_CONSTRUCTOR_ACCESS:
     MeshVertexData();
     virtual ~MeshVertexData();
     
-    static const AABB& calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
+    static AABB calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
 protected:
     VertexData*          _vertexData; //mesh vertex data
     VertexBuffer*        _vertexBuffer; // vertex buffer

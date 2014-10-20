@@ -96,6 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/scenetest/UIComponentTest");
         searchPaths.push_back("ccs-res/hd/scenetest/TriggerTest");
         searchPaths.push_back("ccs-res");
+        searchPaths.push_back("Manifests");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
     else
@@ -124,16 +125,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = Scene::create();
     auto layer = new (std::nothrow) TestController();
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    layer->addConsoleAutoTest();
-#endif
     layer->autorelease();
     layer->addConsoleAutoTest();
     scene->addChild(layer);
     director->runWithScene(scene);
 
     // Enable Remote Console
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     auto console = director->getConsole();
     console->listenOnTCP(5678);
     Configuration *conf = Configuration::getInstance();
@@ -142,7 +139,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         layer->startAutoRun();
     }
-#endif
     
     return true;
 }

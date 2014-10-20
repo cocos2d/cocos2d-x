@@ -237,6 +237,7 @@ void ActionObject::play(CallFunc* func)
 void ActionObject::pause()
 {
 	_bPause = true;
+	_bPlaying = false;
 }
 
 void ActionObject::stop()
@@ -245,6 +246,7 @@ void ActionObject::stop()
 	{
 		e->stopAction();
 	}
+	_bPlaying = false;
 	_pScheduler->unschedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
@@ -283,6 +285,7 @@ void ActionObject::simulationActionUpdate(float dt)
 		}
 		else
 		{
+			_bPlaying = false;
 			_pScheduler->unschedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this);
 		}
 	}

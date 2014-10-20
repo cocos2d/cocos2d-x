@@ -413,7 +413,22 @@ function Camera3DTestDemo:onEnter()
 
     self:SwitchViewCallback(self, CameraType.ThirdCamera)
 
-    --UNDO DrawLine3D drwaline
+    local line = cc.DrawNode3D:create()
+    --draw x
+    for i = -20 ,20 do
+        line:drawLine(cc.vec3(-100, 0, 5 * i), cc.vec3(100, 0, 5 * i), cc.c4f(1, 0, 0, 0))
+    end
+
+    --draw z
+    for i = -20, 20 do
+        line:drawLine(cc.vec3(5 * i, 0, -100), cc.vec3(5 * i, 0, 100), cc.c4f(0, 0, 1, 1))
+    end
+
+    --draw y
+    line:drawLine(cc.vec3(0, -50, 0), cc.vec3(0,0,0), cc.c4f(0, 0.5, 0, 1))
+    line:drawLine(cc.vec3(0, 0, 0), cc.vec3(0,50,0), cc.c4f(0, 1, 0, 1))
+    self._layer3D:addChild(line)
+
     self._layer3D:setCameraMask(2)
 end
 

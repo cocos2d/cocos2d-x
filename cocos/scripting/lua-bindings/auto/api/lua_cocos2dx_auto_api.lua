@@ -1017,6 +1017,11 @@
 
 
 --------------------------------------------------------
+-- the cc ClippingRectangleNode
+-- @field [parent=#cc] ClippingRectangleNode#ClippingRectangleNode ClippingRectangleNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc MotionStreak
 -- @field [parent=#cc] MotionStreak#MotionStreak MotionStreak preloaded module
 
@@ -1214,6 +1219,11 @@
 --------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
+-- the cc CSLoader
+-- @field [parent=#cc] CSLoader#CSLoader CSLoader preloaded module
 
 
 return nil
