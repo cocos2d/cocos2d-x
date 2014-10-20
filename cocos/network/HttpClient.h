@@ -44,7 +44,7 @@ namespace network {
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class CC_DLL HttpClient
+class CC_DLL HttpClient : public Ref
 {
 public:
     /** Return the shared instance **/
@@ -107,21 +107,11 @@ public:
 private:
     HttpClient();
     virtual ~HttpClient();
-    bool init(void);
-    
-    /**
-     * Init pthread mutex, semaphore, and create new thread for http requests
-     * @return bool
-     */
-    bool lazyInitThreadSemphore();
-    void networkThread();
-    void networkThreadAlone(HttpRequest* request);
-    /** Poll function called from main thread to dispatch callbacks when http requests finished **/
-    void dispatchResponseCallbacks();
-    
-private:
+
     int _timeoutForConnect;
     int _timeoutForRead;
+    std::string _cookiesFilename;
+    std::string _sslCaFilename;
 };
 
 // end of Network group
