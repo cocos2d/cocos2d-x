@@ -51,6 +51,8 @@ Scene::Scene()
     _defaultCamera = Camera::create();
     addChild(_defaultCamera);
     
+    _leftVRCamera = _rightVRCamera = nullptr;
+    
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
 }
@@ -129,6 +131,7 @@ void Scene::render(Renderer* renderer)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
+    Rect viewrect(0.0f, 0.0f, 1.0f, 1.0f);
     for (const auto& camera : _cameras)
     {
         Camera::_visitingCamera = camera;
@@ -141,6 +144,14 @@ void Scene::render(Renderer* renderer)
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
+        
+        const auto& cameraViewRect = camera->getNormalizeViewPortRect();
+        if (viewrect.origin.x != cameraViewRect.origin.x || viewrect.origin.y != cameraViewRect.origin.y
+            || viewrect.size.width != cameraViewRect.size.width || viewrect.size.height != cameraViewRect.size.height)
+        {
+            director->setViewport();
+            viewrect = cameraViewRect;
+        }
         //visit the scene
         visit(renderer, Mat4::IDENTITY, 0);
         renderer->render();
@@ -156,11 +167,75 @@ void Scene::render(Renderer* renderer)
         
         //visit the scene
         visit(renderer, Mat4::IDENTITY, 0);
+        const auto& cameraViewRect = defaultCamera->getNormalizeViewPortRect();
+        if (viewrect.origin.x != cameraViewRect.origin.x || viewrect.origin.y != cameraViewRect.origin.y
+            || viewrect.size.width != cameraViewRect.size.width || viewrect.size.height != cameraViewRect.size.height)
+        {
+            director->setViewport();
+            viewrect = cameraViewRect;
+        }
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
     Camera::_visitingCamera = nullptr;
+    
+    // reset view port
+    if (viewrect.origin.x != 0.f || viewrect.origin.y != 0.f || viewrect.size.width != 1.f|| viewrect.size.height != 1.f)
+        director->setViewport();
+}
+
+void Scene::enableVR(float distanceBetweenEyes, CameraFlag cameraflag)
+{
+    auto s = Director::getInstance()->getWinSize();
+    if (_leftVRCamera == nullptr)
+    {
+        float ratio = (GLfloat)s.width * 0.5f / s.height;
+        _leftVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
+        _rightVRCamera = Camera::createPerspective(60, ratio, 1.0f, 1000.0f);
+        
+        _leftVRCamera->setNormalizedViewPortRect(0.f, 0.f, 0.5f, 1.f);
+        _rightVRCamera->setNormalizedViewPortRect(0.5f, 0.f, 0.5f, 1.f);
+        addChild(_leftVRCamera);
+        addChild(_rightVRCamera);
+        _leftVRCamera->setScene(this);
+        _rightVRCamera->setScene(this);
+    }
+    _leftVRCamera->setCameraFlag(cameraflag);
+    _rightVRCamera->setCameraFlag(cameraflag);
+    
+    _leftVRCamera->setPosition3D(_defaultCamera->getPosition3D() - Vec3(distanceBetweenEyes / 2.f, 0.f, 0.f));
+    _rightVRCamera->setPosition3D(_defaultCamera->getPosition3D() + Vec3(distanceBetweenEyes / 2.f, 0.f, 0.f));
+    
+    setVRHeadPosAndRot(_defaultCamera->getPosition3D(), _defaultCamera->getRotation3D());
+}
+
+void Scene::disableVR()
+{
+    if (_leftVRCamera && _rightVRCamera)
+    {
+        removeChild(_leftVRCamera);
+        removeChild(_rightVRCamera);
+        _leftVRCamera = _rightVRCamera = nullptr;
+    }
+}
+
+void Scene::setVRHeadPosAndRot(const Vec3& pos, const Vec3& rot)
+{
+    if (_leftVRCamera && _rightVRCamera)
+    {
+        float distanceBetweenEyes = (_leftVRCamera->getPosition3D() - _rightVRCamera->getPosition3D()).length();
+        
+        _leftVRCamera->setRotation3D(rot);
+        _rightVRCamera->setRotation3D(rot);
+        auto mat = _leftVRCamera->getNodeToParentTransform();
+        Vec3 offset(mat.m[0], mat.m[1], mat.m[2]);
+        offset.normalize();
+        offset *= distanceBetweenEyes / 2.f;
+        
+        _leftVRCamera->setPosition3D(pos - offset);
+        _rightVRCamera->setPosition3D(pos + offset);
+    }
 }
 
 #if CC_USE_PHYSICS

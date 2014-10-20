@@ -19,6 +19,7 @@
  */
 
 #include "Quaternion.h"
+#include "math/Vec2.h"
 #include "base/ccMacros.h"
 
 NS_CC_MATH_BEGIN
@@ -252,6 +253,15 @@ float Quaternion::toAxisAngle(Vec3* axis) const
     axis->normalize();
 
     return (2.0f * acos(q.w));
+}
+
+void Quaternion::toEulerAngle(Vec3* angle) const
+{
+    float fRoll  = atan2(2 * (w * z + x * y) , 1 - 2 * (z * z + x * x));
+    float fPitch = asin(clampf(2 * (w * x - y * z) , -1.0f , 1.0f));
+    float fYaw   = atan2(2 * (w * y + z * x) , 1 - 2 * (x * x + y * y));
+    
+    angle->set(CC_RADIANS_TO_DEGREES(fPitch),CC_RADIANS_TO_DEGREES(fYaw),CC_RADIANS_TO_DEGREES(fRoll));
 }
 
 void Quaternion::lerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst)

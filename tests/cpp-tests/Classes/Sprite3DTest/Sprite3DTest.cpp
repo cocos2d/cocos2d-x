@@ -31,6 +31,7 @@
 #include "3d/CCSprite3D.h"
 #include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
+#include "ui/UISlider.h"
 #include "DrawNode3D.h"
 
 #include <algorithm>
@@ -62,7 +63,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
-    CL(Sprite3DMirrorTest)
+    CL(Sprite3DMirrorTest),
+    CL(VRTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1527,4 +1529,175 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
         sprite->runAction(RepeatForever::create(animate));
     }
     _mirrorSprite = sprite;
+}
+
+VRTest::VRTest()
+: _velocity(Vec3::ZERO)
+, _moveTowardZ(true)
+{
+    std::string fileName = "Sprite3DTest/girl.c3b";
+    _sprite = Sprite3D::create(fileName);
+    _sprite->setScale(0.2f);
+    addChild(_sprite);
+    auto s = Director::getInstance()->getWinSize();
+    Vec2 p(s.width/2, s.height/2);
+    _sprite->setCameraMask(2);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        _sprite->runAction(RepeatForever::create(animate));
+    }
+    _rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    _rot->retain();
+    _drawDebug = DrawNode3D::create();
+    _drawDebug->setCameraMask(2);
+    addChild(_drawDebug);
+    
+    _start.set(s.width * 0.5f + 20, s.height * 0.5f - 10, -40.f);
+    _end.set(s.width * 0.5f, s.height * 0.5f - 10, 60.f);
+    _velocity = (_end - _start).getNormalized() * 10;
+    _sprite->setPosition3D(_start);
+    
+    //add slider
+    ui::Slider* slider = ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPercent(50);
+    slider->setPosition(Vec2(s.width / 2.0f, s.height * 0.2f));
+    slider->setTag(100);
+    addChild(slider);
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 10);
+    auto label = Label::createWithTTF(ttfCount,"distance between eyes: 5");
+    label->setTag(101);
+    addChild(label);
+    label->setPosition(s.width/3.f, s.height / 3.f);
+    
+    slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
+        
+        if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
+        {
+            ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
+            float p = slider->getPercent() / 100.0f;
+            auto scene = getScene();
+            scene->enableVR(p * 10, CameraFlag::USER1);
+            auto s = Director::getInstance()->getWinSize();
+            scene->setVRHeadPosAndRot(Vec3(s.width / 2.f, s.height / 2.f, 100), Vec3::ZERO);
+            
+            auto label = static_cast<Label*>(getChildByTag(101));
+            char str[50];
+            sprintf(str, "distance between eyes: %.2f", p*10);
+            label->setString(str);
+        }
+    });
+    
+    scheduleUpdate();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(VRTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+VRTest::~VRTest()
+{
+    unscheduleUpdate();
+    _rot->release();
+}
+
+void VRTest::onEnter()
+{
+    Sprite3DTestDemo::onEnter();
+    auto scene = getScene();
+    scene->enableVR(5.f, CameraFlag::USER1);
+    auto s = Director::getInstance()->getWinSize();
+    scene->setVRHeadPosAndRot(Vec3(s.width / 2.f, s.height / 2.f, 100), Vec3::ZERO);
+    
+//    ui::Slider* slider = static_cast<ui::Slider*>(getChildByTag(100));
+//    slider->setPercent(50);
+}
+
+void VRTest::onExit()
+{
+    Sprite3DTestDemo::onExit();
+    getScene()->disableVR();
+}
+
+std::string VRTest::title() const
+{
+    return "Test VR";
+}
+
+std::string VRTest::subtitle() const
+{
+    return "Tap to show or hide UI ";
+}
+
+void VRTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    static bool showUI = true;
+    showUI = !showUI;
+    auto scene = getScene();
+    if (showUI)
+    {
+        scene->setCameraMask(0);
+        _sprite->setCameraMask(2);
+    }
+    else
+    {
+        scene->setCameraMask(1);
+        _sprite->setCameraMask(2);
+    }
+}
+
+void VRTest::update(float dt)
+{
+    Vec3 delta = _velocity * dt;
+    
+    Vec3 pos = _sprite->getPosition3D();
+    pos += delta;
+    if (_moveTowardZ)
+    {
+        if (pos.z > _end.z)
+        {
+            pos = _end;
+            _moveTowardZ = false;
+            _velocity = -_velocity;
+            _sprite->runAction(_rot);
+        }
+    }
+    else
+    {
+        if (pos.z < _start.z)
+        {
+            pos = _start;
+            _moveTowardZ = true;
+            _velocity = -_velocity;
+            _sprite->runAction(_rot);
+        }
+    }
+    _sprite->setPosition3D(pos);
+    
+    //draw ground
+    if (_drawDebug)
+    {
+        //there is problem on draw the grid in the view port
+//        auto s = Director::getInstance()->getWinSize();
+//        _drawDebug->clear();
+//        //draw x
+//        float centerx = s.width / 2.f;
+//        float centery = s.height / 2.f - 10;
+//        
+//        for( int j =-10; j<=10 ;j++)
+//        {
+//            _drawDebug->drawLine(Vec3(-100 + centerx, centery, 10*j),Vec3(100 + centerx,centery,10*j),Color4F(1,0,0,1));
+//        }
+//        //draw z
+//        for( int j =-10; j<=10 ;j++)
+//        {
+//            _drawDebug->drawLine(Vec3(10*j + centerx, centery, -100),Vec3(10*j + centerx,centery,100),Color4F(0,0,1,1));
+//        }
+    }
 }

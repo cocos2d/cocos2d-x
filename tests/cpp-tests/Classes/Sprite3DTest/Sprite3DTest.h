@@ -321,6 +321,35 @@ protected:
     cocos2d::Sprite3D* _mirrorSprite;
 };
 
+
+/**
+ * This test is for 3d glass, you can get 3d scene using Google Cardboard or VR from Nibiru
+ */
+class VRTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(VRTest);
+    VRTest();
+    ~VRTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    virtual void update(float dt) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    bool               _moveTowardZ; // move toward positive z
+    cocos2d::Vec3      _velocity;
+    cocos2d::RotateBy* _rot; // turn action
+    DrawNode3D*        _drawDebug; // used for draw ground
+    
+    cocos2d::Vec3      _start; //start position
+    cocos2d::Vec3      _end; //end position
+};
+
 class Sprite3DTestScene : public TestScene
 {
 public:

@@ -128,6 +128,10 @@ public:
     */
     void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
     
+    /** get & set normalized view port rect, (0, 0, 1, 1) is the full screen*/
+    void setNormalizedViewPortRect(float x, float y, float width, float height);
+    const Rect& getNormalizeViewPortRect() const { return _normalizedViewPortRect; }
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -164,6 +168,7 @@ protected:
     float _farPlane;
     mutable bool  _viewProjectionDirty;
     unsigned short _cameraFlag; // camera flag
+    Rect           _normalizedViewPortRect; //normalized view port rect
     
     static Camera* _visitingCamera;
     

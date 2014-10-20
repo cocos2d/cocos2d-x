@@ -30,10 +30,10 @@ THE SOFTWARE.
 
 #include <string>
 #include "2d/CCNode.h"
+#include "base/CCCamera.h"
 
 NS_CC_BEGIN
 
-class Camera;
 class BaseLight;
 class Renderer;
 class EventListenerCustom;
@@ -79,6 +79,22 @@ public:
     /** render the scene */
     void render(Renderer* renderer);
     
+    /** 
+     * enable VR and use 3d glasses, this will draw image seen by left eye on the left screen and image seen by right eye on the right screen 
+     * @param distanceBetweenEyes The distance between two eyes.
+     * @param cameraflag The flag used by VR camera.
+     */
+    void enableVR(float distanceBetweenEyes, CameraFlag cameraflag);
+    
+    void disableVR();
+    
+    /**
+     * set head position and rotation, it is valid when VR is enabled
+     * @param pos The position of head.
+     * @param rot The rotation of head.
+     */
+    void setVRHeadPosAndRot(const Vec3& pos, const Vec3& rot);
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
@@ -98,6 +114,8 @@ protected:
     
     std::vector<Camera*> _cameras; //weak ref to Camera
     Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
+    Camera*              _leftVRCamera; // left camera for VR
+    Camera*              _rightVRCamera; // right camera for VR
     EventListenerCustom*       _event;
 
     std::vector<BaseLight *> _lights;
