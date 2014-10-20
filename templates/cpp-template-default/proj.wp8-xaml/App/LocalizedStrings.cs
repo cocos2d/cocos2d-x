@@ -1,6 +1,6 @@
 ﻿using PhoneDirect3DXamlAppInterop.Resources;
 
-namespace PhoneDirect3DXamlAppInterop
+namespace cocos2d
 {
     /// <summary>
     /// Provides access to string resources.

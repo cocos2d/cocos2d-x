@@ -14,12 +14,12 @@
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume"/>
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="PhoneDirect3DXamlAppInteropToken" TaskName="_default">
+      <PrimaryToken TokenID="cocos2dToken" TaskName="_default">
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>PhoneDirect3DXamlAppInterop</Title>
+          <Title>HelloCpp</Title>
           <BackContent></BackContent>
           <BackBackgroundImageURI></BackBackgroundImageURI>
           <BackTitle></BackTitle>
