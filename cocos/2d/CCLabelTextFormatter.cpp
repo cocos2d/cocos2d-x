@@ -151,16 +151,16 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             else
             {
                 StringUtils::trimUTF16Vector(last_word);
-                if (isStartOfLine)
+                //issue #8492:endless loop if not using system font, and constrained length is less than one character width
+                if (isStartOfLine && last_word.size() == 0)
                     last_word.push_back(character);
-
-                last_word.push_back('\n');
-
-                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-                last_word.clear();
-                if (!isStartOfLine)
+                else
                     --j;
 
+                last_word.push_back('\n');
+                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+                last_word.clear();
+                
                 isStartOfWord = false;
                 isStartOfLine = false;
                 startOfWord = -1;
