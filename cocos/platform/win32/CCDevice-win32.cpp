@@ -431,7 +431,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         GetDIBits(dc.getDC(), dc.getBitmap(), 0, height, dataBuf, 
             (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
-        // change pixel's alpha value to 255, when it's RGB != 0
+        COLORREF textColor = (textDefinition._fontFillColor.b << 16 | textDefinition._fontFillColor.g << 8 | textDefinition._fontFillColor.r) & 0x00ffffff;
         COLORREF * pPixel = nullptr;
         for (int y = 0; y < height; ++y)
         {
@@ -439,7 +439,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
             for (int x = 0; x < width; ++x)
             {
                 COLORREF& clr = *pPixel;
-                clr = (0xffffff | (GetRValue(clr) << 24));
+                clr = (GetRValue(clr) << 24) | textColor;
                 ++pPixel;
             }
         }
