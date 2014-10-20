@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-using PhoneDirect3DXamlAppComponent;
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -27,7 +26,7 @@ using Microsoft.Phone.Info;
 using Windows.Graphics.Display;
 using Microsoft.Phone.Tasks;
 
-namespace PhoneDirect3DXamlAppInterop
+namespace cocos2d
 {
     public partial class MainPage : PhoneApplicationPage
     {

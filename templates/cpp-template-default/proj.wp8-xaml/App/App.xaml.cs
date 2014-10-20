@@ -7,9 +7,8 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
-using PhoneDirect3DXamlAppInterop.Resources;
 
-namespace PhoneDirect3DXamlAppInterop
+namespace cocos2d
 {
     public partial class App : Application
     {

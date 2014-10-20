@@ -14,7 +14,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="cpp_tests_Windows.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="cocos2d_Windows.App">
       <m2:VisualElements DisplayName="cpp-tests.Windows" Description="cpp-tests.Windows" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
         <m2:DefaultTile>
           <m2:ShowNameOnTiles>
