@@ -135,12 +135,13 @@ Please refer to this document: [ReadMe](../README.md)
 * TileMap: supported staggered tile map
 * Added `ClippingRectangNode`, it is more effecient for renctangle clipping
 * Node: schedule/unschedule lambda functions
+* Facebook platform support in plugin-x, all features has been added, but the API needs to be polished with Facebook guys
 
 # Features in detail
 
 ## Light
 
-To make 3d objects looks realistic, we add lights to this version. cocos2d-x supports four types of lights, direction light, point light, spot light and ambient light.
+To make 3d objects looks realistic, we add lights to this version. cocos2d-x supports four types of lights, directional light, point light, spot light and ambient light.
 
 `DirectionLight` is meant to represent an extremely distant light source (like the sun or moon). Rays cast from directional lights run parallel in a single direction from every point in the sky, and are typically used to simulate the sun light.
 
@@ -192,9 +193,13 @@ Please refer to `tests/cpp-tests/Classes/SpineTest/SpineTest.cpp` for usage.
 
 ## AssetsManagerEx
 
-`AssetsMangerEx` is an enhancement version of `AssetsManager`.
+`AssetsMangerEx` is an enhancement version of `AssetsManager`. Compared to `AssetsManager`, there are some pros using `AssetsManagerEx`:
 
-TBD
+* complex update package support with manifest file
+* multi-thread downloading support
+* continue transferring from breakpoint
+
+Please refer to [this document](http://cocos2d-x.org/wiki/Assets_manager) for detail information.
 
 ## Application::openURL
 
@@ -224,6 +229,10 @@ auto content = Sprite::create("MyPicture.png");
 ...
 clipper->addChild(content);
 ```
+
+## Facebook integration
+
+TBD
 
 # Highlights of v3.3beta0
 
