@@ -167,7 +167,7 @@ Then the 3d sprite whose light mask AND light flag is none zero can effect by th
 
 `PointLight` casts illumination outward in every direction from a single, infinitely small point in 3D space. It is useful for simulating any omnidirectional light source.
 
-`SpotLight` emits a cone shaped light field from a single point in space. It can be used to simulate desk lamps, overhead cone lighting, etc. Note that 'SpotLight' will take more GPU time.
+`SpotLight` emits a cone shaped light field from a single point in space. It can be used to simulate desk lamps, overhead cone lighting, etc. Note that `SpotLight` will take more GPU time.
 
 `AmbientLight` casts soft rays in every direction.
 
