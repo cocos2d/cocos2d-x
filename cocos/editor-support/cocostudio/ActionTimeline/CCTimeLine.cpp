@@ -209,7 +209,7 @@ void Timeline::binarySearchKeyFrame(int frameIndex)
 void Timeline::updateCurrentKeyFrame(int frameIndex)
 {
     if(frameIndex > 60)
-    int a = 0;
+
     //! If play to current frame's front or back, then find current frame again
     if (frameIndex < _currentKeyFrameIndex || frameIndex >= _currentKeyFrameIndex + _betweenDuration)
     {
