@@ -114,12 +114,36 @@ bool GLViewImpl::Create(float width, float height, DisplayOrientations orientati
     return true;
 }
 
+void GLViewImpl::setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher)
+{
+    m_dispatcher = dispatcher;
+}
 
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
     std::string str;
     setIMEKeyboardState(bOpen, str);
+}
+
+bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ message)
+{
+    if (m_dispatcher.Get())
+    {
+        Windows::UI::Popups::MessageDialog^ msg = ref new Windows::UI::Popups::MessageDialog(message, title);
+        // Set the command to be invoked when a user presses 'ESC'
+        msg->CancelCommandIndex = 1;
+
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
+            ref new Windows::UI::Core::DispatchedHandler([msg]()
+        {
+            // Show the message dialog
+            msg->ShowAsync();
+        }));
+
+        return true;
+    }
+    return false;
 }
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen, std::string str)
@@ -306,15 +330,7 @@ void GLViewImpl::OnRendering()
 
 
 
-bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ message)
-{
-    if(m_messageBoxDelegate)
-    {
-        m_messageBoxDelegate->Invoke(title, message);
-        return true;
-    }
-    return false;
-}
+
 
 bool GLViewImpl::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
 {

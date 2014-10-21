@@ -39,7 +39,6 @@ THE SOFTWARE.
 #include <mutex>
 #include <queue>
 
-#include <agile.h>
 #include <DirectXMath.h>
 
 #include <EGL/egl.h>
@@ -72,6 +71,8 @@ public:
     void HideKeyboard(Windows::Foundation::Rect r);
 
     virtual bool Create(float width, float height ,Windows::Graphics::Display::DisplayOrientations orientation);
+
+    void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -167,6 +168,9 @@ private:
 
     std::queue<std::shared_ptr<InputEvent>> mInputEvents;
     std::mutex mMutex;
+
+    Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
+
 
 };
 
