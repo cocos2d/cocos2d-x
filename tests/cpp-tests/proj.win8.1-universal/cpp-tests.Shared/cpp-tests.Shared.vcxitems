@@ -4,7 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{be3a1791-5bce-4cea-92cd-0e2d86dde27a}</ItemsProjectGuid>
-    <ItemsRootNamespace>cpp_tests</ItemsRootNamespace>
+    <ItemsRootNamespace>cocos2d</ItemsRootNamespace>
     <ItemsProjectName>cpp-tests.Shared</ItemsProjectName>
     <SharedGUID>f6ae64be-127a-4f7d-ad15-53a0fddb7f41</SharedGUID>
   </PropertyGroup>
@@ -14,6 +14,9 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLES.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp">
@@ -191,7 +194,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest_Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp" />
+    <ClCompile Include="$(MSBuildThfisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp" />
@@ -467,14 +470,13 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <_CustomResource Include="$(MSBuildThisFileDirectory)..\..\Resources\**\*">
       <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <DeploymentContent>true</DeploymentContent>
     </_CustomResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
-    <Page Include="$(MSBuildThisFileDirectory)App.xaml" />
   </ItemGroup>
   <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
     <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />

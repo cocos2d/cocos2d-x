@@ -5,7 +5,7 @@
     <HasSharedItems>true</HasSharedItems>
     <SharedGUID>e956c24b-f04e-47bf-bf00-746681ae1301</SharedGUID>
     <ItemsProjectGuid>{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}</ItemsProjectGuid>
-    <ItemsRootNamespace>HelloCpp</ItemsRootNamespace>
+    <ItemsRootNamespace>cocos2d</ItemsRootNamespace>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

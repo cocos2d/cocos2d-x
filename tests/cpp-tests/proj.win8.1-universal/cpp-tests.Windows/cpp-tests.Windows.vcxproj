@@ -28,7 +28,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f2bae06b-caae-43ee-b21b-57fa48db04fa}</ProjectGuid>
-    <RootNamespace>cpp_tests</RootNamespace>
+    <RootNamespace>cocos2d</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
