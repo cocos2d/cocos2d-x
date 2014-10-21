@@ -86,7 +86,7 @@ namespace utils
     /**
      * calculate all children's boundingBox
      */
-    Rect getCascadeBoundingBox(Node *node);
+    Rect CC_DLL getCascadeBoundingBox(Node *node);
 }
 
 NS_CC_END
