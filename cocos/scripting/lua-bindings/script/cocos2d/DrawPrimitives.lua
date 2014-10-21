@@ -8,11 +8,11 @@ local dp_pointSize = 1.0
 
 local SHADER_NAME_POSITION_U_COLOR = "ShaderPosition_uColor"
 
-local targetPlatform = CCApplication:getInstance():getTargetPlatform()
+local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 
 local function lazy_init()
     if not dp_initialized then
-        dp_shader = CCShaderCache:getInstance():getProgram(SHADER_NAME_POSITION_U_COLOR)
+        dp_shader = cc.ShaderCache:getInstance():getProgram(SHADER_NAME_POSITION_U_COLOR)
         --dp_shader:retain()
         if nil ~= dp_shader then
             dp_colorLocation = gl.getUniformLocation( dp_shader:getProgram(), "u_color")
@@ -52,7 +52,7 @@ function ccDrawColor4f(r,g,b,a)
 end
 
 function ccPointSize(pointSize)
-    dp_pointSize = pointSize * CCDirector:getInstance():getContentScaleFactor()
+    dp_pointSize = pointSize * cc.Director:getInstance():getContentScaleFactor()
 end
 
 function ccDrawColor4B(r,g,b,a)
