@@ -74,7 +74,7 @@ xcopy "OpenGLESPage.xaml.h" "..\..\..\templates\cpp-template-default\proj.win8.1
 xcopy "OpenGLES.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "OpenGLES.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "Cocos2dRenderer.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "Cocos2dRenderer.h " "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "Cocos2dRenderer.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -97,7 +97,7 @@ xcopy "OpenGLESPage.xaml.h" "..\..\..\templates\cpp-template-default\proj.win8.1
 xcopy "OpenGLES.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "OpenGLES.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "Cocos2dRenderer.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "Cocos2dRenderer.h " "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "Cocos2dRenderer.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -120,7 +120,7 @@ xcopy "OpenGLESPage.xaml.h" "..\..\..\templates\cpp-template-default\proj.win8.1
 xcopy "OpenGLES.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "OpenGLES.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "Cocos2dRenderer.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "Cocos2dRenderer.h " "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "Cocos2dRenderer.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -143,7 +143,7 @@ xcopy "OpenGLESPage.xaml.h" "..\..\..\templates\cpp-template-default\proj.win8.1
 xcopy "OpenGLES.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "OpenGLES.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "Cocos2dRenderer.cpp" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "Cocos2dRenderer.h " "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "Cocos2dRenderer.h" "..\..\..\templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
