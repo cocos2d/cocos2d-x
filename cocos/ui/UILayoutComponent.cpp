@@ -66,9 +66,24 @@ namespace ui {
     {
         return this->getOwner()->getContentSize();
     }
-    void LayoutComponent::setOwnerContentSize(const Vec2& percent)
+    void LayoutComponent::setOwnerContentSize(const Vec2& size)
     {
-        this->RefreshLayoutSize(SizeType::Size,percent);
+        this->getOwner()->setContentSize(Size(size.x,size.y));
+
+        Node* parentNode = this->getOwner()->getParent();
+        if (parentNode != NULL && _actived)
+        {
+            Size parentSize = parentNode->getContentSize();
+
+            if (parentSize.width != 0 && parentSize.height != 0)
+            {
+                _percentContentSize = Point(size.x/parentSize.width,size.y/parentSize.height);
+            }
+            else
+            {
+                _percentContentSize = Point(0,0);
+            }
+        }
     }
 
     const Vec2& LayoutComponent::getPercentContentSize()const
@@ -78,7 +93,17 @@ namespace ui {
     
     void LayoutComponent::setPercentContentSize(const Vec2& percent)
     {
-        this->RefreshLayoutSize(SizeType::PreSize,percent);
+        _percentContentSize = percent;
+
+        Node* parentNode = this->getOwner()->getParent();
+        if (parentNode != NULL && _actived)
+        {
+            Size parentSize = parentNode->getContentSize();
+            if (_usingPercentContentSize)
+            {
+                this->getOwner()->setContentSize(Size(percent.x*parentSize.width,percent.y*parentSize.height));
+            }
+        }
     }
     
     bool LayoutComponent::isUsingPercentContentSize()
@@ -89,79 +114,35 @@ namespace ui {
     void LayoutComponent::setUsingPercentContentSize(bool flag)
     {
         _usingPercentContentSize = flag;
-        this->RefreshLayoutSize(SizeType::PreSizeEnable,Vec2(0,0));
-    }
 
-    void LayoutComponent::RefreshLayoutSize(SizeType sType, const Vec2& size)
-    {
         Node* parentNode = this->getOwner()->getParent();
         if (parentNode != NULL && _actived)
         {
             Size parentSize = parentNode->getContentSize();
-
-            switch (sType)
+            if (_usingPercentContentSize)
             {
-            case SizeType::Size:
-                if (parentSize.width != 0 && parentSize.height != 0)
+                Size baseSize = this->getOwner()->getContentSize();
+                if (parentSize.width != 0)
                 {
-                    _percentContentSize = Point(size.x/parentSize.width,size.y/parentSize.height);
+                    _percentContentSize.x = baseSize.width/parentSize.width;
                 }
                 else
                 {
-                    _percentContentSize = Point(0,0);
+                    _percentContentSize.x = 0;
+                    baseSize.width = 0;
                 }
-                this->getOwner()->setContentSize(Size(size.x,size.y));
-                break;
-            case SizeType::PreSize:
-                _percentContentSize = size;
-                if (_usingPercentContentSize)
-                {
-                    this->getOwner()->setContentSize(Size(size.x*parentSize.width,size.y*parentSize.height));
-                }
-                break;
-            case SizeType::PreSizeEnable:
-                if (_usingPercentContentSize)
-                {
-                    Size baseSize = this->getOwner()->getContentSize();
-                    if (parentSize.width != 0)
-                    {
-                        _percentContentSize.x = baseSize.width/parentSize.width;
-                    }
-                    else
-                    {
-                        _percentContentSize.x = 0;
-                        baseSize.width = 0;
-                    }
 
-                    if (parentSize.height != 0)
-                    {
-                        _percentContentSize.y = baseSize.height/parentSize.height;
-                    }
-                    else
-                    {
-                        _percentContentSize.y = 0;
-                        baseSize.height = 0;
-                    }
-
-                    this->getOwner()->setContentSize(baseSize);
+                if (parentSize.height != 0)
+                {
+                    _percentContentSize.y = baseSize.height/parentSize.height;
                 }
-                break;
-            default:
-                break;
-            }
-        }
-        else
-        {
-            switch (sType)
-            {
-            case SizeType::Size:
-                this->getOwner()->setContentSize(Size(size.x,size.y));
-                break;
-            case SizeType::PreSize:
-                _percentContentSize = size;
-                break;
-            default:
-                break;
+                else
+                {
+                    _percentContentSize.y = 0;
+                    baseSize.height = 0;
+                }
+
+                this->getOwner()->setContentSize(baseSize);
             }
         }
     }
@@ -174,7 +155,38 @@ namespace ui {
     void LayoutComponent::setUsingPercentPosition(bool flag)
     {
         _usingPercentPosition = flag;
-        this->RefreshLayoutPosition(PositionType::PreRelativePositionEnable,Vec2(0,0));
+
+        Node* parentNode = this->getOwner()->getParent();
+        if (parentNode != NULL && _actived)
+        {
+            Size parentSize = parentNode->getContentSize();
+
+            if (_usingPercentPosition)
+            {
+                if (parentSize.width != 0)
+                {
+                    _percentPosition.x = _relativePosition.x/parentSize.width;
+                }
+                else
+                {
+                    _percentPosition.x = 0;
+                    _relativePosition.x = 0;
+                }
+
+                if (parentSize.height != 0)
+                {
+                    _percentPosition.y = _relativePosition.y/parentSize.height;
+                }
+                else
+                {
+                    _percentPosition.y = 0;
+                    _relativePosition.y = 0;
+                }
+            }
+
+            Point inversePoint = this->converPointWithReferencePointAndSize(_relativePosition,parentSize);
+            this->getOwner()->setPosition(inversePoint);
+        }
     }
 
     const Vec2& LayoutComponent::getPercentPosition()
@@ -183,7 +195,16 @@ namespace ui {
     }
     void LayoutComponent::setPercentPosition(const Vec2& percent)
     {
-        this->RefreshLayoutPosition(PositionType::PreRelativePosition,percent);
+        _percentPosition = percent;
+
+        Node* parentNode = this->getOwner()->getParent();
+        if (parentNode != NULL && _actived)
+        {
+            Size parentSize = parentNode->getContentSize();
+            _relativePosition = Point(_percentPosition.x*parentSize.width,_percentPosition.y*parentSize.height);
+            Point inversePoint = this->converPointWithReferencePointAndSize(_relativePosition,parentSize);
+            this->getOwner()->setPosition(inversePoint);
+        }
     }
 
     const Vec2& LayoutComponent::getOwnerPosition()const
@@ -192,7 +213,32 @@ namespace ui {
     }
     void LayoutComponent::setOwnerPosition(const Vec2& point)
     {
-        this->RefreshLayoutPosition(PositionType::Position,point);
+        Node* parentNode = this->getOwner()->getParent();
+        if (parentNode != NULL && _actived)
+        {
+            Size parentSize = parentNode->getContentSize();
+
+            Point inversePoint = this->converPointWithReferencePointAndSize(point,parentSize);
+            this->getOwner()->setPosition(point);
+            _relativePosition = inversePoint;
+            if (parentSize.width != 0 && parentSize.height != 0)
+            {
+                _percentPosition = Point(_relativePosition.x/parentSize.width,_relativePosition.y/parentSize.height);
+            }
+            else
+            {
+                _percentPosition = Point(0,0);
+            }
+        }
+        else
+        {
+            this->getOwner()->setPosition(point);
+            if (_referencePoint == ReferencePoint::BOTTOM_LEFT)
+            {
+                _relativePosition = point;
+            }
+        }
+
     }
 
     const Vec2& LayoutComponent::getRelativePosition()
@@ -201,7 +247,24 @@ namespace ui {
     }
     void LayoutComponent::setRelativePosition(const Vec2& position)
     {
-        this->RefreshLayoutPosition(PositionType::RelativePosition,position);
+        _relativePosition = position;
+
+        Node* parentNode = this->getOwner()->getParent();
+        if (parentNode != NULL && _actived)
+        {
+            Size parentSize = parentNode->getContentSize();
+
+            Point inversePoint = this->converPointWithReferencePointAndSize(_relativePosition,parentSize);
+            this->getOwner()->setPosition(inversePoint);
+            if (parentSize.width != 0 && parentSize.height != 0)
+            {
+                _percentPosition = Point(_relativePosition.x/parentSize.width,_relativePosition.y/parentSize.height);
+            }
+            else
+            {
+                _percentPosition = Point(0,0);
+            }
+        }
     }
 
     LayoutComponent::ReferencePoint LayoutComponent::getReferencePoint()
@@ -211,130 +274,33 @@ namespace ui {
     void LayoutComponent::setReferencePoint(ReferencePoint point)
     {
         _referencePoint = point;
-        this->RefreshLayoutPosition(PositionType::RelativePosition,_relativePosition);
+        this->setRelativePosition(_relativePosition);
     }
 
-    void LayoutComponent::RefreshLayoutPosition(PositionType pType,const Vec2& point)
-    {
-        Node* parentNode = this->getOwner()->getParent();
-        Point basePoint = point;
-        if (parentNode != NULL && _actived)
-        {
-            Size parentSize = parentNode->getContentSize();
-            
-            if ( pType == PositionType::PreRelativePosition)
-            {
-                _percentPosition = point;
-                basePoint = Point(_percentPosition.x*parentSize.width,_percentPosition.y*parentSize.height);
-            }
-            else if(pType == PositionType::PreRelativePositionEnable)
-            {
-                if (_usingPercentPosition)
-                {
-                    if (parentSize.width != 0)
-                    {
-                        _percentPosition.x = _relativePosition.x/parentSize.width;
-                    }
-                    else
-                    {
-                        _percentPosition.x = 0;
-                        _relativePosition.x = 0;
-                    }
-
-                    if (parentSize.height != 0)
-                    {
-                        _percentPosition.y = _relativePosition.y/parentSize.height;
-                    }
-                    else
-                    {
-                        _percentPosition.y = 0;
-                        _relativePosition.y = 0;
-                    }
-                }
-                basePoint = _relativePosition;
-            }
-            
-            Point inversePoint = basePoint;
-            switch (_referencePoint)
-            {
-            case ReferencePoint::TOP_LEFT:
-                inversePoint.y = parentSize.height - inversePoint.y;
-                break;
-            case ReferencePoint::BOTTOM_RIGHT:
-                inversePoint.x = parentSize.width - inversePoint.x;
-                break;
-            case ReferencePoint::TOP_RIGHT:
-                inversePoint.x = parentSize.width - inversePoint.x;
-                inversePoint.y = parentSize.height - inversePoint.y;
-                break;
-            default:
-                break;
-            }
-
-            switch (pType)
-            {
-            case PositionType::Position:
-                this->getOwner()->setPosition(basePoint);
-                _relativePosition = inversePoint;
-                if (parentSize.width != 0 && parentSize.height != 0)
-                {
-                    _percentPosition = Point(_relativePosition.x/parentSize.width,_relativePosition.y/parentSize.height);
-                }
-                else
-                {
-                    _percentPosition = Point(0,0);
-                }
-                break;
-            case PositionType::RelativePosition:
-                this->getOwner()->setPosition(inversePoint);
-                _relativePosition = basePoint;
-                if (parentSize.width != 0 && parentSize.height != 0)
-                {
-                    _percentPosition = Point(_relativePosition.x/parentSize.width,_relativePosition.y/parentSize.height);
-                }
-                else
-                {
-                    _percentPosition = Point(0,0);
-                }
-                break;
-            case PositionType::PreRelativePosition:
-                this->getOwner()->setPosition(inversePoint);
-                _relativePosition = basePoint;
-                break;
-            case PositionType::PreRelativePositionEnable:
-                this->getOwner()->setPosition(inversePoint);
-                _relativePosition = basePoint;
-                break;
-            default:
-                break;
-            }
-        }
-        else
-        {
-            switch (pType)
-            {
-            case PositionType::Position:
-                this->getOwner()->setPosition(basePoint);
-                if (_referencePoint == ReferencePoint::BOTTOM_LEFT)
-                {
-                    _relativePosition = basePoint;
-                }
-                break;
-            case PositionType::RelativePosition:
-                _relativePosition = basePoint;
-                break;
-            case PositionType::PreRelativePosition:
-                _percentPosition = basePoint;
-                break;
-            default:
-                break;
-            }
-        }
-    }
-
-    void LayoutComponent::SetActiveEnable(bool enable)
+    void LayoutComponent::setActiveEnable(bool enable)
     {
         _actived = enable;
+    }
+
+    Vec2 LayoutComponent::converPointWithReferencePointAndSize(const Vec2& point,const Size& size)
+    {
+        Point inversePoint = point;
+        switch (_referencePoint)
+        {
+        case ReferencePoint::TOP_LEFT:
+            inversePoint.y = size.height - inversePoint.y;
+            break;
+        case ReferencePoint::BOTTOM_RIGHT:
+            inversePoint.x = size.width - inversePoint.x;
+            break;
+        case ReferencePoint::TOP_RIGHT:
+            inversePoint.x = size.width - inversePoint.x;
+            inversePoint.y = size.height - inversePoint.y;
+            break;
+        default:
+            break;
+        }
+        return inversePoint;
     }
 }
 

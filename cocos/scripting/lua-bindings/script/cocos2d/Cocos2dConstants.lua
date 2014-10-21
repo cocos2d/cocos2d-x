@@ -576,3 +576,31 @@ cc.MATRIX_STACK_TYPE =
     PROJECTION = 1,
     TEXTURE = 2,
 }
+
+cc.LightType = 
+{
+    DIRECTIONAL = 0,
+    POINT = 1,
+    SPOT = 2,
+    AMBIENT = 3,
+}
+
+cc.LightFlag = 
+{
+    LIGHT0  = math.pow(2,0),
+    LIGHT1  = math.pow(2,1),
+    LIGHT2  = math.pow(2,2),
+    LIGHT3  = math.pow(2,3),
+    LIGHT4  = math.pow(2,4),
+    LIGHT5  = math.pow(2,5),
+    LIGHT6  = math.pow(2,6),
+    LIGHT7  = math.pow(2,7),
+    LIGHT8  = math.pow(2,8),
+    LIGHT9  = math.pow(2,9),
+    LIGHT10 = math.pow(2,10),
+    LIGHT11 = math.pow(2,11),
+    LIGHT12 = math.pow(2,12),
+    LIGHT13 = math.pow(2,13),
+    LIGHT14 = math.pow(2,14),
+    LIGHT15 = math.pow(2,15),
+}

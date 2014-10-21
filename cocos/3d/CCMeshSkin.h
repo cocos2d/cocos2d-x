@@ -42,6 +42,7 @@ class Skeleton3D;
  */
 class CC_DLL MeshSkin: public Ref
 {
+    friend class Mesh;
 public:
     
     /**create a new meshskin if do not want to share meshskin*/
@@ -79,6 +80,9 @@ CC_CONSTRUCTOR_ACCESS:
     
     /**add skin bone*/
     void addSkinBone(Bone3D* bone);
+    
+    /** get inverse bind pose */
+    const Mat4& getInvBindPose(const Bone3D* bone);
     
 protected:
     

@@ -1098,7 +1098,7 @@ bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* 
                 ok = false;
                 break;
             }
-            for (int i = 0; i < len; i++)
+            for (size_t i = 0; i < len; i++)
             {
                 lua_pushnumber(L,i + 1);
                 lua_gettable(L,lo);
@@ -1143,7 +1143,7 @@ bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcNa
             if (NULL == arr)
                 return false;
             
-            for (int i = 0; i < len; i++)
+            for (size_t i = 0; i < len; i++)
             {
                 lua_pushnumber(L,i + 1);
                 lua_gettable(L,lo);
@@ -1347,7 +1347,7 @@ bool luaval_to_array_of_vec2(lua_State* L,int lo,cocos2d::Vec2 **points, int *nu
             cocos2d::Vec2* array = (cocos2d::Vec2*) new Vec2[len];
             if (NULL == array)
                 return false;
-            for (uint32_t i = 0; i < len; ++i)
+            for (size_t i = 0; i < len; ++i)
             {
                 lua_pushnumber(L,i + 1);
                 lua_gettable(L,lo);
@@ -1731,7 +1731,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             lua_pushnumber(L,i + 1);
             lua_gettable(L,lo);
@@ -1814,7 +1814,7 @@ bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>*
     {
         size_t len = lua_objlen(L, lo);
         std::string value = "";
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L,lo);
@@ -1854,7 +1854,7 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L,lo);
@@ -1937,7 +1937,7 @@ bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, c
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L,lo);
@@ -1977,7 +1977,7 @@ bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned shor
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
-        for (int i = 0; i < len; i++)
+        for (size_t i = 0; i < len; i++)
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L,lo);

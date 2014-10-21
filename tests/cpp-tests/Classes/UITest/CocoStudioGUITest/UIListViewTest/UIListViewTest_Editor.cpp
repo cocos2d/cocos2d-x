@@ -26,7 +26,7 @@ void UIListViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/windows_ui_listview_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView/Vertical/windows_ui_listview_editor_1.json"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -38,7 +38,7 @@ void UIListViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/windows_ui_listview_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIListView/Vertical/windows_ui_listview_editor_1.csb"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -50,7 +50,7 @@ void UIListViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/Vertical/crossplatform_UIListView_Vertical_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -65,7 +65,7 @@ void UIListViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/crossplatform_UIListView_Vertical_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/Vertical/crossplatform_UIListView_Vertical_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -124,7 +124,7 @@ bool UIListViewTest_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/windows_ui_listview_editor_1.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView/Vertical/windows_ui_listview_editor_1.json"));
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
         
@@ -158,7 +158,7 @@ void UIListViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/windows_ui_listview_horizontal_editor_1.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView/Horizontal/windows_ui_listview_horizontal_editor_1.json"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -170,7 +170,7 @@ void UIListViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/windows_ui_listview_horizontal_editor_1.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIListView/Horizontal/windows_ui_listview_horizontal_editor_1.csb"));
             _touchGroup->addChild(_layout);
             
             this->configureGUIScene();
@@ -182,7 +182,7 @@ void UIListViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/Horizontal/crossplatform_UIListView_Horizontal_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -197,7 +197,7 @@ void UIListViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/crossplatform_UIListView_Horizontal_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/Horizontal/crossplatform_UIListView_Horizontal_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -256,7 +256,7 @@ bool UIListViewTest_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/windows_ui_listview_horizontal_editor_1.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIListView/Horizontal/windows_ui_listview_horizontal_editor_1.json"));
         _touchGroup->addChild(_layout);
        
         this->configureGUIScene();

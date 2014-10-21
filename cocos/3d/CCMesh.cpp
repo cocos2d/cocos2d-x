@@ -230,10 +230,31 @@ void Mesh::calcuateAABB()
         _aabb = _meshIndexData->getAABB();
         if (_skin)
         {
-            Bone3D* root = _skin->getRootBone();
+            //get skin root
+            Bone3D* root = nullptr;
+            Mat4 invBindPose;
+            if (_skin->_skinBones.size())
+            {
+                root = _skin->_skinBones.at(0);
+                while (root) {
+                    auto parent = root->getParentBone();
+                    bool parentInSkinBone = false;
+                    for (const auto& bone : _skin->_skinBones) {
+                        if (bone == parent)
+                        {
+                            parentInSkinBone = true;
+                            break;
+                        }
+                    }
+                    if (!parentInSkinBone)
+                        break;
+                    root = parent;
+                }
+            }
+            
             if (root)
             {
-                _aabb.transform(root->getWorldMat());
+                _aabb.transform(root->getWorldMat() * _skin->getInvBindPose(root));
             }
         }
     }

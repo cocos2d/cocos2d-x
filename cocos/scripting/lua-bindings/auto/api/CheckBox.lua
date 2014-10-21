@@ -94,7 +94,7 @@
 -- @param #string backGroundDisabled
 -- @param #string frontCrossDisabled
 -- @param #int texType
--- @return CheckBox#CheckBox ret (retunr value: ccui.CheckBox)
+-- @return CheckBox#CheckBox ret (return value: ccui.CheckBox)
 
 --------------------------------
 -- 

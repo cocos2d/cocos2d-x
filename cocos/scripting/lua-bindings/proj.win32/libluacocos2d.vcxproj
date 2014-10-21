@@ -37,6 +37,7 @@
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c" />
     <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_audioengine_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="..\auto\lua_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp" />
     <ClCompile Include="..\manual\3d\lua_cocos2dx_3d_manual.cpp" />
+    <ClCompile Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.cpp" />
     <ClCompile Include="..\manual\CCLuaBridge.cpp" />
     <ClCompile Include="..\manual\CCLuaEngine.cpp" />
     <ClCompile Include="..\manual\CCLuaStack.cpp" />
@@ -105,6 +107,7 @@
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h" />
     <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_audioengine_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp" />
@@ -116,6 +119,7 @@
     <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp" />
     <ClInclude Include="..\manual\3d\lua_cocos2dx_3d_manual.h" />
+    <ClInclude Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.h" />
     <ClInclude Include="..\manual\CCLuaBridge.h" />
     <ClInclude Include="..\manual\CCLuaEngine.h" />
     <ClInclude Include="..\manual\CCLuaStack.h" />

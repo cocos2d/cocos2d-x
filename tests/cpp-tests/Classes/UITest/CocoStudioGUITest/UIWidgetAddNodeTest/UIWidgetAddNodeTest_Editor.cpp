@@ -25,7 +25,7 @@ void UIWidgetAddNodeTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/windows_ui_widget_add_node_editor.json"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode/windows_ui_widget_add_node_editor.json"));
             
             _touchGroup->addChild(_layout);
             
@@ -38,7 +38,7 @@ void UIWidgetAddNodeTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/windows_ui_widget_add_node_editor.csb"));
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode/windows_ui_widget_add_node_editor.csb"));
             
             _touchGroup->addChild(_layout);
             
@@ -51,7 +51,7 @@ void UIWidgetAddNodeTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
 
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIWidgetAddNode_Editor/crossplatform_UIWidgetAddNode_Editor_1.ExportJson");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIWidgetAddNode/crossplatform_UIWidgetAddNode_Editor_1.ExportJson");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -66,7 +66,7 @@ void UIWidgetAddNodeTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIWidgetAddNode_Editor/crossplatform_UIWidgetAddNode_Editor_1.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIWidgetAddNode/crossplatform_UIWidgetAddNode_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -114,7 +114,7 @@ bool UIWidgetAddNodeTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIWidgetAddNode_Editor/crossplatform_UIWidgetAddNode_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIWidgetAddNode/crossplatform_UIWidgetAddNode_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

@@ -93,7 +93,7 @@ end
 
 function UIButtonTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIButton/windows_UIButton_Editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -161,7 +161,7 @@ end
 
 function UICheckBoxEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UICheckBox/windows_ui_checkbox_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -233,7 +233,7 @@ end
 
 function UISliderEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UISlider/windows_ui_slider_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -289,7 +289,7 @@ end
 
 function UIImageViewEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIImageView/windows_ui_ImageView_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -343,7 +343,7 @@ end
 
 function LoadingBarEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar/windows_ui_loadingbar_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -410,7 +410,7 @@ end
 
 function LabelAtalsEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabelAtlas/windows_ui_labelatlas_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -458,7 +458,7 @@ end
 
 function LabelEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabel_Editor/ui_label_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabel/windows_ui_label_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -506,7 +506,7 @@ end
 
 function LabelBMFontEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabelBMFont/windows_ui_labelbmfont_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -575,7 +575,7 @@ end
 
 function TextFieldEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UITextField/windows_ui_textfield_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -632,7 +632,7 @@ end
 
 function LayoutEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Layout/windows_ui_layout_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -680,7 +680,7 @@ end
 
 function ScrollViewEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView/Vertical/windows_ui_scrollview_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -728,7 +728,7 @@ end
 
 function PageViewEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView/windows_ui_pageview_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -781,7 +781,7 @@ end
 
 function ListViewEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIListView/Vertical/windows_ui_listview_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -838,7 +838,7 @@ end
 
 function WidgetAddNodeEditorTest:initExtend()
     self:init()
-    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.csb")
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode/windows_ui_widget_add_node_editor.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end

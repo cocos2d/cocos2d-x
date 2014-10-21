@@ -195,7 +195,7 @@ public:
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    virtual void drawContour();
+    CC_DEPRECATED_ATTRIBUTE virtual void drawContour();
 #endif
 
 
