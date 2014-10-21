@@ -1013,6 +1013,7 @@ Developers:
         
     zhongfq
         Optimize decompress jpg data
+        Fixed memory leak of TextureCache::reloadTexture()
         
     wohaaitinciu
         WebView support on windows

@@ -36,6 +36,7 @@ NS_TIMELINE_BEGIN
 Frame::Frame()
     : _frameIndex(0)
     , _tween(true)
+    , _enterWhenPassed(false)
     , _timeline(nullptr)
     , _node(nullptr)
 {
@@ -554,11 +555,17 @@ EventFrame* EventFrame::create()
     EventFrame* frame = new (std::nothrow) EventFrame();
     if (frame)
     {
+        frame->init();
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
     return nullptr;
+}
+
+void EventFrame::init()
+{
+    _enterWhenPassed = true;
 }
 
 EventFrame::EventFrame()
