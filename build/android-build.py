@@ -22,8 +22,8 @@ def get_num_of_cpu():
             else:
                 return 1
         else:
-            from numpy.distutils import cpuinfo
-            return cpuinfo.cpu._getNCPUs()
+            import multiprocessing
+            return multiprocessing.cpu_count()
     except Exception:
         print "Can't know cpuinfo, use default 1 cpu"
         return 1
