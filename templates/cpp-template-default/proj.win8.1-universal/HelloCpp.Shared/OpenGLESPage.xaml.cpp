@@ -21,8 +21,7 @@ using namespace Windows::UI::Xaml::Navigation;
 OpenGLESPage::OpenGLESPage() :
     OpenGLESPage(nullptr)
 {
-    int i = 0;
-    i++;
+
 }
 
 OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
@@ -207,8 +206,10 @@ void OpenGLESPage::StartRenderLoop()
         return;
     }
 
+    auto dispatcher = Windows::UI::Xaml::Window::Current->CoreWindow->Dispatcher;
+
     // Create a task for rendering that will be run on a background thread.
-    auto workItemHandler = ref new Windows::System::Threading::WorkItemHandler([this](Windows::Foundation::IAsyncAction ^ action)
+    auto workItemHandler = ref new Windows::System::Threading::WorkItemHandler([this, dispatcher](Windows::Foundation::IAsyncAction ^ action)
     {
         critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
 
@@ -220,7 +221,7 @@ void OpenGLESPage::StartRenderLoop()
         
         if (m_renderer.get() == nullptr)
         {
-            m_renderer = std::make_shared<cocos2d::Cocos2dRenderer>(panelWidth, panelHeight);
+            m_renderer = std::make_shared<cocos2d::Cocos2dRenderer>(panelWidth, panelHeight, dispatcher);
         }
 
         while (action->Status == Windows::Foundation::AsyncStatus::Started)

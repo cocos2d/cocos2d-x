@@ -21,8 +21,7 @@ using namespace Windows::UI::Xaml::Navigation;
 OpenGLESPage::OpenGLESPage() :
     OpenGLESPage(nullptr)
 {
-    int i = 0;
-    i++;
+
 }
 
 OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :

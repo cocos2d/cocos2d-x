@@ -24,21 +24,24 @@
 #include <fstream>
 
 using namespace Platform;
+using namespace Windows::UI::Core;
 
 using namespace Windows::Graphics::Display;
 
 USING_NS_CC;
 
 
-Cocos2dRenderer::Cocos2dRenderer(const int width, const int height)
+Cocos2dRenderer::Cocos2dRenderer(const int width, const int height, CoreDispatcher^ dispatcher)
     : mApp(nullptr)
     , mWidth(width)
     , mHeight(height)
+    , m_dispatcher(dispatcher)
 {
     mApp = new AppDelegate();
     auto director = cocos2d::Director::getInstance();
 
     GLViewImpl* glview = GLViewImpl::create("Test Cpp");
+    glview->setDispatcher(dispatcher);
     glview->Create(static_cast<float>(width), static_cast<float>(height), DisplayOrientations::Landscape);
     director->setOpenGLView(glview);
     CCApplication::getInstance()->run();
