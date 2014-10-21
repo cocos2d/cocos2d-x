@@ -204,9 +204,9 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
             exit(1)
 
     if build_mode is None:
-        build_mode = 'release'
-    elif build_mode != 'debug':
-        build_mode = 'release'
+        build_mode = 'debug'
+    elif build_mode != 'release':
+        build_mode = 'debug'
 
     app_android_root = ''
 
