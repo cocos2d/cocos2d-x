@@ -72,8 +72,10 @@ public:
     inline int getReadyState() { return _readyState ;}
 
     inline cocos2d::network::HttpRequest*  getHttpRequest() { return _httpRequest; }
-    inline int getStatus() { return _status; }
     inline std::string getStatusText() { return _statusText ;}
+    
+    inline void setStatus(int status) { _status = status; }
+    inline int getStatus() { return _status; }
 
     inline std::string getUrl(){return _url;}
     inline void setUrl(std::string url) { _url = url ;}
@@ -96,6 +98,12 @@ public:
     
     inline size_t getDataSize() {   return _dataSize; }
     
+    inline void setErrorFlag(bool errorFlag) { _errorFlag = errorFlag; }
+    inline bool getErrorFlag() { return _errorFlag; }
+    
+    inline void setAborted(bool isAborted) { _isAborted = isAborted; }
+    inline bool getAborted() { return _isAborted; }
+    
 private:
     void _gotHeader(std::string header);
     
@@ -116,6 +124,8 @@ private:
     bool                                 _withCredentialsValue;
     std::map<std::string, std::string>   _httpHeader;
     std::map<std::string, std::string>   _requestHeader;
+    bool                                 _errorFlag;
+    bool                                 _isAborted;
 };
 
 TOLUA_API int register_xml_http_request(lua_State* L);

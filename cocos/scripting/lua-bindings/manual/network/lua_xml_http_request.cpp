@@ -33,12 +33,25 @@
 using namespace cocos2d;
 using namespace std;
 
-LuaMinXmlHttpRequest::LuaMinXmlHttpRequest():_isNetwork(true)
+LuaMinXmlHttpRequest::LuaMinXmlHttpRequest()
+:_isNetwork(true),
+_url(""),
+_meth(""),
+_type(""),
+_dataSize(0),
+_readyState(UNSENT),
+_status(0),
+_statusText(""),
+_responseType(ResponseType::STRING),
+_timeout(0),
+_isAsync(false),
+_withCredentialsValue(true),
+_errorFlag(false),
+_isAborted(false)
 {
     _httpHeader.clear();
     _requestHeader.clear();
-    _withCredentialsValue = true;
-    _httpRequest  = new network::HttpRequest();
+    _httpRequest = new (std::nothrow)cocos2d::network::HttpRequest();
 }
 
 LuaMinXmlHttpRequest::~LuaMinXmlHttpRequest()
@@ -182,6 +195,9 @@ void LuaMinXmlHttpRequest::_setHttpRequestHeader()
 void LuaMinXmlHttpRequest::_sendRequest()
 {
     _httpRequest->setResponseCallback([this](cocos2d::network::HttpClient* sender, cocos2d::network::HttpResponse* response){
+        if (_isAborted)
+            return ;
+        
         if (0 != strlen(response->getHttpRequest()->getTag()))
         {
             CCLOG("%s completed", response->getHttpRequest()->getTag());
@@ -193,8 +209,23 @@ void LuaMinXmlHttpRequest::_sendRequest()
         
         if (!response->isSucceed())
         {
-            CCLOG("response failed");
-            CCLOG("error buffer: %s", response->getErrorBuffer());
+            CCLOG("Response failed, error buffer: %s", response->getErrorBuffer());
+            if(statusCode == 0)
+            {
+                _errorFlag = true;
+                _status    = 0;
+                _statusText.clear();
+            }
+            // TODO: call back lua function
+            int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
+            
+            if (0 != handler)
+            {
+                CCLOG("come in handler, handler is %d", handler);
+                cocos2d::CommonScriptData data(handler,"");
+                cocos2d::ScriptEvent event(cocos2d::ScriptEventType::kCommonEvent,(void*)&data);
+                cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            }
             return;
         }
         
@@ -244,7 +275,7 @@ void LuaMinXmlHttpRequest::_sendRequest()
         }
         release();
     });
-    network::HttpClient::getInstance()->send(_httpRequest);
+    network::HttpClient::getInstance()->sendImmediate(_httpRequest);
     _httpRequest->release();
     retain();
 }
@@ -641,11 +672,17 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
     
     if (self->getResponseType() == LuaMinXmlHttpRequest::ResponseType::JSON)
     {
+        if (self->getReadyState() != LuaMinXmlHttpRequest::DONE || self->getErrorFlag())
+            return 0;
+        
         lua_pushstring(L, self->getDataStr().c_str());
         return 1;
     }
     else if(self->getResponseType() == LuaMinXmlHttpRequest::ResponseType::ARRAY_BUFFER)
     {
+        if (self->getReadyState() != LuaMinXmlHttpRequest::DONE || self->getErrorFlag())
+            return 0;
+        
         LuaStack *pStack = LuaEngine::getInstance()->getLuaStack();
         if (NULL == pStack) {
             return 0;
@@ -747,9 +784,21 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::POST);
             }
-            else
+            else if(method.compare("get") == 0 || method.compare("GET") == 0)
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::GET);
+            }
+            else if(method.compare("put") == 0 || method.compare("PUT") == 0)
+            {
+                self->getHttpRequest()->setRequestType(network::HttpRequest::Type::PUT);
+            }
+            else if(method.compare("delete") == 0 || method.compare("DELETE") == 0)
+            {
+                self->getHttpRequest()->setRequestType(network::HttpRequest::Type::DELETE);
+            }
+            else
+            {
+                self->getHttpRequest()->setRequestType(network::HttpRequest::Type::UNKNOWN);
             }
             
             self->getHttpRequest()->setUrl(url.c_str());
@@ -758,6 +807,8 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
         
         self->setIsNetWork(true);
         self->setReadyState(LuaMinXmlHttpRequest::OPENED);
+        self->setStatus(0);
+        self->setAborted(false);
 
         return 0;
     }
@@ -793,6 +844,8 @@ static int lua_cocos2dx_XMLHttpRequest_send(lua_State* L)
 		return 0;
     }
 #endif
+    self->getHttpHeader().clear();
+    self->setErrorFlag(false);
     
     argc = lua_gettop(L) - 1;
 
@@ -807,7 +860,8 @@ static int lua_cocos2dx_XMLHttpRequest_send(lua_State* L)
     }
     
     if (size > 0 &&
-        (self->getMethod().compare("post") == 0 || self->getMethod().compare("POST") == 0) &&
+        (self->getMethod().compare("post") == 0 || self->getMethod().compare("POST") == 0
+         || self->getMethod().compare("put") == 0 || self->getMethod().compare("PUT") == 0 )&&
         nullptr != self->getHttpRequest())
     {
         self->getHttpRequest()->setRequestData(data,size);
@@ -829,7 +883,37 @@ tolua_lerror:
  */
 static int lua_cocos2dx_XMLHttpRequest_abort(lua_State* L)
 {
+    int argc = 0;
+    LuaMinXmlHttpRequest* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.XMLHttpRequest",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (LuaMinXmlHttpRequest*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_XMLHttpRequest_send'\n", nullptr);
+		return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if ( 0 == argc )
+    {
+        self->setAborted(true);
+        self->setReadyState(LuaMinXmlHttpRequest::UNSENT);
+    }
     return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_XMLHttpRequest_send'.",&tolua_err);
+    return 0;
+#endif
 }
 
 static int lua_cocos2dx_XMLHttpRequest_setRequestHeader(lua_State* L)
