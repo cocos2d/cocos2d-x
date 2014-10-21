@@ -1637,7 +1637,12 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
             return false;
         }
     }
-    for( int i = 0; i < animNum ; i++ )
+    else
+    {
+        animNum = 1;
+    }
+    bool has_found =false;
+    for( int k = 0; k < animNum ; k++ )
     {
         animationdata->resetData();
         std::string animId = _binaryReader.readString();
@@ -1740,8 +1745,13 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
         }
         if( id == animId || id.empty())
         {
+            has_found = true;
             break;
         }       
+    }
+    if(!id.empty() && !has_found)
+    {
+        return false;
     }
     return true;
 }
