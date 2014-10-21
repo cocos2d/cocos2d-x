@@ -125,6 +125,10 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# Notes 
+
+* You need to use `VS2013 with update 3` to use `Cocos2dShaderCompiler` used to compile precompiled shaders for WP8.
+
 # Highlights of v3.3rc0
 
 * 3d: added light support: including directional light, point light, spot light and ambient light
