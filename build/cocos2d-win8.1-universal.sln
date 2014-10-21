@@ -46,6 +46,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.WindowsPhone", "..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.WindowsPhone\HelloCpp.WindowsPhone.vcxproj", "{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CopyTemplateFiles", "..\cocos\platform\win8.1-universal\CopyTemplateFiles.vcxproj", "{271FEE84-9198-4C26-8567-4247C563B0B1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A} = {396FE85E-BB05-4B92-BCCB-F89AED4EA41A}
+		{F2BAE06B-CAAE-43EE-B21B-57FA48DB04FA} = {F2BAE06B-CAAE-43EE-B21B-57FA48DB04FA}
+		{15247C71-5289-4913-B88F-E253CC353720} = {15247C71-5289-4913-B88F-E253CC353720}
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638} = {79A8FCDA-4B12-4DD1-B676-FF148D651638}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

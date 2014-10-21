@@ -748,6 +748,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLES.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\pch.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextFieldTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1291,7 +1294,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLES.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\pch.cpp" />
-    <ClCompile Include="$(MSBuildThfisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml" />
