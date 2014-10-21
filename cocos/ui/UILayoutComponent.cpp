@@ -62,7 +62,7 @@ namespace ui {
     }
     
     //Size
-    const Vec2& LayoutComponent::getOwnerContentSize()const
+    Vec2 LayoutComponent::getOwnerContentSize()const
     {
         return this->getOwner()->getContentSize();
     }
