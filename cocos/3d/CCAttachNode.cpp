@@ -62,13 +62,6 @@ Mat4 AttachNode::getWorldToNodeTransform() const
     return mat;
 }
 
-const Mat4& AttachNode::getNodeToParentTransform() const
-{
-    static Mat4 mat;
-    mat = _attachBone->getWorldMat() * Node::getNodeToParentTransform();
-    return mat;
-}
-
 void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
     Node::visit(renderer, parentTransform * _attachBone->getWorldMat(), Node::FLAGS_DIRTY_MASK);
