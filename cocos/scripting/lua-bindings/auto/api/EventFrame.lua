@@ -12,6 +12,11 @@
         
 --------------------------------
 -- 
+-- @function [parent=#EventFrame] init 
+-- @param self
+        
+--------------------------------
+-- 
 -- @function [parent=#EventFrame] getEvent 
 -- @param self
 -- @return string#string ret (return value: string)

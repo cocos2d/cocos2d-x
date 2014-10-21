@@ -68,7 +68,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFChinese),
     CL(LabelBMFontChinese),
     CL(BitmapFontMultiLineAlignment),
-    CL(LabelTTFA8Test),
+    CL(LabelTTFOpacityTest),
     CL(BMFontOneAtlas),
     CL(BMFontUnicode),
     CL(BMFontInit),
@@ -1325,18 +1325,17 @@ void BitmapFontMultiLineAlignment::snapArrowsToEdge()
         this->_labelShouldRetain->getPosition().y));
 }
 
-/// LabelTTFA8Test
-LabelTTFA8Test::LabelTTFA8Test()
+/// LabelTTFOpacityTest
+LabelTTFOpacityTest::LabelTTFOpacityTest()
 {
     auto s = Director::getInstance()->getWinSize();
 
     auto layer = LayerColor::create(Color4B(128, 128, 128, 255));
     addChild(layer, -10);
 
-    // LabelBMFont
-    auto label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
+    auto label1 = LabelTTF::create("Testing opacity", "Marker Felt", 48);
     addChild(label1);
-    label1->setColor(Color3B::RED);
+    label1->setFontFillColor(Color3B::RED);
     label1->setPosition(Vec2(s.width/2, s.height/2));
 
     auto fadeOut = FadeOut::create(2);
@@ -1346,12 +1345,12 @@ LabelTTFA8Test::LabelTTFA8Test()
     label1->runAction(forever);
 }
 
-std::string LabelTTFA8Test::title() const
+std::string LabelTTFOpacityTest::title() const
 {
-    return "Testing A8 Format";
+    return "Testing opacity";
 }
 
-std::string LabelTTFA8Test::subtitle() const
+std::string LabelTTFOpacityTest::subtitle() const
 {
     return "RED label, fading In and Out in the center of the screen";
 }

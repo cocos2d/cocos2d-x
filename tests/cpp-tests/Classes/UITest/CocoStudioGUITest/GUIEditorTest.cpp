@@ -1,6 +1,8 @@
 
 
 #include "GUIEditorTest.h"
+
+#include "cocostudio/ActionTimeline/CSLoader.h"
 #include "CocoStudioGUITest.h"
 #include "UISceneManager_Editor.h"
 
@@ -269,6 +271,8 @@ static Vec2 s_tCurPos = Vec2::ZERO;
 void GUIEditorMainLayer::onEnter()
 {
     Layer::onEnter();
+    
+    CSLoader::getInstance()->setRecordProtocolBuffersPath(true);
     
     auto s = Director::getInstance()->getWinSize();
     

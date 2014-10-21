@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
-#include "base/CCCamera.h"
 namespace cocos2d {
     class Sprite3D;
     class Delay;

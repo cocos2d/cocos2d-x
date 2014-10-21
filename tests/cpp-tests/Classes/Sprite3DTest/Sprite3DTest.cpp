@@ -29,7 +29,6 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
-#include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 

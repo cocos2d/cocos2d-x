@@ -54,6 +54,8 @@ public:
     virtual void setTween(bool tween) { _tween = tween; }
     virtual bool isTween() const { return _tween; }
 
+    virtual bool isEnterWhenPassed() { return _enterWhenPassed; }
+
     virtual void onEnter(Frame *nextFrame) = 0;
     virtual void apply(float percent) {}
 
@@ -68,6 +70,7 @@ protected:
 
     unsigned int    _frameIndex;
     bool            _tween;
+    bool            _enterWhenPassed;
 
     Timeline* _timeline;
     cocos2d::Node*  _node;
@@ -300,6 +303,7 @@ class CC_STUDIO_DLL EventFrame : public Frame
 {
 public:
     static EventFrame* create();
+    void init();
 
     EventFrame();
 

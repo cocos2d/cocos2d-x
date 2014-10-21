@@ -39,15 +39,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_State* L = stack->getLuaState();
     
     lua_module_register(L);
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
     lua_getglobal(L, "_G");
     if (lua_istable(L,-1))//stack:...,_G,
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         register_assetsmanager_test_sample(L);
+#endif
         register_test_binding(L);
     }
     lua_pop(L, 1);
-    #endif
+
 
     pEngine->executeScriptFile("src/controller.lua");
 
