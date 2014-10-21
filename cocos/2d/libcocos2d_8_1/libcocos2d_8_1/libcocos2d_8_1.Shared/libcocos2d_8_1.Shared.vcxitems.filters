@@ -270,9 +270,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCCamera.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.h">
       <Filter>base</Filter>
     </ClInclude>
@@ -1165,9 +1162,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIImageView.h">
       <Filter>ui\UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCLight.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPlatformDefine-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -1299,6 +1293,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\Manifest.h">
       <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLight.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1556,9 +1556,6 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCCamera.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.cpp">
@@ -2279,9 +2276,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIImageView.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCLight.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGLViewImpl-winrt.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -2359,6 +2353,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\assets-manager\Manifest.cpp">
       <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLight.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2688,6 +2688,12 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor-no-gl_PointSize.vert">
       <Filter>renderer</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters">
+      <Filter>2d</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters">
+      <Filter>2d</Filter>
     </None>
   </ItemGroup>
 </Project>
