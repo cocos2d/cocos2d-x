@@ -1272,7 +1272,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& t
             {
                 if(ray.intersects(_obb[i]))
                 {
-                    _intersetList.insert(i);
+                    _intersetList.insert((int)i);
                     return;
                 }
             }
@@ -1294,7 +1294,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& t
 
         for(decltype(obbSize) i = 0; i < obbSize; i++)
         {
-            if(_intersetList.find(i) != _intersetList.end())
+            if(_intersetList.find((int)i) != _intersetList.end())
                 _obb[i]._center = Vec3(location.x,location.y,0);
         }
     }
