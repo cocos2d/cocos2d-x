@@ -1628,7 +1628,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 {
     if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
         return false;
-    unsigned int animNum=0;
+    unsigned int animNum = 1;
     if( _version == "0.3"|| _version == "0.4")
     {
         if (!_binaryReader.read(&animNum))
@@ -1637,12 +1637,9 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
             return false;
         }
     }
-    else
-    {
-        animNum = 1;
-    }
+    
     bool has_found =false;
-    for( int k = 0; k < animNum ; k++ )
+    for(unsigned int k = 0; k < animNum ; k++ )
     {
         animationdata->resetData();
         std::string animId = _binaryReader.readString();
@@ -1749,8 +1746,9 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
             break;
         }       
     }
-    if(!id.empty() && !has_found)
+    if(!has_found)
     {
+        animationdata->resetData();
         return false;
     }
     return true;
