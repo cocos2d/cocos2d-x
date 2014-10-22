@@ -88,7 +88,8 @@ static int lua_cocos2dx_Widget_addTouchEventListener(lua_State* L)
         self->addTouchEventListener([=](cocos2d::Ref* ref,Widget::TouchEventType eventType){
             handleUIEvent(handler, ref, (int)eventType);
         });
-                
+        
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -149,6 +150,7 @@ static int lua_cocos2dx_CheckBox_addEventListener(lua_State* L)
             handleUIEvent(handler, ref, (int)eventType);
         });
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -210,6 +212,7 @@ static int lua_cocos2dx_Slider_addEventListener(lua_State* L)
             handleUIEvent(handler, ref, (int)eventType);
         });
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -271,6 +274,7 @@ static int lua_cocos2dx_TextField_addEventListener(lua_State* L)
             handleUIEvent(handler, ref, (int)eventType);
         });
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -332,6 +336,7 @@ static int lua_cocos2dx_PageView_addEventListener(lua_State* L)
             handleUIEvent(handler, ref, (int)eventType);
         });
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -393,6 +398,7 @@ static int lua_cocos2dx_ScrollView_addEventListener(lua_State* L)
             handleUIEvent(handler, ref, (int)eventType);
         });
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -455,6 +461,7 @@ static int lua_cocos2dx_ListView_addEventListener(lua_State* L)
         };
         self->addEventListener((ui::ListView::ccListViewCallback)listViewCallback);
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     
@@ -506,6 +513,7 @@ static int lua_cocos2dx_ListView_addScrollViewEventListener(lua_State* L)
         };
         self->addEventListener((ui::ScrollView::ccScrollViewCallback)scrollViewCallback);
         
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         return 0;
     }
     

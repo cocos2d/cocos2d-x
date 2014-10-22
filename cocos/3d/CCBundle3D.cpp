@@ -354,11 +354,11 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
 
     if (_isBinary)
     {
-        return loadAnimationDataBinary(animationdata);
+        return loadAnimationDataBinary(id,animationdata);
     }
     else
     {
-        return loadAnimationDataJson(animationdata);
+        return loadAnimationDataJson(id,animationdata);
     }
 }
 
@@ -1189,7 +1189,7 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
     return true;
 }
 
-bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
+bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* animationdata)
 {
     std::string anim = "";
     if (_version == "1.2" || _version == "0.2")
@@ -1198,11 +1198,26 @@ bool Bundle3D::loadAnimationDataJson(Animation3DData* animationdata)
         anim = ANIMATIONS;
 
     if (!_jsonReader.HasMember(anim.c_str())) return false;
-
+    int the_index = -1;
     const rapidjson::Value& animation_data_array =  _jsonReader[anim.c_str()];
+
     if (animation_data_array.Size()==0) return false;
 
-    const rapidjson::Value& animation_data_array_val_0 = animation_data_array[(rapidjson::SizeType)0];
+    if(!id.empty())
+    {
+        for(int i=0 ;i<animation_data_array.Size();i++)
+        {
+            if(animation_data_array[i][ID].GetString() ==id )
+            {
+                the_index = i;
+            }
+        }
+        if(the_index < 0) return false;
+    }else{
+        the_index = 0;
+    }
+
+    const rapidjson::Value& animation_data_array_val_0 = animation_data_array[(rapidjson::SizeType)the_index];
 
     animationdata->_totalTime = animation_data_array_val_0[LENGTH].GetDouble();
 
@@ -1609,11 +1624,11 @@ bool Bundle3D::loadMaterialDataBinary(MaterialData* materialdata)
     return true;
 }
 
-bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
+bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* animationdata)
 {
     if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
         return false;
-    unsigned int animNum=0;
+    unsigned int animNum = 1;
     if( _version == "0.3"|| _version == "0.4")
     {
         if (!_binaryReader.read(&animNum))
@@ -1622,105 +1637,123 @@ bool Bundle3D::loadAnimationDataBinary(Animation3DData* animationdata)
             return false;
         }
     }
-    std::string id = _binaryReader.readString();
+    
+    bool has_found =false;
+    for(unsigned int k = 0; k < animNum ; k++ )
+    {
+        animationdata->resetData();
+        std::string animId = _binaryReader.readString();
 
-    if (!_binaryReader.read(&animationdata->_totalTime))
-    {
-        CCLOG("warning: Failed to read AnimationData: totalTime '%s'.", _path.c_str());
-        return false;
-    }
-
-    unsigned int nodeAnimationNum;
-    if (!_binaryReader.read(&nodeAnimationNum))
-    {
-        CCLOG("warning: Failed to read AnimationData: animNum '%s'.", _path.c_str());
-        return false;
-    }
-    for (unsigned int i = 0; i < nodeAnimationNum; ++i)
-    {
-        std::string boneName = _binaryReader.readString();
-        unsigned int keyframeNum;
-        if (!_binaryReader.read(&keyframeNum))
+        if (!_binaryReader.read(&animationdata->_totalTime))
         {
-            CCLOG("warning: Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
+            CCLOG("warning: Failed to read AnimationData: totalTime '%s'.", _path.c_str());
             return false;
         }
-        
-        animationdata->_rotationKeys[boneName].reserve(keyframeNum);
-        animationdata->_scaleKeys[boneName].reserve(keyframeNum);
-        animationdata->_translationKeys[boneName].reserve(keyframeNum);
 
-        for (unsigned int j = 0; j < keyframeNum; ++j)
+        unsigned int nodeAnimationNum;
+        if (!_binaryReader.read(&nodeAnimationNum))
         {
-            float keytime;
-            if (!_binaryReader.read(&keytime))
+            CCLOG("warning: Failed to read AnimationData: animNum '%s'.", _path.c_str());
+            return false;
+        }
+        for (unsigned int i = 0; i < nodeAnimationNum; ++i)
+        {
+            std::string boneName = _binaryReader.readString();
+            unsigned int keyframeNum;
+            if (!_binaryReader.read(&keyframeNum))
             {
-                CCLOG("warning: Failed to read AnimationData: keytime '%s'.", _path.c_str());
+                CCLOG("warning: Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
                 return false;
             }
 
-            // transform flag
-            unsigned char transformFlag(0);
-            if (_version == "0.4")
+            animationdata->_rotationKeys[boneName].reserve(keyframeNum);
+            animationdata->_scaleKeys[boneName].reserve(keyframeNum);
+            animationdata->_translationKeys[boneName].reserve(keyframeNum);
+
+            for (unsigned int j = 0; j < keyframeNum; ++j)
             {
-                if (!_binaryReader.read(&transformFlag))
+                float keytime;
+                if (!_binaryReader.read(&keytime))
                 {
-                    CCLOG("warning: Failed to read AnimationData: transformFlag '%s'.", _path.c_str());
+                    CCLOG("warning: Failed to read AnimationData: keytime '%s'.", _path.c_str());
                     return false;
                 }
-            }
-            
-            // rotation
-            bool hasRotate = true;
-            if (_version == "0.4")
-                hasRotate = transformFlag & 0x01;
-            
-            if (hasRotate)
-            {
-                Quaternion  rotate;
-                if (_binaryReader.read(&rotate, 4, 4) != 4)
+
+                // transform flag
+                unsigned char transformFlag(0);
+                if (_version == "0.4")
                 {
-                    CCLOG("warning: Failed to read AnimationData: rotate '%s'.", _path.c_str());
-                    return false;
+                    if (!_binaryReader.read(&transformFlag))
+                    {
+                        CCLOG("warning: Failed to read AnimationData: transformFlag '%s'.", _path.c_str());
+                        return false;
+                    }
                 }
-                animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime, rotate));
+
+                // rotation
+                bool hasRotate = true;
+                if (_version == "0.4")
+                    hasRotate = transformFlag & 0x01;
+
+                if (hasRotate)
+                {
+                    Quaternion  rotate;
+                    if (_binaryReader.read(&rotate, 4, 4) != 4)
+                    {
+                        CCLOG("warning: Failed to read AnimationData: rotate '%s'.", _path.c_str());
+                        return false;
+                    }
+                    animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime, rotate));
+                }
+
+                // scale
+                bool hasScale = true;
+                if (_version == "0.4")
+                    hasScale = (transformFlag >> 1) & 0x01;
+
+                if (hasScale)
+                {
+                    Vec3 scale;
+                    if (_binaryReader.read(&scale, 4, 3) != 3)
+                    {
+                        CCLOG("warning: Failed to read AnimationData: scale '%s'.", _path.c_str());
+                        return false;
+                    }
+                    animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, scale));
+                }
+
+                // translation
+                bool hasTranslation = true;
+                if (_version == "0.4")
+                    hasTranslation = (transformFlag >> 2) & 0x01;
+
+                if (hasTranslation)
+                {
+                    Vec3 position;
+                    if (_binaryReader.read(&position, 4, 3) != 3)
+                    {
+                        CCLOG("warning: Failed to read AnimationData: position '%s'.", _path.c_str());
+                        return false;
+                    }
+                    animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
+                }
             }
 
-            // scale
-            bool hasScale = true;
-            if (_version == "0.4")
-                hasScale = (transformFlag >> 1) & 0x01;
-            
-            if (hasScale)
-            {
-                Vec3 scale;
-                if (_binaryReader.read(&scale, 4, 3) != 3)
-                {
-                    CCLOG("warning: Failed to read AnimationData: scale '%s'.", _path.c_str());
-                    return false;
-                }
-                animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, scale));
-            }
-            
-            // translation
-            bool hasTranslation = true;
-            if (_version == "0.4")
-                hasTranslation = (transformFlag >> 2) & 0x01;
-            
-            if (hasTranslation)
-            {
-                Vec3 position;
-                if (_binaryReader.read(&position, 4, 3) != 3)
-                {
-                    CCLOG("warning: Failed to read AnimationData: position '%s'.", _path.c_str());
-                    return false;
-                }
-                animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
-            }
         }
+        if( id == animId || id.empty())
+        {
+            has_found = true;
+            break;
+        }       
+    }
+    if(!has_found)
+    {
+        animationdata->resetData();
+        return false;
     }
     return true;
 }
+
 
 bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 {

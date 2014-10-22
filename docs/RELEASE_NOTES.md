@@ -13,8 +13,15 @@
 		- [Windows](#user-content-windows)
 		- [Linux](#user-content-linux)
 	- [How to start a new game](#user-content-how-to-start-a-new-game)
+- [Notes of v3.3rc0](#user-content-notes-of-v33rc0)
 - [Highlights of v3.3rc0](#user-content-highlights-of-v33rc0)
 - [Features in detail](#user-content-features-in-detail)
+	- [Light](#user-content-light)
+	- [Spine runtime](#user-content-spine-runtime)
+	- [AssetsManagerEx](#user-content-assetsmanagerex)
+	- [Application::openURL](#user-content-applicationopenurl)
+	- [ClippingRectangleNode](#user-content-clippingrectanglenode)
+	- [Facebook platform support](#user-content-facebook-platform-support)
 - [Highlights of v3.3beta0](#user-content-highlights-of-v33beta0)
 - [Features in detail](#user-content-features-in-detail-1)
 	- [BillBoard](#user-content-billboard)
@@ -125,9 +132,48 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# Notes 
+# Notes of v3.3rc0
 
-* You need to use `VS2013 with update 3` to use `Cocos2dShaderCompiler` used to compile precompiled shaders for WP8.
+**wp8**
+
+You need to use `VS2013 with update 3` to use `Cocos2dShaderCompiler` used to compile precompiled shaders for WP8.
+
+**lua**
+
+All internal lua files are copied into `src/cocos` when creating a new lua project. And we added `cocos/init.lua` to load all these internal lua files. `cocos/init.lua` is loaded by default which means you don't have to load these lua files by yourself. So you have to remove all these codes in your lua codes:
+
+* require "Cocos2d"
+* require "Cocos2dConstants" 
+* require "bitExtend"
+* require "DrawPrimitives" 
+* require "extern"
+* require "json"
+* require "Opengl"
+* require "OpenglConstants" 
+* require "CCBReaderLoad" 
+* require "AudioEngine"
+* require “CocoStudio”
+* require “StudioConstants”
+* require “ControllerConstants” 
+* require “ExtensionConstants”
+* require “NetworkConstants”
+* require “GuiConstants”
+* require “experimentalUIConstants” 
+
+`luaj` and `luaoc` are special. They can not be loaded in `cocos/init.lua` because they will return an object to be used in codes. So you have to replace the codes like this:
+
+* require "luaj" -> require "cocos.cocos2d.luaj"
+* require "luaoc" -> require "cocos.cocos2d.luaoc"
+
+All lua files used for deprecated API are not loaded by default. If you want to use deprecated API, you should uncomment a line in `src/main.lua` like this:
+
+```
+-- uncomment this line to use deprecated API
+-- CC_USE_DEPRECATED_API = true 
+require "cocos.init"
+
+```
+
 
 # Highlights of v3.3rc0
 
@@ -139,7 +185,7 @@ Please refer to this document: [ReadMe](../README.md)
 * TileMap: supported staggered tile map
 * Added `ClippingRectangNode`, it is more effecient for renctangle clipping
 * Node: schedule/unschedule lambda functions
-* Facebook platform support in plugin-x, all features has been added, but the API needs to be polished with Facebook guys
+* Facebook platform support in `plugin` on iOS and Android, all features has been added, but the API needs to be polished with Facebook guys
 
 # Features in detail
 
@@ -234,9 +280,15 @@ auto content = Sprite::create("MyPicture.png");
 clipper->addChild(content);
 ```
 
-## Facebook integration
+## Facebook platform support
 
-TBD
+All features has been added, but the API needs to be polished with Facebook guys. There is a test case in `plugin` for it. Steps to run test case
+
+* open `plugin/pluing-x_ios.xcworkspace`
+* select `HelloPlugins` to run
+* there are `Test Facebook User` and `Test Facebook Share` items
+
+You can refer to [this document](http://www.cocos2d-x.org/wiki/Integrate_the_Facebook_SDK_for_Cocos2d-x) for detail information.
 
 # Highlights of v3.3beta0
 
@@ -283,6 +335,7 @@ The step to use Triangle Command is very simple.
 To improve performance, `Triangles` will hold a weak reference to the vertices and indices data to be rendered, which is the same like `QuadCommand`. The userer should not release any rendered data before the `Command` is executed by `Renderer`.
 
 ## WebView
+
 WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
 
 The class is under `cocos2d::ui::experimental` namespace.

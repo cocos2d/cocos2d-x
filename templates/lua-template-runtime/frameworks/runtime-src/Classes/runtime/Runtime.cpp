@@ -68,7 +68,7 @@ extern string getIPAddress();
 
 const char* getRuntimeVersion()
 {
-    return "1.4";
+    return "1.5";
 }
 
 static string& replaceAll(string& str, const string& old_value, const string& new_value)

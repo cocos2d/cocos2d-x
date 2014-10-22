@@ -417,7 +417,6 @@ public:
         int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
 
         int lineCount = textLines.size();
-        int textColor = (textDefinition._fontFillColor.b << 16 | textDefinition._fontFillColor.g << 8 | textDefinition._fontFillColor.r) & 0x00ffffff;
         for (int line = 0; line < lineCount; line++) {
             int iCurXCursor = computeLineStart(face, eAlignMask, line);
 
@@ -450,8 +449,8 @@ public:
                         }
 
                         int iX = xoffset + x;
-
-                        int iTemp = cTemp << 24 | textColor;
+                        //FIXME:wrong text color
+                        int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
                         *(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
                     }
                 }
