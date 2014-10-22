@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "InputEvent.h"
+#include "CCWinRTUtils.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 #include "CCGLViewImpl-wp8.h"
@@ -89,9 +90,8 @@ void KeyboardEvent::execute()
     {
     case Cocos2dKeyEvent::Text:
     {
-        char szUtf8[256] = { 0 };
-        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR) m_text.Get()->Data(), -1, szUtf8, sizeof(szUtf8), NULL, NULL);
-        IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen - 1);
+        std::string text = PlatformStringToString(m_text.Get());
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText(text.c_str(), text.length());
         break;
     }
 
