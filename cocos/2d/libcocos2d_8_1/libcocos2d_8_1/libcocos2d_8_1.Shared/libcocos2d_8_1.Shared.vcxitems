@@ -326,6 +326,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_ntop_winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\InputEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\InputEventTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\Keyboard-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\sha1.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCBatchCommand.h" />
@@ -707,6 +708,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\InputEvent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\Keyboard-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
       <ForcedIncludeFiles>

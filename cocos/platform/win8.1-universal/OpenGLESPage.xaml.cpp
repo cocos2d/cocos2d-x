@@ -115,7 +115,7 @@ void OpenGLESPage::OnPointerPressed(Object^ sender, PointerEventArgs^ e)
 {
     if (m_renderer)
     {
-        m_renderer->QueuePointerEvent(cocos2d::PointerEventType::PointerPressed, e);
+        m_renderer->QueuePointerEvent(PointerEventType::PointerPressed, e);
     }
 }
 
@@ -123,7 +123,7 @@ void OpenGLESPage::OnPointerMoved(Object^ sender, PointerEventArgs^ e)
 {
     if (m_renderer)
     {
-        m_renderer->QueuePointerEvent(cocos2d::PointerEventType::PointerMoved, e);
+        m_renderer->QueuePointerEvent(PointerEventType::PointerMoved, e);
     }
 }
 
@@ -131,9 +131,10 @@ void OpenGLESPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
 {
     if (m_renderer)
     {
-        m_renderer->QueuePointerEvent(cocos2d::PointerEventType::PointerReleased, e);
+        m_renderer->QueuePointerEvent(PointerEventType::PointerReleased, e);
     }
 }
+
 
 
 void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
@@ -239,7 +240,7 @@ void OpenGLESPage::StartRenderLoop()
         
         if (m_renderer.get() == nullptr)
         {
-            m_renderer = std::make_shared<cocos2d::Cocos2dRenderer>(panelWidth, panelHeight, dispatcher);
+            m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, dispatcher, swapChainPanel);
         }
 
         while (action->Status == Windows::Foundation::AsyncStatus::Started)

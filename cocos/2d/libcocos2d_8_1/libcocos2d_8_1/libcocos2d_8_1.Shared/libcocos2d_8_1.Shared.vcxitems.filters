@@ -1300,6 +1300,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLight.h">
       <Filter>2d</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\Keyboard-winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -2359,6 +2362,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLight.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\Keyboard-winrt.cpp">
+      <Filter>platform\winrt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
