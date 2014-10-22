@@ -132,9 +132,26 @@ CustomInputEvent::CustomInputEvent(const std::function<void()>& fun)
 : m_fun(fun)
 {
 }
+
 void CustomInputEvent::execute()
 {
     m_fun();
+}
+
+UIEditBoxEvent::UIEditBoxEvent(Platform::Object^ sender, Platform::String^ text, Windows::Foundation::EventHandler<Platform::String^>^ handle) 
+    : m_sender(sender)
+    , m_text(text)
+    , m_handler(handle)
+{
+
+}
+
+void UIEditBoxEvent::execute()
+{
+    if (m_handler.Get())
+    {
+        m_handler.Get()->Invoke(m_sender.Get(), m_text.Get());
+    }
 }
 
 NS_CC_END

@@ -104,6 +104,19 @@ private:
     std::function<void()> m_fun;
 };
 
+class UIEditBoxEvent : public cocos2d::InputEvent
+{
+public:
+    UIEditBoxEvent(Platform::Object^ sender, Platform::String^ text, Windows::Foundation::EventHandler<Platform::String^>^ handle);
+
+    virtual void execute();
+
+private:
+    Platform::Agile<Platform::Object^> m_sender;
+    Platform::Agile<Platform::String^> m_text;
+    Platform::Agile<Windows::Foundation::EventHandler<Platform::String^>^> m_handler;
+};
+
 NS_CC_END
 
 #endif // #ifndef __INPUT_EVENT__
