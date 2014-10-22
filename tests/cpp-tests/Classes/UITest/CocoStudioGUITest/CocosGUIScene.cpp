@@ -145,7 +145,7 @@ g_guisTests[] =
         }
 	},
     {
-        "TextAtalsTest",
+        "TextAtlasTest",
         [](Ref* sender)
         {
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
