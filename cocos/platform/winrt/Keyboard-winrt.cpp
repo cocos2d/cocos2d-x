@@ -73,10 +73,12 @@ void KeyBoardWinRT::ShowKeyboard(Platform::String^ text)
                 m_textBox->AddHandler(UIElement::KeyDownEvent, ref new KeyEventHandler(this, &KeyBoardWinRT::OnKeyPressed), true);
                 m_textBox->AddHandler(UIElement::KeyUpEvent, ref new KeyEventHandler(this, &KeyBoardWinRT::OnKeyReleased), true);
                 m_textBox->TextChanged += ref new TextChangedEventHandler(this, &KeyBoardWinRT::OnTextChanged);
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+                // Need to use InputScopeNameValue::Search to prevent auto-capitalize
                 m_textBox->InputScope = ref new InputScope();
                 auto n = m_textBox->InputScope->Names;
-                // Need to use InputScopeNameValue::Search to prevent auto-capitalize
                 n->Append(ref new InputScopeName(InputScopeNameValue::Search));
+#endif
                 m_panel.Get()->Children->Append(m_textBox);
             }
             m_textBox->SelectionLength = 0;
