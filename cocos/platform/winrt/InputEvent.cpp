@@ -90,8 +90,11 @@ void KeyboardEvent::execute()
     {
     case Cocos2dKeyEvent::Text:
     {
-        std::string text = PlatformStringToString(m_text.Get());
-        IMEDispatcher::sharedDispatcher()->dispatchInsertText(text.c_str(), text.length());
+        std::wstring w(m_text.Get()->Data());
+        std::u16string  s16(w.begin(),w.end());
+        std::string utf8String;
+        StringUtils::UTF16ToUTF8(s16, utf8String);
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText(utf8String.c_str(), utf8String.size());
         break;
     }
 
@@ -105,7 +108,6 @@ void KeyboardEvent::execute()
             IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
             break;
         case Cocos2dKeyEvent::Enter:
-            //SetFocus(false);
             IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
             break;
         default:
