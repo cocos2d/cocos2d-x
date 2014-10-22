@@ -49,6 +49,8 @@ namespace ui {
         Windows::UI::Xaml::Controls::Control^ CreatePasswordBox(int maxLength);
         void SetInputScope(Windows::UI::Xaml::Controls::TextBox^ box, EditBox::InputMode inputMode);
 
+        void CreateButtons();
+        Windows::UI::Xaml::Controls::Button^ CreateButton(Platform::String^ title);
         void RemoveControls();
         void RemoveControl(Windows::UI::Xaml::Controls::Control^ control);
         void QueueText();
@@ -58,6 +60,7 @@ namespace ui {
         void OnGotFocusPassword(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);
         void OnLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);
         void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);
+        void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 
         Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
         Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
@@ -66,6 +69,10 @@ namespace ui {
         Windows::UI::Xaml::Controls::TextBox^ m_textBox;
         Windows::UI::Xaml::Controls::PasswordBox^ m_passwordBox;
         Windows::UI::Xaml::Controls::Control^ m_control;
+        Windows::UI::Xaml::Controls::Button^ m_done;
+        Windows::UI::Xaml::Controls::Button^ m_cancel;
+        Windows::Foundation::EventRegistrationToken m_hideKeyboardToken;
+
         Platform::String^ m_strText;
         Platform::String^ m_strPlaceholder;
         EditBox::InputMode m_inputMode;

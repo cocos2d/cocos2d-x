@@ -44,6 +44,8 @@ using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
+using namespace Windows::UI::ViewManagement;
+using namespace Windows::Foundation;
 
 NS_CC_BEGIN
 
@@ -100,7 +102,7 @@ void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
 
         if (m_control)
         {
-            //control->Margin = ref new Thickness(0, 0, 220, 0);
+            //m_control->Margin = Thickness(0, 0, 220, 0);
             m_control->Height = 72.0;
             m_control->TabIndex = 0;
             m_control->VerticalAlignment = VerticalAlignment::Top;
@@ -108,6 +110,11 @@ void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
             m_control->Loaded += ref new RoutedEventHandler(this, &EditBoxWinRT::OnLoaded);
             m_panel.Get()->Children->Append(m_control);
         }
+
+        auto inputPane = InputPane::GetForCurrentView();
+        m_hideKeyboardToken = inputPane->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &EditBoxWinRT::HideKeyboard);
+
+        //CreateButtons();
     }));
 }
 
@@ -149,6 +156,30 @@ Control^ EditBoxWinRT::CreatePasswordBox(int maxLength)
 
     return m_passwordBox;
 }
+
+void EditBoxWinRT::CreateButtons()
+{
+    m_done = CreateButton(L"Done");
+    m_cancel = CreateButton(L"Cancel");
+}
+
+Controls::Button^ EditBoxWinRT::CreateButton(Platform::String^ title)
+{
+    auto button = ref new Controls::Button();
+    button->Margin = Thickness(20, 0, 120, 0);
+    button->Height = 72.0;
+    button->Width = 108;
+    button->Content = title;
+    button->VerticalAlignment = VerticalAlignment::Top;
+    button->HorizontalAlignment = HorizontalAlignment::Right;
+    auto r = Windows::UI::Xaml::Application::Current->Resources;
+    auto key = ref new Platform::String(L"PhoneChromeBrush");
+    auto brush = (Windows::UI::Xaml::Media::Brush^)r->Lookup(key);
+    button->Background = brush;
+    m_panel.Get()->Children->Append(button);
+    return button;
+}
+
 
 void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
 {
@@ -200,6 +231,12 @@ void EditBoxWinRT::RemoveControl(Control^ control)
     }
 }
 
+void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
+{
+    RemoveControls();
+}
+
+
 void EditBoxWinRT::RemoveControls()
 {
     if (m_dispatcher.Get() && m_panel.Get())
@@ -207,6 +244,8 @@ void EditBoxWinRT::RemoveControls()
         // run on main UI thread
         m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
         {
+            auto inputPane = InputPane::GetForCurrentView();
+            inputPane->Hiding -= m_hideKeyboardToken;
             RemoveControl(m_control);
             m_textBox = nullptr;
             m_passwordBox = nullptr;
