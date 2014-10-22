@@ -30,23 +30,25 @@
 
 using namespace Platform;
 using namespace Windows::UI::Core;
-
+using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Graphics::Display;
 
 USING_NS_CC;
 
 
-Cocos2dRenderer::Cocos2dRenderer(const int width, const int height, CoreDispatcher^ dispatcher)
+Cocos2dRenderer::Cocos2dRenderer(const int width, const int height, CoreDispatcher^ dispatcher, Panel^ panel)
     : mApp(nullptr)
     , mWidth(width)
     , mHeight(height)
     , m_dispatcher(dispatcher)
+    , m_panel(panel)
 {
     mApp = new AppDelegate();
     auto director = cocos2d::Director::getInstance();
 
     GLViewImpl* glview = GLViewImpl::create("Test Cpp");
     glview->setDispatcher(dispatcher);
+    glview->setPanel(panel);
     glview->Create(static_cast<float>(width), static_cast<float>(height), DisplayOrientations::Landscape);
     director->setOpenGLView(glview);
     CCApplication::getInstance()->run();
@@ -74,6 +76,11 @@ void Cocos2dRenderer::Draw(GLsizei width, GLsizei height)
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
 {
     GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
+}
+
+void Cocos2dRenderer::QueueKeyBoardEvent(cocos2d::Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e)
+{
+    //GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, e);
 }
 
 
