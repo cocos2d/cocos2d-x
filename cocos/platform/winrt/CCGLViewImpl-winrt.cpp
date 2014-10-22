@@ -79,8 +79,6 @@ GLViewImpl::GLViewImpl()
 	, m_windowVisible(true)
     , m_width(0)
     , m_height(0)
-    , m_delegate(nullptr)
-    , m_messageBoxDelegate(nullptr)
     , m_orientation(DisplayOrientations::Landscape)
 {
 	s_pEglView = this;
@@ -328,22 +326,6 @@ void GLViewImpl::OnRendering()
         Director::getInstance()->mainLoop();
 	}
 }
-
-
-
-
-
-bool GLViewImpl::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
-{
-    if(m_editBoxDelegate)
-    {
-        m_editBoxDelegate->Invoke(strPlaceHolder, strText, maxLength, inputMode, inputFlag, receiveHandler);
-        return true;
-    }
-    return false;
-}
-
-
 
 // called by orientation change from WP8 XAML
 void GLViewImpl::UpdateOrientation(DisplayOrientations orientation)

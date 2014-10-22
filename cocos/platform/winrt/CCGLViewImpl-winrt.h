@@ -33,6 +33,7 @@ THE SOFTWARE.
 
 
 #include <agile.h>
+#include <string>
 
 #include <wrl/client.h>
 #include <mutex>
@@ -66,7 +67,10 @@ public:
     virtual bool Create(float width, float height ,Windows::Graphics::Display::DisplayOrientations orientation);
 
     void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
+    Windows::UI::Core::CoreDispatcher^ getDispatcher() {return m_dispatcher.Get();}
+
     void setPanel(Windows::UI::Xaml::Controls::Panel^ panel);
+    Windows::UI::Xaml::Controls::Panel^ getPanel() {return m_panel.Get();}
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -85,12 +89,7 @@ public:
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
     void QueueEvent(std::shared_ptr<InputEvent>& event);
 
-    void SetXamlEventDelegate(Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
-    void SetXamlMessageBoxDelegate(Cocos2dMessageBoxDelegate^ delegate) { m_messageBoxDelegate = delegate; };
-    void SetXamlEditBoxDelegate(Cocos2dEditBoxDelegate^ delegate) { m_editBoxDelegate = delegate; };
-
     bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
-    bool OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
 
 	int Run();
 	void Render();
