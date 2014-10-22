@@ -140,13 +140,15 @@ namespace cocos2d
 
         public void OnKeyUp(object sender, KeyEventArgs e)
         {
-            m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
-            m_textBox.Text = "";
         }
 
         public void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
+            if (m_textBox.Text.Length > 0)
+            {
+                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
+                m_textBox.Text = "";
+            }
         }
 
         // Called by the Cocos2d-x C++ engine to display a MessageBox
@@ -180,7 +182,6 @@ namespace cocos2d
                             m_textBox.TextChanged += OnTextChanged;
                             DrawingSurfaceBackground.Children.Add(m_textBox);
                         }
-                        m_textBox.Text = text;
                         m_textBox.SelectionLength = 0;
                         m_textBox.SelectionStart = int.MaxValue;
                         m_textBox.Focus();
