@@ -35,19 +35,15 @@ THE SOFTWARE.
 #include <agile.h>
 
 #include <wrl/client.h>
-#include <d3d11_1.h>
 #include <mutex>
 #include <queue>
 
-#include <DirectXMath.h>
 
-#include <EGL/egl.h>
-
+#include <Keyboard-winrt.h>
 
 NS_CC_BEGIN
 
 class GLViewImpl;
-
 
 class CC_DLL GLViewImpl : public GLView
 {
@@ -66,13 +62,11 @@ public:
 
     virtual void setIMEKeyboardState(bool bOpen);
     virtual void setIMEKeyboardState(bool bOpen, std::string str);
-    Platform::String^ stringToPlatformString(std::string strSrc);
-    void ShowKeyboard(Windows::Foundation::Rect r);
-    void HideKeyboard(Windows::Foundation::Rect r);
 
     virtual bool Create(float width, float height ,Windows::Graphics::Display::DisplayOrientations orientation);
 
     void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
+    void setPanel(Windows::UI::Xaml::Controls::Panel^ panel);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -89,7 +83,7 @@ public:
 
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-    void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event);
+    void QueueEvent(std::shared_ptr<InputEvent>& event);
 
     void SetXamlEventDelegate(Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
     void SetXamlMessageBoxDelegate(Cocos2dMessageBoxDelegate^ delegate) { m_messageBoxDelegate = delegate; };
@@ -141,7 +135,7 @@ private:
 
 	void OnRendering();
 	void UpdateWindowSize();
-
+ 
     cocos2d::Vec2 TransformToOrientation(Windows::Foundation::Point point);
  	cocos2d::Vec2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
        
@@ -170,8 +164,8 @@ private:
     std::mutex mMutex;
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
-
-
+    Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
+    KeyBoardWinRT^ m_keyboard;
 };
 
 NS_CC_END

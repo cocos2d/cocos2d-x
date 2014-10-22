@@ -39,7 +39,9 @@ using namespace Windows::Graphics::Display;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media;
+using namespace Windows::UI::Xaml::Input;
 using namespace Windows::System;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::ApplicationModel;
@@ -119,6 +121,12 @@ void GLViewImpl::setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher)
     m_dispatcher = dispatcher;
 }
 
+void GLViewImpl::setPanel(Windows::UI::Xaml::Controls::Panel^ panel)
+{
+    m_panel = panel;
+}
+
+
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
@@ -130,14 +138,12 @@ bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ messa
 {
     if (m_dispatcher.Get())
     {
-        Windows::UI::Popups::MessageDialog^ msg = ref new Windows::UI::Popups::MessageDialog(message, title);
-        // Set the command to be invoked when a user presses 'ESC'
-        msg->CancelCommandIndex = 1;
-
-        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-            ref new Windows::UI::Core::DispatchedHandler([msg]()
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([title, message]()
         {
             // Show the message dialog
+            auto msg = ref new Windows::UI::Popups::MessageDialog(message, title);
+            // Set the command to be invoked when a user presses 'ESC'
+            msg->CancelCommandIndex = 1;
             msg->ShowAsync();
         }));
 
@@ -148,30 +154,25 @@ bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ messa
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen, std::string str)
 {
-    if(m_delegate)
+    if(bOpen)
     {
-        if(bOpen)
+        if (m_keyboard == nullptr)
         {
-            m_delegate->Invoke(Cocos2dEvent::ShowKeyboard, stringToPlatformString(str));
+            m_keyboard = ref new KeyBoardWinRT(m_dispatcher.Get(), m_panel.Get());
         }
-        else
+        m_keyboard->ShowKeyboard(PlatformStringFromString(str));
+    }
+    else
+    {
+        if (m_keyboard != nullptr)
         {
-            m_delegate->Invoke(Cocos2dEvent::HideKeyboard, stringToPlatformString(str));
+            m_keyboard->HideKeyboard(PlatformStringFromString(str));
         }
+        m_keyboard = nullptr;
     }
 }
 
-Platform::String^ GLViewImpl::stringToPlatformString(std::string strSrc)
-{
-    // to wide char
-    int strLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);
-    wchar_t* wstr = new wchar_t[strLen + 1];
-    memset(wstr, 0, strLen + 1);
-    MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, wstr, strLen);
-    Platform::String^ strDst = ref new Platform::String(wstr);
-    delete[] wstr;
-    return strDst;
-}
+
 
 void GLViewImpl::swapBuffers()
 {
@@ -204,7 +205,7 @@ void GLViewImpl::OnBackKeyPress()
     std::string str;
     if(m_delegate)
     {
-        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
+        //m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
     }
 }
 
