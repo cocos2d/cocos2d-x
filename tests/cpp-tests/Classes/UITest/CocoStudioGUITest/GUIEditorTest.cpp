@@ -121,7 +121,7 @@ g_guisTests[] =
 	},
      */
     {
-        "gui TextAtals Editor Test",
+        "gui TextAtlas Editor Test",
         [](Ref* sender)
         {
             UISceneManager_Editor* pManager = UISceneManager_Editor::sharedUISceneManager_Editor();
