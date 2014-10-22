@@ -130,7 +130,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(Engi
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)ttemplates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -149,7 +149,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(Engi
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)ttemplates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -168,7 +168,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(Engi
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)ttemplates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -187,7 +187,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(Engi
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)ttemplates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -206,7 +206,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(Engi
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)ttemplates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -225,7 +225,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(Engi
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)ttemplates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\HelloCpp.Shared\*" /eiycq
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
