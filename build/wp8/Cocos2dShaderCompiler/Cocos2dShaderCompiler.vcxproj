@@ -234,6 +234,7 @@
     <ClInclude Include="..\..\..\cocos\2d\CCAnimation.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCAnimationCache.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCAtlasNode.h" />
+    <ClInclude Include="..\..\..\cocos\2d\CCCamera.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCClippingNode.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCComponent.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCComponentContainer.h" />
@@ -256,6 +257,7 @@
     <ClInclude Include="..\..\..\cocos\2d\CCLabelTextFormatter.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCLabelTTF.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCLayer.h" />
+    <ClInclude Include="..\..\..\cocos\2d\CCLight.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCMenu.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCMenuItem.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCMotionStreak.h" />
@@ -287,7 +289,6 @@
     <ClInclude Include="..\..\..\cocos\base\atitc.h" />
     <ClInclude Include="..\..\..\cocos\base\base64.h" />
     <ClInclude Include="..\..\..\cocos\base\CCAutoreleasePool.h" />
-    <ClInclude Include="..\..\..\cocos\base\CCCamera.h" />
     <ClInclude Include="..\..\..\cocos\base\ccCArray.h" />
     <ClInclude Include="..\..\..\cocos\base\ccConfig.h" />
     <ClInclude Include="..\..\..\cocos\base\CCConfiguration.h" />
@@ -318,7 +319,6 @@
     <ClInclude Include="..\..\..\cocos\base\CCGameController.h" />
     <ClInclude Include="..\..\..\cocos\base\CCIMEDelegate.h" />
     <ClInclude Include="..\..\..\cocos\base\CCIMEDispatcher.h" />
-    <ClInclude Include="..\..\..\cocos\base\CCLight.h" />
     <ClInclude Include="..\..\..\cocos\base\ccMacros.h" />
     <ClInclude Include="..\..\..\cocos\base\CCMap.h" />
     <ClInclude Include="..\..\..\cocos\base\CCNS.h" />
@@ -432,6 +432,7 @@
     <ClCompile Include="..\..\..\cocos\2d\CCAnimation.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCAnimationCache.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCAtlasNode.cpp" />
+    <ClCompile Include="..\..\..\cocos\2d\CCCamera.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCClippingNode.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCComponent.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCComponentContainer.cpp" />
@@ -454,6 +455,7 @@
     <ClCompile Include="..\..\..\cocos\2d\CCLabelTextFormatter.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCLabelTTF.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCLayer.cpp" />
+    <ClCompile Include="..\..\..\cocos\2d\CCLight.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCMenu.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCMenuItem.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCMotionStreak.cpp" />
@@ -485,7 +487,6 @@
     <ClCompile Include="..\..\..\cocos\base\atitc.cpp" />
     <ClCompile Include="..\..\..\cocos\base\base64.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCAutoreleasePool.cpp" />
-    <ClCompile Include="..\..\..\cocos\base\CCCamera.cpp" />
     <ClCompile Include="..\..\..\cocos\base\ccCArray.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCConfiguration.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCConsole.cpp" />
@@ -519,7 +520,6 @@
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\CCIMEDispatcher.cpp" />
-    <ClCompile Include="..\..\..\cocos\base\CCLight.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCNS.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCProfiling.cpp" />
     <ClCompile Include="..\..\..\cocos\base\ccRandom.cpp" />
