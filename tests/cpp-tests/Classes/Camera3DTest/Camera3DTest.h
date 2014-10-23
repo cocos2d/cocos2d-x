@@ -32,6 +32,57 @@ namespace cocos2d {
     class Sprite3D;
     class Delay;
 }
+
+class DrawLine3D: public Node
+{
+public:
+    /** creates and initialize a node */
+    static DrawLine3D* create();
+    
+    /**
+     * Draw 3D Line
+     */
+    void drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color);
+    
+    void drawCube(Vec3* vertices, const Color4F &color);
+    
+    /** Clear the geometry in the node's buffer. */
+    void clear()
+    {
+        _buffer.clear();
+    }
+    
+    void onDraw(const Mat4 &transform, uint32_t flags);
+    
+    // Overrides
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    
+CC_CONSTRUCTOR_ACCESS:
+    DrawLine3D()
+    {
+        
+    }
+    virtual ~DrawLine3D()
+    {
+        
+    }
+    virtual bool init();
+    
+protected:
+    struct V3F_C4B
+    {
+        Vec3     vertices;
+        Color4B  colors;
+    };
+    
+    std::vector<V3F_C4B> _buffer;
+    
+    CustomCommand _customCommand;
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(DrawLine3D);
+};
+
 enum State
 {
     State_None = 0,
@@ -106,6 +157,41 @@ protected:
     Label* _ZoomInlabel;
     Label* _ZoomOutlabel;
 };
+
+class CameraClipDemo : public BaseTest
+{
+public:
+    CREATE_FUNC(CameraClipDemo);
+    CameraClipDemo(void);
+    virtual ~CameraClipDemo(void);
+    
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    // overrides
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void reachEndCallBack();
+    void switchViewCallback(Ref* sender,CameraType cameraType);
+    void update(float fDelta);
+    void drawCameraFrustum();
+    void initCamera();
+    
+protected:
+    std::string    _title;
+    Label*         _labelDrawCall;
+    Layer*         _layer3D;
+    std::vector<Sprite3D*> objects;
+    CameraType     _cameraType;
+    Camera*        _cameraFirst;
+    Camera*        _cameraThird;
+    MoveBy*         _moveAction;
+    DrawLine3D* _drawAABB;
+    DrawLine3D* _drawFrustum;
+};
+
 class Camera3DTestScene : public TestScene
 {
 public:

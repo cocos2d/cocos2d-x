@@ -28,55 +28,6 @@ THE SOFTWARE.
 #include "../testResource.h"
 
 ////////////DrawLine/////////////////////
-
-class DrawLine3D: public Node
-{
-public:
-    /** creates and initialize a node */
-    static DrawLine3D* create();
-    
-    /**
-     * Draw 3D Line
-     */
-    void drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color);
-    
-    /** Clear the geometry in the node's buffer. */
-    void clear()
-    {
-        _buffer.clear();
-    }
-    
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
-    // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    
-CC_CONSTRUCTOR_ACCESS:
-    DrawLine3D()
-    {
-        
-    }
-    virtual ~DrawLine3D()
-    {
-        
-    }
-    virtual bool init();
-    
-protected:
-    struct V3F_C4B
-    {
-        Vec3     vertices;
-        Color4B  colors;
-    };
-    
-    std::vector<V3F_C4B> _buffer;
-    
-    CustomCommand _customCommand;
-    
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(DrawLine3D);
-};
-
 DrawLine3D* DrawLine3D::create()
 {
     auto ret = new (std::nothrow) DrawLine3D();
@@ -101,6 +52,27 @@ void DrawLine3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color
     _buffer.push_back(vertex);
     vertex.vertices = to;
     _buffer.push_back(vertex);
+}
+
+void DrawLine3D::drawCube(Vec3* vertices, const Color4F &color)
+{
+    // front face
+    drawLine(vertices[0], vertices[1], color);
+    drawLine(vertices[1], vertices[2], color);
+    drawLine(vertices[2], vertices[3], color);
+    drawLine(vertices[3], vertices[0], color);
+    
+    // back face
+    drawLine(vertices[4], vertices[5], color);
+    drawLine(vertices[5], vertices[6], color);
+    drawLine(vertices[6], vertices[7], color);
+    drawLine(vertices[7], vertices[4], color);
+    
+    // edge
+    drawLine(vertices[0], vertices[7], color);
+    drawLine(vertices[1], vertices[6], color);
+    drawLine(vertices[2], vertices[5], color);
+    drawLine(vertices[3], vertices[4], color);
 }
 
 void DrawLine3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -140,6 +112,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Camera3DTestDemo),
+    CL(CameraClipDemo)
 };
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
@@ -755,6 +728,282 @@ void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 {
     _bRotateRight = false;
 }
+
+////////////////////////////////////////////////////////////
+// CameraClipDemo
+CameraClipDemo::CameraClipDemo(void)
+: BaseTest()
+, _labelDrawCall(nullptr)
+, _layer3D(nullptr)
+, _cameraFirst(nullptr)
+, _cameraThird(nullptr)
+, _moveAction(nullptr)
+, _drawAABB(nullptr)
+, _drawFrustum(nullptr)
+{
+}
+CameraClipDemo::~CameraClipDemo(void)
+{
+}
+
+std::string CameraClipDemo::title() const
+{
+    return "Testing Camera";
+}
+
+std::string CameraClipDemo::subtitle() const
+{
+    return "Camera Frustum Clipping";
+}
+
+void CameraClipDemo::switchViewCallback(Ref* sender, CameraType cameraType)
+{
+    if(_cameraType==cameraType)
+    {
+        return ;
+    }
+    _cameraType = cameraType;
+    if(_cameraType==CameraType::FirstCamera)
+    {
+        _drawFrustum->clear();
+        _cameraFirst->setCameraFlag(CameraFlag::USER1);
+        _cameraThird->setCameraFlag(CameraFlag::USER8);
+        _cameraFirst->enableFrustumCull(true, true);
+    }
+    else if(_cameraType==CameraType::ThirdCamera)
+    {
+        _cameraThird->setCameraFlag(CameraFlag::USER1);
+        _cameraFirst->setCameraFlag(CameraFlag::USER8);
+        _cameraThird->enableFrustumCull(false, false);
+    }
+}
+void CameraClipDemo::onEnter()
+{
+    BaseTest::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(CameraClipDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(CameraClipDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(CameraClipDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto layer3D=Layer::create();
+    addChild(layer3D,0);
+    _layer3D=layer3D;
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"third person");
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CameraClipDemo::switchViewCallback,this,CameraType::ThirdCamera));
+    auto label2 = Label::createWithTTF(ttfConfig,"first person");
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(CameraClipDemo::switchViewCallback,this,CameraType::FirstCamera));
+    auto menu = Menu::create(menuItem1,menuItem2,NULL);
+    
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition(VisibleRect::left().x+70, VisibleRect::top().y -50);
+    menuItem2->setPosition(VisibleRect::left().x+70, VisibleRect::top().y -80);
+    addChild(menu, 0);
+    
+    _labelDrawCall = Label::createWithTTF(ttfConfig,"In Frustum Num: ");
+    _labelDrawCall->setPosition(VisibleRect::rightTop().x-80, VisibleRect::rightTop().y -50);
+    addChild(_labelDrawCall, 0);
+    
+    schedule(schedule_selector(CameraClipDemo::update), 0.0f);
+    
+    if (_cameraFirst == nullptr)
+    {
+        _cameraFirst=Camera::createPerspective(30, (GLfloat)s.width/s.height, 10, 200);
+        _layer3D->addChild(_cameraFirst);
+    }
+    if (_cameraThird == nullptr)
+    {
+        _cameraThird=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        _layer3D->addChild(_cameraThird);
+    }
+    
+    DrawLine3D* line =DrawLine3D::create();
+    const int gridNum = 30;
+    const int girdSize = 5;
+    //draw x
+    for( int j =-gridNum; j<=gridNum ;j++)
+    {
+        line->drawLine(Vec3(-gridNum*girdSize, 0, 5*j),Vec3(gridNum*girdSize,0,5*j),Color4F(1,0,0,1));
+    }
+    //draw z
+    for( int j =-gridNum; j<=gridNum ;j++)
+    {
+        line->drawLine(Vec3(5*j, 0, -gridNum*girdSize),Vec3(5*j,0,gridNum*girdSize),Color4F(0,0,1,1));
+    }
+    
+    _layer3D->addChild(line);
+    
+    _drawAABB = DrawLine3D::create();
+    _layer3D->addChild(_drawAABB);
+    
+    // add some objects to 3d layer
+    int num = 5;
+    objects.clear();
+    for (int x = -num; x < num; x++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            for (int z = -num; z < num; z++) {
+                auto sprite = Sprite3D::create("Sprite3DTest/boss.c3b");
+                sprite->setPosition3D( Vec3( x*30, j*30, z*30) );
+                objects.push_back(sprite);
+                _layer3D->addChild(sprite);
+                
+                Vec3 corners[8];
+                sprite->getAABB().getCorners(corners);
+                _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+            }
+        }
+    }
+    
+    _drawFrustum = DrawLine3D::create();
+    _layer3D->addChild(_drawFrustum);
+    
+    switchViewCallback(this,CameraType::FirstCamera);
+    initCamera();
+    _layer3D->setCameraMask(2);
+}
+
+void CameraClipDemo::onExit()
+{
+    BaseTest::onExit();
+    if (_cameraFirst)
+    {
+        _cameraFirst = nullptr;
+    }
+    if (_cameraThird)
+    {
+        _cameraThird = nullptr;
+    }
+}
+
+void CameraClipDemo::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild(restartSpriteTestAction());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClipDemo::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild( nextSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+void CameraClipDemo::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild( backSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClipDemo::reachEndCallBack()
+{
+    _cameraFirst->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(CameraClipDemo::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _cameraFirst->runAction(seq);
+}
+
+void CameraClipDemo::drawCameraFrustum()
+{
+    _drawFrustum->clear();
+    auto size = Director::getInstance()->getWinSize();
+    
+    Color4F color(1.f, 1.f, 0.f, 1);
+    
+    // top-left
+    Vec3 tl_0,tl_1;
+    Vec3 src(0,0,0);
+    _cameraFirst->unproject(size, &src, &tl_0);
+    src = Vec3(0,0,1);
+    _cameraFirst->unproject(size, &src, &tl_1);
+    
+    // top-right
+    Vec3 tr_0,tr_1;
+    src = Vec3(size.width,0,0);
+    _cameraFirst->unproject(size, &src, &tr_0);
+    src = Vec3(size.width,0,1);
+    _cameraFirst->unproject(size, &src, &tr_1);
+    
+    // bottom-left
+    Vec3 bl_0,bl_1;
+    src = Vec3(0,size.height,0);
+    _cameraFirst->unproject(size, &src, &bl_0);
+    src = Vec3(0,size.height,1);
+    _cameraFirst->unproject(size, &src, &bl_1);
+    
+    // bottom-right
+    Vec3 br_0,br_1;
+    src = Vec3(size.width,size.height,0);
+    _cameraFirst->unproject(size, &src, &br_0);
+    src = Vec3(size.width,size.height,1);
+    _cameraFirst->unproject(size, &src, &br_1);
+    
+    _drawFrustum->drawLine(tl_0, tl_1, color);
+    _drawFrustum->drawLine(tr_0, tr_1, color);
+    _drawFrustum->drawLine(bl_0, bl_1, color);
+    _drawFrustum->drawLine(br_0, br_1, color);
+    
+    _drawFrustum->drawLine(tl_0, tr_0, color);
+    _drawFrustum->drawLine(tr_0, br_0, color);
+    _drawFrustum->drawLine(br_0, bl_0, color);
+    _drawFrustum->drawLine(bl_0, tl_0, color);
+    
+    _drawFrustum->drawLine(tl_1, tr_1, color);
+    _drawFrustum->drawLine(tr_1, br_1, color);
+    _drawFrustum->drawLine(br_1, bl_1, color);
+    _drawFrustum->drawLine(bl_1, tl_1, color);
+}
+
+void CameraClipDemo::initCamera()
+{
+    if (_cameraThird)
+    {
+        _cameraFirst->setPosition3D(Vec3(-100,0,0));
+        _cameraFirst->lookAt(Vec3(1000,0,0), Vec3(0, 1, 0));
+        _moveAction = MoveTo::create(4.f, Vec2(100, 0));
+        _moveAction->retain();
+        auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraClipDemo::reachEndCallBack, this)), nullptr);
+        seq->setTag(100);
+        _cameraFirst->runAction(seq);
+    }
+    
+    if (_cameraThird)
+    {
+        _cameraThird->setPosition3D(Vec3(0, 130, 130));
+        _cameraThird->lookAt(Vec3(0,0,0), Vec3(0, 1, 0));
+    }
+}
+
+
+void CameraClipDemo::update(float fDelta)
+{
+    static unsigned long prevCalls = 0;
+    unsigned long drawCall = Director::getInstance()->getRenderer()->getDrawnBatches() - 10;
+    if( drawCall != prevCalls )
+    {
+        char szDrawCall[255];
+        sprintf(szDrawCall, "In Frustum Num: %6lu", drawCall);
+        _labelDrawCall->setString(szDrawCall);
+    }
+    if( _cameraType==CameraType::ThirdCamera)
+    {
+        drawCameraFrustum();
+    }
+}
+
 void Camera3DTestScene::runThisTest()
 {
     auto layer = nextSpriteTestAction();
