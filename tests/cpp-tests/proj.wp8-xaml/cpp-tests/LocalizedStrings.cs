@@ -1,4 +1,4 @@
-﻿using PhoneDirect3DXamlAppInterop.Resources;
+﻿using cocos2d.Resources;
 
 namespace cocos2d
 {
