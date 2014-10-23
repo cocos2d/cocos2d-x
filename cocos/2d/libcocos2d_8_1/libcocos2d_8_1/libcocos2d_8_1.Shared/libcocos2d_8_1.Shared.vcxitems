@@ -558,13 +558,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventListenerTouch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventMouse.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventTouch.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccFPSImages.c">
-      <CompileAsWinRT>false</CompileAsWinRT>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>
-      </ForcedIncludeFiles>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccFPSImages.c" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.cpp" />
