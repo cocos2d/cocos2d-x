@@ -91,7 +91,6 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 			acc.z = reading->AccelerationZ;
             acc.timestamp = 0;
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
 
             switch (orientation)
@@ -121,7 +120,6 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 				acc.y = reading->AccelerationY;
                 break;
             }
-#endif
 
 #ifndef WP8_SHADER_COMPILER
 	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
