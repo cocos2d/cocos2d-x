@@ -1,6 +1,8 @@
 
 
 #include "GUIEditorTest.h"
+
+#include "cocostudio/ActionTimeline/CSLoader.h"
 #include "CocoStudioGUITest.h"
 #include "UISceneManager_Editor.h"
 
@@ -119,7 +121,7 @@ g_guisTests[] =
 	},
      */
     {
-        "gui TextAtals Editor Test",
+        "gui TextAtlas Editor Test",
         [](Ref* sender)
         {
             UISceneManager_Editor* pManager = UISceneManager_Editor::sharedUISceneManager_Editor();
@@ -269,6 +271,8 @@ static Vec2 s_tCurPos = Vec2::ZERO;
 void GUIEditorMainLayer::onEnter()
 {
     Layer::onEnter();
+    
+    CSLoader::getInstance()->setRecordProtocolBuffersPath(true);
     
     auto s = Director::getInstance()->getWinSize();
     

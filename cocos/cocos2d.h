@@ -61,8 +61,6 @@ THE SOFTWARE.
 #include "base/CCIMEDelegate.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
-#include "base/CCCamera.h"
-#include "base/CCLight.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"
@@ -139,6 +137,9 @@ THE SOFTWARE.
 // 2d utils
 #include "2d/CCGrabber.h"
 #include "2d/CCGrid.h"
+
+#include "2d/CCCamera.h"
+#include "2d/CCLight.h"
 
 // include
 #include "base/CCProtocols.h"

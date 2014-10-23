@@ -217,7 +217,7 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
-int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume)
+int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
     auto audioId = AudioEngine::INVAILD_AUDIO_ID;
 
@@ -227,10 +227,10 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
             break;
 
         auto& player = _audioPlayers[currentAudioID];
-        auto initPlayer = player.init( _engineEngine, _outputMixObject, fileFullPath, volume, loop);
+        auto initPlayer = player.init( _engineEngine, _outputMixObject, FileUtils::getInstance()->fullPathForFilename(filePath), volume, loop);
         if (!initPlayer){
             _audioPlayers.erase(currentAudioID);
-            log("%s,%d message:create player for %s fail", __func__, __LINE__, fileFullPath.c_str());
+            log("%s,%d message:create player for %s fail", __func__, __LINE__, filePath.c_str());
             break;
         }
 

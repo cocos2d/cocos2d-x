@@ -27,7 +27,6 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "base/CCLight.h"
 
 class LightTest : public BaseTest
 {

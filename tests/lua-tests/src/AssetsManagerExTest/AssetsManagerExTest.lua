@@ -14,7 +14,6 @@ local sceneManifests =
     "Manifests/AMTestScene3/project.manifest"
 }
 
---UNCHECK
 local storagePaths = 
 {
     "LuaTests/AssetsManagerExTest/scene1",
@@ -24,9 +23,9 @@ local storagePaths =
 
 local backgroundPaths = 
 {
-    "Images/background1.jpg", 
-    "Images/background2.jpg", 
-    "Images/background3.png"
+    "Images/assetMgrBackground1.jpg",
+    "Images/assetMgrBackground2.png",
+    "Images/assetMgrBackground3.png"
 }
 
 -------------------------------------
@@ -57,12 +56,12 @@ function AMTestScene1.create()
         local  progress = cc.Label:createWithTTF(ttfConfig, "0%", cc.VERTICAL_TEXT_ALIGNMENT_CENTER)
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
-        am = cc.AssetsManagerEx:create("Manifests/AMTestScene1/project.manifest", cc.FileUtils:getInstance():getWritablePath() .. "LuaTests/AssetsManagerExTest/scene1")
+        am = cc.AssetsManagerEx:create(sceneManifests[1], cc.FileUtils:getInstance():getWritablePath() .. storagePaths[1])
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
             print("Fail to update assets, step skipped.")
-            local background = cc.Sprite:create("Images/background1.jpg")
+            local background = cc.Sprite:create(backgroundPaths[1])
             layer:addChild(background, 1)
             background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
         else
@@ -70,7 +69,7 @@ function AMTestScene1.create()
                 local eventCode = event:getEventCode()
                 if eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
-                    local background = cc.Sprite:create("Images/background1.jpg")
+                    local background = cc.Sprite:create(backgroundPaths[1])
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif  eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_PROGRESSION then
@@ -89,18 +88,18 @@ function AMTestScene1.create()
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_DOWNLOAD_MANIFEST or 
                        eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
-                    local background = cc.Sprite:create("Images/background1.jpg")
+                    local background = cc.Sprite:create(backgroundPaths[1])
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ALREADY_UP_TO_DATE or 
                        eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
-                        local background = cc.Sprite:create("Images/background1.jpg")
+                        local background = cc.Sprite:create(backgroundPaths[1])
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
-                        local background = cc.Sprite:create("Images/background1.jpg")
+                        local background = cc.Sprite:create(backgroundPaths[1])
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end
@@ -154,12 +153,12 @@ function AMTestScene2.create()
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
 
-        am = cc.AssetsManagerEx:create("Manifests/AMTestScene2/project.manifest", cc.FileUtils:getInstance():getWritablePath() .. "LuaTests/AssetsManagerExTest/scene2")
+        am = cc.AssetsManagerEx:create(sceneManifests[2], cc.FileUtils:getInstance():getWritablePath() .. storagePaths[2])
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
             print("Fail to update assets, step skipped.")
-            local background = cc.Sprite:create("Images/background2.jpg")
+            local background = cc.Sprite:create(backgroundPaths[2])
             layer:addChild(background, 1)
             background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
         else
@@ -167,7 +166,7 @@ function AMTestScene2.create()
                 local eventCode = event:getEventCode()
                 if eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
-                    local background = cc.Sprite:create("Images/background2.jpg")
+                    local background = cc.Sprite:create(backgroundPaths[2])
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif  eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_PROGRESSION then
@@ -186,18 +185,18 @@ function AMTestScene2.create()
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_DOWNLOAD_MANIFEST or 
                        eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
-                    local background = cc.Sprite:create("Images/background2.jpg")
+                    local background = cc.Sprite:create(backgroundPaths[2])
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ALREADY_UP_TO_DATE or 
                        eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
-                        local background = cc.Sprite:create("Images/background2.jpg")
+                        local background = cc.Sprite:create(backgroundPaths[2])
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
-                        local background = cc.Sprite:create("Images/background2.jpg")
+                        local background = cc.Sprite:create(backgroundPaths[2])
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end
@@ -250,7 +249,7 @@ function AMTestScene3.create()
         progress:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y + 50))
         layer:addChild(progress)
 
-        am = cc.AssetsManagerEx:create("Manifests/AMTestScene3/project.manifest", cc.FileUtils:getInstance():getWritablePath() .. "LuaTests/AssetsManagerExTest/scene3")
+        am = cc.AssetsManagerEx:create(sceneManifests[3], cc.FileUtils:getInstance():getWritablePath() .. storagePaths[3])
         am:retain()
 
         if not am:getLocalManifest():isLoaded() then
@@ -263,7 +262,7 @@ function AMTestScene3.create()
                 local eventCode = event:getEventCode()
                 if eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_NO_LOCAL_MANIFEST then
                     print("No local manifest file found, skip assets update.")
-                    local background = cc.Sprite:create("Images/background3.png")
+                    local background = cc.Sprite:create(backgroundPaths[3])
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif  eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_PROGRESSION then
@@ -282,18 +281,18 @@ function AMTestScene3.create()
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_DOWNLOAD_MANIFEST or 
                        eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_PARSE_MANIFEST then
                     print("Fail to download manifest file, update skipped.")
-                    local background = cc.Sprite:create("Images/background3.png")
+                    local background = cc.Sprite:create(backgroundPaths[3])
                     layer:addChild(background, 1)
                     background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ALREADY_UP_TO_DATE or 
                        eventCode == cc.EventAssetsManagerEx.EventCode.UPDATE_FINISHED then
                         print("Update finished.")
-                        local background = cc.Sprite:create("Images/background3.png")
+                        local background = cc.Sprite:create(backgroundPaths[3])
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 elseif eventCode == cc.EventAssetsManagerEx.EventCode.ERROR_UPDATING then
                         print("Asset ", event:getAssetId(), ", ", event:getMessage())
-                        local background = cc.Sprite:create("Images/background3.png")
+                        local background = cc.Sprite:create(backgroundPaths[3])
                         layer:addChild(background, 1)
                         background:setPosition( cc.p(VisibleRect:center().x, VisibleRect:center().y ))
                 end

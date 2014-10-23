@@ -8,10 +8,8 @@ endif()
 # todo: also base/CCController-android.cpp
 
 set(COCOS_BASE_SRC
-  base/CCLight.cpp
   base/ccFPSImages.c
   base/CCAutoreleasePool.cpp
-  base/CCCamera.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
   base/CCController.cpp
