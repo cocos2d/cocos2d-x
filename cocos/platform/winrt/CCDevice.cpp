@@ -51,6 +51,7 @@ static Accelerometer^ sAccelerometer = nullptr;
 
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
+#ifndef WP8_SHADER_COMPILER
     static Windows::Foundation::EventRegistrationToken sToken;
     static bool sEnabled = false;
 
@@ -121,12 +122,11 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 break;
             }
 
-#ifndef WP8_SHADER_COMPILER
 	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
-#endif
 		});
 	}
+#endif
 }
 
 void Device::setAccelerometerInterval(float interval)
