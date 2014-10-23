@@ -104,10 +104,10 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     // Recursive add children with which have physics body.
     for (Node* node = this; node != nullptr; node = node->getParent())
     {
-        Scene* scene = dynamic_cast<Scene*>(node);
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
+        PhysicsNode* physicsNode = dynamic_cast<PhysicsNode*>(node);
+        if (physicsNode != nullptr && physicsNode->getPhysicsWorld() != nullptr)
         {
-            scene->addChildToPhysicsWorld(child);
+            physicsNode->addChildToPhysicsWorld(child);
             break;
         }
     }

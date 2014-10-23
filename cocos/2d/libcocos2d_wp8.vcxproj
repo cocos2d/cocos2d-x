@@ -562,6 +562,7 @@
     <ClInclude Include="CCParticleExamples.h" />
     <ClInclude Include="CCParticleSystem.h" />
     <ClInclude Include="CCParticleSystemQuad.h" />
+    <ClInclude Include="CCPhysicsNode.h" />
     <ClInclude Include="CCProgressTimer.h" />
     <ClInclude Include="CCProtectedNode.h" />
     <ClInclude Include="CCRenderTexture.h" />
@@ -1023,7 +1024,8 @@
     <ClCompile Include="CCParticleExamples.cpp" />
     <ClCompile Include="CCParticleSystem.cpp" />
     <ClCompile Include="CCParticleSystemQuad.cpp" />
-    <ClCompile Include="CCProgressTimer.cpp" />
+    <ClCompile Include="CCPhysicsNode.cpp" />
+    <ClCompile Include="CCProgressTimer.cpp" /> 
     <ClCompile Include="CCProtectedNode.cpp" />
     <ClCompile Include="CCRenderTexture.cpp" />
     <ClCompile Include="CCScene.cpp" />

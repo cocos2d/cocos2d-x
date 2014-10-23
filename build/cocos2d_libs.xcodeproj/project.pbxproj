@@ -1736,6 +1736,10 @@
 		50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
+		A559DC8C193E543A006072B5 /* CCPhysicsNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A559DC8A193E543A006072B5 /* CCPhysicsNode.cpp */; };
+		A559DC8D193E543A006072B5 /* CCPhysicsNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A559DC8A193E543A006072B5 /* CCPhysicsNode.cpp */; };
+		A559DC8E193E543A006072B5 /* CCPhysicsNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A559DC8B193E543A006072B5 /* CCPhysicsNode.h */; };
+		A559DC8F193E543A006072B5 /* CCPhysicsNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A559DC8B193E543A006072B5 /* CCPhysicsNode.h */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -2872,6 +2876,8 @@
 		50FCEB9118C72017004AD434 /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A559DC8A193E543A006072B5 /* CCPhysicsNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsNode.cpp; sourceTree = "<group>"; };
+		A559DC8B193E543A006072B5 /* CCPhysicsNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B217703F1977ECE6009EE11B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -3176,6 +3182,8 @@
 			children = (
 				15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */,
 				15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */,
+				A559DC8A193E543A006072B5 /* CCPhysicsNode.cpp */,
+				A559DC8B193E543A006072B5 /* CCPhysicsNode.h */,
 				1A57009C180BC5D20088DEC7 /* CCNode.cpp */,
 				1A57009D180BC5D20088DEC7 /* CCNode.h */,
 				1A570096180BC5C10088DEC7 /* CCAtlasNode.cpp */,
@@ -5124,6 +5132,7 @@
 				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */,
+				A559DC8E193E543A006072B5 /* CCPhysicsNode.h in Headers */,
 				50ABBE891925AB6F00A911A9 /* CCMap.h in Headers */,
 				50ABBE8D1925AB6F00A911A9 /* CCNS.h in Headers */,
 				B29A7DFD19EE1B7700872B35 /* IkConstraintData.h in Headers */,
@@ -5880,6 +5889,7 @@
 				15AE1ABD19AAD40300C27E9E /* b2PolygonAndCircleContact.h in Headers */,
 				15AE1AA819AAD40300C27E9E /* b2Island.h in Headers */,
 				15B3708B19EE414C00ABE682 /* Manifest.h in Headers */,
+				A559DC8F193E543A006072B5 /* CCPhysicsNode.h in Headers */,
 				1A570213180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1A570217180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
@@ -6570,6 +6580,7 @@
 				15AE1A5219AAD40300C27E9E /* b2Draw.cpp in Sources */,
 				50ED2BE419BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */,
 				50ABBE1F1925AB6F00A911A9 /* atitc.cpp in Sources */,
+				A559DC8C193E543A006072B5 /* CCPhysicsNode.cpp in Sources */,
 				1A01C69818F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				B29A7DF119EE1B7700872B35 /* AtlasAttachmentLoader.c in Sources */,
 				1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */,
@@ -6685,6 +6696,7 @@
 				503DD8E11926736A00CD74DD /* CCApplication-ios.mm in Sources */,
 				15AE1AAC19AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
 				15AE18C719AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
+				A559DC8D193E543A006072B5 /* CCPhysicsNode.cpp in Sources */,
 				50ABC01A1926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				B29A7E1C19EE1B7700872B35 /* SkeletonJson.c in Sources */,
 				B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */,

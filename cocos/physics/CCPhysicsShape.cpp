@@ -510,12 +510,12 @@ bool PhysicsShapeEdgeSegment::init(const Vec2& a, const Vec2& b, const PhysicsMa
 
 Vec2 PhysicsShapeEdgeSegment::getPointA() const
 {
-    return PhysicsHelper::cpv2point(((cpSegmentShape*)(_info->getShapes().front()))->ta);
+    return PhysicsHelper::cpv2point(cpSegmentShapeGetA(_info->getShapes().front()));
 }
 
 Vec2 PhysicsShapeEdgeSegment::getPointB() const
 {
-    return PhysicsHelper::cpv2point(((cpSegmentShape*)(_info->getShapes().front()))->tb);
+    return PhysicsHelper::cpv2point(cpSegmentShapeGetB(_info->getShapes().front()));
 }
 
 Vec2 PhysicsShapeEdgeSegment::getCenter()
