@@ -48,13 +48,8 @@ Controller g_aTestNames[] = {
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
 	{ "Configuration", []() { return new ConfigurationTestScene(); } },
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Console", []() { return new ConsoleTestScene(); } },
-
-#endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Curl", []() { return new CurlTestScene(); } },
-#endif
 	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
 	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
