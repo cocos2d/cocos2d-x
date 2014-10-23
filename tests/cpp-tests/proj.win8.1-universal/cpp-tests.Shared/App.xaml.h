@@ -4,7 +4,7 @@
 #include "OpenGLES.h"
 #include "openglespage.xaml.h"
 
-namespace cpp_tests
+namespace cocos2d
 {
     ref class App sealed
     {
@@ -13,7 +13,7 @@ namespace cpp_tests
         virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e) override;
 
     private:
-        OpenGLESPage^ mPage;
+        cocos2d::OpenGLESPage^ mPage;
         OpenGLES mOpenGLES;
     };
 }

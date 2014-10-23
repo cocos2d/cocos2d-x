@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "OpenGLESPage.xaml.h"
 
-using namespace cpp_tests;
+using namespace cocos2d;
 
 App::App()
 {
