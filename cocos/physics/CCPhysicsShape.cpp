@@ -429,12 +429,12 @@ bool PhysicsShapeEdgeSegment::init(const Vec2& a, const Vec2& b, const PhysicsMa
 
 Vec2 PhysicsShapeEdgeSegment::getPointA() const
 {
-    return PhysicsHelper::cpv2point(((cpSegmentShape*)(_cpShapes.front()))->ta);
+    return PhysicsHelper::cpv2point(cpSegmentShapeGetA(_cpShapes.front()));
 }
 
 Vec2 PhysicsShapeEdgeSegment::getPointB() const
 {
-    return PhysicsHelper::cpv2point(((cpSegmentShape*)(_cpShapes.front()))->tb);
+    return PhysicsHelper::cpv2point(cpSegmentShapeGetB(_cpShapes.front()));
 }
 
 Vec2 PhysicsShapeEdgeSegment::getCenter()
@@ -534,6 +534,7 @@ bool PhysicsShapePolygon::init(const Vec2* points, int count, const PhysicsMater
         
         auto vecs = new cpVect[count];
         PhysicsHelper::points2cpvs(points, vecs, count);
+        count = cpConvexHull((int)count, vecs, nullptr, nullptr, 0);
         auto shape = cpPolyShapeNew(s_sharedBody, count, vecs, PhysicsHelper::point2cpv(offset));
         CC_SAFE_DELETE_ARRAY(vecs);
         

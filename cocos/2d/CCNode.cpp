@@ -1051,10 +1051,10 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
     
 #if CC_USE_PHYSICS
     // Recursive add children with which have physics body.
-    auto scene = this->getScene();
-    if (scene && scene->getPhysicsWorld())
+    PhysicsNode* physicsNode = getPhysicsNode();
+    if (physicsNode && physicsNode->getPhysicsWorld())
     {
-        scene->addChildToPhysicsWorld(child);
+        physicsNode->addChildToPhysicsWorld(child);
     }
 #endif
     
@@ -1279,9 +1279,19 @@ void Node::visit()
 uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
 {
 #if CC_USE_PHYSICS
-    if (_physicsBody && _updateTransformFromPhysics)
+    if (_physicsBody && _physicsBody->getWorld() && _updateTransformFromPhysics)
     {
-        updateTransformFromPhysics(parentTransform, parentFlags);
+        PhysicsNode &physicsNode =  _physicsBody->getWorld()->getPhysicsNode();
+        if(physicsNode.getParent())
+        {
+            Mat4 mat = physicsNode.getInverseModelViewTransform();
+            mat.multiply(parentTransform);
+            updateTransformFromPhysics(mat, parentFlags);
+        }
+        else
+        {
+            updateTransformFromPhysics(parentTransform, parentFlags);
+        }
     }
 #endif
     if(_usingNormalizedPosition)
@@ -2016,7 +2026,7 @@ void Node::removeAllComponents()
 
 // MARK: Physics
 
-void Node::setPhysicsBody(PhysicsBody* body)
+void Node::setPhysicsBody(PhysicsBody* body, bool ignoreScale)
 {
     if (_physicsBody == body)
     {
@@ -2050,14 +2060,22 @@ void Node::setPhysicsBody(PhysicsBody* body)
         }
 
         _physicsBody = body;
-        _physicsScaleStartX = _scaleX;
-        _physicsScaleStartY = _scaleY;
+        if(ignoreScale)
+        {
+            _physicsScaleStartX = 1.0f;
+            _physicsScaleStartY = 1.0f;
+        }
+        else
+        {
+            _physicsScaleStartX = _scaleX;
+            _physicsScaleStartY = _scaleY;
+        }
 
-        auto scene = getScene();
-        if (scene && scene->getPhysicsWorld())
+        PhysicsNode* physicsNode = getPhysicsNode();
+        if (physicsNode && physicsNode->getPhysicsWorld())
         {
             _physicsTransformDirty = true;
-            scene->getPhysicsWorld()->addBody(body);
+            physicsNode->getPhysicsWorld()->addBody(body);
         }
     }
 }
@@ -2084,10 +2102,10 @@ void Node::updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t pare
         _physicsBody->setScale(scaleX / _physicsScaleStartX, scaleY / _physicsScaleStartY);
         _physicsBody->setRotation(_physicsRotation);
     }
-
+    
     for (auto node : _children)
     {
-        node->updatePhysicsBodyTransform(_modelViewTransform, flags, scaleX, scaleY);
+        node->updatePhysicsBodyTransform(this->transform(parentTransform), flags, scaleX, scaleY);
     }
 }
 
@@ -2105,6 +2123,58 @@ void Node::updateTransformFromPhysics(const Mat4& parentTransform, uint32_t pare
     }
     _physicsRotation = _physicsBody->getRotation();
     setRotation(_physicsRotation - _parent->_physicsRotation);
+}
+
+PhysicsNode* Node::getPhysicsNode() const
+{
+    if (!_parent)
+    {
+        return nullptr;
+    }
+    else if(_physicsBody && _physicsBody->getWorld())
+    {
+        return &_physicsBody->getWorld()->getPhysicsNode();
+    }
+    else
+    {
+        return _parent->getPhysicsNode();
+    }
+}
+
+Vec2 Node::convertToPhysicsSpace(const Vec2& nodePoint) const
+{
+    Mat4 tmp = getNodeToPhysicsTransform();
+    Vec3 vec3(nodePoint.x, nodePoint.y, 0);
+    Vec3 ret;
+    tmp.transformPoint(vec3,&ret);
+    return Vec2(ret.x, ret.y);
+}
+
+Vec2 Node::convertFromPhysicsSpace(const Vec2& physicsPoint) const
+{
+    Mat4 tmp = getPhysicsToNodeTransform();
+    Vec3 vec3(physicsPoint.x, physicsPoint.y, 0);
+    Vec3 ret;
+    tmp.transformPoint(vec3,&ret);
+    return Vec2(ret.x, ret.y);
+}
+
+Mat4 Node::getNodeToPhysicsTransform() const
+{
+    PhysicsNode *physicsNode = getPhysicsNode();
+    
+    Mat4 t(this->getNodeToParentTransform());
+    
+    for (Node *p = _parent; p != nullptr && p != physicsNode; p = p->getParent())
+    {
+        t = p->getNodeToParentTransform() * t;
+    }
+    return t;
+}
+
+Mat4 Node::getPhysicsToNodeTransform() const
+{
+    return getNodeToPhysicsTransform().getInversed();
 }
 
 #endif //CC_USE_PHYSICS

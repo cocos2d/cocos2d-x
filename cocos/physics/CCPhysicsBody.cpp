@@ -360,7 +360,7 @@ const Vec2& PhysicsBody::getPosition()
     if (_positionInitDirty) {
         if (_node) {
             if (_node->getParent()) {
-                _latestPosition = _node->getParent()->convertToWorldSpace(_node->getPosition());
+                _latestPosition = _node->convertToPhysicsSpace(Vec2(_node->getContentSize().width/2, _node->getContentSize().height/2));
             } else {
                 _latestPosition =  _node->getPosition();
             }
