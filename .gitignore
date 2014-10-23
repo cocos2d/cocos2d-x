@@ -36,6 +36,7 @@ ipch/
 *.opensdf
 SubmissionInfo
 Generated Files
+AppPackages
 
 # Ignore files build by ndk and eclipse
 libs/
