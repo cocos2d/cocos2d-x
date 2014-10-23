@@ -31,11 +31,10 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using PhoneDirect3DXamlAppComponent;
 using System.Windows.Media;
 using System.Windows.Input;
 
-namespace PhoneDirect3DXamlAppInterop
+namespace cocos2d
 {
     public partial class EditBox : UserControl
     {
