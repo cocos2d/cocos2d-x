@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿#include "App.xaml.h"
 #include "OpenGLESPage.xaml.h"
 
 using namespace cocos2d;
@@ -12,7 +12,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 {
     if (mPage == nullptr)
     {
-        mPage = ref new cocos2d::OpenGLESPage(&mOpenGLES);
+        mPage = ref new OpenGLESPage(&mOpenGLES);
     }
 
     // Place the page in the current window and ensure that it is active.
