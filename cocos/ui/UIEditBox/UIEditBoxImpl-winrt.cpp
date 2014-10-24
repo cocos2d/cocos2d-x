@@ -136,23 +136,34 @@ void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
 
 void EditBoxWinRT::Closed(Platform::Object^ sender, Platform::Object^ e)
 {
+    critical_section::scoped_lock lock(m_criticalSection);
     RemoveControls();
 }
 
 void EditBoxWinRT::Done(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+    critical_section::scoped_lock lock(m_criticalSection);
     QueueText();
-    RemoveControls();
+    HideFlyout();
 }
 
 void EditBoxWinRT::Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-    RemoveControls();
+    HideFlyout();
 }
 
 void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
 {
-    RemoveControls();
+    critical_section::scoped_lock lock(m_criticalSection);
+    HideFlyout();
+}
+
+void EditBoxWinRT::HideFlyout()
+{
+    if (m_flyout)
+    {
+        m_flyout->Hide();
+    }
 }
 
 void EditBoxWinRT::RemoveControls()
@@ -182,7 +193,6 @@ void EditBoxWinRT::RemoveControls()
             if (m_flyout != nullptr)
             {
                 m_flyout->Closed -= m_closedToken;
-                m_flyout->Hide();
                 m_flyout = nullptr;
             }
 
@@ -278,6 +288,11 @@ void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
 
 void EditBoxWinRT::QueueText()
 {
+    if ((m_passwordBox == nullptr) && (m_textBox == nullptr))
+    {
+        return;
+    }
+
     m_strText = m_inputFlag == EditBox::InputFlag::PASSWORD ? m_passwordBox->Password : m_textBox->Text;
     std::shared_ptr<cocos2d::InputEvent> e(new UIEditBoxEvent(this, m_strText, m_receiveHandler));
     cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);

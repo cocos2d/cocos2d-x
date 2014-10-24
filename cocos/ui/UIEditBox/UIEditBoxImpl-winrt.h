@@ -59,6 +59,7 @@ namespace ui {
         void Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void Closed(Platform::Object^ sender, Platform::Object^ e);
         void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
+        void HideFlyout();
 
         Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
         Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
