@@ -77,17 +77,16 @@ EditBoxWinRT::EditBoxWinRT(Platform::String^ strPlaceHolder, Platform::String^ s
 
 void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
 {
-    m_strText = strText;
-
     if (m_dispatcher.Get() == nullptr || m_panel.Get() == nullptr)
     {
         return;
     }
 
     // must create XAML element on main UI thread
-    m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
+    m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, strText]()
     {
         critical_section::scoped_lock lock(m_criticalSection);
+        m_strText = strText;
         auto item = findXamlElement(m_panel.Get(), "cocos2d_editbox");
         if (item != nullptr)
         {
@@ -142,7 +141,6 @@ void EditBoxWinRT::Closed(Platform::Object^ sender, Platform::Object^ e)
 
 void EditBoxWinRT::Done(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-    critical_section::scoped_lock lock(m_criticalSection);
     QueueText();
     HideFlyout();
 }
@@ -154,12 +152,12 @@ void EditBoxWinRT::Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEve
 
 void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
 {
-    critical_section::scoped_lock lock(m_criticalSection);
-    HideFlyout();
+    //HideFlyout();
 }
 
 void EditBoxWinRT::HideFlyout()
 {
+    critical_section::scoped_lock lock(m_criticalSection);
     if (m_flyout)
     {
         m_flyout->Hide();
@@ -288,6 +286,7 @@ void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
 
 void EditBoxWinRT::QueueText()
 {
+    critical_section::scoped_lock lock(m_criticalSection);
     if ((m_passwordBox == nullptr) && (m_textBox == nullptr))
     {
         return;
