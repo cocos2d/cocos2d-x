@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "base/CCScriptSupport.h"
 #include "base/ccUTF8.h"
 #include "2d/CCLabel.h"
+#include "CCWinRTUtils.h"
 
 using namespace Platform;
 using namespace Concurrency;
@@ -44,7 +45,6 @@ using namespace Windows::UI::Input;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::ViewManagement;
 using namespace Windows::Foundation;
 
 NS_CC_BEGIN
@@ -74,14 +74,9 @@ EditBoxWinRT::EditBoxWinRT(Platform::String^ strPlaceHolder, Platform::String^ s
 }
 
 
-
 void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
 {
     m_strText = strText;
-    if (m_control != nullptr)
-    {
-        return;
-    }
 
     if (m_dispatcher.Get() == nullptr || m_panel.Get() == nullptr)
     {
@@ -91,94 +86,132 @@ void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
     // must create XAML element on main UI thread
     m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
     {
-        if (m_inputFlag == EditBox::InputFlag::PASSWORD)
+        auto item = findXamlElement(m_panel.Get(), "cocos2d_editbox");
+        if (item != nullptr)
         {
-            m_control = CreatePasswordBox(m_maxLength);
-        }
-        else
-        {
-            m_control = CreateTextBox(m_maxLength);
-        }
+            Controls::Button^ button = dynamic_cast<Controls::Button^>(item);
+            if (button)
+            {
+                m_flyout = dynamic_cast<Flyout^>(button->Flyout);
+                if (m_flyout)
+                {
+                    if (m_inputFlag == EditBox::InputFlag::PASSWORD)
+                    {
+                        SetupPasswordBox();
+                    }
+                    else
+                    {
+                        SetupTextBox();
+                    }
 
-        if (m_control)
-        {
-            //m_control->Margin = Thickness(0, 0, 220, 0);
-            m_control->Height = 72.0;
-            m_control->TabIndex = 0;
-            m_control->VerticalAlignment = VerticalAlignment::Top;
-            m_control->Focus(FocusState::Programmatic);
-            m_control->Loaded += ref new RoutedEventHandler(this, &EditBoxWinRT::OnLoaded);
-            m_panel.Get()->Children->Append(m_control);
+                    auto doneButton = findXamlElement(m_flyout->Content, "cocos2d_editbox_done");
+                    if (doneButton != nullptr)
+                    {
+                        m_doneButton = dynamic_cast<Controls::Button^>(doneButton);
+                        m_doneToken = m_doneButton->Click += ref new RoutedEventHandler(this, &EditBoxWinRT::Done);
+                    }
+
+                    auto cancelButton = findXamlElement(m_flyout->Content, "cocos2d_editbox_cancel");
+                    if (cancelButton != nullptr)
+                    {
+                        m_cancelButton = dynamic_cast<Controls::Button^>(cancelButton);
+                        m_cancelToken = m_cancelButton->Click += ref new RoutedEventHandler(this, &EditBoxWinRT::Cancel);
+                    }
+                }
+            }
+
+            if (m_flyout)
+            {
+                m_closedToken = m_flyout->Closed += ref new EventHandler<Platform::Object^>(this, &EditBoxWinRT::Closed);
+                m_flyout->ShowAt(m_panel.Get());
+            }
         }
-
-        auto inputPane = InputPane::GetForCurrentView();
-        m_hideKeyboardToken = inputPane->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &EditBoxWinRT::HideKeyboard);
-
-        //CreateButtons();
     }));
 }
 
-Control^ EditBoxWinRT::CreateTextBox(int maxLength)
+void EditBoxWinRT::Closed(Platform::Object^ sender, Platform::Object^ e)
 {
-    if (m_textBox == nullptr)
+    RemoveControls();
+}
+
+void EditBoxWinRT::Done(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    QueueText();
+    RemoveControls();
+}
+
+void EditBoxWinRT::Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    RemoveControls();
+}
+
+void EditBoxWinRT::RemoveControls()
+{
+    if (m_dispatcher.Get() && m_panel.Get())
     {
-        auto box = ref new TextBox();
-        box->MaxLength = maxLength < 0 ? 0 : maxLength;
-        SetInputScope(box, m_inputMode);
-        box->PlaceholderText = m_strPlaceholder;
-        if (m_strText->Length() > 0)
+        // run on main UI thread
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
         {
-            box->Text = m_strText;
-        }
-
-        box->AddHandler(UIElement::KeyDownEvent, ref new KeyEventHandler(this, &EditBoxWinRT::OnKeyPressed), true);
-        box->TextChanged += ref new TextChangedEventHandler(this, &EditBoxWinRT::OnTextChanged);
-        box->LostFocus += ref new RoutedEventHandler(this, &EditBoxWinRT::OnLostFocus);
-        box->GotFocus += ref new RoutedEventHandler(this, &EditBoxWinRT::OnGotFocus);
-
-        m_textBox = box;
+            m_flyout->Closed -= m_closedToken;
+            m_doneButton->Click -= m_doneToken;
+            m_cancelButton->Click -= m_cancelToken;
+            m_doneButton = nullptr;
+            m_cancelButton = nullptr;
+            m_textBox = nullptr;
+            m_passwordBox = nullptr;
+            m_flyout->Hide();
+            m_flyout = nullptr;
+        }));
     }
-
-    return m_textBox;
 }
 
-Control^ EditBoxWinRT::CreatePasswordBox(int maxLength)
+void EditBoxWinRT::RemoveTextBox()
 {
-    if (m_passwordBox == nullptr)
+    auto g = findXamlElement(m_flyout->Content, "cocos2d_editbox_grid");
+    auto grid = dynamic_cast<Grid^>(g);
+    auto box = findXamlElement(m_flyout->Content, "cocos2d_editbox_textbox");
+
+    if (box)
     {
-        PasswordBox^ box = ref new PasswordBox();
-        box->MaxLength = maxLength < 0 ? 0 : maxLength;
-        box->Password = m_strText;
-        box->GotFocus += ref new RoutedEventHandler(this, &EditBoxWinRT::OnGotFocusPassword);
-        box->AddHandler(UIElement::KeyDownEvent, ref new KeyEventHandler(this, &EditBoxWinRT::OnKeyPressed), true);
-        m_passwordBox = box;
+        removeXamlElement(grid, box);
     }
-
-    return m_passwordBox;
 }
 
-void EditBoxWinRT::CreateButtons()
+
+
+void EditBoxWinRT::SetupTextBox()
 {
-    m_done = CreateButton(L"Done");
-    m_cancel = CreateButton(L"Cancel");
+    RemoveTextBox();
+
+    m_textBox = ref new TextBox;
+    m_textBox->Text = m_strText;
+    m_textBox->Name = "cocos2d_editbox_textbox";
+    m_textBox->MinWidth = 200;
+    m_textBox->PlaceholderText = m_strPlaceholder;
+    m_textBox->Select(m_textBox->Text->Length(), 0);
+    m_textBox->MaxLength = m_maxLength < 0 ? 0 : m_maxLength;
+    SetInputScope(m_textBox, m_inputMode);
+    auto g = findXamlElement(m_flyout->Content, "cocos2d_editbox_grid");
+    auto grid = dynamic_cast<Grid^>(g);
+    grid->Children->InsertAt(0, m_textBox);
 }
 
-Controls::Button^ EditBoxWinRT::CreateButton(Platform::String^ title)
+void EditBoxWinRT::SetupPasswordBox()
 {
-    auto button = ref new Controls::Button();
-    button->Margin = Thickness(20, 0, 120, 0);
-    button->Height = 72.0;
-    button->Width = 108;
-    button->Content = title;
-    button->VerticalAlignment = VerticalAlignment::Top;
-    button->HorizontalAlignment = HorizontalAlignment::Right;
-    auto r = Windows::UI::Xaml::Application::Current->Resources;
-    auto key = ref new Platform::String(L"PhoneChromeBrush");
-    auto brush = (Windows::UI::Xaml::Media::Brush^)r->Lookup(key);
-    button->Background = brush;
-    m_panel.Get()->Children->Append(button);
-    return button;
+    RemoveTextBox();
+
+    m_passwordBox = ref new PasswordBox();
+    m_passwordBox->Password = m_strText;
+    m_passwordBox->MinWidth = 200;
+    m_passwordBox->Name = "cocos2d_editbox_textbox";
+    m_passwordBox->SelectAll();
+    m_passwordBox->PlaceholderText = m_strPlaceholder;
+    m_passwordBox->MaxLength = m_maxLength < 0 ? 0 : m_maxLength;
+    auto g = findXamlElement(m_flyout->Content, "cocos2d_editbox_grid");
+    auto grid = dynamic_cast<Grid^>(g);
+    grid->Children->InsertAt(0, m_passwordBox);
 }
+
 
 
 void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
@@ -215,54 +248,12 @@ void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
         break;
     }
 
+    box->InputScope = nullptr;
     inputScope->Names->Append(name);
     box->InputScope = inputScope;
 }
 
-void EditBoxWinRT::RemoveControl(Control^ control)
-{
-    if (control != nullptr)
-    {
-        unsigned int index;
-        if (m_panel->Children->IndexOf(control, &index))
-        {
-            m_panel->Children->RemoveAt(index);
-        }
-    }
-}
 
-void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
-{
-    RemoveControls();
-}
-
-
-void EditBoxWinRT::RemoveControls()
-{
-    if (m_dispatcher.Get() && m_panel.Get())
-    {
-        // run on main UI thread
-        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-        {
-            auto inputPane = InputPane::GetForCurrentView();
-            inputPane->Hiding -= m_hideKeyboardToken;
-            RemoveControl(m_control);
-            m_textBox = nullptr;
-            m_passwordBox = nullptr;
-            m_control = nullptr;
-        }));
-    }
-}
-
-void EditBoxWinRT::OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args)
-{
-    m_control->Focus(FocusState::Programmatic);
-}
-
-void EditBoxWinRT::OnGotFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args)
-{
-    m_textBox->Select(m_textBox->Text->Length(), 0);
-}
 
 void EditBoxWinRT::OnGotFocusPassword(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args)
 {
@@ -270,40 +261,15 @@ void EditBoxWinRT::OnGotFocusPassword(Platform::Object^ sender, Windows::UI::Xam
     m_passwordBox->SelectAll();
 }
 
-void EditBoxWinRT::OnLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args)
-{
 
-}
-
-void EditBoxWinRT::OnKeyPressed(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args)
-{
-    switch (args->Key)
-    {
-     case VirtualKey::Enter:
-         QueueText();
-         RemoveControls();
-         args->Handled = true;
-        break;
-     case VirtualKey::Escape:
-         RemoveControls();
-         args->Handled = true;
-         break;
-    default:
-        break;
-    }
-}
 
 void EditBoxWinRT::QueueText()
 {
-    Platform::String^ text = m_inputFlag == EditBox::InputFlag::PASSWORD ? m_passwordBox->Password : m_textBox->Text;
-    std::shared_ptr<cocos2d::InputEvent> e(new UIEditBoxEvent(this, text, m_receiveHandler));
+    m_strText = m_inputFlag == EditBox::InputFlag::PASSWORD ? m_passwordBox->Password : m_textBox->Text;
+    std::shared_ptr<cocos2d::InputEvent> e(new UIEditBoxEvent(this, m_strText, m_receiveHandler));
     cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
 }
 
-void EditBoxWinRT::OnTextChanged(Platform::Object^ sender, TextChangedEventArgs^ args)
-{
-    m_strText = m_textBox->Text;
-}
 
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
