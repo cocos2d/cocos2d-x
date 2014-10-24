@@ -387,8 +387,13 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             log("WARNING: can't find letter definition in font file for letter: %c", c);
             continue;
         }
-
-        nextFontPositionX += charAdvance + kernings[i] + theLabel->_additionalKerning;
+        
+        nextFontPositionX += charAdvance + kernings[i];
+        
+        // only apply kerning shift if string contains more than 1 character
+        if (stringLen > 1) {
+            nextFontPositionX += theLabel->_additionalKerning;
+        }
         
         if (longestLine < nextFontPositionX)
         {
