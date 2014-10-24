@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <ppltasks.h>
 #include <sstream>
 
-#ifdef CC_PLATFORM_WINRT
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 #endif
@@ -158,7 +158,7 @@ std::string CC_DLL getDeviceIPAddresses()
     return result.str();
 }
 
-#ifdef CC_PLATFORM_WINRT
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name)
 {
     if (parent == nullptr || name == nullptr || name->Length() == 0)

@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
 std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
-#ifdef CC_PLATFORM_WINRT
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name);
 bool removeXamlElement(Platform::Object^ parent, Platform::Object^ element);
 bool replaceXamlElement(Platform::Object^ parent, Platform::Object^ add, Platform::Object^ remove);
