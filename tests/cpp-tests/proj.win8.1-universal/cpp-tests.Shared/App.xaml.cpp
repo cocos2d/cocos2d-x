@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿#include "App.xaml.h"
 #include "OpenGLESPage.xaml.h"
 
 using namespace cocos2d;

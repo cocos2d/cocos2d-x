@@ -29,10 +29,4 @@
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="App.xaml.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="App.xaml.h" />
-  </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include "OpenGLES.h"
 #include "OpenGLESPage.g.h"
 #include <memory>
 

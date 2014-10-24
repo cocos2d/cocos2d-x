@@ -17,8 +17,10 @@
 */
 #pragma once
 
-#include "pch.h"
 #include <agile.h>
+
+#include "cocos2d.h"
+
 
 class AppDelegate;
 

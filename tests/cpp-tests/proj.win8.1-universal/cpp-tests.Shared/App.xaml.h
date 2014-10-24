@@ -13,7 +13,7 @@ namespace cocos2d
         virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e) override;
 
     private:
-        cocos2d::OpenGLESPage^ mPage;
+        OpenGLESPage^ mPage;
         OpenGLES mOpenGLES;
     };
 }
