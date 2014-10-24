@@ -390,15 +390,13 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         
         nextFontPositionX += charAdvance + kernings[i];
         
-        // only apply kerning shift if string contains more than 1 character
-        if (stringLen > 1) {
-            nextFontPositionX += theLabel->_additionalKerning;
-        }
-        
         if (longestLine < nextFontPositionX)
         {
             longestLine = nextFontPositionX;
         }
+        
+        // check longest line before adding additional kerning
+        nextFontPositionX += theLabel->_additionalKerning;
     }
     
     float lastCharWidth = tempDefinition.width * contentScaleFactor;
