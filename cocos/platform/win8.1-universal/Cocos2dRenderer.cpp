@@ -16,7 +16,6 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "pch.h"
 #include "Cocos2dRenderer.h"
 #include "AppDelegate.h"
 #include "CCGLViewImpl-winrt.h"

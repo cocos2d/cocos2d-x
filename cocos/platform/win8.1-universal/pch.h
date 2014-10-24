@@ -11,6 +11,6 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
-#include "App.xaml.h"
+//#include "App.xaml.h"
 
 
