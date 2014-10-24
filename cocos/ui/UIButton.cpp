@@ -194,16 +194,7 @@ void Button::ignoreContentAdaptWithSize(bool ignore)
 {
     if (_unifySize)
     {
-        if (_scale9Enabled)
-        {
-            ProtectedNode::setContentSize(_customSize);
-        }
-        else
-        {
-            Size s = getVirtualRendererSize();
-            ProtectedNode::setContentSize(s);
-        }
-        onSizeChanged();
+        this->updateContentSize();
         return;
     }
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
@@ -249,7 +240,17 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     updateFlippedY();
     this->updateChildrenDisplayedRGBA();
     
-    updateContentSizeWithTextureSize(_normalTextureSize);
+    if (_unifySize )
+    {
+        if (!_scale9Enabled)
+        {
+            updateContentSizeWithTextureSize(this->getNormalSize());
+        }
+    }
+    else
+    {
+        updateContentSizeWithTextureSize(_normalTextureSize);
+    }
     _normalTextureLoaded = true;
     _normalTextureAdaptDirty = true;
 }
@@ -532,9 +533,23 @@ void Button::updateTitleLocation()
 
 void Button::updateContentSize()
 {
-  if (_ignoreSize) {
-      this->setContentSize(getVirtualRendererSize());
-  }
+    if (_unifySize)
+    {
+        if (_scale9Enabled)
+        {
+            ProtectedNode::setContentSize(_customSize);
+        }
+        else
+        {
+            Size s = getNormalSize();
+            ProtectedNode::setContentSize(s);
+        }
+        onSizeChanged();
+        return;
+    }
+    if (_ignoreSize) {
+        this->setContentSize(getVirtualRendererSize());
+    }
 }
 
 void Button::onSizeChanged()
@@ -596,11 +611,8 @@ Node* Button::getVirtualRenderer()
 
 void Button::normalTextureScaleChangedWithSize()
 {
-    if (_unifySize)
-    {
-        _buttonNormalRenderer->setPreferredSize(_contentSize);
-    }
-    else if (_ignoreSize)
+
+    if (_ignoreSize && !_unifySize)
     {
         if (!_scale9Enabled)
         {
@@ -638,11 +650,8 @@ void Button::normalTextureScaleChangedWithSize()
 
 void Button::pressedTextureScaleChangedWithSize()
 {
-    if (_unifySize)
-    {
-        _buttonClickedRenderer->setPreferredSize(_contentSize);
-    }
-    else if (_ignoreSize)
+
+    if (_ignoreSize && !_unifySize)
     {
         if (!_scale9Enabled)
         {
@@ -679,11 +688,8 @@ void Button::pressedTextureScaleChangedWithSize()
 
 void Button::disabledTextureScaleChangedWithSize()
 {
-    if (_unifySize)
-    {
-        _buttonDisableRenderer->setPreferredSize(_contentSize);
-    }
-    else if (_ignoreSize)
+
+    if (_ignoreSize && !_unifySize)
     {
         if (!_scale9Enabled)
         {
@@ -784,9 +790,11 @@ void Button::setTitleFontName(const std::string& fontName)
         {
             _titleRenderer->requestSystemFontRefresh();
         }
+        _titleRenderer->setSystemFontSize(_fontSize);
         _type = FontType::SYSTEM;
     }
     _fontName = fontName;
+	this->updateContentSize();
 }
     
 Label* Button::getTitleRenderer()const
@@ -829,6 +837,24 @@ void Button::copySpecialProperties(Widget *widget)
         setPressedActionEnabled(button->_pressedActionEnabled);
         setZoomScale(button->_zoomScale);
     }
+	
+}
+Size Button::getNormalSize()
+{
+    Size titleSize;
+    if (_titleRenderer != nullptr)
+    {
+        titleSize = _titleRenderer->getContentSize();
+    }
+    Size imageSize;
+    if (_buttonNormalRenderer != nullptr)
+    {
+        imageSize = _buttonNormalRenderer->getContentSize();
+    }
+    float width = titleSize.width > imageSize.width ? titleSize.width : imageSize.width;
+    float height = titleSize.height > imageSize.height ? titleSize.height : imageSize.height;
+
+    return Size(width,height);
 }
 
 }
