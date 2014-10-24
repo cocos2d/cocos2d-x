@@ -152,6 +152,7 @@ void EditBoxWinRT::Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEve
 
 void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
 {
+    // we don't want to hide the flyout when the user hide the keyboard
     //HideFlyout();
 }
 
