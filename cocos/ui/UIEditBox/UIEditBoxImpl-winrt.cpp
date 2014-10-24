@@ -46,6 +46,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::Foundation;
+using namespace Windows::UI::ViewManagement;
 
 NS_CC_BEGIN
 
@@ -86,6 +87,7 @@ void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
     // must create XAML element on main UI thread
     m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
     {
+        critical_section::scoped_lock lock(m_criticalSection);
         auto item = findXamlElement(m_panel.Get(), "cocos2d_editbox");
         if (item != nullptr)
         {
@@ -122,6 +124,9 @@ void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
 
             if (m_flyout)
             {
+                auto inputPane = InputPane::GetForCurrentView();
+                m_hideKeyboardToken = inputPane->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &EditBoxWinRT::HideKeyboard);
+
                 m_closedToken = m_flyout->Closed += ref new EventHandler<Platform::Object^>(this, &EditBoxWinRT::Closed);
                 m_flyout->ShowAt(m_panel.Get());
             }
@@ -145,6 +150,11 @@ void EditBoxWinRT::Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEve
     RemoveControls();
 }
 
+void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
+{
+    RemoveControls();
+}
+
 void EditBoxWinRT::RemoveControls()
 {
     if (m_dispatcher.Get() && m_panel.Get())
@@ -152,15 +162,32 @@ void EditBoxWinRT::RemoveControls()
         // run on main UI thread
         m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
         {
-            m_flyout->Closed -= m_closedToken;
-            m_doneButton->Click -= m_doneToken;
-            m_cancelButton->Click -= m_cancelToken;
-            m_doneButton = nullptr;
-            m_cancelButton = nullptr;
+            critical_section::scoped_lock lock(m_criticalSection);
+
+            if (m_doneButton != nullptr)
+            {
+                m_doneButton->Click -= m_doneToken;
+                m_doneButton = nullptr;
+            }
+ 
+            if (m_cancelButton != nullptr)
+            {
+                m_cancelButton->Click -= m_cancelToken;
+                m_cancelButton = nullptr;
+            }
+
             m_textBox = nullptr;
             m_passwordBox = nullptr;
-            m_flyout->Hide();
-            m_flyout = nullptr;
+
+            if (m_flyout != nullptr)
+            {
+                m_flyout->Closed -= m_closedToken;
+                m_flyout->Hide();
+                m_flyout = nullptr;
+            }
+
+            auto inputPane = InputPane::GetForCurrentView();
+            inputPane->Hiding -= m_hideKeyboardToken;
         }));
     }
 }
@@ -177,12 +204,9 @@ void EditBoxWinRT::RemoveTextBox()
     }
 }
 
-
-
 void EditBoxWinRT::SetupTextBox()
 {
     RemoveTextBox();
-
     m_textBox = ref new TextBox;
     m_textBox->Text = m_strText;
     m_textBox->Name = "cocos2d_editbox_textbox";
@@ -199,7 +223,6 @@ void EditBoxWinRT::SetupTextBox()
 void EditBoxWinRT::SetupPasswordBox()
 {
     RemoveTextBox();
-
     m_passwordBox = ref new PasswordBox();
     m_passwordBox->Password = m_strText;
     m_passwordBox->MinWidth = 200;
@@ -252,16 +275,6 @@ void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
     inputScope->Names->Append(name);
     box->InputScope = inputScope;
 }
-
-
-
-void EditBoxWinRT::OnGotFocusPassword(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args)
-{
-    m_passwordBox->Password = m_strText;
-    m_passwordBox->SelectAll();
-}
-
-
 
 void EditBoxWinRT::QueueText()
 {

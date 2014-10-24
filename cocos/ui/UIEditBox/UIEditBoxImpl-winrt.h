@@ -58,9 +58,7 @@ namespace ui {
         void Done(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void Closed(Platform::Object^ sender, Platform::Object^ e);
-
-
-        void OnGotFocusPassword(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);
+        void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
 
         Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
         Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
@@ -75,14 +73,15 @@ namespace ui {
         Windows::Foundation::EventRegistrationToken m_doneToken;
         Windows::Foundation::EventRegistrationToken m_cancelToken;
         Windows::Foundation::EventRegistrationToken m_closedToken;
+        Windows::Foundation::EventRegistrationToken m_hideKeyboardToken;
 
+        Concurrency::critical_section m_criticalSection;
 
         Platform::String^ m_strText;
         Platform::String^ m_strPlaceholder;
         EditBox::InputMode m_inputMode;
         EditBox::InputFlag m_inputFlag;
         int m_maxLength;
-
     };
 
     class CC_GUI_DLL UIEditBoxImplWinrt : public EditBoxImpl
