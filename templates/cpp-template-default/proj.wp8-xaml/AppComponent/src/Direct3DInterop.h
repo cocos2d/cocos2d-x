@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include <DrawingSurfaceNative.h>
 
 
-namespace PhoneDirect3DXamlAppComponent
+namespace cocos2d
 {
 
 public delegate void RequestAdditionalFrameHandler();

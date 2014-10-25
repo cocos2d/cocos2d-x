@@ -35,9 +35,8 @@ using namespace Windows::Phone::Graphics::Interop;
 using namespace Windows::Phone::Input::Interop;
 using namespace Windows::Graphics::Display;
 using namespace DirectX;
-using namespace PhoneDirect3DXamlAppComponent;
 
-namespace PhoneDirect3DXamlAppComponent
+namespace cocos2d
 {
 
 Direct3DInterop::Direct3DInterop(Windows::Graphics::Display::DisplayOrientations orientation) 

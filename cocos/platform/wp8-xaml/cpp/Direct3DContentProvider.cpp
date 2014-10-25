@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "Direct3DContentProvider.h"
 #include "Direct3DInterop.h"
 
-using namespace PhoneDirect3DXamlAppComponent;
+using namespace cocos2d;
 
 Direct3DContentProvider::Direct3DContentProvider(Direct3DInterop^ controller) :
 	m_controller(controller)
