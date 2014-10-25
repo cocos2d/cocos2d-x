@@ -450,8 +450,16 @@ void Button::onPressStateChangedToNormal()
             _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
             
             _titleRenderer->stopAllActions();
-            _titleRenderer->setScaleX(_normalTextureScaleXInSize);
-            _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+            if (_unifySize)
+            {
+                _titleRenderer->setScaleX(1.0f);
+                _titleRenderer->setScaleY(1.0f);
+            }
+            else
+            {
+                _titleRenderer->setScaleX(_normalTextureScaleXInSize);
+                _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+            }
         }
     }
 }
@@ -492,8 +500,16 @@ void Button::onPressStateChangedToPressed()
             _buttonNormalRenderer->setScale(_normalTextureScaleXInSize +_zoomScale, _normalTextureScaleYInSize + _zoomScale);
             
             _titleRenderer->stopAllActions();
-            _titleRenderer->setScaleX(_normalTextureScaleXInSize + _zoomScale);
-            _titleRenderer->setScaleY(_normalTextureScaleYInSize + _zoomScale);
+            if (_unifySize)
+            {
+                _titleRenderer->setScaleX(1.0f + _zoomScale);
+                _titleRenderer->setScaleY(1.0f + _zoomScale);
+            }
+            else
+            {
+                _titleRenderer->setScaleX(_normalTextureScaleXInSize + _zoomScale);
+                _titleRenderer->setScaleY(_normalTextureScaleYInSize + _zoomScale);
+            }
         }
     }
 }
@@ -582,6 +598,10 @@ void Button::adaptRenderers()
 
 Size Button::getVirtualRendererSize() const
 {
+    if (_unifySize)
+    {
+        return this->getNormalSize();
+    }
     Size titleSize = _titleRenderer->getContentSize();
     if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0) {
         return titleSize;
@@ -839,7 +859,7 @@ void Button::copySpecialProperties(Widget *widget)
     }
 	
 }
-Size Button::getNormalSize()
+Size Button::getNormalSize() const
 {
     Size titleSize;
     if (_titleRenderer != nullptr)
