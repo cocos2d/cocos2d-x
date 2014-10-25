@@ -1,4 +1,5 @@
 cocos2d-x-3.3 ??
+    [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
     [FIX]           Label: label shifting when outline feature enabled
     [FIX]           Sprite3D: did not create attached sprite from cache
 
