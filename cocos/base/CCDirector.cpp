@@ -155,9 +155,8 @@ bool Director::init(void)
 
     _renderer = new (std::nothrow) Renderer;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _console = new (std::nothrow) Console;
-#endif
+
     return true;
 }
 
@@ -181,9 +180,8 @@ Director::~Director(void)
 
     delete _renderer;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     delete _console;
-#endif
+
 
     CC_SAFE_RELEASE(_eventDispatcher);
     

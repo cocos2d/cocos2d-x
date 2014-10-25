@@ -4,7 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{be3a1791-5bce-4cea-92cd-0e2d86dde27a}</ItemsProjectGuid>
-    <ItemsRootNamespace>cpp_tests</ItemsRootNamespace>
+    <ItemsRootNamespace>cocos2d</ItemsRootNamespace>
     <ItemsProjectName>cpp-tests.Shared</ItemsProjectName>
     <SharedGUID>f6ae64be-127a-4f7d-ad15-53a0fddb7f41</SharedGUID>
   </PropertyGroup>
@@ -14,6 +14,17 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLES.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsEaseTest\ActionsEaseTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsProgressTest\ActionsProgressTest.cpp" />
@@ -194,7 +205,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UserDefaultTest\UserDefaultTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\VisibleRect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)OpenGLES.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp">
+      <DependentUpon>$(MSBuildThisFileDirectory)App.xaml</DependentUpon>
+    </ClCompile>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLES.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml.h">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsEaseTest\ActionsEaseTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsProgressTest\ActionsProgressTest.h" />
@@ -443,30 +462,26 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UserDefaultTest\UserDefaultTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\VisibleRect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)OpenGLES.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HelloTriangleRenderer.h" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)HelloTriangleRenderer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)App.xaml.h">
       <DependentUpon>$(MSBuildThisFileDirectory)App.xaml</DependentUpon>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp">
-      <DependentUpon>$(MSBuildThisFileDirectory)App.xaml</DependentUpon>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_CustomResource Include="$(MSBuildThisFileDirectory)..\..\Resources\**\*">
+      <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <DeploymentContent>true</DeploymentContent>
+    </_CustomResource>
+  </ItemGroup>
+  <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
+    <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />
+    <ItemGroup>
+      <None Include="@(_CustomResource)" />
+    </ItemGroup>
+  </Target>
 </Project>
