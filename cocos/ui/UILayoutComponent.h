@@ -68,7 +68,7 @@ NS_CC_BEGIN
             const Vec2& getOwnerPosition()const;
             void setOwnerPosition(const Vec2& point); 
 
-            const Vec2& getOwnerContentSize()const;
+            Vec2 getOwnerContentSize()const;
             void setOwnerContentSize(const Vec2& size);
 
             const Vec2& getPercentContentSize()const;

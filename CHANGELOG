@@ -1,3 +1,8 @@
+cocos2d-x-3.3 ??
+    [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
+    [FIX]           Label: label shifting when outline feature enabled
+    [FIX]           Sprite3D: did not create attached sprite from cache
+
 cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           3d: added light support: direction light, point light, spot light and ambient light
     [NEW]           Added ClippingRectangleNode
@@ -34,6 +39,7 @@ cocos2d-x-3.3-rc0  Oct.21 2014
     [FIX]           Node: unscheduleAllSelectors() deprecated in favor of unscheudleAllCallbacks()
     [FIX]           Node: crashed if remove/add child too quickly when using integrated physics
     [FIX]           TextFieldTTF: will get wrong characters if using Chinese input method on WP8
+    [FIX]           TextureCache: memory leak in reloadTexture()
     [FIX]           UI: Button: button remains gray when releasing it, this issue only happened if enable scale9 and only has one texture 
     [FIX]           UI: Button: when creating a button with a title only, button content size is not immediately updated
     [FIX]           UI: EditBox: setMaxLength is invalid on mac

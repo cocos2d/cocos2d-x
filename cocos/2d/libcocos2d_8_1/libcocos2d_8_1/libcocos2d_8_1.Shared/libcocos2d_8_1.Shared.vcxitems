@@ -115,7 +115,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\atitc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\base64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConfiguration.h" />
@@ -146,7 +145,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCGameController.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCLight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.h" />
@@ -328,6 +326,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_ntop_winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\InputEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\InputEventTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\Keyboard-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\sha1.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCBatchCommand.h" />
@@ -359,6 +358,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBoxImpl-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBoxImpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIHBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIHelper.h" />
@@ -397,6 +397,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimationCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCComponent.h" />
@@ -420,6 +421,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelTextFormatter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelTTF.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLight.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCMenu.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCMenuItem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCMotionStreak.h" />
@@ -532,7 +534,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\atitc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\base64.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConfiguration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConsole.cpp" />
@@ -559,13 +560,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCEventTouch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccFPSImages.c">
       <CompileAsWinRT>false</CompileAsWinRT>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCLight.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccRandom.cpp" />
@@ -709,6 +708,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_ntop_winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\InputEvent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\Keyboard-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
       <ForcedIncludeFiles>
@@ -742,7 +742,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBox.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBoxImpl-stub.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBoxImpl-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIHBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIImageView.cpp" />
@@ -780,6 +780,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimationCache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCComponent.cpp" />
@@ -803,6 +804,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelTextFormatter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelTTF.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLight.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCMenu.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCMenuItem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCMotionStreak.cpp" />
@@ -867,8 +869,13 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTextureColor_noMVP.vert" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTexture_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTexture_uColor.vert" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor-no-gl_PointSize.vert">
+      <FileType>Document</FileType>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.vert" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters" />
   </ItemGroup>
 </Project>

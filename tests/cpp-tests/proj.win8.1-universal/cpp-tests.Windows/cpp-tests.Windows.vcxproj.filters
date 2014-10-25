@@ -5,9 +5,6 @@
       <UniqueIdentifier>3744285b-cd16-4f7f-b639-92c82877e0e1</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <Filter Include="Binaries">
-      <Extensions>dll;</Extensions>
-    </Filter>
     <Image Include="Assets\Logo.png">
       <Filter>Assets</Filter>
     </Image>
@@ -22,18 +19,15 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="OpenGLESPage.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="OpenGLESPage.xaml.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="OpenGLESPage.xaml.h" />
-  </ItemGroup>
-  <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp-tests.Windows_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.xaml.h" />
   </ItemGroup>
 </Project>

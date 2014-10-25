@@ -266,7 +266,6 @@
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
-    <ClInclude Include="..\base\CCCamera.h" />
     <ClInclude Include="..\base\ccCArray.h" />
     <ClInclude Include="..\base\ccConfig.h" />
     <ClInclude Include="..\base\CCConfiguration.h" />
@@ -293,7 +292,6 @@
     <ClInclude Include="..\base\ccFPSImages.h" />
     <ClInclude Include="..\base\CCIMEDelegate.h" />
     <ClInclude Include="..\base\CCIMEDispatcher.h" />
-    <ClInclude Include="..\base\CCLight.h" />
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNS.h" />
@@ -542,6 +540,7 @@
     <ClInclude Include="CCAnimation.h" />
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
+    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCClippingRectangleNode.h" />
     <ClInclude Include="CCComponent.h" />
@@ -565,6 +564,7 @@
     <ClInclude Include="CCLabelTextFormatter.h" />
     <ClInclude Include="CCLabelTTF.h" />
     <ClInclude Include="CCLayer.h" />
+    <ClInclude Include="CCLight.h" />
     <ClInclude Include="CCMenu.h" />
     <ClInclude Include="CCMenuItem.h" />
     <ClInclude Include="CCMotionStreak.h" />
@@ -733,7 +733,6 @@
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
-    <ClCompile Include="..\base\CCCamera.cpp" />
     <ClCompile Include="..\base\ccCArray.cpp" />
     <ClCompile Include="..\base\CCConfiguration.cpp" />
     <ClCompile Include="..\base\CCConsole.cpp" />
@@ -782,7 +781,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\base\CCIMEDispatcher.cpp" />
-    <ClCompile Include="..\base\CCLight.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
     <ClCompile Include="..\base\ccRandom.cpp" />
@@ -1000,6 +998,7 @@
     <ClCompile Include="CCAnimation.cpp" />
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
+    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCClippingRectangleNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
@@ -1023,6 +1022,7 @@
     <ClCompile Include="CCLabelTextFormatter.cpp" />
     <ClCompile Include="CCLabelTTF.cpp" />
     <ClCompile Include="CCLayer.cpp" />
+    <ClCompile Include="CCLight.cpp" />
     <ClCompile Include="CCMenu.cpp" />
     <ClCompile Include="CCMenuItem.cpp" />
     <ClCompile Include="CCMotionStreak.cpp" />

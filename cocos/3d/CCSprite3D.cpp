@@ -31,8 +31,8 @@
 #include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
-#include "base/CCLight.h"
-#include "base/CCCamera.h"
+#include "2d/CCLight.h"
+#include "2d/CCCamera.h"
 #include "base/ccMacros.h"
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCFileUtils.h"
@@ -89,6 +89,14 @@ bool Sprite3D::loadFromCache(const std::string& path)
             if(it)
             {
                 createNode(it, this, *(spritedata->materialdatas), spritedata->nodedatas->nodes.size() == 1);
+            }
+        }
+        
+        for(const auto& it : spritedata->nodedatas->skeleton)
+        {
+            if(it)
+            {
+                createAttachSprite3DNode(it,*(spritedata->materialdatas));
             }
         }
         

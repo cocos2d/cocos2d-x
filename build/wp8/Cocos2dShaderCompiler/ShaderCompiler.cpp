@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCPrecompiledShaders.h"
 
 using namespace Concurrency;
-using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;

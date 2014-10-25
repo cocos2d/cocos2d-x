@@ -79,27 +79,27 @@ NS_CC_BEGIN
 
 int Device::getDPI()
 {
-	static int dpi = -1;
-	if (dpi == -1)
-	{
-		Display *dpy;
-	    char *displayname = NULL;
-	    int scr = 0; /* Screen number */
-	    dpy = XOpenDisplay (displayname);
-	    /*
-	     * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
-	     *
-	     *     dpi = N pixels / (M millimeters / (25.4 millimeters / 1 inch))
-	     *         = N pixels / (M inch / 25.4)
-	     *         = N * 25.4 pixels / M inch
-	     */
-	    double xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) / 
-	        ((double) DisplayWidthMM(dpy,scr)));
-	    dpi = (int) (xres + 0.5);
-	    //printf("dpi = %d\n", dpi);
-		XCloseDisplay (dpy);
-	}
-	return dpi;
+    static int dpi = -1;
+    if (dpi == -1)
+    {
+        Display *dpy;
+        char *displayname = NULL;
+        int scr = 0; /* Screen number */
+        dpy = XOpenDisplay (displayname);
+        /*
+         * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
+         *
+         *     dpi = N pixels / (M millimeters / (25.4 millimeters / 1 inch))
+         *         = N pixels / (M inch / 25.4)
+         *         = N * 25.4 pixels / M inch
+         */
+        double xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) / 
+            ((double) DisplayWidthMM(dpy,scr)));
+        dpi = (int) (xres + 0.5);
+        //printf("dpi = %d\n", dpi);
+        XCloseDisplay (dpy);
+    }
+    return dpi;
 }
 
 void Device::setAccelerometerEnabled(bool isEnabled)
@@ -115,25 +115,25 @@ void Device::setAccelerometerInterval(float interval)
 class BitmapDC
 {
 public:
-	BitmapDC() {
-		libError = FT_Init_FreeType( &library );
-		FcInit();
-		_data = NULL;
-		reset();
-	}
-
-	~BitmapDC() {
-		FT_Done_FreeType(library);
-		FcFini();
-		
+    BitmapDC() {
+        libError = FT_Init_FreeType( &library );
+        FcInit();
+        _data = NULL;
         reset();
-	}
+    }
 
-	void reset() {
-		iMaxLineWidth = 0;
-		iMaxLineHeight = 0;
-		textLines.clear();
-	}
+    ~BitmapDC() {
+        FT_Done_FreeType(library);
+        FcFini();
+        
+        reset();
+    }
+
+    void reset() {
+        iMaxLineWidth = 0;
+        iMaxLineHeight = 0;
+        textLines.clear();
+    }
 
     int utf8(char **p)
     {
@@ -171,268 +171,268 @@ public:
     }
 
     bool isBreakPoint(FT_UInt currentCharacter, FT_UInt previousCharacter) {
-    	if ( previousCharacter == '-' || previousCharacter == '/' || previousCharacter == '\\' ) {
-    	   	// we can insert a line break after one of these characters
-    	    return true;
-    	}
-    	return false;
+        if ( previousCharacter == '-' || previousCharacter == '/' || previousCharacter == '\\' ) {
+            // we can insert a line break after one of these characters
+            return true;
+        }
+        return false;
     }
 
-	bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
-		const char* pText = sText;
-		textLines.clear();
-		iMaxLineWidth = 0;
+    bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
+        const char* pText = sText;
+        textLines.clear();
+        iMaxLineWidth = 0;
 
-		FT_UInt unicode;
-		FT_UInt prevCharacter = 0;
-		FT_UInt glyphIndex = 0;
-		FT_UInt prevGlyphIndex = 0;
-		FT_Vector delta;
-		LineBreakLine currentLine;
+        FT_UInt unicode;
+        FT_UInt prevCharacter = 0;
+        FT_UInt glyphIndex = 0;
+        FT_UInt prevGlyphIndex = 0;
+        FT_Vector delta;
+        LineBreakLine currentLine;
 
-		int currentPaintPosition = 0;
-		int lastBreakIndex = -1;
-		bool hasKerning = FT_HAS_KERNING( face );
+        int currentPaintPosition = 0;
+        int lastBreakIndex = -1;
+        bool hasKerning = FT_HAS_KERNING( face );
         while ((unicode=utf8((char**)&pText))) {
             if (unicode == '\n') {
-				currentLine.calculateWidth();
-				iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
-				textLines.push_back(currentLine);
-				currentLine.reset();
-				prevGlyphIndex = 0;
-				prevCharacter = 0;
-				lastBreakIndex = -1;
-				currentPaintPosition = 0;
-				continue;
-			}
-
-            if ( isBreakPoint(unicode, prevCharacter) ) {
-            	lastBreakIndex = currentLine.glyphs.size() - 1;
+                currentLine.calculateWidth();
+                iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+                textLines.push_back(currentLine);
+                currentLine.reset();
+                prevGlyphIndex = 0;
+                prevCharacter = 0;
+                lastBreakIndex = -1;
+                currentPaintPosition = 0;
+                continue;
             }
 
-			glyphIndex = FT_Get_Char_Index(face, unicode);
-			if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT)) {
-				return false;
-			}
+            if ( isBreakPoint(unicode, prevCharacter) ) {
+                lastBreakIndex = currentLine.glyphs.size() - 1;
+            }
 
-			if (iswspace(unicode)) {
-				currentPaintPosition += face->glyph->metrics.horiAdvance >> 6;
-				prevGlyphIndex = glyphIndex;
-				prevCharacter = unicode;
-				lastBreakIndex = currentLine.glyphs.size();
-				continue;
-			}
+            glyphIndex = FT_Get_Char_Index(face, unicode);
+            if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT)) {
+                return false;
+            }
 
-			LineBreakGlyph glyph;
-			glyph.glyphIndex = glyphIndex;
-			glyph.glyphWidth = face->glyph->metrics.width >> 6;
-			glyph.bearingX = face->glyph->metrics.horiBearingX >> 6;
-			glyph.horizAdvance = face->glyph->metrics.horiAdvance >> 6;
-			glyph.kerning = 0;
+            if (iswspace(unicode)) {
+                currentPaintPosition += face->glyph->metrics.horiAdvance >> 6;
+                prevGlyphIndex = glyphIndex;
+                prevCharacter = unicode;
+                lastBreakIndex = currentLine.glyphs.size();
+                continue;
+            }
 
-			if (prevGlyphIndex != 0 && hasKerning) {
-				FT_Get_Kerning(face, prevGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-				glyph.kerning = delta.x >> 6;
-			}
+            LineBreakGlyph glyph;
+            glyph.glyphIndex = glyphIndex;
+            glyph.glyphWidth = face->glyph->metrics.width >> 6;
+            glyph.bearingX = face->glyph->metrics.horiBearingX >> 6;
+            glyph.horizAdvance = face->glyph->metrics.horiAdvance >> 6;
+            glyph.kerning = 0;
 
-			if (iMaxWidth > 0 && currentPaintPosition + glyph.bearingX + glyph.kerning + glyph.glyphWidth > iMaxWidth) {
+            if (prevGlyphIndex != 0 && hasKerning) {
+                FT_Get_Kerning(face, prevGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+                glyph.kerning = delta.x >> 6;
+            }
 
-				int glyphCount = currentLine.glyphs.size();
-				if ( lastBreakIndex >= 0 && lastBreakIndex < glyphCount && currentPaintPosition + glyph.bearingX + glyph.kerning + glyph.glyphWidth - currentLine.glyphs.at(lastBreakIndex).paintPosition < iMaxWidth ) {
-					// we insert a line break at our last break opportunity
-					std::vector<LineBreakGlyph> tempGlyphs;
-					std::vector<LineBreakGlyph>::iterator it = currentLine.glyphs.begin();
-					std::advance(it, lastBreakIndex);
-					tempGlyphs.insert(tempGlyphs.begin(), it, currentLine.glyphs.end());
-					currentLine.glyphs.erase(it, currentLine.glyphs.end());
-					currentLine.calculateWidth();
-					iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
-					textLines.push_back(currentLine);
-					currentLine.reset();
-					currentPaintPosition = 0;
-					for ( it = tempGlyphs.begin(); it != tempGlyphs.end(); it++ ) {
-						if ( currentLine.glyphs.empty() ) {
-							currentPaintPosition = -(*it).bearingX;
-							(*it).kerning = 0;
-						}
-						(*it).paintPosition = currentPaintPosition + (*it).bearingX + (*it).kerning;
-						currentLine.glyphs.push_back((*it));
-						currentPaintPosition += (*it).kerning + (*it).horizAdvance;
-					}
-				} else {
-					// the current word is too big to fit into one line, insert line break right here
-					currentPaintPosition = 0;
-					glyph.kerning = 0;
-					currentLine.calculateWidth();
-					iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
-					textLines.push_back(currentLine);
-					currentLine.reset();
-				}
+            if (iMaxWidth > 0 && currentPaintPosition + glyph.bearingX + glyph.kerning + glyph.glyphWidth > iMaxWidth) {
 
-				prevGlyphIndex = 0;
-				prevCharacter = 0;
-				lastBreakIndex = -1;
-			} else {
-				prevGlyphIndex = glyphIndex;
-				prevCharacter = unicode;
-			}
+                int glyphCount = currentLine.glyphs.size();
+                if ( lastBreakIndex >= 0 && lastBreakIndex < glyphCount && currentPaintPosition + glyph.bearingX + glyph.kerning + glyph.glyphWidth - currentLine.glyphs.at(lastBreakIndex).paintPosition < iMaxWidth ) {
+                    // we insert a line break at our last break opportunity
+                    std::vector<LineBreakGlyph> tempGlyphs;
+                    std::vector<LineBreakGlyph>::iterator it = currentLine.glyphs.begin();
+                    std::advance(it, lastBreakIndex);
+                    tempGlyphs.insert(tempGlyphs.begin(), it, currentLine.glyphs.end());
+                    currentLine.glyphs.erase(it, currentLine.glyphs.end());
+                    currentLine.calculateWidth();
+                    iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+                    textLines.push_back(currentLine);
+                    currentLine.reset();
+                    currentPaintPosition = 0;
+                    for ( it = tempGlyphs.begin(); it != tempGlyphs.end(); it++ ) {
+                        if ( currentLine.glyphs.empty() ) {
+                            currentPaintPosition = -(*it).bearingX;
+                            (*it).kerning = 0;
+                        }
+                        (*it).paintPosition = currentPaintPosition + (*it).bearingX + (*it).kerning;
+                        currentLine.glyphs.push_back((*it));
+                        currentPaintPosition += (*it).kerning + (*it).horizAdvance;
+                    }
+                } else {
+                    // the current word is too big to fit into one line, insert line break right here
+                    currentPaintPosition = 0;
+                    glyph.kerning = 0;
+                    currentLine.calculateWidth();
+                    iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+                    textLines.push_back(currentLine);
+                    currentLine.reset();
+                }
 
-			if ( currentLine.glyphs.empty() ) {
-				currentPaintPosition = -glyph.bearingX;
-			}
-			glyph.paintPosition = currentPaintPosition + glyph.bearingX + glyph.kerning;
-			currentLine.glyphs.push_back(glyph);
-			currentPaintPosition += glyph.kerning + glyph.horizAdvance;
-		}
+                prevGlyphIndex = 0;
+                prevCharacter = 0;
+                lastBreakIndex = -1;
+            } else {
+                prevGlyphIndex = glyphIndex;
+                prevCharacter = unicode;
+            }
 
-		if ( currentLine.glyphs.empty() == false ) {
-			currentLine.calculateWidth();
-			iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
-			textLines.push_back(currentLine);
-		}
-		return true;
-	}
+            if ( currentLine.glyphs.empty() ) {
+                currentPaintPosition = -glyph.bearingX;
+            }
+            glyph.paintPosition = currentPaintPosition + glyph.bearingX + glyph.kerning;
+            currentLine.glyphs.push_back(glyph);
+            currentPaintPosition += glyph.kerning + glyph.horizAdvance;
+        }
 
-	/**
-	 * compute the start pos of every line
-	 */
-	int computeLineStart(FT_Face face, Device::TextAlign eAlignMask, int line) {
-				int lineWidth = textLines.at(line).lineWidth;
-		if (eAlignMask == Device::TextAlign::CENTER || eAlignMask == Device::TextAlign::TOP || eAlignMask == Device::TextAlign::BOTTOM) {
-			return (iMaxLineWidth - lineWidth) / 2;
-		} else if (eAlignMask == Device::TextAlign::RIGHT || eAlignMask == Device::TextAlign::TOP_RIGHT || eAlignMask == Device::TextAlign::BOTTOM_RIGHT) {
-			return (iMaxLineWidth - lineWidth);
-		}
-
-		// left or other situation
-		return 0;
-	}
-
-	int computeLineStartY( FT_Face face, Device::TextAlign eAlignMask, int txtHeight, int borderHeight ){
-		int baseLinePos = ceilf(FT_MulFix( face->bbox.yMax, face->size->metrics.y_scale )/64.0f);
-		if (eAlignMask == Device::TextAlign::CENTER || eAlignMask == Device::TextAlign::LEFT || eAlignMask == Device::TextAlign::RIGHT) {
-			//vertical center
-			return (borderHeight - txtHeight) / 2 + baseLinePos;
-		} else if (eAlignMask == Device::TextAlign::BOTTOM_RIGHT || eAlignMask == Device::TextAlign::BOTTOM || eAlignMask == Device::TextAlign::BOTTOM_LEFT) {
-			//vertical bottom
-			return borderHeight - txtHeight + baseLinePos;
-		}
-
-		// top alignment
-		return baseLinePos;
-	}
-
-    std::string getFontFile(const char* family_name) {
-    	std::string fontPath = family_name;
-
-    	std::map<std::string, std::string>::iterator it = fontCache.find(family_name);
-    	if ( it != fontCache.end() ) {
-    		return it->second;
-    	}
-
-    	// check if the parameter is a font file shipped with the application
-    	std::string lowerCasePath = fontPath;
-    	std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
-    	if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-    		fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath.c_str());
-
-    		FILE *f = fopen(fontPath.c_str(), "r");
-    		if ( f ) {
-    			fclose(f);
-    			fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
-    			return fontPath;
-    		}
-    	}
-
-    	// use fontconfig to match the parameter against the fonts installed on the system
-    	FcPattern *pattern = FcPatternBuild (0, FC_FAMILY, FcTypeString, family_name, (char *) 0);
-    	FcConfigSubstitute(0, pattern, FcMatchPattern);
-    	FcDefaultSubstitute(pattern);
-
-    	FcResult result;
-    	FcPattern *font = FcFontMatch(0, pattern, &result);
-    	if ( font ) {
-    		FcChar8 *s = NULL;
-    		if ( FcPatternGetString(font, FC_FILE, 0, &s) == FcResultMatch ) {
-    			fontPath = (const char*)s;
-
-    			FcPatternDestroy(font);
-    			FcPatternDestroy(pattern);
-
-    			fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
-    			return fontPath;
-    		}
-    		FcPatternDestroy(font);
-    	}
-    	FcPatternDestroy(pattern);
-
-    	return family_name;
+        if ( currentLine.glyphs.empty() == false ) {
+            currentLine.calculateWidth();
+            iMaxLineWidth = max(iMaxLineWidth, currentLine.lineWidth);
+            textLines.push_back(currentLine);
+        }
+        return true;
     }
 
-	bool getBitmap(const char *text, int nWidth, int nHeight, Device::TextAlign eAlignMask, const char * pFontName, float fontSize) {
-		if (libError) {
-			return false;
-		}
+    /**
+     * compute the start pos of every line
+     */
+    int computeLineStart(FT_Face face, Device::TextAlign eAlignMask, int line) {
+                int lineWidth = textLines.at(line).lineWidth;
+        if (eAlignMask == Device::TextAlign::CENTER || eAlignMask == Device::TextAlign::TOP || eAlignMask == Device::TextAlign::BOTTOM) {
+            return (iMaxLineWidth - lineWidth) / 2;
+        } else if (eAlignMask == Device::TextAlign::RIGHT || eAlignMask == Device::TextAlign::TOP_RIGHT || eAlignMask == Device::TextAlign::BOTTOM_RIGHT) {
+            return (iMaxLineWidth - lineWidth);
+        }
 
-		FT_Face face;
-		std::string fontfile = getFontFile(pFontName);
-		if ( FT_New_Face(library, fontfile.c_str(), 0, &face) ) {
-			//no valid font found use default
-			if ( FT_New_Face(library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face) ) {
-				return false;
-			}
-		}
+        // left or other situation
+        return 0;
+    }
 
-		//select utf8 charmap
-		if ( FT_Select_Charmap(face, FT_ENCODING_UNICODE) ) {
-			FT_Done_Face(face);
-			return false;
-		}
+    int computeLineStartY( FT_Face face, Device::TextAlign eAlignMask, int txtHeight, int borderHeight ){
+        int baseLinePos = ceilf(FT_MulFix( face->bbox.yMax, face->size->metrics.y_scale )/64.0f);
+        if (eAlignMask == Device::TextAlign::CENTER || eAlignMask == Device::TextAlign::LEFT || eAlignMask == Device::TextAlign::RIGHT) {
+            //vertical center
+            return (borderHeight - txtHeight) / 2 + baseLinePos;
+        } else if (eAlignMask == Device::TextAlign::BOTTOM_RIGHT || eAlignMask == Device::TextAlign::BOTTOM || eAlignMask == Device::TextAlign::BOTTOM_LEFT) {
+            //vertical bottom
+            return borderHeight - txtHeight + baseLinePos;
+        }
 
-		if ( FT_Set_Pixel_Sizes(face, fontSize, fontSize) ) {
-			FT_Done_Face(face);
-			return false;
-		}
+        // top alignment
+        return baseLinePos;
+    }
 
-		if ( divideString(face, text, nWidth, nHeight) == false ) {
-			FT_Done_Face(face);
-			return false;
-		}
+    std::string getFontFile(const char* family_name) {
+        std::string fontPath = family_name;
 
-		//compute the final line width
-		iMaxLineWidth = MAX(iMaxLineWidth, nWidth);
+        std::map<std::string, std::string>::iterator it = fontCache.find(family_name);
+        if ( it != fontCache.end() ) {
+            return it->second;
+        }
 
-		//compute the final line height
-		iMaxLineHeight = ceilf(FT_MulFix( face->bbox.yMax - face->bbox.yMin, face->size->metrics.y_scale )/64.0f);
-		int lineHeight = face->size->metrics.height>>6;
-		if ( textLines.size() > 0 ) {
-			iMaxLineHeight += (lineHeight * (textLines.size() -1));
-		}
-		int txtHeight = iMaxLineHeight;
-		iMaxLineHeight = MAX(iMaxLineHeight, nHeight);
+        // check if the parameter is a font file shipped with the application
+        std::string lowerCasePath = fontPath;
+        std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
+        if ( lowerCasePath.find(".ttf") != std::string::npos ) {
+            fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath.c_str());
 
-		_data = (unsigned char*)malloc(sizeof(unsigned char) * (iMaxLineWidth * iMaxLineHeight * 4));
-		memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
+            FILE *f = fopen(fontPath.c_str(), "r");
+            if ( f ) {
+                fclose(f);
+                fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
+                return fontPath;
+            }
+        }
 
-		int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
+        // use fontconfig to match the parameter against the fonts installed on the system
+        FcPattern *pattern = FcPatternBuild (0, FC_FAMILY, FcTypeString, family_name, (char *) 0);
+        FcConfigSubstitute(0, pattern, FcMatchPattern);
+        FcDefaultSubstitute(pattern);
 
-		int lineCount = textLines.size();
-		for (int line = 0; line < lineCount; line++) {
-			int iCurXCursor = computeLineStart(face, eAlignMask, line);
+        FcResult result;
+        FcPattern *font = FcFontMatch(0, pattern, &result);
+        if ( font ) {
+            FcChar8 *s = NULL;
+            if ( FcPatternGetString(font, FC_FILE, 0, &s) == FcResultMatch ) {
+                fontPath = (const char*)s;
 
-			int glyphCount = textLines.at(line).glyphs.size();
-			for (int i = 0; i < glyphCount; i++) {
-				LineBreakGlyph glyph = textLines.at(line).glyphs.at(i);
+                FcPatternDestroy(font);
+                FcPatternDestroy(pattern);
 
-				if (FT_Load_Glyph(face, glyph.glyphIndex, FT_LOAD_RENDER)) {
-					continue;
-				}
+                fontCache.insert(std::pair<std::string, std::string>(family_name, fontPath));
+                return fontPath;
+            }
+            FcPatternDestroy(font);
+        }
+        FcPatternDestroy(pattern);
 
-				FT_Bitmap& bitmap = face->glyph->bitmap;
-				int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
-				int xoffset = iCurXCursor + glyph.paintPosition;
+        return family_name;
+    }
 
-				for (int y = 0; y < bitmap.rows; ++y) {
+    bool getBitmap(const char *text, const FontDefinition& textDefinition, Device::TextAlign eAlignMask) {
+        if (libError) {
+            return false;
+        }
+
+        FT_Face face;
+        std::string fontfile = getFontFile(textDefinition._fontName.c_str());
+        if ( FT_New_Face(library, fontfile.c_str(), 0, &face) ) {
+            //no valid font found use default
+            if ( FT_New_Face(library, "/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 0, &face) ) {
+                return false;
+            }
+        }
+
+        //select utf8 charmap
+        if ( FT_Select_Charmap(face, FT_ENCODING_UNICODE) ) {
+            FT_Done_Face(face);
+            return false;
+        }
+
+        if ( FT_Set_Pixel_Sizes(face, textDefinition._fontSize, textDefinition._fontSize) ) {
+            FT_Done_Face(face);
+            return false;
+        }
+
+        if ( divideString(face, text, textDefinition._dimensions.width, textDefinition._dimensions.height) == false ) {
+            FT_Done_Face(face);
+            return false;
+        }
+
+        //compute the final line width
+        iMaxLineWidth = MAX(iMaxLineWidth, textDefinition._dimensions.width);
+
+        //compute the final line height
+        iMaxLineHeight = ceilf(FT_MulFix( face->bbox.yMax - face->bbox.yMin, face->size->metrics.y_scale )/64.0f);
+        int lineHeight = face->size->metrics.height>>6;
+        if ( textLines.size() > 0 ) {
+            iMaxLineHeight += (lineHeight * (textLines.size() -1));
+        }
+        int txtHeight = iMaxLineHeight;
+        iMaxLineHeight = MAX(iMaxLineHeight, textDefinition._dimensions.height);
+
+        _data = (unsigned char*)malloc(sizeof(unsigned char) * (iMaxLineWidth * iMaxLineHeight * 4));
+        memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
+
+        int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
+
+        int lineCount = textLines.size();
+        for (int line = 0; line < lineCount; line++) {
+            int iCurXCursor = computeLineStart(face, eAlignMask, line);
+
+            int glyphCount = textLines.at(line).glyphs.size();
+            for (int i = 0; i < glyphCount; i++) {
+                LineBreakGlyph glyph = textLines.at(line).glyphs.at(i);
+
+                if (FT_Load_Glyph(face, glyph.glyphIndex, FT_LOAD_RENDER)) {
+                    continue;
+                }
+
+                FT_Bitmap& bitmap = face->glyph->bitmap;
+                int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
+                int xoffset = iCurXCursor + glyph.paintPosition;
+
+                for (int y = 0; y < bitmap.rows; ++y) {
                     int iY = yoffset + y;
                     if (iY>=iMaxLineHeight) {
                         //exceed the height truncate
@@ -442,42 +442,42 @@ public:
 
                     int bitmap_y = y * bitmap.width;
 
-					for (int x = 0; x < bitmap.width; ++x) {
-						unsigned char cTemp = bitmap.buffer[bitmap_y + x];
-						if (cTemp == 0) {
-							continue;
-						}
+                    for (int x = 0; x < bitmap.width; ++x) {
+                        unsigned char cTemp = bitmap.buffer[bitmap_y + x];
+                        if (cTemp == 0) {
+                            continue;
+                        }
 
-						int iX = xoffset + x;
+                        int iX = xoffset + x;
+                        //FIXME:wrong text color
+                        int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+                        *(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
+                    }
+                }
+            }
+            // step to next line
+            iCurYCursor += lineHeight;
+        }
 
-						int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-						*(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
-					}
-				}
-			}
-			// step to next line
-			iCurYCursor += lineHeight;
-		}
-
-		//  free face
-		FT_Done_Face(face);
-		return true;
-	}
+        //  free face
+        FT_Done_Face(face);
+        return true;
+    }
 
 public:
-	FT_Library library;
+    FT_Library library;
 
-	unsigned char *_data;
-	int libError;
-	std::vector<LineBreakLine> textLines;
-	int iMaxLineWidth;
-	int iMaxLineHeight;
+    unsigned char *_data;
+    int libError;
+    std::vector<LineBreakLine> textLines;
+    int iMaxLineWidth;
+    int iMaxLineHeight;
 };
 
 static BitmapDC& sharedBitmapDC()
 {
-	static BitmapDC s_BmpDC;
-	return s_BmpDC;
+    static BitmapDC s_BmpDC;
+    return s_BmpDC;
 }
 
 Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
@@ -487,7 +487,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     {
         BitmapDC &dc = sharedBitmapDC();
 
-        CC_BREAK_IF(! dc.getBitmap(text, textDefinition._dimensions.width, textDefinition._dimensions.height, align, textDefinition._fontName.c_str(), textDefinition._fontSize));
+        CC_BREAK_IF(! dc.getBitmap(text, textDefinition, align));
         CC_BREAK_IF(! dc._data);
         width = dc.iMaxLineWidth;
         height = dc.iMaxLineHeight;

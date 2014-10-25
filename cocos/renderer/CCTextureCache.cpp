@@ -406,6 +406,7 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 bool TextureCache::reloadTexture(const std::string& fileName)
 {
     Texture2D * texture = nullptr;
+    Image * image = nullptr;
 
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName);
     if (fullpath.size() == 0)
@@ -426,7 +427,7 @@ bool TextureCache::reloadTexture(const std::string& fileName)
     else
     {
         do {
-            Image* image = new (std::nothrow) Image();
+            image = new (std::nothrow) Image();
             CC_BREAK_IF(nullptr == image);
 
             bool bRet = image->initWithImageFile(fullpath);
@@ -435,6 +436,8 @@ bool TextureCache::reloadTexture(const std::string& fileName)
             ret = texture->initWithImage(image);
         } while (0);
     }
+    
+    CC_SAFE_RELEASE(image);
 
     return ret;
 }

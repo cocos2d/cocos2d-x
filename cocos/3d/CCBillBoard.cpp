@@ -25,7 +25,7 @@
 #include "3d/CCBillBoard.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "base/CCDirector.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramCache.h"
 

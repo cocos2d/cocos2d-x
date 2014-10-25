@@ -29,7 +29,6 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
-#include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -1273,7 +1272,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& t
             {
                 if(ray.intersects(_obb[i]))
                 {
-                    _intersetList.insert(i);
+                    _intersetList.insert((int)i);
                     return;
                 }
             }
@@ -1295,7 +1294,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& t
 
         for(decltype(obbSize) i = 0; i < obbSize; i++)
         {
-            if(_intersetList.find(i) != _intersetList.end())
+            if(_intersetList.find((int)i) != _intersetList.end())
                 _obb[i]._center = Vec3(location.x,location.y,0);
         }
     }
