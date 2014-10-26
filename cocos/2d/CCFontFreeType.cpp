@@ -95,12 +95,12 @@ FT_Library FontFreeType::getFTLibrary()
 FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 : _fontRef(nullptr)
 ,_distanceFieldEnabled(distanceFieldEnabled)
-,_outlineSize(outline)
+,_outlineSize(0.0f)
 ,_stroker(nullptr)
 {
-    if (_outlineSize > 0)
+    if (outline > 0)
     {
-        _outlineSize *= CC_CONTENT_SCALE_FACTOR();
+        _outlineSize = outline * CC_CONTENT_SCALE_FACTOR();
         FT_Stroker_New(FontFreeType::getFTLibrary(), &_stroker);
         FT_Stroker_Set(_stroker,
             (int)(_outlineSize * 64),
@@ -328,8 +328,6 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
                 }
             }
 
-            outRect.origin.x = bbox.xMin >> 6;
-            outRect.origin.y = - (bbox.yMax >> 6);
             xAdvance += 2 * _outlineSize;
             outRect.size.width  =  blendWidth;
             outRect.size.height =  blendHeight;

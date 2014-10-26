@@ -5,18 +5,6 @@
       <UniqueIdentifier>$guid2$</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <Filter Include="Binaries">
-      <Extensions>dll;</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="OpenGLESPage.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="OpenGLESPage.xaml.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="OpenGLESPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.scale-240.png">
