@@ -49,7 +49,7 @@ Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatche
     GLViewImpl* glview = GLViewImpl::create("Test Cpp");
     glview->setDispatcher(dispatcher);
     glview->setPanel(panel);
-    glview->Create(static_cast<float>(width), static_cast<float>(height), DisplayOrientations::Landscape);
+    glview->Create(static_cast<float>(width), static_cast<float>(height), dpi, DisplayOrientations::Landscape);
     director->setOpenGLView(glview);
     CCApplication::getInstance()->run();
 }
@@ -72,7 +72,7 @@ void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
     if (dpi != m_dpi)
     {
         m_dpi = dpi;
-        GLViewImpl::sharedOpenGLView()->UpdateDPI(m_dpi);
+        GLViewImpl::sharedOpenGLView()->SetDPI(m_dpi);
     }
 
     GLViewImpl::sharedOpenGLView()->ProcessEvents();
