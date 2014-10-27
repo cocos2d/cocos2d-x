@@ -67,5 +67,7 @@ namespace cocos2d
         void OnPointerPressed(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerMoved(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerReleased(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
+
+        float m_dpi;
     };
 }

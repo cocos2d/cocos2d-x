@@ -42,8 +42,12 @@ CCFreeTypeFont sFT;
 
 int Device::getDPI()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 	static const float dipsPerInch = 96.0f;
 	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
+#else
+    return cocos2d::GLViewImpl::sharedOpenGLView()->GetDPI();
+#endif
 }
 
 static Accelerometer^ sAccelerometer = nullptr;

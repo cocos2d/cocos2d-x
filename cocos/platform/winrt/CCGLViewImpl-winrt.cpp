@@ -108,9 +108,10 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 }
 
 
-bool GLViewImpl::Create(float width, float height, DisplayOrientations orientation)
+bool GLViewImpl::Create(float width, float height, float dpi, DisplayOrientations orientation)
 {
     m_orientation = orientation;
+    m_dpi = dpi;
     UpdateForWindowSizeChange(width, height);
     return true;
 }

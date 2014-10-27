@@ -29,18 +29,20 @@ namespace cocos2d
     class Cocos2dRenderer
     {
     public:
-        Cocos2dRenderer(const int width, const int height, Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
+        Cocos2dRenderer( int width, int height, float dpi, Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
         ~Cocos2dRenderer();
-        void Draw(GLsizei width, GLsizei height);
+        void Draw(GLsizei width, GLsizei height, float dpi);
         void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
         void QueueKeyBoardEvent(Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e);
 
     private:
 
-        int mWidth;
-        int mHeight;
+        int m_width;
+        int m_height;
+        float m_dpi;
+
         // The AppDelegate for the Cocos2D app
-        AppDelegate* mApp;
+        AppDelegate* m_app;
         Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
         Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
     };
