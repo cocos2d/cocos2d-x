@@ -938,6 +938,7 @@ Developers:
         Fixed compiling error on WP8.
         Added method for custom precompiled shader program loading on WP8
         Enable screen orientation change handling on WP8
+        Enabled GLProgramState restoring on render recreated on WP8
         
     chareice
         Make `setup.py` work on zsh
