@@ -442,8 +442,11 @@ void WebSocket::onSubThreadStarted()
             
             if (_wsProtocols[i+1].callback != nullptr) name += ", ";
         }
+        
+        // Should append :<port> to the string if port!=80, otherwise it does not work properly.
+        std::string hostWithPort = _host + ":" + std::to_string(_port);
         _wsInstance = libwebsocket_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
-                                             _path.c_str(), _host.c_str(), _host.c_str(),
+                                             _path.c_str(), hostWithPort.c_str(), _host.c_str(),
                                              name.c_str(), -1);
                                              
         if(nullptr == _wsInstance) {
