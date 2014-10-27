@@ -777,10 +777,13 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
 
 void ScrollView::onTouchEnded(Touch* touch, Event* event)
 {
-    if (!this->isVisible())
-    {
-        return;
-    }
+    /* Similar to onExit(), if scrollview is set to invisible before touch end/cancel 
+    and after touch began, _touches() would remain NOT empty.
+    */
+    //if (!this->isVisible())
+    //{
+    //    return;
+    //}
     
     auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
     
@@ -802,10 +805,11 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
 
 void ScrollView::onTouchCancelled(Touch* touch, Event* event)
 {
-    if (!this->isVisible())
-    {
-        return;
-    }
+    // see onTouchEnded()
+    //if (!this->isVisible())
+    //{
+    //    return;
+    //}
     
     auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
     _touches.erase(touchIter);
@@ -842,5 +846,22 @@ Rect ScrollView::getViewRect()
     }
 
     return Rect(screenPos.x, screenPos.y, _viewSize.width*scaleX, _viewSize.height*scaleY);
+}
+
+void ScrollView::onExit()
+{
+    Layer::onExit();
+	
+    /* If scrollview is removed from screen before touches end/cancel event and after touches 
+    began, it'll never get touches end/cancel event. After the scrollview been added to scene
+    again, it won't behave correctly because _touches is not empty.
+    */
+    _touches.clear();
+    _dragging = false;    
+    _touchMoved = false;
+
+    // Similar to above issue, the scrollview might continue to scroll after entering again.
+    // stop auto scrolling
+	this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
 }
 NS_CC_EXT_END

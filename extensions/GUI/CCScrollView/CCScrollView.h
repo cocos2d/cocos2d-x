@@ -298,6 +298,8 @@ protected:
 
     Rect getViewRect();
 
+    void onExit() override;
+
     /**
      * scroll view delegate
      */
