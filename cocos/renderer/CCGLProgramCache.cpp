@@ -433,9 +433,9 @@ GLProgram* GLProgramCache::getGLProgram(const std::string &key)
 void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
 {
     // release old one
-	auto prev = getProgram(key);
+    auto prev = getProgram(key);
     if( prev == program )
-	    return;
+        return;
 
     _programs.erase(key);
     CC_SAFE_RELEASE_NULL(prev);
