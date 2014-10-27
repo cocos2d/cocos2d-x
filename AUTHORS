@@ -1033,6 +1033,13 @@ Developers:
         
     coldfog
         Fix bug that ActionManagerEx::initWithBinary can only load one UI animation
+        
+    timur-losev
+        Fix a bug that GLProgramCache::addGLProgram() can not replace existing program
+        
+    TimothyZhang
+        Fixed a potential memory leak in GLProgram::setGLProgram()
+    
     
 Retired Core Developers:
     WenSheng Yang
@@ -1045,9 +1052,6 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
-        
-    timur-losev
-        Fix a bug that GLProgramCache::addGLProgram() can not replace existing program
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!
