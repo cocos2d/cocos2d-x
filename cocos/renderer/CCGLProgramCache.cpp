@@ -432,13 +432,13 @@ GLProgram* GLProgramCache::getGLProgram(const std::string &key)
 
 void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
 {
-	// release old one
+    // release old one
 	auto prev = getProgram(key);
-	if( prev == program )
-		return;
+    if( prev == program )
+	    return;
 
-	_programs.erase(key);
-	CC_SAFE_RELEASE_NULL(prev);
+    _programs.erase(key);
+    CC_SAFE_RELEASE_NULL(prev);
 
     if (program)
         program->retain();    
