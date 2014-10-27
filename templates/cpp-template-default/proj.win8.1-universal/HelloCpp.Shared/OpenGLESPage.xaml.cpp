@@ -226,6 +226,9 @@ void OpenGLESPage::StartRenderLoop()
         return;
     }
 
+    DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
+    m_dpi = currentDisplayInformation->LogicalDpi;
+
     auto dispatcher = Windows::UI::Xaml::Window::Current->CoreWindow->Dispatcher;
 
     // Create a task for rendering that will be run on a background thread.
@@ -239,9 +242,7 @@ void OpenGLESPage::StartRenderLoop()
         GLsizei panelHeight = 0;
         GetSwapChainPanelSize(&panelWidth, &panelHeight);
         
-        DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
 
-        m_dpi = currentDisplayInformation->LogicalDpi;
 
         if (m_renderer.get() == nullptr)
         {
