@@ -1042,6 +1042,9 @@ Developers:
         
     ahlwong
         Fix Label Kerning on Single Characters
+        
+    Svenito
+        Add greater than operator to Vec2
     
     
 Retired Core Developers:
