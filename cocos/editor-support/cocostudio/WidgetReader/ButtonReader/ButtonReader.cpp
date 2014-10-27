@@ -144,7 +144,14 @@ namespace cocostudio
             }else if(key == P_FontSize){
                 button->setTitleFontSize(valueToFloat(value));
             }else if(key == P_FontName){
-                button->setTitleFontName(value);
+                std::string fontFilePath;
+                std::string jsonPath = GUIReader::getInstance()->getFilePath();
+                fontFilePath = jsonPath.append(value);
+                if (FileUtils::getInstance()->isFileExist(fontFilePath)) {
+                    button->setTitleFontName(fontFilePath);
+                }else{
+                    button->setTitleFontName(value);
+                }
             }
             
         } //end of for loop
@@ -226,9 +233,17 @@ namespace cocostudio
         
         button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
         
-
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
-        
+        const char *fontName = DICTOOL->getStringValue_json(options, P_FontName);
+        if (fontName != nullptr){
+            std::string fontFilePath;
+            std::string jsonPath = GUIReader::getInstance()->getFilePath();
+            fontFilePath = jsonPath.append(fontName);
+            if (FileUtils::getInstance()->isFileExist(fontFilePath)) {
+                button->setTitleFontName(fontFilePath);
+            }else{
+                button->setTitleFontName(fontName);
+            }
+        }
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
