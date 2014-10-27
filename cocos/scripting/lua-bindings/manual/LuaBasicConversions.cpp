@@ -2922,7 +2922,7 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
     
     int index = 1;
     
-    for (const std::string value : inValue)
+    for (const std::string& value : inValue)
     {
         lua_pushnumber(L, (lua_Number)index);
         lua_pushstring(L, value.c_str());
