@@ -1,4 +1,5 @@
 cocos2d-x-3.3 ??
+    [FIX]           GLProgramCache: doesn't release old program with the same key before adding a new one
     [FIX]           GLProgramState: enabled GLProgramState restoring on render recreated on WP8
     [FIX]           Label: label shifting when outline feature enabled
     [FIX]           Sprite3D: did not create attached sprite from cache
