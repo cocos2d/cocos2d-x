@@ -435,7 +435,15 @@ void Button::onPressStateChangedToNormal()
             _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
             
             _titleRenderer->stopAllActions();
-            _titleRenderer->runAction(zoomAction->clone());
+            if (_unifySize)
+            {
+                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1, 1);
+                _titleRenderer->runAction(zoomTitleAction);
+            }
+            else
+            {
+                _titleRenderer->runAction(zoomAction->clone());
+            }
         }
     }
     else
@@ -483,6 +491,15 @@ void Button::onPressStateChangedToPressed()
             _titleRenderer->stopAllActions();
             //we must call zoomAction->clone here
             _titleRenderer->runAction(zoomAction->clone());
+            if (_unifySize)
+            {
+                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1 + _zoomScale, 1 + _zoomScale);
+                _titleRenderer->runAction(zoomTitleAction);
+            }
+            else
+            {
+                _titleRenderer->runAction(zoomAction->clone());
+            }
         }
     }
     else
