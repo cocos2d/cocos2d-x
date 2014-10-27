@@ -1039,6 +1039,9 @@ Developers:
         
     TimothyZhang
         Fixed a potential memory leak in GLProgram::setGLProgram()
+        
+    ahlwong
+        Fix Label Kerning on Single Characters
     
     
 Retired Core Developers:
