@@ -33,9 +33,9 @@ THE SOFTWARE.
 
 
 #include <agile.h>
+#include <concurrent_queue.h>
 #include <string>
 #include <wrl/client.h>
-#include <mutex>
 #include <queue>
 #include <Keyboard-winrt.h>
 
@@ -156,8 +156,9 @@ private:
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     Cocos2dEditBoxDelegate^ m_editBoxDelegate;
 
-    std::queue<std::shared_ptr<InputEvent>> mInputEvents;
-    std::mutex mMutex;
+    Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
+    //std::queue<std::shared_ptr<InputEvent>> mInputEvents;
+    //Concurrency::critical_section m_criticalSection;
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
