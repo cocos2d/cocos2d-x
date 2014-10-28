@@ -449,6 +449,53 @@ void SpriteFrameCache::addSpriteFrame(SpriteFrame* frame, const std::string& fra
     _spriteFrames.insert(frameName, frame);
 }
 
+void SpriteFrameCache::loadSpriteFrameLookupDictionaryFromFile(const std::string &filename)
+{
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
+    
+    if (dict.find("metadata") != dict.end())
+    {
+        ValueMap& metadataDict = dict["metadata"].asValueMap();
+        int version = metadataDict["version"].asInt();
+        if( version != 1) {
+            CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %s", (long)version, filename.c_str());
+            return;
+        }
+        ValueVector &spriteFrameFiles = dict["spriteFrameFiles"].asValueVector();
+        for (auto iter = spriteFrameFiles.begin(); iter != spriteFrameFiles.end(); ++iter)
+        {
+            this->registerSpriteFramesFile(iter->asString());
+        }
+    }
+}
+
+void SpriteFrameCache::registerSpriteFramesFile(const std::string &plist)
+{
+    CCAssert(!plist.empty(), "plist filename should not be nil");
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+    ValueMap dictionary = FileUtils::getInstance()->getValueMapFromFile(fullPath);
+    
+    ValueMap& framesDict = dictionary["frames"].asValueMap();
+    int format = 0;
+    
+    // get the format
+    if (dictionary.find("metadata") != dictionary.end())
+    {
+        ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+        format = metadataDict["format"].asInt();
+    }
+    
+    // check the format
+    CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    
+    for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
+    {
+        _spriteFrameFileLookup.insert(std::make_pair(iter->first, plist));
+    }
+}
+
 void SpriteFrameCache::removeSpriteFrames()
 {
     _spriteFrames.clear();
@@ -575,6 +622,16 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
 SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
 {
     SpriteFrame* frame = _spriteFrames.at(name);
+    if (!frame)
+    {
+        // Try finding the frame in one of the registered sprite sheets
+        auto it =_spriteFrameFileLookup.find(name);
+        if(it != _spriteFrameFileLookup.end())
+            addSpriteFramesWithFile(it->second);
+        
+        // Attempt to load the frame again
+        frame = _spriteFrames.at(name);
+    }
     if (!frame)
     {
         // try alias dictionary
