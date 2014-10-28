@@ -163,6 +163,18 @@ std::vector<Node*> findChildren(const Node &node, const std::string &name)
     return vec;
 }
 
+Node* findChildByName(const Node &node, const std::string &name)
+{
+    Node* result;
+    
+    node.enumerateChildren(name, [&result](Node* nodeFound) -> bool {
+        result = nodeFound;
+        return true;
+    });
+
+    return result;
+}
+
 #define MAX_ITOA_BUFFER_SIZE 256
 double atof(const char* str)
 {
