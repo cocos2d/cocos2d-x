@@ -387,13 +387,16 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             log("WARNING: can't find letter definition in font file for letter: %c", c);
             continue;
         }
-
-        nextFontPositionX += charAdvance + kernings[i] + theLabel->_additionalKerning;
+        
+        nextFontPositionX += charAdvance + kernings[i];
         
         if (longestLine < nextFontPositionX)
         {
             longestLine = nextFontPositionX;
         }
+        
+        // check longest line before adding additional kerning
+        nextFontPositionX += theLabel->_additionalKerning;
     }
     
     float lastCharWidth = tempDefinition.width * contentScaleFactor;

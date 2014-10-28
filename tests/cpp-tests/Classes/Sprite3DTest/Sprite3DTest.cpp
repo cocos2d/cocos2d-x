@@ -1259,7 +1259,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
 
 void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto touch: touches)
+    for (const auto& touch: touches)
     {
         auto location = touch->getLocationInView();
         auto obbSize = _obb.size();
@@ -1287,7 +1287,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesEnded(const std::vector<Touch*>& t
 
 void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto touch: touches)
+    for (const auto& touch: touches)
     {
         auto location = touch->getLocation();       
         auto obbSize = _obb.size();
@@ -1447,8 +1447,7 @@ void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, cons
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
-    Mat4 mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec3 src = Vec3(location.x, location.y, -1);
     Vec3 nearPoint;
