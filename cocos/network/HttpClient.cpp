@@ -341,8 +341,8 @@ public:
             _notEmpty.wait(_mutex);
         }
         if (!_immediateTasks.empty()) {
-            HttpTask *task = _tasks.front();
-            _tasks.pop_front();
+            HttpTask *task = _immediateTasks.front();
+            _immediateTasks.pop_front();
             return task;
         }
         HttpTask* task = _tasks.front();
