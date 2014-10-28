@@ -381,25 +381,15 @@ static void performTasks(Scheduler *scheduler, HttpTaskQueue *tq) {
     }
 }
 
-class HttpBackend {
-public:
-
-    HttpTaskQueue* getTaskQueue() {
-        if (!_thread.joinable()) {
-            Scheduler *scheduler = Director::getInstance()->getScheduler();
-            _thread = std::thread(performTasks, scheduler, &_tqueue);
-        }
-        return &_tqueue;
-    }
-
-private:
-    HttpTaskQueue _tqueue;
-    std::thread _thread;
-};
-
 static HttpTaskQueue* getBackendTaskQueue() {
-    static HttpBackend httpBackend;
-    return httpBackend.getTaskQueue();
+    static HttpTaskQueue *tqueue = nullptr;
+    if (tqueue == nullptr) {
+        tqueue = new HttpTaskQueue;
+        Scheduler *scheduler = Director::getInstance()->getScheduler();
+        std::thread taskThread(performTasks, scheduler, tqueue);
+        taskThread.detach();
+    }
+    return tqueue;
 }
 
 static HttpClient *_pHttpClient = nullptr;
