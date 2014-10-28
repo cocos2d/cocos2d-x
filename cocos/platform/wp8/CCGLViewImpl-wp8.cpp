@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLViewImpl.h"
+#include "CCGLViewImpl-wp8.h"
 #include "deprecated/CCSet.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
@@ -49,7 +49,6 @@ using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Phone::UI::Core;
 using namespace Platform;
 using namespace Microsoft::WRL;
-using namespace PhoneDirect3DXamlAppComponent;
 
 
 NS_CC_BEGIN

@@ -39,18 +39,11 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
 #include "CCPrecompiledShaders.h"
 #endif
 
 NS_CC_BEGIN
-
-typedef struct _hashUniformEntry
-{
-    GLvoid*         value;       // value
-    unsigned int    location;    // Key
-    UT_hash_handle  hh;          // hash entry
-} tHashUniformEntry;
 
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositionTextureColor_noMVP";
@@ -100,10 +93,6 @@ const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD1 = "a_texCoord1";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD2 = "a_texCoord2";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD3 = "a_texCoord3";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD4 = "a_texCoord4";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD5 = "a_texCoord5";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD6 = "a_texCoord6";
-const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD7 = "a_texCoord7";
 const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
@@ -140,7 +129,6 @@ GLProgram::GLProgram()
 : _program(0)
 , _vertShader(0)
 , _fragShader(0)
-, _hashForUniforms(nullptr)
 , _flags()
 {
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
@@ -167,21 +155,17 @@ GLProgram::~GLProgram()
         GL::deleteProgram(_program);
     }
 
-    tHashUniformEntry *current_element, *tmp;
-
-    // Purge uniform hash
-    HASH_ITER(hh, _hashForUniforms, current_element, tmp)
+    for (auto e : _hashForUniforms)
     {
-        HASH_DEL(_hashForUniforms, current_element);
-        free(current_element->value);
-        free(current_element);
+        free(e.second);
     }
+    _hashForUniforms.clear();
 }
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     GLboolean hasCompiler = false;
     glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
     _hasShaderCompiler = (hasCompiler == GL_TRUE);
@@ -226,18 +210,19 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     {
         glAttachShader(_program, _fragShader);
     }
-    _hashForUniforms = nullptr;
+    
+    _hashForUniforms.clear();
     
     CHECK_GL_ERROR_DEBUG();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     _shaderId = CCPrecompiledShaders::getInstance()->addShaders(vShaderByteArray, fShaderByteArray);
 #endif
 
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 GLProgram* GLProgram::createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
     auto ret = new (std::nothrow) GLProgram();
@@ -264,7 +249,7 @@ bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArr
     haveProgram = CCPrecompiledShaders::getInstance()->loadProgram(_program, vShaderByteArray, fShaderByteArray);
 
     CHECK_GL_ERROR_DEBUG();
-    _hashForUniforms = nullptr;
+    _hashForUniforms.clear();
 
     CHECK_GL_ERROR_DEBUG();  
 
@@ -294,10 +279,6 @@ void GLProgram::bindPredefinedVertexAttribs()
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD2, GLProgram::VERTEX_ATTRIB_TEX_COORD2},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD3, GLProgram::VERTEX_ATTRIB_TEX_COORD3},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD4, GLProgram::VERTEX_ATTRIB_TEX_COORD4},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD5, GLProgram::VERTEX_ATTRIB_TEX_COORD5},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD6, GLProgram::VERTEX_ATTRIB_TEX_COORD6},
-        {GLProgram::ATTRIBUTE_NAME_TEX_COORD7, GLProgram::VERTEX_ATTRIB_TEX_COORD7},
         {GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::VERTEX_ATTRIB_NORMAL},
     };
 
@@ -368,7 +349,7 @@ void GLProgram::parseUniforms()
                 if(strncmp("CC_", uniformName, 3) != 0) {
 
                     // remove possible array '[]' from uniform name
-                    if(uniform.size > 1 && length > 3)
+                    if(length > 3)
                     {
                         char* c = strrchr(uniformName, '[');
                         if(c)
@@ -426,7 +407,9 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     }
     
     const GLchar *sources[] = {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        (type == GL_VERTEX_SHADER ? "precision mediump float;\n precision mediump int;\n" : "precision mediump float;\n precision mediump int;\n"),
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #endif
         "uniform mat4 CC_PMatrix;\n"
@@ -537,7 +520,7 @@ bool GLProgram::link()
 {
     CCASSERT(_program != 0, "Cannot link invalid program");
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     if(!_hasShaderCompiler)
     {
         // precompiled shader program is already linked
@@ -570,7 +553,7 @@ bool GLProgram::link()
     
     _vertShader = _fragShader = 0;
     
-#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     
     if (status == GL_FALSE)
@@ -581,7 +564,7 @@ bool GLProgram::link()
     }
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     if (status == GL_TRUE)
     {
         CCPrecompiledShaders::getInstance()->addProgram(_program, _shaderId);
@@ -639,31 +622,23 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     }
 
     bool updated = true;
-    tHashUniformEntry *element = nullptr;
-    HASH_FIND_INT(_hashForUniforms, &location, element);
-
-    if (! element)
+    
+    auto element = _hashForUniforms.find(location);
+    if (element == _hashForUniforms.end())
     {
-        element = (tHashUniformEntry*)malloc( sizeof(*element) );
-
-        // key
-        element->location = location;
-
-        // value
-        element->value = malloc( bytes );
-        memcpy(element->value, data, bytes );
-
-        HASH_ADD_INT(_hashForUniforms, location, element);
+        GLvoid* value = malloc(bytes);
+        memcpy(value, data, bytes );
+        _hashForUniforms.insert(std::make_pair(location, value));
     }
     else
     {
-        if (memcmp(element->value, data, bytes) == 0)
+        if (memcmp(element->second, data, bytes) == 0)
         {
             updated = false;
         }
         else
         {
-            memcpy(element->value, data, bytes);
+            memcpy(element->second, data, bytes);
         }
     }
 
@@ -929,17 +904,12 @@ void GLProgram::reset()
     //GL::deleteProgram(_program);
     _program = 0;
 
-    
-    tHashUniformEntry *current_element, *tmp;
-    
-    // Purge uniform hash
-    HASH_ITER(hh, _hashForUniforms, current_element, tmp) 
+    for (auto e: _hashForUniforms)
     {
-        HASH_DEL(_hashForUniforms, current_element);
-        free(current_element->value);
-        free(current_element);
+        free(e.second);
     }
-    _hashForUniforms = nullptr;
+    
+    _hashForUniforms.clear();
 }
 
 NS_CC_END

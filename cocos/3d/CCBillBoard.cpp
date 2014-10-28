@@ -25,7 +25,7 @@
 #include "3d/CCBillBoard.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "base/CCDirector.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramCache.h"
 
@@ -101,13 +101,17 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     auto camera = Camera::getVisitingCamera();
     
     const Mat4& camWorldMat = camera->getNodeToWorldTransform();
-    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_transform.m, transform.m, sizeof(float) * 16) != 0 || _modeDirty)
+    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_mvTransform.m, transform.m, sizeof(float) * 16) != 0 || _modeDirty)
     {
+        Vec3 anchorPoint(_anchorPointInPoints.x , _anchorPointInPoints.y , 0.0f);
+        Mat4 localToWorld = transform;
+        localToWorld.translate(anchorPoint);
+
         Vec3 camDir;
         switch (_mode)
         {
         case Mode::VIEW_POINT_ORIENTED:
-            camDir = Vec3(transform.m[12] - camWorldMat.m[12], transform.m[13] - camWorldMat.m[13], transform.m[14] - camWorldMat.m[14]);
+            camDir = Vec3(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
             break;
         case Mode::VIEW_PLANE_ORIENTED:
             camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
@@ -130,18 +134,22 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         Vec3::cross(camDir, y, &x);
         x.normalize();
         Vec3::cross(x, camDir, &y);
-        float xlen = sqrtf(transform.m[0] * transform.m[0] + transform.m[1] * transform.m[1] + transform.m[2] * transform.m[2]);
-        float ylen = sqrtf(transform.m[4] * transform.m[4] + transform.m[5] * transform.m[5] + transform.m[6] * transform.m[6]);
-        float zlen = sqrtf(transform.m[8] * transform.m[8] + transform.m[9] * transform.m[9] + transform.m[10] * transform.m[10]);
+        y.normalize();
+
+        float xlen = sqrtf(localToWorld.m[0] * localToWorld.m[0] + localToWorld.m[1] * localToWorld.m[1] + localToWorld.m[2] * localToWorld.m[2]);
+        float ylen = sqrtf(localToWorld.m[4] * localToWorld.m[4] + localToWorld.m[5] * localToWorld.m[5] + localToWorld.m[6] * localToWorld.m[6]);
+        float zlen = sqrtf(localToWorld.m[8] * localToWorld.m[8] + localToWorld.m[9] * localToWorld.m[9] + localToWorld.m[10] * localToWorld.m[10]);
 
         _billboardTransform.m[0] = x.x * xlen; _billboardTransform.m[1] = x.y * xlen; _billboardTransform.m[2] = x.z * xlen;
         _billboardTransform.m[4] = y.x * ylen; _billboardTransform.m[5] = y.y * ylen; _billboardTransform.m[6] = y.z * ylen;
         _billboardTransform.m[8] = -camDir.x * zlen; _billboardTransform.m[9] = -camDir.y * zlen; _billboardTransform.m[10] = -camDir.z * zlen;
-        _billboardTransform.m[12] = transform.m[12]; _billboardTransform.m[13] = transform.m[13]; _billboardTransform.m[14] = transform.m[14];
+        _billboardTransform.m[12] = localToWorld.m[12]; _billboardTransform.m[13] = localToWorld.m[13]; _billboardTransform.m[14] = localToWorld.m[14];
+
+        _billboardTransform.translate(-anchorPoint);
 
         const Mat4 &viewMat = camWorldMat.getInversed();
-        _zDepthInView = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
-        _transform = transform;
+        _zDepthInView = -(viewMat.m[2] * _billboardTransform.m[12] + viewMat.m[6] * _billboardTransform.m[13] + viewMat.m[10] * _billboardTransform.m[14] + viewMat.m[14]);
+        _mvTransform = transform;
         _camWorldMat = camWorldMat;
     }
 

@@ -573,7 +573,7 @@ Bone *Armature::getParentBone() const
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 
-void CCArmature::setColliderFilter(ColliderFilter *filter)
+void Armature::setColliderFilter(ColliderFilter *filter)
 {
     for (auto& element : _boneDic)
     {
@@ -582,7 +582,7 @@ void CCArmature::setColliderFilter(ColliderFilter *filter)
 }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
 
-void CCArmature::drawContour()
+void Armature::drawContour()
 {
     for(auto& element : _boneDic)
     {
@@ -607,8 +607,22 @@ void CCArmature::drawContour()
                 points[i].x = p.x;
                 points[i].y = p.y;
             }
+            
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+            
             DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+            
             delete []points;
         }
     }

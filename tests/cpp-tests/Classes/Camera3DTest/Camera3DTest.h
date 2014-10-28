@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
-#include "base/CCCamera.h"
 namespace cocos2d {
     class Sprite3D;
     class Delay;
@@ -56,7 +55,7 @@ public:
     CREATE_FUNC(Camera3DTestDemo);
     Camera3DTestDemo(void);
     virtual ~Camera3DTestDemo(void);
-
+    
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void backCallback(Ref* sender);
@@ -77,6 +76,16 @@ public:
     void updateState(float elapsedTime);
     bool isState(unsigned int state,unsigned int bit) const;
     void reachEndCallBack();
+    
+    bool onTouchesZoomOut(Touch* touch, Event* event);
+    void onTouchesZoomOutEnd(Touch* touch, Event* event);
+    bool onTouchesZoomIn(Touch* touch, Event* event);
+    void onTouchesZoomInEnd(Touch* touch, Event* event);
+    
+    bool onTouchesRotateLeft(Touch* touch, Event* event);
+    void onTouchesRotateLeftEnd(Touch* touch, Event* event);
+    bool onTouchesRotateRight(Touch* touch, Event* event);
+    void onTouchesRotateRightEnd(Touch* touch, Event* event);
 protected:
     std::string    _title;
     Layer*         _layer3D;
@@ -88,6 +97,14 @@ protected:
     unsigned int   _curState;
     Camera*      _camera;
     MoveTo* _moveAction;
+    bool _bZoomOut;
+    bool _bZoomIn;
+    bool _bRotateLeft;
+    bool _bRotateRight;
+    Label* _RotateRightlabel;
+    Label* _RotateLeftlabel;
+    Label* _ZoomInlabel;
+    Label* _ZoomOutlabel;
 };
 class Camera3DTestScene : public TestScene
 {

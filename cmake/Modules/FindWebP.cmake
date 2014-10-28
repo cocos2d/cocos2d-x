@@ -2,7 +2,7 @@
 # FindWebP
 # ------------
 #
-# Locate FindChipmunk library
+# Locate webp library
 #
 # This module defines
 #

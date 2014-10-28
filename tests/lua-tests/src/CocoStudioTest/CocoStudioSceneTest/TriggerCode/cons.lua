@@ -1,5 +1,3 @@
-require ("CocoStudio")
-
 local NodeInRect = class("NodeInRect")
 NodeInRect._tag  = -1
 NodeInRect._origin = nil

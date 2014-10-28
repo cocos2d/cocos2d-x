@@ -21,7 +21,7 @@
 -- @function [parent=#Node] removeComponent
 -- @param self
 -- @param #string name
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- set the PhysicsBody that let the sprite effect with physics<br>
@@ -68,7 +68,7 @@
 -- @overload self         
 -- @function [parent=#Node] getChildren
 -- @param self
--- @return array_table#array_table ret (retunr value: array_table)
+-- @return array_table#array_table ret (return value: array_table)
 
 --------------------------------
 -- 
@@ -173,6 +173,11 @@
 -- @function [parent=#Node] setonEnterTransitionDidFinishCallback 
 -- @param self
 -- @param #function callback
+        
+--------------------------------
+-- remove this node from physics world. it will remove all the physics bodies in it's children too.
+-- @function [parent=#Node] removeFromPhysicsWorld 
+-- @param self
         
 --------------------------------
 -- removes all components
@@ -336,6 +341,12 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- Resumes all scheduled selectors, actions and event listeners.<br>
+-- This method is called internally by onEnter
+-- @function [parent=#Node] resume 
+-- @param self
+        
+--------------------------------
 -- returns the rotation (X,Y,Z) in degrees.
 -- @function [parent=#Node] getRotation3D 
 -- @param self
@@ -361,12 +372,6 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- Resumes all scheduled selectors, actions and event listeners.<br>
--- This method is called internally by onEnter
--- @function [parent=#Node] resume 
--- @param self
         
 --------------------------------
 -- get the PhysicsBody the sprite have
@@ -638,7 +643,7 @@
 -- @overload self         
 -- @function [parent=#Node] getScheduler
 -- @param self
--- @return Scheduler#Scheduler ret (retunr value: cc.Scheduler)
+-- @return Scheduler#Scheduler ret (return value: cc.Scheduler)
 
 --------------------------------
 -- 
@@ -681,7 +686,7 @@
 -- @overload self         
 -- @function [parent=#Node] getParent
 -- @param self
--- @return Node#Node ret (retunr value: cc.Node)
+-- @return Node#Node ret (return value: cc.Node)
 
 --------------------------------
 -- Gets position Z coordinate of this node.<br>
@@ -745,6 +750,17 @@
 -- @function [parent=#Node] getParentToNodeTransform 
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- Checks whether a lambda function is scheduled.<br>
+-- param key      key of the callback<br>
+-- return Whether the lambda function selector is scheduled.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Node] isScheduled 
+-- @param self
+-- @param #string key
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Defines the oder in which the nodes are renderer.<br>
@@ -1022,7 +1038,7 @@
 -- @overload self         
 -- @function [parent=#Node] getActionManager
 -- @param self
--- @return ActionManager#ActionManager ret (retunr value: cc.ActionManager)
+-- @return ActionManager#ActionManager ret (return value: cc.ActionManager)
 
 --------------------------------
 -- Allocates and initializes a node.<br>

@@ -418,6 +418,15 @@ public:
      * @return True if this vector is less than the given vector, false otherwise.
      */
     inline bool operator<(const Vec2& v) const;
+    
+    /**
+     * Determines if this vector is greater than the given vector.
+     *
+     * @param v The vector to compare against.
+     *
+     * @return True if this vector is greater than the given vector, false otherwise.
+     */
+    inline bool operator>(const Vec2& v) const;
 
     /**
      * Determines if this vector is equal to the given vector.

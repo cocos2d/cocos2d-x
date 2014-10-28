@@ -68,7 +68,7 @@ extern string getIPAddress();
 
 const char* getRuntimeVersion()
 {
-    return "1.4";
+    return "1.5";
 }
 
 static string& replaceAll(string& str, const string& old_value, const string& new_value)
@@ -93,19 +93,18 @@ void startScript(string strDebugArg)
     if (!strDebugArg.empty())
     {
         // open debugger.lua module
-        luaopen_debugger(engine->getLuaStack()->getLuaState());
+        luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
         engine->executeString(strDebugArg.c_str());
     }
     cocos2d::log("debug args = %s", strDebugArg.c_str());
     engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
 }
 
-static bool resetLuaModule(string fileName)
+static void resetLuaModule(const string& fileName)
 {
     if (fileName.empty())
     {
-        CCLOG("fileName is null");
-        return false;
+        return;
     }
     auto engine = LuaEngine::getInstance();
     LuaStack* luaStack = engine->getLuaStack();
@@ -125,7 +124,7 @@ static bool resetLuaModule(string fileName)
         tableKey = replaceAll(tableKey, "\\", "/");
         tableKey.append(".lua");
         found = fileName.rfind(tableKey);
-        if (0 == found || ( found != std::string::npos && fileName.at(found - 1) == '/'))
+        if (0 == found || (found != std::string::npos && fileName.at(found - 1) == '/'))
         {
             lua_pushstring(stack, key.c_str());
             lua_pushnil(stack);
@@ -137,8 +136,8 @@ static bool resetLuaModule(string fileName)
         lua_pop(stack, 1);
     }
     lua_pop(stack, 2);
-    return true;
 }
+
 bool reloadScript(const string& file)
 {
     auto director = Director::getInstance();
@@ -150,10 +149,16 @@ bool reloadScript(const string& file)
     }
     FileUtils::getInstance()->purgeCachedEntries();
     string modulefile = file;
-    if (!resetLuaModule(modulefile))
+    
+    if (! modulefile.empty())
+    {
+        resetLuaModule(modulefile);
+    }
+    else
     {
         modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
     }
+    
     auto engine = LuaEngine::getInstance();
     LuaStack* luaStack = engine->getLuaStack();
     std::string require = "require \'" + modulefile + "\'";
@@ -1028,7 +1033,7 @@ public:
                 dReplyParse.Accept(writer);
                 string msgContent = buffer.GetString();
                 char msgLength[64] = {0x1, 0};
-                sprintf(msgLength + 1, "%zu:", msgContent.size());
+                sprintf(msgLength + 1, "%d:", msgContent.size());
                 
                 string msg(msgLength + msgContent);
                 
@@ -1216,7 +1221,7 @@ void initRuntime()
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     register_runtime_override_function(engine->getLuaStack()->getLuaState());
-    
+
     static ConsoleCustomCommand *g_customCommand;
     g_customCommand = new ConsoleCustomCommand();
     g_customCommand->init();

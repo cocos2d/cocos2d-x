@@ -10,6 +10,7 @@
 #include "spine/lua_cocos2dx_spine_manual.hpp"
 #include "3d/lua_cocos2dx_3d_manual.h"
 #include "audioengine/lua_cocos2dx_audioengine_manual.h"
+#include "lua/quick/lua_cocos2dx_quick_manual.hpp"
 
 int lua_module_register(lua_State* L)
 {
@@ -22,9 +23,7 @@ int lua_module_register(lua_State* L)
     register_extension_module(L);
     register_spine_module(L);
     register_cocos3d_module(L);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     register_audioengine_module(L);
-#endif
     return 1;
 }
 

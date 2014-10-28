@@ -37,7 +37,6 @@
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCMeshVertexIndexData.h"
-#include "3d/3dExport.h"
 
 
 NS_CC_BEGIN
@@ -48,7 +47,7 @@ class MeshSkin;
 class AttachNode;
 struct NodeData;
 /** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
-class CC_3D_DLL Sprite3D : public Node, public BlendProtocol
+class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
     /** creates a Sprite3D*/
@@ -69,6 +68,9 @@ public:
 
     /**get mesh*/
     Mesh* getMesh() const { return _meshes.at(0); }
+    
+    /** get mesh count */
+    ssize_t getMeshCount() const { return _meshes.size(); }
     
     /**get skin*/
     CC_DEPRECATED_ATTRIBUTE MeshSkin* getSkin() const;
@@ -138,7 +140,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     /**generate default GLProgramState*/
-    void genGLProgramState();
+    void genGLProgramState(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
@@ -214,7 +216,7 @@ protected:
     std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
-extern std::string CC_3D_DLL s_attributeNames[];//attribute names array
+extern std::string CC_DLL s_attributeNames[];//attribute names array
 
 NS_CC_END
 #endif // __SPRITE3D_H_

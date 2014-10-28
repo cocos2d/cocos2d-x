@@ -618,6 +618,17 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
     case TMXOrientationHex:
         CCASSERT(pos.equals(Vec2::ZERO), "offset for hexagonal map not implemented yet");
         break;
+    case TMXOrientationStaggered:
+        {
+            float diffX = 0;
+            if ((int)abs(pos.y) % 2 == 1)
+            {
+                diffX = _mapTileSize.width/2;
+            }
+            ret = Vec2(pos.x * _mapTileSize.width + diffX,
+                         (-pos.y) * _mapTileSize.height/2);
+        }
+        break;
     }
     return ret;    
 }
@@ -635,6 +646,9 @@ Vec2 TMXLayer::getPositionAt(const Vec2& pos)
         break;
     case TMXOrientationHex:
         ret = getPositionForHexAt(pos);
+        break;
+    case TMXOrientationStaggered:
+        ret = getPositionForStaggeredAt(pos);
         break;
     }
     ret = CC_POINT_PIXELS_TO_POINTS( ret );
@@ -666,6 +680,17 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
     return xy;
 }
 
+Vec2 TMXLayer::getPositionForStaggeredAt(const Vec2 &pos)
+{
+    float diffX = 0;
+    if ((int)pos.y % 2 == 1)
+    {
+        diffX = _mapTileSize.width/2;
+    }
+    return Vec2(pos.x * _mapTileSize.width + diffX,
+                (_layerSize.height - pos.y - 1) * _mapTileSize.height/2);
+}
+
 int TMXLayer::getVertexZForPos(const Vec2& pos)
 {
     int ret = 0;
@@ -679,6 +704,9 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
             ret = static_cast<int>(-(maxVal - (pos.x + pos.y)));
             break;
         case TMXOrientationOrtho:
+            ret = static_cast<int>(-(_layerSize.height-pos.y));
+            break;
+        case TMXOrientationStaggered:
             ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationHex:

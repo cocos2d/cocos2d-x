@@ -47,7 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
@@ -155,9 +155,8 @@ bool Director::init(void)
 
     _renderer = new (std::nothrow) Renderer;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _console = new (std::nothrow) Console;
-#endif
+
     return true;
 }
 
@@ -181,9 +180,8 @@ Director::~Director(void)
 
     delete _renderer;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     delete _console;
-#endif
+
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
@@ -1276,8 +1274,10 @@ void DisplayLinkDirector::startAnimation()
 
     _invalid = false;
 
+#ifndef WP8_SHADER_COMPILER
     Application::getInstance()->setAnimationInterval(_animationInterval);
-    
+#endif
+
     // fix issue #3509, skip one fps to avoid incorrect time calculation.
     setNextDeltaTimeZero(true);
 }

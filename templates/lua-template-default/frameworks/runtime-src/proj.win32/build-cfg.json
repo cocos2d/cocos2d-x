@@ -7,14 +7,6 @@
         {
             "from": "../../../res",
             "to": "res"
-        },
-        {
-            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script/cocos2d",
-            "to": ""
-        },
-        {
-            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script/cocosdenshion",
-            "to": ""
         }
     ]
 }

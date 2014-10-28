@@ -644,6 +644,7 @@ void Layout::setBackGroundImage(const std::string& fileName,TextureResType texTy
     if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
+        _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
     }
     _backGroundImageFileName = fileName;
     _bgImageTexType = texType;
@@ -1771,17 +1772,14 @@ bool  Layout::isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection di
         else
         {
             CCASSERT(0, "invalid layout type");
+            return false;
         }
-        
     }
     else
     {
         return isWidgetAncestorSupportLoopFocus(parent, direction);
     }
 }
-
-
-
 
 Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
 {

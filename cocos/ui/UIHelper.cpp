@@ -24,10 +24,13 @@ THE SOFTWARE.
 
 #include "ui/UIHelper.h"
 #include "ui/UIWidget.h"
+#include "ui/UILayoutComponent.h"
 
 NS_CC_BEGIN
 
 namespace ui {
+
+static bool _activeLayout = true;
 
 Widget* Helper::seekWidgetByTag(Widget* root, int tag)
 {
@@ -146,6 +149,40 @@ std::string Helper::getSubStringOfUTF8String(const std::string& str, std::string
     return str.substr(min,max);
 }
 
+void Helper::changeLayoutSystemActiveState(bool bActive)
+{
+    _activeLayout = bActive;
+}
+void Helper::doLayout(cocos2d::Node *rootNode)
+{
+    if(!_activeLayout)
+    {
+        return;
+    }
+
+    for(auto& node : rootNode->getChildren())
+    {
+        auto com = node->getComponent(__LAYOUT_COMPONENT_NAME);
+        Node *parent = node->getParent();
+        if (nullptr != com && nullptr != parent) {
+            LayoutComponent* layoutComponent = (LayoutComponent*)com;
+
+            if (layoutComponent->isUsingPercentPosition())
+            {
+                layoutComponent->setPercentPosition(layoutComponent->getPercentPosition());
+            }
+            else if (layoutComponent->getReferencePoint() != LayoutComponent::ReferencePoint::BOTTOM_LEFT)
+            {
+                layoutComponent->setRelativePosition(layoutComponent->getRelativePosition());
+            }
+
+            if (layoutComponent->isUsingPercentContentSize())
+            {
+                layoutComponent->setPercentContentSize(layoutComponent->getPercentContentSize());
+            }
+        }
+    }
+}
 }
 
 NS_CC_END

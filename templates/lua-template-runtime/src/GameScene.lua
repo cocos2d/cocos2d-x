@@ -1,5 +1,3 @@
-require "Cocos2d"
-require "Cocos2dConstants"
 
 local GameScene = class("GameScene",function()
     return cc.Scene:create()

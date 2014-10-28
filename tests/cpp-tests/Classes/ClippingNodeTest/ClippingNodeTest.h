@@ -244,6 +244,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ClippingRectangleNodeTest : public BaseClippingNodeTest
+{
+public:
+    CREATE_FUNC(ClippingRectangleNodeTest);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void setup();
+};
+
 
 class ClippingNodeTestScene : public TestScene
 {

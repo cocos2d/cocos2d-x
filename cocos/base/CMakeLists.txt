@@ -1,5 +1,5 @@
 
-if(MACOSX)
+if(MACOSX OR APPLE)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-apple.mm)
 endif()
@@ -8,10 +8,8 @@ endif()
 # todo: also base/CCController-android.cpp
 
 set(COCOS_BASE_SRC
-
   base/ccFPSImages.c
   base/CCAutoreleasePool.cpp
-  base/CCCamera.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
   base/CCController.cpp

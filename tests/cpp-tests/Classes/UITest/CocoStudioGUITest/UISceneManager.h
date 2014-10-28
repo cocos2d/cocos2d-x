@@ -41,7 +41,7 @@ enum
     kUIButtonTextOnly,
     kUIButtonIgnoreContentSizeTest,
     kUIButtonTitleEffectTest,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     kUIEditBoxTest,
 #endif
     kUICheckBoxTest,
@@ -82,10 +82,13 @@ enum
     kUIScrollViewTest_ScrollToPercentBothDirection,
     kUIScrollViewTest_ScrollToPercentBothDirection_Bounce,
     kUIScrollViewNestTest,
+    kUIScrollViewRotated,
+    
     kUIPageViewTest,
     kUIPageViewButtonTest,
     kUIPageViewCustomScrollThreshold,
     kUIPageViewTouchPropagationTest,
+    kUIPageViewDynamicAddAndRemoveTest,
     kUIListViewTest_Vertical,
     kUIListViewTest_Horizontal,
     kUIWidgetAddNodeTest,
@@ -99,7 +102,7 @@ enum
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     kUIVideoPlayerTest,
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     KWebViewTest,
 #endif
     kUIScale9SpriteTest,

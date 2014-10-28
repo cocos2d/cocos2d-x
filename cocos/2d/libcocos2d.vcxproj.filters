@@ -112,9 +112,6 @@
     <Filter Include="ui\UIWidgets\ScrollWidget">
       <UniqueIdentifier>{6ac0e3c8-d5b1-44d9-8c41-21662a767cc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\trigger">
-      <UniqueIdentifier>{0554a5b1-03a1-4d38-87a5-976dbe9a39d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\TimelineAction">
       <UniqueIdentifier>{c75d4c37-d555-4a5b-a0ba-4bc9a3d846e1}</UniqueIdentifier>
     </Filter>
@@ -213,6 +210,18 @@
     </Filter>
     <Filter Include="audioengine">
       <UniqueIdentifier>{e916e2b4-0a6e-4d25-8b36-66fa03719f48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\json\protobuf-lite">
+      <UniqueIdentifier>{cca5b284-43d5-4f19-8a3f-41011ca8fb78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\json\protobuf-lite\io">
+      <UniqueIdentifier>{95d0a465-a443-4974-ac90-ca1a46cd3066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\json\protobuf-lite\stubs">
+      <UniqueIdentifier>{65b452e4-00df-4ab1-803a-af3fb369edc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\TimelineAction\trigger">
+      <UniqueIdentifier>{0554a5b1-03a1-4d38-87a5-976dbe9a39d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +332,9 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCClippingNode.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCClippingRectangleNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCComponent.cpp">
@@ -679,6 +691,9 @@
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp">
       <Filter>external\tinyxml2</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp">
+      <Filter>external\unzip</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\external\unzip\ioapi.cpp">
       <Filter>external\unzip</Filter>
     </ClCompile>
@@ -711,9 +726,6 @@
     </ClCompile>
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\CCCamera.cpp">
-      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCPrimitive.cpp">
       <Filter>renderer</Filter>
@@ -878,21 +890,18 @@
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\TriggerBase.cpp">
-      <Filter>cocostudio\trigger</Filter>
+      <Filter>cocostudio\TimelineAction\trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\TriggerMng.cpp">
-      <Filter>cocostudio\trigger</Filter>
+      <Filter>cocostudio\TimelineAction\trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\TriggerObj.cpp">
-      <Filter>cocostudio\trigger</Filter>
+      <Filter>cocostudio\TimelineAction\trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp">
@@ -1168,14 +1177,23 @@
     <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui\UIWebViewImpl-win32.cpp">
-      <Filter>ui\UIWidgets</Filter>
+    <ClCompile Include="..\..\extensions\assets-manager\AssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\assets-manager\Downloader.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\assets-manager\Manifest.cpp">
+      <Filter>extension\AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIWebView.cpp">
       <Filter>ui\UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\CCLight.cpp">
-      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\audio\AudioEngine.cpp">
       <Filter>audioengine</Filter>
@@ -1188,6 +1206,64 @@
     </ClCompile>
     <ClCompile Include="..\audio\win32\AudioPlayer.cpp">
       <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\CSParseBinary.pb.cc">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UILayoutComponent.cpp">
+      <Filter>ui\Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\extension_set.cc">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.cc">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\message_lite.cc">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\repeated_field.cc">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.cc">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.cc">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.cc">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_gcc.cc">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\common.cc">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\once.cc">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.cc">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="CCCamera.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="CCLight.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1310,6 +1386,9 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCClippingNode.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCClippingRectangleNode.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCComponent.h">
@@ -1729,6 +1808,9 @@
     <ClInclude Include="..\..\external\unzip\ioapi.h">
       <Filter>external\unzip</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\external\unzip\ioapi_mem.h">
+      <Filter>external\unzip</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
       <Filter>external\edtaa</Filter>
     </ClInclude>
@@ -1758,9 +1840,6 @@
     </ClInclude>
     <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCCamera.h">
-      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCPrimitive.h">
       <Filter>renderer</Filter>
@@ -1961,21 +2040,18 @@
       <Filter>cocostudio</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\TriggerBase.h">
-      <Filter>cocostudio\trigger</Filter>
+      <Filter>cocostudio\TimelineAction\trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\TriggerMng.h">
-      <Filter>cocostudio\trigger</Filter>
+      <Filter>cocostudio\TimelineAction\trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\TriggerObj.h">
-      <Filter>cocostudio\trigger</Filter>
+      <Filter>cocostudio\TimelineAction\trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h">
@@ -2314,17 +2390,26 @@
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui\UIWebViewImpl-win32.h">
-      <Filter>ui\UIWidgets</Filter>
+    <ClInclude Include="..\..\extensions\assets-manager\AssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\assets-manager\Downloader.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\assets-manager\Manifest.h">
+      <Filter>extension\AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView-inl.h">
       <Filter>ui\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView.h">
       <Filter>ui\UIWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCLight.h">
-      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\audio\include\AudioEngine.h">
       <Filter>audioengine</Filter>
@@ -2337,6 +2422,112 @@
     </ClInclude>
     <ClInclude Include="..\audio\win32\AudioPlayer.h">
       <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CSParseBinary.pb.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UILayoutComponent.h">
+      <Filter>ui\Layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\extension_set.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\message_lite.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\repeated_field.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite_inl.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\win32\config.h">
+      <Filter>cocostudio\json\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.h">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream_inl.h">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.h">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>cocostudio\json\protobuf-lite\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_arm_gcc.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_arm_qnx.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_atomicword_compat.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_macosx.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_mips_gcc.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_pnacl.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_gcc.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\common.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\hash.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\map-util.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\once.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\platform_macros.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stl_util.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\template_util.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\type_traits.h">
+      <Filter>cocostudio\json\protobuf-lite\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCamera.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCLight.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

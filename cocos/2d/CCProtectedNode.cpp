@@ -271,7 +271,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible)
+    if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }

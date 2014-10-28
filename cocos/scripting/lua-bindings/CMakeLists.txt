@@ -12,6 +12,7 @@ include_directories(
   ${cocos_root}/cocos/3d
   ${cocos_root}/cocos/editor-support/spine
   ${cocos_root}/cocos/editor-support/cocostudio
+  ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline
   ${cocos_root}/cocos/editor-support/cocosbuilder
   ${cocos_root}/cocos/editor-support
   ${cocos_root}/cocos/platform
@@ -42,6 +43,7 @@ if(MACOSX)
         ${cocos_root}/external/lua/luasocket/inet.c
         ${cocos_root}/external/lua/luasocket/io.c
         ${cocos_root}/external/lua/luasocket/luasocket.c
+        ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
         ${cocos_root}/external/lua/luasocket/mime.c
         ${cocos_root}/external/lua/luasocket/options.c
         ${cocos_root}/external/lua/luasocket/select.c
@@ -86,6 +88,7 @@ set(lua_bindings_manual_files
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
     manual/video/lua_cocos2dx_experimental_video_manual.cpp
+    manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     )
 
 set(lua_bindings_auto_files
@@ -101,6 +104,7 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_spine_auto.cpp
     auto/lua_cocos2dx_studio_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
+    auto/lua_cocos2dx_audioengine_auto.cpp
     )
 
 if(MACOSX)

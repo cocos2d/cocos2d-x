@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="APP_DLLS">
+    <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\angle\prebuilt\$(Platform)\</AngleBinPath>
+    <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\curl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</CurlBinPath>
+    <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</WebsocketsBinPath>
+    <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\sqlite3\libraries\$(COCOS2D_PLATFORM)\$(Platform)\</SQLiteBinPath>
+  </PropertyGroup>
+  <ItemGroup Label="ANGLE">
+    <None Include="$(AngleBinPath)libEGL.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(AngleBinPath)libGLESv2.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(WebsocketsBinPath)libwebsockets.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(SQLiteBinPath)sqlite3.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(CurlBinPath)libcurl.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(CurlBinPath)libeay32.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(CurlBinPath)ssleay32.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+</Project>

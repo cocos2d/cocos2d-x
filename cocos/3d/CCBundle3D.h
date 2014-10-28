@@ -26,7 +26,6 @@
 #define __CCBUNDLE3D_H__
 
 #include "3d/CCBundle3DData.h"
-#include "3d/3dExport.h"
 #include "3d/CCBundleReader.h"
 #include "json/document.h"
 
@@ -40,7 +39,7 @@ class Data;
  * c3t text file
  * c3b binary file
  */
-class CC_3D_DLL Bundle3D
+class CC_DLL Bundle3D
 {
 public:
     /**you can define yourself bundle and set it, use default bundle otherwise*/
@@ -115,7 +114,7 @@ protected:
     bool loadMaterialDataJson(MaterialData* materialdata){return true;}
     bool loadMaterialDataJson_0_1(MaterialData* materialdata){return true;}
     bool loadMaterialDataJson_0_2(MaterialData* materialdata){return true;}
-    bool loadAnimationDataJson(Animation3DData* animationdata);
+    bool loadAnimationDataJson(const std::string& id,Animation3DData* animationdata);
     /**
      * load data in binary
      * @param path The c3b file path
@@ -146,7 +145,7 @@ protected:
      * load animation data in binary
      * @param animationdata The animation data pointer
      */
-    bool loadAnimationDataBinary(Animation3DData* animationdata);
+    bool loadAnimationDataBinary(const std::string& id,Animation3DData* animationdata);
 
     bool checkIsBone(const std::string& name);
 

@@ -10,15 +10,18 @@
 -- @param self
         
 --------------------------------
--- 
--- @function [parent=#Scale9Sprite] updateWithSprite 
+-- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
+-- @overload self, cc.Sprite, rect_table, bool, rect_table         
+-- @function [parent=#Scale9Sprite] updateWithSprite
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #rect_table rect
 -- @param #bool rotated
+-- @param #vec2_table offset
+-- @param #size_table originalSize
 -- @param #rect_table capInsets
 -- @return bool#bool ret (return value: bool)
-        
+
 --------------------------------
 -- Returns the flag which indicates whether the widget is flipped horizontally or not.<br>
 -- It only flips the texture of the widget, and not the texture of the widget's children.<br>
@@ -68,7 +71,7 @@
 -- @param self
 -- @param #string spriteFrameName
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -86,13 +89,16 @@
 -- @overload self, cc.Sprite, rect_table, bool, rect_table         
 -- @overload self         
 -- @overload self, cc.Sprite, rect_table, rect_table         
+-- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
 -- @function [parent=#Scale9Sprite] init
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #rect_table rect
 -- @param #bool rotated
+-- @param #vec2_table offset
+-- @param #size_table originalSize
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -111,6 +117,7 @@
 -- @function [parent=#Scale9Sprite] setSpriteFrame 
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
+-- @param #rect_table capInsets
         
 --------------------------------
 -- 
@@ -157,7 +164,7 @@
 -- @param #string file
 -- @param #rect_table rect
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -178,7 +185,7 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -226,7 +233,7 @@
 -- @param #string file
 -- @param #rect_table rect
 -- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- @overload self, string, rect_table         
@@ -235,7 +242,7 @@
 -- @param self
 -- @param #string spriteFrameName
 -- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- @overload self, cc.SpriteFrame, rect_table         
@@ -244,7 +251,7 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (retunr value: ccui.Scale9Sprite)
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- 

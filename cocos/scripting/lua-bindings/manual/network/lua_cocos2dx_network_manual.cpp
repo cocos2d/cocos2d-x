@@ -53,9 +53,5 @@ int register_network_module(lua_State* L)
     }
     lua_pop(L, 1);
     
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedNetworkClass");
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedNetworkEnum");
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedNetworkFunc");
-    
     return 1;
 }

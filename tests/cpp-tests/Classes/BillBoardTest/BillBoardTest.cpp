@@ -25,7 +25,6 @@
 
 #include "BillBoardTest.h"
 #include "3d/CCBillBoard.h"
-#include "base/CCCamera.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -105,6 +104,24 @@ BillBoardTest::BillBoardTest()
         layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1(), Vec3(0.0f, 45.0f, 0.0f) ) ) );
     }
 
+    {
+        auto billboard = BillBoard::create("Images/Icon.png");
+        billboard->setScale(0.2f);
+        billboard->setPosition3D(Vec3(0.0f, 30.0f, 0.0f));
+
+        auto billboard2 = BillBoard::create("Images/r2.png");
+        billboard2->setPosition3D(Vec3(0.0f, 0.0f, 100.0f));
+        billboard->addChild(billboard2);
+        _billboards.push_back(billboard);
+        _billboards.push_back(billboard2);
+
+        auto sprite3d = Sprite3D::create("Sprite3DTest/orc.c3t");
+        sprite3d->setScale(2.0f);
+        sprite3d->addChild(billboard);
+        sprite3d->runAction( RepeatForever::create( RotateBy::create( 10.0f, Vec3(0.0f, 360.0f, 0.0f) ) ) );
+        _layerBillBorad->addChild(sprite3d);
+    }
+
     addNewBillBoradWithCoords(Vec3(20,5,0));
     addNewBillBoradWithCoords(Vec3(60,5,0));
     addNewBillBoradWithCoords(Vec3(100,5,0));
@@ -115,15 +132,15 @@ BillBoardTest::BillBoardTest()
     addNewAniBillBoradWithCoords(Vec3(-100,0,0));
     addNewAniBillBoradWithCoords(Vec3(-140,0,0));
     addNewAniBillBoradWithCoords(Vec3(-180,0,0));
-    _camera->setPosition3D(Vec3(0, 130, 230));
-    _camera->lookAt(Vec3(0,0,100), Vec3(0,1,0));
+    _camera->setPosition3D(Vec3(0, 100, 230));
+    _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
 
     TTFConfig ttfConfig("fonts/arial.ttf", 16);
     auto label1 = Label::createWithTTF(ttfConfig,"rotate+");
     auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,10));
     auto label2 = Label::createWithTTF(ttfConfig,"rotate-");
     auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(BillBoardTest::rotateCameraCallback,this,-10));
-    auto menu = Menu::create(menuItem1,menuItem2,NULL);
+    auto menu = Menu::create(menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2::ZERO);
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-160) );
     menuItem2->setPosition( Vec2( s.width-80, VisibleRect::top().y-190) );
@@ -137,7 +154,7 @@ BillBoardTest::BillBoardTest()
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-100) );
     menuItem2->setPosition( Vec2( s.width-80, VisibleRect::top().y-130) );
     
-    menu = Menu::create(menuItem1,menuItem2,NULL);
+    menu = Menu::create(menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2(0,0));
     this->addChild(menu, 10);
     menuCallback_orientedPoint(nullptr);

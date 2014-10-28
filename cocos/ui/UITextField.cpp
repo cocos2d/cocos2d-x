@@ -496,6 +496,10 @@ void TextField::setFontName(const std::string& name)
         _fontType = FontType::TTF;
     } else {
         _textFieldRenderer->setSystemFontName(name);
+        if (_fontType == FontType::TTF)
+        {
+            _textFieldRenderer->requestSystemFontRefresh();
+        }
         _fontType = FontType::SYSTEM;
     }
     _fontName = name;

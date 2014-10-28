@@ -38,11 +38,12 @@ TOLUA_API int  register_extension_module(lua_State* tolua_S);
 struct LuaAssetsManagerEventData
 {
     int value;
-
+    
     LuaAssetsManagerEventData(int _value = 0):value(_value)
     {
     }
 };
+
 
 struct LuaTableViewEventData
 {

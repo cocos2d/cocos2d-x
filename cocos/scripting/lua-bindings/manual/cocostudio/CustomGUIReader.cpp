@@ -1,7 +1,5 @@
 #include "CustomGUIReader.h"
 #include "CCLuaEngine.h"
-#include "base/ObjectFactory.h"
-#include "json/document.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 

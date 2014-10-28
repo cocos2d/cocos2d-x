@@ -45,6 +45,10 @@ namespace cocostudio
                                                 const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
         
+        virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
+        
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);        
+        
     };
 }
 

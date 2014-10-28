@@ -61,7 +61,7 @@
 -- @param #float stroke
 -- @param #color3b_table color
 -- @param #string path
--- @return MotionStreak#MotionStreak ret (retunr value: cc.MotionStreak)
+-- @return MotionStreak#MotionStreak ret (return value: cc.MotionStreak)
 
 --------------------------------
 -- 

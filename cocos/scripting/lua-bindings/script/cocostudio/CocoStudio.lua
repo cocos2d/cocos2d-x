@@ -1,11 +1,15 @@
-require "json"
-require "extern"
+
+if not json then
+    require "cocos.cocos2d.json"
+end
 
 ccs = ccs or {}
 
+require "cocos.cocostudio.StudioConstants"
+
 function ccs.sendTriggerEvent(event)
     local triggerObjArr = ccs.TriggerMng.getInstance():get(event)
-    
+
     if nil == triggerObjArr then
         return
     end
@@ -106,7 +110,7 @@ end
 function ccs.TriggerObj:detect()
     if (not self._enable) or (table.getn(self._cons) == 0) then
         return true
-    end 
+    end
 
     local ret = true
     local obj = nil
@@ -355,7 +359,7 @@ end
 
 function ccs.TriggerMng:removeTriggerObj(id)
     local obj = self.getTriggerObj(id)
-    
+
     if nil == obj then
         return false
     end

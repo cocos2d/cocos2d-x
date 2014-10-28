@@ -37,7 +37,7 @@ using namespace cocos2d;
 
 WNDPROC g_oldProc=NULL;
 bool g_landscape=false;
-bool g_windTop = true;
+bool g_windTop = false;
 CCSize g_screenSize;
 GLView* g_eglView=NULL;
 INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -339,7 +339,7 @@ void createSimulator(const char* viewName, float width, float height, bool isLan
         width = height;
         height = tmpvalue;
     }
-    g_windTop = true;
+    g_windTop = ConfigParser::getInstance()->isWindowTop();
 
     g_eglView = GLViewImpl::createWithRect(viewName,Rect(0,0,width,height),frameZoomFactor);
     auto director = Director::getInstance();

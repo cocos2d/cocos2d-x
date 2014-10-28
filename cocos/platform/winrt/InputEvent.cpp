@@ -24,13 +24,17 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "InputEvent.h"
-#include "CCGLViewImpl.h"
+#include "CCWinRTUtils.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#include "CCGLViewImpl-wp8.h"
+#else
+#include "CCGLViewImpl-winrt.h"
+#endif
+
 #include "base/CCEventAcceleration.h"
 
 NS_CC_BEGIN
-
-using namespace PhoneDirect3DXamlAppComponent;
-
 
 AccelerometerEvent::AccelerometerEvent(const Acceleration& event)
     : m_event(event)
@@ -86,9 +90,11 @@ void KeyboardEvent::execute()
     {
     case Cocos2dKeyEvent::Text:
     {
-        char szUtf8[256] = { 0 };
-        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR) m_text.Get()->Data(), -1, szUtf8, sizeof(szUtf8), NULL, NULL);
-        IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen - 1);
+        std::wstring w(m_text.Get()->Data());
+        std::u16string  s16(w.begin(),w.end());
+        std::string utf8String;
+        StringUtils::UTF16ToUTF8(s16, utf8String);
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText(utf8String.c_str(), utf8String.size());
         break;
     }
 
@@ -102,7 +108,6 @@ void KeyboardEvent::execute()
             IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
             break;
         case Cocos2dKeyEvent::Enter:
-            //SetFocus(false);
             IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
             break;
         default:
@@ -127,12 +132,27 @@ CustomInputEvent::CustomInputEvent(const std::function<void()>& fun)
 : m_fun(fun)
 {
 }
+
 void CustomInputEvent::execute()
 {
     m_fun();
 }
 
+UIEditBoxEvent::UIEditBoxEvent(Platform::Object^ sender, Platform::String^ text, Windows::Foundation::EventHandler<Platform::String^>^ handle) 
+    : m_sender(sender)
+    , m_text(text)
+    , m_handler(handle)
+{
 
+}
+
+void UIEditBoxEvent::execute()
+{
+    if (m_handler.Get())
+    {
+        m_handler.Get()->Invoke(m_sender.Get(), m_text.Get());
+    }
+}
 
 NS_CC_END
 

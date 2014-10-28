@@ -45,7 +45,6 @@ NS_CC_BEGIN
  * @{
  */
 
-struct _hashUniformEntry;
 class GLProgram;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
@@ -87,14 +86,9 @@ public:
         VERTEX_ATTRIB_TEX_COORD1,
         VERTEX_ATTRIB_TEX_COORD2,
         VERTEX_ATTRIB_TEX_COORD3,
-        VERTEX_ATTRIB_TEX_COORD4,
-        VERTEX_ATTRIB_TEX_COORD5,
-        VERTEX_ATTRIB_TEX_COORD6,
-        VERTEX_ATTRIB_TEX_COORD7,
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
-
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -169,10 +163,6 @@ public:
     static const char* ATTRIBUTE_NAME_TEX_COORD1;
     static const char* ATTRIBUTE_NAME_TEX_COORD2;
     static const char* ATTRIBUTE_NAME_TEX_COORD3;
-    static const char* ATTRIBUTE_NAME_TEX_COORD4;
-    static const char* ATTRIBUTE_NAME_TEX_COORD5;
-    static const char* ATTRIBUTE_NAME_TEX_COORD6;
-    static const char* ATTRIBUTE_NAME_TEX_COORD7;
     static const char* ATTRIBUTE_NAME_NORMAL;
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;
@@ -184,7 +174,7 @@ public:
      * @lua initWithString
      */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CCGLProgram with precompiled shader program */
     static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
@@ -349,10 +339,9 @@ protected:
     GLuint            _vertShader;
     GLuint            _fragShader;
     GLint             _builtInUniforms[UNIFORM_MAX];
-    struct _hashUniformEntry* _hashForUniforms;
     bool              _hasShaderCompiler;
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     std::string       _shaderId;
 #endif
 
@@ -369,6 +358,7 @@ protected:
 
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
+    std::unordered_map<GLint, GLvoid*> _hashForUniforms;
 };
 
 NS_CC_END

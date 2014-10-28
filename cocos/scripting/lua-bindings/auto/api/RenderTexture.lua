@@ -86,7 +86,7 @@
 -- @param #int format
 -- @param #bool isRGBA
 -- @param #function callback
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
@@ -166,7 +166,7 @@
 -- @param #int h
 -- @param #int format
 -- @param #unsigned int depthStencilFormat
--- @return bool#bool ret (retunr value: bool)
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- @overload self, int, int, int         
@@ -178,7 +178,7 @@
 -- @param #int h
 -- @param #int format
 -- @param #unsigned int depthStencilFormat
--- @return RenderTexture#RenderTexture ret (retunr value: cc.RenderTexture)
+-- @return RenderTexture#RenderTexture ret (return value: cc.RenderTexture)
 
 --------------------------------
 -- 

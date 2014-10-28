@@ -1278,8 +1278,8 @@ local LabelCrashTest = {}
 function LabelCrashTest.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("New Label + .TTF")
-    Helper.subtitleLabel:setString("Testing rendering base on DistanceField")
+    Helper.titleLabel:setString("New Label Crash Test")
+    Helper.subtitleLabel:setString("Not crash and show [Test123] when using unknown character.")
 
     local ttfConfig = {}
     ttfConfig.fontFilePath = "fonts/arial.ttf"

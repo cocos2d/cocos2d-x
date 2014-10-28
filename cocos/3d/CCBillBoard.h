@@ -26,14 +26,13 @@
 #define __CCBILLBOARD_H__
 
 #include "2d/CCSprite.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
 
 /**
  * Inherit from Sprite, achieve BillBoard.
  */
-class CC_3D_DLL BillBoard : public Sprite
+class CC_DLL BillBoard : public Sprite
 {
 public:
 
@@ -100,7 +99,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     Mat4 _camWorldMat;
-    Mat4 _transform;
+    Mat4 _mvTransform;
     Mat4 _billboardTransform;
     
     float _zDepthInView;

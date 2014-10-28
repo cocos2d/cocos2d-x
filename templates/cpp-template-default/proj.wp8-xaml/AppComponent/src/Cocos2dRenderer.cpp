@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "Cocos2dRenderer.h"
 #include "cocos2d.h"
 #include "CCApplication.h"
-#include "CCGLViewImpl.h"
+#include "CCGLViewImpl-wp8.h"
 #include "AppDelegate.h"
 #include <ppltasks.h>
 
@@ -35,7 +35,6 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
-using namespace PhoneDirect3DXamlAppComponent;
 
 USING_NS_CC;
 
@@ -56,11 +55,11 @@ void Cocos2dRenderer::CreateGLResources()
         GLViewImpl* glview = GLViewImpl::create("Test Cpp");
 	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height,m_orientation);
         director->setOpenGLView(glview);
-        CCApplication::getInstance()->run();
         glview->SetXamlEventDelegate(m_delegate);
         glview->SetXamlMessageBoxDelegate(m_messageBoxDelegate);
         glview->SetXamlEditBoxDelegate(m_editBoxDelegate);
-   }
+        CCApplication::getInstance()->run();
+    }
     else
     {
         cocos2d::GL::invalidateStateCache();
@@ -71,7 +70,7 @@ void Cocos2dRenderer::CreateGLResources()
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
         director->setGLDefaultValues();
-  }
+    }
 
     m_loadingComplete = true;
 }
@@ -151,7 +150,7 @@ void Cocos2dRenderer::OnCocos2dKeyEvent(Cocos2dKeyEvent event)
 
 }
 
-void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate)
+void Cocos2dRenderer::SetXamlEventDelegate(Cocos2dEventDelegate^ delegate)
 {
     m_delegate = delegate;
     GLViewImpl* eglView = GLViewImpl::sharedOpenGLView();
@@ -161,7 +160,7 @@ void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2
     }
 }
 
-void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate)
+void Cocos2dRenderer::SetXamlMessageBoxDelegate(Cocos2dMessageBoxDelegate^ delegate)
 {
     m_messageBoxDelegate = delegate;
     GLViewImpl* eglView = GLViewImpl::sharedOpenGLView();
@@ -171,7 +170,7 @@ void Cocos2dRenderer::SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::C
     }
 }
 
-void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate)
+void Cocos2dRenderer::SetXamlEditBoxDelegate(Cocos2dEditBoxDelegate^ delegate)
 {
     m_editBoxDelegate = delegate;
     GLViewImpl* eglView = GLViewImpl::sharedOpenGLView();
@@ -181,7 +180,7 @@ void Cocos2dRenderer::SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Coco
     }
 }
 
-void Cocos2dRenderer::SetXamlOpenURLDelegate(PhoneDirect3DXamlAppComponent::Cocos2dOpenURLDelegate^ delegate)
+void Cocos2dRenderer::SetXamlOpenURLDelegate(Cocos2dOpenURLDelegate^ delegate)
 {
     m_openURLDelegate = delegate;
     Application* app = Application::getInstance();

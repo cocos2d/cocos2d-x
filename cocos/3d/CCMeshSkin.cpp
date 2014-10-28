@@ -146,4 +146,15 @@ Bone3D* MeshSkin::getRootBone() const
     return root;
 }
 
+const Mat4& MeshSkin::getInvBindPose(const Bone3D* bone)
+{
+    for (ssize_t i = 0; i < _skinBones.size(); i++) {
+        if (_skinBones.at(i) == bone)
+        {
+            return _invBindPoses.at(i);
+        }
+    }
+    return Mat4::IDENTITY;
+}
+
 NS_CC_END

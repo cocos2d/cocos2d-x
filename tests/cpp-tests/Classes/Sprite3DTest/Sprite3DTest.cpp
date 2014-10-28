@@ -29,7 +29,6 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
-#include "base/CCLight.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -1021,7 +1020,7 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
     item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
     item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
-    auto pMenu1 = CCMenu::create(item1,item2,item3,item4,item5,NULL);
+    auto pMenu1 = CCMenu::create(item1, item2, item3, item4, item5, nullptr);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
     
@@ -1260,20 +1259,20 @@ void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
 
 void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto touch: touches)
+    for (const auto& touch: touches)
     {
         auto location = touch->getLocationInView();
-        
-        if(_obb.size() > 0)
+        auto obbSize = _obb.size();
+        if(obbSize)
         {
             _intersetList.clear();
             Ray ray;
             calculateRayByLocationInView(&ray,location);
-            for(int i = 0; i < _obb.size(); i++)
+            for(decltype(obbSize) i = 0; i < obbSize; i++)
             {
                 if(ray.intersects(_obb[i]))
                 {
-                    _intersetList.insert(i);
+                    _intersetList.insert((int)i);
                     return;
                 }
             }
@@ -1288,13 +1287,14 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesEnded(const std::vector<Touch*>& t
 
 void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto touch: touches)
+    for (const auto& touch: touches)
     {
-        auto location = touch->getLocation();
-        
-        for(int i = 0; i < _obb.size(); i++)
+        auto location = touch->getLocation();       
+        auto obbSize = _obb.size();
+
+        for(decltype(obbSize) i = 0; i < obbSize; i++)
         {
-            if(_intersetList.find(i) != _intersetList.end())
+            if(_intersetList.find((int)i) != _intersetList.end())
                 _obb[i]._center = Vec3(location.x,location.y,0);
         }
     }
@@ -1329,7 +1329,8 @@ void Sprite3DWithOBBPerfromanceTest::update(float dt)
     if(_obb.size() > 0)
     {
         _drawOBB->clear();
-        for(int i =0; i < _obb.size(); i++)
+        auto obbSize = _obb.size();
+        for(decltype(obbSize) i =0; i < obbSize; i++)
         {
             Vec3 corners[8] = {};
             _obb[i].getCorners(corners);
@@ -1446,8 +1447,7 @@ void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, cons
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
-    Mat4 mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec3 src = Vec3(location.x, location.y, -1);
     Vec3 nearPoint;

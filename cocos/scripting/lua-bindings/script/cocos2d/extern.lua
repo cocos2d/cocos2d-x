@@ -1,3 +1,4 @@
+
 function clone(object)
     local lookup_table = {}
     local function _copy(object)
@@ -90,4 +91,3 @@ function performWithDelay(node, callback, delay)
     node:runAction(sequence)
     return sequence
 end
-

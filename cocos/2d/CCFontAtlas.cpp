@@ -67,7 +67,7 @@ FontAtlas::FontAtlas(Font &theFont)
         auto outlineSize = fontTTf->getOutlineSize();
         if(outlineSize > 0)
         {
-            _commonLineHeight += 2 * outlineSize * CC_CONTENT_SCALE_FACTOR();
+            _commonLineHeight += 2 * outlineSize;
             _currentPageDataSize *= 2;
         }    
 

@@ -103,7 +103,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
                 ActionObject* action = new (std::nothrow) ActionObject();
                 action->autorelease();
                 
-                action->initWithBinary(cocoLoader, actionNode->GetChildArray(cocoLoader), root);
+                action->initWithBinary(cocoLoader, &actionNode->GetChildArray(cocoLoader)[i], root);
                 
                 actionList.pushBack(action);
             }
@@ -115,7 +115,11 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 
 ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* actionName)
 {
-	auto iterator = _actionDic.find(jsonName);
+	std::string path = jsonName;
+	ssize_t pos = path.find_last_of("/");
+	std::string fileName = path.substr(pos+1,path.length());
+	CCLOG("find filename == %s",fileName.c_str());
+	auto iterator = _actionDic.find(fileName);
 	if (iterator == _actionDic.end())
 	{
 		return nullptr;

@@ -37,7 +37,7 @@ static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
-static const float ZOOM_ACTION_TIME_STEP = 0.05;
+static const float ZOOM_ACTION_TIME_STEP = 0.05f;
     
 IMPLEMENT_CLASS_GUI_INFO(Button)
     
@@ -192,6 +192,20 @@ bool Button::isScale9Enabled()const
 
 void Button::ignoreContentAdaptWithSize(bool ignore)
 {
+    if (_unifySize)
+    {
+        if (_scale9Enabled)
+        {
+            ProtectedNode::setContentSize(_customSize);
+        }
+        else
+        {
+            Size s = getVirtualRendererSize();
+            ProtectedNode::setContentSize(s);
+        }
+        onSizeChanged();
+        return;
+    }
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
         Widget::ignoreContentAdaptWithSize(ignore);
@@ -310,12 +324,29 @@ void Button::setCapInsets(const Rect &capInsets)
 
 void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
 {
-    _capInsetsNormal = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_normalTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_normalTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsNormal = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonNormalRenderer->setCapInsets(capInsets);
+    _buttonNormalRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsNormalRenderer()const
@@ -325,12 +356,29 @@ const Rect& Button::getCapInsetsNormalRenderer()const
 
 void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
 {
-    _capInsetsPressed = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_pressedTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_pressedTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsPressed = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonClickedRenderer->setCapInsets(capInsets);
+    _buttonClickedRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsPressedRenderer()const
@@ -340,12 +388,29 @@ const Rect& Button::getCapInsetsPressedRenderer()const
 
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
 {
-    _capInsetsDisabled = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_disabledTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_disabledTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsDisabled = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonDisableRenderer->setCapInsets(capInsets);
+    _buttonDisableRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsDisabledRenderer()const
@@ -374,11 +439,19 @@ void Button::onPressStateChangedToNormal()
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
-        _titleRenderer->stopAllActions();
-        _titleRenderer->setScaleX(_normalTextureScaleXInSize);
-        _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+        if (_scale9Enabled)
+        {
+            _buttonNormalRenderer->setColor(Color3B::WHITE);
+        }
+        else
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            
+            _titleRenderer->stopAllActions();
+            _titleRenderer->setScaleX(_normalTextureScaleXInSize);
+            _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+        }
     }
 }
 
@@ -457,6 +530,13 @@ void Button::updateTitleLocation()
     _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
 }
 
+void Button::updateContentSize()
+{
+  if (_ignoreSize) {
+      this->setContentSize(getVirtualRendererSize());
+  }
+}
+
 void Button::onSizeChanged()
 {
     Widget::onSizeChanged();
@@ -516,7 +596,11 @@ Node* Button::getVirtualRenderer()
 
 void Button::normalTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _buttonNormalRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -554,7 +638,11 @@ void Button::normalTextureScaleChangedWithSize()
 
 void Button::pressedTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _buttonClickedRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -591,7 +679,11 @@ void Button::pressedTextureScaleChangedWithSize()
 
 void Button::disabledTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+    if (_unifySize)
+    {
+        _buttonDisableRenderer->setPreferredSize(_contentSize);
+    }
+    else if (_ignoreSize)
     {
         if (!_scale9Enabled)
         {
@@ -630,6 +722,7 @@ void Button::setPressedActionEnabled(bool enabled)
 void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
+    updateContentSize();
 }
 
 const std::string& Button::getTitleText() const
@@ -657,6 +750,7 @@ void Button::setTitleFontSize(float size)
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
     }
+    updateContentSize();
     _fontSize = size;
 }
 
@@ -686,6 +780,10 @@ void Button::setTitleFontName(const std::string& fontName)
         _type = FontType::TTF;
     } else{
         _titleRenderer->setSystemFontName(fontName);
+        if (_type == FontType::TTF)
+        {
+            _titleRenderer->requestSystemFontRefresh();
+        }
         _type = FontType::SYSTEM;
     }
     _fontName = fontName;

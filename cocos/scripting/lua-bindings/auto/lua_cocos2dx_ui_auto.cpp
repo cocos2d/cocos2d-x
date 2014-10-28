@@ -2614,6 +2614,52 @@ int lua_cocos2dx_ui_Widget_isBright(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Widget_setUnifySizeEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Widget* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Widget*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Widget_setUnifySizeEnabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "ccui.Widget:setUnifySizeEnabled");
+        if(!ok)
+            return 0;
+        cobj->setUnifySizeEnabled(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Widget:setUnifySizeEnabled",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Widget_setUnifySizeEnabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Widget_isPropagateTouchEvents(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3491,6 +3537,7 @@ int lua_register_cocos2dx_ui_Widget(lua_State* tolua_S)
         tolua_function(tolua_S,"setFocusEnabled",lua_cocos2dx_ui_Widget_setFocusEnabled);
         tolua_function(tolua_S,"getBottomBoundary",lua_cocos2dx_ui_Widget_getBottomBoundary);
         tolua_function(tolua_S,"isBright",lua_cocos2dx_ui_Widget_isBright);
+        tolua_function(tolua_S,"setUnifySizeEnabled",lua_cocos2dx_ui_Widget_setUnifySizeEnabled);
         tolua_function(tolua_S,"isPropagateTouchEvents",lua_cocos2dx_ui_Widget_isPropagateTouchEvents);
         tolua_function(tolua_S,"getCurrentFocusedWidget",lua_cocos2dx_ui_Widget_getCurrentFocusedWidget);
         tolua_function(tolua_S,"requestFocus",lua_cocos2dx_ui_Widget_requestFocus);
@@ -16553,7 +16600,7 @@ int lua_cocos2dx_ui_Helper_getSubStringOfUTF8String(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
+int lua_cocos2dx_ui_Helper_changeLayoutSystemActiveState(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -16568,23 +16615,20 @@ int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
 
     argc = lua_gettop(tolua_S) - 1;
 
-    if (argc == 2)
+    if (argc == 1)
     {
-        cocos2d::ui::Widget* arg0;
-        int arg1;
-        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0);
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.Helper:seekWidgetByTag");
+        bool arg0;
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "ccui.Helper:changeLayoutSystemActiveState");
         if(!ok)
             return 0;
-        cocos2d::ui::Widget* ret = cocos2d::ui::Helper::seekWidgetByTag(arg0, arg1);
-        object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
-        return 1;
+        cocos2d::ui::Helper::changeLayoutSystemActiveState(arg0);
+        return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:seekWidgetByTag",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:changeLayoutSystemActiveState",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_seekWidgetByTag'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_changeLayoutSystemActiveState'.",&tolua_err);
 #endif
     return 0;
 }
@@ -16658,6 +16702,73 @@ int lua_cocos2dx_ui_Helper_seekWidgetByName(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        cocos2d::ui::Widget* arg0;
+        int arg1;
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0);
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.Helper:seekWidgetByTag");
+        if(!ok)
+            return 0;
+        cocos2d::ui::Widget* ret = cocos2d::ui::Helper::seekWidgetByTag(arg0, arg1);
+        object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:seekWidgetByTag",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_seekWidgetByTag'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ui_Helper_doLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::Node* arg0;
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        if(!ok)
+            return 0;
+        cocos2d::ui::Helper::doLayout(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:doLayout",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_doLayout'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_ui_Helper_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Helper)");
@@ -16671,9 +16782,11 @@ int lua_register_cocos2dx_ui_Helper(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Helper");
         tolua_function(tolua_S,"getSubStringOfUTF8String", lua_cocos2dx_ui_Helper_getSubStringOfUTF8String);
-        tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
+        tolua_function(tolua_S,"changeLayoutSystemActiveState", lua_cocos2dx_ui_Helper_changeLayoutSystemActiveState);
         tolua_function(tolua_S,"seekActionWidgetByActionTag", lua_cocos2dx_ui_Helper_seekActionWidgetByActionTag);
         tolua_function(tolua_S,"seekWidgetByName", lua_cocos2dx_ui_Helper_seekWidgetByName);
+        tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
+        tolua_function(tolua_S,"doLayout", lua_cocos2dx_ui_Helper_doLayout);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::ui::Helper).name();
     g_luaType[typeName] = "ccui.Helper";
@@ -18022,48 +18135,79 @@ int lua_cocos2dx_ui_Scale9Sprite_updateWithSprite(lua_State* tolua_S)
     int argc = 0;
     cocos2d::ui::Scale9Sprite* cobj = nullptr;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
-
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"ccui.Scale9Sprite",0,&tolua_err)) goto tolua_lerror;
 #endif
-
     cobj = (cocos2d::ui::Scale9Sprite*)tolua_tousertype(tolua_S,1,0);
-
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Scale9Sprite_updateWithSprite'", nullptr);
         return 0;
     }
 #endif
-
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 4) 
-    {
-        cocos2d::Sprite* arg0;
-        cocos2d::Rect arg1;
-        bool arg2;
-        cocos2d::Rect arg3;
+    do{
+        if (argc == 6) {
+            cocos2d::Sprite* arg0;
+            ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+            if (!ok) { break; }
+            cocos2d::Rect arg1;
+            ok &= luaval_to_rect(tolua_S, 3, &arg1, "ccui.Scale9Sprite:updateWithSprite");
 
-        ok &= luaval_to_rect(tolua_S, 3, &arg1, "ccui.Scale9Sprite:updateWithSprite");
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccui.Scale9Sprite:updateWithSprite");
 
-        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccui.Scale9Sprite:updateWithSprite");
+            if (!ok) { break; }
+            cocos2d::Vec2 arg3;
+            ok &= luaval_to_vec2(tolua_S, 5, &arg3, "ccui.Scale9Sprite:updateWithSprite");
 
-        ok &= luaval_to_rect(tolua_S, 5, &arg3, "ccui.Scale9Sprite:updateWithSprite");
-        if(!ok)
-            return 0;
-        bool ret = cobj->updateWithSprite(arg0, arg1, arg2, arg3);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Scale9Sprite:updateWithSprite",argc, 4);
+            if (!ok) { break; }
+            cocos2d::Size arg4;
+            ok &= luaval_to_size(tolua_S, 6, &arg4, "ccui.Scale9Sprite:updateWithSprite");
+
+            if (!ok) { break; }
+            cocos2d::Rect arg5;
+            ok &= luaval_to_rect(tolua_S, 7, &arg5, "ccui.Scale9Sprite:updateWithSprite");
+
+            if (!ok) { break; }
+            bool ret = cobj->updateWithSprite(arg0, arg1, arg2, arg3, arg4, arg5);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 4) {
+            cocos2d::Sprite* arg0;
+            ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+
+            if (!ok) { break; }
+            cocos2d::Rect arg1;
+            ok &= luaval_to_rect(tolua_S, 3, &arg1, "ccui.Scale9Sprite:updateWithSprite");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccui.Scale9Sprite:updateWithSprite");
+
+            if (!ok) { break; }
+            cocos2d::Rect arg3;
+            ok &= luaval_to_rect(tolua_S, 5, &arg3, "ccui.Scale9Sprite:updateWithSprite");
+
+            if (!ok) { break; }
+            bool ret = cobj->updateWithSprite(arg0, arg1, arg2, arg3);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.Scale9Sprite:updateWithSprite",argc, 4);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -18566,7 +18710,39 @@ int lua_cocos2dx_ui_Scale9Sprite_init(lua_State* tolua_S)
         }
     }while(0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.Scale9Sprite:init",argc, 3);
+    do{
+        if (argc == 6) {
+            cocos2d::Sprite* arg0;
+            ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+
+            if (!ok) { break; }
+            cocos2d::Rect arg1;
+            ok &= luaval_to_rect(tolua_S, 3, &arg1, "ccui.Scale9Sprite:init");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccui.Scale9Sprite:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg3;
+            ok &= luaval_to_vec2(tolua_S, 5, &arg3, "ccui.Scale9Sprite:init");
+
+            if (!ok) { break; }
+            cocos2d::Size arg4;
+            ok &= luaval_to_size(tolua_S, 6, &arg4, "ccui.Scale9Sprite:init");
+
+            if (!ok) { break; }
+            cocos2d::Rect arg5;
+            ok &= luaval_to_rect(tolua_S, 7, &arg5, "ccui.Scale9Sprite:init");
+
+            if (!ok) { break; }
+            bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.Scale9Sprite:init",argc, 6);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -18700,6 +18876,19 @@ int lua_cocos2dx_ui_Scale9Sprite_setSpriteFrame(lua_State* tolua_S)
         if(!ok)
             return 0;
         cobj->setSpriteFrame(arg0);
+        return 0;
+    }
+    if (argc == 2) 
+    {
+        cocos2d::SpriteFrame* arg0;
+        cocos2d::Rect arg1;
+
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+
+        ok &= luaval_to_rect(tolua_S, 3, &arg1, "ccui.Scale9Sprite:setSpriteFrame");
+        if(!ok)
+            return 0;
+        cobj->setSpriteFrame(arg0, arg1);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Scale9Sprite:setSpriteFrame",argc, 1);

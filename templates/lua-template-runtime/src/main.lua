@@ -1,6 +1,9 @@
 
-require "Cocos2d"
-require "extern"
+cc.FileUtils:getInstance():addSearchPath("src")
+cc.FileUtils:getInstance():addSearchPath("res")
+
+-- CC_USE_DEPRECATED_API = true
+require "cocos.init"
 
 -- cclog
 local cclog = function(...)
@@ -31,8 +34,6 @@ local function main()
     --set FPS. the default value is 1.0/60 if you don't call this
     director:setAnimationInterval(1.0 / 60)
     
-    cc.FileUtils:getInstance():addSearchPath("src")
-    cc.FileUtils:getInstance():addSearchPath("res")
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
     
     --create scene 

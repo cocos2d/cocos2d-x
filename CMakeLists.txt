@@ -87,7 +87,7 @@ if(WINDOWS)
 
   ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
   set(PLATFORM_FOLDER win32)
-elseif(MACOSX)
+elseif(MACOSX OR APPLE)
   ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
   ADD_DEFINITIONS (-DUSE_FILE32API)
   set(PLATFORM_FOLDER mac)
@@ -122,12 +122,12 @@ else()
   message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
 endif()
 
-
 include_directories(
   ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/deprecated
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/extensions
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
@@ -152,8 +152,8 @@ endif()
 
 
 # NB
-# we need to return these to libraries to their official state rather than 
-# having our custom cocos2d namespace so that we may use system versions if 
+# we need to return these to libraries to their official state rather than
+# having our custom cocos2d namespace so that we may use system versions if
 # the platform provides them. It is very important that this
 # is done before we make prebuilt versions of these two libs
 
@@ -163,6 +163,14 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/../external/xxhash
 
 )
+
+if(LINUX OR APPLE)
+
+  find_package(GLFW3 REQUIRED)
+  message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
+  include_directories(${GLFW3_INCLUDE_DIRS})
+
+endif(LINUX OR APPLE)
 
 
 if(NOT MINGW)
@@ -180,8 +188,7 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
-
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
   )
 
@@ -189,7 +196,7 @@ if(NOT MINGW)
 #i.e we should not need to include an extra dir of /freetype2
 
   link_directories(
-
+    ${PLATFORM_LINK_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
@@ -206,6 +213,14 @@ if(NOT MINGW)
 
 endif()
 
+# build for 3rd party libraries
+if(LINUX OR APPLE)
+add_subdirectory(external/Box2D)
+add_subdirectory(external/unzip)
+add_subdirectory(external/xxhash)
+add_subdirectory(external/tinyxml2)
+add_subdirectory(external/protobuf-lite)
+endif()
 
 # libcocos2d.a
 add_subdirectory(cocos)

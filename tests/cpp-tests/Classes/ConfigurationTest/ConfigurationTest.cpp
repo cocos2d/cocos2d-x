@@ -105,7 +105,6 @@ void ConfigurationLoadConfig::onEnter()
 	Configuration::getInstance()->loadConfigFile("configs/config-test-ok.plist");
     std::string config = Configuration::getInstance()->getInfo();
     log("%s\n", config.c_str());
-
 }
 
 std::string ConfigurationLoadConfig::subtitle() const
@@ -122,8 +121,8 @@ void ConfigurationQuery::onEnter()
 {
     ConfigurationBase::onEnter();
 
-	CCLOG("cocos2d version: %s", Configuration::getInstance()->getValue("cocos2d.x.version").asString().c_str() );
-	CCLOG("OpenGL version: %s", Configuration::getInstance()->getValue("gl.version").asString().c_str() );
+	log("cocos2d version: %s", Configuration::getInstance()->getValue("cocos2d.x.version").asString().c_str() );
+	log("OpenGL version: %s", Configuration::getInstance()->getValue("gl.version").asString().c_str() );
 }
 
 std::string ConfigurationQuery::subtitle() const
@@ -159,21 +158,21 @@ void ConfigurationDefault::onEnter()
 
     std::string c_value = Configuration::getInstance()->getValue("invalid.key", Value("no key")).asString();
 	if( c_value != "no key" )
-		CCLOG("1. Test failed!");
+		log("1. Test failed!");
 	else
-		CCLOG("1. Test OK!");
+		log("1. Test OK!");
 
 	bool b_value = Configuration::getInstance()->getValue("invalid.key", Value(true)).asBool();
 	if( ! b_value )
-		CCLOG("2. Test failed!");
+		log("2. Test failed!");
 	else
-		CCLOG("2. Test OK!");
+		log("2. Test OK!");
 
 	double d_value = Configuration::getInstance()->getValue("invalid.key", Value(42.42)).asDouble();
 	if( d_value != 42.42 )
-		CCLOG("3. Test failed!");
+		log("3. Test failed!");
 	else
-		CCLOG("3. Test OK!");
+		log("3. Test OK!");
 
 }
 

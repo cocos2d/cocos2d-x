@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "2d/CCActionManager.h"
 #include "2d/CCScene.h"
 #include "2d/CCComponent.h"
@@ -1100,6 +1100,21 @@ void Node::removeAllChildren()
     this->removeAllChildrenWithCleanup(true);
 }
 
+#if CC_USE_PHYSICS
+void Node::removeFromPhysicsWorld()
+{
+    if (_physicsBody != nullptr)
+    {
+        _physicsBody->removeFromWorld();
+    }
+
+    for (auto child : _children)
+    {
+        child->removeFromPhysicsWorld();
+    }
+}
+#endif
+
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
@@ -1115,10 +1130,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         }
 
 #if CC_USE_PHYSICS
-        if (child->_physicsBody != nullptr)
-        {
-            child->_physicsBody->removeFromWorld();
-        }
+        child->removeFromPhysicsWorld();
 #endif
 
         if (cleanup)
@@ -1144,11 +1156,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
     }
     
 #if CC_USE_PHYSICS
-    if (child->_physicsBody != nullptr)
-    {
-        child->_physicsBody->removeFromWorld();
-    }
-    
+    child->removeFromPhysicsWorld();
 #endif
 
     // If you don't do cleanup, the child's actions will not get removed and the

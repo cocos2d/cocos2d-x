@@ -30,7 +30,7 @@ g_guisTests[] =
         }
     },
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     {
         "WebViewTest",
         [](Ref* sender)
@@ -44,7 +44,7 @@ g_guisTests[] =
         }
     },
 #endif
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     {
         "EditBox Test",
         [](Ref* sender)
@@ -145,7 +145,7 @@ g_guisTests[] =
         }
 	},
     {
-        "TextAtalsTest",
+        "TextAtlasTest",
         [](Ref* sender)
         {
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
@@ -211,7 +211,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
             sceneManager->setMinUISceneId(kUIScrollViewTest_Vertical);
-            sceneManager->setMaxUISceneId(kUIScrollViewNestTest);
+            sceneManager->setMaxUISceneId(kUIScrollViewRotated);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -223,7 +223,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIPageViewTest);
             sceneManager->setMinUISceneId(kUIPageViewTest);
-            sceneManager->setMaxUISceneId(kUIPageViewTouchPropagationTest);
+            sceneManager->setMaxUISceneId(kUIPageViewDynamicAddAndRemoveTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

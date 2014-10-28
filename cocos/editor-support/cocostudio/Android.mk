@@ -58,25 +58,20 @@ ActionTimeline/CCNodeReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
-ActionTimeline/CCActionTimeline.cpp
+ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CSLoader.cpp \
+CSParseBinary.pb.cc 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../../external
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/../../../external \
-$(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/WidgetReader \
-$(LOCAL_PATH)/../../platform/android \
-$(LOCAL_PATH)/../../../external/tinyxml2 \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
+                    $(LOCAL_PATH)/WidgetReader
 
 LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_STATIC_LIBRARIES += cocos_extension_static
-LOCAL_STATIC_LIBRARIES += cocos2dx_internal_static
+LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
 
 include $(BUILD_STATIC_LIBRARY)
-

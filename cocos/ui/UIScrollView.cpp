@@ -123,6 +123,10 @@ void ScrollView::initRenderer()
 {
     Layout::initRenderer();
     _innerContainer = Layout::create();
+    _innerContainer->setColor(Color3B(255,255,255));
+    _innerContainer->setOpacity(255);
+    _innerContainer->setCascadeColorEnabled(true);
+    _innerContainer->setCascadeOpacityEnabled(true);
     addProtectedChild(_innerContainer, 1, 1);
 }
 
@@ -1418,10 +1422,12 @@ void ScrollView::endRecordSlidAction()
         }
         float totalDis = 0.0f;
         Vec2 dir;
+        Vec2 touchEndPositionInNodeSpace = this->convertToNodeSpace(_touchEndPosition);
+        Vec2 touchBeganPositionInNodeSpace = this->convertToNodeSpace(_touchBeganPosition);
         switch (_direction)
         {
             case Direction::VERTICAL:
-                totalDis = _touchEndPosition.y - _touchBeganPosition.y;
+                totalDis = touchEndPositionInNodeSpace.y - touchBeganPositionInNodeSpace.y;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_DOWN;
@@ -1432,7 +1438,7 @@ void ScrollView::endRecordSlidAction()
                 }
                 break;
             case Direction::HORIZONTAL:
-                totalDis = _touchEndPosition.x - _touchBeganPosition.x;
+                totalDis = touchEndPositionInNodeSpace.x - touchBeganPositionInNodeSpace.x;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_LEFT;
@@ -1444,7 +1450,7 @@ void ScrollView::endRecordSlidAction()
                 break;
             case Direction::BOTH:
             {
-                Vec2 subVector = _touchEndPosition - _touchBeganPosition;
+                Vec2 subVector = touchEndPositionInNodeSpace - touchBeganPositionInNodeSpace;
                 totalDis = subVector.getLength();
                 dir = subVector.getNormalized();
                 break;
@@ -1466,7 +1472,9 @@ void ScrollView::handlePressLogic(Touch *touch)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
-    Vec2 delta = touch->getLocation() - touch->getPreviousLocation();
+    Vec2 touchPositionInNodeSpace = this->convertToNodeSpace(touch->getLocation());
+    Vec2 previousTouchPositionInNodeSpace = this->convertToNodeSpace(touch->getPreviousLocation());
+    Vec2 delta = touchPositionInNodeSpace - previousTouchPositionInNodeSpace;
     switch (_direction)
     {
         case Direction::VERTICAL: // vertical
@@ -1821,8 +1829,6 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
         return Widget::findNextFocusedWidget(direction, current);
     }
 }
-    
-
 }
 
 NS_CC_END
