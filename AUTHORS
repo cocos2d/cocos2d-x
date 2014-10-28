@@ -1045,7 +1045,9 @@ Developers:
         
     Svenito
         Add greater than operator to Vec2
-    
+        
+    liamcindy
+        update ui button size changed logic
     
 Retired Core Developers:
     WenSheng Yang
