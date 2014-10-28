@@ -527,6 +527,12 @@ void PageView::handleReleaseLogic(Touch *touch)
 
 void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *touch)
 {
+    if(!_touchEnabled && !_isInterceptTouch) 
+    {  
+        Layout::interceptTouchEvent(event, sender, touch);
+        return;
+    }
+
     Vec2 touchPoint = touch->getLocation();
     
     switch (event)
