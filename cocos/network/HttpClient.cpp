@@ -402,7 +402,7 @@ static HttpTaskQueue* getBackendTaskQueue() {
     return httpBackend.getTaskQueue();
 }
 
-static HttpClient *_pHttpClient;
+static HttpClient *_pHttpClient = nullptr;
 
 // HttpClient implementation
 HttpClient* HttpClient::getInstance()
