@@ -37,7 +37,7 @@ class Direct3DContentProvider : public Microsoft::WRL::RuntimeClass<
 		IDrawingSurfaceBackgroundContentProviderNative>
 {
 public:
-	Direct3DContentProvider(PhoneDirect3DXamlAppComponent::Direct3DInterop^ controller);
+	Direct3DContentProvider(cocos2d::Direct3DInterop^ controller);
 
 	// IDrawingSurfaceContentProviderNative
 	HRESULT STDMETHODCALLTYPE Connect(_In_ IDrawingSurfaceRuntimeHostNative* host, _In_ ID3D11Device1* device);
@@ -47,6 +47,6 @@ public:
 	HRESULT STDMETHODCALLTYPE Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView);
 
 private:
-	PhoneDirect3DXamlAppComponent::Direct3DInterop^ m_controller;
+	cocos2d::Direct3DInterop^ m_controller;
 	Microsoft::WRL::ComPtr<IDrawingSurfaceRuntimeHostNative> m_host;
 };
