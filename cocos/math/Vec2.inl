@@ -82,6 +82,15 @@ inline bool Vec2::operator<(const Vec2& v) const
     return x < v.x;
 }
 
+inline bool Vec2::operator>(const Vec2& v) const
+{
+    if (x == v.x)
+    {
+        return y > v.y;
+    }
+    return x > v.x;
+}
+
 inline bool Vec2::operator==(const Vec2& v) const
 {
     return x==v.x && y==v.y;
