@@ -946,6 +946,8 @@ void CSLoader::setPropsForNodeFromProtocolBuffers(cocos2d::Node *node,
     int tag             = options.tag();
     int actionTag       = options.actiontag();
     bool visible        = options.visible();
+    float w             = options.width();
+    float h             = options.height();
     
     node->setName(name);
     
@@ -967,6 +969,8 @@ void CSLoader::setPropsForNodeFromProtocolBuffers(cocos2d::Node *node,
         node->setLocalZOrder(zorder);
     if(visible != true)
         node->setVisible(visible);
+    if (w != 0 || h != 0)
+        node->setContentSize(Size(w, h));
     
     node->setTag(tag);
     node->setUserObject(ActionTimelineData::create(actionTag));
