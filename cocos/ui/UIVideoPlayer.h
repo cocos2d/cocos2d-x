@@ -84,7 +84,7 @@ namespace experimental{
             VideoPlayer();
             virtual ~VideoPlayer();
 
-         protected:
+        protected:
 #if CC_VIDEOPLAYER_DEBUG_DRAW
             CustomCommand _customDebugDrawCommand;
             void VideoPlayer::drawDebugData();
