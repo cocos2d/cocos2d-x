@@ -33,8 +33,8 @@ static int PALETTE_ROWS = 3;
 
 MeshSkin::MeshSkin()
 : _rootBone(nullptr)
-, _matrixPalette(nullptr)
 , _skeleton(nullptr)
+, _matrixPalette(nullptr)
 {
     
 }

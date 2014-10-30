@@ -66,9 +66,9 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
 }
 
 Camera::Camera()
-: _cameraFlag(1)
-, _scene(nullptr)
+: _scene(nullptr)
 , _viewProjectionDirty(true)
+, _cameraFlag(1)
 {
     
 }
