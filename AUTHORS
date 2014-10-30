@@ -921,6 +921,7 @@ Developers:
         Fix the bug that UIButton doesn't support TTF font
         Fix a bug of TextReader
         Fix a bug that UITextField doesn't support TTF font
+        Setted contentSize in CSLoader
         
     gin0606
         Add a new line at the end of a file
