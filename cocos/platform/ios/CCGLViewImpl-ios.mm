@@ -187,7 +187,8 @@ void GLViewImpl::end()
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
-    [eaglview release];
+    //[eaglview release];
+    release();
 }
 
 
