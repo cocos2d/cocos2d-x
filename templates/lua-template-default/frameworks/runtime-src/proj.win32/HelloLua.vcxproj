@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -68,7 +68,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -106,14 +106,10 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\..\" /e /Y</Command>
-      <Message>copy files</Message>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>
@@ -122,7 +118,7 @@ xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui" "$(P
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -159,14 +155,10 @@ xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui" "$(P
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocos2d" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosdenshion" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocosbuilder" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\cocostudio" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\extension" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\network" "$(ProjectDir)..\..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\lua-bindings\script\ui" "$(ProjectDir)..\..\..\" /e /Y</Command>
-      <Message>copy files</Message>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>

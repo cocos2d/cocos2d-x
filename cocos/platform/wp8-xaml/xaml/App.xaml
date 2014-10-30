@@ -1,5 +1,5 @@
 ﻿<Application
-    x:Class="PhoneDirect3DXamlAppInterop.App"
+    x:Class="cocos2d.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -7,7 +7,7 @@
 
     <!--Application Resources-->
     <Application.Resources>
-        <local:LocalizedStrings xmlns:local="clr-namespace:PhoneDirect3DXamlAppInterop" x:Key="LocalizedStrings"/>
+        <local:LocalizedStrings xmlns:local="clr-namespace:cocos2d" x:Key="LocalizedStrings"/>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

@@ -128,8 +128,7 @@ bool ComAudio::serialize(void* r)
 		}
 		if (strcmp(className, "CCBackgroundAudio") == 0)
 		{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-			// no MP3 support for CC_PLATFORM_WP8
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 			std::string::size_type pos = filePath.find(".mp3");
 			if (pos  == filePath.npos)
 			{
