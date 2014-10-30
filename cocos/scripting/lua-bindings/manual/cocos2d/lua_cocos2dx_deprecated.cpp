@@ -4584,9 +4584,9 @@ static int tolua_cocos2d_Spawn_createWithTwoActions_deprcated00(lua_State* tolua
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"Spawn",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"FiniteTimeAction",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,3,"FiniteTimeAction",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"cc.Spawn",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.FiniteTimeAction",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,3,"cc.FiniteTimeAction",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err)
         )
         goto tolua_lerror;
@@ -4612,7 +4612,7 @@ tolua_lerror:
 
 static int extendSpawnDeprecated(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S,"Spawn");
+    lua_pushstring(tolua_S,"cc.Spawn");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
@@ -4843,5 +4843,6 @@ int register_all_cocos2dx_manual_deprecated(lua_State* tolua_S)
     extendToluaDeprecated(tolua_S);
     extendMenuDeprecated(tolua_S);
     extendLayerMultiplexDeprecated(tolua_S);
+    extendSpawnDeprecated(tolua_S);
     return 0;
 }
