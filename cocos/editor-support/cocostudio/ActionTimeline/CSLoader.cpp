@@ -185,6 +185,8 @@ void CSLoader::init()
 
 Node* CSLoader::createNode(const std::string& filename)
 {
+    CCASSERT(FileUtils::getInstance()->isFileExist(filename),"CreateNode Faild: file not found");
+    
     std::string path = filename;
     size_t pos = path.find_last_of('.');
     std::string suffix = path.substr(pos + 1, path.length());
