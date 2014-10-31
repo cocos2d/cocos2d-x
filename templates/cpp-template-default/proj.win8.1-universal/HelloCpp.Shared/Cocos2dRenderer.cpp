@@ -35,37 +35,44 @@ using namespace Windows::Graphics::Display;
 USING_NS_CC;
 
 
-Cocos2dRenderer::Cocos2dRenderer(const int width, const int height, CoreDispatcher^ dispatcher, Panel^ panel)
-    : mApp(nullptr)
-    , mWidth(width)
-    , mHeight(height)
+Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatcher^ dispatcher, Panel^ panel)
+    : m_app(nullptr)
+    , m_width(width)
+    , m_height(height)
+    , m_dpi(dpi)
     , m_dispatcher(dispatcher)
     , m_panel(panel)
 {
-    mApp = new AppDelegate();
+    m_app = new AppDelegate();
     auto director = cocos2d::Director::getInstance();
 
     GLViewImpl* glview = GLViewImpl::create("Test Cpp");
     glview->setDispatcher(dispatcher);
     glview->setPanel(panel);
-    glview->Create(static_cast<float>(width), static_cast<float>(height), DisplayOrientations::Landscape);
+    glview->Create(static_cast<float>(width), static_cast<float>(height), dpi, DisplayOrientations::Landscape);
     director->setOpenGLView(glview);
     CCApplication::getInstance()->run();
 }
 
 Cocos2dRenderer::~Cocos2dRenderer()
 {
-    delete mApp;
+    delete m_app;
 }
 
 // Draws a basic triangle
-void Cocos2dRenderer::Draw(GLsizei width, GLsizei height)
+void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
 {
-    if (width != mWidth || height != mHeight)
+    if (width != m_width || height != m_height)
     {
-        mWidth = width;
-        mHeight = height;
+        m_width = width;
+        m_height = height;
         GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
+    }
+
+    if (dpi != m_dpi)
+    {
+        m_dpi = dpi;
+        GLViewImpl::sharedOpenGLView()->SetDPI(m_dpi);
     }
 
     GLViewImpl::sharedOpenGLView()->ProcessEvents();

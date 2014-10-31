@@ -47,7 +47,8 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     mRenderSurface(EGL_NO_SURFACE),
     mCustomRenderSurfaceSize(0,0),
     mUseCustomRenderSurfaceSize(false),
-    m_coreInput(nullptr)
+    m_coreInput(nullptr),
+    m_dpi(0.0f)
 {
     InitializeComponent();
 
@@ -225,6 +226,9 @@ void OpenGLESPage::StartRenderLoop()
         return;
     }
 
+    DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
+    m_dpi = currentDisplayInformation->LogicalDpi;
+
     auto dispatcher = Windows::UI::Xaml::Window::Current->CoreWindow->Dispatcher;
 
     // Create a task for rendering that will be run on a background thread.
@@ -238,16 +242,18 @@ void OpenGLESPage::StartRenderLoop()
         GLsizei panelHeight = 0;
         GetSwapChainPanelSize(&panelWidth, &panelHeight);
         
+
+
         if (m_renderer.get() == nullptr)
         {
-            m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, dispatcher, swapChainPanel);
+            m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, m_dpi, dispatcher, swapChainPanel);
         }
 
         while (action->Status == Windows::Foundation::AsyncStatus::Started)
         {
  
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
-            m_renderer.get()->Draw(panelWidth, panelHeight);
+            m_renderer.get()->Draw(panelWidth, panelHeight, m_dpi);
 
             // The call to eglSwapBuffers might not be successful (i.e. due to Device Lost)
             // If the call fails, then we must reinitialize EGL and the GL resources.

@@ -53,12 +53,6 @@
     <Filter Include="platform\winrt">
       <UniqueIdentifier>{a2fd6c36-9078-45e7-bc11-c235357f565e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="platform\renderer">
-      <UniqueIdentifier>{c52c9563-bc10-4b77-8bcc-0e061628fae7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="platform\renderer\shaders">
-      <UniqueIdentifier>{1be811ab-a9b0-44f7-9a37-b7ef7f1ef24a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocosbuilder">
       <UniqueIdentifier>{794d19d1-2992-497a-a770-081932fa9242}</UniqueIdentifier>
     </Filter>
@@ -235,6 +229,12 @@
     </Filter>
     <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf\stubs">
       <UniqueIdentifier>{b7fdf4e2-b3be-4b7a-b586-ddab39fb05b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{c52c9563-bc10-4b77-8bcc-0e061628fae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer\shaders">
+      <UniqueIdentifier>{1be811ab-a9b0-44f7-9a37-b7ef7f1ef24a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -782,67 +782,67 @@
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCBatchCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCCustomCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgram.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgramCache.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgramState.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\ccGLStateCache.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCGroupCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCMeshCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCPrimitive.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCQuadCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCRenderCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCRenderer.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\ccShaders.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCTexture2D.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCTextureCache.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCTrianglesCommand.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\cocos2d.cpp" />
     <ClCompile Include="..\editor-support\cocosbuilder\CCBAnimationManager.cpp">
@@ -1932,70 +1932,70 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCBatchCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCCustomCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgram.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgramCache.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgramState.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgramStateCache.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\ccGLStateCache.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGroupCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCMeshCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCPrimitive.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCPrimitiveCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCQuadCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCRenderCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCRenderCommandPool.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCRenderer.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\ccShaders.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCTexture2D.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCTextureAtlas.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCTextureCache.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCTrianglesCommand.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCVertexIndexData.h">
-      <Filter>platform\renderer</Filter>
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocosbuilder\CCBAnimationManager.h">
       <Filter>cocosbuilder\Header Files</Filter>
@@ -2586,70 +2586,70 @@
       <Filter>math</Filter>
     </None>
     <None Include="..\renderer\ccShader_Label.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Label_df.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Label_df_glow.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Label_normal.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Label_outline.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionColor.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionColor.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTexture.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTexture.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureA8Color.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureA8Color.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureColor.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureColor.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTextureColor_noMVP.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTexture_uColor.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_PositionTexture_uColor.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Position_uColor.frag">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Position_uColor.vert">
-      <Filter>platform\renderer\shaders</Filter>
+      <Filter>renderer\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
