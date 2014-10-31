@@ -276,15 +276,14 @@ int LuaStack::executeScriptFile(const char* filename)
 {
     CCAssert(filename, "CCLuaStack::executeScriptFile() - invalid filename");
 
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-    ssize_t chunkSize = 0;
-    unsigned char *chunk = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &chunkSize);
+    FileUtils *utils = FileUtils::getInstance();
+    std::string fullPath = utils->fullPathForFilename(filename);
+    Data data = utils->getDataFromFile(fullPath);
     int rn = 0;
-    if (chunk) {
-        if (luaLoadBuffer(_state, (const char*)chunk, (int)chunkSize, fullPath.c_str()) == 0) {
+    if (!data.isNull()) {
+        if (luaLoadBuffer(_state, (const char*)data.getBytes(), (int)data.getSize(), fullPath.c_str()) == 0) {
             rn = executeFunction(0);
         }
-        delete chunk;
     }
     return rn;
 }
