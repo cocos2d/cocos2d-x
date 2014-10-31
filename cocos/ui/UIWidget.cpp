@@ -550,6 +550,11 @@ void Widget::onSizeChanged()
             }
         }
     }
+    Layout* layout = dynamic_cast<Layout*>(_parent);
+    if(layout)
+    {
+        layout->requestDoLayout();
+    }
 }
 
 Size Widget::getVirtualRendererSize() const

@@ -92,6 +92,28 @@ private:
     
     friend class Layout;
 };
+    
+class CC_GUI_DLL LinearVerticalAutoLayoutManager : public LayoutManager
+{
+private:
+    LinearVerticalAutoLayoutManager(){};
+    virtual ~LinearVerticalAutoLayoutManager(){};
+    static LinearVerticalAutoLayoutManager* create();
+    virtual void doLayout(LayoutProtocol *layout) override;
+    
+    friend class Layout;
+};
+
+class CC_GUI_DLL LinearHorizontalAutoLayoutManager : public LayoutManager
+{
+private:
+    LinearHorizontalAutoLayoutManager(){};
+    virtual ~LinearHorizontalAutoLayoutManager(){};
+    static LinearHorizontalAutoLayoutManager* create();
+    virtual void doLayout(LayoutProtocol *layout) override;
+    
+    friend class Layout;
+};
 
 /**
  *@brief Relative layouting class.
