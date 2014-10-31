@@ -119,6 +119,22 @@ function BillBoardTest:init()
         layer:runAction( cc.RepeatForever:create( cc.RotateBy:create( math.random(), cc.vec3(0.0, 45.0, 0.0) ) ) )
     end
 
+    local billboard = cc.BillBoard:create("Images/Icon.png")
+    billboard:setScale(0.2)
+    billboard:setPosition3D(cc.vec3(0.0, 30.0, 0.0))
+
+    local billboard2 = cc.BillBoard:create("Images/r2.png")
+    billboard2:setPosition3D(cc.vec3(0.0, 0.0, 100.0))
+    billboard:addChild(billboard2)
+    table.insert(self._billboards, billboard)
+    table.insert(self._billboards, billboard2)
+
+    local sprite3d = cc.Sprite3D:create("Sprite3DTest/orc.c3t")
+    sprite3d:setScale(2.0)
+    sprite3d:addChild(billboard)
+    sprite3d:runAction( cc.RepeatForever:create( cc.RotateBy:create( 10.0, cc.vec3(0.0, 360.0, 0.0) ) ) )
+    self._layerBillBorad:addChild(sprite3d)
+
     self:addNewBillBoradWithCoords(cc.vec3(20,5,0))
     self:addNewBillBoradWithCoords(cc.vec3(60,5,0))
     self:addNewBillBoradWithCoords(cc.vec3(100,5,0))

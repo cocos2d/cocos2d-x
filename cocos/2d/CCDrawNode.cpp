@@ -346,9 +346,8 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
         // texcood
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferCount);
     CHECK_GL_ERROR_DEBUG();
@@ -382,9 +381,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
     glLineWidth(2);
-    glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
     CHECK_GL_ERROR_DEBUG();
@@ -399,15 +396,28 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
     glProgram->setUniformLocationWith4fv(glProgram->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_pointSize"), _pointSize);
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
-
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+    if (_dirtyGLPoint)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
+        
+        _dirtyGLPoint = false;
+    }
+    
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(_vaoGLPoint);
+    }
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+    }
     
     glDrawArrays(GL_POINTS, 0, _bufferCountGLPoint);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLPoint);
     CHECK_GL_ERROR_DEBUG();
@@ -415,6 +425,8 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
 
 void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Color4F &color)
 {
+    ensureCapacityGLPoint(1);
+    
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
     V2F_C4B_T2F a = {position, Color4B(color), Tex2F(0.0, 0.0) };
     *point = a;
@@ -423,6 +435,7 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
     _pointColor = color;
     
     _bufferCountGLPoint += 1;
+    _dirtyGLPoint = true;
 }
 
 void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
@@ -440,6 +453,7 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     _pointColor = color;
     
     _bufferCountGLPoint += numberOfPoints;
+    _dirtyGLPoint = true;
 }
 
 void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
