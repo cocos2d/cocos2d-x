@@ -1074,7 +1074,7 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
     if (argc == 1 || argc == 2) 
     {
         std::string arg0;
-        bool arg1;
+        bool arg1 = false;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
