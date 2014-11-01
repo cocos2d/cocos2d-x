@@ -1071,24 +1071,30 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 1 || argc == 2) 
     {
         std::string arg0;
+        bool arg1 = false;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
+
+        if (argc == 2) {
+            ok &= luaval_to_boolean(tolua_S, 3, &arg1);
+        }
+
         if(!ok)
             return 0;
         std::string originPath = arg0;
         if (!FileUtils::getInstance()->isAbsolutePath(originPath))
             arg0 = g_resourcePath + originPath;
-        cobj->addSearchPath(arg0);
+        cobj->addSearchPath(arg0, arg1);
 
         if (!FileUtils::getInstance()->isAbsolutePath(originPath))
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-            cobj->addSearchPath(g_projectPath + originPath);
+            cobj->addSearchPath(g_projectPath + originPath, arg1);
 #endif
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-            cobj->addSearchPath(originPath);
+            cobj->addSearchPath(originPath, arg1);
 #endif
         return 0;
     }
