@@ -1,3 +1,15 @@
+cocos2d-x-3.3 ??
+    [NEW]           Vec2: added greater than operator
+
+    [FIX]           Cocos console: compile failure on windows if using VS express version
+    [FIX]           GrawNode: drawPoint() may cause crash
+    [FIX]           GLProgramCache: doesn't release old program with the same key before adding a new one
+    [FIX]           GLProgramState: enabled GLProgramState restoring on render recreated on WP8
+    [FIX]           Label: label shifting when outline feature enabled
+    [FIX]           Label: when applying additionalKerning to a Label that displays a string with only 1 character, the character is shifted
+    [FIX]           Sprite3D: did not create attached sprite from cache
+    [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
+
 cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           3d: added light support: direction light, point light, spot light and ambient light
     [NEW]           Added ClippingRectangleNode

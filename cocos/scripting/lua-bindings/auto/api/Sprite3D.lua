@@ -47,16 +47,22 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- 
--- @function [parent=#Sprite3D] setCullFace 
+--  get mesh count 
+-- @function [parent=#Sprite3D] getMeshCount 
 -- @param self
--- @param #unsigned int cullFace
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- remove attach node
 -- @function [parent=#Sprite3D] removeAttachNode 
 -- @param self
 -- @param #string boneName
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] setCullFace 
+-- @param self
+-- @param #unsigned int cullFace
         
 --------------------------------
 -- get SubMeshState by index

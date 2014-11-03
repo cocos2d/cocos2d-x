@@ -94,9 +94,6 @@
     <ClCompile Include="..\..\..\cocos\base\CCAutoreleasePool.cpp">
       <Filter>libcoco2d\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\cocos\base\CCCamera.cpp">
-      <Filter>libcoco2d\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\ccCArray.cpp">
       <Filter>libcoco2d\base</Filter>
     </ClCompile>
@@ -173,9 +170,6 @@
       <Filter>libcoco2d\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\CCIMEDispatcher.cpp">
-      <Filter>libcoco2d\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\base\CCLight.cpp">
       <Filter>libcoco2d\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\CCNS.cpp">
@@ -583,6 +577,12 @@
     <ClCompile Include="..\..\..\external\unzip\ioapi_mem.cpp">
       <Filter>libcoco2d\external\unzip</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCCamera.cpp">
+      <Filter>libcoco2d\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLight.cpp">
+      <Filter>libcoco2d\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -613,9 +613,6 @@
       <Filter>libcoco2d\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\CCAutoreleasePool.h">
-      <Filter>libcoco2d\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\base\CCCamera.h">
       <Filter>libcoco2d\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\ccCArray.h">
@@ -706,9 +703,6 @@
       <Filter>libcoco2d\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\CCIMEDispatcher.h">
-      <Filter>libcoco2d\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\base\CCLight.h">
       <Filter>libcoco2d\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\ccMacros.h">
@@ -1154,6 +1148,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\external\unzip\ioapi_mem.h">
       <Filter>libcoco2d\external\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCCamera.h">
+      <Filter>libcoco2d\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLight.h">
+      <Filter>libcoco2d\2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

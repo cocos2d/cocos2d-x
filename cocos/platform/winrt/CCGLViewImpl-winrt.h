@@ -33,20 +33,15 @@ THE SOFTWARE.
 
 
 #include <agile.h>
-
+#include <string>
 #include <wrl/client.h>
-#include <d3d11_1.h>
 #include <mutex>
 #include <queue>
-
-#include <agile.h>
-#include <DirectXMath.h>
-
+#include <Keyboard-winrt.h>
 
 NS_CC_BEGIN
 
 class GLViewImpl;
-
 
 class CC_DLL GLViewImpl : public GLView
 {
@@ -59,20 +54,20 @@ public:
     virtual void swapBuffers();
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    const Mat4& getOrientationMatrix() const;
-    const Mat4& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
     Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
     virtual void setIMEKeyboardState(bool bOpen);
     virtual void setIMEKeyboardState(bool bOpen, std::string str);
-    Platform::String^ stringToPlatformString(std::string strSrc);
-    void ShowKeyboard(Windows::Foundation::Rect r);
-    void HideKeyboard(Windows::Foundation::Rect r);
 
-    // WP8 XAML app
-    virtual bool Create(float width, float height, Windows::Graphics::Display::DisplayOrientations orientation);
+    virtual bool Create(float width, float height ,Windows::Graphics::Display::DisplayOrientations orientation);
+
+    void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
+    Windows::UI::Core::CoreDispatcher^ getDispatcher() {return m_dispatcher.Get();}
+
+    void setPanel(Windows::UI::Xaml::Controls::Panel^ panel);
+    Windows::UI::Xaml::Controls::Panel^ getPanel() {return m_panel.Get();}
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -89,14 +84,9 @@ public:
 
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-    void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event);
-
-    void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
-    void SetXamlMessageBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ delegate) { m_messageBoxDelegate = delegate; };
-    void SetXamlEditBoxDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ delegate) { m_editBoxDelegate = delegate; };
+    void QueueEvent(std::shared_ptr<InputEvent>& event);
 
     bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
-    bool OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
 
 	int Run();
 	void Render();
@@ -116,9 +106,6 @@ public:
 	static GLViewImpl* sharedOpenGLView();
 
     void ProcessEvents();
-    void AddPointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-
-
 
 protected:
     GLViewImpl();
@@ -144,8 +131,7 @@ private:
 
 	void OnRendering();
 	void UpdateWindowSize();
-    void UpdateOrientationMatrix();
-
+ 
     cocos2d::Vec2 TransformToOrientation(Windows::Foundation::Point point);
  	cocos2d::Vec2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
        
@@ -162,20 +148,20 @@ private:
 	bool m_lastPointValid;
 	bool m_windowClosed;
 	bool m_windowVisible;
-    Mat4 m_orientationMatrix;
-    Mat4 m_reverseOrientationMatrix;
-
 
     bool m_running;
 	bool m_initialized;
 
-    PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
-    PhoneDirect3DXamlAppComponent::Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
-    PhoneDirect3DXamlAppComponent::Cocos2dEditBoxDelegate^ m_editBoxDelegate;
+    Cocos2dEventDelegate^ m_delegate;
+    Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
+    Cocos2dEditBoxDelegate^ m_editBoxDelegate;
 
     std::queue<std::shared_ptr<InputEvent>> mInputEvents;
     std::mutex mMutex;
 
+    Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
+    Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
+    KeyBoardWinRT^ m_keyboard;
 };
 
 NS_CC_END

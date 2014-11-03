@@ -92,6 +92,14 @@ bool Sprite3D::loadFromCache(const std::string& path)
             }
         }
         
+        for(const auto& it : spritedata->nodedatas->skeleton)
+        {
+            if(it)
+            {
+                createAttachSprite3DNode(it,*(spritedata->materialdatas));
+            }
+        }
+        
         for (ssize_t i = 0; i < _meshes.size(); i++) {
             _meshes.at(i)->setGLProgramState(spritedata->glProgramStates.at(i));
         }
