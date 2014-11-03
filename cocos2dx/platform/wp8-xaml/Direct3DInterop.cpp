@@ -40,7 +40,7 @@ namespace PhoneDirect3DXamlAppComponent
 {
 
 Direct3DInterop::Direct3DInterop() 
-    : mCurrentOrientation(DisplayOrientations::Portrait), m_delegate(nullptr)
+    : mCurrentOrientation(DisplayOrientations::None), m_delegate(nullptr)
 {
     m_renderer = ref new Cocos2dRenderer();
 }
