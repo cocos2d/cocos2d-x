@@ -111,7 +111,11 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
         indexBuffer->updateIndices(&index[0], (int)index.size(), 0);
-        aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), index);
+        auto subAABB =  meshdata.subMeshAABB[i];
+        if (subAABB.isEmpty())
+            aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), index);
+        else
+            aabb = subAABB;
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
         MeshIndexData* indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, aabb);
         vertexdata->_indexs.pushBack(indexdata);

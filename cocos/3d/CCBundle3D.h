@@ -90,6 +90,7 @@ protected:
     bool loadMeshDatasBinary(MeshDatas& meshdatas);
     bool loadMeshDatasBinary_0_1(MeshDatas& meshdatas);
     bool loadMeshDatasBinary_0_2(MeshDatas& meshdatas);
+	bool loadMeshDatasBinary_0_5(MeshDatas& meshdatas);
     bool loadMaterialsJson(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_1(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_2(MaterialDatas& materialdatas);
@@ -152,6 +153,8 @@ protected:
 CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
     virtual ~Bundle3D();
+
+    static AABB calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
     
 protected:
     static Bundle3D* _instance;
