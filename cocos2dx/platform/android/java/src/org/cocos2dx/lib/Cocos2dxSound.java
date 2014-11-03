@@ -104,8 +104,11 @@ public class Cocos2dxSound {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-
-	public int preloadEffect(final String pPath) {
+        public int preloadEffect(final String pPath) {
+        	preloadEffect(pPath, true);	
+        }
+        
+	public int preloadEffect(final String pPath, final boolean isWaitLoaded) {
 		Integer soundID = this.mPathSoundIDMap.get(pPath);
 
 		if (soundID == null) {
@@ -113,6 +116,19 @@ public class Cocos2dxSound {
 			// save value just in case if file is really loaded
 			if (soundID != Cocos2dxSound.INVALID_SOUND_ID) {
 				this.mPathSoundIDMap.put(pPath, soundID);
+				if(isWaitLoaded)
+				{
+					// preload one file at a time, or it will cause some
+					// thread safety problem.
+					synchronized(this.mSoundPool) {
+						try {
+							// wait OnloadedCompleteListener
+							this.mSemaphore.acquire();
+						} catch(Exception e) {
+							return Cocos2dxSound.INVALID_SOUND_ID;
+						}
+					}
+				}
 			}
 		}
 
@@ -146,7 +162,7 @@ public class Cocos2dxSound {
 			streamID = this.doPlayEffect(pPath, soundID.intValue(), pLoop);
 		} else {
 			// the effect is not prepared
-			soundID = this.preloadEffect(pPath);
+			soundID = this.preloadEffect(pPath, false);
 			if (soundID == Cocos2dxSound.INVALID_SOUND_ID) {
 				// can not preload effect
 				return Cocos2dxSound.INVALID_SOUND_ID;
