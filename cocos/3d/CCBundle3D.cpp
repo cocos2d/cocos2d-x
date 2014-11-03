@@ -1404,10 +1404,23 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
 
 bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* animationdata)
 {
-    if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
-        return false;
+    if(_version == "0.1" || _version == "0.3" || _version == "0.4")
+    {
+        if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
+            return false;
+    }
+    else
+    {
+        // if id is not a null string, we need to add a suffix of "animation" for seeding.
+        std::string id_ = id;
+        if(id != "") id_ = id + "animation";
+        
+        if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS, id_))
+            return false;
+    }
+    
     unsigned int animNum = 1;
-    if( _version == "0.3"|| _version == "0.4")
+    if(_version == "0.3" || _version == "0.4")
     {
         if (!_binaryReader.read(&animNum))
         {
@@ -1459,7 +1472,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // transform flag
                 unsigned char transformFlag(0);
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                 {
                     if (!_binaryReader.read(&transformFlag))
                     {
@@ -1470,7 +1483,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // rotation
                 bool hasRotate = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                     hasRotate = transformFlag & 0x01;
 
                 if (hasRotate)
@@ -1486,7 +1499,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // scale
                 bool hasScale = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                     hasScale = (transformFlag >> 1) & 0x01;
 
                 if (hasScale)
@@ -1502,7 +1515,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // translation
                 bool hasTranslation = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                     hasTranslation = (transformFlag >> 2) & 0x01;
 
                 if (hasTranslation)
@@ -1938,7 +1951,7 @@ void Bundle3D::getModelRelativePath(const std::string& path)
     _modelPath = path.substr(0, index + 1);
 }
 
-Reference* Bundle3D::seekToFirstType(unsigned int type)
+Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
 {
     // for each Reference
     for (unsigned int i = 0; i < _referenceCount; ++i)
@@ -1946,6 +1959,12 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
         Reference* ref = &_references[i];
         if (ref->type == type)
         {
+            // if id is not a null string, we also need to check the Reference's id.
+            if (id != "" && id != ref->id)
+            {
+                continue;
+            }
+            
             // Found a match
             if (_binaryReader.seek(ref->offset, SEEK_SET) == false)
             {
@@ -1957,6 +1976,7 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
     }
     return nullptr;
 }
+
 
 Bundle3D::Bundle3D()
     :_isBinary(false),
