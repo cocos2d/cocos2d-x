@@ -543,7 +543,7 @@ static Data getData(const std::string& filename, bool forString)
     
     Data ret;
     unsigned char* buffer = nullptr;
-    ssize_t size = 0;
+    size_t size = 0;
     size_t readsize;
     const char* mode = nullptr;
     if (forString)
@@ -1062,7 +1062,7 @@ bool FileUtils::createDirectory(const std::string& path)
     if (!(GetFileAttributesEx(wpath.c_str(), GetFileExInfoStandard, &wfad)))
 	{
 		subpath = "";
-		for(int i = 0 ; i < dirs.size() ; ++i)
+		for(unsigned int i = 0 ; i < dirs.size() ; ++i)
 		{
 			subpath += dirs[i];
 			if (i > 0 && !isDirectoryExist(subpath))
@@ -1146,7 +1146,7 @@ bool FileUtils::removeDirectory(const std::string& path)
 	bool ret=true;   
 	if (search!=INVALID_HANDLE_VALUE)   
 	{   
-		bool find=true;   
+		BOOL find=true;   
 		while (find)
 		{ 
 			//. ..
@@ -1168,8 +1168,10 @@ bool FileUtils::removeDirectory(const std::string& path)
 		}
 		FindClose(search);
 	}
-	if (ret)
-		return RemoveDirectory(wpath.c_str());
+    if (ret && RemoveDirectory(wpath.c_str()))
+    {
+        return true;
+    }
 	return false;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	std::string command = "cmd /c rd /s /q ";

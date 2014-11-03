@@ -29,9 +29,9 @@
 
 NS_CC_BEGIN
 
-const ValueVector ValueVectorNull;
-const ValueMap ValueMapNull;
-const ValueMapIntKey ValueMapIntKeyNull;
+CC_DLL const ValueVector ValueVectorNull;
+CC_DLL const ValueMap ValueMapNull;
+CC_DLL const ValueMapIntKey ValueMapIntKeyNull;
 
 const Value Value::Null;
 
