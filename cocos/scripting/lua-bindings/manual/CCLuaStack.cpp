@@ -797,7 +797,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                         lua_setfield(L, -2, filename.c_str());
                         ++count;
                     }
-                    delete []zbuffer;
+                    free(zbuffer);
                 }
                 filename = zip->getNextFilename();
             }
@@ -812,7 +812,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
         }
         
         if (zipFileData) {
-            delete []zipFileData;
+            free(zipFileData);
         }
         
         if (buffer) {
