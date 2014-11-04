@@ -126,7 +126,6 @@ project.properties
 /external/jpeg/
 /external/json/
 /external/linux-specific/
-/external/lua/
 /external/png/
 /external/sqlite3/
 /external/tiff/
