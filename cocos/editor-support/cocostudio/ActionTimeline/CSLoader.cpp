@@ -1256,12 +1256,11 @@ Node* CSLoader::nodeFromXMLFile(const std::string &fileName)
     ssize_t size;
     
     //fix memory leak for v3.3
-    unsigned char* pByte = FileUtils::getInstance()->getFileData(fullpath, "r", &size);;
-    std::string content =(char*)pByte
+    unsigned char* pByte = FileUtils::getInstance()->getFileData(fullpath, "r", &size);
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
-    document->Parse(content.c_str());
+    document->Parse((const char*)pByte);
     
     free(pByte);
     
