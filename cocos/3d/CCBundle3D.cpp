@@ -427,7 +427,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             std:: string meshPartid = _binaryReader.readString();
             meshData->subMeshIds.push_back(meshPartid);
 
-            if (_version == "0.5")
+            if (_version != "0.3" && _version != "0.4")
             {
                 unsigned int aabbSize=0;
                 //read mesh aabb
