@@ -118,21 +118,7 @@ tests/*/publish/
 project.properties
 
 # Ignore prebuilt libraries folder
-/external/xxhash/
-/external/curl/
-/external/edtaa3func/
-/external/freetype2/
-/external/glfw3/
-/external/jpeg/
-/external/json/
 /external/linux-specific/
-/external/png/
-/external/sqlite3/
-/external/tiff/
-/external/tinyxml2/
-/external/unzip/
-/external/webp/
-/external/websockets/
 /external/win32-specific/
 /external/winrt-specific/
 /external/winrt_8.1-specific/
@@ -143,10 +129,4 @@ project.properties
 /v*-deps-*.zip
 /v*-lua-runtime-*.zip
 /tools/fbx-conv/
-external/chipmunk
 tests/cpp-tests/Resources/audio
-/external/Box2D/
-/external/ConvertUTF/
-/external/audio/
-/external/xxtea/
-/external/protobuf-lite/
