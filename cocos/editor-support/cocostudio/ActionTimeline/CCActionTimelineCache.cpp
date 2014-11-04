@@ -735,7 +735,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromXML(const st
     ssize_t size;
     
     //fix memory leak for v3.3
-    unsigned char* pByte = FileUtils::getInstance()->getFileData(fullpath, "r", &size);;
+    unsigned char* pByte = FileUtils::getInstance()->getFileData(fullpath, "r", &size);
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
