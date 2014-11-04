@@ -1,0 +1,7 @@
+
+$#include "../apptools/HelperFunc.h"
+
+class HelperFunc
+{
+    static LUA_STRING getFileData(const char *pPathFile);
+};

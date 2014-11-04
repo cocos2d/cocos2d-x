@@ -1,0 +1,127 @@
+
+$#include "crypto/CCCrypto.h"
+$#include "native/CCNative.h"
+$#include "network/CCNetwork.h"
+
+$using namespace std;
+$using namespace cocos2d;
+$using namespace cocos2d::extra;
+
+class Crypto
+{
+public:
+    static int getAES256KeyLength(void);
+
+    static LUA_STRING encryptAES256Lua @ encryptAES256 (const char* plaintext,
+                                       int plaintextLength,
+                                       const char* key,
+                                       int keyLength);
+
+    static LUA_STRING decryptAES256Lua @ decryptAES256 (const char* ciphertext,
+                                       int ciphertextLength,
+                                       const char* key,
+                                       int keyLength);
+
+    static LUA_STRING encryptXXTEALua @ encryptXXTEA (const char* plaintext,
+                                      int plaintextLength,
+                                      const char* key,
+                                      int keyLength);
+
+    static LUA_STRING decryptXXTEALua @ decryptXXTEA (const char* ciphertext,
+                                      int ciphertextLength,
+                                      const char* key,
+                                      int keyLength);
+
+    static LUA_STRING encodeBase64Lua @ encodeBase64 (const char* input, int inputLength);
+    static LUA_STRING decodeBase64Lua @ decodeBase64 (const char* input);
+
+    static LUA_STRING MD5Lua @ MD5 (char* input, bool isRawOutput);
+
+    static LUA_STRING MD5FileLua @ MD5File(const char* path);
+};
+
+//
+
+class Native
+{
+public:
+    static void showActivityIndicator(void);
+    static void hideActivityIndicator(void);
+
+    static void createAlert(const char* title,
+                            const char* message,
+                            const char* cancelButtonTitle);
+    static int addAlertButton(const char* buttonTitle);
+
+    static void showAlertLua @ showAlert (LUA_FUNCTION listener);
+
+    static void cancelAlert(void);
+
+    static string getOpenUDID(void);
+    static void openURL(const char* url);
+    static string getInputText(const char* title, const char* message, const char* defaultValue);
+
+    static const string getDeviceName(void);
+    static void vibrate();
+};
+
+//
+
+#define kCCHTTPRequestMethodGET                 0
+#define kCCHTTPRequestMethodPOST                1
+
+#define kCCHTTPRequestAcceptEncodingIdentity    0
+#define kCCHTTPRequestAcceptEncodingGzip        1
+#define kCCHTTPRequestAcceptEncodingDeflate     2
+
+#define kCCHTTPRequestStateIdle                 0
+#define kCCHTTPRequestStateCleared              1
+#define kCCHTTPRequestStateInProgress           2
+#define kCCHTTPRequestStateCompleted            3
+#define kCCHTTPRequestStateCancelled            4
+#define kCCHTTPRequestStateFailed               5
+
+class HTTPRequest : public cc.Ref
+{
+    static HTTPRequest* createWithUrlLua @ createWithUrl (LUA_FUNCTION listener,
+                                           const char* url,
+                                           int method = kCCHTTPRequestMethodGET);
+    void setRequestUrl(const char* url);
+    string getRequestUrl(void);
+    void addRequestHeader(const char* header);
+    void addPOSTValue(const char* key, const char* value);
+    void setPOSTData(const char* data);
+    void addFormFile(const char *name, const char *filePath, const char * fileType="application/octet-stream");
+    void addFormContents(const char *name, const char *value);
+    void setCookieString(const char *cookie);
+    string getCookieString(void);
+    void setAcceptEncoding(int acceptEncoding);
+    void setTimeout(int timeout);
+    bool start(void);
+    void cancel(void);
+    int getState(void);
+    int getResponseStatusCode(void);
+    string getResponseHeadersString(void);
+    string getResponseString(void);
+    LUA_STRING getResponseDataLua @ getResponseData (void);
+    int getResponseDataLength(void);
+    int saveResponseData(const char* filename);
+    int getErrorCode(void);
+    string getErrorMessage(void);
+};
+
+#define kCCNetworkStatusNotReachable     0
+#define kCCNetworkStatusReachableViaWiFi 1
+#define kCCNetworkStatusReachableViaWWAN 2
+
+class Network
+{
+    static bool isLocalWiFiAvailable(void);
+    static bool isInternetConnectionAvailable(void);
+    static bool isHostNameReachable(const char* hostName);
+    static int getInternetConnectionStatus(void);
+
+    static HTTPRequest* createHTTPRequestLua @ createHTTPRequest (LUA_FUNCTION listener,
+                                               const char* url,
+                                               int method = kCCHTTPRequestMethodGET);
+};

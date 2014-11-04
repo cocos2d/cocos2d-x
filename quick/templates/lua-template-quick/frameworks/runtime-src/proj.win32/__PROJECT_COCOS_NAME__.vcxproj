@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}</ProjectGuid>
+    <ProjectName>__PROJECT_COCOS_NAME__</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\cocos2d-x\cocos\2d\cocos2dx.props" />
+    <Import Project="..\..\cocos2d-x\cocos\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\cocos2d-x\cocos\2d\cocos2dx.props" />
+    <Import Project="..\..\cocos2d-x\cocos\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <SourcePath>$(SourcePath);</SourcePath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(ProjectDir)..\Classes\quick-src;$(ProjectDir)..\Classes\quick-src\extra;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\curl\include\win32;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;CC_USE_JSON=1;CC_USE_SQLITE=1;CC_USE_CURL=1;CC_LUA_ENGINE_ENABLED=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;USE_WIN32_CONSOLE=1;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName>__PROJECT_COCOS_NAME__.h</HeaderFileName>
+      <InterfaceIdentifierFileName>__PROJECT_COCOS_NAME___i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>__PROJECT_COCOS_NAME___p.c</ProxyFileName>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)/__PROJECT_COCOS_NAME__.tlb</TypeLibraryName>
+      <DllDataFileName>
+      </DllDataFileName>
+    </Midl>
+    <PreBuildEvent>
+      <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"</Command>
+      <Message>copy files</Message>
+    </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;CC_USE_JSON=1;CC_USE_SQLITE=1;CC_USE_CURL=1;CC_LUA_ENGINE_ENABLED=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;USE_WIN32_CONSOLE=1;_SCL_SECURE_NO_WARNINGSNDEBUG;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName>__PROJECT_COCOS_NAME__.h</HeaderFileName>
+      <InterfaceIdentifierFileName>__PROJECT_COCOS_NAME___i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>__PROJECT_COCOS_NAME___p.c</ProxyFileName>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)/__PROJECT_COCOS_NAME__.tlb</TypeLibraryName>
+      <DllDataFileName>
+      </DllDataFileName>
+    </Midl>
+    <PreBuildEvent>
+      <Command>if exist "$(LocalDebuggerWorkingDirectory)" rd /s /q "$(LocalDebuggerWorkingDirectory)"
+mkdir "$(LocalDebuggerWorkingDirectory)"
+mkdir "$(LocalDebuggerWorkingDirectory)\src"
+mkdir "$(LocalDebuggerWorkingDirectory)\res"
+xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /e /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /e /Y
+copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\config.json" /Y
+</Command>
+      <Message>copy files</Message>
+    </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\ConfigParser.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\apptools\HelperFunc.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\crypto\base64\libbase64.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\crypto\CCCrypto.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\crypto\md5\md5.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\cocos2dFilters.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCBlurFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCBrightnessFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCContrastFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCCustomFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCDropShadowFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCExposureFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCGammaFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCGrayFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCHazeFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCHueFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCMaskFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCRGBFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCSaturationFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCSepiaFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCSharpenFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\filters\CCTestFilter.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\nodes\CCFilteredSprite.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShaders.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_blur_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_brightness_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_colorramp_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_contrast_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_drop_shadow_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_drop_shadow_vert.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_embossmov_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_emboss_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_exposure_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gamma_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gaussian_blur_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gaussian_hblur_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gaussian_vblur_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_grass_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gray_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_haze_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_hblur_vert.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_hue_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_motion_blur_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_motion_blur_vert.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_rgb_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_saturation_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_sepia_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_sharpen_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_sharpen_vert.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_test_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_test_vert.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_vblur_vert.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShader_zoom_blur_frag.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\filters\shaders\FilterShaders.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\luabinding\cocos2dx_extra_luabinding.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\luabinding\HelperFunc_luabinding.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_filter_auto.hpp" />
+    <ClInclude Include="..\Classes\quick-src\extra\native\CCAlertViewDelegate.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\native\CCNative.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\network\CCHTTPRequest.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\network\CCHTTPRequestDelegate.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\network\CCNetwork.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\platform\win32\CCNativeWin32.h" />
+    <ClInclude Include="..\Classes\quick-src\extra\platform\win32\CCNativeWin32def.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\cjson\fpconv.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\cjson\lua_cjson.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\cjson\strbuf.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\debugger\debugger.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\filesystem\lfs.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\lpack\lpack.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\lsqlite3\lsqlite3.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\lsqlite3\sqlite3.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\lua_extensions_more.h" />
+    <ClInclude Include="..\Classes\quick-src\lua_extensions\zlib\lua_zlib.h" />
+    <ClInclude Include="..\Classes\quick-src\ProjectConfig\ProjectConfig.h" />
+    <ClInclude Include="..\Classes\quick-src\ProjectConfig\SimulatorConfig.h" />
+    <ClInclude Include="..\Classes\runtime\lua_debugger.h" />
+    <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
+    <ClInclude Include="..\Classes\runtime\ResData.h" />
+    <ClInclude Include="..\Classes\runtime\Runtime.h" />
+    <ClInclude Include="..\Classes\VisibleRect.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SimulatorWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\ConfigParser.cpp" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc" />
+    <ClCompile Include="..\Classes\quick-src\extra\apptools\HelperFunc.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\crypto\base64\libbase64.c" />
+    <ClCompile Include="..\Classes\quick-src\extra\crypto\CCCrypto.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\crypto\md5\md5.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCBlurFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCBrightnessFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCContrastFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCCustomFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCDropShadowFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCExposureFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCGammaFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCGrayFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCHazeFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCHueFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCMaskFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCRGBFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCSaturationFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCSepiaFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCSharpenFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\filters\CCTestFilter.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\nodes\CCFilteredSprite.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\shaders\ccFilterShaders.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\filters\shaders\FilterShaders.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\luabinding\cocos2dx_extra_luabinding.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\luabinding\HelperFunc_luabinding.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_filter_auto.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\network\CCHTTPRequest.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\network\CCNetwork.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\platform\win32\CCCryptoWin32.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\platform\win32\CCNative.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\platform\win32\CCNativeWin32.cpp" />
+    <ClCompile Include="..\Classes\quick-src\extra\platform\win32\CCNetworkWin32.cpp" />
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\cjson\fpconv.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\cjson\lua_cjson.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\cjson\strbuf.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\debugger\debugger.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\filesystem\lfs.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\lpack\lpack.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\lsqlite3\lsqlite3.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\lsqlite3\sqlite3.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\lua_extensions_more.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\lua_extensions\zlib\lua_zlib.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\Classes\quick-src\ProjectConfig\ProjectConfig.cpp" />
+    <ClCompile Include="..\Classes\quick-src\ProjectConfig\SimulatorConfig.cpp" />
+    <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\lua_debugger.c" />
+    <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\Classes\runtime\Protos.pb.cc" />
+    <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
+    <ClCompile Include="..\Classes\VisibleRect.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Runtime_win32.cpp" />
+    <ClCompile Include="SimulatorWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cocos2d-x\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj">
+      <Project>{9f2d6ce6-c893-4400-b50c-6db70cc2562f}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
