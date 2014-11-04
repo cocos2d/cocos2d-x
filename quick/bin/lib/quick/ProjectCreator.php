@@ -24,18 +24,18 @@ class ProjectCreator
             printf("ERROR: invalid template path \"%s\"\n", $templatePath);
             return false;
         }
-        if (!file_exists($templatePath . 'cocos-project-template.json'))
-        {
-            printf("ERROR: not found cocos-project-template.json in template path \"%s\"\n", $templatePath);
-            return false;
-        }
-        $info = file_get_contents($templatePath . 'cocos-project-template.json');
-        $info = json_decode($info, true);
-        if (!is_array($info) || empty($info['do_default']))
-        {
-            printf("ERROR: invalid cocos-project-template.json in template path \"%s\"\n", $templatePath);
-            return false;
-        }
+        // if (!file_exists($templatePath . 'cocos-project-template.json'))
+        // {
+        //     printf("ERROR: not found cocos-project-template.json in template path \"%s\"\n", $templatePath);
+        //     return false;
+        // }
+        // $info = file_get_contents($templatePath . 'cocos-project-template.json');
+        // $info = json_decode($info, true);
+        // if (!is_array($info) || empty($info['do_default']))
+        // {
+        //     printf("ERROR: invalid cocos-project-template.json in template path \"%s\"\n", $templatePath);
+        //     return false;
+        // }
         $this->config['template'] = $templatePath;
 
         // check package name
@@ -181,16 +181,16 @@ class ProjectCreator
             $this->vars['__SCREEN_ORIENTATION_CONFIG_JSON__'] = 'false';
         }
 
-        $consoleDir = $_ENV['COCOS_CONSOLE_ROOT'];
-        // call cocos to create new project
-        $cmd_str = $consoleDir . "/cocos new " . $this->config['cocos_project']
-                    . " -p " . $this->vars['__PROJECT_PACKAGE_FULL_NAME__']
-                    . " -l lua -t runtime -d " . $this->config['cocos_output'];
-        if ($this->config['extracmd'])
-        {
-            $cmd_str = $cmd_str . ' ' . str_replace('#', ' ', $this->config['extracmd']);
-        }
-        $this->exec_sys_cmd($cmd_str);
+        // $consoleDir = $_ENV['COCOS_CONSOLE_ROOT'];
+        // // call cocos to create new project
+        // $cmd_str = $consoleDir . "/cocos new " . $this->config['cocos_project']
+        //             . " -p " . $this->vars['__PROJECT_PACKAGE_FULL_NAME__']
+        //             . " -l lua -t runtime -d " . $this->config['cocos_output'];
+        // if ($this->config['extracmd'])
+        // {
+        //     $cmd_str = $cmd_str . ' ' . str_replace('#', ' ', $this->config['extracmd']);
+        // }
+        // $this->exec_sys_cmd($cmd_str);
 
         // copy files
         $paths = $this->getPaths($this->config['template']);
