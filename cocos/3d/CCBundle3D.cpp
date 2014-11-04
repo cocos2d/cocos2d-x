@@ -345,10 +345,6 @@ bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
         {
             return loadMeshDatasBinary_0_1(meshdatas);
         }
-        else if (_version == "0.5")
-        {
-            return loadMeshDatasBinary_0_5(meshdatas);
-        }
         else
         {
             return loadMeshDatasBinary(meshdatas);
@@ -430,6 +426,21 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             std::vector<unsigned short>      indexArray;
             std:: string meshPartid = _binaryReader.readString();
             meshData->subMeshIds.push_back(meshPartid);
+
+            if (_version == "0.5")
+            {
+                unsigned int aabbSize=0;
+                //read mesh aabb
+                if (_binaryReader.read(&aabbSize, 4, 1) != 1 || aabbSize < 6)
+                {
+                    CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
+                    return false;
+                }
+                float aabb[6];
+                _binaryReader.read(aabb, 4, 6);
+                meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
+            }
+
             unsigned int nIndexCount;
             if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
             {
@@ -669,101 +680,6 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
 
     meshdatas.meshDatas.push_back(meshdata);
     
-    return true;
-}
-
-bool Bundle3D::loadMeshDatasBinary_0_5( MeshDatas& meshdatas )
-{
-    if (!seekToFirstType(BUNDLE_TYPE_MESH))
-        return false;
-    unsigned int meshSize = 0;
-    if (_binaryReader.read(&meshSize, 4, 1) != 1)
-    {
-        CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
-        return false;
-    }
-    for(int i = 0; i < meshSize ; i++ )
-    {
-        MeshData*   meshData = new (std::nothrow) MeshData();
-
-        unsigned int attribSize=0;
-        // read mesh data
-        if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
-        {
-            CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
-            return false;
-        }
-        meshData->attribCount = attribSize;
-        meshData->attribs.resize(meshData->attribCount);
-        for (ssize_t j = 0; j < meshData->attribCount; j++)
-        {
-            std::string attribute="";
-            unsigned int vSize;
-            if (_binaryReader.read(&vSize, 4, 1) != 1)
-            {
-                CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
-                return false;
-            }
-            std::string type = _binaryReader.readString();
-            attribute=_binaryReader.readString();
-            meshData->attribs[j].size = vSize;
-            meshData->attribs[j].attribSizeBytes = meshData->attribs[j].size * 4;
-            meshData->attribs[j].type =  parseGLType(type);
-            meshData->attribs[j].vertexAttrib = parseGLProgramAttribute(attribute);
-        }
-        unsigned int vertexSizeInFloat = 0;
-        // Read vertex data
-        if (_binaryReader.read(&vertexSizeInFloat, 4, 1) != 1 || vertexSizeInFloat == 0)
-        {
-            CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
-            return false;
-        }
-
-        meshData->vertex.resize(vertexSizeInFloat);
-        if (_binaryReader.read(&meshData->vertex[0], 4, vertexSizeInFloat) != vertexSizeInFloat)
-        {
-            CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
-            return false;
-        }
-
-        // Read index data
-        unsigned int meshPartCount = 1;
-        _binaryReader.read(&meshPartCount, 4, 1);
-
-        for (unsigned int k = 0; k < meshPartCount; ++k)
-        {
-            std::vector<unsigned short>      indexArray;
-            std:: string meshPartid = _binaryReader.readString();
-            meshData->subMeshIds.push_back(meshPartid);
-
-            unsigned int aabbSize=0;
-            //read mesh aabb
-            if (_binaryReader.read(&aabbSize, 4, 1) != 1 || aabbSize < 6)
-            {
-                CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
-                return false;
-            }
-            float aabb[6];
-            _binaryReader.read(aabb, 4, 6);
-            meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
-
-            unsigned int nIndexCount;
-            if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
-            {
-                CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
-                return false;
-            }
-            indexArray.resize(nIndexCount);
-            if (_binaryReader.read(&indexArray[0], 2, nIndexCount) != nIndexCount)
-            {
-                CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
-                return false;
-            }
-            meshData->subMeshIndices.push_back(indexArray);
-            meshData->numIndex = (int)meshData->subMeshIndices.size();
-        }
-        meshdatas.meshDatas.push_back(meshData);
-    }
     return true;
 }
 
