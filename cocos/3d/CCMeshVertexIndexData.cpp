@@ -106,16 +106,16 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     }
     
     AABB aabb;
+    bool needCalcAABB = meshdata.subMeshAABB.size() == meshdata.subMeshIndices.size()? false: true;
     for (size_t i = 0; i < meshdata.subMeshIndices.size(); i++) {
-        
+
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
         indexBuffer->updateIndices(&index[0], (int)index.size(), 0);
-        auto subAABB =  meshdata.subMeshAABB[i];
-        if (subAABB.isEmpty())
+        if (needCalcAABB)
             aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), index);
         else
-            aabb = subAABB;
+            aabb =  meshdata.subMeshAABB[i];
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
         MeshIndexData* indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, aabb);
         vertexdata->_indexs.pushBack(indexdata);
