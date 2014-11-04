@@ -24,19 +24,20 @@ class ProjectCreator
             printf("ERROR: invalid template path \"%s\"\n", $templatePath);
             return false;
         }
-        // if (!file_exists($templatePath . 'cocos-project-template.json'))
-        // {
-        //     printf("ERROR: not found cocos-project-template.json in template path \"%s\"\n", $templatePath);
-        //     return false;
-        // }
-        // $info = file_get_contents($templatePath . 'cocos-project-template.json');
-        // $info = json_decode($info, true);
-        // if (!is_array($info) || empty($info['do_default']))
-        // {
-        //     printf("ERROR: invalid cocos-project-template.json in template path \"%s\"\n", $templatePath);
-        //     return false;
-        // }
+        if (!file_exists($templatePath . '../cocos2dx_files.json'))
+        {
+            printf("ERROR: not found cocos2dx_files.json in template path \"%s/..\"\n", $templatePath);
+            return false;
+        }
+        $cocos_files = file_get_contents($templatePath . '../cocos2dx_files.json');
+        $cocos_files = json_decode($cocos_files, true);
+        if (!is_array($cocos_files) || empty($cocos_files['common']))
+        {
+            printf("ERROR: not found cocos2dx_files.json in template path \"%s/..\"\n", $templatePath);
+            return false;
+        }
         $this->config['template'] = $templatePath;
+        $this->config['cocos_files'] = $cocos_files;
 
         // check package name
         $packageName = str_replace('-', '_', strtolower($this->config['package']));
@@ -218,6 +219,7 @@ class ProjectCreator
         // $this->modifyFiles();
         // $this->fixFiles();
         // $this->replaceFiles();
+        $this->copyCocosFiles();
 
         print("\n\n");
 
@@ -402,9 +404,9 @@ class ProjectCreator
         return true;
     }
 
-    private function replaceFile($src, $dest)
+    private function replaceFile($src, $dest, $cmd)
     {
-        printf("replace file \"%s\" ... ", $dest);
+        printf($cmd . " file \"%s\" ... ", $dest);
         $destinationDir = pathinfo($dest, PATHINFO_DIRNAME);
 
         if (!is_dir($destinationDir))
@@ -425,11 +427,6 @@ class ProjectCreator
         }
         $stat = stat($src);
 
-        // foreach ($this->vars as $key => $value)
-        // {
-        //     $contents = str_replace($key, $value, $contents);
-        // }
-
         if (file_put_contents($dest, $contents) == false)
         {
             printf("ERROR: file_put_contents failure\n");
@@ -438,6 +435,23 @@ class ProjectCreator
         chmod($dest, $stat['mode']);
 
         printf("OK\n");
+        return true;
+    }
+
+    private function copyCocosFiles()
+    {
+        $quickPath = $_ENV['QUICK_V3_ROOT'];
+        $cocosPath = $this->config['output'] . 'frameworks/cocos2d-x';
+        $files = array_merge( $this->config['cocos_files']['common'], 
+                               $this->config['cocos_files']['lua'] );
+        foreach ($files as $file) 
+        {
+            $src = $quickPath . "/" . $file;
+            if (!file_exists($src)) continue;
+            $dst = $cocosPath . "/" . $file;
+            $this->replaceFile($src, $dst, "create");
+        }
+
         return true;
     }
 
