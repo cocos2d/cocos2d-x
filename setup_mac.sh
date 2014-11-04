@@ -86,21 +86,21 @@ fi
 
 export QUICK_V3_ROOT=`cat ~/.QUICK_V3_ROOT`
 
-echo "INSTALLING QUICK FRAMEWORK"
-$QUICK_V3_ROOT/quick/bin/make_framework_package.sh
+# echo "INSTALLING QUICK FRAMEWORK"
+# $QUICK_V3_ROOT/quick/bin/make_framework_package.sh
 
-echo ""
-echo ""
+# echo ""
+# echo ""
 
-echo "INSTALLING QUICK TEMPLATE TO COCOS"
-if [ "$CALL_BY_CONTAINER" == "PKG" ]; then
-    echo "> check coscos version...." >> "$LOG_FILENAME"
-    source $PROFILE_NAME
-    echo "> COCOS_CONSOLE_ROOT=$COCOS_CONSOLE_ROOT" >> "$LOG_FILENAME"
-    $QUICK_V3_ROOT/quick/bin/install_to_cocos.sh >> "$LOG_FILENAME"
-else
-    $QUICK_V3_ROOT/quick/bin/install_to_cocos.sh
-fi
+# echo "INSTALLING QUICK TEMPLATE TO COCOS"
+# if [ "$CALL_BY_CONTAINER" == "PKG" ]; then
+#     echo "> check coscos version...." >> "$LOG_FILENAME"
+#     source $PROFILE_NAME
+#     echo "> COCOS_CONSOLE_ROOT=$COCOS_CONSOLE_ROOT" >> "$LOG_FILENAME"
+#     $QUICK_V3_ROOT/quick/bin/install_to_cocos.sh >> "$LOG_FILENAME"
+# else
+#     $QUICK_V3_ROOT/quick/bin/install_to_cocos.sh
+# fi
 
 echo ""
 echo ""
