@@ -2089,14 +2089,14 @@ Bundle3D::~Bundle3D()
 
 AABB Bundle3D::calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index)
 {
-	AABB aabb;
-	stride /= 4;
-	for(const auto& it : index)
-	{
-		Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
-		aabb.updateMinMax(&point, 1);
-	}
-	return aabb;
+    AABB aabb;
+    stride /= 4;
+    for(const auto& it : index)
+    {
+        Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
+        aabb.updateMinMax(&point, 1);
+    }
+    return aabb;
 }
 
 NS_CC_END

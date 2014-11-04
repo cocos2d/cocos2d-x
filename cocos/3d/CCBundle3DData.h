@@ -142,7 +142,7 @@ public:
     {
         vertex.clear();
         subMeshIndices.clear();
-		subMeshAABB.clear();
+        subMeshAABB.clear();
         attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;
