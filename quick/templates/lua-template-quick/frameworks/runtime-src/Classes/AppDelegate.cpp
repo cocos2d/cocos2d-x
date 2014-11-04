@@ -102,7 +102,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
-    engine->getLuaStack()->loadChunksFromZIP("res/framework_quick.zip");
 
 #if (COCOS2D_DEBUG > 0)
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE

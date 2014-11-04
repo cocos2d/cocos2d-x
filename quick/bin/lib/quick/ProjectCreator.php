@@ -220,6 +220,7 @@ class ProjectCreator
         // $this->fixFiles();
         // $this->replaceFiles();
         $this->copyCocosFiles();
+        $this->copyFrameworkFiles();
 
         print("\n\n");
 
@@ -451,6 +452,35 @@ class ProjectCreator
             $dst = $cocosPath . "/" . $file;
             $this->replaceFile($src, $dst, "create");
         }
+
+        return true;
+    }
+
+    private function copyDir($srcPath, $dstPath)
+    {
+        $files = array();
+        findFiles($srcPath, $files);
+        foreach ($files as $src) 
+        {
+            $dest = str_replace($srcPath, $dstPath, $src);
+            $this->replaceFile($src, $dest, "create");
+        }
+    }
+
+    private function copyFrameworkFiles()
+    {
+        $quickPath = $_ENV['QUICK_V3_ROOT'] . "/quick";
+        $cocosPath = $this->config['output'] . "src";
+
+        $dirname = "/cocos";
+        $src = $quickPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
+
+        $dirname = "/framework";
+        $src = $quickPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
 
         return true;
     }
