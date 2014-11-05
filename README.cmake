@@ -23,7 +23,7 @@ mac build Instructions
 
 cd cocos2d-x
 mkdir macbuild && cd macbuild
-cmake -G "Unix Makefile" -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF ..
+cmake -G "Unix Makefiles" -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF ..
 
 Android Build Instructions
 
@@ -35,6 +35,6 @@ mingw64 with msys2 build Instructions
 
 cd cocos2d-x
 mkdir mingwbuild && cd mingwbuild
-cmake -G "MSYS Makefile" -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF ..
+cmake -G "MSYS Makefiles" -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF ..
 
 todo: structure this document in markdown with better examples and more details
