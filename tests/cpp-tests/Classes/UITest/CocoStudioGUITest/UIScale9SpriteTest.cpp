@@ -44,13 +44,14 @@ bool UIScale9SpriteTest::init()
         auto moveTo = MoveBy::create(1.0, Vec2(30,0));
         auto moveBack = moveTo->reverse();
         auto rotateBy = RotateBy::create(1.0, 180);
-        auto action = Sequence::create(moveTo,moveBack, rotateBy, NULL);
+        auto scaleBy = ScaleTo::create(1.0, -2.0);
+        auto action = Sequence::create(moveTo,moveBack, rotateBy,scaleBy, NULL);
 
         
         Sprite *normalSprite1 = Sprite::create("cocosui/animationbuttonnormal.png");
         normalSprite1->setPosition(100, 270);
-//        normalSprite1->setAnchorPoint(Vec2(0.5,0.5));
-//        normalSprite1->setContentSize(Size(100,100));
+        normalSprite1->setFlippedY(true);
+        
 
         this->addChild(normalSprite1);
         normalSprite1->runAction((FiniteTimeAction*)action->clone());
@@ -107,7 +108,8 @@ bool UIScale9SpriteHierarchialTest::init()
         auto moveBack = moveTo->reverse();
         auto rotateBy = RotateBy::create(1.0f, 180);
         auto fadeOut = FadeOut::create(2.0f);
-        auto action = Sequence::create(moveTo,moveBack, rotateBy,fadeOut, NULL);
+        auto scaleTo = ScaleTo::create(1.0, 2.0);
+        auto action = Sequence::create(moveTo,moveBack, rotateBy,fadeOut,scaleTo, NULL);
         
         Sprite *normalSprite1 = Sprite::create("cocosui/animationbuttonnormal.png");
         normalSprite1->setPosition(100, 270);
@@ -135,6 +137,7 @@ bool UIScale9SpriteHierarchialTest::init()
         cocos2d::ui::Scale9Sprite *sp2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp2->setPreferredSize(sp1->getContentSize() * 1.2f);
         sp2->setColor(Color3B::GREEN);
+        sp2->setFlippedX(true);
         sp2->setContentSize(Size(100,100));
         
         sp1->addChild(sp2);
@@ -163,15 +166,13 @@ bool UIScale9SpriteTouchTest::init()
         
         auto containerForSprite1 = Node::create();
         auto sprite1 = cocos2d::ui::Scale9Sprite::create("Images/CyanSquare.png");
-//        sprite1->setScale9Enabled(false);
         sprite1->setPosition(origin+Vec2(size.width/2, size.height/2) + Vec2(-80, 80));
         containerForSprite1->addChild(sprite1);
         addChild(containerForSprite1, 10);
         
         auto sprite2 = ui::Scale9Sprite::create("Images/MagentaSquare.png");
         sprite2->setPosition(origin+Vec2(size.width/2, size.height/2));
-//        sprite2->setCascadeOpacityEnabled(false);
-//        sprite2->setScale9Enabled(false);
+
 
         addChild(sprite2, 20);
         
@@ -179,7 +180,6 @@ bool UIScale9SpriteTouchTest::init()
         sprite3->setPosition(Vec2(0, 0));
         sprite3->setCascadeOpacityEnabled(false);
         sprite2->addChild(sprite3, 1);
-//        sprite3->setScale9Enabled(false);
 
         
         // Make sprite1 touchable
@@ -666,10 +666,11 @@ bool UIS9Flip::init()
         auto flipXSprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
         
         flipXSprite->setPosition(Vec2(x - 120, y ));
+        flipXSprite->setScale(1.2);
         this->addChild(flipXSprite);
-        flipXSprite->setFlippedX(true);
+        flipXSprite->setFlippedX(false);
         
-        auto flipXLabel = Label::createWithSystemFont("sprite is flipped!","Airal",10);
+        auto flipXLabel = Label::createWithSystemFont("sprite is not flipped!","Airal",10);
         flipXLabel->setPosition(flipXSprite->getPosition() + Vec2(0, flipXSprite->getContentSize().height/2 + 10));
         this->addChild(flipXLabel);
         
@@ -729,6 +730,12 @@ bool UIS9Flip::init()
             
             CCLOG("scaleX = %f", flipXSprite->getScaleX());
             CCLOG("scaleY = %f", flipYSprite->getScale());
+            if (flipXSprite->isFlippedX()) {
+                CCLOG("xxxxxxx");
+            }
+            if (flipYSprite->isFlippedY()) {
+                CCLOG("YYYYYY");
+            }
             
             if (flipXSprite->isFlippedX()) {
                 flipXLabel->setString("sprite is flipped!");

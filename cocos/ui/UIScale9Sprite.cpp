@@ -1023,6 +1023,9 @@ y+=ytranslate;         \
         this->cleanupSlicedSprites();
         _protectedChildren.clear();
         
+        //we must invalide the transform when toggling scale9enabled
+        _transformUpdated = _transformDirty = _inverseDirty = true;
+        
         if (_scale9Enabled)
         {
             if (_scale9Image)
