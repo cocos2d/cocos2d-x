@@ -63,6 +63,7 @@ protected:
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
+    Rect intersectionRect(Rect& rect1, Rect& rect);
     
     Rect _clippingRegion;
     bool _clippingEnabled;

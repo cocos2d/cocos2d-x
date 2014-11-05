@@ -91,6 +91,8 @@ protected:
     void disableTouchDispatching();
 
     void dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event);
+    
+    void removeTouchTarget(LuaEventNode* eventNode);
 
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node, bool isRootNode);
