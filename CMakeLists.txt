@@ -30,7 +30,7 @@ project (Cocos2d-X)
 set(COCOS2D_X_VERSION 3.3.0-beta0)
 
 include(cmake/BuildHelpers.CMakeLists.txt)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
 message(${BUILDING_STRING})
 
