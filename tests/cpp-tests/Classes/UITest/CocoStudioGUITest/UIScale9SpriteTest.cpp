@@ -647,6 +647,9 @@ bool UIS9Flip::init()
         float x = winSize.width / 2;
         float y = 0 + (winSize.height / 2);
         
+        auto statusLabel = Label::createWithSystemFont("Scale9Enabled", "Arial", 10);
+        statusLabel->setPosition(Vec2(x, winSize.height - statusLabel->getContentSize().height - 40));
+        this->addChild(statusLabel);
         
         auto normalSprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
         
@@ -664,10 +667,9 @@ bool UIS9Flip::init()
         
         flipXSprite->setPosition(Vec2(x - 120, y ));
         this->addChild(flipXSprite);
-        
         flipXSprite->setFlippedX(true);
         
-        auto flipXLabel = Label::createWithSystemFont("Sprite FlipX","Airal",10);
+        auto flipXLabel = Label::createWithSystemFont("sprite is flipped!","Airal",10);
         flipXLabel->setPosition(flipXSprite->getPosition() + Vec2(0, flipXSprite->getContentSize().height/2 + 10));
         this->addChild(flipXLabel);
         
@@ -677,11 +679,73 @@ bool UIS9Flip::init()
         flipYSprite->setPosition(Vec2(x + 120, y));
         this->addChild(flipYSprite);
         
+        flipYSprite->setScale(0.8);
         flipYSprite->setFlippedY(true);
         
-        auto flipYLabel = Label::createWithSystemFont("Sprite FlipY","Airal",10);
+        auto flipYLabel = Label::createWithSystemFont("sprite is flipped!","Airal",10);
         flipYLabel->setPosition(flipYSprite->getPosition() + Vec2(0, flipYSprite->getContentSize().height/2 + 10));
         this->addChild(flipYLabel);
+        
+        
+        auto toggleFlipXButton = Button::create();
+        toggleFlipXButton->setTitleText("Toggle FlipX");
+        toggleFlipXButton->setPosition(flipXSprite->getPosition() + Vec2(0, - 20 - flipXSprite->getContentSize().height/2));
+        toggleFlipXButton->addClickEventListener([=](Ref*){
+            flipXSprite->setFlippedX(! flipXSprite->isFlippedX());
+            if (flipXSprite->isFlippedX()) {
+                flipXLabel->setString("sprite is flipped!");
+            }
+            else{
+                flipXLabel->setString("sprite is not flipped!");
+            }
+        });
+        this->addChild(toggleFlipXButton);
+        
+        auto toggleFlipYButton = Button::create();
+        toggleFlipYButton->setTitleText("Toggle FlipY");
+        toggleFlipYButton->setPosition(flipYSprite->getPosition() + Vec2(0, -20 - flipYSprite->getContentSize().height/2));
+        toggleFlipYButton->addClickEventListener([=](Ref*){
+            flipYSprite->setFlippedY(!flipYSprite->isFlippedY());
+            if (flipYSprite->isFlippedY()) {
+                flipYLabel->setString("sprite is flipped!");
+            }
+            else{
+                flipYLabel->setString("sprpite is not flipped!");
+            }
+        });
+        this->addChild(toggleFlipYButton);
+        
+        auto toggleScale9Button = Button::create();
+        toggleScale9Button->setTitleText("Toggle Scale9");
+        toggleScale9Button->setPosition(normalSprite->getPosition() + Vec2(0, -20 - normalSprite->getContentSize().height/2));
+        toggleScale9Button->addClickEventListener([=](Ref*){
+            flipXSprite->setScale9Enabled(!flipXSprite->isScale9Enabled());
+            flipYSprite->setScale9Enabled(!flipYSprite->isScale9Enabled());
+            if (flipXSprite->isScale9Enabled()) {
+                statusLabel->setString("Scale9Enabled");
+            }else{
+                statusLabel->setString("Scale9Disabled");
+            }
+            
+            CCLOG("scaleX = %f", flipXSprite->getScaleX());
+            CCLOG("scaleY = %f", flipYSprite->getScale());
+            
+            if (flipXSprite->isFlippedX()) {
+                flipXLabel->setString("sprite is flipped!");
+            }
+            else{
+                flipXLabel->setString("sprite is not flipped!");
+            }
+            
+            if (flipYSprite->isFlippedY()) {
+                flipYLabel->setString("sprite is flipped!");
+            }
+            else{
+                flipYLabel->setString("sprpite is not flipped!");
+            }
+            
+        });
+        this->addChild(toggleScale9Button);
         
         return true;
     }
