@@ -19,29 +19,14 @@ $options = array(
 $extrawork = array(
     "FilesNeedModify" => array(
             array(
+                "/external/protobuf-lite/Android.mk",
+                'LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..',
+                'LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. $(LOCAL_PATH)/src',
+                ),
+            array(
                 "/cocos/platform/win32/CCFileUtils-win32.cpp",
                 's_resourcePath.append("/");',
                 's_resourcePath.append("/../../");',
-                ),
-            array(
-                "/external/lua/quick/LuaEventNode.h",
-                "class CC_DLL LuaEventNode",
-                "class LuaEventNode",
-                ),
-            array(
-                "/external/lua/quick/LuaNodeManager.h",
-                "class CC_DLL LuaNodeManager",
-                "class LuaNodeManager",
-                ),
-            array(
-                "/external/lua/quick/LuaTouchEventManager.h",
-                "class CC_DLL LuaTouchEventManager",
-                "class LuaTouchEventManager",
-                ),
-            array(
-                "/external/lua/quick/LuaTouchTargetNode.h",
-                "class CC_DLL LuaTouchTargetNode",
-                "class LuaTouchTargetNode",
                 ),
         ),
 
@@ -49,10 +34,6 @@ $extrawork = array(
             array(
                 'cocos2d.cpp',
                 "/cocos/cocos2d.cpp",
-                ),
-            array(
-                "LuaEventNode.cpp",
-                "/external/lua/quick/LuaEventNode.cpp",
                 ),
         ),
 );
