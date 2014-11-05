@@ -156,6 +156,7 @@ namespace cocostudio
             button->setContentSize(Size(scale9Width, scale9Height));
         }
         
+        button->setColor(_color);
         button->setTitleColor(Color3B(cri, cgi, cbi));
         
 
