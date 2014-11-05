@@ -125,7 +125,7 @@ class ApkBuilder
     function setKeystore()
     {
         $proj_dir = $this->config['project_dir'];
-        $json_file = $proj_dir . '/../config.json';
+        $json_file = $proj_dir . '/../../../config.json';
         $json = json_decode(file_get_contents($json_file), true);
         $projectName = $json['init_cfg']['name'];
         date_default_timezone_set("Asia/Chongqing");
