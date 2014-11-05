@@ -9,12 +9,7 @@ local BuildProjectUI = class("BuildProjectUI", function()
 function BuildProjectUI:ctor(args)
 	self.cmdArgs_ = {}
 	self.cmdArgs_.projDir = args.projDir
-	self.cmdArgs_.platform = "android"
-	self.cmdArgs_.mode = "debug"
-	self.cmdArgs_.compileRes = true
-	self.cmdArgs_.compileScr = true
-
-	self.cmdArgs_.outputDir = self:addOutputFromPath(self.cmdArgs_.projDir)
+	self.cmdArgs_.buildNative = true
 
 	self:createUI()
 end
@@ -29,6 +24,7 @@ function BuildProjectUI:createUI()
 	local winSize = cc.Director:getInstance():getWinSize()
 	local posY = winSize.height
 	local posX = display.left + 40
+	local spaceW = 80
 
 	local fontSize = 25
 	local images = {
@@ -40,209 +36,50 @@ function BuildProjectUI:createUI()
 		off = "RadioButtonOff.png",
 		on = "RadioButtonOn.png"
 	}
-	local checkboxImages = {
-	    off = "CheckBoxButton2Off.png",
-	    on = "CheckBoxButton2On.png",
-	}
 
-	-- Porject Dir
 	posY = posY - 30
-    self:addLabel("Project dir:", posX, posY)
-
+    self:addLabel("Project path:", posX, posY)
     posY = posY - 60
     self.projDirTF_ = self:addEditbox({x = posX, y = posY})
-    self:addButton("Select", display.right - 170, posY, function(event)
-    	local filedialog = PlayerProtocol:getInstance():getFileDialogService()
-        local locationDirectory = filedialog:openDirectory("Choose Localtion", "")
-        if string.len(locationDirectory) > 0 then
-            self.projDirTF_:setText(locationDirectory)
-            self.outputDirTF_:setText(self:addOutputFromPath(locationDirectory))
-        end
+    self:addButton("Selected", display.right - 170, posY, function(event)
+    	self:openFileDialog(self.projDirTF_)
     	end)
-    self.projDirTF_:setText(self.cmdArgs_.projDir)
+    self.projDirTF_:setText(self.cmdArgs_.outputDir)
 
-    -- out dir
-    posY = posY - 20
-    self:addLabel("Output dir:", posX, posY)
 
-    posY = posY - 60
-    self.outputDirTF_ = self:addEditbox({x = posX, y = posY})
-    self:addButton("Select", display.right - 170, posY, function(event)
-    	local filedialog = PlayerProtocol:getInstance():getFileDialogService()
-        local locationDirectory = filedialog:openDirectory("Choose Localtion", "")
-        if string.len(locationDirectory) > 0 then
-            self.outputDirTF_:setText(locationDirectory)
-        end
-    	end)
-    self.outputDirTF_:setText(self.cmdArgs_.outputDir)
-
-    -- platform
-    posY = posY - 20
-    self:addLabel("Platform:", posX, posY)
-
-	posY = posY - 50
+    posY = posY - 50
     local group = cc.ui.UICheckBoxButtonGroup.new(display.LEFT_TO_RIGHT)
         :addButton(cc.ui.UICheckBoxButton.new(radioImages)
-            :setButtonLabel(cc.ui.UILabel.new({text = "Android", color = display.COLOR_BLACK}))
-            :setButtonLabelOffset(20, 0)
-            :align(display.LEFT_CENTER))
-    if "ios" == device.platform or "mac" == device.platform then
-        group:addButton(cc.ui.UICheckBoxButton.new(radioImages)
-            :setButtonLabel(cc.ui.UILabel.new({text = "IOS", color = display.COLOR_BLACK}))
+            :setButtonLabel(cc.ui.UILabel.new({text = "BuildNative", color = display.COLOR_BLACK}))
             :setButtonLabelOffset(20, 0)
             :align(display.LEFT_CENTER))
         :addButton(cc.ui.UICheckBoxButton.new(radioImages)
-            :setButtonLabel(cc.ui.UILabel.new({text = "Mac", color = display.COLOR_BLACK}))
+            :setButtonLabel(cc.ui.UILabel.new({text = "BuildAPK", color = display.COLOR_BLACK}))
             :setButtonLabelOffset(20, 0)
             :align(display.LEFT_CENTER))
-    elseif "windows" == device.platform then
-        group:addButton(cc.ui.UICheckBoxButton.new(radioImages)
-            :setButtonLabel(cc.ui.UILabel.new({text = "Win32", color = display.COLOR_BLACK}))
-            :setButtonLabelOffset(20, 0)
-            :align(display.LEFT_CENTER))
-    end
-        -- :addButton(cc.ui.UICheckBoxButton.new(radioImages)
-        --     :setButtonLabel(cc.ui.UILabel.new({text = "Linux", color = display.COLOR_BLACK}))
-        --     :setButtonLabelOffset(20, 0)
-        --     :align(display.LEFT_CENTER))
-        -- :addButton(cc.ui.UICheckBoxButton.new(radioImages)
-        --     :setButtonLabel(cc.ui.UILabel.new({text = "web", color = display.COLOR_BLACK}))
-        --     :setButtonEnabled(false)
-        --     :setButtonLabelOffset(25, 0)
-        --     :align(display.LEFT_CENTER))
     group:setButtonsLayoutMargin(10, 80, 10, 10)
         :onButtonSelectChanged(function(event)
-        	if not self.platformNode_ then
+        	if not self.buildAPKPanel_ then
         		return
         	end
 
-        	self.androidArgsPanel_:setVisible(false)
-			self.IOSArgsPanel_:setVisible(false)
-			self.MacArgsPanel_:setVisible(false)
+			self.buildAPKPanel_:setVisible(false)
 
         	if 1 == event.selected then
-        		self.androidArgsPanel_:setVisible(true)
-        		self.cmdArgs_.platform = "android"
+        		self.cmdArgs_.buildNative = true
         	elseif 2 == event.selected then
-        		if "windows" == device.platform then
-        			self.cmdArgs_.platform = "win32"
-        		else
-	        		self.IOSArgsPanel_:setVisible(true)
-	        		self.cmdArgs_.platform = "ios"
-	        	end
-        	elseif 3 == event.selected then
-        		self.MacArgsPanel_:setVisible(true)
-        		self.cmdArgs_.platform = "mac"
-        	elseif 4 == event.selected then
-        		self.cmdArgs_.platform = "win32"
+        		self.buildAPKPanel_:setVisible(true)
+        		self.cmdArgs_.buildNative = false
         	end
         end)
         :align(display.LEFT_BOTTOM, posX, posY)
         :addTo(self)
     group:getButtonAtIndex(1):setButtonSelected(true)
 
-	-- mode
-    posY = posY - 10
-    self:addLabel("Mode:", posX, posY)
-
-	posY = posY - 50
-	group = cc.ui.UICheckBoxButtonGroup.new(display.LEFT_TO_RIGHT)
-        :addButton(cc.ui.UICheckBoxButton.new(radioImages)
-            :setButtonLabel(cc.ui.UILabel.new({text = "Debug", color = display.COLOR_BLACK}))
-            :setButtonLabelOffset(20, 0)
-            :align(display.LEFT_CENTER))
-        :addButton(cc.ui.UICheckBoxButton.new(radioImages)
-            :setButtonLabel(cc.ui.UILabel.new({text = "Release", color = display.COLOR_BLACK}))
-            :setButtonLabelOffset(20, 0)
-            :align(display.LEFT_CENTER))
-        :setButtonsLayoutMargin(10, 80, 10, 10)
-        :onButtonSelectChanged(function(event)
-        	if 1 == event.selected then
-        		self.cmdArgs_.mode = "debug"
-        	elseif 2 == event.selected then
-        		self.cmdArgs_.mode = "release"
-        	end
-        end)
-        :align(display.LEFT_BOTTOM, posX, posY)
-        :addTo(self)
-    group:getButtonAtIndex(1):setButtonSelected(true)
-
-    -- lua argments
-    posY = posY - 10
-    self:addLabel("Lua Args:", posX, posY)
     posY = posY - 30
-    local spaceW = 300
-    cc.ui.UICheckBoxButton.new(checkboxImages, {scale9 = true})
-    	:setButtonSize(36, 36)
-        :setButtonLabel(cc.ui.UILabel.new({text = "Compile Resource",  color = display.COLOR_BLACK}))
-        :setButtonLabelOffset(25, 0)
-        :setButtonLabelAlignment(display.LEFT_CENTER)
-        :align(display.LEFT_CENTER, posX, posY)
-        :setButtonSelected(true)
-        :addTo(self)
-        :onButtonStateChanged(function(event)
-        	if "on" == event.state then
-        		self.cmdArgs_.compileRes = true
-        	elseif "off" == event.state then
-        		self.cmdArgs_.compileRes = false
-        	end
-        	end)
-    cc.ui.UICheckBoxButton.new(checkboxImages, {scale9 = true})
-    	:setButtonSize(36, 36)
-        :setButtonLabel(cc.ui.UILabel.new({text = "Compile Script",  color = display.COLOR_BLACK}))
-        :setButtonLabelOffset(25, 0)
-        :setButtonLabelAlignment(display.LEFT_CENTER)
-        :align(display.LEFT_CENTER, posX + spaceW, posY)
-        :setButtonSelected(true)
-        :addTo(self)
-        :onButtonStateChanged(function(event)
-        	if "on" == event.state then
-        		self.cmdArgs_.compileScr = true
-        	elseif "off" == event.state then
-        		self.cmdArgs_.compileScr = false
-        	end
-        	end)
-
-    posY = posY - 40
-    cc.ui.UICheckBoxButton.new(checkboxImages, {scale9 = true})
-    	:setButtonSize(36, 36)
-        :setButtonLabel(cc.ui.UILabel.new({text = "Enable Lua Encrypt",  color = display.COLOR_BLACK}))
-        :setButtonLabelOffset(25, 0)
-        :setButtonLabelAlignment(display.LEFT_CENTER)
-        :align(display.LEFT_CENTER, posX, posY)
-        :addTo(self)
-        :onButtonStateChanged(function(event)
-        	if "on" == event.state then
-        		self.encyrPanel_:setVisible(true)
-        		self:updatePlatformPanelPos()
-        		self.cmdArgs_.LuaEncrypt = true
-        	elseif "off" == event.state then
-        		self.encyrPanel_:setVisible(false)
-        		self:updatePlatformPanelPos()
-        		self.cmdArgs_.LuaEncrypt = false
-        	end
-        	end)
-
-	posY = posY - 40
-	self.encyrPanel_ = self:addEncryptArgs()
-	self.encyrPanel_:setPosition(posX, posY)
-	self:addChild(self.encyrPanel_)
-
-	-- posY = posY - 40
-	posX = 40
-	self.androidArgsPanel_ = self:addAndroidArgs()
-	self.IOSArgsPanel_ = self:addIOSArgs()
-	self.MacArgsPanel_ = self:addMacArgs()
-
-	local platformNode = display.newNode()
-	platformNode:addChild(self.androidArgsPanel_)
-	platformNode:addChild(self.IOSArgsPanel_)
-	platformNode:addChild(self.MacArgsPanel_)
-	self:addChild(platformNode)
-	platformNode:setPosition(posX, posY)
-	self.platformNode_ = platformNode
-
-	self.androidArgsPanel_:setVisible(true)
+    self.buildAPKPanel_ = self:addAndroidArgs()
+    self.buildAPKPanel_:setPosition(posX, posY)
+    self:addChild(self.buildAPKPanel_)
 
 	-- back button
 	self:addButton("Back", display.left + 20, 10, function(event)
@@ -253,10 +90,6 @@ function BuildProjectUI:createUI()
 	self.compileBtn = self:addButton("Compile", display.right - 170, 10, function(event)
 		if Utilitys.stringIsNull(self.projDirTF_:getText()) then
 			print("project directory is nil")
-			return
-		end
-		if Utilitys.stringIsNull(self.outputDirTF_:getText()) then
-			print("output directory is nil")
 			return
 		end
 
@@ -291,7 +124,8 @@ function BuildProjectUI:addEditbox(args, node)
     return locationEditbox
 end
 
-function BuildProjectUI:addButton(text, posX, posY, listener)
+function BuildProjectUI:addButton(text, posX, posY, listener, node)
+	node = node or self
 	local images = {
 	    normal = "#ButtonNormal.png",
 	    pressed = "#ButtonPressed.png",
@@ -305,101 +139,107 @@ function BuildProjectUI:addButton(text, posX, posY, listener)
 	            text = text,
 	            size = fontSize}))
 	    :align(display.LEFT_BOTTOM, posX, posY)
-	    :addTo(self)
+	    :addTo(node)
 	    :onButtonClicked(listener)
 
 	return btn
 end
 
-function BuildProjectUI:addEncryptArgs()
+function BuildProjectUI:addKeyStoreArgs()
 	local node = display.newNode()
 	local posX = 0
 	local posY = 0
 	local spaceW = 200
 
-	self:addLabel("EncryptKey:", posX, posY, node)
-	self.encryptKeyTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+    self:addLabel("KeyStore path:", posX, posY, node)
+    posY = posY - 60
+    self.KeyStorePathTF_ = self:addEditbox({x = posX, y = posY}, node)
+    self:addButton("Selected", display.right - 210, posY, function(event)
+    	print("keystore clicked")
+    	end, node)
+
+    posY = posY - 40
+	self:addLabel("KeyStore Password:", posX, posY, node)
+	self.keyStorePWTF_ = self:addEditbox({x = posX + 220, y = posY - 20, size = cc.size(200, 35)}, node)
 	posX = display.cx
-	self:addLabel("EncryptSign:", posX, posY, node)
-	self.encryptKeySign_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+	self:addLabel("KeyStore alias:", posX, posY, node)
+	self.keyStoreAliasTF_ = self:addEditbox({x = posX + 180, y = posY - 20, size = cc.size(200, 35)}, node)
 
 	node:setVisible(false)
 	return node
 end
 
 function BuildProjectUI:addAndroidArgs()
+	local images = {
+	    normal = "#ButtonNormal.png",
+	    pressed = "#ButtonPressed.png",
+	    disabled = "#ButtonDisabled.png",
+	}
+	local radioImages = {
+		off = "RadioButtonOff.png",
+		on = "RadioButtonOn.png"
+	}
+	local checkboxImages = {
+	    off = "CheckBoxButton2Off.png",
+	    on = "CheckBoxButton2On.png",
+	}
+
 	local node = display.newNode()
 	local posX = 0
 	local posY = 0
 	local spaceW = 200
 
-	self:addLabel("Android:", posX, posY, node)
-	posY = posY - 40
-	self:addLabel("AndroidPlatform:", posX, posY, node)
-	self.androidPlatformTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
-	posX = display.cx
-	self:addLabel("NDK_MODE:", posX, posY, node)
-	self.androidNDKMODETF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+    self:addLabel("Android build tools path:", posX, posY, node)
+    posY = posY - 60
+    self.androidBuildToosPathTF_ = self:addEditbox({x = posX, y = posY}, node)
+    self:addButton("Selected", display.right - 210, posY, function(event)
+    	self:openFileDialog(self.androidBuildToosPathTF_)
+    	end, node)
 
-	posY = posY - 40
+    posY = posY - 30
+    self:addLabel("Java extra path:", posX, posY, node)
+    posY = posY - 60
+    self.javaExtraPathTF_ = self:addEditbox({x = posX, y = posY}, node)
+    self:addButton("Selected", display.right - 210, posY, function(event)
+    	self:openFileDialog(self.javaExtraPathTF_)
+    	end, node)
+
+    posY = posY - 40
+	self:addLabel("AndroidAPI:", posX, posY, node)
+	self.androidAPITF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+	posX = display.cx
+	self:addLabel("JavaSDKVer:", posX, posY, node)
+	self.javaSDKVerTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+
 	posX = 0
-	self:addLabel("APP_ABI:", posX, posY, node)
-	self.androidABITF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
-	posX = display.cx
-	self:addLabel("TOOLCHAIN:", posX, posY, node)
-	self.androidToolChainTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+	posY = posY - 40
+	cc.ui.UICheckBoxButton.new(checkboxImages, {scale9 = true})
+    	:setButtonSize(36, 36)
+        :setButtonLabel(cc.ui.UILabel.new({text = "sign the apk",  color = display.COLOR_BLACK}))
+        :setButtonLabelOffset(25, 0)
+        :setButtonLabelAlignment(display.LEFT_CENTER)
+        :align(display.LEFT_CENTER, posX, posY)
+        :setButtonSelected(true)
+        :addTo(node)
+        :onButtonStateChanged(function(event)
+        	if "on" == event.state then
+        		self.cmdArgs_.signAPK = true
+        		self.keystorePanel_:setVisible(true)
+        	elseif "off" == event.state then
+        		self.cmdArgs_.signAPK = false
+        		self.keystorePanel_:setVisible(false)
+        	end
+        	end)
 
 	posY = posY - 40
-	posX = 0
-	self:addLabel("CPP_FLAGS:", posX, posY, node)
-	self.androidCppFlagsTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 35)}, node)
+	self.keystorePanel_ = self:addKeyStoreArgs()
+	self.keystorePanel_:setPosition(posX, posY)
+	node:addChild(self.keystorePanel_)
+
+	self.keystorePanel_:setVisible(true)
 
 	node:setVisible(false)
 	return node
-end
-
-function BuildProjectUI:addIOSArgs()
-	local node = display.newNode()
-	local posX = 0
-	local posY = 0
-	local spaceW = 200
-
-	self:addLabel("IOS:", posX, posY, node)
-	posY = posY - 30
-	self:addLabel("Target:", posX, posY, node)
-	self.iosTargetTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 40)}, node)
-	posX = display.cx
-	self:addLabel("SIGN_ID:", posX, posY, node)
-	self.iosSignTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 40)}, node)
-
-	node:setVisible(false)
-	return node
-end
-
-function BuildProjectUI:addMacArgs()
-	local node = display.newNode()
-	local posX = 0
-	local posY = 0
-	local spaceW = 200
-
-	self:addLabel("Mac:", posX, posY, node)
-	posY = posY - 30
-	self:addLabel("Target:", posX, posY, node)
-	self.macTargetTF_ = self:addEditbox({x = posX + spaceW, y = posY - 20, size = cc.size(200, 40)}, node)
-
-	node:setVisible(false)
-	return node
-end
-
---lua加密的要显示,各平台的参数就要下移,不显示,各平台参数就要上移
-function BuildProjectUI:updatePlatformPanelPos()
-	local posX, posY = self.encyrPanel_:getPosition()
-	local bVisible = self.encyrPanel_:isVisible()
-	if bVisible then
-		self.platformNode_:setPosition(posX, posY - 40)
-	else
-		self.platformNode_:setPosition(posX, posY)
-	end
 end
 
 function BuildProjectUI:getCommandString()
@@ -412,63 +252,77 @@ function BuildProjectUI:getCommandString()
 		table.insert(t, key .. val)
 	end
 
-	table.insert(cmds, "-s " .. self.projDirTF_:getText())
-	table.insert(cmds, "-o " .. self.outputDirTF_:getText())
-	table.insert(cmds, "-p " .. self.cmdArgs_.platform)
-	table.insert(cmds, "-m " .. self.cmdArgs_.mode)
-	if not self.cmdArgs_.compileRes then
-		table.insert(cmds, "--no-res")
-	end
-	if self.cmdArgs_.compileScr then
-		table.insert(cmds, "--compile-script 1")
+	insertValTotable(cmds, "-pdir ", self.projDirTF_:getText())
+	insertValTotable(cmds, "-classpath ", self.javaExtraPathTF_:getText())
+	insertValTotable(cmds, "-bt ", self.androidBuildToosPathTF_:getText())
+
+	if self.cmdArgs_.signAPK then
+		insertValTotable(cmds, "-k ", self.KeyStorePathTF_:getText())
+		insertValTotable(cmds, "-kp ", self.keyStorePWTF_:getText())
+		insertValTotable(cmds, "-ksa ", self.keyStoreAliasTF_:getText())
 	else
-		table.insert(cmds, "--compile-script 0")
-	end
-	if self.cmdArgs_.LuaEncrypt then
-		table.insert(cmds, "--lua-encrypt")
-		insertValTotable(cmds, "--lua-encrypt-key ", self.encryptKeyTF_:getText())
-		insertValTotable(cmds, "--lua-encrypt-sign ", self.encryptKeySign_:getText())
+		table.insert(cmds, "--nosign")
 	end
 
-	if "android" == self.cmdArgs_.platform then
-		insertValTotable(cmds, "--ap ", self.androidPlatformTF_:getText())
-		insertValTotable(cmds, "--ndk-mode ", self.androidNDKMODETF_:getText())
-		insertValTotable(cmds, "--app-abi ", self.androidABITF_:getText())
-		insertValTotable(cmds, "--ndk-toolchain ", self.androidToolChainTF_:getText())
-		insertValTotable(cmds, "--ndk-cppflags ", self.androidCppFlagsTF_:getText())
-	elseif "ios" == self.cmdArgs_.platform then
-		insertValTotable(cmds, "-t ", self.iosTargetTF_:getText())
-		insertValTotable(cmds, "--sign-identity ", self.iosSignTF_:getText())
-	elseif "mac" == self.cmdArgs_.platform then
-		insertValTotable(cmds, "-t ", self.macTargetTF_:getText())
-	end
+	insertValTotable(cmds, "-api ", self.androidAPITF_:getText())
+	insertValTotable(cmds, "-jv ", self.javaSDKVerTF_:getText())
 
 	return table.concat(cmds, " ")
 end
 
 function BuildProjectUI:runCompile()
 	local strCmd = self:getCommandString()
-	print("command string:" .. strCmd)
-	local scriptPath = cc.player.quickRootPath .. "quick/bin/cocos_compile.sh"
-    if device.platform == "windows" then
-        scriptPath = cc.player.quickRootPath .. "quick/bin/cocos_compile.bat"
-    end
+	local projDir = self:addSymbolForPath(self.projDirTF_:getText())
 
+	local scriptPath
+	if self.cmdArgs_.buildNative then
+		if device.platform == "windows" then
+        	scriptPath = projDir .. "build_native.bat"
+        else
+        	scriptPath = projDir .. "build_native.sh"
+    	end
+    	strCmd = ""
+	else
+		if device.platform == "windows" then
+        	scriptPath = projDir .. "build_apk.bat"
+        else
+        	scriptPath = projDir .. "build_apk.sh"
+    	end
+	end
+
+	print("Create Cmd:" .. scriptPath .. " " .. strCmd)
 	local taskId = tostring(os.time())
     local task = PlayerProtocol:getInstance():getTaskService():createTask(taskId, scriptPath, strCmd)
     task:runInTerminal()
 end
 
-function BuildProjectUI:addOutputFromPath(projDir)
+function BuildProjectUI:addSymbolForPath(projDir)
 	if not Utilitys.stringIsNull(projDir) then
+		local paths = {}
+
 		-- '/' 47 '\' 92
-		local val = string.byte(projDir, string.len(projDir))
+		local strLen = string.len(projDir)
+		local val = string.byte(projDir, strLen)
 		if 47 == val or 92 == val then
-			return projDir .. "output" .. string.char(val)
+			table.insert(paths, string.sub(projDir, 1, strLen - 1))
 		else
-			return projDir .. "/output/"
+			table.insert(paths, projDir)
 		end
+		table.insert(paths, "frameworks")
+		table.insert(paths, "runtime-src")
+		table.insert(paths, "proj.android")
+
+		return table.concat(paths, device.directorySeparator) .. device.directorySeparator
 	end
+end
+
+function BuildProjectUI:openFileDialog(textField)
+    local filedialog = PlayerProtocol:getInstance():getFileDialogService()
+    local locationDirectory = filedialog:openDirectory("Choose Localtion", "")
+    if string.len(locationDirectory) > 0 then
+        textField:setText(locationDirectory)
+    end
+
 end
 
 

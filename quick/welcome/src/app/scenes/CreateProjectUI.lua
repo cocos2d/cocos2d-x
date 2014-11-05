@@ -198,6 +198,7 @@ function CreateProjectUI:onEnter()
                 -- local arguments = table.concat(cmds, " ")
                 -- arguments = " " .. arguments
                 
+                print("Create Cmd:" .. scriptPath .. " " .. arguments)
                 local task = PlayerProtocol:getInstance():getTaskService():createTask(taskId, scriptPath, arguments)
                 eventDispatcher:addEventListenerWithFixedPriority(cc.EventListenerCustom:create(taskId,
                             function()
