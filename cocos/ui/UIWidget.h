@@ -43,7 +43,8 @@ typedef enum
     TOUCH_EVENT_BEGAN,
     TOUCH_EVENT_MOVED,
     TOUCH_EVENT_ENDED,
-    TOUCH_EVENT_CANCELED
+    TOUCH_EVENT_CANCELED,
+    TOUCH_EVENT_LONGPRESSED,
 }TouchEventType;
     
 typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
@@ -90,7 +91,8 @@ public:
         BEGAN,
         MOVED,
         ENDED,
-        CANCELED
+        CANCELED,
+        LONGPRESSED
     };
     
     enum class TextureResType
@@ -432,6 +434,8 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
 
+    void checkLongPress(float dt);
+
     /**
      * Sets a LayoutParameter to widget.
      *
@@ -534,6 +538,17 @@ public:
      */
     bool isSwallowTouches()const;
     
+    /**
+     * @brief Specify long press time
+     */
+    void setLongPressTime(float time);
+
+    /**
+     * @return  wheather this touch is long-pressed or not.
+     * It only works if you set _longPressTime >= 0, by calling setLongPressTime(time).
+     */
+    bool isLongPressedTouch() const;
+
     /**
      *@return  whether the widget is focused or not
      */
@@ -659,6 +674,7 @@ protected:
 
     void pushDownEvent();
     void moveEvent();
+    void longPressEvent();
 
     virtual void releaseUpEvent();
     virtual void cancelUpEvent();
@@ -710,6 +726,9 @@ protected:
     Vec2 _touchBeganPosition;
     Vec2 _touchMovePosition;
     Vec2 _touchEndPosition;
+
+    float _longPressTime;
+    bool _longPressedTouch;
 
     bool _flippedX;
     bool _flippedY;

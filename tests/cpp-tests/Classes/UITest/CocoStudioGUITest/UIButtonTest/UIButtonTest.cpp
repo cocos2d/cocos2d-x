@@ -43,6 +43,7 @@ bool UIButtonTest::init()
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest::touchEvent, this));
         button->setZoomScale(0.4f);
         button->setPressedActionEnabled(true);
+        button->setLongPressTime(1.0f);
         _uiLayer->addChild(button);
         button->setOpacity(100);
         // Create the imageview
@@ -75,20 +76,24 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            Button *btn = (Button*)pSender;
+            _displayValueLabel->setString(String::createWithFormat(btn->isLongPressedTouch() ? "Touch Up (LongPressed)" : "Touch Up")->getCString());
             ImageView* imageView = (ImageView*)_uiLayer->getChildByTag(12);
             imageView->setVisible(false);
             imageView->loadTexture("cocosui/ccicon.png");
             imageView->setOpacity(0);
             imageView->setVisible(true);
             imageView->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
-            Button *btn = (Button*)pSender;
             btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
         }
             break;
             
         case Widget::TouchEventType::CANCELED:
             _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        case Widget::TouchEventType::LONGPRESSED:
+            _displayValueLabel->setString(String::createWithFormat("Touch LongPressed")->getCString());
             break;
             
         default:
@@ -135,6 +140,7 @@ bool UIButtonTest_Scale9::init()
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setContentSize(Size(150, 70));
         button->setPressedActionEnabled(true);
+        button->setLongPressTime(1.0f);
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9::touchEvent, this));
         _uiLayer->addChild(button);
         
@@ -166,16 +172,21 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
-            Button *btn = (Button*)_uiLayer->getChildByName("normal");
-            btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
-            btn->loadTexturePressed("cocosui/animationbuttonpressed.png");
-            btn->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
+            Button *btn = (Button*)pSender;
+            _displayValueLabel->setString(String::createWithFormat(btn->isLongPressedTouch() ? "Touch Up (LongPressed)" : "Touch Up")->getCString());
+            Button *btn2 = (Button*)_uiLayer->getChildByName("normal");
+            btn2->loadTextureNormal("cocosui/animationbuttonnormal.png");
+            btn2->loadTexturePressed("cocosui/animationbuttonpressed.png");
+            btn2->runAction(Sequence::create(FadeIn::create(0.5),DelayTime::create(1.0),FadeOut::create(0.5), nullptr));
         }
             break;
             
         case Widget::TouchEventType::CANCELED:
             _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            break;
+            
+        case Widget::TouchEventType::LONGPRESSED:
+            _displayValueLabel->setString(String::createWithFormat("Touch LongPressed")->getCString());
             break;
             
         default:
