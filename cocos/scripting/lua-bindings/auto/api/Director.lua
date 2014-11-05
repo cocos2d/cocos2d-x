@@ -18,19 +18,13 @@
 -- @param #cc.EventDispatcher dispatcher
         
 --------------------------------
---  Suspends the execution of the running scene, pushing it on the stack of suspended scenes.<br>
--- The new scene will be executed.<br>
--- Try to avoid big stacks of pushed scenes to reduce memory allocation. <br>
--- ONLY call it if there is a running scene.
--- @function [parent=#Director] pushScene 
+--  The size in pixels of the surface. It could be different than the screen size.<br>
+-- High-res devices might have a higher surface size than the screen size.<br>
+-- Only available when compiled using SDK >= 4.0.<br>
+-- since v0.99.4
+-- @function [parent=#Director] setContentScaleFactor 
 -- @param self
--- @param #cc.Scene scene
-        
---------------------------------
--- 
--- @function [parent=#Director] getDeltaTime 
--- @param self
--- @return float#float ret (return value: float)
+-- @param #float scaleFactor
         
 --------------------------------
 -- 
@@ -45,17 +39,10 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
---  Returns the Console <br>
--- since v3.0
--- @function [parent=#Director] getConsole 
--- @param self
--- @return Console#Console ret (return value: cc.Console)
-        
---------------------------------
 -- 
--- @function [parent=#Director] pushMatrix 
+-- @function [parent=#Director] getDeltaTime 
 -- @param self
--- @param #int type
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  sets the OpenGL default values 
@@ -149,12 +136,23 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#Director] resetMatrixStack 
+-- @param self
+        
+--------------------------------
 --  converts an OpenGL coordinate to a UIKit coordinate<br>
 -- Useful to convert node points to window points for calls such as glScissor
 -- @function [parent=#Director] convertToUI 
 -- @param self
 -- @param #vec2_table point
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Director] pushMatrix 
+-- @param self
+-- @param #int type
         
 --------------------------------
 --  sets the default values based on the Configuration info 
@@ -205,15 +203,6 @@
 -- If you don't want to pause your animation call [pause] instead.
 -- @function [parent=#Director] stopAnimation 
 -- @param self
-        
---------------------------------
---  The size in pixels of the surface. It could be different than the screen size.<br>
--- High-res devices might have a higher surface size than the screen size.<br>
--- Only available when compiled using SDK >= 4.0.<br>
--- since v0.99.4
--- @function [parent=#Director] setContentScaleFactor 
--- @param self
--- @param #float scaleFactor
         
 --------------------------------
 --  Pops out all scenes from the stack until it reaches `level`.<br>
@@ -293,12 +282,6 @@
 -- @param self
         
 --------------------------------
--- / FIXME: missing description 
--- @function [parent=#Director] getZEye 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
 -- 
 -- @function [parent=#Director] getMatrix 
 -- @param self
@@ -314,6 +297,12 @@
 -- @param self
         
 --------------------------------
+-- 
+-- @function [parent=#Director] loadIdentityMatrix 
+-- @param self
+-- @param #int type
+        
+--------------------------------
 --  Whether or not to display the FPS on the bottom-left corner 
 -- @function [parent=#Director] isDisplayStats 
 -- @param self
@@ -326,21 +315,30 @@
 -- @param #int projection
         
 --------------------------------
+--  Returns the Console <br>
+-- since v3.0
+-- @function [parent=#Director] getConsole 
+-- @param self
+-- @return Console#Console ret (return value: cc.Console)
+        
+--------------------------------
 -- 
--- @function [parent=#Director] loadIdentityMatrix 
+-- @function [parent=#Director] multiplyMatrix 
 -- @param self
 -- @param #int type
+-- @param #mat4_table mat
+        
+--------------------------------
+-- / FIXME: missing description 
+-- @function [parent=#Director] getZEye 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
 -- @function [parent=#Director] setNextDeltaTimeZero 
 -- @param self
 -- @param #bool nextDeltaTimeZero
-        
---------------------------------
--- 
--- @function [parent=#Director] resetMatrixStack 
--- @param self
         
 --------------------------------
 -- 
@@ -364,10 +362,13 @@
 -- @return Scheduler#Scheduler ret (return value: cc.Scheduler)
         
 --------------------------------
---  Set the FPS value. 
--- @function [parent=#Director] setAnimationInterval 
+--  Suspends the execution of the running scene, pushing it on the stack of suspended scenes.<br>
+-- The new scene will be executed.<br>
+-- Try to avoid big stacks of pushed scenes to reduce memory allocation. <br>
+-- ONLY call it if there is a running scene.
+-- @function [parent=#Director] pushScene 
 -- @param self
--- @param #double interval
+-- @param #cc.Scene scene
         
 --------------------------------
 --  Get the FPS value 
@@ -402,11 +403,10 @@
 -- @param #cc.Scene scene
         
 --------------------------------
--- 
--- @function [parent=#Director] multiplyMatrix 
+--  Set the FPS value. 
+-- @function [parent=#Director] setAnimationInterval 
 -- @param self
--- @param #int type
--- @param #mat4_table mat
+-- @param #double interval
         
 --------------------------------
 --  Gets the ActionManager associated with this director<br>
