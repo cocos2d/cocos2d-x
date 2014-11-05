@@ -94,33 +94,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <TargetName>libcocos2d_v2.2.5_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <TargetName>libcocos2d_v2.2.5_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <TargetName>libcocos2d_v2.2.5_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <TargetName>libcocos2d_v2.2.5_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <TargetName>libcocos2d_v2.2.5_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <TargetName>libcocos2d_v2.2.5_Windows_8.1</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;WIN32;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRDLL;_EXPORT_DLL_;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -138,7 +144,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
     </ClCompile>
@@ -153,7 +159,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;WIN32;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRDLL;_EXPORT_DLL_;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -171,7 +177,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
     </ClCompile>
@@ -186,7 +192,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;WIN32;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRDLL;_EXPORT_DLL_;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -204,7 +210,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/winrt-8.1/angle/include;../../../../cocos2dx/platform/third_party/winrt-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../external;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/winrt-8.1/png/include;../../../../cocos2dx/platform/third_party/winrt-8.1/tiff/include;../../../../cocos2dx/platform/third_party/winrt-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/winrt-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/winrt-8.1/curl/include;../../../../external/libwebsockets/winrt-8.1/include;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
     </ClCompile>

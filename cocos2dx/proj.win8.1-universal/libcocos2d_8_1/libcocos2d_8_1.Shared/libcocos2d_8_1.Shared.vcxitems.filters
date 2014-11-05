@@ -1218,6 +1218,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\CocosDenshion\include\SimpleAudioEngine.h">
       <Filter>CocosDenshion</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\CCEGLView-Win8_1.h">
+      <Filter>libcocos2d\platform\win-8.1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
@@ -2279,6 +2282,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\CocosDenshion\win-8.1\SimpleAudioEngine.cpp">
       <Filter>CocosDenshion</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\CCEGLView.cpp">
+      <Filter>libcocos2d\platform\win-8.1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="libcocos2d">
@@ -2568,6 +2574,9 @@
     </Filter>
     <Filter Include="libcocos2d\platform\winrt">
       <UniqueIdentifier>{1b915b26-ae6c-4f4d-9f7b-794a0c39d44a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libcocos2d\platform\win-8.1">
+      <UniqueIdentifier>{91161373-a4e1-477c-976b-b5b5340e4c15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
