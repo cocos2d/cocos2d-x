@@ -49,7 +49,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/lua-bindings/proj.android)
 
-$(call import-module, ../runtime-src/Classes/quick-src/lua_extensions)
-$(call import-module, ../runtime-src/Classes/quick-src/extra)
+$(call import-module, quick-src/lua_extensions)
+$(call import-module, quick-src/extra)
 
 
