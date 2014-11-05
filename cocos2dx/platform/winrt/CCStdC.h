@@ -68,7 +68,7 @@ typedef int ssize_t;
 
 #define _WINSOCKAPI_
 // Structure timeval has define in winsock.h, include windows.h for it.
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WINRT_8_1)
 #include <WinSock2.h>
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include <Windows.h>

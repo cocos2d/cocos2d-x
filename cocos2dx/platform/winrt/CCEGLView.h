@@ -37,7 +37,9 @@ THE SOFTWARE.
 #include <agile.h>
 #include <DirectXMath.h>
 
+#ifndef WINRT_8_1
 #include "esUtil.h"
+#endif
 
 using namespace Windows::Foundation;
 
@@ -87,7 +89,10 @@ private:
 	bool m_lastPointValid;
 	bool m_textInputEnabled;
 	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
+
+#ifndef WINRT_8_1
 	ESContext m_esContext;
+#endif
 	Windows::UI::Xaml::Controls::TextBox^ m_textBox;
 	Windows::UI::Xaml::Controls::Button^ m_dummy;
 	Windows::Foundation::EventRegistrationToken m_pointerPressedEvent;
