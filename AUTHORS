@@ -1049,6 +1049,9 @@ Developers:
         
     liamcindy
         update ui button size changed logic
+        
+    vovkasm
+        Fix warnings for Xcode6.1
     
 Retired Core Developers:
     WenSheng Yang
