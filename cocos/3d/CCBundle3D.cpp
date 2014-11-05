@@ -1959,14 +1959,14 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
 }
 
 Bundle3D::Bundle3D()
-    :_isBinary(false),
-    _modelPath(""),
+    : _modelPath(""),
     _path(""),
     _version(""),
     _jsonBuffer(nullptr),
     _binaryBuffer(nullptr),
     _referenceCount(0),
-    _references(nullptr)
+    _references(nullptr),
+    _isBinary(false)
 {
 
 }

@@ -40,7 +40,11 @@ NS_CC_BEGIN
 
 // implementation RenderTexture
 RenderTexture::RenderTexture()
-: _FBO(0)
+: _keepMatrix(false)
+, _rtTextureRect(Rect::ZERO)
+, _fullRect(Rect::ZERO)
+, _fullviewPort(Rect::ZERO)
+, _FBO(0)
 , _depthRenderBufffer(0)
 , _oldFBO(0)
 , _texture(0)
@@ -53,10 +57,6 @@ RenderTexture::RenderTexture()
 , _clearStencil(0)
 , _autoDraw(false)
 , _sprite(nullptr)
-, _keepMatrix(false)
-, _rtTextureRect(Rect::ZERO)
-, _fullRect(Rect::ZERO)
-, _fullviewPort(Rect::ZERO)
 , _saveFileCallback(nullptr)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA

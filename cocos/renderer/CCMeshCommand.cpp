@@ -78,17 +78,17 @@ static const char          *s_ambientLightUniformColorName = "u_AmbientLightSour
 
 MeshCommand::MeshCommand()
 : _textureID(0)
-, _blendType(BlendFunc::DISABLE)
 , _glProgramState(nullptr)
-, _cullFaceEnabled(false)
-, _cullFace(GL_BACK)
-, _depthTestEnabled(false)
-, _depthWriteEnabled(false)
+, _blendType(BlendFunc::DISABLE)
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
 , _materialID(0)
 , _vao(0)
+, _cullFaceEnabled(false)
+, _cullFace(GL_BACK)
+, _depthTestEnabled(false)
+, _depthWriteEnabled(false)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;

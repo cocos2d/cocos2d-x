@@ -55,8 +55,8 @@ TextFieldTTF::TextFieldTTF()
 , _charCount(0)
 , _inputText("")
 , _placeHolder("")   // prevent Label initWithString assertion
-, _secureTextEntry(false)
 , _colorText(Color4B::WHITE)
+, _secureTextEntry(false)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
