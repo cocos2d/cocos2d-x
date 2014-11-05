@@ -261,6 +261,7 @@ Scheduler::Scheduler(void)
 {
     // I don't expect to have more than 30 functions to all per frame
     _functionsToPerform.reserve(30);
+    _tasksToPerform.reserve(30);
 }
 
 Scheduler::~Scheduler(void)
@@ -826,6 +827,21 @@ void Scheduler::performFunctionInCocosThread(const std::function<void ()> &funct
     _performMutex.unlock();
 }
 
+std::future<bool> Scheduler::performTaskInCocosThread(const std::function<bool ()> &function)
+{
+    std::packaged_task<bool()> task(function);
+    
+    std::future<bool> res=task.get_future();
+    
+    _performMutex.lock();
+
+    _tasksToPerform.push_back(std::move(task));
+
+    _performMutex.unlock();
+    
+    return res;
+}
+
 // main loop
 void Scheduler::update(float dt)
 {
@@ -978,6 +994,17 @@ void Scheduler::update(float dt)
             function();
         }
         
+    }
+    if( !_tasksToPerform.empty()){
+	_performMutex.lock();
+	auto tempQueue = std::move(_tasksToPerform);
+	_tasksToPerform.clear();//maybe doesn't use it,because std::move()
+	_performMutex.unlock();
+	for( auto &task : tempQueue ) {
+            auto tempTask=std::move(task);
+	    tempTask();
+        }
+
     }
 }
 

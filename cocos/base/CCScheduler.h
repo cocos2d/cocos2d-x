@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <functional>
 #include <mutex>
 #include <set>
+#include <future>
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
@@ -363,7 +364,11 @@ public:
      @since v3.0
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
-    
+    /**
+    calls a function on the cocos2d thread.Useful when you need to call a cocos2d function from another thread. Note that return value indicate function running state in cocos2d thread.
+    This function is thread safe.
+    */
+    std::future<bool> performTaskInCocosThread(const std::function<bool()> &function);
     /////////////////////////////////////
     
     // Deprecated methods:
@@ -460,6 +465,8 @@ protected:
     
     // Used for "perform Function"
     std::vector<std::function<void()>> _functionsToPerform;
+    // Used for "perform packaged_task"
+    std::vector<std::packaged_task<bool()>> _tasksToPerform;
     std::mutex _performMutex;
 };
 
