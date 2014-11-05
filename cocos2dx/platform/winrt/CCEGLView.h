@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_WINRT_H__
 #define __CC_EGLVIEW_WINRT_H__
 
+#ifdef WINRT_8_1
+#include "CCEGLView-Win8_1.h"
+#else
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
 #include "cocoa/CCGeometry.h"
@@ -40,8 +43,6 @@ THE SOFTWARE.
 #ifndef WINRT_8_1
 #include "esUtil.h"
 #endif
-
-using namespace Windows::Foundation;
 
 NS_CC_BEGIN
 
@@ -121,14 +122,14 @@ public:
     void OnSuspending();
 
 	void openEditBox(CCEditBoxParam^ param);
-	void SetCocosEditBoxHandler(EventHandler<Platform::Object^>^ handler);
+	void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler);
 	void OnCloseEditBox();
 	
 private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	Windows::Foundation::Point m_lastPoint;
 	bool m_lastPointValid;
-	EventHandler<Platform::Object^>^ m_editBoxhandler;
+	Windows::Foundation::EventHandler<Platform::Object^>^ m_editBoxhandler;
 public:
 
     // winrt platform functions
@@ -164,5 +165,7 @@ private:
 };
 
 NS_CC_END
+
+#endif // WINRT_8_1
 
 #endif    // end of __CC_EGLVIEW_WINRT_H__
