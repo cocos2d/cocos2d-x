@@ -4,7 +4,7 @@ cocos2d-x-3.3 ??
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
     [FIX]           Camera: does not work correctly when the up is not (0, 1, 0)
     [FIX]           Cocos console: compile failure on windows if using VS express version
-    [FIX]           GrawNode: drawPoint() may cause crash
+    [FIX]           DrawNode: drawPoint() may cause crash
     [FIX]           GLProgramCache: doesn't release old program with the same key before adding a new one
     [FIX]           GLProgramState: enabled GLProgramState restoring on render recreated on WP8
     [FIX]           Label: label shifting when outline feature enabled
