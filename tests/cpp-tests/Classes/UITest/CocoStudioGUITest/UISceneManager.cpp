@@ -44,6 +44,7 @@ static const char* s_testArray[] =
     "UIButtonTextOnly",
     "UIButtonIgnoreContentSizeTest",
     "UIButtonTitleEffectTest",
+    "UIButtonFlipTest",
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     "UIEditBoxTest",
@@ -218,6 +219,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonIgnoreContentSizeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTitleEffectTest:
             return UIButtonTitleEffectTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonFlipTest:
+            return UIButtonFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
