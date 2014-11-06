@@ -260,13 +260,18 @@ class ApkBuilder
 
     function appt_res()
     {
-        if (!is_dir('gen'))
+        $projPath = $this->config['project_dir'];
+        $genPath = $projPath . '/gen';
+        if (!is_dir($genPath))
         {
-            mkdir('gen');
+            mkdir($genPath);
         }
 
         $cmd_str = $this->tools_aapt 
-            . ' package -f -m -J ./gen -S res -M AndroidManifest.xml ' . '-I ' . $this->boot_class_path;
+            . ' package -f -m -J ' . $genPath
+            . ' -S ' . $projPath . '/res'
+            . ' -M ' . $projPath . '/AndroidManifest.xml'
+            . ' -I ' . $this->boot_class_path;
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
@@ -275,23 +280,26 @@ class ApkBuilder
 
     function compile_java()
     {
-        if (!is_dir('bin'))
+        $projPath = $this->config['project_dir'];
+        $binPath = $projPath . '/bin';
+        if (!is_dir($binPath))
         {
-            mkdir('bin');
+            mkdir($binPath);
         }
 
-        if (!is_dir('bin/classes'))
+        $classesPath = $binPath . '/classes';
+        if (!is_dir($classesPath))
         {
-            mkdir('bin/classes');
+            mkdir($classesPath);
         }
 
         $files = array();
-        findFiles('src', $files);
-        findFiles('gen', $files);
+        findFiles($projPath . '/src', $files);
+        findFiles($projPath . '/gen', $files);
 
         $cmd_str = 'javac -encoding utf8 -target '. $this->java_version 
             . ' -bootclasspath ' . $this->boot_class_path 
-            . ' -d bin/classes';
+            . ' -d ' . $classesPath;
         foreach ($files as $file)
         {
             $cmd_str = $cmd_str . ' ' . $file;
@@ -304,9 +312,10 @@ class ApkBuilder
 
     function make_dex()
     {
+        $projPath = $this->config['project_dir'];
         $libs = str_replace($this->split_char, ' ', $this->class_path);
         $cmd_str = $this->build_tools_path . '/dx'
-            . ' --dex --output=./bin/classes.dex ./bin/classes '
+            . ' --dex --output=' . $projPath . '/bin/classes.dex ' . $projPath . '/bin/classes '
             . $libs;
 
         $retval = $this->exec_sys_cmd($cmd_str);
@@ -316,9 +325,13 @@ class ApkBuilder
 
     function make_resources()
     {
+        $projPath = $this->config['project_dir'];
         $cmd_str = $this->tools_aapt 
-            . ' package -f -S res -A assets -M AndroidManifest.xml' . ' -I ' . $this->boot_class_path
-            . ' -F bin/resources.ap_';
+            . ' package -f -S ' . $projPath . '/res'
+            . ' -A ' . $projPath . '/assets'
+            . ' -M ' . $projPath . '/AndroidManifest.xml'
+            . ' -I ' . $this->boot_class_path
+            . ' -F ' . $projPath . '/bin/resources.ap_';
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
@@ -327,10 +340,15 @@ class ApkBuilder
 
     function make_apk()
     {
+        $projPath = $this->config['project_dir'];
         $cmd_str = 'java -classpath ' . $this->sdk_root . '/tools/lib/sdklib.jar'
             . ' com.android.sdklib.build.ApkBuilderMain'
-            . ' ' . $this->unsignFilename
-            . ' -u -z bin/resources.ap_ -f bin/classes.dex -rf src -nf libs -rj libs';
+            . ' ' . $projPath . '/' . $this->unsignFilename
+            . ' -u -z ' . $projPath . '/bin/resources.ap_'
+            . ' -f ' . $projPath . '/bin/classes.dex'
+            . ' -rf ' . $projPath . '/src'
+            . ' -nf ' . $projPath . '/libs'
+            . ' -rj ' . $projPath . '/libs';
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
@@ -343,15 +361,18 @@ class ApkBuilder
         {
             return 0;
         }
+        $projPath = $this->config['project_dir'];
 
         $cmd_str = 'jarsigner -keystore ' . $this->keystore_file
             . ' -storepass ' . $this->keystore_password
-            . ' -signedjar ' . $this->apkFilename;
+            . ' -signedjar ' . $projPath . '/' . $this->apkFilename;
         if($this->timestamp)
         {
             $cmd_str = $cmd_str . ' -tsa ' . $this->timestamp;
         }
-        $cmd_str = $cmd_str . ' ' . $this->unsignFilename . ' ' . $this->keystore_alias;
+        $cmd_str = $cmd_str 
+                    . ' ' . $projPath . '/' . $this->unsignFilename 
+                    . ' ' . $this->keystore_alias;
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
