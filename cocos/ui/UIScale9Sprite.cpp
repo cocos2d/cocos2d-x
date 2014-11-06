@@ -1287,7 +1287,7 @@ y+=ytranslate;         \
     
     float Scale9Sprite::getScale()const
     {
-        CCASSERT(this->getScaleX() == this->getScaleY(), "");
+        CCASSERT(this->getScaleX() == this->getScaleY(), "Scale9Sprite#scale. ScaleX != ScaleY. Don't know which one to return");
         return this->getScaleX();
     }
     
