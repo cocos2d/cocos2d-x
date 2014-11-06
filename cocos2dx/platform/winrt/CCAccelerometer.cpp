@@ -64,14 +64,14 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 
 			m_accelerometer->ReadingChanged += ref new TypedEventHandler
 				<Accelerometer^,AccelerometerReadingChangedEventArgs^>
-				([=](Accelerometer^, AccelerometerReadingChangedEventArgs^)
+				([=](Accelerometer^, AccelerometerReadingChangedEventArgs^ e)
 			{
-				AccelerometerReading^ reading = m_accelerometer->GetCurrentReading();
+                AccelerometerReading^ reading = e->Reading;
 				m_obAccelerationValue.x = reading->AccelerationX;
 				m_obAccelerationValue.y = reading->AccelerationY;
 				m_obAccelerationValue.z = reading->AccelerationZ;
 
- #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
                 auto orientation = CCEGLView::sharedOpenGLView()->getDeviceOrientation();
 
                 switch (orientation)
