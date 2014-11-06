@@ -215,7 +215,7 @@ class ApkBuilder
         {
             $this->timestamp = $this->config['timestamp'];
         }
-        else
+        else if($this->java_version != '1.6')
         {
             $this->timestamp = 'http://tsa.starfieldtech.com';
         }
@@ -346,10 +346,12 @@ class ApkBuilder
 
         $cmd_str = 'jarsigner -keystore ' . $this->keystore_file
             . ' -storepass ' . $this->keystore_password
-            . ' -signedjar ' . $this->apkFilename
-            . ' -tsa ' . $this->timestamp
-            . ' ' . $this->unsignFilename . ' '
-            . $this->keystore_alias;
+            . ' -signedjar ' . $this->apkFilename;
+        if($this->timestamp)
+        {
+            $cmd_str = $cmd_str . ' -tsa ' . $this->timestamp;
+        }
+        $cmd_str = $cmd_str . ' ' . $this->unsignFilename . ' ' . $this->keystore_alias;
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
