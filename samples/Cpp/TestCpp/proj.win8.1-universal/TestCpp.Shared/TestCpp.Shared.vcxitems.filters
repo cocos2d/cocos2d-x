@@ -568,6 +568,93 @@
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest">
       <UniqueIdentifier>{92d2a159-5981-475b-a4dd-fee65d86a9d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\FileUtilsTest">
+      <UniqueIdentifier>{b6b80237-82eb-474a-817b-f9a84058a813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\FontTest">
+      <UniqueIdentifier>{15e75c3f-2aee-477d-b4bd-7f6c71db6cba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\IntervalTest">
+      <UniqueIdentifier>{970a980b-c3be-4d1d-9422-2b617939cc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\KeypadTest">
+      <UniqueIdentifier>{c5cab2a7-a70e-4bdc-8fa8-26023f8ea999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LabelTest">
+      <UniqueIdentifier>{bb82e330-4f40-4f8e-8d60-1a211eacf4e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LayerTest">
+      <UniqueIdentifier>{96d28033-e5d8-4a6e-abed-f0e08177527f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MenuTest">
+      <UniqueIdentifier>{a927efe3-31a5-4c70-ba37-c0ff7ce9a416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MotionStreakTest">
+      <UniqueIdentifier>{7dfb2072-5637-496a-8988-3bc1254cd9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MutiTouchTest">
+      <UniqueIdentifier>{a945ca6a-2d0f-4198-9465-76a2ba371dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NodeTest">
+      <UniqueIdentifier>{0a38102b-8fca-4a1f-81a5-bc283c1d6e34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ParallaxTest">
+      <UniqueIdentifier>{d2bd3bc4-1135-42c2-866c-d730c92a57d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ParticleTest">
+      <UniqueIdentifier>{50d6cb21-d192-4694-b4da-57cbb09a2319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\PerformanceTest">
+      <UniqueIdentifier>{33866b82-f197-4fee-995b-6e17843df4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\RenderTextureTest">
+      <UniqueIdentifier>{3a7df3ba-edc2-4b7a-bc9e-b529e4878a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\RotateWorldTest">
+      <UniqueIdentifier>{653e660a-c9f2-4ae8-aa03-ea7cce52a165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SceneTest">
+      <UniqueIdentifier>{957053f2-6025-4641-9c1f-541f4ba7e7b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SchedulerTest">
+      <UniqueIdentifier>{5fa62468-250f-4748-8108-8c80bf30341d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ShaderTest">
+      <UniqueIdentifier>{5a7376d9-ec9a-4a86-98b6-fdaa93110803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SpineTest">
+      <UniqueIdentifier>{289fe6d6-b8a7-479a-9634-445486f49663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SpriteTest">
+      <UniqueIdentifier>{65395afb-de70-4b72-89a0-b879855d9245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TextInputTest">
+      <UniqueIdentifier>{10e83dfe-ffcc-4d87-9b3b-9aff4cbfa30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Texture2dTest">
+      <UniqueIdentifier>{dab4fe2a-b0bc-4256-b356-628664c0bb7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TextureCacheTest">
+      <UniqueIdentifier>{b0362e48-fcde-46ae-a5bb-141d3bd926a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TexturePackerEncryptionTest">
+      <UniqueIdentifier>{77cb6871-f028-44e0-9971-23ce427bec8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TileMapTest">
+      <UniqueIdentifier>{1f9b07cb-551c-4363-ab08-7b8f9d73dd95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TouchesTest">
+      <UniqueIdentifier>{5c4436fb-aa71-4b9c-804e-1efdd976c103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TransitionsTest">
+      <UniqueIdentifier>{909fcc8a-8d8e-4fda-835c-9ef5e1525059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UserDefaultTest">
+      <UniqueIdentifier>{69ea1ff0-5d72-488c-b14b-5920afdf64bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ZwoptexTest">
+      <UniqueIdentifier>{4254b09a-8930-44de-964f-8778272e89fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h">
