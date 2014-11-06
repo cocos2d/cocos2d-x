@@ -1154,6 +1154,7 @@
         "cocos/ui/proj.win32/libui.vcxproj", 
         "cocos/ui/proj.win32/libui.vcxproj.filters", 
         "docs/CODING_STYLE.md", 
+        "docs/CONTRIBUTE.md", 
         "docs/Groups.h", 
         "docs/MainPage.h", 
         "docs/RELEASE_NOTES.md", 
