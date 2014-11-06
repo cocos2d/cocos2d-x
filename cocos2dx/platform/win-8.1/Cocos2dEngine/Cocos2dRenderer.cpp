@@ -40,6 +40,7 @@ Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatche
     , m_width(width)
     , m_height(height)
     , m_dpi(dpi)
+    , m_orientation(DisplayOrientations::None)
     , m_dispatcher(dispatcher)
     , m_panel(panel)
 {
@@ -57,7 +58,7 @@ Cocos2dRenderer::~Cocos2dRenderer()
 }
 
 // Draws a basic triangle
-void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
+void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, Windows::Graphics::Display::DisplayOrientations orientation, float dpi)
 {
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
@@ -72,6 +73,12 @@ void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
     {
         m_dpi = dpi;
         //CCEGLView::sharedOpenGLView()->SetDPI(m_dpi);
+    }
+
+    if (orientation != m_orientation)
+    {
+        m_orientation = orientation;
+        pEGLView->UpdateOrientation(m_orientation);
     }
 
     pEGLView->Render();

@@ -46,11 +46,18 @@ namespace cocos2d
         void StartRenderLoop();
         void StopRenderLoop();
 
+        // DisplayInformation event handlers.
+        void OnDpiChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
+        void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
+        void OnDisplayContentsInvalidated(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
+
+        Windows::Graphics::Display::DisplayOrientations m_orientation;
+
         OpenGLES* mOpenGLES;
         std::shared_ptr<cocos2d::Cocos2dRenderer> m_renderer;
 
         Windows::Foundation::Size mSwapChainPanelSize;
-        Concurrency::critical_section mSwapChainPanelSizeCriticalSection;
+        Concurrency::critical_section mCriticalSection;
 
         Windows::Foundation::Size mCustomRenderSurfaceSize;
         bool mUseCustomRenderSurfaceSize;

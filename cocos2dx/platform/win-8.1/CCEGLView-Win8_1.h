@@ -81,7 +81,6 @@ public:
 	void OnWindowClosed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CoreWindowEventArgs^ args);
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
-    void OnOrientationChanged();
     
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);

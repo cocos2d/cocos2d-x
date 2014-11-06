@@ -31,7 +31,7 @@ namespace cocos2d
     public:
         Cocos2dRenderer( int width, int height, float dpi, Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
         ~Cocos2dRenderer();
-        void Draw(GLsizei width, GLsizei height, float dpi);
+        void Draw(GLsizei width, GLsizei height, Windows::Graphics::Display::DisplayOrientations orientation, float dpi);
         void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
         void QueueKeyBoardEvent(Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e);
 
@@ -40,6 +40,7 @@ namespace cocos2d
         int m_width;
         int m_height;
         float m_dpi;
+        Windows::Graphics::Display::DisplayOrientations m_orientation;
 
         // The AppDelegate for the Cocos2D app
         AppDelegate* m_app;

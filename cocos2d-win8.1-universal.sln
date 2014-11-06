@@ -45,9 +45,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk.Windows", "externa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chipmunk.WindowsPhone", "external\chipmunk\proj.win8.1-universal\chipmunk.WindowsPhone\chipmunk.WindowsPhone.vcxproj", "{7E48E3DE-3741-4427-808D-0789B97135DF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RocketMan", "RocketMan", "{F60347B6-379C-44C6-B7A0-AD40C6C47CB5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Shared", "samples\Cpp\RocketMan\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems", "{DA6A38F2-A96F-4B00-984F-69559ACAA9DC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Windows", "samples\Cpp\RocketMan\proj.win8.1-universal\HelloCpp.Windows\HelloCpp.Windows.vcxproj", "{C0B5295C-44F4-4D75-BE82-1440D885DAA3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.WindowsPhone", "samples\Cpp\RocketMan\proj.win8.1-universal\HelloCpp.WindowsPhone\HelloCpp.WindowsPhone.vcxproj", "{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		samples\Cpp\RocketMan\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{c0b5295c-44f4-4d75-be82-1440d885daa3}*SharedItemsImports = 4
 		external\chipmunk\proj.win8.1-universal\chipmunk.Shared\chipmunk.Shared.vcxitems*{576519b8-967b-4e78-82e1-78c5271fe7c0}*SharedItemsImports = 9
+		samples\Cpp\RocketMan\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{4dc0f3e2-3362-48d1-8628-c75d9f2b9135}*SharedItemsImports = 4
 		cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{a6d2cbf8-a702-4523-9b0a-bd4ba129d8d6}*SharedItemsImports = 9
 		samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
 		external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{4a3c6ba8-c227-498b-aa21-40bda27b461f}*SharedItemsImports = 9
@@ -56,6 +66,7 @@ Global
 		samples\Cpp\TestCpp\proj.win8.1-universal\TestCpp.Shared\TestCpp.Shared.vcxitems*{f6b703a0-4a9e-4ba1-9f97-56a7265e68d2}*SharedItemsImports = 9
 		samples\Cpp\TestCpp\proj.win8.1-universal\TestCpp.Shared\TestCpp.Shared.vcxitems*{633aedd5-6cf2-4f28-9383-1ff5308cb1e5}*SharedItemsImports = 4
 		cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{1278897b-a72b-4778-808b-a7e573c7e905}*SharedItemsImports = 4
+		samples\Cpp\RocketMan\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{da6a38f2-a96f-4b00-984f-69559acaa9dc}*SharedItemsImports = 9
 		external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{3b26a12d-3a44-47ea-82d2-282660fc844d}*SharedItemsImports = 4
 		external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{22f798d8-bfff-4754-996f-a5395343d5ec}*SharedItemsImports = 4
 		external\chipmunk\proj.win8.1-universal\chipmunk.Shared\chipmunk.Shared.vcxitems*{7e48e3de-3741-4427-808d-0789b97135df}*SharedItemsImports = 4
@@ -202,6 +213,38 @@ Global
 		{7E48E3DE-3741-4427-808D-0789B97135DF}.Release|Win32.ActiveCfg = Release|Win32
 		{7E48E3DE-3741-4427-808D-0789B97135DF}.Release|Win32.Build.0 = Release|Win32
 		{7E48E3DE-3741-4427-808D-0789B97135DF}.Release|x64.ActiveCfg = Release|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|ARM.Build.0 = Debug|ARM
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|ARM.Deploy.0 = Debug|ARM
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|Win32.Build.0 = Debug|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|Win32.Deploy.0 = Debug|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|x64.ActiveCfg = Debug|x64
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|x64.Build.0 = Debug|x64
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Debug|x64.Deploy.0 = Debug|x64
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|ARM.ActiveCfg = Release|ARM
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|ARM.Build.0 = Release|ARM
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|ARM.Deploy.0 = Release|ARM
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|Win32.ActiveCfg = Release|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|Win32.Build.0 = Release|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|Win32.Deploy.0 = Release|Win32
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|x64.ActiveCfg = Release|x64
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|x64.Build.0 = Release|x64
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3}.Release|x64.Deploy.0 = Release|x64
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|ARM.Build.0 = Debug|ARM
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|ARM.Deploy.0 = Debug|ARM
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|Win32.Build.0 = Debug|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|Win32.Deploy.0 = Debug|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Debug|x64.ActiveCfg = Debug|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|ARM.ActiveCfg = Release|ARM
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|ARM.Build.0 = Release|ARM
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|ARM.Deploy.0 = Release|ARM
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|Win32.ActiveCfg = Release|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|Win32.Build.0 = Release|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|Win32.Deploy.0 = Release|Win32
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -224,5 +267,8 @@ Global
 		{576519B8-967B-4E78-82E1-78C5271FE7C0} = {62106FCE-13B0-4D3A-9931-4CA38965006F}
 		{2390343D-C34B-4B6C-BAD5-3EF1E18942F8} = {62106FCE-13B0-4D3A-9931-4CA38965006F}
 		{7E48E3DE-3741-4427-808D-0789B97135DF} = {62106FCE-13B0-4D3A-9931-4CA38965006F}
+		{DA6A38F2-A96F-4B00-984F-69559ACAA9DC} = {F60347B6-379C-44C6-B7A0-AD40C6C47CB5}
+		{C0B5295C-44F4-4D75-BE82-1440D885DAA3} = {F60347B6-379C-44C6-B7A0-AD40C6C47CB5}
+		{4DC0F3E2-3362-48D1-8628-C75D9F2B9135} = {F60347B6-379C-44C6-B7A0-AD40C6C47CB5}
 	EndGlobalSection
 EndGlobal

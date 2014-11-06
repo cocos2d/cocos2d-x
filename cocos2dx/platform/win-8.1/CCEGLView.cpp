@@ -115,11 +115,6 @@ void CCEGLView::end()
 	m_windowClosed = true;
 }
 
-void CCEGLView::OnOrientationChanged()
-{
-    UpdateForWindowSizeChange();
-}
-
 void CCEGLView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
 }
@@ -349,7 +344,6 @@ void CCEGLView::UpdateForWindowSizeChange(float width, float height)
 
 void CCEGLView::UpdateForWindowSizeChange()
 {
-    m_orientation = DisplayProperties::CurrentOrientation;
     m_width = ConvertDipsToPixels(m_window->Bounds.Width);
     m_height = ConvertDipsToPixels(m_window->Bounds.Height);
  

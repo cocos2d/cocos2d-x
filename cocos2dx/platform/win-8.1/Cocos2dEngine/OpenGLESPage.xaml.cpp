@@ -65,6 +65,16 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 
     mSwapChainPanelSize = { swapChainPanel->RenderSize.Width, swapChainPanel->RenderSize.Height };
 
+    DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
+
+    currentDisplayInformation->DpiChanged +=
+        ref new TypedEventHandler<DisplayInformation^, Object^>(this, &OpenGLESPage::OnDpiChanged);
+
+    currentDisplayInformation->OrientationChanged +=
+        ref new TypedEventHandler<DisplayInformation^, Object^>(this, &OpenGLESPage::OnOrientationChanged);
+
+
+
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
 #else
@@ -136,6 +146,26 @@ void OpenGLESPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
     }
 }
 
+// DisplayInformation event handlers.
+
+void OpenGLESPage::OnDpiChanged(DisplayInformation^ sender, Object^ args)
+{
+    critical_section::scoped_lock lock(mCriticalSection);
+    m_dpi = sender->LogicalDpi; 
+}
+
+void OpenGLESPage::OnOrientationChanged(DisplayInformation^ sender, Object^ args)
+{
+    critical_section::scoped_lock lock(mCriticalSection);
+    m_orientation = sender->CurrentOrientation;
+}
+
+
+void OpenGLESPage::OnDisplayContentsInvalidated(DisplayInformation^ sender, Object^ args)
+{
+    //critical_section::scoped_lock lock(mCriticalSection);
+    //m_deviceResources->ValidateDevice();
+}
 
 
 void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
@@ -154,13 +184,13 @@ void OpenGLESPage::OnSwapChainPanelSizeChanged(Object^ sender, Windows::UI::Xaml
 {
     // Size change events occur outside of the render thread.  A lock is required when updating
     // the swapchainpanel size
-    critical_section::scoped_lock lock(mSwapChainPanelSizeCriticalSection);
+    critical_section::scoped_lock lock(mCriticalSection);
     mSwapChainPanelSize = { e->NewSize.Width, e->NewSize.Height };
 }
 
 void OpenGLESPage::GetSwapChainPanelSize(GLsizei* width, GLsizei* height)
 {
-    critical_section::scoped_lock lock(mSwapChainPanelSizeCriticalSection);
+    critical_section::scoped_lock lock(mCriticalSection);
     // If a custom render surface size is specified, return its size instead of
     // the swapchain panel size.
     if (mUseCustomRenderSurfaceSize)
@@ -228,6 +258,7 @@ void OpenGLESPage::StartRenderLoop()
 
     DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
     m_dpi = currentDisplayInformation->LogicalDpi;
+    m_orientation = currentDisplayInformation->CurrentOrientation;
 
     auto dispatcher = Windows::UI::Xaml::Window::Current->CoreWindow->Dispatcher;
 
@@ -241,8 +272,6 @@ void OpenGLESPage::StartRenderLoop()
         GLsizei panelWidth = 0;
         GLsizei panelHeight = 0;
         GetSwapChainPanelSize(&panelWidth, &panelHeight);
-        
-
 
         if (m_renderer.get() == nullptr)
         {
@@ -253,7 +282,7 @@ void OpenGLESPage::StartRenderLoop()
         {
  
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
-            m_renderer.get()->Draw(panelWidth, panelHeight, m_dpi);
+            m_renderer.get()->Draw(panelWidth, panelHeight, m_orientation, m_dpi);
 
             // The call to eglSwapBuffers might not be successful (i.e. due to Device Lost)
             // If the call fails, then we must reinitialize EGL and the GL resources.
