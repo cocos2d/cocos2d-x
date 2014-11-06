@@ -59,6 +59,7 @@ The patch must be _complete_. And by that, we mean:
 -   Must NOT break backward compatibility
 -   Must compile WITHOUT warnings
 -   New APIs MUST be **easy to use**, **familiar** to cocos2d-x users
+-   New APIs MUST be documented using Doxgen strings
 -   Code MUST be **easy to extend**
 -   Must be efficient (fast / low memory needs)
 -   It must not duplicate existing code, unless the new code deprecates the old one
