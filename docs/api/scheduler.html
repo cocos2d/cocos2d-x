@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - scheduler</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><strong>scheduler</strong></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>scheduler</h1>
+
+<p>全局计时器、计划任务</p>
+
+<p>«该模块在框架初始化时不会自动载入»</p>
+
+<p>加载方式: local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_scheduler_scheduleUpdateGlobal">scheduler.scheduleUpdateGlobal(listener)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计划一个全局帧事件回调，并返回该计划的句柄。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_scheduler_scheduleGlobal">scheduler.scheduleGlobal(listener,&nbsp;interval)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计划一个以指定时间间隔执行的全局事件回调，并返回该计划的句柄。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_scheduler_unscheduleGlobal">scheduler.unscheduleGlobal(handle)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">取消一个全局计划</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_scheduler_performWithDelayGlobal">scheduler.performWithDelayGlobal(listener,&nbsp;time)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计划一个全局延时回调，并返回该计划的句柄。</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_scheduler_scheduleUpdateGlobal"></a>
+
+            <dd class="">
+
+<h3>scheduler.scheduleUpdateGlobal()</h3>
+
+<blockquote>
+  <p>scheduler.scheduleUpdateGlobal(listener)</p>
+</blockquote>
+
+<p>计划一个全局帧事件回调，并返回该计划的句柄。</p>
+
+<p>全局帧事件在任何场景中都会执行，因此可以在整个应用程序范围内实现较为精确的全局计时器。</p>
+
+<p>该函数返回的句柄用作 scheduler.unscheduleGlobal() 的参数，可以取消指定的计划。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>function <strong>回调函数</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>mixed schedule句柄</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_scheduler_scheduleGlobal"></a>
+
+            <dd class="">
+
+<h3>scheduler.scheduleGlobal()</h3>
+
+<blockquote>
+  <p>scheduler.scheduleGlobal(listener, interval)</p>
+</blockquote>
+
+<p>计划一个以指定时间间隔执行的全局事件回调，并返回该计划的句柄。</p>
+
+<pre><code class="lua"><br />local function onInterval(dt)
+end
+
+-- 每 0.5 秒执行一次 onInterval()
+local handle = scheduler.scheduleGlobal(onInterval, 0.5)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>function <strong>listener</strong> 回调函数</li>
+<li>number <strong>interval</strong> 间隔时间</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>mixed schedule句柄</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_scheduler_unscheduleGlobal"></a>
+
+            <dd class="">
+
+<h3>scheduler.unscheduleGlobal()</h3>
+
+<blockquote>
+  <p>scheduler.unscheduleGlobal(handle)</p>
+</blockquote>
+
+<p>取消一个全局计划</p>
+
+<p>scheduler.unscheduleGlobal() 的参数就是 scheduler.scheduleUpdateGlobal() 和 scheduler.scheduleGlobal() 的返回值。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>schedule句柄</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_scheduler_performWithDelayGlobal"></a>
+
+            <dd class="">
+
+<h3>scheduler.performWithDelayGlobal()</h3>
+
+<blockquote>
+  <p>scheduler.performWithDelayGlobal(listener, time)</p>
+</blockquote>
+
+<p>计划一个全局延时回调，并返回该计划的句柄。</p>
+
+<p>scheduler.performWithDelayGlobal() 会在等待指定时间后执行一次回调函数，然后自动取消该计划。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>function <strong>listener</strong> 回调函数</li>
+<li>number <strong>time</strong> 延迟时间</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>mixed schedule句柄</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

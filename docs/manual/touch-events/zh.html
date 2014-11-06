@@ -1,0 +1,242 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>quick 中的触摸事件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+html,body{color:black}*:not('#mkdbuttons'){margin:0;padding:0}#wrapper{font:16px helvetica,arial,freesans,clean,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;padding:3px;background:#fff;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;border:solid 1px #dddddd !important;color:#333}p{margin:1em 0}a{color:#4183c4;text-decoration:none}#wrapper{background-color:#fff;padding:30px;margin:15px;font-size:16px;line-height:1.6}#wrapper>*:first-child{margin-top:0 !important}#wrapper>*:last-child{margin-bottom:0 !important}@media screen{#wrapper{border:solid 1px #ddd}}h1,h2,h3,h4,h5,h6{position:relative;margin-top:1em;margin-bottom:16px;font-weight:700;line-height:1.4;color:#333}h1{padding-bottom:.3em;font-size:2.25em;line-height:1.2;border-bottom:1px solid #eee}h2{padding-bottom:0.3em;font-size:1.75em;line-height:1.225;border-bottom:1px solid #eee}h3{font-size:1.5em;line-height:1.43}h4{font-size:1.25em}h5{font-size:1em}h6{color:#777;font-size:1em}p,blockquote,ul,ol,dl,table,pre{margin-top:0;margin-bottom:16px}hr{height:4px;padding:0;margin:16px 0;background-color:#e7e7e7;border:0 none}ul,ol{padding-left:2em}ul.no-list,ol.no-list{padding:0;list-style-type:none}ul ul,ul ol{margin-top:0;margin-bottom:0}ol ol,ol ul{margin-top:0;margin-bottom:0}li>p{margin-top:16px}dl{padding:0}dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}dl dd{padding:0 16px;margin-bottom:16px}blockquote{padding:0 15px;margin-left:0;color:#777;border-left:4px solid #ddd}blockquote>:first-child{margin-top:0}blockquote>:last-child{margin-bottom:0}table{display:block;width:100%;overflow:auto}table th{font-weight:700;padding:6px 13px;border:1px solid #ddd}table td{padding:6px 13px;border:1px solid #ddd}table tr{background-color:#fff;border-top:1px solid #ccc}table tr:nth-child(2n){background-color:#f8f8f8}img{max-width:100%;-moz-box-sizing:border-box;box-sizing:border-box}span.frame{display:block;overflow:hidden}span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}span.frame span img{display:block;float:left}span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}span.align-center{display:block;overflow:hidden;clear:both}span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}span.align-center span img{margin:0 auto;text-align:center}span.align-right{display:block;overflow:hidden;clear:both}span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}span.align-right span img{margin:0;text-align:right}span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}span.float-left span{margin:13px 0 0}span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}code,tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,0.04);border-radius:3px}code:before,code:after{letter-spacing:-.2em;content:"\00a0"}tt:before,tt:after{letter-spacing:-.2em;content:"\00a0"}code br,tt br{display:none}del code{text-decoration:inherit;vertical-align:text-top}pre>code{padding:0;margin:0;font-size:100%;white-space:pre;background:transparent;border:0}.highlight{margin-bottom:16px}.highlight pre{padding:16px;margin-bottom:0;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}pre{padding:16px;margin-bottom:0;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px;word-wrap:normal}pre code,pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}pre code:before,pre code:after{content:normal}pre tt:before,pre tt:after{content:normal}.poetry pre{font-family:Georgia, Garamond, serif !important;font-style:italic;font-size:110% !important;line-height:1.6em;display:block;margin-left:1em}.poetry pre code{font-family:Georgia, Garamond, serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;vertical-align:super;position:relative}sub{vertical-align:sub;top:-1px}@media print{body{background:#fff}img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;border:none !important;font-size:12px}pre code{overflow:visible}}@media screen{body.inverted{color:#eee !important;border-color:#555;box-shadow:none}.inverted #wrapper,.inverted hr,.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dd,.inverted dt,.inverted blockquote{color:#eee !important;border-color:#555;box-shadow:none}.inverted td,.inverted th{background:#333}.inverted pre,.inverted code,.inverted tt{background:#eeeeee !important;color:#111}.inverted h2{border-color:#555555}.inverted hr{border-color:#777;border-width:1px !important}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eeeeee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eeeeee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}.inverted{background:#0b2531;background:#252a2a}.inverted #wrapper{background:#252a2a}.inverted a{color:#acd1d5}}.highlight{background:#fff}.highlight .c{color:#998;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k,.highlight .o{font-weight:700}.highlight .cm{color:#998;font-style:italic}.highlight .cp{color:#999;font-weight:700}.highlight .c1{color:#998;font-style:italic}.highlight .cs{color:#999;font-weight:700;font-style:italic}.highlight .gd{color:#000;background-color:#fdd}.highlight .gd .x{color:#000;background-color:#faa}.highlight .ge{font-style:italic}.highlight .gr{color:#a00}.highlight .gh{color:#999}.highlight .gi{color:#000;background-color:#dfd}.highlight .gi .x{color:#000;background-color:#afa}.highlight .go{color:#888}.highlight .gp{color:#555}.highlight .gs{font-weight:700}.highlight .gu{color:purple;font-weight:700}.highlight .gt{color:#a00}.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr{font-weight:700}.highlight .kt{color:#458;font-weight:700}.highlight .m{color:#099}.highlight .s{color:#d14}.highlight .n{color:#333}.highlight .na{color:teal}.highlight .nb{color:#0086b3}.highlight .nc{color:#458;font-weight:700}.highlight .no{color:teal}.highlight .ni{color:purple}.highlight .ne,.highlight .nf{color:#900;font-weight:700}.highlight .nn{color:#555}.highlight .nt{color:navy}.highlight .nv{color:teal}.highlight .ow{font-weight:700}.highlight .w{color:#bbb}.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo{color:#099}.highlight .sb,.highlight .sc,.highlight .sd,.highlight .s2,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999}.highlight .vc,.highlight .vg,.highlight .vi{color:teal}.highlight .il{color:#099}.highlight .gc{color:#999;background-color:#EAF2F5}.type-csharp .highlight .k,.type-csharp .highlight .kt{color:blue}.type-csharp .highlight .nf{color:#000;font-weight:400}.type-csharp .highlight .nc{color:#2b91af}.type-csharp .highlight .nn{color:#000}.type-csharp .highlight .s,.type-csharp .highlight .sc{color:#a31515}.type-csharp .highlight .k,.type-csharp .highlight .kt{color:#00F}.type-csharp .highlight .nf{color:#000;font-weight:normal}.type-csharp .highlight .nc{color:#2B91AF}.type-csharp .highlight .nn{color:#000}.type-csharp .highlight .s,.type-csharp .highlight .sc{color:#A31515}body.dark #wrapper{background:transparent !important;box-shadow:none !important}
+
+@media print{
+#generated-toc-clone,#generated-toc{display:none!important}
+}
+#generated-toc-clone li.missing,#mkreplaced-toc li.missing{list-style-type:none!important}#generated-toc-clone li, #mkreplaced-toc li{list-style-type:upper-roman}#generated-toc-clone li li, #mkreplaced-toc li li{list-style-type:decimal}#generated-toc-clone li li li,#mkreplaced-toc li li li{list-style-type:decimal-leading-zero}#generated-toc-clone li li li li,#mkreplaced-toc li li li li{list-style-type:lower-greek}#generated-toc-clone li li li li li,#mkreplaced-toc li li li li li{list-style-type:disc}#generated-toc-clone li li li li li li,#mkreplaced-toc li li li li li li{list-style-type:square}
+</style>
+<style>#wrapper { max-width:720px; margin:0 auto }</style>
+</head>
+<body class="normal">
+  <div id="wrapper">
+      <h1 id="quick中的触摸事件">quick 中的触摸事件</h1>
+
+<p>cocos2d-x 原本的触摸机制存在一些限制，在使用中需要开发者做不少额外的处理。所以 quick-cocos2d-x 提出了自己的一套触摸机制。本文详细介绍了这套新机制的用法。</p>
+
+<p>~</p>
+
+<h2 id="显示层级">显示层级</h2>
+
+<p>在 cocos2d-x 里，整个游戏的画面是由一系列的 Scene, Node, Sprite, Layer 等对象构成的。而所有这些对象都是从 Node 这个类继承而来。我们可以将 Node 称为<code>显示节点</code>。</p>
+
+<p>一个游戏画面就是许多显示节点构成的一棵树：</p>
+<pre><code class="(null)">
+/|\
+ | 显示层级
+ |
+ |         [Node]  [Node]  [Node]
+ |           |       |       |
+ |           +---+---+       |
+ |               |           |
+ |             [Node]      [Node]
+ |               |           |
+ |               +-----+-----+
+ |                     |
+ |                   [Node]
+</code></pre>
+
+<p>~</p>
+
+<p>在这棵树里，Node 所处的垂直位置就是它们的<code>显示层级</code>。越往上的 Node，其显示层级就越高。从画面表现上来说，下面的 Node 是背景，上面的 Node 是建筑，那么建筑就会挡住一部分背景。</p>
+
+<p>~</p>
+
+<h2 id="触摸区域">触摸区域</h2>
+
+<p>在 cocos2d-x 里，只有 Layer 对象才能接受触摸事件。而 Layer 总是响应整个屏幕范围内的触摸，这就要求开发者在拿到触摸事件后，再做进一步的处理。</p>
+
+<p>例如有一个需求是在玩家触摸屏幕上的方块时，人物角色做一个动作。那么使用 Layer 接受到触摸事件后，开发者需要自行判断触摸位置是否在方块之内。当屏幕上有很多东西需要响应玩家交互时，程序结构就开始变得复杂了。</p>
+
+<p>所以 quick-cocos2d-x 允许开发者将任何一个 Node 设置为接受触摸事件。并且触摸事件一开始只会出现在这个 Node 的<code>触摸区域</code>内。</p>
+
+<p>所谓<code>触摸区域</code>，就是一个 Node 及其所有子 Node 显示内容占据的屏幕空间。要注意的是这个屏幕空间包含了图片的透明部分。下图中，节点 A 是一个 Sprite 对象，它的触摸区域就是图片大小；而节点 B 是一个 Node 对象，其中包含了三个 Sprite 对象，那么节点 B 的触摸区域就是三个 Sprite 对象触摸区域的合集。</p>
+
+<figure>
+<img src="res/boundingbox.png" alt="" />
+</figure>
+
+<p>为了简化实现，<code>触摸区域</code>都是一个矩形，所以节点 B 的<code>触摸区域</code>实际上是一个“包含三个 Sprite 对象触摸区域合集的矩形”，可以参考上图中的红色边框线。</p>
+
+<p>~</p>
+
+<h2 id="用法示例">用法示例</h2>
+
+<p>下面列出触摸事件的用法示例，更详细的示例请参考 <code>samples/touch</code> 示例。</p>
+
+<p>~</p>
+
+<h3 id="单点触摸事件">单点触摸事件</h3>
+<pre><code class="lua">-- 允许 node 接受触摸事件
+node:setTouchEnabled(true)
+
+-- 注册触摸事件
+node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+    -- event.name 是触摸事件的状态：began, moved, ended, cancelled
+    -- event.x, event.y 是触摸点当前位置
+    -- event.prevX, event.prevY 是触摸点之前的位置
+    printf(&quot;sprite: %s x,y: %0.2f, %0.2f&quot;,
+           event.name, event.x, event.y)
+
+    -- 在 began 状态时，如果要让 Node 继续接收该触摸事件的状态变化
+    -- 则必须返回 true
+    if event.name == &quot;began&quot; then
+        return true
+    end
+end)</code></pre>
+
+<p>~</p>
+
+<p>触摸事件的 <code>event.name</code> 指示了事件的状态：</p>
+
+<ul>
+<li><strong>began</strong>: 手指开始触摸屏幕。在 <code>began</code> 状态时，如果要继续接收该触摸事件的状态变化，事件处理函数必须返回 <code>true</code>。</li>
+<li><strong>moved</strong>: 手指在屏幕上移动。</li>
+<li><strong>ended</strong>: 手指离开屏幕。</li>
+<li><strong>cancelled</strong>: 因为其他原因取消触摸操作。</li>
+</ul>
+
+<p>~</p>
+
+<h3 id="多点触摸">多点触摸</h3>
+<pre><code class="lua">-- 允许 node 接受触摸事件
+node:setTouchEnabled(true)
+
+-- 设置触摸模式
+node:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE) -- 多点
+-- node:setTouchMode(cc.TOUCH_MODE_ONE_BY_ONE) -- 单点（默认模式）
+
+-- 注册触摸事件
+node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+    -- event.name 是触摸事件的状态：began, moved, ended, cancelled
+    -- 多点触摸增加了 added 和 removed 状态
+    -- event.points 包含所有触摸点
+    -- 按照 events.point[id] = {x = ?, y = ?} 的结构组织
+    for id, point in pairs(event.points) do
+        printf(&quot;event [%s] %s = %0.2f, %0.2f&quot;,
+               event.name, id, point.x, point.y)
+    end
+
+    if event.name == &quot;began&quot; then
+        return true
+    end
+end)</code></pre>
+
+<p>~</p>
+
+<p>在多点触摸时，事件状态的含义有所区别：</p>
+
+<ul>
+<li><strong>began</strong>: 手指开始触摸屏幕。用户可能同时用多个手指接触屏幕，但因为硬件响应速度极快的原因，<code>began</code> 状态时，<code>event.points</code> 中可能仍然只有一个触摸点的数据，其他触摸点数据会通过 <code>added</code> 状态提供。</li>
+<li><strong>added</strong>: 开始触摸后，如果有更多触摸点出现，则出现 <code>added</code> 状态。此时 <code>event.points</code> 中包含新加入的触摸点数据。</li>
+<li><strong>removed</strong>: 如果触摸结束前有触摸点消失（接触屏幕的部分手指离开了屏幕），则出现 <code>removed</code> 状态。此时 <code>event.points</code> 中包含删除的触摸点数据。</li>
+<li><strong>ended</strong>: 如果所有触摸点都消失（所有手指都离开了屏幕），则出现 <code>ended</code> 状态。此时 <code>event.points</code> 中包含删除的触摸点数据。</li>
+<li><strong>moved</strong>: 由于多点触摸时，可能只有部分触摸点移动。所以此时 <code>event.points</code> 中只包含有变化的触摸点数据。</li>
+</ul>
+
+<p>~</p>
+
+<h2 id="触摸事件吞噬">触摸事件吞噬</h2>
+
+<p>默认情况下，Node 在响应触摸后（在 <code>began</code> 状态返回 <code>true</code> 表示要响应触摸），就会阻止事件继续传递给 Node 的父对象（更下层的 Node），这称为<code>触摸事件吞噬</code>。</p>
+
+<p>如果要改变这个行为，可以用：</p>
+
+<ul>
+<li><strong>setTouchSwallowEnabled()</strong> 是否允许 Node 吞噬触摸，默认为 <code>true</code>。如果设置为 <code>false</code>，则 Node 响应触摸事件后，仍然会将事件继续传递给父对象。</li>
+<li><strong>isTouchSwallowEnabled()</strong> 检查 Node 是否允许吞噬触摸。</li>
+</ul>
+
+<p>~</p>
+
+<h2 id="禁用触摸">禁用触摸</h2>
+
+<p>对于一个 Node，随时可以启用或禁用其触摸事件：</p>
+
+<ul>
+<li><strong>setTouchEnabled()</strong> 是否允许 Node 响应触摸，默认为 <code>false</code>。</li>
+<li><strong>isTouchEnabled()</strong> 检查 Node 是否允许触摸。</li>
+</ul>
+
+<p>~</p>
+
+<p>但即便禁用了 Node 的触摸事件，也只能阻止这个 Node 响应触摸，而不能阻止这个 Node 的子 Node 响应触摸。</p>
+
+<p>假设有一个对话框（Node），我们需要禁止对话框中的所有 Node 响应触摸。那么需要禁止对话框 Node 捕获事件：</p>
+<pre><code class="lua">dialog:setTouchCaptureEnabled(false)</code></pre>
+
+<p>~</p>
+
+<ul>
+<li><strong>setTouchCaptureEnabled()</strong> 是否允许 Node 捕获触摸，默认为 <code>true</code>。当设置为 <code>false</code> 时，该 Node 及其所有子 Node 都无法得到触摸事件。</li>
+<li><strong>isTouchCaptureEnabled()</strong> 检查 Node 是否允许捕获触摸。</li>
+</ul>
+
+<p>~</p>
+
+<p>总结而言，<code>setTouchEnabled()</code> 只针对当前 Node，而 <code>setTouchCaptureEnabled()</code> 同时影响当前 Node 及其所有子 Node。</p>
+
+<p>~</p>
+
+<h2 id="触摸事件的三个阶段">触摸事件的三个阶段</h2>
+
+<p>quick 中触摸事件分为三个阶段：capturing（捕获）、targeting（触发）、bubbling（冒泡）。</p>
+
+<p>当用户的一根手指触摸到屏幕时，将产生一个触摸事件：</p>
+
+<ol>
+<li>遍历所有响应触摸的 Node，找出<code>显示层级</code>最高，并且其<code>触摸区域</code>包含触摸位置的那个 Node。这个 Node 被称为 TargetNode（目标 Node）。</li>
+<li>检查 TargetNode 的 <code>isTouchCaptureEnabled()</code> 结果，如果返回 <code>false</code>，则重复 1
+
+<ol>
+<li>从 TargetNode 的根 Node（通常是 Scene）开始，检查 <code>cc.NODE_TOUCH_CAPTURE_EVENT</code> 事件的返回结果。任何一个 Node 返回 <code>false</code> 都会阻止事件在 TargetNode 上触发。并从步骤 1 开始查找其他符合条件的 Node。</li>
+<li>这个阶段被称为 <code>capturing</code>。</li>
+</ol></li>
+<li>在 TargetNode 上触发事件。这个阶段被称为 <code>targeting</code>。</li>
+<li>如果事件返回结果为 <code>false</code>，表示 TargetNode 不响应该事件，并从步骤 1 开始查找其他符合条件的 Node。</li>
+<li>在 TargetNode 完成事件的响应后，检查 <code>TargetNode:isTouchSwallowEnabled()</code> 的返回值。如果是 <code>true</code>，则取消 <code>bubbling</code> 阶段。</li>
+<li>从 TargetNode 开始往其所有父 Node 触发事件，直到某个 Node 返回 <code>false</code> 或者事件被吞噬。这个阶段称为 <code>bubbling</code>。</li>
+</ol>
+
+<p>~</p>
+
+<p>利用事件的三个阶段，我们可以注册 <code>capturing</code> 阶段的触摸事件处理函数：</p>
+<pre><code class="lua">-- 在 capturing 阶段就捕获事件
+node:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
+    if event.name == &quot;began&quot; then
+        -- 在 began 状态返回 false，将阻止事件
+        return false
+    end
+end)</code></pre>
+
+<p>~</p>
+
+<p>关于触摸机制的灵活运用，可以参考 <code>cc.ui</code> 中的各个 UI 控件，以及 <code>samples/touch</code> 示例。</p>
+
+<p>~</p>
+
+<h2 id="api参考">API 参考</h2>
+
+<ul>
+<li><strong>addNodeEventListener()</strong> 为 Node 的特定事件设置处理函数，返回一个 id 表示注册成功。</li>
+<li><strong>removeNodeEventListener()</strong> 从 Node 上移除指定类型的事件处理函数，需要提供 <code>addNodeEventListener()</code> 返回的注册 id。</li>
+<li><strong>setTouchEnabled()</strong> 是否允许 Node 响应触摸，默认为 <code>false</code>。</li>
+<li><strong>isTouchEnabled()</strong> 检查 Node 是否允许触摸。</li>
+<li><strong>setTouchMode()</strong> 设置触摸模式，默认为 <code>cc.TOUCH_MODE_ONE_BY_ONE</code>。</li>
+<li><strong>getTouchMode()</strong> 返回 Node 当前的触摸模式。</li>
+<li><strong>setTouchCaptureEnabled()</strong> 是否允许 Node 捕获触摸，默认为 <code>true</code>。</li>
+<li><strong>isTouchCaptureEnabled()</strong> 检查 Node 是否允许捕获触摸。</li>
+<li><strong>setTouchSwallowEnabled()</strong> 是否允许 Node 吞噬触摸，默认为 <code>true</code>。</li>
+<li><strong>isTouchSwallowEnabled()</strong> 检查 Node 是否允许吞噬触摸。</li>
+</ul>
+<!-- ##END MARKED WRAPPER## -->
+    </div>
+</body>
+</html>

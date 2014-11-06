@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - ui</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><strong>ui</strong></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>ui</h1>
+
+<p>创建和管理用户界面</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_ui_newEditBox">ui.newEditBox(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建一个文字输入框，并返回 EditBox 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_ui_newBMFontLabel">ui.newBMFontLabel(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">用位图字体创建文本显示对象，并返回 LabelBMFont 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_ui_newTTFLabel">ui.newTTFLabel(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 TTF 字体创建文字显示对象，并返回 LabelTTF 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_ui_newTTFLabelWithShadow">ui.newTTFLabelWithShadow(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建带阴影的 TTF 文字显示对象，并返回 LabelTTF 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_ui_newTTFLabelWithOutline">ui.newTTFLabelWithOutline(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建带描边效果的 TTF 文字显示对象，并返回 LabelTTF 对象。</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_ui_newEditBox"></a>
+
+            <dd class="">
+
+<h3>ui.newEditBox()</h3>
+
+<blockquote>
+  <p>ui.newEditBox(params)</p>
+</blockquote>
+
+<p>创建一个文字输入框，并返回 EditBox 对象。</p>
+
+<p>可用参数：</p>
+
+<ul>
+<li>image: 输入框的图像，可以是图像名或者是 Sprite9Scale 显示对象。用 display.newScale9Sprite() 创建 Sprite9Scale 显示对象。</li>
+<li>imagePressed: 输入状态时输入框显示的图像（可选）</li>
+<li>imageDisabled: 禁止状态时输入框显示的图像（可选）</li>
+<li>listener: 回调函数</li>
+<li>size: 输入框的尺寸，用 cc.size(宽度, 高度) 创建</li>
+<li>x, y: 坐标（可选）</li>
+</ul>
+
+<pre><code class="lua"><br />local function onEdit(event, editbox)
+    if event == "began" then
+        -- 开始输入
+    elseif event == "changed" then
+        -- 输入框内容发生变化
+    elseif event == "ended" then
+        -- 输入结束
+    elseif event == "return" then
+        -- 从输入框返回
+    end
+end
+
+local editbox = ui.newEditBox({
+    image = "EditBox.png",
+    listener = onEdit,
+    size = cc.size(200, 40)
+})
+
+</code></pre>
+
+<p>注意: 使用setInputFlag(0) 可设为密码输入框。</p>
+
+<p>注意：构造输入框时，请使用setPlaceHolder来设定初始文本显示。setText为出现输入法后的默认文本。</p>
+
+<p>注意：事件触发机制，player模拟器上与真机不同，请使用真机实测(不同ios版本貌似也略有不同)。</p>
+
+<p>注意：changed事件中，需要条件性使用setText（如trim或转化大小写等），否则在某些ios版本中会造成死循环。</p>
+
+<pre><code class="lua"><br />--错误，会造成死循环
+
+editbox:setText(string.trim(editbox:getText()))
+
+</code></pre>
+
+<pre><code class="lua"><br />--正确，不会造成死循环
+local _text = editbox:getText()
+local _trimed = string.trim(_text)
+if _trimed ~= _text then
+    editbox:setText(_trimed)
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>EditBox 文字输入框</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_ui_newBMFontLabel"></a>
+
+            <dd class="">
+
+<h3>ui.newBMFontLabel()</h3>
+
+<blockquote>
+  <p>ui.newBMFontLabel(params)</p>
+</blockquote>
+
+<p>用位图字体创建文本显示对象，并返回 LabelBMFont 对象。</p>
+
+<p>BMFont 通常用于显示英文内容，因为英文字母加数字和常用符号也不多，生成的 BMFont 文件较小。如果是中文，应该用 TTFLabel。</p>
+
+<p>可用参数：</p>
+
+<ul>
+<li>text: 要显示的文本</li>
+<li>font: 字体文件名</li>
+<li>align: 文字的水平对齐方式（可选）</li>
+<li>x, y: 坐标（可选）</li>
+</ul>
+
+<pre><code class="lua"><br />local label = ui.newBMFontLabel({
+    text = "Hello",
+    font = "UIFont.fnt",
+})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>LabelBMFont LabelBMFont对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_ui_newTTFLabel"></a>
+
+            <dd class="">
+
+<h3>ui.newTTFLabel()</h3>
+
+<blockquote>
+  <p>ui.newTTFLabel(params)</p>
+</blockquote>
+
+<p>使用 TTF 字体创建文字显示对象，并返回 LabelTTF 对象。</p>
+
+<p>可用参数：</p>
+
+<ul>
+<li>text: 要显示的文本</li>
+<li>font: 字体名，如果是非系统自带的 TTF 字体，那么指定为字体文件名</li>
+<li>size: 文字尺寸，因为是 TTF 字体，所以可以任意指定尺寸</li>
+<li>color: 文字颜色（可选），用 cc.c3b() 指定，默认为白色</li>
+<li>align: 文字的水平对齐方式（可选）</li>
+<li>valign: 文字的垂直对齐方式（可选），仅在指定了 dimensions 参数时有效</li>
+<li>dimensions: 文字显示对象的尺寸（可选），使用 cc.size() 指定</li>
+<li>x, y: 坐标（可选）</li>
+</ul>
+
+<p>align 和 valign 参数可用的值：</p>
+
+<ul>
+<li>ui.TEXT_ALIGN_LEFT 左对齐</li>
+<li>ui.TEXT_ALIGN_CENTER 水平居中对齐</li>
+<li>ui.TEXT_ALIGN_RIGHT 右对齐</li>
+<li>ui.TEXT_VALIGN_TOP 垂直顶部对齐</li>
+<li>ui.TEXT_VALIGN_CENTER 垂直居中对齐</li>
+<li>ui.TEXT_VALIGN_BOTTOM 垂直底部对齐</li>
+</ul>
+
+<pre><code class="lua"><br />-- 创建一个居中对齐的文字显示对象
+local label = ui.newTTFLabel({
+    text = "Hello, World",
+    font = "Marker Felt",
+    size = 64,
+    align = ui.TEXT_ALIGN_CENTER -- 文字内部居中对齐
+})
+
+-- 左对齐，并且多行文字顶部对齐
+local label = ui.newTTFLabel({
+    text = "Hello, World\n您好，世界",
+    font = "Arial",
+    size = 64,
+    color = cc.c3b(255, 0, 0), -- 使用纯红色
+    align = ui.TEXT_ALIGN_LEFT,
+    valign = ui.TEXT_VALIGN_TOP,
+    dimensions = cc.size(400, 200)
+})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>LabelTTF LabelTTF对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_ui_newTTFLabelWithShadow"></a>
+
+            <dd class="">
+
+<h3>ui.newTTFLabelWithShadow()</h3>
+
+<blockquote>
+  <p>ui.newTTFLabelWithShadow(params)</p>
+</blockquote>
+
+<p>创建带阴影的 TTF 文字显示对象，并返回 LabelTTF 对象。</p>
+
+<p>相比 ui.newTTFLabel() 增加一个参数：</p>
+
+<ul>
+<li>shadowColor: 阴影颜色（可选），用 cc.c4b() 指定，默认为黑色</li>
+</ul>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>LabelTTF LabelTTF对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_ui_newTTFLabelWithOutline"></a>
+
+            <dd class="">
+
+<h3>ui.newTTFLabelWithOutline()</h3>
+
+<blockquote>
+  <p>ui.newTTFLabelWithOutline(params)</p>
+</blockquote>
+
+<p>创建带描边效果的 TTF 文字显示对象，并返回 LabelTTF 对象。</p>
+
+<p>相比 ui.newTTFLabel() 增加一个参数：</p>
+
+<pre><code>outlineColor: 描边颜色（可选），用 cc.c4b() 指定，默认为黑色
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>LabelTTF LabelTTF对象</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

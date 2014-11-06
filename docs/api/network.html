@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - network</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><strong>network</strong></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>network</h1>
+
+<p>网络服务</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_network_isLocalWiFiAvailable">network.isLocalWiFiAvailable()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查地 WIFI 网络是否可用</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_network_isInternetConnectionAvailable">network.isInternetConnectionAvailable()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查互联网连接是否可用</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_network_isHostNameReachable">network.isHostNameReachable(hostname)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查是否可以解析指定的主机名</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_network_getInternetConnectionStatus">network.getInternetConnectionStatus()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回互联网连接状态值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_network_createHTTPRequest">network.createHTTPRequest(callback,&nbsp;url,&nbsp;method)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建异步 HTTP 请求，并返回 cc.HTTPRequest 对象。</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_network_isLocalWiFiAvailable"></a>
+
+            <dd class="">
+
+<h3>network.isLocalWiFiAvailable()</h3>
+
+<blockquote>
+  <p>network.isLocalWiFiAvailable()</p>
+</blockquote>
+
+<p>检查地 WIFI 网络是否可用</p>
+
+<p>提示： WIFI 网络可用不代表可以访问互联网。</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean 网络是否可用</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_network_isInternetConnectionAvailable"></a>
+
+            <dd class="">
+
+<h3>network.isInternetConnectionAvailable()</h3>
+
+<blockquote>
+  <p>network.isInternetConnectionAvailable()</p>
+</blockquote>
+
+<p>检查互联网连接是否可用</p>
+
+<p>通常，这里接口返回 3G 网络的状态，具体情况与设备和操作系统有关。</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean 网络是否可用</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_network_isHostNameReachable"></a>
+
+            <dd class="">
+
+<h3>network.isHostNameReachable()</h3>
+
+<blockquote>
+  <p>network.isHostNameReachable(hostname)</p>
+</blockquote>
+
+<p>检查是否可以解析指定的主机名</p>
+
+<pre><code class="lua"><br />if network.isHostNameReachable("www.google.com") then
+    -- 域名可以解析
+end
+
+</code></pre>
+
+<p>注意： 该接口会阻塞程序，因此在调用该接口时应该提醒用户应用程序在一段时间内会失去响应。</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean 主机名是否可以解析</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_network_getInternetConnectionStatus"></a>
+
+            <dd class="">
+
+<h3>network.getInternetConnectionStatus()</h3>
+
+<blockquote>
+  <p>network.getInternetConnectionStatus()</p>
+</blockquote>
+
+<p>返回互联网连接状态值</p>
+
+<p>状态值有三种：</p>
+
+<ul>
+<li>kCCNetworkStatusNotReachable: 无法访问互联网</li>
+<li>kCCNetworkStatusReachableViaWiFi: 通过 WIFI</li>
+<li>kCCNetworkStatusReachableViaWWAN: 通过 3G 网络</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 互联网连接状态值</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_network_createHTTPRequest"></a>
+
+            <dd class="">
+
+<h3>network.createHTTPRequest()</h3>
+
+<blockquote>
+  <p>network.createHTTPRequest(callback, url, method)</p>
+</blockquote>
+
+<p>创建异步 HTTP 请求，并返回 cc.HTTPRequest 对象。</p>
+
+<pre><code class="lua"><br />function onRequestFinished(event)
+    local ok = (event.name == "completed")
+    local request = event.request
+
+    if not ok then
+        -- 请求失败，显示错误代码和错误消息
+        print(request:getErrorCode(), request:getErrorMessage())
+        return
+    end
+
+    local code = request:getResponseStatusCode()
+    if code ~= 200 then
+        -- 请求结束，但没有返回 200 响应代码
+        print(code)
+        return
+    end
+
+    -- 请求成功，显示服务端返回的内容
+    local response = request:getResponseString()
+    print(response)
+end
+
+-- 创建一个请求，并以 POST 方式发送数据到服务端
+local url = "http://www.mycompany.com/request.php"
+local request = network.createHTTPRequest(onRequestFinished, url, "POST")
+request:addPOSTValue("KEY", "VALUE")
+
+-- 开始请求。当请求完成时会调用 callback() 函数
+request:start()
+
+</code></pre>
+
+<h4>Returns</h4>
+
+<ul>
+<li>HTTPRequest 结果</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>
