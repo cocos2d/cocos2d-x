@@ -28,7 +28,7 @@
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
-#include "CCAABB.h"
+#include "3d/CCAABB.h"
 
 #include <vector>
 #include <map>
