@@ -55,15 +55,23 @@
   <Import Project="..\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems" Label="Shared" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="EngineRoot.props" />
+    <Import Project="..\..\..\platform\win-8.1\win-8.1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="EngineRoot.props" />
+    <Import Project="..\..\..\platform\win-8.1\win-8.1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="EngineRoot.props" />
+    <Import Project="..\..\..\platform\win-8.1\win-8.1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="EngineRoot.props" />
+    <Import Project="..\..\..\platform\win-8.1\win-8.1.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -91,8 +99,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/wp-8.1/angle/include;../../../../cocos2dx/platform/third_party/wp-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/wp-8.1/png/include;../../../../cocos2dx/platform/third_party/wp-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/wp-8.1/tiff/include;../../../../cocos2dx/platform/third_party/wp-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/wp-8.1/curl/include;../../../../external/libwebsockets/wp-8.1/include;../../../../external;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;WIN32;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRDLL;_EXPORT_DLL_;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -100,8 +108,8 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalDependencies>libpng.lib;libjpeg.lib;libtiff.lib;zlib.lib;libGLESv2.lib;libEGL.lib;libwebsockets.lib;libcurl.lib;freetype250.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;dxguid.lib;xaudio2.lib;mfcore.lib;mfplat.lib;ws2_32.lib;mfreadwrite.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../../cocos2dx/platform/third_party/wp-8.1/angle/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/png/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/jpeg/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/tiff/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/zlib/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/freetype2/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/curl/prebuilt/$(Platform);../../../../external/libwebsockets/wp-8.1/lib/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -109,14 +117,16 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/wp-8.1/angle/include;../../../../cocos2dx/platform/third_party/wp-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/wp-8.1/png/include;../../../../cocos2dx/platform/third_party/wp-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/wp-8.1/tiff/include;../../../../cocos2dx/platform/third_party/wp-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/wp-8.1/curl/include;../../../../external/libwebsockets/wp-8.1/include;../../../../external;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
@@ -124,8 +134,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/wp-8.1/angle/include;../../../../cocos2dx/platform/third_party/wp-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/wp-8.1/png/include;../../../../cocos2dx/platform/third_party/wp-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/wp-8.1/tiff/include;../../../../cocos2dx/platform/third_party/wp-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/wp-8.1/curl/include;../../../../external/libwebsockets/wp-8.1/include;../../../../external;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;WIN32;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRDLL;_EXPORT_DLL_;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -133,8 +143,8 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <AdditionalDependencies>libpng.lib;libjpeg.lib;libtiff.lib;zlib.lib;libGLESv2.lib;libEGL.lib;libwebsockets.lib;libcurl.lib;freetype250.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;dxguid.lib;xaudio2.lib;mfcore.lib;mfplat.lib;ws2_32.lib;mfreadwrite.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../../cocos2dx/platform/third_party/wp-8.1/angle/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/png/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/jpeg/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/tiff/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/zlib/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/freetype2/prebuilt/$(Platform);../../../../cocos2dx/platform/third_party/wp-8.1/curl/prebuilt/$(Platform);../../../../external/libwebsockets/wp-8.1/lib/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
@@ -142,14 +152,16 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../../include;../../../../cocos2dx/platform/third_party/wp-8.1/angle/include;../../../../cocos2dx/platform/third_party/wp-8.1/zlib/include;../../../../cocos2dx/platform/winrt;../../../../cocos2dx/kazmath/include;../../../../cocos2dx;../../../../extensions;../../../../external/chipmunk/include/chipmunk;../../../../cocos2dx/platform/win-8.1;../../../../cocos2dx/platform/third_party/wp-8.1/png/include;../../../../cocos2dx/platform/third_party/wp-8.1/jpeg/include;../../../../cocos2dx/platform/third_party/wp-8.1/tiff/include;../../../../cocos2dx/platform/third_party/wp-8.1/freetype2/include;../../../../cocos2dx/platform/third_party/wp-8.1/curl/include;../../../../external/libwebsockets/wp-8.1/include;../../../../external;../../../../CocosDenshion/include;../../../../cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

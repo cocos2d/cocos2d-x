@@ -5,9 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libcocos2d", "libcocos2d", "{B3F299D4-B4CA-4F0B-8BE2-FB328483BC13}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-tests", "cpp-tests", "{572742C5-9322-4548-AB8B-96C3750A1B5D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-empty-test", "cpp-empty-test", "{B70EF25E-E352-4020-BCDF-388973E44637}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelloCpp", "HelloCpp", "{B70EF25E-E352-4020-BCDF-388973E44637}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_8_1.Shared", "cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems", "{A6D2CBF8-A702-4523-9B0A-BD4BA129D8D6}"
 EndProject
@@ -15,11 +13,20 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_8_1.Windows", "c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_8_1.WindowsPhone", "cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj", "{1278897B-A72B-4778-808B-A7E573C7E905}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Shared", "samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems", "{A3AD93E4-0B2F-4C58-9181-69BED2E42E3E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Windows", "samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.Windows\HelloCpp.Windows.vcxproj", "{79A8FCDA-4B12-4DD1-B676-FF148D651638}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.WindowsPhone", "samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.WindowsPhone\HelloCpp.WindowsPhone.vcxproj", "{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{a6d2cbf8-a702-4523-9b0a-bd4ba129d8d6}*SharedItemsImports = 9
+		samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
+		samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{79a8fcda-4b12-4dd1-b676-ff148d651638}*SharedItemsImports = 4
 		cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{1278897b-a72b-4778-808b-a7e573c7e905}*SharedItemsImports = 4
 		cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{b2a7bdce-098b-49e8-9c08-c35a22fcec7a}*SharedItemsImports = 4
+		samples\Cpp\HelloCpp\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{396fe85e-bb05-4b92-bccb-f89aed4ea41a}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -52,6 +59,38 @@ Global
 		{1278897B-A72B-4778-808B-A7E573C7E905}.Release|Win32.ActiveCfg = Release|Win32
 		{1278897B-A72B-4778-808B-A7E573C7E905}.Release|Win32.Build.0 = Release|Win32
 		{1278897B-A72B-4778-808B-A7E573C7E905}.Release|x64.ActiveCfg = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|ARM.ActiveCfg = Debug|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|ARM.Build.0 = Debug|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|ARM.Deploy.0 = Debug|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|Win32.ActiveCfg = Debug|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|Win32.Build.0 = Debug|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|Win32.Deploy.0 = Debug|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|x64.ActiveCfg = Debug|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|x64.Build.0 = Debug|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Debug|x64.Deploy.0 = Debug|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|ARM.ActiveCfg = Release|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|ARM.Build.0 = Release|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|ARM.Deploy.0 = Release|ARM
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|Win32.ActiveCfg = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|Win32.Build.0 = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|Win32.Deploy.0 = Release|Win32
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|x64.ActiveCfg = Release|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|x64.Build.0 = Release|x64
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638}.Release|x64.Deploy.0 = Release|x64
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|ARM.Build.0 = Debug|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|Win32.Build.0 = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|Win32.Deploy.0 = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Debug|x64.ActiveCfg = Debug|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|ARM.ActiveCfg = Release|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|ARM.Build.0 = Release|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|ARM.Deploy.0 = Release|ARM
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|Win32.ActiveCfg = Release|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|Win32.Build.0 = Release|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|Win32.Deploy.0 = Release|Win32
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +99,8 @@ Global
 		{A6D2CBF8-A702-4523-9B0A-BD4BA129D8D6} = {B3F299D4-B4CA-4F0B-8BE2-FB328483BC13}
 		{B2A7BDCE-098B-49E8-9C08-C35A22FCEC7A} = {B3F299D4-B4CA-4F0B-8BE2-FB328483BC13}
 		{1278897B-A72B-4778-808B-A7E573C7E905} = {B3F299D4-B4CA-4F0B-8BE2-FB328483BC13}
+		{A3AD93E4-0B2F-4C58-9181-69BED2E42E3E} = {B70EF25E-E352-4020-BCDF-388973E44637}
+		{79A8FCDA-4B12-4DD1-B676-FF148D651638} = {B70EF25E-E352-4020-BCDF-388973E44637}
+		{396FE85E-BB05-4B92-BCCB-F89AED4EA41A} = {B70EF25E-E352-4020-BCDF-388973E44637}
 	EndGlobalSection
 EndGlobal
