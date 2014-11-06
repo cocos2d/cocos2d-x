@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <EngineRoot>$(MSBuildThisFileDirectory)..\..\..\..\</EngineRoot>
+    <Cocos2dPlatform>winrt-8.1</Cocos2dPlatform>
+  </PropertyGroup>
+  <ItemGroup>
+    <BuildMacro Include="EngineRoot">
+      <Value>$(EngineRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+  <ItemGroup>
+    <BuildMacro Include="Cocos2dPlatform">
+      <Value>$(Cocos2dPlatform)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
