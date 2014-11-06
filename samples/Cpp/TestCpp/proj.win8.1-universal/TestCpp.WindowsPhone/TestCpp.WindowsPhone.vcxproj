@@ -131,6 +131,9 @@
     <ProjectReference Include="..\..\..\..\..\cocos2dx\proj.win8.1-universal\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj">
       <Project>{1278897b-a72b-4778-808b-a7e573c7e905}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
+      <Project>{22f798d8-bfff-4754-996f-a5395343d5ec}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
