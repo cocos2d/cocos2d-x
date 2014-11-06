@@ -116,7 +116,7 @@ void OpenGLESPage::OnPointerPressed(Object^ sender, PointerEventArgs^ e)
 {
     if (m_renderer)
     {
-        //m_renderer->QueuePointerEvent(PointerEventType::PointerPressed, e);
+        m_renderer->QueuePointerEvent(PointerEventType::PointerPressed, e);
     }
 }
 
@@ -124,7 +124,7 @@ void OpenGLESPage::OnPointerMoved(Object^ sender, PointerEventArgs^ e)
 {
     if (m_renderer)
     {
-        //m_renderer->QueuePointerEvent(PointerEventType::PointerMoved, e);
+        m_renderer->QueuePointerEvent(PointerEventType::PointerMoved, e);
     }
 }
 
@@ -132,7 +132,7 @@ void OpenGLESPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
 {
     if (m_renderer)
     {
-        //m_renderer->QueuePointerEvent(PointerEventType::PointerReleased, e);
+        m_renderer->QueuePointerEvent(PointerEventType::PointerReleased, e);
     }
 }
 

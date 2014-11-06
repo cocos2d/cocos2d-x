@@ -32,10 +32,8 @@ namespace cocos2d
         Cocos2dRenderer( int width, int height, float dpi, Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
         ~Cocos2dRenderer();
         void Draw(GLsizei width, GLsizei height, float dpi);
-#if 0
         void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
         void QueueKeyBoardEvent(Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e);
-#endif
 
     private:
 

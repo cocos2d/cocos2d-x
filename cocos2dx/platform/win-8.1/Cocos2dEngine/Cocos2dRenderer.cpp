@@ -47,6 +47,7 @@ Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatche
     CCEGLView* pEGLView = new CCEGLView();
     pEGLView->Create(width, height);
     pEGLView->setViewName("Cocos2d-x");
+    pEGLView->setDispatcher(dispatcher);
     CCApplication::sharedApplication()->run();
 }
 
@@ -58,32 +59,31 @@ Cocos2dRenderer::~Cocos2dRenderer()
 // Draws a basic triangle
 void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
 {
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+
     if (width != m_width || height != m_height)
     {
         m_width = width;
         m_height = height;
-        //GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
+        pEGLView->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
     }
 
     if (dpi != m_dpi)
     {
         m_dpi = dpi;
-        //GLViewImpl::sharedOpenGLView()->SetDPI(m_dpi);
+        //CCEGLView::sharedOpenGLView()->SetDPI(m_dpi);
     }
 
-    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
     pEGLView->Render();
 }
 
-#if 0
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
 {
-    GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
+    CCEGLView::sharedOpenGLView()->QueuePointerEvent(type, args);
 }
 
 void Cocos2dRenderer::QueueKeyBoardEvent(cocos2d::Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e)
 {
-    //GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, e);
+    //CCEGLView::sharedOpenGLView()->QueuePointerEvent(type, e);
 }
-#endif
 
