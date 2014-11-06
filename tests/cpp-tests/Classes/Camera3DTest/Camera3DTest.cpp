@@ -112,7 +112,8 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Camera3DTestDemo),
-    CL(CameraClipDemo)
+    CL(CameraClipDemo),
+    CL(CameraClipPerformance)
 };
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
@@ -1002,6 +1003,256 @@ void CameraClipDemo::update(float fDelta)
     {
         drawCameraFrustum();
     }
+}
+
+////////////////////////////////////////////////////////////
+// CameraClipDemo
+CameraClipPerformance::CameraClipPerformance(void)
+: BaseTest()
+, _labelDrawCall(nullptr)
+, _layer3D(nullptr)
+, _cameraFirst(nullptr)
+, _drawAABB(nullptr)
+//, _sprite3D(nullptr)
+{
+}
+CameraClipPerformance::~CameraClipPerformance(void)
+{
+}
+
+std::string CameraClipPerformance::title() const
+{
+    return "Testing Camera";
+}
+
+std::string CameraClipPerformance::subtitle() const
+{
+    return "ClipPerformance Test";
+}
+
+void CameraClipPerformance::inFrustum(Ref* sender)
+{
+    float newY = 0.f - _posY;
+    Mat4 mat = Mat4::IDENTITY;
+    mat.translate(0, newY, 0);
+    _drawAABB->clear();
+    
+    for (auto& iter: listAABB)
+    {
+        iter.transform(mat);
+        Vec3 corners[8];
+        iter.getCorners(corners);
+        _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+    }
+    
+    _posY = 0;
+}
+
+void CameraClipPerformance::partInFrustum(Ref* sender)
+{
+    float newY = 60.f - _posY;
+    Mat4 mat = Mat4::IDENTITY;
+    mat.translate(0, newY, 0);
+    _drawAABB->clear();
+    
+    for (auto& iter: listAABB)
+    {
+        iter.transform(mat);
+        Vec3 corners[8];
+        iter.getCorners(corners);
+        _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+    }
+    
+    _posY = 60;
+}
+
+void CameraClipPerformance::outFrustum(Ref* sender)
+{
+    float newY = 90.f - _posY;
+    Mat4 mat = Mat4::IDENTITY;
+    mat.translate(0, newY, 0);
+    _drawAABB->clear();
+    
+    for (auto& iter: listAABB)
+    {
+        iter.transform(mat);
+        Vec3 corners[8];
+        iter.getCorners(corners);
+        _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+    }
+    
+    _posY = 90;
+}
+
+void CameraClipPerformance::calculate(Ref* sender)
+{
+    AABB aabb;
+    _cameraFirst->visibleInFrustum(aabb);
+
+    auto lastTime = utils::gettime();
+    for (auto& iter : listAABB)
+    {
+        _cameraFirst->visibleInFrustum(iter);
+    }
+    auto deltaTime = utils::gettime() - lastTime;
+    
+    char szDrawCall[255];
+    sprintf(szDrawCall, "Time: %f", deltaTime);
+    _labelDrawCall->setString(szDrawCall);
+}
+
+//void CameraClipPerformance::switchViewCallback(Ref* sender, CameraType cameraType)
+//{
+//    if(_cameraType==cameraType)
+//    {
+//        return ;
+//    }
+//    _cameraType = cameraType;
+//    if(_cameraType==CameraType::FirstCamera)
+//    {
+//        _drawFrustum->clear();
+//        _cameraFirst->setCameraFlag(CameraFlag::USER1);
+//        _cameraThird->setCameraFlag(CameraFlag::USER8);
+//        _cameraFirst->enableFrustumCull(true, true);
+//    }
+//    else if(_cameraType==CameraType::ThirdCamera)
+//    {
+//        _cameraThird->setCameraFlag(CameraFlag::USER1);
+//        _cameraFirst->setCameraFlag(CameraFlag::USER8);
+//        _cameraThird->enableFrustumCull(false, false);
+//    }
+//}
+
+void CameraClipPerformance::onEnter()
+{
+    BaseTest::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(CameraClipDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(CameraClipDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(CameraClipDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"In");
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CameraClipPerformance::inFrustum,this));
+    auto label2 = Label::createWithTTF(ttfConfig,"Part In");
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(CameraClipPerformance::partInFrustum,this));
+    auto label3 = Label::createWithTTF(ttfConfig,"Out");
+    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(CameraClipPerformance::outFrustum,this));
+    auto label4 = Label::createWithTTF(ttfConfig,"Calculate");
+    auto menuItem4 = MenuItemLabel::create(label4, CC_CALLBACK_1(CameraClipPerformance::calculate,this));
+    
+    auto menu = Menu::create(menuItem1,menuItem2,menuItem3,menuItem4,NULL);
+    
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition(VisibleRect::left().x+70, VisibleRect::top().y -50);
+    menuItem2->setPosition(VisibleRect::left().x+70, VisibleRect::top().y -80);
+    menuItem3->setPosition(VisibleRect::left().x+70, VisibleRect::top().y -110);
+    menuItem4->setPosition(VisibleRect::left().x+70, VisibleRect::top().y -140);
+    addChild(menu, 0);
+    
+    _labelDrawCall = Label::createWithTTF(ttfConfig,"Time: ");
+    _labelDrawCall->setPosition(VisibleRect::rightTop().x-80, VisibleRect::rightTop().y -50);
+    addChild(_labelDrawCall, 0);
+    
+    // 3D layer
+    auto layer3D=Layer::create();
+    addChild(layer3D,0);
+    _layer3D=layer3D;
+    
+    // init camera
+    initCamera();
+    
+    // draw line
+    DrawLine3D* line =DrawLine3D::create();
+    const int gridNum = 30;
+    const int girdSize = 5;
+    //draw x
+    for( int j =-gridNum; j<=gridNum ;j++)
+    {
+        line->drawLine(Vec3(-gridNum*girdSize, 0, 5*j),Vec3(gridNum*girdSize,0,5*j),Color4F(1,0,0,1));
+    }
+    //draw z
+    for( int j =-gridNum; j<=gridNum ;j++)
+    {
+        line->drawLine(Vec3(5*j, 0, -gridNum*girdSize),Vec3(5*j,0,gridNum*girdSize),Color4F(0,0,1,1));
+    }
+    
+    _layer3D->addChild(line);
+    
+    _drawAABB = DrawLine3D::create();
+    _layer3D->addChild(_drawAABB);
+    
+//    // add some objects to 3d layer
+//    _sprite3D = Sprite3D::create("Sprite3DTest/boss.c3b");
+//    _layer3D->addChild(_sprite3D);
+
+    _posY = 0.f;
+    
+    //int num = 1000;
+    listAABB.clear();
+    for (int i = -500; i < 500; i++)
+    {
+        AABB aabb(Vec3(-10,-10,-10), Vec3(10,10,10));
+        Mat4 mat = Mat4::IDENTITY;
+        mat.translate(i/10.f, _posY, 0);
+        aabb.transform(mat);
+        listAABB.push_back(aabb);
+    }
+    
+    for (const auto& iter: listAABB) {
+        Vec3 corners[8];
+        iter.getCorners(corners);
+        _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+    }
+    
+    _layer3D->setCameraMask(2);
+}
+
+void CameraClipPerformance::onExit()
+{
+    BaseTest::onExit();
+    if (_cameraFirst)
+    {
+        _cameraFirst = nullptr;
+    }
+}
+
+void CameraClipPerformance::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild(restartSpriteTestAction());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClipPerformance::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild( nextSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+void CameraClipPerformance::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild( backSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClipPerformance::initCamera()
+{
+    auto s = Director::getInstance()->getWinSize();
+    _cameraFirst=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 300);
+    _cameraFirst->setPosition3D(Vec3(0,0,100));
+    _cameraFirst->lookAt(Vec3(0,0,0), Vec3(0, 1, 0));
+    _cameraFirst->setCameraFlag(CameraFlag::USER1);
+    //_cameraFirst->enableFrustumCull(false, false);
+    _layer3D->addChild(_cameraFirst);
 }
 
 void Camera3DTestScene::runThisTest()

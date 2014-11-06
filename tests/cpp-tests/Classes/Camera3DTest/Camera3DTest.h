@@ -192,6 +192,39 @@ protected:
     DrawLine3D* _drawFrustum;
 };
 
+class CameraClipPerformance : public BaseTest
+{
+public:
+    CREATE_FUNC(CameraClipPerformance);
+    CameraClipPerformance(void);
+    virtual ~CameraClipPerformance(void);
+    
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    // overrides
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void reachEndCallBack();
+    void inFrustum(Ref* sender);
+    void partInFrustum(Ref* sender);
+    void outFrustum(Ref* sender);
+    void calculate(Ref* sender);
+    void initCamera();
+    
+protected:
+    std::string    _title;
+    Label*         _labelDrawCall;
+    Layer*         _layer3D;
+    Camera*        _cameraFirst;
+    DrawLine3D*     _drawAABB;
+    //Sprite3D*       _sprite3D;
+    std::vector<AABB> listAABB;
+    float _posY;
+};
+
 class Camera3DTestScene : public TestScene
 {
 public:
