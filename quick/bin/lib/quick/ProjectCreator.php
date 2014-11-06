@@ -220,7 +220,7 @@ class ProjectCreator
         $this->copyFrameworkFiles();
         // $this->modifyFiles();
         $this->fixFiles();
-        // $this->replaceFiles();
+        $this->replaceFiles();
 
         print("\n\n");
 
@@ -397,7 +397,7 @@ class ProjectCreator
         {
             $src = $quickPath . "/quick/lib/hotfix/" . $file[0];
             $dst = $cocosPath . $file[1];
-            $this->replaceFile($src, $dst);
+            $this->replaceFile($src, $dst, "replace");
 
             printf("OK\n");
         }
