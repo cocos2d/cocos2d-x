@@ -22,6 +22,9 @@
     <ProjectReference Include="..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
       <Project>{22f798d8-bfff-4754-996f-a5395343d5ec}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\external\chipmunk\proj.win8.1-universal\chipmunk.WindowsPhone\chipmunk.WindowsPhone.vcxproj">
+      <Project>{7e48e3de-3741-4427-808d-0789b97135df}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1278897b-a72b-4778-808b-a7e573c7e905}</ProjectGuid>

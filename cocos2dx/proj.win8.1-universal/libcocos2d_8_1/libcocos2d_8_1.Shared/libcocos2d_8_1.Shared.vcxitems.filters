@@ -393,84 +393,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCScheduler.h">
       <Filter>libcocos2d</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\chipmunk.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\chipmunk_ffi.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\chipmunk_private.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\chipmunk_types.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\chipmunk_unsafe.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpArbiter.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpBB.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpBody.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpPolyShape.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpShape.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpSpace.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpSpatialIndex.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\cpVect.h">
-      <Filter>chipmunk\include</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpConstraint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpDampedRotarySpring.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpDampedSpring.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpGearJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpGrooveJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpPinJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpPivotJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpRatchetJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpRotaryLimitJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpSimpleMotor.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\cpSlideJoint.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\include\chipmunk\constraints\util.h">
-      <Filter>chipmunk\include\constraints</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\prime.h">
-      <Filter>chipmunk\src</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\cocos-ext.h">
       <Filter>libExtensions</Filter>
     </ClInclude>
@@ -1439,93 +1361,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.cpp">
       <Filter>libcocos2d</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\chipmunk.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpArbiter.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpArray.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpBB.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpBBTree.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpBody.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpCollision.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpHashSet.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpPolyShape.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpShape.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSpace.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSpaceComponent.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSpaceHash.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSpaceQuery.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSpaceStep.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSpatialIndex.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpSweep1D.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\cpVect.c">
-      <Filter>chipmunk\src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpConstraint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpDampedRotarySpring.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpDampedSpring.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpGearJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpGrooveJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpPinJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpPivotJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpRatchetJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpRotaryLimitJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpSimpleMotor.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\external\chipmunk\src\constraints\cpSlideJoint.c">
-      <Filter>chipmunk\src\constraints</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\AssetsManager\AssetsManager.cpp">
       <Filter>libExtensions\AssetsManager</Filter>
     </ClCompile>
@@ -2130,21 +1965,6 @@
     </Filter>
     <Filter Include="libcocos2d\support\zip_support">
       <UniqueIdentifier>{cf84e3a4-5a0a-4069-8978-ac174ae5ecb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="chipmunk">
-      <UniqueIdentifier>{bb5dd5ab-d1c9-4579-a456-f4631abcf02a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="chipmunk\include">
-      <UniqueIdentifier>{9649dae0-10d9-4e6c-b5e8-0b54d1687ff0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="chipmunk\src">
-      <UniqueIdentifier>{bb803793-1ba4-4c4f-8f98-2948ecbd99bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="chipmunk\src\constraints">
-      <UniqueIdentifier>{6a8ab4d6-0933-4841-a11e-49bfcc4a30c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="chipmunk\include\constraints">
-      <UniqueIdentifier>{08e24ef5-cc88-4f44-888e-137687db95bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="libExtensions">
       <UniqueIdentifier>{2b8ae5b5-4741-4d63-b4ce-35cc00b620d7}</UniqueIdentifier>

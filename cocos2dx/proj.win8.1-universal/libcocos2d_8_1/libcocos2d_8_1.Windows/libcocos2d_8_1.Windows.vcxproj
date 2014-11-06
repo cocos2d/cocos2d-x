@@ -30,6 +30,9 @@
     <ProjectReference Include="..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.Windows\libbox2d.Windows.vcxproj">
       <Project>{3b26a12d-3a44-47ea-82d2-282660fc844d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\external\chipmunk\proj.win8.1-universal\chipmunk.Windows\chipmunk.Windows.vcxproj">
+      <Project>{2390343d-c34b-4b6c-bad5-3ef1e18942f8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{b2a7bdce-098b-49e8-9c08-c35a22fcec7a}</ProjectGuid>
