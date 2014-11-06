@@ -73,7 +73,6 @@ CCEGLView::CCEGLView()
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8.1");
-	UpdateOrientationMatrix();
 }
 
 CCEGLView::~CCEGLView()
@@ -231,6 +230,10 @@ void CCEGLView::centerWindow()
 	// not implemented in WinRT. Window is always full screen
 }
 
+void CCEGLView::setDispatcher(CoreDispatcher^ dispatcher)
+{
+    m_dispatcher = dispatcher;
+}
 
 
 CCEGLView* CCEGLView::sharedOpenGLView()
@@ -253,6 +256,7 @@ void CCEGLView::OnRendering()
 {
 	if(m_running && m_initialized)
 	{
+        ProcessEvents();
 		CCDirector::sharedDirector()->mainLoop();
 	}
 }
@@ -301,7 +305,19 @@ void CCEGLView::ValidateDevice()
 
 bool CCEGLView::ShowMessageBox(Platform::String^ title, Platform::String^ message)
 {
+    if (m_dispatcher.Get())
+    {
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([title, message]()
+        {
+            // Show the message dialog
+            auto msg = ref new Windows::UI::Popups::MessageDialog(message, title);
+            // Set the command to be invoked when a user presses 'ESC'
+            msg->CancelCommandIndex = 1;
+            msg->ShowAsync();
+        }));
 
+        return true;
+    }
     return false;
 }
 
@@ -344,18 +360,8 @@ void CCEGLView::UpdateWindowSize()
 {
     float width, height;
 
-    if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
-    {
-        width = m_height;
-        height = m_width;
-    }
-    else
-    {
-        width = m_width;
-        height = m_height;
-    }
-
-    UpdateOrientationMatrix();
+    width = m_width;
+    height = m_height;
 
     //CCSize designSize = getDesignResolutionSize();
     if(!m_initialized)
@@ -376,31 +382,7 @@ void CCEGLView::UpdateWindowSize()
    }
 }
 
-void CCEGLView::UpdateOrientationMatrix()
-{
-    kmMat4Identity(&m_orientationMatrix);
-    kmMat4Identity(&m_reverseOrientationMatrix);
-    switch(m_orientation)
-	{
-		case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
-			kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(M_PI));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(-M_PI));
-			break;
 
-		case Windows::Graphics::Display::DisplayOrientations::Landscape:
-            kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(-M_PI_2));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(M_PI_2));
-			break;
-			
-		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-            kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(M_PI_2));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(-M_PI_2));
-			break;
-
-        default:
-            break;
-	}
-}
 
 CCPoint CCEGLView::TransformToOrientation(Point p)
 {
@@ -460,5 +442,29 @@ void CCEGLView::OnCloseEditBox()
     //m_winRTWindow->EnablePointerPressed();
 }
 
+void CCEGLView::QueueBackKeyPress()
+{
+    std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
+    mInputEvents.push(e);
+}
 
+void CCEGLView::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
+{
+    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
+    mInputEvents.push(e);
+}
+
+void CCEGLView::QueueEvent(std::shared_ptr<InputEvent>& event)
+{
+    mInputEvents.push(event);
+}
+
+void CCEGLView::ProcessEvents()
+{
+    std::shared_ptr<InputEvent> e;
+    while (mInputEvents.try_pop(e))
+    {
+        e->execute();
+    }
+}
 NS_CC_END

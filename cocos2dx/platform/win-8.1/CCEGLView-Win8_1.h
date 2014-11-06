@@ -31,11 +31,9 @@ THE SOFTWARE.
 #include "cocoa/CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 #include <agile.h>
-
+#include <concurrent_queue.h>
 #include <wrl/client.h>
-
-#include <agile.h>
-
+#include "InputEvent.h"
 
 NS_CC_BEGIN
 
@@ -58,8 +56,11 @@ public:
     virtual void swapBuffers();
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    kmMat4* getOrientationMatrix() {return &m_orientationMatrix;};
-    kmMat4* getReverseOrientationMatrix (){return &m_reverseOrientationMatrix;};
+
+    void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
+    Windows::UI::Core::CoreDispatcher^ getDispatcher() { return m_dispatcher.Get(); }
+
+
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
 
@@ -82,6 +83,11 @@ public:
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnOrientationChanged();
     
+    void QueueBackKeyPress();
+    void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
+    void QueueEvent(std::shared_ptr<InputEvent>& event);
+
+
     void openEditBox(cocos2d::CCEditBoxParam^ param);
     void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler);
     void OnCloseEditBox();
@@ -115,9 +121,10 @@ protected:
 
 private:
 	void OnRendering();
+    void ProcessEvents();
+
 	void UpdateForWindowSizeChange();
 	void UpdateWindowSize();
-    void UpdateOrientationMatrix();
 
 	void ValidateDevice();
     CCPoint TransformToOrientation(Windows::Foundation::Point point);
@@ -146,8 +153,9 @@ private:
     bool m_bSupportTouch;
     float m_fFrameZoomFactor;
 
-	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
-
+    Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
+    Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
+    Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
 };
 
 NS_CC_END
