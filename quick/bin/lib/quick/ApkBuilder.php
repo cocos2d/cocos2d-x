@@ -4,7 +4,7 @@ require_once(__DIR__ . '/init.php');
 
 class ApkBuilder
 {
-    const BUILD_NATIVE_SH = './build_native.sh';
+    const BUILD_NATIVE_SH = '/build_native.sh';
     const BUILD_NATIVE_BAT = 'build_native.bat';
 
     private $config;
@@ -253,7 +253,7 @@ class ApkBuilder
 
     function buildNative()
     {
-        $retval = $this->exec_sys_cmd($this->build_bin);
+        $retval = $this->exec_sys_cmd($this->config['project_dir'] . $this->build_bin);
 
         return $retval;
     }
