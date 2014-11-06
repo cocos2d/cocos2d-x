@@ -127,7 +127,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIImageViewTest);
             sceneManager->setMinUISceneId(kUIImageViewTest);
-            sceneManager->setMaxUISceneId(kUIImageViewTest_ContentSize);
+            sceneManager->setMaxUISceneId(kUIImageViewFlipTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

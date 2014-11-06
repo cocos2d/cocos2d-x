@@ -290,7 +290,7 @@ bool UIButtonTest_Title::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("Button with title", "fonts/Marker Felt.ttf", 30);
+        Text* alert = Text::create("Button with title, title should be flipped!", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
@@ -305,7 +305,9 @@ bool UIButtonTest_Title::init()
         CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);
-        
+        button->setFlippedX(true);
+        auto label = button->getTitleRenderer();
+        label->setScale(4.0);
         button->runAction(RepeatForever::create(Sequence::create(ScaleTo::create(1.0f, 1.2f),
                                                                  ScaleTo::create(1.0f, 1.0f),nullptr)));
         

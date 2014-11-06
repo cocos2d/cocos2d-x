@@ -56,6 +56,7 @@ static const char* s_testArray[] =
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
     "UIImageViewTest_ContentSize",
+    "UIImageViewFlipTest",
     
     "UILoadingBarTest_Left",
     "UILoadingBarTest_Right",
@@ -237,6 +238,9 @@ Scene *UISceneManager::currentUIScene()
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewTest_ContentSize:
             return UIImageViewTest_ContentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIImageViewFlipTest:
+            return UIImageViewFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
         case kUILoadingBarTest_Left:
             return UILoadingBarTest_Left::sceneWithTitle(s_testArray[_currentUISceneId]);
             
