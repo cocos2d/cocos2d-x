@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CLCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)App.xaml.h" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\HelloWorldScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\Cocos2dRenderer.cpp">
+      <Filter>Cocos2dEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLES.cpp">
+      <Filter>Cocos2dEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\pch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{38ad799c-8c3c-44a2-8e41-516c8f62f556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cocos2dEngine">
+      <UniqueIdentifier>{11c840bd-0ede-472f-8e19-079343f6a78d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppMacros.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\HelloWorldScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\Cocos2dRenderer.h">
+      <Filter>Cocos2dEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLES.h">
+      <Filter>Cocos2dEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml">
+      <Filter>Cocos2dEngine</Filter>
+    </Page>
+  </ItemGroup>
+</Project>
