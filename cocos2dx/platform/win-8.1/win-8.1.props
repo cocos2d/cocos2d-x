@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos2dx/include;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/angle/include;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/zlib/include;$(EngineRoot)cocos2dx/platform/winrt;$(EngineRoot)cocos2dx/kazmath/include;$(EngineRoot)cocos2dx;$(EngineRoot)extensions;$(EngineRoot)external/chipmunk/include/chipmunk;$(EngineRoot)external;$(EngineRoot)cocos2dx/platform/win-8.1;$(EngineRoot)cocos2dx/platform/win-8.1/Cocos2dEngine;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/png/include;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/tiff/include;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/jpeg/include;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/freetype2/include;$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/curl/include;$(EngineRoot)external/libwebsockets/$(Cocos2dPlatform)/include;$(EngineRoot)CocosDenshion/include;$(EngineRoot)cocos2dx/platform/third_party/win32/libwebp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile>
+      <PreprocessorDefinitions>WINRT;_WINRT;WINRT_8_1;_VARIADIC_MAX=10;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DisableSpecificWarnings>4056;4996;4244;4756;4267;4251;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libpng.lib;libjpeg.lib;libtiff.lib;zlib.lib;libGLESv2.lib;libEGL.lib;libwebsockets.lib;libcurl.lib;freetype250.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;dxguid.lib;xaudio2.lib;mfcore.lib;mfplat.lib;ws2_32.lib;mfreadwrite.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/angle/prebuilt/$(Platform);$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/png/prebuilt/$(Platform);$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/jpeg/prebuilt/$(Platform);$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/tiff/prebuilt/$(Platform);$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/zlib/prebuilt/$(Platform);$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/freetype2/prebuilt/$(Platform);$(EngineRoot)cocos2dx/platform/third_party/$(Cocos2dPlatform)/curl/prebuilt/$(Platform);$(EngineRoot)external/libwebsockets/$(Cocos2dPlatform)/lib/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>
