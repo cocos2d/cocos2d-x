@@ -212,7 +212,12 @@ function CreateProjectUI:onEnter()
                                 end
                             end),
                            1)
-                task:run()
+                task:runInTerminal()
+
+                createProjectbutton:setButtonLabelString("normal", "Open ...")
+                createProjectbutton.currState = 2
+                local messageBox = PlayerProtocol:getInstance():getMessageBoxService()
+                messageBox:showMessageBox("player v3", "Please wait create success and then click Open")
             else
                 local messageBox = PlayerProtocol:getInstance():getMessageBoxService()
                 messageBox:showMessageBox("player v3", "please fill all infomation..")
