@@ -188,21 +188,20 @@ void Bone::update(float delta)
 
     if (_boneTransformDirty)
     {
+        _worldInfo->copy(_tweenData);
         if (_dataVersion >= VERSION_COMBINED)
         {
-            TransformHelp::nodeConcat(*_tweenData, *_boneData);
-            _tweenData->scaleX -= 1;
-            _tweenData->scaleY -= 1;
+            TransformHelp::nodeConcat(*_worldInfo, *_boneData);
+            _worldInfo->scaleX -= 1;
+            _worldInfo->scaleY -= 1;
         }
 
-        _worldInfo->copy(_tweenData);
-
-        _worldInfo->x = _tweenData->x + _position.x;
-        _worldInfo->y = _tweenData->y + _position.y;
-        _worldInfo->scaleX = _tweenData->scaleX * _scaleX;
-        _worldInfo->scaleY = _tweenData->scaleY * _scaleY;
-        _worldInfo->skewX = _tweenData->skewX + _skewX + CC_DEGREES_TO_RADIANS(_rotationZ_X);
-        _worldInfo->skewY = _tweenData->skewY + _skewY - CC_DEGREES_TO_RADIANS(_rotationZ_Y);
+        _worldInfo->x = _worldInfo->x + _position.x;
+        _worldInfo->y = _worldInfo->y + _position.y;
+        _worldInfo->scaleX = _worldInfo->scaleX * _scaleX;
+        _worldInfo->scaleY = _worldInfo->scaleY * _scaleY;
+        _worldInfo->skewX = _worldInfo->skewX + _skewX + CC_DEGREES_TO_RADIANS(_rotationZ_X);
+        _worldInfo->skewY = _worldInfo->skewY + _skewY - CC_DEGREES_TO_RADIANS(_rotationZ_Y);
 
         if(_parentBone)
         {
