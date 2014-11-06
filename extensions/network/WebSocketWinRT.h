@@ -52,7 +52,7 @@ NS_CC_EXT_BEGIN
 class WsThreadHelper;
 class WsMessage;
 
-class WebSocket
+class CC_EX_DLL WebSocket
 {
 public:
     /**
