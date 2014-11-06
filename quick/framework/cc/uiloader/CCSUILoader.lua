@@ -83,9 +83,8 @@ function CCSUILoader:generateUINode(jsonNode, transX, transY, parent)
 	if not uiNode then
 		return
 	end
-
-	self:modifyPanelChildAdaptScale_(options, jsonNode.children)
-	self:modifyPanelChildPos_(clsName, options.adaptScreen, uiNode:getContentSize(), jsonNode.children)
+	
+	self:modifyPanelChildPos_(clsName, options.adaptScreen, options.sizeType, uiNode:getContentSize(), jsonNode.children)
 
 	-- ccs中父节点的原点在父节点的锚点位置，这里用posTrans作转换
 	local posTrans = uiNode:getAnchorPoint()
@@ -119,8 +118,8 @@ function CCSUILoader:generateUINode(jsonNode, transX, transY, parent)
 	end
 	uiNode:setRotation(options.rotation or 0)
 
-	uiNode:setScaleX((options.scaleX or 1) * uiNode:getScaleX() * (options.adaptScaleX_ or 1))
-	uiNode:setScaleY((options.scaleY or 1) * uiNode:getScaleY() * (options.adaptScaleY_ or 1))
+	uiNode:setScaleX((options.scaleX or 1) * uiNode:getScaleX())
+	uiNode:setScaleY((options.scaleY or 1) * uiNode:getScaleY())
 	uiNode:setVisible(options.visible)
 	uiNode:setLocalZOrder(options.ZOrder or 0)
 	-- uiNode:setGlobalZOrder(options.ZOrder or 0)
@@ -711,11 +710,6 @@ function CCSUILoader:createPanel(options)
 
 	local conSize
 	if options.adaptScreen then
-		--panel自适应,记录下panel在x,y方向缩放的大小,
-		--如果panel有子结点的大小为panel的百分比,需要把这个缩放值传给子结点
-		options.scaleX_ = display.width/options.width
-		options.scaleY_ = display.height/options.height
-
 		options.width = display.width
 		options.height = display.height
 	end
@@ -866,6 +860,32 @@ function CCSUILoader:prettyJson(json)
 	end
 
 	setZOrder(json)
+
+	local setPercentSize
+	setPercentSize = function(node, parent)
+		if not node then
+			return
+		end
+		local options = node.options
+		if options.adaptScreen then
+			options.width = display.width
+			options.height = display.height
+		elseif 1 == options.sizeType then
+			if not parent then
+				return
+			end
+
+			local parentOption = parent.options
+			options.width = parentOption.width * options.sizePercentX
+ 			options.height = parentOption.height * options.sizePercentY
+		end
+
+		for i,v in ipairs(node.children) do
+			setPercentSize(v, node)
+		end
+	end
+
+	setPercentSize(json)
 end
 
 -- function CCSUILoader:transPercentPosition(options, parent)
@@ -894,9 +914,9 @@ end
 -- 	options.height = parentSize.height * options.sizePercentY
 -- end
 
-function CCSUILoader:modifyPanelChildPos_(clsType, bAdaptScreen, parentSize, children)
+function CCSUILoader:modifyPanelChildPos_(clsType, bAdaptScreen, sizeType, parentSize, children)
 	if "Panel" ~= clsType
-		or not bAdaptScreen
+		or (not bAdaptScreen and sizeType == 0)
 		or not children then
 		return
 	end
@@ -1049,8 +1069,8 @@ function CCSUILoader:calcChildPosByName_(children, name, parentSize)
 	local options = child.options
 	local x, y
 	local bUseOrigin = false
-	local width = options.width * (options.scaleX or 1) * (options.adaptScaleX_ or 1)
-	local height = options.height * (options.scaleY or 1) * (options.adaptScaleY_ or 1)
+	local width = options.width
+	local height = options.height
 
 	layoutParameter = options.layoutParameter
 
