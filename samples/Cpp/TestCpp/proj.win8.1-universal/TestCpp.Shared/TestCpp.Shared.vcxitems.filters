@@ -308,6 +308,48 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp">
+      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml" />
@@ -507,6 +549,24 @@
     </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
       <UniqueIdentifier>{7abac82f-162b-42f9-8229-fd65c031f8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest">
+      <UniqueIdentifier>{9fdcb6ab-96f7-495a-a8ce-0af7e9ca0ac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker">
+      <UniqueIdentifier>{5dd6fccb-4705-4142-b786-18f47207e6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest">
+      <UniqueIdentifier>{f04f514b-613c-4454-ad08-b5ebdb7541f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest">
+      <UniqueIdentifier>{74af7b84-2e5d-4d73-95b9-b4e61bdac29b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest">
+      <UniqueIdentifier>{40543264-76c7-48c9-a101-0c0c434d8c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest">
+      <UniqueIdentifier>{92d2a159-5981-475b-a4dd-fee65d86a9d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1060,48 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSceneManager.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest\CCControlSliderTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSliderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h">
+      <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
+      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h">
+      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h">
+      <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
