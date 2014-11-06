@@ -10,6 +10,7 @@ function BuildProjectUI:ctor(args)
 	self.cmdArgs_ = {}
 	self.cmdArgs_.projDir = args.projDir
 	self.cmdArgs_.buildNative = true
+	self.cmdArgs_.signAPK = true
 
 	self:createUI()
 end
@@ -44,7 +45,7 @@ function BuildProjectUI:createUI()
     self:addButton("Selected", display.right - 170, posY, function(event)
     	self:openFileDialog(self.projDirTF_)
     	end)
-    self.projDirTF_:setText(self.cmdArgs_.outputDir)
+    self.projDirTF_:setText(self.cmdArgs_.projDir)
 
 
     posY = posY - 50
@@ -252,7 +253,7 @@ function BuildProjectUI:getCommandString()
 		table.insert(t, key .. val)
 	end
 
-	insertValTotable(cmds, "-pdir ", self.projDirTF_:getText())
+	-- insertValTotable(cmds, "-pdir ", self.projDirTF_:getText())
 	insertValTotable(cmds, "-classpath ", self.javaExtraPathTF_:getText())
 	insertValTotable(cmds, "-bt ", self.androidBuildToosPathTF_:getText())
 
@@ -261,7 +262,7 @@ function BuildProjectUI:getCommandString()
 		insertValTotable(cmds, "-kp ", self.keyStorePWTF_:getText())
 		insertValTotable(cmds, "-ksa ", self.keyStoreAliasTF_:getText())
 	else
-		table.insert(cmds, "--nosign")
+		table.insert(cmds, "-nosign")
 	end
 
 	insertValTotable(cmds, "-api ", self.androidAPITF_:getText())
