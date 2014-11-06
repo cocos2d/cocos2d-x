@@ -400,7 +400,7 @@ void AssetsManagerEx::parseVersion()
     if (_updateState != State::VERSION_LOADED)
         return;
 
-    _remoteManifest->parse(_cacheVersionPath);
+    _remoteManifest->parseVersion(_cacheVersionPath);
 
     if (!_remoteManifest->isVersionLoaded())
     {
