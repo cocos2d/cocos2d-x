@@ -13,6 +13,7 @@ $options = array(
     array('api',         'api_ver',        1,      null,       'android api version'),
     array('jv',          'java_ver',       1,      null,       'java sdk version'),
     array('classpath',   'classpath',      1,      null,       'extra android class path'),
+    array('tsa',         'timestamp',      1,      null,       'the timestamp'),
     array('pdir',        'project_dir',    1,      '',         'project\'s dir'),
 );
 

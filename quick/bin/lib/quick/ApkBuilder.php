@@ -27,6 +27,7 @@ class ApkBuilder
     private $keystore_file;
     private $keystore_password;
     private $keystore_alias;
+    private $timestamp;
 
     private $ndk_root;
 
@@ -210,6 +211,15 @@ class ApkBuilder
             return(false);
         }
 
+        if ($this->config['timestamp'])
+        {
+            $this->timestamp = $this->config['timestamp'];
+        }
+        else
+        {
+            $this->timestamp = 'http://tsa.starfieldtech.com';
+        }
+
         $this->build_tools_path = $this->sdk_root . '/build-tools';
         if (!is_dir($this->build_tools_path))
         {
@@ -337,6 +347,7 @@ class ApkBuilder
         $cmd_str = 'jarsigner -keystore ' . $this->keystore_file
             . ' -storepass ' . $this->keystore_password
             . ' -signedjar ' . $this->apkFilename
+            . ' -tsa ' . $this->timestamp
             . ' ' . $this->unsignFilename . ' '
             . $this->keystore_alias;
 
