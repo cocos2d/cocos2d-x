@@ -365,8 +365,11 @@ public:
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
     /**
-    calls a function on the cocos2d thread.Useful when you need to call a cocos2d function from another thread. Note that return value indicate function running state in cocos2d thread.
+    calls a function on the cocos2d thread.Useful when you need to call a cocos2d function from another thread. 
+    Note that return value indicate function running state in cocos2d thread.
+    because of Microsoft bug https://connect.microsoft.com/VisualStudio/feedback/details/791185/std-packaged-task-t-where-t-is-void-or-a-reference-class-are-not-movable,at current,we must need function returning a value like 'bool'.  
     This function is thread safe.
+    @since v3.3+
     */
     std::future<bool> performTaskInCocosThread(const std::function<bool()> &function);
     /////////////////////////////////////
