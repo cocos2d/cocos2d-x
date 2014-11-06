@@ -446,7 +446,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             {
                 //read mesh aabb
                 float aabb[6];		
-                if (_binaryReader.read(aabb, 4, 6) != 1)
+                if (_binaryReader.read(aabb, 4, 6) != 6)
                 {
                     CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
                     return false;
