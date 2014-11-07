@@ -683,12 +683,13 @@ function CCSUILoader:createPanel(options)
 		if options.backGroundImageData and options.backGroundImageData.path then
 			local capInsets = cc.rect(options.capInsetsX, options.capInsetsY,
 						options.capInsetsWidth, options.capInsetsHeight)
+			local scale9sp = ccui.Scale9Sprite or cc.Scale9Sprite
 			if self.bUseTexture then
-				bgLayer = cc.Scale9Sprite:createWithSpriteFrameName(
+				bgLayer = scale9sp:createWithSpriteFrameName(
 					options.backGroundImageData.path, capInsets)
 				bgLayer:setContentSize(cc.size(options.width, options.height))
 			else
-				bgLayer = cc.Scale9Sprite:create(
+				bgLayer = scale9sp:create(
 					capInsets, options.backGroundImageData.path)
 				bgLayer:setContentSize(cc.size(options.width, options.height))
 			end

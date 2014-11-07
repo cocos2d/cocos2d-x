@@ -56,11 +56,12 @@ UILoadingBar.DIRECTION_RIGHT_TO_LEFT = 1
 function UILoadingBar:ctor(params)
 	if params.scale9 then
 		self.scale9 = true
+		local scale9sp = ccui.Scale9Sprite or cc.Scale9Sprite
 		if string.byte(params.image) == 35 then
-			self.bar = cc.Scale9Sprite:createWithSpriteFrameName(
+			self.bar = scale9sp:createWithSpriteFrameName(
 				string.sub(params.image, 2), params.capInsets);
 		else
-			self.bar = cc.Scale9Sprite:create(
+			self.bar = scale9sp:create(
 				params.capInsets, params.image)
 		end
 		self:setClippingRegion(cc.rect(0, 0, params.viewRect.width, params.viewRect.height))
