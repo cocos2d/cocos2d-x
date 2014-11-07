@@ -48,13 +48,8 @@ Controller g_aTestNames[] = {
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
 	{ "Configuration", []() { return new ConfigurationTestScene(); } },
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Console", []() { return new ConsoleTestScene(); } },
-
-#endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Curl", []() { return new CurlTestScene(); } },
-#endif
 	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
 	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
@@ -83,9 +78,7 @@ Controller g_aTestNames[] = {
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
-#endif
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },

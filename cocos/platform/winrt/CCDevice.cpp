@@ -42,8 +42,14 @@ CCFreeTypeFont sFT;
 
 int Device::getDPI()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 	static const float dipsPerInch = 96.0f;
 	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
+#elif defined WP8_SHADER_COMPILER
+    return 0;
+#else
+    return cocos2d::GLViewImpl::sharedOpenGLView()->GetDPI();
+#endif
 }
 
 static Accelerometer^ sAccelerometer = nullptr;
@@ -51,6 +57,7 @@ static Accelerometer^ sAccelerometer = nullptr;
 
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
+#ifndef WP8_SHADER_COMPILER
     static Windows::Foundation::EventRegistrationToken sToken;
     static bool sEnabled = false;
 
@@ -91,7 +98,6 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 			acc.z = reading->AccelerationZ;
             acc.timestamp = 0;
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
 
             switch (orientation)
@@ -121,14 +127,12 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 				acc.y = reading->AccelerationY;
                 break;
             }
-#endif
 
-#ifndef WP8_SHADER_COMPILER
 	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
-#endif
 		});
 	}
+#endif
 }
 
 void Device::setAccelerometerInterval(float interval)

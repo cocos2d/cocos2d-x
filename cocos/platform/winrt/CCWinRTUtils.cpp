@@ -32,6 +32,11 @@ THE SOFTWARE.
 #include <ppltasks.h>
 #include <sstream>
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+#endif
+
 NS_CC_BEGIN
 
 using namespace Windows::Graphics::Display;
@@ -152,6 +157,103 @@ std::string CC_DLL getDeviceIPAddresses()
 
     return result.str();
 }
+
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name)
+{
+    if (parent == nullptr || name == nullptr || name->Length() == 0)
+    {
+        return nullptr;
+    }
+
+    FrameworkElement^ element = dynamic_cast<FrameworkElement^>(parent);
+    if (element == nullptr)
+    {
+        return nullptr;
+    }
+
+    if (element->Name == name)
+    {
+        return element;
+    }
+
+    Panel^ panel = dynamic_cast<Panel^>(element);
+    if (panel == nullptr)
+    {
+        return nullptr;
+    }
+
+    int count = panel->Children->Size;
+    for (int i = 0; i < count; i++)
+    {
+        auto result = findXamlElement(panel->Children->GetAt(i), name);
+        if (result != nullptr)
+        {
+            return result;
+        }
+    }
+
+    return nullptr;
+}
+
+
+bool removeXamlElement(Platform::Object^ parent, Platform::Object^ element)
+{
+    Panel^ panel = dynamic_cast<Panel^>(parent);
+    if (panel == nullptr)
+    {
+        return false;
+    }
+
+    UIElement^ uiElement = dynamic_cast<UIElement^>(element);
+    if (uiElement == nullptr)
+    {
+        return false;
+    }
+
+    unsigned int index;
+    if (!panel->Children->IndexOf(uiElement, &index))
+    {
+        return false;
+    }
+
+    panel->Children->RemoveAt(index);
+
+    return true;
+}
+
+bool replaceXamlElement(Platform::Object^ parent, Platform::Object^ add, Platform::Object^ remove)
+{
+    Panel^ panel = dynamic_cast<Panel^>(parent);
+    if (panel == nullptr)
+    {
+        return false;
+    }
+
+    UIElement^ addElement = dynamic_cast<UIElement^>(add);
+    if (addElement == nullptr)
+    {
+        return false;
+    }
+
+    UIElement^ removeElement = dynamic_cast<UIElement^>(remove);
+    if (removeElement == nullptr)
+    {
+        return false;
+    }
+
+    unsigned int index;
+    if (!panel->Children->IndexOf(removeElement, &index))
+    {
+        return false;
+    }
+
+    panel->Children->RemoveAt(index);
+    panel->Children->InsertAt(index, addElement);
+
+    return true;
+}
+#endif
 
 
 

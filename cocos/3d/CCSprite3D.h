@@ -69,7 +69,7 @@ public:
     /**get mesh*/
     Mesh* getMesh() const { return _meshes.at(0); }
     
-    /** get Mesh Count */
+    /** get mesh count */
     ssize_t getMeshCount() const { return _meshes.size(); }
     
     /**get skin*/

@@ -39,9 +39,9 @@ typedef std::vector<Value> ValueVector;
 typedef std::unordered_map<std::string, Value> ValueMap;
 typedef std::unordered_map<int, Value> ValueMapIntKey;
 
-extern const ValueVector ValueVectorNull;
-extern const ValueMap ValueMapNull;
-extern const ValueMapIntKey ValueMapIntKeyNull;
+CC_DLL extern const ValueVector ValueVectorNull;
+CC_DLL extern const ValueMap ValueMapNull;
+CC_DLL extern const ValueMapIntKey ValueMapIntKeyNull;
 
 class CC_DLL Value
 {
