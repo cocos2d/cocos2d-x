@@ -111,7 +111,7 @@ void ArmatureDataManager::removeArmatureFileInfo(const std::string& configFilePa
 
         for (std::string str : data->plistFiles)
         {
-            SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(str.c_str());
+            SpriteFrameCacheHelper::getInstance()->removeSpriteFrameFromFile(str);
         }
 
         _relativeDatas.erase(configFilePath);

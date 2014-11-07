@@ -28,6 +28,11 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CocosStudioExport.h"
 #include <string>
+#include <vector>
+
+namespace cocos2d {
+    class SpriteFrame;
+}
 
 namespace cocostudio {
 
@@ -50,11 +55,16 @@ public:
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
+    void removeSpriteFrameFromFile(const std::string& plistPath);
 
 private:
+    void _retainSpriteFrames(const std::string& plistPath);
+    void _releaseSpriteFrames(const std::string& plistPath);
+
     SpriteFrameCacheHelper();
     ~SpriteFrameCacheHelper();
 
+    std::map<std::string, std::vector<cocos2d::SpriteFrame*> > _usingSpriteFrames;
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 
