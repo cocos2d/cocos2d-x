@@ -147,7 +147,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -165,7 +165,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -182,7 +182,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -200,7 +200,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -217,7 +217,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4267;4251;4244;4453;4973;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
@@ -235,7 +235,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_USREXDLL;_USRDLL;_EXPORT_DLL_;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
