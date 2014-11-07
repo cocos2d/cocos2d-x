@@ -89,8 +89,13 @@ enum {
 
 struct _hashUniformEntry;
 
-typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
-typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+#ifdef WINRT_8_1
+typedef void(__stdcall *GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
+typedef void(__stdcall *GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+#else
+typedef void(*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
+typedef void(*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+#endif
 
 /** CCGLProgram
  Class that implements a glProgram
