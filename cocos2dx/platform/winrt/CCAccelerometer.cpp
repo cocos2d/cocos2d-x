@@ -102,7 +102,8 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 				    m_obAccelerationValue.y = reading->AccelerationY;
                     break;
                }
-#else
+#else // Windows Store App
+                // from http://msdn.microsoft.com/en-us/library/windows/apps/dn440593
                 switch (orientation)
                 {
                 case DisplayOrientations::Portrait:
@@ -111,7 +112,7 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
                     break;
 
                 case DisplayOrientations::Landscape:
-                    m_obAccelerationValue.x = -reading->AccelerationX;
+                    m_obAccelerationValue.x = reading->AccelerationX;
                     m_obAccelerationValue.y = reading->AccelerationY;
                     break;
 
@@ -121,8 +122,8 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
                     break;
 
                 case DisplayOrientations::LandscapeFlipped:
-                    m_obAccelerationValue.x = reading->AccelerationX;
-                    m_obAccelerationValue.y = reading->AccelerationY;
+                    m_obAccelerationValue.x = -reading->AccelerationY;
+                    m_obAccelerationValue.y = reading->AccelerationX;
                     break;
 
                 default:
