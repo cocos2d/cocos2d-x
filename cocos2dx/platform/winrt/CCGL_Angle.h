@@ -26,20 +26,53 @@ THE SOFTWARE.
 #ifndef __CCGL_ANGLE_H__
 #define __CCGL_ANGLE_H__
 
-#include "../third_party/winrt/angle/include/GLES2/gl2.h"
-#include "../third_party/winrt/angle/include/GLES2/gl2ext.h"
-#include "../third_party/winrt/angle/include/winrtangle.h"
+// disable unimplemented function declarations in Angle
+#define GL_OES_mapbuffer 1
+#define GL_OES_vertex_array_object 1
 
-#define GL_BGRA						GL_BGRA_EXT
+#include "EGL/egl.h"
+#include "EGL/eglext.h"
+#include "EGL/eglplatform.h"
+#include "GLES2/gl2.h"
+#include "GLES2/gl2ext.h"
+#include "winrtangle.h"
+#include "esUtil.h"
+#include "base/ccMacros.h"
 
-#define	glClearDepth				glClearDepthf
-#define glDeleteVertexArrays		glDeleteVertexArraysOES
-#define glGenVertexArrays			glGenVertexArraysOES
-#define glBindVertexArray			glBindVertexArrayOES
-#define glMapBuffer					glMapBufferOES
-#define glUnmapBuffer				glUnmapBufferOES
+#define GL_WRITE_ONLY_OES                                       0x88B9
+#define GL_BUFFER_ACCESS_OES                                    0x88BB
+#define GL_BUFFER_MAPPED_OES                                    0x88BC
+#define GL_BUFFER_MAP_POINTER_OES                               0x88BD
+
+
+
+inline void glGenVertexArrays(GLsizei n, GLuint *arrays)
+{
+    CCASSERT(false, "AngleProject does not implement glGenVertexArraysOES");
+}
+
+inline void glBindVertexArray(GLuint array)
+{
+    CCASSERT(false, "AngleProject does not implement glBindVertexArrayOES");
+}
+
+inline void glDeleteVertexArrays(GLsizei n, const GLuint *arrays)
+{
+    CCASSERT(false, "AngleProject does not implement glDeleteVertexArraysOES");
+}
+
+inline void* glMapBuffer(GLenum target, GLenum access)
+{
+   CCASSERT(false, "AngleProject does not implement glMapBufferOES"); 
+   return NULL;
+}
+
+inline GLboolean glUnmapBuffer(GLenum targets)
+{
+   CCASSERT(false, "AngleProject does not implement glUnmapBufferOES"); 
+   return false;
+}
 
 #define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
-#define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
 
 #endif // __CCGL_ANGLE_H__
