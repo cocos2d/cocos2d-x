@@ -675,12 +675,7 @@ local sprite = display.newScale9Sprite("Box.png", 0, 0, cc.size(400, 300))
 
 ]]
 function display.newScale9Sprite(filename, x, y, size, capInsets)
-    local scale9sp
-    if cc.bPlugin_ then
-        scale9sp = ccui.Scale9Sprite
-    else
-        scale9sp = cc.Scale9Sprite
-    end
+    local scale9sp = ccui.Scale9Sprite or cc.Scale9Sprite
     return display.newSprite(filename, x, y, {class = scale9sp, size = size, capInsets = capInsets})
 end
 
