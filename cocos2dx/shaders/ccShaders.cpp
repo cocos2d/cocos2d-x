@@ -27,10 +27,17 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 //
+
 const GLchar * ccPosition_uColor_frag = 
 #include "ccShader_Position_uColor_frag.h"
+
+#ifdef CC_NO_GL_POINTSIZE
+const GLchar * ccPosition_uColor_vert =
+#include "ccShader_Position_uColor-no-gl_PointSize.vert"
+#else
 const GLchar * ccPosition_uColor_vert =
 #include "ccShader_Position_uColor_vert.h"
+#endif
 
 //
 const GLchar * ccPositionColor_frag =
