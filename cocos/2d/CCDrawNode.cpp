@@ -348,6 +348,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
     }
 
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferCount);
     CHECK_GL_ERROR_DEBUG();
@@ -382,6 +383,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     }
     glLineWidth(2);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
     CHECK_GL_ERROR_DEBUG();
@@ -418,6 +420,7 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
     }
     
     glDrawArrays(GL_POINTS, 0, _bufferCountGLPoint);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLPoint);
     CHECK_GL_ERROR_DEBUG();
