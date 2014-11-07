@@ -48,29 +48,29 @@ THE SOFTWARE.
 
 inline void glGenVertexArrays(GLsizei n, GLuint *arrays)
 {
-    CCASSERT(false, "AngleProject does not implement glGenVertexArraysOES");
+    CCAssert(false, "AngleProject does not implement glGenVertexArraysOES");
 }
 
 inline void glBindVertexArray(GLuint array)
 {
-    CCASSERT(false, "AngleProject does not implement glBindVertexArrayOES");
+    CCAssert(false, "AngleProject does not implement glBindVertexArrayOES");
 }
 
 inline void glDeleteVertexArrays(GLsizei n, const GLuint *arrays)
 {
-    CCASSERT(false, "AngleProject does not implement glDeleteVertexArraysOES");
+    CCAssert(false, "AngleProject does not implement glDeleteVertexArraysOES");
 }
 
 inline void* glMapBuffer(GLenum target, GLenum access)
 {
-   CCASSERT(false, "AngleProject does not implement glMapBufferOES"); 
-   return NULL;
+    CCAssert(false, "AngleProject does not implement glMapBufferOES");
+    return NULL;
 }
 
 inline GLboolean glUnmapBuffer(GLenum targets)
 {
-   CCASSERT(false, "AngleProject does not implement glUnmapBufferOES"); 
-   return false;
+    CCAssert(false, "AngleProject does not implement glUnmapBufferOES");
+    return false;
 }
 
 #define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
