@@ -86,6 +86,7 @@ def checkParams(context):
                           "linux",
                           "marmalade",
                           "tizen",
+                          "win8.1-universal",
                           "wp8-xaml"]
     elif ("lua" == context["language"]):
         context["src_project_name"] = "HelloLua"

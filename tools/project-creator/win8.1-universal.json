@@ -1,0 +1,29 @@
+{
+    "rename": [
+        "HelloCpp.Shared/PROJECT_NAME.Shared.vcxitems",
+        "HelloCpp.Shared/PROJECT_NAME.Shared.vcxitems.filters",
+        "HelloCpp.Windows/PROJECT_NAME.Windows.vcxproj",
+        "HelloCpp.Windows/PROJECT_NAME.Windows.vcxproj.filters",
+        "HelloCpp.Windows/PROJECT_NAME.Windows_TemporaryKey.pfx",
+        "HelloCpp.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+        "HelloCpp.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
+        "HelloCpp.WindowsPhone/PROJECT_NAME.WindowsPhone.pfx",
+        "PROJECT_NAME.Shared",
+        "PROJECT_NAME.Windows",
+        "PROJECT_NAME.WindowsPhone",
+        "PROJECT_NAME.sln"
+    ],
+    "remove": [ ],
+    "replace_package_name": [ ],
+    "replace_project_name": [ 
+         "PROJECT_NAME.Shared/PROJECT_NAME.Shared.vcxitems",
+         "PROJECT_NAME.Shared/PROJECT_NAME.Shared.vcxitems.filters",
+         "PROJECT_NAME.Windows/PROJECT_NAME.Windows.vcxproj",
+         "PROJECT_NAME.Windows/PROJECT_NAME.Windows.vcxproj.filters",
+         "PROJECT_NAME.Windows/Package.appxmanifest",
+         "PROJECT_NAME.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+         "PROJECT_NAME.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
+         "PROJECT_NAME.WindowsPhone/Package.appxmanifest",
+         "PROJECT_NAME.sln"
+    ]
+}
