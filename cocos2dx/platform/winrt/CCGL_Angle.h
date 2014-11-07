@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "GLES2/gl2ext.h"
 #include "winrtangle.h"
 #include "esUtil.h"
-#include "base/ccMacros.h"
+#include "ccMacros.h"
 
 #define GL_WRITE_ONLY_OES                                       0x88B9
 #define GL_BUFFER_ACCESS_OES                                    0x88BB
