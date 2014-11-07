@@ -279,7 +279,9 @@ end
 
 function Node:removeNodeEventListener(listener)
     if not flagNodeTouchInCocos then
-        return self:removeNodeEventListener(listener)
+        local func = tolua.getcfunction(self, "removeNodeEventListener")
+        if func then return func(self, listener) end
+        return
     end
 
     if not self._scriptEventListeners_ then return end
