@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CocosStudioExport.h"
 #include <string>
+#include <map>
 #include <vector>
 
 namespace cocos2d {
