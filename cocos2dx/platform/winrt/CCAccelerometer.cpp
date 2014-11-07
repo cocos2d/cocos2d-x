@@ -67,13 +67,14 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 				([=](Accelerometer^, AccelerometerReadingChangedEventArgs^ e)
 			{
                 AccelerometerReading^ reading = e->Reading;
-				m_obAccelerationValue.x = reading->AccelerationX;
-				m_obAccelerationValue.y = reading->AccelerationY;
-				m_obAccelerationValue.z = reading->AccelerationZ;
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+                m_obAccelerationValue.x = reading->AccelerationX;
+                m_obAccelerationValue.y = reading->AccelerationY;
+                m_obAccelerationValue.z = reading->AccelerationZ;
+
                 auto orientation = CCEGLView::sharedOpenGLView()->getDeviceOrientation();
 
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
                 switch (orientation)
                 {
                 case DisplayOrientations::Portrait:
@@ -82,7 +83,7 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
                     break;
                 
                 case DisplayOrientations::Landscape:
-				    m_obAccelerationValue.x = -reading->AccelerationY;
+				    m_obAccelerationValue.x = reading->AccelerationY;
 				    m_obAccelerationValue.y = reading->AccelerationX;
                     break;
                 
@@ -101,6 +102,34 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 				    m_obAccelerationValue.y = reading->AccelerationY;
                     break;
                }
+#else
+                switch (orientation)
+                {
+                case DisplayOrientations::Portrait:
+                    m_obAccelerationValue.x = reading->AccelerationY;
+                    m_obAccelerationValue.y = -reading->AccelerationX;
+                    break;
+
+                case DisplayOrientations::Landscape:
+                    m_obAccelerationValue.x = -reading->AccelerationX;
+                    m_obAccelerationValue.y = reading->AccelerationY;
+                    break;
+
+                case DisplayOrientations::PortraitFlipped:
+                    m_obAccelerationValue.x = -reading->AccelerationY;
+                    m_obAccelerationValue.y = reading->AccelerationX;
+                    break;
+
+                case DisplayOrientations::LandscapeFlipped:
+                    m_obAccelerationValue.x = reading->AccelerationX;
+                    m_obAccelerationValue.y = reading->AccelerationY;
+                    break;
+
+                default:
+                    m_obAccelerationValue.x = reading->AccelerationY;
+                    m_obAccelerationValue.y = -reading->AccelerationX;
+                    break;
+                }
 #endif
 
                 m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
