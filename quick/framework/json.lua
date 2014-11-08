@@ -133,6 +133,10 @@ function json.decode(text)
     end
 end
 
-if cjson then json.null = cjson.null end
+if cjson then
+    json.null = cjson.null
+else
+    json = nil
+end
 
 return json

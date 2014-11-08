@@ -24,9 +24,7 @@ extern "C" {
 #include "lsqlite3/lsqlite3.h"
 
 static luaL_Reg luax_exts[] = {
-#if CC_USE_JSON
     {"cjson", luaopen_cjson_safe},
-#endif
     {"zlib", luaopen_zlib},
     {"pack", luaopen_pack},
 #ifndef WP8

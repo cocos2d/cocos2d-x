@@ -10,17 +10,15 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/lua_extensions_more.c \
                     $(LOCAL_PATH)/filesystem/lfs.c \
                     $(LOCAL_PATH)/lpack/lpack.c
 
-ifeq ($(CC_USE_SQLITE),1)
-LOCAL_SRC_FILES += \
-                        $(LOCAL_PATH)/lsqlite3/sqlite3.c \
-                        $(LOCAL_PATH)/lsqlite3/lsqlite3.c
-endif
-
-ifeq ($(CC_USE_JSON),1)
 LOCAL_SRC_FILES += \
                         $(LOCAL_PATH)/cjson/fpconv.c \
                         $(LOCAL_PATH)/cjson/lua_cjson.c \
                         $(LOCAL_PATH)/cjson/strbuf.c
+
+ifeq ($(CC_USE_SQLITE),1)
+LOCAL_SRC_FILES += \
+                        $(LOCAL_PATH)/lsqlite3/sqlite3.c \
+                        $(LOCAL_PATH)/lsqlite3/lsqlite3.c
 endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/ \
