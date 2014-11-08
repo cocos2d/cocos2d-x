@@ -49,13 +49,16 @@ void BundleReader::init(char* buffer, ssize_t length)
 ssize_t BundleReader::read(void* ptr, ssize_t size, ssize_t count)
 {
     if (!_buffer || eof())
+    {
+        CCLOG("warning: bundle reader out of range");
         return 0;
+    }
 
     ssize_t validCount;
     ssize_t validLength = _length - _position;
     ssize_t needLength = size*count;
     char* ptr1 = (char*)ptr;
-    if(validLength <= needLength)
+    if(validLength < needLength)
     {
         validCount = validLength/size;
         ssize_t readLength = size*validCount;
