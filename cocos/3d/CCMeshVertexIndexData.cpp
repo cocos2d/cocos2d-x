@@ -94,15 +94,12 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
         vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offset, it.vertexAttrib, it.type, it.size));
         offset += it.attribSizeBytes;
     }
-    vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-    vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
     
     vertexdata->_attribs = meshdata.attribs;
     
     if(vertexdata->_vertexBuffer)
     {
-        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4, 0);
+        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
     }
     
     AABB aabb;

@@ -273,7 +273,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
-    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return getLineHeight();}
+    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
 
 CC_CONSTRUCTOR_ACCESS:
     /**

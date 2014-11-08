@@ -10763,7 +10763,7 @@ int lua_cocos2dx_Director_setEventDispatcher(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
+int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -10783,7 +10783,7 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushScene'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setContentScaleFactor'", nullptr);
         return 0;
     }
 #endif
@@ -10791,64 +10791,20 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Scene* arg0;
+        double arg0;
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Director:setContentScaleFactor");
         if(!ok)
             return 0;
-        cobj->pushScene(arg0);
+        cobj->setContentScaleFactor(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:pushScene",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setContentScaleFactor",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushScene'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getDeltaTime'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getDeltaTime();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getDeltaTime",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getDeltaTime'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setContentScaleFactor'.",&tolua_err);
 #endif
 
     return 0;
@@ -10941,7 +10897,7 @@ int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
+int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -10961,7 +10917,7 @@ int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getConsole'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getDeltaTime'", nullptr);
         return 0;
     }
 #endif
@@ -10971,62 +10927,16 @@ int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Console* ret = cobj->getConsole();
-        object_to_luaval<cocos2d::Console>(tolua_S, "cc.Console",(cocos2d::Console*)ret);
+        double ret = cobj->getDeltaTime();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getConsole",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getDeltaTime",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getConsole'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Director_pushMatrix(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushMatrix'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::MATRIX_STACK_TYPE arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:pushMatrix");
-        if(!ok)
-            return 0;
-        cobj->pushMatrix(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:pushMatrix",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushMatrix'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getDeltaTime'.",&tolua_err);
 #endif
 
     return 0;
@@ -11655,6 +11565,49 @@ int lua_cocos2dx_Director_getSecondsPerFrame(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Director_resetMatrixStack(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_resetMatrixStack'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        cobj->resetMatrixStack();
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:resetMatrixStack",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_resetMatrixStack'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11698,6 +11651,52 @@ int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_convertToUI'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_pushMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:pushMatrix");
+        if(!ok)
+            return 0;
+        cobj->pushMatrix(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:pushMatrix",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -12048,52 +12047,6 @@ int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_stopAnimation'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setContentScaleFactor'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Director:setContentScaleFactor");
-        if(!ok)
-            return 0;
-        cobj->setContentScaleFactor(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setContentScaleFactor",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setContentScaleFactor'.",&tolua_err);
 #endif
 
     return 0;
@@ -12589,50 +12542,6 @@ int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getZEye'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        double ret = cobj->getZEye();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getZEye",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getZEye'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Director_getMatrix(lua_State* tolua_S)
 {
     int argc = 0;
@@ -12666,7 +12575,7 @@ int lua_cocos2dx_Director_getMatrix(lua_State* tolua_S)
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:getMatrix");
         if(!ok)
             return 0;
-        cocos2d::Mat4 ret = cobj->getMatrix(arg0);
+        const cocos2d::Mat4& ret = cobj->getMatrix(arg0);
         mat4_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -12719,6 +12628,52 @@ int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_popScene'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_loadIdentityMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_loadIdentityMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:loadIdentityMatrix");
+        if(!ok)
+            return 0;
+        cobj->loadIdentityMatrix(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:loadIdentityMatrix",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_loadIdentityMatrix'.",&tolua_err);
 #endif
 
     return 0;
@@ -12813,7 +12768,7 @@ int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_loadIdentityMatrix(lua_State* tolua_S)
+int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -12833,28 +12788,119 @@ int lua_cocos2dx_Director_loadIdentityMatrix(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_loadIdentityMatrix'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getConsole'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        cocos2d::MATRIX_STACK_TYPE arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:loadIdentityMatrix");
         if(!ok)
             return 0;
-        cobj->loadIdentityMatrix(arg0);
-        return 0;
+        cocos2d::Console* ret = cobj->getConsole();
+        object_to_luaval<cocos2d::Console>(tolua_S, "cc.Console",(cocos2d::Console*)ret);
+        return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:loadIdentityMatrix",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getConsole",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_loadIdentityMatrix'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getConsole'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_multiplyMatrix(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_multiplyMatrix'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::MATRIX_STACK_TYPE arg0;
+        cocos2d::Mat4 arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:multiplyMatrix");
+
+        ok &= luaval_to_mat4(tolua_S, 3, &arg1, "cc.Director:multiplyMatrix");
+        if(!ok)
+            return 0;
+        cobj->multiplyMatrix(arg0, arg1);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:multiplyMatrix",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_multiplyMatrix'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_getZEye'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+            return 0;
+        double ret = cobj->getZEye();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:getZEye",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_getZEye'.",&tolua_err);
 #endif
 
     return 0;
@@ -12901,49 +12947,6 @@ int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setNextDeltaTimeZero'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Director_resetMatrixStack(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_resetMatrixStack'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        cobj->resetMatrixStack();
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:resetMatrixStack",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_resetMatrixStack'.",&tolua_err);
 #endif
 
     return 0;
@@ -13082,7 +13085,7 @@ int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
+int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -13102,7 +13105,7 @@ int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAnimationInterval'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_pushScene'", nullptr);
         return 0;
     }
 #endif
@@ -13110,20 +13113,20 @@ int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        double arg0;
+        cocos2d::Scene* arg0;
 
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Director:setAnimationInterval");
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
         if(!ok)
             return 0;
-        cobj->setAnimationInterval(arg0);
+        cobj->pushScene(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setAnimationInterval",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:pushScene",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setAnimationInterval'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_pushScene'.",&tolua_err);
 #endif
 
     return 0;
@@ -13352,7 +13355,7 @@ int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_multiplyMatrix(lua_State* tolua_S)
+int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Director* cobj = nullptr;
@@ -13372,31 +13375,28 @@ int lua_cocos2dx_Director_multiplyMatrix(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_multiplyMatrix'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAnimationInterval'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 1) 
     {
-        cocos2d::MATRIX_STACK_TYPE arg0;
-        cocos2d::Mat4 arg1;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:multiplyMatrix");
-
-        ok &= luaval_to_mat4(tolua_S, 3, &arg1, "cc.Director:multiplyMatrix");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Director:setAnimationInterval");
         if(!ok)
             return 0;
-        cobj->multiplyMatrix(arg0, arg1);
+        cobj->setAnimationInterval(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:multiplyMatrix",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setAnimationInterval",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_multiplyMatrix'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setAnimationInterval'.",&tolua_err);
 #endif
 
     return 0;
@@ -13490,12 +13490,10 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Director");
         tolua_function(tolua_S,"pause",lua_cocos2dx_Director_pause);
         tolua_function(tolua_S,"setEventDispatcher",lua_cocos2dx_Director_setEventDispatcher);
-        tolua_function(tolua_S,"pushScene",lua_cocos2dx_Director_pushScene);
-        tolua_function(tolua_S,"getDeltaTime",lua_cocos2dx_Director_getDeltaTime);
+        tolua_function(tolua_S,"setContentScaleFactor",lua_cocos2dx_Director_setContentScaleFactor);
         tolua_function(tolua_S,"getContentScaleFactor",lua_cocos2dx_Director_getContentScaleFactor);
         tolua_function(tolua_S,"getWinSizeInPixels",lua_cocos2dx_Director_getWinSizeInPixels);
-        tolua_function(tolua_S,"getConsole",lua_cocos2dx_Director_getConsole);
-        tolua_function(tolua_S,"pushMatrix",lua_cocos2dx_Director_pushMatrix);
+        tolua_function(tolua_S,"getDeltaTime",lua_cocos2dx_Director_getDeltaTime);
         tolua_function(tolua_S,"setGLDefaultValues",lua_cocos2dx_Director_setGLDefaultValues);
         tolua_function(tolua_S,"setActionManager",lua_cocos2dx_Director_setActionManager);
         tolua_function(tolua_S,"setAlphaBlending",lua_cocos2dx_Director_setAlphaBlending);
@@ -13510,7 +13508,9 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"setDepthTest",lua_cocos2dx_Director_setDepthTest);
         tolua_function(tolua_S,"getFrameRate",lua_cocos2dx_Director_getFrameRate);
         tolua_function(tolua_S,"getSecondsPerFrame",lua_cocos2dx_Director_getSecondsPerFrame);
+        tolua_function(tolua_S,"resetMatrixStack",lua_cocos2dx_Director_resetMatrixStack);
         tolua_function(tolua_S,"convertToUI",lua_cocos2dx_Director_convertToUI);
+        tolua_function(tolua_S,"pushMatrix",lua_cocos2dx_Director_pushMatrix);
         tolua_function(tolua_S,"setDefaultValues",lua_cocos2dx_Director_setDefaultValues);
         tolua_function(tolua_S,"init",lua_cocos2dx_Director_init);
         tolua_function(tolua_S,"setScheduler",lua_cocos2dx_Director_setScheduler);
@@ -13519,7 +13519,6 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"getRunningScene",lua_cocos2dx_Director_getRunningScene);
         tolua_function(tolua_S,"setViewport",lua_cocos2dx_Director_setViewport);
         tolua_function(tolua_S,"stopAnimation",lua_cocos2dx_Director_stopAnimation);
-        tolua_function(tolua_S,"setContentScaleFactor",lua_cocos2dx_Director_setContentScaleFactor);
         tolua_function(tolua_S,"popToSceneStackLevel",lua_cocos2dx_Director_popToSceneStackLevel);
         tolua_function(tolua_S,"resume",lua_cocos2dx_Director_resume);
         tolua_function(tolua_S,"isNextDeltaTimeZero",lua_cocos2dx_Director_isNextDeltaTimeZero);
@@ -13531,24 +13530,25 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"runWithScene",lua_cocos2dx_Director_runWithScene);
         tolua_function(tolua_S,"setNotificationNode",lua_cocos2dx_Director_setNotificationNode);
         tolua_function(tolua_S,"drawScene",lua_cocos2dx_Director_drawScene);
-        tolua_function(tolua_S,"getZEye",lua_cocos2dx_Director_getZEye);
         tolua_function(tolua_S,"getMatrix",lua_cocos2dx_Director_getMatrix);
         tolua_function(tolua_S,"popScene",lua_cocos2dx_Director_popScene);
+        tolua_function(tolua_S,"loadIdentityMatrix",lua_cocos2dx_Director_loadIdentityMatrix);
         tolua_function(tolua_S,"isDisplayStats",lua_cocos2dx_Director_isDisplayStats);
         tolua_function(tolua_S,"setProjection",lua_cocos2dx_Director_setProjection);
-        tolua_function(tolua_S,"loadIdentityMatrix",lua_cocos2dx_Director_loadIdentityMatrix);
+        tolua_function(tolua_S,"getConsole",lua_cocos2dx_Director_getConsole);
+        tolua_function(tolua_S,"multiplyMatrix",lua_cocos2dx_Director_multiplyMatrix);
+        tolua_function(tolua_S,"getZEye",lua_cocos2dx_Director_getZEye);
         tolua_function(tolua_S,"setNextDeltaTimeZero",lua_cocos2dx_Director_setNextDeltaTimeZero);
-        tolua_function(tolua_S,"resetMatrixStack",lua_cocos2dx_Director_resetMatrixStack);
         tolua_function(tolua_S,"popMatrix",lua_cocos2dx_Director_popMatrix);
         tolua_function(tolua_S,"getVisibleSize",lua_cocos2dx_Director_getVisibleSize);
         tolua_function(tolua_S,"getScheduler",lua_cocos2dx_Director_getScheduler);
-        tolua_function(tolua_S,"setAnimationInterval",lua_cocos2dx_Director_setAnimationInterval);
+        tolua_function(tolua_S,"pushScene",lua_cocos2dx_Director_pushScene);
         tolua_function(tolua_S,"getAnimationInterval",lua_cocos2dx_Director_getAnimationInterval);
         tolua_function(tolua_S,"isPaused",lua_cocos2dx_Director_isPaused);
         tolua_function(tolua_S,"setDisplayStats",lua_cocos2dx_Director_setDisplayStats);
         tolua_function(tolua_S,"getEventDispatcher",lua_cocos2dx_Director_getEventDispatcher);
         tolua_function(tolua_S,"replaceScene",lua_cocos2dx_Director_replaceScene);
-        tolua_function(tolua_S,"multiplyMatrix",lua_cocos2dx_Director_multiplyMatrix);
+        tolua_function(tolua_S,"setAnimationInterval",lua_cocos2dx_Director_setAnimationInterval);
         tolua_function(tolua_S,"getActionManager",lua_cocos2dx_Director_getActionManager);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_Director_getInstance);
     tolua_endmodule(tolua_S);

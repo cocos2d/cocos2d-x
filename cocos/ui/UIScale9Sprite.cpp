@@ -45,11 +45,11 @@ namespace ui {
     , _bottomLeft(nullptr)
     , _bottom(nullptr)
     , _bottomRight(nullptr)
+    , _scale9Enabled(true)
     , _insetLeft(0)
     , _insetTop(0)
     , _insetRight(0)
     , _insetBottom(0)
-    , _scale9Enabled(true)
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
     }

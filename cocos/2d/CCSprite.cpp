@@ -259,10 +259,10 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 }
 
 Sprite::Sprite(void)
-: _shouldBeHidden(false)
+: _batchNode(nullptr)
+, _shouldBeHidden(false)
 , _texture(nullptr)
 , _insideBounds(true)
-, _batchNode(nullptr)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();

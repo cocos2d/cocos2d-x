@@ -145,10 +145,10 @@ int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, 
 }
 
 Downloader::Downloader()
-: _onError(nullptr)
+: _connectionTimeout(DEFAULT_TIMEOUT)
+, _onError(nullptr)
 , _onProgress(nullptr)
 , _onSuccess(nullptr)
-, _connectionTimeout(DEFAULT_TIMEOUT)
 , _supportResuming(false)
 {
     _fileUtils = FileUtils::getInstance();

@@ -48,16 +48,16 @@ NS_CC_BEGIN
 //
 
 UniformValue::UniformValue()
-: _useCallback(false)
-, _uniform(nullptr)
+: _uniform(nullptr)
 , _glprogram(nullptr)
+, _useCallback(false)
 {
 }
 
 UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
-: _useCallback(false)
-, _uniform(uniform)
+: _uniform(uniform)
 , _glprogram(glprogram)
+, _useCallback(false)
 {
 }
 
@@ -182,15 +182,15 @@ void UniformValue::setMat4(const Mat4& value)
 //
 
 VertexAttribValue::VertexAttribValue()
-: _useCallback(false)
-, _vertexAttrib(nullptr)
+: _vertexAttrib(nullptr)
+, _useCallback(false)
 , _enabled(false)
 {
 }
 
 VertexAttribValue::VertexAttribValue(VertexAttrib *vertexAttrib)
-: _useCallback(false)
-, _vertexAttrib(vertexAttrib)
+: _vertexAttrib(vertexAttrib)
+, _useCallback(false)
 , _enabled(false)
 {
 }
@@ -274,10 +274,10 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgram(GLProgram *glprogram)
 }
 
 GLProgramState::GLProgramState()
-: _vertexAttribsFlags(0)
-, _glprogram(nullptr)
+: _uniformAttributeValueDirty(true)
 , _textureUnitIndex(1)
-, _uniformAttributeValueDirty(true)
+, _vertexAttribsFlags(0)
+, _glprogram(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** listen the event that renderer was recreated on Android/WP8 */

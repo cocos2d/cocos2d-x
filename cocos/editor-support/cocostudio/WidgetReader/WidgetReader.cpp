@@ -69,12 +69,12 @@ namespace cocostudio
     WidgetReader::WidgetReader()
     :_sizePercentX(0.0f),
     _sizePercentY(0.0f),
-    _isAdaptScreen(false),
-    _width(0.0f),
-    _height(0.0f),
     _positionPercentX(0.0f),
     _positionPercentY(0.0f),
-    _opacity(255)
+    _width(0.0f),
+    _height(0.0f),
+    _opacity(255),
+    _isAdaptScreen(false)
     {
         valueToInt = [=](const std::string& str) -> int{
             return atoi(str.c_str());

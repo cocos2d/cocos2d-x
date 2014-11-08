@@ -36,6 +36,10 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <errno.h>
 
+#ifndef CC_RESOURCE_FOLDER_LINUX
+#define CC_RESOURCE_FOLDER_LINUX ("/Resources/")
+#endif
+
 using namespace std;
 
 NS_CC_BEGIN
@@ -71,7 +75,7 @@ bool FileUtilsLinux::init()
     fullpath[length] = '\0';
     std::string appPath = fullpath;
     _defaultResRootPath = appPath.substr(0, appPath.find_last_of("/"));
-    _defaultResRootPath += "/Resources/";
+    _defaultResRootPath += CC_RESOURCE_FOLDER_LINUX;
 
     // Set writable path to $XDG_CONFIG_HOME or ~/.config/<app name>/ if $XDG_CONFIG_HOME not exists.
     const char* xdg_config_path = getenv("XDG_CONFIG_HOME");

@@ -94,9 +94,9 @@ FT_Library FontFreeType::getFTLibrary()
 
 FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 : _fontRef(nullptr)
-,_distanceFieldEnabled(distanceFieldEnabled)
-,_outlineSize(0.0f)
-,_stroker(nullptr)
+, _stroker(nullptr)
+, _distanceFieldEnabled(distanceFieldEnabled)
+, _outlineSize(0.0f)
 {
     if (outline > 0)
     {
