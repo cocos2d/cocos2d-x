@@ -1,8 +1,8 @@
 #include "cocos2d.h"
 extern "C" {
 #include "lua.h"
-#include "xxtea/xxtea.h"
 }
+#include "xxtea/xxtea.h"
 #include "CCLuaEngine.h"
 #include "HelperFunc.h"
 
@@ -15,11 +15,11 @@ unsigned char* HelperFunc::getFileData(const char* pszFileName, const char* pszM
     unsigned char* buf = FileUtils::getInstance()->getFileData(pszFileName, pszMode, &size);
     if (NULL==buf || size<1) return NULL;
 
+#ifdef LUASTACK_USED_FOR_QUICK_COCOS2DX
     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
     if (NULL==stack) {
         return NULL;
     }
-#if 0
     int xxteaKeyLen = 0;
     const char *xxteaKey = stack->getXXTEAKey(&xxteaKeyLen);
     int xxteaSignLen = 0;
@@ -54,7 +54,8 @@ unsigned char* HelperFunc::getFileData(const char* pszFileName, const char* pszM
     if (pSize) *pSize = size;
     return buffer;
 #else
-    return NULL;
+    if (pSize) *pSize = size;
+    return buf;
 #endif
 }
 
