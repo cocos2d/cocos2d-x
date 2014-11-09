@@ -330,7 +330,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
         DataReaderHelper::addDataFromBinaryCache(contentStr.c_str(),&dataInfo);
     }
 
-	CC_SAFE_DELETE_ARRAY(pBytes);
+	free(pBytes);
 }
 
 void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Ref *target, SEL_SCHEDULE selector)
@@ -429,7 +429,9 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 	Data bytecpy;
     bytecpy.copy(pBytes, size);
     data->fileContent = std::string((const char*)bytecpy.getBytes(), size);
-    CC_SAFE_DELETE_ARRAY(pBytes);
+
+    // fix memory leak for v3.3
+    free(pBytes);
     
     if (str == ".xml")
     {
