@@ -1,4 +1,5 @@
 cocos2d-x-3.3 ??
+    [NEW]           Sprite3D: add getMeshArrayByName and getMeshCount
     [NEW]           Vec2: added greater than operator
 
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
@@ -9,8 +10,8 @@ cocos2d-x-3.3 ??
     [FIX]           GLProgramState: enabled GLProgramState restoring on render recreated on WP8
     [FIX]           Label: label shifting when outline feature enabled
     [FIX]           Label: when applying additionalKerning to a Label that displays a string with only 1 character, the character is shifted
-    [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title 
-    [FIX]           Sprite3D: did not create attached sprite from cache
+    [FIX]           OBB: wrong result of overlap test sometimes
+    [FIX]           Sprite3D: did not create attached sprite from cache, allocated bigger vertex buffer size than it uses
     [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
 
 cocos2d-x-3.3-rc0  Oct.21 2014
