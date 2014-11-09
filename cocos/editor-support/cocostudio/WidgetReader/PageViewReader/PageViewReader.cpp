@@ -98,7 +98,7 @@ namespace cocostudio
         
         int co = options.has_bgcoloropacity() ? options.bgcoloropacity() : 100;
         
-        int colorType = options.has_colortype() ? options.colortype() : 1;
+        int colorType = options.has_colortype() ? options.colortype() : 0;
         pageView->setBackGroundColorType(Layout::BackGroundColorType(colorType));
         
         pageView->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));

@@ -139,7 +139,7 @@ namespace cocostudio
         
         int co = options.has_bgcoloropacity() ? options.bgcoloropacity() : 100;
         
-        int colorType = options.has_colortype() ? options.colortype() : 1;
+        int colorType = options.has_colortype() ? options.colortype() : 0;
         scrollView->setBackGroundColorType(Layout::BackGroundColorType(colorType));
         
         scrollView->setBackGroundColor(Color3B(scr, scg, scb),Color3B(ecr, ecg, ecb));
