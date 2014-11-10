@@ -120,7 +120,7 @@ Atomic32 Release_CompareAndSwap(volatile Atomic32* ptr,
                                 Atomic32 old_value,
                                 Atomic32 new_value);
 
-#ifndef WP8
+#ifndef _M_ARM
 void MemoryBarrier();
 #endif
 void NoBarrier_Store(volatile Atomic32* ptr, Atomic32 value);

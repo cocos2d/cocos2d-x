@@ -54,7 +54,7 @@ namespace {
 
 void SchedYield() {
 #ifdef _WIN32
-  #ifdef WP8
+  #if defined(WP8) || defined(WINRT)
     SleepConditionVariableCS(NULL, NULL, 0);
   #else
 	Sleep(0);

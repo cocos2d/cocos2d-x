@@ -40,7 +40,7 @@
 #if defined(_M_X64) || defined(__x86_64__)
 #define GOOGLE_PROTOBUF_ARCH_X64 1
 #define GOOGLE_PROTOBUF_ARCH_64_BIT 1
-#elif defined(_M_IX86) || defined(__i386__)
+#elif defined(_M_IX86) || defined(__i386__) || defined(_M_ARM)
 #define GOOGLE_PROTOBUF_ARCH_IA32 1
 #define GOOGLE_PROTOBUF_ARCH_32_BIT 1
 #elif defined(__QNX__)
@@ -61,12 +61,9 @@
 #define GOOGLE_PROTOBUF_ARCH_ARM 1
 #define GOOGLE_PROTOBUF_ARCH_64_BIT 1
 #else
-#ifndef WP8
 #error Host architecture was not detected as supported by protobuf
-#else
 #define GOOGLE_PROTOBUF_ARCH_IA32 1
 #define GOOGLE_PROTOBUF_ARCH_32_BIT 1
-#endif
 #endif
 
 #if defined(__APPLE__)

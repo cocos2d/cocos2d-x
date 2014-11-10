@@ -44,7 +44,7 @@ namespace google {
 namespace protobuf {
 namespace internal {
 
-#ifndef WP8
+#ifndef _M_ARM
 inline void MemoryBarrier() {
   // We use MemoryBarrier from WinNT.h
   ::MemoryBarrier();

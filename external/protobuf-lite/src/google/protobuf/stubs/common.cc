@@ -254,7 +254,7 @@ struct Mutex::Internal {
 
 Mutex::Mutex()
   : mInternal(new Internal) {
-#ifdef WP8
+#if defined(WP8) || defined(WINRT)
 	InitializeCriticalSectionEx(&mInternal->mutex, 0, 0);
 #else
 	InitializeCriticalSection(&mInternal->mutex);
