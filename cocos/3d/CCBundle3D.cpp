@@ -739,7 +739,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             meshData->numIndex = (int)meshData->subMeshIndices.size();
             //mesh_aabb
             const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
-            if (mesh_part_aabb.Size() == 6)
+            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
             {
                 Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
                 Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
