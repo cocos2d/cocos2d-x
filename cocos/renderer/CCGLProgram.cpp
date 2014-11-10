@@ -319,6 +319,10 @@ void GLProgram::parseVertexAttribs()
             }
         }
     }
+    else
+    {
+        getVertexShaderLog();
+    }
 }
 
 void GLProgram::parseUniforms()
@@ -370,6 +374,10 @@ void GLProgram::parseUniforms()
                 }
             }
         }
+    }
+    else
+    {
+        getFragmentShaderLog(); 
     }
 }
 
