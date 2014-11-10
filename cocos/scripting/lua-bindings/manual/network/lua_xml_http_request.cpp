@@ -244,16 +244,13 @@ void LuaMinXmlHttpRequest::_sendRequest()
         
         /** get the response data **/
         std::vector<char> *buffer = response->getResponseData();
-        char* concatenated = (char*) malloc(buffer->size() + 1);
-        std::string s2(buffer->begin(), buffer->end());
-        strcpy(concatenated, s2.c_str());
         
         if (statusCode == 200)
         {
             //Succeeded
             _status = 200;
             _readyState = DONE;
-            _data << concatenated;
+            _data.assign(buffer->begin(), buffer->end());
             _dataSize = buffer->size();
         }
         else
@@ -262,7 +259,6 @@ void LuaMinXmlHttpRequest::_sendRequest()
         }
         // Free Memory.
         free((void*) concatHeader);
-        free((void*) concatenated);
         
         // TODO: call back lua function
         int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
@@ -282,7 +278,7 @@ void LuaMinXmlHttpRequest::_sendRequest()
 
 void LuaMinXmlHttpRequest::getByteData(unsigned char* byteData)
 {
-    _data.read((char*)byteData, _dataSize);
+    memcpy((char*)byteData, _data.c_str(), _dataSize);
 }
 
 /* function to regType */
