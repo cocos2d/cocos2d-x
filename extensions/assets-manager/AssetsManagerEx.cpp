@@ -158,9 +158,11 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
     {
         // Compare with cached manifest to determine which one to use
         if (cachedManifest) {
-            if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()))
+            if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()) > 0)
             {
+                // Recreate storage, to empty the content
                 _fileUtils->removeDirectory(_storagePath);
+                _fileUtils->createDirectory(_storagePath);
                 CC_SAFE_RELEASE(cachedManifest);
             }
             else
