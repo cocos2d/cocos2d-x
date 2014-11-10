@@ -1114,7 +1114,7 @@ void Sprite3DReskinTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
 void Sprite3DReskinTest::applyCurSkin()
 {
     for (ssize_t i = 0; i < _sprite->getMeshCount(); i++) {
-        auto mesh = _sprite->getMeshByIndex(i);
+        auto mesh = _sprite->getMeshByIndex(static_cast<int>(i));
         bool isVisible = false;
         for (auto& it : _curSkin) {
             if (mesh->getName() == it.second)
@@ -1123,7 +1123,7 @@ void Sprite3DReskinTest::applyCurSkin()
                 break;
             }
         }
-        _sprite->getMeshByIndex(i)->setVisible(isVisible);
+        _sprite->getMeshByIndex(static_cast<int>(i))->setVisible(isVisible);
     }
 }
 
