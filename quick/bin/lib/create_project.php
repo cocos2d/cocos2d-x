@@ -19,11 +19,6 @@ $options = array(
 $extrawork = array(
     "FilesNeedModify" => array(
             array(
-                "/external/protobuf-lite/Android.mk",
-                'LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..',
-                'LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. $(LOCAL_PATH)/src',
-                ),
-            array(
                 "/cocos/platform/win32/CCFileUtils-win32.cpp",
                 's_resourcePath.append("/");',
                 's_resourcePath.append("/../../");',
