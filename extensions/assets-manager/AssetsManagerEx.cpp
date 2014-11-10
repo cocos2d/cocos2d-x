@@ -138,22 +138,38 @@ void AssetsManagerEx::prepareLocalManifest()
 
 void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
 {
-    // Prefer to use the cached manifest file, if not found use user configured manifest file
+    Manifest *cachedManifest = nullptr;
+    // Find the cached manifest file
     if (_fileUtils->isFileExist(_cacheManifestPath))
     {
-        _localManifest->parse(_cacheManifestPath);
-        if (_localManifest->isLoaded())
-            prepareLocalManifest();
-        else
+        cachedManifest = new Manifest();
+        cachedManifest->parse(_cacheManifestPath);
+        if (!cachedManifest->isLoaded())
+        {
             _fileUtils->removeFile(_cacheManifestPath);
+            CC_SAFE_RELEASE(cachedManifest);
+            cachedManifest = nullptr;
+        }
     }
     
-    // Fail to found or load cached manifest file
-    if (!_localManifest->isLoaded())
+    // Load local manifest in app package
+    _localManifest->parse(_manifestUrl);
+    if (_localManifest->isLoaded())
     {
-        _localManifest->parse(_manifestUrl);
-        if (_localManifest->isLoaded())
-            prepareLocalManifest();
+        // Compare with cached manifest to determine which one to use
+        if (cachedManifest) {
+            if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()))
+            {
+                _fileUtils->removeDirectory(_storagePath);
+                CC_SAFE_RELEASE(cachedManifest);
+            }
+            else
+            {
+                CC_SAFE_RELEASE(_localManifest);
+                _localManifest = cachedManifest;
+            }
+        }
+        prepareLocalManifest();
     }
 
     // Fail to load local manifest
@@ -513,21 +529,16 @@ void AssetsManagerEx::startUpdate()
     // Check difference
     else
     {
-        // Temporary manifest not exists,
+        // Temporary manifest not exists or out of date,
         // it will be used to register the download states of each asset,
         // in this case, it equals remote manifest.
-        if(!_tempManifest->isLoaded()) {
-            _tempManifest->release();
-            _tempManifest = _remoteManifest;
-        }
+        _tempManifest->release();
+        _tempManifest = _remoteManifest;
         
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
         if (diff_map.size() == 0)
         {
-            _updateState = State::UP_TO_DATE;
-            // Rename temporary manifest to valid manifest
-            _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
+            updateSucceed();
         }
         else
         {
