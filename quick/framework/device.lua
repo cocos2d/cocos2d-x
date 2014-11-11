@@ -22,6 +22,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module device
+
 --[[--
 
 提供设备相关属性的查询，以及设备功能的访问
@@ -122,6 +125,10 @@ printInfo("# device.directorySeparator    = " .. device.directorySeparator)
 printInfo("# device.pathSeparator         = " .. device.pathSeparator)
 printInfo("#")
 
+--------------------------------
+-- 显示活动指示器
+-- @function [parent=#device] showActivityIndicator
+
 --[[--
 
 显示活动指示器
@@ -136,17 +143,24 @@ function device.showActivityIndicator()
     cc.Native:showActivityIndicator()
 end
 
---[[--
+--------------------------------
+-- 隐藏正在显示的活动指示器
+-- @function [parent=#device] hideActivityIndicator
 
-隐藏正在显示的活动指示器
-
-]]
 function device.hideActivityIndicator()
     if DEBUG > 1 then
         printInfo("device.hideActivityIndicator()")
     end
     cc.Native:hideActivityIndicator()
 end
+
+--------------------------------
+-- 显示一个包含按钮的弹出对话框
+-- @function [parent=#device] showAlert
+-- @param string title 对话框标题
+-- @param string message 内容
+-- @param table buttonLabels 包含多个按钮标题的表格对象
+-- @param function listener 回调函数
 
 --[[--
 
@@ -169,12 +183,8 @@ device.showAlert("Confirm Exit", "Are you sure exit game ?", {"YES", "NO"}, onBu
 当没有指定按钮标题时，对话框会默认显示一个“OK”按钮。
 回调函数获得的表格中，buttonIndex 指示玩家选择了哪一个按钮，其值是按钮的显示顺序。
 
-@param string title 对话框标题
-@param string message 内容
-@param table buttonLabels 包含多个按钮标题的表格对象
-@param function listener 回调函数
-
 ]]
+
 function device.showAlert(title, message, buttonLabels, listener)
     if type(buttonLabels) ~= "table" then
         buttonLabels = {tostring(buttonLabels)}
@@ -217,19 +227,21 @@ function device.showAlert(title, message, buttonLabels, listener)
 	end
 end
 
---[[--
+--------------------------------
+-- 取消正在显示的对话框。
+-- @function [parent=#device] cancelAlert
 
-取消正在显示的对话框。
-
-提示：取消对话框，不会执行显示对话框时指定的回调函数。
-
-]]
 function device.cancelAlert()
     if DEBUG > 1 then
         printInfo("device.cancelAlert()")
     end
     cc.Native:cancelAlert()
 end
+
+--------------------------------
+-- 返回设备的 OpenUDID 值
+-- @function [parent=#device] getOpenUDID
+-- @return string#string  设备的 OpenUDID 值
 
 --[[--
 
@@ -242,9 +254,8 @@ OpenUDID 是为设备仿造的 UDID（唯一设备识别码），可以用来识
 -   如果删除了应用再重新安装，获得的 OpenUDID 会发生变化
 -   iOS 7 不支持 OpenUDID
 
-@return string 设备的 OpenUDID 值
-
 ]]
+
 function device.getOpenUDID()
     local ret = cc.Native:getOpenUDID()
     if DEBUG > 1 then
@@ -252,6 +263,13 @@ function device.getOpenUDID()
     end
     return ret
 end
+
+--------------------------------
+-- 用浏览器打开指定的网址
+-- @function [parent=#device] openURL
+-- @mycompany 
+-- @mycompany 
+-- @param string 网址，邮件，拨号等的字符串
 
 --[[--
 
@@ -274,9 +292,8 @@ device.openURL("tel:123-456-7890")
 
 ~~~
 
-@param string 网址，邮件，拨号等的字符串
-
 ]]
+
 function device.openURL(url)
     if DEBUG > 1 then
         printInfo("device.openURL() - url: %s", tostring(url))
@@ -284,19 +301,14 @@ function device.openURL(url)
     cc.Native:openURL(url)
 end
 
---[[--
+--------------------------------
+-- 显示一个输入框，并返回用户输入的内容。
+-- @function [parent=#device] showInputBox
+-- @param string title 对话框标题
+-- @param string message 提示信息
+-- @param string defaultValue 输入框默认值
+-- @return string#string  用户输入的字符串
 
-显示一个输入框，并返回用户输入的内容。
-
-当用户点击取消按钮时，showInputBox() 函数返回空字符串。
-
-@param string title 对话框标题
-@param string message 提示信息
-@param string defaultValue 输入框默认值
-
-@return string 用户输入的字符串
-
-]]
 function device.showInputBox(title, message, defaultValue)
     title = tostring(title or "INPUT TEXT")
     message = tostring(message or "INPUT TEXT, CLICK OK BUTTON")

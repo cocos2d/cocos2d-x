@@ -22,6 +22,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module transition
+
 --[[--
 
 为图像创造效果
@@ -54,17 +57,14 @@ ACTION_EASING["SINEOUT"]          = {cc.EaseSineOut, 1}
 
 local actionManager = cc.Director:getInstance():getActionManager()
 
---[[--
+--------------------------------
+-- 创建一个缓动效果
+-- @function [parent=#transition] newEasing
+-- @param Action action     动作对象
+-- @param string easingName 缓冲效果的名字, 具体参考 transition.execute() 方法
+-- @param mixed  more       创建缓冲效果的参数
+-- @return mixed#mixed  结果
 
-创建一个缓动效果
-
-@param Action action     动作对象
-@param string easingName 缓冲效果的名字, 具体参考 transition.execute() 方法
-@param mixed  more       创建缓冲效果的参数
-
-@return mixed 结果
-
-]]
 function transition.newEasing(action, easingName, more)
     local key = string.upper(tostring(easingName))
     if string.sub(key, 1, 6) == "CCEASE" then
@@ -82,16 +82,13 @@ function transition.newEasing(action, easingName, more)
     return easing or action
 end
 
---[[--
+--------------------------------
+-- 创建一个动作效果
+-- @function [parent=#transition] create
+-- @param Action action 动作对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
-创建一个动作效果
-
-@param Action action 动作对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
-]]
 function transition.create(action, args)
     args = checktable(args)
     if args.easing then
@@ -121,6 +118,14 @@ function transition.create(action, args)
         return actions[1]
     end
 end
+
+--------------------------------
+-- 执行一个动作效果
+-- @function [parent=#transition] execute
+-- @param cc.Node target 显示对象
+-- @param Action action 动作对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -175,12 +180,6 @@ transition.execute() 支持的缓动效果：
 -    sineInOut
 -    sineOut
 
-@param cc.Node target 显示对象
-@param Action action 动作对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
 ]]
 function transition.execute(target, action, args)
     assert(not tolua.isnull(target), "transition.execute() - target is not cc.Node")
@@ -188,6 +187,13 @@ function transition.execute(target, action, args)
     target:runAction(action)
     return action
 end
+
+--------------------------------
+-- 将显示对象旋转到指定角度，并返回 Action 动作对象。
+-- @function [parent=#transition] rotateTo
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -200,11 +206,6 @@ transition.rotateTo(sprite, {rotate = 180, time = 0.5})
 
 ~~~
 
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
 ]]
 function transition.rotateTo(target, args)
     assert(not tolua.isnull(target), "transition.rotateTo() - target is not cc.Node")
@@ -212,6 +213,13 @@ function transition.rotateTo(target, args)
     local action = cc.RotateTo:create(args.time, args.rotate)
     return transition.execute(target, action, args)
 end
+
+--------------------------------
+-- 将显示对象移动到指定位置，并返回 Action 动作对象。
+-- @function [parent=#transition] moveTo
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -228,11 +236,6 @@ transition.moveTo(sprite, {y = display.bottom, time = 1.5})
 
 ~~~
 
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
 ]]
 function transition.moveTo(target, args)
     assert(not tolua.isnull(target), "transition.moveTo() - target is not cc.Node")
@@ -242,6 +245,13 @@ function transition.moveTo(target, args)
     local action = cc.MoveTo:create(args.time, cc.p(x, y))
     return transition.execute(target, action, args)
 end
+
+--------------------------------
+-- 将显示对象移动一定距离，并返回 Action 动作对象。
+-- @function [parent=#transition] moveBy
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -258,11 +268,6 @@ transition.moveBy(sprite, {y = -100, time = 1.5})
 
 ~~~
 
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
 ]]
 function transition.moveBy(target, args)
     assert(not tolua.isnull(target), "transition.moveBy() - target is not cc.Node")
@@ -271,6 +276,14 @@ function transition.moveBy(target, args)
     local action = cc.MoveBy:create(args.time, cc.p(x, y))
     return transition.execute(target, action, args)
 end
+
+--------------------------------
+-- 淡入显示对象，并返回 Action 动作对象。
+-- @function [parent=#transition] fadeIn
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
+
 
 --[[--
 
@@ -286,17 +299,19 @@ action = transition.fadeIn(sprite, {time = 1.5})
 
 ~~~
 
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
 ]]
 function transition.fadeIn(target, args)
     assert(not tolua.isnull(target), "transition.fadeIn() - target is not cc.Node")
     local action = cc.FadeIn:create(args.time)
     return transition.execute(target, action, args)
 end
+
+--------------------------------
+-- 淡出显示对象，并返回 Action 动作对象。
+-- @function [parent=#transition] fadeOut
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -312,17 +327,19 @@ action = transition.fadeOut(sprite, {time = 1.5})
 
 ~~~
 
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
-
 ]]
 function transition.fadeOut(target, args)
     assert(not tolua.isnull(target), "transition.fadeOut() - target is not cc.Node")
     local action = cc.FadeOut:create(args.time)
     return transition.execute(target, action, args)
 end
+
+--------------------------------
+-- 将显示对象的透明度改变为指定值，并返回 Action 动作对象。
+-- @function [parent=#transition] fadeTo
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -334,11 +351,6 @@ end
 transition.fadeTo(sprite, {opacity = 128, time = 1.5})
 
 ~~~
-
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
 
 ]]
 function transition.fadeTo(target, args)
@@ -352,6 +364,13 @@ function transition.fadeTo(target, args)
     local action = cc.FadeTo:create(args.time, opacity)
     return transition.execute(target, action, args)
 end
+
+--------------------------------
+-- 将显示对象缩放到指定比例，并返回 Action 动作对象。
+-- @function [parent=#transition] scaleTo
+-- @param cc.Node target 显示对象
+-- @param table args 参数表格对象
+-- @return mixed#mixed  结果
 
 --[[--
 
@@ -367,11 +386,6 @@ transition.scaleTo(sprite, {scaleX = 0.5, time = 1.5})
 transition.scaleTo(sprite, {scaleY = 0.5, time = 1.5})
 
 ~~~
-
-@param cc.Node target 显示对象
-@param table args 参数表格对象
-
-@return mixed 结果
 
 ]]
 function transition.scaleTo(target, args)
@@ -396,6 +410,12 @@ function transition.scaleTo(target, args)
     return transition.execute(target, action, args)
 end
 
+--------------------------------
+-- 创建一个动作序列对象。
+-- @function [parent=#transition] sequence
+-- @param table args 动作的表格对象
+-- @return Sequence#Sequence  动作序列对象
+
 --[[--
 
 创建一个动作序列对象。
@@ -412,10 +432,6 @@ sprite:runAction(sequence)
 
 ~~~
 
-@param table args 动作的表格对象
-
-@return Sequence 动作序列对象
-
 ]]
 function transition.sequence(actions)
     if #actions < 1 then return end
@@ -427,6 +443,16 @@ function transition.sequence(actions)
     end
     return prev
 end
+
+--------------------------------
+-- 在显示对象上播放一次动画，并返回 Action 动作对象。
+-- @function [parent=#transition] playAnimationOnce
+-- @param cc.Node target 显示对象
+-- @param cc.Node animation 动作对象
+-- @param boolean removeWhenFinished 播放完成后删除显示对象
+-- @param function onComplete 播放完成后要执行的函数
+-- @param number delay 播放前等待的时间
+-- @return table#table  动作表格对象
 
 --[[--
 
@@ -465,14 +491,6 @@ boom:playAnimationOnce(display.newAnimation(frames, 0.3/ 8), true)
 
 此外，playAnimationOnce() 还允许在动画播放完成后执行一个指定的函数，以及播放动画前等待一段时间。合理运用这些功能，可以大大简化我们的游戏代码。
 
-@param cc.Node target 显示对象
-@param cc.Node animation 动作对象
-@param boolean removeWhenFinished 播放完成后删除显示对象
-@param function onComplete 播放完成后要执行的函数
-@param number delay 播放前等待的时间
-
-@return table 动作表格对象
-
 ]]
 function transition.playAnimationOnce(target, animation, removeWhenFinished, onComplete, delay)
     local actions = {}
@@ -501,6 +519,14 @@ function transition.playAnimationOnce(target, animation, removeWhenFinished, onC
     return action
 end
 
+--------------------------------
+-- 在显示对象上循环播放动画，并返回 Action 动作对象。
+-- @function [parent=#transition] playAnimationForever
+-- @param cc.Node target 显示对象
+-- @param cc.Node animation 动作对象
+-- @param number delay 播放前等待的时间
+-- @return table#table  动作表格对象
+
 --[[--
 
 在显示对象上循环播放动画，并返回 Action 动作对象。
@@ -512,12 +538,6 @@ local animation = display.newAnimation(frames, 0.5 / 20) -- 0.5s play 20 frames
 sprite:playAnimationForever(animation)
 
 ~~~
-
-@param cc.Node target 显示对象
-@param cc.Node animation 动作对象
-@param number delay 播放前等待的时间
-
-@return table 动作表格对象
 
 ]]
 function transition.playAnimationForever(target, animation, delay)
@@ -538,6 +558,11 @@ function transition.playAnimationForever(target, animation, delay)
     return action
 end
 
+--------------------------------
+-- 停止一个正在执行的动作
+-- @function [parent=#transition] removeAction
+-- @param mixed target
+
 --[[--
 
 停止一个正在执行的动作
@@ -551,14 +576,17 @@ transition.removeAction(action) -- 停止移动
 
 ~~~
 
-@param mixed target
-
 ]]
 function transition.removeAction(action)
     if not tolua.isnull(action) then
         actionManager:removeAction(action)
     end
 end
+
+--------------------------------
+-- 停止一个显示对象上所有正在执行的动作
+-- @function [parent=#transition] stopTarget
+-- @param mixed target
 
 --[[--
 
@@ -576,8 +604,6 @@ transition.stopTarget(sprite)
 
 注意:显示对象的 performWithDelay() 方法是用动作来实现延时回调操作的，所以如果停止显示对象上的所有动作，会清除该对象上的延时回调操作。
 
-@param mixed target
-
 ]]
 function transition.stopTarget(target)
     if not tolua.isnull(target) then
@@ -585,26 +611,22 @@ function transition.stopTarget(target)
     end
 end
 
---[[--
+--------------------------------
+-- 暂停显示对象上所有正在执行的动作
+-- @function [parent=#transition] pauseTarget
+-- @param mixed target
 
-暂停显示对象上所有正在执行的动作
-
-@param mixed target
-
-]]
 function transition.pauseTarget(target)
     if not tolua.isnull(target) then
         actionManager:pauseTarget(target)
     end
 end
 
---[[--
+--------------------------------
+-- 恢复显示对象上所有暂停的动作
+-- @function [parent=#transition] resumeTarget
+-- @param mixed target
 
-恢复显示对象上所有暂停的动作
-
-@param mixed target
-
-]]
 function transition.resumeTarget(target)
     if not tolua.isnull(target) then
         actionManager:resumeTarget(target)

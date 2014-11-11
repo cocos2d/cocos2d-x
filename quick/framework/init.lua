@@ -22,6 +22,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module init
+
 --[[--
 
 quick framework 初始化

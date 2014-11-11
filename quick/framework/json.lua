@@ -22,6 +22,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module json
+
 --[[--
 
 JSON 编码与解码
@@ -37,6 +40,12 @@ end
 if not pcall(safeLoad) then 
     cjson = nil
 end
+
+--------------------------------
+-- 将表格数据编码为 JSON 字符串
+-- @function [parent=#json] encode
+-- @param table 表格对象
+-- @return string#string  json字符串
 
 --[[--
 
@@ -69,10 +78,6 @@ echo(str) -- [null,null,2,null,3]
 
 ~~~
 
-@param table 表格对象
-
-@return string json字符串
-
 ]]
 function json.encode(var)
     local status, result = pcall(cjson.encode, var)
@@ -81,6 +86,12 @@ function json.encode(var)
         printError("json.encode() - encoding failed: %s", tostring(result))
     end
 end
+
+--------------------------------
+-- 将 JSON 字符串解码为表格对象
+-- @function [parent=#json] decode
+-- @param string json字符串
+-- @return table#table  表格对象
 
 --[[--
 
@@ -119,10 +130,6 @@ dump(tb) --[ [
 ] ]
 
 ~~~
-
-@param string json字符串
-
-@return table 表格对象
 
 ]]
 function json.decode(text)
