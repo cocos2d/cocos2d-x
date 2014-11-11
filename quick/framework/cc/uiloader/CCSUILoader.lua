@@ -623,6 +623,10 @@ function CCSUILoader:createEditBox(options)
 		end
 		editBox:setPosition(options.x, options.y)
 	else
+		if not options.maxLengthEnable then
+			-- if maxlength not enable set the length is 0
+			options.maxLength = 0
+		end
 		editBox = cc.ui.UIInput.new({
 		UIInputType = 2,
         placeHolder = options.placeHolder,
