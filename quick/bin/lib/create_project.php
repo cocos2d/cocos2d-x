@@ -1,5 +1,6 @@
 <?php
 
+ini_set('memory_limit','256M');
 require_once(__DIR__ . '/quick/ProjectCreator.php');
 
 $options = array(

@@ -24,6 +24,8 @@ mkdir -p "$WORKDIR"
 cd "$QUICK_V3_ROOT"
 git archive v3 | tar -x -C "$WORKDIR"
 
+cp -rf $QUICK_V3_ROOT/quick/templates/lua-template-quick/runtime/ $WORKDIR/quick/templates/lua-template-quick/runtime/
+
 # cd quick/player/proj.mac
 
 # cp -rf player3.xcodeproj/xcuserdata/USER.xcuserdatad/ player3.xcodeproj/xcuserdata/$USER.xcuserdatad/
