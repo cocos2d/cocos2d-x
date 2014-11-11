@@ -51,6 +51,7 @@
         "build/wp8/wp8_precompiled_shaders.txt", 
         "cmake/BuildHelpers.CMakeLists.txt", 
         "cmake/Modules/CMakeParseArguments.cmake", 
+        "cmake/Modules/CocosBuildHelpers.cmake", 
         "cmake/Modules/FindChipmunk.cmake", 
         "cmake/Modules/FindGLFW3.cmake", 
         "cmake/Modules/FindPackageHandleStandardArgs.cmake", 
