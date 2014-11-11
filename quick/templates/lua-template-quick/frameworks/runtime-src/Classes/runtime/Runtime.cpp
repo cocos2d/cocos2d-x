@@ -97,7 +97,11 @@ void startScript(string strDebugArg)
         engine->executeString(strDebugArg.c_str());
     }
     cocos2d::log("debug args = %s", strDebugArg.c_str());
-    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
+
+    std::string code("require \"");
+    code.append(ConfigParser::getInstance()->getEntryFile().c_str());
+    code.append("\"");
+    engine->executeString(code.c_str());
 }
 
 static void resetLuaModule(const string& fileName)

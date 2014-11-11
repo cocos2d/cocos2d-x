@@ -25,8 +25,28 @@ using namespace CocosDenshion;
 USING_NS_CC;
 using namespace std;
 
+static void quick_module_register(lua_State *L)
+{
+    luaopen_lua_extensions_more(L);
+
+    lua_getglobal(L, "_G");
+    if (lua_istable(L, -1))//stack:...,_G,
+    {
+        register_all_quick_manual(L);
+        // extra
+        luaopen_cocos2dx_extra_luabinding(L);
+        register_all_cocos2dx_extension_filter(L);
+        luaopen_HelperFunc_luabinding(L);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        luaopen_cocos2dx_extra_ios_iap_luabinding(L);
+#endif
+    }
+    lua_pop(L, 1);
+}
+
+//
 AppDelegate::AppDelegate()
-:_launchMode(0)
+:_launchMode(1)
 {
 }
 
@@ -77,17 +97,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_State* L = engine->getLuaStack()->getLuaState();
     lua_module_register(L);
 
-    // If you want to use Quick-Cocos2d-X, please uncomment below code
-    register_all_quick_manual(L);
-
-    // extra
-    luaopen_lua_extensions_more(L);
-    luaopen_cocos2dx_extra_luabinding(L);
-    register_all_cocos2dx_extension_filter(L);
-    luaopen_HelperFunc_luabinding(L);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    luaopen_cocos2dx_extra_ios_iap_luabinding(L);
-#endif
+    // use Quick-Cocos2d-X
+    quick_module_register(L);
 
     LuaStack* stack = engine->getLuaStack();
 #if ANYSDK_DEFINE > 0
