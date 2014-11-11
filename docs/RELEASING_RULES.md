@@ -33,6 +33,12 @@ All kind of releases (alpha,beta,rc, final) must be announced on:
 * [Forum](http://discuss.cocos2d-x.org/)
 
 
+### Download package
+
+A download package must be available for each released version.
+The package shall include the source code of cocos2d-x, and the needed scripts to download and install the 3rd party binaries.
+
+
 ### Release Notes and Changelog
 
 **BEFORE** releasing a new version (either stable or unstable), the following documents must be updated:
@@ -55,9 +61,10 @@ All kind of releases (alpha,beta,rc, final) must be announced on:
 
 ### Deprecated APIs
 
-- APIs introduced in a Major version MUST NOT be deprecated in the same Major version. eg: An API introduce in v3.1 MUST NOT be deprecated the following v3.x releases.
-- Deprecated APIs can be removed only after being deprecated for more than one complete Major cycle. eg: An API deprecated in v2.2 can only be removed in v4.0, but not before.
-- Deprecated APIs MUST give a compile-time warning. And MUST tell the user which is the new API that superceeds it.
+- Only Major versions (eg: 4.0, 5.0) can introduce deprecated APIs. Deprecated APIs cannot be introduced in Point releases (eg: 3.5, 4.2).
+- Only Major versions can remove deprecated APIs. They cannot be removed in Point versions.
+- A deprecated API must live at least for the whole cycle of a Major version. Eg: if an API was deprecated in 4.0, it can be removed in 5.0, but not before. It can be removed in 6.0 or future Major releases, but it cannot be removed in Point releases, like 5.1.
+
 
 ### Performance tests
 
