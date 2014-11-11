@@ -1,8 +1,7 @@
-# How to release a new version of cocos2d-x
+# Cocos2d-x Release Engineering
 
-## Releases Rules
 
-### Tagging
+## Tagging
 
 New releases must be tagged in github. The tag name must follow these rules:
 
@@ -21,8 +20,18 @@ Example of valid names:
 
 See "Naming Conventions" below
 
+## Branching
 
-### Announcing
+Each Major version will have 2 branches, `master` and `develop`.
+For cocos2d-x v3, the branches names will be `v3-master` and `v3-develop`, for v4 the branches names will be `v4-master` and `v4-develop`, and so on.
+
+* `master` is the stable branch.
+* `develop` is the unstable branch. All new features, bug fixes, etc, are applied first to `develop`.
+
+Once a new version is released (either Major, Minor or Revision), then `develop` branch must be merged into `master` branch. To be more specific, `master` only contains _stable_ releases. _Alpha_, _Beta_, and _RC_ versions MUST NOT be merged into `master`.
+
+
+## Announcing
 
 Only stable releases must be announced on:
 
@@ -33,20 +42,20 @@ All kind of releases (alpha,beta,rc, final) must be announced on:
 * [Forum](http://discuss.cocos2d-x.org/)
 
 
-### Download package
+## Download package
 
 A download package must be available for each released version.
 The package shall include the source code of cocos2d-x, and the needed scripts to download and install the 3rd party binaries.
 
 
-### Release Notes and Changelog
+## Release Notes and Changelog
 
 **BEFORE** releasing a new version (either stable or unstable), the following documents must be updated:
 
 * [CHANGELOG](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * [Release Notes](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 
-### Documentation
+## Documentation
 
 **BEFORE** releasing a new Minor or Major stable release, the following tasks MUST be done:
 
@@ -54,26 +63,26 @@ The package shall include the source code of cocos2d-x, and the needed scripts t
     - API Reference
     - Programmers Guide
 
-### Backward compatibility
+## Backward compatibility
 
 - Minor versions MUST be backward compatible with previous minor versions. eg: v3.2 must be backward compatible with v3.1 and v3.0.
 - Major versions SHOULD be backward compatible with previous major versions. Breaking backward compatibility in Major versions is acceptable only if it is extremely well justified
 
-### Deprecated APIs
+## Deprecated APIs
 
 - Only Major versions (eg: 4.0, 5.0) can introduce deprecated APIs. Deprecated APIs cannot be introduced in Point releases (eg: 3.5, 4.2).
 - Only Major versions can remove deprecated APIs. They cannot be removed in Point versions.
 - A deprecated API must live at least for the whole cycle of a Major version. Eg: if an API was deprecated in 4.0, it can be removed in 5.0, but not before. It can be removed in 6.0 or future Major releases, but it cannot be removed in Point releases, like 5.1.
 
 
-### Performance tests
+## Performance tests
 
 - Performance tests MUST be run before releasing a Release Candidate
 - If performance is worse than previous stable version, then the Release Candidate MUST NOT be released (See Naming Conventions below)
 - Results of the performance tests must be documented in this [spreadsheet](https://docs.google.com/spreadsheet/ccc?key=0AvvkdgVbWvpZdHFudzdDT3NuYTRNTHlZZzRGZWYzMmc#gid=8)
 
 
-### Samples and tests
+## Samples and tests
 
 **BEFORE** releasing a new Minor or Major stable release, the following tasks MUST be done:
 
@@ -83,9 +92,9 @@ The package shall include the source code of cocos2d-x, and the needed scripts t
     - All the tests bundled in cocos2d-x
     - All the templates bundled in cocos2d-x
 
-### Naming conventions
+## Naming conventions
 
-#### Alpha
+### Alpha
 
 The product is unstable. It could have memory leaks, or crashes, or the API is unstable. The product contains little QA.
 Although the product is not ready for production, the product should be testable.
@@ -99,8 +108,7 @@ _* But it might have memory leaks, or crashes, or the recently added features mi
 
 Alpha versions are NOT feature freeze. New features might be added in future alpha and beta versions.
 
-
-#### Beta
+### Beta
 
 The product is more stable than _Alpha_. The product might crash, but not frequently. No major changes were made in core components.
 Smaller features could be refactored in _Beta_ versions, but the core functionality is stable.
@@ -116,7 +124,7 @@ As an example, for cocos2d-x it means:
 Beta versions are NOT feature freeze. __Small__ new features might be added in future _Beta_ versions. New __BIG__ features that might affect the Core functionality must only be added in _Alpha_ versions, and not in _Beta_ versions.
 
 
-#### Release Candidate
+### Release Candidate
 Release candidate means that, unless major bugs are found, the product is ready for release.
 The difference between _Release Candidate__ and _Final_ is that RC has less testing than the final version.
 
@@ -125,29 +133,29 @@ Many cocos2d-x users might want to try and use the RC releases for production.
 RC versions ARE feature freeze. No new features, no matter how small they are, MUST be added in RC versions, because as the name implies, it is a _Release Candiate_.
 
 
-#### Final
+### Final
 
 It is the new stable version.
 
-### Number conventions
+## Number conventions
 
 major.minor [revision | status]
 
-#### Major
+### Major
 The major number is increased when there are significant jumps in functionality such as changing the framework which could cause incompatibility with interfacing systems
 
-#### Minor:
+### Minor
 The minor number is incremented when only minor features or significant fixes have been added.
 
-#### Revision:
+### Revision
 The revision number is incremented when minor bugs are fixed.
 
-#### Status:
+### Status
 The status could be: alphaN, betaN or rcN.
 
 'N' is a number, and the first MUST always be 0.
 
-#### Examples
+### Examples
 
 v2.0-alpha0:
   - New major version of cocos2d-x.
