@@ -59,24 +59,28 @@
     <Import Project="EngineRoot.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1_app.props" />
+    <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="EngineRoot.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1_app.props" />
+    <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="EngineRoot.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1_app.props" />
+    <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="EngineRoot.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1.props" />
     <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\win-8.1_app.props" />
+    <Import Project="..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>

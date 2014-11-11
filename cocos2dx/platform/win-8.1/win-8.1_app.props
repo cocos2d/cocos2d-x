@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
-  <PropertyGroup Label="APP_DLLS">
+  <PropertyGroup Label="COCOS2D_DLL_PATHS">
     <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)cocos2dx\platform\third_party\$(Cocos2dPlatform)\angle\prebuilt\$(Platform)\</AngleBinPath>
     <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)cocos2dx\platform\third_party\$(Cocos2dPlatform)\curl\prebuilt\$(Platform)\</CurlBinPath>
     <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\libwebsockets\$(Cocos2dPlatform)\lib\$(Platform)\</WebsocketsBinPath>
     <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)cocos2dx\platform\third_party\$(Cocos2dPlatform)\sqlite3\prebuilt\$(Platform)\</SQLiteBinPath>
   </PropertyGroup>
-  <ItemGroup Label="ANGLE">
+  <ItemGroup Label="COCOS2D_DLLS">
     <None Include="$(AngleBinPath)libEGL.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -30,16 +30,4 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <_CustomResource Include="$(MSBuildThisFileDirectory)..\..\Resources\**\*">
-      <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
-      <DeploymentContent>true</DeploymentContent>
-    </_CustomResource>
-  </ItemGroup>
-  <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
-    <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />
-    <ItemGroup>
-      <None Include="@(_CustomResource)" />
-    </ItemGroup>
-  </Target>
 </Project>
