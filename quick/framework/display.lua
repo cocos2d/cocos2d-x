@@ -22,6 +22,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module display
+
 --[[--
 
 与显示图像、场景有关的功能
@@ -247,19 +250,13 @@ display.DEFAULT_TTF_FONT        = "Arial"
 display.DEFAULT_TTF_FONT_SIZE   = 24
 
 
---[[--
+--------------------------------
+-- 创建一个新场景，并返回 Scene 场景对象。
+-- @function [parent=#display] newScene
+-- @param string name 场景名称
+-- @return Scene#Scene  场景对象
+-- @see Scene
 
-创建一个新场景，并返回 Scene 场景对象。
-
-指定场景名称方便调试。
-
-@param string name 场景名称
-
-@return Scene 场景对象
-
-@see Scene
-
-]]
 function display.newScene(name)
     local scene = cc.Scene:create()
     scene:setNodeEventEnabled(true)
@@ -268,19 +265,13 @@ function display.newScene(name)
     return scene
 end
 
---[[--
+--------------------------------
+-- 创建一个新场景，并返回 Scene 场景对象。
+-- @function [parent=#display] newPhysicsScene
+-- @param string name 场景名称
+-- @return Scene#Scene  场景对象
+-- @see Scene
 
-创建一个新场景，并返回 Scene 场景对象。
-
-指定场景名称方便调试。
-
-@param string name 场景名称
-
-@return Scene 场景对象
-
-@see Scene
-
-]]
 function display.newPhysicsScene(name)
     local scene = cc.Scene:createWithPhysics()
     scene:setNodeEventEnabled(true)
@@ -289,9 +280,17 @@ function display.newPhysicsScene(name)
     return scene
 end
 
---[[--
 
-用场景切换过渡效果包装场景对象，并返回场景过渡对象。
+--------------------------------
+-- 用场景切换过渡效果包装场景对象，并返回场景过渡对象。
+-- @function [parent=#display] wrapSceneWithTransition
+-- @param Scene scene 场景对象
+-- @param string transitionType 过渡效果名
+-- @param number time 过渡时间
+-- @param string more 过渡效果附加参数
+-- @return Scene#Scene  场景对象
+
+--[[--
 
 ~~~ lua
 
@@ -338,14 +337,8 @@ display.replaceScene(nextScene)
 -   splitRows 分成多行切换入新场景，类似百叶窗
 -   turnOffTiles 当前场景分成多个块，逐渐替换为新场景
 
-@param Scene scene 场景对象
-@param string transitionType 过渡效果名
-@param number time 过渡时间
-@param string more 过渡效果附加参数
-
-@return Scene 场景对象
-
 ]]
+
 function display.wrapSceneWithTransition(scene, transitionType, time, more)
     local key = string.upper(tostring(transitionType))
     if string.sub(key, 1, 12) == "CCTRANSITION" then
@@ -372,6 +365,14 @@ function display.wrapSceneWithTransition(scene, transitionType, time, more)
     return scene
 end
 
+--------------------------------
+-- 切换到新场景
+-- @function [parent=#display] replaceScene
+-- @param Scene newScene 场景对象
+-- @param string transitionType 过渡效果名
+-- @param number time 过渡时间
+-- @param mixed more 过渡效果附加参数
+
 --[[--
 
 切换到新场景
@@ -382,11 +383,6 @@ end
 display.replaceScene(nextScene, "fade", 0.5, cc.c3b(255, 0, 0))
 
 ~~~
-
-@param Scene newScene 场景对象
-@param string transitionType 过渡效果名
-@param number time 过渡时间
-@param mixed more 过渡效果附加参数
 
 ]]
 function display.replaceScene(newScene, transitionType, time, more)
@@ -400,44 +396,36 @@ function display.replaceScene(newScene, transitionType, time, more)
     end
 end
 
---[[--
+--------------------------------
+-- 返回当前正在运行的场景对象
+-- @function [parent=#display] getRunningScene
+-- @return Scene#Scene  场景对象
 
-返回当前正在运行的场景对象
-
-@return Scene 场景对象
-
-]]
 function display.getRunningScene()
     return sharedDirector:getRunningScene()
 end
 
---[[--
+--------------------------------
+-- 暂停当前场景
+-- @function [parent=#display] pause
 
-暂停当前场景
-
-]]
 function display.pause()
     sharedDirector:pause()
 end
 
---[[--
+--------------------------------
+-- 恢复当前暂停的场景
+-- @function [parent=#display] resume
 
-恢复当前暂停的场景
-
-]]
 function display.resume()
     sharedDirector:resume()
 end
 
---[[--
+--------------------------------
+-- 创建并返回一个 Layer 层对象
+-- @function [parent=#display] newLayer
+-- @see Layer
 
-创建并返回一个 Layer 层对象
-
-Layer 对象提供了触摸事件、重力感应、Android 按键检测等功能，具体请参考 Layer。
-
-@see Layer
-
-]]
 function display.newLayer()
     local layer
 
@@ -452,19 +440,13 @@ function display.newLayer()
     return layer
 end
 
---[[--
+--------------------------------
+-- 创建一个颜色填充层
+-- @function [parent=#display] newColorLayer
+-- @param ccColor4B color
+-- @return LayerColor#LayerColor 
+-- @see LayerColor
 
-创建一个颜色填充层
-
-LayerColor 对象使用指定的颜色填充。
-
-@param ccColor4B color
-
-@return LayerColor
-
-@see LayerColor
-
-]]
 function display.newColorLayer(color)
     local node
 
@@ -484,6 +466,13 @@ function display.newColorLayer(color)
     return node
 end
 
+--------------------------------
+-- 创建并返回一个 Node 对象
+-- @function [parent=#display] newNode
+-- @return Node#Node  Node对象
+-- @see Node
+
+
 --[[--
 
 创建并返回一个 Node 对象
@@ -501,10 +490,6 @@ transition.moveBy(group, {time = 2.0, x = 100})
 
 ~~~
 
-@return Node Node对象
-
-@see Node
-
 ]]
 function display.newNode()
     return cc.Node:create()
@@ -515,6 +500,14 @@ if cc.ClippingRectangleNode then
 else
     cc.ClippingRectangleNode = cc.ClippingRegionNode
 end
+
+--------------------------------
+-- 创建并返回一个 ClippingRegionNode 对象。
+-- @function [parent=#display] newClippingRegionNode
+-- @param table rect 指定的区域
+-- @return ClippingRegionNode#ClippingRegionNode  ClippingRegionNode对象
+
+
 --[[--
 
 创建并返回一个 ClippingRegionNode 对象。
@@ -539,10 +532,6 @@ scene:addChild(clipnode)
 
 注意：ClippingRegionNode 的父对象其坐标必须是 0, 0。
 
-@param table rect 指定的区域
-
-@return ClippingRegionNode ClippingRegionNode对象
-
 ]]
 function display.newClippingRegionNode(rect)
     if rect then
@@ -551,6 +540,17 @@ function display.newClippingRegionNode(rect)
         return cc.ClippingRegionNode:create()
     end
 end
+
+--------------------------------
+-- 创建并返回一个 Sprite 显示对象。
+-- @function [parent=#display] newSprite
+-- @param mixed 图像名或SpriteFrame对象
+-- @param number x
+-- @param number y
+-- @param table params
+-- @return Sprite#Sprite 
+-- @see Sprite
+
 
 --[[--
 
@@ -579,15 +579,6 @@ local sprite3 = display.newSprite(frame)
 ~~~
 
 如果指定了 x,y 参数，那么创建显示对象后会调用对象的 setPosition() 方法设置对象位置。
-
-@param mixed 图像名或SpriteFrame对象
-@param number x
-@param number y
-@param table params
-
-@return Sprite
-
-@see Sprite
 
 ]]
 function display.newSprite(filename, x, y, params)
@@ -649,6 +640,16 @@ function display.newSprite(filename, x, y, params)
     return sprite
 end
 
+--------------------------------
+-- 创建并返回一个 Sprite9Scale 显示对象。
+-- @function [parent=#display] newScale9Sprite
+-- @param string filename 图像名
+-- @param integer x
+-- @param integer y
+-- @param table size
+-- @return Sprite9Scale#Sprite9Scale  Sprite9Scale显示对象
+
+
 --[[--
 
 创建并返回一个 Sprite9Scale 显示对象。
@@ -666,30 +667,19 @@ local sprite = display.newScale9Sprite("Box.png", 0, 0, cc.size(400, 300))
 
 ~~~
 
-@param string filename 图像名
-@param integer x
-@param integer y
-@param table size
-
-@return Sprite9Scale Sprite9Scale显示对象
-
 ]]
 function display.newScale9Sprite(filename, x, y, size, capInsets)
     local scale9sp = ccui.Scale9Sprite or cc.Scale9Sprite
     return display.newSprite(filename, x, y, {class = scale9sp, size = size, capInsets = capInsets})
 end
 
---[[--
+--------------------------------
+-- 创建并返回一个平铺的 Sprite 显示对象
+-- @function [parent=#display] newTilesSprite
+-- @param string filename 图像名
+-- @param cc.rect rect    平铺范围
+-- @return Sprite#Sprite 
 
-创建并返回一个平铺的 Sprite 显示对象
-
-@param string filename 图像名
-
-@param cc.rect rect    平铺范围
-
-@return Sprite
-
-]]
 function display.newTilesSprite(filename, rect)
     if not rect then
         rect = cc.rect(0, 0, display.width, display.height)
@@ -707,19 +697,16 @@ function display.newTilesSprite(filename, rect)
     return sprite
 end
 
---[[--
+--------------------------------
+-- create a tiled SpriteBatchNode, the image can not a POT file.
+-- @function [parent=#display] newTiledBatchNode
+-- @param mixed filename As same a the first parameter for display.newSprite
+-- @param string plistFile Texture(plist) image filename, filename must be a part of the texture.
+-- @param size size The tiled node size, use cc.size create it please.
+-- @param integer hPadding Horizontal padding, it will display 1 px gap on moving the node, set padding for fix it.
+-- @param integer vPadding Vertical padding.
+-- @return SpriteBatchNode#SpriteBatchNode 
 
-create a tiled SpriteBatchNode, the image can not a POT file.
-
-@param mixed filename As same a the first parameter for display.newSprite
-@param string plistFile Texture(plist) image filename, filename must be a part of the texture.
-@param size size The tiled node size, use cc.size create it please.
-@param integer hPadding Horizontal padding, it will display 1 px gap on moving the node, set padding for fix it.
-@param integer vPadding Vertical padding.
-
-@return SpriteBatchNode
-
-]]
 function display.newTiledBatchNode(filename, plistFile, size, hPadding, vPadding)
     size = size or cc.size(display.width, display.height)
     hPadding = hPadding or 0
@@ -749,16 +736,13 @@ function display.newTiledBatchNode(filename, plistFile, size, hPadding, vPadding
     return __batch, __newSize.width, __newSize.height
 end
 
---[[--
+--------------------------------
+-- Create a masked sprite
+-- @function [parent=#display] newMaskedSprite
+-- @param string mask  裁剪形状的图片名
+-- @param string pic   被裁减的图片名
+-- @return Sprite#Sprite 
 
-Create a masked sprite
-
-@param string mask  裁剪形状的图片名
-@param string pic   被裁减的图片名
-
-@return Sprite
-
-]]
 function display.newMaskedSprite(__mask, __pic)
     local __maskSprite = display.newSprite(__mask):align(display.LEFT_BOTTOM, 0, 0)
     __maskSprite:setBlendFunc(gl.ONE, gl.ZERO)
@@ -778,24 +762,14 @@ function display.newMaskedSprite(__mask, __pic)
     return __resultSprite
 end
 
---[[--
+--------------------------------
+-- Create a Filtered Sprite
+-- @function [parent=#display] newFilteredSprite
+-- @param mixed filename As same a the first parameter for display.newSprite
+-- @param mixed filters One of the following:
+-- @param table params A or some parameters for Filter.
+-- @return An#An  instance of FilteredSprite
 
-Create a Filtered Sprite
-
-@param mixed filename As same a the first parameter for display.newSprite
-@param mixed filters One of the following:
-
-- A Filter name;
-- More Filter names(in a table);
-- An instance of Filter;
-- Some instances of Filter(in a table);
-- A Array inclueds some instances of Filter.
-
-@param table params A or some parameters for Filter.
-
-@return An instance of FilteredSprite
-
-]]
 function display.newFilteredSprite(filename, filters, params)
     local __one = {class=cc.FilteredSpriteWithOne}
     local __multi = {class=cc.FilteredSpriteWithMulti}
@@ -834,32 +808,35 @@ function display.newFilteredSprite(filename, filters, params)
     return __sp
 end
 
---[[--
+--------------------------------
+-- Create a Gray Sprite by FilteredSprite
+-- @function [parent=#display] newGraySprite
+-- @param mixed filename As same a the first parameter for display.newSprite
+-- @param table params As same as the third parameter for display.newFilteredSprite
+-- @return An#An  instance of FilteredSprite
 
-Create a Gray Sprite by FilteredSprite
-
-@param mixed filename As same a the first parameter for display.newSprite
-@param table params As same as the third parameter for display.newFilteredSprite
-
-@return An instance of FilteredSprite
-
-]]
 function display.newGraySprite(filename, params)
     return display.newFilteredSprite(filename, "GRAY", params)
 end
 
---[[--
+--------------------------------
+-- 创建并返回一个空的 DrawNode 对象
+-- @function [parent=#display] newDrawNode
+-- @return DrawNode#DrawNode 
+-- @see DrawNode
 
-创建并返回一个空的 DrawNode 对象
-
-@return DrawNode
-
-@see DrawNode
-
-]]
 function display.newDrawNode()
     return cc.DrawNode:create()
 end
+
+--------------------------------
+-- 创建并返回一个 DrawNode（实心圆）对象。
+-- @function [parent=#display] newSolidCircle
+-- @param number radius 实心圆的半径
+-- @param table params 创建圆的参数 x,y为圆点位置 color中圆的颜色
+-- @return DrawNode#DrawNode 
+-- @see DrawNode
+
 
 --[[--
 
@@ -872,14 +849,6 @@ circle:addTo(scene)
 
 ~~~
 
-
-@param number radius 实心圆的半径
-@param table params 创建圆的参数 x,y为圆点位置 color中圆的颜色
-
-@return DrawNode
-
-@see DrawNode
-
 ]]
 function display.newSolidCircle(radius, params)
     local circle = display.newDrawNode()
@@ -887,6 +856,15 @@ function display.newSolidCircle(radius, params)
         radius or 0, params.color or cc.c4f(0, 0, 0, 1))
     return circle
 end
+
+--------------------------------
+-- 创建并返回一个 DrawNode （圆）对象。
+-- @function [parent=#display] newCircle
+-- @param number radius
+-- @param table params 有参数，x,y 圆的位置 填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
+-- @return DrawNode#DrawNode 
+-- @see DrawNode
+
 
 --[[--
 
@@ -902,13 +880,6 @@ local circle = display.newCircle(50,
         borderWidth = 2})
 
 ~~~
-
-@param number radius
-@param table params 有参数，x,y 圆的位置 填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
-
-@return DrawNode
-
-@see DrawNode
 
 ]]
 function display.newCircle(radius, params)
@@ -958,6 +929,15 @@ function display.newCircle(radius, params)
     return circle
 end
 
+--------------------------------
+-- 创建并返回一个 DrawNode （矩形）对象。
+-- @function [parent=#display] newRect
+-- @param table rect table
+-- @param table params 有参数，填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
+-- @return DrawNode#DrawNode 
+-- @see ShapeNode
+
+
 --[[--
 
 创建并返回一个 DrawNode （矩形）对象。
@@ -978,13 +958,6 @@ local shape4 = display.newRect(cc.rect(100, 100, 40, 40),
 
 ~~~
 
-@param table rect table
-@param table params 有参数，填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
-
-@return DrawNode
-
-@see ShapeNode
-
 ]]
 function display.newRect(rect, params)
     local x, y, width, height = 0, 0
@@ -1002,6 +975,15 @@ function display.newRect(rect, params)
     return display.newPolygon(points, params)
 end
 
+--------------------------------
+-- 创建并返回一个 DrawNode （线性）对象。
+-- @function [parent=#display] newLine
+-- @param table point table
+-- @param table params 有参数，边线色 borderColor 及边线宽度 borderWidth
+-- @return DrawNode#DrawNode 
+-- @see ShapeNode
+
+
 --[[--
 
 创建并返回一个 DrawNode （线性）对象。
@@ -1018,13 +1000,6 @@ local shape3 = display.newLine({(10, 10), (100,100)},
     borderWidth = 1})
 
 ~~~
-
-@param table point table
-@param table params 有参数，边线色 borderColor 及边线宽度 borderWidth
-
-@return DrawNode
-
-@see ShapeNode
 
 ]]
 function display.newLine(points, params)
@@ -1053,6 +1028,15 @@ function display.newLine(points, params)
     return drawNode
 end
 
+--------------------------------
+-- 创建并返回一个 PolygonShape （多边形）对象。
+-- @function [parent=#display] newPolygon
+-- @param table points 包含多边形每一个点坐标的表格对象
+-- @param number scale 缩放比例
+-- @return DrawNode#DrawNode  DrawNode
+-- @see DrawNode
+
+
 --[[--
 
 创建并返回一个 PolygonShape （多边形）对象。
@@ -1067,13 +1051,6 @@ local points = {
 local polygon = display.newPolygon(points)
 
 ~~~
-
-@param table points 包含多边形每一个点坐标的表格对象
-@param number scale 缩放比例
-
-@return DrawNode DrawNode
-
-@see DrawNode
 
 ]]
 function display.newPolygon(points, params, drawNode)
@@ -1108,6 +1085,13 @@ function display.newPolygon(points, params, drawNode)
     return drawNode
 end
 
+--------------------------------
+-- 用位图字体创建文本显示对象，并返回 Label 对象。
+-- @function [parent=#display] newBMFontLabel
+-- @param table params 参数表格对象
+-- @return Label#Label  Label对象
+
+
 --[[--
 
 用位图字体创建文本显示对象，并返回 Label 对象。
@@ -1133,10 +1117,6 @@ local label = display.newBMFontLabel({
 
 ~~~
 
-@param table params 参数表格对象
-
-@return Label Label对象
-
 ]]
 function display.newBMFontLabel(params)
     assert(type(params) == "table",
@@ -1160,6 +1140,12 @@ function display.newBMFontLabel(params)
 
     return label
 end
+
+--------------------------------
+-- 使用 TTF 字体创建文字显示对象，并返回 Label 对象。
+-- @function [parent=#display] newTTFLabel
+-- @param table params 参数表格对象
+-- @return UILabel#UILabel  UILabel对象
 
 --[[--
 
@@ -1208,10 +1194,6 @@ local label = display.newTTFLabel({
 
 ~~~
 
-@param table params 参数表格对象
-
-@return UILabel UILabel对象
-
 ]]
 function display.newTTFLabel(params)
     assert(type(params) == "table",
@@ -1243,6 +1225,15 @@ function display.newTTFLabel(params)
 
     return label
 end
+
+--------------------------------
+-- 将指定的显示对象按照特定锚点对齐。
+-- @function [parent=#display] align
+-- @param Sprite target 显示对象
+-- @param integer anchorPoint 锚点位置
+-- @param integer x
+-- @param integer y
+
 
 --[[--
 
@@ -1279,11 +1270,6 @@ display.align(sprite, display.LEFT_TOP, 0, 0)
 
 ~~~
 
-@param Sprite target 显示对象
-@param integer anchorPoint 锚点位置
-@param integer x
-@param integer y
-
 ]]
 function display.align(target, anchorPoint, x, y)
     target:setAnchorPoint(display.ANCHOR_POINTS[anchorPoint])
@@ -1294,9 +1280,14 @@ function display.addImageAsync(imagePath, callback)
     sharedTextureCache:addImageAsync(imagePath, callback)
 end
 
-if not cc.SpriteFrameCache.addSpriteFrames then
-    cc.SpriteFrameCache.addSpriteFrames = cc.SpriteFrameCache.addSpriteFramesWithFile
-end
+--------------------------------
+-- 将指定的 Sprite Sheets 材质文件及其数据文件载入图像帧缓存。
+-- @function [parent=#display] addSpriteFrames
+-- @param string plistFilename 数据文件名
+-- @param string image 材质文件名
+-- @see Sprite Sheets
+
+
 --[[--
 
 将指定的 Sprite Sheets 材质文件及其数据文件载入图像帧缓存。
@@ -1319,11 +1310,6 @@ display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)
 ~~~
 
 Sprite Sheets 通俗一点解释就是包含多张图片的集合。Sprite Sheets 材质文件由多张图片组成，而数据文件则记录了图片在材质文件中的位置等信息。
-
-@param string plistFilename 数据文件名
-@param string image 材质文件名
-
-@see Sprite Sheets
 
 ]]
 function display.addSpriteFrames(plistFilename, image, handler)
@@ -1355,14 +1341,12 @@ function display.addSpriteFrames(plistFilename, image, handler)
     end
 end
 
---[[--
+--------------------------------
+-- 从内存中卸载 Sprite Sheets 材质和数据文件
+-- @function [parent=#display] removeSpriteFramesWithFile
+-- @param string plistFilename 数据文件名
+-- @param string image 材质文件名
 
-从内存中卸载 Sprite Sheets 材质和数据文件
-
-@param string plistFilename 数据文件名
-@param string image 材质文件名
-
-]]
 function display.removeSpriteFramesWithFile(plistFilename, imageName)
     sharedSpriteFrameCache:removeSpriteFramesFromFile(plistFilename)
     if imageName then
@@ -1370,24 +1354,31 @@ function display.removeSpriteFramesWithFile(plistFilename, imageName)
     end
 end
 
+--------------------------------
+-- 设置材质格式。
+-- @function [parent=#display] setTexturePixelFormat
+-- @param string filename 材质文件名
+-- @param integer format 材质格式
+-- @see Texture Pixel Format
+
+
 --[[--
 
 设置材质格式。
-
 
 为了节约内存，我们会使用一些颜色品质较低的材质格式，例如针对背景图使用 cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565 格式。
 
 display.setTexturePixelFormat() 可以指定材质文件的材质格式，这样在加载材质文件时就会使用指定的格式。
 
-@param string filename 材质文件名
-@param integer format 材质格式
-
-@see Texture Pixel Format
-
 ]]
 function display.setTexturePixelFormat(filename, format)
     display.TEXTURES_PIXEL_FORMAT[filename] = format
 end
+
+--------------------------------
+-- 从图像帧缓存中删除一个图像。
+-- @function [parent=#display] removeSpriteFrameByImageName
+-- @param string imageName 图像文件名
 
 --[[--
 
@@ -1397,13 +1388,19 @@ end
 
 此外，Scene 提供了 markAutoCleanupImage() 接口，可以指定场景退出时需要自动清理的图像，推荐使用。
 
-@param string imageName 图像文件名
-
 ]]
 function display.removeSpriteFrameByImageName(imageName)
     sharedSpriteFrameCache:removeSpriteFrameByName(imageName)
     cc.Director:getInstance():getTextureCache():removeTextureForKey(imageName)
 end
+
+--------------------------------
+-- 从指定的图像文件创建并返回一个批量渲染对象。
+-- @function [parent=#display] newBatchNode
+-- @param string image 图像文件名
+-- @param integer capacity
+-- @return SpriteBatchNode#SpriteBatchNode 
+-- @see Batch Node
 
 --[[--
 
@@ -1430,17 +1427,16 @@ end
 
 ~~~
 
-@param string image 图像文件名
-@param integer capacity
-
-@return SpriteBatchNode
-
-@see Batch Node
-
 ]]
 function display.newBatchNode(image, capacity)
     return cc.SpriteBatchNode:create(image, capacity or 100)
 end
+
+--------------------------------
+-- 创建并返回一个图像帧对象。
+-- @function [parent=#display] newSpriteFrame
+-- @param string 图像帧名称
+-- @return SpriteFrameCache#SpriteFrameCache 
 
 --[[--
 
@@ -1461,10 +1457,6 @@ sprite:setSpriteFrame(frameNo)
 
 ~~~
 
-@param string 图像帧名称
-
-@return SpriteFrameCache
-
 ]]
 function display.newSpriteFrame(frameName)
     local frame = sharedSpriteFrameCache:getSpriteFrame(frameName)
@@ -1473,6 +1465,16 @@ function display.newSpriteFrame(frameName)
     end
     return frame
 end
+
+--------------------------------
+-- 以特定模式创建一个包含多个图像帧对象的数组。
+-- @function [parent=#display] newFrames
+-- @param string pattern 模式字符串
+-- @param integer begin 起始索引
+-- @param integer length 长度
+-- @param boolean isReversed 是否是递减索引
+-- @return table#table  图像帧数组
+
 
 --[[--
 
@@ -1487,13 +1489,6 @@ local frames = display.newFrames("Walk%04d.png", 1, 8)
 local frames = display.newFrames("Walk%04d.png", 1, 8, true)
 
 ~~~
-
-@param string pattern 模式字符串
-@param integer begin 起始索引
-@param integer length 长度
-@param boolean isReversed 是否是递减索引
-
-@return table 图像帧数组
 
 ]]
 function display.newFrames(pattern, begin, length, isReversed)
@@ -1518,6 +1513,13 @@ function display.newFrames(pattern, begin, length, isReversed)
     return frames
 end
 
+--------------------------------
+-- 以包含图像帧的数组创建一个动画对象。
+-- @function [parent=#display] newAnimation
+-- @param table frames 图像帧的数组
+-- @param number time 每一桢动画之间的间隔时间
+-- @return Animation#Animation  Animation对象
+
 --[[--
 
 以包含图像帧的数组创建一个动画对象。
@@ -1530,12 +1532,6 @@ sprite:playAnimationOnce(animation) -- 播放一次动画
 
 ~~~
 
-@param table frames 图像帧的数组
-@param number time 每一桢动画之间的间隔时间
-
-
-@return Animation Animation对象
-
 ]]
 function display.newAnimation(frames, time)
     local count = #frames
@@ -1546,6 +1542,12 @@ function display.newAnimation(frames, time)
     time = time or 1.0 / count
     return cc.Animation:createWithSpriteFrames(frames, time)
 end
+
+--------------------------------
+-- 以指定名字缓存创建好的动画对象，以便后续反复使用。
+-- @function [parent=#display] setAnimationCache
+-- @param string name 名字
+-- @param Animation animation 动画对象
 
 --[[--
 
@@ -1562,48 +1564,44 @@ sprite:playAnimationOnce(display.getAnimationCache("Walk")) -- 播放一次动�
 
 ~~~
 
-@param string name 名字
-@param Animation animation 动画对象
-
-
 ]]
 function display.setAnimationCache(name, animation)
     sharedAnimationCache:addAnimation(animation, name)
 end
 
---[[--
+--------------------------------
+-- 取得以指定名字缓存的动画对象，如果不存在则返回 nil。
+-- @function [parent=#display] getAnimationCache
+-- @param string name
+-- @return Animation#Animation 
 
-取得以指定名字缓存的动画对象，如果不存在则返回 nil。
-
-@param string name
-
-@return Animation
-
-]]
 function display.getAnimationCache(name)
     return sharedAnimationCache:getAnimation(name)
 end
 
---[[--
+--------------------------------
+-- 删除指定名字缓存的动画对象。
+-- @function [parent=#display] removeAnimationCache
+-- @param string name
 
-删除指定名字缓存的动画对象。
-
-@param string name
-
-]]
 function display.removeAnimationCache(name)
     sharedAnimationCache:removeAnimation(name)
 end
 
---[[--
+--------------------------------
+-- 从内存中卸载没有使用 Sprite Sheets 材质
+-- @function [parent=#display] removeUnusedSpriteFrames
 
-从内存中卸载没有使用 Sprite Sheets 材质
-
-]]
 function display.removeUnusedSpriteFrames()
     sharedSpriteFrameCache:removeUnusedSpriteFrames()
     sharedTextureCache:removeUnusedTextures()
 end
+
+--------------------------------
+-- 创建一个进度条的节点
+-- @function [parent=#display] newProgressTimer
+-- @param mixed image
+-- @param number progressType
 
 --[[--
 
@@ -1613,12 +1611,6 @@ end
 
 - display.PROGRESS_TIMER_BAR  环形
 - display.PROGRESS_TIMER_RADIAL
-
-
-@param: mixed image         图片文件名或者精灵
-@param: int   progresssType 进度条类型
-
-@return: ProgressTimer
 
 ]]
 display.PROGRESS_TIMER_BAR = 1
@@ -1632,71 +1624,6 @@ function display.newProgressTimer(image, progresssType)
     local progress = cc.ProgressTimer:create(image)
     progress:setType(progresssType)
     return progress
-end
-
---[[--
-
-获取一个节点的纹理内容
-
-display.printscreen() 提供:
-
-- 保存节点的纹理到磁盘文件
-- 以节点的纹理创建一个精灵并返回
-
-
-注意：node 的 content size 必须大于 (0, 0). 否则会收到错误信息: LUA ERROR: ASSERT FAILED ON LUA EXECUTE: Invalid size
-
-~~~ lua
-
--- 截屏并保存
-display.printscreen(node, {file="save.png"})
-
--- 使用截屏纹理创建一个精灵并返回
-local sp = display.printscreen(node, {})
-
-~~~
-
--- Get a screenshot of a Node
--- @author zrong(zengrong.net)
--- Creation: 2014-04-10
-
-@param node A node to print.
-@param args
-
-@return FilteredSprite   An instance of Sprite or FilteredSprite.
-
-]]
-function display.printscreen(node, args)
-    local sp = true
-    local file = nil
-    local filters = nil
-    local filterParams = nil
-    if args then
-        if args.sprite ~= nil then sp = args.sprite end
-        file = args.file
-        filters = args.filters
-        filterParams = args.filterParams
-    end
-    local size = node:getContentSize()
-    local canvas = cc.RenderTexture:create(size.width,size.height)
-    canvas:begin()
-    node:visit()
-    canvas:endToLua()
-
-    if sp then
-        local texture = canvas:getSprite():getTexture()
-        if filters then
-            sp = display.newFilteredSprite(texture, filters, filterParams)
-        else
-            sp = display.newSprite(texture)
-        end
-        sp:flipY(true)
-    end
-
-    if file then
-        canvas:saveToFile(file)
-    end
-    return sp, file
 end
 
 return display
