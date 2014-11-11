@@ -163,15 +163,7 @@ namespace cocostudio
         label->setFontSize(fontSize);
         
         std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
-        
-        std::string fontFilePath = protocolBuffersPath.append(fontName);
-		if (FileUtils::getInstance()->isFileExist(fontFilePath))
-		{
-			label->setFontName(fontFilePath);
-		}
-		else{
-			label->setFontName(fontName);
-		}
+        label->setFontName(fontName);        
         
         bool aw = options.has_areawidth();
         bool ah = options.has_areaheight();
