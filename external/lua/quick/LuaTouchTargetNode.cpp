@@ -52,6 +52,21 @@ LuaEventNode *LuaTouchTargetNode::getNode()
     return  _node;
 }
 
+bool LuaTouchTargetNode::isEnable()
+{
+    if (_node)
+    {
+        return _node->isRunning();
+    }
+    return false;
+}
+
+void LuaTouchTargetNode::setDisable()
+{
+    CC_SAFE_RELEASE(_node);
+    _node = nullptr;
+}
+
 int LuaTouchTargetNode::getTouchMode()
 {
     return _touchMode;

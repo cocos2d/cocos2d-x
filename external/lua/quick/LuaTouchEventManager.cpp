@@ -377,11 +377,11 @@ void LuaTouchEventManager::dispatchingTouchEvent(const std::vector<Touch*>& touc
     {
         touchTarget = _touchingTargets.at(i);
 
-        if (!touchTarget->getNode()->isRunning())
+        if (!touchTarget->isEnable())
         {
             // target removed from scene, remove it
             //            CCLOG("REMOVE TARGET [%u]", i);
-            _touchingTargets.at(i);
+            _touchingTargets.erase(i);
             --count;
             --i;
             continue;
@@ -596,8 +596,10 @@ void LuaTouchEventManager::removeTouchTarget(LuaEventNode* eventNode)
     for (auto it = _touchingTargets.begin(); it != _touchingTargets.end(); ++it) {
         targetNode = *it;
         if (targetNode->getNode() == eventNode) {
-            _touchingTargets.eraseObject(targetNode);
+//            _touchingTargets.eraseObject(targetNode);
             //CCLOG("remove touch target htl");
+            //Do not erase, just disable it. Because maybe in other loop now --- zjf
+            targetNode->setDisable();
             break;
         }
     }
