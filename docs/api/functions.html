@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - functions</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><strong>functions</strong></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>functions</h1>
+
+<p>提供一组常用函数，以及对 Lua 标准库的扩展</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_printf">printf(fmt,&nbsp;...)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">输出格式化字符串</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_checknumber">checknumber(value,&nbsp;base)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查并尝试转换为数值，如果无法转换则返回 0</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_checkint">checkint(value)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查并尝试转换为整数，如果无法转换则返回 0</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_checkbool">checkbool(value)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查并尝试转换为布尔值，除了 nil 和 false，其他任何值都会返回 true</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_checktable">checktable(value)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查值是否是一个表格，如果不是则返回一个空表格</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_isset">isset(hashtable,&nbsp;key)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">如果表格中指定 key 的值为 nil，或者输入值不是表格，返回 false，否则返回 true</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_clone">clone(object)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">深度克隆一个值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_class">class(classname,&nbsp;super)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建一个类</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_iskindof">iskindof(obj,&nbsp;classname)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">如果对象是指定类或其子类的实例，返回 true，否则返回 false</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_import">import(moduleName,&nbsp;currentModuleName)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">载入一个模块</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_handler">handler(obj,&nbsp;method)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将 Lua 对象及其方法包装为一个匿名函数</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_math_newrandomseed">math.newrandomseed()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">根据系统时间初始化随机数种子，让后续的 math.random() 返回更随机的值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_math_round">math.round(value)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">对数值进行四舍五入，如果不是数值则返回 0</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_math_angle2radian">math.angle2radian(angle)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">角度转弧度</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_math_radian2angle">math.radian2angle(radian)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">弧度转角度</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_io_exists">io.exists(path)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查指定的文件或目录是否存在，如果存在返回 true，否则返回 false</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_io_readfile">io.readfile(path)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">读取文件内容，返回包含文件内容的字符串，如果失败返回 nil</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_io_writefile">io.writefile(path,&nbsp;content,&nbsp;mode)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">以字符串内容写入文件，成功返回 true，失败返回 false</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_io_pathinfo">io.pathinfo(path)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">拆分一个路径字符串，返回组成路径的各个部分</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_io_filesize">io.filesize(path)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回指定文件的大小，如果失败返回 false</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_nums">table.nums(t)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计算表格包含的字段数量</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_keys">table.keys(hashtable)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回指定表格中的所有键</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_values">table.values(hashtable)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回指定表格中的所有值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_merge">table.merge(dest,&nbsp;src)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将来源表格中所有键及其值复制到目标表格对象中，如果存在同名键，则覆盖其值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_insertto">table.insertto(dest,&nbsp;src,&nbsp;begin)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">在目标表格的指定位置插入来源表格，如果没有指定位置则连接两个表格</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_indexof">table.indexof(array,&nbsp;value,&nbsp;begin)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从表格中查找指定值，返回其索引，如果没找到返回 false</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_keyof">table.keyof(hashtable,&nbsp;value)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从表格中查找指定值，返回其 key，如果没找到返回 nil</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_removebyvalue">table.removebyvalue(array,&nbsp;value,&nbsp;removeall)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从表格中删除指定值，返回删除的值的个数</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_map">table.map(t,&nbsp;fn)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">对表格中每一个值执行一次指定的函数，并用函数返回值更新表格内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_walk">table.walk(t,&nbsp;fn)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">对表格中每一个值执行一次指定的函数，但不改变表格内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_filter">table.filter(t,&nbsp;fn)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">对表格中每一个值执行一次指定的函数，如果该函数返回 false，则对应的值会从表格中删除</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_table_unique">table.unique(t)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">遍历表格，确保其中的值唯一</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_htmlspecialchars">string.htmlspecialchars(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将特殊字符转为 HTML 转义符</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_restorehtmlspecialchars">string.restorehtmlspecialchars(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将 HTML 转义符还原为特殊字符，功能与 string.htmlspecialchars() 正好相反</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_nl2br">string.nl2br(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将字符串中的 \n 换行符转换为 HTML 标记</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_text2html">string.text2html(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将字符串中的特殊字符和 \n 换行符转换为 HTML 转移符和标记</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_split">string.split(input,&nbsp;delimiter)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">用指定字符或字符串分割输入字符串，返回包含分割结果的数组</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_ltrim">string.ltrim(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">去除输入字符串头部的空白字符，返回结果</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_rtrim">string.rtrim(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">去除输入字符串尾部的空白字符，返回结果</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_trim">string.trim(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">去掉字符串首尾的空白字符，返回结果</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_ucfirst">string.ucfirst(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将字符串的第一个字符转为大写，返回结果</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_urlencode">string.urlencode(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将字符串转换为符合 URL 传递要求的格式，并返回转换结果</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_urldecode">string.urldecode(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将 URL 中的特殊字符还原，并返回结果</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_utf8len">string.utf8len(input)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计算 UTF8 字符串的长度，每一个中文算一个字符</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_string_formatnumberthousands">string.formatnumberthousands(num)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将数值格式化为包含千分位分隔符的字符串</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_printf"></a>
+
+            <dd class="">
+
+<h3>printf()</h3>
+
+<blockquote>
+  <p>printf(fmt, ...)</p>
+</blockquote>
+
+<p>输出格式化字符串</p>
+
+<pre><code class="lua"><br />printf("The value = %d", 100)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>fmt</strong> 输出格式</li>
+<li>[mixed <strong>...]</strong> 更多参数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_checknumber"></a>
+
+            <dd class="">
+
+<h3>checknumber()</h3>
+
+<blockquote>
+  <p>checknumber(value, base)</p>
+</blockquote>
+
+<p>检查并尝试转换为数值，如果无法转换则返回 0</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>value</strong> 要检查的值</li>
+<li>[integer <strong>base]</strong> 进制，默认为十进制</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>number</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_checkint"></a>
+
+            <dd class="">
+
+<h3>checkint()</h3>
+
+<blockquote>
+  <p>checkint(value)</p>
+</blockquote>
+
+<p>检查并尝试转换为整数，如果无法转换则返回 0</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>value</strong> 要检查的值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_checkbool"></a>
+
+            <dd class="">
+
+<h3>checkbool()</h3>
+
+<blockquote>
+  <p>checkbool(value)</p>
+</blockquote>
+
+<p>检查并尝试转换为布尔值，除了 nil 和 false，其他任何值都会返回 true</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>value</strong> 要检查的值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_checktable"></a>
+
+            <dd class="">
+
+<h3>checktable()</h3>
+
+<blockquote>
+  <p>checktable(value)</p>
+</blockquote>
+
+<p>检查值是否是一个表格，如果不是则返回一个空表格</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>value</strong> 要检查的值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_isset"></a>
+
+            <dd class="">
+
+<h3>isset()</h3>
+
+<blockquote>
+  <p>isset(hashtable, key)</p>
+</blockquote>
+
+<p>如果表格中指定 key 的值为 nil，或者输入值不是表格，返回 false，否则返回 true</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>hashtable</strong> 要检查的表格</li>
+<li>mixed <strong>key</strong> 要检查的键名</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_clone"></a>
+
+            <dd class="">
+
+<h3>clone()</h3>
+
+<blockquote>
+  <p>clone(object)</p>
+</blockquote>
+
+<p>深度克隆一个值</p>
+
+<pre><code class="lua"><br />-- 下面的代码，t2 是 t1 的引用，修改 t2 的属性时，t1 的内容也会发生变化
+local t1 = {a = 1, b = 2}
+local t2 = t1
+t2.b = 3    -- t1 = {a = 1, b = 3} &lt;-- t1.b 发生变化
+
+-- clone() 返回 t1 的副本，修改 t2 不会影响 t1
+local t1 = {a = 1, b = 2}
+local t2 = clone(t1)
+t2.b = 3    -- t1 = {a = 1, b = 2} &lt;-- t1.b 不受影响
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>object</strong> 要克隆的值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>mixed</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_class"></a>
+
+            <dd class="">
+
+<h3>class()</h3>
+
+<blockquote>
+  <p>class(classname, super)</p>
+</blockquote>
+
+<p>创建一个类</p>
+
+<pre><code class="lua"><br />-- 定义名为 Shape 的基础类
+local Shape = class("Shape")
+
+-- ctor() 是类的构造函数，在调用 Shape.new() 创建 Shape 对象实例时会自动执行
+function Shape:ctor(shapeName)
+    self.shapeName = shapeName
+    printf("Shape:ctor(%s)", self.shapeName)
+end
+
+-- 为 Shape 定义个名为 draw() 的方法
+function Shape:draw()
+    printf("draw %s", self.shapeName)
+end
+
+--
+
+-- Circle 是 Shape 的继承类
+local Circle = class("Circle", Shape)
+
+function Circle:ctor()
+    -- 如果继承类覆盖了 ctor() 构造函数，那么必须手动调用父类构造函数
+    -- 类名.super 可以访问指定类的父类
+    Circle.super.ctor(self, "circle")
+    self.radius = 100
+end
+
+function Circle:setRadius(radius)
+    self.radius = radius
+end
+
+-- 覆盖父类的同名方法
+function Circle:draw()
+    printf("draw %s, raidus = %0.2f", self.shapeName, self.raidus)
+end
+
+--
+
+local Rectangle = class("Rectangle", Shape)
+
+function Rectangle:ctor()
+    Rectangle.super.ctor(self, "rectangle")
+end
+
+--
+
+local circle = Circle.new()             -- 输出: Shape:ctor(circle)
+circle:setRaidus(200)
+circle:draw()                           -- 输出: draw circle, radius = 200.00
+
+local rectangle = Rectangle.new()       -- 输出: Shape:ctor(rectangle)
+rectangle:draw()                        -- 输出: draw rectangle
+
+</code></pre>
+
+<h3>高级用法</h3>
+
+<p>class() 除了定义纯 Lua 类之外，还可以从 C++ 对象继承类。</p>
+
+<p>比如需要创建一个工具栏，并在添加按钮时自动排列已有的按钮，那么我们可以使用如下的代码：</p>
+
+<pre><code class="lua"><br />-- 从 cc.Node 对象派生 Toolbar 类，该类具有 cc.Node 的所有属性和行为
+local Toolbar = class("Toolbar", function()
+    return display.newNode() -- 返回一个 cc.Node 对象
+end)
+
+-- 构造函数
+function Toolbar:ctor()
+    self.buttons = {} -- 用一个 table 来记录所有的按钮
+end
+
+-- 添加一个按钮，并且自动设置按钮位置
+function Toolbar:addButton(button)
+    -- 将按钮对象加入 table
+    self.buttons[#self.buttons + 1] = button
+
+    -- 添加按钮对象到 cc.Node 中，以便显示该按钮
+    -- 因为 Toolbar 是从 cc.Node 继承的，所以可以使用 addChild() 方法
+    self:addChild(button)
+
+    -- 按照按钮数量，调整所有按钮的位置
+    local x = 0
+    for _, button in ipairs(self.buttons) do
+        button:setPosition(x, 0)
+        -- 依次排列按钮，每个按钮之间间隔 10 点
+        x = x + button:getContentSize().width + 10
+    end
+end
+
+</code></pre>
+
+<p>class() 的这种用法让我们可以在 C++ 对象基础上任意扩展行为。</p>
+
+<p>既然是继承，自然就可以覆盖 C++ 对象的方法：</p>
+
+<pre><code class="lua"><br />function Toolbar:setPosition(x, y)
+    -- 由于在 Toolbar 继承类中覆盖了 cc.Node 对象的 setPosition() 方法
+    -- 所以我们要用以下形式才能调用到 cc.Node 原本的 setPosition() 方法
+    getmetatable(self).setPosition(self, x, y)
+
+    printf("x = %0.2f, y = %0.2f", x, y)
+end
+
+</code></pre>
+
+<p><strong>注意:</strong> Lua 继承类覆盖的方法并不能从 C++ 调用到。也就是说通过 C++ 代码调用这个 cc.Node 对象的 setPosition() 方法时，并不会执行我们在 Lua 中定义的 Toolbar:setPosition() 方法。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>classname</strong> 类名</li>
+<li>[mixed <strong>super]</strong> 父类或者创建对象实例的函数</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_iskindof"></a>
+
+            <dd class="">
+
+<h3>iskindof()</h3>
+
+<blockquote>
+  <p>iskindof(obj, classname)</p>
+</blockquote>
+
+<p>如果对象是指定类或其子类的实例，返回 true，否则返回 false</p>
+
+<pre><code class="lua"><br />local Animal = class("Animal")
+local Duck = class("Duck", Animal)
+
+print(iskindof(Duck.new(), "Animal")) -- 输出 true
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>obj</strong> 要检查的对象</li>
+<li>string <strong>classname</strong> 类名</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_import"></a>
+
+            <dd class="">
+
+<h3>import()</h3>
+
+<blockquote>
+  <p>import(moduleName, currentModuleName)</p>
+</blockquote>
+
+<p>载入一个模块</p>
+
+<p>import() 与 require() 功能相同，但具有一定程度的自动化特性。</p>
+
+<p>假设我们有如下的目录结构：</p>
+
+<pre><code><br />app/
+app/classes/
+app/classes/MyClass.lua
+app/classes/MyClassBase.lua
+app/classes/data/Data1.lua
+app/classes/data/Data2.lua
+
+</code></pre>
+
+<p>MyClass 中需要载入 MyClassBase 和 MyClassData。如果用 require()，MyClass 内的代码如下：</p>
+
+<pre><code class="lua"><br />local MyClassBase = require("app.classes.MyClassBase")
+local MyClass = class("MyClass", MyClassBase)
+
+local Data1 = require("app.classes.data.Data1")
+local Data2 = require("app.classes.data.Data2")
+
+</code></pre>
+
+<p>假如我们将 MyClass 及其相关文件换一个目录存放，那么就必须修改 MyClass 中的 require() 命令，否则将找不到模块文件。</p>
+
+<p>而使用 import()，我们只需要如下写：</p>
+
+<pre><code class="lua"><br />local MyClassBase = import(".MyClassBase")
+local MyClass = class("MyClass", MyClassBase)
+
+local Data1 = import(".data.Data1")
+local Data2 = import(".data.Data2")
+
+</code></pre>
+
+<p>当在模块名前面有一个"." 时，import() 会从当前模块所在目录中查找其他模块。因此 MyClass 及其相关文件不管存放到什么目录里，我们都不再需要修改 MyClass 中的 import() 命令。这在开发一些重复使用的功能组件时，会非常方便。</p>
+
+<p>我们可以在模块名前添加多个"." ，这样 import() 会从更上层的目录开始查找模块。</p>
+
+<p>~</p>
+
+<p>不过 import() 只有在模块级别调用（也就是没有将 import() 写在任何函数中）时，才能够自动得到当前模块名。如果需要在函数中调用 import()，那么就需要指定当前模块名：</p>
+
+<pre><code class="lua"><br /># MyClass.lua
+
+# 这里的 ... 是隐藏参数，包含了当前模块的名字，所以最好将这行代码写在模块的第一行
+local CURRENT_MODULE_NAME = ...
+
+local function testLoad()
+    local MyClassBase = import(".MyClassBase", CURRENT_MODULE_NAME)
+    # 更多代码
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>moduleName</strong> 要载入的模块的名字</li>
+<li>[string <strong>currentModuleName]</strong> 当前模块名</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>module</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_handler"></a>
+
+            <dd class="">
+
+<h3>handler()</h3>
+
+<blockquote>
+  <p>handler(obj, method)</p>
+</blockquote>
+
+<p>将 Lua 对象及其方法包装为一个匿名函数</p>
+
+<p>在 quick-cocos2d-x 中，许多功能需要传入一个 Lua 函数做参数，然后在特定事件发生时就会调用传入的函数。例如触摸事件、帧事件等等。</p>
+
+<pre><code class="lua"><br />local MyScene = class("MyScene", function()
+    return display.newScene("MyScene")
+end)
+
+function MyScene:ctor()
+    self.frameTimeCount = 0
+    -- 注册帧事件
+    self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, self.onEnterFrame)
+    self:scheduleUpdate()
+end
+
+function MyScene:onEnterFrame(dt)
+    self.frameTimeCount = self.frameTimeCount + dt
+end
+
+</code></pre>
+
+<p>上述代码执行时将出错，报告"Invalid self" ，这就是因为 C++ 无法识别 Lua 对象方法。因此在调用我们传入的 self.onEnterFrame 方法时没有提供正确的参数。</p>
+
+<p>要让上述的代码正常工作，就需要使用 handler() 进行一下包装：</p>
+
+<pre><code class="lua"><br />function MyScene:ctor()
+    self.frameTimeCount = 0
+    -- 注册帧事件
+    self:addNodeEventListener(cc.ENTER_FRAME_EVENT, handler(self, self.onEnterFrame))
+    self:scheduleUpdate()
+end
+
+</code></pre>
+
+<p>实际上，除了 C++ 回调 Lua 函数之外，在其他所有需要回调的地方都可以使用 handler()。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>obj</strong> Lua 对象</li>
+<li>function <strong>method</strong> 对象方法</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>function</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_math_newrandomseed"></a>
+
+            <dd class="">
+
+<h3>math.newrandomseed()</h3>
+
+<blockquote>
+  <p>math.newrandomseed()</p>
+</blockquote>
+
+<p>根据系统时间初始化随机数种子，让后续的 math.random() 返回更随机的值</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_math_round"></a>
+
+            <dd class="">
+
+<h3>math.round()</h3>
+
+<blockquote>
+  <p>math.round(value)</p>
+</blockquote>
+
+<p>对数值进行四舍五入，如果不是数值则返回 0</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>number <strong>value</strong> 输入值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>number</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_math_angle2radian"></a>
+
+            <dd class="">
+
+<h3>math.angle2radian()</h3>
+
+<blockquote>
+  <p>math.angle2radian(angle)</p>
+</blockquote>
+
+<p>角度转弧度</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_math_radian2angle"></a>
+
+            <dd class="">
+
+<h3>math.radian2angle()</h3>
+
+<blockquote>
+  <p>math.radian2angle(radian)</p>
+</blockquote>
+
+<p>弧度转角度</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_io_exists"></a>
+
+            <dd class="">
+
+<h3>io.exists()</h3>
+
+<blockquote>
+  <p>io.exists(path)</p>
+</blockquote>
+
+<p>检查指定的文件或目录是否存在，如果存在返回 true，否则返回 false</p>
+
+<p>可以使用 cc.FileUtils:fullPathForFilename() 函数查找特定文件的完整路径，例如：</p>
+
+<pre><code class="lua"><br />local path = cc.FileUtils:getInstance():fullPathForFilename("gamedata.txt")
+if io.exists(path) then
+    ....
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>path</strong> 要检查的文件或目录的完全路径</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_io_readfile"></a>
+
+            <dd class="">
+
+<h3>io.readfile()</h3>
+
+<blockquote>
+  <p>io.readfile(path)</p>
+</blockquote>
+
+<p>读取文件内容，返回包含文件内容的字符串，如果失败返回 nil</p>
+
+<p>io.readfile() 会一次性读取整个文件的内容，并返回一个字符串，因此该函数不适宜读取太大的文件。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>path</strong> 文件完全路径</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_io_writefile"></a>
+
+            <dd class="">
+
+<h3>io.writefile()</h3>
+
+<blockquote>
+  <p>io.writefile(path, content, mode)</p>
+</blockquote>
+
+<p>以字符串内容写入文件，成功返回 true，失败返回 false</p>
+
+<p>"mode 写入模式" 参数决定 io.writefile() 如何写入内容，可用的值如下：</p>
+
+<ul>
+<li>"w+" : 覆盖文件已有内容，如果文件不存在则创建新文件</li>
+<li>"a+" : 追加内容到文件尾部，如果文件不存在则创建文件</li>
+</ul>
+
+<p>此外，还可以在 "写入模式" 参数最后追加字符 "b" ，表示以二进制方式写入数据，这样可以避免内容写入不完整。</p>
+
+<p><strong>Android 特别提示:</strong> 在 Android 平台上，文件只能写入存储卡所在路径，assets 和 data 等目录都是无法写入的。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>path</strong> 文件完全路径</li>
+<li>string <strong>content</strong> 要写入的内容</li>
+<li>[string <strong>mode]</strong> 写入模式，默认值为 "w+b"</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_io_pathinfo"></a>
+
+            <dd class="">
+
+<h3>io.pathinfo()</h3>
+
+<blockquote>
+  <p>io.pathinfo(path)</p>
+</blockquote>
+
+<p>拆分一个路径字符串，返回组成路径的各个部分</p>
+
+<pre><code class="lua"><br />local pathinfo  = io.pathinfo("/var/app/test/abc.png")
+
+-- 结果:
+-- pathinfo.dirname  = "/var/app/test/"
+-- pathinfo.filename = "abc.png"
+-- pathinfo.basename = "abc"
+-- pathinfo.extname  = ".png"
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>path</strong> 要分拆的路径字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_io_filesize"></a>
+
+            <dd class="">
+
+<h3>io.filesize()</h3>
+
+<blockquote>
+  <p>io.filesize(path)</p>
+</blockquote>
+
+<p>返回指定文件的大小，如果失败返回 false</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>path</strong> 文件完全路径</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_nums"></a>
+
+            <dd class="">
+
+<h3>table.nums()</h3>
+
+<blockquote>
+  <p>table.nums(t)</p>
+</blockquote>
+
+<p>计算表格包含的字段数量</p>
+
+<p>Lua table 的 "#" 操作只对依次排序的数值下标数组有效，table.nums() 则计算 table 中所有不为 nil 的值的个数。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>t</strong> 要检查的表格</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_keys"></a>
+
+            <dd class="">
+
+<h3>table.keys()</h3>
+
+<blockquote>
+  <p>table.keys(hashtable)</p>
+</blockquote>
+
+<p>返回指定表格中的所有键</p>
+
+<pre><code class="lua"><br />local hashtable = {a = 1, b = 2, c = 3}
+local keys = table.keys(hashtable)
+-- keys = {"a", "b", "c"}
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>hashtable</strong> 要检查的表格</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_values"></a>
+
+            <dd class="">
+
+<h3>table.values()</h3>
+
+<blockquote>
+  <p>table.values(hashtable)</p>
+</blockquote>
+
+<p>返回指定表格中的所有值</p>
+
+<pre><code class="lua"><br />local hashtable = {a = 1, b = 2, c = 3}
+local values = table.values(hashtable)
+-- values = {1, 2, 3}
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>hashtable</strong> 要检查的表格</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_merge"></a>
+
+            <dd class="">
+
+<h3>table.merge()</h3>
+
+<blockquote>
+  <p>table.merge(dest, src)</p>
+</blockquote>
+
+<p>将来源表格中所有键及其值复制到目标表格对象中，如果存在同名键，则覆盖其值</p>
+
+<pre><code class="lua"><br />local dest = {a = 1, b = 2}
+local src  = {c = 3, d = 4}
+table.merge(dest, src)
+-- dest = {a = 1, b = 2, c = 3, d = 4}
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>dest</strong> 目标表格</li>
+<li>table <strong>src</strong> 来源表格</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_insertto"></a>
+
+            <dd class="">
+
+<h3>table.insertto()</h3>
+
+<blockquote>
+  <p>table.insertto(dest, src, begin)</p>
+</blockquote>
+
+<p>在目标表格的指定位置插入来源表格，如果没有指定位置则连接两个表格</p>
+
+<pre><code class="lua"><br />local dest = {1, 2, 3}
+local src  = {4, 5, 6}
+table.insertto(dest, src)
+-- dest = {1, 2, 3, 4, 5, 6}
+
+dest = {1, 2, 3}
+table.insertto(dest, src, 5)
+-- dest = {1, 2, 3, nil, 4, 5, 6}
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>dest</strong> 目标表格</li>
+<li>table <strong>src</strong> 来源表格</li>
+<li>[integer <strong>begin]</strong> 插入位置</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_indexof"></a>
+
+            <dd class="">
+
+<h3>table.indexof()</h3>
+
+<blockquote>
+  <p>table.indexof(array, value, begin)</p>
+</blockquote>
+
+<p>从表格中查找指定值，返回其索引，如果没找到返回 false</p>
+
+<pre><code class="lua"><br />local array = {"a", "b", "c"}
+print(table.indexof(array, "b")) -- 输出 2
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>array</strong> 表格</li>
+<li>mixed <strong>value</strong> 要查找的值</li>
+<li>[integer <strong>begin]</strong> 起始索引值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_keyof"></a>
+
+            <dd class="">
+
+<h3>table.keyof()</h3>
+
+<blockquote>
+  <p>table.keyof(hashtable, value)</p>
+</blockquote>
+
+<p>从表格中查找指定值，返回其 key，如果没找到返回 nil</p>
+
+<pre><code class="lua"><br />local hashtable = {name = "dualface", comp = "chukong"}
+print(table.keyof(hashtable, "chukong")) -- 输出 comp
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>hashtable</strong> 表格</li>
+<li>mixed <strong>value</strong> 要查找的值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 该值对应的 key</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_removebyvalue"></a>
+
+            <dd class="">
+
+<h3>table.removebyvalue()</h3>
+
+<blockquote>
+  <p>table.removebyvalue(array, value, removeall)</p>
+</blockquote>
+
+<p>从表格中删除指定值，返回删除的值的个数</p>
+
+<pre><code class="lua"><br />local array = {"a", "b", "c", "c"}
+print(table.removebyvalue(array, "c", true)) -- 输出 2
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>array</strong> 表格</li>
+<li>mixed <strong>value</strong> 要删除的值</li>
+<li>[boolean <strong>removeall]</strong> 是否删除所有相同的值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_map"></a>
+
+            <dd class="">
+
+<h3>table.map()</h3>
+
+<blockquote>
+  <p>table.map(t, fn)</p>
+</blockquote>
+
+<p>对表格中每一个值执行一次指定的函数，并用函数返回值更新表格内容</p>
+
+<pre><code class="lua"><br />local t = {name = "dualface", comp = "chukong"}
+table.map(t, function(v, k)
+    -- 在每一个值前后添加括号
+    return "[" .. v .. "]"
+end)
+
+-- 输出修改后的表格内容
+for k, v in pairs(t) do
+    print(k, v)
+end
+
+-- 输出
+-- name [dualface]
+-- comp [chukong]
+
+</code></pre>
+
+<p>fn 参数指定的函数具有两个参数，并且返回一个值。原型如下：</p>
+
+<pre><code class="lua"><br />function map_function(value, key)
+    return value
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>t</strong> 表格</li>
+<li>function <strong>fn</strong> 函数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_walk"></a>
+
+            <dd class="">
+
+<h3>table.walk()</h3>
+
+<blockquote>
+  <p>table.walk(t, fn)</p>
+</blockquote>
+
+<p>对表格中每一个值执行一次指定的函数，但不改变表格内容</p>
+
+<pre><code class="lua"><br />local t = {name = "dualface", comp = "chukong"}
+table.walk(t, function(v, k)
+    -- 输出每一个值
+    print(v)
+end)
+
+</code></pre>
+
+<p>fn 参数指定的函数具有两个参数，没有返回值。原型如下：</p>
+
+<pre><code class="lua"><br />function map_function(value, key)
+
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>t</strong> 表格</li>
+<li>function <strong>fn</strong> 函数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_filter"></a>
+
+            <dd class="">
+
+<h3>table.filter()</h3>
+
+<blockquote>
+  <p>table.filter(t, fn)</p>
+</blockquote>
+
+<p>对表格中每一个值执行一次指定的函数，如果该函数返回 false，则对应的值会从表格中删除</p>
+
+<pre><code class="lua"><br />local t = {name = "dualface", comp = "chukong"}
+table.filter(t, function(v, k)
+    return v ~= "dualface" -- 当值等于 dualface 时过滤掉该值
+end)
+
+-- 输出修改后的表格内容
+for k, v in pairs(t) do
+    print(k, v)
+end
+
+-- 输出
+-- comp chukong
+
+</code></pre>
+
+<p>fn 参数指定的函数具有两个参数，并且返回一个 boolean 值。原型如下：</p>
+
+<pre><code class="lua"><br />function map_function(value, key)
+    return true or false
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>t</strong> 表格</li>
+<li>function <strong>fn</strong> 函数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_table_unique"></a>
+
+            <dd class="">
+
+<h3>table.unique()</h3>
+
+<blockquote>
+  <p>table.unique(t)</p>
+</blockquote>
+
+<p>遍历表格，确保其中的值唯一</p>
+
+<pre><code class="lua"><br />local t = {"a", "a", "b", "c"} -- 重复的 a 会被过滤掉
+local n = table.unique(t)
+
+for k, v in pairs(n) do
+    print(v)
+end
+
+-- 输出
+-- a
+-- b
+-- c
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>t</strong> 表格</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table 包含所有唯一值的新表格</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_htmlspecialchars"></a>
+
+            <dd class="">
+
+<h3>string.htmlspecialchars()</h3>
+
+<blockquote>
+  <p>string.htmlspecialchars(input)</p>
+</blockquote>
+
+<p>将特殊字符转为 HTML 转义符</p>
+
+<pre><code class="lua"><br />print(string.htmlspecialchars("&lt;ABC&gt;"))
+-- 输出 &amp;lt;ABC&amp;gt;
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 转换结果</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_restorehtmlspecialchars"></a>
+
+            <dd class="">
+
+<h3>string.restorehtmlspecialchars()</h3>
+
+<blockquote>
+  <p>string.restorehtmlspecialchars(input)</p>
+</blockquote>
+
+<p>将 HTML 转义符还原为特殊字符，功能与 string.htmlspecialchars() 正好相反</p>
+
+<pre><code class="lua"><br />print(string.restorehtmlspecialchars("&amp;lt;ABC&amp;gt;"))
+-- 输出 &lt;ABC&gt;
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 转换结果</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_nl2br"></a>
+
+            <dd class="">
+
+<h3>string.nl2br()</h3>
+
+<blockquote>
+  <p>string.nl2br(input)</p>
+</blockquote>
+
+<p>将字符串中的 \n 换行符转换为 HTML 标记</p>
+
+<pre><code class="lua"><br />print(string.nl2br("Hello\nWorld"))
+-- 输出
+-- Hello&lt;br /&gt;World
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 转换结果</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_text2html"></a>
+
+            <dd class="">
+
+<h3>string.text2html()</h3>
+
+<blockquote>
+  <p>string.text2html(input)</p>
+</blockquote>
+
+<p>将字符串中的特殊字符和 \n 换行符转换为 HTML 转移符和标记</p>
+
+<pre><code class="lua"><br />print(string.nl2br("&lt;Hello&gt;\nWorld"))
+-- 输出
+-- &amp;lt;Hello&amp;gt;&lt;br /&gt;World
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 转换结果</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_split"></a>
+
+            <dd class="">
+
+<h3>string.split()</h3>
+
+<blockquote>
+  <p>string.split(input, delimiter)</p>
+</blockquote>
+
+<p>用指定字符或字符串分割输入字符串，返回包含分割结果的数组</p>
+
+<pre><code class="lua"><br />local input = "Hello,World"
+local res = string.split(input, ",")
+-- res = {"Hello", "World"}
+
+local input = "Hello-+-World-+-Quick"
+local res = string.split(input, "-+-")
+-- res = {"Hello", "World", "Quick"}
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+<li>string <strong>delimiter</strong> 分割标记字符或字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>array 包含分割结果的数组</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_ltrim"></a>
+
+            <dd class="">
+
+<h3>string.ltrim()</h3>
+
+<blockquote>
+  <p>string.ltrim(input)</p>
+</blockquote>
+
+<p>去除输入字符串头部的空白字符，返回结果</p>
+
+<pre><code class="lua"><br />local input = "  ABC"
+print(string.ltrim(input))
+-- 输出 ABC，输入字符串前面的两个空格被去掉了
+
+</code></pre>
+
+<p>空白字符包括：</p>
+
+<ul>
+<li>空格</li>
+<li>制表符 \t</li>
+<li>换行符 \n</li>
+<li>回到行首符 \r</li>
+</ul>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 结果</li>
+</ul>
+
+<p>@see string.rtrim, string.trim</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_rtrim"></a>
+
+            <dd class="">
+
+<h3>string.rtrim()</h3>
+
+<blockquote>
+  <p>string.rtrim(input)</p>
+</blockquote>
+
+<p>去除输入字符串尾部的空白字符，返回结果</p>
+
+<pre><code class="lua"><br />local input = "ABC  "
+print(string.ltrim(input))
+-- 输出 ABC，输入字符串最后的两个空格被去掉了
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 结果</li>
+</ul>
+
+<p>@see string.ltrim, string.trim</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_trim"></a>
+
+            <dd class="">
+
+<h3>string.trim()</h3>
+
+<blockquote>
+  <p>string.trim(input)</p>
+</blockquote>
+
+<p>去掉字符串首尾的空白字符，返回结果</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 结果</li>
+</ul>
+
+<p>@see string.ltrim, string.rtrim</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_ucfirst"></a>
+
+            <dd class="">
+
+<h3>string.ucfirst()</h3>
+
+<blockquote>
+  <p>string.ucfirst(input)</p>
+</blockquote>
+
+<p>将字符串的第一个字符转为大写，返回结果</p>
+
+<pre><code class="lua"><br />local input = "hello"
+print(string.ucfirst(input))
+-- 输出 Hello
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 结果</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_urlencode"></a>
+
+            <dd class="">
+
+<h3>string.urlencode()</h3>
+
+<blockquote>
+  <p>string.urlencode(input)</p>
+</blockquote>
+
+<p>将字符串转换为符合 URL 传递要求的格式，并返回转换结果</p>
+
+<pre><code class="lua"><br />local input = "hello world"
+print(string.urlencode(input))
+-- 输出
+-- hello%20world
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 转换后的结果</li>
+</ul>
+
+<p>@see string.urldecode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_urldecode"></a>
+
+            <dd class="">
+
+<h3>string.urldecode()</h3>
+
+<blockquote>
+  <p>string.urldecode(input)</p>
+</blockquote>
+
+<p>将 URL 中的特殊字符还原，并返回结果</p>
+
+<pre><code class="lua"><br />local input = "hello%20world"
+print(string.urldecode(input))
+-- 输出
+-- hello world
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 转换后的结果</li>
+</ul>
+
+<p>@see string.urlencode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_utf8len"></a>
+
+            <dd class="">
+
+<h3>string.utf8len()</h3>
+
+<blockquote>
+  <p>string.utf8len(input)</p>
+</blockquote>
+
+<p>计算 UTF8 字符串的长度，每一个中文算一个字符</p>
+
+<pre><code class="lua"><br />local input = "你好World"
+print(string.utf8len(input))
+-- 输出 7
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 输入字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer 长度</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_string_formatnumberthousands"></a>
+
+            <dd class="">
+
+<h3>string.formatnumberthousands()</h3>
+
+<blockquote>
+  <p>string.formatnumberthousands(num)</p>
+</blockquote>
+
+<p>将数值格式化为包含千分位分隔符的字符串</p>
+
+<pre><code class="lua"><br />print(string.formatnumberthousands(1924235))
+-- 输出 1,924,235
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>number <strong>num</strong> 数值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 格式化结果</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>编译 Android 工程</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+html,body{color:black}*:not('#mkdbuttons'){margin:0;padding:0}#wrapper{font:16px helvetica,arial,freesans,clean,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;padding:3px;background:#fff;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;border:solid 1px #dddddd !important;color:#333}p{margin:1em 0}a{color:#4183c4;text-decoration:none}#wrapper{background-color:#fff;padding:30px;margin:15px;font-size:16px;line-height:1.6}#wrapper>*:first-child{margin-top:0 !important}#wrapper>*:last-child{margin-bottom:0 !important}@media screen{#wrapper{border:solid 1px #ddd}}h1,h2,h3,h4,h5,h6{position:relative;margin-top:1em;margin-bottom:16px;font-weight:700;line-height:1.4;color:#333}h1{padding-bottom:.3em;font-size:2.25em;line-height:1.2;border-bottom:1px solid #eee}h2{padding-bottom:0.3em;font-size:1.75em;line-height:1.225;border-bottom:1px solid #eee}h3{font-size:1.5em;line-height:1.43}h4{font-size:1.25em}h5{font-size:1em}h6{color:#777;font-size:1em}p,blockquote,ul,ol,dl,table,pre{margin-top:0;margin-bottom:16px}hr{height:4px;padding:0;margin:16px 0;background-color:#e7e7e7;border:0 none}ul,ol{padding-left:2em}ul.no-list,ol.no-list{padding:0;list-style-type:none}ul ul,ul ol{margin-top:0;margin-bottom:0}ol ol,ol ul{margin-top:0;margin-bottom:0}li>p{margin-top:16px}dl{padding:0}dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}dl dd{padding:0 16px;margin-bottom:16px}blockquote{padding:0 15px;margin-left:0;color:#777;border-left:4px solid #ddd}blockquote>:first-child{margin-top:0}blockquote>:last-child{margin-bottom:0}table{display:block;width:100%;overflow:auto}table th{font-weight:700;padding:6px 13px;border:1px solid #ddd}table td{padding:6px 13px;border:1px solid #ddd}table tr{background-color:#fff;border-top:1px solid #ccc}table tr:nth-child(2n){background-color:#f8f8f8}img{max-width:100%;-moz-box-sizing:border-box;box-sizing:border-box}span.frame{display:block;overflow:hidden}span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}span.frame span img{display:block;float:left}span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}span.align-center{display:block;overflow:hidden;clear:both}span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}span.align-center span img{margin:0 auto;text-align:center}span.align-right{display:block;overflow:hidden;clear:both}span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}span.align-right span img{margin:0;text-align:right}span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}span.float-left span{margin:13px 0 0}span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}code,tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,0.04);border-radius:3px}code:before,code:after{letter-spacing:-.2em;content:"\00a0"}tt:before,tt:after{letter-spacing:-.2em;content:"\00a0"}code br,tt br{display:none}del code{text-decoration:inherit;vertical-align:text-top}pre>code{padding:0;margin:0;font-size:100%;white-space:pre;background:transparent;border:0}.highlight{margin-bottom:16px}.highlight pre{padding:16px;margin-bottom:0;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}pre{padding:16px;margin-bottom:0;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px;word-wrap:normal}pre code,pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}pre code:before,pre code:after{content:normal}pre tt:before,pre tt:after{content:normal}.poetry pre{font-family:Georgia, Garamond, serif !important;font-style:italic;font-size:110% !important;line-height:1.6em;display:block;margin-left:1em}.poetry pre code{font-family:Georgia, Garamond, serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;vertical-align:super;position:relative}sub{vertical-align:sub;top:-1px}@media print{body{background:#fff}img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;border:none !important;font-size:12px}pre code{overflow:visible}}@media screen{body.inverted{color:#eee !important;border-color:#555;box-shadow:none}.inverted #wrapper,.inverted hr,.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dd,.inverted dt,.inverted blockquote{color:#eee !important;border-color:#555;box-shadow:none}.inverted td,.inverted th{background:#333}.inverted pre,.inverted code,.inverted tt{background:#eeeeee !important;color:#111}.inverted h2{border-color:#555555}.inverted hr{border-color:#777;border-width:1px !important}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eeeeee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eeeeee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}.inverted{background:#0b2531;background:#252a2a}.inverted #wrapper{background:#252a2a}.inverted a{color:#acd1d5}}.highlight{background:#fff}.highlight .c{color:#998;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k,.highlight .o{font-weight:700}.highlight .cm{color:#998;font-style:italic}.highlight .cp{color:#999;font-weight:700}.highlight .c1{color:#998;font-style:italic}.highlight .cs{color:#999;font-weight:700;font-style:italic}.highlight .gd{color:#000;background-color:#fdd}.highlight .gd .x{color:#000;background-color:#faa}.highlight .ge{font-style:italic}.highlight .gr{color:#a00}.highlight .gh{color:#999}.highlight .gi{color:#000;background-color:#dfd}.highlight .gi .x{color:#000;background-color:#afa}.highlight .go{color:#888}.highlight .gp{color:#555}.highlight .gs{font-weight:700}.highlight .gu{color:purple;font-weight:700}.highlight .gt{color:#a00}.highlight .kc,.highlight .kd,.highlight .kn,.highlight .kp,.highlight .kr{font-weight:700}.highlight .kt{color:#458;font-weight:700}.highlight .m{color:#099}.highlight .s{color:#d14}.highlight .n{color:#333}.highlight .na{color:teal}.highlight .nb{color:#0086b3}.highlight .nc{color:#458;font-weight:700}.highlight .no{color:teal}.highlight .ni{color:purple}.highlight .ne,.highlight .nf{color:#900;font-weight:700}.highlight .nn{color:#555}.highlight .nt{color:navy}.highlight .nv{color:teal}.highlight .ow{font-weight:700}.highlight .w{color:#bbb}.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo{color:#099}.highlight .sb,.highlight .sc,.highlight .sd,.highlight .s2,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999}.highlight .vc,.highlight .vg,.highlight .vi{color:teal}.highlight .il{color:#099}.highlight .gc{color:#999;background-color:#EAF2F5}.type-csharp .highlight .k,.type-csharp .highlight .kt{color:blue}.type-csharp .highlight .nf{color:#000;font-weight:400}.type-csharp .highlight .nc{color:#2b91af}.type-csharp .highlight .nn{color:#000}.type-csharp .highlight .s,.type-csharp .highlight .sc{color:#a31515}.type-csharp .highlight .k,.type-csharp .highlight .kt{color:#00F}.type-csharp .highlight .nf{color:#000;font-weight:normal}.type-csharp .highlight .nc{color:#2B91AF}.type-csharp .highlight .nn{color:#000}.type-csharp .highlight .s,.type-csharp .highlight .sc{color:#A31515}body.dark #wrapper{background:transparent !important;box-shadow:none !important}
+
+@media print{
+#generated-toc-clone,#generated-toc{display:none!important}
+}
+#generated-toc-clone li.missing,#mkreplaced-toc li.missing{list-style-type:none!important}#generated-toc-clone li, #mkreplaced-toc li{list-style-type:upper-roman}#generated-toc-clone li li, #mkreplaced-toc li li{list-style-type:decimal}#generated-toc-clone li li li,#mkreplaced-toc li li li{list-style-type:decimal-leading-zero}#generated-toc-clone li li li li,#mkreplaced-toc li li li li{list-style-type:lower-greek}#generated-toc-clone li li li li li,#mkreplaced-toc li li li li li{list-style-type:disc}#generated-toc-clone li li li li li li,#mkreplaced-toc li li li li li li{list-style-type:square}
+</style>
+<style>#wrapper { max-width:720px; margin:0 auto }</style>
+</head>
+<body class="normal firstload">
+  <div id="wrapper">
+      <h1 id="编译android工程">编译 Android 工程</h1>
+
+<p>要编译 Android 功能，必须使用最新版本的 Android SDK 和<code>指定的 r9d 版本</code> Android NDK。</p>
+
+<p>~</p>
+
+<h2 id="安装androidsdk和ndk">安装 Android SDK 和 NDK</h2>
+
+<p>不管是 Mac 还是 Windows 环境，都需要从 <a href="http://developer.android.com/sdk/">http://developer.android.com/sdk/</a> 下载最新版本的 ADT Bundle。</p>
+
+<p>下载解压缩以后，运行 <code>sdk/tools</code> 目录中的 <code>android</code> 工具，对 SDK 进行更新。</p>
+
+<blockquote>
+<p>由于网络问题，大家需要代理才能完成更新操作。</p>
+</blockquote>
+
+<p>由于 cocos2d-x 还不支持最新的 NDK r10，所以我们需要从网络上搜索 NDK r9d 用于编译。</p>
+
+<blockquote>
+<p>SDK 和 NDK 不能放在包含中文和空格的目录中。<br/>
+Windows 下，SDK/NDK 必须和 quick 的文件放在同一个分区中。</p>
+</blockquote>
+
+<p>在完成 SDK 和 NDK 的下载安装后，我们需要做一些环境配置工作：</p>
+
+<ul>
+<li><p>Mac 下修改 .profile 文件：</p>
+
+<p>启动 终端 应用程序, 运行命令:</p>
+<pre><code class="(null)">$ if [ -f ~/.profile ]; then open -e ~/.profile; fi</code></pre>
+
+<p>如果没看到文本编辑窗口出现，则运行以下命令：</p>
+<pre><code class="(null)">$ if [ -f ~/.bash_profile ]; then open -e ~/.bash_profile; fi</code></pre>
+
+<p>添加以下代码：</p>
+<pre><code class="(null)">export ANDROID_NDK_ROOT=NDK绝对路径
+export ANDROID_SDK_ROOT=SDK绝对路径
+export ANDROID_HOME=${ANDROID_SDK_ROOT}</code></pre>
+
+<p>例如：</p>
+<pre><code class="(null)">export ANDROID_NDK_ROOT=/Users/dualface/android-ndk-r9d
+export ANDROID_SDK_ROOT=/Users/dualface/android-sdk
+export ANDROID_HOME=${ANDROID_SDK_ROOT}</code></pre></li>
+<li><p>Windows 下在系统设置里添加以下环境变量：</p>
+<pre><code class="(null)">ANDROID_NDK_ROOT=NDK绝对路径
+ANDROID_SDK_ROOT=SDK绝对路径
+ANDROID_HOME=%ANDROID_SDK_ROOT%</code></pre>
+
+<p>例如：</p>
+<pre><code class="(null)">ANDROID_NDK_ROOT=C:\Work\android-ndk-r9d
+ANDROID_SDK_ROOT=C:\Work\android-sdk
+ANDROID_HOME=%ANDROID_SDK_ROOT%</code></pre></li>
+</ul>
+
+<p>~</p>
+
+<h2 id="编译samplesanysdk">编译 samples/anysdk</h2>
+
+<p>quick 中带有一个 AnySDK 的示例，我们可以编译这个示例来检查准备工作是否就绪：</p>
+
+<blockquote>
+<p>AnySDK 是一个极为方便的工具，可以大大减低接入 SDK 的工作量。 </p>
+
+<p>详情请访问：<a href="http://www.anysdk.com/">http://www.anysdk.com/</a> </p>
+
+<p>AnySDK 为 CP 商提供一套第三方SDK接入解决方案，整个接入过程，不改变任何 SDK 的功能、特性、参数等，对于最终玩家而言是完全透明无感知的。目的是让 CP 商能有更多时间更专注于游戏本身的品质，所有 SDK 的接入工作统统交给我们吧。第三方 SDK 包括了渠道 SDK、用户系统、支付系统、广告系统、统计系统、分享系统等等。我们不开 SDK，我们只帮您轻松接入第三方 SDK！</p>
+</blockquote>
+
+<ol>
+<li><p>打开终端窗口，进入 <code>quick/samples/anysdk/proj.android</code> 目录 </p></li>
+<li><p>如果是 Mac 系统，运行 <code>./build_native.sh</code>，Windows 系统则运行 <code>build_native.bat</code> </p></li>
+<li><p>如果一切顺利，我们将看到输出信息的最后几行：</p>
+<pre><code class="(null)">SharedLibrary  : libgame.so
+Install        : libgame.so =&gt; libs/armeabi/libgame.so</code></pre></li>
+</ol>
+
+<p>~</p>
+
+<p>如果编译失败，请仔细检查 SDK/NDK 版本、安装路径。</p>
+
+<blockquote>
+<p>修改了环境设置后，必须重新打开终端窗口才能生效。</p>
+</blockquote>
+
+<p>~</p>
+
+<p>运行 <code>build_native</code> 只是编译了 C++ 部分，而 Android 应用还存在 Java 部分，这时就需要 Eclipse ADT 来进行了。</p>
+
+<h3 id="将项目导入eclipseadt">将项目导入 Eclipse ADT</h3>
+
+<p>在先前下载的 <code>ADT Bundle</code> 中，已经包含了 Eclipse ADT 工具。只需要从 <code>eclipse</code> 目录中启动即可。下面的截图是 Mac 系统，但 Windows 系统中的操作完全一致。</p>
+
+<p>启动后，需要先导入 cocos2d-x 的 Java 库：</p>
+
+<ol>
+<li>选择菜单 File -&gt; Import, 再选择 Android -&gt; Existing Android Code Into Workspace</li>
+<li>点击 Browse 按钮, 选择 quick 目录中的 <code>cocos/platform/android/java</code></li>
+<li>点击 &#8220;Finish&#8221; 完成操作。</li>
+</ol>
+
+<p>接下来导入 AnySDK 示例的 Android 工程：</p>
+
+<ol>
+<li><p>重复上述步骤，导入 <code>quick/samples/anysdk/proj.android</code> </p></li>
+<li><p>在 <code>AnySDK</code> 工程上点击右键选择菜单 &#8220;Properties&#8221; 打开工程设置对话框 </p></li>
+<li><p>从左侧选择 <code>Android</code>，然后点击右侧 &#8220;Add&#8221; 按钮，添加 <code>v3quick</code> 库。如果添加之前 <code>v3quick</code> 库已经在 <code>Library</code> 列表中，则删除后重新添加 </p></li>
+<li><p>检查 <code>Project Build Target</code> 是否是最新版本的 SDK</p>
+
+<figure>
+<img src="res/check-project-properties.png" alt="" />
+</figure></li>
+</ol>
+
+<p>~</p>
+
+<p>如果完成上述操作后，Eclipse ADT 窗口 <code>Package Explorer</code> 列出的 <code>v3quick</code> 和 <code>AnySDK</code> 项目文件夹上有红色错误图标。请仔细检查 <code>v3quick</code> 和 <code>AnySDK</code> 项目的操作步骤，以及 <code>Project Build Target</code> 是否是最新版本的 SDK。</p>
+
+<p>~</p>
+
+<h3 id="设置android设备允许真机调试">设置 Android 设备允许真机调试</h3>
+
+<p>Android 官方文档：http://developer.android.com/tools/device.html</p>
+
+<ol>
+<li><p>Enable USB debugging on your device.</p>
+
+<ul>
+<li><p>On most devices running Android 3.2 or older, you can find the option under Settings &gt; Applications &gt; Development. </p></li>
+<li><p>On Android 4.0 and newer, it’s in Settings &gt; Developer options.</p>
+
+<p>Note: On Android 4.2 and newer, Developer options is hidden by default. To make it available, go to Settings &gt; About phone and tap Build number seven times. Return to the previous screen to find Developer options.</p></li>
+<li><p>在系统设置中找到“开发者选项”，打开“USB调试”。Android 4.2 开始，<code>开发者选项</code>默认是隐藏的，需要打开<code>设置-&gt;关于</code>界面，然后在<code>Build Number</code>上点击七次才能打开<code>开发者选项</code>。</p></li>
+</ul></li>
+<li><p>Set up your system to detect your device.</p>
+
+<ul>
+<li><p>If you’re developing on Windows, you need to install a USB driver for adb. For an installation guide and links to OEM drivers, see the OEM USB Drivers document.</p></li>
+<li><p>根据不同的机型，也许需要安装该机型特定的 USB 驱动程序。例如 Moto 就必须安装 Moto 的 USB 驱动。</p></li>
+</ul></li>
+<li><p>Connect your device.</p>
+
+<p>完成设置后，将设备连接到开发机，并解锁设备。</p></li>
+</ol>
+
+<p>~</p>
+
+<h3 id="在设备上测试anysdk示例">在设备上测试 AnySDK 示例</h3>
+
+<ol>
+<li><p>在 Eclipse ADT 里选择菜单 Window -&gt; Show View -&gt; Other…, 再选择 Android -&gt; Devices</p></li>
+<li><p>如果设备设置完成，那么在 Devices 标签页中就可以看到你的设备</p></li>
+<li><p>在 <code>AnySDK</code> 项目上点击鼠标右键, 选择菜单 Debug As -&gt; Android Application. 如果一切正常，等一会儿就可以在设备上看到运行画面了：</p>
+
+<figure>
+<img src="res/run-on-device.png" alt="" />
+</figure></li>
+</ol>
+
+<p>~</p>
+
+<h2 id="使用build_apk脚本快速生成apk">使用 build_apk 脚本快速生成 apk</h2>
+
+<blockquote>
+<p>首先确保已经能够正常编译 Android 项目。</p>
+</blockquote>
+
+<p>如果是 Windows 系统，还需要添加 <code>JAVA_HOME</code> 环境变量，指向 JDK 所在目录。并且将 JDK 的 <code>bin</code> 目录路径加入 <code>PATH</code> 环境变量。</p>
+
+<p>如果环境未搭建好或者未配置好，运行时会在命令行报相关错误提示并返回非 0 的错误码。</p>
+
+<p>~</p>
+
+<h3 id="运行build_apk">运行 build_apk</h3>
+
+<p>在终端窗口中，进入工程的 proj.android 目录，然后运行 build_apk 脚本。</p>
+
+<ul>
+<li>如果执行成功，将生成 <code>proj.android/&lt;项目名-日期-时间&gt;.apk</code> 文件，并返回 0 值。</li>
+<li>如果执行失败，将显示错误信息，并返回非 0 错误代码。</li>
+</ul>
+
+<p>~</p>
+
+<p>build_apk 支持下列参数：</p>
+
+<ul>
+<li><p>-classpath &lt;路径&gt;</p>
+
+<p>指定查找用户类文件的位置。</p>
+
+<p>如果有额外的第三方 jar 包需要集成可能会需要添加此参数。默认情况下不需要指定此参数。</p></li>
+<li><p>-jv &lt;版本号&gt;</p>
+
+<p>指定要使用的 JDK 版本号。默认参数为1.6。</p>
+
+<p>如果使用其他版本的 JDK，可能需要指定此参数与要使用的 JDK 版本相一致。</p></li>
+<li><p>-api &lt;版本号&gt;</p>
+
+<p>指定要使用的 Android 的 api 版本号。默认参数为19，即使用 android&#8211;19。</p></li>
+<li><p>-bt &lt;版本号&gt;</p>
+
+<p>指定要使用的 ADT 的 build tools的版本号</p>
+
+<p>一般不需要指定此参数，脚本运行时会自动到 ANDROID_SDK_ROOT/build-tools 目录下查找可用的版本。如果此目录下有多个版本，例如有 android&#8211;4.4.2 和 android&#8211;4.3 ，则可以通过 <code>-bt 4.4.2</code> 来强制指定其中的 4.4.2 版本，但即使不指定也会找到其中一个来使用。</p></li>
+<li><p>-k &lt;文件路径&gt; -kp &lt;口令&gt; -ksa &lt;密钥库名称&gt;</p>
+
+<p>三个参数分别指定：要用于签名的密匙库文件，密钥库口令和密匙库名称。</p>
+
+<p>例如 -k mycert.keystore -kp 123456 -ksa mycert</p></li>
+<li><p>-nosign</p>
+
+<p>不对 apk 进行签名。</p>
+
+<p>指定这个参数后，输出的 apk 文件名是 <code>proj.android/&lt;项目名-日期-时间&gt;-unsigned.apk</code> 。</p></li>
+</ul>
+
+<h3 id="注意事项">注意事项</h3>
+
+<ul>
+<li>JDK 1.7以上的版本，在签名时需要指定时间戳，此脚本现在未做处理，因此在签名时会有警告信息，并且打包出来的apk在真机上运行时会报错。</li>
+<li>旧版本 ADT 的目录结构不同，有可能造成无法找到 build tools 等，造成打包失败。</li>
+</ul>
+
+<p>~</p>
+
+<h2 id="使用模块化编译缩小apk体积">使用模块化编译缩小 apk 体积</h2>
+
+<p>在 quick 中可以使用模块化编译功能，按照项目需求编译出更小的可执行文件。</p>
+
+<p>要启用这个功能，开发者需要打开项目中的 <code>proj.android/jni/Application.mk</code> 文件，然后将不需要的模块值改为 <code>0</code>。</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">MACRO</th>
+	<th style="text-align:left;">体积</th>
+	<th style="text-align:left;">默认开关</th>
+	<th style="text-align:left;">功能</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">CC_USE_CURL</td>
+	<td style="text-align:left;">1259KB</td>
+	<td style="text-align:left;">OFF</td>
+	<td style="text-align:left;">使用 CURL 库提供 HTTP 网络功能。但 quick 在 Android 下使用 Android 系统的 Java 接口提供 HTTP 网络功能，所以 CURL 默认已经关闭。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_TIFF</td>
+	<td style="text-align:left;">514KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 TIFF 图像格式。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_WEBP</td>
+	<td style="text-align:left;">208KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 WebP 图像格式。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_TGA</td>
+	<td style="text-align:left;">8KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 TGA 图像格式。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_PHYSICS</td>
+	<td style="text-align:left;">308KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 Chipmunk 物理引擎。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_WEBSOCKET</td>
+	<td style="text-align:left;">64KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 WebSocket 网络协议。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_SQLITE</td>
+	<td style="text-align:left;">307KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 Lua 的 Sqlite 数据库扩展 lsqlite3。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_CCS_ARMATURE</td>
+	<td style="text-align:left;">32KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用 Cocos Studio 骨骼动画。</td>
+</tr>
+<tr>
+	<td style="text-align:left;">CC_USE_EXTRA_FILTERS</td>
+	<td style="text-align:left;">40KB</td>
+	<td style="text-align:left;">ON</td>
+	<td style="text-align:left;">使用过滤器效果。</td>
+</tr>
+</tbody>
+</table>
+
+<p>只需要在 <code>Applicaiton.mk</code> 中将相应的宏设置为 <code>0</code>，然后重新编译就可以得到更小的可执行文件。</p>
+<!-- ##END MARKED WRAPPER## -->
+    </div>
+</body>
+</html>

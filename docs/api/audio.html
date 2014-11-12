@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - audio</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><strong>audio</strong></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>audio</h1>
+
+<p>播放音乐、音效</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_getMusicVolume">audio.getMusicVolume()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回音乐的音量值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_setMusicVolume">audio.setMusicVolume(volume)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">设置音乐的音量</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_getSoundsVolume">audio.getSoundsVolume()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回音效的音量值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_setSoundsVolume">audio.setSoundsVolume(volume)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">设置音效的音量</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_preloadMusic">audio.preloadMusic(filename)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">预载入一个音乐文件</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_playMusic">audio.playMusic(filename,&nbsp;isLoop)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">播放音乐</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_stopMusic">audio.stopMusic(isReleaseData)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">停止播放音乐</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_pauseMusic">audio.pauseMusic()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">暂停音乐的播放</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_resumeMusic">audio.resumeMusic()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">恢复暂停的音乐</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_rewindMusic">audio.rewindMusic()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从头开始重新播放当前音乐</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_willPlayMusic">audio.willPlayMusic()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查是否可以开始播放音乐</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_isMusicPlaying">audio.isMusicPlaying()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">检查当前是否正在播放音乐</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_playSound">audio.playSound(filename,&nbsp;isLoop)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">播放音效，并返回音效句柄</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_pauseSound">audio.pauseSound(handle)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">暂停指定的音效</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_pauseAllSounds">audio.pauseAllSounds()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">暂停所有音效</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_resumeSound">audio.resumeSound(handle)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">恢复暂停的音效</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_resumeAllSounds">audio.resumeAllSounds()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">恢复所有的音效</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_stopSound">audio.stopSound(handle)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">停止指定的音效</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_stopAllSounds">audio.stopAllSounds()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">停止所有音效</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_preloadSound">audio.preloadSound(filename)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">预载入一个音效文件</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_audio_unloadSound">audio.unloadSound(filename)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从内存卸载一个音效</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_getMusicVolume"></a>
+
+            <dd class="">
+
+<h3>audio.getMusicVolume()</h3>
+
+<blockquote>
+  <p>audio.getMusicVolume()</p>
+</blockquote>
+
+<p>返回音乐的音量值</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>number 返回值在 0.0 到 1.0 之间，0.0 表示完全静音，1.0 表示 100% 音量</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_setMusicVolume"></a>
+
+            <dd class="">
+
+<h3>audio.setMusicVolume()</h3>
+
+<blockquote>
+  <p>audio.setMusicVolume(volume)</p>
+</blockquote>
+
+<p>设置音乐的音量</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>number <strong>volume</strong> 音量在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_getSoundsVolume"></a>
+
+            <dd class="">
+
+<h3>audio.getSoundsVolume()</h3>
+
+<blockquote>
+  <p>audio.getSoundsVolume()</p>
+</blockquote>
+
+<p>返回音效的音量值</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>number 返回值在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_setSoundsVolume"></a>
+
+            <dd class="">
+
+<h3>audio.setSoundsVolume()</h3>
+
+<blockquote>
+  <p>audio.setSoundsVolume(volume)</p>
+</blockquote>
+
+<p>设置音效的音量</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>number <strong>volume</strong> 音量在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_preloadMusic"></a>
+
+            <dd class="">
+
+<h3>audio.preloadMusic()</h3>
+
+<blockquote>
+  <p>audio.preloadMusic(filename)</p>
+</blockquote>
+
+<p>预载入一个音乐文件</p>
+
+<p>在播放音乐前预先载入，可以在需要播放音乐时无延迟立即播放。
+不过限于硬件设备和操作系统的限制，通常只能预载入一个音乐文件。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>filename</strong> 音乐文件名</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_playMusic"></a>
+
+            <dd class="">
+
+<h3>audio.playMusic()</h3>
+
+<blockquote>
+  <p>audio.playMusic(filename, isLoop)</p>
+</blockquote>
+
+<p>播放音乐</p>
+
+<p>如果音乐文件尚未载入，则会首先载入音乐文件，然后开始播放。</p>
+
+<p>注意：即便音乐音量为 0.0，audio.playMusic() 仍然会进行播放操作。
+如果希望停止音乐来降低 CPU 占用，应该使用 audio.stopMusic() 接口完全停止音乐播放。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>filename</strong> 音乐文件名</li>
+<li>boolean <strong>isLoop</strong> 是否循环播放，默认为 true</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_stopMusic"></a>
+
+            <dd class="">
+
+<h3>audio.stopMusic()</h3>
+
+<blockquote>
+  <p>audio.stopMusic(isReleaseData)</p>
+</blockquote>
+
+<p>停止播放音乐</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>boolean <strong>isReleaseData</strong> 是否释放音乐数据，默认为 true</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_pauseMusic"></a>
+
+            <dd class="">
+
+<h3>audio.pauseMusic()</h3>
+
+<blockquote>
+  <p>audio.pauseMusic()</p>
+</blockquote>
+
+<p>暂停音乐的播放</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_resumeMusic"></a>
+
+            <dd class="">
+
+<h3>audio.resumeMusic()</h3>
+
+<blockquote>
+  <p>audio.resumeMusic()</p>
+</blockquote>
+
+<p>恢复暂停的音乐</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_rewindMusic"></a>
+
+            <dd class="">
+
+<h3>audio.rewindMusic()</h3>
+
+<blockquote>
+  <p>audio.rewindMusic()</p>
+</blockquote>
+
+<p>从头开始重新播放当前音乐</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_willPlayMusic"></a>
+
+            <dd class="">
+
+<h3>audio.willPlayMusic()</h3>
+
+<blockquote>
+  <p>audio.willPlayMusic()</p>
+</blockquote>
+
+<p>检查是否可以开始播放音乐</p>
+
+<p>如果可以则返回 true。</p>
+
+<p>如果尚未载入音乐，或者载入的音乐格式不被设备所支持，该方法将返回 false。</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_isMusicPlaying"></a>
+
+            <dd class="">
+
+<h3>audio.isMusicPlaying()</h3>
+
+<blockquote>
+  <p>audio.isMusicPlaying()</p>
+</blockquote>
+
+<p>检查当前是否正在播放音乐</p>
+
+<p>如果有音乐正在播放则返回 true，否则返回 false</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>boolean</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_playSound"></a>
+
+            <dd class="">
+
+<h3>audio.playSound()</h3>
+
+<blockquote>
+  <p>audio.playSound(filename, isLoop)</p>
+</blockquote>
+
+<p>播放音效，并返回音效句柄</p>
+
+<p>如果音效尚未载入，则会载入后开始播放。</p>
+
+<p>该方法返回的音效句柄用于 audio.stopSound()、audio.pauseSound() 等方法。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>filename</strong> 音效文件名</li>
+<li>boolean <strong>isLoop</strong> 是否重复播放，默认为 false</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>integer 音效句柄</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_pauseSound"></a>
+
+            <dd class="">
+
+<h3>audio.pauseSound()</h3>
+
+<blockquote>
+  <p>audio.pauseSound(handle)</p>
+</blockquote>
+
+<p>暂停指定的音效</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>integer <strong>音效句柄</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_pauseAllSounds"></a>
+
+            <dd class="">
+
+<h3>audio.pauseAllSounds()</h3>
+
+<blockquote>
+  <p>audio.pauseAllSounds()</p>
+</blockquote>
+
+<p>暂停所有音效</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_resumeSound"></a>
+
+            <dd class="">
+
+<h3>audio.resumeSound()</h3>
+
+<blockquote>
+  <p>audio.resumeSound(handle)</p>
+</blockquote>
+
+<p>恢复暂停的音效</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>integer <strong>音效句柄</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_resumeAllSounds"></a>
+
+            <dd class="">
+
+<h3>audio.resumeAllSounds()</h3>
+
+<blockquote>
+  <p>audio.resumeAllSounds()</p>
+</blockquote>
+
+<p>恢复所有的音效</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_stopSound"></a>
+
+            <dd class="">
+
+<h3>audio.stopSound()</h3>
+
+<blockquote>
+  <p>audio.stopSound(handle)</p>
+</blockquote>
+
+<p>停止指定的音效</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>integer <strong>音效句柄</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_stopAllSounds"></a>
+
+            <dd class="">
+
+<h3>audio.stopAllSounds()</h3>
+
+<blockquote>
+  <p>audio.stopAllSounds()</p>
+</blockquote>
+
+<p>停止所有音效</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_preloadSound"></a>
+
+            <dd class="">
+
+<h3>audio.preloadSound()</h3>
+
+<blockquote>
+  <p>audio.preloadSound(filename)</p>
+</blockquote>
+
+<p>预载入一个音效文件</p>
+
+<p>可以在进入场景前，载入该场景需要的所有音效。这样就不会因为首次播放某个未载入的音效，而导致游戏暂停执行。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>音效文件名</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_audio_unloadSound"></a>
+
+            <dd class="">
+
+<h3>audio.unloadSound()</h3>
+
+<blockquote>
+  <p>audio.unloadSound(filename)</p>
+</blockquote>
+
+<p>从内存卸载一个音效</p>
+
+<p>退出场景时，可以卸载掉只有该场景使用的音效，从而节约内存。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>音效文件名</strong></li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

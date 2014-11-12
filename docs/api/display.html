@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - display</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><strong>display</strong></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>display</h1>
+
+<p>与显示图像、场景有关的功能</p>
+
+<p><br /></p>
+
+<p>display 模块封装了绝大部分与显示有关的功能，并负责根据 config.lua 中定义的分辨率设定计算屏幕的设计分辨率。</p>
+
+<p><br /></p>
+
+<p>框架初始化后，display 模块提供下列属性：</p>
+
+<ul>
+<li>display.sizeInPixels.width,</li>
+<li>display.sizeInPixels.height 屏幕的像素分辨率</li>
+<li>display.widthInPixels,</li>
+<li>display.heightInPixels 屏幕的像素分辨率</li>
+<li>display.contentScaleFactor 内容缩放因子</li>
+<li>display.size.width,</li>
+<li>display.size.height 屏幕的设计分辨率</li>
+<li>display.width,</li>
+<li>display.height 屏幕的设计分辨率</li>
+<li>display.cx,</li>
+<li>display.cy 屏幕中央的 x 坐标和 y 坐标</li>
+<li>display.left,</li>
+<li>display.top,</li>
+<li>display.right,</li>
+<li>display.bottom 屏幕四边的坐标</li>
+<li>display.c_left,</li>
+<li>display.c_top,</li>
+<li>display.c_right,</li>
+<li>display.c_bottom 当父对象在屏幕中央时，屏幕四边的坐标</li>
+</ul>
+
+<p><br /></p>
+
+<p>颜色：</p>
+
+<ul>
+<li>display.COLOR_WHITE 白色, cc.c3b(255, 255, 255)</li>
+<li>display.COLOR_BLACK 黑色, cc.c3b(0, 0, 0)</li>
+</ul>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newScene">display.newScene(name)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建一个新场景，并返回 Scene 场景对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newPhysicsScene">display.newPhysicsScene(name)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建一个新场景，并返回 Scene 场景对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_wrapSceneWithTransition">display.wrapSceneWithTransition(scene,&nbsp;transitionType,&nbsp;time,&nbsp;more)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">用场景切换过渡效果包装场景对象，并返回场景过渡对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_replaceScene">display.replaceScene(newScene,&nbsp;transitionType,&nbsp;time,&nbsp;more)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">切换到新场景</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_getRunningScene">display.getRunningScene()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回当前正在运行的场景对象</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_pause">display.pause()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">暂停当前场景</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_resume">display.resume()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">恢复当前暂停的场景</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newLayer">display.newLayer()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 Layer 层对象</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newColorLayer">display.newColorLayer(color)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建一个颜色填充层</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newNode">display.newNode()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 Node 对象</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newClippingRegionNode">display.newClippingRegionNode(rect)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 ClippingRegionNode 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newSprite">display.newSprite(filename,&nbsp;x,&nbsp;y,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 Sprite 显示对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newScale9Sprite">display.newScale9Sprite(filename,&nbsp;x,&nbsp;y,&nbsp;size,&nbsp;capInsets)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 Sprite9Scale 显示对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newTilesSprite">display.newTilesSprite(filename,&nbsp;rect)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个平铺的 Sprite 显示对象</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newTiledBatchNode">display.newTiledBatchNode(filename,&nbsp;plistFile,&nbsp;size,&nbsp;hPadding,&nbsp;vPadding)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">create a tiled SpriteBatchNode, the image can not a POT file.</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newMaskedSprite">display.newMaskedSprite(__mask,&nbsp;__pic)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">Create a masked sprite</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newFilteredSprite">display.newFilteredSprite(filename,&nbsp;filters,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">Create a Filtered Sprite</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newGraySprite">display.newGraySprite(filename,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">Create a Gray Sprite by FilteredSprite</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newDrawNode">display.newDrawNode()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个空的 DrawNode 对象</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newSolidCircle">display.newSolidCircle(radius,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 DrawNode（实心圆）对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newCircle">display.newCircle(radius,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 DrawNode （圆）对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newRect">display.newRect(rect,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 DrawNode （矩形）对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newLine">display.newLine(points,&nbsp;params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 DrawNode （线性）对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newPolygon">display.newPolygon(points,&nbsp;params,&nbsp;drawNode)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个 PolygonShape （多边形）对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newBMFontLabel">display.newBMFontLabel(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">用位图字体创建文本显示对象，并返回 Label 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newTTFLabel">display.newTTFLabel(params)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 TTF 字体创建文字显示对象，并返回 Label 对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_align">display.align(target,&nbsp;anchorPoint,&nbsp;x,&nbsp;y)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将指定的显示对象按照特定锚点对齐。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_addSpriteFrames">display.addSpriteFrames(plistFilename,&nbsp;image,&nbsp;handler)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">将指定的 Sprite Sheets 材质文件及其数据文件载入图像帧缓存。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_removeSpriteFramesWithFile">display.removeSpriteFramesWithFile(plistFilename,&nbsp;imageName)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从内存中卸载 Sprite Sheets 材质和数据文件</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_setTexturePixelFormat">display.setTexturePixelFormat(filename,&nbsp;format)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">设置材质格式。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_removeSpriteFrameByImageName">display.removeSpriteFrameByImageName(imageName)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从图像帧缓存中删除一个图像。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newBatchNode">display.newBatchNode(image,&nbsp;capacity)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从指定的图像文件创建并返回一个批量渲染对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newSpriteFrame">display.newSpriteFrame(frameName)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建并返回一个图像帧对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newFrames">display.newFrames(pattern,&nbsp;begin,&nbsp;length,&nbsp;isReversed)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">以特定模式创建一个包含多个图像帧对象的数组。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newAnimation">display.newAnimation(frames,&nbsp;time)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">以包含图像帧的数组创建一个动画对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_setAnimationCache">display.setAnimationCache(name,&nbsp;animation)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">以指定名字缓存创建好的动画对象，以便后续反复使用。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_getAnimationCache">display.getAnimationCache(name)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">取得以指定名字缓存的动画对象，如果不存在则返回 nil。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_removeAnimationCache">display.removeAnimationCache(name)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">删除指定名字缓存的动画对象。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_removeUnusedSpriteFrames">display.removeUnusedSpriteFrames()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">从内存中卸载没有使用 Sprite Sheets 材质</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_newProgressTimer">display.newProgressTimer(image,&nbsp;progresssType)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">创建一个进度条的节点</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_display_printscreen">display.printscreen(node,&nbsp;args)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">获取一个节点的纹理内容</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newScene"></a>
+
+            <dd class="">
+
+<h3>display.newScene()</h3>
+
+<blockquote>
+  <p>display.newScene(name)</p>
+</blockquote>
+
+<p>创建一个新场景，并返回 Scene 场景对象。</p>
+
+<p>指定场景名称方便调试。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>name</strong> 场景名称</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Scene 场景对象</li>
+</ul>
+
+<p>@see Scene</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newPhysicsScene"></a>
+
+            <dd class="">
+
+<h3>display.newPhysicsScene()</h3>
+
+<blockquote>
+  <p>display.newPhysicsScene(name)</p>
+</blockquote>
+
+<p>创建一个新场景，并返回 Scene 场景对象。</p>
+
+<p>指定场景名称方便调试。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>name</strong> 场景名称</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Scene 场景对象</li>
+</ul>
+
+<p>@see Scene</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_wrapSceneWithTransition"></a>
+
+            <dd class="">
+
+<h3>display.wrapSceneWithTransition()</h3>
+
+<blockquote>
+  <p>display.wrapSceneWithTransition(scene, transitionType, time, more)</p>
+</blockquote>
+
+<p>用场景切换过渡效果包装场景对象，并返回场景过渡对象。</p>
+
+<pre><code class="lua"><br />-- 创建一个新场景
+local nextScene = display.newScene("NextScene")
+-- 包装过渡效果
+local transition = display.wrapSceneWithTransition(nextScene, "fade", 0.5)
+-- 切换到新场景
+display.replaceScene(nextScene)
+
+</code></pre>
+
+<p>可用的过渡效果有：</p>
+
+<ul>
+<li>crossFade 淡出当前场景的同时淡入下一个场景</li>
+<li>fade 淡出当前场景到指定颜色，默认颜色为 cc.c3b(0, 0, 0)，可用 wrapSceneWithTransition() 的最后一个参数指定颜色</li>
+<li>fadeBL 从左下角开始淡出场景</li>
+<li>fadeDown 从底部开始淡出场景</li>
+<li>fadeTR 从右上角开始淡出场景</li>
+<li>fadeUp 从顶部开始淡出场景</li>
+<li>flipAngular 当前场景倾斜后翻转成下一个场景，默认从左边开始翻转，可以指定为：
+
+<ul>
+<li>cc.TRANSITION_ORIENTATION_LEFT_OVER 从左边开始</li>
+<li>cc.TRANSITION_ORIENTATION_RIGHT_OVER 从右边开始</li>
+<li>cc.TRANSITION_ORIENTATION_UP_OVER 从顶部开始</li>
+<li>cc.TRANSITION_ORIENTATION_DOWN_OVER 从底部开始</li>
+</ul></li>
+<li>flipX 水平翻转，默认从左往右翻转，可用的附加参数同上</li>
+<li>flipY 垂直翻转，默认从上往下翻转，可用的附加参数同上</li>
+<li>zoomFlipAngular 倾斜翻转的同时放大，可用的附加参数同上</li>
+<li>zoomFlipX 水平翻转的同时放大，可用的附加参数同上</li>
+<li>zoomFlipY 垂直翻转的同时放大，可用的附加参数同上</li>
+<li>jumpZoom 跳跃放大切换场景</li>
+<li>moveInB 新场景从底部进入，现有场景同时从顶部退出</li>
+<li>moveInL 新场景从左侧进入，现有场景同时从右侧退出</li>
+<li>moveInR 新场景从右侧进入，现有场景同时从左侧退出</li>
+<li>moveInT 新场景从顶部进入，现有场景同时从底部退出</li>
+<li>pageTurn 翻页效果，如果指定附加参数为 true，则表示从左侧往右翻页</li>
+<li>rotoZoom 旋转放大切换场景</li>
+<li>shrinkGrow 收缩交叉切换场景</li>
+<li>slideInB 新场景从底部进入，直接覆盖现有场景</li>
+<li>slideInL 新场景从左侧进入，直接覆盖现有场景</li>
+<li>slideInR 新场景从右侧进入，直接覆盖现有场景</li>
+<li>slideInT 新场景从顶部进入，直接覆盖现有场景</li>
+<li>splitCols 分成多列切换入新场景</li>
+<li>splitRows 分成多行切换入新场景，类似百叶窗</li>
+<li>turnOffTiles 当前场景分成多个块，逐渐替换为新场景</li>
+</ul>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>Scene <strong>scene</strong> 场景对象</li>
+<li>string <strong>transitionType</strong> 过渡效果名</li>
+<li>number <strong>time</strong> 过渡时间</li>
+<li>string <strong>more</strong> 过渡效果附加参数</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Scene 场景对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_replaceScene"></a>
+
+            <dd class="">
+
+<h3>display.replaceScene()</h3>
+
+<blockquote>
+  <p>display.replaceScene(newScene, transitionType, time, more)</p>
+</blockquote>
+
+<p>切换到新场景</p>
+
+<pre><code class="lua"><br />-- 使用红色做过渡色
+display.replaceScene(nextScene, "fade", 0.5, cc.c3b(255, 0, 0))
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>Scene <strong>newScene</strong> 场景对象</li>
+<li>string <strong>transitionType</strong> 过渡效果名</li>
+<li>number <strong>time</strong> 过渡时间</li>
+<li>mixed <strong>more</strong> 过渡效果附加参数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_getRunningScene"></a>
+
+            <dd class="">
+
+<h3>display.getRunningScene()</h3>
+
+<blockquote>
+  <p>display.getRunningScene()</p>
+</blockquote>
+
+<p>返回当前正在运行的场景对象</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Scene 场景对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_pause"></a>
+
+            <dd class="">
+
+<h3>display.pause()</h3>
+
+<blockquote>
+  <p>display.pause()</p>
+</blockquote>
+
+<p>暂停当前场景</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_resume"></a>
+
+            <dd class="">
+
+<h3>display.resume()</h3>
+
+<blockquote>
+  <p>display.resume()</p>
+</blockquote>
+
+<p>恢复当前暂停的场景</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newLayer"></a>
+
+            <dd class="">
+
+<h3>display.newLayer()</h3>
+
+<blockquote>
+  <p>display.newLayer()</p>
+</blockquote>
+
+<p>创建并返回一个 Layer 层对象</p>
+
+<p>Layer 对象提供了触摸事件、重力感应、Android 按键检测等功能，具体请参考 Layer。</p>
+
+<p>@see Layer</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newColorLayer"></a>
+
+            <dd class="">
+
+<h3>display.newColorLayer()</h3>
+
+<blockquote>
+  <p>display.newColorLayer(color)</p>
+</blockquote>
+
+<p>创建一个颜色填充层</p>
+
+<p>LayerColor 对象使用指定的颜色填充。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>ccColor3B <strong>color</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>LayerColor</li>
+</ul>
+
+<p>@see LayerColor</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newNode"></a>
+
+            <dd class="">
+
+<h3>display.newNode()</h3>
+
+<blockquote>
+  <p>display.newNode()</p>
+</blockquote>
+
+<p>创建并返回一个 Node 对象</p>
+
+<p>Node 对象并不能显示对象，但可以作为其他显示对象的容器（起到群组的作用）。具体请参考 Node 。</p>
+
+<pre><code class="lua"><br />local group = display.newNode()     -- 创建一个容器
+group:addChild(sprite1)             -- 添加显示对象到容器中
+group:addChild(sprite2)             -- 添加显示对象到容器中
+
+-- 移动容器时，其中包含的子对象也会同时移动
+transition.moveBy(group, {time = 2.0, x = 100})
+
+</code></pre>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Node Node对象</li>
+</ul>
+
+<p>@see Node</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newClippingRegionNode"></a>
+
+            <dd class="">
+
+<h3>display.newClippingRegionNode()</h3>
+
+<blockquote>
+  <p>display.newClippingRegionNode(rect)</p>
+</blockquote>
+
+<p>创建并返回一个 ClippingRegionNode 对象。</p>
+
+<p>创建 ClippingRegionNode 对象时需要指定一个屏幕区域，然后在显示时，所以加入 ClippingRegionNode 对象的内容都会进行剪裁，超出指定区域的内容不会显示。</p>
+
+<pre><code class="lua"><br />-- 剪裁区域从屏幕左下角靠内 100 点，到屏幕右上角
+local rect = cc.rect(display.left + 100,
+                    display.bottom + 100,
+                    display.width - 200,
+                    display.height - 200)
+local clipnode = display.newClippingRegionNode(rect)
+
+clipnode:addChild(sprite1)
+clipnode:addChild(sprite2)
+
+scene:addChild(clipnode)
+
+</code></pre>
+
+<p>注意：ClippingRegionNode 的父对象其坐标必须是 0, 0。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>rect</strong> 指定的区域</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>ClippingRegionNode ClippingRegionNode对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newSprite"></a>
+
+            <dd class="">
+
+<h3>display.newSprite()</h3>
+
+<blockquote>
+  <p>display.newSprite(filename, x, y, params)</p>
+</blockquote>
+
+<p>创建并返回一个 Sprite 显示对象。</p>
+
+<p>display.newSprite() 有三种方式创建显示对象：</p>
+
+<ul>
+<li>从图片文件创建</li>
+<li>从缓存的图像帧创建</li>
+<li>从 SpriteFrame 对象创建</li>
+</ul>
+
+<pre><code class="lua"><br />-- 从图片文件创建显示对象
+local sprite1 = display.newSprite("hello1.png")
+
+-- 从缓存的图像帧创建显示对象
+-- 图像帧的名字就是图片文件名，但为了和图片文件名区分，所以此处需要在文件名前添加 “#” 字符
+-- 添加 “#” 的规则适用于所有需要区分图像和图像帧的地方
+local sprite2 = display.newSprite("#frame0001.png")
+
+-- 从 SpriteFrame 对象创建
+local frame = display.newFrame("frame0002.png")
+local sprite3 = display.newSprite(frame)
+
+</code></pre>
+
+<p>如果指定了 x,y 参数，那么创建显示对象后会调用对象的 setPosition() 方法设置对象位置。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>图像名或SpriteFrame对象</strong></li>
+<li>number <strong>x</strong></li>
+<li>number <strong>y</strong></li>
+<li>table <strong>params</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Sprite</li>
+</ul>
+
+<p>@see Sprite</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newScale9Sprite"></a>
+
+            <dd class="">
+
+<h3>display.newScale9Sprite()</h3>
+
+<blockquote>
+  <p>display.newScale9Sprite(filename, x, y, size, capInsets)</p>
+</blockquote>
+
+<p>创建并返回一个 Sprite9Scale 显示对象。</p>
+
+<p>格式：</p>
+
+<p>sprite = display.newScale9Sprite(图像名, [x, y], [size 对象])</p>
+
+<p>Sprite9Scale 就是通常所說的“九宫格”图像。一个矩形图像会被分为 9 部分，然后根据要求拉伸图像，同时保证拉伸后的图像四边不变形。</p>
+
+<pre><code class="lua"><br />-- 创建一个 Scale9 图像，并拉伸到 400, 300 点大小
+local sprite = display.newScale9Sprite("Box.png", 0, 0, cc.size(400, 300))
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>filename</strong> 图像名</li>
+<li>integer <strong>x</strong></li>
+<li>integer <strong>y</strong></li>
+<li>table <strong>size</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Sprite9Scale Sprite9Scale显示对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newTilesSprite"></a>
+
+            <dd class="">
+
+<h3>display.newTilesSprite()</h3>
+
+<blockquote>
+  <p>display.newTilesSprite(filename, rect)</p>
+</blockquote>
+
+<p>创建并返回一个平铺的 Sprite 显示对象</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><p>string <strong>filename</strong> 图像名</p></li>
+<li><p>cc.rect <strong>rect</strong>    平铺范围</p></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Sprite</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newTiledBatchNode"></a>
+
+            <dd class="">
+
+<h3>display.newTiledBatchNode()</h3>
+
+<blockquote>
+  <p>display.newTiledBatchNode(filename, plistFile, size, hPadding, vPadding)</p>
+</blockquote>
+
+<p>create a tiled SpriteBatchNode, the image can not a POT file.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>filename</strong> As same a the first parameter for display.newSprite</li>
+<li>string <strong>plistFile</strong> Texture(plist) image filename, filename must be a part of the texture.</li>
+<li>size <strong>size</strong> The tiled node size, use cc.size create it please.</li>
+<li>integer <strong>hPadding</strong> Horizontal padding, it will display 1 px gap on moving the node, set padding for fix it.</li>
+<li>integer <strong>vPadding</strong> Vertical padding.</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>SpriteBatchNode</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newMaskedSprite"></a>
+
+            <dd class="">
+
+<h3>display.newMaskedSprite()</h3>
+
+<blockquote>
+  <p>display.newMaskedSprite(__mask, __pic)</p>
+</blockquote>
+
+<p>Create a masked sprite</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>mask</strong>  裁剪形状的图片名</li>
+<li>string <strong>pic</strong>   被裁减的图片名</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Sprite</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newFilteredSprite"></a>
+
+            <dd class="">
+
+<h3>display.newFilteredSprite()</h3>
+
+<blockquote>
+  <p>display.newFilteredSprite(filename, filters, params)</p>
+</blockquote>
+
+<p>Create a Filtered Sprite</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>filename</strong> As same a the first parameter for display.newSprite</li>
+<li><p>mixed <strong>filters</strong> One of the following:</p></li>
+<li><p>A Filter name;</p></li>
+<li>More Filter names(in a table);</li>
+<li>An instance of Filter;</li>
+<li>Some instances of Filter(in a table);</li>
+<li><p>A Array inclueds some instances of Filter.</p></li>
+<li><p>table <strong>params</strong> A or some parameters for Filter.</p></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>An instance of FilteredSprite</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newGraySprite"></a>
+
+            <dd class="">
+
+<h3>display.newGraySprite()</h3>
+
+<blockquote>
+  <p>display.newGraySprite(filename, params)</p>
+</blockquote>
+
+<p>Create a Gray Sprite by FilteredSprite</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>mixed <strong>filename</strong> As same a the first parameter for display.newSprite</li>
+<li>table <strong>params</strong> As same as the third parameter for display.newFilteredSprite</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>An instance of FilteredSprite</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newDrawNode"></a>
+
+            <dd class="">
+
+<h3>display.newDrawNode()</h3>
+
+<blockquote>
+  <p>display.newDrawNode()</p>
+</blockquote>
+
+<p>创建并返回一个空的 DrawNode 对象</p>
+
+<h4>Returns</h4>
+
+<ul>
+<li>DrawNode</li>
+</ul>
+
+<p>@see DrawNode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newSolidCircle"></a>
+
+            <dd class="">
+
+<h3>display.newSolidCircle()</h3>
+
+<blockquote>
+  <p>display.newSolidCircle(radius, params)</p>
+</blockquote>
+
+<p>创建并返回一个 DrawNode（实心圆）对象。</p>
+
+<pre><code class="lua"><br />local circle = display.newSolidCircle(10, {x = 150, y = 150, color = cc.c4f(1, 1, 1, 1)})
+circle:addTo(scene)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>number <strong>radius</strong> 实心圆的半径</li>
+<li>table <strong>params</strong> 创建圆的参数 x,y为圆点位置 color中圆的颜色</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>DrawNode</li>
+</ul>
+
+<p>@see DrawNode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newCircle"></a>
+
+            <dd class="">
+
+<h3>display.newCircle()</h3>
+
+<blockquote>
+  <p>display.newCircle(radius, params)</p>
+</blockquote>
+
+<p>创建并返回一个 DrawNode （圆）对象。</p>
+
+<pre><code class="lua"><br />--创建一个半径为50, 圆心在(100,100),中间填充为红色,边线为绿色,边线的宽度为2 的圆
+local circle = display.newCircle(50,
+        {x = 100, y = 100,
+        fillColor = cc.c4f(1, 0, 0, 1),
+        borderColor = cc.c4f(0, 1, 0, 1),
+        borderWidth = 2})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>number <strong>radius</strong></li>
+<li>table <strong>params</strong> 有参数，x,y 圆的位置 填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>DrawNode</li>
+</ul>
+
+<p>@see DrawNode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newRect"></a>
+
+            <dd class="">
+
+<h3>display.newRect()</h3>
+
+<blockquote>
+  <p>display.newRect(rect, params)</p>
+</blockquote>
+
+<p>创建并返回一个 DrawNode （矩形）对象。</p>
+
+<p>格式：</p>
+
+<p>shape = display.newRect(rect表, [参数])</p>
+
+<pre><code class="lua"><br />-- 创建一个宽度 200，高度 100 的矩形，并且定位于 50, 80
+local shape3 = display.newRect(cc.rect(50, 80, 200, 100))
+
+-- 创建一个宽度 100, 高度 100 的矩形，并定位于 40,40
+-- 并设置它的中间填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth
+local shape4 = display.newRect(cc.rect(100, 100, 40, 40),
+        {fillColor = cc.c4f(1,0,0,1), borderColor = cc.c4f(0,1,0,1), borderWidth = 5})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>rect</strong> table</li>
+<li>table <strong>params</strong> 有参数，填充色 fillColor, 边线色 borderColor 及边线宽度 borderWidth</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>DrawNode</li>
+</ul>
+
+<p>@see ShapeNode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newLine"></a>
+
+            <dd class="">
+
+<h3>display.newLine()</h3>
+
+<blockquote>
+  <p>display.newLine(points, params)</p>
+</blockquote>
+
+<p>创建并返回一个 DrawNode （线性）对象。</p>
+
+<p>格式：</p>
+
+<p>shape = display.newLine(point表, [参数])</p>
+
+<pre><code class="lua"><br />-- 创建一个线宽为2，颜色为红色，从(10,10)到(100,100)的线段
+local shape3 = display.newLine({(10, 10), (100,100)},
+    {borderColor = cc.c4f(1.0, 0.0, 0.0, 1.0),
+    borderWidth = 1})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>point</strong> table</li>
+<li>table <strong>params</strong> 有参数，边线色 borderColor 及边线宽度 borderWidth</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>DrawNode</li>
+</ul>
+
+<p>@see ShapeNode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newPolygon"></a>
+
+            <dd class="">
+
+<h3>display.newPolygon()</h3>
+
+<blockquote>
+  <p>display.newPolygon(points, params, drawNode)</p>
+</blockquote>
+
+<p>创建并返回一个 PolygonShape （多边形）对象。</p>
+
+<pre><code class="lua"><br />local points = {
+    {10, 10},  -- point 1
+    {50, 50},  -- point 2
+    {100, 10}, -- point 3
+}
+local polygon = display.newPolygon(points)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>points</strong> 包含多边形每一个点坐标的表格对象</li>
+<li>number <strong>scale</strong> 缩放比例</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>DrawNode DrawNode</li>
+</ul>
+
+<p>@see DrawNode</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newBMFontLabel"></a>
+
+            <dd class="">
+
+<h3>display.newBMFontLabel()</h3>
+
+<blockquote>
+  <p>display.newBMFontLabel(params)</p>
+</blockquote>
+
+<p>用位图字体创建文本显示对象，并返回 Label 对象。</p>
+
+<p>BMFont 通常用于显示英文内容，因为英文字母加数字和常用符号也不多，生成的 BMFont 文件较小。如果是中文，应该用 TTFLabel。</p>
+
+<p>可用参数：</p>
+
+<ul>
+<li>text: 要显示的文本</li>
+<li>font: 字体文件名</li>
+<li>align: 文字的水平对齐方式（可选）</li>
+<li>maxLineWidth: 最大行宽（可选）</li>
+<li>offsetX: 图像的X偏移量（可选）</li>
+<li>offsetY: 图像的Y偏移量（可选）</li>
+<li>x, y: 坐标（可选）</li>
+</ul>
+
+<pre><code class="lua"><br />local label = display.newBMFontLabel({
+    text = "Hello",
+    font = "UIFont.fnt",
+})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Label Label对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newTTFLabel"></a>
+
+            <dd class="">
+
+<h3>display.newTTFLabel()</h3>
+
+<blockquote>
+  <p>display.newTTFLabel(params)</p>
+</blockquote>
+
+<p>使用 TTF 字体创建文字显示对象，并返回 Label 对象。</p>
+
+<p>可用参数：</p>
+
+<ul>
+<li>text: 要显示的文本</li>
+<li>font: 字体名，如果是非系统自带的 TTF 字体，那么指定为字体文件名</li>
+<li>size: 文字尺寸，因为是 TTF 字体，所以可以任意指定尺寸</li>
+<li>color: 文字颜色（可选），用 cc.c3b() 指定，默认为白色</li>
+<li>align: 文字的水平对齐方式（可选）</li>
+<li>valign: 文字的垂直对齐方式（可选），仅在指定了 dimensions 参数时有效</li>
+<li>dimensions: 文字显示对象的尺寸（可选），使用 cc.size() 指定</li>
+<li>x, y: 坐标（可选）</li>
+</ul>
+
+<p>align 和 valign 参数可用的值：</p>
+
+<ul>
+<li>cc.TEXT_ALIGNMENT_LEFT 左对齐</li>
+<li>cc.TEXT_ALIGNMENT_CENTER 水平居中对齐</li>
+<li>cc.TEXT_ALIGNMENT_RIGHT 右对齐</li>
+<li>cc.VERTICAL_TEXT_ALIGNMENT_TOP 垂直顶部对齐</li>
+<li>cc.VERTICAL_TEXT_ALIGNMENT_CENTER 垂直居中对齐</li>
+<li>cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM 垂直底部对齐</li>
+</ul>
+
+<pre><code class="lua"><br />-- 创建一个居中对齐的文字显示对象
+local label = display.newTTFLabel({
+    text = "Hello, World",
+    font = "Marker Felt",
+    size = 64,
+    align = cc.TEXT_ALIGNMENT_CENTER -- 文字内部居中对齐
+})
+
+-- 左对齐，并且多行文字顶部对齐
+local label = display.newTTFLabel({
+    text = "Hello, World\n您好，世界",
+    font = "Arial",
+    size = 64,
+    color = cc.c3b(255, 0, 0), -- 使用纯红色
+    align = cc.TEXT_ALIGNMENT_LEFT,
+    valign = cc.VERTICAL_TEXT_ALIGNMENT_TOP,
+    dimensions = cc.size(400, 200)
+})
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>params</strong> 参数表格对象</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>UILabel UILabel对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_align"></a>
+
+            <dd class="">
+
+<h3>display.align()</h3>
+
+<blockquote>
+  <p>display.align(target, anchorPoint, x, y)</p>
+</blockquote>
+
+<p>将指定的显示对象按照特定锚点对齐。</p>
+
+<p>格式：</p>
+
+<p>display.align(显示对象, 锚点位置, [x, y])</p>
+
+<p>显示对象锚点位置：</p>
+
+<ul>
+<li>display.CENTER 图像中央</li>
+<li>display.LEFT_TOP,</li>
+<li>display.TOP_LEFT 图像左上角</li>
+<li>display.CENTER_TOP,</li>
+<li>display.TOP_CENTER 图像顶部的中间</li>
+<li>display.RIGHT_TOP,</li>
+<li>display.TOP_RIGHT 图像顶部的中间</li>
+<li>display.CENTER_LEFT,</li>
+<li>display.LEFT_CENTER 图像左边的中间</li>
+<li>display.CENTER_RIGHT,</li>
+<li>display.RIGHT_CENTER 图像右边的中间</li>
+<li>display.BOTTOM_LEFT,</li>
+<li>display.LEFT_BOTTOM 图像左边的底部</li>
+<li>display.BOTTOM_RIGHT,</li>
+<li>display.RIGHT_BOTTOM 图像右边的底部</li>
+<li>display.BOTTOM_CENTER,</li>
+<li>display.CENTER_BOTTOM 图像中间的底部</li>
+</ul>
+
+<pre><code class="lua"><br />-- 将图像按左上角对齐，并放置在屏幕左上角
+display.align(sprite, display.LEFT_TOP, 0, 0)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>Sprite <strong>target</strong> 显示对象</li>
+<li>integer <strong>anchorPoint</strong> 锚点位置</li>
+<li>integer <strong>x</strong></li>
+<li>integer <strong>y</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_addSpriteFrames"></a>
+
+            <dd class="">
+
+<h3>display.addSpriteFrames()</h3>
+
+<blockquote>
+  <p>display.addSpriteFrames(plistFilename, image, handler)</p>
+</blockquote>
+
+<p>将指定的 Sprite Sheets 材质文件及其数据文件载入图像帧缓存。</p>
+
+<p>格式：</p>
+
+<p>display.addSpriteFrames(数据文件名, 材质文件名)</p>
+
+<pre><code class="lua"><br />-- 同步加载纹理
+display.addSpriteFrames("Sprites.plist", "Sprites.png")
+
+-- 异步加载纹理
+local cb = function(plist, image)
+    -- do something
+end
+display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)
+
+</code></pre>
+
+<p>Sprite Sheets 通俗一点解释就是包含多张图片的集合。Sprite Sheets 材质文件由多张图片组成，而数据文件则记录了图片在材质文件中的位置等信息。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>plistFilename</strong> 数据文件名</li>
+<li>string <strong>image</strong> 材质文件名</li>
+</ul>
+
+<p>@see Sprite Sheets</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_removeSpriteFramesWithFile"></a>
+
+            <dd class="">
+
+<h3>display.removeSpriteFramesWithFile()</h3>
+
+<blockquote>
+  <p>display.removeSpriteFramesWithFile(plistFilename, imageName)</p>
+</blockquote>
+
+<p>从内存中卸载 Sprite Sheets 材质和数据文件</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>plistFilename</strong> 数据文件名</li>
+<li>string <strong>image</strong> 材质文件名</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_setTexturePixelFormat"></a>
+
+            <dd class="">
+
+<h3>display.setTexturePixelFormat()</h3>
+
+<blockquote>
+  <p>display.setTexturePixelFormat(filename, format)</p>
+</blockquote>
+
+<p>设置材质格式。</p>
+
+<p>为了节约内存，我们会使用一些颜色品质较低的材质格式，例如针对背景图使用 cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565 格式。</p>
+
+<p>display.setTexturePixelFormat() 可以指定材质文件的材质格式，这样在加载材质文件时就会使用指定的格式。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>filename</strong> 材质文件名</li>
+<li>integer <strong>format</strong> 材质格式</li>
+</ul>
+
+<p>@see Texture Pixel Format</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_removeSpriteFrameByImageName"></a>
+
+            <dd class="">
+
+<h3>display.removeSpriteFrameByImageName()</h3>
+
+<blockquote>
+  <p>display.removeSpriteFrameByImageName(imageName)</p>
+</blockquote>
+
+<p>从图像帧缓存中删除一个图像。</p>
+
+<p>有时候，某些图像仅在特定场景中使用，例如背景图。那么在场景退出时，就可以用 display.removeSpriteFrameByImageName() 从缓存里删除不再使用的图像数据。</p>
+
+<p>此外，Scene 提供了 markAutoCleanupImage() 接口，可以指定场景退出时需要自动清理的图像，推荐使用。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>imageName</strong> 图像文件名</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newBatchNode"></a>
+
+            <dd class="">
+
+<h3>display.newBatchNode()</h3>
+
+<blockquote>
+  <p>display.newBatchNode(image, capacity)</p>
+</blockquote>
+
+<p>从指定的图像文件创建并返回一个批量渲染对象。</p>
+
+<pre><code class="lua"><br />local imageName = "Sprites.png"
+display.addSpriteFrames("Sprites.plist", imageName) -- 载入图像到帧缓存
+
+-- 下面的代码绘制 100 个图像只用了 1 次 OpenGL draw call
+local batch = display.newBatch(imageName)
+for i = 1, 100 do
+    local sprite = display.newSprite("#Sprite0001.png")
+    batch:addChild(sprite)
+end
+
+-- 下面的代码绘制 100 个图像则要使用 100 次 OpenGL draw call
+local group = display.newNode()
+for i = 1, 100 do
+    local sprite = display.newSprite("#Sprite0001.png")
+    group:addChild(sprite)
+end
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>image</strong> 图像文件名</li>
+<li>integer <strong>capacity</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>SpriteBatchNode</li>
+</ul>
+
+<p>@see Batch Node</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newSpriteFrame"></a>
+
+            <dd class="">
+
+<h3>display.newSpriteFrame()</h3>
+
+<blockquote>
+  <p>display.newSpriteFrame(frameName)</p>
+</blockquote>
+
+<p>创建并返回一个图像帧对象。</p>
+
+<pre><code class="lua"><br />display.addSpriteFrames("Sprites.plist", "Sprites.png")
+
+-- 创建一个 Sprite
+local sprite = display.newSprite("#Yes.png")
+
+-- 创建一个图像帧
+local frameNo = display.newSpriteFrame("No.png")
+
+-- 在需要时，修改 Sprite 的显示内容
+sprite:setSpriteFrame(frameNo)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>图像帧名称</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>SpriteFrameCache</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newFrames"></a>
+
+            <dd class="">
+
+<h3>display.newFrames()</h3>
+
+<blockquote>
+  <p>display.newFrames(pattern, begin, length, isReversed)</p>
+</blockquote>
+
+<p>以特定模式创建一个包含多个图像帧对象的数组。</p>
+
+<pre><code class="lua"><br />-- 创建一个数组，包含 Walk0001.png 到 Walk0008.png 的 8 个图像帧对象
+local frames = display.newFrames("Walk%04d.png", 1, 8)
+
+-- 创建一个数组，包含 Walk0008.png 到 Walk0001.png 的 8 个图像帧对象
+local frames = display.newFrames("Walk%04d.png", 1, 8, true)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>pattern</strong> 模式字符串</li>
+<li>integer <strong>begin</strong> 起始索引</li>
+<li>integer <strong>length</strong> 长度</li>
+<li>boolean <strong>isReversed</strong> 是否是递减索引</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>table 图像帧数组</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newAnimation"></a>
+
+            <dd class="">
+
+<h3>display.newAnimation()</h3>
+
+<blockquote>
+  <p>display.newAnimation(frames, time)</p>
+</blockquote>
+
+<p>以包含图像帧的数组创建一个动画对象。</p>
+
+<pre><code class="lua"><br />local frames = display.newFrames("Walk%04d.png", 1, 8)
+local animation = display.newAnimation(frames, 0.5 / 8) -- 0.5 秒播放 8 桢
+sprite:playAnimationOnce(animation) -- 播放一次动画
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>table <strong>frames</strong> 图像帧的数组</li>
+<li>number <strong>time</strong> 每一桢动画之间的间隔时间</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Animation Animation对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_setAnimationCache"></a>
+
+            <dd class="">
+
+<h3>display.setAnimationCache()</h3>
+
+<blockquote>
+  <p>display.setAnimationCache(name, animation)</p>
+</blockquote>
+
+<p>以指定名字缓存创建好的动画对象，以便后续反复使用。</p>
+
+<pre><code class="lua"><br />local frames = display.newFrames("Walk%04d.png", 1, 8)
+local animation = display.newAnimation(frames, 0.5 / 8) -- 0.5 秒播放 8 桢
+display.setAnimationCache("Walk", animation)
+
+-- 在需要使用 Walk 动画的地方
+sprite:playAnimationOnce(display.getAnimationCache("Walk")) -- 播放一次动画
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>name</strong> 名字</li>
+<li>Animation <strong>animation</strong> 动画对象</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_getAnimationCache"></a>
+
+            <dd class="">
+
+<h3>display.getAnimationCache()</h3>
+
+<blockquote>
+  <p>display.getAnimationCache(name)</p>
+</blockquote>
+
+<p>取得以指定名字缓存的动画对象，如果不存在则返回 nil。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>name</strong></li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>Animation</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_removeAnimationCache"></a>
+
+            <dd class="">
+
+<h3>display.removeAnimationCache()</h3>
+
+<blockquote>
+  <p>display.removeAnimationCache(name)</p>
+</blockquote>
+
+<p>删除指定名字缓存的动画对象。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>name</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_removeUnusedSpriteFrames"></a>
+
+            <dd class="">
+
+<h3>display.removeUnusedSpriteFrames()</h3>
+
+<blockquote>
+  <p>display.removeUnusedSpriteFrames()</p>
+</blockquote>
+
+<p>从内存中卸载没有使用 Sprite Sheets 材质</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_newProgressTimer"></a>
+
+            <dd class="">
+
+<h3>display.newProgressTimer()</h3>
+
+<blockquote>
+  <p>display.newProgressTimer(image, progresssType)</p>
+</blockquote>
+
+<p>创建一个进度条的节点</p>
+
+<p>进度条类型有:</p>
+
+<ul>
+<li>display.PROGRESS_TIMER_BAR  环形</li>
+<li>display.PROGRESS_TIMER_RADIAL</li>
+</ul>
+
+<h4>Parameters</h4>
+
+<h2>-</h2>
+
+<h4>Returns</h4>
+
+<p>-</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_display_printscreen"></a>
+
+            <dd class="">
+
+<h3>display.printscreen()</h3>
+
+<blockquote>
+  <p>display.printscreen(node, args)</p>
+</blockquote>
+
+<p>获取一个节点的纹理内容</p>
+
+<p>display.printscreen() 提供:</p>
+
+<ul>
+<li>保存节点的纹理到磁盘文件</li>
+<li>以节点的纹理创建一个精灵并返回</li>
+</ul>
+
+<p>注意：node 的 content size 必须大于 (0, 0). 否则会收到错误信息: LUA ERROR: ASSERT FAILED ON LUA EXECUTE: Invalid size</p>
+
+<pre><code class="lua"><br />-- 截屏并保存
+display.printscreen(node, {file="save.png"})
+
+-- 使用截屏纹理创建一个精灵并返回
+local sp = display.printscreen(node, {})
+
+</code></pre>
+
+<p>-- Get a screenshot of a Node
+-- @author zrong(zengrong.net)
+-- Creation: 2014-04-10</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>node <strong>A</strong> node to print.</li>
+<li>args</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>An instance of Sprite or FilteredSprite.</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

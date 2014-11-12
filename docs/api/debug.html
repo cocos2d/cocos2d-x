@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - debug</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><strong>debug</strong></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>debug</h1>
+
+<p>提供调试接口</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_DEPRECATED">DEPRECATED(newfunction,&nbsp;oldname,&nbsp;newname)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">定义一个作废的接口</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_PRINT_DEPRECATED">PRINT_DEPRECATED(msg)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">显示作废信息</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_printLog">printLog(tag,&nbsp;fmt,&nbsp;...)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">打印调试信息</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_printError">printError(fmt,&nbsp;...)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">输出 tag 为 ERR 的调试信息</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_printInfo">printInfo(fmt,&nbsp;...)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">输出 tag 为 INFO 的调试信息</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_dump">dump(value,&nbsp;desciption,&nbsp;nesting)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">输出值的内容</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_DEPRECATED"></a>
+
+            <dd class="">
+
+<h3>DEPRECATED()</h3>
+
+<blockquote>
+  <p>DEPRECATED(newfunction, oldname, newname)</p>
+</blockquote>
+
+<p>定义一个作废的接口</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_PRINT_DEPRECATED"></a>
+
+            <dd class="">
+
+<h3>PRINT_DEPRECATED()</h3>
+
+<blockquote>
+  <p>PRINT_DEPRECATED(msg)</p>
+</blockquote>
+
+<p>显示作废信息</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_printLog"></a>
+
+            <dd class="">
+
+<h3>printLog()</h3>
+
+<blockquote>
+  <p>printLog(tag, fmt, ...)</p>
+</blockquote>
+
+<p>打印调试信息</p>
+
+<h3>用法示例</h3>
+
+<pre><code class="lua"><br />printLog("WARN", "Network connection lost at %d", os.time())
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>tag</strong> 调试信息的 tag</li>
+<li>string <strong>fmt</strong> 调试信息格式</li>
+<li>[mixed <strong>...]</strong> 更多参数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_printError"></a>
+
+            <dd class="">
+
+<h3>printError()</h3>
+
+<blockquote>
+  <p>printError(fmt, ...)</p>
+</blockquote>
+
+<p>输出 tag 为 ERR 的调试信息</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>fmt</strong> 调试信息格式</li>
+<li>[mixed <strong>...]</strong> 更多参数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_printInfo"></a>
+
+            <dd class="">
+
+<h3>printInfo()</h3>
+
+<blockquote>
+  <p>printInfo(fmt, ...)</p>
+</blockquote>
+
+<p>输出 tag 为 INFO 的调试信息</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>fmt</strong> 调试信息格式</li>
+<li>[mixed <strong>...]</strong> 更多参数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_dump"></a>
+
+            <dd class="">
+
+<h3>dump()</h3>
+
+<blockquote>
+  <p>dump(value, desciption, nesting)</p>
+</blockquote>
+
+<p>输出值的内容</p>
+
+<h3>用法示例</h3>
+
+<pre><code class="lua"><br />local t = {comp = "chukong", engine = "quick"}
+
+dump(t)
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><p>mixed <strong>value</strong> 要输出的值</p></li>
+<li><p>[string <strong>desciption]</strong> 输出内容前的文字描述</p></li>
+</ul>
+
+<p>@parma [integer nesting] 输出时的嵌套层级，默认为 3</p>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

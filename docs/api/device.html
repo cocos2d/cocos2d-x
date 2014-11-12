@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - device</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><a href="crypto.html">crypto</a></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><strong>device</strong></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>device</h1>
+
+<p>提供设备相关属性的查询，以及设备功能的访问</p>
+
+<p>当框架初始完成后，device 模块提供下列属性：</p>
+
+<ul>
+<li>device.platform 返回当前运行平台的名字，可用值： ios, android, mac, windows.</li>
+<li>device.model 返回设备型号，可用值： unknown, iphone, ipad</li>
+<li>device.language 返回设备当前使用的语言，可用值：
+
+<ul>
+<li>cn：中文</li>
+<li>fr：法语</li>
+<li>it：意大利语</li>
+<li>gr：德语</li>
+<li>sp：西班牙语</li>
+<li>ru：俄语</li>
+<li>jp：日语</li>
+<li>en：英语</li>
+</ul></li>
+<li>device.writablePath 返回设备上可以写入数据的首选路径：
+
+<ul>
+<li>iOS 上返回应用程序所在的 Documents 目录</li>
+<li>Android 上返回存储卡的根目录</li>
+<li>其他平台的返回值由 quick-x-player 决定</li>
+</ul></li>
+<li>device.cachePath 返回设备上可以写入数据的缓存目录：
+
+<ul>
+<li>iOS 上返回应用程序所在的 Library/Caches 目录</li>
+<li>其他平台的返回值同 device.writablePath</li>
+</ul></li>
+<li>device.directorySeparator 目录分隔符，在 Windows 平台上是 “\”，其他平台都是 “/”</li>
+<li>device.pathSeparator 路径分隔符，在 Windows 平台上是 “;”，其他平台都是 “:”</li>
+</ul>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_showActivityIndicator">device.showActivityIndicator()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">显示活动指示器</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_hideActivityIndicator">device.hideActivityIndicator()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">隐藏正在显示的活动指示器</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_showAlert">device.showAlert(title,&nbsp;message,&nbsp;buttonLabels,&nbsp;listener)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">显示一个包含按钮的弹出对话框</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_cancelAlert">device.cancelAlert()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">取消正在显示的对话框。</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_getOpenUDID">device.getOpenUDID()</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">返回设备的 OpenUDID 值</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_openURL">device.openURL(url)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">用浏览器打开指定的网址</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_device_showInputBox">device.showInputBox(title,&nbsp;message,&nbsp;defaultValue)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">显示一个输入框，并返回用户输入的内容。</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_showActivityIndicator"></a>
+
+            <dd class="">
+
+<h3>device.showActivityIndicator()</h3>
+
+<blockquote>
+  <p>device.showActivityIndicator()</p>
+</blockquote>
+
+<p>显示活动指示器</p>
+
+<p>在 iOS 和 Android 设备上显示系统的活动指示器，可以用于阻塞操作时通知用户需要等待。</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_hideActivityIndicator"></a>
+
+            <dd class="">
+
+<h3>device.hideActivityIndicator()</h3>
+
+<blockquote>
+  <p>device.hideActivityIndicator()</p>
+</blockquote>
+
+<p>隐藏正在显示的活动指示器</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_showAlert"></a>
+
+            <dd class="">
+
+<h3>device.showAlert()</h3>
+
+<blockquote>
+  <p>device.showAlert(title, message, buttonLabels, listener)</p>
+</blockquote>
+
+<p>显示一个包含按钮的弹出对话框</p>
+
+<pre><code class="lua"><br />local function onButtonClicked(event)
+    if event.buttonIndex == 1 then
+        .... 玩家选择了 YES 按钮
+    else
+        .... 玩家选择了 NO 按钮
+    end
+end
+
+device.showAlert("Confirm Exit", "Are you sure exit game ?", {"YES", "NO"}, onButtonClicked)
+
+</code></pre>
+
+<p>当没有指定按钮标题时，对话框会默认显示一个“OK”按钮。
+回调函数获得的表格中，buttonIndex 指示玩家选择了哪一个按钮，其值是按钮的显示顺序。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>title</strong> 对话框标题</li>
+<li>string <strong>message</strong> 内容</li>
+<li>table <strong>buttonLabels</strong> 包含多个按钮标题的表格对象</li>
+<li>function <strong>listener</strong> 回调函数</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_cancelAlert"></a>
+
+            <dd class="">
+
+<h3>device.cancelAlert()</h3>
+
+<blockquote>
+  <p>device.cancelAlert()</p>
+</blockquote>
+
+<p>取消正在显示的对话框。</p>
+
+<p>提示：取消对话框，不会执行显示对话框时指定的回调函数。</p>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_getOpenUDID"></a>
+
+            <dd class="">
+
+<h3>device.getOpenUDID()</h3>
+
+<blockquote>
+  <p>device.getOpenUDID()</p>
+</blockquote>
+
+<p>返回设备的 OpenUDID 值</p>
+
+<p>OpenUDID 是为设备仿造的 UDID（唯一设备识别码），可以用来识别用户的设备。</p>
+
+<p>但 OpenUDID 存在下列问题：</p>
+
+<ul>
+<li>如果删除了应用再重新安装，获得的 OpenUDID 会发生变化</li>
+<li>iOS 7 不支持 OpenUDID</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 设备的 OpenUDID 值</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_openURL"></a>
+
+            <dd class="">
+
+<h3>device.openURL()</h3>
+
+<blockquote>
+  <p>device.openURL(url)</p>
+</blockquote>
+
+<p>用浏览器打开指定的网址</p>
+
+<pre><code class="lua"><br />-- 打开网页
+device.openURL("http://dualface.github.com/quick-cocos2d-x/")
+
+-- 打开设备上的邮件程序，并创建新邮件，填入收件人地址
+device.openURL("mailto:nobody@mycompany.com")
+-- 增加主题和内容
+local subject = string.urlencode("Hello")
+local body = string.urlencode("How are you ?")
+device.openURL(string.format("mailto:nobody@mycompany.com?subject=%s&amp;body=%s", subject, body))
+
+-- 打开设备上的拨号程序
+device.openURL("tel:123-456-7890")
+
+</code></pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>网址，邮件，拨号等的字符串</strong></li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_device_showInputBox"></a>
+
+            <dd class="">
+
+<h3>device.showInputBox()</h3>
+
+<blockquote>
+  <p>device.showInputBox(title, message, defaultValue)</p>
+</blockquote>
+
+<p>显示一个输入框，并返回用户输入的内容。</p>
+
+<p>当用户点击取消按钮时，showInputBox() 函数返回空字符串。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>title</strong> 对话框标题</li>
+<li>string <strong>message</strong> 提示信息</li>
+<li>string <strong>defaultValue</strong> 输入框默认值</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string 用户输入的字符串</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>

@@ -274,10 +274,18 @@ int LuaStack::executeString(const char *codes)
 
 int LuaStack::executeScriptFile(const char* filename)
 {
-    std::string code("require \"");
-    code.append(filename);
-    code.append("\"");
-    return executeString(code.c_str());
+    CCAssert(filename, "CCLuaStack::executeScriptFile() - invalid filename");
+
+    FileUtils *utils = FileUtils::getInstance();
+    std::string fullPath = utils->fullPathForFilename(filename);
+    Data data = utils->getDataFromFile(fullPath);
+    int rn = 0;
+    if (!data.isNull()) {
+        if (luaLoadBuffer(_state, (const char*)data.getBytes(), (int)data.getSize(), fullPath.c_str()) == 0) {
+            rn = executeFunction(0);
+        }
+    }
+    return rn;
 }
 
 int LuaStack::executeGlobalFunction(const char* functionName)
@@ -730,6 +738,28 @@ void LuaStack::cleanupXXTEAKeyAndSign()
         _xxteaSign = nullptr;
         _xxteaSignLen = 0;
     }
+}
+
+const char* LuaStack::getXXTEAKey(int *len)
+{
+    if (_xxteaEnabled && _xxteaKey) {
+        if (len) {
+            *len = _xxteaKeyLen;
+        }
+        return _xxteaKey;
+    }
+    return nullptr;
+}
+
+const char* LuaStack::getXXTEASign(int *len)
+{
+    if (_xxteaEnabled && _xxteaSign) {
+        if (len) {
+            *len = _xxteaSignLen;
+        }
+        return _xxteaSign;
+    }
+    return nullptr;
 }
 
 int LuaStack::loadChunksFromZIP(const char *zipFilePath)

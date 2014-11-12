@@ -1,0 +1,6 @@
+{
+	"title": "quick-cocos2d-x v3 API Documents",
+	"packageName": "",
+	"indexModule": "init",
+	"excludes": "deprecated, platform., cc., cocos2dx."
+}

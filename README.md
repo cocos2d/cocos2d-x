@@ -1,212 +1,84 @@
-<img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
+Title: quick-cocos2d-x v3 README
 
+quick-cocos2d-x v3
+==================
 
-cocos2d-x
-=========
+quick-cocos2d-x v3 是在 cocos2dx 3.x 的最新版本基础之上，移植了原来 quick-cocos2d-x 的核心框架、强大的 player 、丰富的示例等，并增加更多新的功能。
 
-[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
-[![Build Status](https://travis-ci.org/cocos-travis-mac/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos-travis-mac/cocos2d-x)
+> 当前版本为RC版
 
-[cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
-It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, Windows Phone, OS X, Windows and Linux.
+RC 版本是正式发布 Release 版本之前的准备版本。与正式版本相比，主要区别在于部分功能可能会在正式版中有所调整。但所有核心功能和主要 API 都已经稳定。
 
-cocos2d-x is:
+~
 
-  * Fast
-  * Free
-  * Easy to use
-  * Community Supported
+## 使用指南
 
-Git user attention
------------------------
+### 下载与安装
 
-1. clone the repo from GitHub.
+quick 在每一个主要版本发布时提供两种版本：
 
-         $ git clone git@github.com:cocos2d/cocos2d-x.git
-
-2. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
-
-         $ cd cocos2d-x
-         $ python download-deps.py
-
-3. After running `download-deps.py`.
-
-         $ cd cocos2d-x
-         $ git submodule update --init
-
-How to start a new game
------------------------
-
-1. Download the code from [cocos2d download site][4]
-2. Run `setup.py`
-3. Run the `cocos` script
-
-Example:
-
-    $ cd cocos2d-x
-    $ ./setup.py
-    $ source FILE_TO_SAVE_SYSTEM_VARIABLE
-    $ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
-    $ cd NEW_PROJECTS_DIR/MyGame
-
-### Build and run a new project for Android ###
-
-    $ cocos run -p android -j 4
-
-### Build and run a new project for iOS ###
-
-    $ cocos run -p ios
+-   安装包（含源代码）
     
-### Build and run a new project for OSX ###
+    安装包可以快速完成一些基本设置，并包含编译好的 player 执行文件，简化了安装配置步骤。只需要下载 quick 安装包后，按照安装程序的提示进行操作即可。如果是 Mac 系统，建议先安装好 Xcode 开发工具。
 
-    $ cocos run -p mac
+    访问 [http://cn.cocos2d-x.org/](http://cn.cocos2d-x.org/) 下载安装包。
 
-### Build and run a new project for Linux ###
+-   源码包
 
-if you never run cocos2d-x on Linux, you need to install all dependencies by the
-script in **cocos2d/build/install-deps-linux.sh**
+    下载解压缩后，运行 setup_mac.sh 或者 setup_win.bat 配置环境。需要开发者自行编译 player 执行文件。
 
-    $ cd cocos2d-x/build
-    $ ./install-deps-linux.sh
+    访问 [https://github.com/dualface/v3quick/releases](https://github.com/dualface/v3quick/releases) 下载源码包。
 
-Then
+    访问 [https://github.com/dualface/v3quick](https://github.com/dualface/v3quick) 查看 quick 源代码仓库。
 
-    $ cd NEW_PROJECTS_DIR/MyGame
-    $ cocos run -p linux
-    
-Run
+~
 
-    $ bin/MyGame
+### 快速开始
 
-### Build and run new project for win32 ###
+quick-cocos2d-x 中带有一个名为 player 的工具。
 
-    $ cocos run -p win32
+![](docs/res/player.png)
 
+这个工具不但是一个功能完善的模拟器，可以在 Mac/Windows 桌面运行开发者的游戏，还是一个功能齐备的开发工具入口。
 
-Main features
--------------
-   * Scene management (workflow)
-   * Transitions between scenes
-   * Sprites and Sprite Sheets
-   * Effects: Lens, Ripple, Waves, Liquid, etc.
-   * Actions (behaviours):
-     * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
-     * Composable actions: Sequence, Spawn, Repeat, Reverse
-     * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
-     * Misc actions: CallFunc, OrbitCamera, Follow, Tween
-   * Basic menus and buttons
-   * Integrated with physics engines: [Box2d][5] and [Chipmunk][6]
-   * Particle system
-   * Skeleton Animations: [Spine][7] and Armature support
-   * Fonts:
-     * Fast font rendering using Fixed and Variable width fonts
-     * Support for .ttf fonts
-   * Tile Map support: Orthogonal, Isometric and Hexagonal
-   * Parallax scrolling
-   * Motion Streak
-   * Render To Texture
-   * Touch/Accelerometer on mobile devices
-   * Touch/Mouse/Keyboard on desktop
-   * Sound Engine support (CocosDenshion library) based on OpenAL
-   * Integrated Slow motion/Fast forward
-   * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
-   * Resolution Independent
-   * Language: C++, with Lua and JavaScript bindings
-   * Open Source Commercial Friendly(MIT): Compatible with open and closed source projects
-   * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
+开发者启动 player 后，将可以完成下列任务：
 
-Build Requirements
-------------------
+-   创建项目
+-   打开项目
+-   查看示例
 
-* Mac OS X 10.7+, Xcode 5.1+
-* or Ubuntu 12.10+, CMake 2.6+
-* or Windows 7+, VS 2012+
-* Python 2.7.5
-* NDK r9d is required to build Android games
+未来，我们还将增加更多功能。
 
+现在就下载安装 quick，然后启动 player3.app 或 player3.exe 查看 quick 中那些精彩的示例程序吧。
 
-Runtime Requirements
---------------------
-  * iOS 5.0+ for iPhone / iPad games
-  * Android 2.3+ for Android games
-  * Windows Phone 8+ for Windows Phone games
-  * OS X v10.6+ for Mac games
-  * Windows 7+ for Win games
+~
 
+### 使用指南
 
-Running Tests
---------------------
+-    [player 使用说明](docs/howto/player-user-manual/zh.md)
+-    [在 Code IDE 中调试 quick 工程](docs/howto/use-codeide/zh.md)
+-    [用 CCSLoader 读取 Cocos Studio 输出的场景/UI 文件](docs/howto/use-ccsloader/zh.md)
+-    [在 Windows Phone 8 中运行 quick](docs/howto/run-on-wp8/zh.md)
+-    [编译 player 执行文件](docs/howto/compile-player/zh.md)
+-    [编译 Android 工程](docs/howto/compile-android/zh.md)
+-    [升级到 quick-cocos2d-x 最新版](docs/howto/upgrade/zh.md)
 
-Select the test you want from Xcode Scheme chooser.
+~
 
-* For OS X / iOS
+### 参考手册
 
-```
-$ cd cocos2d-x/build
-$ open cocos_tests.xcodeproj
-```
+-    [quick 中的事件](docs/manual/events/zh.md)
+-    [quick 中的触摸事件](docs/manual/touch-events/zh.md)
+-    [API 文档](docs/api/index.md)
 
-* For Linux
+~
 
-```
-$ cd cocos2d-x/build
-$ ./install-deps-linux.sh
-$ cmake ..
-$ make
-```
+### 历史版本
 
-Run Samples
+beta 版本各主要功能已经完成，其中包括新的纯 lua 滚动控件、ccsloader、对 Cocos Code IDE 的支持、模块裁减等。API 已经稳定，相关文档正在补充。同时正在清理可能的 BUG。
 
-```
-$ bin/cpp-empty-test/cpp-empty-test
-or
-$ bin/lua-empty-test/lua-empty-test
-```
+alpha3 版提供了 3D 精灵示例；新增了几个滚动组件，已在 UI 示例中加入了相关的展示；另外还有一些功能的修改与补充，以及脚本绑定工具的整合等。
 
-      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
-      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
+alpha2 版合并了 cocos2d-x3.2 版本核心引擎；完善了单点及多点触摸机制，并提供了相应的示例；为 Anysdk 封装了 Lua 接口，并提供了相应的示例；修改了1版中 player 的一些问题；增补和修改了一些框架接口及底层功能。
 
-* For Windows
-
-Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
-
-* For Android
-
-```
-$ cd cocos2d-x/build
-$ python ./android-build.py cpp-empty-test -p 10
-$ adb install ../tests/cpp-empty-tst/proj.android/bin/CppEmptyTest-debug.apk
-```
-
-Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
-
-
-Contributing to the Project
---------------------------------
-
-Did you find a bug? Do you have feature request? Do you want to merge a feature?
-
-  * [contributing to cocos2d-x][8]
-
-
-Contact us
-----------
-
-   * Forum: [http://forum.cocos2d-x.org][9]
-   * Twitter: [http://www.twitter.com/cocos2dx][10]
-   * Weibo: [http://t.sina.com.cn/cocos2dx][11]
-   * IRC: [https://webchat.freenode.net/][12] (#cocos2d and #cocos2d-x channels)
-
-[1]: http://www.cocos2d-x.org "cocos2d-x"
-[2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
-[3]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Download
-[4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
-[5]: http://www.box2d.org "Box2D"
-[6]: http://www.chipmunk-physics.net "Chipmunk2D"
-[7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
-[8]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Contribution
-[9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
-[10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
-[11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
-[12]: https://webchat.freenode.net/ "https://webchat.freenode.net/"
+alpha1 版已经完成了大部分基本框架的移植工作；提供了 MAC 版本的 player；已经有多个完整的示例，可以在 player 中直接运行和调试；创建自己的工程，将游戏快速布署到 IOS 及 Android 设备上。

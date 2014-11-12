@@ -33,6 +33,8 @@ extern "C" {
 #include "cocos2d.h"
 #include "CCLuaValue.h"
 
+#define LUASTACK_USED_FOR_QUICK_COCOS2DX
+
 NS_CC_BEGIN
 
 class LuaStack : public Ref
@@ -131,6 +133,9 @@ public:
     
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
     virtual void cleanupXXTEAKeyAndSign();
+    
+    virtual const char *getXXTEAKey(int *len);
+    virtual const char *getXXTEASign(int *len);
     
     int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
     int loadChunksFromZIP(const char *zipFilePath);

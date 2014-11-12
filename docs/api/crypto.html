@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>quick-cocos2d-x v3 API Documents - crypto</title>
+<link rel="stylesheet" href="luadocx-style.css" type="text/css" />
+<link rel="stylesheet" href="luadocx-style-monokai.css" type="text/css" />
+<script src="luadocx-highlight.min.js"></script>
+<script type="text/javascript" charset="utf-8">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <div id="container">
+
+    <table id="main">
+      <tr>
+        <td id="navigation">
+
+          <h2>Links</h2>
+          <ul>
+            <li><a href="index.html">Index</a></li>
+          </ul>
+
+          <h2>Modules</h2>
+          <ul>
+            <li><a href="audio.html">audio</a></li>
+            <li><a href="cocos2dx.html">cocos2dx</a></li>
+            <li><strong>crypto</strong></li>
+            <li><a href="debug.html">debug</a></li>
+            <li><a href="device.html">device</a></li>
+            <li><a href="display.html">display</a></li>
+            <li><a href="filter.html">filter</a></li>
+            <li><a href="functions.html">functions</a></li>
+            <li><a href="index.html">init</a></li>
+            <li><a href="json.html">json</a></li>
+            <li><a href="luaj.html">luaj</a></li>
+            <li><a href="luaoc.html">luaoc</a></li>
+            <li><a href="network.html">network</a></li>
+            <li><a href="scheduler.html">scheduler</a></li>
+            <li><a href="shortcodes.html">shortcodes</a></li>
+            <li><a href="transition.html">transition</a></li>
+            <li><a href="ui.html">ui</a></li>
+          </ul>
+
+        </td> <!-- navigation -->
+
+        <td id="content">
+
+          <!-- BEGIN module doc -->
+
+          <div id="module_doc">
+
+<h1>crypto</h1>
+
+<p>加解密、数据编码</p>
+
+          </div>
+
+          <!-- END module doc -->
+
+
+          <!--  BEGIN functions index -->
+
+
+          <table class="function_list">
+
+              <tr>
+                  <th colspan="2">Functions</th>
+              </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_encryptAES256">crypto.encryptAES256(plaintext,&nbsp;key)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 AES256 算法加密内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_decryptAES256">crypto.decryptAES256(ciphertext,&nbsp;key)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 AES256 算法解密内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_encryptXXTEA">crypto.encryptXXTEA(plaintext,&nbsp;key)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 XXTEA 算法加密内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_decryptXXTEA">crypto.decryptXXTEA(ciphertext,&nbsp;key)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 XXTEA 算法解密内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_encodeBase64">crypto.encodeBase64(plaintext)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 BASE64 算法编码内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_decodeBase64">crypto.decodeBase64(ciphertext)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">使用 BASE64 算法解码内容</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_md5">crypto.md5(input,&nbsp;isRawOutput)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计算内容的 MD5 码</td>
+            </tr>
+
+
+            <tr>
+              <td class="name" nowrap colspan="2"><a href="#anchor_crypto_md5file">crypto.md5file(path)</a></td>
+            </tr>
+
+            <tr>
+              <td class="summary" colspan="2">计算文件的 MD5 码</td>
+            </tr>
+
+
+          </table>
+
+          <!--  END functions index -->
+
+
+          <!-- BEGIN functions details -->
+
+          <h2>Functions</h2>
+          <dl class="function">
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_encryptAES256"></a>
+
+            <dd class="">
+
+<h3>crypto.encryptAES256()</h3>
+
+<blockquote>
+  <p>crypto.encryptAES256(plaintext, key)</p>
+</blockquote>
+
+<p>使用 AES256 算法加密内容</p>
+
+<p>提示：AES256 仅在 iOS 和 Mac 平台可用。加解密尽量选择跨平台的 XXTEA 接口。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>plaintext</strong> 明文字符串</li>
+<li>string <strong>key</strong> 密钥字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string  加密后的字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_decryptAES256"></a>
+
+            <dd class="">
+
+<h3>crypto.decryptAES256()</h3>
+
+<blockquote>
+  <p>crypto.decryptAES256(ciphertext, key)</p>
+</blockquote>
+
+<p>使用 AES256 算法解密内容</p>
+
+<p>提示： AES256 仅在 iOS 和 Mac 平台可用。加解密尽量选择跨平台的 XXTEA 接口。</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>ciphertext</strong> 加密后的字符串</li>
+<li>string <strong>key</strong> 密钥字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string  明文字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_encryptXXTEA"></a>
+
+            <dd class="">
+
+<h3>crypto.encryptXXTEA()</h3>
+
+<blockquote>
+  <p>crypto.encryptXXTEA(plaintext, key)</p>
+</blockquote>
+
+<p>使用 XXTEA 算法加密内容</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>plaintext</strong> 明文字符串</li>
+<li>string <strong>key</strong> 密钥字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string  加密后的字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_decryptXXTEA"></a>
+
+            <dd class="">
+
+<h3>crypto.decryptXXTEA()</h3>
+
+<blockquote>
+  <p>crypto.decryptXXTEA(ciphertext, key)</p>
+</blockquote>
+
+<p>使用 XXTEA 算法解密内容</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>ciphertext</strong> 加密后的字符串</li>
+<li>string <strong>key</strong> 密钥字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string  明文字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_encodeBase64"></a>
+
+            <dd class="">
+
+<h3>crypto.encodeBase64()</h3>
+
+<blockquote>
+  <p>crypto.encodeBase64(plaintext)</p>
+</blockquote>
+
+<p>使用 BASE64 算法编码内容</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>plaintext</strong> 原文字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string  编码后的字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_decodeBase64"></a>
+
+            <dd class="">
+
+<h3>crypto.decodeBase64()</h3>
+
+<blockquote>
+  <p>crypto.decodeBase64(ciphertext)</p>
+</blockquote>
+
+<p>使用 BASE64 算法解码内容</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>ciphertext</strong> 编码后的字符串</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string  原文字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_md5"></a>
+
+            <dd class="">
+
+<h3>crypto.md5()</h3>
+
+<blockquote>
+  <p>crypto.md5(input, isRawOutput)</p>
+</blockquote>
+
+<p>计算内容的 MD5 码</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>input</strong> 内容字符串</li>
+<li>boolean <strong>isRawOutput</strong> 是否返回二进制 MD5 码</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string MD5 字符串</li>
+</ul>
+
+            </dd>
+
+
+<!--            <dt class="--><!--">-->
+<!--              --><!--<a name="--><!--"></a>-->
+<!--              <h3>--><!--</h3>-->
+<!--            </dt>-->
+
+            <a name="anchor_crypto_md5file"></a>
+
+            <dd class="">
+
+<h3>crypto.md5file()</h3>
+
+<blockquote>
+  <p>crypto.md5file(path)</p>
+</blockquote>
+
+<p>计算文件的 MD5 码</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li>string <strong>path</strong> 文件路径</li>
+</ul>
+
+<h4>Returns</h4>
+
+<ul>
+<li>string MD5 字符串</li>
+</ul>
+
+            </dd>
+
+
+          </dl>
+
+          <!-- BEGIN functions details -->
+
+
+      </td> <!-- id="content" -->
+
+      </tr>
+    </table> <!-- id="main" -->
+
+    <div id="about">
+      <i>update: 2014-09-19 16:07:27, generated by <a href="http://github.com/dualface/luadocx">luadocx 1.3</a></i>
+    </div> <!-- id="about" -->
+
+  </div> <!-- id="container" -->
+
+</body>
+</html>
