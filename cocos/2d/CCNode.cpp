@@ -286,10 +286,13 @@ void Node::setLocalZOrder(int z)
     if (_localZOrder == z)
         return;
     
-    _localZOrder = z;
     if (_parent)
     {
         _parent->reorderChild(this, z);
+    }
+    else
+    {
+      _localZOrder = z;
     }
 
     _eventDispatcher->setDirtyForNode(this);
