@@ -92,7 +92,7 @@
     <PostBuildEvent>
       <Command>echo "Copying Universal App template files..."
 xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared" /eiycq
-xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\" /eiycq</Command>
+xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -105,7 +105,7 @@ xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..
     <PostBuildEvent>
       <Command>echo "Copying Universal App template files..."
 xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared" /eiycq
-xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\" /eiycq</Command>
+xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -118,7 +118,7 @@ xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..
     <PostBuildEvent>
       <Command>echo "Copying Universal App template files..."
 xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared" /eiycq
-xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\" /eiycq</Command>
+xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +131,7 @@ xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..
     <PostBuildEvent>
       <Command>echo "Copying Universal App template files..."
 xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared" /eiycq
-xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\" /eiycq</Command>
+xcopy "..\..\..\..\..\cocos2dx\platform\win-8.1\resources.props" "..\..\..\..\..\template\multi-platform-cpp\proj.win8.1-universal\HelloCpp.Shared\" /eiycq</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
