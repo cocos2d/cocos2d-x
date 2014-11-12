@@ -222,27 +222,6 @@ build_apk 支持下列参数：
 -   JDK 1.7以上的版本，在签名时需要指定时间戳，此脚本现在未做处理，因此在签名时会有警告信息，并且打包出来的apk在真机上运行时会报错。
 -   旧版本 ADT 的目录结构不同，有可能造成无法找到 build tools 等，造成打包失败。
 
-~
-
-## 使用模块化编译缩小 apk 体积
-
-在 quick 中可以使用模块化编译功能，按照项目需求编译出更小的可执行文件。
-
-要启用这个功能，开发者需要打开项目中的 `proj.android/jni/Application.mk` 文件，然后将不需要的模块值改为 `0`。
-
-| MACRO                  | 体积    | 默认开关 | 功能  |
-|------------------------|--------|-----|----------|
-|CC_USE_CURL             | 1259KB | OFF | 使用 CURL 库提供 HTTP 网络功能。但 quick 在 Android 下使用 Android 系统的 Java 接口提供 HTTP 网络功能，所以 CURL 默认已经关闭。 |
-|CC_USE_TIFF             |  514KB |  ON | 使用 TIFF 图像格式。 |
-|CC_USE_WEBP             |  208KB |  ON | 使用 WebP 图像格式。 |
-|CC_USE_TGA              |    8KB |  ON | 使用 TGA 图像格式。 |
-|CC_USE_PHYSICS          |  308KB |  ON | 使用 Chipmunk 物理引擎。 |
-|CC_USE_WEBSOCKET        |   64KB |  ON | 使用 WebSocket 网络协议。 |
-|CC_USE_SQLITE           |  307KB |  ON | 使用 Lua 的 Sqlite 数据库扩展 lsqlite3。 |
-|CC_USE_CCS_ARMATURE     |   32KB |  ON | 使用 Cocos Studio 骨骼动画。 |
-|CC_USE_EXTRA_FILTERS    |   40KB |  ON | 使用过滤器效果。 |
-
-只需要在 `Applicaiton.mk` 中将相应的宏设置为 `0`，然后重新编译就可以得到更小的可执行文件。
 
 
 
