@@ -63,7 +63,7 @@ static int tolua_Cocos2d_Node_setTouchEnabled(lua_State* tolua_S)
             if (!lnode) {
                 return 0;
             }
-            lnode->setTouchEnabled(value);
+            lnode->setLuaTouchEnabled(value);
         }
     }
     return 0;
@@ -303,7 +303,8 @@ static int tolua_Cocos2d_Node_removeTouchEvent(lua_State* tolua_S)
             if (!lnode) {
                 return 0;
             }
-            lnode->setTouchEnabled(false);
+            lnode->setLuaTouchEnabled(false);
+            lnode->detachNode();  //this LuaEventNode will be removed in TouchTargetNode
             mng->removeLuaNode(lnode);
         }
     }

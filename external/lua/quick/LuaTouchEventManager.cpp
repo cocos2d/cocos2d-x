@@ -115,7 +115,6 @@ void LuaTouchEventManager::addTouchableNode(LuaEventNode *node)
 
 void LuaTouchEventManager::removeTouchableNode(LuaEventNode *node)
 {
-    node->detachNode();  //this LuaEventNode will be removed in TouchTargetNode
     _touchableNodes.eraseObject(node);
     auto found = _nodeLuaEventNodeMap.find(node->getDetachedNode());
     if (found != _nodeLuaEventNodeMap.end())

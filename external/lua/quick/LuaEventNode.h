@@ -85,7 +85,7 @@ public:
     virtual void ccTouchesCaptureRemoved(const std::vector<Touch*>& touches, LuaEventNode *pTarget);
     
     virtual bool isTouchEnabled();
-    virtual void setTouchEnabled(bool value);
+    virtual void setLuaTouchEnabled(bool value);
     
     virtual void setTouchMode(int mode);
     virtual int getTouchMode();
