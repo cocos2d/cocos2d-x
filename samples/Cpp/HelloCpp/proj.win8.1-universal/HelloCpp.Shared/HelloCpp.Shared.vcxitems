@@ -24,6 +24,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml.cpp">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp">
@@ -35,6 +38,9 @@
       <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml.h">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\HelloWorldScene.h" />
@@ -53,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml">
+      <FileType>Document</FileType>
+    </Page>
   </ItemGroup>
   <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
     <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />

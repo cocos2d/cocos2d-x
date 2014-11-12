@@ -41,9 +41,6 @@ class CCEGL;
 ref class WP8Keyboard;
 ref class CCEditBoxParam;
 
-
-
-
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
 public:
@@ -57,7 +54,10 @@ public:
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
 
-    void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
+    void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher) { m_dispatcher = dispatcher; }
+    void setPanel(Windows::UI::Xaml::Controls::Panel^ panel) { m_panel = panel; }
+    Windows::UI::Xaml::Controls::Panel^ getPanel() { return m_panel.Get(); }
+
     Windows::UI::Core::CoreDispatcher^ getDispatcher() { return m_dispatcher.Get(); }
 
 
@@ -88,7 +88,7 @@ public:
 
 
     void openEditBox(cocos2d::CCEditBoxParam^ param);
-    void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler);
+    void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler) { m_editBoxhandler = handler; }
     void OnCloseEditBox();
 
     bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
@@ -132,7 +132,6 @@ private:
     Windows::Foundation::Rect m_windowBounds;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	Windows::Foundation::Point m_lastPoint;
-    Windows::Foundation::EventHandler<Platform::Object^>^ m_editBoxhandler;
 
     float m_width;
     float m_height;
@@ -155,6 +154,9 @@ private:
     Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
+    Platform::Agile<Windows::Foundation::EventHandler<Platform::Object^>> m_editBoxhandler;
+
+
 };
 
 NS_CC_END

@@ -28,6 +28,7 @@
 #include <fstream>
 
 using namespace Platform;
+using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Graphics::Display;
@@ -49,6 +50,8 @@ Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatche
     pEGLView->Create(width, height);
     pEGLView->setViewName("Cocos2d-x");
     pEGLView->setDispatcher(dispatcher);
+    pEGLView->setPanel(panel);
+    pEGLView->SetCocosEditBoxHandler(m_editBoxhandler.Get());
     CCApplication::sharedApplication()->run();
 }
 
@@ -56,6 +59,17 @@ Cocos2dRenderer::~Cocos2dRenderer()
 {
     delete m_app;
 }
+
+void Cocos2dRenderer::SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler)
+{ 
+    m_editBoxhandler = handler; 
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    if (pEGLView)
+    {
+        pEGLView->SetCocosEditBoxHandler(handler);
+    }
+}
+
 
 // Draws a basic triangle
 void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, Windows::Graphics::Display::DisplayOrientations orientation, float dpi)

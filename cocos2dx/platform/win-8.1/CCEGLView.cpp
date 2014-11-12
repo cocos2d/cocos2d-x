@@ -225,11 +225,6 @@ void CCEGLView::centerWindow()
 	// not implemented in WinRT. Window is always full screen
 }
 
-void CCEGLView::setDispatcher(CoreDispatcher^ dispatcher)
-{
-    m_dispatcher = dispatcher;
-}
-
 
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
@@ -420,15 +415,10 @@ void CCEGLView::openEditBox(CCEditBoxParam^ param)
 {
     //m_winRTWindow->ReleasePointerPressed();
 
-    if (m_editBoxhandler)
+    if (m_editBoxhandler.Get() != nullptr)
     {
-        m_editBoxhandler->Invoke(nullptr, param);
+        m_editBoxhandler.Get()->Invoke(nullptr, param);
     }
-}
-
-void CCEGLView::SetCocosEditBoxHandler(EventHandler<Object^>^ handler)
-{
-    m_editBoxhandler = handler;
 }
 
 void CCEGLView::OnCloseEditBox()

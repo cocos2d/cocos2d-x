@@ -18,6 +18,7 @@
 
 #include "App.xaml.h"
 #include "OpenGLESPage.xaml.h"
+#include "WinRTEditBox.xaml.h"
 
 using namespace cocos2d;
 using namespace Platform;
@@ -35,6 +36,7 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace Windows::UI::Xaml::Input;
 
 OpenGLESPage::OpenGLESPage() :
     OpenGLESPage(nullptr)
@@ -276,11 +278,11 @@ void OpenGLESPage::StartRenderLoop()
         if (m_renderer.get() == nullptr)
         {
             m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, m_dpi, dispatcher, swapChainPanel);
+            m_renderer->SetCocosEditBoxHandler(ref new EventHandler<Object^>(this, &OpenGLESPage::OnOpenEditBox));
         }
 
         while (action->Status == Windows::Foundation::AsyncStatus::Started)
         {
- 
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
             m_renderer.get()->Draw(panelWidth, panelHeight, m_orientation, m_dpi);
 
@@ -311,4 +313,42 @@ void OpenGLESPage::StopRenderLoop()
         mRenderLoopWorker->Cancel();
         mRenderLoopWorker = nullptr;
     }
+}
+
+void OpenGLESPage::OnOpenEditBox(Object^ sender, Object^ args)
+{
+    // get Main thread
+    Windows::UI::Core::CoreWindow^ wnd = Windows::ApplicationModel::Core::CoreApplication::MainView->CoreWindow;
+    assert(wnd != nullptr);
+
+    wnd->Dispatcher->RunAsync(CoreDispatcherPriority::Normal,
+        ref new DispatchedHandler([=]()
+    {
+        CCEditBoxParam^ params = (CCEditBoxParam^) args;
+        WinRTXamlEditBox^ editBox = ref new WinRTXamlEditBox(params);
+        editBox->HorizontalAlignment = Windows::UI::Xaml::HorizontalAlignment::Center;
+#if 0
+        // grid
+        Grid^ grid = ref new Grid();
+        grid->IsHitTestVisible = true;
+        grid->IsTapEnabled = true;
+        grid->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Stretch;
+        grid->HorizontalAlignment = Windows::UI::Xaml::HorizontalAlignment::Stretch;
+
+        // background
+        Border^ overlay = ref new Border();
+        overlay->IsHitTestVisible = false;
+        overlay->VerticalAlignment = Windows::UI::Xaml::VerticalAlignment::Stretch;
+        overlay->HorizontalAlignment = Windows::UI::Xaml::HorizontalAlignment::Stretch;
+        overlay->Background = ref new SolidColorBrush(Windows::UI::Colors::Gray);
+        overlay->Opacity = 0.5;
+        overlay->IsTapEnabled = true;
+
+        grid->Children->Append(overlay);
+        grid->Children->Append(editBox);
+#endif // 0
+
+
+        this->swapChainPanel->Children->Append(editBox);
+    }));
 }

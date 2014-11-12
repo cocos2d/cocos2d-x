@@ -1,0 +1,16 @@
+﻿<UserControl
+    x:Class="cocos2d.WinRTXamlEditBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:cocos2d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="80"
+    d:DesignWidth="450" Width="450" Height="80">
+
+    <Grid x:Name="LayoutRoot" Background="Black" Loaded="editbox_load">
+        <Button Content="OK" HorizontalAlignment="Left" Margin="210,0,0,0" Width ="100" VerticalAlignment="Center" x:Name="cocos2d_editbox_done"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="330,0,0,0" Width ="100" VerticalAlignment="Center" x:Name="cocos2d_editbox_cancel"/> 
+    </Grid>
+</UserControl>

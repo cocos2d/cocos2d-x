@@ -30,6 +30,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+
+
 using namespace Windows::Graphics::Display;
 using namespace Windows::Storage;
 using namespace concurrency;
@@ -37,6 +39,8 @@ using namespace Platform;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage::Streams;
+
+
 
 std::wstring CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len/* = -1*/)
 {
