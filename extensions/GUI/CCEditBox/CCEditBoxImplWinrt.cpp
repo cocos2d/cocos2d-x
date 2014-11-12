@@ -265,24 +265,23 @@ void CCEditBoxImplWinrt::openKeyboard()
 	if (text.length())
 		strncpy(pText, text.c_str(), 100);
 
-	CCEGLView *glView = CCDirector::sharedDirector()->getOpenGLView();
-	CCEditBoxParam^ param = ref new CCEditBoxParam();
-	param->SetPlaceHolder(stringToPlatformString(placeHolder));
-	param->SetEditText(stringToPlatformString(getText()));
-	param->SetEditLength(m_nMaxLength);
-	param->SetInputMode(m_eEditBoxInputMode);
-	param->SetInputFlag(m_eEditBoxInputFlag);
-	param->SetRespondsHandler(ref new Windows::Foundation::EventHandler<Platform::String^>(
-		[this](Platform::Object^ sender, Platform::String^ arg)
-	{
-		setText(PlatformStringTostring(arg).c_str());
-		if (m_pDelegate != NULL) {
-			m_pDelegate->editBoxTextChanged(m_pEditBox, getText());
-			m_pDelegate->editBoxEditingDidEnd(m_pEditBox);
-			m_pDelegate->editBoxReturn(m_pEditBox);
-		}
-	}));
-	glView->openEditBox(param);
+    if (!m_editBoxWinrt)
+    {
+        Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler = ref new Windows::Foundation::EventHandler<Platform::String^>(
+            [this](Platform::Object^ sender, Platform::String^ arg)
+        {
+            setText(PlatformStringTostring(arg).c_str());
+            if (m_pDelegate != NULL) {
+                m_pDelegate->editBoxTextChanged(m_pEditBox, getText());
+                m_pDelegate->editBoxEditingDidEnd(m_pEditBox);
+                m_pDelegate->editBoxReturn(m_pEditBox);
+            }
+        });
+
+        m_editBoxWinrt = ref new EditBoxWinRT(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
+    }
+
+    m_editBoxWinrt->OpenXamlEditBox(stringToPlatformString(getText()));
 }
 
 void CCEditBoxImplWinrt::closeKeyboard()

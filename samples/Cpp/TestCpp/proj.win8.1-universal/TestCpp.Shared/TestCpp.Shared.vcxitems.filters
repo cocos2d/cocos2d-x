@@ -1419,8 +1419,5 @@
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml">
       <Filter>Cocos2dEngine</Filter>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml">
-      <Filter>Cocos2dEngine</Filter>
-    </Page>
   </ItemGroup>
 </Project>

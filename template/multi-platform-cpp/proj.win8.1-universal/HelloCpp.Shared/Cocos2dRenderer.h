@@ -34,7 +34,6 @@ namespace cocos2d
         void Draw(GLsizei width, GLsizei height, Windows::Graphics::Display::DisplayOrientations orientation, float dpi);
         void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
         void QueueKeyBoardEvent(Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e);
-        void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler);
 
     private:
 
@@ -47,6 +46,5 @@ namespace cocos2d
         AppDelegate* m_app;
         Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
         Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
-        Platform::Agile<Windows::Foundation::EventHandler<Platform::Object^>> m_editBoxhandler;
     };
 }

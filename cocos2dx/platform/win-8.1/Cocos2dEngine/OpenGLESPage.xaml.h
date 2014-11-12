@@ -31,7 +31,6 @@ namespace cocos2d
     public:
         OpenGLESPage();
         virtual ~OpenGLESPage();
-        void OnOpenEditBox(Object^ sender, Object^ args);
 
     internal:
         OpenGLESPage(OpenGLES* openGLES);

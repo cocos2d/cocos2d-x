@@ -28,6 +28,7 @@
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
+#include "UIEditBoxImpl-winrt.h"
 
 NS_CC_EXT_BEGIN
 
@@ -78,6 +79,9 @@ private:
 	EditBoxInputMode    m_eEditBoxInputMode;
 	EditBoxInputFlag    m_eEditBoxInputFlag;
 	KeyboardReturnType  m_eKeyboardReturnType;
+
+    EditBoxWinRT^ m_editBoxWinrt;
+
 
 	std::string m_strText;
 	std::string m_strPlaceHolder;

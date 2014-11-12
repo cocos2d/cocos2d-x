@@ -39,7 +39,6 @@ NS_CC_BEGIN
 
 class CCEGL;
 ref class WP8Keyboard;
-ref class CCEditBoxParam;
 
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
@@ -86,13 +85,7 @@ public:
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
     void QueueEvent(std::shared_ptr<InputEvent>& event);
 
-
-    void openEditBox(cocos2d::CCEditBoxParam^ param);
-    void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler) { m_editBoxhandler = handler; }
-    void OnCloseEditBox();
-
     bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
-    bool OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
 
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	

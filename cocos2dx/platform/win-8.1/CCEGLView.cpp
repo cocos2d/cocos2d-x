@@ -311,13 +311,6 @@ bool CCEGLView::ShowMessageBox(Platform::String^ title, Platform::String^ messag
     return false;
 }
 
-bool CCEGLView::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
-{
-
-    return false;
-}
-
-
 
 // called by orientation change from WP8 XAML
 void CCEGLView::UpdateOrientation(DisplayOrientations orientation)
@@ -411,20 +404,6 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
         (GLsizei) (h * m_fScaleY));
 }
 
-void CCEGLView::openEditBox(CCEditBoxParam^ param)
-{
-    //m_winRTWindow->ReleasePointerPressed();
-
-    if (m_editBoxhandler.Get() != nullptr)
-    {
-        m_editBoxhandler.Get()->Invoke(nullptr, param);
-    }
-}
-
-void CCEGLView::OnCloseEditBox()
-{
-    //m_winRTWindow->EnablePointerPressed();
-}
 
 void CCEGLView::QueueBackKeyPress()
 {

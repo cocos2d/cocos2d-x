@@ -160,6 +160,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\CCEditBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWinrt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\UIEditBoxImpl-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCScrollView\CCSorting.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCScrollView\CCTableView.h" />
@@ -486,6 +487,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCControlExtension\CCScale9Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\CCEditBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWinrt.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\UIEditBoxImpl-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCScrollView\CCSorting.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCScrollView\CCTableView.cpp" />

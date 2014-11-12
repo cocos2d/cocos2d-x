@@ -120,10 +120,6 @@ public:
 	void UpdateForWindowSizeChange();
 	void OnRendering();
     void OnSuspending();
-
-	void openEditBox(CCEditBoxParam^ param);
-	void SetCocosEditBoxHandler(Windows::Foundation::EventHandler<Platform::Object^>^ handler);
-	void OnCloseEditBox();
 	
 private:
 	Windows::Foundation::EventRegistrationToken m_eventToken;

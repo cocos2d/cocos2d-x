@@ -1014,6 +1014,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\InputEventTypes.h">
       <Filter>libcocos2d\platform\win-8.1</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\UIEditBoxImpl-winrt.h">
+      <Filter>libExtensions\GUI\CCEditBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
@@ -1861,6 +1864,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\InputEvent.cpp">
       <Filter>libcocos2d\platform\win-8.1</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\GUI\CCEditBox\UIEditBoxImpl-winrt.cpp">
+      <Filter>libExtensions\GUI\CCEditBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
