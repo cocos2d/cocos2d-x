@@ -316,6 +316,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
       <UniqueIdentifier>{1cc09ab5-39ae-44d3-ab90-a74a065b826d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\CurlTest">
+      <UniqueIdentifier>{409669f1-f768-41df-b71d-154818235ce0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -1395,6 +1398,12 @@
     <ClInclude Include="EditBox.xaml.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

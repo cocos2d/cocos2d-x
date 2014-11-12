@@ -19,7 +19,11 @@ private:
 class CurlTestScene : public TestScene
 {
 public:
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && !defined(WINRT_8_1)
+    virtual void runThisTest() { return; }
+#else
     virtual void runThisTest();
+#endif
 };
 
 #endif // _CURL_TEST_H_
