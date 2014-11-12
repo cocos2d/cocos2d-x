@@ -303,6 +303,24 @@ end
 
 --[[--
 
+设置scrollview可触摸
+
+@param boolean bEnabled 是否开启触摸
+
+@return UIScrollView
+
+]]
+function UIScrollView:setTouchEnabled(bEnabled)
+	if not self.scrollNode then
+		return
+	end
+	self.scrollNode:setTouchEnabled(bEnabled)
+
+	return self
+end
+
+--[[--
+
 将要显示的node加到scrollview中,scrollView只支持滚动一个node
 
 @param node node 要显示的项
