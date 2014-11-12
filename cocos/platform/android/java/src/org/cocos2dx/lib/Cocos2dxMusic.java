@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -112,17 +113,20 @@ public class Cocos2dxMusic {
         if (this.mBackgroundMediaPlayer == null) {
             Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: background media player is null");
         } else {
-            // if the music is playing or paused, stop it
-            this.mBackgroundMediaPlayer.stop();
-
-            this.mBackgroundMediaPlayer.setLooping(isLoop);
-
             try {
-                this.mBackgroundMediaPlayer.prepare();
-                this.mBackgroundMediaPlayer.seekTo(0);
-                this.mBackgroundMediaPlayer.start();
-
-                this.mPaused = false;
+                // if the music is playing or paused, stop it
+                if (mPaused) {
+                    mBackgroundMediaPlayer.seekTo(0);
+                    this.mBackgroundMediaPlayer.setLooping(isLoop);
+                    this.mBackgroundMediaPlayer.start();
+                } else if (mBackgroundMediaPlayer.isPlaying()) {
+                    mBackgroundMediaPlayer.seekTo(0);
+                    this.mBackgroundMediaPlayer.setLooping(isLoop);
+                } else {
+                    this.mBackgroundMediaPlayer.setLooping(isLoop);
+                    this.mBackgroundMediaPlayer.start();
+                    this.mPaused = false;
+                }
             } catch (final Exception e) {
                 Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: error state");
             }
@@ -247,6 +251,7 @@ public class Cocos2dxMusic {
      */
     private MediaPlayer createMediaplayer(final String pPath) {
         MediaPlayer mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         try {
             if (pPath.startsWith("/")) {
