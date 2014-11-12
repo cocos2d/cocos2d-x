@@ -41,8 +41,7 @@ public:
     ~LuaTouchTargetNode();
 
     LuaEventNode *getNode();
-    bool isEnable();
-    void setDisable();
+
 
     int getTouchMode();
 

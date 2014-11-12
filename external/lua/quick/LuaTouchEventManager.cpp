@@ -99,10 +99,12 @@ std::string LuaTouchEventManager::getDescription() const
 
 void LuaTouchEventManager::addTouchableNode(LuaEventNode *node)
 {
+    Node *activeNode = node->getActiveNode();
+    if (!activeNode) return;
     if (!_touchableNodes.contains(node))
     {
         _touchableNodes.pushBack(node);
-        _nodeLuaEventNodeMap.insert(std::make_pair(node->getNode(), node));
+        _nodeLuaEventNodeMap.insert(std::make_pair(activeNode, node));
         //CCLOG("ADD TOUCHABLE NODE <%p>", node->getNode());
         if (!m_touchDispatchingEnabled)
         {
@@ -113,13 +115,13 @@ void LuaTouchEventManager::addTouchableNode(LuaEventNode *node)
 
 void LuaTouchEventManager::removeTouchableNode(LuaEventNode *node)
 {
+    node->detachNode();  //this LuaEventNode will be removed in TouchTargetNode
     _touchableNodes.eraseObject(node);
-    auto found = _nodeLuaEventNodeMap.find(node->getNode());
+    auto found = _nodeLuaEventNodeMap.find(node->getDetachedNode());
     if (found != _nodeLuaEventNodeMap.end())
     {
         _nodeLuaEventNodeMap.erase(found);
     }
-    removeTouchTarget(node);
     //CCLOG("REMOVE TOUCHABLE NODE <%p>", node->getNode());
     if (_touchableNodes.size() == 0 && m_touchDispatchingEnabled)
     {
@@ -173,7 +175,9 @@ void LuaTouchEventManager::onTouchesBegan(const std::vector<Touch*>& touches, Ev
 
         // prepare for touch testing
         touchTarget = nullptr;
-        const Rect boundingBox = utils::getCascadeBoundingBox(node->getNode());
+        Node *activeNode = node->getActiveNode();
+        if (!activeNode) continue;
+        const Rect boundingBox = utils::getCascadeBoundingBox(activeNode);
 
         // set touch target
         Touch *touch = nullptr;
@@ -331,7 +335,7 @@ void LuaTouchEventManager::sortAllTouchableNodes(Vector<LuaEventNode*>& nodes)
 
     // After sort: priority < 0, > 0
     std::sort(nodes.begin(), nodes.end(), [this](const LuaEventNode* l1, const LuaEventNode* l2) {
-        return _nodePriorityMap[l1->getNode()] > _nodePriorityMap[l2->getNode()];
+        return _nodePriorityMap[l1->getDetachedNode()] > _nodePriorityMap[l2->getDetachedNode()];
     });
 
 #if DUMP_LISTENER_ITEM_PRIORITY_INFO
@@ -377,7 +381,7 @@ void LuaTouchEventManager::dispatchingTouchEvent(const std::vector<Touch*>& touc
     {
         touchTarget = _touchingTargets.at(i);
 
-        if (!touchTarget->isEnable())
+        if (!touchTarget->getNode()->isRunning())
         {
             // target removed from scene, remove it
             //            CCLOG("REMOVE TARGET [%u]", i);
@@ -587,21 +591,6 @@ void LuaTouchEventManager::visitTarget(Node* node, bool isRootNode)
         }
 
         _globalZOrderNodeMap.clear();
-    }
-}
-
-void LuaTouchEventManager::removeTouchTarget(LuaEventNode* eventNode)
-{
-    LuaTouchTargetNode *targetNode = nullptr;
-    for (auto it = _touchingTargets.begin(); it != _touchingTargets.end(); ++it) {
-        targetNode = *it;
-        if (targetNode->getNode() == eventNode) {
-//            _touchingTargets.eraseObject(targetNode);
-            //CCLOG("remove touch target htl");
-            //Do not erase, just disable it. Because maybe in other loop now --- zjf
-            targetNode->setDisable();
-            break;
-        }
     }
 }
 
