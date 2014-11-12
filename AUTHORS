@@ -820,6 +820,7 @@ Developers:
         
     aeonmine
         Fixed ActionObject memory leak in ActionManagerEx::initWithDictionary
+        Fixed memory leak in cocos studiov2.0 reader
         
     LoungeKatt
         Corrected a mistake of building android project in README.md

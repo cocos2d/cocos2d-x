@@ -439,7 +439,7 @@ GLProgram* GLProgramCache::getGLProgram(const std::string &key)
 void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
 {
     // release old one
-    auto prev = getProgram(key);
+    auto prev = getGLProgram(key);
     if( prev == program )
         return;
 
@@ -447,17 +447,21 @@ void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
     CC_SAFE_RELEASE_NULL(prev);
 
     if (program)
-        program->retain();    
+        program->retain();
     _programs[key] = program;
 }
 
 std::string GLProgramCache::getShaderMacrosForLight() const
 {
     GLchar def[256];
-    sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
+    auto conf = Configuration::getInstance();
+
+    snprintf(def, sizeof(def)-1, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
             "\n#define MAX_POINT_LIGHT_NUM %d \n"
-            "\n#define MAX_SPOT_LIGHT_NUM %d \n"
-            , Configuration::getInstance()->getMaxSupportDirLightInShader(), Configuration::getInstance()->getMaxSupportPointLightInShader(), Configuration::getInstance()->getMaxSupportSpotLightInShader());
+            "\n#define MAX_SPOT_LIGHT_NUM %d \n",
+             conf->getMaxSupportDirLightInShader(),
+             conf->getMaxSupportPointLightInShader(),
+             conf->getMaxSupportSpotLightInShader());
     return std::string(def);
 }
 
