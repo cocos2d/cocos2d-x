@@ -72,9 +72,8 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
                 m_obAccelerationValue.y = reading->AccelerationY;
                 m_obAccelerationValue.z = reading->AccelerationZ;
 
-                auto orientation = CCEGLView::sharedOpenGLView()->getDeviceOrientation();
-
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+                auto orientation = CCEGLView::sharedOpenGLView()->getDeviceOrientation();
                 switch (orientation)
                 {
                 case DisplayOrientations::Portrait:
@@ -102,7 +101,9 @@ void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 				    m_obAccelerationValue.y = reading->AccelerationY;
                     break;
                }
-#else // Windows Store App
+#elif defined(WINRT_8_1) // Windows Store App
+                auto orientation = CCEGLView::sharedOpenGLView()->getDeviceOrientation();
+
                 // from http://msdn.microsoft.com/en-us/library/windows/apps/dn440593
                 switch (orientation)
                 {
