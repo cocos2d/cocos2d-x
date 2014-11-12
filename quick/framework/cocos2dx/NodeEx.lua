@@ -406,7 +406,8 @@ function Node:EventDispatcher( idx, data )
 
     if flagNodeCleanup then
         obj:setTouchEnabled(false)
-        obj:removeAllNodeEventListeners() 
+        obj:removeAllNodeEventListeners()
+        obj:removeTouchEvent()
         obj:unregisterScriptHandler()
     end
 
