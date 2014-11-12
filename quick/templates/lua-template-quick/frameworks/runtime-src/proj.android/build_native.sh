@@ -40,6 +40,8 @@ echo "- copy scripts"
 cp -rf "$APP_ROOT"/src "$APP_ANDROID_ROOT"/assets/
 echo "- copy resources"
 cp -rf "$APP_ROOT"/res "$APP_ANDROID_ROOT"/assets/
+echo "- copy config"
+cp -rf "$APP_ROOT"/config.json "$APP_ANDROID_ROOT"/assets/
 
 # echo COPY framework_precompiled.zip
 # echo FROM: $QUICK_V3_ROOT/quick/lib/framework_precompiled
