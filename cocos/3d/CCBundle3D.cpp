@@ -87,6 +87,7 @@ static const char* TRANSLATION =  "translation";
 static const char* ROTATION =  "rotation";
 static const char* SCALE =  "scale";
 static const char* KEYTIME =  "keytime";
+static const char* AABBS = "aabb";
 
 NS_CC_BEGIN
 
@@ -289,8 +290,8 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             materialdata.textures.push_back(tex);
             materialdata.id = str;
             materialdatas.materials.push_back(materialdata);
-
             meshdata->subMeshIndices.push_back(it.mesh.indices);
+            meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), it.mesh.indices));
             meshdata->subMeshIds.push_back(str);
             auto node = new (std::nothrow) NodeData();
             auto modelnode = new (std::nothrow) ModelData();
@@ -375,6 +376,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
     for(int i = 0; i < meshSize ; i++ )
     {
         MeshData*   meshData = new (std::nothrow) MeshData();
+
          unsigned int attribSize=0;
         // read mesh data
         if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
@@ -424,6 +426,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             std::vector<unsigned short>      indexArray;
             std:: string meshPartid = _binaryReader.readString();
             meshData->subMeshIds.push_back(meshPartid);
+
             unsigned int nIndexCount;
             if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
             {
@@ -438,6 +441,22 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
+
+            if (_version != "0.3" && _version != "0.4")
+            {
+                //read mesh aabb
+                float aabb[6];		
+                if (_binaryReader.read(aabb, 4, 6) != 6)
+                {
+                    CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
+                    return false;
+                }
+                meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
+            }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -545,6 +564,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         }
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
 
     meshdatas.meshDatas.push_back(meshdata);
@@ -659,12 +679,14 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         }
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
 
     meshdatas.meshDatas.push_back(meshdata);
     
     return true;
 }
+
 bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 {
     const rapidjson::Value& mesh_data_array = _jsonReader[MESHES];
@@ -672,6 +694,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
     {
         MeshData*   meshData = new (std::nothrow) MeshData();
         const rapidjson::Value& mesh_data = mesh_data_array[index];
+
         // mesh_vertex_attribute
         const rapidjson::Value& mesh_vertex_attribute = mesh_data[ATTRIBUTES];
         MeshVertexAttrib tempAttrib;
@@ -714,6 +737,18 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
+            //mesh_aabb
+            const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
+            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+            {
+                Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                meshData->subMeshAABB.push_back(AABB(min, max));
+            }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -1081,6 +1116,7 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 
     meshdata->subMeshIndices.push_back(indices);
     meshdatas.meshDatas.push_back(meshdata);
+    meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     return true;
 }
 
@@ -1134,6 +1170,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
             indices[j] = (unsigned short)indices_val_array[j].GetUint();
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
     meshdatas.meshDatas.push_back(meshdata);
     return true;
@@ -1404,10 +1441,23 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
 
 bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* animationdata)
 {
-    if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
-        return false;
+    if(_version == "0.1" || _version == "0.3" || _version == "0.4")
+    {
+        if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
+            return false;
+    }
+    else
+    {
+        // if id is not a null string, we need to add a suffix of "animation" for seeding.
+        std::string id_ = id;
+        if(id != "") id_ = id + "animation";
+        
+        if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS, id_))
+            return false;
+    }
+    
     unsigned int animNum = 1;
-    if( _version == "0.3"|| _version == "0.4")
+    if(_version == "0.3" || _version == "0.4")
     {
         if (!_binaryReader.read(&animNum))
         {
@@ -1459,7 +1509,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // transform flag
                 unsigned char transformFlag(0);
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                 {
                     if (!_binaryReader.read(&transformFlag))
                     {
@@ -1470,7 +1520,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // rotation
                 bool hasRotate = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                     hasRotate = transformFlag & 0x01;
 
                 if (hasRotate)
@@ -1486,7 +1536,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // scale
                 bool hasScale = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                     hasScale = (transformFlag >> 1) & 0x01;
 
                 if (hasScale)
@@ -1502,7 +1552,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // translation
                 bool hasTranslation = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.3")
                     hasTranslation = (transformFlag >> 2) & 0x01;
 
                 if (hasTranslation)
@@ -1938,7 +1988,7 @@ void Bundle3D::getModelRelativePath(const std::string& path)
     _modelPath = path.substr(0, index + 1);
 }
 
-Reference* Bundle3D::seekToFirstType(unsigned int type)
+Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
 {
     // for each Reference
     for (unsigned int i = 0; i < _referenceCount; ++i)
@@ -1946,6 +1996,12 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
         Reference* ref = &_references[i];
         if (ref->type == type)
         {
+            // if id is not a null string, we also need to check the Reference's id.
+            if (id != "" && id != ref->id)
+            {
+                continue;
+            }
+            
             // Found a match
             if (_binaryReader.seek(ref->offset, SEEK_SET) == false)
             {
@@ -1957,6 +2013,7 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
     }
     return nullptr;
 }
+
 
 Bundle3D::Bundle3D()
     : _modelPath(""),
@@ -1974,6 +2031,18 @@ Bundle3D::~Bundle3D()
 {
     clear();
 
+}
+
+AABB Bundle3D::calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index)
+{
+    AABB aabb;
+    stride /= 4;
+    for(const auto& it : index)
+    {
+        Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
+        aabb.updateMinMax(&point, 1);
+    }
+    return aabb;
 }
 
 NS_CC_END
