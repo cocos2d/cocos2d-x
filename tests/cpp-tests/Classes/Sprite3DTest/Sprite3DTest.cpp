@@ -328,8 +328,6 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
 // Sprite3DHitTest
 //
 //------------------------------------------------------------------
-
-
 Sprite3DHitTest::Sprite3DHitTest()
 {
     auto s = Director::getInstance()->getWinSize();
