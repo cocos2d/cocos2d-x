@@ -146,7 +146,7 @@ elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
   set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets ssl crypto
-  fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
+  fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -178,7 +178,7 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-target_link_libraries(cocos2d chipmunk box2d tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
 
 set_target_properties(cocos2d
     PROPERTIES
