@@ -234,7 +234,6 @@ std::string Sprite3DBasicTest::subtitle() const
 
 Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 {
-    CCLOG("hehehe dadadad");
     //the offset use to translating texture
     this->cylinder_texture_offset = 0;
     this->shining_duraion = 0;
