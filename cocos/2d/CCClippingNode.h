@@ -64,7 +64,7 @@ public:
     then this method should return true every time you wish stencil to be visited.
     By default returns true if has any children attached.
     */
-    virtual bool hasContent();
+    virtual bool hasContent() const;
 
     /** The alpha threshold.
      The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.

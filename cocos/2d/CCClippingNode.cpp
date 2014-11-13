@@ -327,7 +327,7 @@ void ClippingNode::setStencil(Node *stencil)
     _stencil = stencil;
 }
 
-bool ClippingNode::hasContent()
+bool ClippingNode::hasContent() const
 {
     return _children.size() > 0;
 }
