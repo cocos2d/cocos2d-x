@@ -117,16 +117,14 @@ public class Cocos2dxMusic {
                 // if the music is playing or paused, stop it
                 if (mPaused) {
                     mBackgroundMediaPlayer.seekTo(0);
-                    this.mBackgroundMediaPlayer.setLooping(isLoop);
                     this.mBackgroundMediaPlayer.start();
                 } else if (mBackgroundMediaPlayer.isPlaying()) {
                     mBackgroundMediaPlayer.seekTo(0);
-                    this.mBackgroundMediaPlayer.setLooping(isLoop);
                 } else {
-                    this.mBackgroundMediaPlayer.setLooping(isLoop);
                     this.mBackgroundMediaPlayer.start();
-                    this.mPaused = false;
                 }
+                this.mBackgroundMediaPlayer.setLooping(isLoop);
+                this.mPaused = false;
             } catch (final Exception e) {
                 Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: error state");
             }
