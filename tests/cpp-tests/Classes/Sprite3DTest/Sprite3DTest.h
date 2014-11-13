@@ -68,6 +68,19 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
+class Sprite3DUVAnimationTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DUVAnimationTest);
+    Sprite3DUVAnimationTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+private:
+    void cylinderUpdate(float dt);
+    float cylinder_texture_offset;
+    float shining_duraion;
+    GLProgramState * state;
+};
 class EffectSprite3D;
 
 class Effect3D : public Ref
