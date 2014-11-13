@@ -26,6 +26,8 @@ xcopy /s /q "%APP_ROOT%src\*.*" "%APP_ANDROID_ROOT%assets\src\"
 echo - copy resources
 mkdir "%APP_ANDROID_ROOT%assets\res"
 xcopy /s /q "%APP_ROOT%res\*.*" "%APP_ANDROID_ROOT%assets\res\"
+echo - copy config
+copy "%APP_ROOT%config.json" "%APP_ANDROID_ROOT%assets\config.json"
 
 rem echo COPY framework_precompiled.zip
 rem echo FROM: %QUICK_V3_ROOT%quick\lib\framework_precompiled

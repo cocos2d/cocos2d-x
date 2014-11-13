@@ -23,6 +23,11 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module UIBoxLayout
+-- @extend UILayout
+-- @parent_module ui
+
 --[[--
 
 quick BoxLayout控件
@@ -32,39 +37,33 @@ quick BoxLayout控件
 local UILayout = import(".UILayout")
 local UIBoxLayout = class("UIBoxLayout", UILayout)
 
---[[--
+--------------------------------
+-- UIBoxLayout的构造函数
+-- @function [parent=#cc.UIBoxLayout] new
+-- @param integer direction 布局方向
+-- @param string name 布局名字
+-- @return UIBoxLayout#UIBoxLayout  结果
 
-UIBoxLayout构建函数
-
-@param integer direction 布局方向
-@param string name 布局名字
-
-]]
 function UIBoxLayout:ctor(direction, name)
     UIBoxLayout.super.ctor(self, name)
     self.direction_ = direction or display.LEFT_TO_RIGHT
 end
 
---[[--
+--------------------------------
+-- 返回方向
+-- @function [parent=#cc.UIBoxLayout] new
+-- @return integer#integer 布局方向
 
-返回方向
-
-@return integer 布局方向
-
-]]
 function UIBoxLayout:getDirection()
     return self.direction_
 end
 
---[[--
+--------------------------------
+-- 设置方向
+-- @function [parent=#cc.UIBoxLayout] new
+-- @param integer direction 方向
+-- @return UIBoxLayout#UIBoxLayout 布局方向
 
-设置方向
-
-@param integer direction 方向
-
-@return UIBoxLayout
-
-]]
 function UIBoxLayout:setDirection(direction)
     self.direction_ = direction
     return self
@@ -72,13 +71,11 @@ end
 
 local depth_ = 0
 
---[[--
+--------------------------------
+-- 应用布局
+-- @function [parent=#UIBoxLayout] apply
+-- @param node container 要布局到的node,为空就布局到自身
 
-应用布局
-
-@param node container 要布局到的node,为空就布局到自身
-
-]]
 function UIBoxLayout:apply(container)
     if table.nums(self.widgets_) == 0 then return end
     if not container then container = self end

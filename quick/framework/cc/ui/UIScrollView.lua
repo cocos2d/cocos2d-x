@@ -23,6 +23,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module UIScrollView
+
 --[[--
 
 quick 滚动控件
@@ -40,6 +43,11 @@ UIScrollView.DIRECTION_BOTH			= 0
 UIScrollView.DIRECTION_VERTICAL		= 1
 UIScrollView.DIRECTION_HORIZONTAL	= 2
 
+--------------------------------
+-- 滚动控件的构建函数
+-- @function [parent=#UIScrollView] new
+-- @param table params 参数表
+
 --[[--
 
 滚动控件的构建函数
@@ -56,9 +64,6 @@ UIScrollView.DIRECTION_HORIZONTAL	= 2
 -   bg 背景图
 -   bgScale9 背景图是否可缩放
 -	capInsets 缩放区域
-
-
-@param table params 参数表
 
 ]]
 function UIScrollView:ctor(params)
@@ -152,29 +157,24 @@ function UIScrollView:setViewRect(rect)
 	return self
 end
 
---[[--
+--------------------------------
+-- 得到滚动控件的显示区域
+-- @function [parent=#UIScrollView] getViewRect
+-- @return Rect#Rect 
 
-得到滚动控件的显示区域
-
-@return Rect
-
-]]
 function UIScrollView:getViewRect()
 	return self.viewRect_
 end
 
---[[--
+--------------------------------
+-- 设置布局四周的空白
+-- @function [parent=#UIScrollView] setLayoutPadding
+-- @param number top 上边的空白
+-- @param number right 右边的空白
+-- @param number bottom 下边的空白
+-- @param number left 左边的空白
+-- @return UIScrollView#UIScrollView 
 
-设置布局四周的空白
-
-@param number top 上边的空白
-@param number right 右边的空白
-@param number bottom 下边的空白
-@param number left 左边的空白
-
-@return UIScrollView
-
-]]
 function UIScrollView:setLayoutPadding(top, right, bottom, left)
 	if not self.layoutPadding then
 		self.layoutPadding = {}
@@ -191,59 +191,48 @@ function UIScrollView:setActualRect(rect)
 	self.actualRect_ = rect
 end
 
---[[--
+--------------------------------
+-- 设置滚动方向
+-- @function [parent=#UIScrollView] setDirection
+-- @param number dir 滚动方向
+-- @return UIScrollView#UIScrollView 
 
-设置滚动方向
-
-@param number dir 滚动方向
-
-@return UIScrollView
-
-]]
 function UIScrollView:setDirection(dir)
 	self.direction = dir
 
 	return self
 end
 
---[[--
+--------------------------------
+-- 获取滚动方向
+-- @function [parent=#UIScrollView] getDirection
+-- @return number#number 
 
-获取滚动方向
-
-@return number
-
-]]
 function UIScrollView:getDirection()
 	return self.direction
 end
 
---[[--
+--------------------------------
+-- 设置滚动控件是否开启回弹功能
+-- @function [parent=#UIScrollView] setBounceable
+-- @param boolean bBounceable 是否开启回弹
+-- @return UIScrollView#UIScrollView 
 
-设置滚动控件是否开启回弹功能
-
-@param boolean bBounceable 是否开启回弹
-
-@return UIScrollView
-
-]]
 function UIScrollView:setBounceable(bBounceable)
 	self.bBounce = bBounceable
 
 	return self
 end
 
---[[--
+--------------------------------
+-- 设置触摸响应方式
+-- true:当触摸在滚动内容上才有效 false:当触摸在显示区域(viewRect_)就有效
+-- 内容大于显示区域时，两者无差别
+-- 内容小于显示区域时，true:在空白区域触摸无效,false:在空白区域触摸也可滚动内容
+-- @function [parent=#UIScrollView] setTouchType
+-- @param boolean bTouchOnContent 是否触控到滚动内容上才有效
+-- @return UIScrollView#UIScrollView 
 
-设置触摸响应方式
-true:当触摸在滚动内容上才有效 false:当触摸在显示区域(viewRect_)就有效
-内容大于显示区域时，两者无差别
-内容小于显示区域时，true:在空白区域触摸无效,false:在空白区域触摸也可滚动内容
-
-@param boolean bTouchOnContent 是否触控到滚动内容上才有效
-
-@return UIScrollView
-
-]]
 function UIScrollView:setTouchType(bTouchOnContent)
 	self.touchOnContent = bTouchOnContent
 
@@ -267,15 +256,12 @@ function UIScrollView:resetPosition()
 	self.scrollNode:setPosition(x, y)
 end
 
---[[--
+--------------------------------
+-- 判断一个node是否在滚动控件的显示区域中
+-- @function [parent=#UIScrollView] isItemInViewRect
+-- @param node item scrollView中的项
+-- @return boolean#boolean 
 
-判断一个node是否在滚动控件的显示区域中
-
-@param node item scrollView中的项
-
-@return boolean
-
-]]
 function UIScrollView:isItemInViewRect(item)
 	if "userdata" ~= type(item) then
 		item = nil
@@ -301,15 +287,12 @@ function UIScrollView:isItemInViewRect(item)
 	return cc.rectIntersectsRect(self:getViewRectInWorldSpace(), bound)
 end
 
---[[--
+--------------------------------
+-- 设置scrollview可触摸
+-- @function [parent=#UIScrollView] setTouchEnabled
+-- @param boolean bEnabled 是否开启触摸
+-- @return UIScrollView#UIScrollView 
 
-设置scrollview可触摸
-
-@param boolean bEnabled 是否开启触摸
-
-@return UIScrollView
-
-]]
 function UIScrollView:setTouchEnabled(bEnabled)
 	if not self.scrollNode then
 		return
@@ -319,15 +302,12 @@ function UIScrollView:setTouchEnabled(bEnabled)
 	return self
 end
 
---[[--
+--------------------------------
+-- 将要显示的node加到scrollview中,scrollView只支持滚动一个node
+-- @function [parent=#UIScrollView] addScrollNode
+-- @param node node 要显示的项
+-- @return UIScrollView#UIScrollView 
 
-将要显示的node加到scrollview中,scrollView只支持滚动一个node
-
-@param node node 要显示的项
-
-@return UIScrollView
-
-]]
 function UIScrollView:addScrollNode(node)
 	self:addChild(node)
 	self.scrollNode = node
@@ -349,26 +329,21 @@ function UIScrollView:addScrollNode(node)
     return self
 end
 
---[[--
+--------------------------------
+-- 返回scrollView中的滚动node
+-- @function [parent=#UIScrollView] getScrollNode
+-- @return node#node  滚动node
 
-返回scrollView中的滚动node
-
-@return node 滚动node
-
-]]
 function UIScrollView:getScrollNode()
 	return self.scrollNode
 end
 
---[[--
+--------------------------------
+-- 注册滚动控件的监听函数
+-- @function [parent=#UIScrollView] onScroll
+-- @param function listener 监听函数
+-- @return UIScrollView#UIScrollView 
 
-注册滚动控件的监听函数
-
-@param function listener 监听函数
-
-@return UIScrollView
-
-]]
 function UIScrollView:onScroll(listener)
 	self.scrollListener_ = listener
 

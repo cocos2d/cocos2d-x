@@ -23,6 +23,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module UIStretch
+
 --[[--
 
 quick 拉伸控件
@@ -31,6 +34,10 @@ quick 拉伸控件
 
 local UIStretch = class("UIStretch")
 
+--------------------------------
+-- quick 拉伸控件
+-- @function [parent=#UIStretch] new
+
 function UIStretch:ctor()
     cc(self):addComponent("components.ui.LayoutProtocol"):exportMethods()
     self:setLayoutSizePolicy(display.AUTO_SIZE, display.AUTO_SIZE)
@@ -38,93 +45,76 @@ function UIStretch:ctor()
     self.anchorPoint_ = display.ANCHOR_POINTS[display.CENTER]
 end
 
---[[--
+--------------------------------
+-- 得到位置信息
+-- @function [parent=#UIStretch] getPosition
+-- @return number#number  x
+-- @return number#number  y
 
-得到位置信息
-
-@return number x
-@return number y
-
-]]
 function UIStretch:getPosition()
     return self.position_.x, self.position_.y
 end
 
---[[--
+--------------------------------
+-- 得到x位置信息
+-- @function [parent=#UIStretch] getPositionX
+-- @return number#number  x
 
-得到x位置信息
-
-@return number x
-
-]]
 function UIStretch:getPositionX()
     return self.position_.x
 end
 
---[[--
+--------------------------------
+-- 得到y位置信息
+-- @function [parent=#UIStretch] getPositionY
+-- @return number#number  y
 
-得到y位置信息
-
-@return number y
-
-]]
 function UIStretch:getPositionY()
     return self.position_.y
 end
 
+--------------------------------
+-- 设置位置信息
+-- @function [parent=#UIStretch] setPosition
+-- @param number x x的位置
+-- @param number y y的位置
 
---[[--
-
-设置位置信息
-
-@param number x x的位置
-@param number y y的位置
-
-]]
 function UIStretch:setPosition(x, y)
     self.position_.x, self.position_.y = x, y
 end
 
---[[--
+--------------------------------
+-- 设置x位置信息
+-- @function [parent=#UIStretch] setPositionX
+-- @param number x x的位置
 
-设置x位置信息
-
-@param number x x的位置
-
-]]
 function UIStretch:setPositionX(x)
     self.position_.x = x
 end
 
---[[--
+--------------------------------
+-- 设置y位置信息
+-- @function [parent=#UIStretch] setPositionY
+-- @param number y y的位置
 
-设置y位置信息
-
-@param number y y的位置
-
-]]
 function UIStretch:setPositionY(y)
     self.position_.y = y
 end
 
---[[--
+--------------------------------
+-- 得到锚点位置信息
+-- @function [parent=#UIStretch] getAnchorPoint
+-- @return table#table  位置信息
 
-得到锚点位置信息
-
-@return table 位置信息
-
-]]
 function UIStretch:getAnchorPoint()
     return self.anchorPoint_
 end
 
---[[--
+--------------------------------
+-- 设置锚点位置
+-- @function [parent=#UIStretch] setAnchorPoint
+-- @param ap 锚点
 
-设置锚点位置
-
-@param ap 锚点
-
-]]
 function UIStretch:setAnchorPoint(ap)
     self.anchorPoint_ = ap
 end

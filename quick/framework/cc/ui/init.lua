@@ -23,6 +23,10 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module ui
+-- @parent_module cc
+
 --[[--
 
 初始化 cc.ui 扩展

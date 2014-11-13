@@ -23,6 +23,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module UIImage
+
 --[[--
 
 quick UIImage控件
@@ -37,14 +40,12 @@ local UIImage = class("UIImage", function(filename, options)
     end
 end)
 
---[[--
+--------------------------------
+-- UIImage构建函数
+-- @function [parent=#UIImage] new
+-- @param string filename 图片文件名
+-- @param table options 参数表
 
-UIImage构建函数
-
-@param string filename 图片文件名
-@param table options 参数表
-
-]]
 function UIImage:ctor(filename, options)
     makeUIControl_(self)
     self:align(display.LEFT_BOTTOM)
@@ -56,17 +57,13 @@ function UIImage:ctor(filename, options)
     end
 end
 
+--------------------------------
+-- UIImage设置控件大小
+-- @function [parent=#UIImage] setLayoutSize
+-- @param number width 宽度
+-- @param number height 高度
+-- @return UIImage#UIImage  自身
 
---[[--
-
-UIImage设置控件大小
-
-@param number width 宽度
-@param number height 高度
-
-@return UIImage 自身
-
-]]
 function UIImage:setLayoutSize(width, height)
     self:getComponent("components.ui.LayoutProtocol"):setLayoutSize(width, height)
     local width, height = self:getLayoutSize()
