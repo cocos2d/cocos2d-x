@@ -35,6 +35,7 @@ namespace cocos2d {
     class Delay;
     class Ray;
     class DrawNode3D;
+    class GLProgramState;
 }
 
 class Sprite3DTestDemo : public BaseTest
@@ -51,9 +52,6 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-
-protected:
-    std::string    _title;
 };
 
 class Sprite3DBasicTest : public Sprite3DTestDemo
@@ -75,11 +73,13 @@ public:
     Sprite3DUVAnimationTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-private:
+    
+protected:
     void cylinderUpdate(float dt);
-    float cylinder_texture_offset;
-    float shining_duraion;
-    GLProgramState * state;
+    
+    float _cylinder_texture_offset;
+    float _shining_duraion;
+    GLProgramState * _state;
 };
 class EffectSprite3D;
 

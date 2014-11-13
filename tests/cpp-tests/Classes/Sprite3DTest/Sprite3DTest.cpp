@@ -235,8 +235,8 @@ std::string Sprite3DBasicTest::subtitle() const
 Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 {
     //the offset use to translating texture
-    this->cylinder_texture_offset = 0;
-    this->shining_duraion = 0;
+    _cylinder_texture_offset = 0;
+    _shining_duraion = 0;
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
@@ -248,17 +248,17 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //create and set our custom shader
     auto shader =GLProgram::createWithFilenames("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
-    state = GLProgramState::create(shader);
-    cylinder->setGLProgramState(state);
+    _state = GLProgramState::create(shader);
+    cylinder->setGLProgramState(_state);
 
-    state->setUniformFloat("offset",cylinder_texture_offset);
-    state->setUniformFloat("duration",shining_duraion);
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
     //pass mesh's attribute to shader
     long offset = 0;
     auto attributeCount = cylinder->getMesh()->getMeshVertexAttribCount();
     for (auto i = 0; i < attributeCount; i++) {
         auto meshattribute = cylinder->getMesh()->getMeshVertexAttribute(i);
-        state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
             meshattribute.size,
             meshattribute.type,
             GL_FALSE,
@@ -276,7 +276,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     tRepeatParams.wrapT = GL_REPEAT;
     shining_texture->setTexParameters(tRepeatParams); 
     //pass the texture sampler to our custom shader
-    state->setUniformTexture("caustics",shining_texture);
+    _state->setUniformTexture("caustics",shining_texture);
 
 
     this->addChild(cylinder);
@@ -293,34 +293,34 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
 std::string Sprite3DUVAnimationTest::title() const 
 {
-    return "The UV Animation of Sprite3D";
+    return "Testing UV Animation";
 }
 
 std::string Sprite3DUVAnimationTest::subtitle() const 
 {
-    return " ";
+    return "";
 }
 
 void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
 {
     //callback function to update cylinder's texcoord
     static bool fade_in = true;
-    cylinder_texture_offset += 0.3*dt;
-    cylinder_texture_offset = (cylinder_texture_offset >1)?0:cylinder_texture_offset;
+    _cylinder_texture_offset += 0.3*dt;
+    _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
     if(fade_in)
     {
-        shining_duraion += 0.5*dt;
-        if(shining_duraion>1) fade_in = false; 
+        _shining_duraion += 0.5*dt;
+        if(_shining_duraion>1) fade_in = false;
     }
     else
     {
-        shining_duraion -= 0.5*dt;
-        if(shining_duraion<0) fade_in = true;
+        _shining_duraion -= 0.5*dt;
+        if(_shining_duraion<0) fade_in = true;
     }
 
     //pass the result to shader
-    state->setUniformFloat("offset",cylinder_texture_offset);
-    state->setUniformFloat("duration",shining_duraion);
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
 }
 
 //------------------------------------------------------------------
