@@ -449,7 +449,8 @@ void CSLoader::initNode(Node* node, const rapidjson::Value& json)
 Node* CSLoader::loadSimpleNode(const rapidjson::Value& json)
 {
     Node* node = Node::create();
-    node->retain();
+    // fix memory leak for v3.3
+    //node->retain();
     initNode(node, json);
     
     return node;
@@ -468,8 +469,8 @@ Node* CSLoader::loadSubGraph(const rapidjson::Value& json)
     {
         node = Node::create();
     }
-    
-    node->retain();
+    // fix memory leak for v3.3
+    //node->retain();
     
     initNode(node, json);
     
@@ -507,7 +508,8 @@ Node* CSLoader::loadSprite(const rapidjson::Value& json)
         sprite = Sprite::create();
     }
     
-    sprite->retain();
+    // fix memory leak for v3.3
+    //sprite->retain();
     
     initNode(sprite, json);
     
@@ -529,7 +531,8 @@ Node* CSLoader::loadParticle(const rapidjson::Value& json)
     
     ParticleSystemQuad* particle = ParticleSystemQuad::create(filePath);
     particle->setTotalParticles(num);
-    particle->retain();
+    // fix memory leak for v3.3
+    //particle->retain();
     
     initNode(particle, json);
     
@@ -578,7 +581,8 @@ Node* CSLoader::loadWidget(const rapidjson::Value& json)
         
         std::string guiClassName = getGUIClassName(classname);
         widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(guiClassName));
-        widget->retain();
+        // fix memory leak for v3.3
+        //widget->retain();
         
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         
@@ -587,7 +591,9 @@ Node* CSLoader::loadWidget(const rapidjson::Value& json)
     else if (isCustomWidget(classname))
     {
         widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(classname));
-        widget->retain();
+        
+        //fix memory leak for v3.3
+        //widget->retain();
         
         //
         // 1st., custom widget parse properties of parent widget with parent widget reader
@@ -826,7 +832,8 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
         readerName.append("Reader");
         
         Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(guiClassName));
-        widget->retain();
+        //fix memory leak for v3.3
+        //widget->retain();
         
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         reader->setPropsFromProtocolBuffers(widget, nodetree);
@@ -840,7 +847,9 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
     else if (isCustomWidget(classname))
     {
         Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(classname));
-        widget->retain();
+
+        //fix memory leak for v3.3
+        //widget->retain();
         
         //
         // 1st., custom widget parse properties of parent widget with parent widget reader
@@ -1046,8 +1055,8 @@ void CSLoader::setPropsForSpriteFromProtocolBuffers(cocos2d::Node *node,
      CCLOG("filePath is empty. Create a sprite with no texture");
      }
      */
-    
-    sprite->retain();
+    //fix memory leak for v3.3
+    //sprite->retain();
     
     setPropsForNodeFromProtocolBuffers(sprite, nodeOptions);
     
@@ -1245,11 +1254,15 @@ Node* CSLoader::nodeFromXMLFile(const std::string &fileName)
     // xml read
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName).c_str();
     ssize_t size;
-    std::string content =(char*)FileUtils::getInstance()->getFileData(fullpath, "r", &size);
+    
+    //fix memory leak for v3.3
+    unsigned char* pByte = FileUtils::getInstance()->getFileData(fullpath, "r", &size);
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
-    document->Parse(content.c_str());
+    document->Parse((const char*)pByte);
+    
+    free(pByte);
     
     const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
     CCLOG("rootElement name = %s", rootElement->Name());
@@ -1408,7 +1421,9 @@ Node* CSLoader::nodeFromXML(const tinyxml2::XMLElement *objectData, const std::s
         readerName.append("Reader");
         
         Widget*               widget = dynamic_cast<Widget*>(ObjectFactory::getInstance()->createObject(guiClassName));
-        widget->retain();
+        
+        //fix memory leak for v3.3
+        //widget->retain();
         
         WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
         reader->setPropsFromXML(widget, objectData);

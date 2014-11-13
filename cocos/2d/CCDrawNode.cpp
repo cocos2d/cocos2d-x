@@ -106,23 +106,23 @@ static inline Tex2F __t(const Vec2 &v)
 DrawNode::DrawNode()
 : _vao(0)
 , _vbo(0)
+, _vaoGLPoint(0)
+, _vboGLPoint(0)
+, _vaoGLLine(0)
+, _vboGLLine(0)
 , _bufferCapacity(0)
 , _bufferCount(0)
 , _buffer(nullptr)
-, _dirty(false)
-, _vaoGLPoint(0)
-, _vboGLPoint(0)
 , _bufferCapacityGLPoint(0)
 , _bufferCountGLPoint(0)
 , _bufferGLPoint(nullptr)
 , _pointColor(1,1,1,1)
 , _pointSize(1)
-, _dirtyGLPoint(false)
-, _vaoGLLine(0)
-, _vboGLLine(0)
 , _bufferCapacityGLLine(0)
 , _bufferCountGLLine(0)
 , _bufferGLLine(nullptr)
+, _dirty(false)
+, _dirtyGLPoint(false)
 , _dirtyGLLine(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -348,6 +348,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
     }
 
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferCount);
     CHECK_GL_ERROR_DEBUG();
@@ -382,6 +383,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     }
     glLineWidth(2);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
     CHECK_GL_ERROR_DEBUG();
@@ -418,6 +420,7 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
     }
     
     glDrawArrays(GL_POINTS, 0, _bufferCountGLPoint);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLPoint);
     CHECK_GL_ERROR_DEBUG();

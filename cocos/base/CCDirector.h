@@ -90,26 +90,11 @@ enum class MATRIX_STACK_TYPE
 
 class CC_DLL Director : public Ref
 {
-private:
-    std::stack<Mat4> _modelViewMatrixStack;
-    std::stack<Mat4> _projectionMatrixStack;
-    std::stack<Mat4> _textureMatrixStack;
-protected:
-    void initMatrixStack();
-public:
-    void pushMatrix(MATRIX_STACK_TYPE type);
-    void popMatrix(MATRIX_STACK_TYPE type);
-    void loadIdentityMatrix(MATRIX_STACK_TYPE type);
-    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
-    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
-    Mat4 getMatrix(MATRIX_STACK_TYPE type);
-    void resetMatrixStack();
 public:
     static const char *EVENT_PROJECTION_CHANGED;
     static const char* EVENT_AFTER_UPDATE;
     static const char* EVENT_AFTER_VISIT;
     static const char* EVENT_AFTER_DRAW;
-
 
     /** @typedef ccDirectorProjection
      Possible OpenGL projections used by director
@@ -399,6 +384,14 @@ public:
      */
     float getFrameRate() const { return _frameRate; }
 
+    void pushMatrix(MATRIX_STACK_TYPE type);
+    void popMatrix(MATRIX_STACK_TYPE type);
+    void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    void resetMatrixStack();
+
 protected:
     void purgeDirector();
     bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
@@ -416,6 +409,12 @@ protected:
     //textureCache creation or release
     void initTextureCache();
     void destroyTextureCache();
+
+    void initMatrixStack();
+
+    std::stack<Mat4> _modelViewMatrixStack;
+    std::stack<Mat4> _projectionMatrixStack;
+    std::stack<Mat4> _textureMatrixStack;
 
     /** Scheduler associated with this director
      @since v2.0

@@ -364,10 +364,10 @@ public:
     }
     
     Animation3DData(const Animation3DData& other)
-    : _totalTime(other._totalTime)
-    , _translationKeys(other._translationKeys)
+    : _translationKeys(other._translationKeys)
     , _rotationKeys(other._rotationKeys)
     , _scaleKeys(other._scaleKeys)
+    , _totalTime(other._totalTime)
     {
     }
     
