@@ -860,6 +860,11 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     }
 }
 
+void FileUtils::setSearchRootPath(const char* path)
+{
+    _defaultResRootPath = path ? path : "";
+}
+
 void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
 {
     std::string prefix;
