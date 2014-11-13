@@ -14,7 +14,8 @@ cocos2d-x-3.3 ??
     [FIX]           Label: display incompletely with multiline text with outline feature enabled
     [FIX]           New audio: can not loop on Android 2.3.x
     [FIX]           Scale9Sprite: will be flipped if both flipX and flipY are false
-    [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong.
+    [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong
+    [FIX]           Scene: setScale() doesn't work as expected
     [FIX]           Sprite3D: did not create attached sprite from cache
     [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
 
