@@ -73,7 +73,8 @@ def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,and
     ndk_path = os.path.join(ndk_root, "ndk-build")
 
     num_of_cpu = get_num_of_cpu()
-	
+
+    app_android_root = app_android_root.replace(' ', '\\ ')
     if ndk_build_param == None:
         command = '%s -j%d -C %s NDK_DEBUG=%d' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug')
     else:
