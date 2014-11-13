@@ -23,6 +23,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module UIPageView
+
 --[[--
 
 quick page控件
@@ -37,6 +40,11 @@ local UIPageView = class("UIPageView", function()
 	-- node:setContentSize(display.width, display.height)
 	return node
 end)
+
+--------------------------------
+-- UIPageView构建函数
+-- @function [parent=#UIPageView] new
+-- @param table params 参数表
 
 --[[--
 
@@ -55,9 +63,6 @@ UIPageView构建函数
     -   top 上边间隙
     -   bottom 下边间隙
 -   bCirc 页面是否循环,默认为false
-
-
-@param table params 参数表
 
 ]]
 function UIPageView:ctor(params)
@@ -80,13 +85,11 @@ function UIPageView:ctor(params)
     	end)
 end
 
---[[--
+--------------------------------
+-- 创建一个新的页面控件项
+-- @function [parent=#UIPageView] newItem
+-- @return UIPageViewItem#UIPageViewItem 
 
-创建一个新的页面控件项
-
-@return UIPageViewItem
-
-]]
 function UIPageView:newItem()
 	local item = UIPageViewItem.new()
 	item:setContentSize(self.viewRect_.width/self.column_, self.viewRect_.height/self.row_)
@@ -94,30 +97,24 @@ function UIPageView:newItem()
 	return item
 end
 
---[[--
+--------------------------------
+-- 添加一项到页面控件中
+-- @function [parent=#UIPageView] addItem
+-- @param node item 页面控件项
+-- @return UIPageView#UIPageView 
 
-添加一项到页面控件中
-
-@param node item 页面控件项
-
-@return UIPageView
-
-]]
 function UIPageView:addItem(item)
 	table.insert(self.items_, item)
 
 	return self
 end
 
+--------------------------------
+-- 移除一项
+-- @function [parent=#UIPageView] removeItem
+-- @param number idx 要移除项的序号
+-- @return UIPageView#UIPageView 
 
---[[--
-
-移除一项
-
-@param number idx 要移除项的序号
-
-@return UIPageView
-]]
 function UIPageView:removeItem(item)
 	local itemIdx
 	for i,v in ipairs(self.items_) do
@@ -140,13 +137,11 @@ function UIPageView:removeItem(item)
 	return self
 end
 
---[[--
+--------------------------------
+-- 移除所有页面
+-- @function [parent=#UIPageView] removeAllItems
+-- @return UIPageView#UIPageView 
 
-移除所有页面
-
-@return UIPageView
-
-]]
 function UIPageView:removeAllItems()
 	self.items_ = {}
 
@@ -155,30 +150,24 @@ function UIPageView:removeAllItems()
 	return self
 end
 
---[[--
+--------------------------------
+-- 注册一个监听函数
+-- @function [parent=#UIPageView] onTouch
+-- @param function listener 监听函数
+-- @return UIPageView#UIPageView 
 
-注册一个监听函数
-
-@param function listener 监听函数
-
-@return UIPageView
-
-]]
 function UIPageView:onTouch(listener)
 	self.touchListener = listener
 
 	return self
 end
 
---[[--
+--------------------------------
+-- 加载数据，各种参数
+-- @function [parent=#UIPageView] reload
+-- @param number page index加载完成后,首先要显示的页面序号,为空从第一页开始显示
+-- @return UIPageView#UIPageView 
 
-加载数据，各种参数
-
-@param number page index加载完成后,首先要显示的页面序号,为空从第一页开始显示
-
-@return UIPageView
-
-]]
 function UIPageView:reload(idx)
 	local page
 	local pageCount
@@ -223,17 +212,14 @@ function UIPageView:reload(idx)
 	return self
 end
 
---[[--
+--------------------------------
+-- 跳转到特定的页面
+-- @function [parent=#UIPageView] gotoPage
+-- @param integer pageIdx 要跳转的页面的位置
+-- @param boolean bSmooth 是否需要跳转动画
+-- @param bLeftToRight 移动的方向,在可循环下有效, nil:自动调整方向,false:从右向左,true:从左向右
+-- @return UIPageView#UIPageView 
 
-跳转到特定的页面
-
-@param integer pageIdx 要跳转的页面的位置
-@param boolean bSmooth 是否需要跳转动画
-@param bLeftToRight 移动的方向,在可循环下有效, nil:自动调整方向,false:从右向左,true:从左向右
-
-@return UIPageView
-
-]]
 function UIPageView:gotoPage(pageIdx, bSmooth, bLeftToRight)
 	if pageIdx < 1 or pageIdx > self:getPageCount() then
 		return self
@@ -262,37 +248,30 @@ function UIPageView:gotoPage(pageIdx, bSmooth, bLeftToRight)
 	return self
 end
 
---[[--
+--------------------------------
+-- 得到页面的总数
+-- @function [parent=#UIPageView] getPageCount
+-- @return number#number 
 
-得到页面的总数
-
-@return number
-
-]]
 function UIPageView:getPageCount()
 	return math.ceil(table.nums(self.items_)/(self.column_*self.row_))
 end
 
---[[--
+--------------------------------
+-- 得到当前页面的位置
+-- @function [parent=#UIPageView] getCurPageIdx
+-- @return number#number 
 
-得到当前页面的位置
-
-@return number
-
-]]
 function UIPageView:getCurPageIdx()
 	return self.curPageIdx_
 end
 
---[[--
+--------------------------------
+-- 设置页面控件是否为循环
+-- @function [parent=#UIPageView] setCirculatory
+-- @param boolean bCirc 是否循环
+-- @return UIPageView#UIPageView 
 
-设置页面控件是否为循环
-
-@param boolean bCirc 是否循环
-
-@return UIPageView
-
-]]
 function UIPageView:setCirculatory(bCirc)
 	self.bCirc = bCirc
 

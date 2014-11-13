@@ -23,6 +23,9 @@ THE SOFTWARE.
 
 ]]
 
+--------------------------------
+-- @module UIPageViewItem
+
 --[[--
 
 quick 页面控件项
