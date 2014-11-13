@@ -93,10 +93,19 @@ LuaEventNode* LuaEventNode::getParent()
 
 bool LuaEventNode::isVisible() const
 {
-    if (_node)
-    {
-        return _node->isVisible();
-    }
+    if (!_node) { return false; }
+    Node *node = _node;
+    do {
+        if (!node) {
+            // here reach the top node
+            return true;
+        }
+        if (!node->isVisible()) {
+            return false;
+        }
+        node = node->getParent();
+    } while (true);
+
     return false;
 }
 
