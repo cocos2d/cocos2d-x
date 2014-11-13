@@ -1541,5 +1541,3 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
     }
     _mirrorSprite = sprite;
 }
-
-
