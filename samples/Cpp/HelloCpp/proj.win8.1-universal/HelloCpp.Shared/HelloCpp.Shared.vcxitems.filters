@@ -17,7 +17,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\pch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
@@ -45,7 +44,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\WinRTEditBox.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\..\cocos2dx\platform\win-8.1\Cocos2dEngine\OpenGLESPage.xaml">

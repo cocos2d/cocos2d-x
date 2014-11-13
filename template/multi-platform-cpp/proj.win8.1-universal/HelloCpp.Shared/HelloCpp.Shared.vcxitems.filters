@@ -39,6 +39,5 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml" />
-    <Page Include="$(MSBuildThisFileDirectory)WinRTEditBox.xaml" />
   </ItemGroup>
 </Project>

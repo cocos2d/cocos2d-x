@@ -29,9 +29,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinRTEditBox.xaml.cpp">
-      <DependentUpon>$(MSBuildThisFileDirectory)WinRTEditBox.xaml</DependentUpon>
-    </ClCompile>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\HelloWorldScene.h" />
@@ -44,9 +41,6 @@
       <DependentUpon>$(MSBuildThisFileDirectory)OpenGLESPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)WinRTEditBox.xaml.h">
-      <DependentUpon>$(MSBuildThisFileDirectory)WinRTEditBox.xaml</DependentUpon>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
@@ -59,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)OpenGLESPage.xaml" />
-    <Page Include="$(MSBuildThisFileDirectory)WinRTEditBox.xaml" />
   </ItemGroup>
   <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
     <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />
