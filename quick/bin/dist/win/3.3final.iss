@@ -42,7 +42,7 @@ Source: "C:\Work\quick-3.3final\*"; DestDir: "{app}"; Flags: ignoreversion recur
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKCU; Subkey: "Environment"; ValueType: "string"; ValueName: "QUICK_V3_ROOT"; ValueData: "{app}\"; Flags: uninsdeletevalue
+Root: "HKCU"; Subkey: "Environment"; ValueType: string; ValueName: "QUICK_V3_ROOT"; ValueData: "{app}\"; Flags: uninsdeletevalue createvalueifdoesntexist
 
 [Icons]
 Name: "{group}\{#MyAppExeTitle}"; Filename: "{app}\{#MyAppExeName}"
@@ -51,5 +51,6 @@ Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{commondesktop}\{#MyAppExeTitle}"; Filename: "{app}\{#MyAppExeName}"
 
 [Run]
-Filename: "{app}\"; Description: "Open Folder {app}"; Flags: shellexec postinstall skipifsilent
-Filename: "{app}\README.html"; Description: "Open README"; Flags: shellexec postinstall skipifsilent
+Filename: "{app}\setup_win.bat"; WorkingDir: "{app}"; Flags: postinstall shellexec; Description: "Setup quick's root path (Important!!!)"
+Filename: "{app}\"; Flags: shellexec postinstall skipifsilent; Description: "Open Folder {app}"
+Filename: "{app}\README.html"; Flags: shellexec postinstall skipifsilent; Description: "Open README"
