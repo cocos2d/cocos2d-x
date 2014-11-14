@@ -98,6 +98,13 @@ local data =
         path        = "samples/statemachine",
         image       = "statemachine_ss.png"
     },
+
+    {
+        title       = "nightclub",
+        description = "夜总会",
+        path        = "samples/nightclub",
+        image       = "nightclub_ss.png"
+    },
 }
 
 return data
