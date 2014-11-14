@@ -55,8 +55,8 @@ public:
     double minDelay;
  
     AudioProfile()
-    : minDelay(0.0)
-    , maxInstances(0)
+    : maxInstances(0)
+    , minDelay(0.0)
     {
         
     }

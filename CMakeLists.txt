@@ -27,7 +27,7 @@ cmake_minimum_required(VERSION 2.8)
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.3.0-beta0)
+set(COCOS2D_X_VERSION 3.3.0-rc1)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 include(CocosBuildHelpers)
