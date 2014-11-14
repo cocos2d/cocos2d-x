@@ -7,6 +7,7 @@ game = {}
 
 function game.startup()
     cc.FileUtils:getInstance():addSearchPath("res/")
+    display.addSpriteFrames(GAME_TEXTURE_DATA_FILENAME, GAME_TEXTURE_IMAGE_FILENAME)
 
     game.enterMainScene()
 end

@@ -91,6 +91,13 @@ local data =
         path        = "samples/websockets",
         image       = "websockets_ss.png"
     },
+
+    {
+        title       = "statemachine",
+        description = "statemachine用法示例",
+        path        = "samples/statemachine",
+        image       = "statemachine_ss.png"
+    },
 }
 
 return data
