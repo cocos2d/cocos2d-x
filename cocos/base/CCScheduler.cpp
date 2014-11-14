@@ -447,7 +447,7 @@ void Scheduler::appendIn(_listEntry **list, const ccSchedulerFunc& callback, voi
     listElement->callback = callback;
     listElement->target = target;
     listElement->paused = paused;
-    listElemetn->priority = 0;
+    listElement->priority = 0;
     listElement->markedForDeletion = false;
 
     DL_APPEND(*list, listElement);
