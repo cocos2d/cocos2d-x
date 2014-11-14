@@ -330,7 +330,7 @@ void UIEditBoxImplWinrt::openKeyboard()
 	{
 		_delegate->editBoxEditingDidBegin(_editBox);
 	}
-
+#if CC_ENABLE_SCRIPT_BINDING
 	EditBox* pEditBox = this->getEditBox();
 	if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
 	{
@@ -338,7 +338,7 @@ void UIEditBoxImplWinrt::openKeyboard()
         ScriptEvent event(kCommonEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
 	}
-
+#endif
 	std::string placeHolder = m_pLabelPlaceHolder->getString();
 	if (placeHolder.length() == 0)
 		placeHolder = "Enter value";
