@@ -88,17 +88,17 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
     _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
 
     // Init and load local manifest
-    _localManifest = new Manifest();
+    _localManifest = new (std::nothrow) Manifest();
     loadLocalManifest(manifestUrl);
     
     // Init and load temporary manifest
-    _tempManifest = new Manifest();
+    _tempManifest = new (std::nothrow) Manifest();
     _tempManifest->parse(_tempManifestPath);
     if (!_tempManifest->isLoaded())
         _fileUtils->removeFile(_tempManifestPath);
 
     // Init remote manifest for future usage
-    _remoteManifest = new Manifest();
+    _remoteManifest = new (std::nothrow) Manifest();
 }
 
 AssetsManagerEx::~AssetsManagerEx()
@@ -142,7 +142,7 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
     // Find the cached manifest file
     if (_fileUtils->isFileExist(_cacheManifestPath))
     {
-        cachedManifest = new Manifest();
+        cachedManifest = new (std::nothrow) Manifest();
         cachedManifest->parse(_cacheManifestPath);
         if (!cachedManifest->isLoaded())
         {
