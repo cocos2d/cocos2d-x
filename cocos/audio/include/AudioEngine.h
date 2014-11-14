@@ -31,7 +31,6 @@
 #include <string.h>
 #include <unordered_map>
 
-#include "2d/CCNode.h"
 #include "Export.h"
 
 #ifdef ERROR
