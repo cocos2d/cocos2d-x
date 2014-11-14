@@ -15,7 +15,15 @@
                "proj.wp8-xaml/PROJECT_NAME.sln",
                "proj.wp8-xaml/App/PROJECT_NAME.csproj",
                "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj",
-               "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj.filters"
+               "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj.filters",
+               "proj.win8.1-universal/PROJECT_NAME.sln",
+               "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
+               "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",
+               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows_TemporaryKey.pfx",
+               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
+               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
+               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters"
             ]
          },
          "project_replace_project_name":{
@@ -29,6 +37,13 @@
                "proj.wp8-xaml/App/PROJECT_NAME.csproj",
                "proj.wp8-xaml/App/Properties/WMAppManifest.xml",
                "proj.wp8-xaml/PROJECT_NAME.sln",
+               "proj.win8.1-universal/PROJECT_NAME.sln",
+               "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
+               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
+               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
+               "proj.win8.1-universal/App.Windows/Package.appxmanifest",
+               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+               "proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
                "proj.android/.project",
                "proj.android/.cproject",
                "proj.android/AndroidManifest.xml",
