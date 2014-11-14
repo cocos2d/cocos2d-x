@@ -56,7 +56,7 @@ function LuabindingTestScene:getCppFunctionTest()
     printf("x, y = %0.2f, %0.2f, expected 100.00, 100.00", x, y)
 
     -- restore C++ method
-    tolua.resetcfunction(cc.Node, "setPosition")
+    cc.Node.setPosition = tolua.getcfunction(cc.Node, "setPosition")
     print("expected - no output")
     node:setPosition(100, 100)
 end

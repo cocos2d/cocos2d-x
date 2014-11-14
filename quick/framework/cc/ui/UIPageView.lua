@@ -684,6 +684,11 @@ function UIPageView:onClick_(event)
 		end
 	end
 
+	if not clickIdx then
+		-- not found, maybe touch in space
+		return
+	end
+
 	clickIdx = clickIdx + (self.column_ * self.row_) * (self.curPageIdx_ - 1)
 
 	self:notifyListener_{name = "clicked",

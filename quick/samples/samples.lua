@@ -84,6 +84,41 @@ local data =
         path        = "samples/coinflip",
         image       = "coinflip_ss.png"
     },
+
+    {
+        title       = "websocket",
+        description = "websocket用法示例",
+        path        = "samples/websockets",
+        image       = "websockets_ss.png"
+    },
+
+    {
+        title       = "statemachine",
+        description = "statemachine用法示例",
+        path        = "samples/statemachine",
+        image       = "statemachine_ss.png"
+    },
+
+    {
+        title       = "nightclub",
+        description = "夜总会",
+        path        = "samples/nightclub",
+        image       = "nightclub_ss.png"
+    },
+
+    {
+        title       = "editbox",
+        description = "输入控件 editbox",
+        path        = "samples/editbox",
+        image       = "editbox_ss.png"
+    },
+
+    {
+        title       = "tests",
+        description = "tests",
+        path        = "samples/tests",
+        image       = "tests_ss.png"
+    },
 }
 
 return data
