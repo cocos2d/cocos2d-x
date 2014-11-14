@@ -105,6 +105,13 @@ local data =
         path        = "samples/nightclub",
         image       = "nightclub_ss.png"
     },
+
+    {
+        title       = "editbox",
+        description = "输入控件 editbox",
+        path        = "samples/editbox",
+        image       = "editbox_ss.png"
+    },
 }
 
 return data
