@@ -84,6 +84,13 @@ local data =
         path        = "samples/coinflip",
         image       = "coinflip_ss.png"
     },
+
+    {
+        title       = "websocket",
+        description = "websocket用法示例",
+        path        = "samples/websockets",
+        image       = "websockets_ss.png"
+    },
 }
 
 return data
