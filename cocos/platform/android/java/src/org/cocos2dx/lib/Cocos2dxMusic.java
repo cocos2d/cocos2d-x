@@ -112,16 +112,17 @@ public class Cocos2dxMusic {
         if (this.mBackgroundMediaPlayer == null) {
             Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: background media player is null");
         } else {
-            // if the music is playing or paused, stop it
-            this.mBackgroundMediaPlayer.stop();
-
-            this.mBackgroundMediaPlayer.setLooping(isLoop);
-
             try {
-                this.mBackgroundMediaPlayer.prepare();
-                this.mBackgroundMediaPlayer.seekTo(0);
-                this.mBackgroundMediaPlayer.start();
-
+                // if the music is playing or paused, stop it
+                if (mPaused) {
+                    mBackgroundMediaPlayer.seekTo(0);
+                    this.mBackgroundMediaPlayer.start();
+                } else if (mBackgroundMediaPlayer.isPlaying()) {
+                    mBackgroundMediaPlayer.seekTo(0);
+                } else {
+                    this.mBackgroundMediaPlayer.start();
+                }
+                this.mBackgroundMediaPlayer.setLooping(isLoop);
                 this.mPaused = false;
             } catch (final Exception e) {
                 Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: error state");

@@ -55,6 +55,8 @@ For the moment Scene has no other logic than that, but in future releases it mig
 additional logic.
 
 It is a good practice to use a Scene as the parent of all your nodes.
+ 
+Scene will create a default camera for you.
 */
 class CC_DLL Scene : public Node
 {

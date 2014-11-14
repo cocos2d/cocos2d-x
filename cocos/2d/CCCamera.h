@@ -28,9 +28,16 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-//class Ray;
 class Scene;
 
+/**
+ * Note: 
+ * Scene creates a default camera. And the default camera mask of Node is 1, therefore it can be seen by the default camera.
+ * During rendering the scene, it draws the objects seen by each camera in the added order except default camera. The default camera is the last one being drawn with.
+ * If 3D objects exist, you'd better create a seperate camera for them. And set the 3d camera flag to CameraFlag::USER1 or anything else except DEFAULT. The DEFAULT camera is for UI, because it is rendered at last.
+ * You can change the camera added order to get different result when depth test is not enabled.
+ * For each camera, transparent 3d sprite is rendered after opaque 3d sprite and other 2d objects.
+ */
 enum class CameraFlag
 {
     DEFAULT = 1,
