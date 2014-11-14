@@ -292,6 +292,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\CCEGLView-Win8_1.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\InputEvent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\InputEventTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\Keyboard-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\winrt\CCAccelerometer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\winrt\CCApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\winrt\CCFileUtilsWinRT.h" />
@@ -666,6 +667,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\platform.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\CCEGLView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\InputEvent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\Keyboard-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\winrt\CCAccelerometer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\winrt\CCApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\winrt\CCCommon.cpp" />

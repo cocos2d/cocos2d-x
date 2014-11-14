@@ -111,7 +111,8 @@ void KeyBoardWinRT::HideKeyboard(Platform::String^ text)
 void KeyBoardWinRT::QueueKeyEvent(Cocos2dKeyEvent key)
 {
     std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::KeyboardEvent(key));
-    cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
+    CCEGLView* glView = CCDirector::sharedDirector()->getOpenGLView();
+    glView->QueueEvent(e);
 }
 
 void KeyBoardWinRT::OnKeyPressed(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args)
@@ -142,7 +143,8 @@ void KeyBoardWinRT::OnTextChanged(Platform::Object^ sender, TextChangedEventArgs
     if (text)
     {
         std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::KeyboardEvent(Cocos2dKeyEvent::Text, text));
-        cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
+        CCEGLView* glView = CCDirector::sharedDirector()->getOpenGLView();
+        glView->QueueEvent(e);
         m_textBox->Text = L"";
     }
 }

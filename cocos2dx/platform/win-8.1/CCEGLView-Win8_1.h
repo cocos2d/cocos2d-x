@@ -38,7 +38,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class CCEGL;
-ref class WP8Keyboard;
+ref class KeyBoardWinRT;
 
 class CC_DLL CCEGLView : public CCEGLViewProtocol
 {
@@ -148,6 +148,8 @@ private:
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
     Platform::Agile<Windows::Foundation::EventHandler<Platform::Object^>> m_editBoxhandler;
+
+    KeyBoardWinRT^ m_keyboard;
 
 
 };

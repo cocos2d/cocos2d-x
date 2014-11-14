@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 #include "support/CCNotificationCenter.h"
+#include "Keyboard-winrt.h"
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -96,7 +97,22 @@ bool CCEGLView::Create(float width, float height)
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-
+    if (bOpen)
+    {
+        if (m_keyboard == nullptr)
+        {
+            m_keyboard = ref new KeyBoardWinRT(m_dispatcher.Get(), m_panel.Get());
+        }
+        m_keyboard->ShowKeyboard(L"");
+    }
+    else
+    {
+        if (m_keyboard != nullptr)
+        {
+            m_keyboard->HideKeyboard(L"");
+        }
+        m_keyboard = nullptr;
+    }
 }
 
 void CCEGLView::swapBuffers()
