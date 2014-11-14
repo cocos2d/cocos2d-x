@@ -53,7 +53,7 @@ public:
     };
 
     AudioCache();
-    AudioCache(AudioCache&);
+    AudioCache(const AudioCache&);
     ~AudioCache();
 
     void addCallbacks(const std::function<void()> &callback);
