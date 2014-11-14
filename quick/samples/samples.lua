@@ -112,6 +112,13 @@ local data =
         path        = "samples/editbox",
         image       = "editbox_ss.png"
     },
+
+    {
+        title       = "tests",
+        description = "tests",
+        path        = "samples/tests",
+        image       = "tests_ss.png"
+    },
 }
 
 return data

@@ -16,7 +16,7 @@ function game.createMenu(items, callback)
 
     for i, item in ipairs(items) do
         cc.ui.UIPushButton.new()
-            :setButtonLabel(cc.ui.UILabel.new({text = item, size = 16, color = display.COLOR_BLUE}))
+            :setButtonLabel(cc.ui.UILabel.new({text = item, size = 32, color = display.COLOR_BLUE}))
             :onButtonClicked(function(event)
                 callback(item)
             end)
@@ -61,7 +61,7 @@ function game.createSceneClass(name)
         -- self.menuLayer:addChild(ui.newMenu({label}))
 
         cc.ui.UIPushButton.new()
-            :setButtonLabel(cc.ui.UILabel.new({text = "RETURN", size = 16, color = display.COLOR_BLUE}))
+            :setButtonLabel(cc.ui.UILabel.new({text = "RETURN", size = 32, color = display.COLOR_BLUE}))
             :onButtonClicked(function(event)
                 display.replaceScene(require("scenes.MainScene").new())
             end)
