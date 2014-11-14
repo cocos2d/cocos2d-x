@@ -64,11 +64,6 @@ class CocosZipInstaller(object):
         self._config_path = config_path
         self._version_path = version_path
 
-        print self._config_path
-        print self._version_path
-
-        adfasdf()
-
         data = self.load_json_file(config_path)
 
         self._current_version = data["version"]
