@@ -84,6 +84,17 @@ void KeyBoardWinRT::ShowKeyboard(Platform::String^ text)
             m_textBox->SelectionLength = 0;
             m_textBox->SelectionStart = 32768;
             m_textBox->Focus(FocusState::Programmatic);
+
+            if (m_button == nullptr)
+            {
+                m_button = ref new Controls::Button();
+                m_button->Opacity = 0.0;
+                m_button->Width = 1;
+                m_button->Height = 1;
+                m_button->IsEnabled = true;
+                m_panel.Get()->Children->Append(m_button);
+
+            }
         }));
     }
 }
@@ -104,6 +115,7 @@ void KeyBoardWinRT::HideKeyboard(Platform::String^ text)
                 }
             }
             m_textBox = nullptr;
+            m_button->Focus(FocusState::Pointer);
         }));
     }
 }

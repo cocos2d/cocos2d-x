@@ -53,6 +53,7 @@ private:
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
     Windows::UI::Xaml::Controls::TextBox^ m_textBox;
+    Windows::UI::Xaml::Controls::Button^ m_button;
 };
 
 NS_CC_END
