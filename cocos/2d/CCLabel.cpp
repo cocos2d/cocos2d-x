@@ -235,30 +235,30 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
 
 Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
              TextVAlignment vAlignment /* = TextVAlignment::TOP */,bool useDistanceField /* = false */,bool useA8Shader /* = false */)
-: _reusedLetter(nullptr)
-, _commonLineHeight(0.0f)
+: _isOpacityModifyRGB(false)
+, _contentDirty(false)
+, _fontAtlas(atlas)
+, _textSprite(nullptr)
+, _compatibleMode(false)
+, _reusedLetter(nullptr)
 , _additionalKerning(0.0f)
+, _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
+, _horizontalKernings(nullptr)
 , _maxLineWidth(0)
+, _labelDimensions(Size::ZERO)
 , _labelWidth(0)
 , _labelHeight(0)
-, _labelDimensions(Size::ZERO)
 , _hAlignment(hAlignment)
 , _vAlignment(vAlignment)
-, _horizontalKernings(nullptr)
-, _fontAtlas(atlas)
-, _isOpacityModifyRGB(false)
+, _currNumLines(-1)
+, _fontScale(1.0f)
 , _useDistanceField(useDistanceField)
 , _useA8Shader(useA8Shader)
-, _fontScale(1.0f)
-, _uniformEffectColor(0)
-, _currNumLines(-1)
-, _textSprite(nullptr)
-, _contentDirty(false)
-, _shadowDirty(false)
-, _compatibleMode(false)
-, _insideBounds(true)
 , _effectColorF(Color4F::BLACK)
+, _uniformEffectColor(0)
+, _shadowDirty(false)
+, _insideBounds(true)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
@@ -395,7 +395,13 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _commonLineHeight = _fontAtlas->getCommonLineHeight();
         _contentDirty = true;
     }
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     _useDistanceField = distanceFieldEnabled;
+#else
+    // some older Windows Phones cannot run the ccShader_Label_df.frag program
+    // so we must disable distance field
+    _useDistanceField = false;
+#endif
     _useA8Shader = useA8Shader;
 
     if (_currentLabelType != LabelType::TTF)

@@ -261,6 +261,30 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Scale9Sprite] setScaleY 
+-- @param self
+-- @param #float scaleY
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] setScaleX 
+-- @param self
+-- @param #float scaleX
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] getScaleY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] getScaleX 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
 -- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
@@ -270,6 +294,14 @@
 -- @function [parent=#Scale9Sprite] cleanup 
 -- @param self
         
+--------------------------------
+-- @overload self, float, float         
+-- @overload self, float         
+-- @function [parent=#Scale9Sprite] setScale
+-- @param self
+-- @param #float scalex
+-- @param #float scaley
+
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] updateDisplayedColor 
@@ -281,6 +313,12 @@
 -- @function [parent=#Scale9Sprite] setContentSize 
 -- @param self
 -- @param #size_table size
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] getScale 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- js ctor

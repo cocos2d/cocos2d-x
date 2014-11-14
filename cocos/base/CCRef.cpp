@@ -189,7 +189,7 @@ static void untrackRef(Ref* ref)
     __refAllocationList.erase(iter);
 }
 
-#endif // #if CC_USE_MEM_LEAK_DETECTION
+#endif // #if CC_REF_LEAK_DETECTION
 
 
 NS_CC_END

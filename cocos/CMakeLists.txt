@@ -48,17 +48,22 @@ include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
 
+if(BUILD_EDITOR_COCOSBUILDER)
 include(editor-support/cocosbuilder/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC})
+endif(BUILD_EDITOR_COCOSBUILDER)
+
+if(BUILD_EDITOR_COCOSTUDIO)
 include(editor-support/cocostudio/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CS_SRC})
+endif(BUILD_EDITOR_COCOSTUDIO)
+
+if(BUILD_EDITOR_SPINE)
 include(editor-support/spine/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
+endif(BUILD_EDITOR_SPINE)
 
 include(../extensions/CMakeLists.txt)
-
-set(COCOS_EDITOR_SUPPORT_SRC
-  ${COCOS_CCB_SRC}
-  ${COCOS_CS_SRC}
-  ${COCOS_SPINE_SRC}
-)
 
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
@@ -98,6 +103,7 @@ endif()
 if(MINGW)
   find_package(Freetype REQUIRED)
   find_package(WebP REQUIRED)
+  find_package(Protobuf REQUIRED)
   #find_package(MiniZip REQUIRED)
   #${MINIZIP_INCLUDE_DIR}
 
@@ -112,8 +118,9 @@ if(MINGW)
   message( STATUS "WEBP dirs: ${WEBP_INCLUDE_DIRS}")
   message( STATUS "FREETYPE dirs: ${FREETYPE_INCLUDE_DIRS}")
   message( STATUS "Chipmunk dirs: ${CHIPMUNK_INCLUDE_DIRS}")
+  message( STATUS "Protobuf dirs: ${PROTOBUF_INCLUDE_DIRS}")
 
-  include_directories(${FREETYPE_INCLUDE_DIRS} ${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS})
+  include_directories(${FREETYPE_INCLUDE_DIRS} ${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 
 else()
 
@@ -146,7 +153,7 @@ elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
   set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets ssl crypto
-  fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
+  fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -178,7 +185,7 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-target_link_libraries(cocos2d chipmunk box2d tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
 
 set_target_properties(cocos2d
     PROPERTIES

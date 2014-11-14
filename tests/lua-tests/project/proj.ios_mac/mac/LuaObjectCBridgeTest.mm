@@ -73,9 +73,10 @@ static LuaObjectCBridgeTest* s_instance = nil;
     }
 }
 
-- (void)init
+- (id)init
 {
     _scriptHandler = 0;
+    return self;
 }
 
 @end

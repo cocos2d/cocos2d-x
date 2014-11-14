@@ -81,7 +81,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelIssue4999Test),
     CL(LabelLineHeightTest),
     CL(LabelAdditionalKerningTest),
-    CL(LabelIssue8492Test)
+    CL(LabelIssue8492Test),
+    CL(LabelMultilineWithOutline)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1832,4 +1833,22 @@ std::string LabelIssue8492Test::title() const
 std::string LabelIssue8492Test::subtitle() const
 {
     return "Work fine when dimensions are not enough to fit one character";
+}
+
+LabelMultilineWithOutline::LabelMultilineWithOutline()
+{
+    auto label =  Label::createWithTTF("Multiline txet\nwith\noutline feature", "fonts/arial.ttf", 24);
+    label->enableOutline(Color4B::ORANGE,1);
+    label->setPosition(VisibleRect::center());
+    addChild(label);
+}
+
+std::string LabelMultilineWithOutline::title() const
+{
+    return "Reorder issue #9095";
+}
+
+std::string LabelMultilineWithOutline::subtitle() const
+{
+    return "end in string 'outline feature'";
 }

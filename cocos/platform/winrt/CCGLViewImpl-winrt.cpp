@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "deprecated/CCNotificationCenter.h"
 
 using namespace Platform;
+using namespace Concurrency;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Graphics::Display;
@@ -107,9 +108,10 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 }
 
 
-bool GLViewImpl::Create(float width, float height, DisplayOrientations orientation)
+bool GLViewImpl::Create(float width, float height, float dpi, DisplayOrientations orientation)
 {
     m_orientation = orientation;
+    m_dpi = dpi;
     UpdateForWindowSizeChange(width, height);
     return true;
 }
@@ -454,33 +456,27 @@ void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 
 void GLViewImpl::QueueBackKeyPress()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
     mInputEvents.push(e);
 }
 
 void GLViewImpl::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mInputEvents.push(e);
 }
 
 void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     mInputEvents.push(event);
 }
 
 void GLViewImpl::ProcessEvents()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
-
-    while (!mInputEvents.empty())
+    std::shared_ptr<InputEvent> e;
+    while (mInputEvents.try_pop(e))
     {
-        InputEvent* e = mInputEvents.front().get();
         e->execute();
-        mInputEvents.pop();
     }
 }
 

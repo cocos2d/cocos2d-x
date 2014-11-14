@@ -261,14 +261,19 @@ public:
     void menuCallback_switchPants(Ref* sender);
     void menuCallback_switchShoes(Ref* sender);
 protected:
-    std::string  _girlPants[2];
-    int _usePantsId;
-    std::string  _girlUpperBody[2];
-    int _useUpBodyId;
-    std::string  _girlShoes[2];
-    int _useShoesId;
-    std::string  _girlHair[2];
-    int _useHairId;
+    void applyCurSkin();
+    
+    enum class SkinType
+    {
+        UPPER_BODY = 0,
+        PANTS,
+        SHOES,
+        HAIR,
+        FACE,
+        HAND,
+        GLASSES,
+    };
+    std::map<SkinType, std::string>  _curSkin;
     cocos2d::Sprite3D* _sprite;
 };
 class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo

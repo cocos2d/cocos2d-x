@@ -44,8 +44,8 @@ void BaseLight::setRotationFromDirection( const Vec3 &direction )
 
 BaseLight::BaseLight()
 : _intensity(1.0f)
-, _enabled(true)
 , _lightFlag(LightFlag::LIGHT0)
+, _enabled(true)
 {
     
 }

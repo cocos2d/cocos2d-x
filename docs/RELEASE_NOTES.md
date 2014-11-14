@@ -174,6 +174,16 @@ require "cocos.init"
 
 ```
 
+`cc.EditBox` and `cc.Scale9Sprite` were deprecated, you should use `ccui.EditBox` and `ccui.Scale9Sprite` instead.
+
+`ccs.NodeReader` was removed because native class `cocostudio::timeline::NodeReader` was removed.In the v3.3rc0,you could use `cc.CSLoader` instead.
+
+`sp.Skeleton` was removed because native class `spine::Skeleton` was removed after updating spine runtime.
+
+`registerSpineEventHandler` of `sp.SkeletonAnimation` has changed:
+
+* registerSpineEventHandler(fucntion)  -> registerSpineEventHandler(funtion, eventType)
+
 
 # Highlights of v3.3rc0
 

@@ -15,7 +15,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <DisableSpecificWarnings>4056;4996;4244;4251;</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4056;4996;4244;4251;4756;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libGLESv2.lib;libEGL.lib;ws2_32.lib;libwebsockets.lib;libcurl.lib;libchipmunk.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype250.lib;sqlite3.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;dxguid.lib;xaudio2.lib;mfcore.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>

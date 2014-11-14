@@ -36,8 +36,7 @@ THE SOFTWARE.
 
 #include <wrl/client.h>
 #include <d3d11_1.h>
-#include <mutex>
-#include <queue>
+#include <concurrent_queue.h>
 
 #include <agile.h>
 #include <DirectXMath.h>
@@ -182,9 +181,7 @@ private:
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     Cocos2dEditBoxDelegate^ m_editBoxDelegate;
 
-    std::queue<std::shared_ptr<InputEvent>> mInputEvents;
-    std::mutex mMutex;
-
+    Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
 };
 
 NS_CC_END

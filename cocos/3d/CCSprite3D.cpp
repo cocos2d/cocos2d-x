@@ -684,7 +684,7 @@ Mesh* Sprite3D::getMeshByIndex(int index) const
     return _meshes.at(index);
 }
 
-/**get SubMeshState by Name */
+/**get Mesh by Name */
 Mesh* Sprite3D::getMeshByName(const std::string& name) const
 {
     for (const auto& it : _meshes) {
@@ -692,6 +692,16 @@ Mesh* Sprite3D::getMeshByName(const std::string& name) const
             return it;
     }
     return nullptr;
+}
+
+std::vector<Mesh*> Sprite3D::getMeshArrayByName(const std::string& name) const
+{
+    std::vector<Mesh*> meshes;
+    for (const auto& it : _meshes) {
+        if (it->getName() == name)
+            meshes.push_back(it);
+    }
+    return meshes;
 }
 
 MeshSkin* Sprite3D::getSkin() const

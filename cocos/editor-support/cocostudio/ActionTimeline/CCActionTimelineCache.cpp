@@ -733,11 +733,15 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFileFromXML(const st
     // xml read
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName).c_str();
     ssize_t size;
-    std::string content =(char*)FileUtils::getInstance()->getFileData(fullpath, "r", &size);
+    
+    //fix memory leak for v3.3
+    unsigned char* pByte = FileUtils::getInstance()->getFileData(fullpath, "r", &size);
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
-    document->Parse(content.c_str());
+    document->Parse((const char*)pByte);
+    
+    free(pByte);
     
     const tinyxml2::XMLElement* rootElement = document->RootElement();// Root
     CCLOG("rootElement name = %s", rootElement->Name());
