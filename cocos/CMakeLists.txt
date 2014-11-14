@@ -81,27 +81,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EXTENSIONS_SRC}
     )
 
-if(MACOSX OR APPLE)
-  include(FindFreetype REQUIRED)
-
-  if(NOT FREETYPE_FOUND)
-    if(IOS)
-      FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype PATHS "../external/freetype2/prebuilt/ios" DOC "Freetype includes")
-      find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/ios" "../external/freetype2/include/ios/freetype" DOC "Freetype includes")
-
-    elseif()
-      FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype PATHS "../external/freetype2/prebuilt/mac" DOC "Freetype includes")
-      find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/mac" "../external/freetype2/include/mac/freetype" DOC "Freetype includes")
-    endif(IOS)
-  endif(NOT FREETYPE_FOUND)
-
-  find_package(Freetype REQUIRED)
-  include_directories(${FREETYPE_INCLUDE_DIRS})
-
-endif()
-
 if(MINGW)
-  find_package(Freetype REQUIRED)
   find_package(WebP REQUIRED)
   find_package(Protobuf REQUIRED)
   #find_package(MiniZip REQUIRED)
@@ -113,11 +93,10 @@ if(MINGW)
 
   message( STATUS "ZLIB dirs: ${ZLIB_INCLUDE_DIRS}")
   message( STATUS "WEBP dirs: ${WEBP_INCLUDE_DIRS}")
-  message( STATUS "FREETYPE dirs: ${FREETYPE_INCLUDE_DIRS}")
   message( STATUS "Chipmunk dirs: ${CHIPMUNK_INCLUDE_DIRS}")
   message( STATUS "Protobuf dirs: ${PROTOBUF_INCLUDE_DIRS}")
 
-  include_directories(${FREETYPE_INCLUDE_DIRS} ${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
+  include_directories(${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 
 else()
 
@@ -145,11 +124,11 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glew32 opengl32 iconv freetype bz2)
+  set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glew32 opengl32 iconv bz2)
 elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glew32 opengl32 libiconv libzlib)
+  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
+  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -164,7 +143,7 @@ elseif(MACOSX OR APPLE)
 
   set(PLATFORM_SPECIFIC_LIBS
     z jpeg png webp tiff curl
-    websockets freetype
+    websockets
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
     ${OPENAL_LIBRARY}
@@ -186,7 +165,7 @@ if(LINUX OR MACOSX OR WINDOWS)
   list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
 endif()
 
-target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
 
 set_target_properties(cocos2d
     PROPERTIES

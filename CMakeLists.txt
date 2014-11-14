@@ -46,6 +46,8 @@ option(BUILD_CPP_TESTS "Build TestCpp samples" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" ON)
 option(BUILD_LUA_TESTS "Build TestLua samples" ON)
 
+option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ON)
+
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
 else(DEBUG_MODE)
@@ -160,15 +162,17 @@ include_directories(
 
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
-  list(APPEND CMAKE_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER})
-  list(APPEND CMAKE_LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER_ARCH})
 
   find_package(GLFW3 REQUIRED)
-  message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
+  message(STATUS "GLFW3 include dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
 
 endif(LINUX OR MACOSX OR WINDOWS)
 
+# Freetype required on all platforms
+find_package(Freetype REQUIRED)
+message(STATUS "FreeType include dirs: ${FREETYPE_INCLUDE_DIRS}")
+include_directories(${FREETYPE_INCLUDE_DIRS})
 
 if(NOT MINGW)
 
@@ -181,15 +185,10 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
   )
-
-#todo: fix location of freetype includes for linux android on cocos prebuilt repo
-#i.e we should not need to include an extra dir of /freetype2
 
   link_directories(
     ${PLATFORM_LINK_DIR}
@@ -198,7 +197,6 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/prebuilt/${PLATFORM_FOLDER_ARCH}
