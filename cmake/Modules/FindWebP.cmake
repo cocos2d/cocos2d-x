@@ -27,6 +27,26 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
+# Try find WebP for our arch in external folder
+if(USE_PREBUILT_LIBS)
+  find_path(WEBP_INCLUDE_DIR decode.h
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
+    NO_DEFAULT_PATH
+    )
+  find_library(WEBP_LIBRARY
+    NAMES webp libwebp
+    PATHS
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+      ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}
+    NO_DEFAULT_PATH
+    )
+  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
+  if(NOT WEBP_INCLUDE_DIR OR NOT WEBP_LIBRARY)
+    unset(WEBP_INCLUDE_DIR CACHE)
+    unset(WEBP_LIBRARY CACHE)
+  endif()
+endif(USE_PREBUILT_LIBS)
+
 FIND_PATH(WEBP_INCLUDE_DIR decode.h
   HINTS
   ENV WEBP_DIR

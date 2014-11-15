@@ -82,7 +82,6 @@ set(COCOS_SRC cocos2d.cpp
     )
 
 if(MINGW)
-  find_package(WebP REQUIRED)
   find_package(Protobuf REQUIRED)
   #find_package(MiniZip REQUIRED)
   #${MINIZIP_INCLUDE_DIR}
@@ -92,11 +91,10 @@ if(MINGW)
   find_package(Chipmunk REQUIRED)
 
   message( STATUS "ZLIB dirs: ${ZLIB_INCLUDE_DIRS}")
-  message( STATUS "WEBP dirs: ${WEBP_INCLUDE_DIRS}")
   message( STATUS "Chipmunk dirs: ${CHIPMUNK_INCLUDE_DIRS}")
   message( STATUS "Protobuf dirs: ${PROTOBUF_INCLUDE_DIRS}")
 
-  include_directories(${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
+  include_directories(${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 
 else()
 
@@ -124,11 +122,11 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glew32 opengl32 iconv bz2)
+  set(PLATFORM_SPECIFIC_LIBS z jpeg png tiff curl websockets glew32 opengl32 iconv bz2)
 elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv libzlib)
+  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
+  set(PLATFORM_SPECIFIC_LIBS jpeg tiff curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -142,7 +140,7 @@ elseif(MACOSX OR APPLE)
  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 
   set(PLATFORM_SPECIFIC_LIBS
-    z jpeg png webp tiff curl
+    z jpeg png tiff curl
     websockets
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
@@ -165,7 +163,7 @@ if(LINUX OR MACOSX OR WINDOWS)
   list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
 endif()
 
-target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${FREETYPE_LIBRARIES} ${WEBP_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
 
 set_target_properties(cocos2d
     PROPERTIES

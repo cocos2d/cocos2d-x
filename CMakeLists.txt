@@ -174,6 +174,11 @@ find_package(Freetype REQUIRED)
 message(STATUS "FreeType include dirs: ${FREETYPE_INCLUDE_DIRS}")
 include_directories(${FREETYPE_INCLUDE_DIRS})
 
+# WebP required on all platforms
+find_package(WebP REQUIRED)
+message(STATUS "WebP include dirs: ${WEBP_INCLUDE_DIRS}")
+include_directories(${WEBP_INCLUDE_DIRS})
+
 if(NOT MINGW)
 
   include_directories(
@@ -184,7 +189,6 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src
@@ -195,7 +199,6 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
