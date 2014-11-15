@@ -184,6 +184,7 @@ if(USE_WEBP)
   message(STATUS "WebP include dirs: ${WEBP_INCLUDE_DIRS}")
 endif(USE_WEBP)
 
+# Chipmunk
 if(USE_CHIPMUNK)
   find_package(Chipmunk REQUIRED)
   message(STATUS "Chipmunk include dirs: ${CHIPMUNK_INCLUDE_DIRS}")
@@ -192,11 +193,19 @@ else(USE_CHIPMUNK)
   add_definitions(-DCC_USE_PHYSICS=0)
 endif(USE_CHIPMUNK)
 
+# Tinyxml2
+if(USE_PREBUILT_LIBS)
+  add_subdirectory(external/tinyxml2)
+  set(TinyXML2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
+  set(TinyXML2_LIBRARIES tinyxml2)
+else()
+  find_package(TinyXML2)
+endif()
+message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
+
 if(NOT MINGW)
 
   include_directories(
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
     ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
@@ -208,7 +217,6 @@ if(NOT MINGW)
 
   link_directories(
     ${PLATFORM_LINK_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
@@ -226,7 +234,6 @@ if(LINUX OR APPLE)
 add_subdirectory(external/Box2D)
 add_subdirectory(external/unzip)
 add_subdirectory(external/xxhash)
-add_subdirectory(external/tinyxml2)
 add_subdirectory(external/protobuf-lite)
 endif()
 

@@ -160,7 +160,8 @@ if(LINUX OR MACOSX OR WINDOWS)
   list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
 endif()
 
-target_link_libraries(cocos2d box2d protobuf tinyxml2 unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
+include_directories(${TinyXML2_INCLUDE_DIRS})
+target_link_libraries(cocos2d box2d protobuf ${TinyXML2_LIBRARIES} unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
