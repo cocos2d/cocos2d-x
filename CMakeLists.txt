@@ -34,8 +34,14 @@ include(CocosBuildHelpers)
 
 message(${BUILDING_STRING})
 
+set(USE_WEBP_DEFAULT ON)
+if(WINRT OR WP8)
+    set(USE_WEBP_DEFAULT OFF)
+endif()
+
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
+option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
 option(BUILD_STATIC "Build static libraries" ON)
 option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_EXTENSIONS "Build extension library" ON)
@@ -174,10 +180,11 @@ find_package(Freetype REQUIRED)
 message(STATUS "FreeType include dirs: ${FREETYPE_INCLUDE_DIRS}")
 include_directories(${FREETYPE_INCLUDE_DIRS})
 
-# WebP required on all platforms
+# WebP required if used
+if(USE_WEBP)
 find_package(WebP REQUIRED)
 message(STATUS "WebP include dirs: ${WEBP_INCLUDE_DIRS}")
-include_directories(${WEBP_INCLUDE_DIRS})
+endif()
 
 if(NOT MINGW)
 
