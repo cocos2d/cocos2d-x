@@ -30,14 +30,13 @@
 # Try find glfw for our arch in external folder
 if(USE_PREBUILT_LIBS)
   find_path(GLFW3_INCLUDE_DIR glfw3.h
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
+    PATHS ${COCOS_EXTERNAL_DIR}/glfw3/include/${PLATFORM_FOLDER}
     NO_DEFAULT_PATH
     )
-  find_library(GLFW3_LIBRARY
-    NAMES glfw3 libglfw3 lgfw
+  find_library(GLFW3_LIBRARY NAMES glfw3 libglfw3 lgfw
     PATHS
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER}
+      ${COCOS_EXTERNAL_DIR}/glfw3/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+      ${COCOS_EXTERNAL_DIR}/glfw3/prebuilt/${PLATFORM_FOLDER}
     NO_DEFAULT_PATH
     )
   # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)

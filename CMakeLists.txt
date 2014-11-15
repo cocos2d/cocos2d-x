@@ -84,6 +84,8 @@ else()
  set (BUILD_TYPE SHARED)
 endif()
 
+set(COCOS_EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
+
 # Some macro definitions
 if(WINDOWS)
 

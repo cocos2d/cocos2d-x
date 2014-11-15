@@ -32,15 +32,14 @@ if(USE_PREBUILT_LIBS)
     PATH_SUFFIXES
       include/chipmunk
       include
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk
+    PATHS ${COCOS_EXTERNAL_DIR}/chipmunk
     NO_DEFAULT_PATH
     )
-  find_library(CHIPMUNK_LIBRARY
-    NAMES chipmunk libchipmunk
+  find_library(CHIPMUNK_LIBRARY NAMES chipmunk libchipmunk
     PATH_SUFFIXES
       prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
       prebuilt/${PLATFORM_FOLDER}
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk
+    PATHS ${COCOS_EXTERNAL_DIR}/chipmunk
     NO_DEFAULT_PATH
     )
   # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)

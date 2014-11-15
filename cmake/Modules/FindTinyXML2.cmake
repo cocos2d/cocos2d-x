@@ -19,15 +19,14 @@ if(USE_PREBUILT_LIBS)
     PATH_SUFFIXES
       include/tinyxml2
       include
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
+    PATHS ${COCOS_EXTERNAL_DIR}/tinyxml2
     NO_DEFAULT_PATH
     )
-  find_library(TinyXML2_LIBRARY
-    NAMES tinyxml2 libtinyxml2
+  find_library(TinyXML2_LIBRARY NAMES tinyxml2 libtinyxml2
     PATH_SUFFIXES
       prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
       prebuilt/${PLATFORM_FOLDER}
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
+    PATHS ${COCOS_EXTERNAL_DIR}/tinyxml2
     NO_DEFAULT_PATH
     )
   # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)

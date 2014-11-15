@@ -45,20 +45,19 @@
 
 if(USE_PREBUILT_LIBS)
   find_path(FREETYPE_INCLUDE_DIR_ft2build ft2build.h
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
+    PATHS ${COCOS_EXTERNAL_DIR}/freetype2/include/${PLATFORM_FOLDER}
     NO_DEFAULT_PATH
     )
   find_path(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
     PATHS
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}/freetype2
+      ${COCOS_EXTERNAL_DIR}/freetype2/include/${PLATFORM_FOLDER}
+      ${COCOS_EXTERNAL_DIR}/freetype2/include/${PLATFORM_FOLDER}/freetype2
     NO_DEFAULT_PATH
     )
-  find_library(FREETYPE_LIBRARY
-    NAMES freetype libfreetype freetype219 freetype250
+  find_library(FREETYPE_LIBRARY NAMES freetype libfreetype freetype219 freetype250
     PATHS
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/prebuilt/${PLATFORM_FOLDER}
+      ${COCOS_EXTERNAL_DIR}/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+      ${COCOS_EXTERNAL_DIR}/freetype2/prebuilt/${PLATFORM_FOLDER}
     NO_DEFAULT_PATH
     )
   # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)

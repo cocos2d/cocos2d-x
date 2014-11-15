@@ -30,14 +30,15 @@
 # Try find WebP for our arch in external folder
 if(USE_PREBUILT_LIBS)
   find_path(WEBP_INCLUDE_DIR decode.h
-    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
+    PATH_SUFFIXES include/${PLATFORM_FOLDER} include
+    PATHS ${COCOS_EXTERNAL_DIR}/webp
     NO_DEFAULT_PATH
     )
-  find_library(WEBP_LIBRARY
-    NAMES webp libwebp
-    PATHS
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/prebuilt/${PLATFORM_FOLDER}
+  find_library(WEBP_LIBRARY NAMES webp libwebp
+    PATH_SUFFIXES
+      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+      prebuilt/${PLATFORM_FOLDER}
+    PATHS ${COCOS_EXTERNAL_DIR}/webp
     NO_DEFAULT_PATH
     )
   # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
