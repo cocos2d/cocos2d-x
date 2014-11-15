@@ -88,13 +88,10 @@ if(MINGW)
 
   find_package(ZLIB REQUIRED)
 
-  find_package(Chipmunk REQUIRED)
-
   message( STATUS "ZLIB dirs: ${ZLIB_INCLUDE_DIRS}")
-  message( STATUS "Chipmunk dirs: ${CHIPMUNK_INCLUDE_DIRS}")
   message( STATUS "Protobuf dirs: ${PROTOBUF_INCLUDE_DIRS}")
 
-  include_directories(${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
+  include_directories(${ZLIB_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
 
 else()
 
@@ -163,7 +160,7 @@ if(LINUX OR MACOSX OR WINDOWS)
   list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
 endif()
 
-target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d box2d protobuf tinyxml2 unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
@@ -171,6 +168,11 @@ if(USE_WEBP)
   target_link_libraries(cocos2d ${WEBP_LIBRARIES})
 else()
   add_definitions(-DCC_USE_WEBP=0)
+endif()
+
+if(USE_CHIPMUNK)
+  include_directories(${CHIPMUNK_INCLUDE_DIRS})
+  target_link_libraries(cocos2d ${CHIPMUNK_LIBRARIES})
 endif()
 
 set_target_properties(cocos2d

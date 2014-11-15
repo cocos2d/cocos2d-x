@@ -27,6 +27,29 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
+if(USE_PREBUILT_LIBS)
+  find_path(CHIPMUNK_INCLUDE_DIR chipmunk.h
+    PATH_SUFFIXES
+      include/chipmunk
+      include
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk
+    NO_DEFAULT_PATH
+    )
+  find_library(CHIPMUNK_LIBRARY
+    NAMES chipmunk libchipmunk
+    PATH_SUFFIXES
+      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+      prebuilt/${PLATFORM_FOLDER}
+    PATHS ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk
+    NO_DEFAULT_PATH
+    )
+  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
+  if(NOT CHIPMUNK_INCLUDE_DIR OR NOT CHIPMUNK_LIBRARY)
+    unset(CHIPMUNK_INCLUDE_DIR CACHE)
+    unset(CHIPMUNK_LIBRARY CACHE)
+  endif()
+endif(USE_PREBUILT_LIBS)
+
 FIND_PATH(CHIPMUNK_INCLUDE_DIR chipmunk.h
   HINTS
   ENV CHIPMUNK_DIR

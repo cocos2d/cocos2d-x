@@ -168,11 +168,9 @@ include_directories(
 
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
-
   find_package(GLFW3 REQUIRED)
   message(STATUS "GLFW3 include dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
-
 endif(LINUX OR MACOSX OR WINDOWS)
 
 # Freetype required on all platforms
@@ -182,16 +180,21 @@ include_directories(${FREETYPE_INCLUDE_DIRS})
 
 # WebP required if used
 if(USE_WEBP)
-find_package(WebP REQUIRED)
-message(STATUS "WebP include dirs: ${WEBP_INCLUDE_DIRS}")
-endif()
+  find_package(WebP REQUIRED)
+  message(STATUS "WebP include dirs: ${WEBP_INCLUDE_DIRS}")
+endif(USE_WEBP)
+
+if(USE_CHIPMUNK)
+  find_package(Chipmunk REQUIRED)
+  message(STATUS "Chipmunk include dirs: ${CHIPMUNK_INCLUDE_DIRS}")
+  add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
+endif(USE_CHIPMUNK)
 
 if(NOT MINGW)
 
   include_directories(
 
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
     ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
@@ -208,7 +211,6 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
 

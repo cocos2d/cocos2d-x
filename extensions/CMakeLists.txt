@@ -2,19 +2,6 @@ if(WINDOWS AND NOT BUILD_STATIC)
   ADD_DEFINITIONS (-D_USREXDLL)
 endif()
 
-if(WINDOWS)
-
-#  set(PLATFORM_EXTENSIONS_SRC
-#    ../extensions/proj.win32/Win32InputBox.cpp
-#  )
-  
-elseif(MACOSX)
-
-else()
-#  set(PLATFORM_EXTENSIONS_SRC
-#    ../../extensions/GUI/CCEditBox/CCEditBoxImplNone.cpp)
-endif()
-
 include_directories(
   ../../extensions
 )
