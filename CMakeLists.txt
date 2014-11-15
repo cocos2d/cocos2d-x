@@ -207,7 +207,9 @@ if(USE_BOX2D)
     set(Box2D_LIBRARIES Box2D)
   endif()
   message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
-  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION)
+  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
+else()
+  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
 endif(USE_BOX2D)
 
 # Tinyxml2

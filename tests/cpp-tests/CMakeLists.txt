@@ -27,11 +27,6 @@ set(TESTS_SRC
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
   Classes/ActionsTest/ActionsTest.cpp
   Classes/BillBoardTest/BillBoardTest.cpp
-  Classes/Box2DTest/Box2dTest.cpp
-  Classes/Box2DTestBed/Box2dView.cpp
-  Classes/Box2DTestBed/GLES-Render.cpp
-  Classes/Box2DTestBed/Test.cpp
-  Classes/Box2DTestBed/TestEntries.cpp
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp
   Classes/BugsTest/Bug-350.cpp
@@ -203,6 +198,20 @@ set(TESTS_SRC
   ${PLATFORM_SRC}
 )
 
+if(USE_CHIPMUNK)
+  include_directories(${CHIPMUNK_INCLUDE_DIRS})
+endif()
+
+if(USE_BOX2D)
+  list(APPEND TESTS_SRC
+    Classes/Box2DTest/Box2dTest.cpp
+    Classes/Box2DTestBed/Box2dView.cpp
+    Classes/Box2DTestBed/GLES-Render.cpp
+    Classes/Box2DTestBed/Test.cpp
+    Classes/Box2DTestBed/TestEntries.cpp
+    )
+endif()
+
 if(LINUX)
     set(EXTENDED_TESTS_SRC
     )
@@ -229,7 +238,6 @@ endif()
 
 include_directories(
   Classes
-  ${CMAKE_SOURCE_DIR}/external/chipmunk/include/chipmunk
   ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
