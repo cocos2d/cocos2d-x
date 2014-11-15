@@ -188,6 +188,8 @@ if(USE_CHIPMUNK)
   find_package(Chipmunk REQUIRED)
   message(STATUS "Chipmunk include dirs: ${CHIPMUNK_INCLUDE_DIRS}")
   add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
+else(USE_CHIPMUNK)
+  add_definitions(-DCC_USE_PHYSICS=0)
 endif(USE_CHIPMUNK)
 
 if(NOT MINGW)
