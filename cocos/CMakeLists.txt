@@ -119,11 +119,11 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS z jpeg png tiff curl websockets glew32 opengl32 iconv bz2)
+  set(PLATFORM_SPECIFIC_LIBS z png tiff curl websockets glew32 opengl32 iconv bz2)
 elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv libzlib)
+  set(PLATFORM_SPECIFIC_LIBS libpng libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS jpeg tiff curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
+  set(PLATFORM_SPECIFIC_LIBS tiff curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -137,7 +137,7 @@ elseif(MACOSX OR APPLE)
  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 
   set(PLATFORM_SPECIFIC_LIBS
-    z jpeg png tiff curl
+    z png tiff curl
     websockets
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
@@ -162,6 +162,9 @@ endif()
 
 include_directories(${TinyXML2_INCLUDE_DIRS})
 target_link_libraries(cocos2d protobuf ${TinyXML2_LIBRARIES} unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
+
+include_directories(${JPEG_INCLUDE_DIRS})
+target_link_libraries(cocos2d ${JPEG_LIBRARIES})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
