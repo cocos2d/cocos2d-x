@@ -69,7 +69,7 @@ find_library(TinyXML2_LIBRARY
 set(TinyXML2_INCLUDE_DIRS "${TinyXML2_INCLUDE_DIR}")
 set(TinyXML2_LIBRARIES "${TinyXML2_LIBRARY}")
 
-include(FindPackageHandleStandardArgs)
+include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 find_package_handle_standard_args(TinyXML2 DEFAULT_MSG TinyXML2_LIBRARIES TinyXML2_INCLUDE_DIRS)
 
 mark_as_advanced(TinyXML2_INCLUDE_DIRS TinyXML2_LIBRARIES TinyXML2_LIBRARY)
