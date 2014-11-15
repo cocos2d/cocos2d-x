@@ -161,7 +161,7 @@ if(LINUX OR MACOSX OR WINDOWS)
 endif()
 
 include_directories(${TinyXML2_INCLUDE_DIRS})
-target_link_libraries(cocos2d box2d protobuf ${TinyXML2_LIBRARIES} unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d protobuf ${TinyXML2_LIBRARIES} unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
@@ -174,6 +174,11 @@ endif()
 if(USE_CHIPMUNK)
   include_directories(${CHIPMUNK_INCLUDE_DIRS})
   target_link_libraries(cocos2d ${CHIPMUNK_LIBRARIES})
+endif()
+
+if(USE_BOX2D)
+  include_directories(${Box2D_INCLUDE_DIRS})
+  target_link_libraries(cocos2d ${Box2D_LIBRARIES})
 endif()
 
 set_target_properties(cocos2d

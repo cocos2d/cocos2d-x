@@ -193,6 +193,21 @@ else(USE_CHIPMUNK)
   add_definitions(-DCC_USE_PHYSICS=0)
 endif(USE_CHIPMUNK)
 
+# Box2d
+if(USE_BOX2D)
+  if(USE_PREBUILT_LIBS)
+    add_subdirectory(external/Box2D)
+    set(Box2D_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include)
+    set(Box2D_LIBRARIES box2d)
+  else()
+    find_package(Box2D REQUIRED CONFIG)
+    # actually Box2D in next line is not a library, it is target exported from Box2DConfig.cmake
+    set(Box2D_LIBRARIES Box2D)
+  endif()
+  message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
+  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION)
+endif(USE_BOX2D)
+
 # Tinyxml2
 if(USE_PREBUILT_LIBS)
   add_subdirectory(external/tinyxml2)
@@ -206,7 +221,6 @@ message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 if(NOT MINGW)
 
   include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
@@ -221,7 +235,6 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
 
   )
@@ -231,7 +244,6 @@ endif()
 
 # build for 3rd party libraries
 if(LINUX OR APPLE)
-add_subdirectory(external/Box2D)
 add_subdirectory(external/unzip)
 add_subdirectory(external/xxhash)
 add_subdirectory(external/protobuf-lite)
