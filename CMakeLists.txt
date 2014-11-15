@@ -226,10 +226,15 @@ message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 find_package(JPEG REQUIRED)
 message(STATUS "JPEG include dirs: ${JPEG_INCLUDE_DIRS}")
 
+find_package(ZLIB REQUIRED)
+message(STATUS "ZLIB include dirs: ${ZLIB_INCLUDE_DIRS}")
+
+find_package(PNG REQUIRED)
+message(STATUS "PNG include dirs: ${PNG_INCLUDE_DIRS}")
+
 if(NOT MINGW)
 
   include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
@@ -239,7 +244,6 @@ if(NOT MINGW)
   link_directories(
     ${PLATFORM_LINK_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/prebuilt/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/png/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
 

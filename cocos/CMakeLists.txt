@@ -119,11 +119,11 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS z png tiff curl websockets glew32 opengl32 iconv bz2)
+  set(PLATFORM_SPECIFIC_LIBS tiff curl websockets glew32 opengl32 iconv bz2)
 elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS libpng libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv libzlib)
+  set(PLATFORM_SPECIFIC_LIBS libtiff libcurl_imp libwebsockets glew32 opengl32 libiconv)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS tiff curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
+  set(PLATFORM_SPECIFIC_LIBS tiff curl websockets ssl crypto fontconfig pthread GLEW GL X11 rt ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -137,7 +137,7 @@ elseif(MACOSX OR APPLE)
  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 
   set(PLATFORM_SPECIFIC_LIBS
-    z png tiff curl
+    tiff curl
     websockets
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
@@ -150,7 +150,7 @@ elseif(MACOSX OR APPLE)
   )
 
 elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv2 log z android)
+  set(PLATFORM_SPECIFIC_LIBS GLESv2 log android)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -160,11 +160,23 @@ if(LINUX OR MACOSX OR WINDOWS)
   list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
 endif()
 
-include_directories(${TinyXML2_INCLUDE_DIRS})
-target_link_libraries(cocos2d protobuf ${TinyXML2_LIBRARIES} unzip xxhash ${FREETYPE_LIBRARIES} ${PLATFORM_SPECIFIC_LIBS})
+add_definitions(${PNG_DEFINITIONS})
 
-include_directories(${JPEG_INCLUDE_DIRS})
-target_link_libraries(cocos2d ${JPEG_LIBRARIES})
+include_directories(
+  ${ZLIB_INCLUDE_DIRS}
+  ${JPEG_INCLUDE_DIRS}
+  ${PNG_INCLUDE_DIRS}
+  ${TinyXML2_INCLUDE_DIRS}
+  )
+target_link_libraries(cocos2d
+  protobuf unzip xxhash
+  ${ZLIB_LIBRARIES}
+  ${JPEG_LIBRARIES}
+  ${PNG_LIBRARIES}
+  ${TinyXML2_LIBRARIES}
+  ${FREETYPE_LIBRARIES}
+  ${PLATFORM_SPECIFIC_LIBS}
+  )
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
