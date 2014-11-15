@@ -319,6 +319,10 @@ void GLProgram::parseVertexAttribs()
             }
         }
     }
+    else
+    {
+        getVertexShaderLog();
+    }
 }
 
 void GLProgram::parseUniforms()
@@ -371,6 +375,11 @@ void GLProgram::parseUniforms()
             }
         }
     }
+    else
+    {
+        getFragmentShaderLog(); 
+    }
+
 }
 
 Uniform* GLProgram::getUniform(const std::string &name)
