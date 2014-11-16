@@ -36,7 +36,7 @@ endif(USE_PREBUILT_LIBS)
   
 find_path(FMODEX_INCLUDE_DIR fmod.h
   HINTS ENV FMODEX_DIR
-  PATH_SUFFIXES include
+  PATH_SUFFIXES include/fmodex include
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
