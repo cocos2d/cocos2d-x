@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "2d/CCSprite.h"
 
+#include <algorithm>
+
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
@@ -438,12 +440,12 @@ void Sprite::setTextureCoords(Rect rect)
 
         if (_flippedX)
         {
-            CC_SWAP(top, bottom, float);
+            std::swap(top, bottom);
         }
 
         if (_flippedY)
         {
-            CC_SWAP(left, right, float);
+            std::swap(left, right);
         }
 
         _quad.bl.texCoords.u = left;
@@ -471,12 +473,12 @@ void Sprite::setTextureCoords(Rect rect)
 
         if(_flippedX)
         {
-            CC_SWAP(left,right,float);
+            std::swap(left, right);
         }
 
         if(_flippedY)
         {
-            CC_SWAP(top,bottom,float);
+            std::swap(top, bottom);
         }
 
         _quad.bl.texCoords.u = left;
