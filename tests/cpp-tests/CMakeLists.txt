@@ -1,22 +1,18 @@
 set(APP_NAME cpp-tests)
 
 if(WIN32)
-  set(PLATFORM_SRC
-    proj.win32/main.cpp
-  )
+  set(PLATFORM_SRC proj.win32/main.cpp)
+  set(RES_PREFIX "")
 elseif(MACOSX)
-  set(PLATFORM_SRC
-    proj.mac/main.cpp
-  )
+  set(PLATFORM_SRC proj.mac/main.cpp)
 
   file(GLOB_RECURSE RES_FILES Resources/*)
   cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
   list(APPEND PLATFORM_SRC ${RES_FILES})
 
 elseif(LINUX)
-  set(PLATFORM_SRC
-    proj.linux/main.cpp
-  )
+  set(PLATFORM_SRC proj.linux/main.cpp)
+  set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -263,8 +259,7 @@ else()
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 
     pre_build(${APP_NAME}
-      COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
       )
 endif()
 

@@ -223,7 +223,7 @@ if(USE_PREBUILT_LIBS OR NOT MINGW)
 else()
   find_package(MINIZIP REQUIRED)
   # double check that we have needed functions
-  include(CheckLibaryExists)
+  include(CheckLibraryExists)
   check_library_exists(${MINIZIP_LIBRARIES} "unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
   if(NOT MINIZIP_HAS_GOTOFIRSTFILE2)
     message(FATAL_ERROR "Minizip library on you system very old. Please use recent version from https://github.com/nmoinvaz/minizip or enable USE_PREBUILT_LIBS")

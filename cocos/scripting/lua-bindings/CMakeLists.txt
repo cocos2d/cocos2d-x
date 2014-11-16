@@ -32,25 +32,29 @@ file(GLOB lua_cocos2d_source_files
     "${cocos_root}/external/xxtea/xxtea.cpp"
     )
 
-# luasockets are needed in Linux too,
-# but Linux have them disabled for some reason
-if(MACOSX)
-    set(lua_cocos2d_source_files
-        ${lua_cocos2d_source_files}
-        ${cocos_root}/external/lua/luasocket/auxiliar.c
-        ${cocos_root}/external/lua/luasocket/buffer.c
-        ${cocos_root}/external/lua/luasocket/except.c
-        ${cocos_root}/external/lua/luasocket/inet.c
-        ${cocos_root}/external/lua/luasocket/io.c
+list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/luasocket.c
-        ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
-        ${cocos_root}/external/lua/luasocket/mime.c
-        ${cocos_root}/external/lua/luasocket/options.c
-        ${cocos_root}/external/lua/luasocket/select.c
-        ${cocos_root}/external/lua/luasocket/serial.c
-        ${cocos_root}/external/lua/luasocket/tcp.c
         ${cocos_root}/external/lua/luasocket/timeout.c
+        ${cocos_root}/external/lua/luasocket/buffer.c
+        ${cocos_root}/external/lua/luasocket/io.c
+        ${cocos_root}/external/lua/luasocket/auxiliar.c
+        ${cocos_root}/external/lua/luasocket/options.c
+        ${cocos_root}/external/lua/luasocket/inet.c
+        ${cocos_root}/external/lua/luasocket/except.c
+        ${cocos_root}/external/lua/luasocket/select.c
+        ${cocos_root}/external/lua/luasocket/tcp.c
         ${cocos_root}/external/lua/luasocket/udp.c
+        ${cocos_root}/external/lua/luasocket/mime.c
+        ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
+	)
+
+if(WINDOWS)
+    list(APPEND lua_cocos2d_source_files
+        ${cocos_root}/external/lua/luasocket/wsocket.c
+        )
+elseif(UNIX)
+    list(APPEND lua_cocos2d_source_files
+        ${cocos_root}/external/lua/luasocket/serial.c
         ${cocos_root}/external/lua/luasocket/unix.c
         ${cocos_root}/external/lua/luasocket/usocket.c
         )

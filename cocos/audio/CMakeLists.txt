@@ -7,7 +7,10 @@ if(WINDOWS)
     set(COCOS_AUDIO_PLATFORM_SRC
         audio/win32/SimpleAudioEngine.cpp
         audio/win32/MciPlayer.cpp
-	    audio/win32/MciPlayer.h
+        audio/win32/MciPlayer.h
+        audio/win32/AudioEngine-win32.cpp
+        audio/win32/AudioCache.cpp
+        audio/win32/AudioPlayer.cpp
     )
 
 elseif(LINUX)

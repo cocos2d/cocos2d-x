@@ -27,7 +27,7 @@ find_path(MINIZIP_INCLUDE_DIR minizip/unzip.h
   /opt
   )
 
-find_library(MINIZIP_LIBRARY NAMES miniunzip libminiunzip
+find_library(MINIZIP_LIBRARY NAMES minizip libminizip
   HINTS ENV MINIZIP_DIR
   PATH_SUFFIXES lib
   PATHS

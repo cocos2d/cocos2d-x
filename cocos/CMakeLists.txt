@@ -90,9 +90,9 @@ set(COCOS_SRC cocos2d.cpp
 add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
 if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 iconv bz2)
+  set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 winmm mpg123 iconv bz2 ogg vorbis vorbisfile OpenAL32)
 elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 libiconv)
+  set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 libwinmm libiconv)
 elseif(LINUX)
   include_directories(${FMODEX_INCLUDE_DIRS})
   set(PLATFORM_SPECIFIC_LIBS ssl crypto fontconfig pthread GLEW GL X11 rt ${FMODEX_LIBRARIES})
