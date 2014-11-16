@@ -154,20 +154,6 @@ elseif(NOT MINGW)
   set(PLATFORM_FOLDER_ARCH ${PLATFORM_FOLDER})
 endif()
 
-
-# NB
-# we need to return these to libraries to their official state rather than
-# having our custom cocos2d namespace so that we may use system versions if
-# the platform provides them. It is very important that this
-# is done before we make prebuilt versions of these two libs
-
-include_directories(
-
-  ${CMAKE_CURRENT_SOURCE_DIR}/../external/unzip
-  ${CMAKE_CURRENT_SOURCE_DIR}/../external/xxhash
-
-)
-
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
   find_package(GLFW3 REQUIRED)
