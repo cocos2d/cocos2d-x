@@ -124,8 +124,8 @@ void TransformHelp::nodeToMatrix(const BaseData &node, Mat4 &matrix)
 
     if (node.skewX == -node.skewY)
     {
-        double sine   = sin(node.skewX);
-        double cosine = cos(node.skewX);
+        double sine   = sin(CC_DEGREES_TO_RADIANS(node.skewX));
+        double cosine = cos(CC_DEGREES_TO_RADIANS(node.skewX));
 
         matrix.m[0] = node.scaleX * cosine;
         matrix.m[1] = node.scaleX * -sine;
@@ -134,10 +134,10 @@ void TransformHelp::nodeToMatrix(const BaseData &node, Mat4 &matrix)
     }
     else
     {
-        matrix.m[0] = node.scaleX * cos(node.skewY);
-        matrix.m[1] = node.scaleX * sin(node.skewY);
-        matrix.m[4] = node.scaleY * sin(node.skewX);
-        matrix.m[5] = node.scaleY * cos(node.skewX);
+        matrix.m[0] = node.scaleX * cos(CC_DEGREES_TO_RADIANS(node.skewY));
+        matrix.m[1] = node.scaleX * sin(CC_DEGREES_TO_RADIANS(node.skewY));
+        matrix.m[4] = node.scaleY * sin(CC_DEGREES_TO_RADIANS(node.skewX));
+        matrix.m[5] = node.scaleY * cos(CC_DEGREES_TO_RADIANS(node.skewX));
     }
     
     matrix.m[12] = node.x;
