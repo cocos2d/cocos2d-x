@@ -34,7 +34,11 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 
 #include "tinyxml2.h"
+#ifdef MINIZIP_FROM_SYSTEM
+#include <minizip/unzip.h>
+#else // from our embedded sources
 #include "unzip.h"
+#endif
 #include <sys/stat.h>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -653,7 +657,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         CC_BREAK_IF(!file);
 
         // FIXME: Other platforms should use upstream minizip like mingw-w64  
-        #ifdef __MINGW32__
+        #ifdef MINIZIP_FROM_SYSTEM
         int ret = unzLocateFile(file, filename.c_str(), NULL);
         #else
         int ret = unzLocateFile(file, filename.c_str(), 1);

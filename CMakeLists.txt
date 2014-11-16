@@ -211,6 +211,27 @@ message(STATUS "JPEG include dirs: ${JPEG_INCLUDE_DIRS}")
 find_package(ZLIB REQUIRED)
 message(STATUS "ZLIB include dirs: ${ZLIB_INCLUDE_DIRS}")
 
+# minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
+# only msys2 currently provides package for this variant, all other
+# dists have packages from zlib, thats very old for us.
+# moreover our embedded version modified to quick provide
+# functionality needed by cocos.
+if(USE_PREBUILT_LIBS OR NOT MINGW)
+  add_subdirectory(external/unzip)
+  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
+  set(MINIZIP_LIBRARIES unzip)
+else()
+  find_package(MINIZIP REQUIRED)
+  # double check that we have needed functions
+  include(CheckLibaryExists)
+  check_library_exists(${MINIZIP_LIBRARIES} "unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
+  if(NOT MINIZIP_HAS_GOTOFIRSTFILE2)
+    message(FATAL_ERROR "Minizip library on you system very old. Please use recent version from https://github.com/nmoinvaz/minizip or enable USE_PREBUILT_LIBS")
+  endif()
+  add_definitions(-DMINIZIP_FROM_SYSTEM)
+endif()
+message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
+
 find_package(PNG REQUIRED)
 message(STATUS "PNG include dirs: ${PNG_INCLUDE_DIRS}")
 
@@ -243,7 +264,6 @@ message(STATUS "Protobuf include dirs: ${PROTOBUF_INCLUDE_DIRS}")
 
 # build for 3rd party libraries
 if(LINUX OR APPLE)
-add_subdirectory(external/unzip)
 add_subdirectory(external/xxhash)
 endif()
 

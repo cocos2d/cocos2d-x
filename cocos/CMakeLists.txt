@@ -81,16 +81,6 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EXTENSIONS_SRC}
     )
 
-if(NOT MINGW)
-
-  #todo: provide prebuild versions of minizip for android ios mac and msvc
-  #done: prebuilt version for mingw-w64 (linux distros should have them also)
-  # check for opensuse the buildbot system arch and ubuntu
-
-  include_directories( ../external/unzip )
-
-endif()
-
   #todo: provide prebuild versions of the xx libs for all platforms
   include_directories(
     ../external/xxhash
@@ -144,6 +134,7 @@ add_definitions(${PNG_DEFINITIONS})
 
 include_directories(
   ${ZLIB_INCLUDE_DIRS}
+  ${MINIZIP_INCLUDE_DIRS}
   ${JPEG_INCLUDE_DIRS}
   ${PNG_INCLUDE_DIRS}
   ${TIFF_INCLUDE_DIRS}
@@ -153,8 +144,9 @@ include_directories(
   ${PROTOBUF_INCLUDE_DIRS}
   )
 target_link_libraries(cocos2d
-  unzip xxhash
+  xxhash
   ${ZLIB_LIBRARIES}
+  ${MINIZIP_LIBRARIES}
   ${JPEG_LIBRARIES}
   ${PNG_LIBRARIES}
   ${TIFF_LIBRARIES}
