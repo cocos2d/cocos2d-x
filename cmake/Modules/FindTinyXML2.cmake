@@ -9,11 +9,11 @@
 # ::
 #
 #   TINYXML2_LIBRARIES, the library to link against
-#   TINYXML2_FOUND, if false, do not try to link to FREETYPE
+#   TINYXML2_FOUND, if false, do not try to link to tinyxml2
 #   TINYXML2_INCLUDE_DIRS, where to find headers.
 #
 
-# Try find glfw for our arch in external folder
+# Try find tinyxml for our arch in external folder
 if(USE_PREBUILT_LIBS)
   find_path(TinyXML2_INCLUDE_DIR tinyxml2.h
     PATH_SUFFIXES
