@@ -99,18 +99,13 @@ endif()
 
 add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(FMOD_LIB "fmodex64")
-elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    set(FMOD_LIB "fmodex")
-endif()
-
 if(MINGW)
   set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 iconv bz2)
 elseif(WINDOWS)
   set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 libiconv)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS ssl crypto fontconfig pthread GLEW GL X11 rt ${FMOD_LIB})
+  include_directories(${FMODEX_INCLUDE_DIRS})
+  set(PLATFORM_SPECIFIC_LIBS ssl crypto fontconfig pthread GLEW GL X11 rt ${FMODEX_LIBRARIES})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 

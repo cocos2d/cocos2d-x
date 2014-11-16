@@ -141,17 +141,15 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
-# Specific Link Directories
 if(LINUX)
-  set(PLATFORM_LINK_DIR
-    /usr/local/lib
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}-specific/fmod/prebuilt/${ARCH_DIR}
-  )
-  set(PLATFORM_FOLDER_ARCH
-      ${PLATFORM_FOLDER}/${ARCH_DIR}
-  )
+  set(PLATFORM_FOLDER_ARCH ${PLATFORM_FOLDER}/${ARCH_DIR})
 elseif(NOT MINGW)
   set(PLATFORM_FOLDER_ARCH ${PLATFORM_FOLDER})
+endif()
+
+if(LINUX)
+  find_package(FMODEX REQUIRED)
+  message(STATUS "FMOD Ex include dirs: ${FMODEX_INCLUDE_DIRS}")
 endif()
 
 # GLFW3 used on Mac, Windows and Linux desktop platforms
@@ -248,12 +246,6 @@ message(STATUS "CURL include dirs: ${CURL_INCLUDE_DIRS}")
 message(STATUS "Protobuf lite libs: ${PROTOBUF_LITE_LIBRARIES}")
 message(STATUS "Protobuf include dirs: ${PROTOBUF_INCLUDE_DIRS}")
 
-
-if(NOT MINGW)
-
-  link_directories(${PLATFORM_LINK_DIR})
-
-endif()
 
 # build for 3rd party libraries
 if(LINUX OR APPLE)
