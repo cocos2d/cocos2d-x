@@ -142,12 +142,6 @@ include_directories(
 )
 
 if(LINUX)
-  set(PLATFORM_FOLDER_ARCH ${PLATFORM_FOLDER}/${ARCH_DIR})
-elseif(NOT MINGW)
-  set(PLATFORM_FOLDER_ARCH ${PLATFORM_FOLDER})
-endif()
-
-if(LINUX)
   find_package(FMODEX REQUIRED)
   message(STATUS "FMOD Ex include dirs: ${FMODEX_INCLUDE_DIRS}")
 endif()
