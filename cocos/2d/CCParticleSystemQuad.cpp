@@ -28,6 +28,9 @@ THE SOFTWARE.
 
 
 #include "2d/CCParticleSystemQuad.h"
+
+#include <algorithm>
+
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
@@ -172,7 +175,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
     // Important. Texture in cocos2d are inverted, so the Y component should be inverted
-    CC_SWAP( top, bottom, float);
+    std::swap(top, bottom);
 
     V3F_C4B_T2F_Quad *quads = nullptr;
     unsigned int start = 0, end = 0;

@@ -63,6 +63,7 @@ THE SOFTWARE.
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables
+ @deprecated use std::swap() instead
 */
 #define CC_SWAP(x, y, type)    \
 {    type temp = (x);        \
