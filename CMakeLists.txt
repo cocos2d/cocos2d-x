@@ -242,19 +242,17 @@ message(STATUS "TIFF include dirs: ${TIFF_INCLUDE_DIRS}")
 find_package(WEBSOCKETS REQUIRED)
 message(STATUS "WEBSOCKETS include dirs: ${WEBSOCKETS_INCLUDE_DIRS}")
 
+find_package(CURL REQUIRED)
+message(STATUS "CURL include dirs: ${CURL_INCLUDE_DIRS}")
+
 if(NOT MINGW)
 
   include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src
   )
 
   link_directories(
     ${PLATFORM_LINK_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/prebuilt/${PLATFORM_FOLDER_ARCH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/prebuilt/${PLATFORM_FOLDER_ARCH}
-
   )
 
 
