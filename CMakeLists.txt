@@ -239,6 +239,9 @@ message(STATUS "PNG include dirs: ${PNG_INCLUDE_DIRS}")
 find_package(TIFF REQUIRED)
 message(STATUS "TIFF include dirs: ${TIFF_INCLUDE_DIRS}")
 
+find_package(WEBSOCKETS REQUIRED)
+message(STATUS "WEBSOCKETS include dirs: ${WEBSOCKETS_INCLUDE_DIRS}")
+
 if(NOT MINGW)
 
   include_directories(
