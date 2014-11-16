@@ -81,26 +81,13 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EXTENSIONS_SRC}
     )
 
-if(MINGW)
-  find_package(Protobuf REQUIRED)
-  #find_package(MiniZip REQUIRED)
-  #${MINIZIP_INCLUDE_DIR}
-
-  find_package(ZLIB REQUIRED)
-
-  message( STATUS "ZLIB dirs: ${ZLIB_INCLUDE_DIRS}")
-  message( STATUS "Protobuf dirs: ${PROTOBUF_INCLUDE_DIRS}")
-
-  include_directories(${ZLIB_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIRS})
-
-else()
+if(NOT MINGW)
 
   #todo: provide prebuild versions of minizip for android ios mac and msvc
   #done: prebuilt version for mingw-w64 (linux distros should have them also)
   # check for opensuse the buildbot system arch and ubuntu
 
-  include_directories(
-    ../external/unzip)
+  include_directories( ../external/unzip )
 
 endif()
 
@@ -166,11 +153,12 @@ include_directories(
   ${PNG_INCLUDE_DIRS}
   ${TIFF_INCLUDE_DIRS}
   ${TinyXML2_INCLUDE_DIRS}
-  ${CURL_INCLUDE_DIRS}
   ${WEBSOCKETS_INCLUDE_DIRS}
+  ${CURL_INCLUDE_DIRS}
+  ${PROTOBUF_INCLUDE_DIRS}
   )
 target_link_libraries(cocos2d
-  protobuf unzip xxhash
+  unzip xxhash
   ${ZLIB_LIBRARIES}
   ${JPEG_LIBRARIES}
   ${PNG_LIBRARIES}
@@ -178,6 +166,7 @@ target_link_libraries(cocos2d
   ${TinyXML2_LIBRARIES}
   ${WEBSOCKETS_LIBRARIES}
   ${CURL_LIBRARIES}
+  ${PROTOBUF_LITE_LIBRARIES}
   ${FREETYPE_LIBRARIES}
   ${PLATFORM_SPECIFIC_LIBS}
   )
