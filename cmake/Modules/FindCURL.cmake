@@ -57,42 +57,50 @@ if(USE_PREBUILT_LIBS)
   endif()
 endif()
 
-# Look for the header file.
-find_path(CURL_INCLUDE_DIR NAMES curl/curl.h)
-mark_as_advanced(CURL_INCLUDE_DIR)
+find_package(PkgConfig)
+if(PKG_CONFIG_FOUND)
+  pkg_search_module(CURL QUIET libcurl)
+endif()
 
-# Look for the library (sorted from most current/relevant entry to least).
-find_library(CURL_LIBRARY NAMES
-    curl
-  # Windows MSVC prebuilts:
-    curllib
-    libcurl_imp
-    curllib_static
-  # Windows older "Win32 - MSVC" prebuilts (libcurl.lib, e.g. libcurl-7.15.5-win32-msvc.zip):
-    libcurl
-)
-mark_as_advanced(CURL_LIBRARY)
+if(NOT CURL_FOUND)
 
-if(CURL_INCLUDE_DIR)
-  foreach(_curl_version_header curlver.h curl.h)
-    if(EXISTS "${CURL_INCLUDE_DIR}/curl/${_curl_version_header}")
-      file(STRINGS "${CURL_INCLUDE_DIR}/curl/${_curl_version_header}" curl_version_str REGEX "^#define[\t ]+LIBCURL_VERSION[\t ]+\".*\"")
+    # Look for the header file.
+    find_path(CURL_INCLUDE_DIR NAMES curl/curl.h)
+    mark_as_advanced(CURL_INCLUDE_DIR)
 
-      string(REGEX REPLACE "^#define[\t ]+LIBCURL_VERSION[\t ]+\"([^\"]*)\".*" "\\1" CURL_VERSION_STRING "${curl_version_str}")
-      unset(curl_version_str)
-      break()
+    # Look for the library (sorted from most current/relevant entry to least).
+    find_library(CURL_LIBRARY NAMES
+        curl
+      # Windows MSVC prebuilts:
+        curllib
+        libcurl_imp
+        curllib_static
+      # Windows older "Win32 - MSVC" prebuilts (libcurl.lib, e.g. libcurl-7.15.5-win32-msvc.zip):
+        libcurl
+    )
+    mark_as_advanced(CURL_LIBRARY)
+
+    if(CURL_INCLUDE_DIR)
+      foreach(_curl_version_header curlver.h curl.h)
+        if(EXISTS "${CURL_INCLUDE_DIR}/curl/${_curl_version_header}")
+          file(STRINGS "${CURL_INCLUDE_DIR}/curl/${_curl_version_header}" curl_version_str REGEX "^#define[\t ]+LIBCURL_VERSION[\t ]+\".*\"")
+
+          string(REGEX REPLACE "^#define[\t ]+LIBCURL_VERSION[\t ]+\"([^\"]*)\".*" "\\1" CURL_VERSION_STRING "${curl_version_str}")
+          unset(curl_version_str)
+          break()
+        endif()
+      endforeach()
     endif()
-  endforeach()
+
+    include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+    FIND_PACKAGE_HANDLE_STANDARD_ARGS(CURL
+                                      REQUIRED_VARS CURL_LIBRARY CURL_INCLUDE_DIR
+                                      VERSION_VAR CURL_VERSION_STRING)
+
+    if(CURL_FOUND)
+      set(CURL_LIBRARIES ${CURL_LIBRARY})
+      set(CURL_INCLUDE_DIRS ${CURL_INCLUDE_DIR})
+    endif()
+
 endif()
 
-# handle the QUIETLY and REQUIRED arguments and set CURL_FOUND to TRUE if
-# all listed variables are TRUE
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(CURL
-                                  REQUIRED_VARS CURL_LIBRARY CURL_INCLUDE_DIR
-                                  VERSION_VAR CURL_VERSION_STRING)
-
-if(CURL_FOUND)
-  set(CURL_LIBRARIES ${CURL_LIBRARY})
-  set(CURL_INCLUDE_DIRS ${CURL_INCLUDE_DIR})
-endif()

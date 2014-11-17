@@ -89,13 +89,22 @@ set(COCOS_SRC cocos2d.cpp
 
 add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
 
-if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 winmm mpg123 iconv bz2 ogg vorbis vorbisfile OpenAL32)
-elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS glew32 opengl32 libwinmm libiconv)
+set(PLATFORM_SPECIFIC_LIBS)
+if(WINDOWS)
+  foreach(_pkg OPENGL GLEW GLFW3 WINMM)
+    include_directories(${${_pkg}_INCLUDE_DIRS})
+    list(APPEND PLATFORM_SPECIFIC_LIBS ${${_pkg}_LIBRARIES})
+  endforeach()
+  if(MINGW)
+    list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 mpg123 bz2 ogg vorbis vorbisfile OpenAL32)
+  endif()
 elseif(LINUX)
+  foreach(_pkg OPENGL GLEW GLFW3 FMODEX)
+    include_directories(${${_pkg}_INCLUDE_DIRS})
+    list(APPEND PLATFORM_SPECIFIC_LIBS ${${_pkg}_LIBRARIES})
+  endforeach()
   include_directories(${FMODEX_INCLUDE_DIRS})
-  set(PLATFORM_SPECIFIC_LIBS ssl crypto fontconfig pthread GLEW GL X11 rt ${FMODEX_LIBRARIES})
+  list(APPEND PLATFORM_SPECIFIC_LIBS fontconfig pthread rt)
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -125,11 +134,6 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-# Add GLFW3 for desktop platforms
-if(LINUX OR MACOSX OR WINDOWS)
-  list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
-endif()
-
 add_definitions(${PNG_DEFINITIONS})
 
 include_directories(
@@ -157,6 +161,10 @@ target_link_libraries(cocos2d
   ${FREETYPE_LIBRARIES}
   ${PLATFORM_SPECIFIC_LIBS}
   )
+
+if(CURL_LIBRARY_DIRS)
+  link_directories(${CURL_LIBRARY_DIRS})
+endif()
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)

@@ -112,10 +112,8 @@ else()
 endif()
 
 if(MINGW)
-  add_definitions(-DGLEW_STATIC)
+  #add_definitions(-DGLEW_STATIC)
   add_definitions(-D__SSIZE_T)
-  set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES} -lws2_32")
-  set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lws2_32")
 
   if(CLANG)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions ")
@@ -148,9 +146,23 @@ endif()
 
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
+  find_package(OpenGL REQUIRED)
+  set(OPENGL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR}) # fix inconsistency
+  message(STATUS "OpenGL include dirs: ${OPENGL_INCLUDE_DIRS}")
+
+  if(LINUX OR WINDOWS)
+    find_package(GLEW REQUIRED)
+    message(STATUS "GLEW libs: ${GLEW_LIBRARIES}")
+  endif()
+
   find_package(GLFW3 REQUIRED)
   message(STATUS "GLFW3 include dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
+
+  if(WINDOWS)
+    find_library(WINMM_LIBRARIES winmm)
+    message(STATUS "Winmm lib: ${WINMM_LIBRARIES}")
+  endif()
 endif(LINUX OR MACOSX OR WINDOWS)
 
 # Freetype required on all platforms
