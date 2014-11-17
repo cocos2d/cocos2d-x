@@ -241,7 +241,7 @@ end
 --------------------------------
 -- 返回设备的 OpenUDID 值
 -- @function [parent=#device] getOpenUDID
--- @return string#string  设备的 OpenUDID 值
+-- @return string#string ret (return value: string)  设备的 OpenUDID 值
 
 --[[--
 
@@ -307,7 +307,7 @@ end
 -- @param string title 对话框标题
 -- @param string message 提示信息
 -- @param string defaultValue 输入框默认值
--- @return string#string  用户输入的字符串
+-- @return string#string ret (return value: string)  用户输入的字符串
 
 function device.showInputBox(title, message, defaultValue)
     title = tostring(title or "INPUT TEXT")

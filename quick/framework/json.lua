@@ -45,7 +45,7 @@ end
 -- 将表格数据编码为 JSON 字符串
 -- @function [parent=#json] encode
 -- @param table 表格对象
--- @return string#string  json字符串
+-- @return string#string ret (return value: string)  json字符串
 
 --[[--
 
@@ -91,7 +91,7 @@ end
 -- 将 JSON 字符串解码为表格对象
 -- @function [parent=#json] decode
 -- @param string json字符串
--- @return table#table  表格对象
+-- @return table#table ret (return value: table)  表格对象
 
 --[[--
 

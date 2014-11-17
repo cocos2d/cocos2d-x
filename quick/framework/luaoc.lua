@@ -40,7 +40,7 @@ local callStaticMethod = LuaObjcBridge.callStaticMethod
 -- @param string className Objective-C类名
 -- @param string methodName Objective-C类方法名
 -- @param table args Objective-C类方法所需要的各种参数字典,key值为方法的参数名
--- @return boolean#boolean  ok, mixed ret ok为是否调用成功, ok为true时,ret为Objective-C方法的返回值,ok为false时,ret为出错原因
+-- @return boolean#boolean ret (return value: bool)  ok, mixed ret ok为是否调用成功, ok为true时,ret为Objective-C方法的返回值,ok为false时,ret为出错原因
 
 function luaoc.callStaticMethod(className, methodName, args)
     local ok, ret = callStaticMethod(className, methodName, args)
