@@ -39,7 +39,7 @@ local sharedEngine = cc.SimpleAudioEngine:getInstance()
 --------------------------------
 -- 返回音乐的音量值
 -- @function [parent=#audio] getMusicVolume
--- @return number#number  返回值在 0.0 到 1.0 之间，0.0 表示完全静音，1.0 表示 100% 音量
+-- @return number#number ret (return value: number)  返回值在 0.0 到 1.0 之间，0.0 表示完全静音，1.0 表示 100% 音量
 
 function audio.getMusicVolume()
     local volume = sharedEngine:getMusicVolume()
@@ -65,7 +65,7 @@ end
 --------------------------------
 -- 返回音效的音量值
 -- @function [parent=#audio] getSoundsVolume
--- @return number#number  返回值在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量
+-- @return number#number ret (return value: number)  返回值在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量
 
 function audio.getSoundsVolume()
     local volume = sharedEngine:getEffectsVolume()
@@ -172,7 +172,7 @@ end
 -- 如果可以则返回 true。
 -- 如果尚未载入音乐，或者载入的音乐格式不被设备所支持，该方法将返回 false。
 -- @function [parent=#audio] willPlayMusic
--- @return boolean#boolean 
+-- @return boolean#boolean ret (return value: bool) 
 
 function audio.willPlayMusic()
     local ret = sharedEngine:willPlayMusic()
@@ -185,7 +185,7 @@ end
 --------------------------------
 -- 检查当前是否正在播放音乐
 -- @function [parent=#audio] isMusicPlaying
--- @return boolean#boolean 
+-- @return boolean#boolean ret (return value: bool) 
 
 function audio.isMusicPlaying()
     local ret = sharedEngine:isMusicPlaying()
@@ -202,7 +202,7 @@ end
 -- @function [parent=#audio] playSound
 -- @param string filename 音效文件名
 -- @param boolean isLoop 是否重复播放，默认为 false
--- @return integer#integer  音效句柄
+-- @return integer#integer ret (return value: int)  音效句柄
 
 function audio.playSound(filename, isLoop)
     if not filename then

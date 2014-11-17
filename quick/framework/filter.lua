@@ -47,7 +47,7 @@ GAUSSIAN_BLUR = {},
 -- @function [parent=#filter] newFilter
 -- @param string __filterName 滤镜名称
 -- @param table __param
--- @return Filter#Filter    Filter的子类
+-- @return FilteredSprite#FilteredSprite ret (return value: cc.FilteredSprite)    Filter的子类
 
 function filter.newFilter(__filterName, __param)
 	local __filterData = FILTERS[__filterName]
@@ -84,7 +84,7 @@ end
 -- @function [parent=#filter] newFilters
 -- @param table __filterNames 滤镜名称数组
 -- @param table __params 对应参数数组
--- @return table#table   Filter数组
+-- @return table#table ret (return value: table)   Filter数组
 
 function filter.newFilters(__filterNames, __params)
 	assert(#__filterNames == #__params, 

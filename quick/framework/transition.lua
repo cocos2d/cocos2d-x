@@ -63,7 +63,7 @@ local actionManager = cc.Director:getInstance():getActionManager()
 -- @param Action action     动作对象
 -- @param string easingName 缓冲效果的名字, 具体参考 transition.execute() 方法
 -- @param mixed  more       创建缓冲效果的参数
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 function transition.newEasing(action, easingName, more)
     local key = string.upper(tostring(easingName))
@@ -87,7 +87,7 @@ end
 -- @function [parent=#transition] create
 -- @param Action action 动作对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 function transition.create(action, args)
     args = checktable(args)
@@ -125,7 +125,7 @@ end
 -- @param cc.Node target 显示对象
 -- @param Action action 动作对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -193,7 +193,7 @@ end
 -- @function [parent=#transition] rotateTo
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -219,7 +219,7 @@ end
 -- @function [parent=#transition] moveTo
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -251,7 +251,7 @@ end
 -- @function [parent=#transition] moveBy
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -282,7 +282,7 @@ end
 -- @function [parent=#transition] fadeIn
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 
 --[[--
@@ -311,7 +311,7 @@ end
 -- @function [parent=#transition] fadeOut
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -339,7 +339,7 @@ end
 -- @function [parent=#transition] fadeTo
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -370,7 +370,7 @@ end
 -- @function [parent=#transition] scaleTo
 -- @param cc.Node target 显示对象
 -- @param table args 参数表格对象
--- @return mixed#mixed  结果
+-- @return mixed#mixed ret (return value: mixed)  结果
 
 --[[--
 
@@ -414,7 +414,7 @@ end
 -- 创建一个动作序列对象。
 -- @function [parent=#transition] sequence
 -- @param table args 动作的表格对象
--- @return Sequence#Sequence  动作序列对象
+-- @return Sequence#Sequence ret (return value: cc.Sequence)  动作序列对象
 
 --[[--
 
@@ -452,7 +452,7 @@ end
 -- @param boolean removeWhenFinished 播放完成后删除显示对象
 -- @param function onComplete 播放完成后要执行的函数
 -- @param number delay 播放前等待的时间
--- @return table#table  动作表格对象
+-- @return table#table ret (return value: table)  动作表格对象
 
 --[[--
 
@@ -525,7 +525,7 @@ end
 -- @param cc.Node target 显示对象
 -- @param cc.Node animation 动作对象
 -- @param number delay 播放前等待的时间
--- @return table#table  动作表格对象
+-- @return table#table ret (return value: table)  动作表格对象
 
 --[[--
 

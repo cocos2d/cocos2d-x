@@ -36,7 +36,7 @@ local network = {}
 --------------------------------
 -- 检查地 WIFI 网络是否可用
 -- @function [parent=#network] isLocalWiFiAvailable
--- @return boolean#boolean  网络是否可用
+-- @return boolean#boolean ret (return value: bool)  网络是否可用
 
 --[[--
 
@@ -52,7 +52,7 @@ end
 --------------------------------
 -- 检查互联网连接是否可用
 -- @function [parent=#network] isInternetConnectionAvailable
--- @return boolean#boolean  网络是否可用
+-- @return boolean#boolean ret (return value: bool)  网络是否可用
 
 --[[--
 
@@ -69,7 +69,7 @@ end
 -- 检查是否可以解析指定的主机名
 -- @function [parent=#network] isHostNameReachable
 -- @param string hostname 主机名
--- @return boolean#boolean  主机名是否可以解析
+-- @return boolean#boolean ret (return value: bool)  主机名是否可以解析
 
 --[[--
 
@@ -97,7 +97,7 @@ end
 --------------------------------
 -- 返回互联网连接状态值
 -- @function [parent=#network] getInternetConnectionStatus
--- @return string#string  互联网连接状态值
+-- @return string#string ret (return value: string)  互联网连接状态值
 
 --[[--
 
@@ -120,7 +120,7 @@ end
 -- @param function callbock 回调函数
 -- @url string http路径
 -- method string method 请求方式
--- @return HTTPRequest#HTTPRequest  结果
+-- @return HTTPRequest#HTTPRequest ret (return value: cc.HTTPRequest) 
 
 --[[--
 
