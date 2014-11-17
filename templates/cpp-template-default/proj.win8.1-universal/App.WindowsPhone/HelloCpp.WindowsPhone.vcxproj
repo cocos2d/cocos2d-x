@@ -51,32 +51,32 @@
     <PlatformToolset>v120_wp81</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="..\HelloCpp.Shared\HelloCpp.Shared.vcxitems" Label="Shared" />
+  <Import Project="..\App.Shared\HelloCpp.Shared.vcxitems" Label="Shared" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
@@ -128,13 +128,13 @@
     <Image Include="Assets\WideLogo.scale-240.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj">
       <Project>{22f3b9df-1209-4574-8331-003966f562bf}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
       <Project>{cc1da216-a80d-4be4-b309-acb6af313aff}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
       <Project>{22f798d8-bfff-4754-996f-a5395343d5ec}</Project>
     </ProjectReference>
   </ItemGroup>

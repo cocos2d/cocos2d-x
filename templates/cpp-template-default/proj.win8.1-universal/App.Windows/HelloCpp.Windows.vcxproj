@@ -70,44 +70,44 @@
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="..\HelloCpp.Shared\HelloCpp.Shared.vcxitems" Label="Shared" />
+  <Import Project="..\App.Shared\HelloCpp.Shared.vcxitems" Label="Shared" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
-    <Import Project="..\..\..\..\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_platform.props" />
+    <Import Project="..\..\cocos2d\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -176,13 +176,13 @@
     <Image Include="Assets\SplashScreen.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Windows\libcocos2d_8_1.Windows.vcxproj">
+    <ProjectReference Include="..\..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Windows\libcocos2d_8_1.Windows.vcxproj">
       <Project>{9335005f-678e-4e8e-9b84-50037216aec8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Windows\libSpine.Windows.vcxproj">
+    <ProjectReference Include="..\..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Windows\libSpine.Windows.vcxproj">
       <Project>{f3550fe0-c795-44f6-8feb-093eb68143ae}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.Windows\libbox2d.Windows.vcxproj">
+    <ProjectReference Include="..\..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Windows\libbox2d.Windows.vcxproj">
       <Project>{3b26a12d-3a44-47ea-82d2-282660fc844d}</Project>
     </ProjectReference>
   </ItemGroup>

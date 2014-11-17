@@ -25,5 +25,21 @@
     },
     "android_cfg": {
         "project_path": "proj.android"
+    },
+    "wp8_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-wp8.sln",
+        "project_name": "cpp-empty-test",
+        "build_folder_path": "cpp-empty-test/Properties/WMAppManifest.xml"
+    },
+    "wp8_1_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-win8.1-universal.sln",
+        "project_name": "HelloCpp.WindowsPhone"
+    },
+    "metro_cfg" : {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-win8.1-universal.sln",
+        "project_name": "HelloCpp.Windows"
     }
 }
