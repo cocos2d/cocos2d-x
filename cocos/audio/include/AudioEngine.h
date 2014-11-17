@@ -28,10 +28,12 @@
 #ifndef __AUDIO_ENGINE_H_
 #define __AUDIO_ENGINE_H_
 
-#include <string.h>
+#include <functional>
+#include <list>
+#include <string>
 #include <unordered_map>
 
-#include "2d/CCNode.h"
+#include "platform/CCPlatformMacros.h"
 #include "Export.h"
 
 #ifdef ERROR
@@ -53,8 +55,8 @@ public:
     double minDelay;
  
     AudioProfile()
-    : minDelay(0.0)
-    , maxInstances(0)
+    : maxInstances(0)
+    , minDelay(0.0)
     {
         
     }

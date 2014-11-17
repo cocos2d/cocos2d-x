@@ -107,9 +107,6 @@ if(MINGW)
   #find_package(MiniZip REQUIRED)
   #${MINIZIP_INCLUDE_DIR}
 
-  #find_package(GLFW REQUIRED)
-  #${GLFW_INCLUDE_DIRS}
-
   find_package(ZLIB REQUIRED)
 
   find_package(Chipmunk REQUIRED)
@@ -148,12 +145,11 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
 endif()
 
 if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glfw3 glew32 opengl32 iconv freetype bz2)
+  set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glew32 opengl32 iconv freetype bz2)
 elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
+  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glew32 opengl32 libiconv libzlib)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets ssl crypto
-  fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB})
+  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets ssl crypto fontconfig png pthread GLEW GL X11 rt z ${FMOD_LIB})
 elseif(MACOSX OR APPLE)
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
@@ -167,7 +163,7 @@ elseif(MACOSX OR APPLE)
  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 
   set(PLATFORM_SPECIFIC_LIBS
-    z jpeg png webp tiff curl glfw3
+    z jpeg png webp tiff curl
     websockets freetype
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
@@ -183,6 +179,11 @@ elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv2 log z android)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+endif()
+
+# Add GLFW3 for desktop platforms
+if(LINUX OR MACOSX OR WINDOWS)
+  list(APPEND PLATFORM_SPECIFIC_LIBS ${GLFW3_LIBRARIES})
 endif()
 
 target_link_libraries(cocos2d chipmunk box2d protobuf tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
