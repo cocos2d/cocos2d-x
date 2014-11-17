@@ -80,3 +80,8 @@ Title: 在 Code IDE 中调试 quick 工程
     ![](res/win32_set_arguments.png)
 
 -   设置完成后和 Xcode 一样开启调试即可。
+
+## 已知问题
+
+-	目前code IDE还不支持挂在cc下面的外部模块提示,所以quick中framework/cc/下面的都还无法提示
+
