@@ -287,6 +287,12 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_USE_WEBP  1
 #endif // CC_USE_WEBP
 
+/** Use curl or not. If your application don't use curl, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_CURL
+#define CC_USE_CURL  1
+#endif // CC_USE_CURL
+
 /** Enable Script binding */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1

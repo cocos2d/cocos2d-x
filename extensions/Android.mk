@@ -6,12 +6,6 @@ LOCAL_MODULE    := cocos_extension_static
 LOCAL_MODULE_FILENAME := libextension
 
 LOCAL_SRC_FILES := \
-assets-manager/AssetsManager.cpp \
-assets-manager/Downloader.cpp \
-assets-manager/Manifest.cpp \
-assets-manager/AssetsManagerEx.cpp \
-assets-manager/CCEventAssetsManagerEx.cpp \
-assets-manager/CCEventListenerAssetsManagerEx.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
 GUI/CCControlExtension/CCControlColourPicker.cpp \
@@ -30,7 +24,20 @@ physics-nodes/CCPhysicsDebugNode.cpp \
 physics-nodes/CCPhysicsSprite.cpp
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
+
+ifeq ($(CC_USE_CURL),1)
+LOCAL_SRC_FILES += \
+assets-manager/AssetsManager.cpp \
+assets-manager/AssetsManager.cpp \
+assets-manager/Downloader.cpp \
+assets-manager/Manifest.cpp \
+assets-manager/AssetsManagerEx.cpp \
+assets-manager/CCEventAssetsManagerEx.cpp \
+assets-manager/CCEventListenerAssetsManagerEx.cpp \
+
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
+endif
+
 LOCAL_STATIC_LIBRARIES += box2d_static
 
 LOCAL_CXXFLAGS += -fexceptions
