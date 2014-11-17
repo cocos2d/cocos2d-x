@@ -52,6 +52,7 @@ static std::function<Layer*()> createFunctions[] =
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
+    CL(Sprite3DUVAnimationTest),
 #endif
     CL(Sprite3DWithSkinTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -227,11 +228,106 @@ std::string Sprite3DBasicTest::subtitle() const
 
 //------------------------------------------------------------------
 //
-// Sprite3DHitTest
+// Sprite3DUVAnimationTest
 //
 //------------------------------------------------------------------
 
+Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
+{
+    //the offset use to translating texture
+    _cylinder_texture_offset = 0;
+    _shining_duraion = 0;
+    Size visibleSize = Director::getInstance()->getVisibleSize();
 
+    //use custom camera
+    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    camera->setCameraFlag(CameraFlag::USER1);
+
+    //create cylinder
+    auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
+
+    //create and set our custom shader
+    auto shader =GLProgram::createWithFilenames("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
+    _state = GLProgramState::create(shader);
+    cylinder->setGLProgramState(_state);
+
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
+    //pass mesh's attribute to shader
+    long offset = 0;
+    auto attributeCount = cylinder->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++) {
+        auto meshattribute = cylinder->getMesh()->getMeshVertexAttribute(i);
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            cylinder->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+
+    //create the second texture for cylinder
+    auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
+    Texture2D::TexParams tRepeatParams;//set texture parameters
+    tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_REPEAT;
+    tRepeatParams.wrapT = GL_REPEAT;
+    shining_texture->setTexParameters(tRepeatParams); 
+    //pass the texture sampler to our custom shader
+    _state->setUniformTexture("caustics",shining_texture);
+
+
+    this->addChild(cylinder);
+    this->setCameraMask(2); 
+    this->addChild(camera);
+
+    //adjust cylinder's position & rotation
+    cylinder->setPosition3D(Vec3(0,-15,-50));
+    cylinder->setRotation3D(Vec3(-90,0,0));
+
+    //the callback function update cylinder's texcoord
+    schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+}
+
+std::string Sprite3DUVAnimationTest::title() const 
+{
+    return "Testing UV Animation";
+}
+
+std::string Sprite3DUVAnimationTest::subtitle() const 
+{
+    return "";
+}
+
+void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
+{
+    //callback function to update cylinder's texcoord
+    static bool fade_in = true;
+    _cylinder_texture_offset += 0.3*dt;
+    _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
+    if(fade_in)
+    {
+        _shining_duraion += 0.5*dt;
+        if(_shining_duraion>1) fade_in = false;
+    }
+    else
+    {
+        _shining_duraion -= 0.5*dt;
+        if(_shining_duraion<0) fade_in = true;
+    }
+
+    //pass the result to shader
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DHitTest
+//
+//------------------------------------------------------------------
 Sprite3DHitTest::Sprite3DHitTest()
 {
     auto s = Director::getInstance()->getWinSize();

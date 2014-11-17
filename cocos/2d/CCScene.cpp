@@ -129,6 +129,7 @@ void Scene::render(Renderer* renderer)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
+    const auto& transform = getNodeToParentTransform();
     for (const auto& camera : _cameras)
     {
         Camera::_visitingCamera = camera;
@@ -142,7 +143,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
         //visit the scene
-        visit(renderer, Mat4::IDENTITY, 0);
+        visit(renderer, transform, 0);
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -155,7 +156,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
         //visit the scene
-        visit(renderer, Mat4::IDENTITY, 0);
+        visit(renderer, transform, 0);
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);

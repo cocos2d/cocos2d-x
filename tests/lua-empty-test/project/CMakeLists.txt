@@ -9,11 +9,20 @@ if(LINUX)
      ${SAMPLE_SRC}
      proj.linux/main.cpp
      )
-elseif(MACOSX)
-  set(SAMPLE_SRC
-     ${SAMPLE_SRC}
-     proj.mac/main.cpp
-     )
+elseif(MACOSX OR APPLE)
+    set(SAMPLE_SRC
+        ${SAMPLE_SRC}
+        proj.mac/main.cpp
+        )
+
+    file(GLOB_RECURSE APP_RESOURCES ../res/*)
+    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
+    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
+    cocos_mark_resources(FILES ${APP_SCRIPTS} BASEDIR ../src RESOURCEBASE Resources/src)
+    file(GLOB_RECURSE COCOS_SCRIPTS ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/*)
+    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script RESOURCEBASE Resources/src/cocos)
+    
+    list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
 endif()
 
 include_directories(
@@ -28,14 +37,23 @@ add_executable(${APP_NAME} ${SAMPLE_SRC})
 
 target_link_libraries(${APP_NAME} cocos2d luacocos2d)
 
-set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+if(MACOSX OR APPLE)
+  set_target_properties(${APP_NAME} PROPERTIES
+      MACOSX_BUNDLE 1
+      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+      )
 
-set_target_properties(${APP_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+else()
 
-pre_build(${APP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}/Resources/src/cocos
-  )
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+
+    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+
+    pre_build(${APP_NAME}
+      COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}/Resources/src/cocos
+      )
+
+endif()

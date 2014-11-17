@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 set(APP_NAME MyGame)
 project (${APP_NAME})
 
-include(cocos2d/cmake/BuildHelpers.CMakeLists.txt)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cocos2d/cmake/Modules/")
+include(CocosBuildHelpers)
 
 option(DEBUG_MODE "Debug or release?" ON)
 

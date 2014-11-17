@@ -1184,7 +1184,7 @@ bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcNa
                        }
                     }
                 }
-                else if(lua_isstring(L, -1))
+                else if(lua_type(L, -1) == LUA_TSTRING)
                 {
                     std::string stringValue = "";
                     if(luaval_to_std_string(L, -1, &stringValue) )
@@ -1192,7 +1192,7 @@ bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcNa
                         arr->addObject(String::create(stringValue));
                     }
                 }
-                else if(lua_isboolean(L, -1))
+                else if(lua_type(L, -1) == LUA_TBOOLEAN)
                 {
                     bool boolVal = false;
                     if (luaval_to_boolean(L, -1, &boolVal))
@@ -1200,7 +1200,7 @@ bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcNa
                         arr->addObject(Bool::create(boolVal));
                     }
                 }
-                else if(lua_isnumber(L, -1))
+                else if(lua_type(L, -1) == LUA_TNUMBER)
                 {
                     arr->addObject(Double::create(tolua_tonumber(L, -1, 0)));
                 }
@@ -1288,21 +1288,21 @@ bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, const ch
                         }
                     }
                 }
-                else if(lua_isstring(L, -1))
+                else if(lua_type(L, -1) == LUA_TSTRING)
                 {
                     if(luaval_to_std_string(L, -1, &stringValue))
                     {
                         dict->setObject(String::create(stringValue), stringKey);
                     }
                 }
-                else if(lua_isboolean(L, -1))
+                else if(lua_type(L, -1) == LUA_TBOOLEAN)
                 {
                     if (luaval_to_boolean(L, -1, &boolVal))
                     {
                         dict->setObject(Bool::create(boolVal),stringKey);
                     }
                 }
-                else if(lua_isnumber(L, -1))
+                else if(lua_type(L, -1) == LUA_TNUMBER)
                 {
                      dict->setObject(Double::create(tolua_tonumber(L, -1, 0)),stringKey);
                 }
@@ -1389,7 +1389,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret)
     for (int i = 0; i < argc; i++)
     {
         double num = 0.0;
-        if (lua_isnumber(L, i + 2))
+        if (lua_type(L, i + 2) == LUA_TNUMBER )
         {
             ok &= luaval_to_number(L, i + 2, &num);
             if (!ok)
@@ -1397,7 +1397,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret)
             
             array->addObject(Integer::create((int)num));
         }
-        else if (lua_isstring(L, i + 2))
+        else if (lua_type(L, i + 2) == LUA_TSTRING )
         {
             std::string str = lua_tostring(L, i + 2);
             array->addObject(String::create(str));
@@ -1453,7 +1453,7 @@ bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVec
                 }
             }
         }
-        else if(lua_isstring(L, i + 2))
+        else if(lua_type(L, i + 2) == LUA_TSTRING )
         {
             std::string stringValue = "";
             if(luaval_to_std_string(L, i + 2, &stringValue) )
@@ -1469,7 +1469,7 @@ bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVec
                 ret->push_back(Value(boolVal));
             }
         }
-        else if(lua_isnumber(L, i + 2))
+        else if(lua_type(L, i + 2) == LUA_TNUMBER )
         {
             ret->push_back(Value(tolua_tonumber(L, i + 2, 0)));
         }
@@ -1515,7 +1515,7 @@ bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const char* fu
             }
         }
     }
-    else if (tolua_isstring(L, lo, 0, &tolua_err))
+    else if ((lua_type(L, lo) == LUA_TSTRING)  && tolua_isstring(L, lo, 0, &tolua_err))
     {
         std::string stringValue = "";
         if (luaval_to_std_string(L, lo, &stringValue))
@@ -1523,7 +1523,7 @@ bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const char* fu
              *ret = Value(stringValue);
         }
     }
-    else if (tolua_isboolean(L, lo, 0, &tolua_err))
+    else if ((lua_type(L, lo) == LUA_TBOOLEAN) && tolua_isboolean(L, lo, 0, &tolua_err))
     {
         bool boolVal = false;
         if (luaval_to_boolean(L, lo, &boolVal))
@@ -1531,7 +1531,7 @@ bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const char* fu
             *ret = Value(boolVal);
         }
     }
-    else if (tolua_isnumber(L, lo, 0, &tolua_err))
+    else if ((lua_type(L, lo) == LUA_TNUMBER) && tolua_isnumber(L, lo, 0, &tolua_err))
     {
         *ret = Value(tolua_tonumber(L, lo, 0));
     }
@@ -1595,21 +1595,21 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const ch
                         }
                     }
                 }
-                else if(lua_isstring(L, -1))
+                else if(lua_type(L, -1) == LUA_TSTRING)
                 {
                     if(luaval_to_std_string(L, -1, &stringValue))
                     {
                         dict[stringKey] = Value(stringValue);
                     }
                 }
-                else if(lua_isboolean(L, -1))
+                else if(lua_type(L, -1) == LUA_TBOOLEAN)
                 {
                     if (luaval_to_boolean(L, -1, &boolVal))
                     {
                         dict[stringKey] = Value(boolVal);
                     }
                 }
-                else if(lua_isnumber(L, -1))
+                else if(lua_type(L, -1) == LUA_TNUMBER)
                 {
                     dict[stringKey] = Value(tolua_tonumber(L, -1, 0));
                 }
@@ -1683,21 +1683,21 @@ bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* r
                         }
                     }
                 }
-                else if(lua_isstring(L, -1))
+                else if(lua_type(L, -1) == LUA_TSTRING)
                 {
                     if(luaval_to_std_string(L, -1, &stringValue))
                     {
                         dict[intKey] = Value(stringValue);
                     }
                 }
-                else if(lua_isboolean(L, -1))
+                else if(lua_type(L, -1) == LUA_TBOOLEAN)
                 {
                     if (luaval_to_boolean(L, -1, &boolVal))
                     {
                         dict[intKey] = Value(boolVal);
                     }
                 }
-                else if(lua_isnumber(L, -1))
+                else if(lua_type(L, -1) == LUA_TNUMBER)
                 {
                     dict[intKey] = Value(tolua_tonumber(L, -1, 0));
                 }
@@ -1764,7 +1764,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                     }
                 }
             }
-            else if(lua_isstring(L, -1))
+            else if(lua_type(L, -1) == LUA_TSTRING)
             {
                 std::string stringValue = "";
                 if(luaval_to_std_string(L, -1, &stringValue) )
@@ -1772,7 +1772,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                     ret->push_back(Value(stringValue));
                 }
             }
-            else if(lua_isboolean(L, -1))
+            else if(lua_type(L, -1) == LUA_TBOOLEAN)
             {
                 bool boolVal = false;
                 if (luaval_to_boolean(L, -1, &boolVal))
@@ -1780,7 +1780,7 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, co
                     ret->push_back(Value(boolVal));
                 }
             }
-            else if(lua_isnumber(L, -1))
+            else if(lua_type(L, -1) == LUA_TNUMBER)
             {
                 ret->push_back(Value(tolua_tonumber(L, -1, 0)));
             }

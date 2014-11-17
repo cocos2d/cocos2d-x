@@ -520,6 +520,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelMultilineWithOutline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelMultilineWithOutline);
+
+    LabelMultilineWithOutline();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // we don't support linebreak mode
 
 #endif
