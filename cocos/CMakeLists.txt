@@ -31,10 +31,6 @@ if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 endif()
 
-if(WINDOWS AND NOT BUILD_STATIC)
-  ADD_DEFINITIONS (-D_USRDLL)
-endif()
-
 include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)
@@ -88,7 +84,7 @@ set(COCOS_SRC cocos2d.cpp
     ../external/xxtea)
 
 
-add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
+add_library(cocos2d ${COCOS_SRC})
 
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)

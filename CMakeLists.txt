@@ -42,7 +42,7 @@ endif()
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
-option(BUILD_STATIC "Build static libraries" ON)
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
@@ -78,21 +78,15 @@ else()
   endif()
 endif(MSVC)
 
-if(BUILD_STATIC)
- set (BUILD_TYPE STATIC)
-else()
- set (BUILD_TYPE SHARED)
-endif()
-
 set(COCOS_EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 
 # Some macro definitions
 if(WINDOWS)
 
-  if(BUILD_STATIC)
-    ADD_DEFINITIONS (-DCC_STATIC)
-  else()
+  if(BUILD_SHARED_LIBS)
     ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
+  else()
+    ADD_DEFINITIONS (-DCC_STATIC)
   endif()
 
   ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
