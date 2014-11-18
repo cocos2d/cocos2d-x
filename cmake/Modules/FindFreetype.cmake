@@ -68,6 +68,11 @@ if(USE_PREBUILT_LIBS)
   endif()
 endif(USE_PREBUILT_LIBS)
 
+# Try pkg-config first (because it provided deps info)
+find_package(PkgConfig)
+pkg_search_module(FREETYPE freetype2)
+if(NOT FREETYPE_FOUND)
+
 # Ugh, FreeType seems to use some #include trickery which
 # makes this harder than it should be. It looks like they
 # put ft2build.h in a common/easier-to-find location which
@@ -172,12 +177,15 @@ if(FREETYPE_INCLUDE_DIR_freetype2 AND FREETYPE_H)
     endforeach()
 endif()
 
+set(FREETYPE_LIBRARIES ${FREETYPE_LIBRARY})
 
 # handle the QUIETLY and REQUIRED arguments and set FREETYPE_FOUND to TRUE if
 # all listed variables are TRUE
 include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Freetype
-                                  REQUIRED_VARS FREETYPE_LIBRARY FREETYPE_INCLUDE_DIRS
+                                  REQUIRED_VARS FREETYPE_LIBRARIES FREETYPE_INCLUDE_DIRS
                                   VERSION_VAR FREETYPE_VERSION_STRING)
+
+endif(NOT FREETYPE_FOUND)
 
 mark_as_advanced(FREETYPE_LIBRARY FREETYPE_INCLUDE_DIR_freetype2 FREETYPE_INCLUDE_DIR_ft2build)

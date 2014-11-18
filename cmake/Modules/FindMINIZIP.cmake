@@ -13,6 +13,15 @@
 #   MINIZIP_INCLUDE_DIRS, where to find headers.
 #
 
+# Try pkg-config first
+if(NOT MINIZIP_LIBRARY AND NOT MINIZIP_INCLUDE_DIR)
+  find_package(PkgConfig)
+  pkg_search_module(MINIZIP minizip)
+  if(MINIZIP_FOUND)
+    return()
+  endif()
+endif()
+
 find_path(MINIZIP_INCLUDE_DIR minizip/unzip.h
   HINTS ENV MINIZIP_DIR
   PATH_SUFFIXES include

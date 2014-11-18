@@ -89,17 +89,12 @@ add_library(cocos2d ${COCOS_SRC})
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
-    include_directories(${${_pkg}_INCLUDE_DIRS})
-    list(APPEND PLATFORM_SPECIFIC_LIBS ${${_pkg}_LIBRARIES})
-    if(${_pkg}_DEFINITIONS)
-      add_definitions(${${_pkg}_DEFINITIONS})
-    endif()
+    cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm)
 elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMODEX)
-    include_directories(${${_pkg}_INCLUDE_DIRS})
-    list(APPEND PLATFORM_SPECIFIC_LIBS ${${_pkg}_LIBRARIES})
+    cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS fontconfig pthread rt)
 elseif(MACOSX OR APPLE)
@@ -131,54 +126,25 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-add_definitions(${PNG_DEFINITIONS})
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL PROTOBUF_LITE)
+  cocos_use_pkg(cocos2d ${pkg})
+endforeach()
 
-include_directories(
-  ${ZLIB_INCLUDE_DIRS}
-  ${MINIZIP_INCLUDE_DIRS}
-  ${JPEG_INCLUDE_DIRS}
-  ${PNG_INCLUDE_DIRS}
-  ${TIFF_INCLUDE_DIRS}
-  ${TinyXML2_INCLUDE_DIRS}
-  ${WEBSOCKETS_INCLUDE_DIRS}
-  ${CURL_INCLUDE_DIRS}
-  ${PROTOBUF_INCLUDE_DIRS}
-  )
-target_link_libraries(cocos2d
-  xxhash
-  ${ZLIB_LIBRARIES}
-  ${MINIZIP_LIBRARIES}
-  ${JPEG_LIBRARIES}
-  ${PNG_LIBRARIES}
-  ${TIFF_LIBRARIES}
-  ${TinyXML2_LIBRARIES}
-  ${WEBSOCKETS_LIBRARIES}
-  ${CURL_LIBRARIES}
-  ${PROTOBUF_LITE_LIBRARIES}
-  ${FREETYPE_LIBRARIES}
-  ${PLATFORM_SPECIFIC_LIBS}
-  )
-
-if(CURL_LIBRARY_DIRS)
-  link_directories(${CURL_LIBRARY_DIRS})
-endif()
+target_link_libraries(cocos2d xxhash ${PLATFORM_SPECIFIC_LIBS})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
-  include_directories(${WEBP_INCLUDE_DIRS})
-  target_link_libraries(cocos2d ${WEBP_LIBRARIES})
+  cocos_use_pkg(cocos2d WEBP)
 else()
   add_definitions(-DCC_USE_WEBP=0)
 endif()
 
 if(USE_CHIPMUNK)
-  include_directories(${CHIPMUNK_INCLUDE_DIRS})
-  target_link_libraries(cocos2d ${CHIPMUNK_LIBRARIES})
+  cocos_use_pkg(cocos2d CHIPMUNK)
 endif()
 
 if(USE_BOX2D)
-  include_directories(${Box2D_INCLUDE_DIRS})
-  target_link_libraries(cocos2d ${Box2D_LIBRARIES})
+  cocos_use_pkg(cocos2d Box2D)
 endif()
 
 set_target_properties(cocos2d

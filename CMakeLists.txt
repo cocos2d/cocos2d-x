@@ -186,7 +186,6 @@ endif(LINUX OR MACOSX OR WINDOWS)
 # Freetype required on all platforms
 find_package(Freetype REQUIRED)
 message(STATUS "FreeType include dirs: ${FREETYPE_INCLUDE_DIRS}")
-include_directories(${FREETYPE_INCLUDE_DIRS})
 
 # WebP required if used
 if(USE_WEBP)
@@ -283,13 +282,14 @@ message(STATUS "CURL include dirs: ${CURL_INCLUDE_DIRS}")
 # compiled only with our in-source version of protobuf-lite
 ## if(USE_PREBUILT_LIBS)
   add_subdirectory(external/protobuf-lite)
-  set(PROTOBUF_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src)
+  set(PROTOBUF_LITE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src)
   set(PROTOBUF_LITE_LIBRARIES protobuf)
 ## else()
 ##  find_package(Protobuf REQUIRED PROTOBUF_LITE_LIBRARIES)
+##  set(PROTOBUF_LITE_INCLUDE_DIRS ${PROTOBUF_INCLUDE_DIRS})
 ## endif()
 message(STATUS "Protobuf lite libs: ${PROTOBUF_LITE_LIBRARIES}")
-message(STATUS "Protobuf include dirs: ${PROTOBUF_INCLUDE_DIRS}")
+message(STATUS "Protobuf include dirs: ${PROTOBUF_LITE_INCLUDE_DIRS}")
 
 
 # build for 3rd party libraries
