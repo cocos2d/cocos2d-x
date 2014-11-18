@@ -44,6 +44,7 @@ struct Particle3D
     // property of particles, TODO add more properties
     Vec3 position;
     Vec4 color;
+    Quaternion orientation;
     
     float age;
     bool  alive;
@@ -91,7 +92,7 @@ public:
     /**
      * add particle affector
      */
-    void addAddAffector(Particle3DAffector* affector);
+    void addAffector(Particle3DAffector* affector);
     
     /**
      * remove affector by index
@@ -107,6 +108,8 @@ public:
      * get particle affector by index
      */
     Particle3DAffector* getAffector(int index);
+
+    const std::vector<Particle3D>& getParticles();
     
 protected:
     enum class State

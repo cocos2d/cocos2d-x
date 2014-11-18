@@ -71,14 +71,18 @@ void ParticleSystem3D::setRender(Particle3DRender* render)
     
 }
 
-void ParticleSystem3D::addAddAffector(Particle3DAffector* affector)
+void ParticleSystem3D::addAffector(Particle3DAffector* affector)
 {
-    
+    if (std::find(_affectors.begin(), _affectors.end(), affector) != _affectors.end()){
+        affector->_particleSystem = this;
+        _affectors.push_back(affector);
+    }
 }
 
 void ParticleSystem3D::removeAffector(int index)
 {
-    
+    CCASSERT(index < _affectors.size(), "wrong index");
+    _affectors.erase(_affectors.begin() + index);
 }
 
 void ParticleSystem3D::removeAllAffector()
@@ -105,6 +109,11 @@ void ParticleSystem3D::update(float delta)
         it->updateAffector(delta);
     }
         
+}
+
+const std::vector<Particle3D>& ParticleSystem3D::getParticles()
+{
+    return _particles;
 }
 
 NS_CC_END

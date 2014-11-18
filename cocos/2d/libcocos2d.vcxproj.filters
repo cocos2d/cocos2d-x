@@ -223,6 +223,18 @@
     <Filter Include="cocostudio\TimelineAction\trigger">
       <UniqueIdentifier>{0554a5b1-03a1-4d38-87a5-976dbe9a39d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extension\3dparticle">
+      <UniqueIdentifier>{f646bed2-5709-4436-82a4-b553ff7cd85c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\3dparticle\ParticleUniverse">
+      <UniqueIdentifier>{ed9d0632-d777-44fe-b754-29d08f3b0572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\3dparticle\ParticleUniverse\ParticleAffectors">
+      <UniqueIdentifier>{66eb7ea7-a018-4a78-8d43-dfe0e1e2c2df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\3dparticle\ParticleUniverse\ParticleEmitters">
+      <UniqueIdentifier>{55ba4137-2e9f-42bd-8303-840ce04cd2af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1264,6 +1276,18 @@
     </ClCompile>
     <ClCompile Include="CCLight.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DAffector.cpp">
+      <Filter>extension\3dparticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DEmitter.cpp">
+      <Filter>extension\3dparticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\CCParticleSystem3D.cpp">
+      <Filter>extension\3dparticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleAffectors\CCParticle3DAlignAffector.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2528,6 +2552,18 @@
     </ClInclude>
     <ClInclude Include="CCLight.h">
       <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DAffector.h">
+      <Filter>extension\3dparticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DEmitter.h">
+      <Filter>extension\3dparticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\CCParticleSystem3D.h">
+      <Filter>extension\3dparticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleAffectors\CCParticle3DAlignAffector.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
