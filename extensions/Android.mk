@@ -38,7 +38,9 @@ assets-manager/CCEventListenerAssetsManagerEx.cpp \
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
 endif
 
+ifeq ($(CC_USE_PHYSICS),1)
 LOCAL_STATIC_LIBRARIES += box2d_static
+endif
 
 LOCAL_CXXFLAGS += -fexceptions
 
