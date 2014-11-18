@@ -5,7 +5,11 @@ LOCAL_MODULE := cocostudio_static
 
 LOCAL_MODULE_FILENAME := libcocostudio
 
-LOCAL_SRC_FILES := CCActionFrame.cpp \
+LOCAL_SRC_FILES := 
+
+ifeq ($(CC_USE_CCSTUDIO),1)
+LOCAL_SRC_FILES += 
+CCActionFrame.cpp \
 CCActionFrameEasing.cpp \
 CCActionManagerEx.cpp \
 CCActionNode.cpp \
@@ -61,7 +65,7 @@ ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
 ActionTimeline/CSLoader.cpp \
 CSParseBinary.pb.cc 
-
+endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
@@ -72,6 +76,8 @@ LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
+ifeq ($(NDK_DEBUG),1)
 LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
+endif
 
 include $(BUILD_STATIC_LIBRARY)

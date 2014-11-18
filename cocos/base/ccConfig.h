@@ -293,6 +293,18 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_USE_CURL  1
 #endif // CC_USE_CURL
 
+/** Use cocos studio or not. If your application don't use ccs, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_CCSTUDIO
+#define CC_USE_CCSTUDIO  1
+#endif // CC_USE_CCSTUDIO
+
+/** Use cocosBuilder or not. If your application don't use ccb, you can undefine this macro to save package size.
+ */
+#ifndef CC_USE_CCBUILDER
+#define CC_USE_CCBUILDER  1
+#endif // CC_USE_CCBUILDER
+
 /** Enable Script binding */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1

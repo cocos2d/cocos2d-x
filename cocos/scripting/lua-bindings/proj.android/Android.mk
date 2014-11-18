@@ -90,14 +90,19 @@ LOCAL_SRC_FILES += ../manual/network/lua_xml_http_request.cpp
 endif
 
 #cocosbuilder
+ifeq ($(CC_USE_CCBUILDER),1)
 LOCAL_SRC_FILES += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \
                    ../manual/cocosbuilder/CCBProxy.cpp \
                    ../auto/lua_cocos2dx_cocosbuilder_auto.cpp
+endif
 
 #cocostudio
+ifeq ($(CC_USE_CCSTUDIO),1)
 LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
                    ../manual/cocostudio/CustomGUIReader.cpp \
+                   ../auto/lua_cocos2dx_csloader_auto.cpp \
                    ../auto/lua_cocos2dx_studio_auto.cpp
+endif
 
 #spine
 LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
@@ -120,7 +125,7 @@ LOCAL_SRC_FILES += ../../../../external/lua/quick/lua_cocos2dx_quick_manual.cpp 
 #extension
 ifeq ($(CC_USE_CURL),1)
 LOCAL_SRC_FILES += \
-lua_cocos2dx_assetsmanager_auto.cpp
+../auto/lua_cocos2dx_assetsmanager_auto.cpp
 endif
 LOCAL_SRC_FILES += ../manual/extension/lua_cocos2dx_extension_manual.cpp \
                    ../auto/lua_cocos2dx_extension_auto.cpp \

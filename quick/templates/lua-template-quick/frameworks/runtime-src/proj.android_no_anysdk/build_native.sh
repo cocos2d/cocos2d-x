@@ -20,7 +20,7 @@ echo "  APP_ROOT            = $APP_ROOT"
 echo "  APP_ANDROID_ROOT    = $APP_ANDROID_ROOT"
 
 # if dont use DEBUG, comments out line below
-NDK_DEBUG=1
+# NDK_DEBUG=1
 
 echo "- cleanup"
 find "$APP_ANDROID_ROOT" -type d | xargs chmod 755 $1

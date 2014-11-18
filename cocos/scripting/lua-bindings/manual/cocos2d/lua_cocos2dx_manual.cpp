@@ -7088,6 +7088,7 @@ static void extendCamera(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+#if CC_USE_CCSTUDIO
 int lua_cocos2dx_CSLoader_createTimeline(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7132,6 +7133,7 @@ static void extendCSLoader(lua_State* tolua_S)
     }
     lua_pop(tolua_S, 1);
 }
+#endif //CC_USE_CCSTUDIO
 
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
@@ -7189,7 +7191,9 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendTextureCache(tolua_S);
     extendGLView(tolua_S);
     extendCamera(tolua_S);
+#if CC_USE_CCSTUDIO
     extendCSLoader(tolua_S);
+#endif
     return 0;
 }
 
