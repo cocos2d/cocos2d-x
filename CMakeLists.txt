@@ -183,6 +183,8 @@ if(LINUX OR MACOSX OR WINDOWS)
     find_package(OpenAL REQUIRED)
     set(OPENAL_INCLUDE_DIRS ${OPENAL_INCLUDE_DIR})
     set(OPENAL_LIBRARIES ${OPENAL_LIBRARY})
+    # because FindOpenAL.cmake set include dir for '#include <al.h>' for portability (not for '#include <AL/al.h>'
+    set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
     message(STATUS "OpenAL include dirs: ${OPENAL_INCLUDE_DIRS}")
   endif()
 endif(LINUX OR MACOSX OR WINDOWS)
