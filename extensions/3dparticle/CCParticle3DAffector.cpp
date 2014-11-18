@@ -43,4 +43,67 @@ void Particle3DAffector::updateAffector(float deltaTime)
     
 }
 
+const Vec3& Particle3DAffector::getDerivedPosition()
+{
+	//if (mMarkedForEmission)
+	//{
+	//	// Use the affector position, because it is emitted
+	//	// If a particle is emitted, position and derived position are the same
+	//	_derivedPosition = position;
+	//}
+	//else
+	//{
+	//	// Add the techniques' derived position
+	//	_derivedPosition = mParentTechnique->getDerivedPosition() + 
+	//		mParentTechnique->getParentSystem()->getDerivedOrientation() * (_mAffectorScale * position);
+	//}
+	//return _derivedPosition;
+
+	//FIXME
+	return _position;
+}
+
+float Particle3DAffector::calculateAffectSpecialisationFactor( const Particle3D* particle )
+{
+	// Assume that particle->totalTimeToLive != 0, which is reasonable
+	switch (_affectSpecialisation)
+	{
+	case AFSP_DEFAULT:
+		return 1.0f;
+		break;
+
+		// This means that older particles will be affected MORE than just emitted particles
+	case AFSP_TTL_INCREASE:
+		{
+			if (particle)
+			{
+				return particle->timeFraction;
+			}
+			else
+			{
+				return 1.0f;
+			}
+		}
+		break;
+
+		// This means that older particles will be affected LESS than just emitted particles
+	case AFSP_TTL_DECREASE:
+		{
+			if (particle)
+			{
+				return 1.0f - particle->timeFraction;
+			}
+			else
+			{
+				return 1.0f;
+			}
+		}
+		break;
+
+	default:
+		return 1.0f;
+		break;
+	}
+}
+
 NS_CC_END

@@ -22,56 +22,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DAlignAffector.h"
+#include "CCParticle3DFlockCenteringAffector.h"
 #include "3dparticle/CCParticleSystem3D.h"
 
 NS_CC_BEGIN
-
-// Constants
-const bool Particle3DAlignAffector::DEFAULT_RESIZE = false;
-    
 //-----------------------------------------------------------------------
-Particle3DAlignAffector::Particle3DAlignAffector() 
-    : Particle3DAffector()
-    , _resize(DEFAULT_RESIZE)
+Particle3DFlockCenteringAffector::Particle3DFlockCenteringAffector() 
+: Particle3DAffector(),
+  _sum(Vec3::ZERO),
+  _average(Vec3::ZERO),
+  _count(0.0f)
 {
 }
 
-Particle3DAlignAffector::~Particle3DAlignAffector()
+Particle3DFlockCenteringAffector::~Particle3DFlockCenteringAffector()
 {
 }
 
-bool Particle3DAlignAffector::isResize() const
+void Particle3DFlockCenteringAffector::updateAffector( float deltaTime )
 {
-    return _resize;
-}
+	if (_count != 0)
+	{
+		// Calculate the average of the previous update
+		_average = _sum / _count;
+	}
+	else
+	{
+		_average = getDerivedPosition(); // Set to position of the affector
+	}
+	_sum = Vec3::ZERO;
+	_count = 0;
 
-void Particle3DAlignAffector::setResize(bool resize)
-{
-    _resize = resize;
-}
-
-void Particle3DAlignAffector::updateAffector( float deltaTime )
-{
-    auto particles = _particleSystem->getParticles();
-    if (!particles.empty())
-    {
-        Particle3D *preParticle = particles[0];
-        for (unsigned int i = 1; i < particles.size(); ++i)
-        {
-            Particle3D *particle = particles[i];
-            Vec3 diff = preParticle->position - particle->position;
-			if (_resize)
-			{
-				particle->setOwnDimensions(particle->width, diff.length(), particle->depth);
-			}
-            diff.normalize();
-            particle->orientation.x = diff.x;
-            particle->orientation.y = diff.y;
-            particle->orientation.z = diff.z;
-            preParticle = particle;
-        }
-    }
+	for (auto iter : _particleSystem->getParticles())
+	{
+		Particle3D *particle = iter;
+		_sum += particle->position;
+		_count++;
+		particle->direction += (_average - particle->position) * deltaTime; // use average of the previous update
+	}
 }
 
 NS_CC_END

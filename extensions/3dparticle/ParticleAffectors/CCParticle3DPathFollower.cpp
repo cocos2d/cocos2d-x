@@ -22,56 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DAlignAffector.h"
+#include "CCParticle3DPathFollower.h"
 #include "3dparticle/CCParticleSystem3D.h"
 
 NS_CC_BEGIN
 
-// Constants
-const bool Particle3DAlignAffector::DEFAULT_RESIZE = false;
-    
+Particle3DPathFollower::Particle3DPathFollower( void )
+{
+
+}
+
+Particle3DPathFollower::~Particle3DPathFollower( void )
+{
+
+}
+
 //-----------------------------------------------------------------------
-Particle3DAlignAffector::Particle3DAlignAffector() 
-    : Particle3DAffector()
-    , _resize(DEFAULT_RESIZE)
+void Particle3DPathFollower::addPoint(const Vec3& point)
 {
+	//_spline.addPoint(point);
 }
-
-Particle3DAlignAffector::~Particle3DAlignAffector()
+//-----------------------------------------------------------------------
+void Particle3DPathFollower::clearPoints (void)
 {
+	//_spline.clear();
 }
+//-----------------------------------------------------------------------
 
-bool Particle3DAlignAffector::isResize() const
+void Particle3DPathFollower::updateAffector( float deltaTime )
 {
-    return _resize;
-}
-
-void Particle3DAlignAffector::setResize(bool resize)
-{
-    _resize = resize;
-}
-
-void Particle3DAlignAffector::updateAffector( float deltaTime )
-{
-    auto particles = _particleSystem->getParticles();
-    if (!particles.empty())
-    {
-        Particle3D *preParticle = particles[0];
-        for (unsigned int i = 1; i < particles.size(); ++i)
-        {
-            Particle3D *particle = particles[i];
-            Vec3 diff = preParticle->position - particle->position;
-			if (_resize)
-			{
-				particle->setOwnDimensions(particle->width, diff.length(), particle->depth);
-			}
-            diff.normalize();
-            particle->orientation.x = diff.x;
-            particle->orientation.y = diff.y;
-            particle->orientation.z = diff.z;
-            preParticle = particle;
-        }
-    }
+	for (auto iter : _particleSystem->getParticles())
+	{
+		Particle3D *particle = iter;
+		//if (_spline.getNumPoints() > 0)
+		//{
+		//	// PU 1.4
+		//	float timeLeft = particle->totalTimeToLive - particle->timeToLive;
+		//	float timeFraction = timeLeft / particle->totalTimeToLive;
+		//	float timeFractionPlusDelta = (timeLeft + deltaTime ) / particle->totalTimeToLive;
+		//	timeFractionPlusDelta = timeFractionPlusDelta < 1.0f ? timeFractionPlusDelta : 1.0f;
+		//	particle->position += _affectorScale * (_spline.interpolate(timeFractionPlusDelta) - _spline.interpolate(timeFraction));
+		//}
+	}
 }
 
 NS_CC_END

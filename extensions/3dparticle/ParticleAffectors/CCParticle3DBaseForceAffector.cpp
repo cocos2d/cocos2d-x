@@ -22,56 +22,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DAlignAffector.h"
+#include "CCParticle3DBaseForceAffector.h"
 #include "3dparticle/CCParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const bool Particle3DAlignAffector::DEFAULT_RESIZE = false;
-    
+const Vec3 Particle3DBaseForceAffector::DEFAULT_FORCE_VECTOR(0, 0, 0);
+const Particle3DBaseForceAffector::ForceApplication Particle3DBaseForceAffector::DEFAULT_FORCE_APPL = Particle3DBaseForceAffector::FA_ADD;
+
 //-----------------------------------------------------------------------
-Particle3DAlignAffector::Particle3DAlignAffector() 
+Particle3DBaseForceAffector::Particle3DBaseForceAffector() 
     : Particle3DAffector()
-    , _resize(DEFAULT_RESIZE)
 {
 }
 
-Particle3DAlignAffector::~Particle3DAlignAffector()
+Particle3DBaseForceAffector::~Particle3DBaseForceAffector()
 {
 }
 
-bool Particle3DAlignAffector::isResize() const
+const Vec3& Particle3DBaseForceAffector::getForceVector() const
 {
-    return _resize;
+	return _forceVector;
 }
 
-void Particle3DAlignAffector::setResize(bool resize)
+void Particle3DBaseForceAffector::setForceVector( const Vec3& forceVector )
 {
-    _resize = resize;
+	_forceVector = forceVector;
 }
 
-void Particle3DAlignAffector::updateAffector( float deltaTime )
+Particle3DBaseForceAffector::ForceApplication Particle3DBaseForceAffector::getForceApplication() const
 {
-    auto particles = _particleSystem->getParticles();
-    if (!particles.empty())
-    {
-        Particle3D *preParticle = particles[0];
-        for (unsigned int i = 1; i < particles.size(); ++i)
-        {
-            Particle3D *particle = particles[i];
-            Vec3 diff = preParticle->position - particle->position;
-			if (_resize)
-			{
-				particle->setOwnDimensions(particle->width, diff.length(), particle->depth);
-			}
-            diff.normalize();
-            particle->orientation.x = diff.x;
-            particle->orientation.y = diff.y;
-            particle->orientation.z = diff.z;
-            preParticle = particle;
-        }
-    }
+	return _forceApplication;
+}
+
+void Particle3DBaseForceAffector::setForceApplication( ForceApplication forceApplication )
+{
+	_forceApplication = forceApplication;
 }
 
 NS_CC_END

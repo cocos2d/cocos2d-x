@@ -28,6 +28,28 @@
 
 NS_CC_BEGIN
 
+
+void Particle3D::setOwnDimensions( float newWidth, float newHeight, float newDepth )
+{
+	ownDimensions = true;
+	if (newWidth)
+		width = newWidth;
+	if (newHeight)
+		height = newHeight;
+	if (newDepth)
+		depth = newDepth;
+	calculateBoundingSphereRadius();
+	//parentEmitter->getParentTechnique()->_notifyParticleResized();
+}
+
+void Particle3D::calculateBoundingSphereRadius()
+{
+	//radius = 0.5 * Math::Sqrt(width*width + height*height + depth*depth);
+	radius = 0.5f * std::max(depth, std::max(width, height)); // approximation
+}
+
+//-----------------------------------------------------------------------
+
 ParticleSystem3D::ParticleSystem3D()
 : _emitter(nullptr)
 , _render(nullptr)
@@ -81,7 +103,7 @@ void ParticleSystem3D::addAffector(Particle3DAffector* affector)
 
 void ParticleSystem3D::removeAffector(int index)
 {
-    CCASSERT(index < _affectors.size(), "wrong index");
+    CCASSERT((unsigned int)index < _affectors.size(), "wrong index");
     _affectors.erase(_affectors.begin() + index);
 }
 
@@ -93,7 +115,7 @@ void ParticleSystem3D::removeAllAffector()
 
 Particle3DAffector* ParticleSystem3D::getAffector(int index)
 {
-    CCASSERT(index < _affectors.size(), "wrong index");
+    CCASSERT((unsigned int)index < _affectors.size(), "wrong index");
     return _affectors[index];
 }
 
@@ -111,7 +133,7 @@ void ParticleSystem3D::update(float delta)
         
 }
 
-const std::vector<Particle3D>& ParticleSystem3D::getParticles()
+const std::vector<Particle3D*>& ParticleSystem3D::getParticles()
 {
     return _particles;
 }

@@ -22,56 +22,60 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DAlignAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#ifndef __CC_PARTICLE_3D_NOISE_H__
+#define __CC_PARTICLE_3D_NOISE_H__
+
+#include "base/CCRef.h"
+#include "math/CCMath.h"
 
 NS_CC_BEGIN
 
-// Constants
-const bool Particle3DAlignAffector::DEFAULT_RESIZE = false;
-    
-//-----------------------------------------------------------------------
-Particle3DAlignAffector::Particle3DAlignAffector() 
-    : Particle3DAffector()
-    , _resize(DEFAULT_RESIZE)
+class Noise3D
 {
-}
+public:
+	/* Constructor / Destructor */
+	Noise3D(void);
+	virtual ~Noise3D(void);
 
-Particle3DAlignAffector::~Particle3DAlignAffector()
-{
-}
+	/* Inititialises the noise function */
+	void initialise(unsigned short octaves, double frequency = 1.0, double amplitude = 1.0, double persistence = 1.0);
 
-bool Particle3DAlignAffector::isResize() const
-{
-    return _resize;
-}
+	/* Returns a noise value between [0, 1]
+	@remarks
+		The noise is calculated in realtime
+	*/
+	double noise(double x, double y, double z);
 
-void Particle3DAlignAffector::setResize(bool resize)
-{
-    _resize = resize;
-}
+	/* Returns a noise value between [0, 1]
+	@remarks
+		The noise is calculated in realtime
+	*/
+	double noise(const Vec3& position);
 
-void Particle3DAlignAffector::updateAffector( float deltaTime )
-{
-    auto particles = _particleSystem->getParticles();
-    if (!particles.empty())
-    {
-        Particle3D *preParticle = particles[0];
-        for (unsigned int i = 1; i < particles.size(); ++i)
-        {
-            Particle3D *particle = particles[i];
-            Vec3 diff = preParticle->position - particle->position;
-			if (_resize)
-			{
-				particle->setOwnDimensions(particle->width, diff.length(), particle->depth);
-			}
-            diff.normalize();
-            particle->orientation.x = diff.x;
-            particle->orientation.y = diff.y;
-            particle->orientation.z = diff.z;
-            preParticle = particle;
-        }
-    }
-}
+	///* Creates an image file to test the noise */
+	//void noise2img(unsigned short dimension = 255);
+
+protected:
+
+		/* Returns a noise value between [0, 1]
+	@remarks
+		The noise is calculated in realtime
+	*/
+	double genNoise(double x, double y, double z);
+
+	double fade(double t);
+	double lerp(double t, double a, double b);
+	double grad(int hash, double x, double y, double z);
+
+protected:
+
+	int _p[512];
+	unsigned short _octaves;
+	double _frequency;
+	double _amplitude;
+	double _persistence;
+};
 
 NS_CC_END
+
+#endif

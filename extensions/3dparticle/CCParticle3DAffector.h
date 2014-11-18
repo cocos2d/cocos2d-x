@@ -26,23 +26,63 @@
 #define __CC_PARTICLE_3D_AFFECTOR_H__
 
 #include "base/CCRef.h"
+#include "math/CCMath.h"
 #include <vector>
 
 NS_CC_BEGIN
 
+struct Particle3D;
 class ParticleSystem3D;
 
 class Particle3DAffector : public Ref
 {
     friend class ParticleSystem3D;
 public:
+		/**
+		The AffectSpecialisation enumeration is used to specialise the affector even more. This enumeration 
+		isn't used by all affectors; in some cases it isn't even applicable.
+	*/
+	enum AffectSpecialisation
+	{
+		AFSP_DEFAULT,
+		AFSP_TTL_INCREASE,
+		AFSP_TTL_DECREASE
+	};
+
     Particle3DAffector();
     virtual ~Particle3DAffector();
     
     virtual void updateAffector(float deltaTime);
+
+	/** Calculate the derived position of the affector.
+	@remarks
+		Note, that in script, the position is set as localspace, while if the affector is
+		emitted, its position is automatically transformed. This function always returns 
+		the derived position.
+	*/
+	const Vec3& getDerivedPosition();
+
+protected:
+
+	float calculateAffectSpecialisationFactor (const Particle3D* particle);
     
 protected:
+
     ParticleSystem3D* _particleSystem;
+	Vec3 _position;
+		/** Although the scale is on a Particle System level, the affector can also be scaled.
+	*/
+	Vec3 _affectorScale;
+		/** Because the public attribute ´position?is sometimes used for both localspace and worldspace
+		position, the mDerivedPosition attribute is introduced.
+	*/
+	Vec3 _derivedPosition;
+
+	/** The mAffectSpecialisation is used to specialise the affector. This attribute is comparable with the 
+		mAutoDirection of the ParticleEmitter, it is an optional attribute and used in some of the Particle
+		Affectors.
+	*/
+	AffectSpecialisation _affectSpecialisation;
 };
 
 NS_CC_END
