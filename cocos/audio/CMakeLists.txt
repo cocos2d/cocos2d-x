@@ -21,8 +21,6 @@ elseif(LINUX)
         audio/linux/AudioPlayer.h
     )
 
-    include_directories( ../external/linux-specific/fmod/include/${ARCH_DIR} )
-
 elseif(MACOSX)
     # split it in _C and non C
     # because C files needs to be compiled with C compiler and not C++
@@ -48,16 +46,3 @@ elseif(MACOSX)
 endif()
 
 list(APPEND COCOS_AUDIO_SRC ${COCOS_AUDIO_PLATFORM_SRC})
-
-if(LINUX)
-  if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-    set(FMOD_LIB "fmodex64")
-  else()
-    set(FMOD_LIB "fmodex")
-  endif()
-  set(AUDIO_LIB ${FMOD_LIB})
-elseif(WINDOWS)
-  set(AUDIO_LIB Winmm)
-endif()
-
-include_directories( audio/include )
