@@ -160,9 +160,6 @@ if(LINUX OR MACOSX OR WINDOWS)
   include_directories(${GLFW3_INCLUDE_DIRS})
 
   if(WINDOWS)
-    find_library(WINMM_LIBRARIES winmm)
-    message(STATUS "Winmm lib: ${WINMM_LIBRARIES}")
-
     if(USE_PREBUILT_LIBS)
         set(VORBIS_PREBUILT_ROOT ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/OggDecoder)
         list(APPEND CMAKE_INCLUDE_PATH ${VORBIS_PREBUILT_ROOT}/include)
