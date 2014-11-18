@@ -32,6 +32,7 @@ https://github.com/cocos2d/cocos2d-console
 * ANDROID_SDK_ROOT: used to generate applicatoin on Android through commands
 * ANT_ROOT: used to generate applicatoin on Android through commands
 * COCOS_X_ROOT: path where cocos2d-x is installed
+* COCOS_TEMPLATES_ROOT: path where cocos2d-x's templates are installed
 
 On Max OS X, when start a shell, it will read these files and execute commands in sequence:
 
@@ -57,6 +58,7 @@ from optparse import OptionParser
 
 COCOS_CONSOLE_ROOT = 'COCOS_CONSOLE_ROOT'
 COCOS_X_ROOT = 'COCOS_X_ROOT'
+COCOS_TEMPLATES_ROOT = 'COCOS_TEMPLATES_ROOT'
 NDK_ROOT = 'NDK_ROOT'
 ANDROID_SDK_ROOT = 'ANDROID_SDK_ROOT'
 ANT_ROOT = 'ANT_ROOT'
@@ -503,6 +505,28 @@ class SetEnvVar(object):
 
             self._force_update_env(COCOS_X_ROOT, cocos_x_root)
 
+    def set_templates_root(self):
+        print("->Check environment variable %s" % COCOS_TEMPLATES_ROOT)
+        cocos_templates_root = os.path.join(self.current_absolute_path, 'templates')
+        old_dir = self._find_environment_variable(COCOS_TEMPLATES_ROOT)
+        if old_dir is None:
+            # add environment variable
+            if self._isWindows():
+                self.set_windows_path(cocos_templates_root)
+
+            self._set_environment_variable(COCOS_TEMPLATES_ROOT, cocos_templates_root)
+        else:
+            if old_dir == cocos_templates_root:
+                # is same with before, nothing to do
+                return
+
+            # update the environment variable
+            if self._isWindows():
+                self.remove_dir_from_win_path(old_dir)
+                self.set_windows_path(cocos_templates_root)
+
+            self._force_update_env(COCOS_TEMPLATES_ROOT, cocos_templates_root)
+
     def _force_update_unix_env(self, var_name, value):
         import re
         home = os.path.expanduser('~')
@@ -662,6 +686,7 @@ class SetEnvVar(object):
 
         self.set_console_root()
         self.set_cocos_x_root()
+        self.set_templates_root()
 
         if self._isWindows():
             print(
