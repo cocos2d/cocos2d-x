@@ -5,7 +5,9 @@ LOCAL_MODULE := spine_static
 
 LOCAL_MODULE_FILENAME := libspine
 
-LOCAL_SRC_FILES := Animation.c \
+LOCAL_SRC_FILES :=
+ifeq ($(CC_USE_SPINE),1)
+LOCAL_SRC_FILES += Animation.c \
 AnimationState.c \
 AnimationStateData.c \
 Atlas.c \
@@ -35,6 +37,7 @@ SkinnedMeshAttachment.c \
 Slot.c \
 SlotData.c \
 spine-cocos2dx.cpp
+endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

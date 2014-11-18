@@ -105,9 +105,11 @@ LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
 endif
 
 #spine
+ifeq ($(CC_USE_SPINE),1)
 LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
                    ../manual/spine/LuaSkeletonAnimation.cpp \
                    ../auto/lua_cocos2dx_spine_auto.cpp
+endif
 
 #ui
 LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
