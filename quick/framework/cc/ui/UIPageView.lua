@@ -92,7 +92,12 @@ end
 
 function UIPageView:newItem()
 	local item = UIPageViewItem.new()
-	item:setContentSize(self.viewRect_.width/self.column_, self.viewRect_.height/self.row_)
+	local itemW = (self.viewRect_.width - self.padding_.left - self.padding_.right
+				- self.columnSpace_*(self.column_ - 1)) / self.column_
+	local itemH = (self.viewRect_.height - self.padding_.top - self.padding_.bottom
+				- self.rowSpace_*(self.row_ - 1)) / self.row_
+	-- item:setContentSize(self.viewRect_.width/self.column_, self.viewRect_.height/self.row_)
+	item:setContentSize(itemW, itemH)
 
 	return item
 end
@@ -317,10 +322,19 @@ function UIPageView:createPage_(pageNo)
 	return page
 end
 
+function UIPageView:isTouchInViewRect_(event, rect)
+	rect = rect or self.viewRect_
+	local viewRect = self:convertToWorldSpace(cc.p(rect.x, rect.y))
+	viewRect.width = rect.width
+	viewRect.height = rect.height
+
+	return cc.rectContainsPoint(viewRect, cc.p(event.x, event.y))
+end
+
 function UIPageView:onTouch_(event)
 	if "began" == event.name
-		and not cc.rectContainsPoint(self.viewRect_, cc.p(event.x, event.y)) then
-		-- printInfo("UIPageView - touch didn't in viewRect")
+		and not self:isTouchInViewRect_(event) then
+		printInfo("UIPageView - touch didn't in viewRect")
 		return false
 	end
 
@@ -663,18 +677,15 @@ function UIPageView:onClick_(event)
 	itemH = (self.viewRect_.height - self.padding_.top - self.padding_.bottom
 				- self.rowSpace_*(self.row_ - 1)) / self.row_
 
-	local x, y = event.x, event.y
-	x = x - self.viewRect_.x
-	y = y - self.viewRect_.y
 	local itemRect = {width = itemW, height = itemH}
 
 	local clickIdx
 	for row = 1, self.row_ do
-		itemRect.y = self.viewRect_.height - self.padding_.top - row*itemH - (row - 1)*self.rowSpace_
+		itemRect.y = self.viewRect_.y + self.viewRect_.height - self.padding_.top - row*itemH - (row - 1)*self.rowSpace_
 		for column = 1, self.column_ do
-			itemRect.x = self.padding_.left + (column - 1)*(itemW + self.columnSpace_)
+			itemRect.x = self.viewRect_.x + self.padding_.left + (column - 1)*(itemW + self.columnSpace_)
 
-			if cc.rectContainsPoint(itemRect, cc.p(x,y)) then
+			if self:isTouchInViewRect_(event, itemRect) then
 				clickIdx = (row - 1)*self.column_ + column
 				break
 			end
