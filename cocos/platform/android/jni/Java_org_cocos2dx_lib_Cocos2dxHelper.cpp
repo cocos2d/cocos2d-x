@@ -132,6 +132,11 @@ void showEditTextDialogJNI(const char* title, const char* message, int inputMode
     }
 }
 
+void notifyEditTextDialogIsReleased() {
+    s_editTextCallback = nullptr;
+    s_ctx = nullptr;
+}
+
 void terminateProcessJNI() {
     JniMethodInfo t;
 
