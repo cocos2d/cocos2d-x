@@ -58,8 +58,10 @@ LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
 
 #3d
+ifeq ($(CC_USE_3D),1)
 LOCAL_SRC_FILES += ../manual/3d/lua_cocos2dx_3d_manual.cpp \
                    ../auto/lua_cocos2dx_3d_auto.cpp
+endif
 
 #cocosdenshion
 LOCAL_SRC_FILES += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp \
