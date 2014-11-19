@@ -1,4 +1,8 @@
-set(cocos_root ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+set(cocos_root ${Cocos2d-X_SOURCE_DIR})
+
+if(WINDOWS)
+  add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
+endif()
 
 include_directories(
   ${cocos_root}/external/lua/tolua
@@ -17,13 +21,12 @@ include_directories(
   ${cocos_root}/cocos/editor-support
   ${cocos_root}/cocos/platform
   ${cocos_root}/cocos/audio/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/manual
-  ${CMAKE_CURRENT_SOURCE_DIR}/manual/extension
-  ${CMAKE_CURRENT_SOURCE_DIR}/manual/cocostudio
-  ${CMAKE_CURRENT_SOURCE_DIR}/manual/ui
-  ${CMAKE_CURRENT_SOURCE_DIR}/ui
-  ${CMAKE_CURRENT_SOURCE_DIR}/manual/cocos2d
-  ${CMAKE_CURRENT_SOURCE_DIR}/auto
+  manual
+  manual/extension
+  manual/cocostudio
+  manual/ui
+  manual/cocos2d
+  auto
 )
 
 file(GLOB lua_cocos2d_source_files
@@ -120,7 +123,7 @@ endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
-add_library(luacocos2d STATIC ${lua_bindings_files})
+add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 set_target_properties(luacocos2d
     PROPERTIES
