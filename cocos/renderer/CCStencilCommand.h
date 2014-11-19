@@ -33,6 +33,9 @@ NS_CC_BEGIN
 
 class GLProgram;
 
+// @brief Stencil base class
+// Maintains a stack of stencil states allowing nesting of stencils.
+// Maintains the count which translates to the stencil bit being used.
 class StencilCommand
     : public RenderCommand
 {
@@ -75,6 +78,9 @@ protected:
 };
 
 
+// @brief Begin a new stencil
+// Sets up the gpu for rendering into the stencil buffer
+// Commands issued after this and before AfterStencilCommand will write into the stencil buffer.
 class BeginStencilCommand
     : public StencilCommand
 {
@@ -96,6 +102,8 @@ protected:
 };
 
 
+// @brief Prepares the gpu for writing normally but clipping against the stencil buffer.
+// This command needs to occur before clipped drawing occurs.
 class AfterStencilCommand
     : public StencilCommand
 {
@@ -114,6 +122,9 @@ protected:
 };
 
 
+// @brief
+// Disables clipping against the current stencil.
+// Restores state to previous stencil or disables stencil.
 class EndStencilCommand
     : public StencilCommand
 {
