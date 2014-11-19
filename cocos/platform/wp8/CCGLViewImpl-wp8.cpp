@@ -67,6 +67,16 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, cocos2d::Rect /*rect*/, float /*frameZoomFactor*/)
+{
+    CCLOG("Not support rect on windows phone");
+    return GLViewImpl::create(viewName);
+}
+
+GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
+{
+    return GLViewImpl::create(viewName);
+}
 
 GLViewImpl::GLViewImpl()
 	: _frameZoomFactor(1.0f)

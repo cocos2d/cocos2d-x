@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="scripting">
+      <UniqueIdentifier>{d545d350-78c1-40c5-b557-93016449bc4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scripting\luabinding">
+      <UniqueIdentifier>{22bf37ae-9adb-4964-926b-755354ff3270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scripting\luabinding\auto">
+      <UniqueIdentifier>{294f7aa7-f2ca-4da1-81a7-45f2bab61ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scripting\luabinding\manual">
+      <UniqueIdentifier>{f26ee833-5ebb-4b12-9f0e-4cf32e0babf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{1f8daca8-a52e-4c88-b096-4159e32024e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\lua">
+      <UniqueIdentifier>{04f09877-30b7-4f9e-a4c4-3a824ab6df55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\lua\lua">
+      <UniqueIdentifier>{c3458f6b-2e0e-4055-9662-ab1e46e10747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\lua\quick">
+      <UniqueIdentifier>{cd6a6dab-2151-4589-909e-b23fb97a9216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\lua\tolua">
+      <UniqueIdentifier>{37ae2aa5-42ef-4484-aaeb-9788ad740798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scripting\luabinding\script">
+      <UniqueIdentifier>{9e758e2a-66d7-4020-8e48-d0be65f998ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\xxtea">
+      <UniqueIdentifier>{82bd8993-4b2e-4170-818c-a6dc5c1b5e01}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lapi.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lauxlib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lbaselib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lcode.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldblib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldebug.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldo.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldump.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lfunc.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lgc.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\linit.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\liolib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\llex.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lmathlib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lmem.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\loadlib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lobject.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lopcodes.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\loslib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lparser.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstate.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstring.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstrlib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltable.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltablib.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltm.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lundump.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lvm.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lzio.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\print.c">
+      <Filter>external\lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c">
+      <Filter>external\lua\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c">
+      <Filter>external\lua\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c">
+      <Filter>external\lua\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_push.c">
+      <Filter>external\lua\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
+      <Filter>external\lua\tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.cpp">
+      <Filter>external\lua\quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp">
+      <Filter>external\lua\quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp">
+      <Filter>external\lua\quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp">
+      <Filter>external\lua\quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.cpp">
+      <Filter>external\lua\quick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_audioengine_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_controller_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_video_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_studio_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaBridge.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaEngine.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaStack.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaValue.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\Cocos2dxLuaLoader.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\LuaBasicConversions.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\tolua_fix.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\3d\lua_cocos2dx_3d_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_deprecated.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_experimental_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_physics_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\LuaOpengl.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\LuaScriptHandlerMgr.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\CCBProxy.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\controller\lua_cocos2dx_controller_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\extension\lua_cocos2dx_extension_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\lua_cocos2dx_network_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\Lua_web_socket.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\lua_xml_http_request.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\spine\lua_cocos2dx_spine_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\spine\LuaSkeletonAnimation.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_ui_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\video\lua_cocos2dx_experimental_video_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp">
+      <Filter>external\xxtea</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h">
+      <Filter>external\lua\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h">
+      <Filter>external\lua\tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.hpp">
+      <Filter>external\lua\quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h">
+      <Filter>external\lua\quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h">
+      <Filter>external\lua\quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h">
+      <Filter>external\lua\quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.h">
+      <Filter>external\lua\quick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_audioengine_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_controller_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_video_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaBridge.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaEngine.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaStack.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaValue.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\Cocos2dxLuaLoader.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\LuaBasicConversions.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\tolua_fix.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\3d\lua_cocos2dx_3d_manual.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_deprecated.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_experimental_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_physics_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\LuaOpengl.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\LuaScriptHandlerMgr.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\CCBProxy.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\controller\lua_cocos2dx_controller_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\extension\lua_cocos2dx_extension_manual.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\lua_cocos2dx_network_manual.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\Lua_web_socket.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\lua_xml_http_request.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\spine\lua_cocos2dx_spine_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\spine\LuaSkeletonAnimation.h">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_ui_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\video\lua_cocos2dx_experimental_video_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
+      <Filter>external\xxtea</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
