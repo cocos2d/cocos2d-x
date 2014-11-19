@@ -31,6 +31,8 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCScissorCommand.h"
+#include "renderer/CCStencilCommand.h"
 #include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
@@ -354,95 +356,128 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     {
         auto command = queue[index];
         auto commandType = command->getType();
-        if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+        
+        switch (commandType)
         {
-            flush3D();
-            if(_numberQuads > 0)
-            {
-                drawBatchedQuads();
-                _lastMaterialID = 0;
-            }
-            
-            auto cmd = static_cast<TrianglesCommand*>(command);
-            //Batch Triangles
-            if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
-            {
-                CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-                CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
-                //Draw batched Triangles if VBO is full
-                drawBatchedTriangles();
-            }
-            
-            _batchedCommands.push_back(cmd);
-            
-            fillVerticesAndIndices(cmd);
-
-        }
-        else if ( RenderCommand::Type::QUAD_COMMAND == commandType )
-        {
-            flush3D();
-            if(_filledIndex > 0)
-            {
-                drawBatchedTriangles();
-                _lastMaterialID = 0;
-            }
-            auto cmd = static_cast<QuadCommand*>(command);
-            //Batch quads
-            if( (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
-            {
-                CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-                //Draw batched quads if VBO is full
-                drawBatchedQuads();
-            }
-            
-            _batchQuadCommands.push_back(cmd);
-            
-            fillQuads(cmd);
-
-        }
-        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-        {
-            flush();
-            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-        }
-        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<CustomCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<BatchCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            cmd->execute();
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            flush2D();
-            auto cmd = static_cast<MeshCommand*>(command);
-            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            case RenderCommand::Type::TRIANGLES_COMMAND:
             {
                 flush3D();
-                cmd->preBatchDraw();
-                cmd->batchDraw();
-                _lastBatchedMeshCommand = cmd;
+                if(_numberQuads > 0)
+                {
+                    drawBatchedQuads();
+                    _lastMaterialID = 0;
+                }
+                
+                auto cmd = static_cast<TrianglesCommand*>(command);
+                //Batch Triangles
+                if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+                {
+                    CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+                    CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
+                    //Draw batched Triangles if VBO is full
+                    drawBatchedTriangles();
+                }
+                
+                _batchedCommands.push_back(cmd);
+                
+                fillVerticesAndIndices(cmd);
             }
-            else
+            break;
+            
+            case RenderCommand::Type::QUAD_COMMAND:
             {
-                cmd->batchDraw();
+                flush3D();
+                if(_filledIndex > 0)
+                {
+                    drawBatchedTriangles();
+                    _lastMaterialID = 0;
+                }
+                auto cmd = static_cast<QuadCommand*>(command);
+                //Batch quads
+                if( (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
+                {
+                    CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+                    //Draw batched quads if VBO is full
+                    drawBatchedQuads();
+                }
+                
+                _batchQuadCommands.push_back(cmd);
+                
+                fillQuads(cmd);
+
             }
-        }
-        else
-        {
-            CCLOGERROR("Unknown commands in renderQueue");
+            break;
+                
+            case RenderCommand::Type::GROUP_COMMAND:
+            {
+                flush();
+                int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+                visitRenderQueue(_renderGroups[renderQueueID]);
+            }
+            break;
+                
+            case RenderCommand::Type::CUSTOM_COMMAND:
+                flush();
+                command->execute<CustomCommand>();
+                break;
+                
+            case RenderCommand::Type::BATCH_COMMAND:
+                flush();
+                command->execute<BatchCommand>();
+                break;
+                
+            case RenderCommand::Type::PRIMITIVE_COMMAND:
+                flush();
+                command->execute<PrimitiveCommand>();
+                break;
+                
+            case RenderCommand::Type::MESH_COMMAND:
+            {
+                flush2D();
+                auto cmd = static_cast<MeshCommand*>(command);
+                if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+                {
+                    flush3D();
+                    cmd->preBatchDraw();
+                    cmd->batchDraw();
+                    _lastBatchedMeshCommand = cmd;
+                }
+                else
+                {
+                    cmd->batchDraw();
+                }
+            }
+            break;
+                
+            case RenderCommand::Type::BEGIN_SCISSOR_COMMAND:
+                flush();
+                command->execute<BeginScissorCommand>();
+                break;
+                
+            case RenderCommand::Type::END_SCISSOR_COMMAND:
+                flush();
+                command->execute<EndScissorCommand>();
+                break;
+                
+            case RenderCommand::Type::BEGIN_STENCIL_COMMAND:
+                flush();
+                command->execute<BeginStencilCommand>();
+                break;
+                
+            case RenderCommand::Type::AFTER_STENCIL_COMMAND:
+                flush();
+                command->execute<AfterStencilCommand>();
+                break;
+                
+            case RenderCommand::Type::END_STENCIL_COMMAND:
+                flush();
+                command->execute<EndStencilCommand>();
+                break;
+                
+            default:
+            {
+                CCLOGERROR("Unknown command type %08x in renderQueue", commandType);
+            }
         }
     }
 }
@@ -460,48 +495,78 @@ void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
     {
         auto command = queue[index];
         auto commandType = command->getType();
-        if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+        
+        switch (commandType)
         {
-            auto cmd = static_cast<TrianglesCommand*>(command);
-            _batchedCommands.push_back(cmd);
-            fillVerticesAndIndices(cmd);
-            drawBatchedTriangles();
-        }
-        else if(RenderCommand::Type::QUAD_COMMAND == commandType)
-        {
-            auto cmd = static_cast<QuadCommand*>(command);
-            _batchQuadCommands.push_back(cmd);
-            fillQuads(cmd);
-            drawBatchedQuads();
-        }
-        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-        {
-            int renderQueueID = (static_cast<GroupCommand*>(command))->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-        }
-        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-        {
-            auto cmd = static_cast<CustomCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-        {
-            auto cmd = static_cast<BatchCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-        {
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            cmd->execute();
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            auto cmd = static_cast<MeshCommand*>(command);
-            cmd->execute();
-        }
-        else
-        {
-            CCLOGERROR("Unknown commands in renderQueue");
+            case RenderCommand::Type::TRIANGLES_COMMAND:
+            {
+                auto cmd = static_cast<TrianglesCommand*>(command);
+                _batchedCommands.push_back(cmd);
+                fillVerticesAndIndices(cmd);
+                drawBatchedTriangles();
+            }
+            break;
+                
+            case RenderCommand::Type::QUAD_COMMAND:
+            {
+                auto cmd = static_cast<QuadCommand*>(command);
+                _batchQuadCommands.push_back(cmd);
+                fillQuads(cmd);
+                drawBatchedQuads();
+            }
+            break;
+                
+            case RenderCommand::Type::GROUP_COMMAND:
+            {
+                int renderQueueID = (static_cast<GroupCommand*>(command))->getRenderQueueID();
+                visitRenderQueue(_renderGroups[renderQueueID]);
+            }
+            break;
+                
+            case RenderCommand::Type::CUSTOM_COMMAND:
+                command->execute<CustomCommand>();
+                break;
+                
+            case RenderCommand::Type::BATCH_COMMAND:
+                command->execute<BatchCommand>();
+                break;
+                
+            case RenderCommand::Type::PRIMITIVE_COMMAND:
+                command->execute<PrimitiveCommand>();
+                break;
+                
+            case RenderCommand::Type::MESH_COMMAND:
+                command->execute<MeshCommand>();
+                break;
+                
+            case RenderCommand::Type::BEGIN_SCISSOR_COMMAND:
+                flush();
+                command->execute<BeginScissorCommand>();
+                break;
+                
+            case RenderCommand::Type::END_SCISSOR_COMMAND:
+                flush();
+                command->execute<EndScissorCommand>();
+                break;
+                
+            case RenderCommand::Type::BEGIN_STENCIL_COMMAND:
+                flush();
+                command->execute<BeginStencilCommand>();
+                break;
+                
+            case RenderCommand::Type::AFTER_STENCIL_COMMAND:
+                command->execute<AfterStencilCommand>();
+                break;
+                
+            case RenderCommand::Type::END_STENCIL_COMMAND:
+                flush();
+                command->execute<EndStencilCommand>();
+                break;
+                
+            default:
+            {
+                CCLOGERROR("Unknown commands in renderQueue");
+            }
         }
     }
 }

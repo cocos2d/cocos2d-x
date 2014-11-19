@@ -1949,6 +1949,14 @@
 		B60C5BD519AC68B10056FBDE /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */; };
 		B60C5BD619AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
 		B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
+		D07745001A1D101F00918FDE /* CCScissorCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07744FC1A1D101F00918FDE /* CCScissorCommand.cpp */; };
+		D07745011A1D101F00918FDE /* CCScissorCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07744FC1A1D101F00918FDE /* CCScissorCommand.cpp */; };
+		D07745021A1D101F00918FDE /* CCScissorCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D07744FD1A1D101F00918FDE /* CCScissorCommand.h */; };
+		D07745031A1D101F00918FDE /* CCScissorCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D07744FD1A1D101F00918FDE /* CCScissorCommand.h */; };
+		D07745041A1D101F00918FDE /* CCStencilCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07744FE1A1D101F00918FDE /* CCStencilCommand.cpp */; };
+		D07745051A1D101F00918FDE /* CCStencilCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07744FE1A1D101F00918FDE /* CCStencilCommand.cpp */; };
+		D07745061A1D101F00918FDE /* CCStencilCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D07744FF1A1D101F00918FDE /* CCStencilCommand.h */; };
+		D07745071A1D101F00918FDE /* CCStencilCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D07744FF1A1D101F00918FDE /* CCStencilCommand.h */; };
 		DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA8C62A019E52C6400000516 /* ioapi_mem.cpp */; };
 		DA8C62A319E52C6400000516 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA8C62A019E52C6400000516 /* ioapi_mem.cpp */; };
 		DA8C62A419E52C6400000516 /* ioapi_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8C62A119E52C6400000516 /* ioapi_mem.h */; };
@@ -3014,6 +3022,10 @@
 		B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormal.frag; sourceTree = "<group>"; };
 		B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormalTex.frag; sourceTree = "<group>"; };
 		B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
+		D07744FC1A1D101F00918FDE /* CCScissorCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScissorCommand.cpp; sourceTree = "<group>"; };
+		D07744FD1A1D101F00918FDE /* CCScissorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScissorCommand.h; sourceTree = "<group>"; };
+		D07744FE1A1D101F00918FDE /* CCStencilCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStencilCommand.cpp; sourceTree = "<group>"; };
+		D07744FF1A1D101F00918FDE /* CCStencilCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStencilCommand.h; sourceTree = "<group>"; };
 		DA8C62A019E52C6400000516 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA8C62A119E52C6400000516 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRectangleNode.cpp; sourceTree = "<group>"; };
@@ -4787,6 +4799,10 @@
 				B257B44D1989D5E800D9A687 /* CCPrimitive.h */,
 				B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */,
 				B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */,
+				D07744FC1A1D101F00918FDE /* CCScissorCommand.cpp */,
+				D07744FD1A1D101F00918FDE /* CCScissorCommand.h */,
+				D07744FE1A1D101F00918FDE /* CCStencilCommand.cpp */,
+				D07744FF1A1D101F00918FDE /* CCStencilCommand.h */,
 				5034CA5D191D591900CE6051 /* shaders */,
 			);
 			name = renderer;
@@ -5158,6 +5174,7 @@
 				15AE191E19AAD35000C27E9E /* CCTween.h in Headers */,
 				15AE184619AAD2F700C27E9E /* CCSprite3DMaterial.h in Headers */,
 				50ABBD3E1925AB0000A911A9 /* CCGeometry.h in Headers */,
+				D07745021A1D101F00918FDE /* CCScissorCommand.h in Headers */,
 				15AE1A7719AAD40300C27E9E /* b2EdgeAndPolygonContact.h in Headers */,
 				15AE18F719AAD35000C27E9E /* CCBatchNode.h in Headers */,
 				15AE181419AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
@@ -5370,6 +5387,7 @@
 				15AE1A6219AAD40300C27E9E /* b2Fixture.h in Headers */,
 				15AE191C19AAD35000C27E9E /* CCTransformHelp.h in Headers */,
 				5034CA2F191D591100CE6051 /* ccShader_PositionTexture.vert in Headers */,
+				D07745061A1D101F00918FDE /* CCStencilCommand.h in Headers */,
 				15AE1C1219AAE2C600C27E9E /* CCPhysicsDebugNode.h in Headers */,
 				50ABBE951925AB6F00A911A9 /* CCProfiling.h in Headers */,
 				5034CA4B191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
@@ -5892,6 +5910,7 @@
 				B29A7DCE19EE1B7700872B35 /* Slot.h in Headers */,
 				15AE1A9C19AAD40300C27E9E /* b2Settings.h in Headers */,
 				1A5701FA180BCBAD0088DEC7 /* CCMenu.h in Headers */,
+				D07745071A1D101F00918FDE /* CCStencilCommand.h in Headers */,
 				15AE18BA19AAD33D00C27E9E /* CCControlButtonLoader.h in Headers */,
 				1A5701FE180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
 				50ABC00C1926664800A911A9 /* CCDevice.h in Headers */,
@@ -6100,6 +6119,7 @@
 				50ABBD5F1925AB0000A911A9 /* Vec3.h in Headers */,
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
 				15AE194C19AAD35100C27E9E /* CCComRender.h in Headers */,
+				D07745031A1D101F00918FDE /* CCScissorCommand.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
 				50CB247619D9C5A100687767 /* AudioCache.h in Headers */,
 				B29A7DDA19EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
@@ -6306,6 +6326,7 @@
 				B29A7DE919EE1B7700872B35 /* EventData.c in Sources */,
 				50ABBEC51925AB6F00A911A9 /* etc1.cpp in Sources */,
 				50643BDE19BFCCA400EF68ED /* LocalStorage-android.cpp in Sources */,
+				D07745041A1D101F00918FDE /* CCStencilCommand.cpp in Sources */,
 				15AE1B5B19AADA9900C27E9E /* UITextAtlas.cpp in Sources */,
 				1A570065180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				50ABBEAB1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
@@ -6506,6 +6527,7 @@
 				1A5702C8180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				15AE1B5519AADA9900C27E9E /* UIScrollView.cpp in Sources */,
 				15AE191919AAD35000C27E9E /* CCSSceneReader.cpp in Sources */,
+				D07745001A1D101F00918FDE /* CCScissorCommand.cpp in Sources */,
 				50ABBE7D1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
 				1A5702EA180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				50ABBD971925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
@@ -7105,6 +7127,7 @@
 				15AE18CC19AAD33D00C27E9E /* CCNode+CCBRelativePositioning.cpp in Sources */,
 				50CB247819D9C5A100687767 /* AudioCache.mm in Sources */,
 				50ABBD5D1925AB0000A911A9 /* Vec3.cpp in Sources */,
+				D07745051A1D101F00918FDE /* CCStencilCommand.cpp in Sources */,
 				38B8E2D619E66581002D7CE7 /* CSLoader.cpp in Sources */,
 				50ABC0121926664800A911A9 /* CCGLView.cpp in Sources */,
 				50ABC0021926664800A911A9 /* CCLock-apple.cpp in Sources */,
@@ -7136,6 +7159,7 @@
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				15AE180D19AAD2F700C27E9E /* CCAnimate3D.cpp in Sources */,
 				50ABBE7A1925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
+				D07745011A1D101F00918FDE /* CCScissorCommand.cpp in Sources */,
 				15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
 				15AE1BBF19AADFF000C27E9E /* WebSocket.cpp in Sources */,

@@ -29,8 +29,7 @@
 #define __MISCNODE_CCCLIPPING_RECTANGLE_NODE_H__
 
 #include "2d/CCNode.h"
-#include "renderer/CCCustomCommand.h"
-#include "platform/CCGL.h"
+#include "renderer/CCScissorCommand.h"
 
 NS_CC_BEGIN
 
@@ -67,8 +66,8 @@ protected:
     Rect _clippingRegion;
     bool _clippingEnabled;
     
-    CustomCommand _beforeVisitCmdScissor;
-    CustomCommand _afterVisitCmdScissor;
+    BeginScissorCommand _beginScissorCommand;
+    EndScissorCommand _endScissorCommand;
 };
 
 NS_CC_END
