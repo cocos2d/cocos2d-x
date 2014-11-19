@@ -268,11 +268,8 @@ public:
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Vec2 p);
-    void menuCallback_switchHair(Ref* sender);
-    void menuCallback_switchGlasses(Ref* sender);
-    void menuCallback_switchCoat(Ref* sender);
-    void menuCallback_switchPants(Ref* sender);
-    void menuCallback_switchShoes(Ref* sender);
+    
+    void menuCallback_reSkin(Ref* sender);
 protected:
     void applyCurSkin();
     
@@ -285,8 +282,11 @@ protected:
         FACE,
         HAND,
         GLASSES,
+        MAX_TYPE,
     };
-    std::map<SkinType, std::string>  _curSkin;
+    
+    std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
+    int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
 };
 class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo
