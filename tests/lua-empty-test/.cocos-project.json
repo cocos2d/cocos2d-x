@@ -26,5 +26,6 @@
     },
     "android_cfg": {
         "project_path": "project/proj.android"
-    }
+    },
+    "engine_dir": "../../"
 }
