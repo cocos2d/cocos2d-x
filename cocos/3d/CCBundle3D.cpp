@@ -291,6 +291,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             materialdatas.materials.push_back(materialdata);
 
             meshdata->subMeshIndices.push_back(it.mesh.indices);
+            meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), it.mesh.indices));
             meshdata->subMeshIds.push_back(str);
             auto node = new (std::nothrow) NodeData();
             auto modelnode = new (std::nothrow) ModelData();
@@ -438,6 +439,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
+            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -545,6 +547,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         }
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
 
     meshdatas.meshDatas.push_back(meshdata);
@@ -659,6 +662,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         }
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
 
     meshdatas.meshDatas.push_back(meshdata);
@@ -714,6 +718,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
+            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -1080,6 +1085,7 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
         indices[i] = (unsigned short)indices_val_array[i].GetUint();
 
     meshdata->subMeshIndices.push_back(indices);
+    meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     meshdatas.meshDatas.push_back(meshdata);
     return true;
 }
@@ -1134,6 +1140,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
             indices[j] = (unsigned short)indices_val_array[j].GetUint();
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
     meshdatas.meshDatas.push_back(meshdata);
     return true;
@@ -1994,6 +2001,18 @@ Bundle3D::~Bundle3D()
 {
     clear();
 
+}
+
+cocos2d::AABB Bundle3D::calculateAABB( const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index )
+{
+    AABB aabb;
+    stride /= 4;
+    for(const auto& it : index)
+        {
+            Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
+            aabb.updateMinMax(&point, 1);
+        }
+    return aabb;
 }
 
 NS_CC_END
