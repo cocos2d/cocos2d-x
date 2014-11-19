@@ -328,6 +328,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNode.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrame.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrameEasing.cpp" />
@@ -735,6 +736,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimelineMacro.h" />
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNode.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionFrame.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionFrameEasing.h" />

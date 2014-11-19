@@ -59,6 +59,7 @@ ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CCActionTimelineNode.cpp \
 ActionTimeline/CSLoader.cpp \
 CSParseBinary.pb.cc 
 

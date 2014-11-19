@@ -1265,6 +1265,9 @@
     <ClCompile Include="CCLight.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2528,6 +2531,9 @@
     </ClInclude>
     <ClInclude Include="CCLight.h">
       <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

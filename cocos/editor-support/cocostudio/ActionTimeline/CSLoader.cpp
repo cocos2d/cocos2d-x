@@ -25,6 +25,7 @@
 #include "CSLoader.h"
 #include "CCActionTimelineCache.h"
 #include "CCActionTimeline.h"
+#include "CCActionTimeLineNode.h"
 #include "../CCSGUIReader.h"
 #include "../../cocos/ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
@@ -223,6 +224,30 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     }
     
     return nullptr;
+}
+
+ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename)
+{
+    Node* root = createNode(filename);
+    ActionTimeline* action = createTimeline(filename);
+
+    if(root && action)
+    {
+        root->runAction(action);
+        action->gotoFrameAndPlay(0);
+    }
+
+    ActionTimelineNode* node = ActionTimelineNode::create(root, action);
+    return node;
+}
+ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop)
+{
+    ActionTimelineNode* node = createActionTimelineNode(filename);
+    ActionTimeline* action = node->getActionTimeline();
+    if(action)
+        action->gotoFrameAndPlay(startIndex, endIndex, loop);
+
+    return node;
 }
 
 Node* CSLoader::createNodeFromJson(const std::string& filename)
@@ -788,15 +813,18 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
         CCLOG("filePath = %s", filePath.c_str());
 		if(filePath != "")
 		{
-            node = createNodeFromProtocolBuffers(_protocolBuffersPath + filePath);
-            setPropsForProjectNodeFromProtocolBuffers(node, options, nodeOptions);
-            
+            Node* root = createNodeFromProtocolBuffers(_protocolBuffersPath + filePath);
+            setPropsForProjectNodeFromProtocolBuffers(root, options, nodeOptions);
+
             cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionFromProtocolBuffers(_protocolBuffersPath + filePath);
             if(action)
             {
-                node->runAction(action);
+                root->runAction(action);
                 action->gotoFrameAndPlay(0);
             }
+
+            node = ActionTimelineNode::create(root, action);
+            node->setName(root->getName());
 		}
      
         curOptions = nodeOptions;
