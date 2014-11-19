@@ -1421,7 +1421,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
     }
     
     unsigned int animNum = 1;
-    if( _version == "0.1"|| _version == "0.2" || _version == "0.3"|| _version == "0.4")
+    if( _version == "0.3"|| _version == "0.4")
     {
         if (!_binaryReader.read(&animNum))
         {
