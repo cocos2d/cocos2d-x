@@ -27,10 +27,10 @@ cmake_minimum_required(VERSION 2.8)
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.3.0-beta0)
+set(COCOS2D_X_VERSION 3.3.0-rc1)
 
-include(cmake/BuildHelpers.CMakeLists.txt)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+include(CocosBuildHelpers)
 
 message(${BUILDING_STRING})
 
@@ -123,7 +123,6 @@ else()
 endif()
 
 include_directories(
-  ${PLATFORM_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/deprecated
@@ -142,12 +141,7 @@ if(LINUX)
       ${PLATFORM_FOLDER}/${ARCH_DIR}
   )
 elseif(NOT MINGW)
-  set(PLATFORM_FOLDER_ARCH
-    ${PLATFORM_FOLDER}
-  )
-  set(PLATFORM_LINK_DIR
-   ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER_ARCH}
-  )
+  set(PLATFORM_FOLDER_ARCH ${PLATFORM_FOLDER})
 endif()
 
 
@@ -164,13 +158,16 @@ include_directories(
 
 )
 
-if(LINUX OR APPLE)
+# GLFW3 used on Mac, Windows and Linux desktop platforms
+if(LINUX OR MACOSX OR WINDOWS)
+  list(APPEND CMAKE_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER})
+  list(APPEND CMAKE_LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/prebuilt/${PLATFORM_FOLDER_ARCH})
 
   find_package(GLFW3 REQUIRED)
   message( STATUS "GLFW3 dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
 
-endif(LINUX OR APPLE)
+endif(LINUX OR MACOSX OR WINDOWS)
 
 
 if(NOT MINGW)
@@ -184,7 +181,6 @@ if(NOT MINGW)
     ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/tiff/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/webp/include/${PLATFORM_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw3/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/websockets/include/${PLATFORM_FOLDER}
     ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include/${PLATFORM_FOLDER}

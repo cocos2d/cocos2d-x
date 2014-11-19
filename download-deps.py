@@ -3,10 +3,12 @@
 #
 # ./download-deps.py
 #
-# Download Cocos2D-X resources from github (https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin) and extract from ZIP
+# Downloads Cocos2D-x 3rd party dependencies from github:
+# https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin) and extracts the zip
+# file
 #
-# Helps prevent repo bloat due to large binary files since they can
-# be hosted separately.
+# Having the dependencies outside the official cocos2d-x repo helps prevent
+# bloating the repo.
 #
 
 """****************************************************************************
@@ -34,7 +36,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************"""
 
-import os.path,zipfile
+import os.path
+import zipfile
 import shutil
 import sys
 import traceback
@@ -48,14 +51,17 @@ from sys import stdout
 from distutils.errors import DistutilsError
 from distutils.dir_util import copy_tree, remove_tree
 
+
 class UnrecognizedFormat:
     def __init__(self, prompt):
         self._prompt = prompt
+
     def __str__(self):
         return self._prompt
 
+
 class CocosZipInstaller(object):
-    def __init__(self, workpath, config_path, version_path, remote_version_key = None):
+    def __init__(self, workpath, config_path, version_path, remote_version_key=None):
         self._workpath = workpath
         self._config_path = config_path
         self._version_path = version_path
@@ -76,7 +82,7 @@ class CocosZipInstaller(object):
 
         try:
             data = self.load_json_file(version_path)
-            if remote_version_key == None:
+            if remote_version_key is None:
                 self._remote_version = data["version"]
             else:
                 self._remote_version = data[remote_version_key]
@@ -117,7 +123,7 @@ class CocosZipInstaller(object):
         file_size_dl = 0
         block_sz = 8192
         block_size_per_second = 0
-        old_time=time()
+        old_time = time()
 
         while True:
             buffer = u.read(block_sz)
@@ -179,7 +185,7 @@ class CocosZipInstaller(object):
                 else:
                     # file
                     data = z.read(info.filename)
-                    f = open(target,'wb')
+                    f = open(target, 'wb')
                     try:
                         f.write(data)
                     finally:
@@ -192,7 +198,6 @@ class CocosZipInstaller(object):
             z.close()
             print("==> Extraction done!")
 
-
     def ask_to_delete_downloaded_zip_file(self):
         ret = self.get_input_value("==> Do you want to keep '%s'? So you don't have to download it later. (yes/no): " % self._filename)
         ret = ret.strip()
@@ -200,7 +205,7 @@ class CocosZipInstaller(object):
             print("==> Cache the dependency libraries by default")
             return False
         else:
-            return True if ret == 'no' or ret =='n' else False
+            return True if ret == 'no' or ret == 'n' else False
 
     def download_zip_file(self):
         if not os.path.isfile(self._filename):
@@ -260,7 +265,7 @@ class CocosZipInstaller(object):
             if os.path.exists(self._extracted_folder_name):
                 shutil.rmtree(self._extracted_folder_name)
             if os.path.isfile(self._filename):
-                if remove_downloaded != None:
+                if remove_downloaded is not None:
                     if remove_downloaded == 'yes':
                         os.remove(self._filename)
                 elif self.ask_to_delete_downloaded_zip_file():
@@ -277,6 +282,7 @@ def _check_python_version():
         return False
 
     return True
+
 
 def main():
     workpath = os.path.dirname(os.path.realpath(__file__))
@@ -303,7 +309,7 @@ def main():
     print("==> Prepare to download external libraries!")
     external_path = os.path.join(workpath, 'external')
     installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version")
-    installer.run(workpath,external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
+    installer.run(workpath, external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
     print("=======================================================")
     print("==> Prepare to download lua runtime binaries")

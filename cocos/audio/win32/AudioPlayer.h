@@ -44,7 +44,7 @@ class CC_DLL AudioPlayer
 {
 public:
     AudioPlayer();
-    AudioPlayer(AudioPlayer&);
+    AudioPlayer(const AudioPlayer&);
     ~AudioPlayer();
     
     //queue buffer related stuff

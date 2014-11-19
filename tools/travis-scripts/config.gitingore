@@ -113,6 +113,8 @@ tags
 !/tools/cocos2d-console/console/bin/
 !/plugin-x/plugin-x_ios.xcworkspace/
 !/cocos/2d/platform/android/java/res/
+# Permit plugins to ship third-party libraries.
+!/plugin/plugins/*/proj.android/libs/*.jar
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

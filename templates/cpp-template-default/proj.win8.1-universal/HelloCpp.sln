@@ -4,11 +4,11 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelloCpp", "HelloCpp", "{36AFDE04-D127-4D84-9730-D84E3E51EAA7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Shared", "HelloCpp.Shared\HelloCpp.Shared.vcxitems", "{A3AD93E4-0B2F-4C58-9181-69BED2E42E3E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "App.Shared", "App.Shared\HelloCpp.Shared.vcxitems", "{A3AD93E4-0B2F-4C58-9181-69BED2E42E3E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.Windows", "HelloCpp.Windows\HelloCpp.Windows.vcxproj", "{79A8FCDA-4B12-4DD1-B676-FF148D651638}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "App.Windows", "App.Windows\HelloCpp.Windows.vcxproj", "{79A8FCDA-4B12-4DD1-B676-FF148D651638}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp.WindowsPhone", "HelloCpp.WindowsPhone\HelloCpp.WindowsPhone.vcxproj", "{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "App.WindowsPhone", "App.WindowsPhone\HelloCpp.WindowsPhone.vcxproj", "{396FE85E-BB05-4B92-BCCB-F89AED4EA41A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libcocos2d", "libcocos2d", "{80DA05C1-6532-4D2A-8606-EF02079B1373}"
 EndProject
@@ -39,17 +39,17 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{9335005f-678e-4e8e-9b84-50037216aec8}*SharedItemsImports = 4
-		HelloCpp.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
+		App.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
 		..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{cc1da216-a80d-4be4-b309-acb6af313aff}*SharedItemsImports = 4
 		..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{4a3c6ba8-c227-498b-aa21-40bda27b461f}*SharedItemsImports = 9
-		HelloCpp.Shared\HelloCpp.Shared.vcxitems*{79a8fcda-4b12-4dd1-b676-ff148d651638}*SharedItemsImports = 4
+		App.Shared\HelloCpp.Shared.vcxitems*{79a8fcda-4b12-4dd1-b676-ff148d651638}*SharedItemsImports = 4
 		..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{adafd00d-a0d6-46ef-9f0b-ea2880bfe1de}*SharedItemsImports = 9
 		..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{5d6f020f-7e72-4494-90a0-2df11d235df9}*SharedItemsImports = 9
 		..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{3b26a12d-3a44-47ea-82d2-282660fc844d}*SharedItemsImports = 4
 		..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{22f3b9df-1209-4574-8331-003966f562bf}*SharedItemsImports = 4
 		..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{22f798d8-bfff-4754-996f-a5395343d5ec}*SharedItemsImports = 4
 		..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{f3550fe0-c795-44f6-8feb-093eb68143ae}*SharedItemsImports = 4
-		HelloCpp.Shared\HelloCpp.Shared.vcxitems*{396fe85e-bb05-4b92-bccb-f89aed4ea41a}*SharedItemsImports = 4
+		App.Shared\HelloCpp.Shared.vcxitems*{396fe85e-bb05-4b92-bccb-f89aed4ea41a}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
