@@ -144,10 +144,11 @@ protected:
     void getModelRelativePath(const std::string& path);
 
     /*
-    * set the read position in buffer to the target type
-    * @param The data type
-    */
-    Reference* seekToFirstType(unsigned int type);
+     * set the read position in buffer to the target type
+     * @param The data type
+     * @param The data id
+     */
+    Reference* seekToFirstType(unsigned int type, const std::string& id = "");
 
 CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
