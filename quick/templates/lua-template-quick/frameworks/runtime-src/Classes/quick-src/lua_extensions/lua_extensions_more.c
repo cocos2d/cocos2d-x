@@ -1,6 +1,5 @@
 
 #include "lua_extensions_more.h"
-#include "base/ccConfig.h"
 
 #if __cplusplus
 extern "C" {
