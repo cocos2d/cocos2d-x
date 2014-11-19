@@ -518,7 +518,7 @@ void Sprite3D::removeAllAttachNode()
     }
     _attachments.clear();
 }
-
+#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
 //Generate a dummy texture when the texture file is missing
 static Texture2D * getDummyTexture()
 {
@@ -533,6 +533,7 @@ static Texture2D * getDummyTexture()
     }
     return texture;
 }
+#endif
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
@@ -563,6 +564,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         auto programstate = mesh->getGLProgramState();
         auto& meshCommand = mesh->getMeshCommand();
 
+#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
         GLuint textureID = 0;
         if(mesh->getTexture())
         {
@@ -573,6 +575,10 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             mesh->setTexture(texture);
             textureID = texture->getName();
         }
+
+#else
+        GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
+#endif
 
         float globalZ = _globalZOrder;
         bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
