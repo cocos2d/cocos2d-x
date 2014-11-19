@@ -141,11 +141,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
-if(LINUX)
-  find_package(FMODEX REQUIRED)
-  message(STATUS "FMOD Ex include dirs: ${FMODEX_INCLUDE_DIRS}")
-endif()
-
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
   find_package(OpenGL REQUIRED)
@@ -164,6 +159,18 @@ if(LINUX OR MACOSX OR WINDOWS)
   find_package(GLFW3 REQUIRED)
   message(STATUS "GLFW3 include dirs: ${GLFW3_INCLUDE_DIRS}")
   include_directories(${GLFW3_INCLUDE_DIRS})
+
+  if(LINUX)
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    find_package(Threads REQUIRED)
+    set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+
+    find_package(FMODEX REQUIRED)
+    message(STATUS "FMOD Ex include dirs: ${FMODEX_INCLUDE_DIRS}")
+
+    find_package(Fontconfig REQUIRED)
+    message(STATUS "Fontconfig include dirs: ${FONTCONFIG_INCLUDE_DIRS}")
+  endif()
 
   if(WINDOWS)
     if(USE_PREBUILT_LIBS)
@@ -250,11 +257,13 @@ find_package(JPEG REQUIRED)
 message(STATUS "JPEG include dirs: ${JPEG_INCLUDE_DIRS}")
 
 if(USE_PREBUILT_LIBS)
-  set(ZLIB_PREBUILT_ROOT ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/zlib)
-  #set(CMAKE_INCLUDE_PATH ${ZLIB_PREBUILT_ROOT} ${CMAKE_INCLUDE_PATH})
-  #set(CMAKE_LIBRARY_PATH ${ZLIB_PREBUILT_ROOT}/prebuilt ${CMAKE_LIBRARY_PATH})
-  set(ZLIB_INCLUDE_DIR ${ZLIB_PREBUILT_ROOT}/include)
-  set(ZLIB_LIBRARY ${ZLIB_PREBUILT_ROOT}/prebuilt/libzlib.lib)
+  if(WINDOWS)
+    set(ZLIB_PREBUILT_ROOT ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/zlib)
+    #set(CMAKE_INCLUDE_PATH ${ZLIB_PREBUILT_ROOT} ${CMAKE_INCLUDE_PATH})
+    #set(CMAKE_LIBRARY_PATH ${ZLIB_PREBUILT_ROOT}/prebuilt ${CMAKE_LIBRARY_PATH})
+    set(ZLIB_INCLUDE_DIR ${ZLIB_PREBUILT_ROOT}/include)
+    set(ZLIB_LIBRARY ${ZLIB_PREBUILT_ROOT}/prebuilt/libzlib.lib)
+  endif()
 endif()
 find_package(ZLIB REQUIRED)
 message(STATUS "ZLIB include dirs: ${ZLIB_INCLUDE_DIRS}")
