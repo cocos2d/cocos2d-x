@@ -36,66 +36,66 @@ NS_CC_BEGIN
 class  ForceFieldCalculationFactory
 {
 public:
-	// Const
-	static const Vec3 DEFAULT_WORLDSIZE;
+    // Const
+    static const Vec3 DEFAULT_WORLDSIZE;
 
-	ForceFieldCalculationFactory(void) : 
-		_octaves(2),
-		_frequency(1.0f),
-		_amplitude(1.0f),
-		_persistence(1.0f),
-		_mappedPosition(Vec3::ZERO),
-		_mapScale(Vec3::ZERO),
-		_worldSize(DEFAULT_WORLDSIZE)
-	{
-	};
-	virtual ~ForceFieldCalculationFactory(void){};
+    ForceFieldCalculationFactory(void) : 
+        _octaves(2),
+        _frequency(1.0f),
+        _amplitude(1.0f),
+        _persistence(1.0f),
+        _mappedPosition(Vec3::ZERO),
+        _mapScale(Vec3::ZERO),
+        _worldSize(DEFAULT_WORLDSIZE)
+    {
+    };
+    virtual ~ForceFieldCalculationFactory(void){};
 
-	/** Generates the force field
-	@remarks
-		This function takes several arguments. 
-		- forceFieldSize defines the internal dimensions of the force field. 
-		- octaves, frequency, amplitude and persistence define the noise that is being generated.
-		- worldSize defines the dimensions in the real world (scene).
-	*/
-	virtual void generate(unsigned int forceFieldSize, 
-		unsigned short octaves, 
-		double frequency, 
-		double amplitude, 
-		double persistence, 
-		const Vec3& worldSize) = 0;
+    /** Generates the force field
+    @remarks
+        This function takes several arguments. 
+        - forceFieldSize defines the internal dimensions of the force field. 
+        - octaves, frequency, amplitude and persistence define the noise that is being generated.
+        - worldSize defines the dimensions in the real world (scene).
+    */
+    virtual void generate(unsigned int forceFieldSize, 
+        unsigned short octaves, 
+        double frequency, 
+        double amplitude, 
+        double persistence, 
+        const Vec3& worldSize) = 0;
 
-	/** Determine force, based on the position of a particle.
-	#remarks
-		The position is the position of a particle. The argument 'delta' defines the radius around the position that contributes to the 
-		calculation of the force.
-	*/
-	virtual void determineForce(const Vec3& position, Vec3& force, float delta) = 0;
+    /** Determine force, based on the position of a particle.
+    #remarks
+        The position is the position of a particle. The argument 'delta' defines the radius around the position that contributes to the 
+        calculation of the force.
+    */
+    virtual void determineForce(const Vec3& position, Vec3& force, float delta) = 0;
 
-	/** Default Getters/Setters
-	*/
-	virtual unsigned short getOctaves(void) const;
-	virtual void setOctaves(unsigned short octaves);
-	virtual double getFrequency(void) const;
-	virtual void setFrequency(double frequency);
-	virtual double getAmplitude(void) const;
-	virtual void setAmplitude(double amplitude);
-	virtual double getPersistence(void) const;
-	virtual void setPersistence(double persistence);
-	virtual unsigned int getForceFieldSize(void) const;
-	virtual void setForceFieldSize(unsigned int forceFieldSize);
-	virtual Vec3 getWorldSize(void) const;
-	virtual void setWorldSize(const Vec3& worldSize);
+    /** Default Getters/Setters
+    */
+    virtual unsigned short getOctaves(void) const;
+    virtual void setOctaves(unsigned short octaves);
+    virtual double getFrequency(void) const;
+    virtual void setFrequency(double frequency);
+    virtual double getAmplitude(void) const;
+    virtual void setAmplitude(double amplitude);
+    virtual double getPersistence(void) const;
+    virtual void setPersistence(double persistence);
+    virtual unsigned int getForceFieldSize(void) const;
+    virtual void setForceFieldSize(unsigned int forceFieldSize);
+    virtual Vec3 getWorldSize(void) const;
+    virtual void setWorldSize(const Vec3& worldSize);
 
 protected:
-	Noise3D _noise3D;
-	unsigned short _octaves;
-	double _frequency;
-	double _amplitude;
-	double _persistence;
-	Vec3 _mapScale;
-	Vec3 _worldSize;
-	Vec3 _mappedPosition;
+    Noise3D _noise3D;
+    unsigned short _octaves;
+    double _frequency;
+    double _amplitude;
+    double _persistence;
+    Vec3 _mapScale;
+    Vec3 _worldSize;
+    Vec3 _mappedPosition;
 };
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -106,21 +106,21 @@ protected:
 class RealTimeForceFieldCalculationFactory : public ForceFieldCalculationFactory
 {
 public:
-	RealTimeForceFieldCalculationFactory(void) : ForceFieldCalculationFactory() {};
-	virtual ~RealTimeForceFieldCalculationFactory(void){};
+    RealTimeForceFieldCalculationFactory(void) : ForceFieldCalculationFactory() {};
+    virtual ~RealTimeForceFieldCalculationFactory(void){};
 
-	/** Override from ForceFieldCalculationFactory
-	*/
-	virtual void generate(unsigned int forceFieldSize, 
-		unsigned short octaves, 
-		double frequency, 
-		double amplitude, 
-		double persistence, 
-		const Vec3& worldSize);
+    /** Override from ForceFieldCalculationFactory
+    */
+    virtual void generate(unsigned int forceFieldSize, 
+        unsigned short octaves, 
+        double frequency, 
+        double amplitude, 
+        double persistence, 
+        const Vec3& worldSize);
 
-	/** Override from ForceFieldCalculationFactory
-	*/
-	virtual void determineForce(const Vec3& position, Vec3& force, float delta);
+    /** Override from ForceFieldCalculationFactory
+    */
+    virtual void determineForce(const Vec3& position, Vec3& force, float delta);
 };
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -221,83 +221,83 @@ public:
 
 
 /** Force Field Affector Class:
-	This class defines a force field to affect the particle direction. The force field is based on 3D noise. The force can be calculated in
-	realtime or based on a precreated 3D force field matrix, which essentially involves one lookup. To speed things up, the 3d matrix can be
-	precreated in a separate thread (optionally).
+    This class defines a force field to affect the particle direction. The force field is based on 3D noise. The force can be calculated in
+    realtime or based on a precreated 3D force field matrix, which essentially involves one lookup. To speed things up, the 3d matrix can be
+    precreated in a separate thread (optionally).
 */
 class ForceField
 {
-	public:
-		enum ForceFieldType
-		{
-			FF_REALTIME_CALC,
-			FF_MATRIX_CALC
-		};
+    public:
+        enum ForceFieldType
+        {
+            FF_REALTIME_CALC,
+            FF_MATRIX_CALC
+        };
 
-		ForceField();
-		~ForceField();
+        ForceField();
+        ~ForceField();
 
-		/** Initialises a ForceField */
-		virtual void initialise(ForceFieldType type,
-			const Vec3& position,
-			unsigned int forceFieldSize, 
-			unsigned short octaves, 
-			double frequency, 
-			double amplitude, 
-			double persistence, 
-			const Vec3& worldSize);
+        /** Initialises a ForceField */
+        virtual void initialise(ForceFieldType type,
+            const Vec3& position,
+            unsigned int forceFieldSize, 
+            unsigned short octaves, 
+            double frequency, 
+            double amplitude, 
+            double persistence, 
+            const Vec3& worldSize);
 
-		/** Initialises a ForceField */
-		virtual void initialise(ForceFieldType type,
-			unsigned int forceFieldSize, 
-			unsigned short octaves, 
-			double frequency, 
-			double amplitude, 
-			double persistence, 
-			const Vec3& worldSize);
+        /** Initialises a ForceField */
+        virtual void initialise(ForceFieldType type,
+            unsigned int forceFieldSize, 
+            unsigned short octaves, 
+            double frequency, 
+            double amplitude, 
+            double persistence, 
+            const Vec3& worldSize);
 
-		/** Get/Set the base position of the force field */
-		const Vec3& getForceFieldPositionBase(void) const;
-		void setForceFieldPositionBase(const Vec3& position);
+        /** Get/Set the base position of the force field */
+        const Vec3& getForceFieldPositionBase(void) const;
+        void setForceFieldPositionBase(const Vec3& position);
 
-		/** Calculate the force, based on a certain position */
-		void determineForce(const Vec3& position, Vec3& force, float delta);
+        /** Calculate the force, based on a certain position */
+        void determineForce(const Vec3& position, Vec3& force, float delta);
 
-		/** Getters/Setters
-		*/
-		virtual unsigned short getOctaves(void) const;
-		virtual void setOctaves(unsigned short octaves);
-		virtual double getFrequency(void) const;
-		virtual void setFrequency(double frequency);
-		virtual double getAmplitude(void) const;
-		virtual void setAmplitude(double amplitude);
-		virtual double getPersistence(void) const;
-		virtual void setPersistence(double persistence);
-		virtual unsigned int getForceFieldSize(void) const;
-		virtual void setForceFieldSize(unsigned int forceFieldSize);
-		virtual Vec3 getWorldSize(void) const;
-		virtual void setWorldSize(const Vec3& worldSize);
-			
-		/** Get/Set the Forcefield type
-		*/
-		const ForceFieldType getForceFieldType(void) const;
-		void setForceFieldType(const ForceFieldType forceFieldType);
+        /** Getters/Setters
+        */
+        virtual unsigned short getOctaves(void) const;
+        virtual void setOctaves(unsigned short octaves);
+        virtual double getFrequency(void) const;
+        virtual void setFrequency(double frequency);
+        virtual double getAmplitude(void) const;
+        virtual void setAmplitude(double amplitude);
+        virtual double getPersistence(void) const;
+        virtual void setPersistence(double persistence);
+        virtual unsigned int getForceFieldSize(void) const;
+        virtual void setForceFieldSize(unsigned int forceFieldSize);
+        virtual Vec3 getWorldSize(void) const;
+        virtual void setWorldSize(const Vec3& worldSize);
+            
+        /** Get/Set the Forcefield type
+        */
+        const ForceFieldType getForceFieldType(void) const;
+        void setForceFieldType(const ForceFieldType forceFieldType);
 
-	protected:
-		unsigned short _octaves;
-		double _frequency;
-		double _amplitude;
-		double _persistence;
-		Vec3 _worldSize;
-		unsigned int _forceFieldSize;
-		ForceFieldCalculationFactory* _forceFieldCalculationFactory; // Internal factory that creates a certain force field type
-		Vec3 _forceFieldPositionBase; // Position of the force field
-		ForceFieldType _forceFieldType;
+    protected:
+        unsigned short _octaves;
+        double _frequency;
+        double _amplitude;
+        double _persistence;
+        Vec3 _worldSize;
+        unsigned int _forceFieldSize;
+        ForceFieldCalculationFactory* _forceFieldCalculationFactory; // Internal factory that creates a certain force field type
+        Vec3 _forceFieldPositionBase; // Position of the force field
+        ForceFieldType _forceFieldType;
 
-		/** Get/Set/Create ForceFieldCalculationFactory */
-		ForceFieldCalculationFactory* getForceFieldCalculationFactory() const;
-		void setForceFieldCalculationFactory(ForceFieldCalculationFactory* forceFieldCalculationFactory);
-		ForceFieldCalculationFactory* createForceFieldCalculationFactory(ForceFieldType type);
+        /** Get/Set/Create ForceFieldCalculationFactory */
+        ForceFieldCalculationFactory* getForceFieldCalculationFactory() const;
+        void setForceFieldCalculationFactory(ForceFieldCalculationFactory* forceFieldCalculationFactory);
+        ForceFieldCalculationFactory* createForceFieldCalculationFactory(ForceFieldType type);
 };
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------

@@ -34,55 +34,55 @@ NS_CC_BEGIN
 class  Particle3DColorAffector : public Particle3DAffector
 {
 public:
-	typedef std::map<float, Vec4> ColorMap;
-	typedef std::map<float, Vec4>::iterator ColorMapIterator;
-	enum ColorOperation
-	{
-		CAO_MULTIPLY,
-		CAO_SET
-	};
+    typedef std::map<float, Vec4> ColorMap;
+    typedef std::map<float, Vec4>::iterator ColorMapIterator;
+    enum ColorOperation
+    {
+        CAO_MULTIPLY,
+        CAO_SET
+    };
 
-	// Constants
-	static const ColorOperation DEFAULT_COLOR_OPERATION;
+    // Constants
+    static const ColorOperation DEFAULT_COLOR_OPERATION;
 
-	// Constructor
-	Particle3DColorAffector();
+    // Constructor
+    Particle3DColorAffector();
 
-	// Destructor
-	virtual ~Particle3DColorAffector();
+    // Destructor
+    virtual ~Particle3DColorAffector();
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** 
-	*/
-	void addColor(float timeFraction, const Vec4& color);
+    /** 
+    */
+    void addColor(float timeFraction, const Vec4& color);
 
-	/** 
-	*/
-	const ColorMap& getTimeAndColor() const;
+    /** 
+    */
+    const ColorMap& getTimeAndColor() const;
 
-	/** 
-	*/
-	void clearColorMap ();
+    /** 
+    */
+    void clearColorMap ();
 
-	/** 
-	*/
-	const ColorOperation& getColorOperation () const;
+    /** 
+    */
+    const ColorOperation& getColorOperation () const;
 
-	/** 
-	*/
-	void setColorOperation (const ColorOperation& colorOperation);
-
-protected:
-
-	/** 
-	*/
-	inline ColorMapIterator findNearestColorMapIterator(float timeFraction);
+    /** 
+    */
+    void setColorOperation (const ColorOperation& colorOperation);
 
 protected:
 
-	ColorMap _colorMap;
-	ColorOperation _colorOperation;
+    /** 
+    */
+    inline ColorMapIterator findNearestColorMapIterator(float timeFraction);
+
+protected:
+
+    ColorMap _colorMap;
+    ColorOperation _colorOperation;
 };
 NS_CC_END
 

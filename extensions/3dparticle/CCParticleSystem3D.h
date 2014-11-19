@@ -41,130 +41,130 @@ class Particle3DRender;
 
 struct Particle3D
 {
-		/** Enumeration which lists a number of reserved event flags. Although custom flags can be used to
-		indicate that a certain condition occurs, the first number of flags may not be used as custom flags.
-	*/
-	enum ReservedParticleEventFlags
-	{
-		PEF_EXPIRED = 1<<0,
-		PEF_EMITTED = 1<<1,
-		PEF_COLLIDED = 1<<2
-	};
+        /** Enumeration which lists a number of reserved event flags. Although custom flags can be used to
+        indicate that a certain condition occurs, the first number of flags may not be used as custom flags.
+    */
+    enum ReservedParticleEventFlags
+    {
+        PEF_EXPIRED = 1<<0,
+        PEF_EMITTED = 1<<1,
+        PEF_COLLIDED = 1<<2
+    };
 
     // property of particles, TODO add more properties
     Vec3 position;
-	// Values that are assigned as soon as the particle is emitted (non-transformed)
-	Vec3 originalPosition;
-	// Direction (and speed)
-	Vec3 direction;
-	Vec3 originalDirection;
-	/** The rotation axis is used in combination with orientation. Because the rotation axis is part
-		of the particle itself, it can be changed independently. */
-	Vec3 rotationAxis;
-	/** Current and original colour */
-	Vec4 color;
-	Vec4 originalColor;
-	/** zRotation is used to rotate the particle in 2D (around the Z-axis)
-	@remarks
-		There is no relation between zRotation and orientation.
-		rotationSpeed in combination with orientation are used for 3D rotation of the particle, while
-		zRotation means the rotation around the Z-axis. This type of rotation is typically used for 
-		rotating textures. This also means that both types of rotation can be used together.
-	*/
-	float zRotation; //radian
+    // Values that are assigned as soon as the particle is emitted (non-transformed)
+    Vec3 originalPosition;
+    // Direction (and speed)
+    Vec3 direction;
+    Vec3 originalDirection;
+    /** The rotation axis is used in combination with orientation. Because the rotation axis is part
+        of the particle itself, it can be changed independently. */
+    Vec3 rotationAxis;
+    /** Current and original colour */
+    Vec4 color;
+    Vec4 originalColor;
+    /** zRotation is used to rotate the particle in 2D (around the Z-axis)
+    @remarks
+        There is no relation between zRotation and orientation.
+        rotationSpeed in combination with orientation are used for 3D rotation of the particle, while
+        zRotation means the rotation around the Z-axis. This type of rotation is typically used for 
+        rotating textures. This also means that both types of rotation can be used together.
+    */
+    float zRotation; //radian
 
-	/** The zRotationSpeed is used in combination with zRotation and defines tha actual rotationspeed
-		in 2D. */
-	float zRotationSpeed; //radian
+    /** The zRotationSpeed is used in combination with zRotation and defines tha actual rotationspeed
+        in 2D. */
+    float zRotationSpeed; //radian
 
-	/*  Orientation of the particle.
-	@remarks
-		The orientation of the particle is only visible if the Particle Renderer - such as the Box renderer - 
-		supports orientation.
-	*/
-	Quaternion orientation;
-	Quaternion originalOrientation;
+    /*  Orientation of the particle.
+    @remarks
+        The orientation of the particle is only visible if the Particle Renderer - such as the Box renderer - 
+        supports orientation.
+    */
+    Quaternion orientation;
+    Quaternion originalOrientation;
 
-	/** The rotation is used in combination with orientation. Because the rotation speed is part
-		of the particle itself, it can be changed independently. */
-	float rotationSpeed;
-		/** Own width
-	*/
-	float width;
+    /** The rotation is used in combination with orientation. Because the rotation speed is part
+        of the particle itself, it can be changed independently. */
+    float rotationSpeed;
+        /** Own width
+    */
+    float width;
         
-	/** Own height
-	*/
-	float height;
+    /** Own height
+    */
+    float height;
 
-	/** Own depth
-	*/
-	float depth;
+    /** Own depth
+    */
+    float depth;
 
-	/** Radius of the particle, to be used for inter-particle collision and such.
-	*/
-	float radius;
+    /** Radius of the particle, to be used for inter-particle collision and such.
+    */
+    float radius;
 
-	/** Set own dimensions
-	*/
-	void setOwnDimensions(float newWidth, float newHeight, float newDepth);
-	void calculateBoundingSphereRadius();
+    /** Set own dimensions
+    */
+    void setOwnDimensions(float newWidth, float newHeight, float newDepth);
+    void calculateBoundingSphereRadius();
 
-	/** Does this particle have it's own dimensions? */
-	bool ownDimensions;
+    /** Does this particle have it's own dimensions? */
+    bool ownDimensions;
 
-		/** Sets the event flags.
-	*/
-	inline void setEventFlags(unsigned int flags) {eventFlags = flags;}
+        /** Sets the event flags.
+    */
+    inline void setEventFlags(unsigned int flags) {eventFlags = flags;}
 
-	/** As setEventFlags, except the flags passed as parameters are appended to the
-		existing flags on this object.
-	*/
-	inline void addEventFlags(unsigned int flags) {eventFlags |= flags;}
+    /** As setEventFlags, except the flags passed as parameters are appended to the
+        existing flags on this object.
+    */
+    inline void addEventFlags(unsigned int flags) {eventFlags |= flags;}
             
-	/** The flags passed as parameters are removed from the existing flags.
-	*/
-	inline void removeEventFlags(unsigned int flags) {eventFlags &= ~flags;}
+    /** The flags passed as parameters are removed from the existing flags.
+    */
+    inline void removeEventFlags(unsigned int flags) {eventFlags &= ~flags;}
         
-	/** Return the event flags.
-	*/
-	inline unsigned int getEventFlags() const {return eventFlags;}
+    /** Return the event flags.
+    */
+    inline unsigned int getEventFlags() const {return eventFlags;}
 
-	/** Determines whether it has certain flags set.
-	*/
-	inline bool hasEventFlags(unsigned int flags) const {return static_cast<bool>(eventFlags & flags);}
+    /** Determines whether it has certain flags set.
+    */
+    inline bool hasEventFlags(unsigned int flags) const {return static_cast<bool>(eventFlags & flags);}
 
-	unsigned int eventFlags;
+    unsigned int eventFlags;
 
-	bool isFreezed(void) const
-	{
-		return freezed;
-	}
-	//-----------------------------------------------------------------------
-	void setFreezed(bool fzd)
-	{
-		freezed = fzd;
-	}
-	bool freezed;
+    bool isFreezed(void) const
+    {
+        return freezed;
+    }
+    //-----------------------------------------------------------------------
+    void setFreezed(bool fzd)
+    {
+        freezed = fzd;
+    }
+    bool freezed;
 
-	// Time to live, number of seconds left of particles natural life
-	float timeToLive;
+    // Time to live, number of seconds left of particles natural life
+    float timeToLive;
 
-	// Total Time to live, number of seconds of particles natural life
-	float totalTimeToLive;
+    // Total Time to live, number of seconds of particles natural life
+    float totalTimeToLive;
 
-	// The timeFraction is calculated every update. It is used in other observers, affectors, etc. so it is
-	// better to calculate it once at the Particle level.
-	float timeFraction;
+    // The timeFraction is calculated every update. It is used in other observers, affectors, etc. so it is
+    // better to calculate it once at the Particle level.
+    float timeFraction;
 
-		/*  Mass of a particle.
-	@remarks
-		In case of simulations where mass of a particle is needed (i.e. exploding particles of different
-		mass) this attribute can be used.
-	*/
-	float mass;
+        /*  Mass of a particle.
+    @remarks
+        In case of simulations where mass of a particle is needed (i.e. exploding particles of different
+        mass) this attribute can be used.
+    */
+    float mass;
 
-	float age;
-	bool  alive;
+    float age;
+    bool  alive;
     
     //user defined property
     std::map<std::string, void*> userDefs;

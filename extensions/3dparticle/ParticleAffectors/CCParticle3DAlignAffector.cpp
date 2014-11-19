@@ -61,10 +61,10 @@ void Particle3DAlignAffector::updateAffector( float deltaTime )
         {
             Particle3D *particle = particles[i];
             Vec3 diff = preParticle->position - particle->position;
-			if (_resize)
-			{
-				particle->setOwnDimensions(particle->width, diff.length(), particle->depth);
-			}
+            if (_resize)
+            {
+                particle->setOwnDimensions(particle->width, diff.length(), particle->depth);
+            }
             diff.normalize();
             particle->orientation.x = diff.x;
             particle->orientation.y = diff.y;

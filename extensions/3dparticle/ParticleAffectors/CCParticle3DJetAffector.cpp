@@ -32,20 +32,20 @@ const float Particle3DJetAffector::DEFAULT_ACCELERATION = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DJetAffector::Particle3DJetAffector (void) : 
-	Particle3DAffector(),
-	_scaled(0.0f)
+    Particle3DAffector(),
+    _scaled(0.0f)
 {
-	//_dynAcceleration = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-	//(static_cast<DynamicAttributeFixed*>(_dynAcceleration))->setValue(DEFAULT_ACCELERATION);
+    //_dynAcceleration = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
+    //(static_cast<DynamicAttributeFixed*>(_dynAcceleration))->setValue(DEFAULT_ACCELERATION);
 }
 //-----------------------------------------------------------------------
 Particle3DJetAffector::~Particle3DJetAffector (void)
 {
-	//if (!_dynAcceleration)
-	//	return;
+    //if (!_dynAcceleration)
+    //	return;
 
-	//PU_DELETE_T(_dynAcceleration, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-	//_dynAcceleration = 0;
+    //PU_DELETE_T(_dynAcceleration, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
+    //_dynAcceleration = 0;
 }
 //-----------------------------------------------------------------------
 //void Particle3DJetAffector::setDynAcceleration(DynamicAttribute* dynAcceleration)
@@ -58,20 +58,20 @@ Particle3DJetAffector::~Particle3DJetAffector (void)
 
 void Particle3DJetAffector::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		//_scaled = deltaTime * (_dynAcceleration->getValue(particle->timeFraction));
-		if (particle->direction == Vec3::ZERO)
-		{
-			// Existing direction is zero, so use original direction
-			particle->direction += (particle->originalDirection * _scaled);
-		}
-		else
-		{
-			particle->direction += (particle->direction * _scaled);
-		}
-	}
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        //_scaled = deltaTime * (_dynAcceleration->getValue(particle->timeFraction));
+        if (particle->direction == Vec3::ZERO)
+        {
+            // Existing direction is zero, so use original direction
+            particle->direction += (particle->originalDirection * _scaled);
+        }
+        else
+        {
+            particle->direction += (particle->direction * _scaled);
+        }
+    }
 }
 
 NS_CC_END

@@ -30,13 +30,13 @@ NS_CC_BEGIN
 // Constants
 const float Particle3DInterParticleCollider::DEFAULT_ADJUSTMENT = 1.0f;
 const Particle3DInterParticleCollider::InterParticleCollisionResponse Particle3DInterParticleCollider::DEFAULT_COLLISION_RESPONSE = 
-	     Particle3DInterParticleCollider::IPCR_AVERAGE_VELOCITY;
+         Particle3DInterParticleCollider::IPCR_AVERAGE_VELOCITY;
 
 //-----------------------------------------------------------------------
 Particle3DInterParticleCollider::Particle3DInterParticleCollider(void) : 
-	Particle3DBaseCollider(),
-	_adjustment(DEFAULT_ADJUSTMENT),
-	_interParticleCollisionResponse(DEFAULT_COLLISION_RESPONSE)
+    Particle3DBaseCollider(),
+    _adjustment(DEFAULT_ADJUSTMENT),
+    _interParticleCollisionResponse(DEFAULT_COLLISION_RESPONSE)
 {
 }
 
@@ -47,22 +47,22 @@ Particle3DInterParticleCollider::~Particle3DInterParticleCollider( void )
 //-----------------------------------------------------------------------
 float Particle3DInterParticleCollider::getAdjustment(void) const
 {
-	return _adjustment;
+    return _adjustment;
 }
 //-----------------------------------------------------------------------
 void Particle3DInterParticleCollider::setAdjustment(float adjustment)
 {
-	_adjustment = adjustment;
+    _adjustment = adjustment;
 }
 //-----------------------------------------------------------------------
 Particle3DInterParticleCollider::InterParticleCollisionResponse Particle3DInterParticleCollider::getInterParticleCollisionResponse(void) const
 {
-	return _interParticleCollisionResponse;
+    return _interParticleCollisionResponse;
 }
 //-----------------------------------------------------------------------
 void Particle3DInterParticleCollider::setInterParticleCollisionResponse(Particle3DInterParticleCollider::InterParticleCollisionResponse interParticleCollisionResponse)
 {
-	_interParticleCollisionResponse = interParticleCollisionResponse;
+    _interParticleCollisionResponse = interParticleCollisionResponse;
 }
 //-----------------------------------------------------------------------
 //void Particle3DInterParticleCollider::_prepare(ParticleTechnique* particleTechnique)
@@ -79,91 +79,91 @@ void Particle3DInterParticleCollider::setInterParticleCollisionResponse(Particle
 //-----------------------------------------------------------------------
 bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particle3D* particle1, Particle3D* particle2, float timeElapsed)
 {
-	Particle3D* vp1 = static_cast<Particle3D*>(particle1);
-	Particle3D* vp2 = static_cast<Particle3D*>(particle2);
-	if ((vp1->position - vp2->position).length() < _adjustment * (vp1->radius + vp2->radius))
-	{
-		/** Collision detected.
-		@remarks
-			The collision response calculation isn't accurate, but gives an acceptable result.
-		*/
-		Vec3 n = vp1->position - vp2->position;
-		n.normalize();
-		switch(_interParticleCollisionResponse)
-		{
-			case IPCR_AVERAGE_VELOCITY:
-			{
-				// Use average velocity; this keeps the particles in movement.
-				float velocity1 = vp1->direction.length();
-				float velocity2 = vp2->direction.length();
-				float averageVelocity = 0.5f * (velocity1 + velocity2);
-				vp1->direction = averageVelocity * vp2->mass * n;
-				vp2->direction = averageVelocity * vp1->mass * -n;
-			}
-			break;
+    Particle3D* vp1 = static_cast<Particle3D*>(particle1);
+    Particle3D* vp2 = static_cast<Particle3D*>(particle2);
+    if ((vp1->position - vp2->position).length() < _adjustment * (vp1->radius + vp2->radius))
+    {
+        /** Collision detected.
+        @remarks
+            The collision response calculation isn't accurate, but gives an acceptable result.
+        */
+        Vec3 n = vp1->position - vp2->position;
+        n.normalize();
+        switch(_interParticleCollisionResponse)
+        {
+            case IPCR_AVERAGE_VELOCITY:
+            {
+                // Use average velocity; this keeps the particles in movement.
+                float velocity1 = vp1->direction.length();
+                float velocity2 = vp2->direction.length();
+                float averageVelocity = 0.5f * (velocity1 + velocity2);
+                vp1->direction = averageVelocity * vp2->mass * n;
+                vp2->direction = averageVelocity * vp1->mass * -n;
+            }
+            break;
 
-			case IPCR_ANGLE_BASED_VELOCITY:
-			{
-				// The new velocity is based on the angle between original direction and new direction.
-				// Note, that this usually means that the velocity decreases.
+            case IPCR_ANGLE_BASED_VELOCITY:
+            {
+                // The new velocity is based on the angle between original direction and new direction.
+                // Note, that this usually means that the velocity decreases.
 
-				float velocity1 = Vec3(abs(vp1->direction.x), abs(vp1->direction.y), abs(vp1->direction.z)).dot(n);
-				float velocity2 = Vec3(abs(vp2->direction.x), abs(vp2->direction.y), abs(vp2->direction.z)).dot(n);
-				vp1->direction = velocity1 * vp2->mass * n;
-				vp2->direction = velocity2 * vp1->mass * -n;
-			}
-			break;
-		}
-		vp1->direction *= _bouncyness;
-		vp2->direction *= _bouncyness;
-		vp1->addEventFlags(Particle3D::PEF_COLLIDED);
-		vp2->addEventFlags(Particle3D::PEF_COLLIDED);
-		return true;
-	}
+                float velocity1 = Vec3(abs(vp1->direction.x), abs(vp1->direction.y), abs(vp1->direction.z)).dot(n);
+                float velocity2 = Vec3(abs(vp2->direction.x), abs(vp2->direction.y), abs(vp2->direction.z)).dot(n);
+                vp1->direction = velocity1 * vp2->mass * n;
+                vp2->direction = velocity2 * vp1->mass * -n;
+            }
+            break;
+        }
+        vp1->direction *= _bouncyness;
+        vp2->direction *= _bouncyness;
+        vp1->addEventFlags(Particle3D::PEF_COLLIDED);
+        vp2->addEventFlags(Particle3D::PEF_COLLIDED);
+        return true;
+    }
 
-	return false;
+    return false;
 }
 //-----------------------------------------------------------------------
 
 void Particle3DInterParticleCollider::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		// Fast rejection: only visible, moving particles are able to collide, unless they are colliding already
-		// Changed && into || in V1.3.1
-		if (//particle->particleType != Particle::PT_VISUAL || 
-			particle->hasEventFlags(Particle3D::PEF_COLLIDED) || 
-			particle->direction == Vec3::ZERO)
-		{
-			return;
-		}
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        // Fast rejection: only visible, moving particles are able to collide, unless they are colliding already
+        // Changed && into || in V1.3.1
+        if (//particle->particleType != Particle::PT_VISUAL || 
+            particle->hasEventFlags(Particle3D::PEF_COLLIDED) || 
+            particle->direction == Vec3::ZERO)
+        {
+            return;
+        }
 
-		//// Determine whether neighbour particles are colliding.
-		//SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
-		//if (hashtable)
-		//{
-		//	SpatialHashTable<Particle*>::HashTableCell cell = hashtable->getCell(particle->position);
-		//	if (cell.empty())
-		//		return;
+        //// Determine whether neighbour particles are colliding.
+        //SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
+        //if (hashtable)
+        //{
+        //	SpatialHashTable<Particle*>::HashTableCell cell = hashtable->getCell(particle->position);
+        //	if (cell.empty())
+        //		return;
 
-		//	unsigned int size = static_cast<unsigned int>(cell.size());
-		//	for (unsigned int i = 0; i < size; ++i)
-		//	{
-		//		Particle* p = cell[i];
+        //	unsigned int size = static_cast<unsigned int>(cell.size());
+        //	for (unsigned int i = 0; i < size; ++i)
+        //	{
+        //		Particle* p = cell[i];
 
-		//		// Don't check if it is the same particle or the particle is already colliding.
-		//		if (particle != p  && !p->hasEventFlags(Particle3D::PEF_COLLIDED))
-		//		{
-		//			// Check for collision
-		//			if (validateAndExecuteSphereCollision(particle, p, deltaTime))
-		//			{
-		//				return;
-		//			}
-		//		}
-		//	}
-		//}
-	}
+        //		// Don't check if it is the same particle or the particle is already colliding.
+        //		if (particle != p  && !p->hasEventFlags(Particle3D::PEF_COLLIDED))
+        //		{
+        //			// Check for collision
+        //			if (validateAndExecuteSphereCollision(particle, p, deltaTime))
+        //			{
+        //				return;
+        //			}
+        //		}
+        //	}
+        //}
+    }
 }
 
 NS_CC_END

@@ -34,14 +34,14 @@ NS_CC_BEGIN
 class  Particle3DLinearForceAffector : public Particle3DBaseForceAffector
 {
 public:
-	Particle3DLinearForceAffector(void);
-	virtual ~Particle3DLinearForceAffector(void);
+    Particle3DLinearForceAffector(void);
+    virtual ~Particle3DLinearForceAffector(void);
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** 
-	*/
-	//virtual void _preProcessParticles(ParticleTechnique* particleTechnique, Real timeElapsed);
+    /** 
+    */
+    //virtual void _preProcessParticles(ParticleTechnique* particleTechnique, Real timeElapsed);
 
 };
 NS_CC_END

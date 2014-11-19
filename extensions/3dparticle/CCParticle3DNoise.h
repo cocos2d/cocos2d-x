@@ -33,47 +33,47 @@ NS_CC_BEGIN
 class Noise3D
 {
 public:
-	/* Constructor / Destructor */
-	Noise3D(void);
-	virtual ~Noise3D(void);
+    /* Constructor / Destructor */
+    Noise3D(void);
+    virtual ~Noise3D(void);
 
-	/* Inititialises the noise function */
-	void initialise(unsigned short octaves, double frequency = 1.0, double amplitude = 1.0, double persistence = 1.0);
+    /* Inititialises the noise function */
+    void initialise(unsigned short octaves, double frequency = 1.0, double amplitude = 1.0, double persistence = 1.0);
 
-	/* Returns a noise value between [0, 1]
-	@remarks
-		The noise is calculated in realtime
-	*/
-	double noise(double x, double y, double z);
+    /* Returns a noise value between [0, 1]
+    @remarks
+        The noise is calculated in realtime
+    */
+    double noise(double x, double y, double z);
 
-	/* Returns a noise value between [0, 1]
-	@remarks
-		The noise is calculated in realtime
-	*/
-	double noise(const Vec3& position);
+    /* Returns a noise value between [0, 1]
+    @remarks
+        The noise is calculated in realtime
+    */
+    double noise(const Vec3& position);
 
-	///* Creates an image file to test the noise */
-	//void noise2img(unsigned short dimension = 255);
-
-protected:
-
-		/* Returns a noise value between [0, 1]
-	@remarks
-		The noise is calculated in realtime
-	*/
-	double genNoise(double x, double y, double z);
-
-	double fade(double t);
-	double lerp(double t, double a, double b);
-	double grad(int hash, double x, double y, double z);
+    ///* Creates an image file to test the noise */
+    //void noise2img(unsigned short dimension = 255);
 
 protected:
 
-	int _p[512];
-	unsigned short _octaves;
-	double _frequency;
-	double _amplitude;
-	double _persistence;
+        /* Returns a noise value between [0, 1]
+    @remarks
+        The noise is calculated in realtime
+    */
+    double genNoise(double x, double y, double z);
+
+    double fade(double t);
+    double lerp(double t, double a, double b);
+    double grad(int hash, double x, double y, double z);
+
+protected:
+
+    int _p[512];
+    unsigned short _octaves;
+    double _frequency;
+    double _amplitude;
+    double _persistence;
 };
 
 NS_CC_END

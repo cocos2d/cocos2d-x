@@ -33,16 +33,16 @@ NS_CC_BEGIN
 class  Particle3DFlockCenteringAffector : public Particle3DAffector
 {
 public:
-	Particle3DFlockCenteringAffector();
-	virtual ~Particle3DFlockCenteringAffector();
+    Particle3DFlockCenteringAffector();
+    virtual ~Particle3DFlockCenteringAffector();
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
 protected:
 
-	Vec3 _sum;
-	Vec3 _average;
-	float _count;
+    Vec3 _sum;
+    Vec3 _average;
+    float _count;
 };
 NS_CC_END
 

@@ -33,68 +33,68 @@ struct Particle3D;
 class  Particle3DGeometryRotator : public Particle3DAffector
 {
 public:
-	// Constants
-	static const bool DEFAULT_USE_OWN;
-	static const float DEFAULT_ROTATION_SPEED;
-	static const Vec3 DEFAULT_ROTATION_AXIS;
+    // Constants
+    static const bool DEFAULT_USE_OWN;
+    static const float DEFAULT_ROTATION_SPEED;
+    static const Vec3 DEFAULT_ROTATION_AXIS;
 
-	Particle3DGeometryRotator();
-	virtual ~Particle3DGeometryRotator();
+    Particle3DGeometryRotator();
+    virtual ~Particle3DGeometryRotator();
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** Returns the rotation speed. This is the speed controlled by the affector. Besides
-		the default rotation speed, it is also possible to use the particles own rotation speed.
-	*/
-	//DynamicAttribute* getRotationSpeed(void) const;
+    /** Returns the rotation speed. This is the speed controlled by the affector. Besides
+        the default rotation speed, it is also possible to use the particles own rotation speed.
+    */
+    //DynamicAttribute* getRotationSpeed(void) const;
 
-	/** 
-	*/
-	//void setRotationSpeed(DynamicAttribute* dynRotationSpeed);
+    /** 
+    */
+    //void setRotationSpeed(DynamicAttribute* dynRotationSpeed);
 
-	/** Returns an indication whether the rotation speed is the same for all particles in this 
-		particle technique, or whether the rotation speed of the particle itself is used.
-	*/
-	bool useOwnRotationSpeed (void) const;
+    /** Returns an indication whether the rotation speed is the same for all particles in this 
+        particle technique, or whether the rotation speed of the particle itself is used.
+    */
+    bool useOwnRotationSpeed (void) const;
 
-	/** Set the indication whether rotation speed of the particle itself is used.
-	*/
-	void setUseOwnRotationSpeed (bool _useOwnRotationSpeed);
+    /** Set the indication whether rotation speed of the particle itself is used.
+    */
+    void setUseOwnRotationSpeed (bool _useOwnRotationSpeed);
 
-	/** 
-	*/
-	const Vec3& getRotationAxis(void) const;
+    /** 
+    */
+    const Vec3& getRotationAxis(void) const;
 
-	/** 
-	*/
-	void setRotationAxis(const Vec3& rotationAxis);
+    /** 
+    */
+    void setRotationAxis(const Vec3& rotationAxis);
 
-	/** 
-	*/
-	void resetRotationAxis(void);
-
-protected:
-
-	/** Returns a rotation speed value, depending on the type of dynamic attribute.
-	*/
-	float calculateRotationSpeed (Particle3D* particle);
-
-	/** @copydoc ParticleAffector::_initParticleForEmission */
-	virtual void initParticleForEmission(Particle3D* particle);
+    /** 
+    */
+    void resetRotationAxis(void);
 
 protected:
 
-	float _scaledRotationSpeed;
-	bool _useOwnRotationSpeed;
-	//DynamicAttribute* _dynRotationSpeed;
-	Quaternion _q;
-	Vec3 _rotationAxis;
-	bool _rotationAxisSet;
+    /** Returns a rotation speed value, depending on the type of dynamic attribute.
+    */
+    float calculateRotationSpeed (Particle3D* particle);
 
-	/** Helper factory
-	*/
-	//DynamicAttributeFactory _dynamicAttributeFactory;
-	//DynamicAttributeHelper _dynamicAttributeHelper;
+    /** @copydoc ParticleAffector::_initParticleForEmission */
+    virtual void initParticleForEmission(Particle3D* particle);
+
+protected:
+
+    float _scaledRotationSpeed;
+    bool _useOwnRotationSpeed;
+    //DynamicAttribute* _dynRotationSpeed;
+    Quaternion _q;
+    Vec3 _rotationAxis;
+    bool _rotationAxisSet;
+
+    /** Helper factory
+    */
+    //DynamicAttributeFactory _dynamicAttributeFactory;
+    //DynamicAttributeHelper _dynamicAttributeHelper;
 };
 NS_CC_END
 

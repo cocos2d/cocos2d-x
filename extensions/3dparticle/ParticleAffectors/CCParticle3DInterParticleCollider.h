@@ -35,54 +35,54 @@ class  Particle3DInterParticleCollider : public Particle3DBaseCollider
 {
 public:
 
-	enum InterParticleCollisionResponse
-	{
-		IPCR_AVERAGE_VELOCITY,
-		IPCR_ANGLE_BASED_VELOCITY
-	};
+    enum InterParticleCollisionResponse
+    {
+        IPCR_AVERAGE_VELOCITY,
+        IPCR_ANGLE_BASED_VELOCITY
+    };
 
-	// Constants
-	static const float DEFAULT_ADJUSTMENT;
-	static const InterParticleCollisionResponse DEFAULT_COLLISION_RESPONSE;
+    // Constants
+    static const float DEFAULT_ADJUSTMENT;
+    static const InterParticleCollisionResponse DEFAULT_COLLISION_RESPONSE;
 
-	Particle3DInterParticleCollider(void);
-	virtual ~Particle3DInterParticleCollider(void);
+    Particle3DInterParticleCollider(void);
+    virtual ~Particle3DInterParticleCollider(void);
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** Todo
-	*/
-	float getAdjustment(void) const;
+    /** Todo
+    */
+    float getAdjustment(void) const;
 
-	/** Todo
-	*/
-	void setAdjustment(float adjustment);
+    /** Todo
+    */
+    void setAdjustment(float adjustment);
 
-	/** Todo
-	*/
-	InterParticleCollisionResponse getInterParticleCollisionResponse(void) const;
+    /** Todo
+    */
+    InterParticleCollisionResponse getInterParticleCollisionResponse(void) const;
 
-	/** Todo
-	*/
-	void setInterParticleCollisionResponse(InterParticleCollisionResponse interParticleCollisionResponse);
+    /** Todo
+    */
+    void setInterParticleCollisionResponse(InterParticleCollisionResponse interParticleCollisionResponse);
 
-	///** @copydoc ParticleAffector::_prepare */
-	//virtual void _prepare(ParticleTechnique* particleTechnique);
+    ///** @copydoc ParticleAffector::_prepare */
+    //virtual void _prepare(ParticleTechnique* particleTechnique);
 
-	///** @copydoc ParticleAffector::_unprepare */
-	//virtual void _unprepare(ParticleTechnique* particleTechnique);
+    ///** @copydoc ParticleAffector::_unprepare */
+    //virtual void _unprepare(ParticleTechnique* particleTechnique);
 
 
 protected:
 
-	/** Todo
-	*/
-	bool validateAndExecuteSphereCollision (Particle3D* particle1, Particle3D* particle2, float timeElapsed);
-		
+    /** Todo
+    */
+    bool validateAndExecuteSphereCollision (Particle3D* particle1, Particle3D* particle2, float timeElapsed);
+        
 protected:
 
-	float _adjustment;
-	InterParticleCollisionResponse _interParticleCollisionResponse;
+    float _adjustment;
+    InterParticleCollisionResponse _interParticleCollisionResponse;
 
 };
 NS_CC_END

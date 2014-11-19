@@ -35,46 +35,46 @@ const float Particle3DScaleAffector::DEFAULT_XYZ_SCALE = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DScaleAffector::Particle3DScaleAffector(void) : 
-	Particle3DAffector(),
-	_dynScaleXSet(false),
-	_dynScaleYSet(false),
-	_dynScaleZSet(false),
-	_dynScaleXYZSet(false),
-	_sinceStartSystem(false)
+    Particle3DAffector(),
+    _dynScaleXSet(false),
+    _dynScaleYSet(false),
+    _dynScaleZSet(false),
+    _dynScaleXYZSet(false),
+    _sinceStartSystem(false)
 {
-	//_dynScaleX = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-	//_dynScaleY = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-	//_dynScaleZ = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-	//_dynScaleXYZ = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-	//(static_cast<DynamicAttributeFixed*>(_dynScaleX))->setValue(DEFAULT_X_SCALE);
-	//(static_cast<DynamicAttributeFixed*>(_dynScaleY))->setValue(DEFAULT_Y_SCALE);
-	//(static_cast<DynamicAttributeFixed*>(_dynScaleZ))->setValue(DEFAULT_Z_SCALE);
-	//(static_cast<DynamicAttributeFixed*>(_dynScaleXYZ))->setValue(DEFAULT_XYZ_SCALE);
-	_latestTimeElapsed = 1.0f;
+    //_dynScaleX = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
+    //_dynScaleY = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
+    //_dynScaleZ = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
+    //_dynScaleXYZ = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
+    //(static_cast<DynamicAttributeFixed*>(_dynScaleX))->setValue(DEFAULT_X_SCALE);
+    //(static_cast<DynamicAttributeFixed*>(_dynScaleY))->setValue(DEFAULT_Y_SCALE);
+    //(static_cast<DynamicAttributeFixed*>(_dynScaleZ))->setValue(DEFAULT_Z_SCALE);
+    //(static_cast<DynamicAttributeFixed*>(_dynScaleXYZ))->setValue(DEFAULT_XYZ_SCALE);
+    _latestTimeElapsed = 1.0f;
 }
 //-----------------------------------------------------------------------
 Particle3DScaleAffector::~Particle3DScaleAffector(void)
 {
-	//if (_dynScaleX)
-	//{
-	//	PU_DELETE_T(_dynScaleX, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-	//	_dynScaleX = 0;
-	//}
-	//if (_dynScaleY)
-	//{
-	//	PU_DELETE_T(_dynScaleY, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-	//	_dynScaleY = 0;
-	//}
-	//if (_dynScaleZ)
-	//{
-	//	PU_DELETE_T(_dynScaleZ, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-	//	_dynScaleZ = 0;
-	//}
-	//if (_dynScaleXYZ)
-	//{
-	//	PU_DELETE_T(_dynScaleXYZ, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-	//	_dynScaleXYZ = 0;
-	//}
+    //if (_dynScaleX)
+    //{
+    //	PU_DELETE_T(_dynScaleX, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
+    //	_dynScaleX = 0;
+    //}
+    //if (_dynScaleY)
+    //{
+    //	PU_DELETE_T(_dynScaleY, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
+    //	_dynScaleY = 0;
+    //}
+    //if (_dynScaleZ)
+    //{
+    //	PU_DELETE_T(_dynScaleZ, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
+    //	_dynScaleZ = 0;
+    //}
+    //if (_dynScaleXYZ)
+    //{
+    //	PU_DELETE_T(_dynScaleXYZ, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
+    //	_dynScaleXYZ = 0;
+    //}
 }
 //-----------------------------------------------------------------------
 //void Particle3DScaleAffector::setDynScaleX(DynamicAttribute* dynScaleX)
@@ -193,70 +193,70 @@ Particle3DScaleAffector::~Particle3DScaleAffector(void)
 void Particle3DScaleAffector::updateAffector( float deltaTime )
 {
 
-	//// Only continue if the particle is a visual particle
-	//if (particle->particleType != Particle::PT_VISUAL)
-	//	return;
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		float ds = 0;
-		float width = 0;
-		float height = 0;
-		float depth = 0;
-		float dimension = 0; // Added in V1.4
+    //// Only continue if the particle is a visual particle
+    //if (particle->particleType != Particle::PT_VISUAL)
+    //	return;
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        float ds = 0;
+        float width = 0;
+        float height = 0;
+        float depth = 0;
+        float dimension = 0; // Added in V1.4
 
-		if (_dynScaleXYZSet)
-		{
-			//ds = calculateScale(_dynScaleXYZ, particle) * deltaTime * _calculateAffectSpecialisationFactor(particle);
-			dimension = particle->width + ds * _affectorScale.x;
-			if (dimension > 0)
-			{
-				width = dimension;
-			}
-			dimension = particle->height + ds * _affectorScale.y;
-			if (dimension > 0)
-			{
-				height = dimension;
-			}
-			dimension = particle->depth + ds * _affectorScale.z;
-			if (dimension > 0)
-			{
-				depth = dimension;
-			}
-			particle->setOwnDimensions(width, height, depth);
-		}
-		else
-		{
-			if (_dynScaleXSet)
-			{
-				//ds = calculateScale(_dynScaleX, particle) * deltaTime;
-				dimension = particle->width + ds * _affectorScale.x;
-				if (dimension > 0)
-				{
-					width = dimension;
-				}
-			}
-			if (_dynScaleYSet)
-			{
-				//ds = calculateScale(_dynScaleY, particle) * deltaTime;
-				dimension = particle->height + ds * _affectorScale.y;
-				if (dimension > 0)
-				{
-					height = dimension;
-				}
-			}
-			if (_dynScaleZSet)
-			{
-				//ds = calculateScale(_dynScaleZ, particle) * deltaTime;
-				dimension = particle->depth + ds * _affectorScale.z;
-				if (dimension > 0)
-				{
-					depth = dimension;
-				}
-			}
-			particle->setOwnDimensions(width, height, depth);
-		}
-	}
+        if (_dynScaleXYZSet)
+        {
+            //ds = calculateScale(_dynScaleXYZ, particle) * deltaTime * calculateAffectSpecialisationFactor(particle);
+            dimension = particle->width + ds * _affectorScale.x;
+            if (dimension > 0)
+            {
+                width = dimension;
+            }
+            dimension = particle->height + ds * _affectorScale.y;
+            if (dimension > 0)
+            {
+                height = dimension;
+            }
+            dimension = particle->depth + ds * _affectorScale.z;
+            if (dimension > 0)
+            {
+                depth = dimension;
+            }
+            particle->setOwnDimensions(width, height, depth);
+        }
+        else
+        {
+            if (_dynScaleXSet)
+            {
+                //ds = calculateScale(_dynScaleX, particle) * deltaTime;
+                dimension = particle->width + ds * _affectorScale.x;
+                if (dimension > 0)
+                {
+                    width = dimension;
+                }
+            }
+            if (_dynScaleYSet)
+            {
+                //ds = calculateScale(_dynScaleY, particle) * deltaTime;
+                dimension = particle->height + ds * _affectorScale.y;
+                if (dimension > 0)
+                {
+                    height = dimension;
+                }
+            }
+            if (_dynScaleZSet)
+            {
+                //ds = calculateScale(_dynScaleZ, particle) * deltaTime;
+                dimension = particle->depth + ds * _affectorScale.z;
+                if (dimension > 0)
+                {
+                    depth = dimension;
+                }
+            }
+            particle->setOwnDimensions(width, height, depth);
+        }
+    }
 
 }
 

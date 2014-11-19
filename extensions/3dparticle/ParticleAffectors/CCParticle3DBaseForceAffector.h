@@ -34,34 +34,34 @@ NS_CC_BEGIN
 class  Particle3DBaseForceAffector : public Particle3DAffector
 {
 public:
-	enum ForceApplication
-	{
-		FA_AVERAGE,
-		FA_ADD
-	};
+    enum ForceApplication
+    {
+        FA_AVERAGE,
+        FA_ADD
+    };
 
-	// Constants
-	static const Vec3 DEFAULT_FORCE_VECTOR;
-	static const ForceApplication DEFAULT_FORCE_APPL;
+    // Constants
+    static const Vec3 DEFAULT_FORCE_VECTOR;
+    static const ForceApplication DEFAULT_FORCE_APPL;
 
-	Particle3DBaseForceAffector();
-	virtual ~Particle3DBaseForceAffector();
+    Particle3DBaseForceAffector();
+    virtual ~Particle3DBaseForceAffector();
 
-	/** 
-	*/
-	const Vec3& getForceVector() const;
-	void setForceVector(const Vec3& forceVector);
+    /** 
+    */
+    const Vec3& getForceVector() const;
+    void setForceVector(const Vec3& forceVector);
 
-	/** 
-	*/
-	ForceApplication getForceApplication() const;
-	void setForceApplication(ForceApplication forceApplication);
+    /** 
+    */
+    ForceApplication getForceApplication() const;
+    void setForceApplication(ForceApplication forceApplication);
 
 protected:
 
-	Vec3 _forceVector;
-	Vec3 _scaledVector;
-	ForceApplication _forceApplication;
+    Vec3 _forceVector;
+    Vec3 _scaledVector;
+    ForceApplication _forceApplication;
 
 };
 NS_CC_END

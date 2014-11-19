@@ -32,9 +32,9 @@ const Vec3 Particle3DPlaneCollider::DEFAULT_NORMAL(0, 0, 0);
 
 //-----------------------------------------------------------------------
 Particle3DPlaneCollider::Particle3DPlaneCollider(void) : 
-	Particle3DBaseCollider(),
-	_predictedPosition(Vec3::ZERO),
-	_normal(DEFAULT_NORMAL)
+    Particle3DBaseCollider(),
+    _predictedPosition(Vec3::ZERO),
+    _normal(DEFAULT_NORMAL)
 {
 }
 Particle3DPlaneCollider::~Particle3DPlaneCollider( void )
@@ -44,13 +44,13 @@ Particle3DPlaneCollider::~Particle3DPlaneCollider( void )
 //-----------------------------------------------------------------------
 const Vec3 Particle3DPlaneCollider::getNormal(void) const
 {
-	return _normal;
+    return _normal;
 }
 //-----------------------------------------------------------------------
 void Particle3DPlaneCollider::setNormal(const Vec3& normal)
 {
-	_normal = normal;
-	//_plane.redefine(mNormal, getDerivedPosition()); // Changed in 1.3.1
+    _normal = normal;
+    //_plane.redefine(mNormal, getDerivedPosition()); // Changed in 1.3.1
 }
 //-----------------------------------------------------------------------
 //void Particle3DPlaneCollider::_notifyRescaled(const Vec3& scale)
@@ -62,105 +62,105 @@ void Particle3DPlaneCollider::setNormal(const Vec3& normal)
 //-----------------------------------------------------------------------
 void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed)
 {
-	float directionLength = particle->direction.length();
-	switch (_collisionType)
-	{
-		case Particle3DBaseCollider::CT_BOUNCE:
-		{
-			/** If the particle is on the plane or at the back of the plane, bounce it.
-				Make use of the same formula as the sphere collider.
-			*/
-			particle->direction.normalize();
-			particle->direction = 2 * (-particle->direction.dot(-_normal)) * -_normal + particle->direction;
+    float directionLength = particle->direction.length();
+    switch (_collisionType)
+    {
+        case Particle3DBaseCollider::CT_BOUNCE:
+        {
+            /** If the particle is on the plane or at the back of the plane, bounce it.
+                Make use of the same formula as the sphere collider.
+            */
+            particle->direction.normalize();
+            particle->direction = 2 * (-particle->direction.dot(-_normal)) * -_normal + particle->direction;
 
-			// Adjust to original speed
-			particle->direction *= directionLength;
+            // Adjust to original speed
+            particle->direction *= directionLength;
 
-			// Accelerate/slow down, using the bounce value
-			particle->direction *= _bouncyness;
-		}
-		break;
-		case Particle3DBaseCollider::CT_FLOW:
-		{
-			/** Reset the position (just in front of the plane), but keep the direction.
-			@remarks
-				This is not really the correct way, because the particle 'jumps'. Maybe it is better to change 
-				the direction parallel to the plane.
-			*/
-			particle->position += timeElapsed * directionLength * _normal;
-		}
-		break;
-	}
+            // Accelerate/slow down, using the bounce value
+            particle->direction *= _bouncyness;
+        }
+        break;
+        case Particle3DBaseCollider::CT_FLOW:
+        {
+            /** Reset the position (just in front of the plane), but keep the direction.
+            @remarks
+                This is not really the correct way, because the particle 'jumps'. Maybe it is better to change 
+                the direction parallel to the plane.
+            */
+            particle->position += timeElapsed * directionLength * _normal;
+        }
+        break;
+    }
 }
 
 void Particle3DPlaneCollider::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		_predictedPosition = particle->position + _velocityScale * particle->direction;
-		bool collision = false;
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        _predictedPosition = particle->position + _velocityScale * particle->direction;
+        bool collision = false;
 
-		switch(_intersectionType)
-		{
-		case Particle3DBaseCollider::IT_POINT:
-			{
-				//// Validate for a point-plane intersection (on the plane or the back side)
-				//// First determine whether it is now colliding (some affector made the particle move), else
-				//// determine whether it WILL be colliding
-				//if (_plane.getDistance(particle->position) <= 0.0f)
-				//{
-				//	// Collision detected (re-position the particle)
-				//	particle->position -= mVelocityScale * particle->direction;
-				//	collision = true;
-				//}
-				//else if (_plane.getDistance(_predictedPosition) <= 0.0f)
-				//{
-				//	// Collision detected
-				//	collision = true;
-				//}
-			}
-			break;
+        switch(_intersectionType)
+        {
+        case Particle3DBaseCollider::IT_POINT:
+            {
+                //// Validate for a point-plane intersection (on the plane or the back side)
+                //// First determine whether it is now colliding (some affector made the particle move), else
+                //// determine whether it WILL be colliding
+                //if (_plane.getDistance(particle->position) <= 0.0f)
+                //{
+                //	// Collision detected (re-position the particle)
+                //	particle->position -= mVelocityScale * particle->direction;
+                //	collision = true;
+                //}
+                //else if (_plane.getDistance(_predictedPosition) <= 0.0f)
+                //{
+                //	// Collision detected
+                //	collision = true;
+                //}
+            }
+            break;
 
-		case Particle3DBaseCollider::IT_BOX:
-			{
+        case Particle3DBaseCollider::IT_BOX:
+            {
 
-				AABB box;
-				populateAlignedBox(box,
-					particle->position, 
-					particle->width, 
-					particle->height,
-					particle->depth);
-				//if (box.intersects(_plane))
-				//{
-				//	// Collision detected (re-position the particle)
-				//	particle->position -= _velocityScale * particle->direction;
-				//	collision = true;
-				//}
-				//else 
-				//{
-				//	populateAlignedBox(box,
-				//		_predictedPosition, 
-				//		particle->width, 
-				//		particle->height,
-				//		particle->depth);
-				//	if (box.intersects(_plane))
-				//	{
-				//		// Collision detected
-				//		collision = true;
-				//	}
-				//}
-			}
-			break;
-		}
+                AABB box;
+                populateAlignedBox(box,
+                    particle->position, 
+                    particle->width, 
+                    particle->height,
+                    particle->depth);
+                //if (box.intersects(_plane))
+                //{
+                //	// Collision detected (re-position the particle)
+                //	particle->position -= _velocityScale * particle->direction;
+                //	collision = true;
+                //}
+                //else 
+                //{
+                //	populateAlignedBox(box,
+                //		_predictedPosition, 
+                //		particle->width, 
+                //		particle->height,
+                //		particle->depth);
+                //	if (box.intersects(_plane))
+                //	{
+                //		// Collision detected
+                //		collision = true;
+                //	}
+                //}
+            }
+            break;
+        }
 
-		if (collision)
-		{
-			calculateDirectionAfterCollision(particle, deltaTime);
-			calculateRotationSpeedAfterCollision(particle);
-			particle->addEventFlags(Particle3D::PEF_COLLIDED);
-		}
-	}
+        if (collision)
+        {
+            calculateDirectionAfterCollision(particle, deltaTime);
+            calculateRotationSpeedAfterCollision(particle);
+            particle->addEventFlags(Particle3D::PEF_COLLIDED);
+        }
+    }
 
 }
 

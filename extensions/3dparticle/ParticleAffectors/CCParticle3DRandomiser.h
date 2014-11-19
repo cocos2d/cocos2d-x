@@ -34,56 +34,56 @@ NS_CC_BEGIN
 class  Particle3DRandomiser : public Particle3DAffector
 {
 public:
-	// Constants
-	static const Vec3 DEFAULT_MAX_DEVIATION;
-	static const float DEFAULT_TIME_STEP;
-	static const bool DEFAULT_RANDOM_DIRECTION;
+    // Constants
+    static const Vec3 DEFAULT_MAX_DEVIATION;
+    static const float DEFAULT_TIME_STEP;
+    static const bool DEFAULT_RANDOM_DIRECTION;
 
-	Particle3DRandomiser(void);
-	virtual ~Particle3DRandomiser(void);
+    Particle3DRandomiser(void);
+    virtual ~Particle3DRandomiser(void);
 
-	virtual void updateAffector(float deltaTime) override;
-	/** 
-	*/
-	float getMaxDeviationX(void) const;
-	void setMaxDeviationX(const float maxDeviationX);
+    virtual void updateAffector(float deltaTime) override;
+    /** 
+    */
+    float getMaxDeviationX(void) const;
+    void setMaxDeviationX(const float maxDeviationX);
 
-	/** 
-	*/
-	float getMaxDeviationY(void) const;
-	void setMaxDeviationY(const float maxDeviationZ);
+    /** 
+    */
+    float getMaxDeviationY(void) const;
+    void setMaxDeviationY(const float maxDeviationZ);
 
-	/** 
-	*/
-	float getMaxDeviationZ(void) const;
-	void setMaxDeviationZ(const float maxDeviationZ);
+    /** 
+    */
+    float getMaxDeviationZ(void) const;
+    void setMaxDeviationZ(const float maxDeviationZ);
 
-	/** 
-	*/
-	float getTimeStep(void) const;
-	void setTimeStep(const float timeStep);
+    /** 
+    */
+    float getTimeStep(void) const;
+    void setTimeStep(const float timeStep);
 
-	/** 
-	*/
-	bool isRandomDirection(void) const;
-	void setRandomDirection(bool randomDirection);
+    /** 
+    */
+    bool isRandomDirection(void) const;
+    void setRandomDirection(bool randomDirection);
 
-	/** 
-	*/
-	//virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
+    /** 
+    */
+    //virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
 
-	/** 
-	*/
-	//virtual void _postProcessParticles(ParticleTechnique* technique, float timeElapsed);
+    /** 
+    */
+    //virtual void _postProcessParticles(ParticleTechnique* technique, float timeElapsed);
 
 protected:
-	float _maxDeviationX;
-	float _maxDeviationY;
-	float _maxDeviationZ;
-	float _timeSinceLastUpdate;
-	float _timeStep;
-	bool _randomDirection;
-	bool _update;
+    float _maxDeviationX;
+    float _maxDeviationY;
+    float _maxDeviationZ;
+    float _timeSinceLastUpdate;
+    float _timeStep;
+    bool _randomDirection;
+    bool _update;
 
 };
 NS_CC_END

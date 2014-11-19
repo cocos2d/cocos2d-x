@@ -32,8 +32,8 @@ const Particle3DColorAffector::ColorOperation Particle3DColorAffector::DEFAULT_C
 
 //-----------------------------------------------------------------------
 Particle3DColorAffector::Particle3DColorAffector() : 
-	Particle3DAffector(),
-	_colorOperation(DEFAULT_COLOR_OPERATION)
+    Particle3DAffector(),
+    _colorOperation(DEFAULT_COLOR_OPERATION)
 {
 }
 
@@ -43,85 +43,85 @@ Particle3DColorAffector::~Particle3DColorAffector()
 //-----------------------------------------------------------------------
 const Particle3DColorAffector::ColorOperation& Particle3DColorAffector::getColorOperation () const
 {
-	return _colorOperation;
+    return _colorOperation;
 }
 //-----------------------------------------------------------------------
 void Particle3DColorAffector::setColorOperation (const Particle3DColorAffector::ColorOperation& colorOperation)
 {
-	_colorOperation = colorOperation;
+    _colorOperation = colorOperation;
 }
 //-----------------------------------------------------------------------
 void Particle3DColorAffector::addColor (float timeFraction, const Vec4& color)
 {
-	_colorMap[timeFraction] = color;
+    _colorMap[timeFraction] = color;
 }
 //-----------------------------------------------------------------------
 const Particle3DColorAffector::ColorMap& Particle3DColorAffector::getTimeAndColor() const
 {
-	return _colorMap;
+    return _colorMap;
 }
 //-----------------------------------------------------------------------
 void Particle3DColorAffector::clearColorMap ()
 {
-	_colorMap.clear();
+    _colorMap.clear();
 }
 //-----------------------------------------------------------------------
 Particle3DColorAffector::ColorMapIterator Particle3DColorAffector::findNearestColorMapIterator(float timeFraction)
 {
-	ColorMapIterator it;
-	for (it = _colorMap.begin(); it != _colorMap.end(); ++it)
-	{
-		if (timeFraction < it->first)
-		{
-			if (it == _colorMap.begin())
-				return it;
-			else
-				return --it;
-		}
-	}
+    ColorMapIterator it;
+    for (it = _colorMap.begin(); it != _colorMap.end(); ++it)
+    {
+        if (timeFraction < it->first)
+        {
+            if (it == _colorMap.begin())
+                return it;
+            else
+                return --it;
+        }
+    }
 
-	// If not found return the last valid iterator
-	return --it;
+    // If not found return the last valid iterator
+    return --it;
 }
 
 void Particle3DColorAffector::updateAffector( float deltaTime )
 {
-	// Fast rejection
-	if (_colorMap.empty())
-		return;
+    // Fast rejection
+    if (_colorMap.empty())
+        return;
 
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		// Linear interpolation of the colour
-		Vec4 color = Vec4::ONE;
-		float timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;
-		ColorMapIterator it1 = findNearestColorMapIterator(timeFraction);
-		ColorMapIterator it2 = it1;
-		it2++;
-		if (it2 != _colorMap.end())
-		{
-			// Interpolate colour
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        // Linear interpolation of the colour
+        Vec4 color = Vec4::ONE;
+        float timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;
+        ColorMapIterator it1 = findNearestColorMapIterator(timeFraction);
+        ColorMapIterator it2 = it1;
+        it2++;
+        if (it2 != _colorMap.end())
+        {
+            // Interpolate colour
 
-			color = it1->second + ((it2->second - it1->second) * ((timeFraction - it1->first)/(it2->first - it1->first)));
-		}
-		else
-		{
-			color = it1->second;
-		}
+            color = it1->second + ((it2->second - it1->second) * ((timeFraction - it1->first)/(it2->first - it1->first)));
+        }
+        else
+        {
+            color = it1->second;
+        }
 
-		// Determine operation
-		if (_colorOperation == CAO_SET)
-		{
-			// No operation, so just set the colour
-			particle->color = color;
-		}
-		else
-		{
-			// Multiply
-			particle->color = Vec4(color.x * particle->originalColor.x, color.y * particle->originalColor.y, color.z * particle->originalColor.z, color.w * particle->originalColor.w);
-		}
-	}
+        // Determine operation
+        if (_colorOperation == CAO_SET)
+        {
+            // No operation, so just set the colour
+            particle->color = color;
+        }
+        else
+        {
+            // Multiply
+            particle->color = Vec4(color.x * particle->originalColor.x, color.y * particle->originalColor.y, color.z * particle->originalColor.z, color.w * particle->originalColor.w);
+        }
+    }
 }
 
 NS_CC_END

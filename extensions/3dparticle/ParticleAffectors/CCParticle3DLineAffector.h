@@ -34,62 +34,62 @@ NS_CC_BEGIN
 class  Particle3DLineAffector : public Particle3DAffector
 {
 public:
-	// Constants
-	static const float DEFAULT_MAX_DEVIATION;
-	static const float DEFAULT_TIME_STEP;
-	static const Vec3 DEFAULT_END;
-	static const float DEFAULT_DRIFT;
-			
-	Particle3DLineAffector(void);
-	virtual ~Particle3DLineAffector(void);
+    // Constants
+    static const float DEFAULT_MAX_DEVIATION;
+    static const float DEFAULT_TIME_STEP;
+    static const Vec3 DEFAULT_END;
+    static const float DEFAULT_DRIFT;
+            
+    Particle3DLineAffector(void);
+    virtual ~Particle3DLineAffector(void);
 
-	virtual void updateAffector(float deltaTime) override;
-	/** 
-	*/
-	float getMaxDeviation(void) const;
-	void setMaxDeviation(float maxDeviation);
+    virtual void updateAffector(float deltaTime) override;
+    /** 
+    */
+    float getMaxDeviation(void) const;
+    void setMaxDeviation(float maxDeviation);
 
-	/** 
-	*/
-	const Vec3& getEnd(void) const;
-	void setEnd(const Vec3& end);
+    /** 
+    */
+    const Vec3& getEnd(void) const;
+    void setEnd(const Vec3& end);
 
-	/** 
-	*/
-	float getTimeStep(void) const;
-	void setTimeStep(float timeStep);
+    /** 
+    */
+    float getTimeStep(void) const;
+    void setTimeStep(float timeStep);
 
-	/** 
-	*/
-	float getDrift(void) const;
-	void setDrift(float drift);
+    /** 
+    */
+    float getDrift(void) const;
+    void setDrift(float drift);
 
-	/**
-	*/
-	//virtual void _notifyRescaled(const Vec3& scale);
+    /**
+    */
+    //virtual void _notifyRescaled(const Vec3& scale);
 
-	/** 
-	*/
-	//virtual void _firstParticle(ParticleTechnique* particleTechnique, Particle* particle, float timeElapsed);
-	/** 
-	*/
-	//virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
+    /** 
+    */
+    //virtual void _firstParticle(ParticleTechnique* particleTechnique, Particle* particle, float timeElapsed);
+    /** 
+    */
+    //virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
 
-	/** 
-	*/
-	//virtual void _postProcessParticles(ParticleTechnique* technique, float timeElapsed);
+    /** 
+    */
+    //virtual void _postProcessParticles(ParticleTechnique* technique, float timeElapsed);
 
 protected:
 
-	float _maxDeviation;
-	float _scaledMaxDeviation;
-	Vec3 _end;
-	float _timeSinceLastUpdate;
-	float _timeStep;
-	float _drift;
-	float _oneMinusDrift;
-	bool _update;
-	bool _first;
+    float _maxDeviation;
+    float _scaledMaxDeviation;
+    Vec3 _end;
+    float _timeSinceLastUpdate;
+    float _timeStep;
+    float _drift;
+    float _oneMinusDrift;
+    bool _update;
+    bool _first;
 };
 NS_CC_END
 

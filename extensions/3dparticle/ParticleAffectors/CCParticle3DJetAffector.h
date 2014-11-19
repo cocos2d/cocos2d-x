@@ -34,30 +34,30 @@ NS_CC_BEGIN
 class  Particle3DJetAffector : public Particle3DAffector
 {
 public:
-	// Constants
-	static const float DEFAULT_ACCELERATION;
+    // Constants
+    static const float DEFAULT_ACCELERATION;
 
-	Particle3DJetAffector(void);
-	virtual ~Particle3DJetAffector(void);
+    Particle3DJetAffector(void);
+    virtual ~Particle3DJetAffector(void);
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** 
-	*/
-	//DynamicAttribute* getDynAcceleration(void) const {return _dynAcceleration;};
-	//void setDynAcceleration(DynamicAttribute* dynAcceleration);
+    /** 
+    */
+    //DynamicAttribute* getDynAcceleration(void) const {return _dynAcceleration;};
+    //void setDynAcceleration(DynamicAttribute* dynAcceleration);
 
 protected:
 
-	float _scaled;
+    float _scaled;
 
-	/** Dynamic attribute used to generate the velocity of a particle.
-	*/
-	//DynamicAttribute* _dynAcceleration;
+    /** Dynamic attribute used to generate the velocity of a particle.
+    */
+    //DynamicAttribute* _dynAcceleration;
 
-	/** Helper factory
-	*/
-	//DynamicAttributeFactory _dynamicAttributeFactory;
+    /** Helper factory
+    */
+    //DynamicAttributeFactory _dynamicAttributeFactory;
 };
 NS_CC_END
 

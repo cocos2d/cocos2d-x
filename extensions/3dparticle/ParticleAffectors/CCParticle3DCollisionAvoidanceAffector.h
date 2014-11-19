@@ -33,25 +33,25 @@ NS_CC_BEGIN
 class  Particle3DCollisionAvoidanceAffector : public Particle3DAffector
 {
 public:
-	// Constants
-	static const float DEFAULT_RADIUS;
+    // Constants
+    static const float DEFAULT_RADIUS;
 
-	Particle3DCollisionAvoidanceAffector();
-	virtual ~Particle3DCollisionAvoidanceAffector();
+    Particle3DCollisionAvoidanceAffector();
+    virtual ~Particle3DCollisionAvoidanceAffector();
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** Todo
-	*/
-	float getRadius() const;
+    /** Todo
+    */
+    float getRadius() const;
 
-	/** Todo
-	*/
-	void setRadius(float radius);
-		
+    /** Todo
+    */
+    void setRadius(float radius);
+        
 protected:
 
-	float _radius;
+    float _radius;
 };
 NS_CC_END
 

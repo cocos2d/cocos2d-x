@@ -33,11 +33,11 @@ const float Particle3DParticleFollower::DEFAULT_MIN_DISTANCE = 10.0f;
 
 //-----------------------------------------------------------------------
 Particle3DParticleFollower::Particle3DParticleFollower(void) : 
-	Particle3DAffector(),
-	_minDistance(DEFAULT_MIN_DISTANCE),
-	_maxDistance(DEFAULT_MAX_DISTANCE),
-	_positionPreviousParticle(Vec3::ZERO),
-	_first(false)
+    Particle3DAffector(),
+    _minDistance(DEFAULT_MIN_DISTANCE),
+    _maxDistance(DEFAULT_MAX_DISTANCE),
+    _positionPreviousParticle(Vec3::ZERO),
+    _first(false)
 {
 }
 
@@ -56,47 +56,47 @@ Particle3DParticleFollower::~Particle3DParticleFollower( void )
 //-----------------------------------------------------------------------
 float Particle3DParticleFollower::getMaxDistance(void) const
 {
-	return _maxDistance;
+    return _maxDistance;
 }
 //-----------------------------------------------------------------------
 void Particle3DParticleFollower::setMaxDistance(float maxDistance)
 {
-	_maxDistance = maxDistance;
+    _maxDistance = maxDistance;
 }
 //-----------------------------------------------------------------------
 float Particle3DParticleFollower::getMinDistance(void) const
 {
-	return _minDistance;
+    return _minDistance;
 }
 //-----------------------------------------------------------------------
 void Particle3DParticleFollower::setMinDistance(float minDistance)
 {
-	_minDistance = minDistance;
+    _minDistance = minDistance;
 }
 
 void Particle3DParticleFollower::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		if (!_first)
-		{
-			// Change in V 1.3.1
-			// Only proceed if it isn the first one. Compensate for scaling.
-			//			Real distance = (particle->position / _mAffectorScale).distance(mPositionPreviousParticle / _mAffectorScale);
-			float distance = (particle->position).distance(_positionPreviousParticle);
-			float avgScale = 0.3333f * (_affectorScale.x + _affectorScale.y + _affectorScale.z);
-			float scaledMinDistance = avgScale * _minDistance;
-			if (distance > scaledMinDistance && distance < avgScale * _maxDistance)
-			{
-				// This particle drifts too much from the previous one; correct it!
-				float f = scaledMinDistance/distance;
-				particle->position = _positionPreviousParticle + f * (particle->position - _positionPreviousParticle);
-			}
-		}
-		_positionPreviousParticle = particle->position;
-		_first = false;
-	}
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        if (!_first)
+        {
+            // Change in V 1.3.1
+            // Only proceed if it isn the first one. Compensate for scaling.
+            //			Real distance = (particle->position / _mAffectorScale).distance(mPositionPreviousParticle / _mAffectorScale);
+            float distance = (particle->position).distance(_positionPreviousParticle);
+            float avgScale = 0.3333f * (_affectorScale.x + _affectorScale.y + _affectorScale.z);
+            float scaledMinDistance = avgScale * _minDistance;
+            if (distance > scaledMinDistance && distance < avgScale * _maxDistance)
+            {
+                // This particle drifts too much from the previous one; correct it!
+                float f = scaledMinDistance/distance;
+                particle->position = _positionPreviousParticle + f * (particle->position - _positionPreviousParticle);
+            }
+        }
+        _positionPreviousParticle = particle->position;
+        _first = false;
+    }
 }
 
 NS_CC_END

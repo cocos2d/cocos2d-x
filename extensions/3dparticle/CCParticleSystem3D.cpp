@@ -31,21 +31,21 @@ NS_CC_BEGIN
 
 void Particle3D::setOwnDimensions( float newWidth, float newHeight, float newDepth )
 {
-	ownDimensions = true;
-	if (newWidth)
-		width = newWidth;
-	if (newHeight)
-		height = newHeight;
-	if (newDepth)
-		depth = newDepth;
-	calculateBoundingSphereRadius();
-	//parentEmitter->getParentTechnique()->_notifyParticleResized();
+    ownDimensions = true;
+    if (newWidth)
+        width = newWidth;
+    if (newHeight)
+        height = newHeight;
+    if (newDepth)
+        depth = newDepth;
+    calculateBoundingSphereRadius();
+    //parentEmitter->getParentTechnique()->_notifyParticleResized();
 }
 
 void Particle3D::calculateBoundingSphereRadius()
 {
-	//radius = 0.5 * Math::Sqrt(width*width + height*height + depth*depth);
-	radius = 0.5f * std::max(depth, std::max(width, height)); // approximation
+    //radius = 0.5 * Math::Sqrt(width*width + height*height + depth*depth);
+    radius = 0.5f * std::max(depth, std::max(width, height)); // approximation
 }
 
 //-----------------------------------------------------------------------

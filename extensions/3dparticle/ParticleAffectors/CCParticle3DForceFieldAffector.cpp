@@ -42,27 +42,27 @@ const float Particle3DForceFieldAffector::DEFAULT_MOVEMENT_FREQUENCY = 5.0f;
 
 //-----------------------------------------------------------------------
 Particle3DForceFieldAffector::Particle3DForceFieldAffector() :
-	_forceFieldType(ForceField::FF_REALTIME_CALC),
-	_delta(DEFAULT_DELTA),
-	_force(Vec3::ZERO),
-	_scaleForce(DEFAULT_FORCE),
-	_octaves(DEFAULT_OCTAVES),
-	_frequency(DEFAULT_FREQUENCY),
-	_amplitude(DEFAULT_AMPLITUDE),
-	_persistence(DEFAULT_PERSISTENCE),
-	_forceFieldSize(DEFAULT_FORCEFIELDSIZE),
-	_worldSize(DEFAULT_WORLDSIZE),
-	_prepared(true),
-	_ignoreNegativeX(false),
-	_ignoreNegativeY(false),
-	_ignoreNegativeZ(false),
-	_movement(DEFAULT_MOVEMENT),
-	_movementSet(false),
-	_movementFrequency(DEFAULT_MOVEMENT_FREQUENCY),
-	_movementFrequencyCount(0.0f),
-	_displacement(Vec3::ZERO),
-	_basePosition(Vec3::ZERO),
-	_suppressGeneration(false)
+    _forceFieldType(ForceField::FF_REALTIME_CALC),
+    _delta(DEFAULT_DELTA),
+    _force(Vec3::ZERO),
+    _scaleForce(DEFAULT_FORCE),
+    _octaves(DEFAULT_OCTAVES),
+    _frequency(DEFAULT_FREQUENCY),
+    _amplitude(DEFAULT_AMPLITUDE),
+    _persistence(DEFAULT_PERSISTENCE),
+    _forceFieldSize(DEFAULT_FORCEFIELDSIZE),
+    _worldSize(DEFAULT_WORLDSIZE),
+    _prepared(true),
+    _ignoreNegativeX(false),
+    _ignoreNegativeY(false),
+    _ignoreNegativeZ(false),
+    _movement(DEFAULT_MOVEMENT),
+    _movementSet(false),
+    _movementFrequency(DEFAULT_MOVEMENT_FREQUENCY),
+    _movementFrequencyCount(0.0f),
+    _displacement(Vec3::ZERO),
+    _basePosition(Vec3::ZERO),
+    _suppressGeneration(false)
 {
 };
 //-----------------------------------------------------------------------
@@ -138,200 +138,200 @@ Particle3DForceFieldAffector::~Particle3DForceFieldAffector()
 //-----------------------------------------------------------------------
 const ForceField::ForceFieldType Particle3DForceFieldAffector::getForceFieldType(void) const
 {
-	return _forceFieldType;
+    return _forceFieldType;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setForceFieldType(const ForceField::ForceFieldType forceFieldType)
 {
-	_forceFieldType = forceFieldType;
-	if (_suppressGeneration)
-		return;
+    _forceFieldType = forceFieldType;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setForceFieldType(forceFieldType);
+    _forceField.setForceFieldType(forceFieldType);
 }
 //-----------------------------------------------------------------------
 float Particle3DForceFieldAffector::getDelta(void) const
 {
-	return _delta;
+    return _delta;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setDelta(float delta)
 {
-	_delta = delta;
+    _delta = delta;
 }
 //-----------------------------------------------------------------------
 float Particle3DForceFieldAffector::getScaleForce(void) const
 {
-	return _scaleForce;
+    return _scaleForce;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setScaleForce(float scaleForce)
 {
-	_scaleForce = scaleForce;
+    _scaleForce = scaleForce;
 }
 //-----------------------------------------------------------------------
 unsigned short Particle3DForceFieldAffector::getOctaves(void) const
 {
-	return _octaves;
+    return _octaves;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setOctaves(unsigned short octaves)
 {
-	_octaves = octaves;
-	if (_suppressGeneration)
-		return;
+    _octaves = octaves;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setOctaves(octaves);
+    _forceField.setOctaves(octaves);
 }
 //-----------------------------------------------------------------------
 double Particle3DForceFieldAffector::getFrequency(void) const
 {
-	return _frequency;
+    return _frequency;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setFrequency(double frequency)
 {
-	_frequency = frequency;
-	if (_suppressGeneration)
-		return;
+    _frequency = frequency;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setFrequency(frequency);
+    _forceField.setFrequency(frequency);
 }
 //-----------------------------------------------------------------------
 double Particle3DForceFieldAffector::getAmplitude(void) const
 {
-	return _amplitude;
+    return _amplitude;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setAmplitude(double amplitude)
 {
-	_amplitude = amplitude;
-	if (_suppressGeneration)
-		return;
+    _amplitude = amplitude;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setAmplitude(amplitude);
+    _forceField.setAmplitude(amplitude);
 }
 //-----------------------------------------------------------------------
 double Particle3DForceFieldAffector::getPersistence(void) const
 {
-	return _persistence;
+    return _persistence;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setPersistence(double persistence)
 {
-	_persistence = persistence;
-	if (_suppressGeneration)
-		return;
+    _persistence = persistence;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setPersistence(persistence);
+    _forceField.setPersistence(persistence);
 }
 //-----------------------------------------------------------------------
 unsigned int Particle3DForceFieldAffector::getForceFieldSize(void) const
 {
-	return _forceFieldSize;
+    return _forceFieldSize;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setForceFieldSize(unsigned int forceFieldSize)
 {
-	_forceFieldSize = forceFieldSize;
-	if (_suppressGeneration)
-		return;
+    _forceFieldSize = forceFieldSize;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setForceFieldSize(forceFieldSize);
+    _forceField.setForceFieldSize(forceFieldSize);
 }
 //-----------------------------------------------------------------------
 Vec3 Particle3DForceFieldAffector::getWorldSize(void) const
 {
-	return _worldSize;
+    return _worldSize;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setWorldSize(const Vec3& worldSize)
 {
-	_worldSize = worldSize;
-	if (_suppressGeneration)
-		return;
+    _worldSize = worldSize;
+    if (_suppressGeneration)
+        return;
 
-	_forceField.setWorldSize(worldSize);
+    _forceField.setWorldSize(worldSize);
 }
 //-----------------------------------------------------------------------
 bool Particle3DForceFieldAffector::getIgnoreNegativeX(void) const
 {
-	return _ignoreNegativeX;
+    return _ignoreNegativeX;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setIgnoreNegativeX(bool ignoreNegativeX)
 {
-	_ignoreNegativeX = ignoreNegativeX;
+    _ignoreNegativeX = ignoreNegativeX;
 }
 //-----------------------------------------------------------------------
 bool Particle3DForceFieldAffector::getIgnoreNegativeY(void) const
 {
-	return _ignoreNegativeY;
+    return _ignoreNegativeY;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setIgnoreNegativeY(bool ignoreNegativeY)
 {
-	_ignoreNegativeY = ignoreNegativeY;
+    _ignoreNegativeY = ignoreNegativeY;
 }
 //-----------------------------------------------------------------------
 bool Particle3DForceFieldAffector::getIgnoreNegativeZ(void) const
 {
-	return _ignoreNegativeZ;
+    return _ignoreNegativeZ;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setIgnoreNegativeZ(bool ignoreNegativeZ)
 {
-	_ignoreNegativeZ = ignoreNegativeZ;
+    _ignoreNegativeZ = ignoreNegativeZ;
 }
 //-----------------------------------------------------------------------
 float Particle3DForceFieldAffector::getMovementFrequency(void) const
 {
-	return _movementFrequency;
+    return _movementFrequency;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setMovementFrequency(float movementFrequency)
 {
-	_movementFrequency = movementFrequency;
-	_movementSet = (movementFrequency > 0.0f);
+    _movementFrequency = movementFrequency;
+    _movementSet = (movementFrequency > 0.0f);
 }
 //-----------------------------------------------------------------------
 const Vec3& Particle3DForceFieldAffector::getMovement(void) const
 {
-	return _movement;
+    return _movement;
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::setMovement(const Vec3& movement)
 {
-	_movement = movement;
-	_movementSet = (movement != Vec3::ZERO);
+    _movement = movement;
+    _movementSet = (movement != Vec3::ZERO);
 }
 //-----------------------------------------------------------------------
 void Particle3DForceFieldAffector::suppressGeneration(bool suppress)
 {
-	_suppressGeneration = suppress;
+    _suppressGeneration = suppress;
 }
 
 void Particle3DForceFieldAffector::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		_forceField.determineForce(particle->position, _force, _delta);
-		// If negative values are ignored, set the force to 0.
-		if (_ignoreNegativeX)
-		{
-			_force.x = 0.0f;
-		}
-		if (_ignoreNegativeY)
-		{
-			_force.y = 0.0f;
-		}
-		if (_ignoreNegativeZ)
-		{
-			_force.z = 0.0f;
-		}
-		particle->direction += deltaTime * _scaleForce * _force;
-	}
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        _forceField.determineForce(particle->position, _force, _delta);
+        // If negative values are ignored, set the force to 0.
+        if (_ignoreNegativeX)
+        {
+            _force.x = 0.0f;
+        }
+        if (_ignoreNegativeY)
+        {
+            _force.y = 0.0f;
+        }
+        if (_ignoreNegativeZ)
+        {
+            _force.z = 0.0f;
+        }
+        particle->direction += deltaTime * _scaleForce * _force;
+    }
 }
 
 NS_CC_END

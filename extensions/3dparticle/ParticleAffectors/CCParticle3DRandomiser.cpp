@@ -34,14 +34,14 @@ const bool Particle3DRandomiser::DEFAULT_RANDOM_DIRECTION = true;
 
 //-----------------------------------------------------------------------
 Particle3DRandomiser::Particle3DRandomiser(void) : 
-	Particle3DAffector(),
-	_maxDeviationX(DEFAULT_MAX_DEVIATION.x),
-	_maxDeviationY(DEFAULT_MAX_DEVIATION.y),
-	_maxDeviationZ(DEFAULT_MAX_DEVIATION.z),
-	_timeSinceLastUpdate(0.0f),
-	_timeStep(DEFAULT_TIME_STEP),
-	_update(true),
-	_randomDirection(DEFAULT_RANDOM_DIRECTION)
+    Particle3DAffector(),
+    _maxDeviationX(DEFAULT_MAX_DEVIATION.x),
+    _maxDeviationY(DEFAULT_MAX_DEVIATION.y),
+    _maxDeviationZ(DEFAULT_MAX_DEVIATION.z),
+    _timeSinceLastUpdate(0.0f),
+    _timeStep(DEFAULT_TIME_STEP),
+    _update(true),
+    _randomDirection(DEFAULT_RANDOM_DIRECTION)
 {
 }
 Particle3DRandomiser::~Particle3DRandomiser( void )
@@ -51,53 +51,53 @@ Particle3DRandomiser::~Particle3DRandomiser( void )
 //-----------------------------------------------------------------------
 float Particle3DRandomiser::getMaxDeviationX(void) const
 {
-	return _maxDeviationX;
+    return _maxDeviationX;
 }
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::setMaxDeviationX(float maxDeviationX)
 {
-	_maxDeviationX = maxDeviationX;
+    _maxDeviationX = maxDeviationX;
 }
 //-----------------------------------------------------------------------
 float Particle3DRandomiser::getMaxDeviationY(void) const
 {
-	return _maxDeviationY;
+    return _maxDeviationY;
 }
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::setMaxDeviationY(float maxDeviationY)
 {
-	_maxDeviationY = maxDeviationY;
+    _maxDeviationY = maxDeviationY;
 }
 //-----------------------------------------------------------------------
 float Particle3DRandomiser::getMaxDeviationZ(void) const
 {
-	return _maxDeviationZ;
+    return _maxDeviationZ;
 }
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::setMaxDeviationZ(float maxDeviationZ)
 {
-	_maxDeviationZ = maxDeviationZ;
+    _maxDeviationZ = maxDeviationZ;
 }
 //-----------------------------------------------------------------------
 float Particle3DRandomiser::getTimeStep(void) const
 {
-	return _timeStep;
+    return _timeStep;
 }
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::setTimeStep(float timeStep)
 {
-	_timeStep = timeStep;
-	_timeSinceLastUpdate = timeStep;
+    _timeStep = timeStep;
+    _timeSinceLastUpdate = timeStep;
 }
 //-----------------------------------------------------------------------
 bool Particle3DRandomiser::isRandomDirection(void) const
 {
-	return _randomDirection;
+    return _randomDirection;
 }
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::setRandomDirection(bool randomDirection)
 {
-	_randomDirection = randomDirection;
+    _randomDirection = randomDirection;
 }
 //-----------------------------------------------------------------------
 //void Particle3DRandomiser::_preProcessParticles(ParticleTechnique* technique, float timeElapsed)
@@ -115,31 +115,31 @@ void Particle3DRandomiser::setRandomDirection(bool randomDirection)
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		if (_update)
-		{
-			if (_randomDirection)
-			{
-				// Random direction: Change the direction after each update
-				particle->direction += Vec3(CCRANDOM_MINUS1_1() * _maxDeviationX,
-					CCRANDOM_MINUS1_1() * _maxDeviationY,
-					CCRANDOM_MINUS1_1() * _maxDeviationZ);
-			}
-			else
-			{
-				// Explicitly check on 'freezed', because it passes the techniques' validation.
-				if (particle->isFreezed())
-					return;
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        if (_update)
+        {
+            if (_randomDirection)
+            {
+                // Random direction: Change the direction after each update
+                particle->direction += Vec3(CCRANDOM_MINUS1_1() * _maxDeviationX,
+                    CCRANDOM_MINUS1_1() * _maxDeviationY,
+                    CCRANDOM_MINUS1_1() * _maxDeviationZ);
+            }
+            else
+            {
+                // Explicitly check on 'freezed', because it passes the techniques' validation.
+                if (particle->isFreezed())
+                    return;
 
-				// Random position: Add the position deviation after each update
-				particle->position += Vec3(CCRANDOM_MINUS1_1() * _maxDeviationX * _affectorScale.x,
-					CCRANDOM_MINUS1_1() * _maxDeviationY * _affectorScale.y,
-					CCRANDOM_MINUS1_1() * _maxDeviationZ * _affectorScale.z);
-			}
-		}
-	}
+                // Random position: Add the position deviation after each update
+                particle->position += Vec3(CCRANDOM_MINUS1_1() * _maxDeviationX * _affectorScale.x,
+                    CCRANDOM_MINUS1_1() * _maxDeviationY * _affectorScale.y,
+                    CCRANDOM_MINUS1_1() * _maxDeviationZ * _affectorScale.z);
+            }
+        }
+    }
 }
 
 //-----------------------------------------------------------------------

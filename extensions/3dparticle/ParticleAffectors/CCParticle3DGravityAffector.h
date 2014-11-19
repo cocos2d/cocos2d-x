@@ -34,22 +34,22 @@ NS_CC_BEGIN
 class  Particle3DGravityAffector : public Particle3DAffector
 {
 public:
-	// Constants
-	static const float DEFAULT_GRAVITY;
-			
-	Particle3DGravityAffector(void);
-	virtual ~Particle3DGravityAffector(void);
+    // Constants
+    static const float DEFAULT_GRAVITY;
+            
+    Particle3DGravityAffector(void);
+    virtual ~Particle3DGravityAffector(void);
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** 
-	*/
-	float getGravity(void) const;
-	void setGravity(float gravity);
+    /** 
+    */
+    float getGravity(void) const;
+    void setGravity(float gravity);
 
 protected:
 
-	float _gravity;
+    float _gravity;
 };
 NS_CC_END
 

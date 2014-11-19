@@ -43,22 +43,22 @@ Particle3DBaseForceAffector::~Particle3DBaseForceAffector()
 
 const Vec3& Particle3DBaseForceAffector::getForceVector() const
 {
-	return _forceVector;
+    return _forceVector;
 }
 
 void Particle3DBaseForceAffector::setForceVector( const Vec3& forceVector )
 {
-	_forceVector = forceVector;
+    _forceVector = forceVector;
 }
 
 Particle3DBaseForceAffector::ForceApplication Particle3DBaseForceAffector::getForceApplication() const
 {
-	return _forceApplication;
+    return _forceApplication;
 }
 
 void Particle3DBaseForceAffector::setForceApplication( ForceApplication forceApplication )
 {
-	_forceApplication = forceApplication;
+    _forceApplication = forceApplication;
 }
 
 NS_CC_END

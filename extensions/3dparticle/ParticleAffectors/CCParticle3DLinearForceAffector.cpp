@@ -38,19 +38,19 @@ NS_CC_BEGIN
 
 void Particle3DLinearForceAffector::updateAffector( float deltaTime )
 {
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		// Affect the direction and take the specialisation into account
-		if (_forceApplication == FA_ADD)
-		{
-			particle->direction += _scaledVector * calculateAffectSpecialisationFactor(particle);
-		}
-		else
-		{
-			particle->direction = (particle->direction + _forceVector) / 2;
-		}
-	}
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        // Affect the direction and take the specialisation into account
+        if (_forceApplication == FA_ADD)
+        {
+            particle->direction += _scaledVector * calculateAffectSpecialisationFactor(particle);
+        }
+        else
+        {
+            particle->direction = (particle->direction + _forceVector) / 2;
+        }
+    }
 
 }
 

@@ -34,29 +34,29 @@ NS_CC_BEGIN
 class  Particle3DPathFollower : public Particle3DAffector
 {
 public:
-	Particle3DPathFollower(void);
-	virtual ~Particle3DPathFollower(void);
+    Particle3DPathFollower(void);
+    virtual ~Particle3DPathFollower(void);
 
-	virtual void updateAffector(float deltaTime) override;
-	/** 
-	*/
-	void addPoint(const Vec3& point);
+    virtual void updateAffector(float deltaTime) override;
+    /** 
+    */
+    void addPoint(const Vec3& point);
 
-	/** Clear all points
-	*/
-	void clearPoints (void);
+    /** Clear all points
+    */
+    void clearPoints (void);
 
-	/** 
-	*/
-	//unsigned short getNumPoints(void) const {return _spline.getNumPoints();};
-				
-	/** 
-	*/
-	//const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
+    /** 
+    */
+    //unsigned short getNumPoints(void) const {return _spline.getNumPoints();};
+                
+    /** 
+    */
+    //const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
 
 protected:
 
-	//SimpleSpline _spline;
+    //SimpleSpline _spline;
 };
 NS_CC_END
 

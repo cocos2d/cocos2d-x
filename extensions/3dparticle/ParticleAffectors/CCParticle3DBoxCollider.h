@@ -33,77 +33,77 @@ NS_CC_BEGIN
 class  Particle3DBoxCollider : public Particle3DBaseCollider
 {
 public:
-	static const float DEFAULT_WIDTH;
-	static const float DEFAULT_HEIGHT;
-	static const float DEFAULT_DEPTH;
+    static const float DEFAULT_WIDTH;
+    static const float DEFAULT_HEIGHT;
+    static const float DEFAULT_DEPTH;
 
-	Particle3DBoxCollider();
-	virtual ~Particle3DBoxCollider();
+    Particle3DBoxCollider();
+    virtual ~Particle3DBoxCollider();
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** Returns the width of the box
-	*/
-	const float getWidth() const;
+    /** Returns the width of the box
+    */
+    const float getWidth() const;
 
-	/** Sets the width of the box
-	*/
-	void setWidth(const float width);
+    /** Sets the width of the box
+    */
+    void setWidth(const float width);
 
-	/** Returns the height of the box
-	*/
-	const float getHeight() const;
+    /** Returns the height of the box
+    */
+    const float getHeight() const;
 
-	/** Sets the height of the box
-	*/
-	void setHeight(const float height);
+    /** Sets the height of the box
+    */
+    void setHeight(const float height);
 
-	/** Returns the depth of the box
-	*/
-	const float getDepth() const;
+    /** Returns the depth of the box
+    */
+    const float getDepth() const;
 
-	/** Sets the depth of the box
-	*/
-	void setDepth(const float depth);
+    /** Sets the depth of the box
+    */
+    void setDepth(const float depth);
 
-	/** Returns indication whether the collision is inside or outside of the box
-	@remarks
-		If value is true, the collision is inside of the box.
-	*/
-	bool isInnerCollision() const;
+    /** Returns indication whether the collision is inside or outside of the box
+    @remarks
+        If value is true, the collision is inside of the box.
+    */
+    bool isInnerCollision() const;
 
-	/** Set indication whether the collision is inside or outside of the box
-	@remarks
-		If value is set to true, the collision is inside of the box.
-	*/
-	void setInnerCollision(bool innerCollision);
+    /** Set indication whether the collision is inside or outside of the box
+    @remarks
+        If value is set to true, the collision is inside of the box.
+    */
+    void setInnerCollision(bool innerCollision);
 
-	/** 
-	*/
-	void calculateDirectionAfterCollision(Particle3D* particle);
-
-protected:
-		/** 
-	*/
-	void calculateBounds ();
-	/** 
-	*/
-	bool isSmallestValue(float value, const Vec3& particlePosition);
+    /** 
+    */
+    void calculateDirectionAfterCollision(Particle3D* particle);
 
 protected:
+        /** 
+    */
+    void calculateBounds ();
+    /** 
+    */
+    bool isSmallestValue(float value, const Vec3& particlePosition);
 
-	float _width;
-	float _height;
-	float _depth;
-	float _xmin;
-	float _xmax;
-	float _ymin;
-	float _ymax;
-	float _zmin;
-	float _zmax;
-	AABB _box;
-	Vec3 _predictedPosition;
-	bool _innerCollision;
+protected:
+
+    float _width;
+    float _height;
+    float _depth;
+    float _xmin;
+    float _xmax;
+    float _ymin;
+    float _ymax;
+    float _zmin;
+    float _zmax;
+    AABB _box;
+    Vec3 _predictedPosition;
+    bool _innerCollision;
 };
 NS_CC_END
 

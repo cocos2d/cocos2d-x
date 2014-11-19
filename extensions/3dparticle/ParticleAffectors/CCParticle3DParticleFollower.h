@@ -34,36 +34,36 @@ NS_CC_BEGIN
 class  Particle3DParticleFollower : public Particle3DAffector
 {
 public:
-	// Constants
-	static const float DEFAULT_MAX_DISTANCE;
-	static const float DEFAULT_MIN_DISTANCE;
+    // Constants
+    static const float DEFAULT_MAX_DISTANCE;
+    static const float DEFAULT_MIN_DISTANCE;
 
-	Particle3DParticleFollower(void);
-	virtual ~Particle3DParticleFollower(void);
+    Particle3DParticleFollower(void);
+    virtual ~Particle3DParticleFollower(void);
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** Validate if first particle.
-	*/
-	//virtual void _firstParticle(ParticleTechnique* particleTechnique, 
-	//	Particle* particle, 
-	//	float timeElapsed);
+    /** Validate if first particle.
+    */
+    //virtual void _firstParticle(ParticleTechnique* particleTechnique, 
+    //	Particle* particle, 
+    //	float timeElapsed);
 
-	/** 
-	*/
-	float getMaxDistance(void) const;
-	void setMaxDistance(float maxDistance);
+    /** 
+    */
+    float getMaxDistance(void) const;
+    void setMaxDistance(float maxDistance);
 
-	/** 
-	*/
-	float getMinDistance(void) const;
-	void setMinDistance(float minDistance);
+    /** 
+    */
+    float getMinDistance(void) const;
+    void setMinDistance(float minDistance);
 
 protected:
-	float _minDistance;
-	float _maxDistance;
-	Vec3 _positionPreviousParticle;
-	bool _first;
+    float _minDistance;
+    float _maxDistance;
+    Vec3 _positionPreviousParticle;
+    bool _first;
 };
 NS_CC_END
 

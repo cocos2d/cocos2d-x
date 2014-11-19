@@ -32,8 +32,8 @@ const float Particle3DGravityAffector::DEFAULT_GRAVITY = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DGravityAffector::Particle3DGravityAffector(void) : 
-	Particle3DAffector(),
-	_gravity(DEFAULT_GRAVITY)
+    Particle3DAffector(),
+    _gravity(DEFAULT_GRAVITY)
 {
 }
 //-----------------------------------------------------------------------
@@ -44,38 +44,38 @@ Particle3DGravityAffector::~Particle3DGravityAffector( void )
 //-----------------------------------------------------------------------
 float Particle3DGravityAffector::getGravity(void) const
 {
-	return _gravity;
+    return _gravity;
 }
 //-----------------------------------------------------------------------
 void Particle3DGravityAffector::setGravity(float gravity)
 {
-	_gravity = gravity;
+    _gravity = gravity;
 }
 
 void Particle3DGravityAffector::updateAffector( float deltaTime )
 {
-	// Calculate the affectors' position so it is also safe to use mDerivedPosition.
-	getDerivedPosition();
+    // Calculate the affectors' position so it is also safe to use mDerivedPosition.
+    getDerivedPosition();
 
-	for (auto iter : _particleSystem->getParticles())
-	{
-		Particle3D *particle = iter;
-		// Applied scaling in V1.3.1
-		/** Applying Newton's law of universal gravitation.	*/
-		Vec3 distance = _derivedPosition - particle->position;
-		float length = distance.lengthSquared();
-		float scaleVelocity = 1.0f;
-		//if (mParentTechnique)
-		//{
-		//	scaleVelocity = mParentTechnique->getParticleSystemScaleVelocity();
-		//}
-		//if (length > 0 && mParentTechnique)
-		//{
-		//	//Real force = (mGravity * particle->mass * mass) / length;
-		//	float force = (scaleVelocity * _gravity * particle->mass * mass) / length;
-		//	particle->direction += force * distance * deltaTime * calculateAffectSpecialisationFactor(particle);
-		//}
-	}
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        // Applied scaling in V1.3.1
+        /** Applying Newton's law of universal gravitation.	*/
+        Vec3 distance = _derivedPosition - particle->position;
+        float length = distance.lengthSquared();
+        float scaleVelocity = 1.0f;
+        //if (mParentTechnique)
+        //{
+        //	scaleVelocity = mParentTechnique->getParticleSystemScaleVelocity();
+        //}
+        //if (length > 0 && mParentTechnique)
+        //{
+        //	//Real force = (mGravity * particle->mass * mass) / length;
+        //	float force = (scaleVelocity * _gravity * particle->mass * mass) / length;
+        //	particle->direction += force * distance * deltaTime * calculateAffectSpecialisationFactor(particle);
+        //}
+    }
 }
 
 NS_CC_END

@@ -34,34 +34,34 @@ NS_CC_BEGIN
 class  Particle3DPlaneCollider : public Particle3DBaseCollider
 {
 public:
-	// Constants
-	static const Vec3 DEFAULT_NORMAL;
+    // Constants
+    static const Vec3 DEFAULT_NORMAL;
 
-	Particle3DPlaneCollider(void);
-	virtual ~Particle3DPlaneCollider(void);
+    Particle3DPlaneCollider(void);
+    virtual ~Particle3DPlaneCollider(void);
 
-	virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(float deltaTime) override;
 
-	/** Returns the normal of the plane
-	*/
-	const Vec3 getNormal(void) const;
+    /** Returns the normal of the plane
+    */
+    const Vec3 getNormal(void) const;
 
-	/** Sets the normal of the plane
-	*/
-	void setNormal(const Vec3& normal);
+    /** Sets the normal of the plane
+    */
+    void setNormal(const Vec3& normal);
 
-	/** Notify that the Affector is rescaled.
-	*/
-	//virtual void _notifyRescaled(const Vec3& scale);
+    /** Notify that the Affector is rescaled.
+    */
+    //virtual void _notifyRescaled(const Vec3& scale);
 
-	/** 
-	*/
-	void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
+    /** 
+    */
+    void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
 
 protected:
-	Vec3 _normal;
-	Vec3 _predictedPosition;
-	//Plane _plane;
+    Vec3 _normal;
+    Vec3 _predictedPosition;
+    //Plane _plane;
 };
 NS_CC_END
 
