@@ -59,8 +59,8 @@ public:
     void removeSpriteFrameFromFile(const std::string& plistPath);
 
 private:
-    void _retainSpriteFrames(const std::string& plistPath);
-    void _releaseSpriteFrames(const std::string& plistPath);
+    void retainSpriteFrames(const std::string& plistPath);
+    void releaseSpriteFrames(const std::string& plistPath);
 
     SpriteFrameCacheHelper();
     ~SpriteFrameCacheHelper();

@@ -50,7 +50,7 @@ void SpriteFrameCacheHelper::purge()
     _spriteFrameCacheHelper = nullptr;
 }
 
-void SpriteFrameCacheHelper::_retainSpriteFrames(const std::string &plistPath)
+void SpriteFrameCacheHelper::retainSpriteFrames(const std::string &plistPath)
 {
     auto it = _usingSpriteFrames.find(plistPath);
     if(it != _usingSpriteFrames.end()) return;
@@ -71,7 +71,7 @@ void SpriteFrameCacheHelper::_retainSpriteFrames(const std::string &plistPath)
     _usingSpriteFrames[plistPath] = vec;
 }
 
-void SpriteFrameCacheHelper::_releaseSpriteFrames(const std::string &plistPath)
+void SpriteFrameCacheHelper::releaseSpriteFrames(const std::string &plistPath)
 {
     auto it = _usingSpriteFrames.find(plistPath);
     if(it == _usingSpriteFrames.end()) return;
@@ -90,13 +90,13 @@ void SpriteFrameCacheHelper::_releaseSpriteFrames(const std::string &plistPath)
 void SpriteFrameCacheHelper::removeSpriteFrameFromFile(const std::string &plistPath)
 {
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(plistPath);
-    _releaseSpriteFrames(plistPath);
+    releaseSpriteFrames(plistPath);
 }
 
 void SpriteFrameCacheHelper::addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath)
 {
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
-    _retainSpriteFrames(plistPath);
+    retainSpriteFrames(plistPath);
 }
 
 SpriteFrameCacheHelper::SpriteFrameCacheHelper()
