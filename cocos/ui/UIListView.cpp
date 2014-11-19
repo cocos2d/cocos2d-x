@@ -35,10 +35,10 @@ ListView::ListView():
 _model(nullptr),
 _gravity(Gravity::CENTER_VERTICAL),
 _itemsMargin(0.0f),
-_listViewEventListener(nullptr),
-_listViewEventSelector(nullptr),
 _curSelectedIndex(0),
 _refreshViewDirty(true),
+_listViewEventListener(nullptr),
+_listViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     this->setTouchEnabled(true);

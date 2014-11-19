@@ -470,9 +470,9 @@ bool EffectNormalMapped::init()
     _kBump = 2;
     return true;
 }
-bool EffectNormalMapped::initNormalMap(const std::string&normalMapFileName)
+bool EffectNormalMapped::initNormalMap(const std::string& normalMapFileName)
 {
-    auto normalMapTextrue = TextureCache::getInstance()->addImage(normalMapFileName.c_str());
+    auto normalMapTextrue = Director::getInstance()->getTextureCache()->addImage(normalMapFileName);
     getGLProgramState()->setUniformTexture("u_normalMap", normalMapTextrue);
     return true;
 }
