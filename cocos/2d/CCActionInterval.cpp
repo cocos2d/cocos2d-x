@@ -1950,7 +1950,16 @@ void FadeTo::update(float time)
 {
     if (_target)
     {
-        _target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        float opacity = _fromOpacity + (_toOpacity - _fromOpacity) * time;
+        if (opacity < 0.0f)
+        {
+            opacity = 0.0f;
+        }
+        else if (opacity > 255.0f)
+        {
+            opacity = 255.0f;
+        }
+        _target->setOpacity((GLubyte)opacity);
     }
     /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
 }
