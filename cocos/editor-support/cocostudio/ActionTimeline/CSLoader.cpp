@@ -814,7 +814,7 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
 		if(filePath != "")
 		{
             Node* root = createNodeFromProtocolBuffers(_protocolBuffersPath + filePath);
-            setPropsForProjectNodeFromProtocolBuffers(node, options, nodeOptions);
+            setPropsForProjectNodeFromProtocolBuffers(root, options, nodeOptions);
 
             cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionFromProtocolBuffers(_protocolBuffersPath + filePath);
             if(action)
@@ -824,6 +824,7 @@ Node* CSLoader::nodeFromProtocolBuffers(const protocolbuffers::NodeTree &nodetre
             }
 
             node = ActionTimelineNode::create(root, action);
+            node->setName(root->getName());
 		}
      
         curOptions = nodeOptions;
