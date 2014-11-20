@@ -3,10 +3,12 @@
 #
 # ./download-deps.py
 #
-# Download Cocos2D-X resources from github (https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin) and extract from ZIP
+# Downloads Cocos2D-x 3rd party dependencies from github:
+# https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin) and extracts the zip
+# file
 #
-# Helps prevent repo bloat due to large binary files since they can
-# be hosted separately.
+# Having the dependencies outside the official cocos2d-x repo helps prevent
+# bloating the repo.
 #
 
 """****************************************************************************
@@ -183,7 +185,7 @@ class CocosZipInstaller(object):
                 else:
                     # file
                     data = z.read(info.filename)
-                    f = open(target,'wb')
+                    f = open(target, 'wb')
                     try:
                         f.write(data)
                     finally:
