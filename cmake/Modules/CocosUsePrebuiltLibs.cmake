@@ -60,8 +60,9 @@ set(_OpenalSoft_libs OpenAL32)
 set(_zlib_inc zlib.h)
 set(_zlib_libs libzlib)
 
+set(_fmod_prefix FMODEX)
 set(_fmod_inc fmod.h)
-set(_fmod_libs fmodex fmodexL)
+set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
 
 set(all_prebuilt_libs
   chipmunk
@@ -157,6 +158,7 @@ foreach(_lib ${all_prebuilt_libs})
       if(libs)
         set(${_prefix}_LIBRARIES ${libs} CACHE STRING "Libraries to link for ${_prefix}" FORCE)
       endif()
+      #message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
 
       if(${_prefix}_LIBRARIES AND ${_prefix}_INCLUDE_DIRS)
         set(${_prefix}_FOUND YES)
