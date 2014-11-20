@@ -56,6 +56,7 @@ if(WINDOWS)
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
 elseif(UNIX)
+    add_definitions(-D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE)
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/serial.c
         ${cocos_root}/external/lua/luasocket/unix.c
