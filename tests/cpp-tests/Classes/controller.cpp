@@ -42,8 +42,10 @@ Controller g_aTestNames[] = {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
 #endif
+#if CC_ENABLE_BOX2D_INTEGRATION
 	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
 	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
+#endif
 	{ "Bugs", []() { return new BugsTestScene(); } },
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },

@@ -1,19 +1,15 @@
 set(APP_NAME lua-empty-test)
 
-set(SAMPLE_SRC
-  Classes/AppDelegate.cpp
-)
+set(SAMPLE_SRC Classes/AppDelegate.cpp)
 
 if(LINUX)
-  set(SAMPLE_SRC
-     ${SAMPLE_SRC}
-     proj.linux/main.cpp
-     )
+    set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
+    set(RES_PREFIX "/Resources")
+elseif(WINDOWS)
+    list(APPEND SAMPLE_SRC proj.win32/main.cpp)
+    set(RES_PREFIX "")
 elseif(MACOSX OR APPLE)
-    set(SAMPLE_SRC
-        ${SAMPLE_SRC}
-        proj.mac/main.cpp
-        )
+    set(SAMPLE_SRC ${SAMPLE_SRC} proj.mac/main.cpp)
 
     file(GLOB_RECURSE APP_RESOURCES ../res/*)
     cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
@@ -50,10 +46,9 @@ else()
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 
     pre_build(${APP_NAME}
-      COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}/Resources/src/cocos
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}${RES_PREFIX}/res
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}${RES_PREFIX}/src
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}${RES_PREFIX}/src/cocos
       )
 
 endif()

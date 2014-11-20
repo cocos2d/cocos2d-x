@@ -5,7 +5,7 @@
 #include "ui/UILayout.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 
 USING_NS_CC;
 using namespace ui;
