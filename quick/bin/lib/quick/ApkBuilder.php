@@ -6,6 +6,8 @@ class ApkBuilder
 {
     const BUILD_NATIVE_SH = '/build_native.sh';
     const BUILD_NATIVE_BAT = 'build_native.bat';
+    const BUILD_NATIVE_SH_RELEASE = '/build_native_release.sh';
+    const BUILD_NATIVE_BAT_RELEASE = 'build_native_release.bat';
 
     private $config;
     private $split_char;
@@ -42,12 +44,21 @@ class ApkBuilder
 
     function check_win32()
     {
+        $build_mode = $this->config['build_mode'];
+        echo "*******************build mode: $build_mode\n";
         if (DS == '/')
         {
             $this->java_home = '';
             $this->java_bin_path = '';
             $this->split_char =  ':';
-            $this->build_bin =  self::BUILD_NATIVE_SH;
+            if ($build_mode == 'debug')
+            {
+                $this->build_bin =  self::BUILD_NATIVE_SH;
+            }
+            else
+            {
+                $this->build_bin =  self::BUILD_NATIVE_SH_RELEASE;
+            }
             return true;
         }
 
@@ -61,7 +72,14 @@ class ApkBuilder
 
         {
             $this->split_char =  ';';
-            $this->build_bin =  self::BUILD_NATIVE_BAT;
+            if ($build_mode == 'debug')
+            {
+                $this->build_bin =  self::BUILD_NATIVE_BAT;
+            }
+            else
+            {
+                $this->build_bin =  self::BUILD_NATIVE_BAT_RELEASE;
+            }
         }
 
         return true;
