@@ -113,8 +113,22 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
     MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, utf16Buf, sizeof(utf16Buf)/sizeof(utf16Buf[0]));
 
     DWORD attr = GetFileAttributesW(utf16Buf);
-    if(attr == INVALID_FILE_ATTRIBUTES || (attr & FILE_ATTRIBUTE_DIRECTORY))
+    if (attr == INVALID_FILE_ATTRIBUTES || (attr & FILE_ATTRIBUTE_DIRECTORY))
+    {
         return false;   //  not a file
+    }
+    else
+    {
+        WIN32_FIND_DATAA ffd;
+        HANDLE hFind = FindFirstFileA(strPath.c_str(), &ffd);  
+        std::string filename(ffd.cFileName);
+        size_t pos = strFilePath.find(filename);
+        if (pos + filename.length() != strFilePath.length())
+        {
+            std::string realFile = strPath.substr(0, strPath.length() - filename.length()) + filename;
+            CCLOG("WARNING: File case-sensitive.\n%s\n%s\n\n", strPath.c_str(), realFile.c_str());
+        }
+    }
     return true;
 }
 

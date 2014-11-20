@@ -316,6 +316,16 @@ NSBundle* FileUtilsApple::getBundle() const {
     return _bundle;
 }
 
+void FileUtilsApple::checkFilePathWithCaseSensitive(const std::string& filePath) const
+{
+    NSString *filePathName = [NSString stringWithUTF8String:filePath.c_str()];
+    NSString *realFilePathName = [filePathName stringByResolvingSymlinksInPath];
+    
+    if ([[realFilePathName lastPathComponent] compare:[filePathName lastPathComponent]] != NSOrderedSame)
+    {
+        CCLOG("WARNING: File case-sensitive.\n%s\n%s\n\n", filePath.c_str(), [realFilePathName UTF8String]);
+    }
+}
 
 #pragma mark - FileUtils
 
@@ -382,6 +392,7 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
     {
         // Search path is an absolute path.
         if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:filePath.c_str()]]) {
+            checkFilePathWithCaseSensitive(filePath);
             ret = true;
         }
     }
@@ -405,6 +416,7 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
         std::string fullPath = directory+filename;
         // Search path is an absolute path.
         if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:fullPath.c_str()]]) {
+            checkFilePathWithCaseSensitive(fullPath);
             return fullPath;
         }
     }

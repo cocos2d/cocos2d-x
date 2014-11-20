@@ -58,6 +58,7 @@ public:
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
     NSBundle* getBundle() const;
+    void checkFilePathWithCaseSensitive(const std::string& filePath) const;
     NSBundle* _bundle;
 };
 
