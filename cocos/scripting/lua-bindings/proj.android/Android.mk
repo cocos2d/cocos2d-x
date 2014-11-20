@@ -58,8 +58,10 @@ LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
 
 #3d
+ifeq ($(CC_USE_3D),1)
 LOCAL_SRC_FILES += ../manual/3d/lua_cocos2dx_3d_manual.cpp \
                    ../auto/lua_cocos2dx_3d_auto.cpp
+endif
 
 #cocosdenshion
 LOCAL_SRC_FILES += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp \
@@ -69,7 +71,6 @@ LOCAL_SRC_FILES += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
 LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../manual/network/lua_extensions.c \
                    ../manual/network/Lua_web_socket.cpp \
-                   ../manual/network/lua_xml_http_request.cpp \
                    ../../../../external/lua/luasocket/auxiliar.c \
                    ../../../../external/lua/luasocket/buffer.c \
                    ../../../../external/lua/luasocket/except.c \
@@ -86,21 +87,31 @@ LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../../../../external/lua/luasocket/udp.c \
                    ../../../../external/lua/luasocket/unix.c \
                    ../../../../external/lua/luasocket/usocket.c
+ifeq ($(CC_USE_CURL),1)
+LOCAL_SRC_FILES += ../manual/network/lua_xml_http_request.cpp
+endif
 
 #cocosbuilder
+ifeq ($(CC_USE_CCBUILDER),1)
 LOCAL_SRC_FILES += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \
                    ../manual/cocosbuilder/CCBProxy.cpp \
                    ../auto/lua_cocos2dx_cocosbuilder_auto.cpp
+endif
 
 #cocostudio
+ifeq ($(CC_USE_CCSTUDIO),1)
 LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
                    ../manual/cocostudio/CustomGUIReader.cpp \
+                   ../auto/lua_cocos2dx_csloader_auto.cpp \
                    ../auto/lua_cocos2dx_studio_auto.cpp
+endif
 
 #spine
+ifeq ($(CC_USE_SPINE),1)
 LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
                    ../manual/spine/LuaSkeletonAnimation.cpp \
                    ../auto/lua_cocos2dx_spine_auto.cpp
+endif
 
 #ui
 LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
@@ -116,6 +127,10 @@ LOCAL_SRC_FILES += ../../../../external/lua/quick/lua_cocos2dx_quick_manual.cpp 
                    ../../../../external/lua/quick/LuaTouchTargetNode.cpp
 
 #extension
+ifeq ($(CC_USE_CURL),1)
+LOCAL_SRC_FILES += \
+../auto/lua_cocos2dx_assetsmanager_auto.cpp
+endif
 LOCAL_SRC_FILES += ../manual/extension/lua_cocos2dx_extension_manual.cpp \
                    ../auto/lua_cocos2dx_extension_auto.cpp \
 

@@ -5,7 +5,9 @@ LOCAL_MODULE := cocos3d_static
 
 LOCAL_MODULE_FILENAME := libcocos3d
 
-LOCAL_SRC_FILES := \
+LOCAL_SRC_FILES :=
+ifeq ($(CC_USE_3D),1)
+LOCAL_SRC_FILES += \
 CCRay.cpp \
 CCAABB.cpp \
 CCOBB.cpp \
@@ -22,6 +24,7 @@ CCSprite3DMaterial.cpp \
 CCObjLoader.cpp \
 CCSkeleton3D.cpp \
 CCSprite3D.cpp
+endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

@@ -23,6 +23,7 @@
  ****************************************************************************/
 #include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_extension_auto.hpp"
+#include "lua_cocos2dx_assetsmanager_auto.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -398,6 +399,7 @@ public:
     }
 };
 
+#if CC_USE_CURL
 static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
 {
     if (nullptr == L)
@@ -471,6 +473,7 @@ static void extendAssetsManager(lua_State* L)
     }
     lua_pop(L, 1);
 }
+#endif  //CC_USE_CURL
 
 #define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
 #define KEY_TABLEVIEW_DELEGATE     "TableViewDelegate"
@@ -946,6 +949,7 @@ static void extendManifest(lua_State* L)
     lua_pop(L, 1);
 }
 
+#if CC_USE_CURL
 static int lua_cocos2dx_Extension_EventListenerAssetsManagerEx_create(lua_State* L)
 {
     if (nullptr == L)
@@ -1005,15 +1009,18 @@ static void extendEventListenerAssetsManagerEx(lua_State* L)
     }
     lua_pop(L, 1);
 }
+#endif  //CC_USE_CURL
 
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
-    extendAssetsManager(tolua_S);
     extendScrollView(tolua_S);
     extendTableView(tolua_S);
     extendManifest(tolua_S);
+#if CC_USE_CURL
+    extendAssetsManager(tolua_S);
     extendEventListenerAssetsManagerEx(tolua_S);
+#endif
     return 0;
 }
 
@@ -1023,6 +1030,9 @@ int register_extension_module(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))//stack:...,_G,
     {
         register_all_cocos2dx_extension(tolua_S);
+#if CC_USE_CURL
+        register_all_cocos2dx_assetsmanager(tolua_S);
+#endif
         register_all_cocos2dx_extension_manual(tolua_S);
     }
     lua_pop(tolua_S, 1);
