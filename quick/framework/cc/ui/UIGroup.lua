@@ -39,9 +39,13 @@ local UIGroup = class("UIGroup", function()
     return display.newNode()
 end)
 
+-- start --
+
 --------------------------------
 -- UIGroup构建函数
 -- @function [parent=#UIGroup] new
+
+-- end --
 
 function UIGroup:ctor()
     makeUIControl_(self)
@@ -50,11 +54,15 @@ function UIGroup:ctor()
     self:align(display.LEFT_BOTTOM)
 end
 
+-- start --
+
 --------------------------------
 -- 添加一个控件
 -- @function [parent=#UIGroup] addWidget
 -- @param node widget 控件
 -- @return UIGroup#UIGroup 
+
+-- end --
 
 function UIGroup:addWidget(widget)
     self:addChild(widget)
@@ -62,11 +70,15 @@ function UIGroup:addWidget(widget)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 触摸监听函数
 -- @function [parent=#UIGroup] onTouch
 -- @param function listener 函数
 -- @return UIGroup#UIGroup 
+
+-- end --
 
 function UIGroup:onTouch(listener)
     if not listener then listener = function() return true end end
@@ -80,16 +92,22 @@ function UIGroup:onTouch(listener)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 打开触摸功能
 -- @function [parent=#UIGroup] enableTouch
 -- @param boolean enabled
 -- @return UIGroup#UIGroup 
 
+-- end --
+
 function UIGroup:enableTouch(enabled)
     self:setTouchEnabled(enabled)
     return self
 end
+
+-- start --
 
 --------------------------------
 -- 设置大小
@@ -97,6 +115,8 @@ end
 -- @param number width
 -- @param number height
 -- @return UIGroup#UIGroup 
+
+-- end --
 
 function UIGroup:setLayoutSize(width, height)
     self:getComponent("components.ui.LayoutProtocol"):setLayoutSize(width, height)
@@ -106,6 +126,8 @@ function UIGroup:setLayoutSize(width, height)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 设置背景图片
 -- @function [parent=#UIGroup] setBackgroundImage
@@ -113,6 +135,8 @@ end
 -- @param table args 图片控件的参数表
 -- @return UIGroup#UIGroup 
 -- @see UIImage
+
+-- end --
 
 function UIGroup:setBackgroundImage(filename, args)
     self.backgroundSprite_ = UIImage.new(filename, args):setLayoutSize(self:getLayoutSize())

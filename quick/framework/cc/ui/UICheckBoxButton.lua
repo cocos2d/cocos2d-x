@@ -42,11 +42,15 @@ UICheckBoxButton.ON           = "on"
 UICheckBoxButton.ON_PRESSED   = "on_pressed"
 UICheckBoxButton.ON_DISABLED  = "on_disabled"
 
+-- start --
+
 --------------------------------
 -- UICheckBoxButton构建函数
 -- @function [parent=#UICheckBoxButton] new
 -- @param table images checkButton各种状态的图片表
 -- @param table options 参数表
+
+-- end --
 
 function UICheckBoxButton:ctor(images, options)
     UICheckBoxButton.super.ctor(self, {
@@ -72,6 +76,8 @@ function UICheckBoxButton:ctor(images, options)
     self.labelAlign_ = display.LEFT_CENTER
 end
 
+-- start --
+
 --------------------------------
 -- 设置单个状态的图片
 -- @function [parent=#UICheckBoxButton] setButtonImage
@@ -79,6 +85,8 @@ end
 -- @param string image 图片路径
 -- @param boolean ignoreEmpty 忽略image为nil
 -- @return UICheckBoxButton#UICheckBoxButton  自身
+
+-- end --
 
 function UICheckBoxButton:setButtonImage(state, image, ignoreEmpty)
     assert(state == UICheckBoxButton.OFF
@@ -108,20 +116,28 @@ function UICheckBoxButton:setButtonImage(state, image, ignoreEmpty)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 是否选中状态
 -- @function [parent=#UICheckBoxButton] isButtonSelected
 -- @return boolean#boolean  选中与否
 
+-- end --
+
 function UICheckBoxButton:isButtonSelected()
     return self.fsm_:canDoEvent("unselect")
 end
+
+-- start --
 
 --------------------------------
 -- 设置选中状态
 -- @function [parent=#UICheckBoxButton] setButtonSelected
 -- @param boolean selected 选中与否
 -- @return UICheckBoxButton#UICheckBoxButton  自身
+
+-- end --
 
 function UICheckBoxButton:setButtonSelected(selected)
     if self:isButtonSelected() ~= selected then

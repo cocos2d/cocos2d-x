@@ -48,6 +48,8 @@ UIInput = class("UIInput", function(options)
     return inputLabel
 end)
 
+-- start --
+
 --------------------------------
 -- 输入构建函数
 -- @function [parent=#UIInput] new
@@ -65,6 +67,8 @@ options参灵敏:
 -   UIInputType: 2 表示创建textfield输入控件
 
 ]]
+-- end --
+
 function UIInput:ctor(options)
 
     -- make editbox and textfield have same getText function

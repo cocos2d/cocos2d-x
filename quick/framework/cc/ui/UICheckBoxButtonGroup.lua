@@ -40,10 +40,14 @@ local UICheckBoxButtonGroup = class("UICheckBoxButtonGroup", UIGroup)
 
 UICheckBoxButtonGroup.BUTTON_SELECT_CHANGED = "BUTTON_SELECT_CHANGED"
 
+-- start --
+
 --------------------------------
 -- UICheckBoxButtonGroup构建函数
 -- @function [parent=#UICheckBoxButtonGroup] new
 -- @param integer direction checkBox排列方向
+
+-- end --
 
 function UICheckBoxButtonGroup:ctor(direction)
     UICheckBoxButtonGroup.super.ctor(self)
@@ -52,12 +56,16 @@ function UICheckBoxButtonGroup:ctor(direction)
     self.currentSelectedIndex_ = 0
 end
 
+-- start --
+
 --------------------------------
 -- 加入一个checkBox
 -- @function [parent=#UICheckBoxButtonGroup] addButton
 -- @param UICheckBoxButton button checkBox
 -- @return UICheckBoxButtonGroup#UICheckBoxButtonGroup  自身
 -- @see UICheckBoxButton
+
+-- end --
 
 function UICheckBoxButtonGroup:addButton(button)
     self:addChild(button)
@@ -68,11 +76,15 @@ function UICheckBoxButtonGroup:addButton(button)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 按index移除掉一个checkBox
 -- @function [parent=#UICheckBoxButtonGroup] removeButtonAtIndex
 -- @param integer index 要移除checkBox的位置
 -- @return UICheckBoxButtonGroup#UICheckBoxButtonGroup  自身
+
+-- end --
 
 function UICheckBoxButtonGroup:removeButtonAtIndex(index)
     assert(self.buttons_[index] ~= nil, "UICheckBoxButtonGroup:removeButtonAtIndex() - invalid index")
@@ -94,24 +106,34 @@ function UICheckBoxButtonGroup:removeButtonAtIndex(index)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 按index获取checkBox
 -- @function [parent=#UICheckBoxButtonGroup] getButtonAtIndex
 -- @param integer index 要获取checkBox的位置
 -- @return UICheckBoxButton#UICheckBoxButton 
 
+-- end --
+
 function UICheckBoxButtonGroup:getButtonAtIndex(index)
     return self.buttons_[index]
 end
+
+-- start --
 
 --------------------------------
 -- 得到UICheckBoxButton的总数
 -- @function [parent=#UICheckBoxButtonGroup] getButtonsCount
 -- @return integer#integer 
 
+-- end --
+
 function UICheckBoxButtonGroup:getButtonsCount()
     return #self.buttons_
 end
+
+-- start --
 
 --------------------------------
 -- 设置margin
@@ -121,6 +143,8 @@ end
 -- @param number bottom 下边的空白
 -- @param number left 左边的空白
 -- @return UICheckBoxButtonGroup#UICheckBoxButtonGroup  自身
+
+-- end --
 
 function UICheckBoxButtonGroup:setButtonsLayoutMargin(top, right, bottom, left)
     for _, button in ipairs(self.buttons_) do
@@ -134,11 +158,15 @@ function UICheckBoxButtonGroup:addButtonSelectChangedEventListener(callback)
     return self:addEventListener(UICheckBoxButtonGroup.BUTTON_SELECT_CHANGED, callback)
 end
 
+-- start --
+
 --------------------------------
 -- 注册checkbox状态变化listener
 -- @function [parent=#UICheckBoxButtonGroup] onButtonSelectChanged
 -- @param function callback
 -- @return UICheckBoxButtonGroup#UICheckBoxButtonGroup  自身
+
+-- end --
 
 function UICheckBoxButtonGroup:onButtonSelectChanged(callback)
     self:addButtonSelectChangedEventListener(callback)

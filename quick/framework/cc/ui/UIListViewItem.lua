@@ -54,10 +54,14 @@ function UIListViewItem:ctor(item)
 	self:addContent(item)
 end
 
+-- start --
+
 --------------------------------
 -- 将要内容加到列表控件项中
 -- @function [parent=#UIListViewItem] addContent
 -- @param node content 显示内容
+
+-- end --
 
 function UIListViewItem:addContent(content)
 	if not content then
@@ -67,14 +71,20 @@ function UIListViewItem:addContent(content)
 	self:addChild(content, UIListViewItem.CONTENT_Z_ORDER, UIListViewItem.CONTENT_TAG)
 end
 
+-- start --
+
 --------------------------------
 -- 获取列表控件项中的内容
 -- @function [parent=#UIListViewItem] getContent
 -- @return node#node 
 
+-- end --
+
 function UIListViewItem:getContent()
 	return self:getChildByTag(UIListViewItem.CONTENT_TAG)
 end
+
+-- start --
 
 --------------------------------
 -- 设置列表项中的大小
@@ -82,6 +92,8 @@ end
 -- @param number w 列表项宽度
 -- @param number h 列表项高度
 -- @param [boolean bNoMargin] 是否不使用margin margin可调用setMargin赋值
+
+-- end --
 
 function UIListViewItem:setItemSize(w, h, bNoMargin)
 	if not bNoMargin then

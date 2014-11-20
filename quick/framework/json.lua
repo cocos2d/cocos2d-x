@@ -41,6 +41,8 @@ if not pcall(safeLoad) then
     cjson = nil
 end
 
+-- start --
+
 --------------------------------
 -- 将表格数据编码为 JSON 字符串
 -- @function [parent=#json] encode
@@ -79,6 +81,8 @@ echo(str) -- [null,null,2,null,3]
 ~~~
 
 ]]
+-- end --
+
 function json.encode(var)
     local status, result = pcall(cjson.encode, var)
     if status then return result end
@@ -86,6 +90,8 @@ function json.encode(var)
         printError("json.encode() - encoding failed: %s", tostring(result))
     end
 end
+
+-- start --
 
 --------------------------------
 -- 将 JSON 字符串解码为表格对象
@@ -132,6 +138,8 @@ dump(tb) --[ [
 ~~~
 
 ]]
+-- end --
+
 function json.decode(text)
     local status, result = pcall(cjson.decode, text)
     if status then return result end

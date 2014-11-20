@@ -39,6 +39,8 @@ UIPushButton.NORMAL   = "normal"
 UIPushButton.PRESSED  = "pressed"
 UIPushButton.DISABLED = "disabled"
 
+-- start --
+
 --------------------------------
 -- 按钮控件构建函数
 -- @function [parent=#UIPushButton] ctor
@@ -55,6 +57,8 @@ UIPushButton.DISABLED = "disabled"
 -   disabled 无效状态
 
 ]]
+-- end --
+
 function UIPushButton:ctor(images, options)
     UIPushButton.super.ctor(self, {
         {name = "disable", from = {"normal", "pressed"}, to = "disabled"},

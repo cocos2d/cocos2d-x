@@ -32,6 +32,8 @@ THE SOFTWARE.
 ]]
 local crypto = {}
 
+-- start --
+
 --------------------------------
 -- 使用 AES256 算法加密内容
 -- @function [parent=#crypto] encryptAES256
@@ -39,11 +41,15 @@ local crypto = {}
 -- @param string key 密钥字符串
 -- @return string#string ret (return value: string)   加密后的字符串
 
+-- end --
+
 function crypto.encryptAES256(plaintext, key)
     plaintext = tostring(plaintext)
     key = tostring(key)
     return cc.Crypto:encryptAES256(plaintext, string.len(plaintext), key, string.len(key))
 end
+
+-- start --
 
 --------------------------------
 -- 使用 AES256 算法解密内容
@@ -52,11 +58,15 @@ end
 -- @param string key 密钥字符串
 -- @return string#string ret (return value: string)   明文字符串
 
+-- end --
+
 function crypto.decryptAES256(ciphertext, key)
     ciphertext = tostring(ciphertext)
     key = tostring(key)
     return cc.Crypto:decryptAES256(ciphertext, string.len(ciphertext), key, string.len(key))
 end
+
+-- start --
 
 --------------------------------
 -- 使用 XXTEA 算法加密内容
@@ -65,11 +75,15 @@ end
 -- @param string key 密钥字符串
 -- @return string#string ret (return value: string)   加密后的字符串
 
+-- end --
+
 function crypto.encryptXXTEA(plaintext, key)
     plaintext = tostring(plaintext)
     key = tostring(key)
     return cc.Crypto:encryptXXTEA(plaintext, string.len(plaintext), key, string.len(key))
 end
+
+-- start --
 
 --------------------------------
 -- 使用 XXTEA 算法解密内容
@@ -78,11 +92,15 @@ end
 -- @param string key 密钥字符串
 -- @return string#string ret (return value: string)   明文字符串
 
+-- end --
+
 function crypto.decryptXXTEA(ciphertext, key)
     ciphertext = tostring(ciphertext)
     key = tostring(key)
     return cc.Crypto:decryptXXTEA(ciphertext, string.len(ciphertext), key, string.len(key))
 end
+
+-- start --
 
 --------------------------------
 -- 使用 BASE64 算法编码内容
@@ -90,10 +108,14 @@ end
 -- @param string plaintext 原文字符串
 -- @return string#string ret (return value: string)   编码后的字符串
 
+-- end --
+
 function crypto.encodeBase64(plaintext)
     plaintext = tostring(plaintext)
     return cc.Crypto:encodeBase64(plaintext, string.len(plaintext))
 end
+
+-- start --
 
 --------------------------------
 -- 使用 BASE64 算法解码内容
@@ -101,10 +123,14 @@ end
 -- @param string ciphertext 编码后的字符串
 -- @return string#string ret (return value: string)   原文字符串
 
+-- end --
+
 function crypto.decodeBase64(ciphertext)
     ciphertext = tostring(ciphertext)
     return cc.Crypto:decodeBase64(ciphertext)
 end
+
+-- start --
 
 --------------------------------
 -- 计算内容的 MD5 码
@@ -113,17 +139,23 @@ end
 -- @param boolean isRawOutput 是否返回二进制 MD5 码
 -- @return string#string ret (return value: string)  MD5 字符串
 
+-- end --
+
 function crypto.md5(input, isRawOutput)
     input = tostring(input)
     if type(isRawOutput) ~= "boolean" then isRawOutput = false end
     return cc.Crypto:MD5(input, isRawOutput)
 end
 
+-- start --
+
 --------------------------------
 -- 计算文件的 MD5 码
 -- @function [parent=#crypto] md5file
 -- @param string path 文件路径
 -- @return string#string ret (return value: string)  MD5 字符串
+
+-- end --
 
 function crypto.md5file(path)
     if not path then

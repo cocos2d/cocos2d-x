@@ -51,10 +51,14 @@ UILabel.LABEL_TYPE_BM					= 1
 UILabel.LABEL_TYPE_TTF 					= 2
 
 
+-- start --
+
 --------------------------------
 -- UILabel构建函数
 -- @function [parent=#UILabel] new
 -- @param table options 参数表
+
+-- end --
 
 function UILabel:ctor(options)
     makeUIControl_(self)
@@ -63,12 +67,16 @@ function UILabel:ctor(options)
     self:align(display.LEFT_CENTER)
 end
 
+-- start --
+
 --------------------------------
 -- UILabel设置控件大小
 -- @function [parent=#UILabel] setLayoutSize
 -- @param number width 宽度
 -- @param number height 高度
 -- @return UILabel#UILabel  自身
+
+-- end --
 
 function UILabel:setLayoutSize(width, height)
     self:getComponent("components.ui.LayoutProtocol"):setLayoutSize(width, height)
