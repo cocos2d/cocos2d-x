@@ -70,7 +70,8 @@ endif
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
-                    $(LOCAL_PATH)/WidgetReader
+                    $(LOCAL_PATH)/WidgetReader \
+                    $(LOCAL_PATH)/../../../external/protobuf-lite/src
 
 LOCAL_CFLAGS += -fexceptions
 

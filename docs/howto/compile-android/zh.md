@@ -1,11 +1,9 @@
-Title: 编译 Android 工程
 
 编译 Android 工程
 ================
 
 要编译 Android 功能，必须使用最新版本的 Android SDK 和`指定的 r9d 版本` Android NDK。
 
-~
 
 ## 安装 Android SDK 和 NDK
 
@@ -68,7 +66,6 @@ Title: 编译 Android 工程
     ANDROID_HOME=%ANDROID_SDK_ROOT%
     ~~~
 
-~
 
 ## 编译 samples/anysdk
 
@@ -80,22 +77,23 @@ quick 中带有一个 AnySDK 的示例，我们可以编译这个示例来检查
 > 
 > AnySDK 为 CP 商提供一套第三方SDK接入解决方案，整个接入过程，不改变任何 SDK 的功能、特性、参数等，对于最终玩家而言是完全透明无感知的。目的是让 CP 商能有更多时间更专注于游戏本身的品质，所有 SDK 的接入工作统统交给我们吧。第三方 SDK 包括了渠道 SDK、用户系统、支付系统、广告系统、统计系统、分享系统等等。我们不开 SDK，我们只帮您轻松接入第三方 SDK！
 
-1.  打开终端窗口，进入 `quick/samples/anysdk/proj.android` 目录
-2.  如果是 Mac 系统，运行 `./build_native.sh`，Windows 系统则运行 `build_native.bat`
-3.  如果一切顺利，我们将看到输出信息的最后几行：
+1.  新建一个工程,把 AnySDK 示例中的src,res文件夹覆盖对应文件夹
+2.  打开终端窗口，进入新工程的 `frameworks/runtime-src/proj.android` 目录
+3.  如果是 Mac 系统，运行 `./build_native.sh`，Windows 系统则运行 `build_native.bat`
+4.  如果一切顺利，我们将看到输出信息的最后几行：
 
     ~~~
     SharedLibrary  : libgame.so
     Install        : libgame.so => libs/armeabi/libgame.so
     ~~~
 
-~
+
 
 如果编译失败，请仔细检查 SDK/NDK 版本、安装路径。
 
 > 修改了环境设置后，必须重新打开终端窗口才能生效。
 
-~
+
 
 运行 `build_native` 只是编译了 C++ 部分，而 Android 应用还存在 Java 部分，这时就需要 Eclipse ADT 来进行了。
 
@@ -106,23 +104,23 @@ quick 中带有一个 AnySDK 的示例，我们可以编译这个示例来检查
 启动后，需要先导入 cocos2d-x 的 Java 库：
 
 1.  选择菜单 File -> Import, 再选择 Android -> Existing Android Code Into Workspace
-2.  点击 Browse 按钮, 选择 quick 目录中的 `cocos/platform/android/java`
+2.  点击 Browse 按钮, 选择新工程目录中的 `frameworks/cocos2d-x/cocos/platform/android/java`
 3.  点击 "Finish" 完成操作。
 
 接下来导入 AnySDK 示例的 Android 工程：
 
-1.  重复上述步骤，导入 `quick/samples/anysdk/proj.android`
+1.  重复上述步骤，导入 `frameworks/runtime-src/proj.android`
 2.  在 `AnySDK` 工程上点击右键选择菜单 "Properties" 打开工程设置对话框
 3.  从左侧选择 `Android`，然后点击右侧 "Add" 按钮，添加 `v3quick` 库。如果添加之前 `v3quick` 库已经在 `Library` 列表中，则删除后重新添加
 4.  检查 `Project Build Target` 是否是最新版本的 SDK
 
     ![](res/check-project-properties.png)
 
-~
+
 
 如果完成上述操作后，Eclipse ADT 窗口 `Package Explorer` 列出的 `v3quick` 和 `AnySDK` 项目文件夹上有红色错误图标。请仔细检查 `v3quick` 和 `AnySDK` 项目的操作步骤，以及 `Project Build Target` 是否是最新版本的 SDK。
 
-~
+
 
 ### 设置 Android 设备允许真机调试 ###
 
@@ -147,7 +145,7 @@ Android 官方文档：http://developer.android.com/tools/device.html
     
     完成设置后，将设备连接到开发机，并解锁设备。
 
-~
+
 
 ### 在设备上测试 AnySDK 示例 ###
 
@@ -159,7 +157,7 @@ Android 官方文档：http://developer.android.com/tools/device.html
 
     ![](res/run-on-device.png)
 
-~
+
 
 ## 使用 build_apk 脚本快速生成 apk
 
@@ -169,7 +167,7 @@ Android 官方文档：http://developer.android.com/tools/device.html
 
 如果环境未搭建好或者未配置好，运行时会在命令行报相关错误提示并返回非 0 的错误码。
 
-~
+
 
 ### 运行 build_apk
 
@@ -178,7 +176,7 @@ Android 官方文档：http://developer.android.com/tools/device.html
 -   如果执行成功，将生成 `proj.android/<项目名-日期-时间>.apk` 文件，并返回 0 值。
 -   如果执行失败，将显示错误信息，并返回非 0 错误代码。
 
-~
+
 
 build_apk 支持下列参数：
 
