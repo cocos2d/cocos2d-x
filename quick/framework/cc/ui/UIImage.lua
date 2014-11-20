@@ -40,11 +40,15 @@ local UIImage = class("UIImage", function(filename, options)
     end
 end)
 
+-- start --
+
 --------------------------------
 -- UIImage构建函数
 -- @function [parent=#UIImage] new
 -- @param string filename 图片文件名
 -- @param table options 参数表
+
+-- end --
 
 function UIImage:ctor(filename, options)
     makeUIControl_(self)
@@ -57,12 +61,16 @@ function UIImage:ctor(filename, options)
     end
 end
 
+-- start --
+
 --------------------------------
 -- UIImage设置控件大小
 -- @function [parent=#UIImage] setLayoutSize
 -- @param number width 宽度
 -- @param number height 高度
 -- @return UIImage#UIImage  自身
+
+-- end --
 
 function UIImage:setLayoutSize(width, height)
     self:getComponent("components.ui.LayoutProtocol"):setLayoutSize(width, height)

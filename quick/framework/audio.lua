@@ -36,10 +36,14 @@ local audio = {}
 local sharedEngine = cc.SimpleAudioEngine:getInstance()
 
 
+-- start --
+
 --------------------------------
 -- 返回音乐的音量值
 -- @function [parent=#audio] getMusicVolume
 -- @return number#number ret (return value: number)  返回值在 0.0 到 1.0 之间，0.0 表示完全静音，1.0 表示 100% 音量
+
+-- end --
 
 function audio.getMusicVolume()
     local volume = sharedEngine:getMusicVolume()
@@ -49,10 +53,14 @@ function audio.getMusicVolume()
     return volume
 end
 
+-- start --
+
 --------------------------------
 -- 设置音乐的音量
 -- @function [parent=#audio] setMusicVolume
 -- @param number volume 音量在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量
+
+-- end --
 
 function audio.setMusicVolume(volume)
     volume = checknumber(volume)
@@ -62,10 +70,14 @@ function audio.setMusicVolume(volume)
     sharedEngine:setMusicVolume(volume)
 end
 
+-- start --
+
 --------------------------------
 -- 返回音效的音量值
 -- @function [parent=#audio] getSoundsVolume
 -- @return number#number ret (return value: number)  返回值在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量
+
+-- end --
 
 function audio.getSoundsVolume()
     local volume = sharedEngine:getEffectsVolume()
@@ -75,10 +87,14 @@ function audio.getSoundsVolume()
     return volume
 end
 
+-- start --
+
 --------------------------------
 -- 设置音效的音量
 -- @function [parent=#audio] setSoundsVolume
 -- @param number volume 音量在 0.0 到 1.0 之间, 0.0 表示完全静音，1.0 表示 100% 音量
+
+-- end --
 
 function audio.setSoundsVolume(volume)
     volume = checknumber(volume)
@@ -88,10 +104,14 @@ function audio.setSoundsVolume(volume)
     sharedEngine:setEffectsVolume(volume)
 end
 
+-- start --
+
 --------------------------------
 -- 预载入一个音乐文件
 -- @function [parent=#audio] preloadMusic
 -- @param string filename 音乐文件名
+
+-- end --
 
 function audio.preloadMusic(filename)
     if not filename then
@@ -104,11 +124,15 @@ function audio.preloadMusic(filename)
     sharedEngine:preloadMusic(filename)
 end
 
+-- start --
+
 --------------------------------
 -- 播放音乐
 -- @function [parent=#audio] playMusic
 -- @param string filename 音乐文件名
 -- @param boolean isLoop 是否循环播放，默认为 true
+
+-- end --
 
 function audio.playMusic(filename, isLoop)
     if not filename then
@@ -124,10 +148,14 @@ function audio.playMusic(filename, isLoop)
     sharedEngine:playMusic(filename, isLoop)
 end
 
+-- start --
+
 --------------------------------
 -- 停止播放音乐
 -- @function [parent=#audio] stopMusic
 -- @param boolean isReleaseData 是否释放音乐数据，默认为 true
+
+-- end --
 
 function audio.stopMusic(isReleaseData)
     isReleaseData = checkbool(isReleaseData)
@@ -137,9 +165,14 @@ function audio.stopMusic(isReleaseData)
     sharedEngine:stopMusic(isReleaseData)
 end
 
+-- start --
+
 --------------------------------
 -- 暂停音乐的播放
 -- @function [parent=#audio] pauseMusic
+
+-- end --
+
 function audio.pauseMusic()
     if DEBUG > 1 then
         printInfo("audio.pauseMusic()")
@@ -147,9 +180,14 @@ function audio.pauseMusic()
     sharedEngine:pauseMusic()
 end
 
+-- start --
+
 --------------------------------
 -- 恢复暂停的音乐
 -- @function [parent=#audio] resumeMusic
+
+-- end --
+
 function audio.resumeMusic()
     if DEBUG > 1 then
         printInfo("audio.resumeMusic()")
@@ -157,9 +195,14 @@ function audio.resumeMusic()
     sharedEngine:resumeMusic()
 end
 
+-- start --
+
 --------------------------------
 -- 从头开始重新播放当前音乐
 -- @function [parent=#audio] rewindMusic
+
+-- end --
+
 function audio.rewindMusic()
     if DEBUG > 1 then
         printInfo("audio.rewindMusic()")
@@ -167,12 +210,16 @@ function audio.rewindMusic()
     sharedEngine:rewindMusic()
 end
 
+-- start --
+
 --------------------------------
 -- 检查是否可以开始播放音乐
 -- 如果可以则返回 true。
 -- 如果尚未载入音乐，或者载入的音乐格式不被设备所支持，该方法将返回 false。
 -- @function [parent=#audio] willPlayMusic
 -- @return boolean#boolean ret (return value: bool) 
+
+-- end --
 
 function audio.willPlayMusic()
     local ret = sharedEngine:willPlayMusic()
@@ -182,10 +229,14 @@ function audio.willPlayMusic()
     return ret
 end
 
+-- start --
+
 --------------------------------
 -- 检查当前是否正在播放音乐
 -- @function [parent=#audio] isMusicPlaying
 -- @return boolean#boolean ret (return value: bool) 
+
+-- end --
 
 function audio.isMusicPlaying()
     local ret = sharedEngine:isMusicPlaying()
@@ -195,6 +246,8 @@ function audio.isMusicPlaying()
     return ret
 end
 
+-- start --
+
 --------------------------------
 -- 播放音效，并返回音效句柄
 -- 如果音效尚未载入，则会载入后开始播放。
@@ -203,6 +256,8 @@ end
 -- @param string filename 音效文件名
 -- @param boolean isLoop 是否重复播放，默认为 false
 -- @return integer#integer ret (return value: int)  音效句柄
+
+-- end --
 
 function audio.playSound(filename, isLoop)
     if not filename then
@@ -216,10 +271,14 @@ function audio.playSound(filename, isLoop)
     return sharedEngine:playEffect(filename, isLoop)
 end
 
+-- start --
+
 --------------------------------
 -- 暂停指定的音效
 -- @function [parent=#audio] pauseSound
 -- @param integer 音效句柄
+
+-- end --
 
 function audio.pauseSound(handle)
     if not handle then
@@ -232,9 +291,13 @@ function audio.pauseSound(handle)
     sharedEngine:pauseEffect(handle)
 end
 
+-- start --
+
 --------------------------------
 -- 暂停所有音效
 -- @function [parent=#audio] pauseAllSounds
+
+-- end --
 
 function audio.pauseAllSounds()
     if DEBUG > 1 then
@@ -243,10 +306,14 @@ function audio.pauseAllSounds()
     sharedEngine:pauseAllEffects()
 end
 
+-- start --
+
 --------------------------------
 -- 恢复暂停的音效
 -- @function [parent=#audio] resumeSound
 -- @param integer 音效句柄
+
+-- end --
 
 function audio.resumeSound(handle)
     if not handle then
@@ -259,9 +326,13 @@ function audio.resumeSound(handle)
     sharedEngine:resumeEffect(handle)
 end
 
+-- start --
+
 --------------------------------
 -- 恢复所有的音效
 -- @function [parent=#audio] resumeAllSounds
+
+-- end --
 
 function audio.resumeAllSounds()
     if DEBUG > 1 then
@@ -270,10 +341,14 @@ function audio.resumeAllSounds()
     sharedEngine:resumeAllEffects()
 end
 
+-- start --
+
 --------------------------------
 -- 停止指定的音效
 -- @function [parent=#audio] stopSound
 -- @param integer 音效句柄
+
+-- end --
 
 function audio.stopSound(handle)
     if not handle then
@@ -286,9 +361,13 @@ function audio.stopSound(handle)
     sharedEngine:stopEffect(handle)
 end
 
+-- start --
+
 --------------------------------
 -- 停止所有音效
 -- @function [parent=#audio] stopAllSounds
+
+-- end --
 
 function audio.stopAllSounds()
     if DEBUG > 1 then
@@ -297,10 +376,14 @@ function audio.stopAllSounds()
     sharedEngine:stopAllEffects()
 end
 
+-- start --
+
 --------------------------------
 -- 预载入一个音效文件
 -- @function [parent=#audio] preloadSound
 -- @param string 音效文件名
+
+-- end --
 
 function audio.preloadSound(filename)
     if not filename then
@@ -313,10 +396,14 @@ function audio.preloadSound(filename)
     sharedEngine:preloadEffect(filename)
 end
 
+-- start --
+
 --------------------------------
 -- 从内存卸载一个音效
 -- @function [parent=#audio] unloadSound
 -- @param string 音效文件名
+
+-- end --
 
 function audio.unloadSound(filename)
     if not filename then

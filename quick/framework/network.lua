@@ -33,6 +33,8 @@ THE SOFTWARE.
 
 local network = {}
 
+-- start --
+
 --------------------------------
 -- 检查地 WIFI 网络是否可用
 -- @function [parent=#network] isLocalWiFiAvailable
@@ -45,9 +47,13 @@ local network = {}
 提示： WIFI 网络可用不代表可以访问互联网。
 
 ]]
+-- end --
+
 function network.isLocalWiFiAvailable()
     return cc.Network:isLocalWiFiAvailable()
 end
+
+-- start --
 
 --------------------------------
 -- 检查互联网连接是否可用
@@ -61,9 +67,13 @@ end
 通常，这里接口返回 3G 网络的状态，具体情况与设备和操作系统有关。 
 
 ]]
+-- end --
+
 function network.isInternetConnectionAvailable()
     return cc.Network:isInternetConnectionAvailable()
 end
+
+-- start --
 
 --------------------------------
 -- 检查是否可以解析指定的主机名
@@ -86,6 +96,8 @@ end
 注意： 该接口会阻塞程序，因此在调用该接口时应该提醒用户应用程序在一段时间内会失去响应。 
 
 ]]
+-- end --
+
 function network.isHostNameReachable(hostname)
     if type(hostname) ~= "string" then
         printError("network.isHostNameReachable() - invalid hostname %s", tostring(hostname))
@@ -93,6 +105,8 @@ function network.isHostNameReachable(hostname)
     end
     return cc.Network:isHostNameReachable(hostname)
 end
+
+-- start --
 
 --------------------------------
 -- 返回互联网连接状态值
@@ -110,9 +124,13 @@ end
 -   kCCNetworkStatusReachableViaWWAN: 通过 3G 网络
 
 ]]
+-- end --
+
 function network.getInternetConnectionStatus()
     return cc.Network:getInternetConnectionStatus()
 end
+
+-- start --
 
 --------------------------------
 -- 创建异步 HTTP 请求，并返回 cc.HTTPRequest 对象。
@@ -161,6 +179,8 @@ request:start()
 ~~~
 
 ]]
+-- end --
+
 function network.createHTTPRequest(callback, url, method)
     if not method then method = "GET" end
     if string.upper(tostring(method)) == "GET" then
@@ -170,6 +190,8 @@ function network.createHTTPRequest(callback, url, method)
     end
     return cc.HTTPRequest:createWithUrl(callback, url, method)
 end
+
+-- start --
 
 --------------------------------
 -- 通过HTTPRequest上传一个文件
@@ -218,6 +240,8 @@ network.uploadFile(function(evt)
 ~~~
 
 ]]		
+-- end --
+
 function network.uploadFile(callback, url, datas)
 	assert(datas or datas.fileFieldName or datas.filePath, "Need file datas!")
 	local request = network.createHTTPRequest(callback, url, "POST")
@@ -245,11 +269,15 @@ local function parseTrueFalse(t)
     return false
 end
 
+-- start --
+
 --------------------------------
 -- 转换cookie为一个字串
 -- @function [parent=#network] makeCookieString
 -- @param tabel cookie
 -- @return string#string  结果
+
+-- end --
 
 function network.makeCookieString(cookie)
     local arr = {}
@@ -266,11 +294,15 @@ function network.makeCookieString(cookie)
     return table.concat(arr, "; ")
 end
 
+-- start --
+
 --------------------------------
 -- 转换字串为一个cookie表
 -- @function [parent=#network] parseCookie
 -- @param string cookieString
 -- @return table#table  结果
+
+-- end --
 
 function network.parseCookie(cookieString)
     local cookie = {}

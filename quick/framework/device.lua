@@ -125,6 +125,8 @@ printInfo("# device.directorySeparator    = " .. device.directorySeparator)
 printInfo("# device.pathSeparator         = " .. device.pathSeparator)
 printInfo("#")
 
+-- start --
+
 --------------------------------
 -- 显示活动指示器
 -- @function [parent=#device] showActivityIndicator
@@ -136,6 +138,8 @@ printInfo("#")
 在 iOS 和 Android 设备上显示系统的活动指示器，可以用于阻塞操作时通知用户需要等待。
 
 ]]
+-- end --
+
 function device.showActivityIndicator()
     if DEBUG > 1 then
         printInfo("device.showActivityIndicator()")
@@ -143,9 +147,13 @@ function device.showActivityIndicator()
     cc.Native:showActivityIndicator()
 end
 
+-- start --
+
 --------------------------------
 -- 隐藏正在显示的活动指示器
 -- @function [parent=#device] hideActivityIndicator
+
+-- end --
 
 function device.hideActivityIndicator()
     if DEBUG > 1 then
@@ -153,6 +161,8 @@ function device.hideActivityIndicator()
     end
     cc.Native:hideActivityIndicator()
 end
+
+-- start --
 
 --------------------------------
 -- 显示一个包含按钮的弹出对话框
@@ -184,6 +194,8 @@ device.showAlert("Confirm Exit", "Are you sure exit game ?", {"YES", "NO"}, onBu
 回调函数获得的表格中，buttonIndex 指示玩家选择了哪一个按钮，其值是按钮的显示顺序。
 
 ]]
+
+-- end --
 
 function device.showAlert(title, message, buttonLabels, listener)
     if type(buttonLabels) ~= "table" then
@@ -227,9 +239,13 @@ function device.showAlert(title, message, buttonLabels, listener)
 	end
 end
 
+-- start --
+
 --------------------------------
 -- 取消正在显示的对话框。
 -- @function [parent=#device] cancelAlert
+
+-- end --
 
 function device.cancelAlert()
     if DEBUG > 1 then
@@ -237,6 +253,8 @@ function device.cancelAlert()
     end
     cc.Native:cancelAlert()
 end
+
+-- start --
 
 --------------------------------
 -- 返回设备的 OpenUDID 值
@@ -256,6 +274,8 @@ OpenUDID 是为设备仿造的 UDID（唯一设备识别码），可以用来识
 
 ]]
 
+-- end --
+
 function device.getOpenUDID()
     local ret = cc.Native:getOpenUDID()
     if DEBUG > 1 then
@@ -263,6 +283,8 @@ function device.getOpenUDID()
     end
     return ret
 end
+
+-- start --
 
 --------------------------------
 -- 用浏览器打开指定的网址
@@ -294,12 +316,16 @@ device.openURL("tel:123-456-7890")
 
 ]]
 
+-- end --
+
 function device.openURL(url)
     if DEBUG > 1 then
         printInfo("device.openURL() - url: %s", tostring(url))
     end
     cc.Native:openURL(url)
 end
+
+-- start --
 
 --------------------------------
 -- 显示一个输入框，并返回用户输入的内容。
@@ -308,6 +334,8 @@ end
 -- @param string message 提示信息
 -- @param string defaultValue 输入框默认值
 -- @return string#string ret (return value: string)  用户输入的字符串
+
+-- end --
 
 function device.showInputBox(title, message, defaultValue)
     title = tostring(title or "INPUT TEXT")

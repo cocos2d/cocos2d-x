@@ -43,6 +43,8 @@ UIScrollView.DIRECTION_BOTH			= 0
 UIScrollView.DIRECTION_VERTICAL		= 1
 UIScrollView.DIRECTION_HORIZONTAL	= 2
 
+-- start --
+
 --------------------------------
 -- 滚动控件的构建函数
 -- @function [parent=#UIScrollView] new
@@ -66,6 +68,8 @@ UIScrollView.DIRECTION_HORIZONTAL	= 2
 -	capInsets 缩放区域
 
 ]]
+-- end --
+
 function UIScrollView:ctor(params)
 	self.bBounce = true
 	self.nShakeVal = 5
@@ -157,14 +161,20 @@ function UIScrollView:setViewRect(rect)
 	return self
 end
 
+-- start --
+
 --------------------------------
 -- 得到滚动控件的显示区域
 -- @function [parent=#UIScrollView] getViewRect
 -- @return Rect#Rect 
 
+-- end --
+
 function UIScrollView:getViewRect()
 	return self.viewRect_
 end
+
+-- start --
 
 --------------------------------
 -- 设置布局四周的空白
@@ -174,6 +184,8 @@ end
 -- @param number bottom 下边的空白
 -- @param number left 左边的空白
 -- @return UIScrollView#UIScrollView 
+
+-- end --
 
 function UIScrollView:setLayoutPadding(top, right, bottom, left)
 	if not self.layoutPadding then
@@ -191,11 +203,15 @@ function UIScrollView:setActualRect(rect)
 	self.actualRect_ = rect
 end
 
+-- start --
+
 --------------------------------
 -- 设置滚动方向
 -- @function [parent=#UIScrollView] setDirection
 -- @param number dir 滚动方向
 -- @return UIScrollView#UIScrollView 
+
+-- end --
 
 function UIScrollView:setDirection(dir)
 	self.direction = dir
@@ -203,14 +219,20 @@ function UIScrollView:setDirection(dir)
 	return self
 end
 
+-- start --
+
 --------------------------------
 -- 获取滚动方向
 -- @function [parent=#UIScrollView] getDirection
 -- @return number#number 
 
+-- end --
+
 function UIScrollView:getDirection()
 	return self.direction
 end
+
+-- start --
 
 --------------------------------
 -- 设置滚动控件是否开启回弹功能
@@ -218,11 +240,15 @@ end
 -- @param boolean bBounceable 是否开启回弹
 -- @return UIScrollView#UIScrollView 
 
+-- end --
+
 function UIScrollView:setBounceable(bBounceable)
 	self.bBounce = bBounceable
 
 	return self
 end
+
+-- start --
 
 --------------------------------
 -- 设置触摸响应方式
@@ -232,6 +258,8 @@ end
 -- @function [parent=#UIScrollView] setTouchType
 -- @param boolean bTouchOnContent 是否触控到滚动内容上才有效
 -- @return UIScrollView#UIScrollView 
+
+-- end --
 
 function UIScrollView:setTouchType(bTouchOnContent)
 	self.touchOnContent = bTouchOnContent
@@ -256,11 +284,15 @@ function UIScrollView:resetPosition()
 	self.scrollNode:setPosition(x, y)
 end
 
+-- start --
+
 --------------------------------
 -- 判断一个node是否在滚动控件的显示区域中
 -- @function [parent=#UIScrollView] isItemInViewRect
 -- @param node item scrollView中的项
 -- @return boolean#boolean 
+
+-- end --
 
 function UIScrollView:isItemInViewRect(item)
 	if "userdata" ~= type(item) then
@@ -287,11 +319,15 @@ function UIScrollView:isItemInViewRect(item)
 	return cc.rectIntersectsRect(self:getViewRectInWorldSpace(), bound)
 end
 
+-- start --
+
 --------------------------------
 -- 设置scrollview可触摸
 -- @function [parent=#UIScrollView] setTouchEnabled
 -- @param boolean bEnabled 是否开启触摸
 -- @return UIScrollView#UIScrollView 
+
+-- end --
 
 function UIScrollView:setTouchEnabled(bEnabled)
 	if not self.scrollNode then
@@ -302,11 +338,15 @@ function UIScrollView:setTouchEnabled(bEnabled)
 	return self
 end
 
+-- start --
+
 --------------------------------
 -- 将要显示的node加到scrollview中,scrollView只支持滚动一个node
 -- @function [parent=#UIScrollView] addScrollNode
 -- @param node node 要显示的项
 -- @return UIScrollView#UIScrollView 
+
+-- end --
 
 function UIScrollView:addScrollNode(node)
 	self:addChild(node)
@@ -329,20 +369,28 @@ function UIScrollView:addScrollNode(node)
     return self
 end
 
+-- start --
+
 --------------------------------
 -- 返回scrollView中的滚动node
 -- @function [parent=#UIScrollView] getScrollNode
 -- @return node#node  滚动node
 
+-- end --
+
 function UIScrollView:getScrollNode()
 	return self.scrollNode
 end
+
+-- start --
 
 --------------------------------
 -- 注册滚动控件的监听函数
 -- @function [parent=#UIScrollView] onScroll
 -- @param function listener 监听函数
 -- @return UIScrollView#UIScrollView 
+
+-- end --
 
 function UIScrollView:onScroll(listener)
 	self.scrollListener_ = listener

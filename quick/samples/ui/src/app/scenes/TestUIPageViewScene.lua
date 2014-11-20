@@ -19,7 +19,7 @@ function TestUIPageViewScene:createPageView()
         viewRect = cc.rect(80, 80, 780, 480),
         column = 3, row = 3,
         padding = {left = 20, right = 20, top = 20, bottom = 20},
-        columnSpace = 10, rowSapce = 10}
+        columnSpace = 10, rowSpace = 10}
         :onTouch(handler(self, self.touchListener))
         :addTo(self)
 

@@ -25,18 +25,6 @@ THE SOFTWARE.
 --------------------------------
 -- @module scheduler
 
---------------------------------
--- 计划一个全局帧事件回调，并返回该计划的句柄。
--- @function [parent=#scheduler] scheduleUpdateGlobal
--- @param function 回调函数
--- @return mixed#mixed ret (return value: mixed)  schedule句柄
-
---------------------------------
--- 计划一个以指定时间间隔执行的全局事件回调，并返回该计划的句柄。
--- @function [parent=#scheduler] scheduleGlobal
--- @param function listener 回调函数
--- @param number interval 间隔时间
--- @return mixed#mixed ret (return value: mixed)  schedule句柄
 
 --[[--
 
@@ -51,6 +39,14 @@ local scheduler = {}
 
 local sharedScheduler = cc.Director:getInstance():getScheduler()
 
+-- start --
+
+--------------------------------
+-- 计划一个全局帧事件回调，并返回该计划的句柄。
+-- @function [parent=#scheduler] scheduleUpdateGlobal
+-- @param function 回调函数
+-- @return mixed#mixed ret (return value: mixed)  schedule句柄
+
 --[[--
 
 计划一个全局帧事件回调，并返回该计划的句柄。
@@ -60,9 +56,21 @@ local sharedScheduler = cc.Director:getInstance():getScheduler()
 该函数返回的句柄用作 scheduler.unscheduleGlobal() 的参数，可以取消指定的计划。 
 
 ]]
+
+-- end --
+
 function scheduler.scheduleUpdateGlobal(listener)
     return sharedScheduler:scheduleScriptFunc(listener, 0, false)
 end
+
+-- start --
+
+--------------------------------
+-- 计划一个以指定时间间隔执行的全局事件回调，并返回该计划的句柄。
+-- @function [parent=#scheduler] scheduleGlobal
+-- @param function listener 回调函数
+-- @param number interval 间隔时间
+-- @return mixed#mixed ret (return value: mixed)  schedule句柄
 
 --[[--
 
@@ -79,9 +87,14 @@ local handle = scheduler.scheduleGlobal(onInterval, 0.5)
 ~~~
 
 ]]
+
+-- end --
+
 function scheduler.scheduleGlobal(listener, interval)
     return sharedScheduler:scheduleScriptFunc(listener, interval, false)
 end
+
+-- start --
 
 --------------------------------
 -- 取消一个全局计划
@@ -95,9 +108,14 @@ end
 scheduler.unscheduleGlobal() 的参数就是 scheduler.scheduleUpdateGlobal() 和 scheduler.scheduleGlobal() 的返回值。
 
 ]]
+
+-- end --
+
 function scheduler.unscheduleGlobal(handle)
     sharedScheduler:unscheduleScriptEntry(handle)
 end
+
+-- start --
 
 --------------------------------
 -- 计划一个全局延时回调，并返回该计划的句柄。
@@ -113,6 +131,9 @@ end
 scheduler.performWithDelayGlobal() 会在等待指定时间后执行一次回调函数，然后自动取消该计划。
 
 ]]
+
+-- end --
+
 function scheduler.performWithDelayGlobal(listener, time)
     local handle
     handle = sharedScheduler:scheduleScriptFunc(function()

@@ -40,6 +40,8 @@ end)
 UILoadingBar.DIRECTION_LEFT_TO_RIGHT = 0
 UILoadingBar.DIRECTION_RIGHT_TO_LEFT = 1
 
+-- start --
+
 --------------------------------
 -- 进度控件构建函数
 -- @function [parent=#UILoadingBar] new
@@ -59,6 +61,8 @@ UILoadingBar.DIRECTION_RIGHT_TO_LEFT = 1
 -	direction 方向，默认值从左到右
 
 ]]
+-- end --
+
 function UILoadingBar:ctor(params)
 	if params.scale9 then
 		self.scale9 = true
@@ -84,11 +88,15 @@ function UILoadingBar:ctor(params)
 	self:addChild(self.bar)
 end
 
+-- start --
+
 --------------------------------
 -- 设置进度控件的进度
 -- @function [parent=#UILoadingBar] setPercent
 -- @param number percent 进度值 0到100
 -- @return UILoadingBar#UILoadingBar 
+
+-- end --
 
 function UILoadingBar:setPercent(percent)
 	local rect = cc.rect(self.viewRect_.x, self.viewRect_.y,
@@ -116,11 +124,15 @@ function UILoadingBar:setPercent(percent)
 	return self
 end
 
+-- start --
+
 --------------------------------
 -- 设置进度控件的方向
 -- @function [parent=#UILoadingBar] setDirction
 -- @param integer dir 进度的方向
 -- @return UILoadingBar#UILoadingBar 
+
+-- end --
 
 function UILoadingBar:setDirction(dir)
 	self.direction_ = dir
@@ -133,11 +145,15 @@ function UILoadingBar:setDirction(dir)
 	return self
 end
 
+-- start --
+
 --------------------------------
 -- 设置进度控件的显示区域
 -- @function [parent=#UILoadingBar] setViewRect
 -- @param table rect 显示区域
 -- @return UILoadingBar#UILoadingBar 
+
+-- end --
 
 function UILoadingBar:setViewRect(rect)
 	self.viewRect_ = rect

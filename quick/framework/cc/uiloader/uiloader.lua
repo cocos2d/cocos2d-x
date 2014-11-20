@@ -39,12 +39,18 @@ local uiloader = class("uiloader")
 local CCSUILoader = import(".CCSUILoader")
 local CCSSceneLoader = import(".CCSSceneLoader")
 
+-- start --
+
 --------------------------------
 -- 初始化 cc.uiloader,并提供对外统一接口
 -- @function [parent=#uiloader] new
 
+-- end --
+
 function uiloader:ctor()
 end
+
+-- start --
 
 --------------------------------
 -- 解析json文件
@@ -52,6 +58,8 @@ end
 -- @param string jsonFile 要解析的json文件
 -- @param table params 解析参数
 -- @return node#node  解析后的布局
+
+-- end --
 
 function uiloader:load(jsonFile, params)
 	local json = self:loadFile_(jsonFile)
@@ -73,12 +81,16 @@ function uiloader:load(jsonFile, params)
 	return node, w, h
 end
 
+-- start --
+
 --------------------------------
 -- 按tag查找布局中的结点
 -- @function [parent=#uiloader] seekNodeByTag
 -- @param node parent 要查找布局的结点
 -- @param number tag 要查找的tag
 -- @return node#node 
+
+-- end --
 
 function uiloader:seekNodeByTag(parent, tag)
 	if not parent then
@@ -113,12 +125,16 @@ function uiloader:seekNodeByTag(parent, tag)
 	return
 end
 
+-- start --
+
 --------------------------------
 -- 按name查找布局中的结点
 -- @function [parent=#uiloader] seekNodeByName
 -- @param node parent 要查找布局的结点
 -- @param string name 要查找的name
 -- @return node#node 
+
+-- end --
 
 function uiloader:seekNodeByName(parent, name)
 	if not parent then
@@ -167,6 +183,8 @@ function uiloader:seekNodeByName(parent, name)
 	return
 end
 
+-- start --
+
 --------------------------------
 -- 按name查找布局中的结点
 -- 与seekNodeByName不同之处在于它是通过node的下子结点表来查询,效率更快
@@ -174,6 +192,8 @@ end
 -- @param node parent 要查找布局的结点
 -- @param string name 要查找的name
 -- @return node#node 
+
+-- end --
 
 function uiloader:seekNodeByNameFast(parent, name)
 	if not parent then
@@ -204,12 +224,16 @@ function uiloader:seekNodeByNameFast(parent, name)
 	return
 end
 
+-- start --
+
 --------------------------------
 -- 根据路径来查找布局中的结点
 -- @function [parent=#uiloader] seekNodeByPath
 -- @param node parent 要查找布局的结点
 -- @param string path 要查找的path
 -- @return node#node 
+
+-- end --
 
 function uiloader:seekNodeByPath(parent, path)
 	if not parent then
@@ -227,6 +251,8 @@ function uiloader:seekNodeByPath(parent, path)
 
 	return parent
 end
+
+-- start --
 
 --------------------------------
 -- 查找布局中的组件结点
@@ -250,6 +276,8 @@ local hero = cc.uiloader:seekComponents(parentNode, "hero", 1)
 ~~~
 
 ]]
+-- end --
+
 function uiloader:seekComponents(parent, nodeName, componentIdx)
 	local node = self:seekNodeByName(parent, nodeName)
 	if not node then
