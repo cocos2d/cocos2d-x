@@ -1,4 +1,3 @@
-Title: 升级到 quick-cocos2d-x 最新版
 
 升级到 quick-cocos2d-x 最新版
 ============================
@@ -22,4 +21,4 @@ Title: 升级到 quick-cocos2d-x 最新版
 | setFlipX()                              | setFlippedX()                |
 | setFlipY()                              | setFlippedY()                |
 
-~
+
