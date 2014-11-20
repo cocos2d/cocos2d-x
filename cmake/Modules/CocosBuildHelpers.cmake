@@ -36,6 +36,23 @@ function(cocos_mark_resources)
     endforeach()
 endfunction()
 
+# cocos_find_package(pkg args...)
+# works same as find_package, but do additional care to properly find
+# prebuilt libs for cocos
+macro(cocos_find_package pkg_name pkg_prefix)
+  if(NOT USE_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
+    find_package(${pkg_name} ${ARGN})
+  endif()
+  if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)
+    set(${pkg_prefix}_INCLUDE_DIRS ${${pkg_prefix}_INCLUDE_DIR})
+  endif()
+  if(NOT ${pkg_prefix}_LIBRARIES AND ${pkg_prefix}_LIBRARY)
+    set(${pkg_prefix}_LIBRARIES ${${pkg_prefix}_LIBRARY})
+  endif()
+
+  message(STATUS "${pkg_name} include dirs: ${${pkg_prefix}_INCLUDE_DIRS}")
+endmacro()
+
 # cocos_use_pkg(pkg) function.
 # This function applies standard package variables (after find_package(pkg) call) to current scope
 # Recognized variables: <pkg>_INCLUDE_DIRS, <pkg>_LIBRARIES, <pkg>_LIBRARY_DIRS

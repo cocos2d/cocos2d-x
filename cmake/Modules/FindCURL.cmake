@@ -37,26 +37,6 @@ set(CURL_LIBRARY_NAMES
   libcurl
   )
 
-if(USE_PREBUILT_LIBS)
-  find_path(CURL_INCLUDE_DIR curl/curl.h
-    PATH_SUFFIXES include/${PLATFORM_FOLDER} include
-    PATHS ${COCOS_EXTERNAL_DIR}/curl
-    NO_DEFAULT_PATH
-    )
-  find_library(CURL_LIBRARY NAMES ${CURL_LIBRARY_NAMES}
-    PATH_SUFFIXES
-      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      prebuilt/${PLATFORM_FOLDER}
-    PATHS ${COCOS_EXTERNAL_DIR}/curl
-    NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(NOT CURL_INCLUDE_DIR OR NOT CURL_LIBRARY)
-    unset(CURL_INCLUDE_DIR CACHE)
-    unset(CURL_LIBRARY CACHE)
-  endif()
-endif()
-
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
   pkg_search_module(CURL QUIET libcurl)

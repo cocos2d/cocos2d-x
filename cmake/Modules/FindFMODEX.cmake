@@ -13,27 +13,6 @@
 #   FMODEX_INCLUDE_DIRS, where to find headers.
 #
 
-# Try find fmodex for our arch in external folder
-set(_FMOD_COCOS_PATHS
-  ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/fmod
-  ${COCOS_EXTERNAL_DIR}/fmod
-  )
-if(USE_PREBUILT_LIBS)
-  find_path(FMODEX_INCLUDE_DIR fmod.h
-    PATH_SUFFIXES include/${ARCH_DIR} include
-    PATHS ${_FMOD_COCOS_PATHS} NO_DEFAULT_PATH
-    )
-  find_library(FMODEX_LIBRARY NAMES fmodex fmodex64
-    PATH_SUFFIXES prebuilt/${ARCH_DIR} prebuilt
-    PATHS ${_FMOD_COCOS_PATHS} NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(NOT FMODEX_INCLUDE_DIR OR NOT FMODEX_LIBRARY)
-    unset(FMODEX_INCLUDE_DIR CACHE)
-    unset(FMODEX_LIBRARY CACHE)
-  endif()
-endif(USE_PREBUILT_LIBS)
-  
 find_path(FMODEX_INCLUDE_DIR fmod.h
   HINTS ENV FMODEX_DIR
   PATH_SUFFIXES include/fmodex include

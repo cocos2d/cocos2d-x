@@ -97,6 +97,8 @@ elseif(LINUX)
     cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
 elseif(MACOSX OR APPLE)
+  cocos_use_pkg(cocos2d GLFW3)
+
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
  FIND_LIBRARY(COCOA_LIBRARY Cocoa)

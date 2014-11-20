@@ -43,35 +43,6 @@
 #todo: fix location of freetype includes for linux android on cocos prebuilt repo
 #i.e we should not need to include an extra dir of /freetype2
 
-if(USE_PREBUILT_LIBS)
-  find_path(FREETYPE_INCLUDE_DIR_ft2build ft2build.h
-    PATHS ${COCOS_EXTERNAL_DIR}/freetype2/include/${PLATFORM_FOLDER}
-    NO_DEFAULT_PATH
-    )
-  find_path(FREETYPE_INCLUDE_DIR_freetype2 freetype/config/ftheader.h
-    PATHS
-      ${COCOS_EXTERNAL_DIR}/freetype2/include/${PLATFORM_FOLDER}
-      ${COCOS_EXTERNAL_DIR}/freetype2/include/${PLATFORM_FOLDER}/freetype2
-    NO_DEFAULT_PATH
-    )
-  find_library(FREETYPE_LIBRARY NAMES freetype libfreetype freetype219 freetype250
-    PATHS
-      ${COCOS_EXTERNAL_DIR}/freetype2/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      ${COCOS_EXTERNAL_DIR}/freetype2/prebuilt/${PLATFORM_FOLDER}
-    NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(FREETYPE_INCLUDE_DIR_ft2build AND FREETYPE_INCLUDE_DIR_freetype2 AND FREETYPE_LIBRARY)
-    set(FREETYPE_FOUND 1)
-    set(FREETYPE_INCLUDE_DIRS ${FREETYPE_INCLUDE_DIR_ft2build} ${FREETYPE_INCLUDE_DIR_freetype2})
-    set(FREETYPE_LIBRARIES ${FREETYPE_LIBRARY})
-  else()
-    unset(FREETYPE_INCLUDE_DIR_ft2build CACHE)
-    unset(FREETYPE_INCLUDE_DIR_freetype2 CACHE)
-    unset(FREETYPE_LIBRARY CACHE)
-  endif()
-endif(USE_PREBUILT_LIBS)
-
 # Try pkg-config first (because it provided deps info)
 if(NOT FREETYPE_FOUND)
   find_package(PkgConfig)

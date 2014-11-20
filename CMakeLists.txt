@@ -141,23 +141,19 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+if(USE_PREBUILT_LIBS)
+  include(CocosUsePrebuiltLibs)
+endif()
+
 # GLFW3 used on Mac, Windows and Linux desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
-  find_package(OpenGL REQUIRED)
-  set(OPENGL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR}) # fix inconsistency
-  message(STATUS "OpenGL include dirs: ${OPENGL_INCLUDE_DIRS}")
+  cocos_find_package(OpenGL OPENGL REQUIRED)
 
   if(LINUX OR WINDOWS)
-    if(USE_PREBUILT_LIBS AND WINDOWS)
-        set(GLEW_INCLUDE_DIR ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/gles/include/OGLES)
-        set(GLEW_LIBRARY ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/gles/prebuilt/glew32.lib)
-    endif()
-    find_package(GLEW REQUIRED)
-    message(STATUS "GLEW libs: ${GLEW_LIBRARIES}")
+    cocos_find_package(GLEW GLEW REQUIRED)
   endif()
 
-  find_package(GLFW3 REQUIRED)
-  message(STATUS "GLFW3 include dirs: ${GLFW3_INCLUDE_DIRS}")
+  cocos_find_package(GLFW3 GLFW3 REQUIRED)
   include_directories(${GLFW3_INCLUDE_DIRS})
 
   if(LINUX)
@@ -165,57 +161,30 @@ if(LINUX OR MACOSX OR WINDOWS)
     find_package(Threads REQUIRED)
     set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
 
-    find_package(FMODEX REQUIRED)
-    message(STATUS "FMOD Ex include dirs: ${FMODEX_INCLUDE_DIRS}")
-
-    find_package(Fontconfig REQUIRED)
-    message(STATUS "Fontconfig include dirs: ${FONTCONFIG_INCLUDE_DIRS}")
+    cocos_find_package(FMODEX FMODEX REQUIRED)
+    cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
   endif()
 
   if(WINDOWS)
-    if(USE_PREBUILT_LIBS)
-        set(VORBIS_PREBUILT_ROOT ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/OggDecoder)
-        list(APPEND CMAKE_INCLUDE_PATH ${VORBIS_PREBUILT_ROOT}/include)
-        list(APPEND CMAKE_LIBRARY_PATH ${VORBIS_PREBUILT_ROOT}/prebuilt)
-    endif()
-    find_package(Vorbis REQUIRED)
-    message(STATUS "Vorbis include dirs: ${VORBIS_INCLUDE_DIRS}")
-
-    if(USE_PREBUILT_LIBS)
-        list(APPEND CMAKE_INCLUDE_PATH ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/MP3Decoder/include)
-        list(APPEND CMAKE_LIBRARY_PATH ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/MP3Decoder/prebuilt)
-    endif()
-    find_package(MPG123 REQUIRED)
-    message(STATUS "MPG123 include dirs: ${MPG123_INCLUDE_DIRS}")
-
-    if(USE_PREBUILT_LIBS)
-        set(OPENAL_PREBUILT_ROOT ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/OpenalSoft)
-        list(APPEND CMAKE_INCLUDE_PATH ${OPENAL_PREBUILT_ROOT})
-        list(APPEND CMAKE_LIBRARY_PATH ${OPENAL_PREBUILT_ROOT}/prebuilt)
-    endif()
-    find_package(OpenAL REQUIRED)
-    set(OPENAL_INCLUDE_DIRS ${OPENAL_INCLUDE_DIR})
-    set(OPENAL_LIBRARIES ${OPENAL_LIBRARY})
+    cocos_find_package(Vorbis VORBIS REQUIRED)
+    cocos_find_package(MPG123 MPG123 REQUIRED)
+    cocos_find_package(OpenAL OPENAL REQUIRED)
     # because FindOpenAL.cmake set include dir for '#include <al.h>' for portability (not for '#include <AL/al.h>'
     set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
-    message(STATUS "OpenAL include dirs: ${OPENAL_INCLUDE_DIRS}")
   endif()
 endif(LINUX OR MACOSX OR WINDOWS)
 
 # Freetype required on all platforms
-find_package(Freetype REQUIRED)
-message(STATUS "FreeType include dirs: ${FREETYPE_INCLUDE_DIRS}")
+cocos_find_package(Freetype FREETYPE REQUIRED)
 
 # WebP required if used
 if(USE_WEBP)
-  find_package(WebP REQUIRED)
-  message(STATUS "WebP include dirs: ${WEBP_INCLUDE_DIRS}")
+  cocos_find_package(WebP WEBP REQUIRED)
 endif(USE_WEBP)
 
 # Chipmunk
 if(USE_CHIPMUNK)
-  find_package(Chipmunk REQUIRED)
-  message(STATUS "Chipmunk include dirs: ${CHIPMUNK_INCLUDE_DIRS}")
+  cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
   add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
   if(IOS OR MACOSX)
     # without this chipmunk will try to use apple defined geometry types, that conflicts with cocos
@@ -248,25 +217,13 @@ if(USE_PREBUILT_LIBS)
   set(TinyXML2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
   set(TinyXML2_LIBRARIES tinyxml2)
 else()
-  find_package(TinyXML2)
+  cocos_find_package(TinyXML2 TinyXML2 REQUIRED)
 endif()
 message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
 # libjpeg
-find_package(JPEG REQUIRED)
-message(STATUS "JPEG include dirs: ${JPEG_INCLUDE_DIRS}")
-
-if(USE_PREBUILT_LIBS)
-  if(WINDOWS)
-    set(ZLIB_PREBUILT_ROOT ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/zlib)
-    #set(CMAKE_INCLUDE_PATH ${ZLIB_PREBUILT_ROOT} ${CMAKE_INCLUDE_PATH})
-    #set(CMAKE_LIBRARY_PATH ${ZLIB_PREBUILT_ROOT}/prebuilt ${CMAKE_LIBRARY_PATH})
-    set(ZLIB_INCLUDE_DIR ${ZLIB_PREBUILT_ROOT}/include)
-    set(ZLIB_LIBRARY ${ZLIB_PREBUILT_ROOT}/prebuilt/libzlib.lib)
-  endif()
-endif()
-find_package(ZLIB REQUIRED)
-message(STATUS "ZLIB include dirs: ${ZLIB_INCLUDE_DIRS}")
+cocos_find_package(JPEG JPEG REQUIRED)
+cocos_find_package(ZLIB ZLIB REQUIRED)
 
 # minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
 # only msys2 currently provides package for this variant, all other
@@ -277,8 +234,9 @@ if(USE_PREBUILT_LIBS OR NOT MINGW)
   add_subdirectory(external/unzip)
   set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
   set(MINIZIP_LIBRARIES unzip)
+  message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
 else()
-  find_package(MINIZIP REQUIRED)
+  cocos_find_package(MINIZIP MINIZIP REQUIRED)
   # double check that we have needed functions
   include(CheckLibraryExists)
   check_library_exists(${MINIZIP_LIBRARIES} "unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
@@ -287,19 +245,11 @@ else()
   endif()
   add_definitions(-DMINIZIP_FROM_SYSTEM)
 endif()
-message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
 
-find_package(PNG REQUIRED)
-message(STATUS "PNG include dirs: ${PNG_INCLUDE_DIRS}")
-
-find_package(TIFF REQUIRED)
-message(STATUS "TIFF include dirs: ${TIFF_INCLUDE_DIRS}")
-
-find_package(WEBSOCKETS REQUIRED)
-message(STATUS "WEBSOCKETS include dirs: ${WEBSOCKETS_INCLUDE_DIRS}")
-
-find_package(CURL REQUIRED)
-message(STATUS "CURL include dirs: ${CURL_INCLUDE_DIRS}")
+cocos_find_package(PNG PNG REQUIRED)
+cocos_find_package(TIFF TIFF REQUIRED)
+cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
+cocos_find_package(CURL CURL REQUIRED)
 
 # protobuf-lite (not prebuilded, exists as source)
 # TODO: for now we can't use upstream protobuf because these files:
@@ -313,7 +263,7 @@ message(STATUS "CURL include dirs: ${CURL_INCLUDE_DIRS}")
   set(PROTOBUF_LITE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/protobuf-lite/src)
   set(PROTOBUF_LITE_LIBRARIES protobuf)
 ## else()
-##  find_package(Protobuf REQUIRED PROTOBUF_LITE_LIBRARIES)
+##  cocos_find_package(Protobuf REQUIRED PROTOBUF_LITE_LIBRARIES)
 ##  set(PROTOBUF_LITE_INCLUDE_DIRS ${PROTOBUF_INCLUDE_DIRS})
 ## endif()
 message(STATUS "Protobuf lite libs: ${PROTOBUF_LITE_LIBRARIES}")
