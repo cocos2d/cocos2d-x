@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
 
 
