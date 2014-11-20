@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libcocostudio
 LOCAL_SRC_FILES := 
 
 ifeq ($(CC_USE_CCSTUDIO),1)
-LOCAL_SRC_FILES += 
+LOCAL_SRC_FILES += \
 CCActionFrame.cpp \
 CCActionFrameEasing.cpp \
 CCActionManagerEx.cpp \
