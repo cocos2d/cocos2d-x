@@ -70,6 +70,8 @@ public:
     Particle3DBaseCollider();
     virtual ~Particle3DBaseCollider();
 
+    virtual void preUpdateAffector(float deltaTime) override;
+
         /** Returns the type of intersection.
     */
     const IntersectionType getIntersectionType() const;

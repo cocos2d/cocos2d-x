@@ -41,6 +41,17 @@ Particle3DFlockCenteringAffector::~Particle3DFlockCenteringAffector()
 
 void Particle3DFlockCenteringAffector::updateAffector( float deltaTime )
 {
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
+        _sum += particle->position;
+        _count++;
+        particle->direction += (_average - particle->position) * deltaTime; // use average of the previous update
+    }
+}
+
+void Particle3DFlockCenteringAffector::preUpdateAffector( float deltaTime )
+{
     if (_count != 0)
     {
         // Calculate the average of the previous update
@@ -52,14 +63,6 @@ void Particle3DFlockCenteringAffector::updateAffector( float deltaTime )
     }
     _sum = Vec3::ZERO;
     _count = 0;
-
-    for (auto iter : _particleSystem->getParticles())
-    {
-        Particle3D *particle = iter;
-        _sum += particle->position;
-        _count++;
-        particle->direction += (_average - particle->position) * deltaTime; // use average of the previous update
-    }
 }
 
 NS_CC_END

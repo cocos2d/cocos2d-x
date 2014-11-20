@@ -65,17 +65,17 @@ void Particle3DInterParticleCollider::setInterParticleCollisionResponse(Particle
     _interParticleCollisionResponse = interParticleCollisionResponse;
 }
 //-----------------------------------------------------------------------
-//void Particle3DInterParticleCollider::_prepare(ParticleTechnique* particleTechnique)
-//{
-//	// Activate spatial hashing
-//	particleTechnique->setSpatialHashingUsed(true);
-//}
-////-----------------------------------------------------------------------
-//void Particle3DInterParticleCollider::_unprepare(ParticleTechnique* particleTechnique)
-//{
-//	// Deactivate spatial hashing
-//	particleTechnique->setSpatialHashingUsed(false);
-//}
+void Particle3DInterParticleCollider::prepare()
+{
+    // Activate spatial hashing
+    //particleTechnique->setSpatialHashingUsed(true);
+}
+//-----------------------------------------------------------------------
+void Particle3DInterParticleCollider::unPrepare()
+{
+    // Deactivate spatial hashing
+    //particleTechnique->setSpatialHashingUsed(false);
+}
 //-----------------------------------------------------------------------
 bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particle3D* particle1, Particle3D* particle2, float timeElapsed)
 {
@@ -127,43 +127,44 @@ bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particl
 
 void Particle3DInterParticleCollider::updateAffector( float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
-    {
-        Particle3D *particle = iter;
-        // Fast rejection: only visible, moving particles are able to collide, unless they are colliding already
-        // Changed && into || in V1.3.1
-        if (//particle->particleType != Particle::PT_VISUAL || 
-            particle->hasEventFlags(Particle3D::PEF_COLLIDED) || 
-            particle->direction == Vec3::ZERO)
-        {
-            return;
-        }
+    CCASSERT(0, "nonsupport yet");
+    //for (auto iter : _particleSystem->getParticles())
+    //{
+    //    Particle3D *particle = iter;
+    //     Fast rejection: only visible, moving particles are able to collide, unless they are colliding already
+    //     Changed && into || in V1.3.1
+    //    if (//particle->particleType != Particle::PT_VISUAL || 
+    //        particle->hasEventFlags(Particle3D::PEF_COLLIDED) || 
+    //        particle->direction == Vec3::ZERO)
+    //    {
+    //        return;
+    //    }
 
-        //// Determine whether neighbour particles are colliding.
-        //SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
-        //if (hashtable)
-        //{
-        //	SpatialHashTable<Particle*>::HashTableCell cell = hashtable->getCell(particle->position);
-        //	if (cell.empty())
-        //		return;
+    //    // Determine whether neighbour particles are colliding.
+    //    SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
+    //    if (hashtable)
+    //    {
+    //    	SpatialHashTable<Particle*>::HashTableCell cell = hashtable->getCell(particle->position);
+    //    	if (cell.empty())
+    //    		return;
 
-        //	unsigned int size = static_cast<unsigned int>(cell.size());
-        //	for (unsigned int i = 0; i < size; ++i)
-        //	{
-        //		Particle* p = cell[i];
+    //    	unsigned int size = static_cast<unsigned int>(cell.size());
+    //    	for (unsigned int i = 0; i < size; ++i)
+    //    	{
+    //    		Particle* p = cell[i];
 
-        //		// Don't check if it is the same particle or the particle is already colliding.
-        //		if (particle != p  && !p->hasEventFlags(Particle3D::PEF_COLLIDED))
-        //		{
-        //			// Check for collision
-        //			if (validateAndExecuteSphereCollision(particle, p, deltaTime))
-        //			{
-        //				return;
-        //			}
-        //		}
-        //	}
-        //}
-    }
+    //    		// Don't check if it is the same particle or the particle is already colliding.
+    //    		if (particle != p  && !p->hasEventFlags(Particle3D::PEF_COLLIDED))
+    //    		{
+    //    			// Check for collision
+    //    			if (validateAndExecuteSphereCollision(particle, p, deltaTime))
+    //    			{
+    //    				return;
+    //    			}
+    //    		}
+    //    	}
+    //    }
+    //}
 }
 
 NS_CC_END

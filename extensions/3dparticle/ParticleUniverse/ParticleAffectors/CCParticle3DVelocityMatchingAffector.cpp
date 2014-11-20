@@ -22,43 +22,54 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DCollisionAvoidanceAffector.h"
+#include "CCParticle3DVelocityMatchingAffector.h"
 #include "3dparticle/CCParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DCollisionAvoidanceAffector::DEFAULT_RADIUS = 100.0f;
+const float Particle3DVelocityMatchingAffector::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-Particle3DCollisionAvoidanceAffector::Particle3DCollisionAvoidanceAffector(void) : 
+Particle3DVelocityMatchingAffector::Particle3DVelocityMatchingAffector(void) : 
     Particle3DAffector(),
     _radius(DEFAULT_RADIUS)
 {
 }
-Particle3DCollisionAvoidanceAffector::~Particle3DCollisionAvoidanceAffector()
+
+Particle3DVelocityMatchingAffector::~Particle3DVelocityMatchingAffector( void )
 {
 
 }
+
 //-----------------------------------------------------------------------
-float Particle3DCollisionAvoidanceAffector::getRadius(void) const
+float Particle3DVelocityMatchingAffector::getRadius(void) const
 {
     return _radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DCollisionAvoidanceAffector::setRadius(float radius)
+void Particle3DVelocityMatchingAffector::setRadius(float radius)
 {
     _radius = radius;
 }
+////-----------------------------------------------------------------------
+//void Particle3DVelocityMatchingAffector::_prepare(ParticleTechnique* particleTechnique)
+//{
+//	// Activate spatial hashing
+//	particleTechnique->setSpatialHashingUsed(true);
+//}
+////-----------------------------------------------------------------------
+//void Particle3DVelocityMatchingAffector::_unprepare(ParticleTechnique* particleTechnique)
+//{
+//	// Activate spatial hashing
+//	particleTechnique->setSpatialHashingUsed(false);
+//}
 //-----------------------------------------------------------------------
-void Particle3DCollisionAvoidanceAffector::updateAffector( float deltaTime )
-{
-    CCASSERT(0, "nonsupport yet");
-    //for (auto iter : _particleSystem->getParticles())
-    //{
-    //	Particle3D *particle = iter;
-    //	// Activate spatial hashing
-    //	particleTechnique->setSpatialHashingUsed(true);
 
+void Particle3DVelocityMatchingAffector::updateAffector( float deltaTime )
+{
+    for (auto iter : _particleSystem->getParticles())
+    {
+        Particle3D *particle = iter;
     //	// Determine neighbouring particles.
     //	SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
     //	if (hashtable)
@@ -68,8 +79,9 @@ void Particle3DCollisionAvoidanceAffector::updateAffector( float deltaTime )
     //			return;
 
     //		unsigned int size = static_cast<unsigned int>(cell.size());
-    //		Vector3 displacement = Vector3::ZERO;
-    //		Vector3 diff = Vector3::ZERO;
+    //		Vec3 sumDirection = Vec3::ZERO;
+    //		Vec3 diff = Vec3::ZERO;
+    //		unsigned int count = 0;
     //		for (unsigned int i = 0; i < size; ++i)
     //		{
     //			Particle* p = cell[i];
@@ -81,17 +93,20 @@ void Particle3DCollisionAvoidanceAffector::updateAffector( float deltaTime )
     //				diff = p->position - particle->position;
     //				if (diff.length() < _radius)
     //				{
-    //					displacement -= diff;
+    //					sumDirection += p->direction;
+    //					count++;
     //				}
     //			}
     //		}
-    //		particle->direction += displacement * deltaTime;
+
+    //		// Adjust direction
+    //		if (count > 0)
+    //		{
+    //			sumDirection = sumDirection / (float)count;
+    //			particle->direction += (sumDirection - particle->direction) * deltaTime;
+    //		}
     //	}
-
-    //	// Deactivate spatial hashing
-    //	particleTechnique->setSpatialHashingUsed(false);
-    //}
-
+    }
 }
 
 NS_CC_END

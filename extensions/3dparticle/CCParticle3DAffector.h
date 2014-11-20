@@ -52,7 +52,17 @@ public:
     Particle3DAffector();
     virtual ~Particle3DAffector();
     
+    virtual void notifyStart();
+    virtual void notifyStop();
+    virtual void notifyPause();
+    virtual void notifyResume();
+    virtual void notifyRescaled(const Vec3& scale);
+    virtual void prepare();
+    virtual void unPrepare();
+    virtual void preUpdateAffector(float deltaTime);
     virtual void updateAffector(float deltaTime);
+    virtual void postUpdateAffector(float deltaTime);
+    virtual void initParticleForEmission(Particle3D* particle);
 
     /** Calculate the derived position of the affector.
     @remarks
@@ -61,6 +71,7 @@ public:
         the derived position.
     */
     const Vec3& getDerivedPosition();
+
 
 protected:
 

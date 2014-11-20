@@ -59,7 +59,7 @@ const Vec3& Particle3DAffector::getDerivedPosition()
     //}
     //return _derivedPosition;
 
-    //FIXME
+    //incorrect result (FIXME)
     return _position;
 }
 
@@ -104,6 +104,56 @@ float Particle3DAffector::calculateAffectSpecialisationFactor( const Particle3D*
         return 1.0f;
         break;
     }
+}
+
+void Particle3DAffector::notifyStart()
+{
+
+}
+
+void Particle3DAffector::notifyStop()
+{
+
+}
+
+void Particle3DAffector::notifyPause()
+{
+
+}
+
+void Particle3DAffector::notifyResume()
+{
+
+}
+
+void Particle3DAffector::preUpdateAffector( float deltaTime )
+{
+
+}
+
+void Particle3DAffector::postUpdateAffector( float deltaTime )
+{
+
+}
+
+void Particle3DAffector::prepare()
+{
+
+}
+
+void Particle3DAffector::unPrepare()
+{
+
+}
+
+void Particle3DAffector::initParticleForEmission( Particle3D* particle )
+{
+
+}
+
+void Particle3DAffector::notifyRescaled(const Vec3& scale)
+{
+
 }
 
 NS_CC_END

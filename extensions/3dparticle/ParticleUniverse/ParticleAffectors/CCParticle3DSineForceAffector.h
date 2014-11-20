@@ -23,43 +23,42 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
+#define __CC_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
 
-#include "CCParticle3DBaseCollider.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DPlane.h"
+#include "CCParticle3DBaseForceAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPlaneCollider : public Particle3DBaseCollider
+class  Particle3DSineForceAffector : public Particle3DBaseForceAffector
 {
 public:
     // Constants
-    static const Vec3 DEFAULT_NORMAL;
+    static const float DEFAULT_FREQ_MIN;
+    static const float DEFAULT_FREQ_MAX;
 
-    Particle3DPlaneCollider(void);
-    virtual ~Particle3DPlaneCollider(void);
+    Particle3DSineForceAffector(void);
+    virtual ~Particle3DSineForceAffector(void);
 
-    virtual void notifyRescaled(const Vec3& scale) override;
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
-
-    /** Returns the normal of the plane
-    */
-    const Vec3 getNormal(void) const;
-
-    /** Sets the normal of the plane
-    */
-    void setNormal(const Vec3& normal);
 
     /** 
     */
-    void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
+    const float getFrequencyMin(void) const;
+    void setFrequencyMin(const float frequencyMin);
+
+    /** 
+    */
+    const float getFrequencyMax(void) const;
+    void setFrequencyMax(const float frequencyMax);
 
 protected:
-    Vec3 _normal;
-    Vec3 _predictedPosition;
-    Plane _plane;
+    float _angle;
+    float _frequencyMin;
+    float _frequencyMax;
+    float _frequency;
 };
 NS_CC_END
 

@@ -27,6 +27,7 @@
 #define __CC_PARTICLE_3D_COLOR_AFFECTOR_H__
 
 #include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -45,7 +46,7 @@ public:
     /** 
     */
     //DynamicAttribute* getDynAcceleration(void) const {return _dynAcceleration;};
-    //void setDynAcceleration(DynamicAttribute* dynAcceleration);
+    void setDynAcceleration(DynamicAttribute* dynAcceleration);
 
 protected:
 
@@ -53,11 +54,7 @@ protected:
 
     /** Dynamic attribute used to generate the velocity of a particle.
     */
-    //DynamicAttribute* _dynAcceleration;
-
-    /** Helper factory
-    */
-    //DynamicAttributeFactory _dynamicAttributeFactory;
+    DynamicAttribute* _dynAcceleration;
 };
 NS_CC_END
 

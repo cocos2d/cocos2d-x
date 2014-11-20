@@ -48,6 +48,8 @@ public:
     Particle3DInterParticleCollider(void);
     virtual ~Particle3DInterParticleCollider(void);
 
+    virtual void prepare() override;
+    virtual void unPrepare() override;
     virtual void updateAffector(float deltaTime) override;
 
     /** Todo
@@ -65,12 +67,6 @@ public:
     /** Todo
     */
     void setInterParticleCollisionResponse(InterParticleCollisionResponse interParticleCollisionResponse);
-
-    ///** @copydoc ParticleAffector::_prepare */
-    //virtual void _prepare(ParticleTechnique* particleTechnique);
-
-    ///** @copydoc ParticleAffector::_unprepare */
-    //virtual void _unprepare(ParticleTechnique* particleTechnique);
 
 
 protected:

@@ -55,6 +55,7 @@ ParticleSystem3D::ParticleSystem3D()
 , _render(nullptr)
 , _aliveParticlesCnt(0)
 , _state(State::RUNNING)
+, _particleSystemScaleVelocity(0.0f)
 {
     
 }
@@ -136,6 +137,18 @@ void ParticleSystem3D::update(float delta)
 const std::vector<Particle3D*>& ParticleSystem3D::getParticles()
 {
     return _particles;
+}
+
+float ParticleSystem3D::getParticleSystemScaleVelocity() const
+{
+    return _particleSystemScaleVelocity;
+}
+
+void ParticleSystem3D::rotationOffset( Vec3& pos )
+{
+    Mat4 rotMat;
+    Mat4::createRotation(_rotationOffset, &rotMat);
+    pos = _rotationCentre + rotMat * (pos - _rotationCentre);
 }
 
 NS_CC_END

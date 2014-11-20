@@ -41,14 +41,14 @@ Particle3DGeometryRotator::Particle3DGeometryRotator() :
     _rotationAxis(DEFAULT_ROTATION_AXIS),
     _rotationAxisSet(false)
 {
-    //_dynRotationSpeed = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-    //(static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
+    _dynRotationSpeed = new DynamicAttributeFixed();
+    (static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 };
 //-----------------------------------------------------------------------
 Particle3DGeometryRotator::~Particle3DGeometryRotator()
 {
-    //if (_dynRotationSpeed)
-    //	PU_DELETE_T(_dynRotationSpeed, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
+    if (_dynRotationSpeed)
+        CC_SAFE_DELETE(_dynRotationSpeed);
 }
 //-----------------------------------------------------------------------
 const Vec3& Particle3DGeometryRotator::getRotationAxis() const
@@ -64,23 +64,22 @@ void Particle3DGeometryRotator::setRotationAxis(const Vec3& rotationAxis)
 //-----------------------------------------------------------------------
 void Particle3DGeometryRotator::resetRotationAxis(void)
 {
-    //_dynRotationSpeed = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-    //(static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
-    //_rotationAxisSet = false;
+    _dynRotationSpeed = new DynamicAttributeFixed();
+    (static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
+    _rotationAxisSet = false;
 }
 //-----------------------------------------------------------------------
-//DynamicAttribute* Particle3DGeometryRotator::getRotationSpeed(void) const
-//{
-//	return _dynRotationSpeed;
-//}
-////-----------------------------------------------------------------------
-//void Particle3DGeometryRotator::setRotationSpeed(DynamicAttribute* dynRotationSpeed)
-//{
-//	if (_dynRotationSpeed)
-//		PU_DELETE_T(_dynRotationSpeed, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-//
-//	_dynRotationSpeed = dynRotationSpeed;
-//}
+DynamicAttribute* Particle3DGeometryRotator::getRotationSpeed(void) const
+{
+    return _dynRotationSpeed;
+}
+//-----------------------------------------------------------------------
+void Particle3DGeometryRotator::setRotationSpeed(DynamicAttribute* dynRotationSpeed)
+{
+    if (_dynRotationSpeed)
+        CC_SAFE_DELETE(_dynRotationSpeed);
+    _dynRotationSpeed = dynRotationSpeed;
+}
 //-----------------------------------------------------------------------
 bool Particle3DGeometryRotator::useOwnRotationSpeed (void) const
 {
@@ -94,9 +93,7 @@ void Particle3DGeometryRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed
 //-----------------------------------------------------------------------
 float Particle3DGeometryRotator::calculateRotationSpeed(Particle3D* particle)
 {
-    //return _dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction);
-    //FIXME
-    return particle->timeFraction;
+    return _dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction);
 }
 //-----------------------------------------------------------------------
 void Particle3DGeometryRotator::initParticleForEmission(Particle3D* particle)

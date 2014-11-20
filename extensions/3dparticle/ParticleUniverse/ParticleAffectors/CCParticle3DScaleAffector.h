@@ -27,6 +27,7 @@
 #define __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
 
 #include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -47,27 +48,27 @@ public:
 
     /** 
     */
-    //DynamicAttribute* getDynScaleX(void) const {return _dynScaleX;};
-    //void setDynScaleX(DynamicAttribute* dynScaleX);
-    //void resetDynScaleX(bool resetToDefault = true);
+    DynamicAttribute* getDynScaleX(void) const {return _dynScaleX;};
+    void setDynScaleX(DynamicAttribute* dynScaleX);
+    void resetDynScaleX(bool resetToDefault = true);
 
     /** 
     */
-    //DynamicAttribute* getDynScaleY(void) const {return _dynScaleY;};
-    //void setDynScaleY(DynamicAttribute* dynScaleY);
-    //void resetDynScaleY(bool resetToDefault = true);
+    DynamicAttribute* getDynScaleY(void) const {return _dynScaleY;};
+    void setDynScaleY(DynamicAttribute* dynScaleY);
+    void resetDynScaleY(bool resetToDefault = true);
 
     /** 
     */
-        //DynamicAttribute* getDynScaleZ(void) const {return _dynScaleZ;};
-        //void setDynScaleZ(DynamicAttribute* dynScaleZ);
-        //void resetDynScaleZ(bool resetToDefault = true);
+    DynamicAttribute* getDynScaleZ(void) const {return _dynScaleZ;};
+    void setDynScaleZ(DynamicAttribute* dynScaleZ);
+    void resetDynScaleZ(bool resetToDefault = true);
 
     /** 
     */
-    //DynamicAttribute* getDynScaleXYZ(void) const {return _dynScaleXYZ;};
-    //void setDynScaleXYZ(DynamicAttribute* dynScaleXYZ);
-    //void resetDynScaleXYZ(bool resetToDefault = true);
+    DynamicAttribute* getDynScaleXYZ(void) const {return _dynScaleXYZ;};
+    void setDynScaleXYZ(DynamicAttribute* dynScaleXYZ);
+    void resetDynScaleXYZ(bool resetToDefault = true);
 
     /** 
     */
@@ -78,20 +79,19 @@ protected:
 
     /** Returns the scale value for the dynamic Scale.
     */
-    //float calculateScale(DynamicAttribute* dynScale, Particle3D* particle);
+    float calculateScale(DynamicAttribute* dynScale, Particle3D* particle);
 
 protected:
 
-    //DynamicAttribute* _dynScaleX;
-    //DynamicAttribute* _dynScaleY;
-    //DynamicAttribute* _dynScaleZ;
-    //DynamicAttribute* _dynScaleXYZ;
+    DynamicAttribute* _dynScaleX;
+    DynamicAttribute* _dynScaleY;
+    DynamicAttribute* _dynScaleZ;
+    DynamicAttribute* _dynScaleXYZ;
     bool _dynScaleXSet;
     bool _dynScaleYSet;
     bool _dynScaleZSet;
     bool _dynScaleXYZSet;
-    //DynamicAttributeFactory _dynamicAttributeFactory;
-    //DynamicAttributeHelper _dynamicAttributeHelper;
+    DynamicAttributeHelper _dynamicAttributeHelper;
     bool _sinceStartSystem;
 
     float _latestTimeElapsed;

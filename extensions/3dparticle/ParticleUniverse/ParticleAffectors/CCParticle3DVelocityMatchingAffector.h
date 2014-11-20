@@ -23,43 +23,40 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PARTICLE_3D_VELOCITY_MATCHING_AFFECTOR_H__
+#define __CC_PARTICLE_3D_VELOCITY_MATCHING_AFFECTOR_H__
 
-#include "CCParticle3DBaseCollider.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DPlane.h"
+#include "3dparticle/CCParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPlaneCollider : public Particle3DBaseCollider
+class  Particle3DVelocityMatchingAffector : public Particle3DAffector
 {
 public:
     // Constants
-    static const Vec3 DEFAULT_NORMAL;
+    static const float DEFAULT_RADIUS;
 
-    Particle3DPlaneCollider(void);
-    virtual ~Particle3DPlaneCollider(void);
+    Particle3DVelocityMatchingAffector(void);
+    virtual ~Particle3DVelocityMatchingAffector(void);
 
-    virtual void notifyRescaled(const Vec3& scale) override;
     virtual void updateAffector(float deltaTime) override;
-
-    /** Returns the normal of the plane
+    /** Todo
     */
-    const Vec3 getNormal(void) const;
+    float getRadius(void) const;
 
-    /** Sets the normal of the plane
+    /** Todo
     */
-    void setNormal(const Vec3& normal);
+    void setRadius(float radius);
 
-    /** 
-    */
-    void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
+    /** @copydoc ParticleAffector::_prepare */
+    //virtual void _prepare(ParticleTechnique* particleTechnique);
 
+    /** @copydoc ParticleAffector::_unprepare */
+    //virtual void _unprepare(ParticleTechnique* particleTechnique);
+        
 protected:
-    Vec3 _normal;
-    Vec3 _predictedPosition;
-    Plane _plane;
+    float _radius;
 };
 NS_CC_END
 

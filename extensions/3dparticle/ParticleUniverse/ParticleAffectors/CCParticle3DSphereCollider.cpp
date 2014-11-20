@@ -22,55 +22,65 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DPlaneCollider.h"
+#include "CCParticle3DSphereCollider.h"
 #include "3dparticle/CCParticleSystem3D.h"
 
 NS_CC_BEGIN
-
 // Constants
-const Vec3 Particle3DPlaneCollider::DEFAULT_NORMAL(0, 0, 0);
+const float Particle3DSphereCollider::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-Particle3DPlaneCollider::Particle3DPlaneCollider(void) : 
+Particle3DSphereCollider::Particle3DSphereCollider(void) : 
     Particle3DBaseCollider(),
     _predictedPosition(Vec3::ZERO),
-    _normal(DEFAULT_NORMAL)
+    _radius(DEFAULT_RADIUS),
+    _innerCollision(false)
 {
 }
-Particle3DPlaneCollider::~Particle3DPlaneCollider( void )
+
+Particle3DSphereCollider::~Particle3DSphereCollider( void )
 {
 
 }
+
 //-----------------------------------------------------------------------
-const Vec3 Particle3DPlaneCollider::getNormal(void) const
+const float Particle3DSphereCollider::getRadius(void) const
 {
-    return _normal;
+    return _radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::setNormal(const Vec3& normal)
+void Particle3DSphereCollider::setRadius(const float radius)
 {
-    _normal = normal;
-    _plane.redefine(_normal, getDerivedPosition()); // Changed in 1.3.1
+    _radius = radius;
+    _sphere.setRadius(_radius);
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::notifyRescaled(const Vec3& scale)
+bool Particle3DSphereCollider::isInnerCollision(void) const
 {
-	// Function added in 1.3.1
-	_plane.redefine(_normal, getDerivedPosition());
+    return _innerCollision;
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed)
+void Particle3DSphereCollider::setInnerCollision(bool innerCollision)
 {
-    float directionLength = particle->direction.length();
+    _innerCollision = innerCollision;
+}
+//-----------------------------------------------------------------------
+void Particle3DSphereCollider::calculateDirectionAfterCollision(Particle3D* particle, Vec3 distance, float distanceLength)
+{
     switch (_collisionType)
     {
         case Particle3DBaseCollider::CT_BOUNCE:
         {
-            /** If the particle is on the plane or at the back of the plane, bounce it.
-                Make use of the same formula as the sphere collider.
+            /** If the particle is on the surface (or just inside the sphere); bounce it
+                Make use of formula R = 2 * (-I dot N) * N + I, where
+                R = the new direction vector
+                I = the old (unit) direction vector before the collision
+                N = the Normal at the collision point
             */
+            float directionLength = particle->direction.length();
             particle->direction.normalize();
-            particle->direction = 2 * (-particle->direction.dot(-_normal)) * -_normal + particle->direction;
+            distance.normalize();
+            particle->direction = 2 * (-particle->direction.dot(distance)) * distance + particle->direction;
 
             // Adjust to original speed
             particle->direction *= directionLength;
@@ -81,70 +91,80 @@ void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* parti
         break;
         case Particle3DBaseCollider::CT_FLOW:
         {
-            /** Reset the position (just in front of the plane), but keep the direction.
-            @remarks
-                This is not really the correct way, because the particle 'jumps'. Maybe it is better to change 
-                the direction parallel to the plane.
+            /** Reset the position (on the sphere), but keep the direction.
+                This doesn't really work good for box-type collisions, because it doesn't take the particle
+                dimensions into account.
             */
-            particle->position += timeElapsed * directionLength * _normal;
+            float scaledRadius = 0.3333f * (_affectorScale.x + _affectorScale.y + _affectorScale.z) * _radius;
+            particle->position = _derivedPosition + distance * (scaledRadius / distanceLength);
         }
         break;
     }
 }
 
-void Particle3DPlaneCollider::updateAffector( float deltaTime )
+void Particle3DSphereCollider::updateAffector( float deltaTime )
 {
     for (auto iter : _particleSystem->getParticles())
     {
         Particle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
+        Vec3 distance = particle->position - _derivedPosition;
+        float distanceLength = distance.length();
+        float scaledRadius = 0.3333f * (_affectorScale.x + _affectorScale.y + _affectorScale.z) * _radius; // Scaling changed in V 1.3.1
 
         switch(_intersectionType)
         {
         case Particle3DBaseCollider::IT_POINT:
             {
-                // Validate for a point-plane intersection (on the plane or the back side)
-                // First determine whether it is now colliding (some affector made the particle move), else
-                // determine whether it WILL be colliding
-                if (_plane.getDistance(particle->position) <= 0.0f)
+                // Validate for a point-sphere intersection
+                if (_innerCollision == (distanceLength > scaledRadius))
                 {
-                	// Collision detected (re-position the particle)
-                	particle->position -= _velocityScale * particle->direction;
-                	collision = true;
+                    // Collision detected (re-position the particle)
+                    particle->position -= _velocityScale * particle->direction;
+                    collision = true;
                 }
-                else if (_plane.getDistance(_predictedPosition) <= 0.0f)
+                else
                 {
-                	// Collision detected
-                	collision = true;
+                    distance = _predictedPosition - _derivedPosition;
+                    distanceLength = distance.length();
+                    if (_innerCollision == (distanceLength > scaledRadius))
+                    {
+                        // Collision detected
+                        collision = true;
+                    }
                 }
             }
             break;
 
         case Particle3DBaseCollider::IT_BOX:
             {
-
+                //// Validate for a box-sphere intersection
+                //if (particle->particleType != Particle::PT_VISUAL)
+                //	break;
                 AABB box;
                 populateAlignedBox(box,
                     particle->position, 
                     particle->width, 
                     particle->height,
                     particle->depth);
-				//FIXME
-                //if (box.intersects(_plane))
+
+                //FIXME
+                //if (_innerCollision != box.intersects(_sphere))
                 //{
                 //	// Collision detected (re-position the particle)
                 //	particle->position -= _velocityScale * particle->direction;
                 //	collision = true;
                 //}
-                //else 
+                //else
                 //{
+                //	AABB box;
                 //	populateAlignedBox(box,
                 //		_predictedPosition, 
                 //		particle->width, 
                 //		particle->height,
                 //		particle->depth);
-                //	if (box.intersects(_plane))
+                //	if (_innerCollision != box.intersects(_sphere))
                 //	{
                 //		// Collision detected
                 //		collision = true;
@@ -156,12 +176,17 @@ void Particle3DPlaneCollider::updateAffector( float deltaTime )
 
         if (collision)
         {
-            calculateDirectionAfterCollision(particle, deltaTime);
+            calculateDirectionAfterCollision(particle, distance, distanceLength);
             calculateRotationSpeedAfterCollision(particle);
             particle->addEventFlags(Particle3D::PEF_COLLIDED);
         }
     }
+}
 
+void Particle3DSphereCollider::preUpdateAffector( float deltaTime )
+{
+    // Calculate the affectors' center position.
+    _sphere.setCenter(getDerivedPosition());
 }
 
 NS_CC_END

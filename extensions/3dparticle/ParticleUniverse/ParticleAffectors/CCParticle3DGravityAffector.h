@@ -40,6 +40,7 @@ public:
     Particle3DGravityAffector(void);
     virtual ~Particle3DGravityAffector(void);
 
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
 
     /** 

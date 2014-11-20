@@ -194,11 +194,6 @@ bool Particle3DBoxCollider::isSmallestValue(float value, const Vec3& particlePos
 
 void Particle3DBoxCollider::updateAffector( float deltaTime )
 {
-    // Calculate the affectors' center position in worldspace, set the box and calculate the bounds
-    // Applied scaling in V 1.3.1.
-    populateAlignedBox(_box, getDerivedPosition(), _affectorScale.x * _width, _affectorScale.y * _height, _affectorScale.z * _depth);
-    calculateBounds();
-
     for (auto iter : _particleSystem->getParticles())
     {
         Particle3D *particle = iter;
@@ -271,6 +266,14 @@ void Particle3DBoxCollider::updateAffector( float deltaTime )
         }
     }
 
+}
+
+void Particle3DBoxCollider::preUpdateAffector( float deltaTime )
+{
+    // Calculate the affectors' center position in worldspace, set the box and calculate the bounds
+    // Applied scaling in V 1.3.1.
+    populateAlignedBox(_box, getDerivedPosition(), _affectorScale.x * _width, _affectorScale.y * _height, _affectorScale.z * _depth);
+    calculateBounds();
 }
 
 NS_CC_END

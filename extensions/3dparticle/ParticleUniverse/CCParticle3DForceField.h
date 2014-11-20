@@ -27,7 +27,7 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "3dparticle/CCParticle3DNoise.h"
+#include "CCParticle3DNoise.h"
 
 NS_CC_BEGIN
 

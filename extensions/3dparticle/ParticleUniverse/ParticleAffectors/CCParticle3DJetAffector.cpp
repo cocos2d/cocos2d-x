@@ -35,26 +35,26 @@ Particle3DJetAffector::Particle3DJetAffector (void) :
     Particle3DAffector(),
     _scaled(0.0f)
 {
-    //_dynAcceleration = PU_NEW_T(DynamicAttributeFixed, MEMCATEGORY_SCENE_OBJECTS)();
-    //(static_cast<DynamicAttributeFixed*>(_dynAcceleration))->setValue(DEFAULT_ACCELERATION);
+    _dynAcceleration = new DynamicAttributeFixed();
+    (static_cast<DynamicAttributeFixed*>(_dynAcceleration))->setValue(DEFAULT_ACCELERATION);
 }
 //-----------------------------------------------------------------------
 Particle3DJetAffector::~Particle3DJetAffector (void)
 {
-    //if (!_dynAcceleration)
-    //	return;
+    if (!_dynAcceleration)
+        return;
 
-    //PU_DELETE_T(_dynAcceleration, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-    //_dynAcceleration = 0;
+    CC_SAFE_DELETE(_dynAcceleration);
+    _dynAcceleration = 0;
 }
 //-----------------------------------------------------------------------
-//void Particle3DJetAffector::setDynAcceleration(DynamicAttribute* dynAcceleration)
-//{
-//	if (_dynAcceleration)
-//		PU_DELETE_T(_dynAcceleration, DynamicAttribute, MEMCATEGORY_SCENE_OBJECTS);
-//
-//	_dynAcceleration = dynAcceleration;
-//}
+void Particle3DJetAffector::setDynAcceleration(DynamicAttribute* dynAcceleration)
+{
+    if (_dynAcceleration)
+        CC_SAFE_DELETE(_dynAcceleration);
+
+    _dynAcceleration = dynAcceleration;
+}
 
 void Particle3DJetAffector::updateAffector( float deltaTime )
 {

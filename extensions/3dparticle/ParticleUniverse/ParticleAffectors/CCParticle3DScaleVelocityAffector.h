@@ -23,43 +23,47 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PARTICLE_3D_SCALE_VELOCITY_AFFECTOR_H__
+#define __CC_PARTICLE_3D_SCALE_VELOCITY_AFFECTOR_H__
 
-#include "CCParticle3DBaseCollider.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DPlane.h"
+#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPlaneCollider : public Particle3DBaseCollider
+class  Particle3DScaleVelocityAffector : public Particle3DAffector
 {
 public:
     // Constants
-    static const Vec3 DEFAULT_NORMAL;
+    static const float DEFAULT_VELOCITY_SCALE;
 
-    Particle3DPlaneCollider(void);
-    virtual ~Particle3DPlaneCollider(void);
+    Particle3DScaleVelocityAffector(void);
+    virtual ~Particle3DScaleVelocityAffector(void);
 
-    virtual void notifyRescaled(const Vec3& scale) override;
     virtual void updateAffector(float deltaTime) override;
-
-    /** Returns the normal of the plane
-    */
-    const Vec3 getNormal(void) const;
-
-    /** Sets the normal of the plane
-    */
-    void setNormal(const Vec3& normal);
 
     /** 
     */
-    void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
+    DynamicAttribute* getDynScaleVelocity(void) const {return _dynScaleVelocity;};
+    void setDynScaleVelocity(DynamicAttribute* dynScaleVelocity);
+    void resetDynScaleVelocity(bool resetToDefault = true);
+
+    /** 
+    */
+    bool isSinceStartSystem(void) const {return _sinceStartSystem;};
+    void setSinceStartSystem(bool sinceStartSystem){_sinceStartSystem = sinceStartSystem;};
+
+    /** 
+    */
+    bool isStopAtFlip(void) const {return _stopAtFlip;};
+    void setStopAtFlip(bool stopAtFlip){_stopAtFlip = stopAtFlip;};
 
 protected:
-    Vec3 _normal;
-    Vec3 _predictedPosition;
-    Plane _plane;
+    DynamicAttribute* _dynScaleVelocity;
+    DynamicAttributeHelper _dynamicAttributeHelper;
+    bool _sinceStartSystem;
+    bool _stopAtFlip;
 };
 NS_CC_END
 

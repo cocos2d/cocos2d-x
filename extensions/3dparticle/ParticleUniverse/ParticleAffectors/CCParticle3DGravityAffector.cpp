@@ -66,16 +66,21 @@ void Particle3DGravityAffector::updateAffector( float deltaTime )
         float length = distance.lengthSquared();
         float scaleVelocity = 1.0f;
         //if (mParentTechnique)
-        //{
-        //	scaleVelocity = mParentTechnique->getParticleSystemScaleVelocity();
-        //}
-        //if (length > 0 && mParentTechnique)
-        //{
-        //	//Real force = (mGravity * particle->mass * mass) / length;
-        //	float force = (scaleVelocity * _gravity * particle->mass * mass) / length;
-        //	particle->direction += force * distance * deltaTime * calculateAffectSpecialisationFactor(particle);
-        //}
+        {
+            scaleVelocity = _particleSystem->getParticleSystemScaleVelocity();
+        }
+        if (length > 0/* && mParentTechnique*/)
+        {
+            //Real force = (mGravity * particle->mass * mass) / length;
+            float force = (scaleVelocity * _gravity * particle->mass/* * mass*/) / length;
+            particle->direction += force * distance * deltaTime * calculateAffectSpecialisationFactor(particle);
+        }
     }
+}
+
+void Particle3DGravityAffector::preUpdateAffector( float deltaTime )
+{
+    getDerivedPosition();
 }
 
 NS_CC_END
