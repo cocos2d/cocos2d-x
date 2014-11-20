@@ -48,8 +48,10 @@ int register_network_module(lua_State* L)
         tolua_web_socket_open(L);
         register_web_socket_manual(L);
 #endif
-        
+
+#if CC_USE_CURL        
         register_xml_http_request(L);
+#endif
     }
     lua_pop(L, 1);
     

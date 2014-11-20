@@ -5,7 +5,9 @@ LOCAL_MODULE := cocosbuilder_static
 
 LOCAL_MODULE_FILENAME := libcocosbuilder
 
-LOCAL_SRC_FILES := CCBAnimationManager.cpp \
+LOCAL_SRC_FILES :=
+ifeq ($(CC_USE_CCBUILDER),1)
+LOCAL_SRC_FILES += CCBAnimationManager.cpp \
 CCBFileLoader.cpp \
 CCBKeyframe.cpp \
 CCBReader.cpp \
@@ -27,6 +29,7 @@ CCParticleSystemQuadLoader.cpp \
 CCScale9SpriteLoader.cpp \
 CCScrollViewLoader.cpp \
 CCSpriteLoader.cpp
+endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

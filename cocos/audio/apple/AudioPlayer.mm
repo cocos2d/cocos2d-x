@@ -37,8 +37,8 @@ using namespace cocos2d::experimental;
 
 AudioPlayer::AudioPlayer()
 : _exitThread(false)
-, _timeDirty(false)
 , _streamingSource(false)
+, _timeDirty(false)
 , _currTime(0.0f)
 , _finishCallbak(nullptr)
 , _ready(false)

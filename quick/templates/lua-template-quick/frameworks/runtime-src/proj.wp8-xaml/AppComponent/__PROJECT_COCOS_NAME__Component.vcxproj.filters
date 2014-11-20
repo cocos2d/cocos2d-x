@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Cocos2dRenderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct3DContentProvider.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Direct3DInterop.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectXBase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditBoxEvent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\ConfigParser.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\ProjectConfig\ProjectConfig.cpp">
+      <Filter>Classes\quick-src\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\ProjectConfig\SimulatorConfig.cpp">
+      <Filter>Classes\quick-src\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\cjson\fpconv.c">
+      <Filter>Classes\quick-src\lua_extensions\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\cjson\lua_cjson.c">
+      <Filter>Classes\quick-src\lua_extensions\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\cjson\strbuf.c">
+      <Filter>Classes\quick-src\lua_extensions\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\lpack\lpack.c">
+      <Filter>Classes\quick-src\lua_extensions\lpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\lsqlite3\lsqlite3.c">
+      <Filter>Classes\quick-src\lua_extensions\lsqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\lsqlite3\sqlite3.c">
+      <Filter>Classes\quick-src\lua_extensions\lsqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\zlib\lua_zlib.c">
+      <Filter>Classes\quick-src\lua_extensions\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\lua_extensions\lua_extensions_more.c">
+      <Filter>Classes\quick-src\lua_extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\apptools\HelperFunc.cpp">
+      <Filter>Classes\quick-src\extra\apptools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\crypto\CCCrypto.cpp">
+      <Filter>Classes\quick-src\extra\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\crypto\base64\libbase64.c">
+      <Filter>Classes\quick-src\extra\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\crypto\md5\md5.c">
+      <Filter>Classes\quick-src\extra\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCBlurFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCBrightnessFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCContrastFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCCustomFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCDropShadowFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCExposureFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCGammaFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCGrayFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCHazeFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCHueFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCMaskFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCRGBFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCSaturationFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCSepiaFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCSharpenFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\filters\CCTestFilter.cpp">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShaders.cpp">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\shaders\FilterShaders.cpp">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\filters\nodes\CCFilteredSprite.cpp">
+      <Filter>Classes\quick-src\extra\filters\nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\cocos2dx_extra_luabinding.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\HelperFunc_luabinding.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_filter_auto.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\network\CCHTTPRequest.cpp">
+      <Filter>Classes\quick-src\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\network\CCNetwork.cpp">
+      <Filter>Classes\quick-src\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\platform\wp8\CCNetworkWP8.cpp">
+      <Filter>Classes\quick-src\extra\platform\wp8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\platform\wp8\CCCryptoWP8.cpp">
+      <Filter>Classes\quick-src\extra\platform\wp8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\platform\wp8\CCNativeWP8.cpp">
+      <Filter>Classes\quick-src\extra\platform\wp8</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Cocos2dRenderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct3DContentProvider.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Direct3DInterop.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectXBase.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectXHelper.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EditBoxEvent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\ConfigParser.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\ProjectConfig\ProjectConfig.h">
+      <Filter>Classes\quick-src\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\ProjectConfig\SimulatorConfig.h">
+      <Filter>Classes\quick-src\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\cjson\fpconv.h">
+      <Filter>Classes\quick-src\lua_extensions\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\cjson\lua_cjson.h">
+      <Filter>Classes\quick-src\lua_extensions\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\cjson\strbuf.h">
+      <Filter>Classes\quick-src\lua_extensions\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\lpack\lpack.h">
+      <Filter>Classes\quick-src\lua_extensions\lpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\lsqlite3\lsqlite3.h">
+      <Filter>Classes\quick-src\lua_extensions\lsqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\lsqlite3\sqlite3.h">
+      <Filter>Classes\quick-src\lua_extensions\lsqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\zlib\lua_zlib.h">
+      <Filter>Classes\quick-src\lua_extensions\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\lua_extensions\lua_extensions_more.h">
+      <Filter>Classes\quick-src\lua_extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\apptools\HelperFunc.h">
+      <Filter>Classes\quick-src\extra\apptools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\crypto\CCCrypto.h">
+      <Filter>Classes\quick-src\extra\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\crypto\base64\libbase64.h">
+      <Filter>Classes\quick-src\extra\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\crypto\md5\md5.h">
+      <Filter>Classes\quick-src\extra\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\cocos2dFilters.h">
+      <Filter>Classes\quick-src\extra\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCBlurFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCBrightnessFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCContrastFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCCustomFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCDropShadowFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCExposureFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCGammaFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCGrayFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCHazeFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCHueFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCMaskFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCRGBFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCSaturationFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCSepiaFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCSharpenFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\filters\CCTestFilter.h">
+      <Filter>Classes\quick-src\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_blur_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_brightness_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_colorramp_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_contrast_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_drop_shadow_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_drop_shadow_vert.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_emboss_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_embossmov_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_exposure_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gamma_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gaussian_blur_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gaussian_hblur_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gaussian_vblur_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_grass_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_gray_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_haze_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_hblur_vert.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_hue_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_motion_blur_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_motion_blur_vert.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_rgb_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_saturation_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_sepia_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_sharpen_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_sharpen_vert.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_test_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_test_vert.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_vblur_vert.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShader_zoom_blur_frag.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\ccFilterShaders.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\shaders\FilterShaders.h">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\filters\nodes\CCFilteredSprite.h">
+      <Filter>Classes\quick-src\extra\filters\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\cocos2dx_extra_luabinding.h">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\HelperFunc_luabinding.h">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_filter_auto.hpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\native\CCAlertViewDelegate.h">
+      <Filter>Classes\quick-src\extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\native\CCNative.h">
+      <Filter>Classes\quick-src\extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\network\CCHTTPRequest.h">
+      <Filter>Classes\quick-src\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\network\CCHTTPRequestDelegate.h">
+      <Filter>Classes\quick-src\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\network\CCNetwork.h">
+      <Filter>Classes\quick-src\extra\network</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{ddb0f381-1dc4-44a0-ab28-0f672a551265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6fcff44b-bb9f-4ed9-8553-558855bc91e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src">
+      <UniqueIdentifier>{92d0f3a5-4535-417c-ab53-b414ff9d9e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra">
+      <UniqueIdentifier>{c15b65d5-5187-42d9-91b9-84057e9f07d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\lua_extensions">
+      <UniqueIdentifier>{d3269a20-8373-4e13-b6bd-d5463fd802e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\ProjectConfig">
+      <UniqueIdentifier>{3c75d340-9a03-46dc-be08-b2962a09ca50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\lua_extensions\cjson">
+      <UniqueIdentifier>{e48830d7-79f2-4a7f-98d8-ddd16f5f902f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\lua_extensions\lpack">
+      <UniqueIdentifier>{aeb46f4b-8b94-455b-af64-3242cae6ecf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\lua_extensions\lsqlite3">
+      <UniqueIdentifier>{946b3c8b-514d-404a-ad66-33807d6dda5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\lua_extensions\zlib">
+      <UniqueIdentifier>{f5e4bec9-e1f5-492e-bbcb-d37b4d3d024a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\apptools">
+      <UniqueIdentifier>{96e0d8b3-0f13-49c6-8553-d15e8755271c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\crypto">
+      <UniqueIdentifier>{6b7e0495-27d2-49a5-be93-6f57b5b3da6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\filters">
+      <UniqueIdentifier>{8315a2b1-f18a-461c-a958-b9dc9787295f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\luabinding">
+      <UniqueIdentifier>{e7d3eef1-b7e7-4ac5-ae21-5fe4185b50d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\native">
+      <UniqueIdentifier>{c4056d0a-13f9-438d-914f-e6b090830e30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\network">
+      <UniqueIdentifier>{4554d93d-ffb4-4d09-9105-c0f90bc8e74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\platform">
+      <UniqueIdentifier>{ea5811d6-41d4-46b2-b309-ba1b7a631d49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\filters\filters">
+      <UniqueIdentifier>{819418cc-c0ea-43ec-abb0-00337064aa71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\filters\nodes">
+      <UniqueIdentifier>{e6224057-935d-45fa-bc24-3ba5b000bb80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\filters\shaders">
+      <UniqueIdentifier>{3f58759b-de43-4b2a-be24-0478b22ff35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\platform\wp8">
+      <UniqueIdentifier>{981a71f2-f77b-42c9-9a54-79a837465a66}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(AngleBinPath)libEGL_phone.dll" />
+    <None Include="$(AngleBinPath)libGLESv2_phone.dll" />
+    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
+    <None Include="$(SQLiteBinPath)sqlite3.dll" />
+    <None Include="$(CurlBinPath)libcurl.dll" />
+    <None Include="$(CurlBinPath)libeay32.dll" />
+    <None Include="$(CurlBinPath)ssleay32.dll" />
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_bloom.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Blur.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_celShading.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_ColorBars.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_ColorBars.vsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_edgeDetection.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Flower.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_greyScale.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Heart.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_HorizontalColor.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Julia.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_lensFlare.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Mandelbrot.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Monjori.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_MultiTexture.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_MultiTexture.vsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Noisy.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_normal.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_outline.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Plasma.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_sepia.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\example_Twist.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\shadertoy_FireBall.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\shadertoy_Glow.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+    <None Include="..\..\Classes\quick-src\extra\filters\shaders\shadertoy_LensFlare.fsh">
+      <Filter>Classes\quick-src\extra\filters\shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
