@@ -49,7 +49,7 @@ static void quick_module_register(lua_State *L)
 
 //
 AppDelegate::AppDelegate()
-    :_launchMode(1)
+:_launchMode(1)
 {
 }
 
