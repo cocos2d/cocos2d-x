@@ -179,6 +179,11 @@ bool GLViewImpl::isOpenGLReady()
 void GLViewImpl::end()
 {
 	m_windowClosed = true;
+    std::string str;
+	if (m_delegate) {
+		// Terminate app on Director::getInstance()->end();
+        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
+	}
 }
 
 
@@ -193,11 +198,8 @@ void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 // user pressed the Back Key on the phone
 void GLViewImpl::OnBackKeyPress()
 {
-    std::string str;
-    if(m_delegate)
-    {
-        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
-    }
+	EventKeyboard event(EventKeyboard::KeyCode::KEY_ESCAPE, false);
+	Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void GLViewImpl::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)

@@ -1,5 +1,6 @@
-cocos2d-x-3.3 ??
+cocos2d-x-3.3-rc1 ??
     [NEW]           Vec2: added greater than operator
+    [NEW]           WP8: Win8.1 universal app support
 
     [FIX]           Audio: `SimpleAudioEngine::sharedEngine()->playBackgroundMusic()` crashed freezen on Lollipop(Android5.0)
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
@@ -17,7 +18,7 @@ cocos2d-x-3.3 ??
     [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong
     [FIX]           Scene: setScale() doesn't work as expected
     [FIX]           Sprite3D: did not create attached sprite from cache
-    [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
+    [FIX]           WP: back key behaviour and Director::getInstance()->end() works not correctly
 
 cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           3d: added light support: direction light, point light, spot light and ambient light
