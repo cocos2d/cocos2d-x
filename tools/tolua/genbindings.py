@@ -37,18 +37,6 @@ def _check_python_bin_env():
 
     return PYTHON_BIN
 
-def _check_quickx_root():
-    ''' Checking the environment QUICK_V3_ROOT, which will be used for building
-    '''
-
-    try:
-        QUICK_V3_ROOT = os.environ['QUICK_V3_ROOT']
-    except Exception:
-        print "QUICK_V3_ROOT not defined, Please define QUICK_V3_ROOT in your environment."
-        sys.exit(1)
-
-    return QUICK_V3_ROOT
-
 
 class CmdError(Exception):
     pass
@@ -74,7 +62,6 @@ def main():
     ndk_root = _check_ndk_root_env()
     # del the " in the path
     ndk_root = re.sub(r"\"", "", ndk_root)
-    quick_root = _check_quickx_root()
     python_bin = _check_python_bin_env()
 
     platform = sys.platform
@@ -104,7 +91,7 @@ def main():
         sys.exit(1)
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    cocos_root = os.path.abspath(quick_root)
+    cocos_root = os.path.abspath(os.path.join(project_root, ''))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'tools/bindings-generator'))
 
     # save config to file
