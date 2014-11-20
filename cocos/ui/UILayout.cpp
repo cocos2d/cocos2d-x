@@ -350,6 +350,8 @@ void Layout::onBeforeVisitStencil()
     
 void Layout::drawFullScreenQuadClearStencil()
 {
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
