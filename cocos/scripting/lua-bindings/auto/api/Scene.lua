@@ -5,12 +5,6 @@
 -- @parent_module cc
 
 --------------------------------
--- 
--- @function [parent=#Scene] getPhysicsWorld 
--- @param self
--- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
-        
---------------------------------
 --  render the scene 
 -- @function [parent=#Scene] render 
 -- @param self
@@ -26,12 +20,6 @@
 --------------------------------
 --  creates a new Scene object 
 -- @function [parent=#Scene] create 
--- @param self
--- @return Scene#Scene ret (return value: cc.Scene)
-        
---------------------------------
--- 
--- @function [parent=#Scene] createWithPhysics 
 -- @param self
 -- @return Scene#Scene ret (return value: cc.Scene)
         
