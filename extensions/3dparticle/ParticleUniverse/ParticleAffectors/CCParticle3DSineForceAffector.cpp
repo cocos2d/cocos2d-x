@@ -22,72 +22,86 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DParticleFollower.h"
+#include "CCParticle3DSineForceAffector.h"
 #include "3dparticle/CCParticleSystem3D.h"
 
 NS_CC_BEGIN
-
 // Constants
-const float Particle3DParticleFollower::DEFAULT_MAX_DISTANCE = 3.40282e+038f;
-const float Particle3DParticleFollower::DEFAULT_MIN_DISTANCE = 10.0f;
+const float Particle3DSineForceAffector::DEFAULT_FREQ_MIN = 1.0f;
+const float Particle3DSineForceAffector::DEFAULT_FREQ_MAX = 1.0f;
 
 //-----------------------------------------------------------------------
-Particle3DParticleFollower::Particle3DParticleFollower(void) : 
-    Particle3DAffector(),
-    _minDistance(DEFAULT_MIN_DISTANCE),
-    _maxDistance(DEFAULT_MAX_DISTANCE),
-    _positionPreviousParticle(Vec3::ZERO),
-    _first(false)
+Particle3DSineForceAffector::Particle3DSineForceAffector(void) : 
+    Particle3DBaseForceAffector(),
+    _angle(361),
+    _frequencyMin(DEFAULT_FREQ_MIN),
+    _frequencyMax(DEFAULT_FREQ_MAX),
+    _frequency(1.0f)
 {
 }
+Particle3DSineForceAffector::~Particle3DSineForceAffector( void )
+{
 
-Particle3DParticleFollower::~Particle3DParticleFollower( void )
+}
+//-----------------------------------------------------------------------
+void Particle3DSineForceAffector::preUpdateAffector(float deltaTime)
 {
+    // Scale by time
+    _angle += _frequency * deltaTime;
+    float sineValue = sin(_angle);
+    _scaledVector = _forceVector * deltaTime * sineValue;
 
-}
-//-----------------------------------------------------------------------
-float Particle3DParticleFollower::getMaxDistance(void) const
-{
-    return _maxDistance;
-}
-//-----------------------------------------------------------------------
-void Particle3DParticleFollower::setMaxDistance(float maxDistance)
-{
-    _maxDistance = maxDistance;
-}
-//-----------------------------------------------------------------------
-float Particle3DParticleFollower::getMinDistance(void) const
-{
-    return _minDistance;
-}
-//-----------------------------------------------------------------------
-void Particle3DParticleFollower::setMinDistance(float minDistance)
-{
-    _minDistance = minDistance;
-}
+    if (_angle > M_PI * 2.0f)
+    {
+        _angle = 0.0f;
 
-void Particle3DParticleFollower::updateAffector( float deltaTime )
+        if (_frequencyMin != _frequencyMax)
+        {
+            _frequency = cocos2d::random(_frequencyMin, _frequencyMax);
+        }
+    }
+}
+//-----------------------------------------------------------------------
+const float Particle3DSineForceAffector::getFrequencyMin(void) const
 {
-    _first = true;
+    return _frequencyMin;
+}
+//-----------------------------------------------------------------------
+void Particle3DSineForceAffector::setFrequencyMin(const float frequencyMin)
+{
+    _frequencyMin = frequencyMin;
+    if (frequencyMin > _frequencyMax)
+    {
+        _frequency = frequencyMin;
+    }
+}
+//-----------------------------------------------------------------------
+const float Particle3DSineForceAffector::getFrequencyMax(void) const
+{
+    return _frequencyMax;
+}
+//-----------------------------------------------------------------------
+void Particle3DSineForceAffector::setFrequencyMax(const float frequencyMax)
+{
+    _frequencyMax = frequencyMax;
+    _frequency = frequencyMax;
+}
+//-----------------------------------------------------------------------
+
+void Particle3DSineForceAffector::updateAffector( float deltaTime )
+{
     for (auto iter : _particleSystem->getParticles())
     {
         Particle3D *particle = iter;
-        if (!_first)
+        // Affect the direction
+        if (_forceApplication == FA_ADD)
         {
-            // Change in V 1.3.1
-            // Only proceed if it isn the first one. Compensate for scaling.
-            float distance = (particle->position).distance(_positionPreviousParticle);
-            float avgScale = 0.3333f * (_affectorScale.x + _affectorScale.y + _affectorScale.z);
-            float scaledMinDistance = avgScale * _minDistance;
-            if (distance > scaledMinDistance && distance < avgScale * _maxDistance)
-            {
-                // This particle drifts too much from the previous one; correct it!
-                float f = scaledMinDistance/distance;
-                particle->position = _positionPreviousParticle + f * (particle->position - _positionPreviousParticle);
-            }
+            particle->direction += _scaledVector;
         }
-        _positionPreviousParticle = particle->position;
-        _first = false;
+        else
+        {
+            particle->direction = (particle->direction + _forceVector) / 2;
+        }
     }
 }
 

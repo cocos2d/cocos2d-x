@@ -95,37 +95,29 @@ void Particle3DLineAffector::setDrift(float drift)
     _oneMinusDrift = 1.0f - drift;
 }
 //-----------------------------------------------------------------------
-//void Particle3DLineAffector::_notifyRescaled(const Vec3& scale)
-//{
-//	ParticleAffector::_notifyRescaled(scale);
-//	_scaledMaxDeviation = _maxDeviation * scale.length();
-//}
-////-----------------------------------------------------------------------
-//void Particle3DLineAffector::_firstParticle(ParticleTechnique* particleTechnique, 
-//	Particle* particle, 
-//	float timeElapsed)
-//{
-//	// The first particle should stay on its place
-//	_first = true;
-//}
+void Particle3DLineAffector::notifyRescaled(const Vec3& scale)
+{
+    _scaledMaxDeviation = _maxDeviation * scale.length();
+}
 //-----------------------------------------------------------------------
-//void Particle3DLineAffector::_preProcessParticles(ParticleTechnique* technique, float timeElapsed)
-//{
-//	if (technique->getNumberOfEmittedParticles() > 0)
-//	{
-//		_timeSinceLastUpdate += timeElapsed;
-//		while (_timeSinceLastUpdate > _timeStep)
-//		{
-//			_timeSinceLastUpdate -= _timeStep;
-//			_update = true;
-//		}
-//	}
-//	mParentTechnique->getParentSystem()->rotationOffset(_end); // Always update
-//}
+void Particle3DLineAffector::preUpdateAffector(float deltaTime)
+{
+    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticles().size() > 0)
+    {
+        _timeSinceLastUpdate += deltaTime;
+        while (_timeSinceLastUpdate > _timeStep)
+        {
+            _timeSinceLastUpdate -= _timeStep;
+            _update = true;
+        }
+    }
+    _particleSystem->rotationOffset(_end); // Always update
+}
 //-----------------------------------------------------------------------
 
 void Particle3DLineAffector::updateAffector( float deltaTime )
 {
+    _first = true;
     for (auto iter : _particleSystem->getParticles())
     {
         Particle3D *particle = iter;
@@ -147,16 +139,16 @@ void Particle3DLineAffector::updateAffector( float deltaTime )
                 a new particle position instead of a direction.
             */
             particle->position = _drift * targetPosition + _oneMinusDrift * particle->position;
-            //mParentTechnique->getParentSystem()->rotationOffset(particle->position);
+            _particleSystem->rotationOffset(particle->position);
         }
         _first = false;
     }
 }
 
 //-----------------------------------------------------------------------
-//void Particle3DLineAffector::_postProcessParticles(ParticleTechnique* technique, float timeElapsed)
-//{
-//	_update = false;
-//}
+void Particle3DLineAffector::postUpdateAffector(float deltaTime)
+{
+    _update = false;
+}
 
 NS_CC_END

@@ -40,6 +40,7 @@ public:
     Particle3DBoxCollider();
     virtual ~Particle3DBoxCollider();
 
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
 
     /** Returns the width of the box

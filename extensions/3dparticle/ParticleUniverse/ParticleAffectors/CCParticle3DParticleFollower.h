@@ -43,12 +43,6 @@ public:
 
     virtual void updateAffector(float deltaTime) override;
 
-    /** Validate if first particle.
-    */
-    //virtual void _firstParticle(ParticleTechnique* particleTechnique, 
-    //	Particle* particle, 
-    //	float timeElapsed);
-
     /** 
     */
     float getMaxDistance(void) const;

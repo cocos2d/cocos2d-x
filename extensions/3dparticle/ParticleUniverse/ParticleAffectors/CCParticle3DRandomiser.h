@@ -42,7 +42,9 @@ public:
     Particle3DRandomiser(void);
     virtual ~Particle3DRandomiser(void);
 
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
+    virtual void postUpdateAffector(float deltaTime) override;
     /** 
     */
     float getMaxDeviationX(void) const;
@@ -67,14 +69,6 @@ public:
     */
     bool isRandomDirection(void) const;
     void setRandomDirection(bool randomDirection);
-
-    /** 
-    */
-    //virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
-
-    /** 
-    */
-    //virtual void _postProcessParticles(ParticleTechnique* technique, float timeElapsed);
 
 protected:
     float _maxDeviationX;

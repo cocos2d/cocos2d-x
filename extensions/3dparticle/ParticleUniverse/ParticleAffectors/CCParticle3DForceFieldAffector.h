@@ -27,7 +27,7 @@
 #define __CC_PARTICLE_3D_FORCE_FIELD_AFFECTOR_H__
 
 #include "3dparticle/CCParticle3DAffector.h"
-#include "3dparticle/CCParticle3DForceField.h"
+#include "3dparticle/ParticleUniverse/CCParticle3DForceField.h"
 
 NS_CC_BEGIN
 
@@ -50,19 +50,10 @@ public:
     Particle3DForceFieldAffector();
     ~Particle3DForceFieldAffector();
 
+    virtual void notifyStart() override;
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
-
-    ///** @copydoc ParticleAffector::_prepare */
-    //virtual void _prepare(ParticleTechnique* particleTechnique);
-
-    ///** @copydoc ParticleAffector::_preProcessParticles */
-    //virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
-
-    ///** @copydoc ParticleAffector::_notifyStart */
-    //virtual void _notifyStart(void);
-
-    ///** @copydoc ParticleAffector::_affect */
-    //virtual void _affect(ParticleTechnique* particleTechnique, Particle* particle, float timeElapsed);
+    virtual void prepare() override;
 
     /** Get/Set Forcefield type
     */

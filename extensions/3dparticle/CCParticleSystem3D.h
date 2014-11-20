@@ -131,7 +131,7 @@ struct Particle3D
 
     /** Determines whether it has certain flags set.
     */
-    inline bool hasEventFlags(unsigned int flags) const {return static_cast<bool>(eventFlags & flags);}
+    inline bool hasEventFlags(unsigned int flags) const {return (eventFlags & flags) != 0;}
 
     unsigned int eventFlags;
 
@@ -162,6 +162,13 @@ struct Particle3D
         mass) this attribute can be used.
     */
     float mass;
+
+    /** Animation attributes
+    */
+    float textureAnimationTimeStep;
+    float textureAnimationTimeStepCount;
+    unsigned short textureCoordsCurrent;
+    bool textureAnimationDirectionUp;
 
     float age;
     bool  alive;
@@ -227,6 +234,17 @@ public:
     Particle3DAffector* getAffector(int index);
 
     const std::vector<Particle3D*>& getParticles();
+
+    /** Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
+    */
+    float getParticleSystemScaleVelocity() const;
+
+    /** If the orientation of the particle system has been changed since the last update, the passed vector
+        is rotated accordingly.
+    */
+    void rotationOffset(Vec3& pos);
+
+    inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
     
 protected:
     enum class State
@@ -239,6 +257,16 @@ protected:
     Particle3DEmitter*               _emitter;
     std::vector<Particle3DAffector*> _affectors;
     Particle3DRender*                _render;
+
+    float _particleSystemScaleVelocity;
+    float _timeElapsedSinceStart;
+    /** Rotation offset between 2 updates.
+    */
+    Quaternion _rotationOffset;
+
+    /** The rotation centre.
+    */
+    Vec3 _rotationCentre;
     
     //particles
     std::vector<Particle3D*>          _particles;

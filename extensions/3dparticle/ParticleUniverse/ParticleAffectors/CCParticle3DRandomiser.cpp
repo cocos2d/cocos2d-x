@@ -100,18 +100,18 @@ void Particle3DRandomiser::setRandomDirection(bool randomDirection)
     _randomDirection = randomDirection;
 }
 //-----------------------------------------------------------------------
-//void Particle3DRandomiser::_preProcessParticles(ParticleTechnique* technique, float timeElapsed)
-//{
-//	if (technique->getNumberOfEmittedParticles() > 0)
-//	{
-//		_timeSinceLastUpdate += timeElapsed;
-//		if (_timeSinceLastUpdate > _timeStep)
-//		{
-//			_timeSinceLastUpdate -= _timeStep;
-//			_update = true;
-//		}
-//	}
-//}
+void Particle3DRandomiser::preUpdateAffector(float deltaTime)
+{
+    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticles().size() > 0)
+    {
+        _timeSinceLastUpdate += deltaTime;
+        if (_timeSinceLastUpdate > _timeStep)
+        {
+            _timeSinceLastUpdate -= _timeStep;
+            _update = true;
+        }
+    }
+}
 //-----------------------------------------------------------------------
 void Particle3DRandomiser::updateAffector( float deltaTime )
 {
@@ -143,8 +143,8 @@ void Particle3DRandomiser::updateAffector( float deltaTime )
 }
 
 //-----------------------------------------------------------------------
-//void Particle3DRandomiser::_postProcessParticles(ParticleTechnique* technique, float timeElapsed)
-//{
-//	_update = false;
-//}
+void Particle3DRandomiser::postUpdateAffector(float deltaTime)
+{
+    _update = false;
+}
 NS_CC_END

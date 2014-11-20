@@ -43,7 +43,12 @@ public:
     Particle3DLineAffector(void);
     virtual ~Particle3DLineAffector(void);
 
+        /**
+    */
+    virtual void notifyRescaled(const Vec3& scale) override;
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
+    virtual void postUpdateAffector(float deltaTime) override;
     /** 
     */
     float getMaxDeviation(void) const;
@@ -63,21 +68,6 @@ public:
     */
     float getDrift(void) const;
     void setDrift(float drift);
-
-    /**
-    */
-    //virtual void _notifyRescaled(const Vec3& scale);
-
-    /** 
-    */
-    //virtual void _firstParticle(ParticleTechnique* particleTechnique, Particle* particle, float timeElapsed);
-    /** 
-    */
-    //virtual void _preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed);
-
-    /** 
-    */
-    //virtual void _postProcessParticles(ParticleTechnique* technique, float timeElapsed);
 
 protected:
 

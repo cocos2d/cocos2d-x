@@ -28,11 +28,11 @@
 NS_CC_BEGIN
 
 //-----------------------------------------------------------------------
-//void Particle3DLinearForceAffector::_preProcessParticles(ParticleTechnique* particleTechnique, Real timeElapsed)
-//{
-//	// Scale force
-//	mScaledVector = mForceVector * timeElapsed;
-//}
+void Particle3DLinearForceAffector::preUpdateAffector(float deltaTime)
+{
+    // Scale force
+    _scaledVector = _forceVector * deltaTime;
+}
 //-----------------------------------------------------------------------
 
 

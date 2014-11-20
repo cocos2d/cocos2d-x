@@ -69,72 +69,6 @@ Particle3DForceFieldAffector::Particle3DForceFieldAffector() :
 Particle3DForceFieldAffector::~Particle3DForceFieldAffector()
 {
 };
-////-----------------------------------------------------------------------
-//void Particle3DForceFieldAffector::_prepare(ParticleTechnique* particleTechnique)
-//{
-//	if (particleTechnique->getParentSystem())
-//	{
-//		// Forcefield position is same position as particle system position
-//		_forceField.initialise(_forceFieldType,
-//			particleTechnique->getParentSystem()->getDerivedPosition(),
-//			_forceFieldSize,
-//			_octaves,
-//			_frequency,
-//			_amplitude,
-//			_persistence,
-//			_worldSize);
-//
-//		_basePosition = _forceField.getForceFieldPositionBase();
-//		_prepared = true;
-//	}
-//}
-////-----------------------------------------------------------------------
-//void Particle3DForceFieldAffector::_preProcessParticles(ParticleTechnique* particleTechnique, float timeElapsed)
-//{
-//	if (_movementSet)
-//	{
-//		if (timeElapsed > _movementFrequency)
-//		{
-//			// Ignore too large times, because it just blows things up
-//			return;
-//		}
-//
-//		_movementFrequencyCount += timeElapsed;
-//		if (_movementFrequencyCount > _movementFrequency)
-//		{
-//			_movementFrequencyCount -= _movementFrequency;
-//		}
-//
-//		_displacement = Math::Sin(Math::TWO_PI * _movementFrequencyCount/_movementFrequency) * _movement;
-//		_forceField.setForceFieldPositionBase(_basePosition + _displacement);
-//	}
-//}
-////-----------------------------------------------------------------------
-//void Particle3DForceFieldAffector::_notifyStart(void)
-//{
-//	ParticleAffector::_notifyStart();
-//	_movementFrequencyCount = 0.0f;
-//}
-////-----------------------------------------------------------------------
-//void Particle3DForceFieldAffector::_affect(ParticleTechnique* particleTechnique, Particle* particle, float timeElapsed)
-//{
-//	_forceField.determineForce(particle->position, _force, _delta);
-//
-//	// If negative values are ignored, set the force to 0.
-//	if (_ignoreNegativeX)
-//	{
-//		_force.x = 0.0f;
-//	}
-//	if (_ignoreNegativeY)
-//	{
-//		_force.y = 0.0f;
-//	}
-//	if (_ignoreNegativeZ)
-//	{
-//		_force.z = 0.0f;
-//	}
-//	particle->direction += timeElapsed * _scaleForce * _force;
-//}
 //-----------------------------------------------------------------------
 const ForceField::ForceFieldType Particle3DForceFieldAffector::getForceFieldType(void) const
 {
@@ -331,6 +265,53 @@ void Particle3DForceFieldAffector::updateAffector( float deltaTime )
             _force.z = 0.0f;
         }
         particle->direction += deltaTime * _scaleForce * _force;
+    }
+}
+
+void Particle3DForceFieldAffector::notifyStart()
+{
+    _movementFrequencyCount = 0.0f;
+}
+
+void Particle3DForceFieldAffector::preUpdateAffector( float deltaTime )
+{
+    if (_movementSet)
+    {
+        if (deltaTime > _movementFrequency)
+        {
+            // Ignore too large times, because it just blows things up
+            return;
+        }
+
+        _movementFrequencyCount += deltaTime;
+        if (_movementFrequencyCount > _movementFrequency)
+        {
+            _movementFrequencyCount -= _movementFrequency;
+        }
+
+        _displacement = sin(2.0f * M_PI * _movementFrequencyCount/_movementFrequency) * _movement;
+        _forceField.setForceFieldPositionBase(_basePosition + _displacement);
+    }
+}
+
+void Particle3DForceFieldAffector::prepare()
+{
+    //if (particleTechnique->getParentSystem())
+    {
+        // Forcefield position is same position as particle system position
+        _forceField.initialise(_forceFieldType,
+            //FIXME need use  _particleSystem->getDerivedPosition()
+            getDerivedPosition(),
+            //end FIXME
+            _forceFieldSize,
+            _octaves,
+            _frequency,
+            _amplitude,
+            _persistence,
+            _worldSize);
+    
+        _basePosition = _forceField.getForceFieldPositionBase();
+        _prepared = true;
     }
 }
 

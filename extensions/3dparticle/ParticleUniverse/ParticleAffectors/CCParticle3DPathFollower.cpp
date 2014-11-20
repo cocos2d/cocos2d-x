@@ -40,12 +40,12 @@ Particle3DPathFollower::~Particle3DPathFollower( void )
 //-----------------------------------------------------------------------
 void Particle3DPathFollower::addPoint(const Vec3& point)
 {
-    //_spline.addPoint(point);
+    _spline.addPoint(point);
 }
 //-----------------------------------------------------------------------
 void Particle3DPathFollower::clearPoints (void)
 {
-    //_spline.clear();
+    _spline.clear();
 }
 //-----------------------------------------------------------------------
 
@@ -54,15 +54,16 @@ void Particle3DPathFollower::updateAffector( float deltaTime )
     for (auto iter : _particleSystem->getParticles())
     {
         Particle3D *particle = iter;
-        //if (_spline.getNumPoints() > 0)
-        //{
-        //	// PU 1.4
-        //	float timeLeft = particle->totalTimeToLive - particle->timeToLive;
-        //	float timeFraction = timeLeft / particle->totalTimeToLive;
-        //	float timeFractionPlusDelta = (timeLeft + deltaTime ) / particle->totalTimeToLive;
-        //	timeFractionPlusDelta = timeFractionPlusDelta < 1.0f ? timeFractionPlusDelta : 1.0f;
-        //	particle->position += _affectorScale * (_spline.interpolate(timeFractionPlusDelta) - _spline.interpolate(timeFraction));
-        //}
+        if (_spline.getNumPoints() > 0)
+        {
+            // PU 1.4
+            float timeLeft = particle->totalTimeToLive - particle->timeToLive;
+            float timeFraction = timeLeft / particle->totalTimeToLive;
+            float timeFractionPlusDelta = (timeLeft + deltaTime ) / particle->totalTimeToLive;
+            timeFractionPlusDelta = timeFractionPlusDelta < 1.0f ? timeFractionPlusDelta : 1.0f;
+            Vec3 inter = _spline.interpolate(timeFractionPlusDelta) - _spline.interpolate(timeFraction);
+            particle->position += Vec3(_affectorScale.x * inter.x, _affectorScale.y * inter.y, _affectorScale.z * inter.z);
+        }
     }
 }
 

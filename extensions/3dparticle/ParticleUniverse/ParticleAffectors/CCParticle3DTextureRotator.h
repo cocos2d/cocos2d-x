@@ -23,31 +23,38 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_GEOMETRY_ROTATOR_H__
-#define __CC_PARTICLE_3D_GEOMETRY_ROTATOR_H__
+#ifndef __CC_PARTICLE_3D_TEXTURE_ROTATOR_H__
+#define __CC_PARTICLE_3D_TEXTURE_ROTATOR_H__
 
 #include "3dparticle/CCParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
-struct Particle3D;
-class  Particle3DGeometryRotator : public Particle3DAffector
+
+class  Particle3DTextureRotator : public Particle3DAffector
 {
 public:
     // Constants
-    static const bool DEFAULT_USE_OWN;
+    static const bool DEFAULT_USE_OWN_SPEED;
     static const float DEFAULT_ROTATION_SPEED;
-    static const Vec3 DEFAULT_ROTATION_AXIS;
+    static const float DEFAULT_ROTATION;
 
-    Particle3DGeometryRotator();
-    virtual ~Particle3DGeometryRotator();
+    Particle3DTextureRotator(void);
+    virtual ~Particle3DTextureRotator(void);
 
     virtual void updateAffector(float deltaTime) override;
-    /** @copydoc ParticleAffector::_initParticleForEmission */
-    virtual void initParticleForEmission(Particle3D* particle) override;
 
-    /** Returns the rotation speed. This is the speed controlled by the affector. Besides
-        the default rotation speed, it is also possible to use the particles own rotation speed.
+    /** Returns an indication whether the 2D rotation speed is the same for all particles in this 
+        particle technique, or whether the 2D rotation speed of the particle itself is used.
+    */
+    bool useOwnRotationSpeed (void) const;
+
+    /** Set the indication whether the 2D rotation speed of the particle itself is used.
+    */
+    void setUseOwnRotationSpeed (bool useOwnRotationSpeed);
+
+    /** Returns the rotation speed. This is the speed controlled by the affector.
     */
     DynamicAttribute* getRotationSpeed(void) const;
 
@@ -55,41 +62,31 @@ public:
     */
     void setRotationSpeed(DynamicAttribute* dynRotationSpeed);
 
-    /** Returns an indication whether the rotation speed is the same for all particles in this 
-        particle technique, or whether the rotation speed of the particle itself is used.
+    /** Returns the rotation defined in the the affector.
     */
-    bool useOwnRotationSpeed (void) const;
-
-    /** Set the indication whether rotation speed of the particle itself is used.
-    */
-    void setUseOwnRotationSpeed (bool _useOwnRotationSpeed);
+    DynamicAttribute* getRotation(void) const;
 
     /** 
     */
-    const Vec3& getRotationAxis(void) const;
+    void setRotation(DynamicAttribute* dynRotation);
 
-    /** 
+    /** Returns a rotation set in the affector, depending on the type of dynamic attribute.
     */
-    void setRotationAxis(const Vec3& rotationAxis);
-
-    /** 
-    */
-    void resetRotationAxis(void);
-
-protected:
+    float calculateRotation (void);
 
     /** Returns a rotation speed value, depending on the type of dynamic attribute.
     */
     float calculateRotationSpeed (Particle3D* particle);
 
-protected:
+    /** @copydoc ParticleAffector::_initParticleForEmission */
+    virtual void initParticleForEmission(Particle3D* particle);
 
-    float _scaledRotationSpeed;
+protected:
     bool _useOwnRotationSpeed;
+    float _scaledRotationSpeed;
+    float _twoPiRad;
+    DynamicAttribute* _dynRotation;
     DynamicAttribute* _dynRotationSpeed;
-    Quaternion _q;
-    Vec3 _rotationAxis;
-    bool _rotationAxisSet;
 
     /** Helper factory
     */

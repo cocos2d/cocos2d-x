@@ -35,6 +35,11 @@ const Particle3DBaseCollider::CollisionType Particle3DBaseCollider::DEFAULT_COLL
 //-----------------------------------------------------------------------
 Particle3DBaseCollider::Particle3DBaseCollider() 
     : Particle3DAffector()
+    , _bouncyness(DEFAULT_BOUNCYNESS)
+    , _friction(DEFAULT_FRICTION)
+    , _intersectionType(DEFAULT_INTERSECTION_TYPE)
+    , _collisionType(DEFAULT_COLLISION_TYPE)
+    , _velocityScale(1.0f)
 {
 }
 
@@ -101,6 +106,12 @@ void Particle3DBaseCollider::calculateRotationSpeedAfterCollision( Particle3D* p
 
     particle->rotationSpeed *= signedFriction;
     particle->zRotationSpeed *= signedFriction;
+}
+
+void Particle3DBaseCollider::preUpdateAffector( float deltaTime )
+{
+    // Take scaled velocity into account
+    _velocityScale = deltaTime * _particleSystem->getParticleSystemScaleVelocity();
 }
 
 NS_CC_END

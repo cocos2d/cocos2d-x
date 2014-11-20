@@ -27,6 +27,7 @@
 #define __CC_PARTICLE_3D_PATH_FOLLOWER_H__
 
 #include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/CCParticle3DSimpleSpline.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -48,15 +49,15 @@ public:
 
     /** 
     */
-    //unsigned short getNumPoints(void) const {return _spline.getNumPoints();};
+    unsigned short getNumPoints(void) const {return _spline.getNumPoints();};
                 
     /** 
     */
-    //const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
+    const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
 
 protected:
 
-    //SimpleSpline _spline;
+    SimpleSpline _spline;
 };
 NS_CC_END
 

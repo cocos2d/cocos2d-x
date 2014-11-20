@@ -23,43 +23,56 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
+#define __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
 
 #include "CCParticle3DBaseCollider.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DPlane.h"
+#include "3dparticle/ParticleUniverse/CCParticle3DSphere.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPlaneCollider : public Particle3DBaseCollider
+class  Particle3DSphereCollider : public Particle3DBaseCollider
 {
 public:
     // Constants
-    static const Vec3 DEFAULT_NORMAL;
+    static const float DEFAULT_RADIUS;
 
-    Particle3DPlaneCollider(void);
-    virtual ~Particle3DPlaneCollider(void);
+    Particle3DSphereCollider(void);
+    virtual ~Particle3DSphereCollider(void);
 
-    virtual void notifyRescaled(const Vec3& scale) override;
+    virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(float deltaTime) override;
 
-    /** Returns the normal of the plane
+    /** Returns the radius of the sphere
     */
-    const Vec3 getNormal(void) const;
+    const float getRadius(void) const;
 
-    /** Sets the normal of the plane
+    /** Sets the radius of the sphere
     */
-    void setNormal(const Vec3& normal);
+    void setRadius(const float radius);
+
+    /** Returns indication whether the collision is inside or outside of the box
+    @remarks
+        If value is true, the collision is inside of the box.
+    */
+    bool isInnerCollision(void) const;
+
+    /** Set indication whether the collision is inside or outside of the box
+    @remarks
+        If value is set to true, the collision is inside of the box.
+    */
+    void setInnerCollision(bool innerCollision);
 
     /** 
     */
-    void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
+    void calculateDirectionAfterCollision(Particle3D* particle, Vec3 distance, float distanceLength);
 
 protected:
-    Vec3 _normal;
+    float _radius;
+    Sphere _sphere;
     Vec3 _predictedPosition;
-    Plane _plane;
+    bool _innerCollision;
 };
 NS_CC_END
 
