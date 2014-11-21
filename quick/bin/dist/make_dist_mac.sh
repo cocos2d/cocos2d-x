@@ -16,15 +16,44 @@ echo "VERSION = \"$VERSION\""
 echo "WORKDIR = \"$WORKDIR\""
 echo ""
 
+echo "Clean old work dir"
 if [ -d "$WORKDIR" ]; then
     rm -fr "$WORKDIR"
 fi
+if [ -d "$WORKDIR-win" ]; then
+    rm -fr "$WORKDIR-win"
+fi
 mkdir -p "$WORKDIR"
 
+echo "Get Quick-x Packages"
 cd "$QUICK_V3_ROOT"
 git archive v3 | tar -x -C "$WORKDIR"
+rm -fr $WORKDIR/quick/bin/dist
 
+echo "Copy runtime's files"
 cp -rf $QUICK_V3_ROOT/quick/templates/lua-template-quick/runtime/ $WORKDIR/quick/templates/lua-template-quick/runtime/
+
+echo "Copy bindings-generator"
+GTOOLSPATH="bindings-generator"
+cd "$QUICK_V3_ROOT/../$GTOOLSPATH"
+git archive develop | tar -x -C "$WORKDIR/tools/$GTOOLSPATH"
+rm $WORKDIR/tools/$GTOOLSPATH/libclang/libclang.so
+cd "$QUICK_V3_ROOT"
+
+echo "Copy to windows work dir"
+cp -rf $WORKDIR $WORKDIR-win
+rm $WORKDIR-win/.g*
+rm $WORKDIR-win/.t*
+
+echo "Clean windows file in work dir"
+rm $WORKDIR/tools/$GTOOLSPATH/libclang/libclang.dll
+rm -fr $WORKDIR/tools/$GTOOLSPATH/tools
+rm -fr $WORKDIR/quick/templates/lua-template-quick/runtime/win32
+
+echo "Clean mac&ios file in windows work dir"
+rm $WORKDIR-win/tools/$GTOOLSPATH/libclang/libclang.dylib
+rm -fr $WORKDIR-win/quick/templates/lua-template-quick/runtime/ios
+rm -fr $WORKDIR-win/quick/templates/lua-template-quick/runtime/mac
 
 # cd quick/player/proj.mac
 
