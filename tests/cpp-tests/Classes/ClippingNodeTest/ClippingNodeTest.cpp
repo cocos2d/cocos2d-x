@@ -34,6 +34,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(RawStencilBufferTest6),
     CL(ClippingToRenderTextureTest),
     CL(ClippingRectangleNodeTest),
+    CL(ClippingRectangleNodeNestTest),
 };
 
 static int sceneIdx=-1;
@@ -1126,6 +1127,63 @@ void ClippingRectangleNodeTest::setup()
     content->setAnchorPoint(  Vec2(0.5, 0.5) );
     content->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     clipper->addChild(content);
+}
+
+// ClippingRectangleNodeNestDemo
+
+std::string ClippingRectangleNodeNestTest::title() const
+{
+    return "ClippingRectangleNode Nest Test";
+}
+
+std::string ClippingRectangleNodeNestTest::subtitle() const
+{
+    return "more effectively";
+}
+
+void ClippingRectangleNodeNestTest::setup()
+{
+    auto clipper = ClippingRectangleNode::create();
+    clipper->setClippingRegion(Rect(-100, -100, 200, 200));
+    clipper->setTag( kTagClipperNode );
+    clipper->setPosition(Vec2(this->getContentSize().width / 2, this->getContentSize().height / 2));
+    this->addChild(clipper);
+    
+    auto content = Sprite::create("Images/background.png");
+    content->setTag( kTagContentNode );
+    content->setAnchorPoint( Vec2(0.5, 0.5) );
+    content->setPosition( Vec2(0, 0) );
+    clipper->addChild(content);
+    
+    // have intersection with parent clipper
+    auto childclipper1 = ClippingRectangleNode::create();
+    childclipper1->setClippingRegion(Rect(-50, -50, 100, 100));
+    childclipper1->setPosition(Vec2(100, 100));
+    clipper->addChild(childclipper1);
+    
+    auto childContent1 = Sprite::create(s_back1);
+    childContent1->setAnchorPoint(Vec2(0.5, 0.5));
+    childclipper1->addChild(childContent1);
+    
+    // in parent clipper
+    auto childclipper2 = ClippingRectangleNode::create();
+    childclipper2->setClippingRegion(Rect(-50, -50, 100, 100));
+    childclipper2->setPosition(Vec2(0, 0));
+    clipper->addChild(childclipper2);
+    
+    auto childContent2 = Sprite::create(s_back2);
+    childContent2->setAnchorPoint(Vec2(0.5, 0.5));
+    childclipper2->addChild(childContent2);
+    
+    // out of parent clipper
+    auto childclipper3 = ClippingRectangleNode::create();
+    childclipper3->setClippingRegion(Rect(-50, -50, 100, 100));
+    childclipper3->setPosition(Vec2(200, 0));
+    clipper->addChild(childclipper3);
+    
+    auto childContent3 = Sprite::create(s_back3);
+    childContent3->setAnchorPoint(Vec2(0.5, 0.5));
+    childclipper3->addChild(childContent3);
 }
 
 
