@@ -1973,6 +1973,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2006,23 +2007,26 @@
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../../scripting/lua/lua/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"-llua",
 				);
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 armv7s i386 arm64";
 				WARNING_CFLAGS = "";
 			};
 			name = Debug;
@@ -2031,6 +2035,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_FAST_OBJC_DISPATCH = YES;
@@ -2062,23 +2067,26 @@
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../../scripting/lua/lua/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"-llua",
 				);
 				PRODUCT_NAME = HelloLua;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 armv7s i386 arm64";
 				WARNING_CFLAGS = "";
 			};
 			name = Release;
