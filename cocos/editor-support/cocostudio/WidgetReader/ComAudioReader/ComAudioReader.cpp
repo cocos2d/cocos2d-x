@@ -24,7 +24,7 @@
 
 #include "ComAudioReader.h"
 
-#include "CCComAudio.h"
+#include "cocostudio/CCComAudio.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
