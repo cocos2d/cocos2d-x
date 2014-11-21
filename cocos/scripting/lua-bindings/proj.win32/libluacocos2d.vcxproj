@@ -37,10 +37,12 @@
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c" />
     <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_assetsmanager_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_audioengine_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_video_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp" />
@@ -107,10 +109,12 @@
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h" />
     <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_assetsmanager_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_audioengine_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_video_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp" />

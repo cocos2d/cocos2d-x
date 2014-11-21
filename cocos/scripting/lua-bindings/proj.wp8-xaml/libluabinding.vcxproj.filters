@@ -293,6 +293,12 @@
     <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp">
       <Filter>external\xxtea</Filter>
     </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_assetsmanager_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -449,6 +455,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
       <Filter>external\xxtea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_assetsmanager_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp">
+      <Filter>scripting\luabinding\auto</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
