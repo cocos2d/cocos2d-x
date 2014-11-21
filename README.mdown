@@ -14,13 +14,13 @@ Supported Platforms
    * iOS:  stable, well tested on iOS 5.x ~ 6.x SDK.
    * Android: stable, well tested on 2.0~4.x, ndk r5 ~ r8. If you use gles20
      branch or cocos2d-x v2.0 above, only android 2.3 and higher are supported
-   * Windows Phone 8 and Windows Store Apps (WinRT)
+   * Windows Phone 8 and 8.1 and Windows Store Apps (WinRT) see http://msopentech.github.io/cocos2d-x/ for more info on Windows platform
    * Bada: cocos2d-x v1.x supports Bada SDK 1.0 & 2.0. Bada support was
      deprecated since cocos2d-x v2.0.
    * BlackBerry: stable, contributed by staffs in RIM, supports Playbook & BB10.
    * Marmalade: stable since cocos2d-x v0.11.0, contributed by Marmalade's staff.
    * Native Client (NaCl): contributed by the Native Client authors.
-   * Windows: stable, well tested on WinXP/Vista/Win7. Please upgrde the drive
+   * Windows: stable, well tested on WinXP/Vista/Win7/Win8. Please upgrade the drive
      of your video card if you meet problems on OpenGL functions
    * Linux: support but not very stable.
    * Emscripten: Alpha-level. Most features implemented. Needs testing.
