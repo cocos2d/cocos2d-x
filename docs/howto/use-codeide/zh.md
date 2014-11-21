@@ -5,7 +5,7 @@ Title: 在 Code IDE 中调试 quick 工程
 
 > Code IDE 是 cocos2d-x 团队为开发者提供的全功能代码开发环境。
 
-注意：新版本的 Code IDE 已经能很好的支持 quick 3.3final 以上版本的工程，不需要特殊的设置。以下的说明只适用于 Code IDE 1.0 rc1 和 1.0.1 之间的版本。
+注意：新版本的 Code IDE 已经能很好的支持 quick 3.3rc1 以上版本的工程，不需要特殊的设置。以下的说明只适用于 Code IDE 1.0 rc1 和 1.0.1 之间的版本。
 
 
 ~

@@ -5,7 +5,7 @@ quick-cocos2d-x v3
 
 quick-cocos2d-x v3 是在 cocos2dx 3.x 的最新版本基础之上，移植了原来 quick-cocos2d-x 的核心框架、强大的 player 、丰富的示例等，并增加更多新的功能。
 
-> 当前版本为final版
+> 当前版本为RC版
 
 ## 使用指南
 
@@ -17,6 +17,8 @@ quick-cocos2d-x v3 是在 cocos2dx 3.x 的最新版本基础之上，移植了�
 
     访问 [http://cn.cocos2d-x.org/](http://cn.cocos2d-x.org/) 下载安装包。
 
+    安装过程很简单，基本上一路点“继续”或者“下一步”即可。在windows下安装你可以修改要安装的目录位置。另外，如果你以前安装过 quick 3.x 的其他版本，并且对引擎代码自己做过修改，请预先备份自己的工作，避免被新版本覆盖。
+    
 ### 快速开始
 
 quick-cocos2d-x 中带有一个名为 player 的工具。
