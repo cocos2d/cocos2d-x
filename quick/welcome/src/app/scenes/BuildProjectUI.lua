@@ -106,6 +106,11 @@ function BuildProjectUI:createUI()
 		self:removeFromParent(true)
     	end)
 
+	-- clear button
+	self.compileBtn = self:addButton("Clear", display.right - 370, 10, function(event)
+		self:runClear()
+    	end)
+
 	-- compile button
 	self.compileBtn = self:addButton("Compile", display.right - 170, 10, function(event)
 		if Utilitys.stringIsNull(self.projDirTF_:getText()) then
@@ -323,6 +328,22 @@ function BuildProjectUI:runCompile()
 	end
 
 	print("Create Cmd:" .. scriptPath .. " " .. strCmd)
+	local taskId = tostring(os.time())
+    local task = PlayerProtocol:getInstance():getTaskService():createTask(taskId, scriptPath, strCmd)
+    task:runInTerminal()
+end
+
+function BuildProjectUI:runClear()
+	local scriptPath
+    local strCmd = ""
+    local projDir = self:addSymbolForPath(self.projDirTF_:getText())
+
+	if device.platform == "windows" then
+    	scriptPath = projDir .. "clean.bat"
+    else
+    	scriptPath = projDir .. "clean.sh"
+	end
+
 	local taskId = tostring(os.time())
     local task = PlayerProtocol:getInstance():getTaskService():createTask(taskId, scriptPath, strCmd)
     task:runInTerminal()
