@@ -266,7 +266,14 @@ function player:onScreenChangeFrameSize(sender)
 
     self.projectConfig_:setFrameSize(w, h)
     self.projectConfig_:setFrameScale(1.0)
-    PlayerProtocol:getInstance():openProjectWithProjectConfig(self.projectConfig_)
+    
+    local player = PlayerProtocol:getInstance()
+    if player.getPositionX then
+        print(player:getPositionX(), player:getPositionY())
+        self.projectConfig_:setWindowOffset(player:getPositionX(), player:getPositionY())
+    end
+
+    player:openProjectWithProjectConfig(self.projectConfig_)
 end
 
 function player:onScreenChangeDirection(sender)
