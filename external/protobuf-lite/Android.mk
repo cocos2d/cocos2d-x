@@ -6,7 +6,9 @@ LOCAL_MODULE := cocos_protobuf-lite_static
 
 LOCAL_MODULE_FILENAME := libprotobuf-lite
 
-LOCAL_SRC_FILES := \
+LOCAL_SRC_FILES := 
+ifeq ($(NDK_DEBUG),1)
+LOCAL_SRC_FILES += \
 src/google/protobuf/extension_set.cc \
 src/google/protobuf/generated_message_util.cc \
 src/google/protobuf/message_lite.cc \
@@ -20,6 +22,7 @@ src/google/protobuf/stubs/common.cc \
 src/google/protobuf/stubs/once.cc \
 src/google/protobuf/stubs/stringprintf.cc \
 src/google/protobuf/stubs/atomicops_internals_x86_gcc.cc
+endif
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/src
 
