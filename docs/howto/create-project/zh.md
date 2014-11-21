@@ -19,7 +19,7 @@
 4. `create_project.sh` 的更多参数可以输出 `./create_project.sh -h` 来了解
 
 `create_project.sh` 的参数:
-
+I
 - -h show help
 - -p package name
 - -o project path (default is "current_dir/last_package_name")
