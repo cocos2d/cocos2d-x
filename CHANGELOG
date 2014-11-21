@@ -1,0 +1,7 @@
+quick-cocos2d-x-3.3-rc1 ??
+    [NEW]           WP: added proj.wp8-xaml
+    [NEW]           Runtime: supported Cocos Code IDE
+
+    [FIX]           Event: Bugs of touch events dispatching
+    [FIX]           Cocos2d-x: Re-integrate cocos2d-x into Quick
+
