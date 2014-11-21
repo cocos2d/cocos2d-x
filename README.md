@@ -45,6 +45,7 @@ quick-cocos2d-x 中带有一个名为 player 的工具。
 -    [用 CCSLoader 读取 Cocos Studio 输出的场景/UI 文件](docs/howto/use-ccsloader/zh.md)
 -    [编译 Android 工程](docs/howto/compile-android/zh.md)
 -    [升级到 quick-cocos2d-x 最新版](docs/howto/upgrade/zh.md)
+-    [使用bindings-generator导出自定义C++类](docs/howto/use-bindings-generator/zh.md)
 
 ### 参考手册
 
