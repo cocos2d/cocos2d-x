@@ -1182,7 +1182,6 @@ void Node::insertChild(Node* child, int z)
 	_reorderChildDirty = true;
 	_children.pushBack(child);
 	child->_localZOrder = z;
-	setGlobalZOrder(z);
 }
 
 void Node::reorderChild(Node *child, int zOrder)
