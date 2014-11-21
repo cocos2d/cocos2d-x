@@ -76,8 +76,6 @@ LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-ifeq ($(NDK_DEBUG),1)
 LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
-endif
 
 include $(BUILD_STATIC_LIBRARY)
