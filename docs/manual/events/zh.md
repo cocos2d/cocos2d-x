@@ -1,4 +1,3 @@
-Title: quick 中的事件
 
 quick 中的事件
 ============
@@ -12,21 +11,25 @@ quick 中的事件按照功能和用途分为：
 -   重力感应事件
 -   应用程序事件
 
-~
 
 ## 节点事件
 
 节点事件在一个 Node 对象进入、退出场景时触发。
 
 ~~~lua
+
+
 local node = display.newNode()
+
 node:addNodeEventListener(cc.NODE_EVENT, function(event)
     print(event.name)
 end)
+
 scene:addChild(node)
+
 ~~~
 
-~
+
 
 event 属性：
 
@@ -77,6 +80,7 @@ end, 1.0)
 ~~~
 node in scene [scene1] NODE_EVENT: enter
 node in scene [scene1] NODE_EVENT: enterTransitionFinish
+
 --------
 node in scene [scene1] NODE_EVENT: exitTransitionStart
 node in scene [scene1] NODE_EVENT: exit
@@ -85,7 +89,7 @@ node in scene [scene2] NODE_EVENT: enter
 node in scene [scene2] NODE_EVENT: enterTransitionFinish
 ~~~
 
-~
+
 
 在切换场景时如果没有使用特效，那么事件出现的顺序如上。
 
@@ -94,6 +98,7 @@ node in scene [scene2] NODE_EVENT: enterTransitionFinish
 ~~~
 node in scene [scene1] NODE_EVENT: enter
 node in scene [scene1] NODE_EVENT: enterTransitionFinish
+
 --------
 node in scene [scene1] NODE_EVENT: exitTransitionStart
 node in scene [scene2] NODE_EVENT: enter
@@ -102,7 +107,7 @@ node in scene [scene2] NODE_EVENT: enterTransitionFinish
 node in scene [scene1] NODE_EVENT: cleanup
 ~~~
 
-~
+
 
 造成这种区别的原因就是场景切换特效播放期间，会同时渲染两个场景，所以从事件上看，可以看到第二个场景的 `enter` 事件出现后，第一个场景的 `exit` 事件才出现。
 
@@ -114,7 +119,7 @@ node in scene [scene1] NODE_EVENT: cleanup
 -   exit: 如果场景切换使用了特效，可以在这里停止场景中的一些动画，避免切换场景的特效导致帧率下降
 -   cleanup: 适合做清理工作
 
-~
+
 
 为了简化使用，quick 为 cc.Node 封装了几个现成的方法，开发者如果从 Node（或继承类）创建自己的 Lua 类，那么可以直接覆盖这几个方法：
 
@@ -199,11 +204,11 @@ node in scene [scene2] method onEnterTransitionFinish
 node in scene [scene1] method onCleanup
 ~~~
 
-~
+
 
 效果和直接注册事件一样。两种方式让开发者可以根据实际需求灵活选择。
 
-~
+
 
 
 ## 节点帧事件
@@ -238,20 +243,20 @@ end, 0.5)
 display.replaceScene(scene)
 ~~~
 
-~
+
 
 运行时，屏幕上会不断输出上一帧和下一帧之间的时间间隔（通常为 1/60 秒），并在 0.5 时短暂暂停一下。
 
 **注意**：一定要调用 `scheduleUpdate()` 后，帧事件才会触发。
 
-~
+
 
 
 ## 触摸事件
 
 由于触摸事件的内容较多，所以请参考独立的文档《quick 中的触摸事件》。
 
-~
+
 
 ## 键盘事件
 
@@ -265,7 +270,7 @@ end)
 scene:addChild(node)
 ~~~
 
-~
+
 
 event 属性：
 
@@ -273,7 +278,7 @@ event 属性：
     -   menu
     -   back
 
-~
+
 
 ## 重力感应事件
 
@@ -287,14 +292,14 @@ end)
 scene:addChild(node)
 ~~~
 
-~
+
 
 event 属性：
 
 -   event.**x**, event.**y**, event.**z**: 设备在 xyz 轴上的角度
 -   event.**timestamp**: 测量值更新时间
 
-~
+
 
 ## 应用程序事件
 

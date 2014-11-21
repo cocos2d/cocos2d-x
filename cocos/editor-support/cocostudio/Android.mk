@@ -70,15 +70,12 @@ endif
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
-                    $(LOCAL_PATH)/WidgetReader \
-                    $(LOCAL_PATH)/../../../external/protobuf-lite/src
+                    $(LOCAL_PATH)/WidgetReader
 
 LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-ifeq ($(NDK_DEBUG),1)
 LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
-endif
 
 include $(BUILD_STATIC_LIBRARY)

@@ -1,11 +1,10 @@
-Title: quick 中的触摸事件
 
 quick 中的触摸事件
 ================
 
 cocos2d-x 原本的触摸机制存在一些限制，在使用中需要开发者做不少额外的处理。所以 quick-cocos2d-x 提出了自己的一套触摸机制。本文详细介绍了这套新机制的用法。
 
-~
+
 
 ## 显示层级
 
@@ -30,11 +29,11 @@ cocos2d-x 原本的触摸机制存在一些限制，在使用中需要开发者�
 
 ~~~
 
-~
+
 
 在这棵树里，Node 所处的垂直位置就是它们的`显示层级`。越往上的 Node，其显示层级就越高。从画面表现上来说，下面的 Node 是背景，上面的 Node 是建筑，那么建筑就会挡住一部分背景。
 
-~
+
 
 ## 触摸区域
 
@@ -50,13 +49,13 @@ cocos2d-x 原本的触摸机制存在一些限制，在使用中需要开发者�
 
 为了简化实现，`触摸区域`都是一个矩形，所以节点 B 的`触摸区域`实际上是一个“包含三个 Sprite 对象触摸区域合集的矩形”，可以参考上图中的红色边框线。
 
-~
+
 
 ## 用法示例
 
 下面列出触摸事件的用法示例，更详细的示例请参考 `samples/touch` 示例。
 
-~
+
 
 ### 单点触摸事件
 
@@ -80,7 +79,7 @@ node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
 end)
 ~~~
 
-~
+
 
 触摸事件的 `event.name` 指示了事件的状态：
 
@@ -89,7 +88,7 @@ end)
 -   **ended**: 手指离开屏幕。
 -   **cancelled**: 因为其他原因取消触摸操作。
 
-~
+
 
 ### 多点触摸
 
@@ -118,7 +117,7 @@ node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
 end)
 ~~~
 
-~
+
 
 在多点触摸时，事件状态的含义有所区别：
 
@@ -128,7 +127,7 @@ end)
 -   **ended**: 如果所有触摸点都消失（所有手指都离开了屏幕），则出现 `ended` 状态。此时 `event.points` 中包含删除的触摸点数据。
 -   **moved**: 由于多点触摸时，可能只有部分触摸点移动。所以此时 `event.points` 中只包含有变化的触摸点数据。
 
-~
+
 
 ## 触摸事件吞噬
 
@@ -139,7 +138,7 @@ end)
 -   **setTouchSwallowEnabled()** 是否允许 Node 吞噬触摸，默认为 `true`。如果设置为 `false`，则 Node 响应触摸事件后，仍然会将事件继续传递给父对象。
 -   **isTouchSwallowEnabled()** 检查 Node 是否允许吞噬触摸。
 
-~
+
 
 ## 禁用触摸
 
@@ -148,7 +147,7 @@ end)
 -   **setTouchEnabled()** 是否允许 Node 响应触摸，默认为 `false`。
 -   **isTouchEnabled()** 检查 Node 是否允许触摸。
 
-~
+
 
 但即便禁用了 Node 的触摸事件，也只能阻止这个 Node 响应触摸，而不能阻止这个 Node 的子 Node 响应触摸。
 
@@ -158,16 +157,16 @@ end)
 dialog:setTouchCaptureEnabled(false)
 ~~~
 
-~
+
 
 -   **setTouchCaptureEnabled()** 是否允许 Node 捕获触摸，默认为 `true`。当设置为 `false` 时，该 Node 及其所有子 Node 都无法得到触摸事件。
 -   **isTouchCaptureEnabled()** 检查 Node 是否允许捕获触摸。
 
-~
+
 
 总结而言，`setTouchEnabled()` 只针对当前 Node，而 `setTouchCaptureEnabled()` 同时影响当前 Node 及其所有子 Node。
 
-~
+
 
 ## 触摸事件的三个阶段
 
@@ -184,7 +183,7 @@ quick 中触摸事件分为三个阶段：capturing（捕获）、targeting（�
 5.  在 TargetNode 完成事件的响应后，检查 `TargetNode:isTouchSwallowEnabled()` 的返回值。如果是 `true`，则取消 `bubbling` 阶段。
 6.  从 TargetNode 开始往其所有父 Node 触发事件，直到某个 Node 返回 `false` 或者事件被吞噬。这个阶段称为 `bubbling`。
 
-~
+
 
 利用事件的三个阶段，我们可以注册 `capturing` 阶段的触摸事件处理函数：
 
@@ -198,11 +197,11 @@ node:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
 end)
 ~~~
 
-~
+
 
 关于触摸机制的灵活运用，可以参考 `cc.ui` 中的各个 UI 控件，以及 `samples/touch` 示例。
 
-~
+
 
 ## API 参考
 
