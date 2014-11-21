@@ -249,6 +249,9 @@ void OpenGLESPage::StartRenderLoop()
             m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, m_dpi, dispatcher, swapChainPanel);
         }
 
+        m_renderer->Resume();
+
+
         while (action->Status == Windows::Foundation::AsyncStatus::Started)
         {
  
@@ -281,5 +284,10 @@ void OpenGLESPage::StopRenderLoop()
     {
         mRenderLoopWorker->Cancel();
         mRenderLoopWorker = nullptr;
+    }
+
+    if (m_renderer)
+    {
+        m_renderer->Pause();
     }
 }
