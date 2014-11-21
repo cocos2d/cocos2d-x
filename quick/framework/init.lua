@@ -105,7 +105,7 @@ local CURRENT_MODULE_NAME = ...
 
 cc = cc or {}
 cc.PACKAGE_NAME = string.sub(CURRENT_MODULE_NAME, 1, -6)
-cc.VERSION = "3.3 final"
+cc.VERSION = "3.3rc1"
 cc.FRAMEWORK_NAME = "quick-cocos2d-x"
 
 if cc.Node.removeTouchEvent then
