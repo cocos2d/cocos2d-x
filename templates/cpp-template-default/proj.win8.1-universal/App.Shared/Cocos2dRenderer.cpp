@@ -83,6 +83,8 @@ void Cocos2dRenderer::Pause()
 
 void Cocos2dRenderer::DeviceLost()
 {
+    Pause();
+
     auto director = cocos2d::Director::getInstance();
     if (director->getOpenGLView()) {
         cocos2d::GL::invalidateStateCache();

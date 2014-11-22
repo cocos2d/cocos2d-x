@@ -48,7 +48,8 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     mCustomRenderSurfaceSize(0,0),
     mUseCustomRenderSurfaceSize(false),
     m_coreInput(nullptr),
-    m_dpi(0.0f)
+    m_dpi(0.0f),
+    m_deviceLost(false)
 {
     InitializeComponent();
 
@@ -209,7 +210,7 @@ void OpenGLESPage::RecoverFromLostDevice()
 
     {
         critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
-
+        m_deviceLost = true;
         DestroyRenderSurface();
         mOpenGLES->Reset();
         CreateRenderSurface();
@@ -249,7 +250,15 @@ void OpenGLESPage::StartRenderLoop()
             m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, m_dpi, dispatcher, swapChainPanel);
         }
 
-        m_renderer->Resume();
+        if (m_deviceLost)
+        {
+            m_deviceLost = false;
+            m_renderer->DeviceLost();
+        }
+        else
+        {
+            m_renderer->Resume();
+        }
 
 
         while (action->Status == Windows::Foundation::AsyncStatus::Started)
