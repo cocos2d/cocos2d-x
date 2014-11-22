@@ -42,7 +42,8 @@ This file was modified to fit the cocos2d-x project
     #else
     #endif
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #if defined (__arm64__)
+    #if defined (__arm64__) || defined (__aarch64__)
+    #define USE_NEON64
     #define INCLUDE_NEON64
     #elif defined (__ARM_NEON__)
     #define INCLUDE_NEON32
