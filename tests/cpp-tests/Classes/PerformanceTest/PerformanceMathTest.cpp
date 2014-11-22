@@ -65,6 +65,9 @@ void PerformanceMathLayer::onEnter()
 {
     PerformBasicLayer::onEnter();
     
+    _loopCount = 10000;
+    _stepCount = 10000;
+    
     CC_PROFILER_PURGE_ALL();
     
     auto s = Director::getInstance()->getWinSize();
