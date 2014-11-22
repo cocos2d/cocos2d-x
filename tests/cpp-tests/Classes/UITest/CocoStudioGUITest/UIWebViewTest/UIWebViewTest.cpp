@@ -115,7 +115,7 @@ bool WebViewTest::init()
         loadFileBtn->setPosition(Vec2(winSize/2) - Vec2( _webView->getContentSize().width/2 +
                                                       loadFileBtn->getContentSize().width/2 + 10,50 ));
         loadFileBtn->addClickEventListener([=](Ref*){
-            _webView->loadFile("Test.html");
+            _webView->loadFile("www/Test.html");
         });
         this->addChild(loadFileBtn);
         
@@ -128,10 +128,47 @@ bool WebViewTest::init()
             _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World</body>","text/html");
         });
         this->addChild(loadHTMLBtn);
-        
-        
-        
-        
+
+
+        Button *loadHTMLFromFileBtn= Button::create("cocosui/animationbuttonnormal.png",
+                                                    "cocosui/animationbuttonpressed.png");
+        loadHTMLFromFileBtn->setTitleText("HTML File As String");
+        loadHTMLFromFileBtn->setPosition(Vec2(winSize/2) - Vec2( _webView->getContentSize().width/2 +
+                                                                loadHTMLFromFileBtn->getContentSize().width/2 + 10,100 ));
+        loadHTMLFromFileBtn->addClickEventListener([=](Ref*){
+            const std::string FULL_PATH = FileUtils::getInstance()->fullPathForFilename("www/Test.html");
+            const std::string HTML = FileUtils::getInstance()->getStringFromFile(FULL_PATH);
+
+            std::string baseUrl = FileUtils::getInstance()->fullPathForFilename(FULL_PATH);
+            auto replaceInPlace = [&](std::string &source,
+                                      const std::string &search,
+                                      const std::string &replacement)
+            {
+                size_t pos = 0;
+                while ((pos = source.find(search, pos)) != std::string::npos)
+                {
+                    source.replace(pos, search.length(), replacement);
+                    pos += replacement.length();
+                }
+            };
+
+            // Base URL is one level up (see Resources/www/Test.html to see how relative resources are linked)
+            replaceInPlace(baseUrl, "/Test.html", "");
+
+            // Convert spaces to URL equivalents
+            replaceInPlace(baseUrl, " ", "%20");
+
+            baseUrl += "/";
+            // Need entire base path (with specific URI) to respect relative paths in HTML on Android
+            #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                replaceInPlace(baseUrl, "assets/", "file:///android_asset/");
+            #endif
+
+            _webView->loadHTMLString(HTML, baseUrl);
+        });
+        this->addChild(loadHTMLFromFileBtn);
+
+
         Button *evalJsBtn = Button::create("cocosui/animationbuttonnormal.png",
                                          "cocosui/animationbuttonpressed.png");
         evalJsBtn->setTitleText("Evaluate JS");
