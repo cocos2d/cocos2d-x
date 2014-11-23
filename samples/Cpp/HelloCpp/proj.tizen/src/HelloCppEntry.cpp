@@ -45,7 +45,9 @@ ApplicationInitialized(void)
     AppDelegate* pAppDelegate = new AppDelegate;
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setFrameSize(1280, 720);
+    int x, y, width, height;
+    CCOspApplication::GetInstance()->getCCOspForm()->GetBounds(x, y, width, height);
+    eglView->setFrameSize(width, height);
 
     CCApplication::sharedApplication()->run();
 }

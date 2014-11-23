@@ -119,8 +119,8 @@ CATCH:
 bool
 CCOspApplication::OnAppInitialized(void)
 {
-    sm_pApplicationInitialized();
     __pFrame->SetOrientation(sm_eScreenOrientation);
+    sm_pApplicationInitialized();
     return true;
 }
 
