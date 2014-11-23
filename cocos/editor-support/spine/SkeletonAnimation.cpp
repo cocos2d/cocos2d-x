@@ -88,6 +88,19 @@ SkeletonAnimation* SkeletonAnimation::createWithFile (const std::string& skeleto
 	return node;
 }
 
+void SkeletonAnimation::initWithFiles (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	CCASSERT(_atlas, "Error reading atlas file.");
+
+	spSkeletonJson* json = spSkeletonJson_create(_atlas);
+	json->scale = scale;
+	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+	spSkeletonJson_dispose(json);
+
+	setSkeletonData(skeletonData, true);
+}
+
 void SkeletonAnimation::initialize () {
 	_ownsAnimationStateData = true;
 	_state = spAnimationState_create(spAnimationStateData_create(_skeleton->data));
@@ -96,6 +109,10 @@ void SkeletonAnimation::initialize () {
 
 	_spAnimationState* stateInternal = (_spAnimationState*)_state;
 	stateInternal->disposeTrackEntry = disposeTrackEntry;
+}
+
+SkeletonAnimation::SkeletonAnimation ()
+		: SkeletonRenderer() {
 }
 
 SkeletonAnimation::SkeletonAnimation (spSkeletonData *skeletonData)
