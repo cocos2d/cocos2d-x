@@ -158,12 +158,10 @@ void PhysicsContactPreSolve::ignore()
 PhysicsContactPostSolve::PhysicsContactPostSolve(void* contactInfo)
 : _contactInfo(contactInfo)
 {
-    
 }
 
 PhysicsContactPostSolve::~PhysicsContactPostSolve()
 {
-    
 }
 
 float PhysicsContactPostSolve::getRestitution() const
@@ -266,7 +264,6 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
 
 EventListenerPhysicsContact::~EventListenerPhysicsContact()
 {
-    
 }
 
 EventListenerPhysicsContact* EventListenerPhysicsContact::create()
@@ -340,12 +337,10 @@ EventListenerPhysicsContactWithBodies::EventListenerPhysicsContactWithBodies()
 : _a(nullptr)
 , _b(nullptr)
 {
-    
 }
 
 EventListenerPhysicsContactWithBodies::~EventListenerPhysicsContactWithBodies()
 {
-    
 }
 
 

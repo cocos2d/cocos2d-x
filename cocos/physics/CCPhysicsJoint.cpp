@@ -84,16 +84,17 @@ void PhysicsJoint::setEnable(bool enable)
     {
         _enable = enable;
         
-        if (_world != nullptr)
+        if (_world == nullptr)
         {
-            if (enable)
-            {
-                _world->addJointOrDelay(this);
-            }else
-            {
-                _world->removeJointOrDelay(this);
-            }
+            return;
         }
+        
+        if (enable)
+        {
+            _world->addJointOrDelay(this);
+        }
+        
+        _world->removeJointOrDelay(this);
     }
 }
 
@@ -132,20 +133,18 @@ void PhysicsJoint::destroy(PhysicsJoint* joint)
         {
             joint->_world->removeJoint(joint, true);
         }
-        else
+
+        if (joint->_bodyA != nullptr)
         {
-            if (joint->_bodyA != nullptr)
-            {
-                joint->_bodyA->removeJoint(joint);
-            }
-            
-            if (joint->_bodyB != nullptr)
-            {
-                joint->_bodyB->removeJoint(joint);
-            }
-            
-            delete joint;
+            joint->_bodyA->removeJoint(joint);
         }
+        
+        if (joint->_bodyB != nullptr)
+        {
+            joint->_bodyB->removeJoint(joint);
+        }
+        
+        delete joint;
     }
 }
 

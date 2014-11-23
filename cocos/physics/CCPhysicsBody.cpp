@@ -77,9 +77,9 @@ PhysicsBody::PhysicsBody()
 
 PhysicsBody::~PhysicsBody()
 {
-    for (auto it = _joints.begin(); it != _joints.end(); ++it)
+    for (const auto& it : _joints)
     {
-        PhysicsJoint* joint = *it;
+        PhysicsJoint* joint = it;
         
         PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyB() : joint->getBodyA();
         other->removeJoint(joint);
@@ -275,42 +275,41 @@ void PhysicsBody::removeJoint(PhysicsJoint* joint)
 
 void PhysicsBody::setDynamic(bool dynamic)
 {
-    if (dynamic != _dynamic)
+    if (dynamic == _dynamic)
     {
-        _dynamic = dynamic;
-        if (dynamic)
-        {
-            cpBodySetMass(_info->getBody(), _mass);
-            cpBodySetMoment(_info->getBody(), _moment);
-            
-            if (_world != nullptr)
-            {
-                // reset the gravity enable
-                if (isGravityEnabled())
-                {
-                    _gravityEnabled = false;
-                    setGravityEnable(true);
-                }
-                
-                cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
-            }
-        }
-        else
-        {
-            if (_world != nullptr)
-            {
-                cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
-            }
-            
-            // avoid incorrect collion simulation.
-            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
-            cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
-            cpBodySetVel(_info->getBody(), cpvzero);
-            cpBodySetAngVel(_info->getBody(), 0.0f);
-            resetForces();
-        }
-        
+        return;
     }
+    
+    _dynamic = dynamic;
+    if (dynamic)
+    {
+        cpBodySetMass(_info->getBody(), _mass);
+        cpBodySetMoment(_info->getBody(), _moment);
+        
+        if (_world != nullptr)
+        {
+            // reset the gravity enable
+            if (isGravityEnabled())
+            {
+                _gravityEnabled = false;
+                setGravityEnable(true);
+            }
+            
+            cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
+        }
+    }
+
+    if (_world != nullptr)
+    {
+        cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
+    }
+    
+    // avoid incorrect collion simulation.
+    cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
+    cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
+    cpBodySetVel(_info->getBody(), cpvzero);
+    cpBodySetAngVel(_info->getBody(), 0.0f);
+    resetForces();
 }
 
 void PhysicsBody::setRotationEnable(bool enable)
@@ -324,21 +323,24 @@ void PhysicsBody::setRotationEnable(bool enable)
 
 void PhysicsBody::setGravityEnable(bool enable)
 {
-    if (_gravityEnabled != enable)
+    if (_gravityEnabled == enable)
     {
-        _gravityEnabled = enable;
-        
-        if (_world != nullptr)
-        {
-            if (enable)
-            {
-                applyForce(_world->getGravity() * _mass);
-            }else
-            {
-                applyForce(-_world->getGravity() * _mass);
-            }
-        }
+        return;
     }
+    
+    _gravityEnabled = enable;
+    
+    if (_world == nullptr)
+    {
+        return;
+    }
+
+    if (enable)
+    {
+        applyForce(_world->getGravity() * _mass);
+    }
+    
+    applyForce(-_world->getGravity() * _mass);
 }
 
 void PhysicsBody::setPosition(const Vec2& position)
@@ -396,7 +398,10 @@ float PhysicsBody::getRotation() const
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
 {
-    if (shape == nullptr) return nullptr;
+    if (shape == nullptr)
+    {
+        return nullptr;
+    }
     
     // add shape to body
     if (_shapes.getIndex(shape) == -1)
@@ -521,7 +526,8 @@ void PhysicsBody::addMass(float mass)
         if (_mass + mass > 0)
         {
             _mass +=  mass;
-        }else
+        }
+        else
         {
             _mass = MASS_DEFAULT;
             _massDefault = true;
@@ -662,7 +668,7 @@ void PhysicsBody::setMoment(float moment)
 
 PhysicsShape* PhysicsBody::getShape(int tag) const
 {
-    for (auto& shape : _shapes)
+    for (const auto& shape : _shapes)
     {
         if (shape->getTag() == tag)
         {
@@ -758,7 +764,8 @@ void PhysicsBody::setEnable(bool enable)
             if (enable)
             {
                 _world->addBodyOrDelay(this);
-            }else
+            }
+            else
             {
                 _world->removeBodyOrDelay(this);
             }
@@ -776,7 +783,8 @@ void PhysicsBody::setResting(bool rest) const
     if (rest && !isResting())
     {
         cpBodySleep(_info->getBody());
-    }else if(!rest && isResting())
+    }
+    else if(!rest && isResting())
     {
         cpBodyActivate(_info->getBody());
     }
@@ -872,10 +880,8 @@ int PhysicsBody::getCollisionBitmask() const
     {
         return _shapes.front()->getCollisionBitmask();
     }
-    else
-    {
-        return UINT_MAX;
-    }
+
+    return UINT_MAX;
 }
 
 void PhysicsBody::setGroup(int group)
