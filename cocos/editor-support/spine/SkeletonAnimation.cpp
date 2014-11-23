@@ -99,6 +99,8 @@ void SkeletonAnimation::initWithFiles (const std::string& skeletonDataFile, cons
 	spSkeletonJson_dispose(json);
 
 	setSkeletonData(skeletonData, true);
+
+	initialize();
 }
 
 void SkeletonAnimation::initialize () {
