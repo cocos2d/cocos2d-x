@@ -24,7 +24,7 @@ function game.createMenu(items, callback)
             :addTo(menu)
     end
 
-    menu:setPosition(display.cx, display.cy)
+    menu:setPosition(display.cx, display.bottom + 100)
     return menu
 end
 

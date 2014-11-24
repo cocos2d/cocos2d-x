@@ -35,38 +35,16 @@ function AppBase:exit()
 end
 
 function AppBase:enterScene(sceneName, args, transitionType, time, more)
-    local scenePackageName = self. packageRoot .. ".scenes." .. sceneName
+    local scenePackageName = self.packageRoot .. ".scenes." .. sceneName
     local sceneClass = require(scenePackageName)
     local scene = sceneClass.new(unpack(checktable(args)))
     display.replaceScene(scene, transitionType, time, more)
 end
 
 function AppBase:createView(viewName, ...)
-    local viewPackageName = self. packageRoot .. ".views." .. viewName
+    local viewPackageName = self.packageRoot .. ".views." .. viewName
     local viewClass = require(viewPackageName)
     return viewClass.new(...)
-end
-
-function AppBase:makeLuaVMSnapshot()
-    self.snapshots_[#self.snapshots_ + 1] = LuaStackSnapshot()
-    while #self.snapshots_ > 2 do
-        table.remove(self.snapshots_, 1)
-    end
-
-    return self
-end
-
-function AppBase:checkLuaVMLeaks()
-    assert(#self.snapshots_ >= 2, "AppBase:checkLuaVMLeaks() - need least 2 snapshots")
-    local s1 = self.snapshots_[1]
-    local s2 = self.snapshots_[2]
-    for k, v in pairs(s2) do
-        if s1[k] == nil then
-            print(k, v)
-        end
-    end
-
-    return self
 end
 
 function AppBase:onEnterBackground()

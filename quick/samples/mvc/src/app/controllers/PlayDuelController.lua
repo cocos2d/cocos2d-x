@@ -1,6 +1,5 @@
 
 local Hero = import("..models.Hero")
-local HeroView = import("..views.HeroView")
 
 local PlayDuelController = class("PlayDuelController", function()
     return display.newNode()
@@ -28,11 +27,11 @@ function PlayDuelController:ctor()
     self.views_ = {}
     self.bullets_ = {}
 
-    self.views_[self.player] = HeroView.new(self.player)
+    self.views_[self.player] = app:createView("HeroView", self.player)
         :pos(display.cx - 300, display.cy)
         :addTo(self)
 
-    self.views_[self.enemy] = HeroView.new(self.enemy)
+    self.views_[self.enemy] = app:createView("HeroView", self.enemy)
         :pos(display.cx + 300, display.cy)
         :flipX(true)
         :addTo(self)
@@ -104,6 +103,22 @@ function PlayDuelController:fire(attacker, target)
     bullet.attacker = attacker
     bullet.target = target
     self.bullets_[#self.bullets_ + 1] = bullet
+
+    self:InterfaceTest()
+end
+
+-- 只是单纯为了检查接口用,与样例功能无关
+function PlayDuelController:InterfaceTest()
+    local proper = self.player:getProperties({"hp", "level"})
+    dump(proper, "proper:")
+    local id = self.player:getId()
+    print("id:" .. id)
+    local bValid = self.player:isValidId()
+    print("valid id:" .. tostring(bValid))
+
+    app:makeLuaVMSnapshot()
+    app:makeLuaVMSnapshot()
+    app:checkLuaVMLeaks()
 end
 
 function PlayDuelController:hit(attacker, target, bullet)
