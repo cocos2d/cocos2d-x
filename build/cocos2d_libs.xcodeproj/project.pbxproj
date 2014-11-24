@@ -1279,68 +1279,6 @@
 		38B8E2E219E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38B8E2DF19E671D2002D7CE7 /* UILayoutComponent.cpp */; };
 		38B8E2E319E671D2002D7CE7 /* UILayoutComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 38B8E2E019E671D2002D7CE7 /* UILayoutComponent.h */; };
 		38B8E2E419E671D2002D7CE7 /* UILayoutComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 38B8E2E019E671D2002D7CE7 /* UILayoutComponent.h */; };
-		38F62B901A1EF0C600D56E50 /* flatbuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62B861A1EF0C600D56E50 /* flatbuffers.h */; };
-		38F62B911A1EF0C600D56E50 /* flatbuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62B861A1EF0C600D56E50 /* flatbuffers.h */; };
-		38F62B921A1EF0C600D56E50 /* flatc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B871A1EF0C600D56E50 /* flatc.cpp */; };
-		38F62B931A1EF0C600D56E50 /* flatc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B871A1EF0C600D56E50 /* flatc.cpp */; };
-		38F62B941A1EF0C600D56E50 /* idl.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62B881A1EF0C600D56E50 /* idl.h */; };
-		38F62B951A1EF0C600D56E50 /* idl.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62B881A1EF0C600D56E50 /* idl.h */; };
-		38F62B961A1EF0C600D56E50 /* idl_gen_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B891A1EF0C600D56E50 /* idl_gen_cpp.cpp */; };
-		38F62B971A1EF0C600D56E50 /* idl_gen_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B891A1EF0C600D56E50 /* idl_gen_cpp.cpp */; };
-		38F62B981A1EF0C600D56E50 /* idl_gen_fbs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8A1A1EF0C600D56E50 /* idl_gen_fbs.cpp */; };
-		38F62B991A1EF0C600D56E50 /* idl_gen_fbs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8A1A1EF0C600D56E50 /* idl_gen_fbs.cpp */; };
-		38F62B9A1A1EF0C600D56E50 /* idl_gen_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8B1A1EF0C600D56E50 /* idl_gen_general.cpp */; };
-		38F62B9B1A1EF0C600D56E50 /* idl_gen_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8B1A1EF0C600D56E50 /* idl_gen_general.cpp */; };
-		38F62B9C1A1EF0C600D56E50 /* idl_gen_go.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8C1A1EF0C600D56E50 /* idl_gen_go.cpp */; };
-		38F62B9D1A1EF0C600D56E50 /* idl_gen_go.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8C1A1EF0C600D56E50 /* idl_gen_go.cpp */; };
-		38F62B9E1A1EF0C600D56E50 /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8D1A1EF0C600D56E50 /* idl_gen_text.cpp */; };
-		38F62B9F1A1EF0C600D56E50 /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8D1A1EF0C600D56E50 /* idl_gen_text.cpp */; };
-		38F62BA01A1EF0C600D56E50 /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8E1A1EF0C600D56E50 /* idl_parser.cpp */; };
-		38F62BA11A1EF0C600D56E50 /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62B8E1A1EF0C600D56E50 /* idl_parser.cpp */; };
-		38F62BA21A1EF0C600D56E50 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62B8F1A1EF0C600D56E50 /* util.h */; };
-		38F62BA31A1EF0C600D56E50 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62B8F1A1EF0C600D56E50 /* util.h */; };
-		38F62BBA1A1EF13A00D56E50 /* ComAudioReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BA51A1EF13A00D56E50 /* ComAudioReader.cpp */; };
-		38F62BBB1A1EF13A00D56E50 /* ComAudioReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BA51A1EF13A00D56E50 /* ComAudioReader.cpp */; };
-		38F62BBC1A1EF13A00D56E50 /* ComAudioReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BA61A1EF13A00D56E50 /* ComAudioReader.h */; };
-		38F62BBD1A1EF13A00D56E50 /* ComAudioReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BA61A1EF13A00D56E50 /* ComAudioReader.h */; };
-		38F62BBE1A1EF13A00D56E50 /* GameMapReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BA81A1EF13A00D56E50 /* GameMapReader.cpp */; };
-		38F62BBF1A1EF13A00D56E50 /* GameMapReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BA81A1EF13A00D56E50 /* GameMapReader.cpp */; };
-		38F62BC01A1EF13A00D56E50 /* GameMapReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BA91A1EF13A00D56E50 /* GameMapReader.h */; };
-		38F62BC11A1EF13A00D56E50 /* GameMapReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BA91A1EF13A00D56E50 /* GameMapReader.h */; };
-		38F62BC21A1EF13A00D56E50 /* NodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BAB1A1EF13A00D56E50 /* NodeReader.cpp */; };
-		38F62BC31A1EF13A00D56E50 /* NodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BAB1A1EF13A00D56E50 /* NodeReader.cpp */; };
-		38F62BC41A1EF13A00D56E50 /* NodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BAC1A1EF13A00D56E50 /* NodeReader.h */; };
-		38F62BC51A1EF13A00D56E50 /* NodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BAC1A1EF13A00D56E50 /* NodeReader.h */; };
-		38F62BC61A1EF13A00D56E50 /* NodeReaderDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BAD1A1EF13A00D56E50 /* NodeReaderDefine.cpp */; };
-		38F62BC71A1EF13A00D56E50 /* NodeReaderDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BAD1A1EF13A00D56E50 /* NodeReaderDefine.cpp */; };
-		38F62BC81A1EF13A00D56E50 /* NodeReaderDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BAE1A1EF13A00D56E50 /* NodeReaderDefine.h */; };
-		38F62BC91A1EF13A00D56E50 /* NodeReaderDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BAE1A1EF13A00D56E50 /* NodeReaderDefine.h */; };
-		38F62BCA1A1EF13A00D56E50 /* NodeReaderProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BAF1A1EF13A00D56E50 /* NodeReaderProtocol.cpp */; };
-		38F62BCB1A1EF13A00D56E50 /* NodeReaderProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BAF1A1EF13A00D56E50 /* NodeReaderProtocol.cpp */; };
-		38F62BCC1A1EF13A00D56E50 /* NodeReaderProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB01A1EF13A00D56E50 /* NodeReaderProtocol.h */; };
-		38F62BCD1A1EF13A00D56E50 /* NodeReaderProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB01A1EF13A00D56E50 /* NodeReaderProtocol.h */; };
-		38F62BCE1A1EF13A00D56E50 /* ProjectNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BB21A1EF13A00D56E50 /* ProjectNodeReader.cpp */; };
-		38F62BCF1A1EF13A00D56E50 /* ProjectNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BB21A1EF13A00D56E50 /* ProjectNodeReader.cpp */; };
-		38F62BD01A1EF13A00D56E50 /* ProjectNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB31A1EF13A00D56E50 /* ProjectNodeReader.h */; };
-		38F62BD11A1EF13A00D56E50 /* ProjectNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB31A1EF13A00D56E50 /* ProjectNodeReader.h */; };
-		38F62BD21A1EF13A00D56E50 /* SingleNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BB51A1EF13A00D56E50 /* SingleNodeReader.cpp */; };
-		38F62BD31A1EF13A00D56E50 /* SingleNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BB51A1EF13A00D56E50 /* SingleNodeReader.cpp */; };
-		38F62BD41A1EF13A00D56E50 /* SingleNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB61A1EF13A00D56E50 /* SingleNodeReader.h */; };
-		38F62BD51A1EF13A00D56E50 /* SingleNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB61A1EF13A00D56E50 /* SingleNodeReader.h */; };
-		38F62BD61A1EF13A00D56E50 /* SpriteReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BB81A1EF13A00D56E50 /* SpriteReader.cpp */; };
-		38F62BD71A1EF13A00D56E50 /* SpriteReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BB81A1EF13A00D56E50 /* SpriteReader.cpp */; };
-		38F62BD81A1EF13A00D56E50 /* SpriteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB91A1EF13A00D56E50 /* SpriteReader.h */; };
-		38F62BD91A1EF13A00D56E50 /* SpriteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BB91A1EF13A00D56E50 /* SpriteReader.h */; };
-		38F62BDD1A1EF17F00D56E50 /* ParticleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BDB1A1EF17F00D56E50 /* ParticleReader.cpp */; };
-		38F62BDE1A1EF17F00D56E50 /* ParticleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BDB1A1EF17F00D56E50 /* ParticleReader.cpp */; };
-		38F62BDF1A1EF17F00D56E50 /* ParticleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BDC1A1EF17F00D56E50 /* ParticleReader.h */; };
-		38F62BE01A1EF17F00D56E50 /* ParticleReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BDC1A1EF17F00D56E50 /* ParticleReader.h */; };
-		38F62BE21A1EF1D800D56E50 /* CSParseBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BE11A1EF1D800D56E50 /* CSParseBinary_generated.h */; };
-		38F62BE31A1EF1D800D56E50 /* CSParseBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BE11A1EF1D800D56E50 /* CSParseBinary_generated.h */; };
-		38F62BE61A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BE41A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp */; };
-		38F62BE71A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38F62BE41A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp */; };
-		38F62BE81A1EF1FB00D56E50 /* FlatBuffersSerialize.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BE51A1EF1FB00D56E50 /* FlatBuffersSerialize.h */; };
-		38F62BE91A1EF1FB00D56E50 /* FlatBuffersSerialize.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F62BE51A1EF1FB00D56E50 /* FlatBuffersSerialize.h */; };
 		3E2BDADE19C030ED0055CDCD /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDADD19C030ED0055CDCD /* AudioEngine.h */; };
 		3E2BDAEC19C0436F0055CDCD /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAEB19C0436F0055CDCD /* AudioEngine.cpp */; };
 		3E2F27A619CFBFE100E7C490 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAEB19C0436F0055CDCD /* AudioEngine.cpp */; };
@@ -2512,37 +2450,6 @@
 		38B8E2D419E66581002D7CE7 /* CSLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLoader.h; sourceTree = "<group>"; };
 		38B8E2DF19E671D2002D7CE7 /* UILayoutComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutComponent.cpp; sourceTree = "<group>"; };
 		38B8E2E019E671D2002D7CE7 /* UILayoutComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutComponent.h; sourceTree = "<group>"; };
-		38F62B861A1EF0C600D56E50 /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
-		38F62B871A1EF0C600D56E50 /* flatc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flatc.cpp; sourceTree = "<group>"; };
-		38F62B881A1EF0C600D56E50 /* idl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl.h; sourceTree = "<group>"; };
-		38F62B891A1EF0C600D56E50 /* idl_gen_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_cpp.cpp; sourceTree = "<group>"; };
-		38F62B8A1A1EF0C600D56E50 /* idl_gen_fbs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_fbs.cpp; sourceTree = "<group>"; };
-		38F62B8B1A1EF0C600D56E50 /* idl_gen_general.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_general.cpp; sourceTree = "<group>"; };
-		38F62B8C1A1EF0C600D56E50 /* idl_gen_go.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_go.cpp; sourceTree = "<group>"; };
-		38F62B8D1A1EF0C600D56E50 /* idl_gen_text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_text.cpp; sourceTree = "<group>"; };
-		38F62B8E1A1EF0C600D56E50 /* idl_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_parser.cpp; sourceTree = "<group>"; };
-		38F62B8F1A1EF0C600D56E50 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
-		38F62BA51A1EF13A00D56E50 /* ComAudioReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComAudioReader.cpp; sourceTree = "<group>"; };
-		38F62BA61A1EF13A00D56E50 /* ComAudioReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComAudioReader.h; sourceTree = "<group>"; };
-		38F62BA81A1EF13A00D56E50 /* GameMapReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMapReader.cpp; sourceTree = "<group>"; };
-		38F62BA91A1EF13A00D56E50 /* GameMapReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMapReader.h; sourceTree = "<group>"; };
-		38F62BAB1A1EF13A00D56E50 /* NodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeReader.cpp; sourceTree = "<group>"; };
-		38F62BAC1A1EF13A00D56E50 /* NodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeReader.h; sourceTree = "<group>"; };
-		38F62BAD1A1EF13A00D56E50 /* NodeReaderDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeReaderDefine.cpp; sourceTree = "<group>"; };
-		38F62BAE1A1EF13A00D56E50 /* NodeReaderDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeReaderDefine.h; sourceTree = "<group>"; };
-		38F62BAF1A1EF13A00D56E50 /* NodeReaderProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeReaderProtocol.cpp; sourceTree = "<group>"; };
-		38F62BB01A1EF13A00D56E50 /* NodeReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeReaderProtocol.h; sourceTree = "<group>"; };
-		38F62BB21A1EF13A00D56E50 /* ProjectNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProjectNodeReader.cpp; sourceTree = "<group>"; };
-		38F62BB31A1EF13A00D56E50 /* ProjectNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectNodeReader.h; sourceTree = "<group>"; };
-		38F62BB51A1EF13A00D56E50 /* SingleNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleNodeReader.cpp; sourceTree = "<group>"; };
-		38F62BB61A1EF13A00D56E50 /* SingleNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleNodeReader.h; sourceTree = "<group>"; };
-		38F62BB81A1EF13A00D56E50 /* SpriteReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteReader.cpp; sourceTree = "<group>"; };
-		38F62BB91A1EF13A00D56E50 /* SpriteReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteReader.h; sourceTree = "<group>"; };
-		38F62BDB1A1EF17F00D56E50 /* ParticleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleReader.cpp; sourceTree = "<group>"; };
-		38F62BDC1A1EF17F00D56E50 /* ParticleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleReader.h; sourceTree = "<group>"; };
-		38F62BE11A1EF1D800D56E50 /* CSParseBinary_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSParseBinary_generated.h; sourceTree = "<group>"; };
-		38F62BE41A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlatBuffersSerialize.cpp; sourceTree = "<group>"; };
-		38F62BE51A1EF1FB00D56E50 /* FlatBuffersSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatBuffersSerialize.h; sourceTree = "<group>"; };
 		3E2BDADD19C030ED0055CDCD /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		3E2BDAEB19C0436F0055CDCD /* AudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
 		3E6176551960F89B00DE83F5 /* CCController-iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "CCController-iOS.mm"; path = "../base/CCController-iOS.mm"; sourceTree = "<group>"; };
@@ -3607,7 +3514,6 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
-				38F62B851A1EF0C600D56E50 /* flatbuffers */,
 				3828BFD819EB8AAD002AB57B /* protobuf-lite */,
 				1AC026971914068200FA920D /* ConvertUTF */,
 				46C02E0418E91123004B7456 /* xxhash */,
@@ -3847,9 +3753,6 @@
 		1A8C5946180E930E00EF57C3 /* cocostudio */ = {
 			isa = PBXGroup;
 			children = (
-				38F62BE11A1EF1D800D56E50 /* CSParseBinary_generated.h */,
-				38F62BE41A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp */,
-				38F62BE51A1EF1FB00D56E50 /* FlatBuffersSerialize.h */,
 				38B8E2CD19E65F4C002D7CE7 /* CSParseBinary.pb.cc */,
 				38B8E2CE19E65F4C002D7CE7 /* CSParseBinary.pb.h */,
 				29E99D1C1957BA7000046604 /* CocoLoader.cpp */,
@@ -4431,87 +4334,6 @@
 			);
 			name = stubs;
 			path = src/google/protobuf/stubs;
-			sourceTree = "<group>";
-		};
-		38F62B851A1EF0C600D56E50 /* flatbuffers */ = {
-			isa = PBXGroup;
-			children = (
-				38F62B861A1EF0C600D56E50 /* flatbuffers.h */,
-				38F62B871A1EF0C600D56E50 /* flatc.cpp */,
-				38F62B881A1EF0C600D56E50 /* idl.h */,
-				38F62B891A1EF0C600D56E50 /* idl_gen_cpp.cpp */,
-				38F62B8A1A1EF0C600D56E50 /* idl_gen_fbs.cpp */,
-				38F62B8B1A1EF0C600D56E50 /* idl_gen_general.cpp */,
-				38F62B8C1A1EF0C600D56E50 /* idl_gen_go.cpp */,
-				38F62B8D1A1EF0C600D56E50 /* idl_gen_text.cpp */,
-				38F62B8E1A1EF0C600D56E50 /* idl_parser.cpp */,
-				38F62B8F1A1EF0C600D56E50 /* util.h */,
-			);
-			name = flatbuffers;
-			path = ../external/flatbuffers;
-			sourceTree = "<group>";
-		};
-		38F62BA41A1EF13A00D56E50 /* ComAudioReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BA51A1EF13A00D56E50 /* ComAudioReader.cpp */,
-				38F62BA61A1EF13A00D56E50 /* ComAudioReader.h */,
-			);
-			path = ComAudioReader;
-			sourceTree = "<group>";
-		};
-		38F62BA71A1EF13A00D56E50 /* GameMapReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BA81A1EF13A00D56E50 /* GameMapReader.cpp */,
-				38F62BA91A1EF13A00D56E50 /* GameMapReader.h */,
-			);
-			path = GameMapReader;
-			sourceTree = "<group>";
-		};
-		38F62BAA1A1EF13A00D56E50 /* NodeReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BAB1A1EF13A00D56E50 /* NodeReader.cpp */,
-				38F62BAC1A1EF13A00D56E50 /* NodeReader.h */,
-			);
-			path = NodeReader;
-			sourceTree = "<group>";
-		};
-		38F62BB11A1EF13A00D56E50 /* ProjectNodeReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BB21A1EF13A00D56E50 /* ProjectNodeReader.cpp */,
-				38F62BB31A1EF13A00D56E50 /* ProjectNodeReader.h */,
-			);
-			path = ProjectNodeReader;
-			sourceTree = "<group>";
-		};
-		38F62BB41A1EF13A00D56E50 /* SingleNodeReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BB51A1EF13A00D56E50 /* SingleNodeReader.cpp */,
-				38F62BB61A1EF13A00D56E50 /* SingleNodeReader.h */,
-			);
-			path = SingleNodeReader;
-			sourceTree = "<group>";
-		};
-		38F62BB71A1EF13A00D56E50 /* SpriteReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BB81A1EF13A00D56E50 /* SpriteReader.cpp */,
-				38F62BB91A1EF13A00D56E50 /* SpriteReader.h */,
-			);
-			path = SpriteReader;
-			sourceTree = "<group>";
-		};
-		38F62BDA1A1EF17F00D56E50 /* ParticleReader */ = {
-			isa = PBXGroup;
-			children = (
-				38F62BDB1A1EF17F00D56E50 /* ParticleReader.cpp */,
-				38F62BDC1A1EF17F00D56E50 /* ParticleReader.h */,
-			);
-			path = ParticleReader;
 			sourceTree = "<group>";
 		};
 		46A15FD01807A56F005B8026 /* audio */ = {
@@ -5113,13 +4935,6 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
-				38F62BAA1A1EF13A00D56E50 /* NodeReader */,
-				38F62BB41A1EF13A00D56E50 /* SingleNodeReader */,
-				38F62BB71A1EF13A00D56E50 /* SpriteReader */,
-				38F62BDA1A1EF17F00D56E50 /* ParticleReader */,
-				38F62BA71A1EF13A00D56E50 /* GameMapReader */,
-				38F62BA41A1EF13A00D56E50 /* ComAudioReader */,
-				38F62BB11A1EF13A00D56E50 /* ProjectNodeReader */,
 				50FCEB6918C72017004AD434 /* ButtonReader */,
 				50FCEB6C18C72017004AD434 /* CheckBoxReader */,
 				50FCEB6F18C72017004AD434 /* ImageViewReader */,
@@ -5136,10 +4951,6 @@
 				50FCEB9018C72017004AD434 /* WidgetReader.cpp */,
 				50FCEB9118C72017004AD434 /* WidgetReader.h */,
 				50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */,
-				38F62BAD1A1EF13A00D56E50 /* NodeReaderDefine.cpp */,
-				38F62BAE1A1EF13A00D56E50 /* NodeReaderDefine.h */,
-				38F62BAF1A1EF13A00D56E50 /* NodeReaderProtocol.cpp */,
-				38F62BB01A1EF13A00D56E50 /* NodeReaderProtocol.h */,
 			);
 			path = WidgetReader;
 			sourceTree = "<group>";
@@ -5316,7 +5127,6 @@
 				50ABBE851925AB6F00A911A9 /* ccFPSImages.h in Headers */,
 				15AE1A5319AAD40300C27E9E /* b2Draw.h in Headers */,
 				38B8E2E319E671D2002D7CE7 /* UILayoutComponent.h in Headers */,
-				38F62BD81A1EF13A00D56E50 /* SpriteReader.h in Headers */,
 				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */,
@@ -5436,14 +5246,12 @@
 				3828C0C319EB8ACA002AB57B /* atomicops_internals_mips_gcc.h in Headers */,
 				15AE189A19AAD33D00C27E9E /* CCMenuLoader.h in Headers */,
 				46C02E0918E91123004B7456 /* xxhash.h in Headers */,
-				38F62BBC1A1EF13A00D56E50 /* ComAudioReader.h in Headers */,
 				15AE1A6B19AAD40300C27E9E /* b2ChainAndCircleContact.h in Headers */,
 				1A570110180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
 				50CB247D19D9C5A100687767 /* AudioPlayer.h in Headers */,
 				B37510791823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1A570114180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				15AE1A6019AAD40300C27E9E /* b2ContactManager.h in Headers */,
-				38F62BD41A1EF13A00D56E50 /* SingleNodeReader.h in Headers */,
 				15B3707A19EE414C00ABE682 /* AssetsManagerEx.h in Headers */,
 				15AE188319AAD33D00C27E9E /* CCBSelectorResolver.h in Headers */,
 				B29A7E2719EE1B7700872B35 /* spine-cocos2dx.h in Headers */,
@@ -5455,12 +5263,9 @@
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
 				3828C0A319EB8ACA002AB57B /* coded_stream_inl.h in Headers */,
-				38F62B941A1EF0C600D56E50 /* idl.h in Headers */,
 				B29A7E0F19EE1B7700872B35 /* SkeletonJson.h in Headers */,
 				B29A7E2919EE1B7700872B35 /* SkeletonData.h in Headers */,
-				38F62BC01A1EF13A00D56E50 /* GameMapReader.h in Headers */,
 				1AC0269C1914068200FA920D /* ConvertUTF.h in Headers */,
-				38F62BE81A1EF1FB00D56E50 /* FlatBuffersSerialize.h in Headers */,
 				15AE1A7119AAD40300C27E9E /* b2Contact.h in Headers */,
 				50ABBED11925AB6F00A911A9 /* TGAlib.h in Headers */,
 				1A57019F180BCB590088DEC7 /* CCFont.h in Headers */,
@@ -5556,7 +5361,6 @@
 				B29A7DF919EE1B7700872B35 /* Json.h in Headers */,
 				15AE18EF19AAD35000C27E9E /* CCArmature.h in Headers */,
 				15AE19A719AAD39600C27E9E /* TextReader.h in Headers */,
-				38F62BE21A1EF1D800D56E50 /* CSParseBinary_generated.h in Headers */,
 				1A570227180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022B180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				15AE190E19AAD35000C27E9E /* CCDisplayManager.h in Headers */,
@@ -5601,13 +5405,11 @@
 				1A570288180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				15AE189519AAD33D00C27E9E /* CCLayerLoader.h in Headers */,
 				1A57028C180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
-				38F62BC41A1EF13A00D56E50 /* NodeReader.h in Headers */,
 				5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				15AE1B5A19AADA9900C27E9E /* UIText.h in Headers */,
 				15AE184A19AAD30500C27E9E /* Export.h in Headers */,
 				15AE1BA019AADFDF00C27E9E /* UILayout.h in Headers */,
 				1A570294180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
-				38F62BA21A1EF0C600D56E50 /* util.h in Headers */,
 				50ABBD421925AB0000A911A9 /* CCMathBase.h in Headers */,
 				3828C0BB19EB8ACA002AB57B /* atomicops_internals_arm_gcc.h in Headers */,
 				1A570298180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
@@ -5656,7 +5458,6 @@
 				15AE1B6019AADA9900C27E9E /* UITextField.h in Headers */,
 				15AE190619AAD35000C27E9E /* CCDataReaderHelper.h in Headers */,
 				15AE1A6419AAD40300C27E9E /* b2Island.h in Headers */,
-				38F62B901A1EF0C600D56E50 /* flatbuffers.h in Headers */,
 				15AE1B5619AADA9900C27E9E /* UIScrollView.h in Headers */,
 				50ABBDBB1925AB4100A911A9 /* CCTextureAtlas.h in Headers */,
 				1A570302180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
@@ -5670,7 +5471,6 @@
 				15AE1A6F19AAD40300C27E9E /* b2CircleContact.h in Headers */,
 				15AE191619AAD35000C27E9E /* CCSkin.h in Headers */,
 				50ABC0651926664800A911A9 /* CCGL-mac.h in Headers */,
-				38F62BDF1A1EF17F00D56E50 /* ParticleReader.h in Headers */,
 				50643BD419BFAECF00EF68ED /* CCGL.h in Headers */,
 				15AE190C19AAD35000C27E9E /* CCDisplayFactory.h in Headers */,
 				B37510751823AC9F00B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
@@ -5783,14 +5583,12 @@
 				50ABBD9D1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
 				B29A7E0319EE1B7700872B35 /* BoundingBoxAttachment.h in Headers */,
 				50ABBEB91925AB6F00A911A9 /* ccUTF8.h in Headers */,
-				38F62BC81A1EF13A00D56E50 /* NodeReaderDefine.h in Headers */,
 				15AE191A19AAD35000C27E9E /* CCSSceneReader.h in Headers */,
 				292DB13F19B4574100A80320 /* UIEditBox.h in Headers */,
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				3828C0D919EB8ACA002AB57B /* once.h in Headers */,
 				15AE18E219AAD35000C27E9E /* TriggerMng.h in Headers */,
 				50ABBE2F1925AB6F00A911A9 /* ccConfig.h in Headers */,
-				38F62BD01A1EF13A00D56E50 /* ProjectNodeReader.h in Headers */,
 				15AE188019AAD33D00C27E9E /* CCBMemberVariableAssigner.h in Headers */,
 				3828C09919EB8ACA002AB57B /* extension_set.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
@@ -5801,7 +5599,6 @@
 				B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				50ABBE2D1925AB6F00A911A9 /* ccCArray.h in Headers */,
 				50ABBD5E1925AB0000A911A9 /* Vec3.h in Headers */,
-				38F62BCC1A1EF13A00D56E50 /* NodeReaderProtocol.h in Headers */,
 				15AE188919AAD33D00C27E9E /* CCControlButtonLoader.h in Headers */,
 				15AE189119AAD33D00C27E9E /* CCLayerColorLoader.h in Headers */,
 				50ABBE211925AB6F00A911A9 /* atitc.h in Headers */,
@@ -5904,7 +5701,6 @@
 				15AE193519AAD35100C27E9E /* CCActionObject.h in Headers */,
 				15AE1AA919AAD40300C27E9E /* b2TimeStep.h in Headers */,
 				15AE197A19AAD35700C27E9E /* CCActionTimelineCache.h in Headers */,
-				38F62BC91A1EF13A00D56E50 /* NodeReaderDefine.h in Headers */,
 				15AE19B919AAD39700C27E9E /* TextFieldReader.h in Headers */,
 				15AE181319AAD2F700C27E9E /* CCAnimation3D.h in Headers */,
 				50ABBEC21925AB6F00A911A9 /* CCValue.h in Headers */,
@@ -5922,7 +5718,6 @@
 				15AE18D819AAD33D00C27E9E /* CCScrollViewLoader.h in Headers */,
 				15AE18DB19AAD33D00C27E9E /* CocosBuilder.h in Headers */,
 				15AE1ACD19AAD40300C27E9E /* b2PrismaticJoint.h in Headers */,
-				38F62BE91A1EF1FB00D56E50 /* FlatBuffersSerialize.h in Headers */,
 				50ABBEBA1925AB6F00A911A9 /* ccUTF8.h in Headers */,
 				50643BD619BFAEDA00EF68ED /* CCPlatformDefine.h in Headers */,
 				3828C0B419EB8ACA002AB57B /* message_lite.h in Headers */,
@@ -6023,7 +5818,6 @@
 				B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */,
 				B230ED7419B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
 				50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
-				38F62BE01A1EF17F00D56E50 /* ParticleReader.h in Headers */,
 				15AE1ACB19AAD40300C27E9E /* b2MouseJoint.h in Headers */,
 				50ABBD3F1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				B29A7DD019EE1B7700872B35 /* RegionAttachment.h in Headers */,
@@ -6037,7 +5831,6 @@
 				1A5701B4180BCB590088DEC7 /* CCFontFNT.h in Headers */,
 				15AE18D419AAD33D00C27E9E /* CCParticleSystemQuadLoader.h in Headers */,
 				B29A7DFA19EE1B7700872B35 /* Json.h in Headers */,
-				38F62BC11A1EF13A00D56E50 /* GameMapReader.h in Headers */,
 				1A5701B8180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
 				15AE182719AAD2F700C27E9E /* CCMesh.h in Headers */,
 				15AE199319AAD37300C27E9E /* ImageViewReader.h in Headers */,
@@ -6053,7 +5846,6 @@
 				292DB14619B4574100A80320 /* UIEditBoxImpl-android.h in Headers */,
 				15AE1B9419AADA9A00C27E9E /* GUIDefine.h in Headers */,
 				15AE183B19AAD2F700C27E9E /* CCRay.h in Headers */,
-				38F62BD51A1EF13A00D56E50 /* SingleNodeReader.h in Headers */,
 				5034CA42191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
 				1A5701C4180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
 				15AE193F19AAD35100C27E9E /* CCBatchNode.h in Headers */,
@@ -6084,7 +5876,6 @@
 				3828C0A419EB8ACA002AB57B /* coded_stream_inl.h in Headers */,
 				15AE1ADB19AAD41000C27E9E /* b2Rope.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
-				38F62BE31A1EF1D800D56E50 /* CSParseBinary_generated.h in Headers */,
 				15AE1AB119AAD40300C27E9E /* b2ChainAndPolygonContact.h in Headers */,
 				1A5701E1180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				15AE1BEE19AAE01E00C27E9E /* CCControlExtensions.h in Headers */,
@@ -6092,11 +5883,9 @@
 				1A5701E5180BCB8C0088DEC7 /* CCScene.h in Headers */,
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
 				15AE198F19AAD36E00C27E9E /* CheckBoxReader.h in Headers */,
-				38F62BA31A1EF0C600D56E50 /* util.h in Headers */,
 				3828C0E419EB8ACA002AB57B /* template_util.h in Headers */,
 				50ABBED41925AB6F00A911A9 /* uthash.h in Headers */,
 				B29A7E0A19EE1B7700872B35 /* AttachmentLoader.h in Headers */,
-				38F62BBD1A1EF13A00D56E50 /* ComAudioReader.h in Headers */,
 				1A5701ED180BCB8C0088DEC7 /* CCTransitionPageTurn.h in Headers */,
 				1A5701F1180BCB8C0088DEC7 /* CCTransitionProgress.h in Headers */,
 				3828C0E819EB8ACA002AB57B /* wire_format_lite_inl.h in Headers */,
@@ -6129,7 +5918,6 @@
 				15AE198619AAD36400C27E9E /* WidgetReader.h in Headers */,
 				1A570224180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
 				15AE1AC919AAD40300C27E9E /* b2Joint.h in Headers */,
-				38F62B911A1EF0C600D56E50 /* flatbuffers.h in Headers */,
 				15AE196819AAD35100C27E9E /* CCUtilMath.h in Headers */,
 				B29A7E2019EE1B7700872B35 /* BoneData.h in Headers */,
 				503DD8F61926B0DB00CD74DD /* CCIMEDelegate.h in Headers */,
@@ -6138,7 +5926,6 @@
 				15AE1BAC19AADFDF00C27E9E /* UILayout.h in Headers */,
 				1A570230180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				3828C09E19EB8ACA002AB57B /* generated_message_util.h in Headers */,
-				38F62B951A1EF0C600D56E50 /* idl.h in Headers */,
 				29394CF119B01DBA00D2DE1A /* UIWebView.h in Headers */,
 				15AE18B419AAD33D00C27E9E /* CCBSelectorResolver.h in Headers */,
 				B24AA988195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
@@ -6167,7 +5954,6 @@
 				1A570289180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				15AE1B7F19AADA9A00C27E9E /* UIText.h in Headers */,
 				B29A7E3419EE1B7700872B35 /* SlotData.h in Headers */,
-				38F62BD11A1EF13A00D56E50 /* ProjectNodeReader.h in Headers */,
 				50ABBE701925AB6F00A911A9 /* CCEventListenerKeyboard.h in Headers */,
 				15AE18B619AAD33D00C27E9E /* CCBSequence.h in Headers */,
 				15AE1A9819AAD40300C27E9E /* b2GrowableStack.h in Headers */,
@@ -6192,7 +5978,6 @@
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				15AE18AE19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
 				15AE197819AAD35700C27E9E /* CCActionTimeline.h in Headers */,
-				38F62BCD1A1EF13A00D56E50 /* NodeReaderProtocol.h in Headers */,
 				15AE1AA019AAD40300C27E9E /* b2Timer.h in Headers */,
 				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
@@ -6219,7 +6004,6 @@
 				15AE185D19AAD31200C27E9E /* CocosDenshion.h in Headers */,
 				15AE194319AAD35100C27E9E /* CCColliderDetector.h in Headers */,
 				15AE1BC419AADFFB00C27E9E /* ExtensionMacros.h in Headers */,
-				38F62BC51A1EF13A00D56E50 /* NodeReader.h in Headers */,
 				15AE185A19AAD31200C27E9E /* CDConfig.h in Headers */,
 				B29A7DE819EE1B7700872B35 /* spine.h in Headers */,
 				1A57034E180BD09B0088DEC7 /* tinyxml2.h in Headers */,
@@ -6317,7 +6101,6 @@
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
 				15AE194C19AAD35100C27E9E /* CCComRender.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
-				38F62BD91A1EF13A00D56E50 /* SpriteReader.h in Headers */,
 				50CB247619D9C5A100687767 /* AudioCache.h in Headers */,
 				B29A7DDA19EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
 				15AE194119AAD35100C27E9E /* CCBone.h in Headers */,
@@ -6465,7 +6248,6 @@
 			files = (
 				15AE1A9019AAD40300C27E9E /* b2WeldJoint.cpp in Sources */,
 				50ABBE2B1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
-				38F62B961A1EF0C600D56E50 /* idl_gen_cpp.cpp in Sources */,
 				B29A7E3B19EE1B7700872B35 /* Animation.c in Sources */,
 				15AE1BDE19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
 				292DB14F19B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */,
@@ -6489,7 +6271,6 @@
 				50ABC0611926664800A911A9 /* CCCommon-mac.mm in Sources */,
 				50ABBDB11925AB4100A911A9 /* ccShaders.cpp in Sources */,
 				15AE198219AAD36400C27E9E /* WidgetReader.cpp in Sources */,
-				38F62BDD1A1EF17F00D56E50 /* ParticleReader.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				15AE18E419AAD35000C27E9E /* CCActionFrame.cpp in Sources */,
 				15AE18FD19AAD35000C27E9E /* CCComAttribute.cpp in Sources */,
@@ -6534,7 +6315,6 @@
 				DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
-				38F62BCA1A1EF13A00D56E50 /* NodeReaderProtocol.cpp in Sources */,
 				299CF1FB19A434BC00C378C1 /* ccRandom.cpp in Sources */,
 				15AE18E819AAD35000C27E9E /* CCActionManagerEx.cpp in Sources */,
 				B29A7DDB19EE1B7700872B35 /* Event.c in Sources */,
@@ -6544,12 +6324,10 @@
 				15AE1A5019AAD40300C27E9E /* b2BlockAllocator.cpp in Sources */,
 				15AE1A8219AAD40300C27E9E /* b2GearJoint.cpp in Sources */,
 				1A570071180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
-				38F62BE61A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp in Sources */,
 				50CB247F19D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				B37510761823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.cpp in Sources */,
 				50ABBFFF1926664800A911A9 /* CCFileUtils-apple.mm in Sources */,
 				1A570075180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
-				38F62B9A1A1EF0C600D56E50 /* idl_gen_general.cpp in Sources */,
 				15AE1C1319AAE2C600C27E9E /* CCPhysicsSprite.cpp in Sources */,
 				B375107A1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				15AE1A5F19AAD40300C27E9E /* b2ContactManager.cpp in Sources */,
@@ -6586,7 +6364,6 @@
 				50ABBE391925AB6F00A911A9 /* CCData.cpp in Sources */,
 				1A57010E180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				50ABBED71925AB6F00A911A9 /* ZipUtils.cpp in Sources */,
-				38F62BC21A1EF13A00D56E50 /* NodeReader.cpp in Sources */,
 				3828C0CB19EB8ACA002AB57B /* atomicops_internals_x86_msvc.cc in Sources */,
 				38B8E2CF19E65F4C002D7CE7 /* CSParseBinary.pb.cc in Sources */,
 				B29A7E1319EE1B7700872B35 /* Bone.c in Sources */,
@@ -6600,8 +6377,6 @@
 				B29A7E3719EE1B7700872B35 /* AnimationStateData.c in Sources */,
 				15AE182419AAD2F700C27E9E /* CCMesh.cpp in Sources */,
 				15AE190D19AAD35000C27E9E /* CCDisplayManager.cpp in Sources */,
-				38F62B9C1A1EF0C600D56E50 /* idl_gen_go.cpp in Sources */,
-				38F62BA01A1EF0C600D56E50 /* idl_parser.cpp in Sources */,
 				3828C0B119EB8ACA002AB57B /* message_lite.cc in Sources */,
 				1A57011F180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				15AE187A19AAD33D00C27E9E /* CCBAnimationManager.cpp in Sources */,
@@ -6707,9 +6482,7 @@
 				15AE1B6A19AADA9900C27E9E /* UIDeprecated.cpp in Sources */,
 				15AE183C19AAD2F700C27E9E /* CCSkeleton3D.cpp in Sources */,
 				15AE1A2319AAD3D500C27E9E /* b2BroadPhase.cpp in Sources */,
-				38F62BD21A1EF13A00D56E50 /* SingleNodeReader.cpp in Sources */,
 				B29A7DF319EE1B7700872B35 /* AttachmentLoader.c in Sources */,
-				38F62B921A1EF0C600D56E50 /* flatc.cpp in Sources */,
 				1A57028A180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
 				15AE18E619AAD35000C27E9E /* CCActionFrameEasing.cpp in Sources */,
 				B29A7DC919EE1B7700872B35 /* SlotData.c in Sources */,
@@ -6764,7 +6537,6 @@
 				15AE1A2719AAD3D500C27E9E /* b2CollidePolygon.cpp in Sources */,
 				15AE199A19AAD39600C27E9E /* PageViewReader.cpp in Sources */,
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
-				38F62B981A1EF0C600D56E50 /* idl_gen_fbs.cpp in Sources */,
 				15AE1A5919AAD40300C27E9E /* b2StackAllocator.cpp in Sources */,
 				B29A7E3D19EE1B7700872B35 /* AnimationState.c in Sources */,
 				15AE192219AAD35000C27E9E /* DictionaryHelper.cpp in Sources */,
@@ -6792,13 +6564,11 @@
 				50ABBEB31925AB6F00A911A9 /* CCUserDefault-apple.mm in Sources */,
 				50ABBEB51925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
-				38F62B9E1A1EF0C600D56E50 /* idl_gen_text.cpp in Sources */,
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
 				15AE1B7019AADA9900C27E9E /* CocosGUI.cpp in Sources */,
 				50CB247719D9C5A100687767 /* AudioCache.mm in Sources */,
 				15AE18FA19AAD35000C27E9E /* CCColliderDetector.cpp in Sources */,
 				3828C0E919EB8ACA002AB57B /* wire_format_lite.cc in Sources */,
-				38F62BBE1A1EF13A00D56E50 /* GameMapReader.cpp in Sources */,
 				50ABBEA71925AB6F00A911A9 /* CCTouch.cpp in Sources */,
 				15AE191319AAD35000C27E9E /* CCSGUIReader.cpp in Sources */,
 				15AE186819AAD31D00C27E9E /* CDXMacOSXSupport.mm in Sources */,
@@ -6806,7 +6576,6 @@
 				15AE189019AAD33D00C27E9E /* CCLayerColorLoader.cpp in Sources */,
 				15AE18F819AAD35000C27E9E /* CCBone.cpp in Sources */,
 				15AE1A7619AAD40300C27E9E /* b2EdgeAndPolygonContact.cpp in Sources */,
-				38F62BCE1A1EF13A00D56E50 /* ProjectNodeReader.cpp in Sources */,
 				50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */,
 				50ABBDA31925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
@@ -6838,7 +6607,6 @@
 				50ED2BE419BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */,
 				50ABBE1F1925AB6F00A911A9 /* atitc.cpp in Sources */,
 				1A01C69818F57BE800EFE3A6 /* CCSet.cpp in Sources */,
-				38F62BC61A1EF13A00D56E50 /* NodeReaderDefine.cpp in Sources */,
 				B29A7DF119EE1B7700872B35 /* AtlasAttachmentLoader.c in Sources */,
 				1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */,
 				15AE1BD219AAE01E00C27E9E /* CCControlPotentiometer.cpp in Sources */,
@@ -6880,7 +6648,6 @@
 				15AE18E319AAD35000C27E9E /* TriggerObj.cpp in Sources */,
 				15AE1BA119AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				50ABC0211926664800A911A9 /* CCGLViewImpl-desktop.cpp in Sources */,
-				38F62BD61A1EF13A00D56E50 /* SpriteReader.cpp in Sources */,
 				50ABC00D1926664800A911A9 /* CCFileUtils.cpp in Sources */,
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				15AE1A6819AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
@@ -6895,7 +6662,6 @@
 				15AE1A2519AAD3D500C27E9E /* b2CollideCircle.cpp in Sources */,
 				50ABBE5D1925AB6F00A911A9 /* CCEventListener.cpp in Sources */,
 				B29A7E2D19EE1B7700872B35 /* Slot.c in Sources */,
-				38F62BBA1A1EF13A00D56E50 /* ComAudioReader.cpp in Sources */,
 				15AE182819AAD2F700C27E9E /* CCMeshSkin.cpp in Sources */,
 				15AE19A619AAD39600C27E9E /* TextReader.cpp in Sources */,
 				15AE198819AAD36A00C27E9E /* ButtonReader.cpp in Sources */,
@@ -6944,7 +6710,6 @@
 				292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				15AE1BFB19AAE01E00C27E9E /* CCControlUtils.cpp in Sources */,
 				B230ED7219B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */,
-				38F62B9B1A1EF0C600D56E50 /* idl_gen_general.cpp in Sources */,
 				15AE1B9019AADA9A00C27E9E /* UIWidget.cpp in Sources */,
 				ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				1A01C68F18F57BE800EFE3A6 /* CCDictionary.cpp in Sources */,
@@ -6976,7 +6741,6 @@
 				3828C0A619EB8ACA002AB57B /* zero_copy_stream.cc in Sources */,
 				15AE185E19AAD31200C27E9E /* CocosDenshion.m in Sources */,
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
-				38F62BCF1A1EF13A00D56E50 /* ProjectNodeReader.cpp in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				B276EF661988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */,
@@ -6999,7 +6763,6 @@
 				B29A7E1619EE1B7700872B35 /* BoundingBoxAttachment.c in Sources */,
 				DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,
 				15AE1BF119AAE01E00C27E9E /* CCControlPotentiometer.cpp in Sources */,
-				38F62BA11A1EF0C600D56E50 /* idl_parser.cpp in Sources */,
 				15AE1B8419AADA9A00C27E9E /* UITextField.cpp in Sources */,
 				15AE198E19AAD36E00C27E9E /* CheckBoxReader.cpp in Sources */,
 				50ABBE621925AB6F00A911A9 /* CCEventListenerAcceleration.cpp in Sources */,
@@ -7046,7 +6809,6 @@
 				15AE1B7A19AADA9A00C27E9E /* UIScrollView.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				15AE19B219AAD39700C27E9E /* SliderReader.cpp in Sources */,
-				38F62B971A1EF0C600D56E50 /* idl_gen_cpp.cpp in Sources */,
 				15AE1B7E19AADA9A00C27E9E /* UIText.cpp in Sources */,
 				15AE1A3E19AAD3D500C27E9E /* b2CollidePolygon.cpp in Sources */,
 				15AE1AB219AAD40300C27E9E /* b2CircleContact.cpp in Sources */,
@@ -7060,7 +6822,6 @@
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1AC419AAD40300C27E9E /* b2FrictionJoint.cpp in Sources */,
 				15AE1BEC19AAE01E00C27E9E /* CCControlColourPicker.cpp in Sources */,
-				38F62B9F1A1EF0C600D56E50 /* idl_gen_text.cpp in Sources */,
 				50ABBEC01925AB6F00A911A9 /* CCValue.cpp in Sources */,
 				50ABBD591925AB0000A911A9 /* Vec2.cpp in Sources */,
 				15AE1AD019AAD40300C27E9E /* b2RevoluteJoint.cpp in Sources */,
@@ -7080,7 +6841,6 @@
 				50ABBED81925AB6F00A911A9 /* ZipUtils.cpp in Sources */,
 				15AE1B9219AADA9A00C27E9E /* UIHelper.cpp in Sources */,
 				15AE1AA119AAD40300C27E9E /* b2Body.cpp in Sources */,
-				38F62BCB1A1EF13A00D56E50 /* NodeReaderProtocol.cpp in Sources */,
 				15AE1ABA19AAD40300C27E9E /* b2EdgeAndPolygonContact.cpp in Sources */,
 				15AE181B19AAD2F700C27E9E /* CCBundle3D.cpp in Sources */,
 				1A57008E180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
@@ -7179,7 +6939,6 @@
 				15AE1B8619AADA9A00C27E9E /* UIButton.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
 				1A570211180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
-				38F62BD31A1EF13A00D56E50 /* SingleNodeReader.cpp in Sources */,
 				15AE193819AAD35100C27E9E /* CCArmatureAnimation.cpp in Sources */,
 				503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */,
 				15AE197719AAD35700C27E9E /* CCActionTimeline.cpp in Sources */,
@@ -7205,10 +6964,8 @@
 				15AE18CE19AAD33D00C27E9E /* CCNodeLoader.cpp in Sources */,
 				29394CF719B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				B29A7DF219EE1B7700872B35 /* AtlasAttachmentLoader.c in Sources */,
-				38F62BDE1A1EF17F00D56E50 /* ParticleReader.cpp in Sources */,
 				15AE1AC619AAD40300C27E9E /* b2GearJoint.cpp in Sources */,
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
-				38F62BBF1A1EF13A00D56E50 /* GameMapReader.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				15AE197F19AAD35700C27E9E /* CCTimeLine.cpp in Sources */,
@@ -7255,9 +7012,7 @@
 				B29A7DFC19EE1B7700872B35 /* spine-cocos2dx.cpp in Sources */,
 				15AE1BA919AADFDF00C27E9E /* UIVBox.cpp in Sources */,
 				50ABBDAE1925AB4100A911A9 /* CCRenderer.cpp in Sources */,
-				38F62B9D1A1EF0C600D56E50 /* idl_gen_go.cpp in Sources */,
 				50ABBDBA1925AB4100A911A9 /* CCTextureAtlas.cpp in Sources */,
-				38F62BD71A1EF13A00D56E50 /* SpriteReader.cpp in Sources */,
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				1A570301180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				15AE1A4519AAD3D500C27E9E /* b2TimeOfImpact.cpp in Sources */,
@@ -7292,7 +7047,6 @@
 				15AE1A9619AAD40300C27E9E /* b2Draw.cpp in Sources */,
 				503DD8E91926736A00CD74DD /* CCES2Renderer-ios.m in Sources */,
 				5027253D190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
-				38F62BC31A1EF13A00D56E50 /* NodeReader.cpp in Sources */,
 				B29A7E0819EE1B7700872B35 /* SkinnedMeshAttachment.c in Sources */,
 				15AE183919AAD2F700C27E9E /* CCRay.cpp in Sources */,
 				15AE1B8219AADA9A00C27E9E /* UITextBMFont.cpp in Sources */,
@@ -7311,13 +7065,10 @@
 				1A01C68B18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
 				15AE195719AAD35100C27E9E /* CCInputDelegate.cpp in Sources */,
 				15AE1B8A19AADA9A00C27E9E /* UIImageView.cpp in Sources */,
-				38F62BBB1A1EF13A00D56E50 /* ComAudioReader.cpp in Sources */,
-				38F62BC71A1EF13A00D56E50 /* NodeReaderDefine.cpp in Sources */,
 				50ABBD391925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
 				15AE1C1519AAE2C700C27E9E /* CCPhysicsDebugNode.cpp in Sources */,
 				50ABBD841925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				50ABBDA81925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
-				38F62B991A1EF0C600D56E50 /* idl_gen_fbs.cpp in Sources */,
 				15AE1B7419AADA9A00C27E9E /* UILoadingBar.cpp in Sources */,
 				50ABBEA41925AB6F00A911A9 /* CCScriptSupport.cpp in Sources */,
 				B29A7DD219EE1B7700872B35 /* Skin.c in Sources */,
@@ -7326,7 +7077,6 @@
 				3828C0B219EB8ACA002AB57B /* message_lite.cc in Sources */,
 				503DD8E71926736A00CD74DD /* CCEAGLView-ios.mm in Sources */,
 				3E2BDAEC19C0436F0055CDCD /* AudioEngine.cpp in Sources */,
-				38F62B931A1EF0C600D56E50 /* flatc.cpp in Sources */,
 				15B3707919EE414C00ABE682 /* AssetsManagerEx.cpp in Sources */,
 				50ABBDA41925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				15AE18C319AAD33D00C27E9E /* CCLayerGradientLoader.cpp in Sources */,
@@ -7360,7 +7110,6 @@
 				50ABC0021926664800A911A9 /* CCLock-apple.cpp in Sources */,
 				3828C09819EB8ACA002AB57B /* extension_set.cc in Sources */,
 				50ABBEBC1925AB6F00A911A9 /* ccUtils.cpp in Sources */,
-				38F62BE71A1EF1FB00D56E50 /* FlatBuffersSerialize.cpp in Sources */,
 				15AE1A4719AAD3D500C27E9E /* b2ChainShape.cpp in Sources */,
 				50ABBE721925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
 				50ABC0001926664800A911A9 /* CCFileUtils-apple.mm in Sources */,

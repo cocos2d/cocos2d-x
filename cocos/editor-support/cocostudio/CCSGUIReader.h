@@ -131,6 +131,11 @@ public:
                                                          cocos2d::ui::Widget* widget,
                                                          const protocolbuffers::NodeTree& nodetree) = 0;
     
+    virtual cocos2d::ui::Widget* widgetFromXML(const tinyxml2::XMLElement* objectData, const std::string& classType) = 0;
+    virtual void setPropsForAllWidgetFromXML(WidgetReaderProtocol* reader,
+                                             cocos2d::ui::Widget* widget,
+                                             const tinyxml2::XMLElement* objectData) = 0;
+    
 protected:
     void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
     std::string  getWidgetReaderClassName(const std::string& classname);
@@ -195,6 +200,11 @@ public:
     virtual void setPropsForAllWidgetFromProtocolBuffers(WidgetReaderProtocol* reader,
                                                          cocos2d::ui::Widget* widget,
                                                          const protocolbuffers::NodeTree& nodetree) {};
+    
+    virtual cocos2d::ui::Widget* widgetFromXML(const tinyxml2::XMLElement* objectData, const std::string& classType) { return nullptr; };
+    virtual void setPropsForAllWidgetFromXML(WidgetReaderProtocol* reader,
+                                             cocos2d::ui::Widget* widget,
+                                             const tinyxml2::XMLElement* objectData) {};
 };
    
 class CC_STUDIO_DLL WidgetPropertiesReader0300 : public WidgetPropertiesReader
@@ -243,7 +253,12 @@ public:
     virtual cocos2d::ui::Widget* widgetFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree);
     virtual void setPropsForAllWidgetFromProtocolBuffers(WidgetReaderProtocol* reader,
                                                          cocos2d::ui::Widget* widget,
-                                                         const protocolbuffers::NodeTree& nodetree);    
+                                                         const protocolbuffers::NodeTree& nodetree);
+    
+    virtual cocos2d::ui::Widget* widgetFromXML(const tinyxml2::XMLElement* objectData, const std::string& classType);
+    virtual void setPropsForAllWidgetFromXML(WidgetReaderProtocol* reader,
+                                             cocos2d::ui::Widget* widget,
+                                             const tinyxml2::XMLElement* objectData);
 };
 
 

@@ -25,17 +25,16 @@
 #ifndef __TestCpp__CheckBoxReader__
 #define __TestCpp__CheckBoxReader__
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
+#include "../WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UICheckBox.h"
 
 namespace cocostudio
 {
     class CC_STUDIO_DLL CheckBoxReader : public WidgetReader
     {
-        DECLARE_CLASS_NODE_READER_INFO
-        
     public:
+        DECLARE_CLASS_WIDGET_READER_INFO
+        
         CheckBoxReader();
         virtual ~CheckBoxReader();
         
@@ -45,10 +44,7 @@ namespace cocostudio
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-                                                                             flatbuffers::FlatBufferBuilder* builder);
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* checkBoxOptions);
-        cocos2d::ui::CheckBox* createNodeWithFlatBuffers(const flatbuffers::Table* checkBoxOptions);
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
 		virtual int getResourceType(std::string key);
     };
 }

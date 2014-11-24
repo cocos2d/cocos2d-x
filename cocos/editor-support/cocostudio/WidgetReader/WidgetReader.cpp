@@ -1,20 +1,14 @@
 
 
 #include "WidgetReader.h"
-
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
-#include "../ActionTimeline/CCActionTimeline.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "cocostudio/CSParseBinary_generated.h"
-
-#include "tinyxml2/tinyxml2.h"
-#include "flatbuffers/flatbuffers.h"
+#include "tinyxml2.h"
+#include "../ActionTimeline/CCActionTimeline.h"
 
 USING_NS_CC;
 using namespace ui;
-using namespace flatbuffers;
-/**/
 
 
 
@@ -70,7 +64,7 @@ namespace cocostudio
     
     static WidgetReader* instanceWidgetReader = nullptr;
     
-    IMPLEMENT_CLASS_NODE_READER_INFO(WidgetReader)
+    IMPLEMENT_CLASS_WIDGET_READER_INFO(WidgetReader)
     
     WidgetReader::WidgetReader()
     :_sizePercentX(0.0f),
@@ -504,81 +498,73 @@ namespace cocostudio
         }
     }
     
-    Offset<Table> WidgetReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData, flatbuffers::FlatBufferBuilder *builder)
+    void WidgetReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
     {
-        std::string name = "";
-        long actionTag = 0;
-        Vec2 rotationSkew = Vec2::ZERO;
-        int zOrder = 0;
-        bool visible = true;
-        GLubyte alpha = 255;
-        int tag = 0;
-        Vec2 position = Vec2::ZERO;
-        Vec2 scale = Vec2(1.0f, 1.0f);
-        Vec2 anchorPoint = Vec2::ZERO;
-        Color4B color(255, 255, 255, 255);
-        Vec2 size = Vec2::ZERO;
-        bool flipX = false;
-        bool flipY = false;
-        bool ignoreSize = false;
-        bool touchEnabled = false;
-        std::string frameEvent = "";
-        std::string customProperty = "";
+        widget->setTouchEnabled(false);
+        
+        widget->setCascadeColorEnabled(true);
+        widget->setCascadeOpacityEnabled(true);
+        
+        widget->setUnifySizeEnabled(true);
+        
+        widget->setScale(0.0f, 0.0f);
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
         {
-            std::string attriname = attribute->Name();
+            std::string name = attribute->Name();
             std::string value = attribute->Value();
             
-            if (attriname == "Name")
+            if (name == "Name")
             {
-                name = value;
+                const char* widgetName = value.c_str() ? value.c_str() :"default";
+                widget->setName(widgetName);
             }
-            else if (attriname == "ActionTag")
+            else if (name == "ActionTag")
             {
-                actionTag = atol(value.c_str());
+                int actionTag = atoi(value.c_str());
+                widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
             }
-            else if (attriname == "RotationSkewX")
+            else if (name == "RotationSkewX")
             {
-                rotationSkew.x = atof(value.c_str());
+                widget->setRotationSkewX(atof(value.c_str()));
             }
-            else if (attriname == "RotationSkewY")
+            else if (name == "RotationSkewY")
             {
-                rotationSkew.y = atof(value.c_str());
+                widget->setRotationSkewY(atof(value.c_str()));
             }
-            else if (attriname == "Rotation")
+            else if (name == "ZOrder")
             {
-                //            rotation = atoi(value.c_str());
+                widget->setLocalZOrder(atoi(value.c_str()));
             }
-            else if (attriname == "ZOrder")
+            else if (name == "VisibleForFrame")
             {
-                zOrder = atoi(value.c_str());
+                widget->setVisible((value == "True") ? true : false);
             }
-            else if (attriname == "Visible")
+            else if (name == "Alpha")
             {
-                //            visible = (value == "True") ? true : false;
+                widget->setOpacity(atoi(value.c_str()));
             }
-            else if (attriname == "VisibleForFrame")
+            else if (name == "Tag")
             {
-                visible = (value == "True") ? true : false;
+                widget->setTag(atoi(value.c_str()));
             }
-            else if (attriname == "Alpha")
+            else if (name == "FlipX")
             {
-                alpha = atoi(value.c_str());
+                widget->setFlippedX((value == "True") ? true : false);
             }
-            else if (attriname == "Tag")
+            else if (name == "FlipY")
             {
-                tag = atoi(value.c_str());
+                widget->setFlippedY((value == "True") ? true : false);
             }
-            else if (attriname == "TouchEnable")
+            else if (name == "TouchEnable")
             {
-                touchEnabled = (value == "True") ? true : false;
+                widget->setTouchEnabled((value == "True") ? true : false);
             }
-            else if (attriname == "FrameEvent")
+            else if (name == "ControlSizeType")
             {
-                frameEvent = value;
+                widget->ignoreContentAdaptWithSize((value == "Auto") ? true : false);
             }
             
             attribute = attribute->Next();
@@ -587,233 +573,137 @@ namespace cocostudio
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
         {
-            std::string attriname = child->Name();
-            if (attriname == "Children")
+            std::string name = child->Name();
+            if (name == "Children")
             {
                 break;
             }
-            else if (attriname == "Position")
+            else if (name == "Position")
             {
                 attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    attriname = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
-                    if (attriname == "X")
+                    if (name == "X")
                     {
-                        position.x = atof(value.c_str());
+                        widget->setPositionX(atof(value.c_str()));
                     }
-                    else if (attriname == "Y")
+                    else if (name == "Y")
                     {
-                        position.y = atof(value.c_str());
+                        widget->setPositionY(atof(value.c_str()));
                     }
                     
                     attribute = attribute->Next();
                 }
             }
-            else if (attriname == "Scale")
+            else if (name == "Scale")
             {
                 attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
-                    attriname = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
-                    if (attriname == "ScaleX")
+                    if (name == "ScaleX")
                     {
-                        scale.x = atof(value.c_str());
+                        widget->setScaleX(atof(value.c_str()));
                     }
-                    else if (attriname == "ScaleY")
+                    else if (name == "ScaleY")
                     {
-                        scale.y = atof(value.c_str());
+                        widget->setScaleY(atof(value.c_str()));
                     }
                     
                     attribute = attribute->Next();
                 }
             }
-            else if (attriname == "AnchorPoint")
+            else if (name == "AnchorPoint")
             {
                 attribute = child->FirstAttribute();
+                float anchor_x = 0.0f, anchor_y = 0.0f;
                 
                 while (attribute)
                 {
-                    attriname = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
-                    if (attriname == "ScaleX")
+                    if (name == "ScaleX")
                     {
-                        anchorPoint.x = atof(value.c_str());
+                        anchor_x = atof(value.c_str());
                     }
-                    else if (attriname == "ScaleY")
+                    else if (name == "ScaleY")
                     {
-                        anchorPoint.y = atof(value.c_str());
+                        anchor_y = atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
                 }
+                
+                widget->setAnchorPoint(Vec2(anchor_x, anchor_y));
             }
-            else if (attriname == "CColor")
+            else if (name == "CColor")
             {
                 attribute = child->FirstAttribute();
+                int red = 255, green = 255, blue = 255;
                 
                 while (attribute)
                 {
-                    attriname = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
-                    if (attriname == "A")
+                    if (name == "A")
                     {
-                        color.a = atoi(value.c_str());
+                        widget->setOpacity(atoi(value.c_str()));
                     }
-                    else if (attriname == "R")
+                    else if (name == "R")
                     {
-                        color.r = atoi(value.c_str());
+                        red = atoi(value.c_str());
                     }
-                    else if (attriname == "G")
+                    else if (name == "G")
                     {
-                        color.g = atoi(value.c_str());
+                        green = atoi(value.c_str());
                     }
-                    else if (attriname == "B")
+                    else if (name == "B")
                     {
-                        color.b = atoi(value.c_str());
+                        blue = atoi(value.c_str());
                     }
                     
                     attribute = attribute->Next();
                 }
+                
+                widget->setColor(Color3B(red, green, blue));
             }
-            else if (attriname == "Size")
+            else if (name == "Size")
             {
                 attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
                 
                 while (attribute)
                 {
-                    attriname = attribute->Name();
+                    name = attribute->Name();
                     std::string value = attribute->Value();
                     
-                    if (attriname == "X")
+                    if (name == "X")
                     {
-                        size.x = atof(value.c_str());
+                        width = atof(value.c_str());
                     }
-                    else if (attriname == "Y")
+                    else if (name == "Y")
                     {
-                        size.y = atof(value.c_str());
+                        height = atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
                 }
+                
+                widget->setContentSize(Size(width, height));
             }
             
             child = child->NextSiblingElement();
         }
         
-        RotationSkew f_rotationskew(rotationSkew.x, rotationSkew.y);
-        Position f_position(position.x, position.y);
-        Scale f_scale(scale.x, scale.y);
-        AnchorPoint f_anchortpoint(anchorPoint.x, anchorPoint.y);
-        Color f_color(color.a, color.r, color.g, color.b);
-        FlatSize f_size(size.x, size.y);
-        
-        auto options = CreateWidgetOptions(*builder,
-                                           builder->CreateString(name),
-                                           (int32_t)actionTag,
-                                           &f_rotationskew,
-                                           zOrder,
-                                           visible,
-                                           alpha,
-                                           tag,
-                                           &f_position,
-                                           &f_scale,
-                                           &f_anchortpoint,
-                                           &f_color,
-                                           &f_size,
-                                           flipX,
-                                           flipY,
-                                           ignoreSize,
-                                           touchEnabled,
-                                           builder->CreateString(frameEvent),
-                                           builder->CreateString(customProperty)
-                                           );
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    void WidgetReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *widgetOptions)
-    {
-        Widget* widget = static_cast<Widget*>(node);
-        
-        auto options = (WidgetOptions*)widgetOptions;
-        
-        widget->setCascadeColorEnabled(true);
-        widget->setCascadeOpacityEnabled(true);
-        widget->setAnchorPoint(Vec2::ZERO);
-        
-        widget->setUnifySizeEnabled(true);
-        
-        bool ignoreSize = options->ignoreSize();
-        widget->ignoreContentAdaptWithSize(ignoreSize);
-        
-        Size contentSize(options->size()->width(), options->size()->height());
-        widget->setContentSize(contentSize);
-        
-        int tag = options->tag();
-        widget->setTag(tag);
-        
-        int actionTag = options->actionTag();
-        widget->setActionTag(actionTag);
-        
-        bool touchEnabled = options->touchEnabled();
-        widget->setTouchEnabled(touchEnabled);
-        
-        std::string name = options->name()->c_str();
-        widget->setName(name);
-        
-        Vec2 position(options->position()->x(), options->position()->y());
-        widget->setPosition(position);
-        
-        float scaleX = options->scale()->scaleX();
-        widget->setScaleX(scaleX);
-        float scaleY = options->scale()->scaleY();
-        widget->setScaleY(scaleY);
-        
-        float rotationSkewX = options->rotationSkew()->rotationSkewX();
-        widget->setRotationSkewX(rotationSkewX);
-        float rotationSkewY = options->rotationSkew()->rotationSkewY();
-        widget->setRotationSkewY(rotationSkewY);
-        
-        bool visible = options->visible();
-        widget->setVisible(visible);
-        
-        int zOrder = options->zOrder();
-        widget->setLocalZOrder(zOrder);
-        
-        auto f_color = options->color();
-        Color3B color(f_color->r(), f_color->g(), f_color->b());
-        widget->setColor(color);
-        
-        int alpha = options->alpha();
-        widget->setOpacity(alpha);
-        
-        auto f_anchorPoint = options->anchorPoint();
-        Vec2 anchorPoint(f_anchorPoint->scaleX(), f_anchorPoint->scaleY());
-        widget->setAnchorPoint(anchorPoint);
-        
-        bool flippedX = options->flipX();
-        widget->setFlippedX(flippedX);
-        bool flippedY = options->flipY();
-        widget->setFlippedY(flippedY);
-        
-    }
-    
-    Widget* WidgetReader::createNodeWithFlatBuffers(const flatbuffers::Table *widgetOptions)
-    {
-        Widget* widget = Widget::create();
-        
-        setPropsWithFlatBuffers(widget, (Table*)widgetOptions);
-        
-        return widget;
     }
     
     void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)

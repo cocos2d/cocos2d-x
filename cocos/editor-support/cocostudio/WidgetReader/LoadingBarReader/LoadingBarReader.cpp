@@ -1,19 +1,14 @@
 
 
 #include "LoadingBarReader.h"
-
 #include "ui/UILoadingBar.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
-
-#include "tinyxml2/tinyxml2.h"
-#include "flatbuffers/flatbuffers.h"
+#include "tinyxml2.h"
 
 USING_NS_CC;
 using namespace ui;
-using namespace flatbuffers;
+using namespace cocostudio;
 
 namespace cocostudio
 {
@@ -28,7 +23,7 @@ namespace cocostudio
     
     static LoadingBarReader* instanceLoadingBar = nullptr;
     
-    IMPLEMENT_CLASS_NODE_READER_INFO(LoadingBarReader)
+    IMPLEMENT_CLASS_WIDGET_READER_INFO(LoadingBarReader)
     
     LoadingBarReader::LoadingBarReader()
     {
@@ -194,18 +189,21 @@ namespace cocostudio
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
     
-    Offset<Table> LoadingBarReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
-                                                                 flatbuffers::FlatBufferBuilder *builder)
+    void LoadingBarReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
     {
-        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        WidgetReader::setPropsFromXML(widget, objectData);
         
-        std::string path = "";
-        std::string plistFile = "";
-        int resourceType = 0;
+        LoadingBar* loadingBar = static_cast<LoadingBar*>(widget);
         
-        int percent = 80;
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        bool scale9Enabled = false;
+        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
         int direction = 0;
+        
+        int percent = 0;
+        
+        int opacity = 255;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -222,6 +220,33 @@ namespace cocostudio
             {
                 percent = atoi(value.c_str());
             }
+            else if (name == "Scale9Enable")
+            {
+                if (value == "True")
+                {
+                    scale9Enabled = true;
+                }
+            }
+            else if (name == "Scale9OriginX")
+            {
+                cx = atof(value.c_str());
+            }
+            else if (name == "Scale9OriginY")
+            {
+                cy = atof(value.c_str());
+            }
+            else if (name == "Scale9Width")
+            {
+                cw = atof(value.c_str());
+            }
+            else if (name == "Scale9Height")
+            {
+                ch = atof(value.c_str());
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
+            }
             
             attribute = attribute->Next();
         }
@@ -234,10 +259,9 @@ namespace cocostudio
             
             if (name == "ImageFileData")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-                
                 attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -250,87 +274,43 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = getResourceType(value);
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
                         plistFile = value;
-                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                if (resourceType == 1)
+                switch (resourceType)
                 {
-                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    case 0:
+                    {
+                        loadingBar->loadTexture(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        loadingBar->loadTexture(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
                 }
             }
             
             child = child->NextSiblingElement();
         }
         
-        auto options = CreateLoadingBarOptions(*builder,
-                                               widgetOptions,
-                                               CreateResourceData(*builder,
-                                                                  builder->CreateString(path),
-                                                                  builder->CreateString(plistFile),
-                                                                  resourceType),
-                                               percent,
-                                               direction);
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    void LoadingBarReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *loadingBarOptions)
-    {
-        LoadingBar* loadingBar = static_cast<LoadingBar*>(node);
-        auto options = (LoadingBarOptions*)loadingBarOptions;
-        
-        auto imageFileNameDic = options->textureData();
-        int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
-        loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
-        
-        int direction = options->direction();
-        loadingBar->setDirection(LoadingBar::Direction(direction));
-        
-        int percent = options->percent();
+        loadingBar->setDirection((LoadingBar::Direction)direction);
         loadingBar->setPercent(percent);
         
-        auto widgetReader = WidgetReader::getInstance();
-        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-    }
-    
-    LoadingBar* LoadingBarReader::createNodeWithFlatBuffers(const flatbuffers::Table *loadingBarOptions)
-    {
-        LoadingBar* loadingBar = LoadingBar::create();
-        
-        setPropsWithFlatBuffers(loadingBar, (Table*)loadingBarOptions);
-        
-        return loadingBar;
-    }
-    
-    int LoadingBarReader::getResourceType(std::string key)
-    {
-        if(key == "Normal" || key == "Default")
-        {
-            return 	0;
-        }
-        
-        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-        if(fbs->_isSimulator)
-        {
-            if(key == "MarkedSubImage")
-            {
-                return 0;
-            }
-        }
-        return 1;
+        loadingBar->setOpacity(opacity);
     }
     
 }

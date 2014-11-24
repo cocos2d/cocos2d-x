@@ -25,18 +25,16 @@
 #ifndef __TestCpp__LayoutReader__
 #define __TestCpp__LayoutReader__
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
+#include "../WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UILayout.h"
 
 namespace cocostudio
 {
     class CC_STUDIO_DLL LayoutReader : public WidgetReader
     {
-    
-        DECLARE_CLASS_NODE_READER_INFO
-        
     public:
+        DECLARE_CLASS_WIDGET_READER_INFO
+        
         LayoutReader();
         virtual ~LayoutReader();
         
@@ -46,14 +44,8 @@ namespace cocostudio
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-                                                                             flatbuffers::FlatBufferBuilder* builder);
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* layoutOptions);
-        cocos2d::ui::Layout* createNodeWithFlatBuffers(const flatbuffers::Table* layoutOptions);
-        
-        int getResourceType(std::string key);
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
     };
-    
 }
 
 #endif /* defined(__TestCpp__LayoutReader__) */
