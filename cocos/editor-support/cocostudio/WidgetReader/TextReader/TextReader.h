@@ -25,16 +25,17 @@
 #ifndef __TestCpp__TextReader__
 #define __TestCpp__TextReader__
 
-#include "../WidgetReader.h"
+#include "cocostudio/WidgetReader/WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
+#include "ui/UIText.h"
 
 namespace cocostudio
 {
     class CC_STUDIO_DLL TextReader : public WidgetReader
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:
         TextReader();
         virtual ~TextReader();
         
@@ -44,7 +45,10 @@ namespace cocostudio
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
-        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* textOptions);
+        cocos2d::ui::Text* createNodeWithFlatBuffers(const flatbuffers::Table* textOptions);
 
     };
 }

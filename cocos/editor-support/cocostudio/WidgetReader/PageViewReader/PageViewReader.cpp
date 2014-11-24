@@ -1,20 +1,26 @@
 
 
 #include "PageViewReader.h"
+
 #include "ui/UIPageView.h"
 #include "ui/UILayout.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "tinyxml2.h"
+#include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
     static PageViewReader* instancePageViewReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(PageViewReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(PageViewReader)
     
     PageViewReader::PageViewReader()
     {
@@ -155,29 +161,27 @@ namespace cocostudio
         }
     }
     
-    void PageViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    Offset<Table> PageViewReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                               flatbuffers::FlatBufferBuilder *builder)
     {
-        WidgetReader::setPropsFromXML(widget, objectData);
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        PageView* pageView = static_cast<PageView*>(widget);
-        
-        std::string xmlPath = GUIReader::getInstance()->getFilePath();
-        
-        bool scale9Enabled = false;
-        float width = 0.0f, height = 0.0f;
-        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
-        
-        Layout::BackGroundColorType colorType = Layout::BackGroundColorType::NONE;
-        int color_opacity = 255, bgimg_opacity = 255, opacity = 255;
-        int red = 255, green = 255, blue = 255;
-        int bgimg_red = 255, bgimg_green = 255, bgimg_blue = 255;
-        int singleRed = 255, singleGreen = 255, singleBlue = 255;
-        int start_red = 255, start_green = 255, start_blue = 255;
-        int end_red = 255, end_green = 255, end_blue = 255;
-        float vector_color_x = 0.0f, vector_color_y = -0.5f;
-        
+        std::string path = "";
+        std::string plistFile = "";
         int resourceType = 0;
-        std::string path = "", plistFile = "";
+        
+        bool clipEnabled = false;
+        Color3B bgColor;
+        Color3B bgStartColor;
+        Color3B bgEndColor;
+        int colorType = 0;
+        GLubyte bgColorOpacity = 255;
+        Vec2 colorVector(0.0f, -0.5f);
+        Rect capInsets;
+        Size scale9Size;
+        bool backGroundScale9Enabled = false;
+        
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -188,40 +192,38 @@ namespace cocostudio
             
             if (name == "ClipAble")
             {
-                pageView->setClippingEnabled((value == "True") ? true : false);
+                clipEnabled = (value == "True") ? true : false;
             }
             else if (name == "ComboBoxIndex")
             {
-                colorType = (Layout::BackGroundColorType)atoi(value.c_str());
+                colorType = atoi(value.c_str());
             }
             else if (name == "BackColorAlpha")
             {
-                color_opacity = atoi(value.c_str());
-            }
-            else if (name == "Alpha")
-            {
-                opacity = atoi(value.c_str());
-                bgimg_opacity = atoi(value.c_str());
+                bgColorOpacity = atoi(value.c_str());
             }
             else if (name == "Scale9Enable")
             {
-                scale9Enabled = (value == "True") ? true : false;
+                if (value == "True")
+                {
+                    backGroundScale9Enabled = true;
+                }
             }
             else if (name == "Scale9OriginX")
             {
-                cx = atof(value.c_str());
+                capInsets.origin.x = atof(value.c_str());
             }
             else if (name == "Scale9OriginY")
             {
-                cy = atof(value.c_str());
+                capInsets.origin.y = atof(value.c_str());
             }
             else if (name == "Scale9Width")
             {
-                cw = atof(value.c_str());
+                capInsets.size.width = atof(value.c_str());
             }
             else if (name == "Scale9Height")
             {
-                ch = atof(value.c_str());
+                capInsets.size.height = atof(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -233,7 +235,7 @@ namespace cocostudio
         {
             std::string name = child->Name();
             
-            if (name == "Size")
+            if (name == "Size" && backGroundScale9Enabled)
             {
                 attribute = child->FirstAttribute();
                 
@@ -244,17 +246,17 @@ namespace cocostudio
                     
                     if (name == "X")
                     {
-                        width = atof(value.c_str());
+                        scale9Size.width = atof(value.c_str());
                     }
                     else if (name == "Y")
                     {
-                        height = atof(value.c_str());
+                        scale9Size.height = atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
                 }
             }
-            else if (name == "CColor")
+            else if (name == "SingleColor")
             {
                 attribute = child->FirstAttribute();
                 
@@ -265,42 +267,15 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
-                        red = atoi(value.c_str());
-                        bgimg_red = atoi(value.c_str());
+                        bgColor.r = atoi(value.c_str());
                     }
                     else if (name == "G")
                     {
-                        green = atoi(value.c_str());
-                        bgimg_green = atoi(value.c_str());
+                        bgColor.g = atoi(value.c_str());
                     }
                     else if (name == "B")
                     {
-                        blue = atoi(value.c_str());
-                        bgimg_blue = atoi(value.c_str());
-                    }
-                    
-                    attribute = attribute->Next();
-                }
-            }
-            else if (name == "SingleColor")
-            {
-                attribute = child->FirstAttribute();
-                while (attribute)
-                {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
-                    
-                    if (name == "R")
-                    {
-                        singleRed = atoi(value.c_str());
-                    }
-                    else if (name == "G")
-                    {
-                        singleGreen = atoi(value.c_str());
-                    }
-                    else if (name == "B")
-                    {
-                        singleBlue = atoi(value.c_str());
+                        bgColor.b = atoi(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -309,6 +284,7 @@ namespace cocostudio
             else if (name == "EndColor")
             {
                 attribute = child->FirstAttribute();
+                
                 while (attribute)
                 {
                     name = attribute->Name();
@@ -316,15 +292,15 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
-                        end_red = atoi(value.c_str());
+                        bgEndColor.r = atoi(value.c_str());
                     }
                     else if (name == "G")
                     {
-                        end_green = atoi(value.c_str());
+                        bgEndColor.g = atoi(value.c_str());
                     }
                     else if (name == "B")
                     {
-                        end_blue = atoi(value.c_str());
+                        bgEndColor.b = atoi(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -333,6 +309,7 @@ namespace cocostudio
             else if (name == "FirstColor")
             {
                 attribute = child->FirstAttribute();
+                
                 while (attribute)
                 {
                     name = attribute->Name();
@@ -340,15 +317,15 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
-                        start_red = atoi(value.c_str());
+                        bgStartColor.r = atoi(value.c_str());
                     }
                     else if (name == "G")
                     {
-                        start_green = atoi(value.c_str());
+                        bgStartColor.g = atoi(value.c_str());
                     }
                     else if (name == "B")
                     {
-                        start_blue = atoi(value.c_str());
+                        bgStartColor.b = atoi(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -364,11 +341,11 @@ namespace cocostudio
                     
                     if (name == "ScaleX")
                     {
-                        vector_color_x = atof(value.c_str());
+                        colorVector.x = atof(value.c_str());
                     }
                     else if (name == "ScaleY")
                     {
-                        vector_color_y = atof(value.c_str());
+                        colorVector.y = atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -376,6 +353,9 @@ namespace cocostudio
             }
             else if (name == "FileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
                 
                 while (attribute)
@@ -389,71 +369,146 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                        resourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
                         plistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
+                }
+                
+                if (resourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             
             child = child->NextSiblingElement();
         }
         
-        pageView->setColor(Color3B(red, green, blue));
+        Color f_bgColor(255, bgColor.r, bgColor.g, bgColor.b);
+        Color f_bgStartColor(255, bgStartColor.r, bgStartColor.g, bgStartColor.b);
+        Color f_bgEndColor(255, bgEndColor.r, bgEndColor.g, bgEndColor.b);
+        ColorVector f_colorVector(colorVector.x, colorVector.y);
+        CapInsets f_capInsets(capInsets.origin.x, capInsets.origin.y, capInsets.size.width, capInsets.size.height);
+        FlatSize f_scale9Size(scale9Size.width, scale9Size.height);
+        
+        auto options = CreatePageViewOptions(*builder,
+                                             widgetOptions,
+                                             CreateResourceData(*builder,
+                                                                builder->CreateString(path),
+                                                                builder->CreateString(plistFile),
+                                                                resourceType),
+                                             clipEnabled,
+                                             &f_bgColor,
+                                             &f_bgStartColor,
+                                             &f_bgEndColor,
+                                             colorType,
+                                             bgColorOpacity,
+                                             &f_colorVector,
+                                             &f_capInsets,
+                                             &f_scale9Size,
+                                             backGroundScale9Enabled);
+        
+        return *(Offset<Table>*)(&options);
+    }
+    
+    void PageViewReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *pageViewOptions)
+    {
+        PageView* pageView = static_cast<PageView*>(node);
+        auto options = (PageViewOptions*)pageViewOptions;
+        
+        bool clipEnabled = options->clipEnabled();
+        pageView->setClippingEnabled(clipEnabled);
+        
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        pageView->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
+        
+        
+        auto f_bgColor = options->bgColor();
+        Color3B bgColor(f_bgColor->r(), f_bgColor->g(), f_bgColor->b());
+        auto f_bgStartColor = options->bgStartColor();
+        Color3B bgStartColor(f_bgStartColor->r(), f_bgStartColor->g(), f_bgStartColor->b());
+        auto f_bgEndColor = options->bgEndColor();
+        Color3B bgEndColor(f_bgEndColor->r(), f_bgEndColor->g(), f_bgEndColor->b());
+        
+        auto f_colorVecor = options->colorVector();
+        Vec2 colorVector(f_colorVecor->vectorX(), f_colorVecor->vectorY());
+        pageView->setBackGroundColorVector(colorVector);
+        
+        int bgColorOpacity = options->bgColorOpacity();
+        
+        int colorType = options->colorType();
+        pageView->setBackGroundColorType(Layout::BackGroundColorType(colorType));
+        
+        pageView->setBackGroundColor(bgStartColor, bgEndColor);
+        pageView->setBackGroundColor(bgColor);
+        pageView->setBackGroundColorOpacity(bgColorOpacity);
+        
+        
+        auto imageFileNameDic = options->backGroundImageData();
+        int imageFileNameType = imageFileNameDic->resourceType();
+        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        pageView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+        
+        
+        if (backGroundScale9Enabled)
+        {
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            pageView->setBackGroundImageCapInsets(capInsets);
+            
+            auto f_scale9Size = options->scale9Size();
+            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
+            pageView->setContentSize(scale9Size);
+        }
+        
+        auto widgetOptions = options->widgetOptions();
+        auto f_color = widgetOptions->color();
+        Color3B color(f_color->r(), f_color->g(), f_color->b());
+        pageView->setColor(color);
+        
+        int opacity = widgetOptions->alpha();
         pageView->setOpacity(opacity);
         
-        pageView->setBackGroundColorType(colorType);
-        switch (colorType)
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+    }
+    
+    PageView* PageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *pageViewOptions)
+    {
+        PageView* pageView = PageView::create();
+        
+        setPropsWithFlatBuffers(pageView, (Table*)pageViewOptions);
+        
+        return pageView;
+    }
+    
+    int PageViewReader::getResourceType(std::string key)
+    {
+        if(key == "Normal" || key == "Default")
         {
-            case Layout::BackGroundColorType::SOLID:
-                pageView->setBackGroundColor(Color3B(singleRed, singleGreen, singleBlue));
-                break;
-                
-            case Layout::BackGroundColorType::GRADIENT:
-                pageView->setBackGroundColor(Color3B(start_red, start_green, start_blue),
-                                             Color3B(end_red, end_green, end_blue));
-                pageView->setBackGroundColorVector(Vec2(vector_color_x, vector_color_y));
-                break;
-                
-            default:
-                break;
+            return 	0;
         }
         
-        pageView->setBackGroundColorOpacity(color_opacity);
-        
-        switch (resourceType)
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
         {
-            case 0:
+            if(key == "MarkedSubImage")
             {
-                pageView->setBackGroundImage(xmlPath + path, Widget::TextureResType::LOCAL);
-                break;
+                return 0;
             }
-                
-            case 1:
-            {
-                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                pageView->setBackGroundImage(path, Widget::TextureResType::PLIST);
-                break;
-            }
-                
-            default:
-                break;
         }
-        
-        if (path != "")
-        {
-            if (scale9Enabled)
-            {
-                pageView->setBackGroundImageScale9Enabled(scale9Enabled);
-                pageView->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
-                pageView->setContentSize(Size(width, height));
-            }
-        }        
-        
+        return 1;
     }
     
 }
