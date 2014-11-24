@@ -93,6 +93,13 @@ public:
     * @lua NA
     */
     virtual void applicationWillEnterForeground() = 0;
+    
+    /**
+     @brief  This function will be called when the application terminates.
+     * @js NA
+     * @lua NA
+     */
+    virtual void applicationWillTerminate() = 0;
 
     /**
     @brief    Callback by Director for limit FPS.
