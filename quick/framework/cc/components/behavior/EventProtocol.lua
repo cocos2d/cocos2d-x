@@ -55,6 +55,7 @@ function EventProtocol:dispatchEvent(event)
         end
         -- listener[1] = listener
         -- listener[2] = tag
+        event.tag = listener[2]
         listener[1](event)
         if event.stop_ then
             if DEBUG > 1 then
