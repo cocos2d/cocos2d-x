@@ -1,22 +1,18 @@
 set(APP_NAME cpp-tests)
 
 if(WIN32)
-  set(PLATFORM_SRC
-    proj.win32/main.cpp
-  )
+  set(PLATFORM_SRC proj.win32/main.cpp)
+  set(RES_PREFIX "")
 elseif(MACOSX)
-  set(PLATFORM_SRC
-    proj.mac/main.cpp
-  )
+  set(PLATFORM_SRC proj.mac/main.cpp)
 
   file(GLOB_RECURSE RES_FILES Resources/*)
   cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
   list(APPEND PLATFORM_SRC ${RES_FILES})
 
 elseif(LINUX)
-  set(PLATFORM_SRC
-    proj.linux/main.cpp
-  )
+  set(PLATFORM_SRC proj.linux/main.cpp)
+  set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -27,11 +23,6 @@ set(TESTS_SRC
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
   Classes/ActionsTest/ActionsTest.cpp
   Classes/BillBoardTest/BillBoardTest.cpp
-  Classes/Box2DTest/Box2dTest.cpp
-  Classes/Box2DTestBed/Box2dView.cpp
-  Classes/Box2DTestBed/GLES-Render.cpp
-  Classes/Box2DTestBed/Test.cpp
-  Classes/Box2DTestBed/TestEntries.cpp
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp
   Classes/BugsTest/Bug-350.cpp
@@ -203,6 +194,20 @@ set(TESTS_SRC
   ${PLATFORM_SRC}
 )
 
+if(USE_CHIPMUNK)
+  include_directories(${CHIPMUNK_INCLUDE_DIRS})
+endif()
+
+if(USE_BOX2D)
+  list(APPEND TESTS_SRC
+    Classes/Box2DTest/Box2dTest.cpp
+    Classes/Box2DTestBed/Box2dView.cpp
+    Classes/Box2DTestBed/GLES-Render.cpp
+    Classes/Box2DTestBed/Test.cpp
+    Classes/Box2DTestBed/TestEntries.cpp
+    )
+endif()
+
 if(LINUX)
     set(EXTENDED_TESTS_SRC
     )
@@ -229,7 +234,6 @@ endif()
 
 include_directories(
   Classes
-  ${CMAKE_SOURCE_DIR}/external/chipmunk/include/chipmunk
   ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
@@ -255,8 +259,7 @@ else()
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 
     pre_build(${APP_NAME}
-      COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
       )
 endif()
 

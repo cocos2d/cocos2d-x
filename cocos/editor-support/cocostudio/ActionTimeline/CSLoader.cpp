@@ -30,7 +30,7 @@
 #include "cocostudio/CocoStudio.h"
 
 #include "cocostudio/CSParseBinary.pb.h"
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 
 #include <fstream>
 

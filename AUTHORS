@@ -1053,6 +1053,9 @@ Developers:
         
     vovkasm
         Fix warnings for Xcode6.1
+        
+    nilium
+        Unignore libs dir in plugin and fix Travis script to descend into included directories
     
 Retired Core Developers:
     WenSheng Yang

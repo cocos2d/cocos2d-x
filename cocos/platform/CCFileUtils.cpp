@@ -34,7 +34,11 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 
 #include "tinyxml2.h"
+#ifdef MINIZIP_FROM_SYSTEM
+#include <minizip/unzip.h>
+#else // from our embedded sources
 #include "unzip.h"
+#endif
 #include <sys/stat.h>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -443,7 +447,6 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
 		return node;
     }
 
-
     // object is Array
     if (value.getType() == Value::Type::VECTOR)
         return generateElementForArray(value.asValueVector(), doc);
@@ -463,14 +466,14 @@ static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxm
 {
     tinyxml2::XMLElement* rootNode = doc->NewElement("dict");
     
-    for (auto iter = dict.cbegin(); iter != dict.cend(); ++iter)
+    for (const auto &iter : dict)
     {
         tinyxml2::XMLElement* tmpNode = doc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
-        tinyxml2::XMLText* content = doc->NewText(iter->first.c_str());
+        tinyxml2::XMLText* content = doc->NewText(iter.first.c_str());
         tmpNode->LinkEndChild(content);
         
-        tinyxml2::XMLElement *element = generateElementForObject(iter->second, doc);
+        tinyxml2::XMLElement *element = generateElementForObject(iter.second, doc);
         if (element)
             rootNode->LinkEndChild(element);
     }
@@ -492,7 +495,6 @@ static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, t
     return rootNode;
 }
 
-
 #else
 NS_CC_BEGIN
 
@@ -504,9 +506,7 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath) {return
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
-
 FileUtils* FileUtils::s_sharedFileUtils = nullptr;
-
 
 void FileUtils::destroyInstance()
 {
@@ -520,7 +520,6 @@ FileUtils::FileUtils()
 FileUtils::~FileUtils()
 {
 }
-
 
 bool FileUtils::init()
 {
@@ -546,6 +545,7 @@ static Data getData(const std::string& filename, bool forString)
     size_t size = 0;
     size_t readsize;
     const char* mode = nullptr;
+    
     if (forString)
         mode = "rt";
     else
@@ -629,7 +629,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
         fclose(fp);
     } while (0);
     
-    if (! buffer)
+    if (!buffer)
     {
         std::string msg = "Get data from file(";
         msg.append(filename).append(") failed!");
@@ -653,7 +653,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         CC_BREAK_IF(!file);
 
         // FIXME: Other platforms should use upstream minizip like mingw-w64  
-        #ifdef __MINGW32__
+        #ifdef MINIZIP_FROM_SYSTEM
         int ret = unzLocateFile(file, filename.c_str(), NULL);
         #else
         int ret = unzLocateFile(file, filename.c_str(), 1);
@@ -724,7 +724,6 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
     return path;
 }
 
-
 std::string FileUtils::fullPathForFilename(const std::string &filename)
 {
     if (filename.empty())
@@ -739,7 +738,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
 
     // Already Cached ?
     auto cacheIter = _fullPathCache.find(filename);
-    if( cacheIter != _fullPathCache.end() )
+    if(cacheIter != _fullPathCache.end())
     {
         return cacheIter->second;
     }
@@ -749,11 +748,11 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
     
 	std::string fullpath;
     
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    for (const auto& searchIt : _searchPathArray)
     {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        for (const auto& resolutionIt : _searchResolutionsOrderArray)
         {
-            fullpath = this->getPathForFilename(newFilename, *resolutionIt, *searchIt);
+            fullpath = this->getPathForFilename(newFilename, resolutionIt, searchIt);
             
             if (fullpath.length() > 0)
             {
@@ -761,6 +760,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
                 _fullPathCache.insert(std::make_pair(filename, fullpath));
                 return fullpath;
             }
+            
         }
     }
     
@@ -783,9 +783,9 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
     bool existDefault = false;
     _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
-    for(auto iter = searchResolutionsOrder.cbegin(); iter != searchResolutionsOrder.cend(); ++iter)
+    for(const auto& iter : searchResolutionsOrder)
     {
-        std::string resolutionDirectory = *iter;
+        std::string resolutionDirectory = iter;
         if (!existDefault && resolutionDirectory == "")
         {
             existDefault = true;
@@ -798,6 +798,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
         
         _searchResolutionsOrderArray.push_back(resolutionDirectory);
     }
+
     if (!existDefault)
     {
         _searchResolutionsOrderArray.push_back("");
@@ -809,6 +810,7 @@ void FileUtils::addSearchResolutionsOrder(const std::string &order,const bool fr
     std::string resOrder = order;
     if (!resOrder.empty() && resOrder[resOrder.length()-1] != '/')
         resOrder.append("/");
+    
     if (front) {
         _searchResolutionsOrderArray.insert(_searchResolutionsOrderArray.begin(), resOrder);
     } else {
@@ -816,7 +818,7 @@ void FileUtils::addSearchResolutionsOrder(const std::string &order,const bool fr
     }
 }
 
-const std::vector<std::string>& FileUtils::getSearchResolutionsOrder()
+const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
 {
     return _searchResolutionsOrderArray;
 }
@@ -832,16 +834,16 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     
     _fullPathCache.clear();
     _searchPathArray.clear();
-    for (auto iter = searchPaths.cbegin(); iter != searchPaths.cend(); ++iter)
+    for (const auto& iter : searchPaths)
     {
         std::string prefix;
         std::string path;
         
-        if (!isAbsolutePath(*iter))
+        if (!isAbsolutePath(iter))
         { // Not an absolute path
             prefix = _defaultResRootPath;
         }
-        path = prefix + (*iter);
+        path = prefix + (iter);
         if (path.length() > 0 && path[path.length()-1] != '/')
         {
             path += "/";
@@ -1005,12 +1007,12 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath)
     }
     
 	std::string fullpath;
-    for (auto searchIt = _searchPathArray.cbegin(); searchIt != _searchPathArray.cend(); ++searchIt)
+    for (const auto& searchIt : _searchPathArray)
     {
-        for (auto resolutionIt = _searchResolutionsOrderArray.cbegin(); resolutionIt != _searchResolutionsOrderArray.cend(); ++resolutionIt)
+        for (const auto& resolutionIt : _searchResolutionsOrderArray)
         {
             // searchPath + file_path + resourceDirectory
-            fullpath = *searchIt + dirPath + *resolutionIt;
+            fullpath = searchIt + dirPath + resolutionIt;
             if (isDirectoryExistInternal(fullpath))
             {
                 const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(dirPath, fullpath));

@@ -27,6 +27,25 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
+# Try find glfw for our arch in external folder
+if(USE_PREBUILT_LIBS)
+  find_path(GLFW3_INCLUDE_DIR glfw3.h
+    PATHS ${COCOS_EXTERNAL_DIR}/glfw3/include/${PLATFORM_FOLDER}
+    NO_DEFAULT_PATH
+    )
+  find_library(GLFW3_LIBRARY NAMES glfw3 libglfw3 lgfw
+    PATHS
+      ${COCOS_EXTERNAL_DIR}/glfw3/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+      ${COCOS_EXTERNAL_DIR}/glfw3/prebuilt/${PLATFORM_FOLDER}
+    NO_DEFAULT_PATH
+    )
+  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
+  if(NOT GLFW3_INCLUDE_DIR OR NOT GLFW3_LIBRARY)
+    unset(GLFW3_INCLUDE_DIR CACHE)
+    unset(GLFW3_LIBRARY CACHE)
+  endif()
+endif(USE_PREBUILT_LIBS)
+
 FIND_PATH(GLFW3_INCLUDE_DIR glfw3.h
   HINTS
   ENV GLFW3_DIR
