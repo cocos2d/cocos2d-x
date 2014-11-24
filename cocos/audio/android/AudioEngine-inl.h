@@ -50,16 +50,15 @@ public:
     bool init(SLEngineItf engineEngine, SLObjectItf outputMixObject,const std::string& fileFullPath, float volume, bool loop);
 
     bool _playOver;
-private:
-
-    SLObjectItf _fdPlayerObject;
+    bool _loop;
     SLPlayItf _fdPlayerPlay;
+private:
+    SLObjectItf _fdPlayerObject;
     SLSeekItf _fdPlayerSeek;
     SLVolumeItf _fdPlayerVolume;
 
     float _duration;
     int _audioID;
-    
 
     std::function<void (int, const std::string &)> _finishCallback;
 

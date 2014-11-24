@@ -23,13 +23,21 @@
  ****************************************************************************/
 #include "AssetsManagerEx.h"
 #include "CCEventListenerAssetsManagerEx.h"
-#include "cocos2d.h"
+#include "deprecated/CCString.h"
+#include "base/CCDirector.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include <stdio.h>
 
+#ifdef MINIZIP_FROM_SYSTEM
+#include <minizip/unzip.h>
+#else // from our embedded sources
 #include "unzip.h"
+#endif
+
+using namespace cocos2d;
+using namespace std;
 
 NS_CC_EXT_BEGIN
 
@@ -50,20 +58,20 @@ const std::string AssetsManagerEx::BATCH_UPDATE_ID = "@batch_update";
 
 AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
 : _updateState(State::UNCHECKED)
-, _waitToUpdate(false)
-, _totalToDownload(0)
-, _totalWaitToDownload(0)
-, _percent(0)
-, _percentByFile(0)
-, _manifestUrl(manifestUrl)
+, _assets(nullptr)
 , _storagePath("")
 , _cacheVersionPath("")
 , _cacheManifestPath("")
 , _tempManifestPath("")
-, _assets(nullptr)
+, _manifestUrl(manifestUrl)
 , _localManifest(nullptr)
 , _tempManifest(nullptr)
 , _remoteManifest(nullptr)
+, _waitToUpdate(false)
+, _percent(0)
+, _percentByFile(0)
+, _totalToDownload(0)
+, _totalWaitToDownload(0)
 {
     // Init variables
     _eventDispatcher = Director::getInstance()->getEventDispatcher();

@@ -141,28 +141,28 @@ _enabled(true),
 _bright(true),
 _touchEnabled(false),
 _highlight(false),
+_affectByClipping(false),
+_ignoreSize(false),
+_propagateTouchEvents(true),
 _brightStyle(BrightStyle::NONE),
-_touchBeganPosition(Vec2::ZERO),
-_touchMovePosition(Vec2::ZERO),
-_touchEndPosition(Vec2::ZERO),
-_touchEventListener(nullptr),
-_touchEventSelector(nullptr),
+_sizeType(SizeType::ABSOLUTE),
+_positionType(PositionType::ABSOLUTE),
 _actionTag(0),
 _customSize(Size::ZERO),
-_ignoreSize(false),
-_affectByClipping(false),
-_sizeType(SizeType::ABSOLUTE),
 _sizePercent(Vec2::ZERO),
-_positionType(PositionType::ABSOLUTE),
 _positionPercent(Vec2::ZERO),
 _hitted(false),
 _touchListener(nullptr),
+_touchBeganPosition(Vec2::ZERO),
+_touchMovePosition(Vec2::ZERO),
+_touchEndPosition(Vec2::ZERO),
 _flippedX(false),
 _flippedY(false),
+_layoutParameterType(LayoutParameter::Type::NONE),
 _focused(false),
 _focusEnabled(true),
-_layoutParameterType(LayoutParameter::Type::NONE),
-_propagateTouchEvents(true)
+_touchEventListener(nullptr),
+_touchEventSelector(nullptr)
 {
   
 }
@@ -1135,17 +1135,77 @@ void Widget::copyProperties(Widget *widget)
     }
 }
     
-void Widget::setFlippedX(bool flippedX)
-{
-    _flippedX = flippedX;
-    updateFlippedX();
-}
-
-void Widget::setFlippedY(bool flippedY)
-{
-    _flippedY = flippedY;
-    updateFlippedY();
-}
+    void Widget::setFlippedX(bool flippedX)
+    {
+        
+        float realScale = this->getScaleX();
+        _flippedX = flippedX;
+        this->setScaleX(realScale);
+    }
+    
+    void Widget::setFlippedY(bool flippedY)
+    {
+        float realScale = this->getScaleY();
+        _flippedY = flippedY;
+        this->setScaleY(realScale);
+    }
+    
+   
+    
+    void Widget::setScaleX(float scaleX)
+    {
+        if (_flippedX) {
+            scaleX = scaleX * -1;
+        }
+        Node::setScaleX(scaleX);
+    }
+    
+    void Widget::setScaleY(float scaleY)
+    {
+        if (_flippedY) {
+            scaleY = scaleY * -1;
+        }
+        Node::setScaleY(scaleY);
+    }
+    
+    void Widget::setScale(float scale)
+    {
+        this->setScaleX(scale);
+        this->setScaleY(scale);
+        this->setScaleZ(scale);
+    }
+    
+    void Widget::setScale(float scaleX, float scaleY)
+    {
+        this->setScaleX(scaleX);
+        this->setScaleY(scaleY);
+    }
+    
+    float Widget::getScaleX()const
+    {
+        float originalScale = Node::getScaleX();
+        if (_flippedX)
+        {
+            originalScale = originalScale * -1.0;
+        }
+        return originalScale;
+    }
+    
+    float Widget::getScaleY()const
+    {
+        float originalScale = Node::getScaleY();
+        if (_flippedY)
+        {
+            originalScale = originalScale * -1.0;
+        }
+        return originalScale;
+    }
+    
+    float Widget::getScale()const
+    {
+        CCASSERT(this->getScaleX() == this->getScaleY(), "");
+        return this->getScaleX();
+    }
 
 
 /*temp action*/

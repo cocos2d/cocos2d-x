@@ -57,14 +57,14 @@ _capInsetsBarRenderer(Rect::ZERO),
 _capInsetsProgressBarRenderer(Rect::ZERO),
 _sliderEventListener(nullptr),
 _sliderEventSelector(nullptr),
+_eventCallback(nullptr),
 _barTexType(TextureResType::LOCAL),
 _progressBarTexType(TextureResType::LOCAL),
 _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-_progressBarRendererDirty(true),
-_eventCallback(nullptr)
+_progressBarRendererDirty(true)
 {
     setTouchEnabled(true);
 }

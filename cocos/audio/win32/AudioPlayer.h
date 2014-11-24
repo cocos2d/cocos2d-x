@@ -31,7 +31,11 @@
 #include <string>
 #include <condition_variable>
 #include <thread>
-#include "AL/al.h"
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
+#include <AL/al.h>
+#endif
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -44,7 +48,7 @@ class CC_DLL AudioPlayer
 {
 public:
     AudioPlayer();
-    AudioPlayer(AudioPlayer&);
+    AudioPlayer(const AudioPlayer&);
     ~AudioPlayer();
     
     //queue buffer related stuff

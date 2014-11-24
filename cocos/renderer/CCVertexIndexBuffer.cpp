@@ -56,10 +56,10 @@ VertexBuffer* VertexBuffer::create(int sizePerVertex, int vertexNumber)
 }
 
 VertexBuffer::VertexBuffer()
-: _vbo(0)
-, _vertexNumber(0)
+: _recreateVBOEventListener(nullptr)
+, _vbo(0)
 , _sizePerVertex(0)
-, _recreateVBOEventListener(nullptr)
+, _vertexNumber(0)
 {
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

@@ -257,30 +257,6 @@ void Text::onPressStateChangedToDisabled()
     
 }
 
-void Text::updateFlippedX()
-{
-     if (_flippedX)
-    {
-        _labelRenderer->setScaleX(-1.0f);
-    } 
-    else
-    {
-        _labelRenderer->setScaleX(1.0f);
-    }
-}
-    
-void Text::updateFlippedY()
-{
-    if (_flippedY)
-    {
-        _labelRenderer->setScaleY(-1.0f);
-    } 
-    else
-    {
-        _labelRenderer->setScaleY(1.0f);
-    }
-}
-
 void Text::onSizeChanged()
 {
     Widget::onSizeChanged();

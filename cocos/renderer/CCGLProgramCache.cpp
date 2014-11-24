@@ -181,6 +181,7 @@ void GLProgramCache::loadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p) );
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL, p) );
@@ -188,6 +189,7 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW, p) );
+#endif
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelNormal);
@@ -293,6 +295,7 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
@@ -300,6 +303,7 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
+#endif
 
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_NORMAL);
     p->reset();
@@ -372,12 +376,14 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionLengthTexureColor:
             p->initWithByteArrays(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
             break;
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         case kShaderType_LabelDistanceFieldNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldNormal_frag);
             break;
         case kShaderType_LabelDistanceFieldGlow:
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldGlow_frag);
             break;
+#endif
         case kShaderType_LabelNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelNormal_frag);
             break;
@@ -433,7 +439,7 @@ GLProgram* GLProgramCache::getGLProgram(const std::string &key)
 void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
 {
     // release old one
-    auto prev = getProgram(key);
+    auto prev = getGLProgram(key);
     if( prev == program )
         return;
 
@@ -441,17 +447,21 @@ void GLProgramCache::addGLProgram(GLProgram* program, const std::string &key)
     CC_SAFE_RELEASE_NULL(prev);
 
     if (program)
-        program->retain();    
+        program->retain();
     _programs[key] = program;
 }
 
 std::string GLProgramCache::getShaderMacrosForLight() const
 {
     GLchar def[256];
-    sprintf(def, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
+    auto conf = Configuration::getInstance();
+
+    snprintf(def, sizeof(def)-1, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
             "\n#define MAX_POINT_LIGHT_NUM %d \n"
-            "\n#define MAX_SPOT_LIGHT_NUM %d \n"
-            , Configuration::getInstance()->getMaxSupportDirLightInShader(), Configuration::getInstance()->getMaxSupportPointLightInShader(), Configuration::getInstance()->getMaxSupportSpotLightInShader());
+            "\n#define MAX_SPOT_LIGHT_NUM %d \n",
+             conf->getMaxSupportDirLightInShader(),
+             conf->getMaxSupportPointLightInShader(),
+             conf->getMaxSupportSpotLightInShader());
     return std::string(def);
 }
 

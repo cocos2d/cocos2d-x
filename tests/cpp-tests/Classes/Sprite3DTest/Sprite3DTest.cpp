@@ -52,6 +52,7 @@ static std::function<Layer*()> createFunctions[] =
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
+    CL(Sprite3DUVAnimationTest),
 #endif
     CL(Sprite3DWithSkinTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -227,11 +228,106 @@ std::string Sprite3DBasicTest::subtitle() const
 
 //------------------------------------------------------------------
 //
-// Sprite3DHitTest
+// Sprite3DUVAnimationTest
 //
 //------------------------------------------------------------------
 
+Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
+{
+    //the offset use to translating texture
+    _cylinder_texture_offset = 0;
+    _shining_duraion = 0;
+    Size visibleSize = Director::getInstance()->getVisibleSize();
 
+    //use custom camera
+    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    camera->setCameraFlag(CameraFlag::USER1);
+
+    //create cylinder
+    auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
+
+    //create and set our custom shader
+    auto shader =GLProgram::createWithFilenames("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
+    _state = GLProgramState::create(shader);
+    cylinder->setGLProgramState(_state);
+
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
+    //pass mesh's attribute to shader
+    long offset = 0;
+    auto attributeCount = cylinder->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++) {
+        auto meshattribute = cylinder->getMesh()->getMeshVertexAttribute(i);
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            cylinder->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+
+    //create the second texture for cylinder
+    auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
+    Texture2D::TexParams tRepeatParams;//set texture parameters
+    tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_REPEAT;
+    tRepeatParams.wrapT = GL_REPEAT;
+    shining_texture->setTexParameters(tRepeatParams); 
+    //pass the texture sampler to our custom shader
+    _state->setUniformTexture("caustics",shining_texture);
+
+
+    this->addChild(cylinder);
+    this->setCameraMask(2); 
+    this->addChild(camera);
+
+    //adjust cylinder's position & rotation
+    cylinder->setPosition3D(Vec3(0,-15,-50));
+    cylinder->setRotation3D(Vec3(-90,0,0));
+
+    //the callback function update cylinder's texcoord
+    schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+}
+
+std::string Sprite3DUVAnimationTest::title() const 
+{
+    return "Testing UV Animation";
+}
+
+std::string Sprite3DUVAnimationTest::subtitle() const 
+{
+    return "";
+}
+
+void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
+{
+    //callback function to update cylinder's texcoord
+    static bool fade_in = true;
+    _cylinder_texture_offset += 0.3*dt;
+    _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
+    if(fade_in)
+    {
+        _shining_duraion += 0.5*dt;
+        if(_shining_duraion>1) fade_in = false;
+    }
+    else
+    {
+        _shining_duraion -= 0.5*dt;
+        if(_shining_duraion<0) fade_in = true;
+    }
+
+    //pass the result to shader
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DHitTest
+//
+//------------------------------------------------------------------
 Sprite3DHitTest::Sprite3DHitTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -1027,124 +1123,50 @@ Sprite3DReskinTest::Sprite3DReskinTest()
 }
 void Sprite3DReskinTest::menuCallback_switchHair(Ref* sender)
 {
-    _useHairId++;
-    if(_useHairId > 1 )
-    {
-        _useHairId = 0;
-    }
-    if(_useHairId >= 0  && _sprite)
-    {
-        for(int i = 0; i < 2; i++ )
-        {
-            auto subMesh = _sprite->getMeshByName(_girlHair[i]);
-            if(subMesh)
-            {
-                if(i == _useHairId )
-                {
-                    subMesh->setVisible(true);
-                }
-                else
-                {
-                    subMesh->setVisible(false);
-                }
-            }
-        }
-    }
+    std::string str = _curSkin[SkinType::HAIR];
+    if (str == "Girl_Hair01")
+        _curSkin[SkinType::HAIR] = "Girl_Hair02";
+    else
+        _curSkin[SkinType::HAIR] = "Girl_Hair01";
+    applyCurSkin();
 }
 void Sprite3DReskinTest::menuCallback_switchGlasses(Ref* sender)
 {
-    auto subMesh = _sprite->getMeshByName("Girl_Glasses01");
-    if(subMesh)
-    {
-        if(subMesh->isVisible())
-        {
-            subMesh->setVisible(false);
-        }
-        else
-        {
-            subMesh->setVisible(true);
-        }
-    }
+    std::string str = _curSkin[SkinType::GLASSES];
+    if (str == "Girl_Glasses01")
+        _curSkin[SkinType::GLASSES] = "";
+    else
+        _curSkin[SkinType::GLASSES] = "Girl_Glasses01";
+    applyCurSkin();
 }
 void Sprite3DReskinTest::menuCallback_switchCoat(Ref* sender)
 {
-    _useUpBodyId++;
-    if(_useUpBodyId > 1 )
-    {
-        _useUpBodyId = 0;
-    }
-    if(_useUpBodyId >= 0  && _sprite)
-    {
-        for(int i = 0; i < 2; i++ )
-        {
-            auto subMesh = _sprite->getMeshByName(_girlUpperBody[i]);
-            if(subMesh)
-            {
-                if(i == _useUpBodyId )
-                {
-                    subMesh->setVisible(true);
-                }
-                else
-                {
-                    subMesh->setVisible(false);
-                }
-            }
-        }
-    }
+    std::string str = _curSkin[SkinType::UPPER_BODY];
+    if (str == "Girl_UpperBody01")
+        _curSkin[SkinType::UPPER_BODY] = "Girl_UpperBody02";
+    else
+        _curSkin[SkinType::UPPER_BODY] = "Girl_UpperBody01";
+    applyCurSkin();
 }
 void Sprite3DReskinTest::menuCallback_switchPants(Ref* sender)
 {
-    _usePantsId++;
-    if(_usePantsId > 1 )
-    {
-        _usePantsId = 0;
-    }
-    if(_usePantsId >= 0  && _sprite)
-    {
-        for(int i = 0; i < 2; i++ )
-        {
-            auto subMesh = _sprite->getMeshByName(_girlPants[i]);
-            if(subMesh)
-            {
-                if(i == _usePantsId )
-                {
-                    subMesh->setVisible(true);
-                }
-                else
-                {
-                    subMesh->setVisible(false);
-                }
-            }
-        }
-    }
+    std::string str = _curSkin[SkinType::PANTS];
+    if (str == "Girl_LowerBody01")
+        _curSkin[SkinType::PANTS] = "Girl_LowerBody02";
+    else
+        _curSkin[SkinType::PANTS] = "Girl_LowerBody01";
+    applyCurSkin();
 }
 void Sprite3DReskinTest::menuCallback_switchShoes(Ref* sender)
 {
-        _useShoesId++;
-        if(_useShoesId > 1 )
-        {
-            _useShoesId = 0;
-        }
-        if(_useShoesId >= 0  && _sprite)
-        {
-            for(int i = 0; i < 2; i++ )
-            {
-                auto subMesh = _sprite->getMeshByName(_girlShoes[i]);
-                if(subMesh)
-                {
-                    if(i == _useShoesId )
-                    {
-                        subMesh->setVisible(true);
-                    }
-                    else
-                    {
-                        subMesh->setVisible(false);
-                    }
-                }
-            }
-        }
-       
+    std::string strShoes = _curSkin[SkinType::SHOES];
+    if (strShoes == "Girl_Shoes01")
+        _curSkin[SkinType::SHOES] = "Girl_Shoes02";
+    else
+        _curSkin[SkinType::SHOES] = "Girl_Shoes01";
+    applyCurSkin();
 }
+
 std::string Sprite3DReskinTest::title() const
 {
     return "Testing Sprite3D Reskin";
@@ -1156,43 +1178,10 @@ std::string Sprite3DReskinTest::subtitle() const
 
 void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
 {
-    _girlPants[0]= "Girl_LowerBody01";
-    _girlPants[1]= "Girl_LowerBody02";
-    _girlUpperBody[0] = "Girl_UpperBody01";
-    _girlUpperBody[1] = "Girl_UpperBody02";
-    _girlShoes[0]  = "Girl_Shoes01";
-    _girlShoes[1]  = "Girl_Shoes02";
-    _girlHair[0]= "Girl_Hair01";
-    _girlHair[1]= "Girl_Hair02";
-    _usePantsId = 0;
-    _useUpBodyId = 0;
-    _useShoesId   =0;
-    _useHairId = 0;
-    
     std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
     auto sprite = Sprite3D::create(fileName);
     sprite->setScale(4);
     sprite->setRotation3D(Vec3(0,0,0));
-    auto girlPants = sprite->getMeshByName(_girlPants[1]);
-    if(girlPants)
-    {
-        girlPants->setVisible(false);
-    }
-    auto girlShoes = sprite->getMeshByName(_girlShoes[1]);
-    if(girlShoes)
-    {
-        girlShoes->setVisible(false);
-    }
-    auto girlHair = sprite->getMeshByName(_girlHair[1]);
-    if(girlHair)
-    {
-        girlHair->setVisible(false);
-    }
-    auto girlUpBody = sprite->getMeshByName( _girlUpperBody[1]);
-    if(girlUpBody)
-    {
-        girlUpBody->setVisible(false);
-    }
     addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y-60) );
     auto animation = Animation3D::create(fileName);
@@ -1203,11 +1192,37 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
         sprite->runAction(RepeatForever::create(animate));
     }
     _sprite = sprite;
+    
+    _curSkin[SkinType::UPPER_BODY] = "Girl_UpperBody01";
+    _curSkin[SkinType::PANTS] = "Girl_LowerBody01";
+    _curSkin[SkinType::SHOES] = "Girl_Shoes01";
+    _curSkin[SkinType::HAIR] = "Girl_Hair01";
+    _curSkin[SkinType::FACE] = "Girl_Face01";
+    _curSkin[SkinType::HAND] = "Girl_Hand01";
+    _curSkin[SkinType::GLASSES] = "";
+    applyCurSkin();
 }
 
 void Sprite3DReskinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
 }
+
+void Sprite3DReskinTest::applyCurSkin()
+{
+    for (ssize_t i = 0; i < _sprite->getMeshCount(); i++) {
+        auto mesh = _sprite->getMeshByIndex(static_cast<int>(i));
+        bool isVisible = false;
+        for (auto& it : _curSkin) {
+            if (mesh->getName() == it.second)
+            {
+                isVisible = true;
+                break;
+            }
+        }
+        _sprite->getMeshByIndex(static_cast<int>(i))->setVisible(isVisible);
+    }
+}
+
 Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -1447,7 +1462,7 @@ void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, cons
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
-    Mat4 mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec3 src = Vec3(location.x, location.y, -1);
     Vec3 nearPoint;

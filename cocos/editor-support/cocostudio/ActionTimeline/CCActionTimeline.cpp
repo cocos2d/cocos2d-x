@@ -78,6 +78,7 @@ ActionTimeline::ActionTimeline()
     , _startFrame(0)
     , _endFrame(0)
     , _frameEventListener(nullptr)
+    , _lastFrameListener(nullptr)
 {
 }
 
@@ -186,6 +187,9 @@ void ActionTimeline::step(float delta)
 
     if(_time > _endFrame * _frameInternal)
     {
+        if(_lastFrameListener != nullptr)
+            _lastFrameListener();
+
         _playing = _loop;
         if(!_playing)
             _time = _endFrame * _frameInternal;
@@ -272,6 +276,15 @@ void ActionTimeline::clearFrameEventCallFunc()
     _frameEventListener = nullptr;
 }
 
+void ActionTimeline::setLastFrameCallFunc(std::function<void()> listener)
+{
+    _lastFrameListener = listener;
+}
+
+void ActionTimeline::clearLastFrameCallFunc()
+{
+    _lastFrameListener = nullptr;
+}
 
 void ActionTimeline::emitFrameEvent(Frame* frame)
 {
@@ -283,6 +296,9 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
 
 void ActionTimeline::gotoFrame(int frameIndex)
 {
+    if(_target == nullptr)
+        return;
+
     ssize_t size = _timelineList.size();
     for(ssize_t i = 0; i < size; i++)
     {      

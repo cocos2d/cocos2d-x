@@ -179,6 +179,11 @@ bool GLViewImpl::isOpenGLReady()
 void GLViewImpl::end()
 {
 	m_windowClosed = true;
+    std::string str;
+	if (m_delegate) {
+		// Terminate app on Director::getInstance()->end();
+        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
+	}
 }
 
 
@@ -193,11 +198,8 @@ void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 // user pressed the Back Key on the phone
 void GLViewImpl::OnBackKeyPress()
 {
-    std::string str;
-    if(m_delegate)
-    {
-        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
-    }
+	EventKeyboard event(EventKeyboard::KeyCode::KEY_ESCAPE, false);
+	Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void GLViewImpl::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
@@ -531,33 +533,27 @@ void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 
 void GLViewImpl::QueueBackKeyPress()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
     mInputEvents.push(e);
 }
 
 void GLViewImpl::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mInputEvents.push(e);
 }
 
 void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     mInputEvents.push(event);
 }
 
 void GLViewImpl::ProcessEvents()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
-
-    while (!mInputEvents.empty())
+    std::shared_ptr<InputEvent> e;
+    while (mInputEvents.try_pop(e))
     {
-        InputEvent* e = mInputEvents.front().get();
         e->execute();
-        mInputEvents.pop();
     }
 }
 

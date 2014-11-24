@@ -58,7 +58,7 @@ CC_CONSTRUCTOR_ACCESS:
     
 
 protected:
-    Bone3D* _attachBone;
+    Bone3D*         _attachBone;
 };
 
 

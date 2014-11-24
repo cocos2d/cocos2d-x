@@ -197,8 +197,6 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
    
-    virtual void updateFlippedX() override;
-    virtual void updateFlippedY() override;
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

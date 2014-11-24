@@ -414,7 +414,7 @@ bool OBB::intersects(const OBB& box) const
         for (int j = 0; j < 3; j++)
         {
             Vec3 axis;
-            Vec3::cross(getFaceDirection(i), box.getFaceDirection(j), &axis);
+            Vec3::cross(getEdgeDirection(i), box.getEdgeDirection(j), &axis);
             getInterval(*this, axis, min1, max1);
             getInterval(box, axis, min2, max2);
             if (max1 < min2 || max2 < min1) return false;

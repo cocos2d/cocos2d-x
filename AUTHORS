@@ -820,6 +820,7 @@ Developers:
         
     aeonmine
         Fixed ActionObject memory leak in ActionManagerEx::initWithDictionary
+        Fixed memory leak in cocos studiov2.0 reader
         
     LoungeKatt
         Corrected a mistake of building android project in README.md
@@ -921,6 +922,7 @@ Developers:
         Fix the bug that UIButton doesn't support TTF font
         Fix a bug of TextReader
         Fix a bug that UITextField doesn't support TTF font
+        Setted contentSize in CSLoader
         
     gin0606
         Add a new line at the end of a file
@@ -1048,6 +1050,12 @@ Developers:
         
     liamcindy
         update ui button size changed logic
+        
+    vovkasm
+        Fix warnings for Xcode6.1
+        
+    nilium
+        Unignore libs dir in plugin and fix Travis script to descend into included directories
     
 Retired Core Developers:
     WenSheng Yang
