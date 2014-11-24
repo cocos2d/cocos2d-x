@@ -20,11 +20,11 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName=C:\cocos\quick-3.3final
-DefaultGroupName=quick-3.3final
+DefaultDirName=C:\cocos\quick-3.3rc1
+DefaultGroupName=quick-3.3rc1
 AllowNoIcons=yes
 OutputDir=C:\Work\quick-cocos2d-x-SetupFiles
-OutputBaseFilename=quick-3.3final-win
+OutputBaseFilename=quick-3.3rc1-win
 Compression=lzma
 SolidCompression=yes
 ChangesEnvironment=yes
@@ -38,7 +38,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Work\quick-3.3final\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Work\quick-3.3rc1\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
