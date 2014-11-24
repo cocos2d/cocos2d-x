@@ -5,6 +5,8 @@ end)
 
 function MainScene:ctor()
     local items = {
+        "framework.helper",
+        "framework.native",
         "framework.display",
         "framework.crypto",
         "framework.network",
