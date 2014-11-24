@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
-extern int g_physicsSceneCount = 0;
+int g_physicsSceneCount = 0;
 
 NS_CC_BEGIN
 
