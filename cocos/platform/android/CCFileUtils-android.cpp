@@ -298,7 +298,7 @@ std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
     if (data.isNull())
         return "";
 
-    std::string ret((const char*)data.getBytes());
+    std::string ret((const char*)data.getBytes(), data.getSize());
     return ret;
 }
     
