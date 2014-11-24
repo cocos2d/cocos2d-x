@@ -528,6 +528,8 @@
         "cocos/editor-support/cocosbuilder/CocosBuilder.h", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimeline.cpp", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimeline.h", 
+        "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.cpp", 
+        "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.h", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.cpp", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.h", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCFrame.cpp", 
