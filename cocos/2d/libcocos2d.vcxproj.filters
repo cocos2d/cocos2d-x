@@ -1379,6 +1379,33 @@
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DVortexAffector.cpp">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DBoxEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DCircleEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DLineEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DMeshSurfaceEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DPointEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DPositionEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSlaveEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSphereSurfaceEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DVertexEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2747,6 +2774,33 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DVortexAffector.h">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DBoxEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DCircleEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DLineEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DMeshSurfaceEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DPointEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DPositionEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSlaveEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSphereSurfaceEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DVertexEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

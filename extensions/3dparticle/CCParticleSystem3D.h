@@ -55,9 +55,11 @@ struct Particle3D
     Vec3 position;
     // Values that are assigned as soon as the particle is emitted (non-transformed)
     Vec3 originalPosition;
+    Vec3 latestPosition;
     // Direction (and speed)
     Vec3 direction;
     Vec3 originalDirection;
+    float originalDirectionLength; // Length of the direction that has been set
     /** The rotation axis is used in combination with orientation. Because the rotation axis is part
         of the particle itself, it can be changed independently. */
     Vec3 rotationAxis;
