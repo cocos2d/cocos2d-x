@@ -25,17 +25,16 @@
 #ifndef __TestCpp__TextBMFontReader__
 #define __TestCpp__TextBMFontReader__
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
+#include "../WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UITextBMFont.h"
 
 namespace cocostudio
 {
     class CC_STUDIO_DLL TextBMFontReader : public WidgetReader
     {
-        DECLARE_CLASS_NODE_READER_INFO
-        
     public:
+        DECLARE_CLASS_WIDGET_READER_INFO
+        
         TextBMFontReader();
         virtual ~TextBMFontReader();
         
@@ -45,10 +44,7 @@ namespace cocostudio
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-                                                                             flatbuffers::FlatBufferBuilder* builder);
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* textBMFontOptions);
-        cocos2d::ui::TextBMFont* createNodeWithFlatBuffers(const flatbuffers::Table* textBMFontOptions);
+        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
 
     };
 }

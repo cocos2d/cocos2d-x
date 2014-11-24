@@ -1,19 +1,13 @@
 
 
 #include "ImageViewReader.h"
-
 #include "ui/UIImageView.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
-
-#include "tinyxml2/tinyxml2.h"
-#include "flatbuffers/flatbuffers.h"
+#include "tinyxml2.h"
 
 USING_NS_CC;
 using namespace ui;
-using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -29,7 +23,7 @@ namespace cocostudio
     
     static ImageViewReader* instanceImageViewReader = nullptr;
     
-    IMPLEMENT_CLASS_NODE_READER_INFO(ImageViewReader)
+    IMPLEMENT_CLASS_WIDGET_READER_INFO(ImageViewReader)
     
     ImageViewReader::ImageViewReader()
     {
@@ -203,19 +197,19 @@ namespace cocostudio
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
     
-    Offset<Table> ImageViewReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
-                                                                flatbuffers::FlatBufferBuilder *builder)
+    void ImageViewReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
     {
-        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        WidgetReader::setPropsFromXML(widget, objectData);
+        
+        ImageView* imageView = static_cast<ImageView*>(widget);
+        
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
         
         bool scale9Enabled = false;
-        Rect capInsets;
-        cocos2d::Size scale9Size;
+        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
+        float swf = 0.0f, shf = 0.0f;
         
-        std::string path = "";
-        std::string plistFile = "";
-        int resourceType = 0;
+        int opacity = 255;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -233,19 +227,23 @@ namespace cocostudio
             }
             else if (name == "Scale9OriginX")
             {
-                capInsets.origin.x = atof(value.c_str());
+                cx = atof(value.c_str());
             }
             else if (name == "Scale9OriginY")
             {
-                capInsets.origin.y = atof(value.c_str());
+                cy = atof(value.c_str());
             }
             else if (name == "Scale9Width")
             {
-                capInsets.size.width = atof(value.c_str());
+                cw = atof(value.c_str());
             }
             else if (name == "Scale9Height")
             {
-                capInsets.size.height = atof(value.c_str());
+                ch = atof(value.c_str());
+            }
+            else if (name == "Alpha")
+            {
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -268,11 +266,11 @@ namespace cocostudio
                     
                     if (name == "X")
                     {
-                        scale9Size.width = atof(value.c_str());
+                        swf = atof(value.c_str());
                     }
                     else if (name == "Y")
                     {
-                        scale9Size.height = atof(value.c_str());
+                        shf = atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -280,10 +278,9 @@ namespace cocostudio
             }
             else if (name == "FileData")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-                
                 attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -296,106 +293,48 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = getResourceType(value);
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
                         plistFile = value;
-                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                if (resourceType == 1)
+                switch (resourceType)
                 {
-                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    case 0:
+                    {
+                        imageView->loadTexture(xmlPath + path, Widget::TextureResType::LOCAL);
+                        break;
+                    }
+                        
+                    case 1:
+                    {
+                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
+                        imageView->loadTexture(path, Widget::TextureResType::PLIST);
+                        break;
+                    }
+                        
+                    default:
+                        break;
                 }
             }
             
             child = child->NextSiblingElement();
         }
         
-        CapInsets f_capInsets(capInsets.origin.x, capInsets.origin.y, capInsets.size.width, capInsets.size.height);
-        FlatSize f_scale9Size(scale9Size.width, scale9Size.height);
-        
-        auto options = CreateImageViewOptions(*builder,
-                                              widgetOptions,
-                                              CreateResourceData(*builder,
-                                                                 builder->CreateString(path),
-                                                                 builder->CreateString(plistFile),
-                                                                 resourceType),
-                                              &f_capInsets,
-                                              &f_scale9Size,
-                                              scale9Enabled);
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    void ImageViewReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *imageViewOptions)
-    {
-        ImageView* imageView = static_cast<ImageView*>(node);
-        auto options = (ImageViewOptions*)imageViewOptions;
-        
-        
-        auto imageFileNameDic = options->fileNameData();
-        int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
-        imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
-        
-        bool scale9Enabled = options->scale9Enabled();
         imageView->setScale9Enabled(scale9Enabled);
-        
         
         if (scale9Enabled)
         {
-            imageView->setUnifySizeEnabled(false);
-            imageView->ignoreContentAdaptWithSize(false);
-            
-            auto f_scale9Size = options->scale9Size();
-            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
-            imageView->setContentSize(scale9Size);
-            
-            
-            auto f_capInset = options->capInsets();
-            Rect capInsets(f_capInset->x(), f_capInset->y(), f_capInset->width(), f_capInset->height());
-            imageView->setCapInsets(capInsets);
+            imageView->setCapInsets(Rect(cx, cy, cw, ch));
+            imageView->setContentSize(Size(swf, shf));
         }
         
-        auto widgetReader = WidgetReader::getInstance();
-        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-        
-    }
-    
-    ImageView* ImageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *imageViewOptions)
-    {
-        ImageView* imageView = ImageView::create();
-        
-        setPropsWithFlatBuffers(imageView, (Table*)imageViewOptions);
-        
-        return imageView;
-    }
-    
-    int ImageViewReader::getResourceType(std::string key)
-    {
-        if(key == "Normal" || key == "Default")
-        {
-            return 	0;
-        }
-        
-        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-        if(fbs->_isSimulator)
-        {
-            if(key == "MarkedSubImage")
-            {
-                return 0;
-            }
-        }
-        return 1;
+        imageView->setOpacity(opacity);
     }
     
 }
