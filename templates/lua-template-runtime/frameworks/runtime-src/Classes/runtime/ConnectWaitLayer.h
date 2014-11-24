@@ -22,27 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef  _RUNTIME__H_
-#define  _RUNTIME__H_
+#ifndef  _CONNECT_WAIT_LAYER__H_
+#define  _CONNECT_WAIT_LAYER__H_
 
-#include <string>
-using namespace std;
+#include "cocos2d.h"
 
-void recvBuf(int fd, char *pbuf, unsigned long bufsize);
+using namespace cocos2d;
 
-void sendBuf(int fd, const char *pbuf, unsigned long bufsize);
+class ConnectWaitLayer: public Layer
+{
+public:
+    ConnectWaitLayer();
+    void update(float fDelta);
+    
+private:
+    Label* _labelUploadFile;
+};
 
-string& replaceAll(string& str, const string& old_value, const string& new_value);
-
-string getIPAddress();
-
-const char* getRuntimeVersion();
-
-void startScript(string strDebugArg);
-
-void initRuntime();
-
-void startRuntime();
-
-#endif // _RUNTIME__H_
+#endif // _CONNECT_WAIT_LAYER__H_
 

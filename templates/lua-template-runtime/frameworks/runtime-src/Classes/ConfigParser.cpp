@@ -49,7 +49,7 @@ void ConfigParser::readConfig()
                 {
                     float tmpvalue = _initViewSize.height;
                     _initViewSize.height = _initViewSize.width;
-                     _initViewSize.width = tmpvalue;
+                    _initViewSize.width = tmpvalue;
                 }
                 
             }
@@ -88,7 +88,7 @@ void ConfigParser::readConfig()
         const rapidjson::Value& ArrayScreenSize = _docRootjson["simulator_screen_size"];
         if (ArrayScreenSize.IsArray())
         {
-            for (int i = 0; i<ArrayScreenSize.Size(); i++)
+            for (int i = 0; i < ArrayScreenSize.Size(); i++)
             {
                 const rapidjson::Value& objectScreenSize = ArrayScreenSize[i];
                 if (objectScreenSize.HasMember("title") && objectScreenSize.HasMember("width") && objectScreenSize.HasMember("height"))
