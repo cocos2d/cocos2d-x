@@ -45,7 +45,6 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDataReaderHelper.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCComBase.h"
