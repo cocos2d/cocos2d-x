@@ -12,6 +12,10 @@ function NetworkTestScene:ctor()
         "createHTTPRequest",
         "createHTTPRequestBadDomain",
         "send data to server",
+        "isLocalWiFiAvailable",
+        "isInternetConnectionAvailable",
+        "isHostNameReachable",
+        "getInternetConnectionStatus",
     }
     self:addChild(game.createMenu(items, handler(self, self.runTest)))
 end
@@ -91,6 +95,28 @@ print("send data to server")
     request:setCookieString(network.makeCookieString({C1 = "V1", C2 = "V2"}))
     printf("REQUEST START %d", index)
     request:start()
+end
+
+function NetworkTestScene:isLocalWiFiAvailableTest()
+    print("Is local wifi avaibable: ", network.isLocalWiFiAvailable())
+end
+
+function NetworkTestScene:isInternetConnectionAvailableTest()
+    print("Is internet connection avaibable: ", network.isInternetConnectionAvailable())
+end
+
+function NetworkTestScene:isHostNameReachableTest()
+    print("Is www.cocos2d-x.org reachable: ", network.isHostNameReachable("www.cocos2d-x.org"))
+end
+
+function NetworkTestScene:getInternetConnectionStatusTest()
+    local status = {
+        [cc.kCCNetworkStatusNotReachable]     = "无法访问互联网",
+        [cc.kCCNetworkStatusReachableViaWiFi] = "通过 WIFI",
+        [cc.kCCNetworkStatusReachableViaWWAN] = "通过 3G 网络",
+    }
+
+    printf("Internet Connection Status: %s", status[network.getInternetConnectionStatus()])
 end
 
 return NetworkTestScene
