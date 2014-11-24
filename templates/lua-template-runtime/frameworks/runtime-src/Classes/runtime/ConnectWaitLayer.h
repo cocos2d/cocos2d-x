@@ -27,16 +27,14 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 
-using namespace cocos2d;
-
-class ConnectWaitLayer: public Layer
+class ConnectWaitLayer: public cocos2d::Layer
 {
 public:
     ConnectWaitLayer();
     void update(float fDelta);
     
 private:
-    Label* _labelUploadFile;
+    cocos2d::Label* _labelUploadFile;
 };
 
 #endif // _CONNECT_WAIT_LAYER__H_

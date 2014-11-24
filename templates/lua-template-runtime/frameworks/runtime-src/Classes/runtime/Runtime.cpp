@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 static std::string g_projectPath;
 
-void startScript(string strDebugArg)
+void startScript(std::string strDebugArg)
 {
     // register lua engine
     auto engine = LuaEngine::getInstance();
@@ -81,13 +81,13 @@ void sendBuf(int fd, const char *pbuf, unsigned long bufsize)
     }
 }
 
-string& replaceAll(string& str, const string& old_value, const string& new_value)
+std::string& replaceAll(std::string& str, const std::string& old_value, const std::string& new_value)
 {
     size_t start = 0;
     while(true)
     {
         size_t pos = 0;
-        if((pos = str.find(old_value, start)) != string::npos) {
+        if((pos = str.find(old_value, start)) != std::string::npos) {
             str.replace(pos, old_value.length(), new_value);
             start = pos + new_value.length();
         }

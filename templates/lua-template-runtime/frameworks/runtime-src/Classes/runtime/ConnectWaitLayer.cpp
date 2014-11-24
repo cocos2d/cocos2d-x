@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "VisibleRect.h"
 #include "ResData.h"
 
+using namespace cocos2d;
+
 ConnectWaitLayer::ConnectWaitLayer()
 {
     int designWidth = 1280;
@@ -76,7 +78,7 @@ ConnectWaitLayer::ConnectWaitLayer()
     shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
     addChild(shineSprite, 9998);
 
-    string strip = getIPAddress();
+    std::string strip = getIPAddress();
     char szIPAddress[64] = {0};
     sprintf(szIPAddress, "IP: %s", strip.c_str());
     auto IPlabel = Label::createWithSystemFont(szIPAddress, "", 72);
@@ -86,7 +88,7 @@ ConnectWaitLayer::ConnectWaitLayer()
     IPlabel->setPosition(Point(VisibleRect::leftTop().x + spaceSizex, VisibleRect::top().y - spaceSizey));
     addChild(IPlabel, 9001);
 
-    string transferTip = "waiting for file transfer ...";
+    std::string transferTip = "waiting for file transfer ...";
     if (CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
     {
         transferTip = "waiting for debugger to connect ...";
@@ -142,7 +144,7 @@ ConnectWaitLayer::ConnectWaitLayer()
 // clean up: ignore stdin, stdout and stderr
 void ConnectWaitLayer::update(float fDelta)
 {
-    string transferTip = FileServer::getShareInstance()->getTransingFileName();
+    std::string transferTip = FileServer::getShareInstance()->getTransingFileName();
     if (transferTip.empty()){
         return;
     }

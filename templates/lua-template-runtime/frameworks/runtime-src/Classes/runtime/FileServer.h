@@ -33,9 +33,6 @@ THE SOFTWARE.
 #include "Protos.pb.h"
 #include <string>
 
-using namespace std;
-using namespace cocos2d;
-
 // header files for socket
 #ifdef _WIN32
 #include <io.h>
@@ -75,9 +72,9 @@ public:
     void addResFileInfo(const char* filename,uint64_t u64);
     void removeResFileInfo(const char *filename);
     rapidjson::Document* getFileCfgJson() { return &_filecfgjson; }
-    string getWritePath() { return _writePath; }
-    string getTransingFileName();
-    void setTransingFileName(const string& filename);
+    std::string getWritePath() { return _writePath; }
+    std::string getTransingFileName();
+    void setTransingFileName(const std::string& filename);
 protected:
     FileServer();
     ~FileServer();
@@ -85,7 +82,7 @@ private:
     void loopReceiveFile();
     void loopWriteFile();
     void loopResponse();
-    void addResponse(int fd, string filename,int errortype,int errornum);
+    void addResponse(int fd, std::string filename,int errortype,int errornum);
     enum PROTONUM
     {
         FILEPROTO = 1,
@@ -126,13 +123,13 @@ private:
     
     rapidjson::Document _filecfgjson;
     
-    string _strFileName;
+    std::string _strFileName;
     std::mutex _fileNameMutex;
     
-    string _recvErrorFile;
-    string _writeErrorFile;
+    std::string _recvErrorFile;
+    std::string _writeErrorFile;
     
-    string _writePath;
+    std::string _writePath;
 };
 
 bool createDir(const char *sPathName);

@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include <sys/stat.h>
 #endif
 
+USING_NS_CC;
+
 //1M size
 #define MAXPROTOLENGTH 1048576
 
@@ -41,7 +43,7 @@ THE SOFTWARE.
 FileServer* FileServer::s_sharedFileServer = nullptr;
 void FileServer::readResFileFinfo()
 {
-    string filecfg = _writePath + "/fileinfo_debug.json";
+    std::string filecfg = _writePath + "/fileinfo_debug.json";
     FILE * pFile = fopen (filecfg.c_str() , "r");
     if(pFile)
     {
@@ -59,7 +61,7 @@ void FileServer::readResFileFinfo()
         rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
         _filecfgjson.Accept(writer);
         const char* str = buffer.GetString();
-        string filecfg = _writePath + "/fileinfo_debug.json";
+        std::string filecfg = _writePath + "/fileinfo_debug.json";
         FILE * pFile = fopen(filecfg.c_str(), "w");
         if (!pFile) return ;
         fwrite(str, sizeof(char), strlen(str), pFile);
@@ -88,15 +90,15 @@ void FileServer::removeResFileInfo(const char *filename)
     }
 }
 
-string FileServer::getTransingFileName()
+std::string FileServer::getTransingFileName()
 {
     _fileNameMutex.lock();
-    string filename = _strFileName;
+    std::string filename = _strFileName;
     _fileNameMutex.unlock();
     return filename;
 }
 
-void FileServer::setTransingFileName(const string &filename)
+void FileServer::setTransingFileName(const std::string &filename)
 {
     _fileNameMutex.lock();
     _strFileName = filename;
@@ -138,8 +140,13 @@ bool FileServer::listenOnTCP(int port)
         //setsockopt(listenfd, IPPROTO_TCP, TCP_NODELAY, (const char*)&on, sizeof(on));
         if (::bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
-        
-        close(listenfd);    /* bind error, close and try next one */
+   
+		/* bind error, close and try next one */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		closesocket(listenfd);
+#else
+		close(listenfd);
+#endif
     } while ((res = res->ai_next) != NULL);
 
     if (res == NULL)
@@ -340,8 +347,8 @@ void FileServer::loopWriteFile()
         RecvBufStruct recvDataBuf = _recvBufList.front();
         _recvBufList.pop_front();
         _recvBufListMutex.unlock();
-        string filename = recvDataBuf.fileProto.file_name();
-        string fullfilename = _writePath;
+        std::string filename = recvDataBuf.fileProto.file_name();
+        std::string fullfilename = _writePath;
         fullfilename += filename;
         _fileNameMutex.lock();
         _strFileName = filename;
@@ -387,7 +394,7 @@ void FileServer::loopWriteFile()
     }
 }
 
-void FileServer::addResponse(int fd, string filename, int errortype, int errornum)
+void FileServer::addResponse(int fd, std::string filename, int errortype, int errornum)
 {
     switch (errortype)
     {
@@ -433,7 +440,7 @@ void FileServer::loopResponse()
         _responseBufList.pop_front();
         _responseBufListMutex.unlock();
         //send response
-        string responseString;
+        std::string responseString;
         runtime::FileSendComplete  fileSendProtoComplete;
         fileSendProtoComplete.set_file_name(responseBuf.fileResponseProto.file_name());
         fileSendProtoComplete.set_result(responseBuf.fileResponseProto.result());
@@ -474,11 +481,13 @@ bool createDir(const char *sPathName)
         if(DirName[i] == '/')
         {
             DirName[i] = 0;
-            if(access(DirName, NULL) != 0)
-            {
 #ifdef _WIN32
+            if(_access(DirName, NULL) != 0)
+            {
                 if(_mkdir(DirName/*, 0755*/) == -1)
 #else
+			if (access(DirName, NULL) != 0)
+			{
                 if(mkdir(DirName, 0755) == -1)
 #endif
                 {
