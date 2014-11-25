@@ -47,7 +47,6 @@ if(PKG_CONFIG_FOUND)
   list(APPEND PKG_CONFIG_PATH "/usr/local/lib/pkgconfig")
   file(TO_NATIVE_PATH "${PKG_CONFIG_PATH}" new_pkg_config_path)
   set(ENV{PKG_CONFIG_PATH} "${new_pkg_config_path}")
-  message(STATUS "XXX pkg-config search path: $ENV{PKG_CONFIG_PATH}")
 
   # now try to find glfw with pkg-config
   pkg_check_modules(PC_GLFW3 glfw3)
@@ -147,10 +146,5 @@ if(NOT GLFW3_FOUND)
   find_package_handle_standard_args(GLFW3 DEFAULT_MSG GLFW3_LIBRARIES GLFW3_INCLUDE_DIR)
 
 endif()
-
-# debug
-foreach(var FOUND DEFINITIONS INCLUDE_DIRS LIBRARIES LIBRARY_DIRS)
-  message(STATUS "glfw3 ${var}: ${GLFW3_${var}}")
-endforeach()
 
 mark_as_advanced(GLFW3_INCLUDE_DIR GLFW3_LIBRARIES GLFW3_LIBRARY)
