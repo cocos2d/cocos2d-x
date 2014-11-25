@@ -12,7 +12,10 @@ function MainScene:ctor()
         "framework.network",
         "framework.luabinding",
         "framework.event",
-        "framework.interface"
+        "framework.interface",
+        "framework.socketTcp",
+        "framework.timer",
+        "framework.function"
     }
 
     self:addChild(game.createMenu(items, handler(self, self.openTest)))
