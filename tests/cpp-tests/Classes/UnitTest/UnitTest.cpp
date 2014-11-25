@@ -1,6 +1,37 @@
 #include "UnitTest.h"
 #include "RefPtrTest.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if defined (__arm64__)
+#define USE_NEON64
+#define INCLUDE_NEON64
+#elif defined (__ARM_NEON__)
+#define USE_NEON32
+#define INCLUDE_NEON32
+#else
+#endif
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if defined (__arm64__) || defined (__aarch64__)
+#define USE_NEON64
+#define INCLUDE_NEON64
+#elif defined (__ARM_NEON__)
+#define INCLUDE_NEON32
+#else
+#endif
+#else
+
+#endif
+
+#if defined (__SSE__)
+#define USE_SSE
+#define INCLUDE_SSE
+#endif
+
+#if (defined INCLUDE_NEON64) || (defined INCLUDE_NEON32) // FIXME: || (defined INCLUDE_SSE)
+#define UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
+#endif
+
+
 // For ' < o > ' multiply test scene.
 
 static std::function<Layer*()> createFunctions[] = {
@@ -9,7 +40,9 @@ static std::function<Layer*()> createFunctions[] = {
     CL(ValueTest),
     CL(RefPtrTest),
     CL(UTFConversionTest),
+#ifdef UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
     CL(MathUtilTest)
+#endif
 };
 
 static int sceneIdx = -1;
@@ -820,38 +853,7 @@ std::string UTFConversionTest::subtitle() const
 
 // MathUtilTest
 
-//#define USE_NEON32        : neon 32 code will be used
-//#define USE_NEON64        : neon 64 code will be used
-//#define INCLUDE_NEON32    : neon 32 code included
-//#define INCLUDE_NEON64    : neon 64 code included
-//#define USE_SSE           : SSE code used
-//#define INCLUDE_SSE       : SSE code included
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#if defined (__arm64__)
-#define USE_NEON64
-#define INCLUDE_NEON64
-#elif defined (__ARM_NEON__)
-#define USE_NEON32
-#define INCLUDE_NEON32
-#else
-#endif
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#if defined (__arm64__) || defined (__aarch64__)
-#define USE_NEON64
-#define INCLUDE_NEON64
-#elif defined (__ARM_NEON__)
-#define INCLUDE_NEON32
-#else
-#endif
-#else
-
-#endif
-
-#if defined (__SSE__)
-#define USE_SSE
-#define INCLUDE_SSE
-#endif
+namespace UnitTest {
 
 #ifdef INCLUDE_NEON32
 #include "math/MathUtilNeon.inl"
@@ -862,10 +864,15 @@ std::string UTFConversionTest::subtitle() const
 #endif
 
 #ifdef INCLUDE_SSE
-#include "math/MathUtilSSE.inl"
+//FIXME: #include "math/MathUtilSSE.inl"
 #endif
 
 #include "math/MathUtil.inl"
+
+} // namespace UnitTest {
+
+// I know the next line looks ugly, but it's a way to test MathUtil. :)
+using namespace UnitTest::cocos2d;
 
 static void __checkMathUtilResult(const char* description, const float* a1, const float* a2, int size)
 {
@@ -882,7 +889,7 @@ static void __checkMathUtilResult(const char* description, const float* a1, cons
         {
             log("Wrong: a1[%d]=%f, a2[%d]=%f", i, a1[i], i, a2[i]);
         }
-//        CCASSERT(r, "The optimized instruction is implemented in a wrong way, please check it!");
+        CCASSERT(r, "The optimized instruction is implemented in a wrong way, please check it!");
     }
 }
 
