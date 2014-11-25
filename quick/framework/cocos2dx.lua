@@ -59,6 +59,7 @@ require(p .. "StudioConstants")
 end
 
 require(p .. "Event")
+require(p .. "ActionEx")
 require(p .. "NodeEx")
 require(p .. "SceneEx")
 require(p .. "SpriteEx")
