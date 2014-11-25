@@ -8,18 +8,6 @@ LOCAL_MODULE_FILENAME := libcocos2dlua
 
 LOCAL_SRC_FILES := hellolua/main.cpp \
 hellolua/Runtime_android.cpp \
-../../Classes/protobuf-lite/google/protobuf/io/coded_stream.cc \
-../../Classes/protobuf-lite/google/protobuf/stubs/common.cc \
-../../Classes/protobuf-lite/google/protobuf/extension_set.cc \
-../../Classes/protobuf-lite/google/protobuf/generated_message_util.cc \
-../../Classes/protobuf-lite/google/protobuf/message_lite.cc \
-../../Classes/protobuf-lite/google/protobuf/stubs/once.cc \
-../../Classes/protobuf-lite/google/protobuf/stubs/atomicops_internals_x86_gcc.cc \
-../../Classes/protobuf-lite/google/protobuf/repeated_field.cc \
-../../Classes/protobuf-lite/google/protobuf/wire_format_lite.cc \
-../../Classes/protobuf-lite/google/protobuf/io/zero_copy_stream.cc \
-../../Classes/protobuf-lite/google/protobuf/io/zero_copy_stream_impl_lite.cc \
-../../Classes/protobuf-lite/google/protobuf/stubs/stringprintf.cc \
 ../../Classes/runtime/Landscape_png.cpp \
 ../../Classes/runtime/PlayDisable_png.cpp \
 ../../Classes/runtime/PlayEnable_png.cpp \
@@ -44,6 +32,7 @@ $(LOCAL_PATH)/../../Classes/quick-src/extra
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 LOCAL_STATIC_LIBRARIES += lua_extensions_static
 LOCAL_STATIC_LIBRARIES += extra_static
+LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
 
 include $(BUILD_SHARED_LIBRARY)
 
