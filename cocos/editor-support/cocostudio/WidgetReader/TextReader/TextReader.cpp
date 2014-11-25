@@ -1,18 +1,13 @@
 
 
 #include "TextReader.h"
-
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "cocostudio/CSParseBinary_generated.h"
-
-#include "tinyxml2/tinyxml2.h"
-#include "flatbuffers/flatbuffers.h"
+#include "tinyxml2.h"
 
 USING_NS_CC;
 using namespace ui;
-using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -27,7 +22,7 @@ namespace cocostudio
     
     static TextReader* instanceTextReader = nullptr;
     
-    IMPLEMENT_CLASS_NODE_READER_INFO(TextReader)
+    IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
     
     TextReader::TextReader()
     {
@@ -200,25 +195,22 @@ namespace cocostudio
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
     
-    Offset<Table> TextReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
-                                                           flatbuffers::FlatBufferBuilder *builder)
+    void TextReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
     {
-        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        WidgetReader::setPropsFromXML(widget, objectData);
         
-        bool touchScaleEnabled = false;
-        bool isCustomSize = false;
-        std::string fontName = "微软雅黑";
-        int fontSize = 20;
-        std::string text = "Text Label";
-        int areaWidth = 0;
-        int areaHeight = 0;
-        int h_alignment = 0;
-        int v_alignment = 0;
+        Text* label = static_cast<Text*>(widget);
         
-        std::string path = "";
-        std::string plistFile = "";
-        int resourceType = 0;
+        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        
+        float areaWidth = 0.0f, areaHeight = 0.0f;
+        int halignment = 0, valignment = 0;
+        
+        int opacity = 255;
+        
+        label->setUnifySizeEnabled(false);
+        
+        label->setFontName("微软雅黑");
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -229,19 +221,19 @@ namespace cocostudio
             
             if (name == "TouchScaleChangeAble")
             {
-                touchScaleEnabled = (value == "True") ? true : false;
+                label->setTouchScaleChangeEnabled((value == "True") ? true : false);
             }
             else if (name == "LabelText")
             {
-                text = value;
+                label->setString(value);
             }
             else if (name == "FontSize")
             {
-                fontSize = atoi(value.c_str());
+                label->setFontSize(atoi(value.c_str()));
             }
             else if (name == "FontName")
             {
-                fontName = value;
+                label->setFontName(value);
             }
             else if (name == "AreaWidth")
             {
@@ -255,35 +247,35 @@ namespace cocostudio
             {
                 if (value == "HT_Left")
                 {
-                    h_alignment = 0;
+                    halignment = 0;
                 }
                 else if (value == "HT_Center")
                 {
-                    h_alignment = 1;
+                    halignment = 1;
                 }
                 else if (value == "HT_Right")
                 {
-                    h_alignment = 2;
+                    halignment = 2;
                 }
             }
             else if (name == "VerticalAlignmentType")
             {
                 if (value == "VT_Top")
                 {
-                    v_alignment = 0;
+                    valignment = 0;
                 }
                 else if (value == "VT_Center")
                 {
-                    v_alignment = 1;
+                    valignment = 1;
                 }
                 else if (value == "VT_Bottom")
                 {
-                    v_alignment = 2;
+                    valignment = 2;
                 }
             }
-            else if (name == "IsCustomSize")
+            else if (name == "Alpha")
             {
-                isCustomSize = (value == "True") ? true : false;
+                opacity = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -295,9 +287,36 @@ namespace cocostudio
         {
             std::string name = child->Name();
             
-            if (name == "FontResource")
+            if (name == "Size")
             {
                 attribute = child->FirstAttribute();
+                float width = 0.0f, height = 0.0f;
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                label->ignoreContentAdaptWithSize(false);
+                label->setContentSize(Size(width, height));
+            }
+            else if (name == "FontResource")
+            {
+                attribute = child->FirstAttribute();
+                int resourceType = 0;
+                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -310,7 +329,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = 0;
+                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
                     }
                     else if (name == "Plist")
                     {
@@ -319,81 +338,32 @@ namespace cocostudio
                     
                     attribute = attribute->Next();
                 }
+                
+                switch (resourceType)
+                {
+                    case 0:
+                    {
+                        label->setFontName(xmlPath + path);
+                        break;
+                    }
+                        
+                    default:
+                        break;
+                }
             }
             
             child = child->NextSiblingElement();
         }
         
-        auto options = CreateTextOptions(*builder,
-                                         widgetOptions,
-                                         CreateResourceData(*builder,
-                                                            builder->CreateString(path),
-                                                            builder->CreateString(plistFile),
-                                                            resourceType),
-                                         builder->CreateString(fontName),
-                                         fontSize,
-                                         builder->CreateString(text),
-                                         areaWidth,
-                                         areaHeight,
-                                         h_alignment,
-                                         v_alignment,
-                                         touchScaleEnabled,
-                                         isCustomSize);
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    void TextReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *textOptions)
-    {
-        Text* label = static_cast<Text*>(node);
-        auto options = (TextOptions*)textOptions;
-        
-        bool IsCustomSize = options->isCustomSize();
-        label->ignoreContentAdaptWithSize(!IsCustomSize);
-        
-        label->setUnifySizeEnabled(false);
-        
-        bool touchScaleEnabled = options->touchScaleEnable();
-        label->setTouchScaleChangeEnabled(touchScaleEnabled);
-        std::string text = options->text()->c_str();
-        label->setString(text);
-        
-        int fontSize = options->fontSize();
-        label->setFontSize(fontSize);
-        
-        std::string fontName = options->fontName()->c_str();
-        label->setFontName(fontName);
-        
-        Size areaSize = Size(options->areaWidth(), options->areaHeight());
-        if (!areaSize.equals(Size::ZERO))
+        if (areaWidth != 0 || areaHeight != 0)
         {
-            label->setTextAreaSize(areaSize);
+            label->setTextAreaSize(Size(areaWidth, areaHeight));
         }
         
-        TextHAlignment h_alignment = (TextHAlignment)options->hAlignment();
-        label->setTextHorizontalAlignment(h_alignment);
+        label->setTextHorizontalAlignment((TextHAlignment)halignment);
+        label->setTextVerticalAlignment((TextVAlignment)valignment);
         
-        TextVAlignment v_alignment = (TextVAlignment)options->vAlignment();
-        label->setTextVerticalAlignment((TextVAlignment)v_alignment);
-        
-        auto resourceData = options->fontResource();
-        std::string path = resourceData->path()->c_str();
-        if (path != "")
-        {
-            label->setFontName(path);
-        }
-        
-        auto widgetReader = WidgetReader::getInstance();
-        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-    }
-    
-    Text* TextReader::createNodeWithFlatBuffers(const flatbuffers::Table *textOptions)
-    {
-        Text* text = Text::create();
-        
-        setPropsWithFlatBuffers(text, (Table*)textOptions);
-        
-        return text;
+        label->setOpacity(opacity);
     }
     
 }
