@@ -34,8 +34,7 @@ function MainScene:ctor()
 end
 
 function MainScene:openTest(name)
-    local Scene = require("tests." .. name .. "Test")
-    display.replaceScene(Scene.new())
+    display.replaceScene(require("tests." .. name .. "Test").new(), "random", 1)
 end
 
 function MainScene:onEnter()

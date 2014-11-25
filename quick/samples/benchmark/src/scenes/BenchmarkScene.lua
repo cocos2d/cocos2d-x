@@ -114,4 +114,8 @@ function BenchmarkScene:onEnter()
     end)
 end
 
+function BenchmarkScene:onExit()
+    display.removeAnimationCache("Coin")
+end
+
 return BenchmarkScene

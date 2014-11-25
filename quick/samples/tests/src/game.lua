@@ -33,7 +33,7 @@ function game.exit()
 end
 
 function game.enterMainScene()
-    display.replaceScene(require("scenes.MainScene").new(), "fade", 0.6, display.COLOR_WHITE)
+    display.replaceScene(require("scenes.MainScene").new(), "random", 1)
 
     -- local Scene = require("tests.framework.networkTest")
     -- display.replaceScene(Scene.new())
@@ -63,7 +63,7 @@ function game.createSceneClass(name)
         cc.ui.UIPushButton.new()
             :setButtonLabel(cc.ui.UILabel.new({text = "RETURN", size = 32, color = display.COLOR_BLUE}))
             :onButtonClicked(function(event)
-                display.replaceScene(require("scenes.MainScene").new())
+                display.replaceScene(require("scenes.MainScene").new(), "random", 1)
             end)
             :align(display.LEFT_BOTTOM, display.right - 80, display.bottom + 30)
             :addTo(self.menuLayer)

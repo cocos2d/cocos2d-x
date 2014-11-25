@@ -309,7 +309,7 @@ local nextScene = display.newScene("NextScene")
 -- 包装过渡效果
 local transition = display.wrapSceneWithTransition(nextScene, "fade", 0.5)
 -- 切换到新场景
-display.replaceScene(nextScene)
+display.replaceScene(transition)
 
 ~~~
 
@@ -761,7 +761,7 @@ function display.newTilesSprite(filename, rect)
         return
     end
 
-    sprite:getTexture():setTexParameters(9729, 9729, 10497, 10497)
+    sprite:getTexture():setTexParameters(gl.LINEAR, gl.LINEAR, gl.REPEAT, gl.REPEAT)
 
     display.align(sprite, display.LEFT_BOTTOM, 0, 0)
 
@@ -809,36 +809,6 @@ function display.newTiledBatchNode(filename, plistFile, size, hPadding, vPadding
     __batch:setContentSize(__newSize)
 
     return __batch, __newSize.width, __newSize.height
-end
-
--- start --
-
---------------------------------
--- Create a masked sprite
--- @function [parent=#display] newMaskedSprite
--- @param string mask  裁剪形状的图片名
--- @param string pic   被裁减的图片名
--- @return Sprite#Sprite ret (return value: cc.Sprite)
-
--- end --
-
-function display.newMaskedSprite(__mask, __pic)
-    local __maskSprite = display.newSprite(__mask):align(display.LEFT_BOTTOM, 0, 0)
-    __maskSprite:setBlendFunc(gl.ONE, gl.ZERO)
-
-    local __picSprite = display.newSprite(__pic):align(display.LEFT_BOTTOM, 0, 0)
-    __picSprite:setBlendFunc(gl.DST_ALPHA, gl.ZERO)
-
-    local __maskSize = __maskSprite:getContentSize()
-    local __canva = cc.RenderTexture:create(__maskSize.width,__maskSize.height)
-    __canva:begin()
-    __maskSprite:visit()
-    __picSprite:visit()
-    __canva:endToLua()
-
-    local __resultSprite = cc.Sprite:createWithTexture(__canva:getSprite():getTexture())
-    __resultSprite:flipY(true)
-    return __resultSprite
 end
 
 -- start --
@@ -1457,7 +1427,7 @@ function display.addSpriteFrames(plistFilename, image, handler)
         else
             sharedSpriteFrameCache:addSpriteFrames(plistFilename, image)
         end
-        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2D_PIXEL_FORMAT_RGBA8888)
     else
         if async then
             sharedTextureCache:addImageAsync(image, asyncHandler)
@@ -1498,7 +1468,7 @@ end
 
 设置材质格式。
 
-为了节约内存，我们会使用一些颜色品质较低的材质格式，例如针对背景图使用 cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565 格式。
+为了节约内存，我们会使用一些颜色品质较低的材质格式，例如针对背景图使用 cc.TEXTURE2D_PIXEL_FORMAT_RGB565 格式。
 
 display.setTexturePixelFormat() 可以指定材质文件的材质格式，这样在加载材质文件时就会使用指定的格式。
 
@@ -1552,7 +1522,7 @@ local imageName = "Sprites.png"
 display.addSpriteFrames("Sprites.plist", imageName) -- 载入图像到帧缓存
 
 -- 下面的代码绘制 100 个图像只用了 1 次 OpenGL draw call
-local batch = display.newBatch(imageName)
+local batch = display.newBatchNode(imageName)
 for i = 1, 100 do
     local sprite = display.newSprite("#Sprite0001.png")
     batch:addChild(sprite)
@@ -1781,14 +1751,15 @@ end
 
 进度条类型有:
 
-- display.PROGRESS_TIMER_BAR  环形
-- display.PROGRESS_TIMER_RADIAL
+- display.PROGRESS_TIMER_BAR
+- display.PROGRESS_TIMER_RADIAL 环形
 
 ]]
-display.PROGRESS_TIMER_BAR = 1
-display.PROGRESS_TIMER_RADIAL = 0
 
 -- end --
+
+display.PROGRESS_TIMER_BAR = 1
+display.PROGRESS_TIMER_RADIAL = 0
 
 function display.newProgressTimer(image, progresssType)
     if type(image) == "string" then
