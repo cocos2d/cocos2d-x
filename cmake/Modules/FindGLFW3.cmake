@@ -50,7 +50,14 @@ if(PKG_CONFIG_FOUND)
 
   # now try to find glfw with pkg-config
   pkg_check_modules(PC_GLFW3 glfw3)
-
+  #TODO: remove when problem will be fixed
+  message(STATUS "BEGIN DEBUG")
+  foreach(_prefix PC_GLFW3 PC_GLFW3_STATIC)
+    foreach(_suffix LIBRARIES LIBRARY_DIRS LDFLAGS LDFLAGS_OTHER INCLUDE_DIRS CFLAGS CLAGS_OTHER)
+      message(STATUS "PkgConfig: ${_prefix}_${_suffix}: ${${_prefix}_${_suffix}}")
+    endforeach()
+  endforeach()
+  message(STATUS "END DEBUG")
   if(PC_GLFW3_FOUND)
 
     # try to find static library
