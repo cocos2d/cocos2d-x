@@ -575,6 +575,7 @@ end
 -- end --
 
 function math.round(value)
+    value = checknumber(value)
     return math.floor(value + 0.5)
 end
 
@@ -1363,7 +1364,7 @@ end
 
 ~~~ lua
 
-print(string.nl2br("<Hello>\nWorld"))
+print(string.text2html("<Hello>\nWorld"))
 -- 输出
 -- &lt;Hello&gt;<br />World
 
@@ -1476,7 +1477,7 @@ end
 ~~~ lua
 
 local input = "ABC  "
-print(string.ltrim(input))
+print(string.rtrim(input))
 -- 输出 ABC，输入字符串最后的两个空格被去掉了
 
 ~~~

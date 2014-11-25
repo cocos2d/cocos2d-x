@@ -93,7 +93,7 @@ function Timer.new()
 
     -   eventName: 计时器事件的名称
     -   countdown: 倒计时（秒）
-    -   interval（可选）: 检查倒计时的时间间隔，最小为 5 秒，最长为 120 秒，如果未指定则默认为 30 秒
+    -   interval（可选）: 检查倒计时的时间间隔，最小为 2 秒，最长为 120 秒，如果未指定则默认为 30 秒
 
     ]]
     function timer:addCountdown(eventName, countdown, interval)
