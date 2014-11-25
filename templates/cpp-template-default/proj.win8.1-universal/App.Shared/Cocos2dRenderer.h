@@ -34,7 +34,10 @@ namespace cocos2d
         void Draw(GLsizei width, GLsizei height, float dpi);
         void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
         void QueueKeyBoardEvent(Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e);
-
+        void Pause();
+        void Resume();
+        void DeviceLost();
+        
     private:
 
         int m_width;
