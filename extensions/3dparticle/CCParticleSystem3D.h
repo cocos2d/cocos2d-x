@@ -187,6 +187,8 @@ public:
     
     virtual void update(float delta) override;
     
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    
     /**
      * particle system play control
      */

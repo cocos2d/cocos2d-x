@@ -25,6 +25,7 @@
 #include "CCParticleSystem3D.h"
 #include "CCParticle3DEmitter.h"
 #include "CCParticle3DAffector.h"
+#include "CCParticle3DRender.h"
 
 NS_CC_BEGIN
 
@@ -54,44 +55,70 @@ ParticleSystem3D::ParticleSystem3D()
 : _emitter(nullptr)
 , _render(nullptr)
 , _aliveParticlesCnt(0)
-, _state(State::RUNNING)
+, _state(State::STOP)
 , _particleSystemScaleVelocity(0.0f)
 {
     
 }
 ParticleSystem3D::~ParticleSystem3D()
 {
-    
+    stop();
+    CC_SAFE_RELEASE(_emitter);
+    CC_SAFE_RETAIN(_render);
 }
 
 void ParticleSystem3D::start()
 {
-    
+    if (_state != State::RUNNING)
+    {
+        scheduleUpdate();
+        _state = State::RUNNING;
+    }
 }
 
 void ParticleSystem3D::stop()
 {
-    
+    if (_state != State::STOP)
+    {
+        unscheduleUpdate();
+        _state = State::STOP;
+    }
 }
 
 void ParticleSystem3D::pause()
 {
-    
+    if (_state == State::RUNNING)
+    {
+        _state = State::PAUSE;
+    }
 }
 
 void ParticleSystem3D::resume()
 {
-    
+    if (_state == State::PAUSE)
+    {
+        _state = State::RUNNING;
+    }
 }
 
 void ParticleSystem3D::setEmitter(Particle3DEmitter* emitter)
 {
-    
+    if (_emitter != emitter)
+    {
+        CC_SAFE_RELEASE(_emitter);
+        _emitter = emitter;
+        CC_SAFE_RETAIN(_emitter);
+    }
 }
 
 void ParticleSystem3D::setRender(Particle3DRender* render)
 {
-    
+    if (_render != render)
+    {
+        CC_SAFE_RELEASE(_render);
+        _render = render;
+        CC_SAFE_RETAIN(_render);
+    }
 }
 
 void ParticleSystem3D::addAffector(Particle3DAffector* affector)
@@ -131,7 +158,15 @@ void ParticleSystem3D::update(float delta)
     for (auto& it : _affectors) {
         it->updateAffector(delta);
     }
-        
+}
+
+void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (_state != State::STOP && _render)
+    {
+        _render->updateRender(transform, this);
+        _render->render(renderer);
+    }
 }
 
 const std::vector<Particle3D*>& ParticleSystem3D::getParticles()

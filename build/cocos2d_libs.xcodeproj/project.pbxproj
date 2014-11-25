@@ -2111,6 +2111,10 @@
 		B64F2CA81A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9B1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h */; };
 		B64F2CA91A244E8E00DDCF36 /* CCParticle3DSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */; };
 		B64F2CAA1A244E8E00DDCF36 /* CCParticle3DSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */; };
+		B64F2CAD1A24590300DDCF36 /* CCParticle3DRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2CAB1A24590300DDCF36 /* CCParticle3DRender.cpp */; };
+		B64F2CAE1A24590300DDCF36 /* CCParticle3DRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2CAB1A24590300DDCF36 /* CCParticle3DRender.cpp */; };
+		B64F2CAF1A24590300DDCF36 /* CCParticle3DRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2CAC1A24590300DDCF36 /* CCParticle3DRender.h */; };
+		B64F2CB01A24590300DDCF36 /* CCParticle3DRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2CAC1A24590300DDCF36 /* CCParticle3DRender.h */; };
 		B67880791A198F79002425C1 /* CCParticleSystem3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67880771A198F79002425C1 /* CCParticleSystem3D.cpp */; };
 		B678807A1A198F79002425C1 /* CCParticleSystem3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67880771A198F79002425C1 /* CCParticleSystem3D.cpp */; };
 		B678807B1A198F79002425C1 /* CCParticleSystem3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B67880781A198F79002425C1 /* CCParticleSystem3D.h */; };
@@ -3266,6 +3270,8 @@
 		B64F2C9A1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSimpleSpline.cpp; path = 3dparticle/ParticleUniverse/CCParticle3DSimpleSpline.cpp; sourceTree = "<group>"; };
 		B64F2C9B1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSimpleSpline.h; path = 3dparticle/ParticleUniverse/CCParticle3DSimpleSpline.h; sourceTree = "<group>"; };
 		B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSphere.h; path = 3dparticle/ParticleUniverse/CCParticle3DSphere.h; sourceTree = "<group>"; };
+		B64F2CAB1A24590300DDCF36 /* CCParticle3DRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DRender.cpp; path = 3dparticle/CCParticle3DRender.cpp; sourceTree = "<group>"; };
+		B64F2CAC1A24590300DDCF36 /* CCParticle3DRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DRender.h; path = 3dparticle/CCParticle3DRender.h; sourceTree = "<group>"; };
 		B67880771A198F79002425C1 /* CCParticleSystem3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticleSystem3D.cpp; path = 3dparticle/CCParticleSystem3D.cpp; sourceTree = "<group>"; };
 		B67880781A198F79002425C1 /* CCParticleSystem3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticleSystem3D.h; path = 3dparticle/CCParticleSystem3D.h; sourceTree = "<group>"; };
 		B678807D1A19C8AA002425C1 /* CCParticle3DAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DAffector.cpp; path = 3dparticle/CCParticle3DAffector.cpp; sourceTree = "<group>"; };
@@ -5381,6 +5387,8 @@
 		B67880721A198D05002425C1 /* 3d particle */ = {
 			isa = PBXGroup;
 			children = (
+				B64F2CAB1A24590300DDCF36 /* CCParticle3DRender.cpp */,
+				B64F2CAC1A24590300DDCF36 /* CCParticle3DRender.h */,
 				B678807D1A19C8AA002425C1 /* CCParticle3DAffector.cpp */,
 				B678807E1A19C8AA002425C1 /* CCParticle3DAffector.h */,
 				B678807F1A19C8AA002425C1 /* CCParticle3DEmitter.cpp */,
@@ -5610,6 +5618,7 @@
 				3EA6F4D91A1C8BAA00FF6AA9 /* CCParticle3DRandomiser.h in Headers */,
 				50ABBD8D1925AB4100A911A9 /* CCGLProgram.h in Headers */,
 				50ABBEA11925AB6F00A911A9 /* CCScheduler.h in Headers */,
+				B64F2CAF1A24590300DDCF36 /* CCParticle3DRender.h in Headers */,
 				15AE1B6219AADA9900C27E9E /* UIButton.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
@@ -6252,6 +6261,7 @@
 				B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */,
 				B230ED7419B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
 				50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
+				B64F2CB01A24590300DDCF36 /* CCParticle3DRender.h in Headers */,
 				B64F2CA41A244E8E00DDCF36 /* CCParticle3DPlane.h in Headers */,
 				15AE1ACB19AAD40300C27E9E /* b2MouseJoint.h in Headers */,
 				50ABBD3F1925AB0000A911A9 /* CCGeometry.h in Headers */,
@@ -7154,6 +7164,7 @@
 				15AE190919AAD35000C27E9E /* CCDecorativeDisplay.cpp in Sources */,
 				15AE18E319AAD35000C27E9E /* TriggerObj.cpp in Sources */,
 				3EA6F4C71A1C8BAA00FF6AA9 /* CCParticle3DLinearForceAffector.cpp in Sources */,
+				B64F2CAD1A24590300DDCF36 /* CCParticle3DRender.cpp in Sources */,
 				15AE1BA119AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				50ABC0211926664800A911A9 /* CCGLViewImpl-desktop.cpp in Sources */,
 				50ABC00D1926664800A911A9 /* CCFileUtils.cpp in Sources */,
@@ -7524,6 +7535,7 @@
 				15AE19AE19AAD39700C27E9E /* PageViewReader.cpp in Sources */,
 				B64F2CA61A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp in Sources */,
 				1A570297180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
+				B64F2CAE1A24590300DDCF36 /* CCParticle3DRender.cpp in Sources */,
 				50ABBE321925AB6F00A911A9 /* CCConfiguration.cpp in Sources */,
 				15AE1A9F19AAD40300C27E9E /* b2Timer.cpp in Sources */,
 				3EA6F4B81A1C8BAA00FF6AA9 /* CCParticle3DGravityAffector.cpp in Sources */,
