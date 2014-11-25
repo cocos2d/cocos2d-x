@@ -7,6 +7,12 @@ LOCAL_MODULE := cocos2dlua_shared
 LOCAL_MODULE_FILENAME := libcocos2dlua
 
 LOCAL_SRC_FILES := hellolua/main.cpp \
+../../Classes/VisibleRect.cpp \
+../../Classes/AppDelegate.cpp \
+../../Classes/ConfigParser.cpp
+
+ifeq ($(NDK_DEBUG),1)
+LOCAL_SRC_FILES += \
 hellolua/Runtime_android.cpp \
 ../../Classes/runtime/Landscape_png.cpp \
 ../../Classes/runtime/PlayDisable_png.cpp \
@@ -15,11 +21,8 @@ hellolua/Runtime_android.cpp \
 ../../Classes/runtime/Shine_png.cpp \
 ../../Classes/runtime/Runtime.cpp \
 ../../Classes/runtime/Protos.pb.cc \
-../../Classes/runtime/lua_debugger.c \
-../../Classes/VisibleRect.cpp \
-../../Classes/AppDelegate.cpp \
-../../Classes/ConfigParser.cpp
-
+../../Classes/runtime/lua_debugger.c
+endif
 
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \
