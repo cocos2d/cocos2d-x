@@ -10,8 +10,15 @@ function DisplayTestScene:ctor()
         "addImageAsync",
         "scale9Sprite",
         "layerMultiTouch",
+        "tilesSprite",
+        "tiledBatchNode",
+        "drawNode",
+        "progress"
     }
     self:addChild(game.createMenu(items, handler(self, self.runTest)))
+
+    display.setTexturePixelFormat("Coin0001.png", cc.TEXTURE2D_PIXEL_FORMAT_RGB565)
+    display.setTexturePixelFormat("blocks9ss.png", cc.TEXTURE2D_PIXEL_FORMAT_RGB565)
 end
 
 function DisplayTestScene:beforeRunTest()
@@ -28,6 +35,16 @@ function DisplayTestScene:beforeRunTest()
     if self.layerTouch then
         self.layerTouch:removeSelf()
         self.layerTouch = nil
+    end
+
+    if self.drawNode_ then
+        self.drawNode_:removeSelf()
+        self.drawNode_ = nil
+    end
+
+    if self.progressNode_ then
+        self.progressNode_:removeSelf()
+        self.progressNode_ = nil
     end
 end
 
@@ -74,6 +91,78 @@ function DisplayTestScene:layerMultiTouchTest()
     end)
     self.layerTouch:setTouchEnabled(true)
     self:addChild(self.layerTouch)
+end
+
+function DisplayTestScene:tilesSpriteTest()
+    display.newTilesSprite("close.png", cc.rect(10, 10, 100, 100))
+        :pos(display.left + 10, display.bottom + 10)
+        :addTo(self)
+end
+
+function DisplayTestScene:tiledBatchNodeTest()
+    local cb = function(plist, image)
+        display.newTiledBatchNode("#blocks9.png", "blocks9ss.png", cc.size(170, 170), 10, 10)
+            :pos(display.left + 10, display.bottom + 150)
+            :addTo(self)
+    end
+    display.addSpriteFrames("blocks9ss.plist", "blocks9ss.png", cb)
+end
+
+function DisplayTestScene:drawNodeTest()
+    local node = display.newNode()
+        :addTo(self)
+    self.drawNode_ = node
+
+    display.newSolidCircle(20,
+        {x = 30, y = 50, color = cc.c4f(1, 1, 1, 1)})
+        :addTo(node, 100, 101)
+
+    display.newCircle(50,
+        {x = display.right - 100, y = display.bottom + 100,
+        fillColor = cc.c4f(1, 0, 0, 1),
+        borderColor = cc.c4f(0, 1, 0, 1),
+        borderWidth = 2})
+        :addTo(node, 100)
+
+    display.newRect(cc.rect(30, 200, 80, 80),
+        {fillColor = cc.c4f(1,0,0,1), borderColor = cc.c4f(0,1,0,1), borderWidth = 5})
+        :addTo(node, 100, 101)
+
+    display.newLine(
+        {
+            {10, 10},
+            {200, 30}
+        },
+        {
+            borderColor = cc.c4f(1.0, 0.0, 0.0, 1.0),
+            borderWidth = 1
+        })
+        :addTo(node, 100, 101)
+
+    local points = {
+        {10, 120},  -- point 1
+        {50, 160},  -- point 2
+        {100, 120}, -- point 3
+    }
+    display.newPolygon(points,
+        {
+            borderColor = cc.c4f(0, 1, 0, 1)
+        })
+        :addTo(node, 100)
+
+end
+
+function DisplayTestScene:progressTest()
+    local progress = display.newProgressTimer("Coin0001.png", display.PROGRESS_TIMER_RADIAL)
+        :pos(100, 100)
+        :addTo(self)
+    progress:setPercentage(60)
+    self.progressNode_ = progress
+end
+
+function DisplayTestScene:onExit()
+    display.removeSpriteFramesWithFile("blocks9ss.plist", "blocks9ss.png")
+    display.removeUnusedSpriteFrames()
 end
 
 return DisplayTestScene

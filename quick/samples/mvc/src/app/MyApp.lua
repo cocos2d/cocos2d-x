@@ -31,4 +31,12 @@ function MyApp:isObjectExists(id)
     return self.objects_[id] ~= nil
 end
 
+function MyApp:onEnterBackground()
+    display.pause()
+end
+
+function MyApp:onEnterForeground()
+    display.resume()
+end
+
 return MyApp
