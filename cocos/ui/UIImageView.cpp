@@ -112,7 +112,7 @@ void ImageView::initRenderer()
 
 void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
 {
-    if (fileName.empty())
+    if (fileName.empty() || (_textureFile == fileName && _imageTexType == texType))
     {
         return;
     }
