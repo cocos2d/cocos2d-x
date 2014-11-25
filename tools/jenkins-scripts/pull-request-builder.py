@@ -138,7 +138,7 @@ def main():
     build_number = os.environ['BUILD_NUMBER']
     target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
-    set_description(pr_desc, target_url)
+    # set_description(pr_desc, target_url)
 
 
     data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build started..."}
@@ -242,28 +242,28 @@ def main():
         print "Start build android..."
         ret = os.system("python build/android-build.py -p 10 all")
         # create and save apk
-        if(ret == 0):
-          sample_dir = 'tests/cpp-tests/proj.android/'
-          local_apk = sample_dir + 'bin/CppTests-debug.apk'
-          backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
-          os.system('cp ' + local_apk + ' ' + backup_apk)
-          db = connect_db()
-          scan_all_libs(db, pr_num)
-          ret = os.system("python build/android-build.py -p 10 -b release cpp-empty-test")
-          if(ret == 0):
-            _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
-            filesize = os.path.getsize(_path)
-            pr_desc = pr_desc + '<h3>size of libcpp_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
-            set_description(pr_desc, target_url)
-            save_build_stats(db, pr_num, 'libcpp_empty_test', filesize/1024)
-          ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
-          if(ret == 0):
-            _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
-            filesize = os.path.getsize(_path)
-            pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
-            set_description(pr_desc, target_url)
-            save_build_stats(db, pr_num, 'liblua_empty_test', filesize/1024)
-          close_db(db)
+        # if(ret == 0):
+          # sample_dir = 'tests/cpp-tests/proj.android/'
+          # local_apk = sample_dir + 'bin/CppTests-debug.apk'
+          # backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
+          # os.system('cp ' + local_apk + ' ' + backup_apk)
+          # db = connect_db()
+          # scan_all_libs(db, pr_num)
+          # ret = os.system("python build/android-build.py -p 10 -b release cpp-empty-test")
+          # if(ret == 0):
+          #   _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
+          #   filesize = os.path.getsize(_path)
+          #   pr_desc = pr_desc + '<h3>size of libcpp_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
+          #   set_description(pr_desc, target_url)
+          #   save_build_stats(db, pr_num, 'libcpp_empty_test', filesize/1024)
+          # ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
+          # if(ret == 0):
+          #   _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
+          #   filesize = os.path.getsize(_path)
+          #   pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
+          #   set_description(pr_desc, target_url)
+          #   save_build_stats(db, pr_num, 'liblua_empty_test', filesize/1024)
+          # close_db(db)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
