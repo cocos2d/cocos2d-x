@@ -182,8 +182,7 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
         default:
             break;
     }
-    updateFlippedX();
-    updateFlippedY();
+   
     this->updateChildrenDisplayedRGBA();
 
     updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
@@ -209,8 +208,7 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
         default:
             break;
     }
-    updateFlippedX();
-    updateFlippedY();
+  
     this->updateChildrenDisplayedRGBA();
 
     _backGroundSelectedBoxRendererAdaptDirty = true;
@@ -235,8 +233,7 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
         default:
             break;
     }
-    updateFlippedX();
-    updateFlippedY();
+   
     this->updateChildrenDisplayedRGBA();
 
     _frontCrossRendererAdaptDirty = true;
@@ -261,8 +258,7 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
         default:
             break;
     }
-    updateFlippedX();
-    updateFlippedY();
+   
     this->updateChildrenDisplayedRGBA();
 
     _backGroundBoxDisabledRendererAdaptDirty = true;
@@ -287,8 +283,7 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
         default:
             break;
     }
-    updateFlippedX();
-    updateFlippedY();
+  
     this->updateChildrenDisplayedRGBA();
 
     _frontCrossDisabledRendererAdaptDirty = true;
@@ -397,24 +392,6 @@ void CheckBox::addEventListener(const ccCheckBoxCallback& callback)
     _checkBoxEventCallback = callback;
 }
     
-void CheckBox::updateFlippedX()
-{
-    _backGroundBoxRenderer->setFlippedX(_flippedX);
-    _backGroundSelectedBoxRenderer->setFlippedX(_flippedX);
-    _frontCrossRenderer->setFlippedX(_flippedX);
-    _backGroundBoxDisabledRenderer->setFlippedX(_flippedX);
-    _frontCrossDisabledRenderer->setFlippedX(_flippedX);
-}
-    
-void CheckBox::updateFlippedY()
-{
-    _backGroundBoxRenderer->setFlippedY(_flippedY);
-    _backGroundSelectedBoxRenderer->setFlippedY(_flippedY);
-    _frontCrossRenderer->setFlippedY(_flippedY);
-    _backGroundBoxDisabledRenderer->setFlippedY(_flippedY);
-    _frontCrossDisabledRenderer->setFlippedY(_flippedY);
-}
-
 void CheckBox::onSizeChanged()
 {
     Widget::onSizeChanged();

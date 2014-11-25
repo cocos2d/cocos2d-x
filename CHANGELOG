@@ -13,11 +13,14 @@ cocos2d-x-3.3-rc1 ??
     [FIX]           Label: label shifting when outline feature enabled
     [FIX]           Label: when applying additionalKerning to a Label that displays a string with only 1 character, the character is shifted
     [FIX]           Label: display incompletely with multiline text with outline feature enabled
+    [FIX]           Lua: logical error in luaval_to_quaternion
     [FIX]           New audio: can not loop on Android 2.3.x
     [FIX]           Scale9Sprite: will be flipped if both flipX and flipY are false
     [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong
     [FIX]           Scene: setScale() doesn't work as expected
     [FIX]           Sprite3D: did not create attached sprite from cache
+    [FIX]           VideoPlayer: showed in wrong place on Android v2.3.x
+    [FIX]           WebView: showed in wrong place on Android v2.3.x
     [FIX]           WP: back key behaviour and Director::getInstance()->end() works not correctly
 
 cocos2d-x-3.3-rc0  Oct.21 2014
