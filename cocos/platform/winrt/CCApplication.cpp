@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "platform/winrt/CCGLViewImpl-winrt.h"
+using namespace Windows::UI::Core;
+using namespace Windows::Foundation;
+
 #else
 #include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
@@ -180,6 +183,14 @@ Application::Platform  Application::getTargetPlatform()
 
 bool Application::openURL(const std::string &url)
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    auto dispatcher = cocos2d::GLViewImpl::sharedOpenGLView()->getDispatcher();
+    dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([url]() {
+        auto uri = ref new Windows::Foundation::Uri(PlatformStringFromString(url));
+        concurrency::task<bool> launchUriOperation(Windows::System::Launcher::LaunchUriAsync(uri));
+    }));
+    return true;
+#else
     if (m_openURLDelegate)
     {
         m_openURLDelegate(PlatformStringFromString(url));
@@ -189,6 +200,7 @@ bool Application::openURL(const std::string &url)
     {
         return false;
     }
+#endif
 }
 
 void Application::setResourceRootPath(const std::string& rootResDir)
