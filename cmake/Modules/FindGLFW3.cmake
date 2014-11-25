@@ -37,6 +37,13 @@
 #  first, and then if nothing found, we repeat search for dynamic
 
 find_package(PkgConfig)
+#TODO: remove after fix
+if(PKG_CONFIG_FOUND)
+  message(STATUS "PkgConfig found")
+else()
+  message(STATUS "PkgConfig not found")
+endif()
+
 if(PKG_CONFIG_FOUND)
   # Save some global stuff that we change, to revert after work has been done
   set(_saved_PKG_CONFIG_PATH "$ENV{PKG_CONFIG_PATH}")
