@@ -10,12 +10,183 @@ extern "C" {
 #include "tolua_fix.h"
 }
 
+inline string jString2stdString(JNIEnv* env, jstring jstr)
+{
+	std::string ret;
+	if(jstr){
+		char* utf = (char*)env->GetStringUTFChars(jstr, 0);
+		ret = utf;
+		env->ReleaseStringUTFChars(jstr, utf);
+	}
+	else ret ="";
+    
+	return ret;
+}
+
+inline map<string, string> jHashMap2StdMap(JNIEnv* env, jobject jhashmap)
+{
+    std::map<std::string, std::string> retmap;
+	do
+	{
+		if (jhashmap == NULL)
+		{
+			break;
+		}
+        
+		if (env == NULL)
+		{
+			break;
+		}
+		static jclass mapClass = env->FindClass("java/util/HashMap");
+		if (mapClass == NULL)
+		{
+			break;
+		}
+		static jmethodID mapClass_keySet = env->GetMethodID(mapClass, "keySet", "()Ljava/util/Set;");
+		if (mapClass_keySet == NULL)
+		{
+			break;
+		}
+		static jmethodID mapClass_get = env->GetMethodID(mapClass, "get", "(Ljava/lang/Object;)Ljava/lang/Object;");
+		if (mapClass_get == NULL)
+		{
+			break;
+		}
+		jobject keyset =  env->CallObjectMethod(jhashmap, mapClass_keySet);
+		if (keyset == NULL)
+		{
+			break;
+		}
+		static jclass setClass =  env->FindClass("java/util/Set");
+		if (setClass == NULL)
+		{
+			break;
+		}
+		static jmethodID setClass_toArray = env->GetMethodID(setClass, "toArray", "()[Ljava/lang/Object;");
+		if (setClass_toArray == NULL)
+		{
+			break;
+		}
+		jobjectArray keyarray = (jobjectArray)env->CallObjectMethod(keyset, setClass_toArray);
+		if (keyarray == NULL)
+		{
+			break;
+		}
+		jint arraysize = env->GetArrayLength(keyarray);
+		for(jint i = 0; i < arraysize; i++)
+		{
+			jstring key = (jstring)env->GetObjectArrayElement(keyarray, i);
+			jstring value = (jstring)env->CallObjectMethod(jhashmap, mapClass_get, key);
+			retmap.insert(pair<std::string, std::string>(jString2stdString(env,key), jString2stdString(env,value)));
+			env->DeleteLocalRef(key);
+			env->DeleteLocalRef(value);
+		}
+        env->DeleteLocalRef(keyset);
+        env->DeleteLocalRef(keyarray);
+	} while (0);
+	return retmap;
+}
+
+inline vector<string> jVector2stdVector(JNIEnv* env, jobject jVector)
+{
+    vector<string> v;
+    do {
+        if (jVector == NULL)
+		{
+			break;
+		}
+        
+		if (env == NULL)
+		{
+			break;
+		}
+		static jclass vectorClass = env->FindClass("java/util/Vector");
+		if (vectorClass == NULL)
+		{
+			break;
+		}
+        static jmethodID vectorClass_toArray = env->GetMethodID(vectorClass, "toArray", "()[Ljava/lang/Object;");
+		if (vectorClass_toArray == NULL)
+		{
+			break;
+		}
+		jobjectArray valuearray = (jobjectArray)env->CallObjectMethod(jVector, vectorClass_toArray);
+		if (valuearray == NULL)
+		{
+			break;
+		}
+		jint arraysize = env->GetArrayLength(valuearray);
+		for(jint i = 0; i < arraysize; i++)
+		{
+			jstring value = (jstring)env->GetObjectArrayElement(valuearray, i);
+            v.push_back(jString2stdString(env, value));
+			env->DeleteLocalRef(value);
+		}
+        
+    } while (0);
+	return v;
+}
+
+inline vector<string> jArray2stdVector(JNIEnv* env, jobject jArray)
+{
+    vector<string> v;
+    do {
+        if (jArray == NULL)
+		{
+			break;
+		}
+        
+		if (env == NULL)
+		{
+			break;
+		}
+		static jclass arrayClass = env->FindClass("java/util/ArrayList");
+		if (arrayClass == NULL)
+		{
+			break;
+		}
+        static jmethodID arrayClass_toArray = env->GetMethodID(arrayClass, "toArray", "()[Ljava/lang/Object;");
+		if (arrayClass_toArray == NULL)
+		{
+			break;
+		}
+		jobjectArray valuearray = (jobjectArray)env->CallObjectMethod(jArray, arrayClass_toArray);
+		if (valuearray == NULL)
+		{
+			break;
+		}
+		jint arraysize = env->GetArrayLength(valuearray);
+		for(jint i = 0; i < arraysize; i++)
+		{
+			jstring value = (jstring)env->GetObjectArrayElement(valuearray, i);
+            v.push_back(jString2stdString(env, value));
+			env->DeleteLocalRef(value);
+		}
+        
+    } while (0);
+	return v;
+}
+
 LuaJavaBridge::CallInfo::~CallInfo(void)
 {
-	if (m_returnType == TypeString && m_ret.stringValue)
-	{
-		delete m_ret.stringValue;
-	}
+    switch (m_returnType)
+    {
+        case TypeVoid:
+        case TypeInteger:
+        case TypeFloat:
+        case TypeBoolean:
+            break;            
+        case TypeString:
+            if (m_ret.stringValue)
+                delete m_ret.stringValue;
+            break;
+        case TypeVector:
+        case TypeArrayList:
+        case TypeMap:
+            if (m_ret.objectValue)
+                m_env->DeleteLocalRef( m_ret.objectValue );
+            break;
+    }
 }
 
 bool LuaJavaBridge::CallInfo::execute(void)
@@ -38,12 +209,19 @@ bool LuaJavaBridge::CallInfo::execute(void)
             m_ret.boolValue = m_env->CallStaticBooleanMethod(m_classID, m_methodID);
             break;
 
-        case TypeString:
+        case TypeString: {
             m_retjs = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
             const char *stringBuff = m_env->GetStringUTFChars(m_retjs, 0);
             m_ret.stringValue = new string(stringBuff);
             m_env->ReleaseStringUTFChars(m_retjs, stringBuff);
-           break;
+            break;
+        }
+
+        case TypeVector:
+        case TypeArrayList:
+        case TypeMap:
+            m_ret.objectValue = (jobject)m_env->CallStaticObjectMethod(m_classID, m_methodID);
+            break;
     }
 
 	if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -78,12 +256,18 @@ bool LuaJavaBridge::CallInfo::executeWithArgs(jvalue *args)
              m_ret.boolValue = m_env->CallStaticBooleanMethodA(m_classID, m_methodID, args);
              break;
 
-         case TypeString:
+         case TypeString: {
         	 m_retjs = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
 			 const char *stringBuff = m_env->GetStringUTFChars(m_retjs, 0);
 			 m_ret.stringValue = new string(stringBuff);
 			 m_env->ReleaseStringUTFChars(m_retjs, stringBuff);
-            break;
+             break;
+        }
+         case TypeVector:
+         case TypeArrayList:
+         case TypeMap:
+             m_ret.objectValue = (jobject)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
+             break;
      }
 
 	if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -119,6 +303,44 @@ int LuaJavaBridge::CallInfo::pushReturnValue(lua_State *L)
 		case TypeString:
 			lua_pushstring(L, m_ret.stringValue->c_str());
 			return 1;
+        case TypeVector:
+        {
+            lua_newtable(L);
+            vector<string> vec = jVector2stdVector(m_env, m_ret.objectValue);
+            for (int i=0; i<vec.size(); ++i)
+            {
+                string s = vec[i];
+                int len = lua_objlen(L, -1);
+                lua_pushstring(L, s.c_str());
+                lua_rawseti(L, -2, len+1);
+            }
+            return 1;
+        }
+        case TypeArrayList:
+        {
+            lua_newtable(L);
+            vector<string> vec = jArray2stdVector(m_env, m_ret.objectValue);
+            for (int i=0; i<vec.size(); ++i)
+            {
+                string s = vec[i];
+                int len = lua_objlen(L, -1);
+                lua_pushstring(L, s.c_str());
+                lua_rawseti(L, -2, len+1);
+            }
+            return 1;
+        }
+        case TypeMap:
+        {
+            lua_newtable(L);
+            map<string, string> ma = jHashMap2StdMap(m_env, m_ret.objectValue);
+            for(map<string, string>::iterator it=ma.begin(); it!=ma.end(); ++it)
+            {
+                lua_pushstring(L, it->first.c_str());
+                lua_pushstring(L, it->second.c_str());
+                lua_rawset(L, -3);
+            }
+            return 1;
+        }
 	}
 
 	return 0;
@@ -186,6 +408,16 @@ LuaJavaBridge::ValueType LuaJavaBridge::CallInfo::checkType(const string& sig, s
             {
             	*pos = pos2;
                 return TypeVector;
+            }
+            else if (t.compare("Ljava/util/HashMap;") == 0)
+            {
+                *pos = pos2;
+                return TypeMap;
+            }
+            else if (t.compare("Ljava/util/ArrayList;") == 0)
+            {
+                *pos = pos2;
+                return TypeArrayList;
             }
             else
             {
@@ -265,6 +497,192 @@ void LuaJavaBridge::luaopen_luaj(lua_State *L)
     lua_setglobal(L, "LuaJavaBridge");
 }
 
+inline string formatString(string format, ...)
+{
+    string result = format;
+	va_list arg;
+	int len;
+	va_start( arg, format );
+	len = vsnprintf( NULL, 0, result.c_str(), arg);
+	va_end( arg );
+	char* str = new char[ len + 1 ];
+	va_start( arg, format );
+	vsnprintf( str, len + 1, result.c_str(), arg );
+	va_end( arg );
+	result = str;
+	delete str;
+	return result;
+}
+
+string LuaJavaBridge::checkObj(lua_State *L)
+{
+    switch (lua_type(L, -1))
+    {
+        case LUA_TNUMBER:
+        {
+            lua_Number number = lua_tonumber(L, -1);
+            int value1 = (int)number;
+            float value2 = (float)number;
+            if (value1 == value2) {
+                return formatString("%d", value1);
+            } else {
+                return formatString("%f", value2);
+            }
+        }
+            
+        case LUA_TBOOLEAN:
+        {
+            if (lua_toboolean(L, -1) == 0)
+                return "false";
+            else
+                return "true";
+        }
+            
+        case LUA_TSTRING:
+        {
+            return lua_tostring(L, -1);
+        }
+            
+        case LUA_TFUNCTION:
+        {
+            int funcId = retainLuaFunction(L, -1, NULL);
+            return formatString("%d", funcId);
+        }
+            
+        case LUA_TTABLE:
+        {
+            return lua_tostring(L, -1);
+        }
+    }
+    
+    return "";
+}
+
+jobject LuaJavaBridge::checkHashMap(lua_State *L)
+{
+    map<string, string> stdMap;
+    lua_pushnil(L);
+    while (lua_next(L, -2))
+    {
+        string key = lua_tostring(L, -2);
+        LOGD("key-%s", key.c_str());
+        stdMap[key] = checkObj(L);
+        lua_pop(L, 1);
+    }
+    
+    JNIEnv *env = 0;
+    JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+    jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+    switch (ret) {
+        case JNI_OK:
+            break;
+            
+        case JNI_EDETACHED :
+            if (jvm->AttachCurrentThread(&env, NULL) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                return NULL;
+            }
+            break;
+            
+        case JNI_EVERSION :
+        default :
+            LOGD("Failed to get the environment using GetEnv()");
+            return NULL;
+    }
+
+    PSJNIHelper::createHashMap();
+    for(map<string, string>::iterator it = stdMap.begin(); it != stdMap.end(); ++it)
+    {
+        PSJNIHelper::pushHashMapElement(it->first, it->second);
+    }
+    
+    return PSJNIHelper::getHashMap();
+}
+
+jobject LuaJavaBridge::checkVector(lua_State *L)
+{
+    vector<string> strings;
+    lua_pushnil(L);  /* first key */
+    while (lua_next(L, -2)) {
+        int index = lua_tonumber(L, -2) - 1;
+        strings.push_back(checkObj(L));
+        lua_pop(L, 1);
+    }
+    
+    JNIEnv *env = 0;
+    JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+    jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+    switch (ret) {
+        case JNI_OK:
+            break;
+            
+        case JNI_EDETACHED :
+            if (jvm->AttachCurrentThread(&env, NULL) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                return NULL;
+            }
+            break;
+            
+        case JNI_EVERSION :
+        default :
+            LOGD("Failed to get the environment using GetEnv()");
+            return NULL;
+    }
+    
+    PSJNIHelper::createVector();
+    for(vector<string>::iterator it = strings.begin(); it != strings.end(); ++it)
+    {
+        PSJNIHelper::pushVectorElement(*it);
+    }
+    
+    return PSJNIHelper::getVector();
+}
+
+jobject LuaJavaBridge::checkArrayList(lua_State *L)
+{
+    vector<string> strings;
+    lua_pushnil(L);  /* first key */
+    while (lua_next(L, -2)) {
+        int index = lua_tonumber(L, -2) - 1;
+        string temp = checkObj(L);
+        LOGD("%s", temp.c_str());
+        strings.push_back(checkObj(L));
+        lua_pop(L, 1);
+    }
+    
+    JNIEnv *env = 0;
+    JavaVM* jvm = cocos2d::JniHelper::getJavaVM();
+    jint ret = jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+    switch (ret) {
+        case JNI_OK:
+            break;
+            
+        case JNI_EDETACHED :
+            if (jvm->AttachCurrentThread(&env, NULL) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                return NULL;
+            }
+            break;
+            
+        case JNI_EVERSION :
+        default :
+            LOGD("Failed to get the environment using GetEnv()");
+            return NULL;
+    }
+    
+    PSJNIHelper::createArrayList();
+    for(vector<string>::iterator it = strings.begin(); it != strings.end(); ++it)
+    {
+        PSJNIHelper::pushArrayListElement(*it);
+    }
+    
+    return PSJNIHelper::getArrayList();
+}
+
+
 /*
 args:
     const char *className
@@ -289,6 +707,16 @@ int LuaJavaBridge::callJavaStaticMethod(lua_State *L)
 
     CallInfo call(className, methodName, methodSig);
 
+    if (!call.isValid())
+    {
+    	LOGD("LuaJavaBridge::callJavaStaticMethod(\"%s\", \"%s\", args, \"%s\") CHECK FAILURE, ERROR CODE: %d",
+    			className, methodName, methodSig, call.getErrorCode());
+
+        lua_pushboolean(L, 0);
+        lua_pushinteger(L, call.getErrorCode());
+    	return 2;
+    }
+
     // check args
     lua_pop(L, 1);													/* L: args */
     int count = fetchArrayElements(L, -1);                      	/* L: args e1 e2 e3 e4 ... */
@@ -296,37 +724,46 @@ int LuaJavaBridge::callJavaStaticMethod(lua_State *L)
     if (count > 0)
     {
 	    args = new jvalue[count];
-	    for (int i = 0; i < count; ++i)
+	    for (int i = count - 1; i >= 0; --i)
 	    {
 	        int index = -count + i;
 	        switch (call.argumentTypeAtIndex(i))
 	        {
 	            case TypeInteger:
-	            	if (lua_isfunction(L, index))
+	            	if (lua_isfunction(L, -1))
 	            	{
-	                    args[i].i = retainLuaFunction(L, index, NULL);
+	                    args[i].i = retainLuaFunction(L, -1, NULL);
 	            	}
 	            	else
 	            	{
-	            		args[i].i = (int)lua_tonumber(L, index);
+	            		args[i].i = (int)lua_tonumber(L, -1);
 	            	}
 	                break;
 
 	            case TypeFloat:
-	                args[i].f = lua_tonumber(L, index);
+	                args[i].f = lua_tonumber(L, -1);
 	                break;
 
 	            case TypeBoolean:
-	                args[i].z = lua_toboolean(L, index) != 0 ? JNI_TRUE : JNI_FALSE;
+	                args[i].z = lua_toboolean(L, -1) != 0 ? JNI_TRUE : JNI_FALSE;
 	                break;
-
+                case TypeVector:
+                    args[i].l = LuaJavaBridge::checkVector(L);
+                    break;
+                case TypeMap:
+                    args[i].l = LuaJavaBridge::checkHashMap(L);
+                    break;
+                case TypeArrayList:
+                    args[i].l = LuaJavaBridge::checkArrayList(L);
+                    break;
 	            case TypeString:
 	            default:
-	                args[i].l = call.getEnv()->NewStringUTF(lua_tostring(L, index));
+	                args[i].l = call.getEnv()->NewStringUTF(lua_tostring(L, -1));
 	                break;
 	        }
+            lua_pop(L, 1);
 	    }
-	    lua_pop(L, count);                               			/* L: args */
+	    //lua_pop(L, count);                               			/* L: args */
     }
 
     bool success = args ? call.executeWithArgs(args) : call.execute();
@@ -615,4 +1052,135 @@ int LuaJavaBridge::fetchArrayElements(lua_State *L, int index)
         ++count;
     } while (1);
     return count;
+}
+
+void LuaJavaBridge::PSJNIHelper::createHashMap(){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "createHashMap"
+                                       , "()V"))
+    {
+		t.env->CallStaticVoidMethod(t.classID, t.methodID);
+		t.env->DeleteLocalRef(t.classID);
+    }
+    
+}
+
+jobject LuaJavaBridge::PSJNIHelper::getHashMap(){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "getHashMap"
+                                       , "()Ljava/util/HashMap;"))
+    {
+		jobject jobj = (jobject)t.env->CallStaticObjectMethod(t.classID, t.methodID);        
+		t.env->DeleteLocalRef(t.classID);
+		return jobj;
+    }
+    return NULL;
+}
+
+void LuaJavaBridge::PSJNIHelper::pushHashMapElement(string key, string value){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "pushHashMapElement"
+                                       , "(Ljava/lang/String;Ljava/lang/String;)V"))
+    {
+        jstring jkey = t.env->NewStringUTF(key.c_str());
+        jstring jvalue = t.env->NewStringUTF(value.c_str());
+        
+		t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey, jvalue);
+        
+		t.env->DeleteLocalRef(jkey);
+        t.env->DeleteLocalRef(jvalue);
+		t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void LuaJavaBridge::PSJNIHelper::createVector(){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "createVector"
+                                       , "()V"))
+    {
+		t.env->CallStaticVoidMethod(t.classID, t.methodID);
+		t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+jobject LuaJavaBridge::PSJNIHelper::getVector(){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "getVector"
+                                       , "()Ljava/util/Vector;"))
+    {
+		jobject jobj = (jobject)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+		t.env->DeleteLocalRef(t.classID);
+		return jobj;
+    }
+    return NULL;
+    
+}
+
+void LuaJavaBridge::PSJNIHelper::pushVectorElement(string value){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "pushVectorElement"
+                                       , "(Ljava/lang/String;)V"))
+    {
+        jstring jvalue = t.env->NewStringUTF(value.c_str());
+        
+		t.env->CallStaticVoidMethod(t.classID, t.methodID, jvalue);
+        
+        t.env->DeleteLocalRef(jvalue);
+		t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void LuaJavaBridge::PSJNIHelper::createArrayList(){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "createArrayList"
+                                       , "()V"))
+    {
+		t.env->CallStaticVoidMethod(t.classID, t.methodID);
+		t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+jobject LuaJavaBridge::PSJNIHelper::getArrayList(){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "getArrayList"
+                                       , "()Ljava/util/ArrayList;"))
+    {
+		jobject jobj = (jobject)t.env->CallStaticObjectMethod(t.classID, t.methodID);
+		t.env->DeleteLocalRef(t.classID);
+		return jobj;
+    }
+    return NULL;
+    
+}
+
+void LuaJavaBridge::PSJNIHelper::pushArrayListElement(string value){
+    JniMethodInfo t;
+    if( JniHelper::getStaticMethodInfo(t
+                                       , "org/cocos2dx/utils/PSJNIHelper"
+                                       , "pushArrayListElement"
+                                       , "(Ljava/lang/String;)V"))
+    {
+        jstring jvalue = t.env->NewStringUTF(value.c_str());
+        
+		t.env->CallStaticVoidMethod(t.classID, t.methodID, jvalue);
+        
+        t.env->DeleteLocalRef(jvalue);
+		t.env->DeleteLocalRef(t.classID);
+    }
 }
