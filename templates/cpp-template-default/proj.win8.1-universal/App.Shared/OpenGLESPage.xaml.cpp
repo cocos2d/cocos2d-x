@@ -210,7 +210,6 @@ void OpenGLESPage::RecoverFromLostDevice()
 
     {
         critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
-        m_deviceLost = true;
         DestroyRenderSurface();
         mOpenGLES->Reset();
         CreateRenderSurface();
@@ -261,9 +260,8 @@ void OpenGLESPage::StartRenderLoop()
         }
 
 
-        while (action->Status == Windows::Foundation::AsyncStatus::Started)
+        while (action->Status == Windows::Foundation::AsyncStatus::Started && !m_deviceLost)
         {
- 
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
             m_renderer.get()->Draw(panelWidth, panelHeight, m_dpi);
 
@@ -271,9 +269,10 @@ void OpenGLESPage::StartRenderLoop()
             // If the call fails, then we must reinitialize EGL and the GL resources.
             if (mOpenGLES->SwapBuffers(mRenderSurface) != GL_TRUE)
             {
+                m_deviceLost = true;
+
                 // XAML objects like the SwapChainPanel must only be manipulated on the UI thread.
                 swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High, ref new Windows::UI::Core::DispatchedHandler([=]()
-                //swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High, ref new Windows::UI::Core::DispatchedHandler([=]()
                 {
                     RecoverFromLostDevice();
                 }, CallbackContext::Any));
