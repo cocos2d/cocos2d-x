@@ -101,19 +101,32 @@ Application* Application::getInstance()
 
 const char * Application::getCurrentLanguageCode()
 {
-	static std::string code = "";
+	static std::string code = "en";
 
-    wchar_t localeName[LOCALE_NAME_MAX_LENGTH] = {0};
-    if (GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH))
-    {
-        wchar_t* primary = wcstok(localeName, L"-");
-        code = CCUnicodeToUtf8(primary);
-    }
-    else
-    {
-        code = "en";
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    auto languages = Windows::System::UserProfile::GlobalizationPreferences::Languages;
+    code = PlatformStringToString(languages->GetAt(0));
+#else
+    ULONG numLanguages = 0;
+    DWORD cchLanguagesBuffer = 0;
+    BOOL result = GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &numLanguages, NULL, &cchLanguagesBuffer);
+
+    if (result) {
+        WCHAR* pwszLanguagesBuffer = new WCHAR[cchLanguagesBuffer];
+        result = GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &numLanguages, pwszLanguagesBuffer, &cchLanguagesBuffer);
+        if (result) {
+
+            code = CCUnicodeToUtf8(pwszLanguagesBuffer);
+        }
+
+        if (pwszLanguagesBuffer)
+        {
+            delete pwszLanguagesBuffer;
+        }
     }
 
+
+#endif
     return code.c_str();
 }
 
@@ -124,51 +137,51 @@ LanguageType Application::getCurrentLanguage()
 
     const char* code = getCurrentLanguageCode();
 
-    if (strcmp(code, "zh") == 0)
+    if (strncmp(code, "zh", 2) == 0)
     {
         ret = LanguageType::CHINESE;
     }
-    else if (strcmp(code, "ja") == 0)
+    else if (strncmp(code, "ja", 2) == 0)
     {
         ret = LanguageType::JAPANESE;
     }
-    else if (strcmp(code, "fr") == 0)
+    else if (strncmp(code, "fr", 2) == 0)
     {
         ret = LanguageType::FRENCH;
     }
-    else if (strcmp(code, "it") == 0)
+    else if (strncmp(code, "it", 2) == 0)
     {
         ret = LanguageType::ITALIAN;
     }
-    else if (strcmp(code, "de") == 0)
+    else if (strncmp(code, "de", 2) == 0)
     {
         ret = LanguageType::GERMAN;
     }
-    else if (strcmp(code, "es") == 0)
+    else if (strncmp(code, "es", 2) == 0)
     {
         ret = LanguageType::SPANISH;
     }
-    else if (strcmp(code, "nl") == 0)
+    else if (strncmp(code, "nl", 2) == 0)
     {
         ret = LanguageType::DUTCH;
     }
-    else if (strcmp(code, "ru") == 0)
+    else if (strncmp(code, "ru", 2) == 0)
     {
         ret = LanguageType::RUSSIAN;
     }
-    else if (strcmp(code, "hu") == 0)
+    else if (strncmp(code, "hu", 2) == 0)
     {
         ret = LanguageType::HUNGARIAN;
     }
-    else if (strcmp(code, "pt") == 0)
+    else if (strncmp(code, "pt", 2) == 0)
     {
         ret = LanguageType::PORTUGUESE;
     }
-    else if (strcmp(code, "ko") == 0)
+    else if (strncmp(code, "ko", 2) == 0)
     {
         ret = LanguageType::KOREAN;
     }
-    else if (strcmp(code, "ar") == 0)
+    else if (strncmp(code, "ar", 2) == 0)
     {
         ret = LanguageType::ARABIC;
     } 
