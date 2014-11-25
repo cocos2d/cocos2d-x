@@ -39,13 +39,15 @@
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
   # Save some global stuff that we change, to revert after work has been done
-  set(_saved_PKG_CONFIG_PATH $ENV{PKG_CONFIG_PATH})
-  set(_saved_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
+  set(_saved_PKG_CONFIG_PATH "$ENV{PKG_CONFIG_PATH}")
+  set(_saved_CMAKE_FIND_LIBRARY_SUFFIXES "${CMAKE_FIND_LIBRARY_SUFFIXES}")
 
   # add /usr/local/lib/pkgconfig to pkg-config search path (some linuxes do not do that, but glfw installs to taht prefix by default)
   file(TO_CMAKE_PATH "$ENV{PKG_CONFIG_PATH}" PKG_CONFIG_PATH)
   list(APPEND PKG_CONFIG_PATH "/usr/local/lib/pkgconfig")
-  file(TO_NATIVE_PATH "${PKG_CONFIG_PATH}" ENV{PKG_CONFIG_PATH})
+  file(TO_NATIVE_PATH "${PKG_CONFIG_PATH}" new_pkg_config_path)
+  set(ENV{PKG_CONFIG_PATH} "${new_pkg_config_path}")
+  message(STATUS "XXX pkg-config search path: $ENV{PKG_CONFIG_PATH}")
 
   # now try to find glfw with pkg-config
   pkg_check_modules(PC_GLFW3 glfw3)
@@ -100,8 +102,8 @@ if(PKG_CONFIG_FOUND)
   endif()
 
   # Restore global stuff
-  set(CMAKE_FIND_LIBRARY_SUFFIXES ${_saved_CMAKE_FIND_LIBRARY_SUFFIXES})
-  set(ENV{PKG_CONFIG_PATH} ${_saved_PKG_CONFIG_PATH})
+  set(CMAKE_FIND_LIBRARY_SUFFIXES "${_saved_CMAKE_FIND_LIBRARY_SUFFIXES}")
+  set(ENV{PKG_CONFIG_PATH} "${_saved_PKG_CONFIG_PATH}")
 endif(PKG_CONFIG_FOUND)
 
 # fallback if pkg-config method not work
