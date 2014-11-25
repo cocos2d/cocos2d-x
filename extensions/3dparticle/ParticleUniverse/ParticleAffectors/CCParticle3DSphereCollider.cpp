@@ -99,6 +99,8 @@ void Particle3DSphereCollider::calculateDirectionAfterCollision(Particle3D* part
             particle->position = _derivedPosition + distance * (scaledRadius / distanceLength);
         }
         break;
+        default:
+        break;
     }
 }
 

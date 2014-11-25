@@ -157,6 +157,8 @@ void Particle3DBoxCollider::calculateDirectionAfterCollision(Particle3D* particl
             particle->direction *= -_friction;
         }
         break;
+        default:
+        break;
     }
 }
 //-----------------------------------------------------------------------

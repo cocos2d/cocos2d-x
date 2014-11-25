@@ -2033,6 +2033,84 @@
 		B60C5BD519AC68B10056FBDE /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */; };
 		B60C5BD619AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
 		B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
+		B64F2C441A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C361A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp */; };
+		B64F2C451A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C361A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp */; };
+		B64F2C461A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C371A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h */; };
+		B64F2C471A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C371A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h */; };
+		B64F2C481A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C381A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp */; };
+		B64F2C491A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C381A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp */; };
+		B64F2C4A1A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C391A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp */; };
+		B64F2C4B1A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C391A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp */; };
+		B64F2C4C1A244E6300DDCF36 /* CCParticle3DSphereCollider.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C3A1A244E6300DDCF36 /* CCParticle3DSphereCollider.h */; };
+		B64F2C4D1A244E6300DDCF36 /* CCParticle3DSphereCollider.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C3A1A244E6300DDCF36 /* CCParticle3DSphereCollider.h */; };
+		B64F2C4E1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C3B1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp */; };
+		B64F2C4F1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C3B1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp */; };
+		B64F2C501A244E6300DDCF36 /* CCParticle3DTextureAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C3C1A244E6300DDCF36 /* CCParticle3DTextureAnimator.h */; };
+		B64F2C511A244E6300DDCF36 /* CCParticle3DTextureAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C3C1A244E6300DDCF36 /* CCParticle3DTextureAnimator.h */; };
+		B64F2C521A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C3D1A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp */; };
+		B64F2C531A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C3D1A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp */; };
+		B64F2C541A244E6300DDCF36 /* CCParticle3DTextureRotator.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C3E1A244E6300DDCF36 /* CCParticle3DTextureRotator.h */; };
+		B64F2C551A244E6300DDCF36 /* CCParticle3DTextureRotator.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C3E1A244E6300DDCF36 /* CCParticle3DTextureRotator.h */; };
+		B64F2C561A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C3F1A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp */; };
+		B64F2C571A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C3F1A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp */; };
+		B64F2C581A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C401A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h */; };
+		B64F2C591A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C401A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h */; };
+		B64F2C5A1A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C411A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp */; };
+		B64F2C5B1A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C411A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp */; };
+		B64F2C5C1A244E6300DDCF36 /* CCParticle3DVortexAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C421A244E6300DDCF36 /* CCParticle3DVortexAffector.h */; };
+		B64F2C5D1A244E6300DDCF36 /* CCParticle3DVortexAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C421A244E6300DDCF36 /* CCParticle3DVortexAffector.h */; };
+		B64F2C5E1A244E6300DDCF36 /* CCParticle3DSineForceAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C431A244E6300DDCF36 /* CCParticle3DSineForceAffector.h */; };
+		B64F2C5F1A244E6300DDCF36 /* CCParticle3DSineForceAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C431A244E6300DDCF36 /* CCParticle3DSineForceAffector.h */; };
+		B64F2C721A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C601A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp */; };
+		B64F2C731A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C601A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp */; };
+		B64F2C741A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C611A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp */; };
+		B64F2C751A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C611A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp */; };
+		B64F2C761A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C621A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp */; };
+		B64F2C771A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C621A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp */; };
+		B64F2C781A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C631A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp */; };
+		B64F2C791A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C631A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp */; };
+		B64F2C7A1A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C641A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp */; };
+		B64F2C7B1A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C641A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp */; };
+		B64F2C7C1A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C651A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp */; };
+		B64F2C7D1A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C651A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp */; };
+		B64F2C7E1A244E7900DDCF36 /* CCParticle3DPositionEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C661A244E7900DDCF36 /* CCParticle3DPositionEmitter.h */; };
+		B64F2C7F1A244E7900DDCF36 /* CCParticle3DPositionEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C661A244E7900DDCF36 /* CCParticle3DPositionEmitter.h */; };
+		B64F2C801A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C671A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp */; };
+		B64F2C811A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C671A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp */; };
+		B64F2C821A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C681A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp */; };
+		B64F2C831A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C681A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp */; };
+		B64F2C841A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C691A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h */; };
+		B64F2C851A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C691A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h */; };
+		B64F2C861A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C6A1A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp */; };
+		B64F2C871A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C6A1A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp */; };
+		B64F2C881A244E7900DDCF36 /* CCParticle3DBoxEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6B1A244E7900DDCF36 /* CCParticle3DBoxEmitter.h */; };
+		B64F2C891A244E7900DDCF36 /* CCParticle3DBoxEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6B1A244E7900DDCF36 /* CCParticle3DBoxEmitter.h */; };
+		B64F2C8A1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6C1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h */; };
+		B64F2C8B1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6C1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h */; };
+		B64F2C8C1A244E7900DDCF36 /* CCParticle3DLineEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6D1A244E7900DDCF36 /* CCParticle3DLineEmitter.h */; };
+		B64F2C8D1A244E7900DDCF36 /* CCParticle3DLineEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6D1A244E7900DDCF36 /* CCParticle3DLineEmitter.h */; };
+		B64F2C8E1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6E1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h */; };
+		B64F2C8F1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6E1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h */; };
+		B64F2C901A244E7900DDCF36 /* CCParticle3DPointEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6F1A244E7900DDCF36 /* CCParticle3DPointEmitter.h */; };
+		B64F2C911A244E7900DDCF36 /* CCParticle3DPointEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C6F1A244E7900DDCF36 /* CCParticle3DPointEmitter.h */; };
+		B64F2C921A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C701A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h */; };
+		B64F2C931A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C701A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h */; };
+		B64F2C941A244E7900DDCF36 /* CCParticle3DVertexEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C711A244E7900DDCF36 /* CCParticle3DVertexEmitter.h */; };
+		B64F2C951A244E7900DDCF36 /* CCParticle3DVertexEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C711A244E7900DDCF36 /* CCParticle3DVertexEmitter.h */; };
+		B64F2C9D1A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C961A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp */; };
+		B64F2C9E1A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C961A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp */; };
+		B64F2C9F1A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C971A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h */; };
+		B64F2CA01A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C971A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h */; };
+		B64F2CA11A244E8E00DDCF36 /* CCParticle3DPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C981A244E8E00DDCF36 /* CCParticle3DPlane.cpp */; };
+		B64F2CA21A244E8E00DDCF36 /* CCParticle3DPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C981A244E8E00DDCF36 /* CCParticle3DPlane.cpp */; };
+		B64F2CA31A244E8E00DDCF36 /* CCParticle3DPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C991A244E8E00DDCF36 /* CCParticle3DPlane.h */; };
+		B64F2CA41A244E8E00DDCF36 /* CCParticle3DPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C991A244E8E00DDCF36 /* CCParticle3DPlane.h */; };
+		B64F2CA51A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C9A1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp */; };
+		B64F2CA61A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64F2C9A1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp */; };
+		B64F2CA71A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9B1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h */; };
+		B64F2CA81A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9B1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h */; };
+		B64F2CA91A244E8E00DDCF36 /* CCParticle3DSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */; };
+		B64F2CAA1A244E8E00DDCF36 /* CCParticle3DSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */; };
 		B67880791A198F79002425C1 /* CCParticleSystem3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67880771A198F79002425C1 /* CCParticleSystem3D.cpp */; };
 		B678807A1A198F79002425C1 /* CCParticleSystem3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67880771A198F79002425C1 /* CCParticleSystem3D.cpp */; };
 		B678807B1A198F79002425C1 /* CCParticleSystem3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B67880781A198F79002425C1 /* CCParticleSystem3D.h */; };
@@ -3149,6 +3227,45 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBillBoard.cpp; sourceTree = "<group>"; };
 		B60C5BD319AC68B10056FBDE /* CCBillBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBillBoard.h; sourceTree = "<group>"; };
+		B64F2C361A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DScaleVelocityAffector.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DScaleVelocityAffector.cpp; sourceTree = "<group>"; };
+		B64F2C371A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DScaleVelocityAffector.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DScaleVelocityAffector.h; sourceTree = "<group>"; };
+		B64F2C381A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSineForceAffector.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DSineForceAffector.cpp; sourceTree = "<group>"; };
+		B64F2C391A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSphereCollider.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DSphereCollider.cpp; sourceTree = "<group>"; };
+		B64F2C3A1A244E6300DDCF36 /* CCParticle3DSphereCollider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSphereCollider.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DSphereCollider.h; sourceTree = "<group>"; };
+		B64F2C3B1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DTextureAnimator.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DTextureAnimator.cpp; sourceTree = "<group>"; };
+		B64F2C3C1A244E6300DDCF36 /* CCParticle3DTextureAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DTextureAnimator.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DTextureAnimator.h; sourceTree = "<group>"; };
+		B64F2C3D1A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DTextureRotator.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DTextureRotator.cpp; sourceTree = "<group>"; };
+		B64F2C3E1A244E6300DDCF36 /* CCParticle3DTextureRotator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DTextureRotator.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DTextureRotator.h; sourceTree = "<group>"; };
+		B64F2C3F1A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DVelocityMatchingAffector.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DVelocityMatchingAffector.cpp; sourceTree = "<group>"; };
+		B64F2C401A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DVelocityMatchingAffector.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DVelocityMatchingAffector.h; sourceTree = "<group>"; };
+		B64F2C411A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DVortexAffector.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DVortexAffector.cpp; sourceTree = "<group>"; };
+		B64F2C421A244E6300DDCF36 /* CCParticle3DVortexAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DVortexAffector.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DVortexAffector.h; sourceTree = "<group>"; };
+		B64F2C431A244E6300DDCF36 /* CCParticle3DSineForceAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSineForceAffector.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DSineForceAffector.h; sourceTree = "<group>"; };
+		B64F2C601A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DBoxEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DBoxEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C611A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DCircleEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DCircleEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C621A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DLineEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DLineEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C631A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DMeshSurfaceEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DMeshSurfaceEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C641A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DPointEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPointEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C651A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DPositionEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPositionEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C661A244E7900DDCF36 /* CCParticle3DPositionEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DPositionEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPositionEmitter.h; sourceTree = "<group>"; };
+		B64F2C671A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSlaveEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DSlaveEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C681A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSphereSurfaceEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DSphereSurfaceEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C691A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSphereSurfaceEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DSphereSurfaceEmitter.h; sourceTree = "<group>"; };
+		B64F2C6A1A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DVertexEmitter.cpp; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DVertexEmitter.cpp; sourceTree = "<group>"; };
+		B64F2C6B1A244E7900DDCF36 /* CCParticle3DBoxEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DBoxEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DBoxEmitter.h; sourceTree = "<group>"; };
+		B64F2C6C1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DCircleEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DCircleEmitter.h; sourceTree = "<group>"; };
+		B64F2C6D1A244E7900DDCF36 /* CCParticle3DLineEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DLineEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DLineEmitter.h; sourceTree = "<group>"; };
+		B64F2C6E1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DMeshSurfaceEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DMeshSurfaceEmitter.h; sourceTree = "<group>"; };
+		B64F2C6F1A244E7900DDCF36 /* CCParticle3DPointEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DPointEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPointEmitter.h; sourceTree = "<group>"; };
+		B64F2C701A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSlaveEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DSlaveEmitter.h; sourceTree = "<group>"; };
+		B64F2C711A244E7900DDCF36 /* CCParticle3DVertexEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DVertexEmitter.h; path = 3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DVertexEmitter.h; sourceTree = "<group>"; };
+		B64F2C961A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DDynamicAttribute.cpp; path = 3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.cpp; sourceTree = "<group>"; };
+		B64F2C971A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DDynamicAttribute.h; path = 3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h; sourceTree = "<group>"; };
+		B64F2C981A244E8E00DDCF36 /* CCParticle3DPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DPlane.cpp; path = 3dparticle/ParticleUniverse/CCParticle3DPlane.cpp; sourceTree = "<group>"; };
+		B64F2C991A244E8E00DDCF36 /* CCParticle3DPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DPlane.h; path = 3dparticle/ParticleUniverse/CCParticle3DPlane.h; sourceTree = "<group>"; };
+		B64F2C9A1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSimpleSpline.cpp; path = 3dparticle/ParticleUniverse/CCParticle3DSimpleSpline.cpp; sourceTree = "<group>"; };
+		B64F2C9B1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSimpleSpline.h; path = 3dparticle/ParticleUniverse/CCParticle3DSimpleSpline.h; sourceTree = "<group>"; };
+		B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DSphere.h; path = 3dparticle/ParticleUniverse/CCParticle3DSphere.h; sourceTree = "<group>"; };
 		B67880771A198F79002425C1 /* CCParticleSystem3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticleSystem3D.cpp; path = 3dparticle/CCParticleSystem3D.cpp; sourceTree = "<group>"; };
 		B67880781A198F79002425C1 /* CCParticleSystem3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticleSystem3D.h; path = 3dparticle/CCParticleSystem3D.h; sourceTree = "<group>"; };
 		B678807D1A19C8AA002425C1 /* CCParticle3DAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DAffector.cpp; path = 3dparticle/CCParticle3DAffector.cpp; sourceTree = "<group>"; };
@@ -5278,6 +5395,13 @@
 		B67880731A198D1F002425C1 /* Particle Universe */ = {
 			isa = PBXGroup;
 			children = (
+				B64F2C961A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp */,
+				B64F2C971A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h */,
+				B64F2C981A244E8E00DDCF36 /* CCParticle3DPlane.cpp */,
+				B64F2C991A244E8E00DDCF36 /* CCParticle3DPlane.h */,
+				B64F2C9A1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp */,
+				B64F2C9B1A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h */,
+				B64F2C9C1A244E8E00DDCF36 /* CCParticle3DSphere.h */,
 				3EA6F4611A1C8B8C00FF6AA9 /* CCParticle3DForceField.cpp */,
 				3EA6F4621A1C8B8C00FF6AA9 /* CCParticle3DForceField.h */,
 				3EA6F4631A1C8B8C00FF6AA9 /* CCParticle3DNoise.cpp */,
@@ -5291,6 +5415,24 @@
 		B67880741A198DA1002425C1 /* ParticleEmitters */ = {
 			isa = PBXGroup;
 			children = (
+				B64F2C601A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp */,
+				B64F2C611A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp */,
+				B64F2C621A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp */,
+				B64F2C631A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp */,
+				B64F2C641A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp */,
+				B64F2C651A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp */,
+				B64F2C661A244E7900DDCF36 /* CCParticle3DPositionEmitter.h */,
+				B64F2C671A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp */,
+				B64F2C681A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp */,
+				B64F2C691A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h */,
+				B64F2C6A1A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp */,
+				B64F2C6B1A244E7900DDCF36 /* CCParticle3DBoxEmitter.h */,
+				B64F2C6C1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h */,
+				B64F2C6D1A244E7900DDCF36 /* CCParticle3DLineEmitter.h */,
+				B64F2C6E1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h */,
+				B64F2C6F1A244E7900DDCF36 /* CCParticle3DPointEmitter.h */,
+				B64F2C701A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h */,
+				B64F2C711A244E7900DDCF36 /* CCParticle3DVertexEmitter.h */,
 			);
 			name = ParticleEmitters;
 			sourceTree = "<group>";
@@ -5298,6 +5440,20 @@
 		B67880751A198DD3002425C1 /* ParticleAffectors */ = {
 			isa = PBXGroup;
 			children = (
+				B64F2C361A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp */,
+				B64F2C371A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h */,
+				B64F2C381A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp */,
+				B64F2C391A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp */,
+				B64F2C3A1A244E6300DDCF36 /* CCParticle3DSphereCollider.h */,
+				B64F2C3B1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp */,
+				B64F2C3C1A244E6300DDCF36 /* CCParticle3DTextureAnimator.h */,
+				B64F2C3D1A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp */,
+				B64F2C3E1A244E6300DDCF36 /* CCParticle3DTextureRotator.h */,
+				B64F2C3F1A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp */,
+				B64F2C401A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h */,
+				B64F2C411A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp */,
+				B64F2C421A244E6300DDCF36 /* CCParticle3DVortexAffector.h */,
+				B64F2C431A244E6300DDCF36 /* CCParticle3DSineForceAffector.h */,
 				3EA6F46D1A1C8BA900FF6AA9 /* CCParticle3DAlignAffector.cpp */,
 				3EA6F46E1A1C8BA900FF6AA9 /* CCParticle3DAlignAffector.h */,
 				3EA6F46F1A1C8BA900FF6AA9 /* CCParticle3DBaseCollider.cpp */,
@@ -5396,6 +5552,7 @@
 				15AE1A2219AAD3D500C27E9E /* Box2D.h in Headers */,
 				15AE191419AAD35000C27E9E /* CCSGUIReader.h in Headers */,
 				B29A7E0119EE1B7700872B35 /* extension.h in Headers */,
+				B64F2C7E1A244E7900DDCF36 /* CCParticle3DPositionEmitter.h in Headers */,
 				15AE196D19AAD35700C27E9E /* CCActionTimeline.h in Headers */,
 				15AE1A6D19AAD40300C27E9E /* b2ChainAndPolygonContact.h in Headers */,
 				3E2F27A719CFBFE400E7C490 /* AudioEngine.h in Headers */,
@@ -5469,6 +5626,7 @@
 				1A57009A180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
 				15AE190819AAD35000C27E9E /* CCDatas.h in Headers */,
 				B29A7E1119EE1B7700872B35 /* EventData.h in Headers */,
+				B64F2C5E1A244E6300DDCF36 /* CCParticle3DSineForceAffector.h in Headers */,
 				1A5700A0180BC5D20088DEC7 /* CCNode.h in Headers */,
 				50ABC0671926664800A911A9 /* CCPlatformDefine-mac.h in Headers */,
 				3828C0C319EB8ACA002AB57B /* atomicops_internals_mips_gcc.h in Headers */,
@@ -5583,6 +5741,7 @@
 				15AE1B6919AADA9900C27E9E /* UIDeprecated.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
 				15AE1A8319AAD40300C27E9E /* b2GearJoint.h in Headers */,
+				B64F2C9F1A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h in Headers */,
 				15AE1BD519AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.h in Headers */,
 				3EA6F4B51A1C8BAA00FF6AA9 /* CCParticle3DGeometryRotator.h in Headers */,
 				15AE186919AAD31D00C27E9E /* CocosDenshion.h in Headers */,
@@ -5616,6 +5775,7 @@
 				15AE18F119AAD35000C27E9E /* CCArmatureAnimation.h in Headers */,
 				1A57022F180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				15AE188519AAD33D00C27E9E /* CCBSequence.h in Headers */,
+				B64F2C4C1A244E6300DDCF36 /* CCParticle3DSphereCollider.h in Headers */,
 				3828C0C519EB8ACA002AB57B /* atomicops_internals_pnacl.h in Headers */,
 				3EA6F4C51A1C8BAA00FF6AA9 /* CCParticle3DLineAffector.h in Headers */,
 				3828C0D519EB8ACA002AB57B /* map-util.h in Headers */,
@@ -5640,6 +5800,7 @@
 				15AE1B4E19AADA9900C27E9E /* UIListView.h in Headers */,
 				1A570284180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
 				5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
+				B64F2CA91A244E8E00DDCF36 /* CCParticle3DSphere.h in Headers */,
 				15AE1BCE19AAE01E00C27E9E /* CCControlColourPicker.h in Headers */,
 				1A570288180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				15AE189519AAD33D00C27E9E /* CCLayerLoader.h in Headers */,
@@ -5658,7 +5819,9 @@
 				3828C09519EB8ACA002AB57B /* config.h in Headers */,
 				B29A7E1919EE1B7700872B35 /* Event.h in Headers */,
 				15AE18AA19AAD33D00C27E9E /* CocosBuilder.h in Headers */,
+				B64F2C881A244E7900DDCF36 /* CCParticle3DBoxEmitter.h in Headers */,
 				50ABC0071926664800A911A9 /* CCApplicationProtocol.h in Headers */,
+				B64F2C581A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h in Headers */,
 				15AE1A7919AAD40300C27E9E /* b2PolygonAndCircleContact.h in Headers */,
 				15AE199719AAD39600C27E9E /* ListViewReader.h in Headers */,
 				B29A7E1D19EE1B7700872B35 /* PolygonBatch.h in Headers */,
@@ -5687,11 +5850,13 @@
 				50ABBDAF1925AB4100A911A9 /* CCRenderer.h in Headers */,
 				15AE181E19AAD2F700C27E9E /* CCBundle3DData.h in Headers */,
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
+				B64F2C541A244E6300DDCF36 /* CCParticle3DTextureRotator.h in Headers */,
 				5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				15AE1A2419AAD3D500C27E9E /* b2BroadPhase.h in Headers */,
 				B29A7E3919EE1B7700872B35 /* Animation.h in Headers */,
 				15AE191019AAD35000C27E9E /* CCInputDelegate.h in Headers */,
 				15AE184C19AAD30800C27E9E /* SimpleAudioEngine.h in Headers */,
+				B64F2CA71A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h in Headers */,
 				50ABBDA11925AB4100A911A9 /* CCGroupCommand.h in Headers */,
 				29394CF019B01DBA00D2DE1A /* UIWebView.h in Headers */,
 				15AE186519AAD31D00C27E9E /* CDOpenALSupport.h in Headers */,
@@ -5699,6 +5864,7 @@
 				15AE1B5C19AADA9900C27E9E /* UITextAtlas.h in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				15AE1B6019AADA9900C27E9E /* UITextField.h in Headers */,
+				B64F2C901A244E7900DDCF36 /* CCParticle3DPointEmitter.h in Headers */,
 				15AE190619AAD35000C27E9E /* CCDataReaderHelper.h in Headers */,
 				15AE1A6419AAD40300C27E9E /* b2Island.h in Headers */,
 				15AE1B5619AADA9900C27E9E /* UIScrollView.h in Headers */,
@@ -5708,6 +5874,7 @@
 				1A57030E180BCF190088DEC7 /* CCComponent.h in Headers */,
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				15AE1B7119AADA9900C27E9E /* CocosGUI.h in Headers */,
+				B64F2C8C1A244E7900DDCF36 /* CCParticle3DLineEmitter.h in Headers */,
 				15AE1A2D19AAD3D500C27E9E /* b2DynamicTree.h in Headers */,
 				3828C09D19EB8ACA002AB57B /* generated_message_util.h in Headers */,
 				50ABBD851925AB4100A911A9 /* CCBatchCommand.h in Headers */,
@@ -5744,11 +5911,15 @@
 				15AE188B19AAD33D00C27E9E /* CCControlLoader.h in Headers */,
 				B29A7DF719EE1B7700872B35 /* Attachment.h in Headers */,
 				15AE1BCA19AAE01E00C27E9E /* CCControl.h in Headers */,
+				B64F2C5C1A244E6300DDCF36 /* CCParticle3DVortexAffector.h in Headers */,
 				50ABBDBF1925AB4100A911A9 /* CCTextureCache.h in Headers */,
 				B29A7E0D19EE1B7700872B35 /* Bone.h in Headers */,
+				B64F2C501A244E6300DDCF36 /* CCParticle3DTextureAnimator.h in Headers */,
 				15AE186719AAD31D00C27E9E /* CDXMacOSXSupport.h in Headers */,
 				B29A7DCD19EE1B7700872B35 /* Slot.h in Headers */,
 				3828C0BF19EB8ACA002AB57B /* atomicops_internals_atomicword_compat.h in Headers */,
+				B64F2C921A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h in Headers */,
+				B64F2C8A1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h in Headers */,
 				B37510741823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.h in Headers */,
 				5034CA35191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				15AE1BB219AADFEF00C27E9E /* HttpClient.h in Headers */,
@@ -5766,6 +5937,7 @@
 				15AE1BB419AADFEF00C27E9E /* HttpResponse.h in Headers */,
 				3EA6F4951A1C8BAA00FF6AA9 /* CCParticle3DAlignAffector.h in Headers */,
 				15AE1A8519AAD40300C27E9E /* b2Joint.h in Headers */,
+				B64F2C461A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h in Headers */,
 				15AE1A8D19AAD40300C27E9E /* b2RevoluteJoint.h in Headers */,
 				50ABBE291925AB6F00A911A9 /* CCAutoreleasePool.h in Headers */,
 				299CF1FD19A434BC00C378C1 /* ccRandom.h in Headers */,
@@ -5782,6 +5954,7 @@
 				15AE1BCF19AAE01E00C27E9E /* CCControlExtensions.h in Headers */,
 				15AE1A3519AAD3D500C27E9E /* b2EdgeShape.h in Headers */,
 				50643BD919BFAF4400EF68ED /* CCApplication.h in Headers */,
+				B64F2C8E1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h in Headers */,
 				15AE183619AAD2F700C27E9E /* CCObjLoader.h in Headers */,
 				15AE1BE719AAE01E00C27E9E /* CCTableViewCell.h in Headers */,
 				3EA6F4671A1C8B8C00FF6AA9 /* CCParticle3DForceField.h in Headers */,
@@ -5817,6 +5990,7 @@
 				15B3708219EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
 				15B3708619EE414C00ABE682 /* Downloader.h in Headers */,
 				5034CA41191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
+				B64F2CA31A244E8E00DDCF36 /* CCParticle3DPlane.h in Headers */,
 				50ABBE7F1925AB6F00A911A9 /* CCEventTouch.h in Headers */,
 				50ABBE5B1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
 				1A01C69E18F57BE800EFE3A6 /* CCString.h in Headers */,
@@ -5866,6 +6040,8 @@
 				50ABBEB11925AB6F00A911A9 /* CCUserDefault.h in Headers */,
 				B29A7DEF19EE1B7700872B35 /* SkeletonBounds.h in Headers */,
 				50ABBEC71925AB6F00A911A9 /* etc1.h in Headers */,
+				B64F2C841A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h in Headers */,
+				B64F2C941A244E7900DDCF36 /* CCParticle3DVertexEmitter.h in Headers */,
 				B29A7E3519EE1B7700872B35 /* AnimationStateData.h in Headers */,
 				15AE1BC619AAE00000C27E9E /* AssetsManager.h in Headers */,
 				50ABBEA91925AB6F00A911A9 /* CCTouch.h in Headers */,
@@ -5909,6 +6085,7 @@
 				15AE181519AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
 				503DD8EF1926736A00CD74DD /* CCPlatformDefine-ios.h in Headers */,
 				3828C0C019EB8ACA002AB57B /* atomicops_internals_atomicword_compat.h in Headers */,
+				B64F2C951A244E7900DDCF36 /* CCParticle3DVertexEmitter.h in Headers */,
 				15AE196919AAD35100C27E9E /* CocoStudio.h in Headers */,
 				46A171041807CECB005B8026 /* CCPhysicsShape.h in Headers */,
 				15AE183319AAD2F700C27E9E /* CCOBB.h in Headers */,
@@ -5926,6 +6103,7 @@
 				46A170FD1807CECB005B8026 /* CCPhysicsBody.h in Headers */,
 				50ABBE9C1925AB6F00A911A9 /* CCRef.h in Headers */,
 				B29A7E2819EE1B7700872B35 /* spine-cocos2dx.h in Headers */,
+				B64F2C591A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.h in Headers */,
 				292DB16219B461CA00A80320 /* ExtensionDeprecated.h in Headers */,
 				50ABBD961925AB4100A911A9 /* CCGLProgramState.h in Headers */,
 				46A171061807CECB005B8026 /* CCPhysicsWorld.h in Headers */,
@@ -6032,6 +6210,7 @@
 				15AE1BF019AAE01E00C27E9E /* CCControlHuePicker.h in Headers */,
 				15AE18B819AAD33D00C27E9E /* CCBSequenceProperty.h in Headers */,
 				3EA6F49E1A1C8BAA00FF6AA9 /* CCParticle3DBaseForceAffector.h in Headers */,
+				B64F2C8F1A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.h in Headers */,
 				503DD8E41926736A00CD74DD /* CCDirectorCaller-ios.h in Headers */,
 				15AE198119AAD35700C27E9E /* CCTimelineMacro.h in Headers */,
 				B29A7E0219EE1B7700872B35 /* extension.h in Headers */,
@@ -6073,6 +6252,7 @@
 				B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */,
 				B230ED7419B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
 				50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
+				B64F2CA41A244E8E00DDCF36 /* CCParticle3DPlane.h in Headers */,
 				15AE1ACB19AAD40300C27E9E /* b2MouseJoint.h in Headers */,
 				50ABBD3F1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				B29A7DD019EE1B7700872B35 /* RegionAttachment.h in Headers */,
@@ -6110,6 +6290,7 @@
 				15AE1C1819AAE2C700C27E9E /* CCPhysicsSprite.h in Headers */,
 				3828C0B019EB8ACA002AB57B /* zero_copy_stream_impl_lite.h in Headers */,
 				15AE1BC819AAE00000C27E9E /* AssetsManager.h in Headers */,
+				B64F2C4D1A244E6300DDCF36 /* CCParticle3DSphereCollider.h in Headers */,
 				B29A7E0419EE1B7700872B35 /* BoundingBoxAttachment.h in Headers */,
 				3EA6F4B21A1C8BAA00FF6AA9 /* CCParticle3DForceFieldAffector.h in Headers */,
 				15AE1BBC19AADFF000C27E9E /* HttpResponse.h in Headers */,
@@ -6122,6 +6303,7 @@
 				15AE196219AAD35100C27E9E /* CCSSceneReader.h in Headers */,
 				1A01C69518F57BE800EFE3A6 /* CCFloat.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
+				B64F2C891A244E7900DDCF36 /* CCParticle3DBoxEmitter.h in Headers */,
 				50643BDC19BFAF4400EF68ED /* CCStdC.h in Headers */,
 				5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				15AE1B8E19AADA9A00C27E9E /* UIDeprecated.h in Headers */,
@@ -6150,6 +6332,7 @@
 				3EA6F4C61A1C8BAA00FF6AA9 /* CCParticle3DLineAffector.h in Headers */,
 				1A5701F1180BCB8C0088DEC7 /* CCTransitionProgress.h in Headers */,
 				3828C0E819EB8ACA002AB57B /* wire_format_lite_inl.h in Headers */,
+				B64F2C8D1A244E7900DDCF36 /* CCParticle3DLineEmitter.h in Headers */,
 				B29A7DCE19EE1B7700872B35 /* Slot.h in Headers */,
 				15AE1A9C19AAD40300C27E9E /* b2Settings.h in Headers */,
 				1A5701FA180BCBAD0088DEC7 /* CCMenu.h in Headers */,
@@ -6161,6 +6344,7 @@
 				15AE1B8919AADA9A00C27E9E /* UICheckBox.h in Headers */,
 				5034CA34191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
 				B29A7DF819EE1B7700872B35 /* Attachment.h in Headers */,
+				B64F2C5F1A244E6300DDCF36 /* CCParticle3DSineForceAffector.h in Headers */,
 				15AE197C19AAD35700C27E9E /* CCFrame.h in Headers */,
 				15AE1AA219AAD40300C27E9E /* b2Body.h in Headers */,
 				15AE1C0419AAE01E00C27E9E /* CCTableView.h in Headers */,
@@ -6176,6 +6360,7 @@
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1A570217180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				15AE1ABB19AAD40300C27E9E /* b2EdgeAndPolygonContact.h in Headers */,
+				B64F2C511A244E6300DDCF36 /* CCParticle3DTextureAnimator.h in Headers */,
 				15AE198719AAD36400C27E9E /* WidgetReaderProtocol.h in Headers */,
 				15AE198619AAD36400C27E9E /* WidgetReader.h in Headers */,
 				1A570224180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
@@ -6199,6 +6384,7 @@
 				50CB247A19D9C5A100687767 /* AudioEngine-inl.h in Headers */,
 				50ABBD431925AB0000A911A9 /* CCMathBase.h in Headers */,
 				15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */,
+				B64F2C911A244E7900DDCF36 /* CCParticle3DPointEmitter.h in Headers */,
 				15AE194419AAD35100C27E9E /* CCComBase.h in Headers */,
 				3828C0D219EB8ACA002AB57B /* common.h in Headers */,
 				3828C0C219EB8ACA002AB57B /* atomicops_internals_macosx.h in Headers */,
@@ -6216,12 +6402,14 @@
 				1A570289180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				15AE1B7F19AADA9A00C27E9E /* UIText.h in Headers */,
 				B29A7E3419EE1B7700872B35 /* SlotData.h in Headers */,
+				B64F2C851A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.h in Headers */,
 				3EA6F4D61A1C8BAA00FF6AA9 /* CCParticle3DPlaneCollider.h in Headers */,
 				50ABBE701925AB6F00A911A9 /* CCEventListenerKeyboard.h in Headers */,
 				15AE18B619AAD33D00C27E9E /* CCBSequence.h in Headers */,
 				15AE1A9819AAD40300C27E9E /* b2GrowableStack.h in Headers */,
 				1A57028D180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				1A570295180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
+				B64F2C931A244E7900DDCF36 /* CCParticle3DSlaveEmitter.h in Headers */,
 				50ABBDB81925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				15AE1AAB19AAD40300C27E9E /* b2World.h in Headers */,
 				15AE180F19AAD2F700C27E9E /* CCAnimate3D.h in Headers */,
@@ -6240,6 +6428,7 @@
 				1A5702ED180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				15AE195E19AAD35100C27E9E /* CCSkin.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
+				B64F2CAA1A244E8E00DDCF36 /* CCParticle3DSphere.h in Headers */,
 				15AE18AE19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
 				15AE197819AAD35700C27E9E /* CCActionTimeline.h in Headers */,
 				15AE1AA019AAD40300C27E9E /* b2Timer.h in Headers */,
@@ -6257,6 +6446,7 @@
 				292DB14219B4574100A80320 /* UIEditBoxImpl.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				50ABBE2A1925AB6F00A911A9 /* CCAutoreleasePool.h in Headers */,
+				B64F2C7F1A244E7900DDCF36 /* CCParticle3DPositionEmitter.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
 				15AE1AD519AAD40300C27E9E /* b2WeldJoint.h in Headers */,
 				15AE18B019AAD33D00C27E9E /* CCBKeyframe.h in Headers */,
@@ -6320,6 +6510,7 @@
 				5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				15AE1A9719AAD40300C27E9E /* b2Draw.h in Headers */,
 				3E6176691960F89B00DE83F5 /* CCController.h in Headers */,
+				B64F2C8B1A244E7900DDCF36 /* CCParticle3DCircleEmitter.h in Headers */,
 				3E6176781960F89B00DE83F5 /* CCGameController.h in Headers */,
 				15AE19BB19AAD39700C27E9E /* TextReader.h in Headers */,
 				50ABBE641925AB6F00A911A9 /* CCEventListenerAcceleration.h in Headers */,
@@ -6342,6 +6533,7 @@
 				3828C0BC19EB8ACA002AB57B /* atomicops_internals_arm_gcc.h in Headers */,
 				15AE1ACF19AAD40300C27E9E /* b2PulleyJoint.h in Headers */,
 				15AE198019AAD35700C27E9E /* CCTimeLine.h in Headers */,
+				B64F2C5D1A244E6300DDCF36 /* CCParticle3DVortexAffector.h in Headers */,
 				38B8E2D219E65F4C002D7CE7 /* CSParseBinary.pb.h in Headers */,
 				38B8E2E419E671D2002D7CE7 /* UILayoutComponent.h in Headers */,
 				50ABBD4F1925AB0000A911A9 /* MathUtil.h in Headers */,
@@ -6376,6 +6568,7 @@
 				15AE194119AAD35100C27E9E /* CCBone.h in Headers */,
 				50ABBD471925AB0000A911A9 /* CCVertex.h in Headers */,
 				15AE195A19AAD35100C27E9E /* CCProcessBase.h in Headers */,
+				B64F2CA81A244E8E00DDCF36 /* CCParticle3DSimpleSpline.h in Headers */,
 				15AE193D19AAD35100C27E9E /* CCArmatureDefine.h in Headers */,
 				15AE1A4219AAD3D500C27E9E /* b2Distance.h in Headers */,
 				15AE195419AAD35100C27E9E /* CCDisplayFactory.h in Headers */,
@@ -6397,6 +6590,7 @@
 				15AE1BF619AAE01E00C27E9E /* CCControlSlider.h in Headers */,
 				1A01C68718F57BE800EFE3A6 /* CCArray.h in Headers */,
 				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
+				B64F2CA01A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.h in Headers */,
 				3828C0E219EB8ACA002AB57B /* stringprintf.h in Headers */,
 				50ABBEDA1925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50ABBDC01925AB4100A911A9 /* CCTextureCache.h in Headers */,
@@ -6418,8 +6612,10 @@
 				15AE18B319AAD33D00C27E9E /* CCBReader.h in Headers */,
 				15AE18D219AAD33D00C27E9E /* CCNodeLoaderListener.h in Headers */,
 				15AE184D19AAD30800C27E9E /* SimpleAudioEngine.h in Headers */,
+				B64F2C551A244E6300DDCF36 /* CCParticle3DTextureRotator.h in Headers */,
 				1A01C68D18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
 				B29A7E3619EE1B7700872B35 /* AnimationStateData.h in Headers */,
+				B64F2C471A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h in Headers */,
 				503DD8EA1926736A00CD74DD /* CCESRenderer-ios.h in Headers */,
 				50ABBE581925AB6F00A911A9 /* CCEventFocus.h in Headers */,
 				15AE196419AAD35100C27E9E /* CCTransformHelp.h in Headers */,
@@ -6519,6 +6715,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15AE1A9019AAD40300C27E9E /* b2WeldJoint.cpp in Sources */,
+				B64F2C441A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp in Sources */,
 				50ABBE2B1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				B29A7E3B19EE1B7700872B35 /* Animation.c in Sources */,
 				15AE1BDE19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
@@ -6537,11 +6734,13 @@
 				15AE1BDA19AAE01E00C27E9E /* CCControlSwitch.cpp in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				15AE18DC19AAD35000C27E9E /* CocoLoader.cpp in Sources */,
+				B64F2C561A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp in Sources */,
 				15AE1B4D19AADA9900C27E9E /* UIListView.cpp in Sources */,
 				15AE189D19AAD33D00C27E9E /* CCNodeLoader.cpp in Sources */,
 				5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
 				50ABC0611926664800A911A9 /* CCCommon-mac.mm in Sources */,
 				50ABBDB11925AB4100A911A9 /* ccShaders.cpp in Sources */,
+				B64F2C4E1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp in Sources */,
 				15AE198219AAD36400C27E9E /* WidgetReader.cpp in Sources */,
 				B67880791A198F79002425C1 /* CCParticleSystem3D.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
@@ -6566,6 +6765,8 @@
 				15AE1B6319AADA9900C27E9E /* UICheckBox.cpp in Sources */,
 				15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
+				B64F2C481A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp in Sources */,
+				B64F2C821A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp in Sources */,
 				15AE189819AAD33D00C27E9E /* CCMenuItemLoader.cpp in Sources */,
 				3EA6F4AB1A1C8BAA00FF6AA9 /* CCParticle3DFlockCenteringAffector.cpp in Sources */,
 				15AE1A5719AAD40300C27E9E /* b2Settings.cpp in Sources */,
@@ -6574,6 +6775,7 @@
 				15AE188E19AAD33D00C27E9E /* CCLabelTTFLoader.cpp in Sources */,
 				15AE1A3019AAD3D500C27E9E /* b2ChainShape.cpp in Sources */,
 				50ABBE8B1925AB6F00A911A9 /* CCNS.cpp in Sources */,
+				B64F2CA11A244E8E00DDCF36 /* CCParticle3DPlane.cpp in Sources */,
 				15AE1BD819AAE01E00C27E9E /* CCControlStepper.cpp in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
 				1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */,
@@ -6610,6 +6812,7 @@
 				15AE1B9D19AADFDF00C27E9E /* UIVBox.cpp in Sources */,
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1A7019AAD40300C27E9E /* b2Contact.cpp in Sources */,
+				B64F2C521A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp in Sources */,
 				15AE18A619AAD33D00C27E9E /* CCScrollViewLoader.cpp in Sources */,
 				15AE18F619AAD35000C27E9E /* CCBatchNode.cpp in Sources */,
 				15AE184419AAD2F700C27E9E /* CCSprite3DMaterial.cpp in Sources */,
@@ -6670,8 +6873,10 @@
 				1A5701A1180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				B29A7DFF19EE1B7700872B35 /* Json.c in Sources */,
 				15AE1A8619AAD40300C27E9E /* b2MouseJoint.cpp in Sources */,
+				B64F2CA51A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp in Sources */,
 				1A5701A5180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				3828C0A919EB8ACA002AB57B /* zero_copy_stream_impl.cc in Sources */,
+				B64F2C721A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp in Sources */,
 				15AE1A7A19AAD40300C27E9E /* b2PolygonContact.cpp in Sources */,
 				15AE191119AAD35000C27E9E /* CCProcessBase.cpp in Sources */,
 				15AE18EE19AAD35000C27E9E /* CCArmature.cpp in Sources */,
@@ -6693,6 +6898,7 @@
 				15AE1A8C19AAD40300C27E9E /* b2RevoluteJoint.cpp in Sources */,
 				3EA6F4CB1A1C8BAA00FF6AA9 /* CCParticle3DParticleFollower.cpp in Sources */,
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,
+				B64F2C761A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp in Sources */,
 				15AE191719AAD35000C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
@@ -6740,10 +6946,12 @@
 				B29A7DD719EE1B7700872B35 /* SkeletonData.c in Sources */,
 				3EACC9A019F5014D00EB3C5E /* CCCamera.cpp in Sources */,
 				1A570214180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
+				B64F2C7C1A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp in Sources */,
 				15AE1BD019AAE01E00C27E9E /* CCControlHuePicker.cpp in Sources */,
 				15AE18F219AAD35000C27E9E /* CCArmatureDataManager.cpp in Sources */,
 				15AE1B6119AADA9900C27E9E /* UIButton.cpp in Sources */,
 				3EA6F4DB1A1C8BAA00FF6AA9 /* CCParticle3DScaleAffector.cpp in Sources */,
+				B64F2C5A1A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp in Sources */,
 				15AE1A5519AAD40300C27E9E /* b2Math.cpp in Sources */,
 				B276EF651988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */,
 				50ABBE411925AB6F00A911A9 /* CCDirector.cpp in Sources */,
@@ -6755,6 +6963,7 @@
 				1A57027E180BCC900088DEC7 /* CCSprite.cpp in Sources */,
 				15AE1A7419AAD40300C27E9E /* b2EdgeAndCircleContact.cpp in Sources */,
 				1A570282180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
+				B64F2C861A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
 				B24AA989195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				B29A7E2F19EE1B7700872B35 /* SkeletonAnimation.cpp in Sources */,
@@ -6802,14 +7011,17 @@
 				B29A7DC719EE1B7700872B35 /* SkeletonRenderer.cpp in Sources */,
 				15AE1A7C19AAD40300C27E9E /* b2MotorJoint.cpp in Sources */,
 				15AE1A2619AAD3D500C27E9E /* b2CollideEdge.cpp in Sources */,
+				B64F2C4A1A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp in Sources */,
 				1A5702EE180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				15AE1BD619AAE01E00C27E9E /* CCControlSlider.cpp in Sources */,
 				B67880811A19C8AA002425C1 /* CCParticle3DAffector.cpp in Sources */,
+				B64F2C781A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp in Sources */,
 				50ABBE691925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
 				15AE18EA19AAD35000C27E9E /* CCActionNode.cpp in Sources */,
 				15AE1A7819AAD40300C27E9E /* b2PolygonAndCircleContact.cpp in Sources */,
 				15AE1A3419AAD3D500C27E9E /* b2EdgeShape.cpp in Sources */,
 				15AE1BA319AADFDF00C27E9E /* UILayoutManager.cpp in Sources */,
+				B64F2C7A1A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp in Sources */,
 				B230ED7119B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */,
 				3EA6F4651A1C8B8C00FF6AA9 /* CCParticle3DForceField.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
@@ -6857,12 +7069,14 @@
 				50ABBEB51925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
+				B64F2C801A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp in Sources */,
 				3EA6F49B1A1C8BAA00FF6AA9 /* CCParticle3DBaseForceAffector.cpp in Sources */,
 				15AE1B7019AADA9900C27E9E /* CocosGUI.cpp in Sources */,
 				50CB247719D9C5A100687767 /* AudioCache.mm in Sources */,
 				15AE18FA19AAD35000C27E9E /* CCColliderDetector.cpp in Sources */,
 				3828C0E919EB8ACA002AB57B /* wire_format_lite.cc in Sources */,
 				50ABBEA71925AB6F00A911A9 /* CCTouch.cpp in Sources */,
+				B64F2C741A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp in Sources */,
 				15AE191319AAD35000C27E9E /* CCSGUIReader.cpp in Sources */,
 				15AE186819AAD31D00C27E9E /* CDXMacOSXSupport.mm in Sources */,
 				15AE191519AAD35000C27E9E /* CCSkin.cpp in Sources */,
@@ -6969,6 +7183,7 @@
 				B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
 				15AE189619AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
+				B64F2C9D1A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp in Sources */,
 				15AE1B5119AADA9900C27E9E /* UIPageView.cpp in Sources */,
 				50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
 				15AE18EC19AAD35000C27E9E /* CCActionObject.cpp in Sources */,
@@ -7022,6 +7237,7 @@
 				B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */,
 				38B8E2E219E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */,
 				B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */,
+				B64F2C5B1A244E6300DDCF36 /* CCParticle3DVortexAffector.cpp in Sources */,
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,
 				15AE186119AAD31200C27E9E /* SimpleAudioEngine_objc.m in Sources */,
 				15AE182519AAD2F700C27E9E /* CCMesh.cpp in Sources */,
@@ -7044,6 +7260,7 @@
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				B276EF661988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */,
 				15AE1C0119AAE01E00C27E9E /* CCScrollView.cpp in Sources */,
+				B64F2C7B1A244E7900DDCF36 /* CCParticle3DPointEmitter.cpp in Sources */,
 				15B3708919EE414C00ABE682 /* Manifest.cpp in Sources */,
 				15AE1A9B19AAD40300C27E9E /* b2Settings.cpp in Sources */,
 				1A57006A180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
@@ -7077,6 +7294,7 @@
 				15AE1ACA19AAD40300C27E9E /* b2MouseJoint.cpp in Sources */,
 				15AE19AC19AAD39700C27E9E /* LoadingBarReader.cpp in Sources */,
 				50ABBE7E1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
+				B64F2C751A244E7900DDCF36 /* CCParticle3DCircleEmitter.cpp in Sources */,
 				3828C0AE19EB8ACA002AB57B /* zero_copy_stream_impl_lite.cc in Sources */,
 				15AE183119AAD2F700C27E9E /* CCOBB.cpp in Sources */,
 				B29A7DCA19EE1B7700872B35 /* SlotData.c in Sources */,
@@ -7107,9 +7325,11 @@
 				15AE193A19AAD35100C27E9E /* CCArmatureDataManager.cpp in Sources */,
 				3EACC9A519F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				15AE1B7A19AADA9A00C27E9E /* UIScrollView.cpp in Sources */,
+				B64F2C571A244E6300DDCF36 /* CCParticle3DVelocityMatchingAffector.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				15AE19B219AAD39700C27E9E /* SliderReader.cpp in Sources */,
 				15AE1B7E19AADA9A00C27E9E /* UIText.cpp in Sources */,
+				B64F2C491A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp in Sources */,
 				15AE1A3E19AAD3D500C27E9E /* b2CollidePolygon.cpp in Sources */,
 				15AE1AB219AAD40300C27E9E /* b2CircleContact.cpp in Sources */,
 				B29A7E2619EE1B7700872B35 /* Attachment.c in Sources */,
@@ -7131,9 +7351,11 @@
 				15AE1C0319AAE01E00C27E9E /* CCTableView.cpp in Sources */,
 				38B8E2D019E65F4C002D7CE7 /* CSParseBinary.pb.cc in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
+				B64F2C791A244E7900DDCF36 /* CCParticle3DMeshSurfaceEmitter.cpp in Sources */,
 				15AE1BF319AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				1A570086180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
+				B64F2C811A244E7900DDCF36 /* CCParticle3DSlaveEmitter.cpp in Sources */,
 				15AE1AB819AAD40300C27E9E /* b2EdgeAndCircleContact.cpp in Sources */,
 				1A57008A180BC5A10088DEC7 /* CCActionProgressTimer.cpp in Sources */,
 				15AE18AF19AAD33D00C27E9E /* CCBKeyframe.cpp in Sources */,
@@ -7235,6 +7457,7 @@
 				1A5701EF180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
 				1A5701F8180BCBAD0088DEC7 /* CCMenu.cpp in Sources */,
 				3828C0CC19EB8ACA002AB57B /* atomicops_internals_x86_msvc.cc in Sources */,
+				B64F2C831A244E7900DDCF36 /* CCParticle3DSphereSurfaceEmitter.cpp in Sources */,
 				50ABBD511925AB0000A911A9 /* Quaternion.cpp in Sources */,
 				1A5701FC180BCBAD0088DEC7 /* CCMenuItem.cpp in Sources */,
 				15AE195119AAD35100C27E9E /* CCDecorativeDisplay.cpp in Sources */,
@@ -7257,9 +7480,11 @@
 				15AE185F19AAD31200C27E9E /* SimpleAudioEngine.mm in Sources */,
 				B29A7DC819EE1B7700872B35 /* SkeletonRenderer.cpp in Sources */,
 				15AE1BE819AAE01E00C27E9E /* CCControl.cpp in Sources */,
+				B64F2C4B1A244E6300DDCF36 /* CCParticle3DSphereCollider.cpp in Sources */,
 				1A570226180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
 				15AE194919AAD35100C27E9E /* CCComController.cpp in Sources */,
 				1A57022A180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
+				B64F2C451A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp in Sources */,
 				15AE182919AAD2F700C27E9E /* CCMeshSkin.cpp in Sources */,
 				3EACC9A119F5014D00EB3C5E /* CCCamera.cpp in Sources */,
 				15AE1BBD19AADFF000C27E9E /* SocketIO.cpp in Sources */,
@@ -7274,6 +7499,7 @@
 				15AE1AC619AAD40300C27E9E /* b2GearJoint.cpp in Sources */,
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
+				B64F2C871A244E7900DDCF36 /* CCParticle3DVertexEmitter.cpp in Sources */,
 				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				15AE197F19AAD35700C27E9E /* CCTimeLine.cpp in Sources */,
 				B29A7DD819EE1B7700872B35 /* SkeletonData.c in Sources */,
@@ -7281,6 +7507,7 @@
 				15AE194719AAD35100C27E9E /* CCComAudio.cpp in Sources */,
 				15AE192719AAD35100C27E9E /* TriggerBase.cpp in Sources */,
 				15AE1B8819AADA9A00C27E9E /* UICheckBox.cpp in Sources */,
+				B64F2C4F1A244E6300DDCF36 /* CCParticle3DTextureAnimator.cpp in Sources */,
 				15AE1A4B19AAD3D500C27E9E /* b2EdgeShape.cpp in Sources */,
 				15AE18B519AAD33D00C27E9E /* CCBSequence.cpp in Sources */,
 				B29A7DD619EE1B7700872B35 /* RegionAttachment.c in Sources */,
@@ -7295,6 +7522,7 @@
 				15AE194D19AAD35100C27E9E /* CCDataReaderHelper.cpp in Sources */,
 				15AE1B8C19AADA9A00C27E9E /* UIScale9Sprite.cpp in Sources */,
 				15AE19AE19AAD39700C27E9E /* PageViewReader.cpp in Sources */,
+				B64F2CA61A244E8E00DDCF36 /* CCParticle3DSimpleSpline.cpp in Sources */,
 				1A570297180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				50ABBE321925AB6F00A911A9 /* CCConfiguration.cpp in Sources */,
 				15AE1A9F19AAD40300C27E9E /* b2Timer.cpp in Sources */,
@@ -7326,6 +7554,7 @@
 				1A5702FB180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				1A570301180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				15AE1A4519AAD3D500C27E9E /* b2TimeOfImpact.cpp in Sources */,
+				B64F2C7D1A244E7900DDCF36 /* CCParticle3DPositionEmitter.cpp in Sources */,
 				1A57030D180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				3EA6F4BC1A1C8BAA00FF6AA9 /* CCParticle3DInterParticleCollider.cpp in Sources */,
 				15AE1B8F19AADA9A00C27E9E /* UIDeprecated.cpp in Sources */,
@@ -7388,14 +7617,17 @@
 				B29A7DD219EE1B7700872B35 /* Skin.c in Sources */,
 				3E6176761960F89B00DE83F5 /* CCEventListenerController.cpp in Sources */,
 				15AE1AC219AAD40300C27E9E /* b2DistanceJoint.cpp in Sources */,
+				B64F2C731A244E7900DDCF36 /* CCParticle3DBoxEmitter.cpp in Sources */,
 				3828C0B219EB8ACA002AB57B /* message_lite.cc in Sources */,
 				503DD8E71926736A00CD74DD /* CCEAGLView-ios.mm in Sources */,
+				B64F2CA21A244E8E00DDCF36 /* CCParticle3DPlane.cpp in Sources */,
 				3E2BDAEC19C0436F0055CDCD /* AudioEngine.cpp in Sources */,
 				15B3707919EE414C00ABE682 /* AssetsManagerEx.cpp in Sources */,
 				50ABBDA41925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				15AE18C319AAD33D00C27E9E /* CCLayerGradientLoader.cpp in Sources */,
 				15AE197919AAD35700C27E9E /* CCActionTimelineCache.cpp in Sources */,
 				1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */,
+				B64F2C771A244E7900DDCF36 /* CCParticle3DLineEmitter.cpp in Sources */,
 				50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */,
 				15AE192E19AAD35100C27E9E /* CCActionFrameEasing.cpp in Sources */,
 				3EA6F4A81A1C8BAA00FF6AA9 /* CCParticle3DColorAffector.cpp in Sources */,
@@ -7437,6 +7669,7 @@
 				15AE1AA319AAD40300C27E9E /* b2ContactManager.cpp in Sources */,
 				15AE196519AAD35100C27E9E /* CCTween.cpp in Sources */,
 				3EA6F4661A1C8B8C00FF6AA9 /* CCParticle3DForceField.cpp in Sources */,
+				B64F2C531A244E6300DDCF36 /* CCParticle3DTextureRotator.cpp in Sources */,
 				3EA6F4A01A1C8BAA00FF6AA9 /* CCParticle3DBoxCollider.cpp in Sources */,
 				46C02E0818E91123004B7456 /* xxhash.c in Sources */,
 				15AE183519AAD2F700C27E9E /* CCObjLoader.cpp in Sources */,
@@ -7447,6 +7680,7 @@
 				15AE1AB419AAD40300C27E9E /* b2Contact.cpp in Sources */,
 				B29A7DDC19EE1B7700872B35 /* Event.c in Sources */,
 				50ABBEB41925AB6F00A911A9 /* CCUserDefault-apple.mm in Sources */,
+				B64F2C9E1A244E8E00DDCF36 /* CCParticle3DDynamicAttribute.cpp in Sources */,
 				1A1645B1191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				50ABBE3A1925AB6F00A911A9 /* CCData.cpp in Sources */,
 				1A1645B3191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
@@ -7498,7 +7732,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../external/protobuf-lite/src";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../external/protobuf-lite/src $(SRCROOT)/../extensions";
 			};
 			name = Debug;
 		};
@@ -7531,7 +7765,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../external/protobuf-lite/src";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../external/protobuf-lite/src $(SRCROOT)/../extensions";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

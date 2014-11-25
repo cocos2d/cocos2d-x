@@ -71,12 +71,12 @@ void Particle3DScaleVelocityAffector::updateAffector( float deltaTime )
 
         if (_stopAtFlip)
         {
-            if (calculated.x > 0.0f && particle->direction.x < 0.0f ||
-                calculated.y > 0.0f && particle->direction.y < 0.0f ||
-                calculated.z > 0.0f && particle->direction.z < 0.0f ||
-                calculated.x < 0.0f && particle->direction.x > 0.0f ||
-                calculated.y < 0.0f && particle->direction.y > 0.0f ||
-                calculated.z < 0.0f && particle->direction.z > 0.0f)
+            if ((calculated.x > 0.0f && particle->direction.x < 0.0f) ||
+                (calculated.y > 0.0f && particle->direction.y < 0.0f) ||
+                (calculated.z > 0.0f && particle->direction.z < 0.0f) ||
+                (calculated.x < 0.0f && particle->direction.x > 0.0f) ||
+                (calculated.y < 0.0f && particle->direction.y > 0.0f) ||
+                (calculated.z < 0.0f && particle->direction.z > 0.0f))
                 return;
         }
 
