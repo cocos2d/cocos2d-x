@@ -35,7 +35,11 @@ NS_CC_BEGIN
 class ParticleSystem3D;
 class Renderer;
 class MeshCommand;
+class Mesh;
 class Sprite3D;
+class GLProgramState;
+class IndexBuffer;
+class VertexBuffer;
 
 /**
  * 3d particle render
@@ -43,9 +47,8 @@ class Sprite3D;
 class Particle3DRender : public Ref
 {
 public:
-    virtual void updateRender(const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
 
-    virtual void render(Renderer* renderer) = 0;
+    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
     
     void setVisible(bool isVisible) { _isVisible = isVisible; }
     
@@ -64,10 +67,9 @@ protected:
 class Particle3DQuadRender : public Particle3DRender
 {
 public:
-    static Particle3DQuadRender* create();
+    static Particle3DQuadRender* create(const std::string& texFile = "");
     
-    virtual void updateRender(const Mat4 &transform, ParticleSystem3D* particleSystem) override;
-    virtual void render(Renderer* renderer) override;
+    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
     
 CC_CONSTRUCTOR_ACCESS:
     Particle3DQuadRender();
@@ -75,6 +77,21 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     MeshCommand* _meshCommand;
+    Mesh*        _mesh;
+    bool         _useTexture;
+    GLProgramState* _glProgramState;
+    IndexBuffer*          _indexBuffer; //index buffer
+    VertexBuffer*        _vertexBuffer; // vertex buffer
+    
+    struct posuvcolor
+    {
+        Vec3 position;
+        Vec2 uv;
+        Vec4 color;
+    };
+
+    std::vector<posuvcolor> _posuvcolors;   //vertex data
+    std::vector<unsigned short> _indexData; //index data
 };
 
 // particle render for Sprite3D
@@ -82,9 +99,8 @@ class Particle3DModelRender : public Particle3DRender
 {
 public:
     static Particle3DModelRender* create(Sprite3D* sprite);
-    
-    virtual void updateRender(const Mat4 &transform, ParticleSystem3D* particleSystem) override;
-    virtual void render(Renderer* renderer) override;
+
+    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
     
 CC_CONSTRUCTOR_ACCESS:
     Particle3DModelRender();
@@ -92,7 +108,6 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     Sprite3D* _sprite; //3d sprite to be rendered
-    std::vector<MeshCommand*> _meshCommand; // mesh command
 };
 
 NS_CC_END

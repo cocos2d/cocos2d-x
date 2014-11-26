@@ -164,8 +164,7 @@ void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t 
 {
     if (_state != State::STOP && _render)
     {
-        _render->updateRender(transform, this);
-        _render->render(renderer);
+        _render->render(renderer, transform, this);
     }
 }
 

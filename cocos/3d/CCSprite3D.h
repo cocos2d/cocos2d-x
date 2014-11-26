@@ -121,6 +121,9 @@ public:
     /** light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff */
     void setLightMask(unsigned int mask) { _lightMask = mask; }
     unsigned int getLightMask() const { return _lightMask; }
+    
+    /**draw*/
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -139,9 +142,6 @@ CC_CONSTRUCTOR_ACCESS:
     /**load from .c3b or .c3t*/
     bool loadFromC3x(const std::string& path);
 
-    /**draw*/
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    
     /**generate default GLProgramState*/
     void genGLProgramState(bool useLight = false);
 

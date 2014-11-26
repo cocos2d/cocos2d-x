@@ -3231,6 +3231,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBillBoard.cpp; sourceTree = "<group>"; };
 		B60C5BD319AC68B10056FBDE /* CCBillBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBillBoard.h; sourceTree = "<group>"; };
+		B63703191A25CBE800A83662 /* ccShader_3D_Particle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Particle.frag; sourceTree = "<group>"; };
+		B637031A1A25CBE800A83662 /* ccShader_3D_Particle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Particle.vert; sourceTree = "<group>"; };
 		B64F2C361A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DScaleVelocityAffector.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DScaleVelocityAffector.cpp; sourceTree = "<group>"; };
 		B64F2C371A244E6300DDCF36 /* CCParticle3DScaleVelocityAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticle3DScaleVelocityAffector.h; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DScaleVelocityAffector.h; sourceTree = "<group>"; };
 		B64F2C381A244E6300DDCF36 /* CCParticle3DSineForceAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCParticle3DSineForceAffector.cpp; path = 3dparticle/ParticleUniverse/ParticleAffectors/CCParticle3DSineForceAffector.cpp; sourceTree = "<group>"; };
@@ -5064,6 +5066,8 @@
 		5034CA5D191D591900CE6051 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				B63703191A25CBE800A83662 /* ccShader_3D_Particle.frag */,
+				B637031A1A25CBE800A83662 /* ccShader_3D_Particle.vert */,
 				B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */,
 				B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */,
 				B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */,
