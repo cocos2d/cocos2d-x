@@ -24,6 +24,8 @@ cocos2d-x-3.3-rc1 ??
     [FIX]           VideoPlayer: showed in wrong place on Android v2.3.x
     [FIX]           WebView: showed in wrong place on Android v2.3.x
     [FIX]           WP: back key behaviour and Director::getInstance()->end() works not correctly
+    
+    [FIX]           Lua-binding: XmlHttpRequest would truncate binary data
 
 cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           3d: added light support: direction light, point light, spot light and ambient light
