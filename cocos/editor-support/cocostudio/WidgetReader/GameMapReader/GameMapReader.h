@@ -47,7 +47,7 @@ namespace cocostudio
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* gameMapOptions);
-        cocos2d::TMXTiledMap* createNodeWithFlatBuffers(const flatbuffers::Table* gameMapOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* gameMapOptions);
     };
 }
 

@@ -538,7 +538,7 @@ namespace cocostudio
         
     }
     
-    CheckBox* CheckBoxReader::createNodeWithFlatBuffers(const flatbuffers::Table *checkBoxOptions)
+    Node* CheckBoxReader::createNodeWithFlatBuffers(const flatbuffers::Table *checkBoxOptions)
     {
         CheckBox* checkBox = CheckBox::create();
         

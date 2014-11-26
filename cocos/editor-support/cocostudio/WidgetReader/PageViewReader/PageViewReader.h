@@ -27,7 +27,6 @@
 
 #include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UIPageView.h"
 
 namespace cocostudio
 {
@@ -48,7 +47,7 @@ namespace cocostudio
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* pageViewOptions);
-        cocos2d::ui::PageView* createNodeWithFlatBuffers(const flatbuffers::Table* pageViewOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* pageViewOptions);
         
         int getResourceType(std::string key);
         

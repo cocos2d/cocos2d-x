@@ -27,7 +27,6 @@
 
 #include "cocostudio/WidgetReader/WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UILoadingBar.h"
 
 namespace cocostudio
 {
@@ -48,7 +47,7 @@ namespace cocostudio
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* loadingBarOptions);
-        cocos2d::ui::LoadingBar* createNodeWithFlatBuffers(const flatbuffers::Table* loadingBarOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* loadingBarOptions);
         
         int getResourceType(std::string key);
         

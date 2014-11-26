@@ -588,7 +588,7 @@ namespace cocostudio
         
     }
     
-    Slider* SliderReader::createNodeWithFlatBuffers(const flatbuffers::Table *sliderOptions)
+    Node* SliderReader::createNodeWithFlatBuffers(const flatbuffers::Table *sliderOptions)
     {
         Slider* slider = Slider::create();
         

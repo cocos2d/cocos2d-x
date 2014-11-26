@@ -306,7 +306,7 @@ namespace cocostudio
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
     }
     
-    LoadingBar* LoadingBarReader::createNodeWithFlatBuffers(const flatbuffers::Table *loadingBarOptions)
+    Node* LoadingBarReader::createNodeWithFlatBuffers(const flatbuffers::Table *loadingBarOptions)
     {
         LoadingBar* loadingBar = LoadingBar::create();
         

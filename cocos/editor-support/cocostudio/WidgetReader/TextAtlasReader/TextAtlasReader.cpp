@@ -311,7 +311,7 @@ namespace cocostudio
         
     }
     
-    TextAtlas* TextAtlasReader::createNodeWithFlatBuffers(const flatbuffers::Table *textAtlasOptions)
+    Node* TextAtlasReader::createNodeWithFlatBuffers(const flatbuffers::Table *textAtlasOptions)
     {
         TextAtlas* textAtlas = TextAtlas::create();
         

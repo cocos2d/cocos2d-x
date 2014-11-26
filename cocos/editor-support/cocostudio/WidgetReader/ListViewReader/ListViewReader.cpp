@@ -645,7 +645,7 @@ namespace cocostudio
         
     }
     
-    ListView* ListViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *listViewOptions)
+    Node* ListViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *listViewOptions)
     {
         ListView* listView = ListView::create();
         

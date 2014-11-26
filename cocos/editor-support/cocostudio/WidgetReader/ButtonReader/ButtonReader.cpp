@@ -710,7 +710,7 @@ namespace cocostudio
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
     }
     
-    Button* ButtonReader::createNodeWithFlatBuffers(const flatbuffers::Table *buttonOptions)
+    Node* ButtonReader::createNodeWithFlatBuffers(const flatbuffers::Table *buttonOptions)
     {
         Button* button = Button::create();
         

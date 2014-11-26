@@ -382,7 +382,7 @@ namespace cocostudio
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
     }
     
-    TextField* TextFieldReader::createNodeWithFlatBuffers(const flatbuffers::Table *textFieldOptions)
+    Node* TextFieldReader::createNodeWithFlatBuffers(const flatbuffers::Table *textFieldOptions)
     {
         TextField* textField = TextField::create();
         

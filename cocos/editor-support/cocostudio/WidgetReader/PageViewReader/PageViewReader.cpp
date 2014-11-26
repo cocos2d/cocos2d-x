@@ -484,7 +484,7 @@ namespace cocostudio
         
     }
     
-    PageView* PageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *pageViewOptions)
+    Node* PageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *pageViewOptions)
     {
         PageView* pageView = PageView::create();
         

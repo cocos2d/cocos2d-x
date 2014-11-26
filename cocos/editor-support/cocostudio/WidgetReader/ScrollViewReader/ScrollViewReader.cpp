@@ -590,7 +590,7 @@ namespace cocostudio
         
     }
     
-    ScrollView* ScrollViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *scrollViewOptions)
+    Node* ScrollViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *scrollViewOptions)
     {
         ScrollView* scrollView = ScrollView::create();
         

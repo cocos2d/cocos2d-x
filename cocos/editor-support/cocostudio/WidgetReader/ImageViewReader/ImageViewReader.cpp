@@ -371,7 +371,7 @@ namespace cocostudio
         
     }
     
-    ImageView* ImageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *imageViewOptions)
+    Node* ImageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *imageViewOptions)
     {
         ImageView* imageView = ImageView::create();
         

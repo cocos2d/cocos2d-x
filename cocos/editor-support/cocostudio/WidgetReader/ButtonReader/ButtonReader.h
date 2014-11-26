@@ -27,7 +27,6 @@
 
 #include "cocostudio/WidgetReader/WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UIButton.h"
 
 namespace cocostudio
 {
@@ -51,7 +50,7 @@ namespace cocostudio
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* buttonOptions);
-        cocos2d::ui::Button* createNodeWithFlatBuffers(const flatbuffers::Table* buttonOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* buttonOptions);
         
         int getResourceType(std::string key);    
         

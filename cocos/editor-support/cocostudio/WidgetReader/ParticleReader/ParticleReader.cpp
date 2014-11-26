@@ -127,7 +127,7 @@ namespace cocostudio
         nodeReader->setPropsWithFlatBuffers(node, (Table*)options->nodeOptions());
     }
     
-    ParticleSystemQuad* ParticleReader::createNodeWithFlatBuffers(const flatbuffers::Table *particleOptions)
+    Node* ParticleReader::createNodeWithFlatBuffers(const flatbuffers::Table *particleOptions)
     {
         ParticleSystemQuad* particle = nullptr;
         

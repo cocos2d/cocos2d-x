@@ -27,7 +27,6 @@
 
 #include "cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "ui/UIListView.h"
 
 namespace cocostudio
 {
@@ -48,7 +47,7 @@ namespace cocostudio
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* listViewOptions);
-        cocos2d::ui::ListView* createNodeWithFlatBuffers(const flatbuffers::Table* listViewOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* listViewOptions);
         
         int getResourceType(std::string key);
         

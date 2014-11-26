@@ -807,7 +807,7 @@ namespace cocostudio
         
     }
     
-    Widget* WidgetReader::createNodeWithFlatBuffers(const flatbuffers::Table *widgetOptions)
+    Node* WidgetReader::createNodeWithFlatBuffers(const flatbuffers::Table *widgetOptions)
     {
         Widget* widget = Widget::create();
         

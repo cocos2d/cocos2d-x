@@ -200,7 +200,7 @@ namespace cocostudio
             sprite->setFlippedY(flipY);
     }
     
-    Sprite* SpriteReader::createNodeWithFlatBuffers(const flatbuffers::Table *spriteOptions)
+    Node* SpriteReader::createNodeWithFlatBuffers(const flatbuffers::Table *spriteOptions)
     {
         Sprite* sprite = Sprite::create();
         

@@ -789,7 +789,7 @@ namespace cocostudio
         
     }
     
-    Layout* LayoutReader::createNodeWithFlatBuffers(const flatbuffers::Table *layoutOptions)
+    Node* LayoutReader::createNodeWithFlatBuffers(const flatbuffers::Table *layoutOptions)
     {
         Layout* layout = Layout::create();
         

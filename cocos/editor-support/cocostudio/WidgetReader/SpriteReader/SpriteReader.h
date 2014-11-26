@@ -47,7 +47,7 @@ namespace cocostudio
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* spriteOptions);
-        cocos2d::Sprite* createNodeWithFlatBuffers(const flatbuffers::Table* spriteOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* spriteOptions);
         
         int getResourceType(std::string key);        
     };

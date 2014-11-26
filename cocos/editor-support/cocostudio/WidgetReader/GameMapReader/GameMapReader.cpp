@@ -127,7 +127,7 @@ namespace cocostudio
         nodeReader->setPropsWithFlatBuffers(node, (Table*)options->nodeOptions());
     }
     
-    TMXTiledMap* GameMapReader::createNodeWithFlatBuffers(const flatbuffers::Table *gameMapOptions)
+    Node* GameMapReader::createNodeWithFlatBuffers(const flatbuffers::Table *gameMapOptions)
     {
         TMXTiledMap* tmx = nullptr;
         

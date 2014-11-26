@@ -253,7 +253,7 @@ namespace cocostudio
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
     }
     
-    TextBMFont* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)
+    Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)
     {
         TextBMFont* textBMFont = TextBMFont::create();
         
