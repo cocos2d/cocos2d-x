@@ -1,5 +1,6 @@
 
 require("config")
+require("cocos.init")
 require("framework.init")
 -- require("framework.utilitys")
 
@@ -8,13 +9,19 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.scenes_ = {
-        -- "MenuScene",
+        "MenuScene",
         "CCSSample1Scene",
         "CCSSample2Scene",
         "CCSSample3Scene",
         "CCSSample4Scene",
         "CCSSample5Scene",
         "CCSSample6Scene",
+        "CCSReader1Scene",
+        "CCSReader2Scene",
+        "CCSReader3Scene",
+        "CCSReader4Scene",
+        "CCSReader5Scene",
+        "CCSReader6Scene"
     }
 end
 
@@ -29,7 +36,13 @@ function MyApp:enterScene(sceneName, ...)
     MyApp.super.enterScene(self, sceneName, ...)
 end
 
-function MyApp:enterNextScene()
+function MyApp:enterNextScene(bReader)
+    if not bReader then
+        if "CCSSample6Scene" == self.currentSceneName_ then
+            self.currentSceneName_ = "CCSReader6Scene"
+        end
+    end
+
     local index = 1
     while index <= #self.scenes_ do
         if self.scenes_[index] == self.currentSceneName_ then
