@@ -99,7 +99,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void applicationWillTerminate() = 0;
+    virtual void applicationWillTerminate() {};
 
     /**
     @brief    Callback by Director for limit FPS.
