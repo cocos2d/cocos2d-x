@@ -37,6 +37,16 @@ function DisplayTestScene:beforeRunTest()
         self.layerTouch = nil
     end
 
+    if self.tilesSprite_ then
+        self.tilesSprite_:removeSelf()
+        self.tilesSprite_ = nil
+    end
+
+    if self.tiledBatchNode_ then
+        self.tiledBatchNode_:removeSelf()
+        self.tiledBatchNode_ = nil
+    end
+
     if self.drawNode_ then
         self.drawNode_:removeSelf()
         self.drawNode_ = nil
@@ -94,14 +104,14 @@ function DisplayTestScene:layerMultiTouchTest()
 end
 
 function DisplayTestScene:tilesSpriteTest()
-    display.newTilesSprite("close.png", cc.rect(10, 10, 100, 100))
+    self.tilesSprite_ = display.newTilesSprite("close.png", cc.rect(10, 10, 100, 100))
         :pos(display.left + 10, display.bottom + 10)
         :addTo(self)
 end
 
 function DisplayTestScene:tiledBatchNodeTest()
     local cb = function(plist, image)
-        display.newTiledBatchNode("#blocks9.png", "blocks9ss.png", cc.size(170, 170), 10, 10)
+        self.tiledBatchNode_ = display.newTiledBatchNode("#blocks9.png", "blocks9ss.png", cc.size(170, 170), 10, 10)
             :pos(display.left + 10, display.bottom + 150)
             :addTo(self)
     end

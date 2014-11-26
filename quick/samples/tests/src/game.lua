@@ -12,19 +12,39 @@ function game.startup()
 end
 
 function game.createMenu(items, callback)
-    local menu = display.newNode()
-
-    for i, item in ipairs(items) do
-        cc.ui.UIPushButton.new()
-            :setButtonLabel(cc.ui.UILabel.new({text = item, size = 32, color = display.COLOR_BLUE}))
-            :onButtonClicked(function(event)
-                callback(item)
+    local menu = cc.ui.UIListView.new {
+        viewRect = cc.rect(display.cx - 150, display.bottom + 100, 300, display.height - 200),
+        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
+        :onScroll(function(event)
+                if "moved" == event.name then
+                    game.bListViewMove = true
+                elseif "ended" == event.name then
+                    game.bListViewMove = false
+                end
             end)
-            :align(display.LEFT_BOTTOM, 0, 40*i)
-            :addTo(menu)
-    end
 
-    menu:setPosition(display.cx, display.bottom)
+    for i, v in ipairs(items) do
+        local item = menu:newItem()
+        local content
+
+        content = cc.ui.UIPushButton.new()
+            :setButtonSize(200, 40)
+            :setButtonLabel(cc.ui.UILabel.new({text = v, size = 24, color = display.COLOR_BLUE}))
+            :onButtonClicked(function(event)
+                if game.bListViewMove then
+                    return
+                end
+
+                callback(v)
+            end)
+        content:setTouchSwallowEnabled(false)
+        item:addContent(content)
+        item:setItemSize(120, 40)
+
+        menu:addItem(item)
+    end
+    menu:reload()
+
     return menu
 end
 
