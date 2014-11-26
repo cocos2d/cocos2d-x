@@ -108,6 +108,10 @@ void Text::initRenderer()
     
 void Text::setString(const std::string &text)
 {
+    if (text == _labelRenderer->getString())
+    {
+        return;
+    }
     _labelRenderer->setString(text);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
