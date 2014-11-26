@@ -319,6 +319,12 @@ void GLProgram::parseVertexAttribs()
             }
         }
     }
+    else
+    {
+        GLchar ErrorLog[1024];
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        CCLOG("Error linking shader program: '%s'\n", ErrorLog);
+    }
 }
 
 void GLProgram::parseUniforms()
@@ -371,6 +377,14 @@ void GLProgram::parseUniforms()
             }
         }
     }
+    else
+    {
+        GLchar ErrorLog[1024];
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        CCLOG("Error linking shader program: '%s'\n", ErrorLog);
+
+    }
+
 }
 
 Uniform* GLProgram::getUniform(const std::string &name)
