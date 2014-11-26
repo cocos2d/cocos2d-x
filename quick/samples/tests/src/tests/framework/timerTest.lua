@@ -1,6 +1,6 @@
 
 local net = require("framework.cc.net.init")
-local TimerTestScene = game.createSceneClass("CryptoTestScene")
+local TimerTestScene = game.createSceneClass("TimerTestScene")
 
 function TimerTestScene:ctor()
     cc.FileUtils:getInstance():addSearchPath("src/")

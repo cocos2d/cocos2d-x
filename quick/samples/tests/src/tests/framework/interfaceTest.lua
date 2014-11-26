@@ -1,5 +1,5 @@
 
-local InterfaceTestScene = game.createSceneClass("EventTestScene")
+local InterfaceTestScene = game.createSceneClass("InterfaceTestScene")
 
 function InterfaceTestScene:ctor()
     self:prepare({
@@ -51,7 +51,9 @@ function InterfaceTestScene:functionsTest()
 	if not iskindof(Duck.new(), "Animal") then
 		printError("ERROR somenthing wrong in iskindof()")
 	end
-	if not iskindof(cc.Node, "Node") then
+
+	local subNode = class("subNode", function() return display.newNode() end).new()
+	if not iskindof(subNode, "subNode") then
 		printError("ERROR somenthing wrong in iskindof()")
 	end
 
@@ -73,7 +75,8 @@ function InterfaceTestScene:functionsTest()
 		printError("ERROR somenthing wrong in io.exists()")
 	end
 	print("io.readfile content:" .. io.readfile(path))
-	io.writefile(cc.FileUtils:getInstance():fullPathForFilename("testFile1.dat"), "1232kddk")
+
+	io.writefile(io.pathinfo(path).dirname .. "testFile1.dat", "1232kddk")
 
 	val = io.filesize(path)
 	print("io.filesize size:" .. val)
@@ -83,17 +86,17 @@ function InterfaceTestScene:functionsTest()
 	local array = {45, 25, "name1", "name2", "same", "htl", "same"}
 	val = table.nums(table1)
 	print("table.nums want 3, actual " .. val)
-	dump(table.keys(table1), "table.keys want {key1, 1, key3}, actual:")
-	dump(table.values(table1), "table.values want {val1, val2, val3}, actual:")
+	dump(table.keys(table1), "table.keys want {1, key1, key3}, actual:")
+	dump(table.values(table1), "table.values want {val2, val1, val3}, actual:")
 	
 	local table2 = {3, key11 = "val11"}
 	table.merge(table2, table1)
-	dump(table2, "tabel.merge want {key1 = val1, val2, key2 = val3, 3, key11 = val11, actual:")
+	dump(table2, "tabel.merge want {val2, key1 = val1, key11 = val11, key3 = val3, actual:")
 
 	local src = {4, 5}
 	local dest = {1, 2}
 	table.insertto(dest, src, 4)
-	dump(dest, "tabel.insertto want {1, 2, nil, 4, 5, actual:")
+	dump(dest, "tabel.insertto want {1, 2, 4, 5, actual:")
 
 	val = table.indexof(dest, 2)
 	print("table.indexof want 2, actual " .. val)
@@ -114,7 +117,7 @@ function InterfaceTestScene:functionsTest()
 	end)
 
 	table.filter(table2, function(v, k)
-	    return v ~= "key1"
+	    return v ~= "[val11]"
 	end)
 
 	table.walk(table2, function(v, k)
@@ -125,6 +128,7 @@ function InterfaceTestScene:functionsTest()
 	table2[103] = "same"
 
 	table2 = table.unique(table2)
+	dump(table2, "should just have one \"same\" value:")
 
 	print(string.htmlspecialchars("<ABC>"))
 	print(string.restorehtmlspecialchars(string.htmlspecialchars("<ABC>")))

@@ -1,12 +1,12 @@
 
 local net = require("framework.cc.net.init")
-local SocketTcpTestScene = game.createSceneClass("CryptoTestScene")
+local SocketTcpTestScene = game.createSceneClass("SocketTcpTestScene")
 
 function SocketTcpTestScene:ctor()
     cc.FileUtils:getInstance():addSearchPath("src/")
 
     self:prepare({
-        description = "Please check console output"
+        description = "Please run server listen on 127.0.0.1:8080"
     })
 
     local items = {
@@ -47,7 +47,9 @@ function SocketTcpTestScene:SendDataTest()
 end
 
 function SocketTcpTestScene:CloseTest()
-	self.socket_:close()
+	if self.socket_.isConnected then
+		self.socket_:close()
+	end
 end
 
 function SocketTcpTestScene:tcpData(event)
@@ -68,6 +70,13 @@ end
 
 function SocketTcpTestScene:tcpConnectedFail()
 	print("SocketTCP connect fail")
+end
+
+function SocketTcpTestScene:onExit()
+	if self.socket_.isConnected then
+		self.socket_:close()
+	end
+	self.socket_:disconnect()
 end
 
 return SocketTcpTestScene
