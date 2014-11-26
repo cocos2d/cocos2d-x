@@ -95,4 +95,16 @@ protected:
     int _count;
 };
 
+class UILoadingBarTest_Issue9091 : public UIScene
+{
+public:
+    UILoadingBarTest_Issue9091();
+    ~UILoadingBarTest_Issue9091();
+    bool init();
+ 
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Issue9091)
+};
+
 #endif /* defined(__TestCpp__UILoadingBarTest__) */
