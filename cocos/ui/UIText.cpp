@@ -108,6 +108,10 @@ void Text::initRenderer()
     
 void Text::setString(const std::string &text)
 {
+    if (text == _labelRenderer->getString())
+    {
+        return;
+    }
     _labelRenderer->setString(text);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
@@ -255,30 +259,6 @@ void Text::onPressStateChangedToPressed()
 void Text::onPressStateChangedToDisabled()
 {
     
-}
-
-void Text::updateFlippedX()
-{
-     if (_flippedX)
-    {
-        _labelRenderer->setScaleX(-1.0f);
-    } 
-    else
-    {
-        _labelRenderer->setScaleX(1.0f);
-    }
-}
-    
-void Text::updateFlippedY()
-{
-    if (_flippedY)
-    {
-        _labelRenderer->setScaleY(-1.0f);
-    } 
-    else
-    {
-        _labelRenderer->setScaleY(1.0f);
-    }
 }
 
 void Text::onSizeChanged()

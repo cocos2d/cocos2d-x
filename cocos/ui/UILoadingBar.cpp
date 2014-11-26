@@ -212,7 +212,15 @@ const Rect& LoadingBar::getCapInsets()const
     
 void LoadingBar::setPercent(float percent)
 {
-    if ( percent < 0 || percent > 100)
+    if (percent > 100)
+    {
+        percent = 100;
+    }
+    if (percent < 0)
+    {
+        percent = 0;
+    }
+    if (_percent == percent)
     {
         return;
     }

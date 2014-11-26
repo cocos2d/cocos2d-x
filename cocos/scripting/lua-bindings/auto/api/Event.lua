@@ -5,10 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
---  Checks whether the event has been stopped 
--- @function [parent=#Event] isStopped 
+--  @brief Gets current target of the event<br>
+-- return The target with which the event associates.<br>
+-- note It onlys be available when the event listener is associated with node. <br>
+-- It returns 0 when the listener is associated with fixed priority.
+-- @function [parent=#Event] getCurrentTarget 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 --  Gets the event type 
@@ -17,13 +20,22 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  @brief Gets current target of the event<br>
--- return The target with which the event associates.<br>
--- note It onlys be available when the event listener is associated with node. <br>
--- It returns 0 when the listener is associated with fixed priority.
--- @function [parent=#Event] getCurrentTarget 
+-- 
+-- @function [parent=#Event] getResult 
 -- @param self
--- @return Node#Node ret (return value: cc.Node)
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+--  Checks whether the event has been stopped 
+-- @function [parent=#Event] isStopped 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Event] setResult 
+-- @param self
+-- @param #string result
         
 --------------------------------
 --  Stops propagation for current event 

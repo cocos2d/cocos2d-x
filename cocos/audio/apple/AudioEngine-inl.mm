@@ -128,11 +128,10 @@ namespace cocos2d {
 }
 
 AudioEngineImpl::AudioEngineImpl()
-: _lazyInitLoop(true)
-, _threadPool(nullptr)
+: _threadPool(nullptr)
+, _lazyInitLoop(true)
 , _currentAudioID(0)
 {
-    
 }
 
 AudioEngineImpl::~AudioEngineImpl()

@@ -37,11 +37,14 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setStoragePath(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.AssetsManager:setStoragePath"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_setStoragePath'", nullptr);
             return 0;
+        }
         cobj->setStoragePath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setStoragePath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setStoragePath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -83,11 +86,14 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setPackageUrl(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.AssetsManager:setPackageUrl"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_setPackageUrl'", nullptr);
             return 0;
+        }
         cobj->setPackageUrl(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setPackageUrl",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setPackageUrl",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -126,12 +132,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_checkUpdate(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_checkUpdate'", nullptr);
             return 0;
+        }
         bool ret = cobj->checkUpdate();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:checkUpdate",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:checkUpdate",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -170,12 +179,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getStoragePath(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_getStoragePath'", nullptr);
             return 0;
+        }
         const char* ret = cobj->getStoragePath();
         tolua_pushstring(tolua_S,(const char*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getStoragePath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getStoragePath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -214,11 +226,14 @@ int lua_cocos2dx_assetsmanager_AssetsManager_update(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_update'", nullptr);
             return 0;
+        }
         cobj->update();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:update",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:update",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -260,11 +275,14 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setConnectionTimeout(lua_State* tol
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.AssetsManager:setConnectionTimeout");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_setConnectionTimeout'", nullptr);
             return 0;
+        }
         cobj->setConnectionTimeout(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setConnectionTimeout",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setConnectionTimeout",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -306,11 +324,14 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setVersionFileUrl(lua_State* tolua_
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.AssetsManager:setVersionFileUrl"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_setVersionFileUrl'", nullptr);
             return 0;
+        }
         cobj->setVersionFileUrl(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setVersionFileUrl",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:setVersionFileUrl",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -349,12 +370,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getPackageUrl(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_getPackageUrl'", nullptr);
             return 0;
+        }
         const char* ret = cobj->getPackageUrl();
         tolua_pushstring(tolua_S,(const char*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getPackageUrl",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getPackageUrl",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -393,12 +417,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getConnectionTimeout(lua_State* tol
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_getConnectionTimeout'", nullptr);
             return 0;
+        }
         unsigned int ret = cobj->getConnectionTimeout();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getConnectionTimeout",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getConnectionTimeout",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -437,12 +464,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getVersion(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_getVersion'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getVersion();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getVersion",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -481,12 +511,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getVersionFileUrl(lua_State* tolua_
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_getVersionFileUrl'", nullptr);
             return 0;
+        }
         const char* ret = cobj->getVersionFileUrl();
         tolua_pushstring(tolua_S,(const char*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getVersionFileUrl",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:getVersionFileUrl",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -525,11 +558,14 @@ int lua_cocos2dx_assetsmanager_AssetsManager_deleteVersion(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_deleteVersion'", nullptr);
             return 0;
+        }
         cobj->deleteVersion();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:deleteVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:deleteVersion",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -581,12 +617,15 @@ int lua_cocos2dx_assetsmanager_AssetsManager_create(lua_State* tolua_S)
 		} while(0)
 		;
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_create'", nullptr);
             return 0;
+        }
         cocos2d::extension::AssetsManager* ret = cocos2d::extension::AssetsManager::create(arg0, arg1, arg2, arg3, arg4, arg5);
         object_to_luaval<cocos2d::extension::AssetsManager>(tolua_S, "cc.AssetsManager",(cocos2d::extension::AssetsManager*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AssetsManager:create",argc, 6);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AssetsManager:create",argc, 6);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -610,7 +649,10 @@ int lua_cocos2dx_assetsmanager_AssetsManager_constructor(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_constructor'", nullptr);
             return 0;
+        }
         cobj = new cocos2d::extension::AssetsManager();
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
@@ -624,7 +666,10 @@ int lua_cocos2dx_assetsmanager_AssetsManager_constructor(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.AssetsManager:AssetsManager"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_constructor'", nullptr);
             return 0;
+        }
         cobj = new cocos2d::extension::AssetsManager(arg0);
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
@@ -641,7 +686,10 @@ int lua_cocos2dx_assetsmanager_AssetsManager_constructor(lua_State* tolua_S)
 
         std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "cc.AssetsManager:AssetsManager"); arg1 = arg1_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_constructor'", nullptr);
             return 0;
+        }
         cobj = new cocos2d::extension::AssetsManager(arg0, arg1);
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
@@ -661,7 +709,10 @@ int lua_cocos2dx_assetsmanager_AssetsManager_constructor(lua_State* tolua_S)
 
         std::string arg2_tmp; ok &= luaval_to_std_string(tolua_S, 4, &arg2_tmp, "cc.AssetsManager:AssetsManager"); arg2 = arg2_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManager_constructor'", nullptr);
             return 0;
+        }
         cobj = new cocos2d::extension::AssetsManager(arg0, arg1, arg2);
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
@@ -669,7 +720,7 @@ int lua_cocos2dx_assetsmanager_AssetsManager_constructor(lua_State* tolua_S)
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.AssetsManager");
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:AssetsManager",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManager:AssetsManager",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -741,12 +792,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetsManagerEx(lua_State
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetsManagerEx'", nullptr);
             return 0;
+        }
         cocos2d::extension::AssetsManagerEx* ret = cobj->getAssetsManagerEx();
         object_to_luaval<cocos2d::extension::AssetsManagerEx>(tolua_S, "cc.AssetsManagerEx",(cocos2d::extension::AssetsManagerEx*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getAssetsManagerEx",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getAssetsManagerEx",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -785,12 +839,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetId(lua_State* tolua_
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetId'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getAssetId();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getAssetId",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getAssetId",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -829,12 +886,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLECode(lua_State* tolu
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLECode'", nullptr);
             return 0;
+        }
         int ret = cobj->getCURLECode();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getCURLECode",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getCURLECode",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -873,12 +933,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getMessage(lua_State* tolua_
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getMessage'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getMessage();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getMessage",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getMessage",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -917,12 +980,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLMCode(lua_State* tolu
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLMCode'", nullptr);
             return 0;
+        }
         int ret = cobj->getCURLMCode();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getCURLMCode",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getCURLMCode",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -961,12 +1027,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercentByFile(lua_State* 
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercentByFile'", nullptr);
             return 0;
+        }
         double ret = cobj->getPercentByFile();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getPercentByFile",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getPercentByFile",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1005,12 +1074,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getEventCode(lua_State* tolu
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getEventCode'", nullptr);
             return 0;
+        }
         int ret = (int)cobj->getEventCode();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getEventCode",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getEventCode",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1049,12 +1121,15 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercent(lua_State* tolua_
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercent'", nullptr);
             return 0;
+        }
         double ret = cobj->getPercent();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getPercent",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getPercent",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1120,12 +1195,15 @@ int lua_cocos2dx_assetsmanager_Manifest_getManifestFileUrl(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_Manifest_getManifestFileUrl'", nullptr);
             return 0;
+        }
         const std::string& ret = cobj->getManifestFileUrl();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getManifestFileUrl",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getManifestFileUrl",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1164,12 +1242,15 @@ int lua_cocos2dx_assetsmanager_Manifest_isVersionLoaded(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_Manifest_isVersionLoaded'", nullptr);
             return 0;
+        }
         bool ret = cobj->isVersionLoaded();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:isVersionLoaded",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:isVersionLoaded",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1208,12 +1289,15 @@ int lua_cocos2dx_assetsmanager_Manifest_isLoaded(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_Manifest_isLoaded'", nullptr);
             return 0;
+        }
         bool ret = cobj->isLoaded();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:isLoaded",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:isLoaded",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1252,12 +1336,15 @@ int lua_cocos2dx_assetsmanager_Manifest_getPackageUrl(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_Manifest_getPackageUrl'", nullptr);
             return 0;
+        }
         const std::string& ret = cobj->getPackageUrl();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getPackageUrl",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getPackageUrl",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1296,12 +1383,15 @@ int lua_cocos2dx_assetsmanager_Manifest_getVersion(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_Manifest_getVersion'", nullptr);
             return 0;
+        }
         const std::string& ret = cobj->getVersion();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getVersion",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1340,12 +1430,15 @@ int lua_cocos2dx_assetsmanager_Manifest_getVersionFileUrl(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_Manifest_getVersionFileUrl'", nullptr);
             return 0;
+        }
         const std::string& ret = cobj->getVersionFileUrl();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getVersionFileUrl",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getVersionFileUrl",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1409,12 +1502,15 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getState(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getState'", nullptr);
             return 0;
+        }
         int ret = (int)cobj->getState();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getState",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getState",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1453,11 +1549,14 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_checkUpdate(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_checkUpdate'", nullptr);
             return 0;
+        }
         cobj->checkUpdate();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:checkUpdate",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:checkUpdate",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1496,12 +1595,15 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getStoragePath(lua_State* tolua_S
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getStoragePath'", nullptr);
             return 0;
+        }
         const std::string& ret = cobj->getStoragePath();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getStoragePath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getStoragePath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1540,11 +1642,14 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_update(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_update'", nullptr);
             return 0;
+        }
         cobj->update();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:update",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:update",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1583,12 +1688,15 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getLocalManifest(lua_State* tolua
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getLocalManifest'", nullptr);
             return 0;
+        }
         const cocos2d::extension::Manifest* ret = cobj->getLocalManifest();
         object_to_luaval<cocos2d::extension::Manifest>(tolua_S, "cc.Manifest",(cocos2d::extension::Manifest*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getLocalManifest",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getLocalManifest",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1627,12 +1735,15 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getRemoteManifest(lua_State* tolu
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getRemoteManifest'", nullptr);
             return 0;
+        }
         const cocos2d::extension::Manifest* ret = cobj->getRemoteManifest();
         object_to_luaval<cocos2d::extension::Manifest>(tolua_S, "cc.Manifest",(cocos2d::extension::Manifest*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getRemoteManifest",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:getRemoteManifest",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1671,11 +1782,14 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_downloadFailedAssets(lua_State* t
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_downloadFailedAssets'", nullptr);
             return 0;
+        }
         cobj->downloadFailedAssets();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:downloadFailedAssets",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AssetsManagerEx:downloadFailedAssets",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1707,12 +1821,15 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_create(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.AssetsManagerEx:create");
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.AssetsManagerEx:create");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_create'", nullptr);
             return 0;
+        }
         cocos2d::extension::AssetsManagerEx* ret = cocos2d::extension::AssetsManagerEx::create(arg0, arg1);
         object_to_luaval<cocos2d::extension::AssetsManagerEx>(tolua_S, "cc.AssetsManagerEx",(cocos2d::extension::AssetsManagerEx*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AssetsManagerEx:create",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AssetsManagerEx:create",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

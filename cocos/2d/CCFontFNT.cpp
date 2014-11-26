@@ -676,7 +676,6 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffse
     Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(newConf->getAtlasName());
     if (!tempTexture)
     {
-        delete newConf;
         return nullptr;
     }
     
@@ -684,7 +683,6 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffse
     
     if (!tempFont)
     {
-        delete newConf;
         return nullptr;
     }
     tempFont->autorelease();

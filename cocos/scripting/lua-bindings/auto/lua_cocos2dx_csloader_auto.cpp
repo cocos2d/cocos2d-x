@@ -37,12 +37,15 @@ int lua_cocos2dx_csloader_CSLoader_createNodeFromJson(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNodeFromJson");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_createNodeFromJson'", nullptr);
             return 0;
+        }
         cocos2d::Node* ret = cobj->createNodeFromJson(arg0);
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:createNodeFromJson",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:createNodeFromJson",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -84,12 +87,15 @@ int lua_cocos2dx_csloader_CSLoader_createNodeFromProtocolBuffers(lua_State* tolu
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNodeFromProtocolBuffers");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_createNodeFromProtocolBuffers'", nullptr);
             return 0;
+        }
         cocos2d::Node* ret = cobj->createNodeFromProtocolBuffers(arg0);
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:createNodeFromProtocolBuffers",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:createNodeFromProtocolBuffers",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -128,11 +134,14 @@ int lua_cocos2dx_csloader_CSLoader_init(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_init'", nullptr);
             return 0;
+        }
         cobj->init();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:init",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:init",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -174,11 +183,14 @@ int lua_cocos2dx_csloader_CSLoader_setRecordXMLPath(lua_State* tolua_S)
 
         ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.CSLoader:setRecordXMLPath");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setRecordXMLPath'", nullptr);
             return 0;
+        }
         cobj->setRecordXMLPath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordXMLPath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordXMLPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -220,11 +232,14 @@ int lua_cocos2dx_csloader_CSLoader_setJsonPath(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:setJsonPath");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'", nullptr);
             return 0;
+        }
         cobj->setJsonPath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setJsonPath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setJsonPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -266,12 +281,15 @@ int lua_cocos2dx_csloader_CSLoader_loadNodeWithFile(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:loadNodeWithFile");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_loadNodeWithFile'", nullptr);
             return 0;
+        }
         cocos2d::Node* ret = cobj->loadNodeWithFile(arg0);
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:loadNodeWithFile",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:loadNodeWithFile",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -313,12 +331,15 @@ int lua_cocos2dx_csloader_CSLoader_loadNodeWithContent(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:loadNodeWithContent");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_loadNodeWithContent'", nullptr);
             return 0;
+        }
         cocos2d::Node* ret = cobj->loadNodeWithContent(arg0);
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:loadNodeWithContent",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:loadNodeWithContent",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -357,12 +378,15 @@ int lua_cocos2dx_csloader_CSLoader_isRecordProtocolBuffersPath(lua_State* tolua_
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_isRecordProtocolBuffersPath'", nullptr);
             return 0;
+        }
         bool ret = cobj->isRecordProtocolBuffersPath();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:isRecordProtocolBuffersPath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:isRecordProtocolBuffersPath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -401,12 +425,15 @@ int lua_cocos2dx_csloader_CSLoader_isRecordXMLPath(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_isRecordXMLPath'", nullptr);
             return 0;
+        }
         bool ret = cobj->isRecordXMLPath();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:isRecordXMLPath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:isRecordXMLPath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -445,12 +472,15 @@ int lua_cocos2dx_csloader_CSLoader_getProtocolBuffersPath(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_getProtocolBuffersPath'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getProtocolBuffersPath();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getProtocolBuffersPath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getProtocolBuffersPath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -489,12 +519,15 @@ int lua_cocos2dx_csloader_CSLoader_getXMLPath(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_getXMLPath'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getXMLPath();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getXMLPath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getXMLPath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -536,12 +569,15 @@ int lua_cocos2dx_csloader_CSLoader_createNodeFromXML(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNodeFromXML");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_createNodeFromXML'", nullptr);
             return 0;
+        }
         cocos2d::Node* ret = cobj->createNodeFromXML(arg0);
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:createNodeFromXML",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:createNodeFromXML",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -580,12 +616,15 @@ int lua_cocos2dx_csloader_CSLoader_isRecordJsonPath(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_isRecordJsonPath'", nullptr);
             return 0;
+        }
         bool ret = cobj->isRecordJsonPath();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:isRecordJsonPath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:isRecordJsonPath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -627,11 +666,14 @@ int lua_cocos2dx_csloader_CSLoader_setRecordProtocolBuffersPath(lua_State* tolua
 
         ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.CSLoader:setRecordProtocolBuffersPath");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setRecordProtocolBuffersPath'", nullptr);
             return 0;
+        }
         cobj->setRecordProtocolBuffersPath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordProtocolBuffersPath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordProtocolBuffersPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -670,12 +712,15 @@ int lua_cocos2dx_csloader_CSLoader_getJsonPath(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_getJsonPath'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getJsonPath();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getJsonPath",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getJsonPath",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -717,11 +762,14 @@ int lua_cocos2dx_csloader_CSLoader_setRecordJsonPath(lua_State* tolua_S)
 
         ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.CSLoader:setRecordJsonPath");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setRecordJsonPath'", nullptr);
             return 0;
+        }
         cobj->setRecordJsonPath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordJsonPath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordJsonPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -763,11 +811,14 @@ int lua_cocos2dx_csloader_CSLoader_setProtocolBuffersPath(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:setProtocolBuffersPath");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setProtocolBuffersPath'", nullptr);
             return 0;
+        }
         cobj->setProtocolBuffersPath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setProtocolBuffersPath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setProtocolBuffersPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -806,11 +857,14 @@ int lua_cocos2dx_csloader_CSLoader_purge(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_purge'", nullptr);
             return 0;
+        }
         cobj->purge();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:purge",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:purge",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -852,11 +906,14 @@ int lua_cocos2dx_csloader_CSLoader_setXMLPath(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:setXMLPath");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setXMLPath'", nullptr);
             return 0;
+        }
         cobj->setXMLPath(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setXMLPath",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setXMLPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -884,11 +941,14 @@ int lua_cocos2dx_csloader_CSLoader_destroyInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_destroyInstance'", nullptr);
             return 0;
+        }
         cocos2d::CSLoader::destroyInstance();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:destroyInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:destroyInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -916,12 +976,15 @@ int lua_cocos2dx_csloader_CSLoader_createNode(lua_State* tolua_S)
         std::string arg0;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNode");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_createNode'", nullptr);
             return 0;
+        }
         cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0);
         object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:createNode",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:createNode",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -947,12 +1010,15 @@ int lua_cocos2dx_csloader_CSLoader_getInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_getInstance'", nullptr);
             return 0;
+        }
         cocos2d::CSLoader* ret = cocos2d::CSLoader::getInstance();
         object_to_luaval<cocos2d::CSLoader>(tolua_S, "cc.CSLoader",(cocos2d::CSLoader*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:getInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -976,13 +1042,16 @@ int lua_cocos2dx_csloader_CSLoader_constructor(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_constructor'", nullptr);
             return 0;
+        }
         cobj = new cocos2d::CSLoader();
         tolua_pushusertype(tolua_S,(void*)cobj,"cc.CSLoader");
         tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:CSLoader",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:CSLoader",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1

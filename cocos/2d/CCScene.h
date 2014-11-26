@@ -67,9 +67,6 @@ public:
     /** creates a new Scene object with a predefined Size */
     static Scene *createWithSize(const Size& size);
 
-    // Overrides
-    virtual Scene *getScene() const override;
-
     using Node::addChild;
     virtual std::string getDescription() const override;
     

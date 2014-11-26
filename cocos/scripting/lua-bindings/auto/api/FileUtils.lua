@@ -92,6 +92,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Set search root path.
+-- @function [parent=#FileUtils] setSearchRootPath 
+-- @param self
+-- @param #char path
+        
+--------------------------------
 -- Loads the filenameLookup dictionary from the contents of a filename.<br>
 -- note The plist file name should follow the format below:<br>
 -- code<br>
@@ -270,6 +276,12 @@
 -- @param #string filename
 -- @param #string relativeFile
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- Set writable/cache path (for debug).
+-- @function [parent=#FileUtils] setWritablePath 
+-- @param self
+-- @param #char writablePath
         
 --------------------------------
 -- Sets/Gets whether to pop-up a message box when failed to load an image.
