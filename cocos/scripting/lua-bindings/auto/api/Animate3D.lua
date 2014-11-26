@@ -39,7 +39,7 @@
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
 
 --------------------------------
---  animate transistion time 
+--  animate transition time 
 -- @function [parent=#Animate3D] getTransitionTime 
 -- @param self
 -- @return float#float ret (return value: float)
