@@ -223,10 +223,9 @@ public:
     cocos2d::Node* createGameScene();
   
 private:
-	cocos2d::Node *_node;
+    void defaultPlay();
+
     cocos2d::EventListener* _touchListener;
-private:
-	void defaultPlay();
 };
 
 #endif  // __HELLOWORLD_SCENE_H__
