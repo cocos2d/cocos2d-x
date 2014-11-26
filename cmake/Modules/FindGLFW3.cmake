@@ -64,6 +64,7 @@ if(PKG_CONFIG_FOUND)
     find_library(GLFW3_STATIC_LIBRARY NAMES glfw3 libglfw3 PATHS ${PC_GLFW3_LIBRARY_DIRS})
     # also we include glfw3.h header, not GLFW/glfw3.h :(
     find_path(GLFW3_INCLUDE_DIRS glfw3.h PATH_SUFFIXES GLFW PATHS ${PC_GLFW3_INCLUDE_DIRS} NO_DEFAULT_PATH)
+    find_path(GLFW3_INCLUDE_DIRS glfw3.h PATH_SUFFIXES GLFW PATHS ${PC_GLFW3_INCLUDE_DIRS})
 
     if(GLFW3_STATIC_LIBRARY)
       # glfw3 is static
