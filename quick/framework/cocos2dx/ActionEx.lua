@@ -1,10 +1,15 @@
-local ActionBuilder = {}
 local cca = {}
 _G.cca = cca -- make it global
 
 function cc.Action:addTo(node)
    node:runAction(self)
    return self
+end
+
+function cc.Node:buildAction(...)
+   local builder = cca.builder(...)
+   builder.target = self
+   return builder
 end
 
 -- instant
@@ -47,8 +52,6 @@ function cca.callFuncN(cb)
    return false
 end
 
-cca.cb = cca.callFunc
-
 
 -- interval
 
@@ -61,27 +64,33 @@ function cca.rotateBy(dt, ...)
 end
 
 function cca.moveTo(dt, x, y)
-   return cc.MoveTo:create(dt, cc.p(x, y))
+   if y then x = cc.p(x, y) end
+   return cc.MoveTo:create(dt, x)
 end
 
 function cca.moveBy(dt, dx, dy)
-   return cc.MoveBy:create(dt, cc.p(dx, dy))
+   if dy then dx = cc.p(dx, dy) end
+   return cc.MoveBy:create(dt, dx)
 end
 
 function cca.skewTo(dt, x, y)
-   return cc.SkewTo:create(dt, cc.p(x, y))
+   if y then x = cc.p(x, y) end
+   return cc.SkewTo:create(dt, x)
 end
 
 function cca.skewBy(dt, dx, dy)
-   return cc.SkewBy:create(dt, cc.p(dx, dy))
+   if dy then dx = cc.p(dx, dy) end
+   return cc.SkewBy:create(dt, dx)
 end
 
-function cca.jumpTo(dt, dt, x, y, height, count)
-   return cc.JumpTo:create(dt, cc.p(x, y), height, count)
+function cca.jumpTo(dt, x, y, height, count)
+   if y then x = cc.p(x, y) end
+   return cc.JumpTo:create(dt, x, height, count)
 end
 
 function cca.jumpBy(dt, x, y, height, count)
-   return cc.JumpBy:create(dt, cc.p(x, y), height, count)
+   if y then x = cc.p(x, y) end
+   return cc.JumpBy:create(dt, x, height, count)
 end
 
 function cca.bezierTo(dt, c1, c2, p2)
@@ -154,6 +163,14 @@ function cca.animate(ani)
    return cc.Animate:create(ani)
 end
 
+function cca.progressTo(dt, progress)
+   return cc.ProgressTo:create(dt, progress)
+end
+
+function cca.progressFromTo(dt, from, to)
+   return cc.ProgressFromTo:create(dt, from, to)
+end
+
 
 -- compose: compose can used together with cca.builder, as compose
 -- always use act(s) for it's first arguments, and only take one extra
@@ -171,10 +188,10 @@ end
 --
 
 local function checkaction(act)
-   local t = type(act)
-   if t == 'table' and getmetatable(act) == ActionBuilder then
-      return act:build()
+   if not act then
+      error("action required!!!")
    end
+   if act.build then return act:build() end
    return act
 end
 
@@ -186,7 +203,7 @@ function cca.spawn(acts)
    return cc.Spawn:create(acts)
 end
 
-function cca.loop(act)
+function cca.repeatForever(act)
    return cc.RepeatForever:create(checkaction(act))
 end
 
@@ -220,11 +237,11 @@ local function EaseAction(name, dft)
    local cls = "Ease"..name:gsub("^%w", string.upper)
    local f
    if dft then
-      f = function(self, act, rate)
+      f = function(act, rate)
          return cc[cls]:create(checkaction(act), rate or dft)
       end
    else
-      f = function(self, act)
+      f = function(act)
          return cc[cls]:create(checkaction(act))
       end
    end
@@ -255,8 +272,17 @@ EaseAction("sineInOut")
 EaseAction("sineOut")
 
 
+-- shortcodes
+
+cca.cb = cca.callFunc
+cca.ani = cca.animate
+cca.loop = cca.repeatForever
+cca.to = cca.targeted
+
+
 -- ActionBuilder implement
 
+local ActionBuilder = {}
 ActionBuilder.__class = "ActionBuilder"
 ActionBuilder.__index = ActionBuilder
 
@@ -265,6 +291,7 @@ function cca.builder(cmd, parent)
    self.cur = self
    self.cur.parent = parent or self
    self.cur.cmd = cmd or "seq"
+   self.target = nil
    if not cca[self.cur.cmd] then
       error("cmd '"..(cmd or "nil").."' not found")
    end
@@ -289,6 +316,7 @@ end
 function ActionBuilder:begin(cmd, args)
    self.cur = cca.builder(cmd, self.cur)
    self.cur.args = args
+   self.cur.target = self.target
    return self
 end
 
@@ -321,10 +349,16 @@ function ActionBuilder:add(act)
 end
 
 function ActionBuilder:addTo(target)
-    assert(not tolua.isnull(target), "transition.execute() - target is not cc.Node")
-    local self, act = self:done()
-    return act:addTo(target)
+   target = target or self.target
+   assert(not tolua.isnull(target), "ActionBuilder.addTo() - target is not cc.Node")
+   local self, act = self:done()
+   return act:addTo(target)
 end
+
+-- shortcode
+ActionBuilder.run = ActionBuilder.addTo
+ActionBuilder.build = ActionBuilder.done
+
 
 for k,v in pairs(cca) do
    ActionBuilder[k] = function(self, ...)
@@ -334,6 +368,19 @@ for k,v in pairs(cca) do
       end
       return self
    end
+end
+
+-- some patch to standard actions
+
+local builder_moveTo = ActionBuilder.moveTo
+function ActionBuilder:moveTo(dt, x, y)
+   if self.target then
+      x = x or self.target:getPositionX()
+      if not y and type(x) == "number" then
+         y = self.target:getPositionY()
+      end
+   end
+   return builder_moveTo(self, dt, x, y)
 end
 
 return cca
