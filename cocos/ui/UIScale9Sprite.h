@@ -370,6 +370,8 @@ namespace ui {
         void createSlicedSprites();
         void cleanupSlicedSprites();
         void adjustScale9ImagePosition();
+        void handleCapInsetSizeExceedContentSize();
+        void toggleSlicedSpriteVisibility(bool visible);
         /**
          * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
          * This appraoch can improves the performance massively.

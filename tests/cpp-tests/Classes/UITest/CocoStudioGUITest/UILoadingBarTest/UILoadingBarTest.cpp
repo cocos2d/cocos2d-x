@@ -365,14 +365,25 @@ bool UILoadingBarTest_Issue9091::init()
                                 widgetSize.height / 2.0f ));
         _uiLayer->addChild(alert);
         
+        auto scale9Sprite = Scale9Sprite::create("cocosui/slider_bar_active_9patch.png");
+        scale9Sprite->setPosition(Vec2(widgetSize.width/2,
+                                       widgetSize.height/2 + 50));
+        scale9Sprite->setPreferredSize(Size(0,0));
+        scale9Sprite->setInsetLeft(0);
+        scale9Sprite->setInsetBottom(0);
+        scale9Sprite->setInsetRight(0);
+        scale9Sprite->setInsetTop(0);
+        _uiLayer->addChild(scale9Sprite);
+        
         // Create the loading bar
         LoadingBar* loadingBar = LoadingBar::create("cocosui/slider_bar_active_9patch.png");
         loadingBar->setTag(0);
-        loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
+        
         loadingBar->setContentSize(Size(300, 13));
         loadingBar->setDirection(LoadingBar::Direction::RIGHT);
         loadingBar->setPercent(0);
+        loadingBar->setScale9Enabled(true);
         
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f - loadingBar->getContentSize().width/2,
                                      widgetSize.height / 2.0f - 50 ));
