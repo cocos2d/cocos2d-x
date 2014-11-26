@@ -57,7 +57,7 @@ class CC_DLL GLViewImpl : public GLView
 {
 public:
     static GLViewImpl* create(const std::string& viewName);
-    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
+    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f, bool resizable = false);
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
     static GLViewImpl* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -112,7 +112,7 @@ protected:
     GLViewImpl();
     virtual ~GLViewImpl();
 
-    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
+    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable = false);
     bool initWithFullScreen(const std::string& viewName);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -131,12 +131,14 @@ protected:
     void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
     void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
     void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified);
+    void onGLFWWindowcloseCallback(GLFWwindow *window);
 
     bool _captured;
     bool _supportTouch;
     bool _isInRetinaMonitor;
     bool _isRetinaEnabled;
     int  _retinaFactor;  // Should be 1 or 2
+    bool _resizable;
 
     float _frameZoomFactor;
 

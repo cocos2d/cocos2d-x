@@ -217,6 +217,7 @@ class ProjectCreator
         }
 
         $this->copyCocosFiles();
+        $this->copyQuickSources();
         $this->copyFrameworkFiles();
         // $this->modifyFiles();
         $this->fixFiles();
@@ -485,4 +486,16 @@ class ProjectCreator
         return true;
     }
 
+    private function copyQuickSources()
+    {
+        $quickSrcPath = $_ENV['QUICK_V3_ROOT'] . "/quick/lib";
+        $cocosPath = $this->config['output'] . "/frameworks/runtime-src/Classes";
+
+        $dirname = "/quick-src";
+        $src = $quickSrcPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
+
+        return true;
+    }
 }

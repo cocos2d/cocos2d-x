@@ -26,6 +26,7 @@
 #ifndef __CCEVENT_H__
 #define __CCEVENT_H__
 
+#include <string>
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 
@@ -73,6 +74,8 @@ public:
      */
     inline Node* getCurrentTarget() { return _currentTarget; };
     
+    std::string getResult() const { return _result; };
+    void setResult(const std::string &result) { _result = result; };
 protected:
     /** Sets current target */
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
@@ -81,6 +84,7 @@ protected:
     
     bool _isStopped;       ///< whether the event has been stopped.
     Node* _currentTarget;  ///< Current target
+    std::string _result;   ///< Event result
     
     friend class EventDispatcher;
 };

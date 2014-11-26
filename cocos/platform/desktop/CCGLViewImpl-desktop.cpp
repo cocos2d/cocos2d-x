@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "CCGLViewImpl-desktop.h"
 
 #include <unordered_map>
+#include <sstream>
 
 #include "platform/CCApplication.h"
 #include "base/CCDirector.h"
@@ -34,9 +35,9 @@ THE SOFTWARE.
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventMouse.h"
 #include "base/CCIMEDispatcher.h"
+#include "base/CCEventCustom.h"
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
-
 
 NS_CC_BEGIN
 
@@ -99,6 +100,12 @@ public:
             _view->onGLFWWindowSizeFunCallback(window, width, height);
     }
 
+    static void onGLFWWindowCloseCallback(GLFWwindow *window)
+    {
+        if (_view)
+            _view->onGLFWWindowcloseCallback(window);
+    }
+    
     static void setGLViewImpl(GLViewImpl* view)
     {
         _view = view;
@@ -274,6 +281,7 @@ GLViewImpl::GLViewImpl()
 , _monitor(nullptr)
 , _mouseX(0.0f)
 , _mouseY(0.0f)
+, _resizable(false)
 {
     _viewName = "cocos2dx";
     g_keyCodeMap.clear();
@@ -306,10 +314,10 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable)
 {
     auto ret = new (std::nothrow) GLViewImpl;
-    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
+    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor, resizable)) {
         ret->autorelease();
         return ret;
     }
@@ -339,13 +347,15 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const 
     return nullptr;
 }
 
-bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable)
 {
     setViewName(viewName);
 
     _frameZoomFactor = frameZoomFactor;
+    _resizable = resizable;
 
-    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, resizable ? GL_TRUE : GL_FALSE);
+    
     glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
     glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
     glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
@@ -369,6 +379,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
     glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
     glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
+    //glfwSetWindowCloseCallback(_mainWindow, GLFWEventHandler::onGLFWWindowCloseCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
 
@@ -723,6 +734,16 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
         updateDesignResolutionSize();
         Director::getInstance()->setViewport();
     }
+    
+    if (_resizable)
+    {
+        cocos2d::EventCustom event("APP.WINDOW_RESIZE_EVENT");
+        std::stringstream buf;
+        buf << "{\"width\":" << width;
+        buf << ",\"height\":" << height << "}";
+        event.setDataString(buf.str());
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
 }
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
@@ -735,6 +756,15 @@ void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
     {
         Application::getInstance()->applicationWillEnterForeground();
     }
+}
+
+void GLViewImpl::onGLFWWindowcloseCallback(GLFWwindow *window)
+{
+    glfwSetWindowShouldClose(window, 0);
+    
+    // "APP.WINDOW_CLOSE_EVENT" forwarded through by Player as "APP.EVENT"
+    cocos2d::EventCustom event("APP.WINDOW_CLOSE_EVENT");
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

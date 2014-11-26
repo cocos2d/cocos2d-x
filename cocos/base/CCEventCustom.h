@@ -42,11 +42,15 @@ public:
     /** Gets user data */
     inline void* getUserData() const { return _userData; };
     
+    inline void setDataString(const std::string& str) { _eventDataString = str; };
+    inline const std::string& getDataString() const { return _eventDataString; };
+    
     /** Gets event name */
     inline const std::string& getEventName() const { return _eventName; };
 protected:
     void* _userData;       ///< User data
     std::string _eventName;
+    std::string _eventDataString;
 };
 
 NS_CC_END

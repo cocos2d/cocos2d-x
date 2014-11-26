@@ -1,0 +1,228 @@
+
+$#include <string>
+$#include <vector>
+$#include "PlayerProtocol.h"
+$#include "tolua++.h"
+$#include "tolua_fix.h"
+$#include "LuaBasicConversions.h"
+
+$using namespace std;
+$using namespace player;
+
+class vector {
+
+    TOLUA_TEMPLATE_BIND(T, string)
+
+    void clear();
+    int size() const;
+
+    const T& operator[](int index) const;
+    T& operator[](int index);
+    void push_back(T val);
+
+    vector();
+    ~vector();
+};
+
+class ProjectConfig
+{
+    ProjectConfig();
+
+    bool isWelcome();
+    void resetToWelcome();
+    void resetToCreator();
+
+    string getProjectDir() const;
+    void setProjectDir(const string &projectDir);
+
+    string getScriptFile() const;
+    string getScriptFileRealPath() const;
+    void setScriptFile(const string &scriptFile);
+
+    string getWritablePath() const;
+    string getWritableRealPath() const;
+    void setWritablePath(const string &writablePath);
+
+    string getPackagePath() const;
+    string getNormalizedPackagePath() const;
+    void setPackagePath(const string &packagePath);
+    void addPackagePath(const string &packagePath);
+    vector<string> getPackagePathArray() const;
+
+    bool isLandscapeFrame() const;
+    bool isPortraitFrame() const;
+    void changeFrameOrientation();
+    void changeFrameOrientationToPortait();
+    void changeFrameOrientationToLandscape();
+
+    float getFrameScale() const;
+    void setFrameScale(float frameScale);
+
+    bool isShowConsole() const;
+    void setShowConsole(bool showConsole);
+
+    bool isLoadPrecompiledFramework() const;
+    void setLoadPrecompiledFramework(bool load);
+
+    bool isWriteDebugLogToFile() const;
+    void setWriteDebugLogToFile(bool writeDebugLogToFile);
+    string getDebugLogFilePath() const;
+
+    void setWindowOffset(int x, int y);
+
+    int getDebuggerType() const;
+    void setDebuggerType(int debuggerType);
+
+    void parseCommandLine(const vector<string> &args);
+    string makeCommandLine(unsigned int mask) const;
+
+    bool isAppMenu() const;
+    bool isResizeWindow() const;
+    bool isRetinaDisplay() const;
+
+    bool validate() const;
+    void dump();
+};
+
+class PlayerSettings
+{
+    PlayerSettings();
+
+    bool openLastProject;
+    int offsetX;
+    int offsetY;
+};
+
+class PlayerProtocol
+{
+    static PlayerProtocol *getInstance();
+    static void purgeInstance();
+
+    void setPlayerSettings(const PlayerSettings &settings);
+    PlayerSettings getPlayerSettings() const;
+
+    PlayerFileDialogServiceProtocol *getFileDialogService();
+    PlayerMessageBoxServiceProtocol *getMessageBoxService();
+    PlayerMenuServiceProtocol *getMenuService();
+    PlayerEditBoxServiceProtocol *getEditBoxService();
+    PlayerTaskServiceProtocol *getTaskService();
+
+    void quit();
+    void relaunch();
+    void openNewPlayer();
+    void openNewPlayerWithProjectConfig(ProjectConfig config);
+    void openProjectWithProjectConfig(ProjectConfig config);
+
+    int getPositionX();
+    int getPositionY();
+};
+
+class PlayerFileDialogServiceProtocol : public PlayerServiceProtocol
+{
+    virtual std::string openFile(const std::string &title,
+                                 const std::string &directory,
+                                 const std::string &extensions);
+    virtual std::vector<std::string> openMultiple(const std::string &title,
+                                                  const std::string &directory,
+                                                  const std::string &extensions) const;
+    virtual std::string saveFile(const std::string &title,
+                                 const std::string &path);
+    virtual std::string openDirectory(const std::string &title,
+                                      const std::string &directory);
+};
+
+
+//
+//  PlayerMenuServiceProtocol.h
+//  quick-x-player
+//
+
+//#define MAX_INT ((unsigned)(-1))>>1
+//#define MIN_INT ~MAX_INT
+
+//#define kPlayerSuperModifyKey "super"
+//#define kPlayerShiftModifyKey "shift"
+//#define kPlayerCtrlModifyKey  "ctrl"
+//#define kPlayerAltModifyKey   "alt"
+
+
+class PlayerMenuItem : public cocos2d::Ref
+{
+    std::string getMenuId() const;
+    std::string getTitle() const;
+    int getOrder() const;
+    bool isGroup() const;
+    bool isEnabled() const;
+    bool isChecked() const;
+    std::string getShortcut() const;
+
+    virtual void setTitle(const std::string title);
+    virtual void setEnabled(bool enabled);
+    virtual void setChecked(bool checked);
+    virtual void setShortcut(const std::string shortcut);
+};
+
+class PlayerMenuServiceProtocol
+{
+    virtual PlayerMenuItem *addItem(const std::string &menuId,
+                                    const std::string &title,
+                                    const std::string &parentId);
+    virtual PlayerMenuItem *addItem(const std::string &menuId,
+                                    const std::string &title,
+                                    const std::string &parentId,
+                                    int order);
+    virtual PlayerMenuItem *addItem(const std::string &menuId,
+                                    const std::string &title);
+    virtual PlayerMenuItem *getItem(const std::string &menuId);
+    virtual bool removeItem(const std::string &menuId);
+    
+};
+
+class PlayerMessageBoxServiceProtocol : public PlayerServiceProtocol
+{
+    virtual int showMessageBox(const std::string &title,
+                               const std::string &message);
+
+    virtual int showMessageBox(const std::string &title,
+                               const std::string &message,
+                               int buttonsType);
+};
+
+
+class PlayerTask : public cocos2d::Ref
+{
+    std::string getName() const;
+    std::string getExecutePath() const;
+    std::string getCommandLineArguments() const;
+    std::string getOutput() const;
+    int getState() const;
+    bool isIdle() const;
+    bool isRunning() const;
+    bool isCompleted() const;
+    float getLifetime() const;
+    int getResultCode() const;
+
+    bool run();
+    void stop();
+    void runInTerminal();
+};
+
+class PlayerTaskServiceProtocol : public PlayerServiceProtocol
+{
+    PlayerTask *createTask(const std::string &name,
+                                   const std::string &executePath,
+                                   const std::string &commandLineArguments);
+    PlayerTask *getTask(const std::string &name);
+    void removeTask(const std::string &name);
+};
+
+class PlayerEditBoxServiceProtocol : public PlayerServiceProtocol
+{
+    void hide();
+
+    void setText(const std::string &text);
+    void setFont(const std::string &name, int size);
+    //void setFontColor(const cocos2d::Color3B &color);
+    void setFormator(int formator);
+    void registerHandler(LUA_FUNCTION handler);
+}
