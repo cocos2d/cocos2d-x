@@ -57,14 +57,9 @@ class FileServer
 {
     static FileServer *s_sharedFileServer;
 public:
-    static FileServer* getShareInstance()
-    {
-        if (s_sharedFileServer == nullptr)
-        {
-            s_sharedFileServer = new FileServer();
-        }
-        return s_sharedFileServer;
-    }
+    static FileServer* getShareInstance();
+	static void purge();
+
     bool listenOnTCP(int port);
     void stop();
     
@@ -106,15 +101,15 @@ private:
     
     // file descriptor: socket, console, etc.
     int _listenfd;
-    int _maxfd;
-    std::vector<int> _fds;
     std::thread _responseThread;
     std::thread _receiveThread;
     std::thread _writeThread;
-    fd_set _read_set;
-    bool _running;
-    bool _endThread;
-    char *_protoBuf;
+    bool _receiveRunning;
+    bool _receiveEndThread;
+	bool _writeRunning;
+	bool _writeEndThread;
+	bool _responseRunning;
+	bool _responseEndThread;
     
     std::list<RecvBufStruct> _recvBufList;
     std::list<ResponseStruct> _responseBufList;

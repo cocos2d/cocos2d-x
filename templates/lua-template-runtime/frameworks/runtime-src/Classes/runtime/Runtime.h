@@ -43,5 +43,7 @@ void initRuntime();
 
 void startRuntime();
 
+void endRuntime();
+
 #endif // _RUNTIME__H_
 

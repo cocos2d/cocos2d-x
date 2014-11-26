@@ -98,6 +98,24 @@ bool reloadScript(const string& file)
     return luaStack->executeString(require.c_str());
 }
 
+ConsoleCommand* ConsoleCommand::s_sharedConsoleCommand = nullptr;
+ConsoleCommand* ConsoleCommand::getShareInstance() 
+{
+	if (s_sharedConsoleCommand == nullptr)
+	{
+		s_sharedConsoleCommand = new ConsoleCommand();
+	}
+	return s_sharedConsoleCommand;
+}
+
+void ConsoleCommand::purge()
+{
+	if (s_sharedConsoleCommand != nullptr)
+	{
+		delete s_sharedConsoleCommand;
+	}
+}
+
 void ConsoleCommand::init()
 {
     cocos2d::Console *_console = Director::getInstance()->getConsole();
@@ -122,12 +140,6 @@ void ConsoleCommand::init()
     _fileserver->listenOnTCP(6020);
 #endif
     _fileserver->readResFileFinfo();
-}
-
-ConsoleCommand::~ConsoleCommand()
-{
-    Director::getInstance()->getConsole()->stop();
-    _fileserver->stop();
 }
 
 void ConsoleCommand::onSendCommand(int fd, const std::string &args)
@@ -283,4 +295,9 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
             sendBuf(fd, msg.c_str(), msg.size());
         }
     });
+}
+
+ConsoleCommand::~ConsoleCommand()
+{
+	Director::getInstance()->getConsole()->stop();
 }

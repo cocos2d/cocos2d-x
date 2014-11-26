@@ -12,15 +12,20 @@
 #define WIN_HEIGHT  640
 
 // ConfigParser
-ConfigParser *ConfigParser::s_sharedInstance = NULL;
+ConfigParser *ConfigParser::s_sharedConfigParserInstance = NULL;
 ConfigParser *ConfigParser::getInstance(void)
 {
-    if (!s_sharedInstance)
+    if (!s_sharedConfigParserInstance)
     {
-        s_sharedInstance = new ConfigParser();
-        s_sharedInstance->readConfig();
+        s_sharedConfigParserInstance = new ConfigParser();
+        s_sharedConfigParserInstance->readConfig();
     }
-    return s_sharedInstance;
+    return s_sharedConfigParserInstance;
+}
+
+void ConfigParser::purge()
+{
+	CC_SAFE_DELETE(s_sharedConfigParserInstance);
 }
 
 void ConfigParser::readConfig()

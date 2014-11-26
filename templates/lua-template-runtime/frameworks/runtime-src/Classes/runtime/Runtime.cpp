@@ -200,7 +200,7 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
             return 0;
         std::vector<std::string> originPath; // for IOS platform.
         std::vector<std::string> projPath; // for Desktop platform.
-        for (int i = 0; i < vecPaths.size(); i++)
+        for (size_t i = 0; i < vecPaths.size(); i++)
         {
             if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
             {
@@ -269,9 +269,7 @@ void initRuntime()
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     register_runtime_override_function(engine->getLuaStack()->getLuaState());
 
-    static ConsoleCommand *g_customCommand;
-    g_customCommand = new ConsoleCommand();
-    g_customCommand->init();
+    ConsoleCommand::getShareInstance()->init();
 }
 
 void startRuntime()
@@ -282,4 +280,11 @@ void startRuntime()
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
+}
+
+void endRuntime()
+{
+	ConsoleCommand::purge();
+	FileServer::getShareInstance()->stop();
+	//FileServer::purge();
 }

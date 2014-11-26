@@ -41,6 +41,20 @@ USING_NS_CC;
 #define PROTO_START "RuntimeSend:"
 
 FileServer* FileServer::s_sharedFileServer = nullptr;
+FileServer* FileServer::getShareInstance()
+{
+	if (s_sharedFileServer == nullptr)
+	{
+		s_sharedFileServer = new FileServer;
+	}
+	return s_sharedFileServer;
+}
+
+void FileServer::purge()
+{
+	CC_SAFE_DELETE(s_sharedFileServer);
+}
+
 void FileServer::readResFileFinfo()
 {
     std::string filecfg = _writePath + "/fileinfo_debug.json";
@@ -177,7 +191,7 @@ bool FileServer::listenOnTCP(int port)
     }
     freeaddrinfo(ressave);
     _listenfd = listenfd;
-    _receiveThread = std::thread( std::bind( &FileServer::loopReceiveFile, this) );
+    _receiveThread = std::thread(std::bind( &FileServer::loopReceiveFile, this));
     _writeThread = std::thread(std::bind(&FileServer::loopWriteFile, this));
     _responseThread = std::thread(std::bind(&FileServer::loopResponse, this));
     return true;
@@ -185,20 +199,34 @@ bool FileServer::listenOnTCP(int port)
 
 void FileServer::stop()
 {
-    if(_running)
+	_receiveEndThread = true;
+	_writeEndThread = true;
+	_responseEndThread = true;
+
+    if(_receiveRunning)
     {
-        _endThread = true;
         _receiveThread.join();
-        _writeThread.join();
-        _responseThread.join();
     }
+
+	if (_writeRunning)
+	{
+		_writeThread.join();
+	}
+
+	if (_responseRunning)
+	{
+		_responseThread.join();
+	}
 }
 
 FileServer::FileServer() :
 _listenfd(-1),
-_running(false),
-_endThread(false),
-_protoBuf(nullptr)
+_receiveRunning(false),
+_receiveEndThread(false),
+_writeRunning(false),
+_writeEndThread(false),
+_responseRunning(false),
+_responseEndThread(false)
 {
     _writePath = FileUtils::getInstance()->getWritablePath();
     
@@ -218,7 +246,7 @@ _protoBuf(nullptr)
 
 FileServer::~FileServer()
 {
-    CC_SAFE_DELETE_ARRAY(_protoBuf);
+	stop();
 }
 
 void FileServer::loopReceiveFile()
@@ -229,12 +257,9 @@ void FileServer::loopReceiveFile()
     /* new client */
     client_len = sizeof(client);
     int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
-    if (_protoBuf == nullptr)
-    {
-        _protoBuf = new char[MAXPROTOLENGTH];
-    }
+    char *protoBuf = new char[MAXPROTOLENGTH];
 
-    while(!_endThread) { 
+    while(!_receiveEndThread) { 
 
         // recv start flag
         char startflag[13] = {0};
@@ -260,12 +285,12 @@ void FileServer::loopReceiveFile()
         recvBuf(fd, protolength.char_type, sizeof(protolength.char_type) - 1);
 
         //recv variable length
-        memset(_protoBuf, 0, MAXPROTOLENGTH);
-        recvBuf(fd, _protoBuf, protolength.uint16_type);
+        memset(protoBuf, 0, MAXPROTOLENGTH);
+        recvBuf(fd, protoBuf, protolength.uint16_type);
 
         RecvBufStruct recvDataBuf;
         recvDataBuf.fd = fd;
-        recvDataBuf.fileProto.ParseFromString(_protoBuf);
+        recvDataBuf.fileProto.ParseFromString(protoBuf);
         if (1 == recvDataBuf.fileProto.package_seq())
         {
             _recvErrorFile = "";
@@ -294,14 +319,14 @@ void FileServer::loopReceiveFile()
                 unsigned long recvLen = MAXPROTOLENGTH;
                 if(recvTotalLen < MAXPROTOLENGTH)
                     recvLen = recvTotalLen;
-                memset(_protoBuf, 0, MAXPROTOLENGTH);
-                unsigned long result = recv(fd, _protoBuf, recvLen,0);
+                memset(protoBuf, 0, MAXPROTOLENGTH);
+                unsigned long result = recv(fd, protoBuf, recvLen,0);
                 if (result <= 0)
                 {
                     usleep(1);
                     continue;
                 }
-                memcpy(contentbuf + contentSize - recvTotalLen, _protoBuf, result);
+                memcpy(contentbuf + contentSize - recvTotalLen, protoBuf, result);
                 recvTotalLen -= result;
             }
 
@@ -328,11 +353,16 @@ void FileServer::loopReceiveFile()
             _recvBufListMutex.unlock();
         }
     }
+
+	_receiveRunning = false;
+
+	CC_SAFE_DELETE_ARRAY(protoBuf);
 }
 
 void FileServer::loopWriteFile()
 {
-    while(!_endThread)
+	_writeRunning = true;
+    while(!_writeEndThread)
     {
         _recvBufListMutex.lock();
         size_t recvSize = _recvBufList.size();
@@ -392,6 +422,8 @@ void FileServer::loopWriteFile()
             addResponse(recvDataBuf.fd, filename, runtime::FileSendComplete::RESULTTYPE::FileSendComplete_RESULTTYPE_SUCCESS, 0);
         }
     }
+
+	_writeRunning = false;
 }
 
 void FileServer::addResponse(int fd, std::string filename, int errortype, int errornum)
@@ -424,7 +456,8 @@ void FileServer::addResponse(int fd, std::string filename, int errortype, int er
 
 void FileServer::loopResponse()
 {
-    while(!_endThread) {
+	_responseRunning = true;
+    while(!_responseEndThread) {
         _responseBufListMutex.lock();
         size_t responseSize = _responseBufList.size();
         _responseBufListMutex.unlock();
@@ -463,6 +496,8 @@ void FileServer::loopResponse()
         sendBuf(responseBuf.fd, dataBuf, sizeof(responseHeader) + responseString.size());
         cocos2d::log("responseFile:%s,result:%d", fileSendProtoComplete.file_name().c_str(), fileSendProtoComplete.result());
     }
+
+	_responseRunning = false;
 }
 
 bool createDir(const char *sPathName)

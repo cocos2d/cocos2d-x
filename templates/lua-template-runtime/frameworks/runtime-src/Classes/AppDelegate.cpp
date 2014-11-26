@@ -2,6 +2,7 @@
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
+#include "CodeIDESupport.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
 #include "lua_module_register.h"
@@ -18,6 +19,13 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     SimpleAudioEngine::end();
+
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+	endRuntime();
+#endif
+
+	ConfigParser::purge();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -33,7 +41,7 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-#if (COCOS2D_DEBUG > 0)
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     initRuntime();
 #endif
@@ -69,7 +77,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
     
-#if (COCOS2D_DEBUG > 0)
+#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     startRuntime();
 #else

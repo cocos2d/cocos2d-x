@@ -35,18 +35,18 @@ ConnectWaitLayer::ConnectWaitLayer()
 {
     int designWidth = 1280;
     int designHeight = 800;
-    Image* imagebg = new Image();
+    _imagebg = new Image();
     
     if (ConfigParser::getInstance()->isLanscape())
     {
-        imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
+        _imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth, designHeight, ResolutionPolicy::EXACT_FIT);
     } else
     {
-        imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
+        _imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
         Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight, designWidth, ResolutionPolicy::FIXED_HEIGHT);
     }
-    Texture2D* texturebg = Director::getInstance()->getTextureCache()->addImage(imagebg, "play_background");
+    Texture2D* texturebg = Director::getInstance()->getTextureCache()->addImage(_imagebg, "play_background");
     auto background = Sprite::createWithTexture(texturebg);
     background->setAnchorPoint(Vec2(0.5, 0.5));
     background->setPosition(VisibleRect::center());
@@ -57,15 +57,15 @@ ConnectWaitLayer::ConnectWaitLayer()
     int portraitY = 500;
     int lanscaptX = 902;
     int lanscaptY = 400;
-    Image* imageplay = new Image();
-    imageplay->initWithImageData(__playEnablePngData, sizeof(__playEnablePngData));
-    Texture2D* textureplay = Director::getInstance()->getTextureCache()->addImage(imageplay, "play_enable");
+    _imageplay = new Image();
+    _imageplay->initWithImageData(__playEnablePngData, sizeof(__playEnablePngData));
+    Texture2D* textureplay = Director::getInstance()->getTextureCache()->addImage(_imageplay, "play_enable");
     auto playSprite = Sprite::createWithTexture(textureplay);
     addChild(playSprite, 9999);
 
-    Image* imageShine = new Image();
-    imageShine->initWithImageData(__shinePngData, sizeof(__shinePngData));
-    Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(imageShine, "shine");
+    _imageShine = new Image();
+    _imageShine->initWithImageData(__shinePngData, sizeof(__shinePngData));
+    Texture2D* textureShine = Director::getInstance()->getTextureCache()->addImage(_imageShine, "shine");
     auto shineSprite = Sprite::createWithTexture(textureShine);
     shineSprite->setOpacity(0);
     Vector<FiniteTimeAction*> arrayOfActions;
@@ -139,6 +139,13 @@ ConnectWaitLayer::ConnectWaitLayer()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, playSprite);
 
     this->scheduleUpdate();
+}
+
+ConnectWaitLayer::~ConnectWaitLayer()
+{
+	CC_SAFE_DELETE(_imagebg);
+	CC_SAFE_DELETE(_imageplay);
+	CC_SAFE_DELETE(_imageShine);
 }
 
 // clean up: ignore stdin, stdout and stderr

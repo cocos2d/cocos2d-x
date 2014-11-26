@@ -29,11 +29,16 @@ THE SOFTWARE.
 
 class ConsoleCommand
 {
+	static ConsoleCommand *s_sharedConsoleCommand;
+
 public:
+	static ConsoleCommand* getShareInstance();
+	static void purge();
+
     void init();
-    ~ConsoleCommand();
     void onSendCommand(int fd, const std::string &args);
 private:
+	~ConsoleCommand();
     FileServer* _fileserver;
 };
 
