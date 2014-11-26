@@ -240,7 +240,7 @@ void TextFieldTTF::deleteBackward()
 
     if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - deleteLen, static_cast<int>(deleteLen)))
     {
-        // delegate doesn't wan't to delete backwards
+        // delegate doesn't want to delete backwards
         return;
     }
 

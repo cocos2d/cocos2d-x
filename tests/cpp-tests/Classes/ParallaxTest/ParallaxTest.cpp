@@ -155,8 +155,8 @@ std::string Parallax2::title() const
 //------------------------------------------------------------------
 Issue2572::Issue2572()
 : _preListSize(0)
-, _printCount(0)
 , _moveTimer(0.0f)
+, _printCount(0)
 , _addTimer(0.0f)
 {
     _addChildStep = 1.0f;

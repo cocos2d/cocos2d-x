@@ -4,7 +4,11 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
 #include <AL/al.h>
+#endif
 #include "cocos2d.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN

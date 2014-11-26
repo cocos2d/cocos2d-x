@@ -97,6 +97,7 @@ class CocosFileList:
                             self.fileList_lua.append("%s/" %relativePath)
                         else:
                             self.fileList_com.append("%s/" %relativePath)
+                        self.__parseFileList(path)
                         continue
                 if (
                      self.__bExclude("/%s" %relativePath) or

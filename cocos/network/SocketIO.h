@@ -162,7 +162,7 @@ public:
     SocketIO::SIODelegate* getDelegate() { return _delegate; };
 
     /**
-     *  @brief Disconnect from the endpoint, onClose will be called on the delegate when comlpete
+     *  @brief Disconnect from the endpoint, onClose will be called on the delegate when complete
      */
     void disconnect();
     /**
@@ -174,7 +174,7 @@ public:
      */
     void emit(std::string eventname, std::string args);
     /**
-     *  @brief Used to resgister a socket.io event callback
+     *  @brief Used to register a socket.io event callback
      *         Event argument should be passed using CC_CALLBACK2(&Base::function, this)
      */
     void on(const std::string& eventName, SIOEvent e);

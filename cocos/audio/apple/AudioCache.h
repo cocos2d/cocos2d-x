@@ -53,10 +53,8 @@ public:
 
     void addCallbacks(const std::function<void()> &callback);
     
-private:
-    
+protected:
     void readDataTask();
-    
     void invokingCallbacks();
     
     //pcm data related stuff

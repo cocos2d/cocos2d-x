@@ -69,7 +69,7 @@ SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, 
     return spriteFrame;
 }
 
-SpriteFrame::SpriteFrame(void)
+SpriteFrame::SpriteFrame()
 : _rotated(false)
 , _texture(nullptr)
 {
@@ -123,7 +123,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     return true;
 }
 
-SpriteFrame::~SpriteFrame(void)
+SpriteFrame::~SpriteFrame()
 {
     CCLOGINFO("deallocing SpriteFrame: %p", this);
     CC_SAFE_RELEASE(_texture);
@@ -182,7 +182,7 @@ void SpriteFrame::setTexture(Texture2D * texture)
     }
 }
 
-Texture2D* SpriteFrame::getTexture(void)
+Texture2D* SpriteFrame::getTexture()
 {
     if( _texture ) {
         return _texture;
