@@ -176,13 +176,13 @@ static Layer* restartSpriteTestAction()
 
 Camera3DTestDemo::Camera3DTestDemo(void)
 : BaseTest()
-, _camera(nullptr)
 , _incRot(nullptr)
+, _camera(nullptr)
 , _decRot(nullptr)
-,_bZoomOut(false)
-,_bZoomIn(false)
-,_bRotateLeft(false)
-,_bRotateRight(false)
+, _bZoomOut(false)
+, _bZoomIn(false)
+, _bRotateLeft(false)
+, _bRotateRight(false)
 {
 }
 Camera3DTestDemo::~Camera3DTestDemo(void)

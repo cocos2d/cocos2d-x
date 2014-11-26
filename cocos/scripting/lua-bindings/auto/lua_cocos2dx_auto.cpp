@@ -19186,7 +19186,7 @@ int lua_register_cocos2dx_Speed(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
+int lua_cocos2dx_Follow_setBoundarySet(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Follow* cobj = nullptr;
@@ -19206,7 +19206,7 @@ int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_setBoudarySet'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Follow_setBoundarySet'", nullptr);
         return 0;
     }
 #endif
@@ -19216,18 +19216,18 @@ int lua_cocos2dx_Follow_setBoudarySet(lua_State* tolua_S)
     {
         bool arg0;
 
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Follow:setBoudarySet");
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Follow:setBoundarySet");
         if(!ok)
             return 0;
-        cobj->setBoudarySet(arg0);
+        cobj->setBoundarySet(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Follow:setBoudarySet",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Follow:setBoundarySet",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Follow_setBoudarySet'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Follow_setBoundarySet'.",&tolua_err);
 #endif
 
     return 0;
@@ -19333,7 +19333,7 @@ int lua_register_cocos2dx_Follow(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Follow","cc.Follow","cc.Action",nullptr);
 
     tolua_beginmodule(tolua_S,"Follow");
-        tolua_function(tolua_S,"setBoudarySet",lua_cocos2dx_Follow_setBoudarySet);
+        tolua_function(tolua_S,"setBoundarySet",lua_cocos2dx_Follow_setBoundarySet);
         tolua_function(tolua_S,"isBoundarySet",lua_cocos2dx_Follow_isBoundarySet);
         tolua_function(tolua_S,"create", lua_cocos2dx_Follow_create);
     tolua_endmodule(tolua_S);

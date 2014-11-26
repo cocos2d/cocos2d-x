@@ -428,11 +428,43 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- 
+-- @function [parent=#Widget] setScaleY 
+-- @param self
+-- @param #float scaleY
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] setScaleX 
+-- @param self
+-- @param #float scaleX
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getScaleY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getScaleX 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- Returns the "class name" of widget.
 -- @function [parent=#Widget] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+-- @overload self, float, float         
+-- @overload self, float         
+-- @function [parent=#Widget] setScale
+-- @param self
+-- @param #float scalex
+-- @param #float scaley
+
 --------------------------------
 -- Changes the position (x,y) of the widget in OpenGL coordinates<br>
 -- Usually we use p(x,y) to compose Vec2 object.<br>
@@ -447,6 +479,12 @@
 -- @function [parent=#Widget] setContentSize 
 -- @param self
 -- @param #size_table contentSize
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getScale 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Default constructor

@@ -66,6 +66,7 @@
         "cmake/Modules/FindPNG.cmake", 
         "cmake/Modules/FindPackageHandleStandardArgs.cmake", 
         "cmake/Modules/FindPackageMessage.cmake", 
+        "cmake/Modules/FindPkgConfig.cmake", 
         "cmake/Modules/FindTIFF.cmake", 
         "cmake/Modules/FindTinyXML2.cmake", 
         "cmake/Modules/FindVorbis.cmake", 

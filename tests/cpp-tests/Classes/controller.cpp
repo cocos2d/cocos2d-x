@@ -84,7 +84,7 @@ Controller g_aTestNames[] = {
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
-	{ "MutiTouch", []() { return new MutiTouchTestScene(); } },
+	{ "MultiTouch", []() { return new MutiTouchTestScene(); } },
 	{ "Performance tests", []() { return new PerformanceTestScene(); } },
     { "Renderer", []() { return new NewRendererTestScene(); } },
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },

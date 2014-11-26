@@ -24,6 +24,11 @@
 # ****************************************************************************/
 
 cmake_minimum_required(VERSION 2.8)
+# It ensures that when Find*.cmake files included from cmake's Modules dir
+# include another *.cmake file with relative path, that file will be included
+# also from cmake's Modules dir, to not clash with per-project files.
+cmake_policy(SET CMP0017 NEW)
+
 project (Cocos2d-X)
 
 # The version number

@@ -112,7 +112,7 @@ void ImageView::initRenderer()
 
 void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
 {
-    if (fileName.empty())
+    if (fileName.empty() || (_textureFile == fileName && _imageTexType == texType))
     {
         return;
     }
@@ -131,8 +131,7 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
     }
     
     _imageTextureSize = _imageRenderer->getContentSize();
-    updateFlippedX();
-    updateFlippedY();
+  
     this->updateChildrenDisplayedRGBA();
 
     updateContentSizeWithTextureSize(_imageTextureSize);
@@ -159,17 +158,6 @@ void ImageView::setTextureRect(const Rect &rect)
     }
 }
     
-void ImageView::updateFlippedX()
-{
-    _imageRenderer->setFlippedX(_flippedX);
-}
-    
-void ImageView::updateFlippedY()
-{
-    _imageRenderer->setFlippedY(_flippedY);
-
-}
-
 void ImageView::setScale9Enabled(bool able)
 {
     if (_scale9Enabled == able)

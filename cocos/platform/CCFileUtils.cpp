@@ -466,14 +466,14 @@ static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxm
 {
     tinyxml2::XMLElement* rootNode = doc->NewElement("dict");
     
-    for (const auto iter : dict)
+    for (const auto &iter : dict)
     {
         tinyxml2::XMLElement* tmpNode = doc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
-        tinyxml2::XMLText* content = doc->NewText(iter->first.c_str());
+        tinyxml2::XMLText* content = doc->NewText(iter.first.c_str());
         tmpNode->LinkEndChild(content);
         
-        tinyxml2::XMLElement *element = generateElementForObject(iter->second, doc);
+        tinyxml2::XMLElement *element = generateElementForObject(iter.second, doc);
         if (element)
             rootNode->LinkEndChild(element);
     }
@@ -834,7 +834,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     
     _fullPathCache.clear();
     _searchPathArray.clear();
-    for (const auto iter : searchPaths)
+    for (const auto& iter : searchPaths)
     {
         std::string prefix;
         std::string path;

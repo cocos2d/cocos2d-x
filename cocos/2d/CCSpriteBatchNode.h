@@ -79,7 +79,7 @@ public:
 
 
     /** returns the TextureAtlas object */
-    inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
+    inline TextureAtlas* getTextureAtlas() { return _textureAtlas; }
 
     /** sets the TextureAtlas object */
     inline void setTextureAtlas(TextureAtlas* textureAtlas)

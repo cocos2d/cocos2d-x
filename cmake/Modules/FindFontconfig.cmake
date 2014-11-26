@@ -11,7 +11,7 @@ endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Fontconfig
-  REQUIRED_VARS FONTCONFIG_LIBRARIES FONTCONFIG_INCLUDE_DIRS
+  REQUIRED_VARS FONTCONFIG_FOUND
   VERSION_VAR FONTCONFIG_VERSION
   )
 
