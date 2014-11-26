@@ -61,3 +61,8 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
+
+// this function will be called when the app will terminate
+void AppDelegate::applicationWillTerminate() {
+
+}

@@ -124,6 +124,8 @@ static AppDelegate s_sharedApplication;
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
+    
+    cocos2d::Application::getInstance()->applicationWillTerminate();
 }
 
 
