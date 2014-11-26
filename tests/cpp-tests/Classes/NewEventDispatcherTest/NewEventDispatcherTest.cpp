@@ -1350,17 +1350,14 @@ public:
         Sprite::onExit();
     }
     
-private:
-    
-    EventListenerTouchOneByOne *    _eventListener;
-    int                             _fixedPriority;
-    TappedCallback                  _tappedCallback;
+private:    
+    EventListenerTouchOneByOne* _eventListener;
+    TappedCallback _tappedCallback;
 };
 
 DanglingNodePointersTest::DanglingNodePointersTest()
 {
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
-    
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     

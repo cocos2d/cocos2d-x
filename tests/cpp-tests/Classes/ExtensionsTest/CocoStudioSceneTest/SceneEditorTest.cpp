@@ -790,8 +790,7 @@ void AttributeComponentTest::defaultPlay()
 }
 
 TriggerTest::TriggerTest()
-: _node(nullptr)
-, _touchListener(nullptr)
+: _touchListener(nullptr)
 {
 	
 }

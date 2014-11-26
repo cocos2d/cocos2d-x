@@ -1290,6 +1290,9 @@
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\CSParseBinary.pb.cc">
+      <Filter>cocostudio</Filter>
+    </ClCompile>
     <ClCompile Include="..\ui\UILayoutComponent.cpp">
       <Filter>ui\Layouts</Filter>
     </ClCompile>
@@ -2519,6 +2522,9 @@
     </ClInclude>
     <ClInclude Include="..\..\external\unzip\ioapi_mem.h">
       <Filter>external\unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\config.h">
+      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.h">
       <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>

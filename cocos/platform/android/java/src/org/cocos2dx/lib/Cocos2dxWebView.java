@@ -6,6 +6,7 @@ import java.net.URI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -77,18 +78,15 @@ public class Cocos2dxWebView extends WebView {
             Cocos2dxWebViewHelper._didFailLoading(viewTag, failingUrl);
         }
     }
-
+    
     public void setWebViewRect(int left, int top, int maxWidth, int maxHeight) {
-        fixSize(left, top, maxWidth, maxHeight);
-    }
-
-    private void fixSize(int left, int top, int width, int height) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.leftMargin = left;
         layoutParams.topMargin = top;
-        layoutParams.width = width;
-        layoutParams.height = height;
+        layoutParams.width = maxWidth;
+        layoutParams.height = maxHeight;
+        layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
         this.setLayoutParams(layoutParams);
     }
 }
