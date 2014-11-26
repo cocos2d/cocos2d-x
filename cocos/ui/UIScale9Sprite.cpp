@@ -1211,7 +1211,9 @@ y+=ytranslate;         \
         _flippedX = flippedX;
         if (_scale9Enabled)
         {
-            this->setScaleX(-1);
+            if (_flippedX) {
+                this->setScaleX(-1);
+            }
         }
         else
         {
@@ -1227,7 +1229,9 @@ y+=ytranslate;         \
         _flippedY = flippedY;
         if (_scale9Enabled)
         {
-            this->setScaleY(-1);
+            if (_flippedY) {
+                this->setScaleY(-1);
+            }
         }
         else
         {
