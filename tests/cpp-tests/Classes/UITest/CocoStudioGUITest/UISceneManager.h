@@ -60,9 +60,10 @@ enum
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,
-    
     kUILabelTest_Effect,
     kUITextTest_TTF,
+    kUITextTest_IgnoreConentSize,
+    
     kUITextBMFontTest,
     kUITextFieldTest,
     kUITextFieldTest_MaxLength,
