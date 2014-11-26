@@ -60,6 +60,19 @@ SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonD
 	return node;
 }
 
+void SkeletonRenderer::initWithFiles (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	CCASSERT(_atlas, "Error reading atlas file.");
+
+	spSkeletonJson* json = spSkeletonJson_create(_atlas);
+	json->scale = scale;
+	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+	spSkeletonJson_dispose(json);
+
+	setSkeletonData(skeletonData, true);
+}
+
 void SkeletonRenderer::initialize () {
 	_atlas = 0;
 	_debugSlots = false;
@@ -106,18 +119,9 @@ SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas
 }
 
 SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+	initWithFiles(skeletonDataFile, atlasFile, scale);
+
 	initialize();
-
-	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
-	CCASSERT(_atlas, "Error reading atlas file.");
-
-	spSkeletonJson* json = spSkeletonJson_create(_atlas);
-	json->scale = scale;
-	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
-	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
-	spSkeletonJson_dispose(json);
-
-	setSkeletonData(skeletonData, true);
 }
 
 SkeletonRenderer::~SkeletonRenderer () {
