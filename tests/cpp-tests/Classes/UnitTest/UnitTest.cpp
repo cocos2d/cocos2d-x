@@ -697,7 +697,8 @@ void ValueTest::constFunc(const Value& value) const
 
 // UTFConversionTest
 
-static const int TEST_CODE_NUM = 11;
+// FIXME: made as define to prevent compile warnings in release mode. Better is to be a `const static int`
+#define TEST_CODE_NUM 11
 
 static const char16_t __utf16Code[] =
 {
@@ -818,8 +819,7 @@ static void doUTFConversion()
     CCASSERT(StringUtils::getCharacterCountInUTF8String(originalUTF8) == TEST_CODE_NUM, "StringUtils::getCharacterCountInUTF8String failed");
     
     //---------------------------
-    int lastIndex = StringUtils::getIndexOfLastNotChar16(vec3, 0x2009);
-    CCASSERT(lastIndex == (vec1.size()-1), "StringUtils::getIndexOfLastNotChar16 failed");
+    CCASSERT(StringUtils::getIndexOfLastNotChar16(vec3, 0x2009) == (vec1.size()-1), "StringUtils::getIndexOfLastNotChar16 failed");
     
     //---------------------------
     CCASSERT(originalUTF16.length() == TEST_CODE_NUM, "The length of the original utf16 string isn't equal to TEST_CODE_NUM");
