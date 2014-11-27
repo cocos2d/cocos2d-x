@@ -28,19 +28,20 @@
 #include "WidgetReaderProtocol.h"
 #include "cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
-#include "ui/UIWidget.h"
 #include "cocostudio/CocosStudioExport.h"
+#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace cocostudio
 {
     class CocoLoader;
     struct stExpCocoNode;
     
-    class CC_STUDIO_DLL WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
+    class CC_STUDIO_DLL WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol, public NodeReaderProtocol
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:
         WidgetReader();
         virtual ~WidgetReader();
         
@@ -58,7 +59,13 @@ namespace cocostudio
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
         virtual void setColorPropsFromProtocolBuffers(cocos2d::ui::Widget* widget,
                                                       const protocolbuffers::NodeTree& nodeTree);
-        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);
+        
+        /* flatbuffers refactoring */
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* widgetOptions);
+        /**/
         
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,

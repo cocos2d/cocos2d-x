@@ -1,13 +1,19 @@
 
 
 #include "CheckBoxReader.h"
+
 #include "ui/UICheckBox.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary.pb.h"
-#include "tinyxml2.h"
+#include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -19,7 +25,7 @@ namespace cocostudio
     
     static CheckBoxReader* instanceCheckBoxReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(CheckBoxReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(CheckBoxReader)
     
     CheckBoxReader::CheckBoxReader()
     {
@@ -205,15 +211,35 @@ namespace cocostudio
         WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
     }
     
-    void CheckBoxReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
+    Offset<Table> CheckBoxReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                               flatbuffers::FlatBufferBuilder *builder)
     {
-        WidgetReader::setPropsFromXML(widget, objectData);
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        CheckBox* checkBox = static_cast<CheckBox*>(widget);
+        bool selectedState = true;
+        bool displaystate = true;
         
-        std::string xmlPath = GUIReader::getInstance()->getFilePath();
+        int backgroundboxResourceType = 0;
+        std::string backgroundboxPath = "";
+        std::string backgroundboxPlistFile = "";
         
-        int opacity = 255;
+        int backGroundBoxSelectedResourceType = 0;
+        std::string backGroundBoxSelectedPath = "";
+        std::string backGroundBoxSelectedPlistFile = "";
+        
+        int frontCrossResourceType = 0;
+        std::string frontCrossPath = "";
+        std::string frontCrossPlistFile = "";
+        
+        int backGroundBoxDisabledResourceType = 0;
+        std::string backGroundBoxDisabledPath = "";
+        std::string backGroundBoxDisabledPlistFile = "";
+        
+        
+        int frontCrossDisabledResourceType = 0;
+        std::string frontCrossDisabledPath = "";
+        std::string frontCrossDisabledPlistFile = "";
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -224,17 +250,12 @@ namespace cocostudio
             
             if (name == "CheckedState")
             {
-                checkBox->setSelected((value == "True") ? true : false);
+                selectedState = (value == "True") ? true : false;
             }
             else if (name == "DisplayState")
             {
-                checkBox->setBright((value == "True") ? true : false);
+                displaystate = (value == "True") ? true : false;
             }
-            else if (name == "Alpha")
-            {
-                opacity = atoi(value.c_str());
-            }
-            
             attribute = attribute->Next();
         }
         
@@ -246,9 +267,10 @@ namespace cocostudio
             
             if (name == "NormalBackFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -257,44 +279,36 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        backgroundboxPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = getResourceType(value);
+                        backgroundboxResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        backgroundboxPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (backgroundboxResourceType == 1)
                 {
-                    case 0:
-                    {
-                        checkBox->loadTextureBackGround(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        checkBox->loadTextureBackGround(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "PressedBackFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -303,44 +317,36 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        backGroundBoxSelectedPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = getResourceType(value);
+                        backGroundBoxSelectedResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        backGroundBoxSelectedPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (backGroundBoxSelectedResourceType == 1)
                 {
-                    case 0:
-                    {
-                        checkBox->loadTextureBackGroundSelected(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        checkBox->loadTextureBackGroundSelected(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "NodeNormalFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -349,44 +355,36 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        frontCrossPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = getResourceType(value);
+                        frontCrossResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        frontCrossPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (frontCrossResourceType == 1)
                 {
-                    case 0:
-                    {
-                        checkBox->loadTextureFrontCross(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        checkBox->loadTextureFrontCross(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "DisableBackFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -395,44 +393,36 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        backGroundBoxDisabledPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = getResourceType(value);
+                        backGroundBoxDisabledResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        backGroundBoxDisabledPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (backGroundBoxDisabledResourceType == 1)
                 {
-                    case 0:
-                    {
-                        checkBox->loadTextureBackGroundDisabled(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        checkBox->loadTextureBackGroundDisabled(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "NodeDisableFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -441,44 +431,120 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        frontCrossDisabledPath = value;
                     }
                     else if (name == "Type")
                     {
-						resourceType = getResourceType(value);
+                        frontCrossDisabledResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        frontCrossDisabledPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (frontCrossDisabledResourceType == 1)
                 {
-                    case 0:
-                    {
-                        checkBox->loadTextureFrontCrossDisabled(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        checkBox->loadTextureFrontCrossDisabled(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             
             child = child->NextSiblingElement();
         }
         
-        checkBox->setOpacity(opacity);
+        auto options = CreateCheckBoxOptions(*builder,
+                                             widgetOptions,
+                                             CreateResourceData(*builder,
+                                                                builder->CreateString(backgroundboxPath),
+                                                                builder->CreateString(backgroundboxPlistFile),
+                                                                backgroundboxResourceType),
+                                             CreateResourceData(*builder,
+                                                                builder->CreateString(backGroundBoxSelectedPath),
+                                                                builder->CreateString(backGroundBoxSelectedPlistFile),
+                                                                backGroundBoxSelectedResourceType),
+                                             CreateResourceData(*builder,
+                                                                builder->CreateString(frontCrossPath),
+                                                                builder->CreateString(frontCrossPlistFile),
+                                                                frontCrossResourceType),
+                                             CreateResourceData(*builder,
+                                                                builder->CreateString(backGroundBoxDisabledPath),
+                                                                builder->CreateString(backGroundBoxDisabledPlistFile),
+                                                                backGroundBoxDisabledResourceType),
+                                             CreateResourceData(*builder,
+                                                                builder->CreateString(frontCrossDisabledPath),
+                                                                builder->CreateString(frontCrossDisabledPlistFile),
+                                                                frontCrossDisabledResourceType),
+                                             selectedState,
+                                             displaystate
+                                             );
+        
+        return *(Offset<Table>*)&options;
+    }
+    
+    void CheckBoxReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *checkBoxOptions)
+    {
+        
+        
+        auto options = (CheckBoxOptions*)checkBoxOptions;
+        
+        CheckBox* checkBox = static_cast<CheckBox*>(node);
+        
+        //load background image
+        auto backGroundDic = options->backGroundBoxData();
+        int backGroundType = backGroundDic->resourceType();
+        std::string backGroundTexturePath = this->getResourcePath(backGroundDic->path()->c_str(), (Widget::TextureResType)backGroundType);
+        checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
+        
+        //load background selected image
+        auto backGroundSelectedDic = options->backGroundBoxSelectedData();
+        int backGroundSelectedType = backGroundSelectedDic->resourceType();
+        std::string backGroundSelectedTexturePath = this->getResourcePath(backGroundSelectedDic->path()->c_str(), (Widget::TextureResType)backGroundSelectedType);
+        checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
+        
+        //load frontCross image
+        auto frontCrossDic = options->frontCrossData();
+        int frontCrossType = frontCrossDic->resourceType();
+        std::string frontCrossFileName = this->getResourcePath(frontCrossDic->path()->c_str(), (Widget::TextureResType)frontCrossType);
+        checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
+        
+        //load backGroundBoxDisabledData
+        auto backGroundDisabledDic = options->backGroundBoxDisabledData();
+        int backGroundDisabledType = backGroundDisabledDic->resourceType();
+        std::string backGroundDisabledFileName = this->getResourcePath(backGroundDisabledDic->path()->c_str(), (Widget::TextureResType)backGroundDisabledType);
+        checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
+        
+        ///load frontCrossDisabledData
+        auto frontCrossDisabledDic = options->frontCrossDisabledData();
+        int frontCrossDisabledType = frontCrossDisabledDic->resourceType();
+        std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic->path()->c_str(), (Widget::TextureResType)frontCrossDisabledType);
+        checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
+        
+        bool selectedstate = options->selectedState();
+        checkBox->setSelected(selectedstate);
+        
+        bool displaystate = options->displaystate();
+        checkBox->setBright(displaystate);
+        
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+    }
+    
+    Node* CheckBoxReader::createNodeWithFlatBuffers(const flatbuffers::Table *checkBoxOptions)
+    {
+        CheckBox* checkBox = CheckBox::create();
+        
+        setPropsWithFlatBuffers(checkBox, (Table*)checkBoxOptions);
+        
+        return checkBox;
     }
 
     int CheckBoxReader::getResourceType(std::string key)

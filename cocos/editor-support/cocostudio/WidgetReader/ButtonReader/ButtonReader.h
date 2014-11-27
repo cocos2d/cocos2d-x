@@ -25,16 +25,16 @@
 #ifndef __TestCpp__ButtonReader__
 #define __TestCpp__ButtonReader__
 
-#include "../WidgetReader.h"
+#include "cocostudio/WidgetReader/WidgetReader.h"
 #include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
     class CC_STUDIO_DLL ButtonReader : public WidgetReader
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:        
         ButtonReader();
         virtual ~ButtonReader();
         
@@ -47,7 +47,12 @@ namespace cocostudio
         
         virtual void setPropsFromProtocolBuffers(cocos2d::ui::Widget* widget, const protocolbuffers::NodeTree& nodeTree);
         
-        virtual void setPropsFromXML(cocos2d::ui::Widget* widget, const tinyxml2::XMLElement* objectData);        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* buttonOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* buttonOptions);
+        
+        int getResourceType(std::string key);    
         
     };
 }
