@@ -28,6 +28,7 @@
 #include "PerformanceSpriteTest.h"
 
 #include <cmath>
+#include <math.h>
 
 enum {
     kMaxNodes = 50000,
