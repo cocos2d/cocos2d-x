@@ -1340,6 +1340,9 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2645,6 +2648,9 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
+      <Filter>cocostudio\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
