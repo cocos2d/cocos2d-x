@@ -19,7 +19,7 @@ proxyDict = {'http':http_proxy,'https':http_proxy}
 def check_queue_build(action, pr_num, statuses_url):
     username = os.environ['JENKINS_ADMIN']
     password = os.environ['JENKINS_ADMIN_PW']
-    J = Jenkins('http://115.28.134.83:8000',username,password)
+    J = Jenkins('http://115.28.72.132:8000',username,password)
     queues = J.get_queue()
     for key,queue in queues.iteritems():
       q_payload_str = queue.get_parameters()['payload'].decode('utf-8','ignore')
