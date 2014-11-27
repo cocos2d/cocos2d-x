@@ -404,6 +404,7 @@
     <ClInclude Include="..\editor-support\cocostudio\TriggerBase.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerObj.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
@@ -892,6 +893,7 @@
     <ClCompile Include="..\editor-support\cocostudio\TriggerBase.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerObj.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />

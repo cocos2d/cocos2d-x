@@ -1365,6 +1365,9 @@
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCAction.h">
@@ -2676,8 +2679,8 @@
     <ClInclude Include="..\editor-support\cocostudio\FlatBuffersSerialize.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\win32\config.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
+      <Filter>cocostudio\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
