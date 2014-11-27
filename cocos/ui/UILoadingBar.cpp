@@ -195,6 +195,11 @@ bool LoadingBar::isScale9Enabled()const
     return _scale9Enabled;
 }
     
+void LoadingBar::toggleScale9CornerSpriteVisibility(bool visible)
+{
+    _barRenderer->toggleCornerSpritesVisibility(visible);
+}
+    
 void LoadingBar::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;

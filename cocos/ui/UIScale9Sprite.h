@@ -273,7 +273,7 @@ namespace ui {
         void setScale9Enabled(bool enabled);
         bool isScale9Enabled()const;
         
-        
+        void toggleCornerSpritesVisibility(bool visible);
         
         /// @} end of Children and Parent
         

@@ -542,6 +542,30 @@ y+=ytranslate;         \
         }
     }
     
+    void Scale9Sprite::toggleCornerSpritesVisibility(bool visible)
+    {
+        if (_topLeft)
+        {
+            _topLeft->setVisible(visible);
+        }
+        
+        if (_topRight)
+        {
+            _topRight->setVisible(visible);
+        }
+        
+        if (_bottomLeft)
+        {
+            _bottomLeft->setVisible(visible);
+        }
+        
+        if (_bottomRight)
+        {
+            _bottomRight->setVisible(visible);
+        }
+        
+    }
+    
     void Scale9Sprite::handleCapInsetSizeExceedContentSize()
     {
         Size size = this->_contentSize;
@@ -577,6 +601,15 @@ y+=ytranslate;         \
         
         float sizableWidth = size.width - _topLeftSize.width - _bottomRightSize.width;
         float sizableHeight = size.height - _topLeftSize.height - _bottomRightSize.height;
+        
+        if (sizableHeight < 0) {
+            sizableHeight = 0;
+            sizableWidth = 0;
+        }
+        if (sizableWidth < 0) {
+            sizableWidth = 0;
+            sizableHeight = 0;
+        }
         
         float horizontalScale = sizableWidth/_centerSize.width;
         float verticalScale = sizableHeight/_centerSize.height;
@@ -1080,7 +1113,6 @@ y+=ytranslate;         \
     {
         if(this->_positionsAreDirty)
         {
-            this->handleCapInsetSizeExceedContentSize();
             this->updatePositions();
             this->adjustScale9ImagePosition();
             this->_positionsAreDirty = false;
