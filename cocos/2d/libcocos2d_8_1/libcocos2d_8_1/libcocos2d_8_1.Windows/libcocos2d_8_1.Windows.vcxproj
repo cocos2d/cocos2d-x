@@ -34,46 +34,6 @@
       <Project>{f3550fe0-c795-44f6-8feb-093eb68143ae}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\flatc.cpp" />
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\idl_gen_cpp.cpp" />
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\idl_gen_fbs.cpp" />
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\idl_gen_general.cpp" />
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\idl_gen_go.cpp" />
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\idl_gen_text.cpp" />
-    <ClCompile Include="..\..\..\..\..\external\flatbuffers\idl_parser.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReader\NodeReader.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp" />
-    <ClCompile Include="..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\external\flatbuffers\flatbuffers.h" />
-    <ClInclude Include="..\..\..\..\..\external\flatbuffers\idl.h" />
-    <ClInclude Include="..\..\..\..\..\external\flatbuffers\util.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\CSParseBinary_generated.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReader\NodeReader.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.h" />
-    <ClInclude Include="..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\..\..\editor-support\cocostudio\CMakeLists.txt" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9335005f-678e-4e8e-9b84-50037216aec8}</ProjectGuid>
     <DefaultLanguage>en-US</DefaultLanguage>
