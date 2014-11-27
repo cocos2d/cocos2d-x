@@ -35,7 +35,7 @@ def initBuildConstant(ndk_build_param, build_mode):
             ndkVersionValue = int(filter(str.isdigit,ndkVersion))
             if ndkVersionValue < 10 or cmp(ndkVersion,'r10c') < 0 :
                 print '''Please use NDK r10c above.
-If you do not,your application may crash or freeze when using c++ 11 regular,BMFont and HttpClient.
+If you do not,your application may crash or freeze on Android L(5.0) when use BMFont and HttpClient.
 For More information:
     https://github.com/cocos2d/cocos2d-x/issues/9114
     https://github.com/cocos2d/cocos2d-x/issues/9138\n'''
@@ -44,6 +44,9 @@ For More information:
         versionFile.close()
     except Exception:
         print "Can not be determined your NDK version"
+        
+    if toolchainVersion == '4.8':
+        print 'NDK_TOOLCHAIN_VERSION is 4.8,your application may crash on Androud when use c++ 11 regular\n'
         
     current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
@@ -75,12 +78,10 @@ def check_environment_variables_sdk():
     '''
 
     try:
-        SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+        BUILD_CONSTANT.SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
     except Exception:
         print "ANDROID_SDK_ROOT not defined. Please define ANDROID_SDK_ROOT in your environment"
         sys.exit(1)
-
-    return SDK_ROOT
 
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
