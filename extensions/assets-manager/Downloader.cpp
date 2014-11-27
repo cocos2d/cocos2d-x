@@ -471,46 +471,45 @@ void Downloader::batchDownloadAsync(const DownloadUnits &units, const std::strin
 
 void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string &batchId/* = ""*/)
 {
-    if (units.size() == 0)
-    {
-        return;
-    }
     // Make sure downloader won't be released
     std::weak_ptr<Downloader> ptr = shared_from_this();
     
-    // Test server download resuming support with the first unit
-    _supportResuming = false;
-    CURL *header = curl_easy_init();
-    // Make a resume request
-    curl_easy_setopt(header, CURLOPT_RESUME_FROM_LARGE, 0);
-    if (prepareHeader(header, units.begin()->second.srcUrl))
+    if (units.size() != 0)
     {
-        long responseCode;
-        curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &responseCode);
-        if (responseCode == HTTP_CODE_SUPPORT_RESUME)
+        // Test server download resuming support with the first unit
+        _supportResuming = false;
+        CURL *header = curl_easy_init();
+        // Make a resume request
+        curl_easy_setopt(header, CURLOPT_RESUME_FROM_LARGE, 0);
+        if (prepareHeader(header, units.begin()->second.srcUrl))
         {
-            _supportResuming = true;
+            long responseCode;
+            curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &responseCode);
+            if (responseCode == HTTP_CODE_SUPPORT_RESUME)
+            {
+                _supportResuming = true;
+            }
         }
-    }
-    curl_easy_cleanup(header);
-    
-    int count = 0;
-    DownloadUnits group;
-    for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
-    {
-        if (count == FOPEN_MAX)
+        curl_easy_cleanup(header);
+        
+        int count = 0;
+        DownloadUnits group;
+        for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
+        {
+            if (count == FOPEN_MAX)
+            {
+                groupBatchDownload(group);
+                group.clear();
+                count = 0;
+            }
+            const std::string &key = it->first;
+            const DownloadUnit &unit = it->second;
+            group.emplace(key, unit);
+        }
+        if (group.size() > 0)
         {
             groupBatchDownload(group);
-            group.clear();
-            count = 0;
         }
-        const std::string &key = it->first;
-        const DownloadUnit &unit = it->second;
-        group.emplace(key, unit);
-    }
-    if (group.size() > 0)
-    {
-        groupBatchDownload(group);
     }
     
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([ptr, batchId]{
