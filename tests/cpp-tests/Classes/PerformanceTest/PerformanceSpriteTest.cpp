@@ -366,6 +366,8 @@ void SpriteMenuLayer::showCurrentTest()
 //
 ////////////////////////////////////////////////////////
 
+// FIXME: This should be part of the class, but VC2013 doesn't support constexpr as static members yet
+static const float SECONDS_PER_TESTS = 4.0f;
 // 500 sprites, 1500 sprites, etc...
 bool SpriteMainScene::_s_autoTest = false;
 int SpriteMainScene::_s_nSpriteCurCase = 0;

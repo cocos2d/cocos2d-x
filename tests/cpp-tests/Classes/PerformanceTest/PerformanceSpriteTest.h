@@ -105,7 +105,6 @@ protected:
     SubTest* _subTest;
     int _subtestNumber;
 
-    constexpr static const float SECONDS_PER_TESTS = 4.0f;
     static const int MAX_SPRITE_TEST_CASE = 7;
     static const int MAX_SUB_TEST_NUMS = 13;
 };
