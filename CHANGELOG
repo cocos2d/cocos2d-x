@@ -1,12 +1,12 @@
 cocos2d-x-3.3-rc1  Nov.28 2014
     [NEW]           Vec2: added greater than operator
+    [NEW]           Tools: Updated cocos console to v1.4 (from 1.2)
     [NEW]           WP8: Win8.1 universal app support
 
     [FIX]           Audio: `SimpleAudioEngine::sharedEngine()->playBackgroundMusic()` crashed freezen on Lollipop(Android5.0)
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
     [FIX]           Camera: does not work correctly when the up is not (0, 1, 0)
-    [FIX]           Cocos console: compile failure on windows if using VS express version
     [FIX]           Director: Uses a low-pass filter to diplay the FPS
     [FIX]           DrawNode: drawPoint() may cause crash
     [FIX]           EventKeyboard: can not check right Shift, right Ctrl and right ALT
