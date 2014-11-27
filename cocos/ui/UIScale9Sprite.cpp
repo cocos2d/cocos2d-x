@@ -551,7 +551,7 @@ y+=ytranslate;         \
         
         this->toggleSlicedSpriteVisibility(true);
         
-        if (sizableWidth < 0.0f || sizableHeight < 0.0f)
+        if ((size.width == 0 || size.height == 0) && (sizableWidth < 0.0f || sizableHeight < 0.0f))
         {
             CCLOG("Invalid capInset size");
             this->toggleSlicedSpriteVisibility(false);

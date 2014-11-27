@@ -365,7 +365,7 @@ bool UILoadingBarTest_Issue9091::init()
                                 widgetSize.height / 2.0f ));
         _uiLayer->addChild(alert);
         
-        auto scale9Sprite = Scale9Sprite::create("cocosui/slider_bar_active_9patch.png");
+        auto scale9Sprite = ui::Scale9Sprite::create("cocosui/slider_bar_active_9patch.png");
         scale9Sprite->setPosition(Vec2(widgetSize.width/2,
                                        widgetSize.height/2 + 50));
         scale9Sprite->setPreferredSize(Size(0,0));
