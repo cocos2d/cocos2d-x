@@ -54,6 +54,8 @@ def check_current_3rd_libs(branch):
     os.system("git checkout -b " + checkout_branch_name + checkout_tag_name)
     #copy all the 3rd party dependencies
     os.system("cp -r  *  ../cocos-2dx-pull-request-build/node/" +  node_name + "/external/")
+    os.system("git checkout v3")
+    os.system("git branch -D " + checkout_branch_name)
     os.system("cd -")
     os.system("python download-deps.py -r no")
 
