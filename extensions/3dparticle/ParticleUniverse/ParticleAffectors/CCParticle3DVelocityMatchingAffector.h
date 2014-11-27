@@ -40,7 +40,7 @@ public:
     Particle3DVelocityMatchingAffector(void);
     virtual ~Particle3DVelocityMatchingAffector(void);
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
     /** Todo
     */
     float getRadius(void) const;

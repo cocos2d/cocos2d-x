@@ -194,11 +194,11 @@ bool Particle3DBoxCollider::isSmallestValue(float value, const Vec3& particlePos
         value <= value6);
 }
 
-void Particle3DBoxCollider::updateAffector( float deltaTime )
+void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
 

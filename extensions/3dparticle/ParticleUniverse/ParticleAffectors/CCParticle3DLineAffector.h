@@ -47,8 +47,9 @@ public:
     */
     virtual void notifyRescaled(const Vec3& scale) override;
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
     virtual void postUpdateAffector(float deltaTime) override;
+    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime) override;
     /** 
     */
     float getMaxDeviation(void) const;

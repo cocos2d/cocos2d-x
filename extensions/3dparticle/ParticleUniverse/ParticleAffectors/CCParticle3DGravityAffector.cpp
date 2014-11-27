@@ -52,14 +52,11 @@ void Particle3DGravityAffector::setGravity(float gravity)
     _gravity = gravity;
 }
 
-void Particle3DGravityAffector::updateAffector( float deltaTime )
+void Particle3DGravityAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    // Calculate the affectors' position so it is also safe to use mDerivedPosition.
-    getDerivedPosition();
-
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Applied scaling in V1.3.1
         /** Applying Newton's law of universal gravitation.	*/
         Vec3 distance = _derivedPosition - particle->position;

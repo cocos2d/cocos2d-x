@@ -29,6 +29,9 @@ NS_CC_BEGIN
 
 Particle3DAffector::Particle3DAffector()
 : _particleSystem(nullptr)
+, _affectorScale(Vec3::ONE)
+, _affectSpecialisation(AFSP_DEFAULT)
+, _isEnabled(true)
 {
     
 }
@@ -38,7 +41,7 @@ Particle3DAffector::~Particle3DAffector()
     _particleSystem = nullptr;
 }
 
-void Particle3DAffector::updateAffector(float deltaTime)
+void Particle3DAffector::updateAffector(Particle3D *particle, float deltaTime)
 {
     
 }
@@ -152,6 +155,21 @@ void Particle3DAffector::initParticleForEmission( Particle3D* particle )
 }
 
 void Particle3DAffector::notifyRescaled(const Vec3& scale)
+{
+    _affectorScale = scale;
+}
+
+void Particle3DAffector::setEnabled( bool enabled )
+{
+    _isEnabled = enabled;
+}
+
+bool Particle3DAffector::isEnabled( void ) const
+{
+    return _isEnabled;
+}
+
+void Particle3DAffector::firstParticleUpdate( Particle3D *particle, float deltaTime )
 {
 
 }

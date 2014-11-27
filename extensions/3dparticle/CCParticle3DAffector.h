@@ -60,8 +60,9 @@ public:
     virtual void prepare();
     virtual void unPrepare();
     virtual void preUpdateAffector(float deltaTime);
-    virtual void updateAffector(float deltaTime);
+    virtual void updateAffector(Particle3D *particle, float deltaTime);
     virtual void postUpdateAffector(float deltaTime);
+    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime);
     virtual void initParticleForEmission(Particle3D* particle);
 
     /** Calculate the derived position of the affector.
@@ -72,6 +73,26 @@ public:
     */
     const Vec3& getDerivedPosition();
 
+    /** Todo
+    */
+    const AffectSpecialisation& getAffectSpecialisation(void) const {return _affectSpecialisation;};
+    void setAffectSpecialisation(const AffectSpecialisation& affectSpecialisation) {_affectSpecialisation = affectSpecialisation;};
+
+    /** Todo
+    */
+    const std::string& getAffectorType(void) const {return _affectorType;};
+    void setAffectorType(const std::string& affectorType) {_affectorType = affectorType;};
+
+    /** Todo
+    */
+    const std::string& getName(void) const {return _name;};
+    void setName(const std::string& name) {_name = name;};
+
+    /** Enables or disables the affector.
+    */
+    void setEnabled (bool enabled);
+
+    bool isEnabled(void) const;
 
 protected:
 
@@ -94,6 +115,14 @@ protected:
         Affectors.
     */
     AffectSpecialisation _affectSpecialisation;
+
+        // Type of the affector
+    std::string _affectorType;
+
+    // Name of the affector (optional)
+    std::string _name;
+
+    bool _isEnabled;
 };
 
 NS_CC_END

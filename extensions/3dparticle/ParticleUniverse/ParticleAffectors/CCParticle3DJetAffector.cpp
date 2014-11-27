@@ -56,11 +56,11 @@ void Particle3DJetAffector::setDynAcceleration(DynamicAttribute* dynAcceleration
     _dynAcceleration = dynAcceleration;
 }
 
-void Particle3DJetAffector::updateAffector( float deltaTime )
+void Particle3DJetAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+   // for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+       // Particle3D *particle = iter;
         //_scaled = deltaTime * (_dynAcceleration->getValue(particle->timeFraction));
         if (particle->direction == Vec3::ZERO)
         {

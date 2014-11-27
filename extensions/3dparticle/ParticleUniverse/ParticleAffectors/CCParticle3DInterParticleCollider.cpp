@@ -125,7 +125,7 @@ bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particl
 }
 //-----------------------------------------------------------------------
 
-void Particle3DInterParticleCollider::updateAffector( float deltaTime )
+void Particle3DInterParticleCollider::updateAffector( Particle3D *particle, float deltaTime )
 {
     CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())

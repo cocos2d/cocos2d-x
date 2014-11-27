@@ -38,7 +38,7 @@ public:
     Particle3DPathFollower(void);
     virtual ~Particle3DPathFollower(void);
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
     /** 
     */
     void addPoint(const Vec3& point);

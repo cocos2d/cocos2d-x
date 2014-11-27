@@ -194,4 +194,20 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     }
 }
 
+
+void Particle3DRender::notifyStart( void )
+{
+	setVisible(true);
+}
+
+void Particle3DRender::notifyStop( void )
+{
+	setVisible(false);
+}
+
+void Particle3DRender::notifyRescaled( const Vec3& scale )
+{
+	_rendererScale = scale;
+}
+
 NS_CC_END

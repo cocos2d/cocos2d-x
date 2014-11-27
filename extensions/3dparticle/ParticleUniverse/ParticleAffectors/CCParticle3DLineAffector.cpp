@@ -115,12 +115,12 @@ void Particle3DLineAffector::preUpdateAffector(float deltaTime)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DLineAffector::updateAffector( float deltaTime )
+void Particle3DLineAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    _first = true;
-    for (auto iter : _particleSystem->getParticles())
+	//_first = true;
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         //mParentTechnique->getParentSystem()->rotationOffset(particle->originalPosition); // Always update
         if (_update && CCRANDOM_0_1() > 0.5 && !_first)
         {
@@ -149,6 +149,11 @@ void Particle3DLineAffector::updateAffector( float deltaTime )
 void Particle3DLineAffector::postUpdateAffector(float deltaTime)
 {
     _update = false;
+}
+
+void Particle3DLineAffector::firstParticleUpdate( Particle3D *particle, float deltaTime )
+{
+    _first = true;
 }
 
 NS_CC_END

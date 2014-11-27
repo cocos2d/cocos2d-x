@@ -52,7 +52,7 @@ public:
 
     virtual void notifyStart() override;
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
     virtual void prepare() override;
 
     /** Get/Set Forcefield type

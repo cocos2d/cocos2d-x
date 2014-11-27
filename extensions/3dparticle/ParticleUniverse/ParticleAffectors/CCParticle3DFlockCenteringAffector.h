@@ -37,7 +37,7 @@ public:
     virtual ~Particle3DFlockCenteringAffector();
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 
 protected:
 

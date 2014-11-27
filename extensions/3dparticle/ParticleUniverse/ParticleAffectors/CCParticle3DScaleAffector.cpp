@@ -187,15 +187,15 @@ float Particle3DScaleAffector::calculateScale(DynamicAttribute* dynScale, Partic
     }
 }
 
-void Particle3DScaleAffector::updateAffector( float deltaTime )
+void Particle3DScaleAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
 
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
     //	return;
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         float ds = 0;
         float width = 0;
         float height = 0;

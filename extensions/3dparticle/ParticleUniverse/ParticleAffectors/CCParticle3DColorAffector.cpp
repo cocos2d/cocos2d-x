@@ -84,15 +84,15 @@ Particle3DColorAffector::ColorMapIterator Particle3DColorAffector::findNearestCo
     return --it;
 }
 
-void Particle3DColorAffector::updateAffector( float deltaTime )
+void Particle3DColorAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
     // Fast rejection
     if (_colorMap.empty())
         return;
 
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Linear interpolation of the colour
         Vec4 color = Vec4::ONE;
         float timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;

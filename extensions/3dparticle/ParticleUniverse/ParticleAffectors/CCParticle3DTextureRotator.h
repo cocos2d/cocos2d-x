@@ -43,7 +43,7 @@ public:
     Particle3DTextureRotator(void);
     virtual ~Particle3DTextureRotator(void);
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 
     /** Returns an indication whether the 2D rotation speed is the same for all particles in this 
         particle technique, or whether the 2D rotation speed of the particle itself is used.

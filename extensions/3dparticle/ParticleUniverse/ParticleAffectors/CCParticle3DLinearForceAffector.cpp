@@ -36,11 +36,11 @@ void Particle3DLinearForceAffector::preUpdateAffector(float deltaTime)
 //-----------------------------------------------------------------------
 
 
-void Particle3DLinearForceAffector::updateAffector( float deltaTime )
+void Particle3DLinearForceAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Affect the direction and take the specialisation into account
         if (_forceApplication == FA_ADD)
         {

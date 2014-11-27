@@ -92,11 +92,11 @@ void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* parti
     }
 }
 
-void Particle3DPlaneCollider::updateAffector( float deltaTime )
+void Particle3DPlaneCollider::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
 

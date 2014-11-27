@@ -44,7 +44,7 @@ public:
     Particle3DScaleAffector(void);
     virtual ~Particle3DScaleAffector(void);
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 
     /** 
     */

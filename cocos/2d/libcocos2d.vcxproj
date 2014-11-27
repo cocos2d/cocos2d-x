@@ -186,6 +186,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
   <ItemGroup>
     <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DAffector.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DEmitter.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DRender.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\CCParticleSystem3D.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DDynamicAttribute.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DForceField.cpp" />
@@ -579,6 +580,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
   <ItemGroup>
     <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DAffector.h" />
     <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DEmitter.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DRender.h" />
     <ClInclude Include="..\..\extensions\3dparticle\CCParticleSystem3D.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DDynamicAttribute.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DForceField.h" />
