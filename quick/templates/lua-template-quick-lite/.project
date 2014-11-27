@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>__PROJECT_COCOS_NAME__</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>org.ccdt.cocosproject</nature>
+		<nature>org.ccdt.cocosquickproject</nature>
+		<nature>org.eclipse.koneki.ldt.nature</nature>
+	</natures>
+</projectDescription>
