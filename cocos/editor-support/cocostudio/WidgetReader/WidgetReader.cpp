@@ -805,6 +805,8 @@ namespace cocostudio
         bool flippedY = options->flipY();
         widget->setFlippedY(flippedY);
         
+        widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
+        
     }
     
     Node* WidgetReader::createNodeWithFlatBuffers(const flatbuffers::Table *widgetOptions)
