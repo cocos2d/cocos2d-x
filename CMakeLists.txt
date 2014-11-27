@@ -281,7 +281,7 @@ message(STATUS "Protobuf include dirs: ${PROTOBUF_LITE_INCLUDE_DIRS}")
 # and source file not provided. So these files can be
 # compiled only with our in-source version of flatbuffers
 ## if(USE_PREBUILT_LIBS)
-  add_subdirectory(external)
+  add_subdirectory(external/flatbuffers)
   set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
   set(FLATBUFFERS_LIBRARIES flatbuffers)
 ## else()
