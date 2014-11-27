@@ -257,6 +257,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\SpriteReader">
       <UniqueIdentifier>{fa1426ae-957e-4d62-82c2-9f55e7fbc524}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\GameMapReader">
+      <UniqueIdentifier>{02d389d5-8f57-4bd6-b12a-95af86c5b356}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCAction.cpp">
@@ -1314,9 +1317,6 @@
     <ClCompile Include="CCClippingRectangleNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\flatc.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_cpp.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
@@ -1367,6 +1367,9 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
       <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2681,6 +2684,9 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
