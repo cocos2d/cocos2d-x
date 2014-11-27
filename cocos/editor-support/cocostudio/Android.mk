@@ -68,7 +68,8 @@ ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
 ActionTimeline/CSLoader.cpp \
 CSParseBinary.pb.cc \
-FlatBuffersSerialize.cpp
+FlatBuffersSerialize.cpp \
+WidgetCallBackHandlerProtocol.cpp
  
 
 
