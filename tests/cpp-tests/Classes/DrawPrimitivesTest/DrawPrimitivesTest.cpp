@@ -270,7 +270,7 @@ DrawNodeTest::DrawNodeTest()
     
     // draw 4 small points
     Vec2 position[] = { Vec2(60,60), Vec2(70,70), Vec2(60,70), Vec2(70,60) };
-    draw->drawPoints( position, 4,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    draw->drawPoints( position, 4, 15, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
  
     // draw a line
     draw->drawLine(Vec2(0,0), Vec2(s.width, s.height), Color4F(1.0, 0.0, 0.0, 0.5));
