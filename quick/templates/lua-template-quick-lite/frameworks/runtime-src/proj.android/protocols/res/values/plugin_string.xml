@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plugin_login_title">账号登陆</string>
+    <string name="plugin_login_account">账号</string>
+    <string name="plugin_login_password">密码</string>
+    <string name="plugin_login">登陆</string>
+    <string name="plugin_cancel">取消</string>
+    <string name="plugin_pay_content">是否确认支付？</string>
+    <string name="plugin_pay">支付</string>
+    <string name="plugin_rank">排行榜</string>
+    <string name="plugin_achievement">成就榜</string>
+    <string name="plugin_center">平台中心</string>
+    <string name="plugin_showTool">工具栏</string>
+    <string name="plugin_hideTool">隐藏工具栏</string>
+    <string name="plugin_realNameRegister">实名注册</string>
+    <string name="plugin_antiAddictionQuery">防沉迷查询</string>
+    <string name="plugin_exit">退出</string>
+    <string name="plugin_pause">暂停游戏</string>
+    <string name="plugin_sure">确认</string>
+    <string name="plugin_accountSwitch">切换账号</string>
+    <string name="plugin_logout">登出</string>
+    <string name="plugin_submitLoginGameRole">提交角色信息</string>
+    <string name="plugin_tips">测试模式,不能用于渠道发布</string>
+    
+    
+</resources>
