@@ -30,12 +30,11 @@ LOCAL_SRC_FILES += \
 ../../Classes/anysdk_manual_bindings.cpp
 
 LOCAL_C_INCLUDES := \
-$(LOCAL_PATH)/../../Classes/protobuf-lite \
 $(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
-$(LOCAL_PATH)/../../../cocos2d-x/external \
-$(LOCAL_PATH)/../../Classes/quick-src \
-$(LOCAL_PATH)/../../Classes/quick-src/extra
+$(COCOS2DX_ROOT)/external \
+$(COCOS2DX_ROOT)/quick/lib/quick-src \
+$(COCOS2DX_ROOT)/quick/lib/quick-src/extra
 
 #anysdk
 LOCAL_C_INCLUDES +=	\

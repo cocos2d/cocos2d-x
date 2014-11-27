@@ -11,7 +11,7 @@ source $PROFILE_NAME
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_ROOT="$DIR/../../.."
 APP_ANDROID_ROOT="$DIR"
-export COCOS2DX_ROOT=$DIR/../../cocos2d-x
+export COCOS2DX_ROOT=`cat ~/.QUICK_V3_ROOT`
 
 echo "- config:"
 echo "  ANDROID_NDK_ROOT    = $ANDROID_NDK_ROOT"
@@ -49,4 +49,4 @@ echo ""
 # build
 echo "Using prebuilt externals"
 "$ANDROID_NDK_ROOT"/ndk-build $ANDROID_NDK_BUILD_FLAGS NDK_DEBUG=$NDK_DEBUG $NDK_BUILD_FLAGS -C "$APP_ANDROID_ROOT" $* \
-"NDK_MODULE_PATH=${APP_ANDROID_ROOT}:${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos:${COCOS2DX_ROOT}/external:${COCOS2DX_ROOT}/cocos/scripting:${APP_ANDROID_ROOT}/../Classes"
+"NDK_MODULE_PATH=${APP_ANDROID_ROOT}:${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos:${COCOS2DX_ROOT}/quick/lib:${COCOS2DX_ROOT}/external:${COCOS2DX_ROOT}/cocos/scripting:${APP_ANDROID_ROOT}/../Classes"

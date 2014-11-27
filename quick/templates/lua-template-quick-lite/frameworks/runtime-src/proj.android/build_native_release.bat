@@ -3,7 +3,7 @@
 set DIR=%~dp0
 set APP_ROOT=%DIR%..\..\..\
 set APP_ANDROID_ROOT=%DIR%
-set COCOS2DX_ROOT=%DIR%\..\..\cocos2d-x
+set COCOS2DX_ROOT=%QUICK_V3_ROOT%
 
 echo - config:
 echo   ANDROID_NDK_ROOT    = %ANDROID_NDK_ROOT%
@@ -32,4 +32,4 @@ rem echo TO: "%APP_ANDROID_ROOT%assets\res\"
 rem copy %QUICK_V3_ROOT%quick\lib\framework_precompiled\framework_precompiled.zip "%APP_ANDROID_ROOT%assets\res\"
 
 echo Using prebuilt externals
-"%ANDROID_NDK_ROOT%\ndk-build" %ANDROID_NDK_BUILD_FLAGS% NDK_DEBUG=%NDK_DEBUG% %NDK_BUILD_FLAGS% -C %APP_ANDROID_ROOT% NDK_MODULE_PATH=%APP_ANDROID_ROOT%;%COCOS2DX_ROOT%;%COCOS2DX_ROOT%/cocos;%COCOS2DX_ROOT%/external;%COCOS2DX_ROOT%/cocos/scripting;%APP_ANDROID_ROOT%/../Classes
+"%ANDROID_NDK_ROOT%\ndk-build" %ANDROID_NDK_BUILD_FLAGS% NDK_DEBUG=%NDK_DEBUG% %NDK_BUILD_FLAGS% -C %APP_ANDROID_ROOT% NDK_MODULE_PATH=%APP_ANDROID_ROOT%;%COCOS2DX_ROOT%;%COCOS2DX_ROOT%/cocos;%COCOS2DX_ROOT%/quick/lib;%COCOS2DX_ROOT%/external;%COCOS2DX_ROOT%/cocos/scripting;%APP_ANDROID_ROOT%/../Classes
