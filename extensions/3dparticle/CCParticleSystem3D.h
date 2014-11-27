@@ -26,6 +26,7 @@
 #define __CC_PARTICLE_SYSTEM_3D_H__
 
 #include "2d/CCNode.h"
+#include "base/CCProtocols.h"
 #include "math/CCMath.h"
 #include <vector>
 #include <map>
@@ -179,7 +180,7 @@ struct Particle3D
     std::map<std::string, void*> userDefs;
 };
 
-class ParticleSystem3D : public Node
+class ParticleSystem3D : public Node, public BlendProtocol
 {
 public:
     ParticleSystem3D();
@@ -188,6 +189,10 @@ public:
     virtual void update(float delta) override;
     
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    
+    virtual const BlendFunc &getBlendFunc() const override;
     
     /**
      * particle system play control
@@ -275,6 +280,8 @@ protected:
     //particles
     std::vector<Particle3D*>          _particles;
     int                              _aliveParticlesCnt;
+    
+    BlendFunc                        _blend;
 };
 
 NS_CC_END

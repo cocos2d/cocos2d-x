@@ -33,15 +33,13 @@
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
 #include "3d/CCSprite3D.h"
-#include "3d/CCMesh.h"
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
 Particle3DQuadRender::Particle3DQuadRender()
 : _meshCommand(nullptr)
-, _mesh(nullptr)
-, _useTexture(false)
+, _texture(nullptr)
 , _glProgramState(nullptr)
 , _indexBuffer(nullptr)
 , _vertexBuffer(nullptr)
@@ -51,7 +49,7 @@ Particle3DQuadRender::Particle3DQuadRender()
 Particle3DQuadRender::~Particle3DQuadRender()
 {
     CC_SAFE_DELETE(_meshCommand);
-    CC_SAFE_RELEASE(_mesh);
+    CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
@@ -68,7 +66,7 @@ Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
         auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
         if (tex)
         {
-            ret->_useTexture = true;
+            ret->_texture = tex;
             glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
         }
     }
@@ -86,6 +84,9 @@ Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
     ret->_vertexBuffer->retain();
     ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6);
     ret->_indexBuffer->retain();
+    
+    ret->_meshCommand = new MeshCommand();
+    ret->_meshCommand->setTransparent(true);
     
     return ret;
 }
@@ -142,8 +143,17 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         vertexindex += 4;
     }
     
+    _posuvcolors.erase(_posuvcolors.begin() + vertexindex, _posuvcolors.end());
+    _indexData.erase(_indexData.begin() + index, _indexData.end());
+    
     _vertexBuffer->updateVertices(&_posuvcolors[0], vertexindex * sizeof(_posuvcolors[0]), 0);
     _indexBuffer->updateIndices(&_indexData[0], index * sizeof(unsigned short), 0);
+    
+    GLuint texId = (_texture ? _texture->getName() : 0);
+    const Mat4 &viewMat = cameraMat.getInversed();
+    float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
+    _meshCommand->init(depthZ, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform);
+    renderer->addCommand(_meshCommand);
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -35,11 +35,11 @@ NS_CC_BEGIN
 class ParticleSystem3D;
 class Renderer;
 class MeshCommand;
-class Mesh;
 class Sprite3D;
 class GLProgramState;
 class IndexBuffer;
 class VertexBuffer;
+class Texture2D;
 
 /**
  * 3d particle render
@@ -77,11 +77,10 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     MeshCommand* _meshCommand;
-    Mesh*        _mesh;
-    bool         _useTexture;
-    GLProgramState* _glProgramState;
-    IndexBuffer*          _indexBuffer; //index buffer
-    VertexBuffer*        _vertexBuffer; // vertex buffer
+    Texture2D*             _texture;
+    GLProgramState*        _glProgramState;
+    IndexBuffer*           _indexBuffer; //index buffer
+    VertexBuffer*          _vertexBuffer; // vertex buffer
     
     struct posuvcolor
     {

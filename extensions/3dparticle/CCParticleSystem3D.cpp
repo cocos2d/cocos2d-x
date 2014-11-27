@@ -57,6 +57,7 @@ ParticleSystem3D::ParticleSystem3D()
 , _aliveParticlesCnt(0)
 , _state(State::STOP)
 , _particleSystemScaleVelocity(0.0f)
+, _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
     
 }
@@ -166,6 +167,16 @@ void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t 
     {
         _render->render(renderer, transform, this);
     }
+}
+
+void ParticleSystem3D::setBlendFunc(const BlendFunc &blendFunc)
+{
+    _blend = blendFunc;
+}
+
+const BlendFunc &ParticleSystem3D::getBlendFunc() const
+{
+    return _blend;
 }
 
 const std::vector<Particle3D*>& ParticleSystem3D::getParticles()
