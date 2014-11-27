@@ -28,7 +28,12 @@
 #include "PerformanceSpriteTest.h"
 
 #include <cmath>
-#include <math.h>
+
+#if defined(_MSC_VER) && _MSC_VER<1800
+#define CC_ROUND(__f__) __f__
+#else
+#define CC_ROUND(__f__) roundf(__f__)
+#endif
 
 enum {
     kMaxNodes = 50000,
@@ -576,7 +581,7 @@ void  SpriteMainScene::dumpProfilerFPS()
             {
                 float fps = _s_saved_fps[j + i*MAX_SUB_TEST_NUMS + MAX_SUB_TEST_NUMS * MAX_SPRITE_TEST_CASE * index];
                 char fps_str[64];
-                sprintf(fps_str, "\t%d", (int)roundf(fps));
+                sprintf(fps_str, "\t%d", (int)CC_ROUND(fps));
                 strcat(buffer, fps_str);
             }
             log("%c%s", i + 'A', buffer);
