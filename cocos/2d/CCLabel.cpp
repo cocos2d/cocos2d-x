@@ -270,7 +270,14 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             _batchNodes.clear();
             _batchNodes.push_back(this);
 
-            alignText();
+            if (_contentDirty)
+            {
+                updateContent();
+            }
+            else
+            {
+                alignText();
+            }
         }
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
