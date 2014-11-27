@@ -16,6 +16,7 @@ $options = array(
     array('tsa',         'timestamp',      1,      null,       'the timestamp'),
     array('pdir',        'project_dir',    1,      '',         'project\'s dir'),
     array('bldm',        'build_mode',     1,      'debug',    'build mode (debug or release)'),
+    array('o',           'output',         1,      null,       'output filename with path'),
 );
 
 function help()

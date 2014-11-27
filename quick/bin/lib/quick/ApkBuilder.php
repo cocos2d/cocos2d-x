@@ -394,6 +394,12 @@ class ApkBuilder
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
+        if ($this->config['output'])
+        {
+            $cmd_str = 'cp ' . $projPath . '/' . $this->apkFilename . ' ' . $this->config['output'];
+            $this->exec_sys_cmd($cmd_str);
+        }
+
         return $retval;
     }
 
