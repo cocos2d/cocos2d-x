@@ -67,7 +67,7 @@ THE SOFTWARE.
  */
 #ifndef CC_DIRECTOR_STATS_POSITION
 #define CC_DIRECTOR_STATS_POSITION Director::getInstance()->getVisibleOrigin()
-#endif
+#endif // CC_DIRECTOR_STATS_POSITION
 
 using namespace std;
 
@@ -1076,7 +1076,7 @@ void Director::showStats()
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
     static float prevDeltaTime  = 0.016; // 60FPS
-    static const float FPS_FILTER = 0.05;
+    static const float FPS_FILTER = 0.10;
 
     _accumDt += _deltaTime;
     
@@ -1086,13 +1086,14 @@ void Director::showStats()
 
         float dt = _deltaTime * FPS_FILTER + (1-FPS_FILTER) * prevDeltaTime;
         prevDeltaTime = dt;
+        _frameRate = 1/dt;
 
         // Probably we don't need this anymore since
         // the framerate is using a low-pass filter
         // to make the FPS stable
         if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            sprintf(buffer, "%.1f / %.3f", 1/dt, _secondsPerFrame);
+            sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
             _FPSLabel->setString(buffer);
             _accumDt = 0;
         }
@@ -1111,7 +1112,6 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-
         Mat4 identity = Mat4::IDENTITY;
         _drawnVerticesLabel->visit(_renderer, identity, 0);
         _drawnBatchesLabel->visit(_renderer, identity, 0);
@@ -1122,7 +1122,7 @@ void Director::showStats()
 void Director::calculateMPF()
 {
     static float prevSecondsPerFrame = 0;
-    static const float MPF_FILTER = 0.05;
+    static const float MPF_FILTER = 0.10;
 
     struct timeval now;
     gettimeofday(&now, nullptr);
