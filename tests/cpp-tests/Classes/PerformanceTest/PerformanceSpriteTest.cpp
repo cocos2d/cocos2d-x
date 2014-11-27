@@ -27,6 +27,8 @@
 
 #include "PerformanceSpriteTest.h"
 
+#include <cmath>
+
 enum {
     kMaxNodes = 50000,
     kNodesIncrease = 250,
@@ -53,7 +55,7 @@ SubTest::~SubTest()
 
 void SubTest::initWithSubTest(int subtest, Node* p)
 {
-    srand(0);
+    std::srand(0);
 
     _subtestNumber = subtest;
     _parentNode = nullptr;
@@ -367,7 +369,10 @@ void SpriteMenuLayer::showCurrentTest()
 ////////////////////////////////////////////////////////
 
 // FIXME: This should be part of the class, but VC2013 doesn't support constexpr as static members yet
-static const float SECONDS_PER_TESTS = 4.0f;
+static const float SECONDS_PER_TESTS = 0.2f;
+static const int MAX_SPRITE_TEST_CASE = 7;
+static const int MAX_SUB_TEST_NUMS = 3;
+
 // 500 sprites, 1500 sprites, etc...
 bool SpriteMainScene::_s_autoTest = false;
 int SpriteMainScene::_s_nSpriteCurCase = 0;
@@ -377,7 +382,7 @@ std::vector<float> SpriteMainScene::_s_saved_fps = {};
 
 void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 {
-    //srandom(0);
+     std::srand(0);
 
     _subtestNumber = asubtest;
     _subTest = new (std::nothrow) SubTest;
@@ -559,7 +564,7 @@ void  SpriteMainScene::dumpProfilerFPS()
     log("");
     int index = 0;
     int sprites = 0;
-    while((sprites = _s_spritesQuanityArray[index++])) {
+    while((sprites = _s_spritesQuanityArray[index])) {
         log("Number of sprites: %d", sprites);
         for(int i=0; i < MAX_SPRITE_TEST_CASE; i++)
         {
@@ -567,13 +572,15 @@ void  SpriteMainScene::dumpProfilerFPS()
             buffer[0]=0;
             for(int j=0; j < MAX_SUB_TEST_NUMS; j++)
             {
-                float fps = _s_saved_fps[j + i*MAX_SUB_TEST_NUMS];
+                float fps = _s_saved_fps[j + i*MAX_SUB_TEST_NUMS + MAX_SUB_TEST_NUMS * MAX_SPRITE_TEST_CASE * index];
                 char fps_str[64];
-                sprintf(fps_str, "\t%.1f", fps);
+                sprintf(fps_str, "\t%d", (int)roundf(fps));
                 strcat(buffer, fps_str);
             }
             log("%c%s", i + 'A', buffer);
         }
+
+        index++;
     };
 }
 
@@ -681,17 +688,17 @@ void  SpriteMainScene::endAutoTest()
 
 void  SpriteMainScene::nextAutoTest()
 {
-    if (SpriteMainScene::_s_nSpriteCurCase < SpriteMainScene::MAX_SPRITE_TEST_CASE)
+    if (SpriteMainScene::_s_nSpriteCurCase < MAX_SPRITE_TEST_CASE)
     {
-        if (_subtestNumber < SpriteMainScene::MAX_SUB_TEST_NUMS)
+        if (_subtestNumber < MAX_SUB_TEST_NUMS)
         {
             // Increase Sub Main Test (1, 2, 3, 4, ...)
             _subtestNumber += 1;
             autoShowSpriteTests(_s_nSpriteCurCase, _subtestNumber, _quantityNodes);
         }
-        else if (_subtestNumber == SpriteMainScene::MAX_SUB_TEST_NUMS)
+        else if (_subtestNumber == MAX_SUB_TEST_NUMS)
         {
-            if (SpriteMainScene::_s_nSpriteCurCase + 1 < SpriteMainScene::MAX_SPRITE_TEST_CASE)
+            if (SpriteMainScene::_s_nSpriteCurCase + 1 < MAX_SPRITE_TEST_CASE)
             {
                 // Increase Main Test (A, B, C, ...)
                 _subtestNumber = 1;

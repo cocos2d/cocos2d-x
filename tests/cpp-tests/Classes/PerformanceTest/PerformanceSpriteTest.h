@@ -104,9 +104,6 @@ protected:
     int _quantityNodes;
     SubTest* _subTest;
     int _subtestNumber;
-
-    static const int MAX_SPRITE_TEST_CASE = 7;
-    static const int MAX_SUB_TEST_NUMS = 13;
 };
 
 class SpritePerformTestA : public SpriteMainScene
