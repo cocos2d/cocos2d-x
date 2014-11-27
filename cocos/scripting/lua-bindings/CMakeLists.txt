@@ -120,6 +120,7 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_physics_auto.cpp
     auto/lua_cocos2dx_spine_auto.cpp
     auto/lua_cocos2dx_studio_auto.cpp
+    auto/lua_cocos2dx_csloader_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
     auto/lua_cocos2dx_audioengine_auto.cpp
     )
