@@ -294,29 +294,29 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
     
     // children
     bool containChildrenElement = false;
-    objectData = objectData->FirstChildElement();
+    const tinyxml2::XMLElement* child = objectData->FirstChildElement();
     
-    while (objectData)
+    while (child)
     {
-        CCLOG("objectData name = %s", objectData->Name());
+        CCLOG("child name = %s", child->Name());
         
-        if (strcmp("Children", objectData->Name()) == 0)
+        if (strcmp("Children", child->Name()) == 0)
         {
             containChildrenElement = true;
             break;
         }
         
-        objectData = objectData->NextSiblingElement();
+        child = child->NextSiblingElement();
     }
     
     if (containChildrenElement)
     {
-        objectData = objectData->FirstChildElement();
-        CCLOG("element name = %s", objectData->Name());
+        child = child->FirstChildElement();
+        CCLOG("element name = %s", child->Name());
         
-        while (objectData)
+        while (child)
         {
-            const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+            const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
             bool bHasType = false;
             while (attribute)
             {
@@ -325,7 +325,7 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
                 
                 if (attriname == "ctype")
                 {
-                    children.push_back(createNodeTree(objectData, value));
+                    children.push_back(createNodeTree(child, value));
                     
                     bHasType = true;
                     break;
@@ -336,19 +336,35 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
             
             if(!bHasType)
             {
-                children.push_back(createNodeTree(objectData, "NodeObjectData"));
+                children.push_back(createNodeTree(child, "NodeObjectData"));
             }
             
-            objectData = objectData->NextSiblingElement();
+            child = child->NextSiblingElement();
         }
     }
     //
     
+    std::string customClassName = "";
+    const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+    while (attribute)
+    {
+        std::string attriname = attribute->Name();
+        std::string value = attribute->Value();
+        
+        if (attriname == "CustomClassName")
+        {
+            customClassName = value;
+            break;
+        }
+        
+        attribute = attribute->Next();
+    }
     
     return CreateNodeTree(*_builder,
                           _builder->CreateString(classname),
                           _builder->CreateVector(children),
-                          options);
+                          options,
+                          _builder->CreateString(customClassName));
 }
 
 int FlatBuffersSerialize::getResourceType(std::string key)

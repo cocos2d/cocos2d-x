@@ -152,8 +152,10 @@ namespace cocostudio
     void ComAudioReader::setPropsWithFlatBuffers(cocos2d::Node *node,
                                                  const flatbuffers::Table *comAudioOptions)
     {
+        auto options = (ComAudioOptions*)comAudioOptions;
+        
         auto nodeReader = NodeReader::getInstance();
-        nodeReader->setPropsWithFlatBuffers(node, comAudioOptions);
+        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
     }
     
     Component* ComAudioReader::createComAudioWithFlatBuffers(const flatbuffers::Table *comAudioOptions)

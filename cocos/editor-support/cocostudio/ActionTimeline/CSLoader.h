@@ -28,6 +28,7 @@
 #include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocos2d.h"
+#include "base/ObjectFactory.h"
 
 namespace flatbuffers
 {
@@ -109,7 +110,15 @@ public:
     bool isRecordProtocolBuffersPath() const { return _recordProtocolBuffersPath; }
     
     void setProtocolBuffersPath(std::string protocolBuffersPath) { _protocolBuffersPath = protocolBuffersPath; }
-    std::string getProtocolBuffersPath() const { return _protocolBuffersPath; }    
+    std::string getProtocolBuffersPath() const { return _protocolBuffersPath; }
+    
+    bool bindCallback(const std::string& callbackName,
+                      const std::string& callbackType,
+                      cocos2d::ui::Widget* sender,
+                      cocos2d::Node* handler);
+    
+    void registReaderObject(const std::string& className,
+                            ObjectFactory::Instance ins);
     
 protected:
     
@@ -178,6 +187,9 @@ protected:
     std::string _protocolBuffersPath;
     
     std::string _monoCocos2dxVersion;
+    
+    Node* _rootNode;
+//    std::vector<Node*> _loadingNodeParentHierarchy;
 };
 
 NS_CC_END

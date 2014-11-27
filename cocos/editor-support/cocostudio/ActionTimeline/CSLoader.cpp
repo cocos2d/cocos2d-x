@@ -62,6 +62,8 @@
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
+#include "cocostudio/WidgetCallBackHandlerProtocol.h"
+
 #include <fstream>
 
 using namespace cocos2d::ui;
@@ -177,6 +179,7 @@ CSLoader::CSLoader()
 , _recordProtocolBuffersPath(false)
 , _protocolBuffersPath("")
 , _monoCocos2dxVersion("")
+, _rootNode(nullptr)
 {
     CREATE_CLASS_NODE_READER_INFO(NodeReader);
     CREATE_CLASS_NODE_READER_INFO(SingleNodeReader);
@@ -1283,6 +1286,8 @@ Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename)
 {
     Node* node = nodeWithFlatBuffersFile(filename);
     
+    _rootNode = nullptr;
+    
     return node;
 }
 
@@ -1357,6 +1362,21 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         node = reader->createNodeWithFlatBuffers(options->data());
+        
+        Widget* widget = dynamic_cast<Widget*>(node);
+        if (widget)
+        {
+            std::string callbackName = widget->getCallbackName();
+            std::string callbackType = widget->getCallbackType();
+            
+            bindCallback(callbackName, callbackType, widget, _rootNode);
+        }
+        
+        if (_rootNode == nullptr)
+        {
+            _rootNode = node;
+        }
+//        _loadingNodeParentHierarchy.push_back(node);
     }
     
     auto children = nodetree->children();
@@ -1394,7 +1414,52 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         }
     }
     
+//    _loadingNodeParentHierarchy.pop_back();
+    
     return node;
+}
+
+bool CSLoader::bindCallback(const std::string &callbackName,
+                            const std::string &callbackType,
+                            cocos2d::ui::Widget *sender,
+                            cocos2d::Node *handler)
+{
+    auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(handler);
+    if (callbackHandler) //The handler can handle callback
+    {
+        if (callbackType == "Click")
+        {
+            Widget::ccWidgetClickCallback callbackFunc = callbackHandler->onLocateClickCallback(callbackName);
+            if (callbackFunc)
+            {
+                sender->addClickEventListener(callbackFunc);
+                return true;
+            }
+        }
+        else if (callbackType == "Touch")
+        {
+            Widget::ccWidgetTouchCallback callbackFunc = callbackHandler->onLocateTouchCallback(callbackName);
+            if (callbackFunc)
+            {
+                sender->addTouchEventListener(callbackFunc);
+                return true;
+            }
+        }
+        else if (callbackType == "Event")
+        {
+            Widget::ccWidgetEventCallback callbackFunc = callbackHandler->onLocateEventCallback(callbackName);
+            if (callbackFunc)
+            {
+                sender->addCCSEventListener(callbackFunc);
+                return true;
+            }
+        }
+    }
+    
+    CCLOG("callBackName %s cannot be found", callbackName.c_str());
+    
+    return false;
+    
 }
 
 bool CSLoader::isWidget(const std::string &type)
@@ -1528,6 +1593,16 @@ std::string CSLoader::getWidgetReaderClassName(Widget* widget)
     }
     
     return readerName;
+}
+
+void CSLoader::registReaderObject(const std::string &className,
+                                  ObjectFactory::Instance ins)
+{
+    ObjectFactory::TInfo t;
+    t._class = className;
+    t._fun = ins;
+    
+    ObjectFactory::getInstance()->registerType(t);
 }
 
 NS_CC_END

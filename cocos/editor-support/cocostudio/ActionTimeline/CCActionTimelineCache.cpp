@@ -807,7 +807,7 @@ Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::Ti
                 auto zOrderFrame = frameFlatbuf->zOrderFrame();
                 frame = loadZOrderFrameWithFlatBuffers(zOrderFrame);
             }
-            else if (frameType == FrameType_RotationFrame)
+            else if (frameType == FrameType_RotationSkewFrame)
             {
                 auto rotationSkewFrame = frameFlatbuf->rotationSkewFrame();
                 frame = loadRotationSkewFrameWithFlatBuffers(rotationSkewFrame);

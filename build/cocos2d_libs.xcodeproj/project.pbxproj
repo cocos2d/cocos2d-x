@@ -1329,6 +1329,10 @@
 		3828C0EA19EB8ACA002AB57B /* wire_format_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3828C09319EB8ACA002AB57B /* wire_format_lite.cc */; };
 		3828C0EB19EB8ACA002AB57B /* wire_format_lite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3828C09419EB8ACA002AB57B /* wire_format_lite.h */; };
 		3828C0EC19EB8ACA002AB57B /* wire_format_lite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3828C09419EB8ACA002AB57B /* wire_format_lite.h */; };
+		38ACD1FC1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */; };
+		38ACD1FD1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */; };
+		38ACD1FE1A27111900C3093D /* WidgetCallBackHandlerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */; };
+		38ACD1FF1A27111900C3093D /* WidgetCallBackHandlerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */; };
 		38B8E2CF19E65F4C002D7CE7 /* CSParseBinary.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 38B8E2CD19E65F4C002D7CE7 /* CSParseBinary.pb.cc */; };
 		38B8E2D019E65F4C002D7CE7 /* CSParseBinary.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 38B8E2CD19E65F4C002D7CE7 /* CSParseBinary.pb.cc */; };
 		38B8E2D119E65F4C002D7CE7 /* CSParseBinary.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 38B8E2CE19E65F4C002D7CE7 /* CSParseBinary.pb.h */; };
@@ -2541,6 +2545,8 @@
 		3828C09219EB8ACA002AB57B /* wire_format_lite_inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wire_format_lite_inl.h; path = src/google/protobuf/wire_format_lite_inl.h; sourceTree = "<group>"; };
 		3828C09319EB8ACA002AB57B /* wire_format_lite.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wire_format_lite.cc; path = src/google/protobuf/wire_format_lite.cc; sourceTree = "<group>"; };
 		3828C09419EB8ACA002AB57B /* wire_format_lite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wire_format_lite.h; path = src/google/protobuf/wire_format_lite.h; sourceTree = "<group>"; };
+		38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetCallBackHandlerProtocol.cpp; sourceTree = "<group>"; };
+		38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetCallBackHandlerProtocol.h; sourceTree = "<group>"; };
 		38B8E2CD19E65F4C002D7CE7 /* CSParseBinary.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSParseBinary.pb.cc; sourceTree = "<group>"; };
 		38B8E2CE19E65F4C002D7CE7 /* CSParseBinary.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSParseBinary.pb.h; sourceTree = "<group>"; };
 		38B8E2D319E66581002D7CE7 /* CSLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSLoader.cpp; sourceTree = "<group>"; };
@@ -3856,6 +3862,8 @@
 				382384061A25900F002C4610 /* FlatBuffersSerialize.h */,
 				38B8E2CD19E65F4C002D7CE7 /* CSParseBinary.pb.cc */,
 				38B8E2CE19E65F4C002D7CE7 /* CSParseBinary.pb.h */,
+				38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */,
+				38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */,
 				29E99D1C1957BA7000046604 /* CocoLoader.cpp */,
 				29E99D1D1957BA7000046604 /* CocoLoader.h */,
 				0634A4C4194B19E400E608AF /* ActionTimeline */,
@@ -5594,6 +5602,7 @@
 				1A01C68C18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
 				50ABBD561925AB0000A911A9 /* TransformUtils.h in Headers */,
 				299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */,
+				38ACD1FE1A27111900C3093D /* WidgetCallBackHandlerProtocol.h in Headers */,
 				50ABBD991925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
 				5034CA3D191D591100CE6051 /* ccShader_PositionColor.frag in Headers */,
 				15AE18FB19AAD35000C27E9E /* CCColliderDetector.h in Headers */,
@@ -6386,6 +6395,7 @@
 				B375107D1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				50ABC01C1926664800A911A9 /* CCSAXParser.h in Headers */,
 				503DD8F11926736A00CD74DD /* OpenGL_Internal-ios.h in Headers */,
+				38ACD1FF1A27111900C3093D /* WidgetCallBackHandlerProtocol.h in Headers */,
 				B37510801823ACA100B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
 				B29A7DF619EE1B7700872B35 /* Skeleton.h in Headers */,
 				50ABBDAA1925AB4100A911A9 /* CCRenderCommand.h in Headers */,
@@ -6814,6 +6824,7 @@
 				15AE191519AAD35000C27E9E /* CCSkin.cpp in Sources */,
 				15AE189019AAD33D00C27E9E /* CCLayerColorLoader.cpp in Sources */,
 				15AE18F819AAD35000C27E9E /* CCBone.cpp in Sources */,
+				38ACD1FC1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp in Sources */,
 				15AE1A7619AAD40300C27E9E /* b2EdgeAndPolygonContact.cpp in Sources */,
 				50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */,
@@ -7216,6 +7227,7 @@
 				15AE1BFD19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
 				B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				15AE18CE19AAD33D00C27E9E /* CCNodeLoader.cpp in Sources */,
+				38ACD1FD1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp in Sources */,
 				29394CF719B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				B29A7DF219EE1B7700872B35 /* AtlasAttachmentLoader.c in Sources */,
 				15AE1AC619AAD40300C27E9E /* b2GearJoint.cpp in Sources */,

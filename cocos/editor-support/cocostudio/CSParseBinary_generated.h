@@ -224,6 +224,7 @@ struct NodeTree : private flatbuffers::Table {
   const flatbuffers::String *classname() const { return GetPointer<const flatbuffers::String *>(4); }
   const flatbuffers::Vector<flatbuffers::Offset<NodeTree>> *children() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<NodeTree>> *>(6); }
   const Options *options() const { return GetPointer<const Options *>(8); }
+  const flatbuffers::String *customClassName() const { return GetPointer<const flatbuffers::String *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* classname */) &&
@@ -233,6 +234,8 @@ struct NodeTree : private flatbuffers::Table {
            verifier.VerifyVectorOfTables(children()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* options */) &&
            verifier.VerifyTable(options()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* customClassName */) &&
+           verifier.Verify(customClassName()) &&
            verifier.EndTable();
   }
 };
@@ -243,10 +246,11 @@ struct NodeTreeBuilder {
   void add_classname(flatbuffers::Offset<flatbuffers::String> classname) { fbb_.AddOffset(4, classname); }
   void add_children(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<NodeTree>>> children) { fbb_.AddOffset(6, children); }
   void add_options(flatbuffers::Offset<Options> options) { fbb_.AddOffset(8, options); }
+  void add_customClassName(flatbuffers::Offset<flatbuffers::String> customClassName) { fbb_.AddOffset(10, customClassName); }
   NodeTreeBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   NodeTreeBuilder &operator=(const NodeTreeBuilder &);
   flatbuffers::Offset<NodeTree> Finish() {
-    auto o = flatbuffers::Offset<NodeTree>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<NodeTree>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -254,8 +258,10 @@ struct NodeTreeBuilder {
 inline flatbuffers::Offset<NodeTree> CreateNodeTree(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<flatbuffers::String> classname = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<NodeTree>>> children = 0,
-   flatbuffers::Offset<Options> options = 0) {
+   flatbuffers::Offset<Options> options = 0,
+   flatbuffers::Offset<flatbuffers::String> customClassName = 0) {
   NodeTreeBuilder builder_(_fbb);
+  builder_.add_customClassName(customClassName);
   builder_.add_options(options);
   builder_.add_children(children);
   builder_.add_classname(classname);
@@ -310,6 +316,8 @@ struct WidgetOptions : private flatbuffers::Table {
   uint8_t touchEnabled() const { return GetField<uint8_t>(34, 0); }
   const flatbuffers::String *frameEvent() const { return GetPointer<const flatbuffers::String *>(36); }
   const flatbuffers::String *customProperty() const { return GetPointer<const flatbuffers::String *>(38); }
+  const flatbuffers::String *callBackType() const { return GetPointer<const flatbuffers::String *>(40); }
+  const flatbuffers::String *callBackName() const { return GetPointer<const flatbuffers::String *>(42); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
@@ -333,6 +341,10 @@ struct WidgetOptions : private flatbuffers::Table {
            verifier.Verify(frameEvent()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 38 /* customProperty */) &&
            verifier.Verify(customProperty()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 40 /* callBackType */) &&
+           verifier.Verify(callBackType()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 42 /* callBackName */) &&
+           verifier.Verify(callBackName()) &&
            verifier.EndTable();
   }
 };
@@ -358,10 +370,12 @@ struct WidgetOptionsBuilder {
   void add_touchEnabled(uint8_t touchEnabled) { fbb_.AddElement<uint8_t>(34, touchEnabled, 0); }
   void add_frameEvent(flatbuffers::Offset<flatbuffers::String> frameEvent) { fbb_.AddOffset(36, frameEvent); }
   void add_customProperty(flatbuffers::Offset<flatbuffers::String> customProperty) { fbb_.AddOffset(38, customProperty); }
+  void add_callBackType(flatbuffers::Offset<flatbuffers::String> callBackType) { fbb_.AddOffset(40, callBackType); }
+  void add_callBackName(flatbuffers::Offset<flatbuffers::String> callBackName) { fbb_.AddOffset(42, callBackName); }
   WidgetOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   WidgetOptionsBuilder &operator=(const WidgetOptionsBuilder &);
   flatbuffers::Offset<WidgetOptions> Finish() {
-    auto o = flatbuffers::Offset<WidgetOptions>(fbb_.EndTable(start_, 18));
+    auto o = flatbuffers::Offset<WidgetOptions>(fbb_.EndTable(start_, 20));
     return o;
   }
 };
@@ -384,8 +398,12 @@ inline flatbuffers::Offset<WidgetOptions> CreateWidgetOptions(flatbuffers::FlatB
    uint8_t ignoreSize = 0,
    uint8_t touchEnabled = 0,
    flatbuffers::Offset<flatbuffers::String> frameEvent = 0,
-   flatbuffers::Offset<flatbuffers::String> customProperty = 0) {
+   flatbuffers::Offset<flatbuffers::String> customProperty = 0,
+   flatbuffers::Offset<flatbuffers::String> callBackType = 0,
+   flatbuffers::Offset<flatbuffers::String> callBackName = 0) {
   WidgetOptionsBuilder builder_(_fbb);
+  builder_.add_callBackName(callBackName);
+  builder_.add_callBackType(callBackType);
   builder_.add_customProperty(customProperty);
   builder_.add_frameEvent(frameEvent);
   builder_.add_size(size);
