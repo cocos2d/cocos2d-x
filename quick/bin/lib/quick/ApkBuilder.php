@@ -315,7 +315,8 @@ class ApkBuilder
         findFiles($projPath . '/src', $files);
         findFiles($projPath . '/gen', $files);
 
-        $cmd_str = 'javac -encoding utf8 -target '. $this->java_version 
+        $cmd_str = 'javac -encoding utf8 -target '. $this->java_version
+            . ' -source ' . $this->java_version
             . ' -bootclasspath ' . $this->boot_class_path 
             . ' -d ' . $classesPath;
         foreach ($files as $file)
