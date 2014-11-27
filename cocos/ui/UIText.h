@@ -149,6 +149,13 @@ public:
      */
     virtual std::string getDescription() const override;
 
+    /**
+     * Set the rendering size of the text, you should call this method
+     * along with calling `ignoreContentAdaptWithSize(false)`, otherwise the text area
+     * size is caculated by the real size of the text content
+     * @param size   The text rendering area size
+     *
+     */
     void setTextAreaSize(const Size &size);
 
     const Size& getTextAreaSize()const;
