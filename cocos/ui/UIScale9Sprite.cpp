@@ -566,28 +566,6 @@ y+=ytranslate;         \
         
     }
     
-    void Scale9Sprite::handleCapInsetSizeExceedContentSize()
-    {
-        Size size = this->_contentSize;
-        
-        float sizableWidth = size.width - _topLeftSize.width - _bottomRightSize.width;
-        float sizableHeight = size.height - _topLeftSize.height - _bottomRightSize.height;
-        
-        this->toggleSlicedSpriteVisibility(true);
-        
-        if ((size.width == 0 || size.height == 0) && (sizableWidth < 0.0f || sizableHeight < 0.0f))
-        {
-            CCLOG("Invalid capInset size");
-            this->toggleSlicedSpriteVisibility(false);
-        }
-    }
-    
-    void Scale9Sprite::toggleSlicedSpriteVisibility(bool visible)
-    {
-        for (const auto& sp : _protectedChildren) {
-            sp->setVisible(visible);
-        }
-    }
     
     void Scale9Sprite::setContentSize(const Size &size)
     {
@@ -602,13 +580,12 @@ y+=ytranslate;         \
         float sizableWidth = size.width - _topLeftSize.width - _bottomRightSize.width;
         float sizableHeight = size.height - _topLeftSize.height - _bottomRightSize.height;
         
-        if (sizableHeight < 0) {
+        this->toggleCornerSpritesVisibility(true);
+        if (sizableHeight < 0 || sizableWidth < 0) {
             sizableHeight = 0;
             sizableWidth = 0;
-        }
-        if (sizableWidth < 0) {
-            sizableWidth = 0;
-            sizableHeight = 0;
+            CCLOG("Warning: invalid capInset size!");
+            this->toggleCornerSpritesVisibility(false);
         }
         
         float horizontalScale = sizableWidth/_centerSize.width;
