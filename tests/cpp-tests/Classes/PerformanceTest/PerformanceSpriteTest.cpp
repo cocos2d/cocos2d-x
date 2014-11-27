@@ -370,7 +370,7 @@ void SpriteMenuLayer::showCurrentTest()
 bool SpriteMainScene::_s_autoTest = false;
 int SpriteMainScene::_s_nSpriteCurCase = 0;
 int SpriteMainScene::_s_spritesQuatityIndex = 0;
-int SpriteMainScene::_s_spritesQuanityArray[] = {500, 1000, 3000, 0};
+int SpriteMainScene::_s_spritesQuanityArray[] = {1000, 3000, 0};
 std::vector<float> SpriteMainScene::_s_saved_fps = {};
 
 void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
@@ -562,6 +562,7 @@ void  SpriteMainScene::dumpProfilerFPS()
         for(int i=0; i < MAX_SPRITE_TEST_CASE; i++)
         {
             char buffer[512];
+            buffer[0]=0;
             for(int j=0; j < MAX_SUB_TEST_NUMS; j++)
             {
                 float fps = _s_saved_fps[j + i*MAX_SUB_TEST_NUMS];
@@ -570,7 +571,6 @@ void  SpriteMainScene::dumpProfilerFPS()
                 strcat(buffer, fps_str);
             }
             log("%c%s", i + 'A', buffer);
-            buffer[0] = 0;
         }
     };
 }
@@ -579,6 +579,7 @@ void SpriteMainScene::saveFPS()
 {
     float fps = Director::getInstance()->getFrameRate();
     _s_saved_fps.push_back(fps);
+    log("Nodes: %d, Test: %c, SubTest: %d = %.1f", _quantityNodes, 'A'+_s_nSpriteCurCase, _subtestNumber, fps);
 }
 
 void SpriteMainScene::updateAutoTest(float dt)
