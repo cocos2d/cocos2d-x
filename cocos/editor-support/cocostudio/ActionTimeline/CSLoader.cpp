@@ -250,7 +250,7 @@ Node* CSLoader::createNode(const std::string& filename)
     
     if (suffix == "csb")
     {
-        return load->createNodeWithFlatBuffersFile(filename);
+        return load->createNodeFromProtocolBuffers(filename);
     }
     else if (suffix == "json" || suffix == "ExportJson")
     {
