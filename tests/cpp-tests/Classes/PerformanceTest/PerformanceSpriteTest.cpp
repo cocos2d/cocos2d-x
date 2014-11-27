@@ -369,16 +369,17 @@ void SpriteMenuLayer::showCurrentTest()
 ////////////////////////////////////////////////////////
 
 // FIXME: This should be part of the class, but VC2013 doesn't support constexpr as static members yet
-static const float SECONDS_PER_TESTS = 0.2f;
-static const int MAX_SPRITE_TEST_CASE = 7;
-static const int MAX_SUB_TEST_NUMS = 3;
+static const float SECONDS_PER_TESTS = 4.0f;
+static const int MAX_SPRITE_TEST_CASE = 7; // A...G
+static const int MAX_SUB_TEST_NUMS = 13;  // 1...13
 
 // 500 sprites, 1500 sprites, etc...
 bool SpriteMainScene::_s_autoTest = false;
 int SpriteMainScene::_s_nSpriteCurCase = 0;
 int SpriteMainScene::_s_spritesQuatityIndex = 0;
 int SpriteMainScene::_s_spritesQuanityArray[] = {1000, 3000, 0};
-std::vector<float> SpriteMainScene::_s_saved_fps = {};
+// FIXME: to make VS2012 happy. Once VS2012 is deprecated, we can just simply replace it with {}
+std::vector<float> SpriteMainScene::_s_saved_fps = std::vector<float>(); 
 
 void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 {
