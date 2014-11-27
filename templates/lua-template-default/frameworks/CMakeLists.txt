@@ -34,7 +34,9 @@ set(GAME_SRC
   runtime-src/Classes/AppDelegate.cpp
 )
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d-x)
+if (NOT COCOS2D_ROOT)
+	set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d-x)
+endif()
 
 include_directories(
   /usr/include

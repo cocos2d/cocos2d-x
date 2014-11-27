@@ -235,7 +235,7 @@ endif()
 
 include_directories(
   Classes
-  ${CMAKE_SOURCE_DIR}/cocos/editor-support
+  ${COCOS2D_ROOT}/cocos/editor-support
 )
 
 # add the executable

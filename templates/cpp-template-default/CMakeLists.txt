@@ -85,7 +85,9 @@ set(GAME_SRC
 )
 endif()
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
+if (NOT COCOS2D_ROOT)
+	set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
+endif()
 if (WIN32)
 include_directories(
   ${COCOS2D_ROOT}
