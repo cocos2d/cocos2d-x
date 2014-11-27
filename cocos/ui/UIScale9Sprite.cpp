@@ -265,7 +265,8 @@ y+=ytranslate;         \
         float w = _originalSize.width;
         float h = _originalSize.height;
         
-        Vec2 offsetPosition(ceil(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2), ceil(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
+        Vec2 offsetPosition(ceil(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
+                            ceil(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
         
         // If there is no specified center region
         if ( _capInsetsInternal.equals(Rect::ZERO) )
@@ -276,9 +277,19 @@ y+=ytranslate;         \
         
         Rect originalRect;
         if(_spriteFrameRotated)
-            originalRect = Rect(_spriteRect.origin.x - offsetPosition.y, _spriteRect.origin.y - offsetPosition.x, _originalSize.width, _originalSize.height);
+        {
+            originalRect = Rect(_spriteRect.origin.x - offsetPosition.y,
+                                _spriteRect.origin.y - offsetPosition.x,
+                                _originalSize.width,
+                                _originalSize.height);
+        }
         else
-            originalRect = Rect(_spriteRect.origin.x - offsetPosition.x, _spriteRect.origin.y - offsetPosition.y, _originalSize.width, _originalSize.height);
+        {
+            originalRect = Rect(_spriteRect.origin.x - offsetPosition.x,
+                                _spriteRect.origin.y - offsetPosition.y,
+                                _originalSize.width,
+                                _originalSize.height);
+        }
         
         float left_w = _capInsetsInternal.origin.x;
         float center_w = _capInsetsInternal.size.width;
@@ -294,6 +305,7 @@ y+=ytranslate;         \
         float x = 0.0;
         float y = 0.0;
         
+        //pixelRect is the real size of the spriteFrame, when the spriteFrame is croped, the real size is smaller than the originalRect
         Rect pixelRect = Rect(offsetPosition.x, offsetPosition.y, _spriteRect.size.width, _spriteRect.size.height);
         
         // top left
@@ -530,6 +542,31 @@ y+=ytranslate;         \
         }
     }
     
+    void Scale9Sprite::toggleCornerSpritesVisibility(bool visible)
+    {
+        if (_topLeft)
+        {
+            _topLeft->setVisible(visible);
+        }
+        
+        if (_topRight)
+        {
+            _topRight->setVisible(visible);
+        }
+        
+        if (_bottomLeft)
+        {
+            _bottomLeft->setVisible(visible);
+        }
+        
+        if (_bottomRight)
+        {
+            _bottomRight->setVisible(visible);
+        }
+        
+    }
+    
+    
     void Scale9Sprite::setContentSize(const Size &size)
     {
         Node::setContentSize(size);
@@ -542,6 +579,14 @@ y+=ytranslate;         \
         
         float sizableWidth = size.width - _topLeftSize.width - _bottomRightSize.width;
         float sizableHeight = size.height - _topLeftSize.height - _bottomRightSize.height;
+        
+        this->toggleCornerSpritesVisibility(true);
+        if (sizableHeight < 0 || sizableWidth < 0) {
+            sizableHeight = 0;
+            sizableWidth = 0;
+            CCLOG("Warning: invalid capInset size!");
+            this->toggleCornerSpritesVisibility(false);
+        }
         
         float horizontalScale = sizableWidth/_centerSize.width;
         float verticalScale = sizableHeight/_centerSize.height;
@@ -803,13 +848,6 @@ y+=ytranslate;         \
         CC_SAFE_DELETE(pReturn);
         return NULL;
     }
-    
-    /** sets the opacity.
-     @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
-     Values goes from 0 to 255, where 255 means fully opaque.
-     */
-    
-    
     
     void Scale9Sprite::updateCapInset()
     {

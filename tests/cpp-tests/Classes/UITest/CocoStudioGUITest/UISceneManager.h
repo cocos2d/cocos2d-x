@@ -57,6 +57,7 @@ enum
     kUILoadingBarTest_Right,
     kUILoadingBarTest_Left_Scale9,
     kUILoadingBarTest_Right_Scale9,
+    kUILoadingBarTest_Issue9091,
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,

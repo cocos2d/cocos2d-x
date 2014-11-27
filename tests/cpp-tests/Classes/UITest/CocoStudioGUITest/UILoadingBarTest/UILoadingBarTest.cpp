@@ -291,7 +291,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
         loadingBar->setContentSize(Size(300, 13));
         loadingBar->setDirection(LoadingBar::Direction::RIGHT);
-        
+        loadingBar->toggleScale9CornerSpriteVisibility(false);
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
         
@@ -339,3 +339,66 @@ void UILoadingBarTest_Right_Scale9::nextCallback(Ref* sender, Widget::TouchEvent
         UIScene::nextCallback(sender, type);
     }
 }
+
+// UILoadingBarTest_Issue9091
+
+UILoadingBarTest_Issue9091::UILoadingBarTest_Issue9091()
+{
+    
+}
+
+UILoadingBarTest_Issue9091::~UILoadingBarTest_Issue9091()
+{
+}
+
+bool UILoadingBarTest_Issue9091::init()
+{
+    if (UIScene::init())
+    {
+        
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add the alert
+        Text *alert = Text::create("LoadingBar should be invisible here", "fonts/Marker Felt.ttf", 20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f ));
+        _uiLayer->addChild(alert);
+        
+        auto scale9Sprite = ui::Scale9Sprite::create("cocosui/slider_bar_active_9patch.png");
+        scale9Sprite->setPosition(Vec2(widgetSize.width/2,
+                                       widgetSize.height/2 + 50));
+        scale9Sprite->setPreferredSize(Size(0,0));
+        scale9Sprite->setInsetLeft(0);
+        scale9Sprite->setInsetBottom(0);
+        scale9Sprite->setInsetRight(0);
+        scale9Sprite->setInsetTop(0);
+        scale9Sprite->toggleCornerSpritesVisibility(false);
+        _uiLayer->addChild(scale9Sprite);
+        
+        // Create the loading bar
+        LoadingBar* loadingBar = LoadingBar::create("cocosui/slider_bar_active_9patch.png");
+        loadingBar->setTag(0);
+        loadingBar->setCapInsets(Rect(0, 0, 0, 0));
+        loadingBar->setContentSize(Size(300, 13));
+        loadingBar->setDirection(LoadingBar::Direction::RIGHT);
+        loadingBar->setPercent(0);
+        loadingBar->setScale9Enabled(true);
+        loadingBar->toggleScale9CornerSpriteVisibility(false);
+        
+        
+        loadingBar->setPosition(Vec2(widgetSize.width / 2.0f - loadingBar->getContentSize().width/2,
+                                     widgetSize.height / 2.0f - 50 ));
+        
+        _uiLayer->addChild(loadingBar);
+        
+        
+        
+        return true;
+    }
+    return false;
+}
+
+
+
+

@@ -114,6 +114,7 @@ public:
      * @param enabled true that using scale9 renderer, false otherwise.
      */
     void setScale9Enabled(bool enabled);
+    void toggleScale9CornerSpriteVisibility(bool visible);
     
     bool isScale9Enabled()const;
     
