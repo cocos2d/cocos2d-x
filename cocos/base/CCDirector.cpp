@@ -1086,13 +1086,14 @@ void Director::showStats()
 
         float dt = _deltaTime * FPS_FILTER + (1-FPS_FILTER) * prevDeltaTime;
         prevDeltaTime = dt;
+        _frameRate = 1/dt;
 
         // Probably we don't need this anymore since
         // the framerate is using a low-pass filter
         // to make the FPS stable
         if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            sprintf(buffer, "%.1f / %.3f", 1/dt, _secondsPerFrame);
+            sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
             _FPSLabel->setString(buffer);
             _accumDt = 0;
         }
