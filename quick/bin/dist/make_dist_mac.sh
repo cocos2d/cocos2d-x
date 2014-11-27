@@ -38,6 +38,8 @@ GTOOLSPATH="bindings-generator"
 cd "$QUICK_V3_ROOT/../$GTOOLSPATH"
 git archive develop | tar -x -C "$WORKDIR/tools/$GTOOLSPATH"
 rm $WORKDIR/tools/$GTOOLSPATH/libclang/libclang.so
+rm -fr $WORKDIR/tools/$GTOOLSPATH/backup
+rm -fr $WORKDIR/tools/$GTOOLSPATH/targets/spidermonkey
 cd "$QUICK_V3_ROOT"
 
 echo "Copy to windows work dir"
@@ -49,6 +51,7 @@ echo "Clean windows file in work dir"
 rm $WORKDIR/tools/$GTOOLSPATH/libclang/libclang.dll
 rm -fr $WORKDIR/tools/$GTOOLSPATH/tools
 rm -fr $WORKDIR/quick/templates/lua-template-quick/runtime/win32
+rm $WORKDIR/player3.bat
 
 echo "Clean mac&ios file in windows work dir"
 rm $WORKDIR-win/tools/$GTOOLSPATH/libclang/libclang.dylib
@@ -68,7 +71,10 @@ rm -fr $WORKDIR-win/quick/templates/lua-template-quick/runtime/mac
 
 # mv ./build.xcarchive/Products/Applications/player3.app "$WORKDIR"
 # rm -fr ./build.xcarchive
-cp -rf player3.app "$WORKDIR"
+echo "Copy mac player"
+cp -rf quick/player/mac/player3.app "$WORKDIR"
+echo "Copy win player"
+cp -rf quick/player/win32 "$WORKDIR-win/quick/player/"
 
 spctl -a -v "$WORKDIR/player3.app/"
 echo ""

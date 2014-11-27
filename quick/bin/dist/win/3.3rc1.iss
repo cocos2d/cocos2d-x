@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "quick-cocos2d-x"
-#define MyAppVersion "3.3final"
+#define MyAppVersion "3.3rc1"
 #define MyAppPublisher "chukong-inc.com"
 #define MyAppURL "http://quick.cocos.org/"
 #define MyAppExeName "player3.exe"
