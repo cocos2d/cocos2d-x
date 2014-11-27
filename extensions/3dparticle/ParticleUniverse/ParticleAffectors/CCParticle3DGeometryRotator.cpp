@@ -127,11 +127,11 @@ void Particle3DGeometryRotator::initParticleForEmission(Particle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DGeometryRotator::updateAffector( float deltaTime )
+void Particle3DGeometryRotator::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Rotate the geometry
 
         if (_useOwnRotationSpeed)

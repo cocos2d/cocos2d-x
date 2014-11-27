@@ -217,15 +217,15 @@ void Particle3DTextureAnimator::determineNextTextureCoords(Particle3D* visualPar
     }
 }
 
-void Particle3DTextureAnimator::updateAffector( float deltaTime )
+void Particle3DTextureAnimator::updateAffector( Particle3D *particle, float deltaTime )
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
     //	return;
 
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Determine the next texture coords index
         if (_animationTimeStepSet)
         {

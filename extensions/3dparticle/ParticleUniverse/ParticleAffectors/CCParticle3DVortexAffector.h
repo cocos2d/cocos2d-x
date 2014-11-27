@@ -43,7 +43,7 @@ public:
     virtual ~Particle3DVortexAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
     /** 
     */
     const Vec3& getRotationVector(void) const;

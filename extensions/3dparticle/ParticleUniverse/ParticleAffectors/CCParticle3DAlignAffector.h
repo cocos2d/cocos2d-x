@@ -39,7 +39,8 @@ public:
     Particle3DAlignAffector();
     virtual ~Particle3DAlignAffector();
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 
     /** See setResize().
     */
@@ -53,6 +54,7 @@ public:
 protected:
 
     bool _resize;
+	Particle3D* _previousParticle;
 };
 NS_CC_END
 

@@ -47,11 +47,11 @@ Particle3DScaleVelocityAffector::~Particle3DScaleVelocityAffector(void)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DScaleVelocityAffector::updateAffector( float deltaTime )
+void Particle3DScaleVelocityAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+       // Particle3D *particle = iter;
         float ds = 0;
         if (_sinceStartSystem)
         {

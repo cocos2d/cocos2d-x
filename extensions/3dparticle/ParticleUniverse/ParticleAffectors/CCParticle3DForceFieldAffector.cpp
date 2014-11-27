@@ -245,11 +245,11 @@ void Particle3DForceFieldAffector::suppressGeneration(bool suppress)
     _suppressGeneration = suppress;
 }
 
-void Particle3DForceFieldAffector::updateAffector( float deltaTime )
+void Particle3DForceFieldAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         _forceField.determineForce(particle->position, _force, _delta);
         // If negative values are ignored, set the force to 0.
         if (_ignoreNegativeX)

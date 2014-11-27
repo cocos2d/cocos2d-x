@@ -50,7 +50,7 @@ void Particle3DCollisionAvoidanceAffector::setRadius(float radius)
     _radius = radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DCollisionAvoidanceAffector::updateAffector( float deltaTime )
+void Particle3DCollisionAvoidanceAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
     CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())

@@ -88,11 +88,11 @@ void Particle3DSineForceAffector::setFrequencyMax(const float frequencyMax)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DSineForceAffector::updateAffector( float deltaTime )
+void Particle3DSineForceAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Affect the direction
         if (_forceApplication == FA_ADD)
         {

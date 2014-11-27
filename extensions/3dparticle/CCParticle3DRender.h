@@ -48,19 +48,29 @@ class Particle3DRender : public Ref
 {
 public:
 
-    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
+	virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
+
+	/** Perform activities when a Renderer is started.
+	*/
+	virtual void notifyStart(void);
+	/** Perform activities when a Renderer is stopped.
+	*/
+	virtual void notifyStop(void);
+	/** Notify that the Particle System is rescaled.
+	*/
+	virtual void notifyRescaled(const Vec3& scale);
     
     void setVisible(bool isVisible) { _isVisible = isVisible; }
     
     bool isVisible() const { return _isVisible; }
     
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DRender();
-    virtual ~Particle3DRender();
+	Particle3DRender(){};
+	virtual ~Particle3DRender(){};
     
 protected:
     bool  _isVisible;
-
+	Vec3 _rendererScale;
 };
 
 // particle render for quad

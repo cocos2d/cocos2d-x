@@ -113,11 +113,11 @@ void Particle3DRandomiser::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::updateAffector( float deltaTime )
+void Particle3DRandomiser::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         if (_update)
         {
             if (_randomDirection)

@@ -41,7 +41,8 @@ public:
     Particle3DParticleFollower(void);
     virtual ~Particle3DParticleFollower(void);
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime) override;
 
     /** 
     */

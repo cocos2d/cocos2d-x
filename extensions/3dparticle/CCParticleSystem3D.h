@@ -42,6 +42,9 @@ class Particle3DRender;
 
 struct Particle3D
 {
+	static float DEFAULT_TTL;
+	static float DEFAULT_MASS;
+
         /** Enumeration which lists a number of reserved event flags. Although custom flags can be used to
         indicate that a certain condition occurs, the first number of flags may not be used as custom flags.
     */
@@ -52,6 +55,8 @@ struct Particle3D
         PEF_COLLIDED = 1<<2
     };
 
+	Particle3DEmitter* parentEmitter;
+
     // property of particles, TODO add more properties
     Vec3 position;
     // Values that are assigned as soon as the particle is emitted (non-transformed)
@@ -61,6 +66,9 @@ struct Particle3D
     Vec3 direction;
     Vec3 originalDirection;
     float originalDirectionLength; // Length of the direction that has been set
+	float originalVelocity;
+	float originalScaledDirectionLength; // Length of the direction after multiplication with the velocity
+
     /** The rotation axis is used in combination with orientation. Because the rotation axis is part
         of the particle itself, it can be changed independently. */
     Vec3 rotationAxis;
@@ -111,6 +119,8 @@ struct Particle3D
     */
     void setOwnDimensions(float newWidth, float newHeight, float newDepth);
     void calculateBoundingSphereRadius();
+
+	void initForEmission();
 
     /** Does this particle have it's own dimensions? */
     bool ownDimensions;
@@ -183,6 +193,11 @@ struct Particle3D
 class ParticleSystem3D : public Node, public BlendProtocol
 {
 public:
+
+	static const float DEFAULT_WIDTH;
+	static const float DEFAULT_HEIGHT;
+	static const float DEFAULT_DEPTH;
+
     ParticleSystem3D();
     virtual ~ParticleSystem3D();
     
@@ -254,7 +269,33 @@ public:
     void rotationOffset(Vec3& pos);
 
     inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
+
+	/** 
+	*/
+	const float getDefaultWidth(void) const;
+	void setDefaultWidth(const float width);
+
+	/** 
+	*/
+	const float getDefaultHeight(void) const;
+	void setDefaultHeight(const float height);
+
+	/** 
+	*/
+	const float getDefaultDepth(void) const;
+	void setDefaultDepth(const float depth);
+
+protected:
+
+	void prepared();
+	void unPrepared();
+	void preUpdator(float elapsedTime);
+	void updator(float elapsedTime);
+	void postUpdator(float elapsedTime);
+	void emitParticles(float elapsedTime);
     
+	inline bool isExpired(Particle3D* particle, float timeElapsed);
+
 protected:
     enum class State
     {
@@ -266,6 +307,7 @@ protected:
     Particle3DEmitter*               _emitter;
     std::vector<Particle3DAffector*> _affectors;
     Particle3DRender*                _render;
+	bool _prepared;
 
     float _particleSystemScaleVelocity;
     float _timeElapsedSinceStart;
@@ -280,6 +322,18 @@ protected:
     //particles
     std::vector<Particle3D*>          _particles;
     int                              _aliveParticlesCnt;
+
+	/** Default width of each visual particle.
+	*/
+	float _defaultWidth;
+
+	/** Default height of each visual particle.
+	*/
+	float _defaultHeight;
+
+	/** Default depth of each visual particle.
+	*/
+	float _defaultDepth;
     
     BlendFunc                        _blend;
 };

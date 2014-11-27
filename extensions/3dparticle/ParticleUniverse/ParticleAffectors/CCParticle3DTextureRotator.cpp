@@ -123,11 +123,11 @@ void Particle3DTextureRotator::initParticleForEmission(Particle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DTextureRotator::updateAffector( float deltaTime )
+void Particle3DTextureRotator::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         //// Only continue if the particle is a visual particle
         //if (particle->particleType != Particle3D::PT_VISUAL)
         //	return;

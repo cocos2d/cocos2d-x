@@ -42,7 +42,7 @@ public:
     Particle3DGeometryRotator();
     virtual ~Particle3DGeometryRotator();
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
     /** @copydoc ParticleAffector::_initParticleForEmission */
     virtual void initParticleForEmission(Particle3D* particle) override;
 

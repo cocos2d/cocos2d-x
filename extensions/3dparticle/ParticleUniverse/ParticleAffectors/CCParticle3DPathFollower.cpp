@@ -49,11 +49,11 @@ void Particle3DPathFollower::clearPoints (void)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DPathFollower::updateAffector( float deltaTime )
+void Particle3DPathFollower::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         if (_spline.getNumPoints() > 0)
         {
             // PU 1.4

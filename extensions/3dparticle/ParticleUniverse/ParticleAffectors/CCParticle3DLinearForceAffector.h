@@ -38,7 +38,7 @@ public:
     virtual ~Particle3DLinearForceAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 };
 NS_CC_END
 

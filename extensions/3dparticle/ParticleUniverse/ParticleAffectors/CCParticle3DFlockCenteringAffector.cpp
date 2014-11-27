@@ -39,11 +39,11 @@ Particle3DFlockCenteringAffector::~Particle3DFlockCenteringAffector()
 {
 }
 
-void Particle3DFlockCenteringAffector::updateAffector( float deltaTime )
+void Particle3DFlockCenteringAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         _sum += particle->position;
         _count++;
         particle->direction += (_average - particle->position) * deltaTime; // use average of the previous update

@@ -65,11 +65,11 @@ void Particle3DVelocityMatchingAffector::setRadius(float radius)
 //}
 //-----------------------------------------------------------------------
 
-void Particle3DVelocityMatchingAffector::updateAffector( float deltaTime )
+void Particle3DVelocityMatchingAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
-    {
-        Particle3D *particle = iter;
+    //for (auto iter : _particleSystem->getParticles())
+    //{
+    //    Particle3D *particle = iter;
     //	// Determine neighbouring particles.
     //	SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
     //	if (hashtable)
@@ -106,7 +106,7 @@ void Particle3DVelocityMatchingAffector::updateAffector( float deltaTime )
     //			particle->direction += (sumDirection - particle->direction) * deltaTime;
     //		}
     //	}
-    }
+    //}
 }
 
 NS_CC_END

@@ -51,7 +51,7 @@ public:
     // Destructor
     virtual ~Particle3DColorAffector();
 
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 
     /** 
     */

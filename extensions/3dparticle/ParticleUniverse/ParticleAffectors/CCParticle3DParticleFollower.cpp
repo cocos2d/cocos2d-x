@@ -66,12 +66,12 @@ void Particle3DParticleFollower::setMinDistance(float minDistance)
     _minDistance = minDistance;
 }
 
-void Particle3DParticleFollower::updateAffector( float deltaTime )
+void Particle3DParticleFollower::updateAffector( Particle3D *particle, float deltaTime )
 {
-    _first = true;
-    for (auto iter : _particleSystem->getParticles())
+    //_first = true;
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         if (!_first)
         {
             // Change in V 1.3.1
@@ -89,6 +89,11 @@ void Particle3DParticleFollower::updateAffector( float deltaTime )
         _positionPreviousParticle = particle->position;
         _first = false;
     }
+}
+
+void Particle3DParticleFollower::firstParticleUpdate( Particle3D *particle, float deltaTime )
+{
+    _first = true;
 }
 
 NS_CC_END

@@ -1406,6 +1406,9 @@
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DVertexEmitter.cpp">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DRender.cpp">
+      <Filter>extension\3dparticle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2801,6 +2804,9 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DVertexEmitter.h">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DRender.h">
+      <Filter>extension\3dparticle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -42,7 +42,7 @@ public:
     virtual ~Particle3DPlaneCollider(void);
 
     virtual void notifyRescaled(const Vec3& scale) override;
-    virtual void updateAffector(float deltaTime) override;
+    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
 
     /** Returns the normal of the plane
     */

@@ -77,14 +77,14 @@ float Particle3DVortexAffector::calculateRotationSpeed(void)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DVortexAffector::updateAffector( float deltaTime )
+void Particle3DVortexAffector::updateAffector( Particle3D *particle, float deltaTime )
 {
-    for (auto iter : _particleSystem->getParticles())
+    //for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        //Particle3D *particle = iter;
         // Explicitly check on 'freezed', because it passes the techniques' validation.
         if (particle->isFreezed())
-            continue;
+            return;
 
         // Rotate position, direction and orientation (visible particle only) and compensate for the affector position
         // Also take the affect specialisation into account
