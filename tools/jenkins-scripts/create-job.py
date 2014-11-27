@@ -23,7 +23,7 @@ payload = {"action":"opened","number":"","pull_request":""}
 payload['number']=pr_num
 payload['pull_request']=pr
 
-jenkins_trigger_url="http://115.28.134.83:8000/job/cocos-2dx-pull-request-build/buildWithParameters?token=ced2014"
+jenkins_trigger_url="http://115.28.72.132:8000/job/cocos-2dx-pull-request-build/buildWithParameters?token=ced2014"
 
 #send trigger and payload
 post_data = {'payload':""}

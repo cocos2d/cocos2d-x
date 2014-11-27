@@ -30,39 +30,36 @@ def set_description(desc, url):
     except:
         traceback.print_exc()
 
+
 def check_current_3rd_libs(branch):
-    print("start backup old 3rd libs...")
+    print("start checkout external bin")
+    cocos2d_external_repository_path = "../../../cocos2d-x-3rd-party-libs-bin"
     #get current_libs config
-    backup_files = range(2)
-    current_files = range(2)
-    config_file_paths = ['external/config.json','templates/lua-template-runtime/runtime/config.json']
-    if (branch == 'v2'):
-        config_file_paths = ['external/config.json']
-        backup_files = range(1)
-        current_files = range(1)
-    for i, config_file_path in enumerate(config_file_paths):
-        if not os.path.isfile(config_file_path):
-            raise Exception("Could not find 'external/config.json'")
+    config_file_path = 'external/config.json'
+    if not os.path.isfile(config_file_path):
+        raise Exception("Could not find 'external/config.json'")
 
-        with open(config_file_path) as data_file:
-            data = json.load(data_file)
+    with open(config_file_path) as data_file:
+        data = json.load(data_file)
 
-        current_3rd_libs_version = data["version"]
-        filename = current_3rd_libs_version + '.zip'
-        node_name = os.environ['NODE_NAME']
-        backup_file = '../../../cocos-2dx-external/node/' + node_name + '/' + filename
-        backup_files[i] = backup_file
-        current_file = filename
-        current_files[i] = current_file
-        if os.path.isfile(backup_file):
-          copy(backup_file, current_file)
-    #run download-deps.py
-    print("prepare to downloading ...")
-    os.system('python download-deps.py -r no')
-    #backup file
-    for i, backup_file in enumerate(backup_files):
-        current_file = current_files[i]
-        copy(current_file, backup_file)
+    checkout_tag_name = data["version"]
+    node_name = os.environ["NODE_NAME"]
+    #sync local repository and checkout a new branch
+    print("begine to async remote cocos2d-x 3rd bin repostiory")
+    os.system("cd " + cocos2d_external_repository_path)
+    os.system("git checkout v3")
+    os.system("git pull")
+    os.system("git fetch --tags")
+    checkout_branch_name = "br-" + checkout_tag_name
+    os.system("git checkout -b " + checkout_branch_name + checkout_tag_name)
+    #copy all the 3rd party dependencies
+    os.system("cp -r  *  ../cocos-2dx-pull-request-build/node/" +  node_name + "/external/")
+    os.system("git checkout v3")
+    os.system("git branch -D " + checkout_branch_name)
+    os.system("cd -")
+
+    print("copying all the 3rd party libraries!")
+
 
 def connect_db():
     db_host = os.environ['db_host']
@@ -75,11 +72,13 @@ def connect_db():
         traceback.print_exc()
     return db
 
+
 def close_db(db):
     try:
         db.close()
     except:
         traceback.print_exc()
+
 
 def save_build_stats(db, pr, filename, size):
     try:
