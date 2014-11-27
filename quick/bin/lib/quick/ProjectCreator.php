@@ -17,8 +17,14 @@ class ProjectCreator
 
     function validateConfig()
     {
+        $isLite = $this->config['lite'];
         // check template
-        $templatePath = rtrim($this->config['template'], "/\\") . DS;
+        $templatePath = rtrim($this->config['template'], "/\\");
+        if ($isLite)
+        {
+            $templatePath = $templatePath . '-lite';
+        }
+        $templatePath = $templatePath . DS;
         if (!is_dir($templatePath))
         {
             printf("ERROR: invalid template path \"%s\"\n", $templatePath);
@@ -216,12 +222,15 @@ class ProjectCreator
             if (!$this->copyFile($sourcePath)) return false;
         }
 
-        $this->copyCocosFiles();
-        $this->copyQuickSources();
         $this->copyFrameworkFiles();
+        if (!$this->config['lite'])
+        {
+            $this->copyCocosFiles();
+            $this->copyQuickSources();
+            $this->fixFiles();
+            $this->replaceFiles();
+        }
         // $this->modifyFiles();
-        $this->fixFiles();
-        $this->replaceFiles();
 
         print("\n\n");
 
