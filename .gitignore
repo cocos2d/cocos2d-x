@@ -151,3 +151,4 @@ tests/cpp-tests/Resources/audio
 /external/audio/
 /external/xxtea/
 /external/protobuf-lite/
+/external/flatbuffers/
