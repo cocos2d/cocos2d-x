@@ -163,7 +163,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextTest);
             sceneManager->setMinUISceneId(kUITextTest);
-            sceneManager->setMaxUISceneId(kUITextTest_TTF);
+            sceneManager->setMaxUISceneId(kUITextTest_IgnoreConentSize);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
