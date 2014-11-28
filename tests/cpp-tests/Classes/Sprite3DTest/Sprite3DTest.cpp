@@ -1128,7 +1128,7 @@ Sprite3DReskinTest::Sprite3DReskinTest()
 }
 void Sprite3DReskinTest::menuCallback_reSkin(Ref* sender)
 {
-    int index = (int)(((MenuItemLabel*)sender)->getUserData());
+    long index = (long)(((MenuItemLabel*)sender)->getUserData());
     if (index < (int)SkinType::MAX_TYPE)
     {
         _curSkin[index] = (_curSkin[index] + 1) % _skins[index].size();
