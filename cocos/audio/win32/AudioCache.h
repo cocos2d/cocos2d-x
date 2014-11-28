@@ -31,8 +31,12 @@
 #include <string>
 #include <mutex>
 #include <vector>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
+#include <AL/al.h>
+#endif
 #include "CCPlatformMacros.h"
-#include "AL/al.h"
 
 #define QUEUEBUFFER_NUM 3
 #define QUEUEBUFFER_TIME_STEP 0.1f

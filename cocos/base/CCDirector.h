@@ -461,7 +461,6 @@ protected:
 
     /* How many frames were called since the director started */
     unsigned int _totalFrames;
-    unsigned int _frames;
     float _secondsPerFrame;
     
     /* The running scene */

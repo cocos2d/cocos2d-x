@@ -115,6 +115,7 @@ tags
 !/cocos/2d/platform/android/java/res/
 # Permit plugins to ship third-party libraries.
 !/plugin/plugins/*/proj.android/libs/*.jar
+!/plugin/plugins/*/proj.android/libs
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

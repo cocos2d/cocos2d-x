@@ -36,15 +36,14 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 AudioPlayer::AudioPlayer()
-: _exitThread(false)
-, _streamingSource(false)
-, _timeDirty(false)
-, _currTime(0.0f)
+: _audioCache(nullptr)
 , _finishCallbak(nullptr)
 , _ready(false)
-, _audioCache(nullptr)
-{
-    
+, _currTime(0.0f)
+, _streamingSource(false)
+, _exitThread(false)
+, _timeDirty(false)
+{    
 }
 
 AudioPlayer::~AudioPlayer()
