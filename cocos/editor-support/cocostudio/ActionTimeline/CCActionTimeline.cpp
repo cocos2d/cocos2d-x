@@ -144,7 +144,7 @@ bool ActionTimeline::isPlaying() const
 
 void ActionTimeline::setCurrentFrame(int frameIndex)
 {
-    if (frameIndex >= _startFrame && frameIndex >= _endFrame)
+    if (frameIndex >= _startFrame && frameIndex <= _endFrame)
     {
         _currentFrame = frameIndex;
         _time = _currentFrame*_frameInternal;

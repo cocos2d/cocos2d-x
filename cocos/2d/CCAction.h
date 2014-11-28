@@ -244,7 +244,8 @@ public:
 
     inline bool isBoundarySet() const { return _boundarySet; }
     /** alter behavior - turn on/off boundary */
-    inline void setBoudarySet(bool value) { _boundarySet = value; }
+    inline void setBoundarySet(bool value) { _boundarySet = value; }
+    CC_DEPRECATED_ATTRIBUTE inline void setBoudarySet(bool value) { setBoundarySet(value); }
 
     //
     // Override

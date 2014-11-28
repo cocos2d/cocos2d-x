@@ -6,7 +6,7 @@
 
 --------------------------------
 --  alter behavior - turn on/off boundary 
--- @function [parent=#Follow] setBoudarySet 
+-- @function [parent=#Follow] setBoundarySet 
 -- @param self
 -- @param #bool value
         

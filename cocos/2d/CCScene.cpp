@@ -37,6 +37,8 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
+int g_physicsSceneCount = 0;
+
 NS_CC_BEGIN
 
 Scene::Scene()
@@ -58,6 +60,10 @@ Scene::Scene()
 Scene::~Scene()
 {
 #if CC_USE_PHYSICS
+    if (_physicsWorld)
+    {
+        g_physicsSceneCount--;
+    }
     CC_SAFE_DELETE(_physicsWorld);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
@@ -109,12 +115,6 @@ Scene* Scene::createWithSize(const Size& size)
 std::string Scene::getDescription() const
 {
     return StringUtils::format("<Scene | tag = %d>", _tag);
-}
-
-Scene* Scene::getScene() const
-{
-    // FIX ME: should use const_case<> to fix compiling error
-    return const_cast<Scene*>(this);
 }
 
 void Scene::onProjectionChanged(EventCustom* event)
@@ -214,6 +214,7 @@ bool Scene::initWithPhysics()
         
         this->scheduleUpdate();
         // success
+        g_physicsSceneCount += 1;
         ret = true;
     } while (0);
     return ret;

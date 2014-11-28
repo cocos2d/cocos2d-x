@@ -41,6 +41,7 @@
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_video_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp" />
@@ -66,6 +67,7 @@
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp" />
     <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp" />
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.cpp" />
+    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp" />
     <ClCompile Include="..\manual\extension\lua_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\manual\LuaBasicConversions.cpp" />
     <ClCompile Include="..\manual\network\lua_cocos2dx_network_manual.cpp" />
@@ -111,6 +113,7 @@
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_video_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp" />
@@ -136,6 +139,7 @@
     <ClInclude Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.h" />
     <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h" />
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp" />
+    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp" />
     <ClInclude Include="..\manual\extension\lua_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\manual\LuaBasicConversions.h" />
     <ClInclude Include="..\manual\network\lua_cocos2dx_network_manual.h" />

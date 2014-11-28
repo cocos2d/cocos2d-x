@@ -162,6 +162,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp \
 ../../Classes/PerformanceTest/PerformanceScenarioTest.cpp \
 ../../Classes/PerformanceTest/PerformanceCallbackTest.cpp \
+../../Classes/PerformanceTest/PerformanceMathTest.cpp \
 ../../Classes/PhysicsTest/PhysicsTest.cpp \
 ../../Classes/ReleasePoolTest/ReleasePoolTest.cpp \
 ../../Classes/RenderTextureTest/RenderTextureTest.cpp \

@@ -259,13 +259,14 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
     
@@ -292,13 +293,14 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
 
@@ -562,6 +564,7 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();
@@ -572,7 +575,7 @@ bool ShaderBlur::init()
         addChild(sprite);
 
         createSliderCtls();
-
+#endif
         return true;
     }
 
