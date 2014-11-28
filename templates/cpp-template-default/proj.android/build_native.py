@@ -43,20 +43,14 @@ def check_environment_variables():
     return NDK_ROOT
 
 def select_toolchain_version():
-    '''Because ndk-r8e uses gcc4.6 as default. gcc4.6 doesn't support c++11. So we should select gcc4.7 when
-    using ndk-r8e. But gcc4.7 is removed in ndk-r9, so we should determine whether gcc4.7 exist.
-    Conclution:
-    ndk-r8e  -> use gcc4.7
-    ndk-r9   -> use gcc4.8
-    '''
 
     ndk_root = check_environment_variables()
-    if os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.8")):
+    if os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.9")):
+        os.environ['NDK_TOOLCHAIN_VERSION'] = '4.9'
+        print "The Selected NDK toolchain version was 4.9 !"
+    elif os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.8")):
         os.environ['NDK_TOOLCHAIN_VERSION'] = '4.8'
         print "The Selected NDK toolchain version was 4.8 !"
-    elif os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.7")):
-        os.environ['NDK_TOOLCHAIN_VERSION'] = '4.7'
-        print "The Selected NDK toolchain version was 4.7 !"
     else:
         print "Couldn't find the gcc toolchain."
         exit(1)
@@ -149,5 +143,7 @@ if __name__ == '__main__':
     parser.add_option("-b", "--build", dest="build_mode", 
     help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
+    
+    print "We will remove this script next version,you should use cocos console to build android project.\n"
     
     build(opts.ndk_build_param,opts.android_platform,opts.build_mode)
