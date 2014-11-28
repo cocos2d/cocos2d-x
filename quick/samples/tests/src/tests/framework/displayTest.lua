@@ -9,11 +9,11 @@ function DisplayTestScene:ctor()
     local items = {
         "addImageAsync",
         "scale9Sprite",
-        "layerMultiTouch",
         "tilesSprite",
         "tiledBatchNode",
         "drawNode",
-        "progress"
+        "progress",
+        "layerMultiTouch"
     }
     self:addChild(game.createMenu(items, handler(self, self.runTest)))
 
