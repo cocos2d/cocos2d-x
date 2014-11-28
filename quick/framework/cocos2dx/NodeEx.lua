@@ -334,7 +334,15 @@ function Node:removeAllNodeEventListeners()
 end
 
 local function KeypadEventCodeConvert( code )
-    return tostring(code)
+    local key
+    if code==6 then
+        key = "back"
+    elseif code==16 then
+        key = "menu"
+    else
+        key = tostring(code)
+    end
+    return key
 end
 
 function Node:EventDispatcher( idx, data )
