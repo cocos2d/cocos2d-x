@@ -27,10 +27,10 @@ $extrawork = array(
         ),
 
     "FilesNeedReplace" => array(
-            array(
-                'cocos2d.cpp',
-                "/cocos/cocos2d.cpp",
-                ),
+            // array(
+            //     'cocos2d.cpp',
+            //     "/cocos/cocos2d.cpp",
+            //     ),
         ),
 );
 
