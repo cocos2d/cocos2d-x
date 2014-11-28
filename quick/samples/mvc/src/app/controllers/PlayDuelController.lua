@@ -115,10 +115,6 @@ function PlayDuelController:InterfaceTest()
     print("id:" .. id)
     local bValid = self.player:isValidId()
     print("valid id:" .. tostring(bValid))
-
-    app:makeLuaVMSnapshot()
-    app:makeLuaVMSnapshot()
-    app:checkLuaVMLeaks()
 end
 
 function PlayDuelController:hit(attacker, target, bullet)
