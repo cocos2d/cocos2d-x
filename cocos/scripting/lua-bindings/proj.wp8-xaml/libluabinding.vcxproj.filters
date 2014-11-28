@@ -299,6 +299,9 @@
     <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp">
       <Filter>scripting\luabinding\auto</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
+      <Filter>scripting\luabinding\manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp">
       <Filter>scripting\luabinding\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
+      <Filter>scripting\luabinding\manual</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
