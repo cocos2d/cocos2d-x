@@ -1292,18 +1292,23 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
     NMaterialData materialData;
     const rapidjson::Value& material_data_array = _jsonReader[MATERIAL];
 
-    const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
-
-    const rapidjson::Value& material_data_base_array = material_data_array_0[BASE];
-
-    const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
-    NTextureData  textureData;
-    // set texture
-    textureData.filename =_modelPath + material_data_base_array_0[FILENAME].GetString();
-    textureData.type= NTextureData::Usage::Diffuse;
-    textureData.id="";
-    materialData.textures.push_back(textureData);
-    materialdatas.materials.push_back(materialData);
+    if (material_data_array.Size() > 0)
+    {
+        const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
+        if (material_data_array_0.HasMember(BASE))
+        {
+            const rapidjson::Value& material_data_base_array = material_data_array_0[BASE];
+            const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
+            NTextureData  textureData;
+            // set texture
+            textureData.filename =_modelPath + material_data_base_array_0[FILENAME].GetString();
+            textureData.type= NTextureData::Usage::Diffuse;
+            textureData.id="";
+            materialData.textures.push_back(textureData);
+            materialdatas.materials.push_back(materialData);
+        }
+    }
+    
     return true;
 }
 
