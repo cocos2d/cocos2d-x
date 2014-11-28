@@ -13,7 +13,7 @@ end
 
 function game.createMenu(items, callback)
     local menu = cc.ui.UIListView.new {
-        viewRect = cc.rect(display.cx - 150, display.bottom + 100, 300, display.height - 200),
+        viewRect = cc.rect(display.cx - 200, display.bottom + 100, 400, display.height - 200),
         direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
         :onScroll(function(event)
                 if "moved" == event.name then
