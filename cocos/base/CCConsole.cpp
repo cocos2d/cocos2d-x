@@ -224,7 +224,7 @@ static void _log(const char *format, va_list args)
     fflush(stdout);
 #else
     // Linux, Mac, iOS, etc
-    fprintf(stdout, "cocos2d: %s", buf);
+    fprintf(stdout, "%s", buf);
     fflush(stdout);
 #endif
 
