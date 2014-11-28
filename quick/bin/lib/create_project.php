@@ -19,11 +19,11 @@ $options = array(
 
 $extrawork = array(
     "FilesNeedModify" => array(
-            array(
-                // "/cocos/platform/win32/CCFileUtils-win32.cpp",
-                // 's_resourcePath.append("/");',
-                // 's_resourcePath.append("/../../");',
-                ),
+            // array(
+            //     "/cocos/platform/win32/CCFileUtils-win32.cpp",
+            //     's_resourcePath.append("/");',
+            //     's_resourcePath.append("/../../");',
+            //     ),
         ),
 
     "FilesNeedReplace" => array(
