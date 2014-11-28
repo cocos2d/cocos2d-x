@@ -67,6 +67,8 @@ public:
     void addResFileInfo(const char* filename,uint64_t u64);
     void removeResFileInfo(const char *filename);
     rapidjson::Document* getFileCfgJson() { return &_filecfgjson; }
+    bool getIsUsingWritePath() { return _isUsingWritePath; }
+    void setIsUsingWritePath(bool use) { _isUsingWritePath = use; }
     std::string getWritePath() { return _writePath; }
     std::string getTransingFileName();
     void setTransingFileName(const std::string& filename);
@@ -124,6 +126,7 @@ private:
     std::string _recvErrorFile;
     std::string _writeErrorFile;
     
+    bool _isUsingWritePath;
     std::string _writePath;
 };
 

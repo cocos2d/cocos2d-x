@@ -98,7 +98,7 @@ std::string& replaceAll(std::string& str, const std::string& old_value, const st
 
 const char* getRuntimeVersion()
 {
-    return "1.5";
+    return "1.6";
 }
 
 int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
@@ -134,24 +134,30 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0);
 
-        if (argc == 2) {
+        if (argc == 2)
+        {
             ok &= luaval_to_boolean(tolua_S, 3, &arg1);
         }
 
         if(!ok)
             return 0;
-        std::string originPath = arg0;
-        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
-            arg0 = FileServer::getShareInstance()->getWritePath() + originPath;
-        cobj->addSearchPath(arg0, arg1);
 
-        if (!FileUtils::getInstance()->isAbsolutePath(originPath))
+        if (! FileUtils::getInstance()->isAbsolutePath(arg0))
+        {
+            // add write path to search path
+            if (FileServer::getShareInstance()->getIsUsingWritePath())
+            {
+                cobj->addSearchPath(FileServer::getShareInstance()->getWritePath() + arg0, arg1);
+            } else
+            {
+                cobj->addSearchPath(arg0, arg1);
+            }
+            
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-            cobj->addSearchPath(g_projectPath + originPath, arg1);
+            // add project path to search path
+            cobj->addSearchPath(g_projectPath + arg0, arg1);
 #endif
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-            cobj->addSearchPath(originPath, arg1);
-#endif
+        }
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSearchPath",argc, 1);
@@ -193,9 +199,9 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::vector<std::string> vecPaths;
+        std::vector<std::string> vecPaths, writePaths;
 
-        ok &= luaval_to_std_vector_string(tolua_S, 2,&vecPaths);
+        ok &= luaval_to_std_vector_string(tolua_S, 2, &vecPaths);
         if(!ok)
             return 0;
         std::vector<std::string> originPath; // for IOS platform.
@@ -205,16 +211,23 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
             if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
             {
                 originPath.push_back(vecPaths[i]); // for IOS platform.
-                projPath.push_back(g_projectPath+vecPaths[i]); //for Desktop platform.
-                vecPaths[i] = FileServer::getShareInstance()->getWritePath() + vecPaths[i];
+                projPath.push_back(g_projectPath + vecPaths[i]); //for Desktop platform.
+                writePaths[i] = FileServer::getShareInstance()->getWritePath() + vecPaths[i];
             }
         }
+        vecPaths.clear();
+        
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        vecPaths.insert(vecPaths.end(),projPath.begin(),projPath.end());
+        vecPaths.insert(vecPaths.end(), projPath.begin(), projPath.end());
 #endif
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        vecPaths.insert(vecPaths.end(),originPath.begin(),originPath.end());
-#endif
+        if (FileServer::getShareInstance()->getIsUsingWritePath())
+        {
+            vecPaths.insert(vecPaths.end(), writePaths.begin(), writePaths.end());
+        } else
+        {
+            vecPaths.insert(vecPaths.end(), originPath.begin(), originPath.end());
+        }
+        
         cobj->setSearchPaths(vecPaths);
         return 0;
     }
@@ -242,28 +255,26 @@ static void register_runtime_override_function(lua_State* tolua_S)
 
 void initRuntime()
 {
-    vector<string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
-    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    // add peoject's root directory to search path
-    if (g_projectPath.empty())
-    {
-        extern std::string getCurAppPath();
-        string appPath = getCurAppPath();
+    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    
+    extern std::string getCurAppPath();
+    std::string appPath = getCurAppPath();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        appPath.append("/../../");
+    appPath.append("/../../");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        appPath.append("/../../../");
+    appPath.append("/../../../");
 #endif
-        appPath = replaceAll(appPath, "\\", "/");
-        g_projectPath = appPath;
-    }    
+    appPath = replaceAll(appPath, "\\", "/");
+    g_projectPath = appPath;
+    
+    // add project's root directory to search path
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
-#endif
     
     // add writable path to search path
     searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
 
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);

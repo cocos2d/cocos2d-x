@@ -4,6 +4,7 @@
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "ConfigParser.h"
+#include "FileServer.h"
 
 #define CONFIG_FILE "config.json"
 #define CONSOLE_PORT 6010
@@ -30,8 +31,22 @@ void ConfigParser::purge()
 
 void ConfigParser::readConfig()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // add writable path to search path temporarily for reading config file
+    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
+    
+    // read config file
     string fullPathFile = FileUtils::getInstance()->fullPathForFilename(CONFIG_FILE);
     string fileContent = FileUtils::getInstance()->getStringFromFile(fullPathFile);
+  
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // revert search path
+    searchPathArray.erase(searchPathArray.end() - 1);
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
 
     if(fileContent.empty())
         return;

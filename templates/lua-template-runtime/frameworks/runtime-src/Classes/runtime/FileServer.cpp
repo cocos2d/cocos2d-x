@@ -228,6 +228,13 @@ _writeEndThread(false),
 _responseRunning(false),
 _responseEndThread(false)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // need to be opened by Code IDE
+    _isUsingWritePath = false;
+#else
+    _isUsingWritePath = true;
+#endif
+    
     _writePath = FileUtils::getInstance()->getWritablePath();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
