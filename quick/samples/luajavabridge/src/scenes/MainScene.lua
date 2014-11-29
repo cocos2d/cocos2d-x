@@ -31,6 +31,21 @@ function MainScene:ctor()
             :align(display.CENTER, display.cx, display.cy)
             :addTo(self)
 
+    btn:setKeypadEnabled(true)
+    btn:addNodeEventListener(cc.KEYPAD_EVENT, function (event)
+        dump(event)
+        local str = "event.key is [ " .. event.key .. " ]"
+                        btn:setButtonLabel(cc.ui.UILabel.new({text = str, size = 32}))
+        if event.key == "back" then
+            print("back")
+            cc.Director:getInstance():endToLua()
+            if device.platform == "windows" or device.platform == "mac" then
+                os.exit()
+            end
+        elseif event.key == "menu" then
+            print("menu")
+        end
+    end)
 end
 
 function MainScene:onEnter()

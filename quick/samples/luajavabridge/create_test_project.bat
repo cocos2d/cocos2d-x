@@ -3,7 +3,7 @@ set DIR=%~dp0
 if not exist %DIR%test mkdir %DIR%test
 
 set CURDIR=%DIR%
-call %QUICK_V3_ROOT%quick/bin/create_project.bat -p com.quick-x.samples.luajavabridge -o %DIR%test\LuaJavaBridge -r landscape
+call %QUICK_V3_ROOT%quick/bin/create_project.bat -p com.quick-x.samples.luajavabridge -o %DIR%test\LuaJavaBridge -r landscape -lt
 set DIR=%CURDIR%
 rmdir /s /q %DIR%test\LuaJavaBridge\runtime
 rmdir /s /q %DIR%test\LuaJavaBridge\frameworks\runtime-src\proj.ios_mac

@@ -1,7 +1,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mkdir $DIR/test
 
-$QUICK_V3_ROOT/quick/bin/create_project.sh -p com.quick-x.samples.luajavabridge -o $DIR/test/LuaJavaBridge -r landscape
+$QUICK_V3_ROOT/quick/bin/create_project.sh -p com.quick-x.samples.luajavabridge -o $DIR/test/LuaJavaBridge -r landscape -lt
 rm -fr $DIR/test/LuaJavaBridge/runtime
 rm -fr $DIR/test/LuaJavaBridge/frameworks/runtime-src/proj.ios_mac
 rm -fr $DIR/test/LuaJavaBridge/frameworks/runtime-src/proj.win32
