@@ -498,7 +498,7 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
     }
 }
 
-void Label::setDimensions(unsigned int width,unsigned int height)
+void Label::setDimensions(unsigned int width, unsigned int height)
 {
     if (height != _labelHeight || width != _labelWidth)
     {

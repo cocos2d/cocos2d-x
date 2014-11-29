@@ -1559,25 +1559,27 @@ void TextureAsync::onEnter()
 
 TextureAsync::~TextureAsync()
 {
-    Director::getInstance()->getTextureCache()->unbindAllImageAsync();
-    Director::getInstance()->getTextureCache()->removeAllTextures();
+    auto textureCache = Director::getInstance()->getTextureCache();
+    textureCache->unbindAllImageAsync();
+    textureCache->removeAllTextures();
 }
 
 void TextureAsync::loadImages(float dt)
 {
+    auto textureCache = Director::getInstance()->getTextureCache();
     for( int i=0;i < 8;i++) {
         for( int j=0;j < 8; j++) {
             char szSpriteName[100] = {0};
             sprintf(szSpriteName, "Images/sprites_test/sprite-%d-%d.png", i, j);
-            Director::getInstance()->getTextureCache()->addImageAsync(szSpriteName, CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+            textureCache->addImageAsync(szSpriteName, CC_CALLBACK_1(TextureAsync::imageLoaded, this));
         }
     }
 
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/atlastest.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_atlas.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/background1.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/background2.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/background.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/atlastest.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/grossini_dance_atlas.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
 }
 
 

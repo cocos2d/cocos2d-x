@@ -31,9 +31,6 @@
 #else
 #include <sys/socket.h>
 #endif
-#include "ui/UIWidget.h"
-#include "ActionTimeline/CCActionTimeline.h"
-#include "ActionTimeline/CSLoader.h"
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
@@ -6643,182 +6640,6 @@ static void extendTMXLayer(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_cocos2dx_EventListenerFocus_create(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertable(tolua_S, 1, "cc.EventListenerFocus", 0, &tolua_err))  goto tolua_lerror;
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (argc == 0)
-    {
-        cocos2d::EventListenerFocus* tolua_ret = cocos2d::EventListenerFocus::create();
-        if(nullptr == tolua_ret)
-            return 0;
-        
-        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerFocus");
-        
-        return 1;
-    }
-    
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:create", argc, 1);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_EventListenerFocus_create'.",&tolua_err);
-    return 0;
-#endif
-}
-
-static void cloneFocusHandler(const EventListenerFocus* src,EventListenerFocus* dst )
-{
-    if (nullptr == src || nullptr == dst)
-        return;
-    
-    LUA_FUNCTION handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)src, ScriptHandlerMgr::HandlerType::EVENT_FOCUS);
-    if (0 != handler)
-    {
-        int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
-        
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, ScriptHandlerMgr::HandlerType::EVENT_FOCUS);
-        dst->onFocusChanged = [=](ui::Widget* widgetLostFocus, ui::Widget* widgetGetFocus){
-            lua_State* tolua_S = LuaEngine::getInstance()->getLuaStack()->getLuaState();
-            int id = (widgetLostFocus) ? (int)widgetLostFocus->_ID : -1;
-            int* luaID = (widgetLostFocus) ? &widgetLostFocus->_luaID : nullptr;
-            toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)widgetLostFocus,"ccui.Widget");
-            id = (widgetGetFocus) ? (int)widgetGetFocus->_ID : -1;
-            luaID = (widgetGetFocus) ? &widgetGetFocus->_luaID : nullptr;
-            toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)widgetGetFocus,"ccui.Widget");
-            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
-        };
-    }
-}
-
-static int tolua_cocos2dx_EventListenerFocus_clone(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    EventListenerFocus* self = nullptr;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerFocus", 0, &tolua_err))  goto tolua_lerror;
-#endif
-    
-    self = static_cast<EventListenerFocus*>(tolua_tousertype(tolua_S,1,0));
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_clone'\n", nullptr);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (argc == 0)
-    {
-        cocos2d::EventListenerFocus* tolua_ret = cocos2d::EventListenerFocus::create();
-        if(nullptr == tolua_ret)
-            return 0;
-        
-        cloneFocusHandler(self, tolua_ret);
-        
-        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerFocus");
-        
-        return 1;
-    }
-    
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:clone", argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_EventListenerFocus_clone'.",&tolua_err);
-    return 0;
-#endif
-}
-
-
-static int tolua_cocos2dx_EventListenerFocus_registerScriptHandler(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    EventListenerFocus* self = nullptr;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerFocus", 0, &tolua_err))  goto tolua_lerror;
-#endif
-    
-    self = static_cast<EventListenerFocus*>(tolua_tousertype(tolua_S,1,0));
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_registerScriptHandler'\n", nullptr);
-		return 0;
-	}
-#endif
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (argc == 1)
-    {
-#if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
-        {
-            goto tolua_lerror;
-        }
-#endif
-        LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_FOCUS);
-        
-        self->onFocusChanged = [=](ui::Widget* widgetLostFocus, ui::Widget* widgetGetFocus){
-            int id = (widgetLostFocus) ? (int)widgetLostFocus->_ID : -1;
-            int* luaID = (widgetLostFocus) ? &widgetLostFocus->_luaID : nullptr;
-            toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)widgetLostFocus,"ccui.Widget");
-            id = (widgetGetFocus) ? (int)widgetGetFocus->_ID : -1;
-            luaID = (widgetGetFocus) ? &widgetGetFocus->_luaID : nullptr;
-            toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)widgetGetFocus,"ccui.Widget");
-            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
-        };
-        return 0;
-    }
-    
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:registerScriptHandler", argc, 1);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_EventListenerFocus_registerScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-static void extendEventListenerFocus(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.EventListenerFocus");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        tolua_function(tolua_S, "create", tolua_cocos2dx_EventListenerFocus_create);
-        tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerFocus_registerScriptHandler);
-        tolua_function(tolua_S, "clone", tolua_cocos2dx_EventListenerFocus_clone);
-    }
-    lua_pop(tolua_S, 1);
-}
-
 
 int lua_cocos2dx_Application_isIOS64bit(lua_State* tolua_S)
 {
@@ -7088,51 +6909,6 @@ static void extendCamera(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-int lua_cocos2dx_CSLoader_createTimeline(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (argc == 1)
-    {
-        std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createTimeline");
-        if(!ok)
-            return 0;
-        cocostudio::timeline::ActionTimeline* ret = cocos2d::CSLoader::createTimeline(arg0);
-        object_to_luaval<cocostudio::timeline::ActionTimeline>(tolua_S, "ccs.ActionTimeline",(cocostudio::timeline::ActionTimeline*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:createTimeline",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_CSLoader_createTimeline'.",&tolua_err);
-#endif
-    return 0;
-}
-
-static void extendCSLoader(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.CSLoader");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        tolua_function(tolua_S, "createTimeline", lua_cocos2dx_CSLoader_createTimeline);
-    }
-    lua_pop(tolua_S, 1);
-}
-
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -7184,12 +6960,10 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendGLProgramState(tolua_S);
     extendOrbitCamera(tolua_S);
     extendTMXLayer(tolua_S);
-    extendEventListenerFocus(tolua_S);
     extendApplication(tolua_S);
     extendTextureCache(tolua_S);
     extendGLView(tolua_S);
     extendCamera(tolua_S);
-    extendCSLoader(tolua_S);
     return 0;
 }
 

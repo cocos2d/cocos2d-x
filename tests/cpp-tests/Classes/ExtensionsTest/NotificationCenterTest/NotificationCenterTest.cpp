@@ -77,7 +77,6 @@ void Light::updateLightState()
 }
 
 NotificationCenterTest::NotificationCenterTest()
-: _showImage(false)
 {
     auto s = Director::getInstance()->getWinSize();
 

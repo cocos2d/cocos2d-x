@@ -308,7 +308,8 @@ void Sprite::setTexture(const std::string &filename)
     setTexture(texture);
 
     Rect rect = Rect::ZERO;
-    rect.size = texture->getContentSize();
+    if (texture)
+        rect.size = texture->getContentSize();
     setTextureRect(rect);
 }
 
@@ -982,7 +983,7 @@ SpriteFrame* Sprite::getSpriteFrame() const
                                            CC_SIZE_POINTS_TO_PIXELS(_contentSize));
 }
 
-SpriteBatchNode* Sprite::getBatchNode()
+SpriteBatchNode* Sprite::getBatchNode() const
 {
     return _batchNode;
 }

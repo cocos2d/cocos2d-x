@@ -76,7 +76,8 @@ bool Text::init()
 Text* Text::create(const std::string &textContent, const std::string &fontName, int fontSize)
 {
     Text *text = new (std::nothrow) Text;
-    if (text && text->init(textContent, fontName, fontSize)) {
+    if (text && text->init(textContent, fontName, fontSize))
+    {
         text->autorelease();
         return text;
     }
@@ -87,8 +88,10 @@ Text* Text::create(const std::string &textContent, const std::string &fontName, 
 bool Text::init(const std::string &textContent, const std::string &fontName, int fontSize)
 {
     bool ret = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             ret = false;
             break;
         }
@@ -108,6 +111,10 @@ void Text::initRenderer()
     
 void Text::setString(const std::string &text)
 {
+    if (text == _labelRenderer->getString())
+    {
+        return;
+    }
     _labelRenderer->setString(text);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
@@ -125,10 +132,12 @@ ssize_t Text::getStringLength()const
 
 void Text::setFontSize(int size)
 {
-    if (_type == Type::SYSTEM) {
+    if (_type == Type::SYSTEM)
+    {
         _labelRenderer->setSystemFontSize(size);
     }
-    else{
+    else
+    {
         TTFConfig config = _labelRenderer->getTTFConfig();
         config.fontSize = size;
         _labelRenderer->setTTFConfig(config);
@@ -153,7 +162,8 @@ void Text::setFontName(const std::string& name)
         _labelRenderer->setTTFConfig(config);
         _type = Type::TTF;
     }
-    else{
+    else
+    {
         _labelRenderer->setSystemFontName(name);
         if (_type == Type::TTF)
         {
@@ -179,6 +189,10 @@ Text::Type Text::getType() const
 void Text::setTextAreaSize(const Size &size)
 {
     _labelRenderer->setDimensions(size.width,size.height);
+    if (!_ignoreSize)
+    {
+        _customSize=size;
+    }
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
     _labelRendererAdaptDirty = true;
 }
@@ -191,8 +205,6 @@ const Size& Text::getTextAreaSize()const
 void Text::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
-    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
-    _labelRendererAdaptDirty = true;
 }
     
 TextHAlignment Text::getTextHorizontalAlignment()const
@@ -203,8 +215,6 @@ TextHAlignment Text::getTextHorizontalAlignment()const
 void Text::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
-    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
-    _labelRendererAdaptDirty = true;
 }
     
 TextVAlignment Text::getTextVerticalAlignment()const
