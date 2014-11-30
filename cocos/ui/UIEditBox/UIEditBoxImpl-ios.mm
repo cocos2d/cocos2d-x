@@ -456,6 +456,7 @@ int EditBoxImplIOS::getMaxLength()
 
 void EditBoxImplIOS::setInputFlag(EditBox::InputFlag inputFlag)
 {
+    _systemControl.textField.secureTextEntry = NO;
     switch (inputFlag)
     {
         case EditBox::InputFlag::PASSWORD:
@@ -583,7 +584,7 @@ void EditBoxImplIOS::setPosition(const Vec2& pos)
 
 void EditBoxImplIOS::setVisible(bool visible)
 {
-//    _systemControl.textField.hidden = !visible;
+    _systemControl.textField.hidden = !visible;
 }
 
 void EditBoxImplIOS::setContentSize(const Size& size)
