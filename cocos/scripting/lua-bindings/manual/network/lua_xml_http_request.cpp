@@ -232,11 +232,8 @@ void LuaMinXmlHttpRequest::_sendRequest()
         // set header
         std::vector<char> *headers = response->getResponseHeader();
         
-        char* concatHeader = (char*) malloc(headers->size() + 1);
         std::string header(headers->begin(), headers->end());
-        strcpy(concatHeader, header.c_str());
-        
-        std::istringstream stream(concatHeader);
+        std::istringstream stream(header);
         std::string line;
         while(std::getline(stream, line)) {
             _gotHeader(line);
@@ -244,25 +241,19 @@ void LuaMinXmlHttpRequest::_sendRequest()
         
         /** get the response data **/
         std::vector<char> *buffer = response->getResponseData();
-        char* concatenated = (char*) malloc(buffer->size() + 1);
-        std::string s2(buffer->begin(), buffer->end());
-        strcpy(concatenated, s2.c_str());
         
         if (statusCode == 200)
         {
             //Succeeded
             _status = 200;
             _readyState = DONE;
-            _data << concatenated;
+            _data.assign(buffer->begin(), buffer->end());
             _dataSize = buffer->size();
         }
         else
         {
             _status = 0;
         }
-        // Free Memory.
-        free((void*) concatHeader);
-        free((void*) concatenated);
         
         // TODO: call back lua function
         int handler = cocos2d::ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, cocos2d::ScriptHandlerMgr::HandlerType::XMLHTTPREQUEST_READY_STATE_CHANGE );
@@ -282,7 +273,7 @@ void LuaMinXmlHttpRequest::_sendRequest()
 
 void LuaMinXmlHttpRequest::getByteData(unsigned char* byteData)
 {
-    _data.read((char*)byteData, _dataSize);
+    memcpy((char*)byteData, _data.c_str(), _dataSize);
 }
 
 /* function to regType */
@@ -642,7 +633,7 @@ static int lua_get_XMLHttpRequest_responseText(lua_State* L)
 		return 0;
     }
 #endif
-    lua_pushstring(L, self->getDataStr().c_str());    
+    lua_pushlstring(L, self->getDataStr().c_str(), self->getDataSize());
     return 1;
     
 #if COCOS2D_DEBUG >= 1
@@ -675,7 +666,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
         if (self->getReadyState() != LuaMinXmlHttpRequest::DONE || self->getErrorFlag())
             return 0;
         
-        lua_pushstring(L, self->getDataStr().c_str());
+        lua_pushlstring(L, self->getDataStr().c_str(), self->getDataSize());
         return 1;
     }
     else if(self->getResponseType() == LuaMinXmlHttpRequest::ResponseType::ARRAY_BUFFER)
@@ -716,7 +707,7 @@ static int lua_get_XMLHttpRequest_response(lua_State* L)
     }
     else
     {
-        lua_pushstring(L, self->getDataStr().c_str());
+        lua_pushlstring(L, self->getDataStr().c_str(), self->getDataSize());
         return 1;
     }
     

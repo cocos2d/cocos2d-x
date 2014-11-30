@@ -21,6 +21,7 @@
 #include "CCGLViewImpl-winrt.h"
 #include "CCApplication.h"
 #include "cocos2d.h"
+#include "renderer/CCTextureCache.h"
 
 // These are used by the shader compilation methods.
 #include <vector>
@@ -44,14 +45,6 @@ Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatche
     , m_panel(panel)
 {
     m_app = new AppDelegate();
-    auto director = cocos2d::Director::getInstance();
-
-    GLViewImpl* glview = GLViewImpl::create("Test Cpp");
-    glview->setDispatcher(dispatcher);
-    glview->setPanel(panel);
-    glview->Create(static_cast<float>(width), static_cast<float>(height), dpi, DisplayOrientations::Landscape);
-    director->setOpenGLView(glview);
-    CCApplication::getInstance()->run();
 }
 
 Cocos2dRenderer::~Cocos2dRenderer()
@@ -59,7 +52,58 @@ Cocos2dRenderer::~Cocos2dRenderer()
     delete m_app;
 }
 
-// Draws a basic triangle
+void Cocos2dRenderer::Resume()
+{
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+
+    if (!glview) 
+    {
+        GLViewImpl* glview = GLViewImpl::create("Test Cpp");
+        glview->setDispatcher(m_dispatcher.Get());
+        glview->setPanel(m_panel.Get());
+        glview->Create(static_cast<float>(m_width), static_cast<float>(m_height), m_dpi, DisplayOrientations::Landscape);
+        director->setOpenGLView(glview);
+        CCApplication::getInstance()->run();
+    }
+    else
+    {
+        Application::getInstance()->applicationWillEnterForeground();
+    }
+}
+
+void Cocos2dRenderer::Pause()
+{
+    if (Director::getInstance()->getOpenGLView()) {
+        Application::getInstance()->applicationDidEnterBackground();
+        //cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+        //cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+    }
+}
+
+void Cocos2dRenderer::DeviceLost()
+{
+    Pause();
+
+    auto director = cocos2d::Director::getInstance();
+    if (director->getOpenGLView()) {
+        cocos2d::GL::invalidateStateCache();
+        cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
+        cocos2d::DrawPrimitives::init();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
+
+        cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+        director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
+        director->setGLDefaultValues();
+
+        Application::getInstance()->applicationWillEnterForeground();
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+    }
+}
+
+
+
 void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
 {
     if (width != m_width || height != m_height)

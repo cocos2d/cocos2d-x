@@ -69,5 +69,7 @@ namespace cocos2d
         void OnPointerReleased(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
 
         float m_dpi;
+        bool m_deviceLost;
+
     };
 }

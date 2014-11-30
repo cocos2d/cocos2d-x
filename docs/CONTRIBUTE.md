@@ -68,6 +68,7 @@ The patch must be _complete_. And by that, we mean:
 
 [*]: If you don't have access to test your code in all the supported platforms, let us know.
 
+__TBD__: Is this applicable for big features ? What is the best way to merge big features ?
 
 # Promoting cocos2d
 

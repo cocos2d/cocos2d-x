@@ -56,9 +56,15 @@ if(WINDOWS)
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
 elseif(UNIX)
+    # because we have -std=c99
+    add_definitions(-D_POSIX_C_SOURCE=200809L)
     if(LINUX)
-        add_definitions(-D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE)
+        add_definitions(-D_BSD_SOURCE)
     endif()
+    if(APPLE)
+        add_definitions(-D_DARWIN_C_SOURCE)
+    endif()
+
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/serial.c
         ${cocos_root}/external/lua/luasocket/unix.c
@@ -87,6 +93,7 @@ set(lua_bindings_manual_files
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/cocostudio/CustomGUIReader.cpp
     manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp
+    manual/cocostudio/lua_cocos2dx_csloader_manual.cpp
     manual/controller/lua_cocos2dx_controller_manual.cpp
     manual/extension/lua_cocos2dx_extension_manual.cpp
     manual/network/lua_extensions.c
@@ -113,6 +120,7 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_physics_auto.cpp
     auto/lua_cocos2dx_spine_auto.cpp
     auto/lua_cocos2dx_studio_auto.cpp
+    auto/lua_cocos2dx_csloader_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
     auto/lua_cocos2dx_audioengine_auto.cpp
     )
