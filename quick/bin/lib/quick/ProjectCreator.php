@@ -223,6 +223,7 @@ class ProjectCreator
         }
 
         $this->copyFrameworkFiles();
+        $this->copyRuntimeSources();
         if (!$this->config['lite'])
         {
             $this->copyCocosFiles();
@@ -489,6 +490,19 @@ class ProjectCreator
 
         $dirname = "/framework";
         $src = $quickPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
+
+        return true;
+    }
+
+    private function copyRuntimeSources()
+    {
+        $quickSrcPath = $_ENV['QUICK_V3_ROOT'] . "/quick/lib/runtime-src";
+        $cocosPath = $this->config['output'] . "/frameworks/runtime-src";
+
+        $dirname = "/Classes";
+        $src = $quickSrcPath . $dirname;
         $dst = $cocosPath . $dirname;
         $this->copyDir($src, $dst);
 
