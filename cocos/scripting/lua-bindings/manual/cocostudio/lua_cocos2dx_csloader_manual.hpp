@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,56 +21,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOSTUDIO_LUA_COCOS2DX_CSLOADER_MANUAL_H
+#define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOSTUDIO_LUA_COCOS2DX_CSLOADER_MANUAL_H
 
-#ifndef __TestCpp__UITextTest__
-#define __TestCpp__UITextTest__
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "tolua++.h"
+#ifdef __cplusplus
+}
+#endif
 
-#include "../UIScene.h"
+#include "base/CCRef.h"
+#include <string>
 
-class UITextTest : public UIScene
-{
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextTest)
-};
+TOLUA_API int  register_all_cocos2dx_csloader_manual(lua_State* L);
 
-class UITextTest_LineWrap : public UIScene
-{
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextTest_LineWrap)
-};
-
-
-class UILabelTest_Effect : public UIScene
-{
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UILabelTest_Effect)
-};
- 
-
-class UITextTest_TTF : public UIScene
-{
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextTest_TTF)
-};
-
-class UITextTest_IgnoreConentSize : public UIScene
-{
-public:
-    bool init();
-protected:
-    UI_SCENE_CREATE_FUNC(UITextTest_IgnoreConentSize)
-};
-
-#endif /* defined(__TestCpp__UITextTest__) */
+#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_COCO_STUDIO_MANUAL_H
