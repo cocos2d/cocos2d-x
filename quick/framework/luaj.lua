@@ -69,7 +69,7 @@ end
 -- @param string className java类名
 -- @param string methodName java类静态方法名
 -- @param table args java类静态方法所需要的各种参数 数组
--- @param [string sig] java类方法的签名
+-- @param string sig java类方法的签名
 -- @return boolean#boolean ret (return value: bool)  ok, mixed ret ok为是否调用成功, ok为true时,ret为java方法的返回值,ok为false时,ret为出错原因
 
 -- end --

@@ -679,7 +679,7 @@ end
 -- @function [parent=#io] writefile
 -- @param string path 文件完全路径
 -- @param string content 要写入的内容
--- @param [string mode] 写入模式，默认值为 "w+b"
+-- @param string mode 写入模式，默认值为 "w+b"
 -- @return boolean#boolean 
 
 --[[--
@@ -919,7 +919,7 @@ end
 -- @function [parent=#table] insertto
 -- @param table dest 目标表格
 -- @param table src 来源表格
--- @param [integer begin] 插入位置
+-- @param integer begin 插入位置,默认最后
 
 --[[--
 
@@ -961,7 +961,7 @@ end
 -- @function [parent=#table] indexof
 -- @param table array 表格
 -- @param mixed value 要查找的值
--- @param [integer begin] 起始索引值
+-- @param integer begin 起始索引值
 -- @return integer#integer 
 
 --[[--
@@ -1024,7 +1024,7 @@ end
 -- @function [parent=#table] removebyvalue
 -- @param table array 表格
 -- @param mixed value 要删除的值
--- @param [boolean removeall] 是否删除所有相同的值
+-- @param boolean removeall 是否删除所有相同的值
 -- @return integer#integer 
 
 --[[--
