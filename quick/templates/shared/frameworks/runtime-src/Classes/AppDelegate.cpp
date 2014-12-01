@@ -71,7 +71,7 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-#if (COCOS2D_DEBUG > 0)
+#if (COCOS2D_DEBUG > 0) && CC_USE_RUNTIME
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     if (_launchMode)
     {
@@ -119,7 +119,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
 
-#if (COCOS2D_DEBUG > 0) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (COCOS2D_DEBUG > 0) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && CC_USE_RUNTIME
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
     if (_launchMode)
     {
