@@ -69,18 +69,27 @@ def connect_db():
     db_user = os.environ['db_user']
     db_pw = os.environ['db_pw']
     db_name=os.environ['db_name']
-    db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
+    try:
+        db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
+    except:
+        traceback.print_exc()
     return db
 
 def close_db(db):
-    db.close()
+    try:
+        db.close()
+    except:
+        traceback.print_exc()
 
 def save_build_stats(db, pr, filename, size):
-    cursor = db.cursor()
-    sql = "INSERT INTO `%s` (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
-    print sql
-    cursor.execute(sql)
-    db.commit()
+    try:
+        cursor = db.cursor()
+        sql = "INSERT INTO `%s` (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
+        print sql
+        cursor.execute(sql)
+        db.commit()
+    except:
+        traceback.print_exc()
 
 def scan_all_libs(db, pr_num):
     stats = {}

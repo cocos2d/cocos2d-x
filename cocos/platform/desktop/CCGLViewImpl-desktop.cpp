@@ -246,13 +246,13 @@ static keyCodeItem g_keyCodeStructArray[] = {
     { GLFW_KEY_KP_ADD          , EventKeyboard::KeyCode::KEY_KP_PLUS       },
     { GLFW_KEY_KP_ENTER        , EventKeyboard::KeyCode::KEY_KP_ENTER      },
     { GLFW_KEY_KP_EQUAL        , EventKeyboard::KeyCode::KEY_EQUAL         },
-    { GLFW_KEY_LEFT_SHIFT      , EventKeyboard::KeyCode::KEY_SHIFT         },
-    { GLFW_KEY_LEFT_CONTROL    , EventKeyboard::KeyCode::KEY_CTRL          },
-    { GLFW_KEY_LEFT_ALT        , EventKeyboard::KeyCode::KEY_ALT           },
+    { GLFW_KEY_LEFT_SHIFT      , EventKeyboard::KeyCode::KEY_LEFT_SHIFT         },
+    { GLFW_KEY_LEFT_CONTROL    , EventKeyboard::KeyCode::KEY_LEFT_CTRL          },
+    { GLFW_KEY_LEFT_ALT        , EventKeyboard::KeyCode::KEY_LEFT_ALT           },
     { GLFW_KEY_LEFT_SUPER      , EventKeyboard::KeyCode::KEY_HYPER         },
-    { GLFW_KEY_RIGHT_SHIFT     , EventKeyboard::KeyCode::KEY_SHIFT         },
-    { GLFW_KEY_RIGHT_CONTROL   , EventKeyboard::KeyCode::KEY_CTRL          },
-    { GLFW_KEY_RIGHT_ALT       , EventKeyboard::KeyCode::KEY_ALT           },
+    { GLFW_KEY_RIGHT_SHIFT     , EventKeyboard::KeyCode::KEY_RIGHT_SHIFT         },
+    { GLFW_KEY_RIGHT_CONTROL   , EventKeyboard::KeyCode::KEY_RIGHT_CTRL          },
+    { GLFW_KEY_RIGHT_ALT       , EventKeyboard::KeyCode::KEY_RIGHT_ALT           },
     { GLFW_KEY_RIGHT_SUPER     , EventKeyboard::KeyCode::KEY_HYPER         },
     { GLFW_KEY_MENU            , EventKeyboard::KeyCode::KEY_MENU          },
     { GLFW_KEY_LAST            , EventKeyboard::KeyCode::KEY_NONE          }
@@ -661,12 +661,40 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
 
 void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
+    EventKeyboard::KeyCode additionalKeyCode = EventKeyboard::KeyCode::KEY_NONE;
+    
+    switch (key)
+    {
+        case GLFW_KEY_LEFT_ALT:
+        case GLFW_KEY_RIGHT_ALT:
+            additionalKeyCode = EventKeyboard::KeyCode::KEY_ALT;
+            break;
+        case GLFW_KEY_LEFT_CONTROL:
+        case GLFW_KEY_RIGHT_CONTROL:
+            additionalKeyCode = EventKeyboard::KeyCode::KEY_CTRL;
+            break;
+        case GLFW_KEY_LEFT_SHIFT:
+        case GLFW_KEY_RIGHT_SHIFT:
+            additionalKeyCode = EventKeyboard::KeyCode::KEY_SHIFT;
+            break;
+        default:
+            break;
+    }
+    
     if (GLFW_REPEAT != action)
     {
         EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
+        
+        // Keep compatibility for the old keycodes like SHIFT, CTRL, ALT.
+        if (additionalKeyCode != EventKeyboard::KeyCode::KEY_NONE)
+        {
+            EventKeyboard additionalEvent(additionalKeyCode, GLFW_PRESS == action);
+            dispatcher->dispatchEvent(&additionalEvent);
+        }
     }
+    
     if (GLFW_RELEASE != action && g_keyCodeMap[key] == EventKeyboard::KeyCode::KEY_BACKSPACE)
     {
         IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();

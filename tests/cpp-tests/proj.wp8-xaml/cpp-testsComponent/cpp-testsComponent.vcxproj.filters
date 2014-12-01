@@ -885,6 +885,9 @@
     <ClCompile Include="..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
       <Filter>Classes\ExtensionsTest\AssetsManagerExLoaderScene</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceMathTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Classes\AppDelegate.h">
@@ -1631,6 +1634,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
       <Filter>Classes\ExtensionsTest\AssetsManagerExLoaderScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceMathTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

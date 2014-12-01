@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "cocostudio/CocoLoader.h"
 #include "ui/CocosGUI.h"
 #include "CSParseBinary.pb.h"
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
