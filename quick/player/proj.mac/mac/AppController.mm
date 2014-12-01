@@ -202,25 +202,20 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     pEngine->executeScriptFile(playerCoreFilePath.c_str());
 }
 
-- (void) createEditMenu
+- (void) adjustEditMenuIndex
 {
     NSApplication *thisApp = [NSApplication sharedApplication];
     NSMenu *mainMenu = [thisApp mainMenu];
 
-    NSMenu *onemenu = [[[NSMenu alloc] initWithTitle:@"Edit"] autorelease];
-    NSMenuItem *soMenuItem = [[NSMenuItem alloc] initWithTitle:@""
-                                                        action:nil
-                                                 keyEquivalent:@""];
-
-    NSUInteger index = 2;
-    if (index > [mainMenu itemArray].count)
-        index = [mainMenu itemArray].count;
-    [mainMenu insertItem:soMenuItem atIndex:index];
-    [mainMenu setSubmenu:onemenu forItem:soMenuItem];
-
-
-    [onemenu addItemWithTitle:@"Copy" action:@selector(copy:) keyEquivalent:@"c"];
-    [onemenu addItemWithTitle:@"Select All" action:@selector(selectAll:) keyEquivalent:@"a"];
+    NSMenuItem *editMenuItem = [mainMenu itemWithTitle:@"Edit"];
+    if (editMenuItem)
+    {
+        NSUInteger index = 2;
+        if (index > [mainMenu itemArray].count)
+            index = [mainMenu itemArray].count;
+        [[editMenuItem menu] removeItem:editMenuItem];
+        [mainMenu insertItem:editMenuItem atIndex:index];
+    }
 }
 
 #pragma mark -
@@ -345,7 +340,7 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     }
     
     [self loadLuaConfig];
-    [self createEditMenu];
+    [self adjustEditMenuIndex];
     if (!_project.isAppMenu())
     {
         NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
