@@ -1901,14 +1901,20 @@ Vec2 Node::convertToWorldSpace(const Vec2& nodePoint) const
 
 Vec2 Node::convertToNodeSpaceAR(const Vec2& worldPoint) const
 {
-    Vec2 nodePoint = convertToNodeSpace(worldPoint);
-    return nodePoint - _anchorPointInPoints;
+    if (_ignoreAnchorPointForPosition)
+    {
+        return convertToNodeSpace(worldPoint);
+    }
+    return convertToNodeSpace(worldPoint) - _anchorPointInPoints;
 }
 
 Vec2 Node::convertToWorldSpaceAR(const Vec2& nodePoint) const
 {
-    Vec2 pt = nodePoint + _anchorPointInPoints;
-    return convertToWorldSpace(pt);
+    if (_ignoreAnchorPointForPosition)
+    {
+        return convertToWorldSpace(nodePoint);
+    }
+    return convertToWorldSpace(nodePoint + _anchorPointInPoints);
 }
 
 Vec2 Node::convertToWindowSpace(const Vec2& nodePoint) const
