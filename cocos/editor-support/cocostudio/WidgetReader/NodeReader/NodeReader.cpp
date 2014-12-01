@@ -334,6 +334,7 @@ namespace cocostudio
         float w             = options->size()->width();
         float h             = options->size()->height();
         int alpha           = options->alpha();
+        Color3B color(options->color()->r(), options->color()->g(), options->color()->b());
         
         node->setName(name);
         
@@ -359,6 +360,8 @@ namespace cocostudio
             node->setContentSize(Size(w, h));
         if (alpha != 255)
             node->setOpacity(alpha);
+        
+        node->setColor(color);
         
         node->setTag(tag);
         node->setUserObject(timeline::ActionTimelineData::create(actionTag));
