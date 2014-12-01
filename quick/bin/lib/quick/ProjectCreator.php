@@ -440,6 +440,11 @@ class ProjectCreator
         }
         $stat = stat($src);
 
+        foreach ($this->vars as $key => $value)
+        {
+            $contents = str_replace($key, $value, $contents);
+        }
+
         if (file_put_contents($dest, $contents) == false)
         {
             printf("ERROR: file_put_contents failure\n");
