@@ -54,7 +54,7 @@ int lua_cocos2dx_csloader_CSLoader_createTimeline(lua_State* tolua_S)
         object_to_luaval<cocostudio::timeline::ActionTimeline>(tolua_S, "ccs.ActionTimeline",(cocostudio::timeline::ActionTimeline*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:createTimeline",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:createTimeline",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
