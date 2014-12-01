@@ -807,6 +807,11 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
     }
     else
     {
+        std::string customClassName = nodetree->customClassName()->c_str();
+        if (customClassName != "")
+        {
+            classname = customClassName;
+        }
         std::string readername = getGUIClassName(classname);
         readername.append("Reader");
         

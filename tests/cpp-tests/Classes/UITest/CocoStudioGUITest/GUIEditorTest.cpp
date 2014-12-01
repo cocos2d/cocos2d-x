@@ -120,6 +120,7 @@ g_guisTests[] =
         }
 	},
      */
+    /*
     {
         "gui TextAtlas Editor Test",
         [](Ref* sender)
@@ -132,6 +133,7 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+     */
     {
         "gui Text Editor Test",
         [](Ref* sender)
