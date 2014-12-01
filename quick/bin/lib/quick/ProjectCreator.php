@@ -222,6 +222,7 @@ class ProjectCreator
             if (!$this->copyFile($sourcePath)) return false;
         }
 
+        $this->copyTemplateSharedFiles();
         $this->copyFrameworkFiles();
         $this->copyRuntimeSources();
         if (!$this->config['lite'])
@@ -476,6 +477,24 @@ class ProjectCreator
             $dest = str_replace($srcPath, $dstPath, $src);
             $this->replaceFile($src, $dest, "create");
         }
+    }
+
+    private function copyTemplateSharedFiles()
+    {
+        $quickPath = $_ENV['QUICK_V3_ROOT'] . "/quick/templates/shared";
+        $cocosPath = $this->config['output'];
+
+        $dirname = "/res";
+        $src = $quickPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
+
+        $dirname = "/src";
+        $src = $quickPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
+
+        return true;
     }
 
     private function copyFrameworkFiles()
