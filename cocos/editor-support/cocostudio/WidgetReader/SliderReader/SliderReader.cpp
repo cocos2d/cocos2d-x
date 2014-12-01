@@ -220,7 +220,7 @@ namespace cocostudio
         std::string progressBarPlistFile = "";
         int progressBarResourceType = 0;
         
-        int percent = 50;
+        int percent = 0;
         bool displaystate = true;
         
         // attributes
