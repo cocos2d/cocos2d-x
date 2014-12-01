@@ -125,6 +125,9 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
+  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNode.cpp
+  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNodeReader.cpp
+  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/NewAudioEngineTest/NewAudioEngineTest.cpp
