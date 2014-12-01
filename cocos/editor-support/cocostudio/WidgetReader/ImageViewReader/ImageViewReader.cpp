@@ -4,7 +4,6 @@
 
 #include "ui/UIImageView.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
@@ -154,54 +153,7 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
-    
-    void ImageViewReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        
-        const protocolbuffers::ImageViewOptions& options = nodeTree.imageviewoptions();        
-        ImageView* imageView = static_cast<ImageView*>(widget);
-
-		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
-        
-        const protocolbuffers::ResourceData& imageFileNameDic = options.filenamedata();
-        int imageFileNameType = imageFileNameDic.resourcetype();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
-        imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
-        
-        
-        bool scale9EnableExist = options.has_scale9enable();
-        bool scale9Enable = false;
-        if (scale9EnableExist)
-        {
-            scale9Enable = options.scale9enable();
-        }
-        imageView->setScale9Enabled(scale9Enable);
-        
-        
-        if (scale9Enable)
-        {
-            imageView->setUnifySizeEnabled(false);
-            imageView->ignoreContentAdaptWithSize(false);
-            
-            float swf = options.has_scale9width() ? options.scale9width() : 80.0f;
-            float shf = options.has_scale9height() ? options.scale9height() : 80.0f;
-            imageView->setContentSize(Size(swf, shf));
-            
-            
-            float cx = options.capinsetsx();
-            float cy = options.capinsetsy();
-            float cw = options.has_capinsetswidth() ? options.capinsetswidth() : 1.0;
-            float ch = options.has_capinsetsheight() ? options.capinsetsheight() : 1.0;
-            
-            imageView->setCapInsets(Rect(cx, cy, cw, ch));
-            
-        }
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
+    }        
     
     Offset<Table> ImageViewReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                 flatbuffers::FlatBufferBuilder *builder)

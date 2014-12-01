@@ -4,7 +4,6 @@
 
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2/tinyxml2.h"
@@ -143,62 +142,7 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
-    
-    void TextReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-		Text* label = static_cast<Text*>(widget);
-        const protocolbuffers::TextOptions& options = nodeTree.textoptions();
-        
-		bool IsCustomSize = options.iscustomsize();
-		label->ignoreContentAdaptWithSize(!IsCustomSize);
-
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        
-        label->setUnifySizeEnabled(false);
-        
-        std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
-        
-        bool touchScaleChangeAble = options.touchscaleenable();
-        label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-        const char* text = options.has_text() ? options.text().c_str() : "Text Label";
-        label->setString(text);
-        
-        int fontSize = options.has_fontsize() ? options.fontsize() : 20;
-        label->setFontSize(fontSize);
-        
-        std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
-        label->setFontName(fontName);        
-        
-        bool aw = options.has_areawidth();
-        bool ah = options.has_areaheight();
-        if (aw && ah)
-        {
-            Size size = Size(options.areawidth(), options.areaheight());
-            label->setTextAreaSize(size);
-        }
-        bool ha = options.has_halignment();
-        if (ha)
-        {
-            label->setTextHorizontalAlignment((TextHAlignment)options.halignment());
-        }
-        bool va = options.has_valignment();
-        if (va)
-        {
-            label->setTextVerticalAlignment((TextVAlignment)options.valignment());
-        }
-
-		if (options.has_fontresource())
-		{
-			const protocolbuffers::ResourceData& resourceData = options.fontresource();
-		    label->setFontName(protocolBuffersPath + resourceData.path());
-		}
-        
-
-
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
+    }        
     
     Offset<Table> TextReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                            flatbuffers::FlatBufferBuilder *builder)

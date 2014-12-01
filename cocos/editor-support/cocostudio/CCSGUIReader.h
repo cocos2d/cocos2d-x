@@ -126,11 +126,6 @@ public:
                                                 CocoLoader* cocoLoader,
                                                 stExpCocoNode*	pCocoNode) = 0;
     
-    virtual cocos2d::ui::Widget* widgetFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree) = 0;
-    virtual void setPropsForAllWidgetFromProtocolBuffers(WidgetReaderProtocol* reader,
-                                                         cocos2d::ui::Widget* widget,
-                                                         const protocolbuffers::NodeTree& nodetree) = 0;
-    
 protected:
     void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);
     std::string  getWidgetReaderClassName(const std::string& classname);
@@ -190,11 +185,6 @@ public:
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
                                                               const rapidjson::Value& customOptions);
-    
-    virtual cocos2d::ui::Widget* widgetFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree) { return NULL; };
-    virtual void setPropsForAllWidgetFromProtocolBuffers(WidgetReaderProtocol* reader,
-                                                         cocos2d::ui::Widget* widget,
-                                                         const protocolbuffers::NodeTree& nodetree) {};
 };
    
 class CC_STUDIO_DLL WidgetPropertiesReader0300 : public WidgetPropertiesReader
@@ -238,12 +228,7 @@ public:
     
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
-                                                              const rapidjson::Value& customOptions);
-    
-    virtual cocos2d::ui::Widget* widgetFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree);
-    virtual void setPropsForAllWidgetFromProtocolBuffers(WidgetReaderProtocol* reader,
-                                                         cocos2d::ui::Widget* widget,
-                                                         const protocolbuffers::NodeTree& nodetree);    
+                                                              const rapidjson::Value& customOptions);        
 };
 
 

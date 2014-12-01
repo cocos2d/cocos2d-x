@@ -67,7 +67,6 @@ ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
 ActionTimeline/CCActionTimeline.cpp \
 ActionTimeline/CSLoader.cpp \
-CSParseBinary.pb.cc \
 FlatBuffersSerialize.cpp \
 WidgetCallBackHandlerProtocol.cpp
  
@@ -82,7 +81,6 @@ LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
 LOCAL_STATIC_LIBRARIES += cocos_flatbuffers_static
 
 include $(BUILD_STATIC_LIBRARY)

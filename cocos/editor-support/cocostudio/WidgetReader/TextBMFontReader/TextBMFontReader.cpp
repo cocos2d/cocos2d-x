@@ -4,7 +4,6 @@
 
 #include "ui/UITextBMFont.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2/tinyxml2.h"
@@ -110,44 +109,7 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
-    
-    void TextBMFontReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
-        
-        TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
-        const protocolbuffers::TextBMFontOptions& options = nodeTree.textbmfontoptions();
-        
-        
-        const protocolbuffers::ResourceData& cmftDic = options.filenamedata();
-        int cmfType = cmftDic.resourcetype();
-        switch (cmfType)
-        {
-            case 0:
-            {
-                std::string tp_c = jsonPath;
-                const char* cmfPath = cmftDic.path().c_str();
-                const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelBMFont->setFntFile(cmf_tp);
-                break;
-            }
-            case 1:
-                CCLOG("Wrong res type of LabelAtlas!");
-                break;
-            default:
-                break;
-        }
-        
-        const char* text = (options.has_text()) ? options.text().c_str() : "Text Label";
-        labelBMFont->setString(text);
-        
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
+    }        
     
     Offset<Table> TextBMFontReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                  flatbuffers::FlatBufferBuilder *builder)

@@ -47,18 +47,6 @@ namespace flatbuffers
     struct ComAudioOptions;
 }
 
-namespace protocolbuffers
-{
-    class NodeTree;
-	class WidgetOptions;
-    class SpriteOptions;
-    class ProjectNodeOptions;
-    class ParticleSystemOptions;
-    class TMXTiledMapOptions;
-    class ComponentOptions;
-    class ComAudioOptions;
-}
-
 namespace cocostudio
 {
     class ComAudio;
@@ -98,19 +86,9 @@ public:
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
     std::string getJsonPath() const { return _jsonPath; }
     
-    cocos2d::Node* createNodeFromProtocolBuffers(const std::string& filename);
-    cocos2d::Node* nodeFromProtocolBuffersFile(const std::string& fileName);
-    cocos2d::Node* nodeFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree);
-    
     cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename);
     cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName);
     cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree);
-    
-    void setRecordProtocolBuffersPath(bool record) { _recordProtocolBuffersPath = record; }
-    bool isRecordProtocolBuffersPath() const { return _recordProtocolBuffersPath; }
-    
-    void setProtocolBuffersPath(std::string protocolBuffersPath) { _protocolBuffersPath = protocolBuffersPath; }
-    std::string getProtocolBuffersPath() const { return _protocolBuffersPath; }
     
     bool bindCallback(const std::string& callbackName,
                       const std::string& callbackType,
@@ -140,28 +118,7 @@ protected:
     
     // load component
     cocos2d::Component* loadComponent(const rapidjson::Value& json);
-    cocos2d::Component* loadComAudio(const rapidjson::Value& json);
-    
-    void setPropsForNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForSingleNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForSpriteFromProtocolBuffers(cocos2d::Node* node,
-                                              const protocolbuffers::SpriteOptions& spriteOptions,
-                                              const protocolbuffers::WidgetOptions& nodeOptions);
-	cocos2d::Node* createParticleFromProtocolBuffers(const protocolbuffers::ParticleSystemOptions& particleSystemOptions,
-													 const protocolbuffers::WidgetOptions& nodeOptions);    
-	cocos2d::Node* createTMXTiledMapFromProtocolBuffers(const protocolbuffers::TMXTiledMapOptions& tmxTiledMapOptions,
-														const protocolbuffers::WidgetOptions& nodeOptions);    
-    void setPropsForProjectNodeFromProtocolBuffers(cocos2d::Node* node,
-                                                   const protocolbuffers::ProjectNodeOptions& projectNodeOptions,
-                                                   const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForSimpleAudioFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
-    
-    cocos2d::Component* createComponentFromProtocolBuffers(const protocolbuffers::ComponentOptions& componentOptions);
-    void setPropsForComponentFromProtocolBuffers(cocos2d::Component* component, const protocolbuffers::ComponentOptions& componentOptions);
-    
-    void setPropsForComAudioFromProtocolBuffers(cocos2d::Component* component,
-                                                const protocolbuffers::ComAudioOptions& comAudioOptions);
-    
+    cocos2d::Component* loadComAudio(const rapidjson::Value& json);    
     
     bool isWidget(const std::string& type);
     bool isCustomWidget(const std::string& type);
@@ -182,9 +139,6 @@ protected:
     bool _recordJsonPath;
     
     std::string _jsonPath;
-    
-    bool _recordProtocolBuffersPath;
-    std::string _protocolBuffersPath;
     
     std::string _monoCocos2dxVersion;
     

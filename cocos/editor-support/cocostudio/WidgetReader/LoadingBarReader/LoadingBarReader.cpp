@@ -4,7 +4,6 @@
 
 #include "ui/UILoadingBar.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
@@ -146,53 +145,7 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
-    
-    void LoadingBarReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        
-        LoadingBar* loadingBar = static_cast<LoadingBar*>(widget);
-        const protocolbuffers::LoadingBarOptions& options = nodeTree.loadingbaroptions();
-
-		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
-        
-		const protocolbuffers::ResourceData& imageFileNameDic = options.texturedata();
-        int imageFileNameType = imageFileNameDic.resourcetype();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic.path(), (Widget::TextureResType)imageFileNameType);
-        loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
-        
-        
-        /* gui mark add load bar scale9 parse */
-        bool scale9Enable = options.scale9enable();
-        loadingBar->setScale9Enabled(scale9Enable);
-        
-        
-        float cx = options.capinsetsx();
-        float cy = options.capinsetsy();
-        float cw = options.has_capinsetswidth() ? options.capinsetswidth() : 1;
-        float ch = options.has_capinsetsheight() ? options.capinsetsheight() : 1;
-        
-        if (scale9Enable) {
-            loadingBar->setCapInsets(Rect(cx, cy, cw, ch));
-            
-        }
-        
-		const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
-        float width = widgetOptions.width();
-        float height = widgetOptions.height();
-        loadingBar->setContentSize(Size(width, height));
-        
-        /**/
-        
-        loadingBar->setDirection(LoadingBar::Direction(options.direction()));
-        int percent = options.has_percent() ? options.percent() : 100;
-        loadingBar->setPercent(percent);
-        
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
+    }        
     
     Offset<Table> LoadingBarReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                  flatbuffers::FlatBufferBuilder *builder)

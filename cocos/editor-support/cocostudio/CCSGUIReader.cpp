@@ -41,7 +41,6 @@ THE SOFTWARE.
 #include "WidgetReader/ListViewReader/ListViewReader.h"
 #include "cocostudio/CocoLoader.h"
 #include "ui/CocosGUI.h"
-#include "CSParseBinary.pb.h"
 #include "tinyxml2.h"
 
 using namespace cocos2d;
@@ -1542,88 +1541,6 @@ void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromJsonDictionary(co
     {
         (object->*selector)(classType, widget, customOptions);
     }    
-}
-    
-Widget* WidgetPropertiesReader0300::widgetFromProtocolBuffers(const protocolbuffers::NodeTree &nodetree)
-{
-    std::string classname = nodetree.classname();
-    CCLOG("classname = %s", classname.c_str());
-    
-    Widget* widget = this->createGUI(classname);
-    std::string readerName = this->getWidgetReaderClassName(classname);
-    
-    WidgetReaderProtocol* reader = this->createWidgetReaderProtocol(readerName);
-    
-    if (reader)
-    {
-        // widget parse with widget reader
-        setPropsForAllWidgetFromProtocolBuffers(reader, widget, nodetree);
-    }
-    else
-    {
-        //
-        // 1st., custom widget parse properties of parent widget with parent widget reader
-        readerName = this->getWidgetReaderClassName(widget);
-        reader =  this->createWidgetReaderProtocol(readerName);
-        if (reader && widget)
-        {
-            setPropsForAllWidgetFromProtocolBuffers(reader, widget, nodetree);
-            
-            // 2nd., custom widget parse with custom reader
-            const protocolbuffers::WidgetOptions& widgetOptions = nodetree.widgetoptions();
-            const char* customProperty = widgetOptions.customproperty().c_str();
-            rapidjson::Document customJsonDict;
-            customJsonDict.Parse<0>(customProperty);
-            if (customJsonDict.HasParseError())
-            {
-                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
-            }
-            setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
-        }
-        else
-        {
-            CCLOG("Widget or WidgetReader doesn't exists!!!  Please check your json file.");
-        }
-        //
-    }
-    
-    int size = nodetree.children_size();
-    CCLOG("widget children size = %d", size);
-    for (int i = 0; i < size; ++i)
-    {
-        protocolbuffers::NodeTree subNodeTree = nodetree.children(i);
-        Widget* child = widgetFromProtocolBuffers(subNodeTree);
-        CCLOG("widget child = %p", child);
-        if (child)
-        {
-            PageView* pageView = dynamic_cast<PageView*>(widget);
-            if (pageView)
-            {
-                pageView->addPage(static_cast<Layout*>(child));
-            }
-            else
-            {
-                ListView* listView = dynamic_cast<ListView*>(widget);
-                if (listView)
-                {
-                    listView->pushBackCustomItem(child);
-                }
-                else
-                {
-                    widget->addChild(child);
-                }
-            }
-        }
-    }
-    
-    CCLOG("widget = %p", widget);
-    
-    return widget;
-}
-
-void WidgetPropertiesReader0300::setPropsForAllWidgetFromProtocolBuffers(cocostudio::WidgetReaderProtocol *reader, cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodetree)
-{
-    reader->setPropsFromProtocolBuffers(widget, nodetree);
 }
     
 }

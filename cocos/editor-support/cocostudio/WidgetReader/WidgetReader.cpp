@@ -5,7 +5,6 @@
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
 #include "../ActionTimeline/CCActionTimeline.h"
-#include "cocostudio/CSParseBinary.pb.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2/tinyxml2.h"
@@ -361,148 +360,7 @@ namespace cocostudio
         }
         
         this->endSetBasicProperties(widget);
-    }
-    
-    void WidgetReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        
-        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
-        
-        widget->setCascadeColorEnabled(true);
-        widget->setCascadeOpacityEnabled(true);
-        widget->setAnchorPoint(Vec2::ZERO);
-        
-        widget->setUnifySizeEnabled(true);
-        
-        bool ignoreSizeExsit = options.has_ignoresize();
-        if (ignoreSizeExsit)
-        {
-            widget->ignoreContentAdaptWithSize(options.ignoresize());
-        }
-        
-        widget->setSizeType((Widget::SizeType)options.sizetype());
-        widget->setPositionType((Widget::PositionType)options.positiontype());
-        
-        widget->setSizePercent(Vec2(options.sizepercentx(), options.sizepercenty()));
-        widget->setPositionPercent(Vec2(options.positionpercentx(), options.positionpercenty()));
-        
-        float w = options.width();
-        float h = options.height();
-        widget->setContentSize(Size(w, h));
-        
-        widget->setTag(options.tag());
-        widget->setActionTag(options.actiontag());
-        widget->setTouchEnabled(options.touchable());
-        const char* name = options.name().c_str();
-        const char* widgetName = name ? name : "default";
-        widget->setName(widgetName);
-        
-        float x = options.x();
-        float y = options.y();
-        widget->setPosition(Vec2(x, y));
-        
-		if(options.has_alpha())
-		{
-			widget->setOpacity(options.alpha());
-		}
-        
-        widget->setScaleX(options.has_scalex() ? options.scalex() : 1.0);
-        
-        
-        widget->setScaleY(options.has_scaley() ? options.scaley() : 1.0);
-
-		widget->setRotationSkewX(options.has_rotationskewx() ? options.rotationskewx() : 0.0);
-
-		widget->setRotationSkewY(options.has_rotationskewy() ? options.rotationskewy() : 0.0);
-        
-        bool vb = options.has_visible();
-        if (vb)
-        {
-            widget->setVisible(options.visible());
-        }
-        
-        int z = options.zorder();
-        widget->setLocalZOrder(z);        
-        
-        
-        bool layout = options.has_layoutparameter();
-        if (layout)
-        {
-            
-            const protocolbuffers::LayoutParameter& layoutParameterDic = options.layoutparameter();;
-            int paramType = layoutParameterDic.type();
-            
-            LayoutParameter* parameter = nullptr;
-            switch (paramType)
-            {
-                case 0:
-                    break;
-                case 1:
-                {
-                    parameter = LinearLayoutParameter::create();
-                    int gravity = layoutParameterDic.gravity();
-                    ((LinearLayoutParameter*)parameter)->setGravity((cocos2d::ui::LinearLayoutParameter::LinearGravity)gravity);
-                    break;
-                }
-                case 2:
-                {
-                    parameter = RelativeLayoutParameter::create();
-                    RelativeLayoutParameter* rParameter = (RelativeLayoutParameter*)parameter;
-                    const char* relativeName = layoutParameterDic.relativename().c_str();
-                    rParameter->setRelativeName(relativeName);
-                    const char* relativeToName = layoutParameterDic.relativetoname().c_str();
-                    rParameter->setRelativeToWidgetName(relativeToName);
-                    int align = layoutParameterDic.align();
-                    rParameter->setAlign((cocos2d::ui::RelativeLayoutParameter::RelativeAlign)align);
-                    break;
-                }
-                default:
-                    break;
-            }
-            if (parameter)
-            {
-                float mgl = layoutParameterDic.marginleft();
-                float mgt = layoutParameterDic.margintop();
-                float mgr = layoutParameterDic.marginright();
-                float mgb = layoutParameterDic.margindown();
-                parameter->setMargin(Margin(mgl, mgt, mgr, mgb));
-                widget->setLayoutParameter(parameter);
-            }
-        }
-        
-    }
-    
-    void WidgetReader::setColorPropsFromProtocolBuffers(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
-        
-       
-        bool isColorRExists = options.has_colorr();
-        bool isColorGExists = options.has_colorg();
-        bool isColorBExists = options.has_colorb();
-        
-        int colorR = options.colorr();
-        int colorG = options.colorg();
-        int colorB = options.colorb();
-        
-        if (isColorRExists && isColorGExists && isColorBExists)
-        {
-            widget->setColor(Color3B(colorR, colorG, colorB));
-        }
-        
-        setAnchorPointForWidget(widget, nodeTree);
-        
-        bool flipX = options.flipx();
-        bool flipY = options.flipy();
-        if (flipX)
-        {
-            widget->setFlippedX(flipX);
-        }
-        if (flipY)
-        {
-            widget->setFlippedY(flipY);
-        }
-    }
+    }        
     
     Offset<Table> WidgetReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData, flatbuffers::FlatBufferBuilder *builder)
     {
@@ -840,38 +698,6 @@ namespace cocostudio
         setPropsWithFlatBuffers(widget, (Table*)widgetOptions);
         
         return widget;
-    }
-    
-    void WidgetReader::setAnchorPointForWidget(cocos2d::ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        const protocolbuffers::WidgetOptions& options = nodeTree.widgetoptions();
-        
-        bool isAnchorPointXExists = options.has_anchorpointx();
-        float anchorPointXInFile;
-        if (isAnchorPointXExists)
-        {
-            anchorPointXInFile = options.anchorpointx();
-        }
-        else
-        {
-            anchorPointXInFile = widget->getAnchorPoint().x;
-        }
-        
-        bool isAnchorPointYExists = options.has_anchorpointy();
-        float anchorPointYInFile;
-        if (isAnchorPointYExists)
-        {
-            anchorPointYInFile = options.anchorpointy();
-        }
-        else
-        {
-            anchorPointYInFile = widget->getAnchorPoint().y;
-        }
-        
-        if (isAnchorPointXExists || isAnchorPointYExists)
-        {
-            widget->setAnchorPoint(Vec2(anchorPointXInFile, anchorPointYInFile));
-        }
     }
     
     std::string WidgetReader::getResourcePath(const std::string &path, cocos2d::ui::Widget::TextureResType texType)

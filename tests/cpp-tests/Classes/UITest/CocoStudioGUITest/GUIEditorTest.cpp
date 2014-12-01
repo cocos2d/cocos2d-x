@@ -270,9 +270,7 @@ static Vec2 s_tCurPos = Vec2::ZERO;
 ////////////////////////////////////////////////////////
 void GUIEditorMainLayer::onEnter()
 {
-    Layer::onEnter();
-    
-    CSLoader::getInstance()->setRecordProtocolBuffersPath(true);
+    Layer::onEnter();    
     
     auto s = Director::getInstance()->getWinSize();
     

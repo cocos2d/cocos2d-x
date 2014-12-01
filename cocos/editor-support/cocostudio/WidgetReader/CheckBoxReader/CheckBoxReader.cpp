@@ -4,7 +4,6 @@
 
 #include "ui/UICheckBox.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
@@ -157,59 +156,7 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
-    
-    void CheckBoxReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
-    {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        
-        CheckBox* checkBox = static_cast<CheckBox*>(widget);
-        const protocolbuffers::CheckBoxOptions& options = nodeTree.checkboxoptions();
-
-		std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
-        
-        //load background image
-		const protocolbuffers::ResourceData& backGroundDic = options.backgroundboxdata();
-        int backGroundType = backGroundDic.resourcetype();
-        std::string backGroundTexturePath = this->getResourcePath(backGroundDic.path(), (Widget::TextureResType)backGroundType);
-        checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
-        
-        //load background selected image
-        const protocolbuffers::ResourceData& backGroundSelectedDic = options.backgroundboxselecteddata();
-        int backGroundSelectedType = backGroundSelectedDic.resourcetype();
-        std::string backGroundSelectedTexturePath = this->getResourcePath(backGroundSelectedDic.path(), (Widget::TextureResType)backGroundSelectedType);
-        checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
-        
-        //load frontCross image
-        const protocolbuffers::ResourceData& frontCrossDic = options.frontcrossdata();
-        int frontCrossType = frontCrossDic.resourcetype();
-        std::string frontCrossFileName = this->getResourcePath(frontCrossDic.path(), (Widget::TextureResType)frontCrossType);
-        checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
-        
-        //load backGroundBoxDisabledData
-        const protocolbuffers::ResourceData& backGroundDisabledDic = options.backgroundboxdisableddata();
-        int backGroundDisabledType = backGroundDisabledDic.resourcetype();
-        std::string backGroundDisabledFileName = this->getResourcePath(backGroundDisabledDic.path(), (Widget::TextureResType)backGroundDisabledType);
-        checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
-        
-        ///load frontCrossDisabledData
-        const protocolbuffers::ResourceData& frontCrossDisabledDic = options.frontcrossdisableddata();
-        int frontCrossDisabledType = frontCrossDisabledDic.resourcetype();
-        std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic.path(), (Widget::TextureResType)frontCrossDisabledType);
-        checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
-        
-        checkBox->setSelected(options.selectedstate());
-        
-		bool displaystate = true;
-		if(options.has_displaystate())
-		{
-			displaystate = options.displaystate();
-		}
-		checkBox->setBright(displaystate);
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
+    }        
     
     Offset<Table> CheckBoxReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                flatbuffers::FlatBufferBuilder *builder)
