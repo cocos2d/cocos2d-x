@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the '__PROJECT_COCOS_NAME__' target in the '__PROJECT_COCOS_NAME__' project
-//
-
-#ifdef __OBJC__
-	#import <Foundation/Foundation.h>
-	#import <UIKit/UIKit.h>
-#endif
