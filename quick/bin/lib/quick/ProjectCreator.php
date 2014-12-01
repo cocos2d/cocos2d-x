@@ -494,6 +494,11 @@ class ProjectCreator
         $dst = $cocosPath . $dirname;
         $this->copyDir($src, $dst);
 
+        $dirname = "/frameworks";
+        $src = $quickPath . $dirname;
+        $dst = $cocosPath . $dirname;
+        $this->copyDir($src, $dst);
+
         return true;
     }
 
