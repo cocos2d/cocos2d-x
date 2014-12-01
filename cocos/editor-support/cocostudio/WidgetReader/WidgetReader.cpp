@@ -554,6 +554,14 @@ namespace cocostudio
             {
                 //            rotation = atoi(value.c_str());
             }
+            else if (attriname == "FlipX")
+            {
+                flipX = (value == "True") ? true : false;
+            }
+            else if (attriname == "FlipY")
+            {
+                flipY = (value == "True") ? true : false;
+            }
             else if (attriname == "ZOrder")
             {
                 zOrder = atoi(value.c_str());

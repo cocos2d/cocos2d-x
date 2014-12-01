@@ -208,7 +208,7 @@ namespace cocostudio
         
         bool touchScaleEnabled = false;
         bool isCustomSize = false;
-        std::string fontName = "微软雅黑";
+        std::string fontName = "";
         int fontSize = 20;
         std::string text = "Text Label";
         int areaWidth = 0;

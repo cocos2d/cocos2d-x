@@ -217,7 +217,7 @@ namespace cocostudio
         std::string plistFile = "";
         int resourceType = 0;
         
-        std::string fontName = "微软雅黑";
+        std::string fontName = "";
         int fontSize = 20;
         std::string text = "";
         std::string placeHolder = "Text Field";

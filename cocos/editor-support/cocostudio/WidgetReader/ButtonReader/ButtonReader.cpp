@@ -345,7 +345,7 @@ namespace cocostudio
         Rect capInsets;
         std::string text = "";
         int fontSize = 14;
-        std::string fontName = "微软雅黑";
+        std::string fontName = "";
         cocos2d::Size scale9Size;
         Color4B textColor(255, 255, 255, 255);
         
