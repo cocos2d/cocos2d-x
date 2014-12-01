@@ -144,6 +144,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 /** CCEAGLView uses double-buffer. This method swaps the buffers */
+-(void) setBuffers;
 -(void) swapBuffers;
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;

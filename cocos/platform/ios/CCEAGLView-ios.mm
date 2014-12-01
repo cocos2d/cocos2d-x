@@ -93,6 +93,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize multiSampling=multiSampling_;
 @synthesize isKeyboardShown=isKeyboardShown_;
 @synthesize keyboardShowNotification = keyboardShowNotification_;
+
 + (Class) layerClass
 {
     return [CAEAGLLayer class];
@@ -253,20 +254,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-    size_ = [renderer_ backingSize];
+    [renderer_ deleteFramebuffer];
+}
 
-    // Issue #914 #924
-//     Director *director = [Director sharedDirector];
-//     [director reshapeProjection:size_];
-    cocos2d::Size size;
-    size.width = size_.width;
-    size.height = size_.height;
-    //cocos2d::Director::getInstance()->reshapeProjection(size);
-
-    // Avoid flicker. Issue #350
-    //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-    cocos2d::Director::getInstance()->drawScene();
+-(void) setBuffers
+{
+    [renderer_ setFramebuffer:(CAEAGLLayer*)self.layer];
 }
 
 - (void) swapBuffers
