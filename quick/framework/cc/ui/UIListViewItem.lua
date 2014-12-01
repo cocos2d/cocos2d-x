@@ -91,7 +91,7 @@ end
 -- @function [parent=#UIListViewItem] setItemSize
 -- @param number w 列表项宽度
 -- @param number h 列表项高度
--- @param [boolean bNoMargin] 是否不使用margin margin可调用setMargin赋值
+-- @param boolean bNoMargin 是否不使用margin margin可调用setMargin赋值
 
 -- end --
 

@@ -279,7 +279,7 @@ end
 -- 在列表项中添加一项
 -- @function [parent=#UIListView] addItem
 -- @param node listItem 要添加的项
--- @param [integer pos] 要添加的位置
+-- @param integer pos 要添加的位置,默认添加到最后
 -- @return UIListView#UIListView 
 
 -- end --
@@ -303,7 +303,7 @@ end
 -- 在列表项中移除一项
 -- @function [parent=#UIListView] removeItem
 -- @param node listItem 要移除的项
--- @param [boolean bAni] 是否要显示移除动画
+-- @param boolean bAni 是否要显示移除动画
 -- @return UIListView#UIListView 
 
 -- end --

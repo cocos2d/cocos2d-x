@@ -14,38 +14,38 @@
 -- @function [parent=#global] printLog
 -- @param string tag 调试信息的 tag
 -- @param string fmt 调试信息格式
--- @param [mixed ...] 更多参数
+-- @param mixed ... 更多参数
 
 --------------------------------
 -- 输出 tag 为 ERR 的调试信息
 -- @function [parent=#global] printError
 -- @param string fmt 调试信息格式
--- @param [mixed ...] 更多参数
+-- @param mixed ... 更多参数
 
 --------------------------------
 -- 输出 tag 为 INFO 的调试信息
 -- @function [parent=#global] printInfo
 -- @param string fmt 调试信息格式
--- @param [mixed ...] 更多参数
+-- @param mixed ... 更多参数
 
 --------------------------------
 -- 输出值的内容
 -- @function [parent=#global] dump
 -- @param mixed value 要输出的值
--- @param [string desciption] 输出内容前的文字描述
+-- @param string desciption 输出内容前的文字描述
 -- @parma [integer nesting] 输出时的嵌套层级，默认为 3
 
 --------------------------------
 -- 输出格式化字符串
 -- @function [parent=#global] printf
 -- @param string fmt 输出格式
--- @param [mixed ...] 更多参数
+-- @param mixed ... 更多参数
 
 --------------------------------
 -- 检查并尝试转换为数值，如果无法转换则返回 0
 -- @function [parent=#global] checknumber
 -- @param mixed value 要检查的值
--- @param [integer base] 进制，默认为十进制
+-- @param integer base 进制，默认为十进制
 -- @return number#number ret (return value: number) 
 
 --------------------------------
@@ -97,7 +97,7 @@
 -- 载入一个模块
 -- @function [parent=#global] import
 -- @param string moduleName 要载入的模块的名字
--- @param [string currentModuleName] 当前模块名
+-- @param string currentModuleName 当前模块名
 -- @return module#module 
 
 --------------------------------
