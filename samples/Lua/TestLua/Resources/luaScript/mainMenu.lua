@@ -2,6 +2,7 @@ require "Cocos2d"
 require "luaScript/helper"
 require "luaScript/testResource"
 
+require "luaScript/BytecodeAndEncryptTest/BytecodeAndEncryptTest"
 require "luaScript/ActionsTest/ActionsTest"
 require "luaScript/TransitionsTest/TransitionsTest"
 require "luaScript/ActionsProgressTest/ActionsProgressTest"
@@ -46,6 +47,7 @@ local BeginPos = {x = 0, y = 0}
 
 
 local _allTests = {
+    { isSupported = true,  name = "BytecodeAndEncryptTest" , create_func   =   ByteCodeEncryptTestMain      },
     { isSupported = true,  name = "CocoStudioTest"         , create_func   =            CocoStudioTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },
