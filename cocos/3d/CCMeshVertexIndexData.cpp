@@ -84,7 +84,8 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
 {
     auto vertexdata = new (std::nothrow) MeshVertexData();
     int pervertexsize = meshdata.getPerVertexSize();
-    vertexdata->_vertexBuffer = VertexBuffer::create(pervertexsize, (int)(meshdata.vertex.size() / (pervertexsize / 4)));
+    int floatSizeInBytes = sizeof(float);
+    vertexdata->_vertexBuffer = VertexBuffer::create(pervertexsize, (int)(meshdata.vertex.size() / (pervertexsize / floatSizeInBytes)));
     vertexdata->_vertexData = VertexData::create();
     CC_SAFE_RETAIN(vertexdata->_vertexData);
     CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
@@ -99,7 +100,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     if(vertexdata->_vertexBuffer)
     {
-        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
+        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * floatSizeInBytes / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
     }
     
     AABB aabb;
