@@ -687,7 +687,7 @@ Offset<TimeLineBoolFrame> FlatBuffersSerialize::createTimeLineBoolFrame(const ti
         
         if (name == "Value")
         {
-            attrivalue = (attrivalue == "True") ? true : false;
+            value = (attrivalue == "True") ? true : false;
         }
         else if (name == "FrameIndex")
         {
