@@ -419,6 +419,11 @@ class ProjectCreator
 
     private function replaceFile($src, $dest, $cmd, $flagCheck)
     {
+        foreach ($this->vars as $key => $value)
+        {
+            $value = str_replace('.', DS, $value);
+            $dest = str_replace($key, $value, $dest);
+        }
         printf($cmd . " file \"%s\" ... ", $dest);
         $destinationDir = pathinfo($dest, PATHINFO_DIRNAME);
 
