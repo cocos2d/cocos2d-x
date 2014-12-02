@@ -212,24 +212,6 @@
     <Filter Include="network\Source Files">
       <UniqueIdentifier>{e3dc7161-12e0-4d3b-b364-00de56fe3755}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite">
-      <UniqueIdentifier>{f68c00d5-e79f-4b3b-b352-20808e2b4f39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src">
-      <UniqueIdentifier>{0037c6b3-aa22-4e63-9048-42ca6c88c9fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google">
-      <UniqueIdentifier>{4efe3422-d5e4-4dd9-8c5e-51a2333f554b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf">
-      <UniqueIdentifier>{38e945e9-f3d8-44e5-8ef9-54ff95ab6f1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf\io">
-      <UniqueIdentifier>{2002113e-f002-4ce3-ad7e-3e8609c691d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf\stubs">
-      <UniqueIdentifier>{b7fdf4e2-b3be-4b7a-b586-ddab39fb05b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="renderer">
       <UniqueIdentifier>{c52c9563-bc10-4b77-8bcc-0e061628fae7}</UniqueIdentifier>
     </Filter>
@@ -1251,50 +1233,8 @@
     <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp">
       <Filter>external\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\message_lite.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\repeated_field.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_gcc.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\common.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\once.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\CSParseBinary.pb.cc">
-      <Filter>cocostudio</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UILayoutComponent.cpp">
       <Filter>ui\Layouts</Filter>
@@ -2528,93 +2468,6 @@
     </ClInclude>
     <ClInclude Include="..\..\external\unzip\ioapi_mem.h">
       <Filter>external\unzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\config.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\message_lite.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\repeated_field.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite_inl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream_inl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_arm_gcc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_arm_qnx.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_atomicword_compat.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_macosx.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_mips_gcc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_pnacl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_gcc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\common.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\hash.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\map-util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\once.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\platform_macros.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stl_util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\template_util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\protobuf-lite\src\google\protobuf\stubs\type_traits.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h">
       <Filter>cocostudio\TimelineAction</Filter>
