@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DGravityAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -32,7 +32,7 @@ const float Particle3DGravityAffector::DEFAULT_GRAVITY = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DGravityAffector::Particle3DGravityAffector(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _gravity(DEFAULT_GRAVITY)
 {
 }
@@ -52,11 +52,11 @@ void Particle3DGravityAffector::setGravity(float gravity)
     _gravity = gravity;
 }
 
-void Particle3DGravityAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DGravityAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Applied scaling in V1.3.1
         /** Applying Newton's law of universal gravitation.	*/
         Vec3 distance = _derivedPosition - particle->position;

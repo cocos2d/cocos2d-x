@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DScaleAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +35,7 @@ const float Particle3DScaleAffector::DEFAULT_XYZ_SCALE = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DScaleAffector::Particle3DScaleAffector(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _dynScaleXSet(false),
     _dynScaleYSet(false),
     _dynScaleZSet(false),
@@ -170,7 +170,7 @@ void Particle3DScaleAffector::resetDynScaleXYZ(bool resetToDefault)
     }
 }
 //-----------------------------------------------------------------------
-float Particle3DScaleAffector::calculateScale(DynamicAttribute* dynScale, Particle3D* particle)
+float Particle3DScaleAffector::calculateScale(DynamicAttribute* dynScale, PUParticle3D* particle)
 {
     if (!particle)
         return 0.0f;
@@ -187,7 +187,7 @@ float Particle3DScaleAffector::calculateScale(DynamicAttribute* dynScale, Partic
     }
 }
 
-void Particle3DScaleAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DScaleAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
 
     //// Only continue if the particle is a visual particle
@@ -195,7 +195,7 @@ void Particle3DScaleAffector::updateAffector( Particle3D *particle, float deltaT
     //	return;
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         float ds = 0;
         float width = 0;
         float height = 0;

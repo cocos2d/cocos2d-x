@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_CIRCLE_EMITTER_H__
-#define __CC_PARTICLE_3D_CIRCLE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_CIRCLE_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_CIRCLE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  Particle3DCircleEmitter : public Particle3DEmitter
+class  Particle3DCircleEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
@@ -77,11 +77,11 @@ protected:
 
     /** Determine a particle position on the circle.
     */
-    virtual void initParticlePosition(Particle3D* particle);
+    virtual void initParticlePosition(PUParticle3D* particle);
 
     /** Determine the particle direction.
     */
-    virtual void initParticleDirection(Particle3D* particle);
+    virtual void initParticleDirection(PUParticle3D* particle);
 
 protected:
     float _radius;

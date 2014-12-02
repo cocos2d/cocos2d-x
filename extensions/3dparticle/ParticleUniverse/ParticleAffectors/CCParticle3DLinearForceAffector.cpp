@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DLinearForceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -36,11 +36,11 @@ void Particle3DLinearForceAffector::preUpdateAffector(float deltaTime)
 //-----------------------------------------------------------------------
 
 
-void Particle3DLinearForceAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DLinearForceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Affect the direction and take the specialisation into account
         if (_forceApplication == FA_ADD)
         {

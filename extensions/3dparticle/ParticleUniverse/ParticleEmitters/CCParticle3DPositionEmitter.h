@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_POSITION_EMITTER_H__
-#define __CC_PARTICLE_3D_POSITION_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_POSITION_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_POSITION_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPositionEmitter : public Particle3DEmitter
+class  Particle3DPositionEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
@@ -69,7 +69,7 @@ public:
 
     /** Generate a particle position based on the added positions.
     */
-    virtual void initParticlePosition(Particle3D* particle) override;
+    virtual void initParticlePosition(PUParticle3D* particle) override;
 
 protected:
     std::vector<Vec3> _positionList;

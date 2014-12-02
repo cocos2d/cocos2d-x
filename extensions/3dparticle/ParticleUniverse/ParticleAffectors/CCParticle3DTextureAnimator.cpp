@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DTextureAnimator.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -35,7 +35,7 @@ const bool Particle3DTextureAnimator::DEFAULT_START_RANDOM = true;
 
 //-----------------------------------------------------------------------
 Particle3DTextureAnimator::Particle3DTextureAnimator(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _animationTimeStep(DEFAULT_TIME_STEP),
     _animationTimeStepSet(false),
     _nextIndex(false),
@@ -102,7 +102,7 @@ void Particle3DTextureAnimator::setStartRandom(bool startRandom)
     _startRandom = startRandom;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::initParticleForEmission(Particle3D* particle)
+void Particle3DTextureAnimator::initParticleForEmission(PUParticle3D* particle)
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
@@ -160,7 +160,7 @@ void Particle3DTextureAnimator::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::determineNextTextureCoords(Particle3D* visualParticle)
+void Particle3DTextureAnimator::determineNextTextureCoords(PUParticle3D* visualParticle)
 {
     switch(_textureAnimationType)
     {
@@ -217,7 +217,7 @@ void Particle3DTextureAnimator::determineNextTextureCoords(Particle3D* visualPar
     }
 }
 
-void Particle3DTextureAnimator::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DTextureAnimator::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
@@ -225,7 +225,7 @@ void Particle3DTextureAnimator::updateAffector( Particle3D *particle, float delt
 
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Determine the next texture coords index
         if (_animationTimeStepSet)
         {

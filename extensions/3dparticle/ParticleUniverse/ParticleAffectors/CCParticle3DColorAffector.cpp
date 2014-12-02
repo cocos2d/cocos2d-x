@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DColorAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -32,7 +32,7 @@ const Particle3DColorAffector::ColorOperation Particle3DColorAffector::DEFAULT_C
 
 //-----------------------------------------------------------------------
 Particle3DColorAffector::Particle3DColorAffector() : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _colorOperation(DEFAULT_COLOR_OPERATION)
 {
 }
@@ -84,7 +84,7 @@ Particle3DColorAffector::ColorMapIterator Particle3DColorAffector::findNearestCo
     return --it;
 }
 
-void Particle3DColorAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DColorAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     // Fast rejection
     if (_colorMap.empty())
@@ -92,7 +92,7 @@ void Particle3DColorAffector::updateAffector( Particle3D *particle, float deltaT
 
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Linear interpolation of the colour
         Vec4 color = Vec4::ONE;
         float timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;

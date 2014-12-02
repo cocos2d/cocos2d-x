@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DSphereCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -65,7 +65,7 @@ void Particle3DSphereCollider::setInnerCollision(bool innerCollision)
     _innerCollision = innerCollision;
 }
 //-----------------------------------------------------------------------
-void Particle3DSphereCollider::calculateDirectionAfterCollision(Particle3D* particle, Vec3 distance, float distanceLength)
+void Particle3DSphereCollider::calculateDirectionAfterCollision(PUParticle3D* particle, Vec3 distance, float distanceLength)
 {
     switch (_collisionType)
     {
@@ -104,11 +104,11 @@ void Particle3DSphereCollider::calculateDirectionAfterCollision(Particle3D* part
     }
 }
 
-void Particle3DSphereCollider::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DSphereCollider::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
         Vec3 distance = particle->position - _derivedPosition;
@@ -180,7 +180,7 @@ void Particle3DSphereCollider::updateAffector( Particle3D *particle, float delta
         {
             calculateDirectionAfterCollision(particle, distance, distanceLength);
             calculateRotationSpeedAfterCollision(particle);
-            particle->addEventFlags(Particle3D::PEF_COLLIDED);
+            particle->addEventFlags(PUParticle3D::PEF_COLLIDED);
         }
     }
 }

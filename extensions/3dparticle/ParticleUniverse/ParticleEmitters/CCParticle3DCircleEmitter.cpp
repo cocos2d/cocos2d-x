@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DCircleEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 #include "base/ccRandom.h"
 
 NS_CC_BEGIN
@@ -37,7 +37,7 @@ const Vec3 Particle3DCircleEmitter::DEFAULT_NORMAL(0, 0, 0);
 
 //-----------------------------------------------------------------------
 Particle3DCircleEmitter::Particle3DCircleEmitter(void) : 
-    Particle3DEmitter(),
+    PUParticle3DEmitter(),
     _radius(DEFAULT_RADIUS),
     _circleAngle(DEFAULT_ANGLE),
     _originalCircleAngle(DEFAULT_ANGLE),
@@ -114,7 +114,7 @@ void Particle3DCircleEmitter::notifyStart (void)
     _circleAngle = _originalCircleAngle;
 }
 //----------------------------------------------------------------------- 
-void Particle3DCircleEmitter::initParticlePosition(Particle3D* particle)
+void Particle3DCircleEmitter::initParticlePosition(PUParticle3D* particle)
 {
     float angle = 0;
     if (_random)
@@ -148,7 +148,7 @@ void Particle3DCircleEmitter::initParticlePosition(Particle3D* particle)
     particle->originalPosition = particle->position;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::initParticleDirection(Particle3D* particle)
+void Particle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
 {
     if (_autoDirection)
     {
@@ -172,7 +172,7 @@ void Particle3DCircleEmitter::initParticleDirection(Particle3D* particle)
     else
     {
         // Use the standard way
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 NS_CC_END

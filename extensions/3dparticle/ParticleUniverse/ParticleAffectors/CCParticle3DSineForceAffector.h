@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
 
 #include "CCParticle3DBaseForceAffector.h"
 #include "base/ccTypes.h"
@@ -42,7 +42,7 @@ public:
     virtual ~Particle3DSineForceAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */

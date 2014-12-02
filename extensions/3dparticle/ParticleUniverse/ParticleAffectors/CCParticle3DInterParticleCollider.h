@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_COLOR_AFFECTOR_H__
-#define __CC_PARTICLE_3D_COLOR_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
 
 #include "CCParticle3DBaseCollider.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
-struct Particle3D;
+struct PUParticle3D;
 class  Particle3DInterParticleCollider : public Particle3DBaseCollider
 {
 public:
@@ -50,7 +50,7 @@ public:
 
     virtual void prepare() override;
     virtual void unPrepare() override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Todo
     */
@@ -73,7 +73,7 @@ protected:
 
     /** Todo
     */
-    bool validateAndExecuteSphereCollision (Particle3D* particle1, Particle3D* particle2, float timeElapsed);
+    bool validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float timeElapsed);
         
 protected:
 

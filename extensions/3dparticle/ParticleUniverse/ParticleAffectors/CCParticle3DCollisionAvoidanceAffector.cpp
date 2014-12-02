@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DCollisionAvoidanceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -31,7 +31,7 @@ const float Particle3DCollisionAvoidanceAffector::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
 Particle3DCollisionAvoidanceAffector::Particle3DCollisionAvoidanceAffector(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _radius(DEFAULT_RADIUS)
 {
 }
@@ -50,12 +50,12 @@ void Particle3DCollisionAvoidanceAffector::setRadius(float radius)
     _radius = radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DCollisionAvoidanceAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DCollisionAvoidanceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())
     //{
-    //	Particle3D *particle = iter;
+    //	PUParticle3D *particle = iter;
     //	// Activate spatial hashing
     //	particleTechnique->setSpatialHashingUsed(true);
 

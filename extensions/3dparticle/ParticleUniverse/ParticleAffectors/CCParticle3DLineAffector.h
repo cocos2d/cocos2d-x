@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_LINE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_LINE_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DLineAffector : public Particle3DAffector
+class  Particle3DLineAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -47,9 +47,9 @@ public:
     */
     virtual void notifyRescaled(const Vec3& scale) override;
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     virtual void postUpdateAffector(float deltaTime) override;
-    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime) override;
+    virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
     /** 
     */
     float getMaxDeviation(void) const;

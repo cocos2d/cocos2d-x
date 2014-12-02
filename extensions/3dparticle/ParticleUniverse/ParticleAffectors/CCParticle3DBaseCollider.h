@@ -23,16 +23,16 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_BASE_COLLIDER_H__
-#define __CC_PARTICLE_3D_BASE_COLLIDER_H__
+#ifndef __CC_PU_PARTICLE_3D_BASE_COLLIDER_H__
+#define __CC_PU_PARTICLE_3D_BASE_COLLIDER_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3d/CCAABB.h"
 
 NS_CC_BEGIN
 
-struct Particle3D;
-class  Particle3DBaseCollider : public Particle3DAffector
+struct PUParticle3D;
+class  Particle3DBaseCollider : public PUParticle3DAffector
 {
 public:
     /** Determines how a particle collision should be determined. IT_POINT means that the position of 
@@ -116,7 +116,7 @@ public:
         This function must be explicitly called in the updateAffector(float deltaTime) function of the class that inherits from 
         BaseCollider.
     */
-    void calculateRotationSpeedAfterCollision(Particle3D* particle);
+    void calculateRotationSpeedAfterCollision(PUParticle3D* particle);
 
 protected:
 

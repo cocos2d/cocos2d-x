@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DGeometryRotator.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -34,7 +34,7 @@ const Vec3 Particle3DGeometryRotator::DEFAULT_ROTATION_AXIS(0, 0, 0);
 
 //-----------------------------------------------------------------------
 Particle3DGeometryRotator::Particle3DGeometryRotator() : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _scaledRotationSpeed(0.0f),
     _useOwnRotationSpeed(DEFAULT_USE_OWN),
     //mQ(Quaternion::IDENTITY),
@@ -91,19 +91,19 @@ void Particle3DGeometryRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed
     _useOwnRotationSpeed = useOwnRotationSpeed;
 }
 //-----------------------------------------------------------------------
-float Particle3DGeometryRotator::calculateRotationSpeed(Particle3D* particle)
+float Particle3DGeometryRotator::calculateRotationSpeed(PUParticle3D* particle)
 {
     return _dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction);
 }
 //-----------------------------------------------------------------------
-void Particle3DGeometryRotator::initParticleForEmission(Particle3D* particle)
+void Particle3DGeometryRotator::initParticleForEmission(PUParticle3D* puParticle)
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
     //	return;
     for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        PUParticle3D *particle = static_cast<PUParticle3D*>(iter);
         if (!_rotationAxisSet)
         {
             // Set initial random rotation axis and orientation(PU 1.4)
@@ -127,11 +127,11 @@ void Particle3DGeometryRotator::initParticleForEmission(Particle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DGeometryRotator::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DGeometryRotator::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Rotate the geometry
 
         if (_useOwnRotationSpeed)

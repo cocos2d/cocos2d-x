@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_TEXTURE_ANIMATOR_H__
-#define __CC_PARTICLE_3D_TEXTURE_ANIMATOR_H__
+#ifndef __CC_PU_PARTICLE_3D_TEXTURE_ANIMATOR_H__
+#define __CC_PU_PARTICLE_3D_TEXTURE_ANIMATOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DTextureAnimator : public Particle3DAffector
+class  Particle3DTextureAnimator : public PUParticle3DAffector
 {
 public:
     enum TextureAnimationType
@@ -52,8 +52,8 @@ public:
     virtual ~Particle3DTextureAnimator(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void initParticleForEmission(Particle3D* particle) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void initParticleForEmission(PUParticle3D* particle) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the AnimationTimeStep. The AnimationTimeStep defines the time between each animation frame. */
     float getAnimationTimeStep(void) const;
@@ -89,7 +89,7 @@ protected:
 
     /** Todo.
     */
-    void determineNextTextureCoords(Particle3D* visualParticle);
+    void determineNextTextureCoords(PUParticle3D* visualParticle);
 
 protected:
     float _animationTimeStep;

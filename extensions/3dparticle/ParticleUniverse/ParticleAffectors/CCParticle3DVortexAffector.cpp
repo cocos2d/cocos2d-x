@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DVortexAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -33,7 +33,7 @@ const float Particle3DVortexAffector::DEFAULT_ROTATION_SPEED = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DVortexAffector::Particle3DVortexAffector(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _rotationVector(DEFAULT_ROTATION_VECTOR)
 {
     _dynRotationSpeed = new DynamicAttributeFixed();
@@ -77,11 +77,11 @@ float Particle3DVortexAffector::calculateRotationSpeed(void)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DVortexAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DVortexAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Explicitly check on 'freezed', because it passes the techniques' validation.
         if (particle->isFreezed())
             return;

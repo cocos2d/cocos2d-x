@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_SLAVE_EMITTER_H__
-#define __CC_PARTICLE_3D_SLAVE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_SLAVE_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_SLAVE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 //FIXME
-class  Particle3DSlaveEmitter : public Particle3DEmitter/*, public TechniqueListener*/
+class  Particle3DSlaveEmitter : public PUParticle3DEmitter/*, public TechniqueListener*/
 {
 public:
     Particle3DSlaveEmitter(void);
@@ -50,11 +50,11 @@ public:
 
     /** See ParticleEmitter.
     */
-    virtual void initParticlePosition(Particle3D* particle) override;
+    virtual void initParticlePosition(PUParticle3D* particle) override;
 
     /** See ParticleEmitter.
     */
-    virtual void initParticleDirection(Particle3D* particle) override;
+    virtual void initParticleDirection(PUParticle3D* particle) override;
 
     /** See ParticleEmitter.
     */
@@ -70,11 +70,11 @@ public:
 
     /** Initialise the emitted particle. This means that its position is set.
     */
-    //virtual void particleEmitted(ParticleTechnique* particleTechnique, Particle3D* particle);
+    //virtual void particleEmitted(ParticleTechnique* particleTechnique, PUParticle3D* particle);
 
     /** No implementation.
     */
-    //virtual void particleExpired(ParticleTechnique* particleTechnique, Particle3D* particle){};
+    //virtual void particleExpired(ParticleTechnique* particleTechnique, PUParticle3D* particle){};
 
     /** 
     */
@@ -82,7 +82,7 @@ public:
 
 protected:
 
-    Particle3D* _masterParticle;
+    PUParticle3D* _masterParticle;
     std::string _masterTechniqueName;
     std::string _masterEmitterName;
     Vec3 _masterPosition;

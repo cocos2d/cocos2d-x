@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DBoxCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -94,7 +94,7 @@ void Particle3DBoxCollider::setInnerCollision(bool innerCollision)
     _innerCollision = innerCollision;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::calculateDirectionAfterCollision(Particle3D* particle)
+void Particle3DBoxCollider::calculateDirectionAfterCollision(PUParticle3D* particle)
 {
     switch (_collisionType)
     {
@@ -194,11 +194,11 @@ bool Particle3DBoxCollider::isSmallestValue(float value, const Vec3& particlePos
         value <= value6);
 }
 
-void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DBoxCollider::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
 
@@ -264,7 +264,7 @@ void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTim
         {
             calculateDirectionAfterCollision(particle);
             calculateRotationSpeedAfterCollision(particle);
-            particle->addEventFlags(Particle3D::PEF_COLLIDED);
+            particle->addEventFlags(PUParticle3D::PEF_COLLIDED);
         }
     }
 

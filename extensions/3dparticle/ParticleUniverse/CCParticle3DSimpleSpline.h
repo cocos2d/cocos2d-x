@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_SIMPLE_SPLINE_H__
-#define __CC_PARTICLE_3D_SIMPLE_SPLINE_H__
+#ifndef __CC_PU_PARTICLE_3D_SIMPLE_SPLINE_H__
+#define __CC_PU_PARTICLE_3D_SIMPLE_SPLINE_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"

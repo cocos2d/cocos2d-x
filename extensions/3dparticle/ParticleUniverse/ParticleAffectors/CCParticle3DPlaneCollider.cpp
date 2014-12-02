@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DPlaneCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -59,7 +59,7 @@ void Particle3DPlaneCollider::notifyRescaled(const Vec3& scale)
 	_plane.redefine(_normal, getDerivedPosition());
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed)
+void Particle3DPlaneCollider::calculateDirectionAfterCollision(PUParticle3D* particle, float timeElapsed)
 {
     float directionLength = particle->direction.length();
     switch (_collisionType)
@@ -92,11 +92,11 @@ void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* parti
     }
 }
 
-void Particle3DPlaneCollider::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DPlaneCollider::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
 
@@ -158,7 +158,7 @@ void Particle3DPlaneCollider::updateAffector( Particle3D *particle, float deltaT
         {
             calculateDirectionAfterCollision(particle, deltaTime);
             calculateRotationSpeedAfterCollision(particle);
-            particle->addEventFlags(Particle3D::PEF_COLLIDED);
+            particle->addEventFlags(PUParticle3D::PEF_COLLIDED);
         }
     }
 

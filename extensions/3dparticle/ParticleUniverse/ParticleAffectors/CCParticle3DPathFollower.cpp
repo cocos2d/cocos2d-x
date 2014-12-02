@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DPathFollower.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -49,11 +49,11 @@ void Particle3DPathFollower::clearPoints (void)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DPathFollower::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DPathFollower::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         if (_spline.getNumPoints() > 0)
         {
             // PU 1.4

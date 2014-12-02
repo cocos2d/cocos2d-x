@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DBaseForceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -33,7 +33,7 @@ const Particle3DBaseForceAffector::ForceApplication Particle3DBaseForceAffector:
 
 //-----------------------------------------------------------------------
 Particle3DBaseForceAffector::Particle3DBaseForceAffector() 
-    : Particle3DAffector()
+    : PUParticle3DAffector()
     , _forceVector(DEFAULT_FORCE_VECTOR)
     , _scaledVector(Vec3::ZERO)
     , _forceApplication(DEFAULT_FORCE_APPL)

@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_GEOMETRY_ROTATOR_H__
-#define __CC_PARTICLE_3D_GEOMETRY_ROTATOR_H__
+#ifndef __CC_PU_PARTICLE_3D_GEOMETRY_ROTATOR_H__
+#define __CC_PU_PARTICLE_3D_GEOMETRY_ROTATOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 
 NS_CC_BEGIN
-struct Particle3D;
-class  Particle3DGeometryRotator : public Particle3DAffector
+struct PUParticle3D;
+class  Particle3DGeometryRotator : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -42,9 +42,9 @@ public:
     Particle3DGeometryRotator();
     virtual ~Particle3DGeometryRotator();
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** @copydoc ParticleAffector::_initParticleForEmission */
-    virtual void initParticleForEmission(Particle3D* particle) override;
+    virtual void initParticleForEmission(PUParticle3D* particle) override;
 
     /** Returns the rotation speed. This is the speed controlled by the affector. Besides
         the default rotation speed, it is also possible to use the particles own rotation speed.
@@ -80,7 +80,7 @@ protected:
 
     /** Returns a rotation speed value, depending on the type of dynamic attribute.
     */
-    float calculateRotationSpeed (Particle3D* particle);
+    float calculateRotationSpeed (PUParticle3D* particle);
 
 protected:
 

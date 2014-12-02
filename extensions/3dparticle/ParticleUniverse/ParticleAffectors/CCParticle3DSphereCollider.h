@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_SCALE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_SCALE_AFFECTOR_H__
 
 #include "CCParticle3DBaseCollider.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DSphere.h"
@@ -42,7 +42,7 @@ public:
     virtual ~Particle3DSphereCollider(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the radius of the sphere
     */
@@ -66,7 +66,7 @@ public:
 
     /** 
     */
-    void calculateDirectionAfterCollision(Particle3D* particle, Vec3 distance, float distanceLength);
+    void calculateDirectionAfterCollision(PUParticle3D* particle, Vec3 distance, float distanceLength);
 
 protected:
     float _radius;

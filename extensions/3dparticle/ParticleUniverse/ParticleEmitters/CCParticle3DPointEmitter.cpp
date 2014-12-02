@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DPointEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 

@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DLineAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +35,7 @@ const float Particle3DLineAffector::DEFAULT_DRIFT = 0.0f;
 
 //-----------------------------------------------------------------------
 Particle3DLineAffector::Particle3DLineAffector(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
     _scaledMaxDeviation(1.0f),
     _end(DEFAULT_END),
@@ -115,12 +115,12 @@ void Particle3DLineAffector::preUpdateAffector(float deltaTime)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DLineAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DLineAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
 	//_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         //mParentTechnique->getParentSystem()->rotationOffset(particle->originalPosition); // Always update
         if (_update && CCRANDOM_0_1() > 0.5 && !_first)
         {
@@ -151,7 +151,7 @@ void Particle3DLineAffector::postUpdateAffector(float deltaTime)
     _update = false;
 }
 
-void Particle3DLineAffector::firstParticleUpdate( Particle3D *particle, float deltaTime )
+void Particle3DLineAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
     _first = true;
 }

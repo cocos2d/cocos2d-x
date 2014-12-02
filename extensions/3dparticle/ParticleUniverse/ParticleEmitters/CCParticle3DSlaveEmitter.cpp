@@ -23,12 +23,12 @@
  ****************************************************************************/
 
 #include "CCParticle3DSlaveEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
 Particle3DSlaveEmitter::Particle3DSlaveEmitter(void) : 
-    Particle3DEmitter(),
+    PUParticle3DEmitter(),
     //TechniqueListener(),
     _masterParticle(0),
     _masterTechniqueName(),
@@ -60,7 +60,7 @@ void Particle3DSlaveEmitter::setMasterEmitterName(const std::string& masterEmitt
     _masterEmitterNameSet = true;
 }
 ////-----------------------------------------------------------------------
-//void Particle3DSlaveEmitter::particleEmitted(ParticleTechnique* particleTechnique, Particle3D* particle)
+//void Particle3DSlaveEmitter::particleEmitted(ParticleTechnique* particleTechnique, PUParticle3D* particle)
 //{
 //	if (_masterEmitterNameSet && _masterEmitterName != particle->parentEmitter->getName())
 //	{
@@ -80,14 +80,14 @@ void Particle3DSlaveEmitter::setMasterEmitterName(const std::string& masterEmitt
 //	mEnabled = false;
 //}
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::initParticlePosition(Particle3D* particle)
+void Particle3DSlaveEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Remark: Don't take the orientation of the node into account, because the position of the master particle is leading.
     particle->position = _masterPosition;
     particle->originalPosition = particle->position;
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::initParticleDirection(Particle3D* particle)
+void Particle3DSlaveEmitter::initParticleDirection(PUParticle3D* particle)
 {
     particle->direction = _masterDirection;
     particle->originalDirection = particle->direction;
@@ -130,7 +130,7 @@ void Particle3DSlaveEmitter::unPrepare()
 //-----------------------------------------------------------------------
 void Particle3DSlaveEmitter::notifyStart (void)
 {
-    Particle3DEmitter::notifyStart();
+    PUParticle3DEmitter::notifyStart();
     setEnabled(false);
 }
 NS_CC_END

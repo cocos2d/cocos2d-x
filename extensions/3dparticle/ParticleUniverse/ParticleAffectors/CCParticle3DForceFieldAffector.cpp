@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DForceFieldAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -245,11 +245,11 @@ void Particle3DForceFieldAffector::suppressGeneration(bool suppress)
     _suppressGeneration = suppress;
 }
 
-void Particle3DForceFieldAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DForceFieldAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _forceField.determineForce(particle->position, _force, _delta);
         // If negative values are ignored, set the force to 0.
         if (_ignoreNegativeX)

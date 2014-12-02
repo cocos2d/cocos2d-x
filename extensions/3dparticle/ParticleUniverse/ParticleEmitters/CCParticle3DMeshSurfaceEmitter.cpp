@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DMeshSurfaceEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -408,7 +408,7 @@ const Triangle::PositionAndNormal MeshInfo::getRandomPositionAndNormal (const si
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 Particle3DMeshSurfaceEmitter::Particle3DMeshSurfaceEmitter(void) : 
-    Particle3DEmitter(),
+    PUParticle3DEmitter(),
     _meshName(),
     _orientation(),
     _scale(DEFAULT_SCALE),
@@ -441,7 +441,7 @@ void Particle3DMeshSurfaceEmitter::unPrepare()
     // Todo
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::initParticlePosition(Particle3D* particle)
+void Particle3DMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle)
 {
     Triangle::PositionAndNormal pAndN;
     pAndN.position = Vec3::ZERO;
@@ -506,18 +506,18 @@ unsigned short Particle3DMeshSurfaceEmitter::calculateRequestedParticles(float t
 {
     if (_meshInfo)
     {
-        return Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+        return PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
     }
 
     return 0;
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::initParticleDirection(Particle3D* particle)
+void Particle3DMeshSurfaceEmitter::initParticleDirection(PUParticle3D* particle)
 {
     // Only determine direction if it hasn't been calculated yet
     if (!_directionSet)
     {
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 //-----------------------------------------------------------------------

@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DBaseCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +34,7 @@ const Particle3DBaseCollider::IntersectionType Particle3DBaseCollider::DEFAULT_I
 const Particle3DBaseCollider::CollisionType Particle3DBaseCollider::DEFAULT_COLLISION_TYPE = Particle3DBaseCollider::CT_BOUNCE;
 //-----------------------------------------------------------------------
 Particle3DBaseCollider::Particle3DBaseCollider() 
-    : Particle3DAffector()
+    : PUParticle3DAffector()
     , _bouncyness(DEFAULT_BOUNCYNESS)
     , _friction(DEFAULT_FRICTION)
     , _intersectionType(DEFAULT_INTERSECTION_TYPE)
@@ -100,7 +100,7 @@ void Particle3DBaseCollider::populateAlignedBox( AABB& box, const Vec3& position
         position.z + halfDepth));
 }
 
-void Particle3DBaseCollider::calculateRotationSpeedAfterCollision( Particle3D* particle )
+void Particle3DBaseCollider::calculateRotationSpeedAfterCollision( PUParticle3D* particle )
 {
     float signedFriction = CCRANDOM_0_1() > 0.5 ? -(_friction - 1) : (_friction - 1);
 

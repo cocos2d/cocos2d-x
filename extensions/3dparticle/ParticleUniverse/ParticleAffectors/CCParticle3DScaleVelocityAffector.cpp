@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DScaleVelocityAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -31,7 +31,7 @@ const float Particle3DScaleVelocityAffector::DEFAULT_VELOCITY_SCALE = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DScaleVelocityAffector::Particle3DScaleVelocityAffector(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _sinceStartSystem(false),
     _stopAtFlip(false)
 {
@@ -47,11 +47,11 @@ Particle3DScaleVelocityAffector::~Particle3DScaleVelocityAffector(void)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DScaleVelocityAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DScaleVelocityAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-       // Particle3D *particle = iter;
+       // PUParticle3D *particle = iter;
         float ds = 0;
         if (_sinceStartSystem)
         {

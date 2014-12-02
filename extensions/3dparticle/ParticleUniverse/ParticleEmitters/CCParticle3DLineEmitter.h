@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINE_EMITTER_H__
-#define __CC_PARTICLE_3D_LINE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_LINE_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_LINE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
-struct Particle3D;
-class  Particle3DLineEmitter : public Particle3DEmitter
+struct PUParticle3D;
+class  Particle3DLineEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
@@ -81,11 +81,11 @@ public:
 
     /** 
     */
-    virtual void initParticlePosition(Particle3D* particle);
+    virtual void initParticlePosition(PUParticle3D* particle);
 
     /** 
     */
-    virtual void initParticleDirection(Particle3D* particle);
+    virtual void initParticleDirection(PUParticle3D* particle);
 
 protected:
 

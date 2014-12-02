@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_COLLISION_AVOIDDANCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_COLLISION_AVOIDDANCE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_COLLISION_AVOIDDANCE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_COLLISION_AVOIDDANCE_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 
 NS_CC_BEGIN
 
-class  Particle3DCollisionAvoidanceAffector : public Particle3DAffector
+class  Particle3DCollisionAvoidanceAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -39,7 +39,7 @@ public:
     Particle3DCollisionAvoidanceAffector();
     virtual ~Particle3DCollisionAvoidanceAffector();
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Todo
     */

@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DTextureRotator.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -33,7 +33,7 @@ const float Particle3DTextureRotator::DEFAULT_ROTATION = 0.0f;
 
 //-----------------------------------------------------------------------
 Particle3DTextureRotator::Particle3DTextureRotator(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _useOwnRotationSpeed(DEFAULT_USE_OWN_SPEED),
     _scaledRotationSpeed(0.0f),
     _twoPiRad(float(2.0 * M_PI))
@@ -98,15 +98,15 @@ float Particle3DTextureRotator::calculateRotation(void)
     return float(_dynamicAttributeHelper.calculate(_dynRotation, _particleSystem->getTimeElapsedSinceStart()));
 }
 //-----------------------------------------------------------------------
-float Particle3DTextureRotator::calculateRotationSpeed(Particle3D* particle)
+float Particle3DTextureRotator::calculateRotationSpeed(PUParticle3D* particle)
 {
     return float(_dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction));
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureRotator::initParticleForEmission(Particle3D* particle)
+void Particle3DTextureRotator::initParticleForEmission(PUParticle3D* particle)
 {
     //// Only continue if the particle is a visual particle
-    //if (particle->particleType != Particle3D::PT_VISUAL)
+    //if (particle->particleType != PUParticle3D::PT_VISUAL)
     //	return;
 
     // Set initial random zRotation
@@ -123,13 +123,13 @@ void Particle3DTextureRotator::initParticleForEmission(Particle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DTextureRotator::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DTextureRotator::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         //// Only continue if the particle is a visual particle
-        //if (particle->particleType != Particle3D::PT_VISUAL)
+        //if (particle->particleType != PUParticle3D::PT_VISUAL)
         //	return;
 
         if (_useOwnRotationSpeed)

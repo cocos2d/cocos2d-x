@@ -23,22 +23,22 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_PATH_FOLLOWER_H__
-#define __CC_PARTICLE_3D_PATH_FOLLOWER_H__
+#ifndef __CC_PU_PARTICLE_3D_PATH_FOLLOWER_H__
+#define __CC_PU_PARTICLE_3D_PATH_FOLLOWER_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DSimpleSpline.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPathFollower : public Particle3DAffector
+class  Particle3DPathFollower : public PUParticle3DAffector
 {
 public:
     Particle3DPathFollower(void);
     virtual ~Particle3DPathFollower(void);
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** 
     */
     void addPoint(const Vec3& point);

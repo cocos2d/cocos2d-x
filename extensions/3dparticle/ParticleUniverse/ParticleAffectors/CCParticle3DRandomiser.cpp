@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DRandomiser.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +34,7 @@ const bool Particle3DRandomiser::DEFAULT_RANDOM_DIRECTION = true;
 
 //-----------------------------------------------------------------------
 Particle3DRandomiser::Particle3DRandomiser(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _maxDeviationX(DEFAULT_MAX_DEVIATION.x),
     _maxDeviationY(DEFAULT_MAX_DEVIATION.y),
     _maxDeviationZ(DEFAULT_MAX_DEVIATION.z),
@@ -113,11 +113,11 @@ void Particle3DRandomiser::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DRandomiser::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         if (_update)
         {
             if (_randomDirection)

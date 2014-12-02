@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DLineEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -34,7 +34,7 @@ const float Particle3DLineEmitter::DEFAULT_MAX_DEVIATION = 0.0f;
 
 //-----------------------------------------------------------------------
 Particle3DLineEmitter::Particle3DLineEmitter(void) : 
-    Particle3DEmitter(),
+    PUParticle3DEmitter(),
     _end(DEFAULT_END),
     _perpendicular(Vec3::ZERO),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
@@ -55,7 +55,7 @@ Particle3DLineEmitter::Particle3DLineEmitter(void) :
 void Particle3DLineEmitter::notifyStart (void)
 {
     // Reset the incremental attributes to allow a restart.
-    Particle3DEmitter::notifyStart();
+    PUParticle3DEmitter::notifyStart();
     _increment = 0.0f;
     _incrementsLeft = true;
     _first = true;
@@ -64,7 +64,7 @@ void Particle3DLineEmitter::notifyStart (void)
 void Particle3DLineEmitter::notifyRescaled(const Vec3& scale)
 {
     // Scale the internal attributes and use them, otherwise this results in too many calculations per particle
-    Particle3DEmitter::notifyRescaled(scale);
+    PUParticle3DEmitter::notifyRescaled(scale);
     float scaleLength = scale.length();
     _scaledEnd = Vec3(_end.x * scale.x, _end.y * scale.y, _end.z * scale.z);
     _scaledMaxDeviation = _maxDeviation * scaleLength;
@@ -75,7 +75,7 @@ void Particle3DLineEmitter::notifyRescaled(const Vec3& scale)
 //-----------------------------------------------------------------------
 unsigned short Particle3DLineEmitter::calculateRequestedParticles(float timeElapsed)
 {
-    unsigned short requested = Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+    unsigned short requested = PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
 
     if (_scaledMaxIncrement > 0)
     {
@@ -143,7 +143,7 @@ void Particle3DLineEmitter::setMaxDeviation(float maxDeviation)
     _scaledMaxDeviation = _maxDeviation * _emitterScale.length();
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::initParticlePosition(Particle3D* particle)
+void Particle3DLineEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Remark: Don´t take the orientation of the node into account. The mEnd position is leading.
     if (_autoDirection || (_scaledMaxDeviation > 0.0f && !_first))
@@ -200,7 +200,7 @@ void Particle3DLineEmitter::initParticlePosition(Particle3D* particle)
     _first = false;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::initParticleDirection(Particle3D* particle)
+void Particle3DLineEmitter::initParticleDirection(PUParticle3D* particle)
 {
     if (_autoDirection)
     {
@@ -221,7 +221,7 @@ void Particle3DLineEmitter::initParticleDirection(Particle3D* particle)
     else
     {
         // Use the standard way
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 NS_CC_END

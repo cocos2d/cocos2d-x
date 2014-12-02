@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DSineForceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -88,11 +88,11 @@ void Particle3DSineForceAffector::setFrequencyMax(const float frequencyMax)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DSineForceAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DSineForceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Affect the direction
         if (_forceApplication == FA_ADD)
         {

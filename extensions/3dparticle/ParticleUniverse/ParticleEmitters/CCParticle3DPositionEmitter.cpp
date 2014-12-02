@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DPositionEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -31,7 +31,7 @@ const bool Particle3DPositionEmitter::DEFAULT_RANDOMIZE = true;
 
 //-----------------------------------------------------------------------
 Particle3DPositionEmitter::Particle3DPositionEmitter(void) : 
-    Particle3DEmitter(),
+    PUParticle3DEmitter(),
     _randomized(DEFAULT_RANDOMIZE),
     _index(0)
 {
@@ -59,7 +59,7 @@ void Particle3DPositionEmitter::addPosition(const Vec3& position)
 //-----------------------------------------------------------------------
 void Particle3DPositionEmitter::notifyStart(void)
 {
-    Particle3DEmitter::notifyStart();
+    PUParticle3DEmitter::notifyStart();
     _index = 0;
 }
 //-----------------------------------------------------------------------
@@ -77,11 +77,11 @@ unsigned short Particle3DPositionEmitter::calculateRequestedParticles(float time
 
     if (_randomized)
     {
-        return Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+        return PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
     }
     else if (_index < _positionList.size())
     {
-        unsigned short requested = Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+        unsigned short requested = PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
         unsigned short size = static_cast<unsigned short>(_positionList.size() - _index);
         if (requested > size)
         {
@@ -96,7 +96,7 @@ unsigned short Particle3DPositionEmitter::calculateRequestedParticles(float time
     return 0;
 }
 //-----------------------------------------------------------------------
-void Particle3DPositionEmitter::initParticlePosition(Particle3D* particle)
+void Particle3DPositionEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Fast rejection
     if (_positionList.empty())

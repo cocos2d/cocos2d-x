@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_VELOCITY_MATCHING_AFFECTOR_H__
-#define __CC_PARTICLE_3D_VELOCITY_MATCHING_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_VELOCITY_MATCHING_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_VELOCITY_MATCHING_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DVelocityMatchingAffector : public Particle3DAffector
+class  Particle3DVelocityMatchingAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -40,7 +40,7 @@ public:
     Particle3DVelocityMatchingAffector(void);
     virtual ~Particle3DVelocityMatchingAffector(void);
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** Todo
     */
     float getRadius(void) const;

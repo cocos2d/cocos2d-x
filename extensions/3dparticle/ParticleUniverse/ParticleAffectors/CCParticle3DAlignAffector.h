@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_ALIGN_AFFECTOR_H__
-#define __CC_PARTICLE_3D_ALIGN_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_ALIGN_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_ALIGN_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 
 NS_CC_BEGIN
 
-class  Particle3DAlignAffector : public Particle3DAffector
+class  Particle3DAlignAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -39,8 +39,8 @@ public:
     Particle3DAlignAffector();
     virtual ~Particle3DAlignAffector();
 
-    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** See setResize().
     */
@@ -54,7 +54,7 @@ public:
 protected:
 
     bool _resize;
-	Particle3D* _previousParticle;
+	PUParticle3D* _previousParticle;
 };
 NS_CC_END
 

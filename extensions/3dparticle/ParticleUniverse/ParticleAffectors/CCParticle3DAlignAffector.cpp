@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DAlignAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -32,7 +32,7 @@ const bool Particle3DAlignAffector::DEFAULT_RESIZE = false;
     
 //-----------------------------------------------------------------------
 Particle3DAlignAffector::Particle3DAlignAffector() 
-    : Particle3DAffector()
+    : PUParticle3DAffector()
     , _resize(DEFAULT_RESIZE)
 {
 }
@@ -51,15 +51,15 @@ void Particle3DAlignAffector::setResize(bool resize)
     _resize = resize;
 }
 
-void Particle3DAlignAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DAlignAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //auto particles = _particleSystem->getParticles();
     //if (!particles.empty())
     {
-        //Particle3D *preParticle = particles[0];
+        //PUParticle3D *preParticle = particles[0];
         //for (unsigned int i = 1; i < particles.size(); ++i)
         {
-            //Particle3D *particle = particles[i];
+            //PUParticle3D *particle = particles[i];
             Vec3 diff = _previousParticle->position - particle->position;
             if (_resize)
             {
@@ -74,7 +74,7 @@ void Particle3DAlignAffector::updateAffector( Particle3D *particle, float deltaT
     }
 }
 
-void Particle3DAlignAffector::firstParticleUpdate( Particle3D *particle, float deltaTime )
+void Particle3DAlignAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
     _previousParticle = particle;
 }

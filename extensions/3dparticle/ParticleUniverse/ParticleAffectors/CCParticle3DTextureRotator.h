@@ -23,16 +23,16 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_TEXTURE_ROTATOR_H__
-#define __CC_PARTICLE_3D_TEXTURE_ROTATOR_H__
+#ifndef __CC_PU_PARTICLE_3D_TEXTURE_ROTATOR_H__
+#define __CC_PU_PARTICLE_3D_TEXTURE_ROTATOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DTextureRotator : public Particle3DAffector
+class  Particle3DTextureRotator : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -43,7 +43,7 @@ public:
     Particle3DTextureRotator(void);
     virtual ~Particle3DTextureRotator(void);
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns an indication whether the 2D rotation speed is the same for all particles in this 
         particle technique, or whether the 2D rotation speed of the particle itself is used.
@@ -76,10 +76,10 @@ public:
 
     /** Returns a rotation speed value, depending on the type of dynamic attribute.
     */
-    float calculateRotationSpeed (Particle3D* particle);
+    float calculateRotationSpeed (PUParticle3D* particle);
 
     /** @copydoc ParticleAffector::_initParticleForEmission */
-    virtual void initParticleForEmission(Particle3D* particle);
+    virtual void initParticleForEmission(PUParticle3D* particle);
 
 protected:
     bool _useOwnRotationSpeed;

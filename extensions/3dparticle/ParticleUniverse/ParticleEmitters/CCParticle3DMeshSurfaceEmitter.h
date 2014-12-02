@@ -23,10 +23,10 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_MESH_SURFACE_EMITTER_H__
-#define __CC_PARTICLE_MESH_SURFACE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
+#define __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
@@ -163,7 +163,7 @@ class MeshInfo
     There are several ways of emitting it on the surface, from the vertices, edges and faces of a mesh.
     It is also possible to define whether more particles emit on larger faces.
 */
-class Particle3DMeshSurfaceEmitter : public Particle3DEmitter
+class Particle3DMeshSurfaceEmitter : public PUParticle3DEmitter
 {
     public:
         // Constants
@@ -224,7 +224,7 @@ class Particle3DMeshSurfaceEmitter : public Particle3DEmitter
 
         /** Determine a particle position on the mesh surface.
         */
-        virtual void initParticlePosition(Particle3D* particle) override;
+        virtual void initParticlePosition(PUParticle3D* particle) override;
 
         /** See ParticleEmitter.
         */
@@ -232,7 +232,7 @@ class Particle3DMeshSurfaceEmitter : public Particle3DEmitter
 
         /** Determine the particle direction.
         */
-        virtual void initParticleDirection(Particle3D* particle) override;
+        virtual void initParticleDirection(PUParticle3D* particle) override;
 
     protected:
         std::string _meshName;

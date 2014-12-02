@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DBoxEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -34,7 +34,7 @@ const float Particle3DBoxEmitter::DEFAULT_DEPTH = 100.0f;
 
 //-----------------------------------------------------------------------
 Particle3DBoxEmitter::Particle3DBoxEmitter(void) : 
-    Particle3DEmitter(),
+    PUParticle3DEmitter(),
     _width(DEFAULT_WIDTH),
     _height(DEFAULT_HEIGHT),
     _depth(DEFAULT_DEPTH),
@@ -77,7 +77,7 @@ void Particle3DBoxEmitter::setDepth(const float depth)
     _zRange = 0.5f * depth;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxEmitter::initParticlePosition(Particle3D* particle)
+void Particle3DBoxEmitter::initParticlePosition(PUParticle3D* particle)
 {
     //ParticleSystem* sys = mParentTechnique->getParentSystem();
 

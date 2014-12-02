@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_POINT_EMITTER_H__
-#define __CC_PARTICLE_3D_POINT_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_POINT_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_POINT_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  Particle3DPointEmitter : public Particle3DEmitter
+class  Particle3DPointEmitter : public PUParticle3DEmitter
 {
 public:
     Particle3DPointEmitter(void);

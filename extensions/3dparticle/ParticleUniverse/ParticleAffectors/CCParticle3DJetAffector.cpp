@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DJetAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -32,7 +32,7 @@ const float Particle3DJetAffector::DEFAULT_ACCELERATION = 1.0f;
 
 //-----------------------------------------------------------------------
 Particle3DJetAffector::Particle3DJetAffector (void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _scaled(0.0f)
 {
     _dynAcceleration = new DynamicAttributeFixed();
@@ -56,11 +56,11 @@ void Particle3DJetAffector::setDynAcceleration(DynamicAttribute* dynAcceleration
     _dynAcceleration = dynAcceleration;
 }
 
-void Particle3DJetAffector::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DJetAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
    // for (auto iter : _particleSystem->getParticles())
     {
-       // Particle3D *particle = iter;
+       // PUParticle3D *particle = iter;
         //_scaled = deltaTime * (_dynAcceleration->getValue(particle->timeFraction));
         if (particle->direction == Vec3::ZERO)
         {

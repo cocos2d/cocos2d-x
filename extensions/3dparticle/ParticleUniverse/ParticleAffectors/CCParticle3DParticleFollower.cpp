@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCParticle3DParticleFollower.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -33,7 +33,7 @@ const float Particle3DParticleFollower::DEFAULT_MIN_DISTANCE = 10.0f;
 
 //-----------------------------------------------------------------------
 Particle3DParticleFollower::Particle3DParticleFollower(void) : 
-    Particle3DAffector(),
+    PUParticle3DAffector(),
     _minDistance(DEFAULT_MIN_DISTANCE),
     _maxDistance(DEFAULT_MAX_DISTANCE),
     _positionPreviousParticle(Vec3::ZERO),
@@ -66,12 +66,12 @@ void Particle3DParticleFollower::setMinDistance(float minDistance)
     _minDistance = minDistance;
 }
 
-void Particle3DParticleFollower::updateAffector( Particle3D *particle, float deltaTime )
+void Particle3DParticleFollower::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         if (!_first)
         {
             // Change in V 1.3.1
@@ -91,7 +91,7 @@ void Particle3DParticleFollower::updateAffector( Particle3D *particle, float del
     }
 }
 
-void Particle3DParticleFollower::firstParticleUpdate( Particle3D *particle, float deltaTime )
+void Particle3DParticleFollower::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
     _first = true;
 }

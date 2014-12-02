@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_BOX_COLLIDER_H__
-#define __CC_PARTICLE_3D_BOX_COLLIDER_H__
+#ifndef __CC_PU_PARTICLE_3D_BOX_COLLIDER_H__
+#define __CC_PU_PARTICLE_3D_BOX_COLLIDER_H__
 
 #include "CCParticle3DBaseCollider.h"
 
@@ -41,7 +41,7 @@ public:
     virtual ~Particle3DBoxCollider();
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the width of the box
     */
@@ -81,7 +81,7 @@ public:
 
     /** 
     */
-    void calculateDirectionAfterCollision(Particle3D* particle);
+    void calculateDirectionAfterCollision(PUParticle3D* particle);
 
 protected:
         /** 
