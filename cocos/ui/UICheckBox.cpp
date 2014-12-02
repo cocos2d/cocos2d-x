@@ -380,7 +380,7 @@ void CheckBox::unSelectedEvent()
     }
     if (_ccEventCallback)
     {
-        _ccEventCallback(this, static_cast<int>(EventType::SELECTED));
+        _ccEventCallback(this, static_cast<int>(EventType::UNSELECTED));
     }
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
