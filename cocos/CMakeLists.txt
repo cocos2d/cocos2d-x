@@ -60,6 +60,11 @@ include(editor-support/spine/CMakeLists.txt)
 set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
 endif(BUILD_EDITOR_SPINE)
 
+if(BUILD_EDITOR_SPRITEBUILDER)
+include(editor-support/spritebuilder/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPRITEBUILDER_SRC})
+endif(BUILD_EDITOR_SPRITEBUILDER)
+
 include(../extensions/CMakeLists.txt)
 
 set(COCOS_SRC cocos2d.cpp

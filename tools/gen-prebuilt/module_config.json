@@ -704,5 +704,61 @@
                 "register_cocosbuilder_module"
             ]
         }
+    },
+    "spritebuilder" : {
+        "is_compiled" : true,
+        "target_dir" : "modules/spritebuilder",
+        "win32_lib_file_name" : "libspritebuilder",
+        "ios_lib_file_name" : "libspritebuilder iOS.a",
+        "mac_lib_file_name" : "libspritebuilder Mac.a",
+        "android_lib_name" : "spritebuilder_static",
+        "android_lib_file_name" : "libspritebuilder",
+        "include" : [
+            {
+                "from": "cocos/editor-support/spritebuilder",
+                "to": "modules/spritebuilder/include/spritebuilder",
+                "include" : [
+                    "*.h"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/script/spritebuilder",
+                "to": "modules/spritebuilder/lua-bindings/script",
+                "include": [
+                    "*.lua"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/auto",
+                "to": "modules/spritebuilder/lua-bindings/include",
+                "include": [
+                    "lua_cocos2dx_spritebuilder_auto.hpp"
+                ]
+            },
+            {
+                "from": "cocos/scripting/lua-bindings/manual/spritebuilder",
+                "to": "modules/spritebuilder/lua-bindings/include",
+                "include": [
+                    "*.hpp", "*.h"
+                ]
+            }
+        ],
+        "export_include" : [
+            "../../include"
+        ],
+        "depend_modules" : [
+            "extensions"
+        ],
+        "is_optional" : true,
+        "lua_bindings" : {
+            "lua_lib_name" : "libluaspritebuilder",
+            "android_lib_name" : "spritebuilder_lua_static",
+            "headers" : [
+                "lua_cocos2dx_spritebuilder_manual.h"
+            ],
+            "registers" : [
+                "register_spritebuilder_module"
+            ]
+        }
     }
 }

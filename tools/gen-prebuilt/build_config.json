@@ -18,7 +18,7 @@
                 "libextension", "libui", "libnetwork", "libspine",
                 "libluacocos2d", "libluacocosbuilder", "libluacocosdenshion",
                 "libluacocostudio", "libluaextension", "libluanetwork",
-                "libluaspine", "libluaui"
+                "libluaspine", "libluaui", "libspritebuilder"
             ]
         }
     }
