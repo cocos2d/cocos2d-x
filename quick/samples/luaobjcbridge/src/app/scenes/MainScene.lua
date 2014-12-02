@@ -11,7 +11,7 @@ function MainScene:ctor()
 
     local btn
     btn = cc.ui.UIPushButton.new()
-            :setButtonLabel(cc.ui.UILabel.new({text = "LuaObjcBridge: please run this on ios/mac", size = 32}))
+            :setButtonLabel(cc.ui.UILabel.new({text = "LuaObjcBridge (Click Me): please run this on ios/mac", size = 24}))
             :onButtonClicked(function()
                 if not luaoc then
                     btn:setButtonLabel(cc.ui.UILabel.new({text = "please run this on ios/mac", size = 32}))

@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mkdir $DIR/test
 
-$QUICK_V3_ROOT/quick/bin/create_project.sh -p com.quick-x.samples.luaobjcbridge -o $DIR/test/LuaObjcBridge -r landscape
+$QUICK_V3_ROOT/quick/bin/create_project.sh -p com.quick-x.samples.luaobjcbridge -o $DIR/test/LuaObjcBridge -r landscape -lt
 rm -fr $DIR/test/LuaObjcBridge/frameworks/runtime-src/proj.win32
 rm -fr $DIR/test/LuaObjcBridge/frameworks/runtime-src/proj.wp8-xaml
 rm -fr $DIR/test/LuaObjcBridge/frameworks/runtime-src/proj.android
