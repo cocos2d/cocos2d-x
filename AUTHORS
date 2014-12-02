@@ -1059,6 +1059,7 @@ Developers:
         
     shrimpz
         Fix two typos in luaval_to_quaternion
+        Fix label crashed on android
     
 Retired Core Developers:
     WenSheng Yang
