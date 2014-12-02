@@ -1,7 +1,15 @@
-quick-cocos2d-x-3.3-rc1 ??
+quick-cocos2d-x-3.3-rc1 Dec.2 2014
     [NEW]           WP: added proj.wp8-xaml
     [NEW]           Runtime: supported Cocos Code IDE
+    [NEW]			Templates: added lua-template-quick-lite
+    [NEW]           Sample: added more api test sample
+    [NEW]           Docs: added new docs
 
     [FIX]           Event: Bugs of touch events dispatching
     [FIX]           Cocos2d-x: Re-integrate cocos2d-x into Quick
+    [FIX]           Quick: fixed issues
+    [FIX]           Docs: updated docs
+    [FIX]           Cocos2d-x: Merged cocos2d-x-3.3-rc1
+
+    [MORE]			See CHANGELOG of cocos2d-x-3.3-rc1
 
