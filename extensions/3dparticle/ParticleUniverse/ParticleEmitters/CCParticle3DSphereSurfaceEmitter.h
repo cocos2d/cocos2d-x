@@ -30,15 +30,13 @@
 
 NS_CC_BEGIN
 
-class  Particle3DSphereSurfaceEmitter : public Particle3DEmitter
+class  CC_DLL Particle3DSphereSurfaceEmitter : public Particle3DEmitter
 {
 public:
     // Constants
     static const float DEFAULT_RADIUS;
 
-    Particle3DSphereSurfaceEmitter(void);
-    virtual ~Particle3DSphereSurfaceEmitter(void) {};
-
+    static Particle3DSphereSurfaceEmitter* create();
     /** 
     */
     const float getRadius(void) const;
@@ -51,6 +49,10 @@ public:
     /** 
     */
     virtual void initParticleDirection(Particle3D* particle);
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DSphereSurfaceEmitter(void);
+    virtual ~Particle3DSphereSurfaceEmitter(void) {};
 
 protected:
     float _radius;

@@ -102,4 +102,12 @@ void Particle3DBoxEmitter::initParticlePosition(Particle3D* particle)
 
     particle->originalPosition = particle->position;
 }
+
+Particle3DBoxEmitter* Particle3DBoxEmitter::create()
+{
+    auto pe = new Particle3DBoxEmitter();
+    pe->autorelease();
+    return pe;
+}
+
 NS_CC_END

@@ -133,4 +133,12 @@ void Particle3DSlaveEmitter::notifyStart (void)
     Particle3DEmitter::notifyStart();
     setEnabled(false);
 }
+
+Particle3DSlaveEmitter* Particle3DSlaveEmitter::create()
+{
+    auto pe = new Particle3DSlaveEmitter();
+    pe->autorelease();
+    return pe;
+}
+
 NS_CC_END

@@ -77,8 +77,12 @@ void Particle3DSphereSurfaceEmitter::initParticleDirection(Particle3D* particle)
         generateAngle(angle);
         if (angle != 0.0f)
         {
-            //FIXME
             //particle->direction = _randomVector.randomDeviant(angle, mUpVector);
+            Mat4 mat;
+            Mat4::createRotation(_randomVector, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
+            Vec3 newUp = mat * _upVector;
+            Mat4::createRotation(newUp, angle, &mat);
+            particle->direction = mat * _randomVector;
             particle->originalDirection = particle->direction;
         }
         else
@@ -93,4 +97,12 @@ void Particle3DSphereSurfaceEmitter::initParticleDirection(Particle3D* particle)
         Particle3DEmitter::initParticleDirection(particle);
     }
 }
+
+Particle3DSphereSurfaceEmitter* Particle3DSphereSurfaceEmitter::create()
+{
+    auto pe = new Particle3DSphereSurfaceEmitter();
+    pe->autorelease();
+    return pe;
+}
+
 NS_CC_END

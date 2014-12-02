@@ -28,6 +28,8 @@
 #include "3dparticle/CCParticle3DAffector.h"
 #include "3dparticle/CCParticle3DRender.h"
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPointEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DBoxEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DCircleEmitter.h"
 
 
 void Particle3DTestScene::runThisTest()
@@ -117,32 +119,42 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
     auto ps = ParticleSystem3D::create();
 
-    auto ppe = Particle3DPointEmitter::create();
-    ppe->setParticleDirection(Vec3(0.0f, 1.0f, 0.0f));
+    //emitter
+    {
+        auto ppe = Particle3DCircleEmitter::create();
+        ppe->setParticleDirection(Vec3(0.0f, 1.0f, 0.0f));
 
-    DynamicAttributeFixed *velocity = new DynamicAttributeFixed();
-    velocity->setValue(10.0f);
-    ppe->setDynVelocity(velocity);
+        ppe->setRadius(20.0f);
+        ppe->setNormal(Vec3(0.0f, 0.0f, 1.0f));
 
-    DynamicAttributeFixed *alive = new DynamicAttributeFixed();
-    alive->setValue(3.0f);
-    ppe->setDynTotalTimeToLive(alive);
+        DynamicAttributeFixed *velocity = new DynamicAttributeFixed();
+        velocity->setValue(10.0f);
+        ppe->setDynVelocity(velocity);
+        DynamicAttributeFixed *alive = new DynamicAttributeFixed();
+        alive->setValue(3.0f);
+        ppe->setDynTotalTimeToLive(alive);
+        DynamicAttributeFixed *dim = new DynamicAttributeFixed();
+        dim->setValue(2.0f);
+        ppe->setDynParticleAllDimensions(dim);
+        DynamicAttributeFixed *rate = new DynamicAttributeFixed();
+        rate->setValue(30.0f);
+        ppe->setDynEmissionRate(rate);
+        ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
+        ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+        ps->setEmitter(ppe);
+    }
 
-    DynamicAttributeFixed *dim = new DynamicAttributeFixed();
-    dim->setValue(2.0f);
-    ppe->setDynParticleAllDimensions(dim);
+    //affector
+    {
 
-    DynamicAttributeFixed *rate = new DynamicAttributeFixed();
-    rate->setValue(30.0f);
-    ppe->setDynEmissionRate(rate);
+    }
 
-    ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
-    ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    //render
+    {
+        auto pr = Particle3DQuadRender::create("Images/stars.png");
+        ps->setRender(pr);
+    }
 
-    ps->setEmitter(ppe);
-
-    auto pr = Particle3DQuadRender::create("Images/stars.png");
-    ps->setRender(pr);
 
     //auto pr = Particle3DModelRender::create(Sprite3D::create("Sprite3DTest/axe.c3b"));
     //ps->setRender(pr);

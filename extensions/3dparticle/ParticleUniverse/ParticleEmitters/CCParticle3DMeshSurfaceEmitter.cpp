@@ -568,4 +568,12 @@ void Particle3DMeshSurfaceEmitter::build(void)
     // Generate meshinfo.
     _meshInfo = new MeshInfo(_meshName, _distribution, _orientation, _scale);
 }
+
+Particle3DMeshSurfaceEmitter* Particle3DMeshSurfaceEmitter::create()
+{
+    auto pe = new Particle3DMeshSurfaceEmitter();
+    pe->autorelease();
+    return pe;
+}
+
 NS_CC_END

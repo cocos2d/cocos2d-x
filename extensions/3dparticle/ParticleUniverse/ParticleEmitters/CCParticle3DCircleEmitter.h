@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class  Particle3DCircleEmitter : public Particle3DEmitter
+class  CC_DLL Particle3DCircleEmitter : public Particle3DEmitter
 {
 public:
     // Constants
@@ -40,8 +40,7 @@ public:
     static const bool DEFAULT_RANDOM;
     static const Vec3 DEFAULT_NORMAL;
 
-    Particle3DCircleEmitter(void);
-    virtual ~Particle3DCircleEmitter(void) {};
+    static Particle3DCircleEmitter* create();
 
     /** 
     */
@@ -71,7 +70,11 @@ public:
 
     /** See ParticleEmiter
     */
-    void notifyStart(void) override;
+    virtual void notifyStart(void) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DCircleEmitter(void);
+    virtual ~Particle3DCircleEmitter(void) {};
 
 protected:
 
@@ -82,6 +85,9 @@ protected:
     /** Determine the particle direction.
     */
     virtual void initParticleDirection(Particle3D* particle);
+
+    Quaternion getRotationTo(const Vec3 &src, const Vec3& dest,
+        const Vec3& fallbackAxis = Vec3::ZERO) const;
 
 protected:
     float _radius;

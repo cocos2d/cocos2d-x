@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 struct Particle3D;
-class  Particle3DLineEmitter : public Particle3DEmitter
+class  CC_DLL Particle3DLineEmitter : public Particle3DEmitter
 {
 public:
     // Constants
@@ -39,9 +39,7 @@ public:
     static const float DEFAULT_MAX_INCREMENT;
     static const float DEFAULT_MAX_DEVIATION;
 
-    Particle3DLineEmitter(void);
-    virtual ~Particle3DLineEmitter(void) {};
-
+    static Particle3DLineEmitter* create();
     /** 
     */
     virtual void notifyStart (void);
@@ -86,6 +84,10 @@ public:
     /** 
     */
     virtual void initParticleDirection(Particle3D* particle);
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DLineEmitter(void);
+    virtual ~Particle3DLineEmitter(void) {};
 
 protected:
 

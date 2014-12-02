@@ -30,11 +30,11 @@
 
 NS_CC_BEGIN
 //FIXME
-class  Particle3DSlaveEmitter : public Particle3DEmitter/*, public TechniqueListener*/
+class  CC_DLL Particle3DSlaveEmitter : public Particle3DEmitter/*, public TechniqueListener*/
 {
 public:
-    Particle3DSlaveEmitter(void);
-    virtual ~Particle3DSlaveEmitter(void){};
+
+    static Particle3DSlaveEmitter* create();
 
     /** 
     */
@@ -79,6 +79,10 @@ public:
     /** 
     */
     void setMasterEmitterName(const std::string& masterEmitterName);
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DSlaveEmitter(void);
+    virtual ~Particle3DSlaveEmitter(void){};
 
 protected:
 

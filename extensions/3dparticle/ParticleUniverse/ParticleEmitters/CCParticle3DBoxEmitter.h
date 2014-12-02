@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class  Particle3DBoxEmitter : public Particle3DEmitter
+class  CC_DLL Particle3DBoxEmitter : public Particle3DEmitter
 {
 public:
     // Constants
@@ -38,8 +38,7 @@ public:
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
 
-    Particle3DBoxEmitter(void);
-    virtual ~Particle3DBoxEmitter(void) {};
+    static Particle3DBoxEmitter* create();
 
     /** 
     */
@@ -55,6 +54,10 @@ public:
     */
     const float getDepth(void) const;
     void setDepth(const float depth);
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DBoxEmitter(void);
+    virtual ~Particle3DBoxEmitter(void) {};
 
 protected:
 

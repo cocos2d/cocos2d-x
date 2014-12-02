@@ -224,4 +224,12 @@ void Particle3DLineEmitter::initParticleDirection(Particle3D* particle)
         Particle3DEmitter::initParticleDirection(particle);
     }
 }
+
+Particle3DLineEmitter* Particle3DLineEmitter::create()
+{
+    auto pe = new Particle3DLineEmitter();
+    pe->autorelease();
+    return pe;
+}
+
 NS_CC_END

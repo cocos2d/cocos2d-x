@@ -30,15 +30,13 @@
 
 NS_CC_BEGIN
 
-class  Particle3DPositionEmitter : public Particle3DEmitter
+class  CC_DLL Particle3DPositionEmitter : public Particle3DEmitter
 {
 public:
     // Constants
     static const bool DEFAULT_RANDOMIZE;
 
-    Particle3DPositionEmitter(void);
-    virtual ~Particle3DPositionEmitter(void) {};
-
+    static Particle3DPositionEmitter* create();
     /** 
     */
     bool isRandomized(void) const;
@@ -70,6 +68,10 @@ public:
     /** Generate a particle position based on the added positions.
     */
     virtual void initParticlePosition(Particle3D* particle) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DPositionEmitter(void);
+    virtual ~Particle3DPositionEmitter(void) {};
 
 protected:
     std::vector<Vec3> _positionList;
