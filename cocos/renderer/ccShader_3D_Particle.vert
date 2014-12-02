@@ -12,7 +12,7 @@ void main()
     ColorOut = a_color;
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
-    gl_Position = CC_PMatrix * ePosition;
+    gl_Position = CC_PMatrix * a_position;
 }
 
 );

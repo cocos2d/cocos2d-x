@@ -34,7 +34,7 @@ NS_CC_BEGIN
 struct Particle3D;
 class ParticleSystem3D;
 
-class Particle3DAffector : public Ref
+class CC_DLL Particle3DAffector : public Ref
 {
     friend class ParticleSystem3D;
 public:
@@ -48,9 +48,6 @@ public:
         AFSP_TTL_INCREASE,
         AFSP_TTL_DECREASE
     };
-
-    Particle3DAffector();
-    virtual ~Particle3DAffector();
     
     virtual void notifyStart();
     virtual void notifyStop();
@@ -93,6 +90,10 @@ public:
     void setEnabled (bool enabled);
 
     bool isEnabled(void) const;
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DAffector();
+    virtual ~Particle3DAffector();
 
 protected:
 

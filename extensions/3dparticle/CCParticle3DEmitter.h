@@ -36,7 +36,7 @@ class ParticleSystem3D;
 /**
  * 3d particle emitter
  */
-class Particle3DEmitter : public Ref
+class CC_DLL Particle3DEmitter : public Ref
 {
     friend class ParticleSystem3D;
 public:
@@ -69,9 +69,6 @@ public:
     static const float DEFAULT_WIDTH;
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
-
-    Particle3DEmitter();
-    virtual ~Particle3DEmitter();
     
     virtual void notifyStart();
     virtual void notifyStop();
@@ -305,6 +302,10 @@ public:
     */
     bool makeParticleLocal(Particle3D* particle);
 
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DEmitter();
+    virtual ~Particle3DEmitter();
+
 protected:
 
     /** Todo
@@ -319,19 +320,19 @@ protected:
     */
     virtual void initParticleOrientation(Particle3D* particle);
 
-	virtual void initParticleVelocity(Particle3D* particle);
+    virtual void initParticleVelocity(Particle3D* particle);
 
-	virtual void initParticleMass(Particle3D* particle);
+    virtual void initParticleMass(Particle3D* particle);
 
-	virtual void initParticleColor(Particle3D* particle);
+    virtual void initParticleColor(Particle3D* particle);
 
-	virtual void initParticleTextureCoords(Particle3D* particle);
+    virtual void initParticleTextureCoords(Particle3D* particle);
 
-	virtual float initParticleTimeToLive();
+    virtual float initParticleTimeToLive();
 
-	virtual void initParticleDimensions(Particle3D* particle);
+    virtual void initParticleDimensions(Particle3D* particle);
 
-	virtual void initParticleForEmission(Particle3D* particle);
+    virtual void initParticleForEmission(Particle3D* particle);
 
     /** Initialise some attributes that are time-based.
     */
@@ -339,7 +340,7 @@ protected:
 
         /**  Internal method for generating the angle.
     */
-    void generateAngle(float angle);
+    void generateAngle(float &angle);
 
     
 protected:

@@ -40,10 +40,10 @@ class Particle3DEmitter;
 class Particle3DAffector;
 class Particle3DRender;
 
-struct Particle3D
+struct CC_DLL Particle3D
 {
-	static float DEFAULT_TTL;
-	static float DEFAULT_MASS;
+    static float DEFAULT_TTL;
+    static float DEFAULT_MASS;
 
         /** Enumeration which lists a number of reserved event flags. Although custom flags can be used to
         indicate that a certain condition occurs, the first number of flags may not be used as custom flags.
@@ -55,7 +55,9 @@ struct Particle3D
         PEF_COLLIDED = 1<<2
     };
 
-	Particle3DEmitter* parentEmitter;
+    Particle3D();
+
+    Particle3DEmitter* parentEmitter;
 
     // property of particles, TODO add more properties
     Vec3 position;
@@ -66,8 +68,8 @@ struct Particle3D
     Vec3 direction;
     Vec3 originalDirection;
     float originalDirectionLength; // Length of the direction that has been set
-	float originalVelocity;
-	float originalScaledDirectionLength; // Length of the direction after multiplication with the velocity
+    float originalVelocity;
+    float originalScaledDirectionLength; // Length of the direction after multiplication with the velocity
 
     /** The rotation axis is used in combination with orientation. Because the rotation axis is part
         of the particle itself, it can be changed independently. */
@@ -120,7 +122,7 @@ struct Particle3D
     void setOwnDimensions(float newWidth, float newHeight, float newDepth);
     void calculateBoundingSphereRadius();
 
-	void initForEmission();
+    void initForEmission();
 
     /** Does this particle have it's own dimensions? */
     bool ownDimensions;
@@ -183,21 +185,22 @@ struct Particle3D
     unsigned short textureCoordsCurrent;
     bool textureAnimationDirectionUp;
 
-    float age;
+    //float age;
     bool  alive;
     
     //user defined property
     std::map<std::string, void*> userDefs;
 };
 
-class ParticleSystem3D : public Node, public BlendProtocol
+class CC_DLL ParticleSystem3D : public Node, public BlendProtocol
 {
 public:
 
-	static const float DEFAULT_WIDTH;
-	static const float DEFAULT_HEIGHT;
-	static const float DEFAULT_DEPTH;
+    static const float DEFAULT_WIDTH;
+    static const float DEFAULT_HEIGHT;
+    static const float DEFAULT_DEPTH;
 
+    CREATE_FUNC(ParticleSystem3D);
     ParticleSystem3D();
     virtual ~ParticleSystem3D();
     
@@ -212,22 +215,22 @@ public:
     /**
      * particle system play control
      */
-    void start();
+    void startSystem();
     
     /**
      * stop particle
      */
-    void stop();
+    void stopSystem();
     
     /**
      * pause particle
      */
-    void pause();
+    void pauseSystem();
     
     /**
      * resume particle
      */
-    void resume();
+    void resumeSystem();
     
     /**
      * set emitter for particle system, can set your own particle emitter
@@ -270,31 +273,34 @@ public:
 
     inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
 
-	/** 
-	*/
-	const float getDefaultWidth(void) const;
-	void setDefaultWidth(const float width);
+    /** 
+    */
+    const float getDefaultWidth(void) const;
+    void setDefaultWidth(const float width);
 
-	/** 
-	*/
-	const float getDefaultHeight(void) const;
-	void setDefaultHeight(const float height);
+    /** 
+    */
+    const float getDefaultHeight(void) const;
+    void setDefaultHeight(const float height);
 
-	/** 
-	*/
-	const float getDefaultDepth(void) const;
-	void setDefaultDepth(const float depth);
+    /** 
+    */
+    const float getDefaultDepth(void) const;
+    void setDefaultDepth(const float depth);
 
 protected:
 
-	void prepared();
-	void unPrepared();
-	void preUpdator(float elapsedTime);
-	void updator(float elapsedTime);
-	void postUpdator(float elapsedTime);
-	void emitParticles(float elapsedTime);
+    void prepared();
+    void unPrepared();
+    void preUpdator(float elapsedTime);
+    void updator(float elapsedTime);
+    void postUpdator(float elapsedTime);
+    void emitParticles(float elapsedTime);
     
-	inline bool isExpired(Particle3D* particle, float timeElapsed);
+    inline bool isExpired(Particle3D* particle, float timeElapsed);
+
+    //Particle3D* getFirstParticle();
+    //Particle3D* getNextParticle();
 
 protected:
     enum class State
@@ -307,7 +313,7 @@ protected:
     Particle3DEmitter*               _emitter;
     std::vector<Particle3DAffector*> _affectors;
     Particle3DRender*                _render;
-	bool _prepared;
+    bool _prepared;
 
     float _particleSystemScaleVelocity;
     float _timeElapsedSinceStart;
@@ -323,17 +329,17 @@ protected:
     std::vector<Particle3D*>          _particles;
     int                              _aliveParticlesCnt;
 
-	/** Default width of each visual particle.
-	*/
-	float _defaultWidth;
+    /** Default width of each visual particle.
+    */
+    float _defaultWidth;
 
-	/** Default height of each visual particle.
-	*/
-	float _defaultHeight;
+    /** Default height of each visual particle.
+    */
+    float _defaultHeight;
 
-	/** Default depth of each visual particle.
-	*/
-	float _defaultDepth;
+    /** Default depth of each visual particle.
+    */
+    float _defaultDepth;
     
     BlendFunc                        _blend;
 };

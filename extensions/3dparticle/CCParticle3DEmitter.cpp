@@ -208,8 +208,13 @@ void Particle3DEmitter::initParticleDirection( Particle3D* particle )
     generateAngle(angle);
     if (angle != 0.0f)
     {
-        //FIXME
         //particle->direction = _particleDirection.randomDeviant(angle, _upVector);
+        // Rotate up vector by random amount around this
+        Mat4 mat;
+        Mat4::createRotation(_particleDirection, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
+        Vec3 newUp = mat * _upVector;
+        Mat4::createRotation(newUp, angle, &mat);
+        particle->direction = mat * _particleDirection;
     }
     else
     {
@@ -219,7 +224,7 @@ void Particle3DEmitter::initParticleDirection( Particle3D* particle )
     particle->originalDirectionLength = particle->direction.length();
 }
 
-void Particle3DEmitter::generateAngle( float angle )
+void Particle3DEmitter::generateAngle( float &angle )
 {
     float a = _dynamicAttributeHelper.calculate(_dynAngle, _particleSystem->getTimeElapsedSinceStart());
     angle = a;
@@ -329,7 +334,7 @@ void Particle3DEmitter::notifyStart()
 
 void Particle3DEmitter::notifyRescaled( const Vec3& scale )
 {
-
+    _emitterScale = scale;
 }
 
 void Particle3DEmitter::notifyStop()
@@ -720,120 +725,120 @@ void Particle3DEmitter::initTimeBased( void )
 
 void Particle3DEmitter::initParticleForEmission( Particle3D* particle )
 {
-	// Initialise the particle position (localspace)
-	particle->parentEmitter = this;
-	initParticlePosition(particle);
-	initParticleDirection(particle);
-	initParticleVelocity(particle);
-	initParticleOrientation(particle);
-	initParticleMass(particle);
-	initParticleColor(particle);
-	initParticleTextureCoords(particle);
-	particle->totalTimeToLive = initParticleTimeToLive();
-	particle->timeToLive = particle->totalTimeToLive;
+    // Initialise the particle position (localspace)
+    particle->parentEmitter = this;
+    initParticlePosition(particle);
+    initParticleDirection(particle);
+    initParticleVelocity(particle);
+    initParticleOrientation(particle);
+    initParticleMass(particle);
+    initParticleColor(particle);
+    initParticleTextureCoords(particle);
+    particle->totalTimeToLive = initParticleTimeToLive();
+    particle->timeToLive = particle->totalTimeToLive;
 
-	// Generate particles' own dimensions if defined.
-	initParticleDimensions(particle);
+    // Generate particles' own dimensions if defined.
+    initParticleDimensions(particle);
 }
 
 void Particle3DEmitter::initParticleVelocity( Particle3D* particle )
 {
-	float scalar = _dynamicAttributeHelper.calculate(_dynVelocity, _particleSystem->getTimeElapsedSinceStart(), 1.0f);
-	particle->direction *= scalar;
-	particle->originalVelocity = scalar;
-	particle->originalScaledDirectionLength = particle->direction.length();
+    float scalar = _dynamicAttributeHelper.calculate(_dynVelocity, _particleSystem->getTimeElapsedSinceStart(), 1.0f);
+    particle->direction *= scalar;
+    particle->originalVelocity = scalar;
+    particle->originalScaledDirectionLength = particle->direction.length();
 }
 
 void Particle3DEmitter::initParticleMass( Particle3D* particle )
 {
-	float mass = _dynamicAttributeHelper.calculate(_dynParticleMass, _particleSystem->getTimeElapsedSinceStart(), Particle3D::DEFAULT_MASS);
-	particle->mass = mass;
+    float mass = _dynamicAttributeHelper.calculate(_dynParticleMass, _particleSystem->getTimeElapsedSinceStart(), Particle3D::DEFAULT_MASS);
+    particle->mass = mass;
 }
 
 void Particle3DEmitter::initParticleColor( Particle3D* particle )
 {
-	if (_particleColorRangeSet)
-	{
-		particle->color.x = cocos2d::random(_particleColorRangeStart.x, _particleColorRangeEnd.x);
-		particle->color.y = cocos2d::random(_particleColorRangeStart.y, _particleColorRangeEnd.y);
-		particle->color.z = cocos2d::random(_particleColorRangeStart.z, _particleColorRangeEnd.z);
-		particle->color.w = cocos2d::random(_particleColorRangeStart.w, _particleColorRangeEnd.w);
-	}
-	else
-	{
-		particle->color = _particleColor;
-	}
+    if (_particleColorRangeSet)
+    {
+        particle->color.x = cocos2d::random(_particleColorRangeStart.x, _particleColorRangeEnd.x);
+        particle->color.y = cocos2d::random(_particleColorRangeStart.y, _particleColorRangeEnd.y);
+        particle->color.z = cocos2d::random(_particleColorRangeStart.z, _particleColorRangeEnd.z);
+        particle->color.w = cocos2d::random(_particleColorRangeStart.w, _particleColorRangeEnd.w);
+    }
+    else
+    {
+        particle->color = _particleColor;
+    }
 
-	// Set original colour
-	particle->originalColor = particle->color;
+    // Set original colour
+    particle->originalColor = particle->color;
 }
 
 void Particle3DEmitter::initParticleTextureCoords( Particle3D* particle )
 {
-	if (_particleTextureCoordsRangeSet)
-	{
-		particle->textureCoordsCurrent = (unsigned short)cocos2d::random((float)_particleTextureCoordsRangeStart, (float)_particleTextureCoordsRangeEnd + 0.999f);
-	}
-	else
-	{
-		particle->textureCoordsCurrent = _particleTextureCoords;
-	}
+    if (_particleTextureCoordsRangeSet)
+    {
+        particle->textureCoordsCurrent = (unsigned short)cocos2d::random((float)_particleTextureCoordsRangeStart, (float)_particleTextureCoordsRangeEnd + 0.999f);
+    }
+    else
+    {
+        particle->textureCoordsCurrent = _particleTextureCoords;
+    }
 }
 
 float Particle3DEmitter::initParticleTimeToLive()
 {
-	return _dynamicAttributeHelper.calculate(_dynTotalTimeToLive, _particleSystem->getTimeElapsedSinceStart(), Particle3D::DEFAULT_TTL);
+    return _dynamicAttributeHelper.calculate(_dynTotalTimeToLive, _particleSystem->getTimeElapsedSinceStart(), Particle3D::DEFAULT_TTL);
 }
 
 void Particle3DEmitter::initParticleDimensions( Particle3D* particle )
 {
-	// Only continue if one of them is set
-	if (_dynParticleAllDimensionsSet || _dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
-	{
-		// Set all dimensions equal ...
-		float extend = 0;
-		if (_dynParticleAllDimensionsSet && _dynParticleAllDimensions)
-		{
-			extend = _dynamicAttributeHelper.calculate(_dynParticleAllDimensions, _particleSystem->getTimeElapsedSinceStart());
-			particle->setOwnDimensions(_emitterScale.x * extend, _emitterScale.y * extend, _emitterScale.z * extend);
-			return;
-		}
+    // Only continue if one of them is set
+    if (_dynParticleAllDimensionsSet || _dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
+    {
+        // Set all dimensions equal ...
+        float extend = 0;
+        if (_dynParticleAllDimensionsSet && _dynParticleAllDimensions)
+        {
+            extend = _dynamicAttributeHelper.calculate(_dynParticleAllDimensions, _particleSystem->getTimeElapsedSinceStart());
+            particle->setOwnDimensions(_emitterScale.x * extend, _emitterScale.y * extend, _emitterScale.z * extend);
+            return;
+        }
 
-		// ... or set the dimensions independent from each other
-		float width = 0;
-		float height = 0;
-		float depth = 0;
-		if (_dynParticleWidthSet && _dynParticleWidth)
-		{
-			width = _dynamicAttributeHelper.calculate(_dynParticleWidth, _particleSystem->getTimeElapsedSinceStart());
-		}
-		if (_dynParticleHeightSet && _dynParticleHeight)
-		{
-			height = _dynamicAttributeHelper.calculate(_dynParticleHeight, _particleSystem->getTimeElapsedSinceStart());
-		}
-		if (_dynParticleDepthSet && _dynParticleDepth)
-		{
-			depth = _dynamicAttributeHelper.calculate(_dynParticleDepth, _particleSystem->getTimeElapsedSinceStart());
-		}
-	
-		/** Set the width, height and depth if at least one of them is set.
-		@remarks
-			If one of the dimensions is 0, it will be overridden by the default value later on.
-		*/
-		if (_dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
-		{
-			particle->setOwnDimensions(_emitterScale.x * width, _emitterScale.y * height, _emitterScale.z * depth);
-		}
-	}
-	else
-	{
-		// Just set the width, height and depth, but these are just the default settings; the particle doesn't
-		// have own dimensions. Recalculate the bounding sphere radius.
-		particle->width = _emitterScale.x * _particleSystem->getDefaultWidth();
-		particle->height = _emitterScale.y * _particleSystem->getDefaultHeight();
-		particle->depth = _emitterScale.z * _particleSystem->getDefaultDepth();
-		particle->calculateBoundingSphereRadius();
-	}
+        // ... or set the dimensions independent from each other
+        float width = 0;
+        float height = 0;
+        float depth = 0;
+        if (_dynParticleWidthSet && _dynParticleWidth)
+        {
+            width = _dynamicAttributeHelper.calculate(_dynParticleWidth, _particleSystem->getTimeElapsedSinceStart());
+        }
+        if (_dynParticleHeightSet && _dynParticleHeight)
+        {
+            height = _dynamicAttributeHelper.calculate(_dynParticleHeight, _particleSystem->getTimeElapsedSinceStart());
+        }
+        if (_dynParticleDepthSet && _dynParticleDepth)
+        {
+            depth = _dynamicAttributeHelper.calculate(_dynParticleDepth, _particleSystem->getTimeElapsedSinceStart());
+        }
+    
+        /** Set the width, height and depth if at least one of them is set.
+        @remarks
+            If one of the dimensions is 0, it will be overridden by the default value later on.
+        */
+        if (_dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
+        {
+            particle->setOwnDimensions(_emitterScale.x * width, _emitterScale.y * height, _emitterScale.z * depth);
+        }
+    }
+    else
+    {
+        // Just set the width, height and depth, but these are just the default settings; the particle doesn't
+        // have own dimensions. Recalculate the bounding sphere radius.
+        particle->width = _emitterScale.x * _particleSystem->getDefaultWidth();
+        particle->height = _emitterScale.y * _particleSystem->getDefaultHeight();
+        particle->depth = _emitterScale.z * _particleSystem->getDefaultDepth();
+        particle->calculateBoundingSphereRadius();
+    }
 }
 
 NS_CC_END

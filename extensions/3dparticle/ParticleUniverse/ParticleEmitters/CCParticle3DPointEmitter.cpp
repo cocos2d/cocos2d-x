@@ -38,4 +38,11 @@ Particle3DPointEmitter::~Particle3DPointEmitter( void )
 
 }
 
+Particle3DPointEmitter* Particle3DPointEmitter::create()
+{
+    auto pe = new Particle3DPointEmitter();
+    pe->autorelease();
+    return pe;
+}
+
 NS_CC_END

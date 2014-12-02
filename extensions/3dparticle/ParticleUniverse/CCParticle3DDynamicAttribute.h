@@ -58,7 +58,7 @@ struct ControlPointSorter
     but where implementation of this behaviour may not be scattered or duplicated within the application that needs 
     it.
 */
-class DynamicAttribute : Ref
+class CC_DLL DynamicAttribute : Ref
 {
     public:
         enum DynamicAttributeType
@@ -104,7 +104,7 @@ class DynamicAttribute : Ref
     Although use of a regular attribute within the class that needs it is preferred, its benefit is that it makes
     use of the generic 'getValue' mechanism of a DynamicAttribute.
 */
-class DynamicAttributeFixed : public DynamicAttribute
+class CC_DLL DynamicAttributeFixed : public DynamicAttribute
 {
     public:
         /** Constructor
@@ -133,7 +133,7 @@ class DynamicAttributeFixed : public DynamicAttribute
 
 /* This class generates random values within a given minimum and maximum interval.
 */
-class DynamicAttributeRandom : public DynamicAttribute
+class CC_DLL DynamicAttributeRandom : public DynamicAttribute
 {
     public:
         /** Constructor
@@ -170,7 +170,7 @@ protected:
     on these control points. Interpolation is done in different flavours. linear?provides linear interpolation
     of a value on the curve, while spline?generates a smooth curve and the returns a value that lies on that curve.
 */
-class DynamicAttributeCurved : public DynamicAttribute
+class CC_DLL DynamicAttributeCurved : public DynamicAttribute
 {
     public:
         typedef std::vector<Vec2> ControlPointList;
@@ -247,7 +247,7 @@ class DynamicAttributeCurved : public DynamicAttribute
 
 /* This class generates values based on an oscillating functione (i.e. Sine).
 */
-class DynamicAttributeOscillate : public DynamicAttribute
+class CC_DLL DynamicAttributeOscillate : public DynamicAttribute
 {
     public:
         enum OscillationType

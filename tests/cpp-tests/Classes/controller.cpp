@@ -71,6 +71,7 @@ Controller g_aTestNames[] = {
 	{ "Node: Node", [](){return new CocosNodeTestScene();} },
 	{ "Node: Parallax", [](){return new ParallaxTestScene(); } },
 	{ "Node: Particles", [](){return new ParticleTestScene(); } },
+	{ "Node: Particle3D", [](){  return new Particle3DTestScene(); }},
 	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
 	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
 	{ "Node: Scene", [](){return new SceneTestScene();} },

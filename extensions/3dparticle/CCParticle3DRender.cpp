@@ -67,7 +67,7 @@ Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
         if (tex)
         {
             ret->_texture = tex;
-            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
         }
     }
     auto glProgramState = GLProgramState::create(glProgram);
@@ -75,14 +75,14 @@ Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
     
     GLsizei stride = 9 * sizeof(float);
     
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_POSITION], 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)0);
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_TEX_COORD], 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)3);
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_COLOR], 4, GL_FLOAT, GL_FALSE, stride, (GLvoid*)5);
+    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_POSITION], 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, position));
+    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_TEX_COORD], 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, uv));
+    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_COLOR], 4, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, color));
     
     ret->_glProgramState = glProgramState;
-    ret->_vertexBuffer = VertexBuffer::create(stride, 4);
+    ret->_vertexBuffer = VertexBuffer::create(stride, 4 * 1000);
     ret->_vertexBuffer->retain();
-    ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6);
+    ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 1000);
     ret->_indexBuffer->retain();
     
     ret->_meshCommand = new MeshCommand();
@@ -121,15 +121,19 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         
         _posuvcolors[vertexindex].position = position - halfwidth - halfheight;
         _posuvcolors[vertexindex].color = particle->color;
-        //_posuvcolors[i].uv = particle->
+        _posuvcolors[vertexindex].uv = Vec2(0.0f, 0.0f);
+
         _posuvcolors[vertexindex + 1].position = position + halfwidth - halfheight;
         _posuvcolors[vertexindex + 1].color = particle->color;
+        _posuvcolors[vertexindex + 1].uv = Vec2(1.0f, 0.0f);
         
         _posuvcolors[vertexindex + 2].position = position - halfwidth + halfheight;
         _posuvcolors[vertexindex + 2].color = particle->color;
+        _posuvcolors[vertexindex + 2].uv = Vec2(0.0f, 1.0f);
         
         _posuvcolors[vertexindex + 3].position = position + halfwidth + halfheight;
         _posuvcolors[vertexindex + 3].color = particle->color;
+        _posuvcolors[vertexindex + 3].uv = Vec2(1.0f, 1.0f);
         
         
         _indexData[index] = vertexindex;
@@ -146,8 +150,8 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     _posuvcolors.erase(_posuvcolors.begin() + vertexindex, _posuvcolors.end());
     _indexData.erase(_indexData.begin() + index, _indexData.end());
     
-    _vertexBuffer->updateVertices(&_posuvcolors[0], vertexindex * sizeof(_posuvcolors[0]), 0);
-    _indexBuffer->updateIndices(&_indexData[0], index * sizeof(unsigned short), 0);
+    _vertexBuffer->updateVertices(&_posuvcolors[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
+    _indexBuffer->updateIndices(&_indexData[0], index/* * sizeof(unsigned short)*/, 0);
     
     GLuint texId = (_texture ? _texture->getName() : 0);
     const Mat4 &viewMat = cameraMat.getInversed();
@@ -197,17 +201,17 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
 
 void Particle3DRender::notifyStart( void )
 {
-	setVisible(true);
+    setVisible(true);
 }
 
 void Particle3DRender::notifyStop( void )
 {
-	setVisible(false);
+    setVisible(false);
 }
 
 void Particle3DRender::notifyRescaled( const Vec3& scale )
 {
-	_rendererScale = scale;
+    _rendererScale = scale;
 }
 
 NS_CC_END
