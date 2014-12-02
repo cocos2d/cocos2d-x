@@ -120,6 +120,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIWidgetAddNode");
         
         searchPaths.push_back("ccs-res/hd/cocosui/CustomTest/CustomWidgetCallbackBindTest");
+        searchPaths.push_back("hd/ActionTimeline");
     }
     else
     {
@@ -157,6 +158,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIWidgetAddNode");
         
         searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
+        
+        searchPaths.push_back("ActionTimeline");
     }
     
     fileUtils->setSearchPaths(searchPaths);
