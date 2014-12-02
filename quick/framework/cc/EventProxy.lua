@@ -22,7 +22,7 @@ end
 
 function EventProxy:removeEventListener(eventHandle)
     self.eventDispatcher_:removeEventListener(eventHandle)
-    for index, handle in ipairs(self.handles_) do
+    for index, handle in pairs(self.handles_) do
         if handle[2] == eventHandle then
             table.remove(self.handles_, index)
             break
@@ -50,7 +50,7 @@ function EventProxy:getEventHandle(eventName)
 end
 
 function EventProxy:removeAllEventListeners()
-    for _, handle in ipairs(self.handles_) do
+    for _, handle in pairs(self.handles_) do
         self.eventDispatcher_:removeEventListener(handle[2])
     end
     self.handles_ = {}
