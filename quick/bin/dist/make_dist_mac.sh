@@ -58,21 +58,24 @@ rm $WORKDIR-win/tools/$GTOOLSPATH/libclang/libclang.dylib
 rm -fr $WORKDIR-win/quick/templates/lua-template-quick/runtime/ios
 rm -fr $WORKDIR-win/quick/templates/lua-template-quick/runtime/mac
 
-# cd quick/player/proj.mac
+echo "Compile mac player"
 
-# cp -rf player3.xcodeproj/xcuserdata/USER.xcuserdatad/ player3.xcodeproj/xcuserdata/$USER.xcuserdatad/
-# xcodebuild -configuration Debug \
-#     CODE_SIGN_IDENTITY="Developer ID Application: $CERT" \
-#     QUICK_V3_ROOT="$QUICK_V3_ROOT" \
-#     -workspace player3.xcworkspace \
-#     -scheme player3 \
-#     -archivePath ./build \
-#     archive
+cd quick/player/proj.mac
 
-# mv ./build.xcarchive/Products/Applications/player3.app "$WORKDIR"
-# rm -fr ./build.xcarchive
+# cp -rf player3.xcodeproj/USER.xcuserdata/xcuserdatad/ player3.xcodeproj/xcuserdata/$USER.xcuserdatad/
+xcodebuild -configuration Debug \
+    CODE_SIGN_IDENTITY="Developer ID Application: $CERT" \
+    QUICK_V3_ROOT="$QUICK_V3_ROOT" \
+    -workspace player3.xcodeproj/project.xcworkspace \
+    --timestamp=none \
+    -scheme player3 \
+    -archivePath ./build \
+    archive
+
 echo "Copy mac player"
-cp -rf quick/player/mac/player3.app "$WORKDIR"
+mv ./build.xcarchive/Products/Applications/player3.app "$WORKDIR"
+rm -fr ./build.xcarchive
+
 echo "Copy win player"
 cp -rf quick/player/win32 "$WORKDIR-win/quick/player/"
 
@@ -92,31 +95,31 @@ echo ""
 echo "--------------------------"
 echo ""
 
-# SRC_PKG=$DIST_WORKDIR/build/quick-cocos2d-x-$VERSION.mpkg
-# DEST_PKG=$DIST_WORKDIR/build/Install.mpkg
-# if [ -d "$DEST_PKG" ]; then
-# 	rm -fr "$DEST_PKG"
-# fi
-# if [ -f "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg" ]; then
-# 	rm -f "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg"
-# fi
+SRC_PKG=$DIST_WORKDIR/build/quick-cocos2d-x-$VERSION.mpkg
+DEST_PKG=$DIST_WORKDIR/build/Install.mpkg
+if [ -d "$DEST_PKG" ]; then
+	rm -fr "$DEST_PKG"
+fi
+if [ -f "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg" ]; then
+	rm -f "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg"
+fi
 
-# productsign --sign "Developer ID Installer: $CERT" "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg" "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg"
-# echo ""
-# rm "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg"
-# mv "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg" "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg"
-# spctl -a -v --type install "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg"
-# echo ""
-# echo "quickcocos2dx.pkg accepted"
-# echo "source=Developer ID"
-# echo "override=security disabled"
-# echo ""
-# echo "--------------------------"
-# echo ""
+productsign --sign "Developer ID Installer: $CERT" "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg" "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg"
+echo ""
+rm "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg"
+mv "$SRC_PKG/Contents/Packages/quickcocos2dx_signed.pkg" "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg"
+spctl -a -v --type install "$SRC_PKG/Contents/Packages/quickcocos2dx.pkg"
+echo ""
+echo "quickcocos2dx.pkg accepted"
+echo "source=Developer ID"
+echo "override=security disabled"
+echo ""
+echo "--------------------------"
+echo ""
 
-# productsign --sign "Developer ID Application: $CERT" "$SRC_PKG" "$DEST_PKG"
-# spctl -a -v --type install "$DEST_PKG"
-# echo ""
-# echo "DONE: Install.mpkg on $DIST_WORKDIR/build/"
-# open "$DIST_WORKDIR/build/"
-# echo ""
+productsign --sign "Developer ID Application: $CERT" "$SRC_PKG" "$DEST_PKG"
+spctl -a -v --type install "$DEST_PKG"
+echo ""
+echo "DONE: Install.mpkg on $DIST_WORKDIR/build/"
+open "$DIST_WORKDIR/build/"
+echo ""
