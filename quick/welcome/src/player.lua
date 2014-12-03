@@ -182,8 +182,8 @@ function player:buildUI()
 
     -- direction
     menuBar:addItem("DIRECTION_MENU_SEP", "-", "VIEW_MENU")
-    local portait = menuBar:addItem("DIRECTION_PORTAIT_MENU", "Portait", "VIEW_MENU")
-    portait.type  = "portait"
+    local portait = menuBar:addItem("DIRECTION_PORTAIT_MENU", "Portrait", "VIEW_MENU")
+    portait.type  = "portrait"
     if self.projectConfig_:isPortraitFrame() then portait:setChecked(true) end
 
     local landscape = menuBar:addItem("DIRECTION_LANDSCAPE_MENU", "Landscape", "VIEW_MENU")
@@ -279,7 +279,7 @@ end
 function player:onScreenChangeDirection(sender)
     if sender:isChecked() then return end
 
-    if sender.type == "portait" then
+    if sender.type == "portrait" then
         self.projectConfig_:changeFrameOrientationToPortait()
     elseif sender.type == "landscape" then
         self.projectConfig_:changeFrameOrientationToLandscape()

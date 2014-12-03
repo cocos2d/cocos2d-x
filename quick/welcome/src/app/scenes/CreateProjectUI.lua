@@ -107,7 +107,7 @@ function CreateProjectUI:onEnter()
 
     local portaitCheckBox =
     cc.ui.UICheckBoxButton.new(checkboxImages)
-        :setButtonLabel(cc.ui.UILabel.new({text = "Portait", size = fontSize,  color = display.COLOR_WHITE}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "Portrait", size = fontSize,  color = display.COLOR_WHITE}))
         :setButtonLabelOffset(30, 0)
         :setButtonLabelAlignment(display.LEFT_CENTER)
         :align(display.LEFT_CENTER, 40, display.cy)
