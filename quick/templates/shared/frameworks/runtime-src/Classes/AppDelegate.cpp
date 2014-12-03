@@ -5,6 +5,10 @@
 #include "ConfigParser.h"
 #include "lua_module_register.h"
 
+#ifndef CC_USE_RUNTIME
+#define CC_USE_RUNTIME 1
+#endif
+
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include "Runtime.h"
 #endif

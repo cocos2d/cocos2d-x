@@ -36,6 +36,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     int argCount=0;
 
     szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
+    bool isCodeIDEDebugger = false;
     if (argCount >=2 )
     {
         int iLen = 2*wcslen(szArgList[1]);
@@ -44,12 +45,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         extern std::string g_resourcePath;
         g_resourcePath = chRtn;
         delete [] chRtn;
+		isCodeIDEDebugger = true;
     }
     LocalFree(szArgList);
 
     ProjectConfig project;
     HWND hwndConsole;
 
+	if(isCodeIDEDebugger) project.setDebuggerType(kCCLuaDebuggerCodeIDE);
     // load project config from command line args
     vector<string> args;
     for (int i = 0; i < __argc; ++i)
@@ -85,7 +88,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // set environments
     CCLOG("the project directory is: %s", project.getProjectDir().c_str());
-    bool isCodeIDEDebugger = (argCount >= 2);
     if (!project.getProjectDir().empty())
     {
         isCodeIDEDebugger = false;
@@ -100,6 +102,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     {
         isCodeIDEDebugger = true;
     }
+	else
+	{
+        isCodeIDEDebugger = false;
+	}
 
     // create the application instance
     AppDelegate app;
@@ -108,6 +114,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     {
         app.setLaunchMode(1);
     }
+	else
+	{
+        app.setLaunchMode(0);
+	}
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
