@@ -422,17 +422,14 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     std::string path = fileName;
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
-    std::string inFile;
-    auto load = LoadFile(fullPath.c_str(), true, &inFile);
-    if (!load)
-    {
-        CCLOG("couldn't load files");
-        return nullptr;
-    }
     
-    auto csparsebinary = GetCSParseBinary(inFile.data());
-    auto nodeAction = csparsebinary->action();
+    CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
+    Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
+    
+    auto csparsebinary = GetCSParseBinary(buf.getBytes());
+    
+    auto nodeAction = csparsebinary->action();    
     action = ActionTimeline::create();
     
     int duration = nodeAction->duration();

@@ -747,15 +747,9 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
     
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
-    std::string inFile;
-    auto load = LoadFile(fullPath.c_str(), true, &inFile);
-    if (!load)
-    {
-        CCLOG("couldn't load files");
-        return nullptr;
-    }
+    Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
     
-    auto csparsebinary = GetCSParseBinary(inFile.data());
+    auto csparsebinary = GetCSParseBinary(buf.getBytes());
     
     // decode plist
     auto textures = csparsebinary->textures();
