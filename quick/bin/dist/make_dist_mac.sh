@@ -77,6 +77,7 @@ mv ./build.xcarchive/Products/Applications/player3.app "$WORKDIR"
 rm -fr ./build.xcarchive
 
 echo "Copy win player"
+cd "$QUICK_V3_ROOT"
 cp -rf quick/player/win32 "$WORKDIR-win/quick/player/"
 
 spctl -a -v "$WORKDIR/player3.app/"
