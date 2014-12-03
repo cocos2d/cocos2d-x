@@ -53,13 +53,13 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
-: _pcmData(nullptr)
-, _dataSize(0)
+: _dataSize(0)
+, _pcmData(nullptr)
 , _bytesOfRead(0)
-, _exitReadDataTask(false)
 , _queBufferFrames(0)
 , _queBufferBytes(0)
 , _alBufferReady(false)
+, _exitReadDataTask(false)
 {
     
 }

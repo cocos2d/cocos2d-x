@@ -32,11 +32,11 @@
 
 #include <errno.h>
 
+#include <curl/curl.h>
+
 #include "base/CCVector.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-
-#include "curl/curl.h"
 
 #include "platform/CCFileUtils.h"
 

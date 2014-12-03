@@ -82,7 +82,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelLineHeightTest),
     CL(LabelAdditionalKerningTest),
     CL(LabelIssue8492Test),
-    CL(LabelMultilineWithOutline)
+    CL(LabelMultilineWithOutline),
+    CL(LabelIssue9255Test)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1851,4 +1852,28 @@ std::string LabelMultilineWithOutline::title() const
 std::string LabelMultilineWithOutline::subtitle() const
 {
     return "end in string 'outline feature'";
+}
+
+
+LabelIssue9255Test::LabelIssue9255Test()
+{
+    Size s = Director::getInstance()->getWinSize();
+    auto parent = Node::create();
+    parent->setPosition(s.width/2, s.height/2);
+    parent->setVisible(false);
+    this->addChild(parent);
+
+    auto label =  Label::createWithTTF("Crashed!!!", "fonts/HKYuanMini.ttf", 24);
+    label->setPosition(VisibleRect::center());
+    parent->addChild(label);
+}
+
+std::string LabelIssue9255Test::title() const
+{
+    return "Test for Issue #9255";
+}
+
+std::string LabelIssue9255Test::subtitle() const
+{
+    return "switch to desktop and switch back. Crashed!!!";
 }

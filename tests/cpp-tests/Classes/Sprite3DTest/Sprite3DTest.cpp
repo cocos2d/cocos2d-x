@@ -536,7 +536,7 @@ Effect3DOutline::Effect3DOutline()
 , _outlineColor(1, 1, 1)
 , _sprite(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                           [this](EventCustom*)
                                                           {
@@ -553,7 +553,7 @@ Effect3DOutline::Effect3DOutline()
 
 Effect3DOutline::~Effect3DOutline()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -1102,69 +1102,38 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto label1 = Label::createWithTTF(ttfConfig,"Hair");
-    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchHair,this) );
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
-    auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchGlasses,this) );
+    auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label3 = Label::createWithTTF(ttfConfig,"Coat");
-    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchCoat,this) );
+    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label4 = Label::createWithTTF(ttfConfig,"Pants");
-    auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchPants,this) );
+    auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
-    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_switchShoes,this) );
+    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
     item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
     item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
     item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
     item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    item1->setUserData((void*)SkinType::HAIR);
+    item2->setUserData((void*)SkinType::GLASSES);
+    item3->setUserData((void*)SkinType::UPPER_BODY);
+    item4->setUserData((void*)SkinType::PANTS);
+    item5->setUserData((void*)SkinType::SHOES);
     auto pMenu1 = CCMenu::create(item1, item2, item3, item4, item5, nullptr);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
     
 }
-void Sprite3DReskinTest::menuCallback_switchHair(Ref* sender)
+void Sprite3DReskinTest::menuCallback_reSkin(Ref* sender)
 {
-    std::string str = _curSkin[SkinType::HAIR];
-    if (str == "Girl_Hair01")
-        _curSkin[SkinType::HAIR] = "Girl_Hair02";
-    else
-        _curSkin[SkinType::HAIR] = "Girl_Hair01";
-    applyCurSkin();
-}
-void Sprite3DReskinTest::menuCallback_switchGlasses(Ref* sender)
-{
-    std::string str = _curSkin[SkinType::GLASSES];
-    if (str == "Girl_Glasses01")
-        _curSkin[SkinType::GLASSES] = "";
-    else
-        _curSkin[SkinType::GLASSES] = "Girl_Glasses01";
-    applyCurSkin();
-}
-void Sprite3DReskinTest::menuCallback_switchCoat(Ref* sender)
-{
-    std::string str = _curSkin[SkinType::UPPER_BODY];
-    if (str == "Girl_UpperBody01")
-        _curSkin[SkinType::UPPER_BODY] = "Girl_UpperBody02";
-    else
-        _curSkin[SkinType::UPPER_BODY] = "Girl_UpperBody01";
-    applyCurSkin();
-}
-void Sprite3DReskinTest::menuCallback_switchPants(Ref* sender)
-{
-    std::string str = _curSkin[SkinType::PANTS];
-    if (str == "Girl_LowerBody01")
-        _curSkin[SkinType::PANTS] = "Girl_LowerBody02";
-    else
-        _curSkin[SkinType::PANTS] = "Girl_LowerBody01";
-    applyCurSkin();
-}
-void Sprite3DReskinTest::menuCallback_switchShoes(Ref* sender)
-{
-    std::string strShoes = _curSkin[SkinType::SHOES];
-    if (strShoes == "Girl_Shoes01")
-        _curSkin[SkinType::SHOES] = "Girl_Shoes02";
-    else
-        _curSkin[SkinType::SHOES] = "Girl_Shoes01";
-    applyCurSkin();
+    long index = (long)(((MenuItemLabel*)sender)->getUserData());
+    if (index < (int)SkinType::MAX_TYPE)
+    {
+        _curSkin[index] = (_curSkin[index] + 1) % _skins[index].size();
+        applyCurSkin();
+    }
 }
 
 std::string Sprite3DReskinTest::title() const
@@ -1193,13 +1162,36 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
     }
     _sprite = sprite;
     
-    _curSkin[SkinType::UPPER_BODY] = "Girl_UpperBody01";
-    _curSkin[SkinType::PANTS] = "Girl_LowerBody01";
-    _curSkin[SkinType::SHOES] = "Girl_Shoes01";
-    _curSkin[SkinType::HAIR] = "Girl_Hair01";
-    _curSkin[SkinType::FACE] = "Girl_Face01";
-    _curSkin[SkinType::HAND] = "Girl_Hand01";
-    _curSkin[SkinType::GLASSES] = "";
+    auto& body = _skins[(int)SkinType::UPPER_BODY];
+    body.push_back("Girl_UpperBody01");
+    body.push_back("Girl_UpperBody02");
+    
+    auto& pants = _skins[(int)SkinType::PANTS];
+    pants.push_back("Girl_LowerBody01");
+    pants.push_back("Girl_LowerBody02");
+    
+    auto& shoes = _skins[(int)SkinType::SHOES];
+    shoes.push_back("Girl_Shoes01");
+    shoes.push_back("Girl_Shoes02");
+    
+    auto& hair = _skins[(int)SkinType::HAIR];
+    hair.push_back("Girl_Hair01");
+    hair.push_back("Girl_Hair02");
+    
+    auto& face = _skins[(int)SkinType::FACE];
+    face.push_back("Girl_Face01");
+    face.push_back("Girl_Face02");
+    
+    auto& hand = _skins[(int)SkinType::HAND];
+    hand.push_back("Girl_Hand01");
+    hand.push_back("Girl_Hand02");
+    
+    auto& glasses = _skins[(int)SkinType::GLASSES];
+    glasses.push_back("");
+    glasses.push_back("Girl_Glasses01");
+    
+    memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
+    
     applyCurSkin();
 }
 
@@ -1212,8 +1204,8 @@ void Sprite3DReskinTest::applyCurSkin()
     for (ssize_t i = 0; i < _sprite->getMeshCount(); i++) {
         auto mesh = _sprite->getMeshByIndex(static_cast<int>(i));
         bool isVisible = false;
-        for (auto& it : _curSkin) {
-            if (mesh->getName() == it.second)
+        for (int j = 0; j < (int)SkinType::MAX_TYPE; j++) {
+            if (mesh->getName() == _skins[j].at(_curSkin[j]))
             {
                 isVisible = true;
                 break;

@@ -690,14 +690,16 @@ void EditBoxImplWin::openKeyboard()
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
-    
-    EditBox* pEditBox = this->getEditBox();
-    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+
+#if CC_ENABLE_SCRIPT_BINDING
+    auto editBox = this->getEditBox();
+    if (editBox && editBox->getScriptEditBoxHandler())
     {
-        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        CommonScriptData data(editBox->getScriptEditBoxHandler(), "began",editBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     
 	std::string placeHolder = _labelPlaceHolder->getString();
 	if (placeHolder.length() == 0)
