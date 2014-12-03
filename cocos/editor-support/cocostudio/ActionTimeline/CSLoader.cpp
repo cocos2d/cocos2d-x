@@ -702,8 +702,6 @@ Node* CSLoader::createNodeFromProtocolBuffers(const std::string &filename)
 
 Node* CSLoader::nodeFromProtocolBuffersFile(const std::string &fileName)
 {
-    std::string path = fileName;
-    
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
     Data content = FileUtils::getInstance()->getDataFromFile(fullPath);
     protocolbuffers::CSParseBinary gpbwp;
