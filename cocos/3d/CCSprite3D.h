@@ -26,6 +26,7 @@
 #define __CCSPRITE3D_H__
 
 #include <unordered_map>
+#include <future>
 
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
@@ -55,6 +56,15 @@ public:
   
     // creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
+    
+    /* create 3d sprite asynchronously
+     * If the 3d model was not previously loaded, it will create a new 3d sprite and it will return it.
+     * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the Sprite3D as a parameter.
+     * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
+     */
+    static void createAsync(const std::string &modelPath, const std::function<void(Sprite3D*)>& callback);
+    
+    static void createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*)>& callback);
     
     /**set texture, set the first if multiple textures exist*/
     void setTexture(const std::string& texFile);
@@ -133,11 +143,8 @@ CC_CONSTRUCTOR_ACCESS:
     /**load sprite3d from cache, return true if succeed, false otherwise*/
     bool loadFromCache(const std::string& path);
     
-    /**.mtl file should at the same directory with the same name if exist*/
-    bool loadFromObj(const std::string& path);
-    
-    /**load from .c3b or .c3t*/
-    bool loadFromC3x(const std::string& path);
+    /** load file and set it to meshedatas, nodedatas and materialdatas, obj file .mtl file should be at the same directory if exist */
+    bool loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshDatas* meshdatas,  MaterialDatas* materialdatas);
 
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -156,6 +163,8 @@ CC_CONSTRUCTOR_ACCESS:
     
     void onAABBDirty() { _aabbDirty = true; }
     
+    void asyncLoadChecker(float delta);
+    
 protected:
 
     Skeleton3D*                  _skeleton; //skeleton
@@ -173,6 +182,18 @@ protected:
     bool                         _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
+    
+    struct AsyncLoadParam
+    {
+        std::future<void>            asyncFuture; // future for load 3d sprite async
+        std::function<void(Sprite3D*)> afterLoadCallback; // callback after load
+        bool                            result; // sprite load result
+        std::string                     path;
+        MeshDatas* meshdatas;
+        MaterialDatas* materialdatas;
+        NodeDatas*   nodeDatas;
+    };
+    AsyncLoadParam             _asyncLoadParam;
 };
 
 ///////////////////////////////////////////////////////

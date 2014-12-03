@@ -54,38 +54,4 @@ AsyncTaskPool::~AsyncTaskPool()
     
 }
 
-template<class F, class... Args>
-auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, F&& f, Args&&... args)
--> std::future<typename std::result_of<F(Args...)>::type>
-{
-    auto& threadTask = _threadTasks[(int)type];
-    //return _threadTasks[taskType].enqueue(f, args);
-    
-    using return_type = typename std::result_of<F(Args...)>::type;
-    
-    auto task = std::make_shared< std::packaged_task<return_type()> >(
-                                                                      std::bind(std::forward<F>(f), std::forward<Args>(args)...)
-                                                                      );
-    auto& queue_mutex = threadTask._queue_mutex;
-    auto& stop = threadTask._stop;
-    auto& tasks = threadTask._tasks;
-    auto& condition = threadTask._condition;
-    std::future<return_type> res = task->get_future();
-    {
-        std::unique_lock<std::mutex> lock(queue_mutex);
-        
-        // don't allow enqueueing after stopping the pool
-        if(stop)
-        {
-            CC_ASSERT(0 && "already stop");
-            return res;
-        }
-        
-        tasks.emplace([task](){ (*task)(); });
-    }
-    condition.notify_one();
-    
-    return res;
-}
-
 NS_CC_END

@@ -31,6 +31,7 @@
 #include "3d/CCMesh.h"
 
 #include "base/CCDirector.h"
+#include "base/CCAsyncTaskPool.h"
 #include "2d/CCLight.h"
 #include "2d/CCCamera.h"
 #include "base/ccMacros.h"
@@ -73,6 +74,78 @@ Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &text
     return sprite;
 }
 
+void Sprite3D::createAsync(const std::string &modelPath, const std::function<void(Sprite3D*)>& callback)
+{
+    createAsync(modelPath, "", callback);
+}
+
+void Sprite3D::createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*)>& callback)
+{
+    Sprite3D *sprite = new (std::nothrow) Sprite3D();
+    if (sprite->loadFromCache(modelPath))
+    {
+        sprite->autorelease();
+        if (!texturePath.empty())
+            sprite->setTexture(texturePath);
+        callback(sprite);
+        return;
+    }
+    
+    sprite->_asyncLoadParam.afterLoadCallback = callback;
+    sprite->_asyncLoadParam.asyncFuture = AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](Sprite3D* sp, const std::string& path)
+    {
+        sp->_asyncLoadParam.materialdatas = new (std::nothrow) MaterialDatas();
+        sp->_asyncLoadParam.meshdatas = new (std::nothrow) MeshDatas();
+        sp->_asyncLoadParam.nodeDatas = new (std::nothrow) NodeDatas();
+        sp->_asyncLoadParam.path = path;
+        sp->_asyncLoadParam.result = sp->loadFromFile(path, sp->_asyncLoadParam.nodeDatas, sp->_asyncLoadParam.meshdatas, sp->_asyncLoadParam.materialdatas);
+    }, sprite, modelPath);
+    
+    sprite->schedule(SEL_SCHEDULE(&Sprite3D::asyncLoadChecker), 0);
+    
+}
+
+void Sprite3D::asyncLoadChecker(float delta)
+{
+    static std::chrono::milliseconds span(0);
+    if (_asyncLoadParam.asyncFuture.valid() && _asyncLoadParam.asyncFuture.wait_for(span) == std::future_status::ready)
+    {
+        if (_asyncLoadParam.result)
+        {
+            _meshes.clear();
+            _meshVertexDatas.clear();
+            CC_SAFE_RELEASE_NULL(_skeleton);
+            removeAllAttachNode();
+            
+            //create in the main thread
+            auto& meshdatas = _asyncLoadParam.meshdatas;
+            auto& materialdatas = _asyncLoadParam.materialdatas;
+            auto&   nodeDatas = _asyncLoadParam.nodeDatas;
+            if (initFrom(*nodeDatas, *meshdatas, *materialdatas))
+            {
+                //add to cache
+                auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
+                data->materialdatas = materialdatas;
+                data->nodedatas = nodeDatas;
+                data->meshVertexDatas = _meshVertexDatas;
+                for (const auto mesh : _meshes) {
+                    data->glProgramStates.pushBack(mesh->getGLProgramState());
+                }
+                
+                Sprite3DCache::getInstance()->addSprite3DData(_asyncLoadParam.path, data);
+                meshdatas = nullptr;
+                materialdatas = nullptr;
+                nodeDatas = nullptr;
+            }
+            delete meshdatas;
+            delete materialdatas;
+            delete nodeDatas;
+        }
+        _asyncLoadParam.afterLoadCallback(this);
+        unschedule(SEL_SCHEDULE(&Sprite3D::asyncLoadChecker));
+    }
+}
+
 bool Sprite3D::loadFromCache(const std::string& path)
 {
     auto spritedata = Sprite3DCache::getInstance()->getSpriteData(path);
@@ -109,66 +182,26 @@ bool Sprite3D::loadFromCache(const std::string& path)
     return false;
 }
 
-//.mtl file should at the same directory with the same name if exist
-bool Sprite3D::loadFromObj(const std::string& path)
+bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshDatas* meshdatas,  MaterialDatas* materialdatas)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
-    MeshDatas meshdatas;
-    MaterialDatas* materialdatas = new (std::nothrow) MaterialDatas();
-    NodeDatas*   nodeDatas = new (std::nothrow) NodeDatas();
-    bool ret = Bundle3D::loadObj(meshdatas, *materialdatas, *nodeDatas, fullPath);
-    if (ret && initFrom(*nodeDatas, meshdatas, *materialdatas))
+    std::string ext = path.substr(path.length() - 4, 4);
+    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    if (ext == ".obj")
     {
-        //add to cache
-        auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
-        data->materialdatas = materialdatas;
-        data->nodedatas = nodeDatas;
-        data->meshVertexDatas = _meshVertexDatas;
-        for (const auto mesh : _meshes) {
-            data->glProgramStates.pushBack(mesh->getGLProgramState());
-        }
+        return Bundle3D::loadObj(*meshdatas, *materialdatas, *nodedatas, fullPath);
+    }
+    else if (ext == ".c3b" || ext == ".c3t")
+    {
+        //load from .c3b or .c3t
+        auto bundle = Bundle3D::getInstance();
+        if (!bundle->load(fullPath))
+            return false;
         
-        Sprite3DCache::getInstance()->addSprite3DData(path, data);
-        return true;
+        return bundle->loadMeshDatas(*meshdatas)
+            && bundle->loadMaterials(*materialdatas) && bundle->loadNodes(*nodedatas);
     }
-    delete materialdatas;
-    delete nodeDatas;
-
-    return false;
-}
-bool Sprite3D::loadFromC3x(const std::string& path)
-{
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-
-    //load from .c3b or .c3t
-    auto bundle = Bundle3D::getInstance();
-    if (!bundle->load(fullPath))
-        return false;
-    
-    MeshDatas meshdatas;
-    MaterialDatas* materialdatas = new (std::nothrow) MaterialDatas();
-    NodeDatas*   nodeDatas = new (std::nothrow) NodeDatas();
-    if (bundle->loadMeshDatas(meshdatas)
-        && bundle->loadMaterials(*materialdatas)
-        && bundle->loadNodes(*nodeDatas)
-        && initFrom(*nodeDatas, meshdatas, *materialdatas))
-    {
-        //add to cache
-        auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
-        data->materialdatas = materialdatas;
-        data->nodedatas = nodeDatas;
-        data->meshVertexDatas = _meshVertexDatas;
-        for (const auto mesh : _meshes) {
-            data->glProgramStates.pushBack(mesh->getGLProgramState());
-        }
-        Sprite3DCache::getInstance()->addSprite3DData(path, data);
-        return true;
-    }
-    
-    delete materialdatas;
-    delete nodeDatas;
-    
     return false;
 }
 
@@ -199,18 +232,29 @@ bool Sprite3D::initWithFile(const std::string &path)
     if (loadFromCache(path))
         return true;
     
-    //load from file
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
-    
-    if (ext == ".obj")
+    MeshDatas* meshdatas = new (std::nothrow) MeshDatas();
+    MaterialDatas* materialdatas = new (std::nothrow) MaterialDatas();
+    NodeDatas*   nodeDatas = new (std::nothrow) NodeDatas();
+    if (loadFromFile(path, nodeDatas, meshdatas, materialdatas))
     {
-        return loadFromObj(path);
+        if (initFrom(*nodeDatas, *meshdatas, *materialdatas))
+        {
+            //add to cache
+            auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
+            data->materialdatas = materialdatas;
+            data->nodedatas = nodeDatas;
+            data->meshVertexDatas = _meshVertexDatas;
+            for (const auto mesh : _meshes) {
+                data->glProgramStates.pushBack(mesh->getGLProgramState());
+            }
+            
+            Sprite3DCache::getInstance()->addSprite3DData(path, data);
+            return true;
+        }
     }
-    else if (ext == ".c3b" || ext == ".c3t")
-    {
-        return loadFromC3x(path);
-    }
+    delete meshdatas;
+    delete materialdatas;
+    delete nodeDatas;
     
     return false;
 }
