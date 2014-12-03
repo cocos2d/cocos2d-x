@@ -19,6 +19,7 @@ function DisplayTestScene:ctor()
 
     display.setTexturePixelFormat("Coin0001.png", cc.TEXTURE2D_PIXEL_FORMAT_RGB565)
     display.setTexturePixelFormat("blocks9ss.png", cc.TEXTURE2D_PIXEL_FORMAT_RGB565)
+
 end
 
 function DisplayTestScene:beforeRunTest()
@@ -64,7 +65,7 @@ function DisplayTestScene:addImageAsyncTest()
     print("display.addImageAsync(\"Coin0001.png\")")
 
     display.addImageAsync("Coin0001.png", function(event, texture)
-        printf("display.addImageAsync(\"Coin0001.png\") - event = %s, texture = %s", event, tostring(texture))
+        printf("display.addImageAsync(\"Coin0001.png\") - event = %s, texture = %s", tostring(event), tostring(texture))
         self.coin = display.newSprite("Coin0001.png", display.left + 100, display.cy)
         self:addChild(self.coin)
     end)
