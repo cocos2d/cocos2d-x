@@ -5,7 +5,7 @@
 #define MyAppVersion "3.3rc1"
 #define MyAppPublisher "chukong-inc.com"
 #define MyAppURL "http://quick.cocos.org/"
-#define MyAppExeName "player3.exe"
+#define MyAppExeName "quick\player\win32\player3.exe"
 #define MyAppExeTitle "player3"
 
 [Setup]
