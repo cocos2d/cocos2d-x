@@ -314,6 +314,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     FontLetterDefinition tempDefinition;
     Vec2 letterPosition;
     const auto& kernings = theLabel->_horizontalKernings;
+    CCASSERT(kernings, "kernings must's be nullptr!!!");
 
     float clipTop = 0;
     float clipBottom = 0;

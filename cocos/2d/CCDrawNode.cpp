@@ -757,109 +757,84 @@ void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const
 void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
     CCASSERT(count >= 0, "invalid count value");
-
-    struct ExtrudeVerts {Vec2 offset, n;};
-	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
-	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
-	
-	for (int i = 0; i < count; i++)
-    {
-		Vec2 v0 = __v2f(verts[(i-1+count)%count]);
-		Vec2 v1 = __v2f(verts[i]);
-		Vec2 v2 = __v2f(verts[(i+1)%count]);
-        
-		Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
-		Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
-		
-		Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0/(v2fdot(n1, n2) + 1.0));
-        struct ExtrudeVerts tmp = {offset, n2};
-		extrude[i] = tmp;
-	}
-	
-	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
-	
-	auto triangle_count = 3*count - 2;
-	auto vertex_count = 3*triangle_count;
+    
+    bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
+    
+    auto  triangle_count = outline ? (3*count - 2) : (count - 2);
+    auto vertex_count = 3*triangle_count;
     ensureCapacity(vertex_count);
-	
-	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
-	V2F_C4B_T2F_Triangle *cursor = triangles;
-	
-	float inset = (outline == false ? 0.5 : 0.0);
-	for (int i = 0; i < count-2; i++)
+    
+    V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+    V2F_C4B_T2F_Triangle *cursor = triangles;
+    
+    for (int i = 0; i < count-2; i++)
     {
-		Vec2 v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
-		Vec2 v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
-		Vec2 v2 = v2fsub(__v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
-		
         V2F_C4B_T2F_Triangle tmp = {
-            {v0, Color4B(fillColor), __t(v2fzero)},
-            {v1, Color4B(fillColor), __t(v2fzero)},
-            {v2, Color4B(fillColor), __t(v2fzero)},
+            {verts[0], Color4B(fillColor), __t(v2fzero)},
+            {verts[i+1], Color4B(fillColor), __t(v2fzero)},
+            {verts[i+2], Color4B(fillColor), __t(v2fzero)},
         };
-
-		*cursor++ = tmp;
-	}
-	
-	for(int i = 0; i < count; i++)
+        
+        *cursor++ = tmp;
+    }
+    
+    if(outline)
     {
-		int j = (i+1)%count;
-		Vec2 v0 = __v2f(verts[i]);
-		Vec2 v1 = __v2f(verts[j]);
-		
-		Vec2 n0 = extrude[i].n;
-		
-		Vec2 offset0 = extrude[i].offset;
-		Vec2 offset1 = extrude[j].offset;
-		
-		if(outline)
+        struct ExtrudeVerts {Vec2 offset, n;};
+        struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
+        memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
+        
+        for (int i = 0; i < count; i++)
         {
-			Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
-			Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
-			Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
-			Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
-			
+            Vec2 v0 = __v2f(verts[(i-1+count)%count]);
+            Vec2 v1 = __v2f(verts[i]);
+            Vec2 v2 = __v2f(verts[(i+1)%count]);
+            
+            Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
+            Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
+            
+            Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0/(v2fdot(n1, n2) + 1.0));
+            struct ExtrudeVerts tmp = {offset, n2};
+            extrude[i] = tmp;
+        }
+        
+        for(int i = 0; i < count; i++)
+        {
+            int j = (i+1)%count;
+            Vec2 v0 = __v2f(verts[i]);
+            Vec2 v1 = __v2f(verts[j]);
+            
+            Vec2 n0 = extrude[i].n;
+            
+            Vec2 offset0 = extrude[i].offset;
+            Vec2 offset1 = extrude[j].offset;
+            
+            Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
+            Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
+            Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
+            Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
+            
             V2F_C4B_T2F_Triangle tmp1 = {
                 {inner0, Color4B(borderColor), __t(v2fneg(n0))},
                 {inner1, Color4B(borderColor), __t(v2fneg(n0))},
                 {outer1, Color4B(borderColor), __t(n0)}
             };
-			*cursor++ = tmp1;
-
+            *cursor++ = tmp1;
+            
             V2F_C4B_T2F_Triangle tmp2 = {
                 {inner0, Color4B(borderColor), __t(v2fneg(n0))},
                 {outer0, Color4B(borderColor), __t(n0)},
                 {outer1, Color4B(borderColor), __t(n0)}
             };
-			*cursor++ = tmp2;
-		}
-        else {
-			Vec2 inner0 = v2fsub(v0, v2fmult(offset0, 0.5));
-			Vec2 inner1 = v2fsub(v1, v2fmult(offset1, 0.5));
-			Vec2 outer0 = v2fadd(v0, v2fmult(offset0, 0.5));
-			Vec2 outer1 = v2fadd(v1, v2fmult(offset1, 0.5));
-			
-            V2F_C4B_T2F_Triangle tmp1 = {
-                {inner0, Color4B(fillColor), __t(v2fzero)},
-                {inner1, Color4B(fillColor), __t(v2fzero)},
-                {outer1, Color4B(fillColor), __t(n0)}
-            };
-			*cursor++ = tmp1;
-
-            V2F_C4B_T2F_Triangle tmp2 = {
-                {inner0, Color4B(fillColor), __t(v2fzero)},
-                {outer0, Color4B(fillColor), __t(n0)},
-                {outer1, Color4B(fillColor), __t(n0)}
-            };
-			*cursor++ = tmp2;
-		}
-	}
-	
-	_bufferCount += vertex_count;
-	
-	_dirty = true;
-
-    free(extrude);
+            *cursor++ = tmp2;
+        }
+        
+        free(extrude);
+    }
+    
+    _bufferCount += vertex_count;
+    
+    _dirty = true;
 }
 
 void DrawNode::drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)

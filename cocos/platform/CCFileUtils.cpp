@@ -1254,7 +1254,7 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
     }
     return true;
 #else
-    std::regex pat("\/");
+    std::regex pat("\\/");
     std::string _old = std::regex_replace(oldPath, pat, "\\");
     std::string _new = std::regex_replace(newPath, pat, "\\");
     
