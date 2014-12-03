@@ -23,34 +23,34 @@
  ****************************************************************************/
 
 #include "CCParticle3DFlockCenteringAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
-Particle3DFlockCenteringAffector::Particle3DFlockCenteringAffector() 
-: Particle3DAffector(),
+PUParticle3DFlockCenteringAffector::PUParticle3DFlockCenteringAffector() 
+: PUParticle3DAffector(),
   _sum(Vec3::ZERO),
   _average(Vec3::ZERO),
   _count(0.0f)
 {
 }
 
-Particle3DFlockCenteringAffector::~Particle3DFlockCenteringAffector()
+PUParticle3DFlockCenteringAffector::~PUParticle3DFlockCenteringAffector()
 {
 }
 
-void Particle3DFlockCenteringAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DFlockCenteringAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _sum += particle->position;
         _count++;
         particle->direction += (_average - particle->position) * deltaTime; // use average of the previous update
     }
 }
 
-void Particle3DFlockCenteringAffector::preUpdateAffector( float deltaTime )
+void PUParticle3DFlockCenteringAffector::preUpdateAffector( float deltaTime )
 {
     if (_count != 0)
     {

@@ -23,53 +23,53 @@
  ****************************************************************************/
 
 #include "CCParticle3DPositionEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const bool Particle3DPositionEmitter::DEFAULT_RANDOMIZE = true;
+const bool PUParticle3DPositionEmitter::DEFAULT_RANDOMIZE = true;
 
 //-----------------------------------------------------------------------
-Particle3DPositionEmitter::Particle3DPositionEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DPositionEmitter::PUParticle3DPositionEmitter(void) : 
+    PUParticle3DEmitter(),
     _randomized(DEFAULT_RANDOMIZE),
     _index(0)
 {
 }
 //-----------------------------------------------------------------------
-bool Particle3DPositionEmitter::isRandomized() const
+bool PUParticle3DPositionEmitter::isRandomized() const
 {
     return _randomized;
 }
 //-----------------------------------------------------------------------
-void Particle3DPositionEmitter::setRandomized(bool randomized)
+void PUParticle3DPositionEmitter::setRandomized(bool randomized)
 {
     _randomized = randomized;
 }
 //-----------------------------------------------------------------------
-const std::vector<Vec3>& Particle3DPositionEmitter::getPositions(void) const
+const std::vector<Vec3>& PUParticle3DPositionEmitter::getPositions(void) const
 {
     return _positionList;
 }
 //-----------------------------------------------------------------------
-void Particle3DPositionEmitter::addPosition(const Vec3& position)
+void PUParticle3DPositionEmitter::addPosition(const Vec3& position)
 {
     _positionList.push_back(position);
 }
 //-----------------------------------------------------------------------
-void Particle3DPositionEmitter::notifyStart(void)
+void PUParticle3DPositionEmitter::notifyStart(void)
 {
-    Particle3DEmitter::notifyStart();
+    PUParticle3DEmitter::notifyStart();
     _index = 0;
 }
 //-----------------------------------------------------------------------
-void Particle3DPositionEmitter::removeAllPositions(void)
+void PUParticle3DPositionEmitter::removeAllPositions(void)
 {
     _index = 0;
     _positionList.clear();
 }
 //-----------------------------------------------------------------------
-unsigned short Particle3DPositionEmitter::calculateRequestedParticles(float timeElapsed)
+unsigned short PUParticle3DPositionEmitter::calculateRequestedParticles(float timeElapsed)
 {
     // Fast rejection
     if (_positionList.empty())
@@ -77,11 +77,11 @@ unsigned short Particle3DPositionEmitter::calculateRequestedParticles(float time
 
     if (_randomized)
     {
-        return Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+        return PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
     }
     else if (_index < _positionList.size())
     {
-        unsigned short requested = Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+        unsigned short requested = PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
         unsigned short size = static_cast<unsigned short>(_positionList.size() - _index);
         if (requested > size)
         {
@@ -96,7 +96,7 @@ unsigned short Particle3DPositionEmitter::calculateRequestedParticles(float time
     return 0;
 }
 //-----------------------------------------------------------------------
-void Particle3DPositionEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DPositionEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Fast rejection
     if (_positionList.empty())
@@ -118,9 +118,9 @@ void Particle3DPositionEmitter::initParticlePosition(Particle3D* particle)
     particle->originalPosition = particle->position;
 }
 
-Particle3DPositionEmitter* Particle3DPositionEmitter::create()
+PUParticle3DPositionEmitter* PUParticle3DPositionEmitter::create()
 {
-    auto pe = new Particle3DPositionEmitter();
+    auto pe = new PUParticle3DPositionEmitter();
     pe->autorelease();
     return pe;
 }

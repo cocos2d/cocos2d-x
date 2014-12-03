@@ -23,30 +23,30 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_SCALE_VELOCITY_AFFECTOR_H__
-#define __CC_PARTICLE_3D_SCALE_VELOCITY_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_SCALE_VELOCITY_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_SCALE_VELOCITY_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DScaleVelocityAffector : public Particle3DAffector
+class  PUParticle3DScaleVelocityAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_VELOCITY_SCALE;
 
-    Particle3DScaleVelocityAffector(void);
-    virtual ~Particle3DScaleVelocityAffector(void);
+    PUParticle3DScaleVelocityAffector(void);
+    virtual ~PUParticle3DScaleVelocityAffector(void);
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */
-    DynamicAttribute* getDynScaleVelocity(void) const {return _dynScaleVelocity;};
-    void setDynScaleVelocity(DynamicAttribute* dynScaleVelocity);
+    PUDynamicAttribute* getDynScaleVelocity(void) const {return _dynScaleVelocity;};
+    void setDynScaleVelocity(PUDynamicAttribute* dynScaleVelocity);
     void resetDynScaleVelocity(bool resetToDefault = true);
 
     /** 
@@ -60,8 +60,8 @@ public:
     void setStopAtFlip(bool stopAtFlip){_stopAtFlip = stopAtFlip;};
 
 protected:
-    DynamicAttribute* _dynScaleVelocity;
-    DynamicAttributeHelper _dynamicAttributeHelper;
+    PUDynamicAttribute* _dynScaleVelocity;
+    PUDynamicAttributeHelper _dynamicAttributeHelper;
     bool _sinceStartSystem;
     bool _stopAtFlip;
 };

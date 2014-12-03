@@ -22,19 +22,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_SIMPLE_SPLINE_H__
-#define __CC_PARTICLE_3D_SIMPLE_SPLINE_H__
+#ifndef __CC_PU_PARTICLE_3D_SIMPLE_SPLINE_H__
+#define __CC_PU_PARTICLE_3D_SIMPLE_SPLINE_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 #include <vector>
 
 NS_CC_BEGIN
-class SimpleSpline
+class PUSimpleSpline
 {
 public:
-    SimpleSpline();
-    ~SimpleSpline();
+    PUSimpleSpline();
+    ~PUSimpleSpline();
 
     /** Adds a control point to the end of the spline. */
     void addPoint(const Vec3& p);

@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_FORCE_FIELD_H__
-#define __CC_PARTICLE_3D_FORCE_FIELD_H__
+#ifndef __CC_PU_PARTICLE_3D_FORCE_FIELD_H__
+#define __CC_PU_PARTICLE_3D_FORCE_FIELD_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
@@ -33,13 +33,13 @@ NS_CC_BEGIN
 
 /** Pure virtual ForceFieldCalculationFactory
 */
-class  ForceFieldCalculationFactory
+class  PUForceFieldCalculationFactory
 {
 public:
     // Const
     static const Vec3 DEFAULT_WORLDSIZE;
 
-    ForceFieldCalculationFactory(void) : 
+    PUForceFieldCalculationFactory(void) : 
         _octaves(2),
         _frequency(1.0f),
         _amplitude(1.0f),
@@ -49,7 +49,7 @@ public:
         _worldSize(DEFAULT_WORLDSIZE)
     {
     };
-    virtual ~ForceFieldCalculationFactory(void){};
+    virtual ~PUForceFieldCalculationFactory(void){};
 
     /** Generates the force field
     @remarks
@@ -88,7 +88,7 @@ public:
     virtual void setWorldSize(const Vec3& worldSize);
 
 protected:
-    Noise3D _noise3D;
+    PUNoise3D _noise3D;
     unsigned short _octaves;
     double _frequency;
     double _amplitude;
@@ -103,11 +103,11 @@ protected:
 
 /** Factory class to calculate forces in realtime
 */
-class RealTimeForceFieldCalculationFactory : public ForceFieldCalculationFactory
+class PURealTimeForceFieldCalculationFactory : public PUForceFieldCalculationFactory
 {
 public:
-    RealTimeForceFieldCalculationFactory(void) : ForceFieldCalculationFactory() {};
-    virtual ~RealTimeForceFieldCalculationFactory(void){};
+    PURealTimeForceFieldCalculationFactory(void) : PUForceFieldCalculationFactory() {};
+    virtual ~PURealTimeForceFieldCalculationFactory(void){};
 
     /** Override from ForceFieldCalculationFactory
     */
@@ -225,7 +225,7 @@ public:
     realtime or based on a precreated 3D force field matrix, which essentially involves one lookup. To speed things up, the 3d matrix can be
     precreated in a separate thread (optionally).
 */
-class ForceField
+class PUForceField
 {
     public:
         enum ForceFieldType
@@ -234,8 +234,8 @@ class ForceField
             FF_MATRIX_CALC
         };
 
-        ForceField();
-        ~ForceField();
+        PUForceField();
+        ~PUForceField();
 
         /** Initialises a ForceField */
         virtual void initialise(ForceFieldType type,
@@ -290,14 +290,14 @@ class ForceField
         double _persistence;
         Vec3 _worldSize;
         unsigned int _forceFieldSize;
-        ForceFieldCalculationFactory* _forceFieldCalculationFactory; // Internal factory that creates a certain force field type
+        PUForceFieldCalculationFactory* _forceFieldCalculationFactory; // Internal factory that creates a certain force field type
         Vec3 _forceFieldPositionBase; // Position of the force field
         ForceFieldType _forceFieldType;
 
         /** Get/Set/Create ForceFieldCalculationFactory */
-        ForceFieldCalculationFactory* getForceFieldCalculationFactory() const;
-        void setForceFieldCalculationFactory(ForceFieldCalculationFactory* forceFieldCalculationFactory);
-        ForceFieldCalculationFactory* createForceFieldCalculationFactory(ForceFieldType type);
+        PUForceFieldCalculationFactory* getForceFieldCalculationFactory() const;
+        void setForceFieldCalculationFactory(PUForceFieldCalculationFactory* forceFieldCalculationFactory);
+        PUForceFieldCalculationFactory* createForceFieldCalculationFactory(ForceFieldType type);
 };
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------

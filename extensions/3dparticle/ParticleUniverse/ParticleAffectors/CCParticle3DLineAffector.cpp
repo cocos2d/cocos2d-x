@@ -23,19 +23,19 @@
  ****************************************************************************/
 
 #include "CCParticle3DLineAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DLineAffector::DEFAULT_MAX_DEVIATION = 1.0f;
-const float Particle3DLineAffector::DEFAULT_TIME_STEP = 0.1f;
-const Vec3 Particle3DLineAffector::DEFAULT_END(0, 0, 0);
-const float Particle3DLineAffector::DEFAULT_DRIFT = 0.0f;
+const float PUParticle3DLineAffector::DEFAULT_MAX_DEVIATION = 1.0f;
+const float PUParticle3DLineAffector::DEFAULT_TIME_STEP = 0.1f;
+const Vec3 PUParticle3DLineAffector::DEFAULT_END(0, 0, 0);
+const float PUParticle3DLineAffector::DEFAULT_DRIFT = 0.0f;
 
 //-----------------------------------------------------------------------
-Particle3DLineAffector::Particle3DLineAffector(void) : 
-    Particle3DAffector(),
+PUParticle3DLineAffector::PUParticle3DLineAffector(void) : 
+    PUParticle3DAffector(),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
     _scaledMaxDeviation(1.0f),
     _end(DEFAULT_END),
@@ -48,59 +48,59 @@ Particle3DLineAffector::Particle3DLineAffector(void) :
 {
 }
 
-Particle3DLineAffector::~Particle3DLineAffector( void )
+PUParticle3DLineAffector::~PUParticle3DLineAffector( void )
 {
 
 }
 //-----------------------------------------------------------------------
-float Particle3DLineAffector::getMaxDeviation(void) const
+float PUParticle3DLineAffector::getMaxDeviation(void) const
 {
     return _maxDeviation;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::setMaxDeviation(float maxDeviation)
+void PUParticle3DLineAffector::setMaxDeviation(float maxDeviation)
 {
     _maxDeviation = maxDeviation;
     _scaledMaxDeviation = _maxDeviation * _affectorScale.length();
 }
 //-----------------------------------------------------------------------
-const Vec3& Particle3DLineAffector::getEnd(void) const
+const Vec3& PUParticle3DLineAffector::getEnd(void) const
 {
     return _end;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::setEnd(const Vec3& end)
+void PUParticle3DLineAffector::setEnd(const Vec3& end)
 {
     _end = end;
 }
 //-----------------------------------------------------------------------
-float Particle3DLineAffector::getTimeStep(void) const
+float PUParticle3DLineAffector::getTimeStep(void) const
 {
     return _timeStep;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::setTimeStep(float timeStep)
+void PUParticle3DLineAffector::setTimeStep(float timeStep)
 {
     _timeStep = timeStep;
 }
 //-----------------------------------------------------------------------
-float Particle3DLineAffector::getDrift(void) const
+float PUParticle3DLineAffector::getDrift(void) const
 {
     return _drift;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::setDrift(float drift)
+void PUParticle3DLineAffector::setDrift(float drift)
 {
     _drift = drift;
     _oneMinusDrift = 1.0f - drift;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::notifyRescaled(const Vec3& scale)
+void PUParticle3DLineAffector::notifyRescaled(const Vec3& scale)
 {
     _scaledMaxDeviation = _maxDeviation * scale.length();
 }
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::preUpdateAffector(float deltaTime)
+void PUParticle3DLineAffector::preUpdateAffector(float deltaTime)
 {
     if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticles().size() > 0)
     {
@@ -111,16 +111,16 @@ void Particle3DLineAffector::preUpdateAffector(float deltaTime)
             _update = true;
         }
     }
-    _particleSystem->rotationOffset(_end); // Always update
+    (static_cast<PUParticleSystem3D *>(_particleSystem))->rotationOffset(_end); // Always update
 }
 //-----------------------------------------------------------------------
 
-void Particle3DLineAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DLineAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
 	//_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         //mParentTechnique->getParentSystem()->rotationOffset(particle->originalPosition); // Always update
         if (_update && CCRANDOM_0_1() > 0.5 && !_first)
         {
@@ -139,19 +139,19 @@ void Particle3DLineAffector::updateAffector( Particle3D *particle, float deltaTi
                 a new particle position instead of a direction.
             */
             particle->position = _drift * targetPosition + _oneMinusDrift * particle->position;
-            _particleSystem->rotationOffset(particle->position);
+            (static_cast<PUParticleSystem3D *>(_particleSystem))->rotationOffset(particle->position);
         }
         _first = false;
     }
 }
 
 //-----------------------------------------------------------------------
-void Particle3DLineAffector::postUpdateAffector(float deltaTime)
+void PUParticle3DLineAffector::postUpdateAffector(float deltaTime)
 {
     _update = false;
 }
 
-void Particle3DLineAffector::firstParticleUpdate( Particle3D *particle, float deltaTime )
+void PUParticle3DLineAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
     _first = true;
 }

@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCParticle3DEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 #include "3dparticle/CCParticle3DRender.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
@@ -114,7 +114,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     int index = 0;
     for (ssize_t i = 0; i < particles.size(); i++)
     {
-        auto& particle = particles[i];
+        auto particle = static_cast<PUParticle3D*>(particles[i]);
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
         transform.transformPoint(particle->position, &position);
@@ -188,8 +188,9 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     
     const auto& particles = particleSystem->getParticles();
     Mat4 mat;
-    for (auto particle : particles)
+    for (auto it : particles)
     {
+        auto particle = static_cast<PUParticle3D*>(it);
         Mat4::createRotation(particle->orientation, &mat);
         mat.m[12] = particle->position.x;
         mat.m[13] = particle->position.y;

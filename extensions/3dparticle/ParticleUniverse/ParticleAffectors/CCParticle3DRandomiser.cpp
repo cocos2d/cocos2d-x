@@ -23,18 +23,18 @@
  ****************************************************************************/
 
 #include "CCParticle3DRandomiser.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const Vec3 Particle3DRandomiser::DEFAULT_MAX_DEVIATION(0, 0, 0);
-const float Particle3DRandomiser::DEFAULT_TIME_STEP = 0.0f;
-const bool Particle3DRandomiser::DEFAULT_RANDOM_DIRECTION = true;
+const Vec3 PUParticle3DRandomiser::DEFAULT_MAX_DEVIATION(0, 0, 0);
+const float PUParticle3DRandomiser::DEFAULT_TIME_STEP = 0.0f;
+const bool PUParticle3DRandomiser::DEFAULT_RANDOM_DIRECTION = true;
 
 //-----------------------------------------------------------------------
-Particle3DRandomiser::Particle3DRandomiser(void) : 
-    Particle3DAffector(),
+PUParticle3DRandomiser::PUParticle3DRandomiser(void) : 
+    PUParticle3DAffector(),
     _maxDeviationX(DEFAULT_MAX_DEVIATION.x),
     _maxDeviationY(DEFAULT_MAX_DEVIATION.y),
     _maxDeviationZ(DEFAULT_MAX_DEVIATION.z),
@@ -44,63 +44,63 @@ Particle3DRandomiser::Particle3DRandomiser(void) :
     _randomDirection(DEFAULT_RANDOM_DIRECTION)
 {
 }
-Particle3DRandomiser::~Particle3DRandomiser( void )
+PUParticle3DRandomiser::~PUParticle3DRandomiser( void )
 {
 
 }
 //-----------------------------------------------------------------------
-float Particle3DRandomiser::getMaxDeviationX(void) const
+float PUParticle3DRandomiser::getMaxDeviationX(void) const
 {
     return _maxDeviationX;
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::setMaxDeviationX(float maxDeviationX)
+void PUParticle3DRandomiser::setMaxDeviationX(float maxDeviationX)
 {
     _maxDeviationX = maxDeviationX;
 }
 //-----------------------------------------------------------------------
-float Particle3DRandomiser::getMaxDeviationY(void) const
+float PUParticle3DRandomiser::getMaxDeviationY(void) const
 {
     return _maxDeviationY;
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::setMaxDeviationY(float maxDeviationY)
+void PUParticle3DRandomiser::setMaxDeviationY(float maxDeviationY)
 {
     _maxDeviationY = maxDeviationY;
 }
 //-----------------------------------------------------------------------
-float Particle3DRandomiser::getMaxDeviationZ(void) const
+float PUParticle3DRandomiser::getMaxDeviationZ(void) const
 {
     return _maxDeviationZ;
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::setMaxDeviationZ(float maxDeviationZ)
+void PUParticle3DRandomiser::setMaxDeviationZ(float maxDeviationZ)
 {
     _maxDeviationZ = maxDeviationZ;
 }
 //-----------------------------------------------------------------------
-float Particle3DRandomiser::getTimeStep(void) const
+float PUParticle3DRandomiser::getTimeStep(void) const
 {
     return _timeStep;
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::setTimeStep(float timeStep)
+void PUParticle3DRandomiser::setTimeStep(float timeStep)
 {
     _timeStep = timeStep;
     _timeSinceLastUpdate = timeStep;
 }
 //-----------------------------------------------------------------------
-bool Particle3DRandomiser::isRandomDirection(void) const
+bool PUParticle3DRandomiser::isRandomDirection(void) const
 {
     return _randomDirection;
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::setRandomDirection(bool randomDirection)
+void PUParticle3DRandomiser::setRandomDirection(bool randomDirection)
 {
     _randomDirection = randomDirection;
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::preUpdateAffector(float deltaTime)
+void PUParticle3DRandomiser::preUpdateAffector(float deltaTime)
 {
     if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticles().size() > 0)
     {
@@ -113,11 +113,11 @@ void Particle3DRandomiser::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DRandomiser::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         if (_update)
         {
             if (_randomDirection)
@@ -143,7 +143,7 @@ void Particle3DRandomiser::updateAffector( Particle3D *particle, float deltaTime
 }
 
 //-----------------------------------------------------------------------
-void Particle3DRandomiser::postUpdateAffector(float deltaTime)
+void PUParticle3DRandomiser::postUpdateAffector(float deltaTime)
 {
     _update = false;
 }

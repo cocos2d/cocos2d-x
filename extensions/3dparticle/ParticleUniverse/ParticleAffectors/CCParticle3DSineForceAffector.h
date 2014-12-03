@@ -23,26 +23,26 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_SINE_FORCE_AFFECTOR_H__
 
 #include "CCParticle3DBaseForceAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DSineForceAffector : public Particle3DBaseForceAffector
+class  PUParticle3DSineForceAffector : public PUParticle3DBaseForceAffector
 {
 public:
     // Constants
     static const float DEFAULT_FREQ_MIN;
     static const float DEFAULT_FREQ_MAX;
 
-    Particle3DSineForceAffector(void);
-    virtual ~Particle3DSineForceAffector(void);
+    PUParticle3DSineForceAffector(void);
+    virtual ~PUParticle3DSineForceAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */

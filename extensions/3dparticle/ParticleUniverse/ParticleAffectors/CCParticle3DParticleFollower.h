@@ -23,26 +23,26 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_PARTICLE_FOLLOWER_H__
-#define __CC_PARTICLE_3D_PARTICLE_FOLLOWER_H__
+#ifndef __CC_PU_PARTICLE_3D_PARTICLE_FOLLOWER_H__
+#define __CC_PU_PARTICLE_3D_PARTICLE_FOLLOWER_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DParticleFollower : public Particle3DAffector
+class  PUParticle3DParticleFollower : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_MAX_DISTANCE;
     static const float DEFAULT_MIN_DISTANCE;
 
-    Particle3DParticleFollower(void);
-    virtual ~Particle3DParticleFollower(void);
+    PUParticle3DParticleFollower(void);
+    virtual ~PUParticle3DParticleFollower(void);
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
-    virtual void firstParticleUpdate(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */

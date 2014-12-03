@@ -42,7 +42,7 @@ NS_CC_BEGIN
 };
 
 //-----------------------------------------------------------------------
-Noise3D::Noise3D(void) : 
+PUNoise3D::PUNoise3D(void) : 
     _octaves(2),
     _frequency(1.0f),
     _amplitude(1.0f),
@@ -50,11 +50,11 @@ Noise3D::Noise3D(void) :
 {
 }
 //-----------------------------------------------------------------------
-Noise3D::~Noise3D(void)
+PUNoise3D::~PUNoise3D(void)
 {
 }
 //-----------------------------------------------------------------------
-void Noise3D::initialise(unsigned short octaves, double frequency, double amplitude, double persistence)
+void PUNoise3D::initialise(unsigned short octaves, double frequency, double amplitude, double persistence)
 {
     _octaves = octaves;
     _frequency = frequency;
@@ -99,12 +99,12 @@ void Noise3D::initialise(unsigned short octaves, double frequency, double amplit
 //	delete [] buff;
 //}
 //-----------------------------------------------------------------------
-double Noise3D::noise(const Vec3& position)
+double PUNoise3D::noise(const Vec3& position)
 {
     return noise(position.x, position.y, position.z);
 }
 //-----------------------------------------------------------------------
-double Noise3D::noise(double x, double y, double z)
+double PUNoise3D::noise(double x, double y, double z)
 {
     double n = 0;
     double freq = _frequency;
@@ -118,7 +118,7 @@ double Noise3D::noise(double x, double y, double z)
     return n;
 }
 //-----------------------------------------------------------------------
-double Noise3D::genNoise(double x, double y, double z)
+double PUNoise3D::genNoise(double x, double y, double z)
 {
     int X = (int)floor(x) & 255;
     int Y = (int)floor(y) & 255;
@@ -143,17 +143,17 @@ double Noise3D::genNoise(double x, double y, double z)
     return abs(lrp); // Use absolute value, because lrp in between [-1, 1]
 }
 //-----------------------------------------------------------------------
-double Noise3D::fade(double t)
+double PUNoise3D::fade(double t)
 {
     return t * t * t * (t * (t * 6 - 15) + 10);
 }
 //-----------------------------------------------------------------------
-double Noise3D::lerp(double t, double a, double b)
+double PUNoise3D::lerp(double t, double a, double b)
 {
     return a + t * (b - a);
 }
 //-----------------------------------------------------------------------
-double Noise3D::grad(int hash, double x, double y, double z)
+double PUNoise3D::grad(int hash, double x, double y, double z)
 {
     int h = hash & 15;
     double u = h<8 ? x : y;

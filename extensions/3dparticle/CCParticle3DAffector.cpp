@@ -29,8 +29,6 @@ NS_CC_BEGIN
 
 Particle3DAffector::Particle3DAffector()
 : _particleSystem(nullptr)
-, _affectorScale(Vec3::ONE)
-, _affectSpecialisation(AFSP_DEFAULT)
 , _isEnabled(true)
 {
     
@@ -41,137 +39,9 @@ Particle3DAffector::~Particle3DAffector()
     _particleSystem = nullptr;
 }
 
-void Particle3DAffector::updateAffector(Particle3D *particle, float deltaTime)
+void Particle3DAffector::updateAffector(Particle3D* particle, float deltaTime)
 {
     
-}
-
-const Vec3& Particle3DAffector::getDerivedPosition()
-{
-    //if (mMarkedForEmission)
-    //{
-    //	// Use the affector position, because it is emitted
-    //	// If a particle is emitted, position and derived position are the same
-    //	_derivedPosition = position;
-    //}
-    //else
-    //{
-    //	// Add the techniques' derived position
-    //	_derivedPosition = mParentTechnique->getDerivedPosition() + 
-    //		mParentTechnique->getParentSystem()->getDerivedOrientation() * (_mAffectorScale * position);
-    //}
-    //return _derivedPosition;
-
-    //incorrect result (FIXME)
-    return _position;
-}
-
-float Particle3DAffector::calculateAffectSpecialisationFactor( const Particle3D* particle )
-{
-    // Assume that particle->totalTimeToLive != 0, which is reasonable
-    switch (_affectSpecialisation)
-    {
-    case AFSP_DEFAULT:
-        return 1.0f;
-        break;
-
-        // This means that older particles will be affected MORE than just emitted particles
-    case AFSP_TTL_INCREASE:
-        {
-            if (particle)
-            {
-                return particle->timeFraction;
-            }
-            else
-            {
-                return 1.0f;
-            }
-        }
-        break;
-
-        // This means that older particles will be affected LESS than just emitted particles
-    case AFSP_TTL_DECREASE:
-        {
-            if (particle)
-            {
-                return 1.0f - particle->timeFraction;
-            }
-            else
-            {
-                return 1.0f;
-            }
-        }
-        break;
-
-    default:
-        return 1.0f;
-        break;
-    }
-}
-
-void Particle3DAffector::notifyStart()
-{
-
-}
-
-void Particle3DAffector::notifyStop()
-{
-
-}
-
-void Particle3DAffector::notifyPause()
-{
-
-}
-
-void Particle3DAffector::notifyResume()
-{
-
-}
-
-void Particle3DAffector::preUpdateAffector( float deltaTime )
-{
-
-}
-
-void Particle3DAffector::postUpdateAffector( float deltaTime )
-{
-
-}
-
-void Particle3DAffector::prepare()
-{
-
-}
-
-void Particle3DAffector::unPrepare()
-{
-
-}
-
-void Particle3DAffector::initParticleForEmission( Particle3D* particle )
-{
-
-}
-
-void Particle3DAffector::notifyRescaled(const Vec3& scale)
-{
-    _affectorScale = scale;
-}
-
-void Particle3DAffector::setEnabled( bool enabled )
-{
-    _isEnabled = enabled;
-}
-
-bool Particle3DAffector::isEnabled( void ) const
-{
-    return _isEnabled;
-}
-
-void Particle3DAffector::firstParticleUpdate( Particle3D *particle, float deltaTime )
-{
-
 }
 
 NS_CC_END

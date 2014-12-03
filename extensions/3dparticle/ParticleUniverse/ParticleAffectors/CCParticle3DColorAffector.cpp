@@ -23,50 +23,50 @@
  ****************************************************************************/
 
 #include "CCParticle3DColorAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const Particle3DColorAffector::ColorOperation Particle3DColorAffector::DEFAULT_COLOR_OPERATION = Particle3DColorAffector::CAO_SET;
+const PUParticle3DColorAffector::ColorOperation PUParticle3DColorAffector::DEFAULT_COLOR_OPERATION = PUParticle3DColorAffector::CAO_SET;
 
 //-----------------------------------------------------------------------
-Particle3DColorAffector::Particle3DColorAffector() : 
-    Particle3DAffector(),
+PUParticle3DColorAffector::PUParticle3DColorAffector() : 
+    PUParticle3DAffector(),
     _colorOperation(DEFAULT_COLOR_OPERATION)
 {
 }
 
-Particle3DColorAffector::~Particle3DColorAffector()
+PUParticle3DColorAffector::~PUParticle3DColorAffector()
 {
 }
 //-----------------------------------------------------------------------
-const Particle3DColorAffector::ColorOperation& Particle3DColorAffector::getColorOperation () const
+const PUParticle3DColorAffector::ColorOperation& PUParticle3DColorAffector::getColorOperation () const
 {
     return _colorOperation;
 }
 //-----------------------------------------------------------------------
-void Particle3DColorAffector::setColorOperation (const Particle3DColorAffector::ColorOperation& colorOperation)
+void PUParticle3DColorAffector::setColorOperation (const PUParticle3DColorAffector::ColorOperation& colorOperation)
 {
     _colorOperation = colorOperation;
 }
 //-----------------------------------------------------------------------
-void Particle3DColorAffector::addColor (float timeFraction, const Vec4& color)
+void PUParticle3DColorAffector::addColor (float timeFraction, const Vec4& color)
 {
     _colorMap[timeFraction] = color;
 }
 //-----------------------------------------------------------------------
-const Particle3DColorAffector::ColorMap& Particle3DColorAffector::getTimeAndColor() const
+const PUParticle3DColorAffector::ColorMap& PUParticle3DColorAffector::getTimeAndColor() const
 {
     return _colorMap;
 }
 //-----------------------------------------------------------------------
-void Particle3DColorAffector::clearColorMap ()
+void PUParticle3DColorAffector::clearColorMap ()
 {
     _colorMap.clear();
 }
 //-----------------------------------------------------------------------
-Particle3DColorAffector::ColorMapIterator Particle3DColorAffector::findNearestColorMapIterator(float timeFraction)
+PUParticle3DColorAffector::ColorMapIterator PUParticle3DColorAffector::findNearestColorMapIterator(float timeFraction)
 {
     ColorMapIterator it;
     for (it = _colorMap.begin(); it != _colorMap.end(); ++it)
@@ -84,7 +84,7 @@ Particle3DColorAffector::ColorMapIterator Particle3DColorAffector::findNearestCo
     return --it;
 }
 
-void Particle3DColorAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DColorAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     // Fast rejection
     if (_colorMap.empty())
@@ -92,7 +92,7 @@ void Particle3DColorAffector::updateAffector( Particle3D *particle, float deltaT
 
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Linear interpolation of the colour
         Vec4 color = Vec4::ONE;
         float timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;

@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
 
 #include "CCParticle3DBaseCollider.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DPlane.h"
@@ -32,17 +32,17 @@
 
 NS_CC_BEGIN
 
-class  Particle3DPlaneCollider : public Particle3DBaseCollider
+class  PUParticle3DPlaneCollider : public PUParticle3DBaseCollider
 {
 public:
     // Constants
     static const Vec3 DEFAULT_NORMAL;
 
-    Particle3DPlaneCollider(void);
-    virtual ~Particle3DPlaneCollider(void);
+    PUParticle3DPlaneCollider(void);
+    virtual ~PUParticle3DPlaneCollider(void);
 
     virtual void notifyRescaled(const Vec3& scale) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the normal of the plane
     */
@@ -54,12 +54,12 @@ public:
 
     /** 
     */
-    void calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed);
+    void calculateDirectionAfterCollision(PUParticle3D* particle, float timeElapsed);
 
 protected:
     Vec3 _normal;
     Vec3 _predictedPosition;
-    Plane _plane;
+    PUPlane _plane;
 };
 NS_CC_END
 

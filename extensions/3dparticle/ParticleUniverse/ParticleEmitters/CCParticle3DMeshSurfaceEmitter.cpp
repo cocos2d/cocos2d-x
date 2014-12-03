@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 #include "CCParticle3DMeshSurfaceEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const Vec3 Particle3DMeshSurfaceEmitter::DEFAULT_SCALE(1, 1, 1);
-const MeshInfo::MeshSurfaceDistribution Particle3DMeshSurfaceEmitter::DEFAULT_DISTRIBUTION = MeshInfo::MSD_HOMOGENEOUS;
+const Vec3 PUParticle3DMeshSurfaceEmitter::DEFAULT_SCALE(1, 1, 1);
+const MeshInfo::MeshSurfaceDistribution PUParticle3DMeshSurfaceEmitter::DEFAULT_DISTRIBUTION = MeshInfo::MSD_HOMOGENEOUS;
 
 //-----------------------------------------------------------------------
-inline void Triangle::calculateSquareSurface (void)
+inline void PUTriangle::calculateSquareSurface (void)
 {
     /* Calculating the surface of a triangle with the following algorithm:
         v1 = Vector3(x1, y1, z1)
@@ -60,7 +60,7 @@ inline void Triangle::calculateSquareSurface (void)
     squareSurface = p * (p-a) * (p-b) * (p-c);
 }
 //-----------------------------------------------------------------------
-inline void Triangle::calculateSurfaceNormal (void)
+inline void PUTriangle::calculateSurfaceNormal (void)
 {
     /* Calculating the surface normal of a triangle with the following algorithm:
         v1 = Vector3(x1, y1, z1)
@@ -72,7 +72,7 @@ inline void Triangle::calculateSurfaceNormal (void)
     surfaceNormal.normalize();
 }
 //-----------------------------------------------------------------------
-inline void Triangle::calculateEdgeNormals (void)
+inline void PUTriangle::calculateEdgeNormals (void)
 {
     Vec3::cross(v1, v2, &en1);
     en1.normalize();
@@ -82,7 +82,7 @@ inline void Triangle::calculateEdgeNormals (void)
     en3.normalize();
 }
 //-----------------------------------------------------------------------
-const Vec3 Triangle::getRandomTrianglePosition (void)
+const Vec3 PUTriangle::getRandomTrianglePosition (void)
 {
     // Use barycentric coordinates. Let A, B, C be the three vertices of the triangle. Any point P inside can 
     // be expressed uniquely as P = aA + bB + cC, where a+b+c=1 and a,b,c are each >= 0.
@@ -104,7 +104,7 @@ const Vec3 Triangle::getRandomTrianglePosition (void)
     return a * v1 + b * v2 + c * v3;
 }
 //-----------------------------------------------------------------------
-const Triangle::PositionAndNormal Triangle::getRandomEdgePositionAndNormal (void)
+const PUTriangle::PositionAndNormal PUTriangle::getRandomEdgePositionAndNormal (void)
 {
     float mult = CCRANDOM_0_1();
     float randomVal = CCRANDOM_0_1() * 3.0f;
@@ -140,7 +140,7 @@ const Triangle::PositionAndNormal Triangle::getRandomEdgePositionAndNormal (void
     return pAndN;
 }
 //-----------------------------------------------------------------------
-const Triangle::PositionAndNormal Triangle::getRandomVertexAndNormal (void)
+const PUTriangle::PositionAndNormal PUTriangle::getRandomVertexAndNormal (void)
 {
     float randomVal = CCRANDOM_0_1() * 3.0f;
     PositionAndNormal pAndN;
@@ -214,7 +214,7 @@ inline float MeshInfo::getGaussianRandom (float high, float cutoff)
 }
 
 //-----------------------------------------------------------------------
-const Triangle& MeshInfo::getTriangle (size_t triangleIndex)
+const PUTriangle& MeshInfo::getTriangle (size_t triangleIndex)
 {
     return _triangles[triangleIndex];
 }
@@ -234,10 +234,10 @@ const size_t MeshInfo::getRandomTriangleIndex (void)
 }
 
 //-----------------------------------------------------------------------
-const Triangle::PositionAndNormal MeshInfo::getRandomPositionAndNormal (const size_t triangleIndex)
+const PUTriangle::PositionAndNormal MeshInfo::getRandomPositionAndNormal (const size_t triangleIndex)
 {
-    Triangle triangle = getTriangle(triangleIndex);
-    Triangle::PositionAndNormal pAndN;
+    PUTriangle triangle = getTriangle(triangleIndex);
+    PUTriangle::PositionAndNormal pAndN;
     pAndN.position = Vec3::ZERO;
     pAndN.normal = Vec3::ZERO;
     if (mDistribution == MSD_HOMOGENEOUS || mDistribution == MSD_HETEROGENEOUS_1 || mDistribution == MSD_HETEROGENEOUS_2)
@@ -407,8 +407,8 @@ const Triangle::PositionAndNormal MeshInfo::getRandomPositionAndNormal (const si
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Particle3DMeshSurfaceEmitter::Particle3DMeshSurfaceEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DMeshSurfaceEmitter::PUParticle3DMeshSurfaceEmitter(void) : 
+    PUParticle3DEmitter(),
     _meshName(),
     _orientation(),
     _scale(DEFAULT_SCALE),
@@ -419,7 +419,7 @@ Particle3DMeshSurfaceEmitter::Particle3DMeshSurfaceEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-Particle3DMeshSurfaceEmitter::~Particle3DMeshSurfaceEmitter(void)
+PUParticle3DMeshSurfaceEmitter::~PUParticle3DMeshSurfaceEmitter(void)
 {
     if (_meshInfo)
     {
@@ -427,7 +427,7 @@ Particle3DMeshSurfaceEmitter::~Particle3DMeshSurfaceEmitter(void)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::prepare()
+void PUParticle3DMeshSurfaceEmitter::prepare()
 {
     // Build the data
     if (!_meshName.empty())
@@ -436,14 +436,14 @@ void Particle3DMeshSurfaceEmitter::prepare()
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::unPrepare()
+void PUParticle3DMeshSurfaceEmitter::unPrepare()
 {
     // Todo
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle)
 {
-    Triangle::PositionAndNormal pAndN;
+    PUTriangle::PositionAndNormal pAndN;
     pAndN.position = Vec3::ZERO;
     pAndN.normal = Vec3::ZERO;
     _directionSet = false;
@@ -470,7 +470,7 @@ void Particle3DMeshSurfaceEmitter::initParticlePosition(Particle3D* particle)
                 //}
 
                 // The value of the direction vector that has been set does not have a meaning
-                float angle = (_dynamicAttributeHelper.calculate(_dynAngle, _particleSystem->getTimeElapsedSinceStart()));
+                float angle = (_dynamicAttributeHelper.calculate(_dynAngle, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart()));
                 if (angle != 0.0f)
                 {
                     //FIXME
@@ -502,31 +502,31 @@ void Particle3DMeshSurfaceEmitter::initParticlePosition(Particle3D* particle)
     }
 }
 //-----------------------------------------------------------------------
-unsigned short Particle3DMeshSurfaceEmitter::calculateRequestedParticles(float timeElapsed)
+unsigned short PUParticle3DMeshSurfaceEmitter::calculateRequestedParticles(float timeElapsed)
 {
     if (_meshInfo)
     {
-        return Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+        return PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
     }
 
     return 0;
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::initParticleDirection(Particle3D* particle)
+void PUParticle3DMeshSurfaceEmitter::initParticleDirection(PUParticle3D* particle)
 {
     // Only determine direction if it hasn't been calculated yet
     if (!_directionSet)
     {
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 //-----------------------------------------------------------------------
-const std::string& Particle3DMeshSurfaceEmitter::getMeshName(void) const
+const std::string& PUParticle3DMeshSurfaceEmitter::getMeshName(void) const
 {
     return _meshName;
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::setMeshName(const std::string& meshName, bool doBuild)
+void PUParticle3DMeshSurfaceEmitter::setMeshName(const std::string& meshName, bool doBuild)
 {
     _meshName = meshName;
 
@@ -537,27 +537,27 @@ void Particle3DMeshSurfaceEmitter::setMeshName(const std::string& meshName, bool
     }
 }
 //-----------------------------------------------------------------------
-const MeshInfo::MeshSurfaceDistribution Particle3DMeshSurfaceEmitter::getDistribution (void) const
+const MeshInfo::MeshSurfaceDistribution PUParticle3DMeshSurfaceEmitter::getDistribution (void) const
 {
     return _distribution;
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::setDistribution(MeshInfo::MeshSurfaceDistribution distribution)
+void PUParticle3DMeshSurfaceEmitter::setDistribution(MeshInfo::MeshSurfaceDistribution distribution)
 {
     _distribution = distribution;
 }
 //-----------------------------------------------------------------------
-const Vec3& Particle3DMeshSurfaceEmitter::getScale (void) const
+const Vec3& PUParticle3DMeshSurfaceEmitter::getScale (void) const
 {
     return _scale;
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::setScale (const Vec3& scale)
+void PUParticle3DMeshSurfaceEmitter::setScale (const Vec3& scale)
 {
     _scale = scale;
 }
 //-----------------------------------------------------------------------
-void Particle3DMeshSurfaceEmitter::build(void)
+void PUParticle3DMeshSurfaceEmitter::build(void)
 {
     // Delete the mesh info if already existing
     if (_meshInfo)
@@ -569,9 +569,9 @@ void Particle3DMeshSurfaceEmitter::build(void)
     _meshInfo = new MeshInfo(_meshName, _distribution, _orientation, _scale);
 }
 
-Particle3DMeshSurfaceEmitter* Particle3DMeshSurfaceEmitter::create()
+PUParticle3DMeshSurfaceEmitter* PUParticle3DMeshSurfaceEmitter::create()
 {
-    auto pe = new Particle3DMeshSurfaceEmitter();
+    auto pe = new PUParticle3DMeshSurfaceEmitter();
     pe->autorelease();
     return pe;
 }

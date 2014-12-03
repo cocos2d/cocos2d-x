@@ -28,122 +28,122 @@
 
 NS_CC_BEGIN
     //-----------------------------------------------------------------------
-    DynamicAttribute::DynamicAttribute (void)
+    PUDynamicAttribute::PUDynamicAttribute (void)
 {
 }
 //-----------------------------------------------------------------------
-DynamicAttribute::~DynamicAttribute (void)
+PUDynamicAttribute::~PUDynamicAttribute (void)
 {
 }
 //-----------------------------------------------------------------------
-DynamicAttribute::DynamicAttributeType DynamicAttribute::getType (void) const
+PUDynamicAttribute::DynamicAttributeType PUDynamicAttribute::getType (void) const
 {
     return _type;
 }
 //-----------------------------------------------------------------------
-void DynamicAttribute::setType (DynamicAttribute::DynamicAttributeType type)
+void PUDynamicAttribute::setType (PUDynamicAttribute::DynamicAttributeType type)
 {
     _type = type;
 }
 
 //-----------------------------------------------------------------------
-DynamicAttributeFixed::DynamicAttributeFixed (void) : _value(0)
+PUDynamicAttributeFixed::PUDynamicAttributeFixed (void) : _value(0)
 {
-    _type = DynamicAttribute::DAT_FIXED;
+    _type = PUDynamicAttribute::DAT_FIXED;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeFixed::DynamicAttributeFixed (const DynamicAttributeFixed& dynamicAttributeFixed)
+PUDynamicAttributeFixed::PUDynamicAttributeFixed (const PUDynamicAttributeFixed& dynamicAttributeFixed)
 {
-    _type = DynamicAttribute::DAT_FIXED;
+    _type = PUDynamicAttribute::DAT_FIXED;
     _value = dynamicAttributeFixed._value;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeFixed::~DynamicAttributeFixed (void)
+PUDynamicAttributeFixed::~PUDynamicAttributeFixed (void)
 {
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeFixed::setValue (float value)
+void PUDynamicAttributeFixed::setValue (float value)
 {
     _value = value;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeFixed::getValue (float x)
+float PUDynamicAttributeFixed::getValue (float x)
 {
     return _value;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeRandom::DynamicAttributeRandom (void) : _min(0), _max(0)
+PUDynamicAttributeRandom::PUDynamicAttributeRandom (void) : _min(0), _max(0)
 {
-    _type = DynamicAttribute::DAT_RANDOM;
+    _type = PUDynamicAttribute::DAT_RANDOM;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeRandom::DynamicAttributeRandom (const DynamicAttributeRandom& dynamicAttributeRandom)
+PUDynamicAttributeRandom::PUDynamicAttributeRandom (const PUDynamicAttributeRandom& dynamicAttributeRandom)
 {
-    _type = DynamicAttribute::DAT_RANDOM;
+    _type = PUDynamicAttribute::DAT_RANDOM;
     _min = dynamicAttributeRandom._min;
     _max = dynamicAttributeRandom._max;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeRandom::~DynamicAttributeRandom (void)
+PUDynamicAttributeRandom::~PUDynamicAttributeRandom (void)
 {
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeRandom::getMin (void) const
+float PUDynamicAttributeRandom::getMin (void) const
 {
     return _min;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeRandom::setMin (float min)
+void PUDynamicAttributeRandom::setMin (float min)
 {
     _min = min;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeRandom::getMax (void) const
+float PUDynamicAttributeRandom::getMax (void) const
 {
     return _max;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeRandom::setMax (float max)
+void PUDynamicAttributeRandom::setMax (float max)
 {
     _max = max;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeRandom::setMinMax (float min, float max)
+void PUDynamicAttributeRandom::setMinMax (float min, float max)
 {
     _min = min;
     _max = max;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeRandom::getValue (float x)
+float PUDynamicAttributeRandom::getValue (float x)
 {
     return cocos2d::random(_min, _max);
 }
 
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::DynamicAttributeCurved (void) : 
+PUDynamicAttributeCurved::PUDynamicAttributeCurved (void) : 
     _interpolationType(IT_LINEAR), 
     _range(0)
 {
-    _type = DynamicAttribute::DAT_CURVED;
+    _type = PUDynamicAttribute::DAT_CURVED;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::DynamicAttributeCurved (InterpolationType interpolationType) : 
+PUDynamicAttributeCurved::PUDynamicAttributeCurved (PUInterpolationType interpolationType) : 
     _interpolationType(interpolationType), 
     _range(0)
 {
-    _type = DynamicAttribute::DAT_CURVED;
+    _type = PUDynamicAttribute::DAT_CURVED;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::DynamicAttributeCurved (const DynamicAttributeCurved& dynamicAttributeCurved)
+PUDynamicAttributeCurved::PUDynamicAttributeCurved (const PUDynamicAttributeCurved& dynamicAttributeCurved)
 {
-    _type = DynamicAttribute::DAT_CURVED;
+    _type = PUDynamicAttribute::DAT_CURVED;
     _interpolationType = dynamicAttributeCurved._interpolationType;
     _spline = dynamicAttributeCurved._spline;
     _range = dynamicAttributeCurved._range;
 
     // Copy controlpoints
-    DynamicAttributeCurved::ControlPointList::const_iterator it; // Need const_iterator here!
-    DynamicAttributeCurved::ControlPointList::const_iterator itEnd = dynamicAttributeCurved._controlPoints.end();
+    PUDynamicAttributeCurved::ControlPointList::const_iterator it; // Need const_iterator here!
+    PUDynamicAttributeCurved::ControlPointList::const_iterator itEnd = dynamicAttributeCurved._controlPoints.end();
     for (it = dynamicAttributeCurved._controlPoints.begin(); it != itEnd; ++it)
     {
         Vec2 controlPoint = *it;
@@ -152,11 +152,11 @@ DynamicAttributeCurved::DynamicAttributeCurved (const DynamicAttributeCurved& dy
     processControlPoints();
 }
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::~DynamicAttributeCurved (void)
+PUDynamicAttributeCurved::~PUDynamicAttributeCurved (void)
 {
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeCurved::setInterpolationType (InterpolationType interpolationType)
+void PUDynamicAttributeCurved::setInterpolationType (PUInterpolationType interpolationType)
 {
     if (interpolationType != _interpolationType)
     {
@@ -166,12 +166,12 @@ void DynamicAttributeCurved::setInterpolationType (InterpolationType interpolati
     }
 }
 //-----------------------------------------------------------------------
-InterpolationType DynamicAttributeCurved::getInterpolationType (void) const
+PUInterpolationType PUDynamicAttributeCurved::getInterpolationType (void) const
 {
     return _interpolationType;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeCurved::getValue (float x)
+float PUDynamicAttributeCurved::getValue (float x)
 {
     switch (_interpolationType)
     {
@@ -210,45 +210,45 @@ float DynamicAttributeCurved::getValue (float x)
     return 0;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeCurved::addControlPoint (float x, float y)
+void PUDynamicAttributeCurved::addControlPoint (float x, float y)
 {
     _controlPoints.push_back(Vec2(x, y));
 }
 //-----------------------------------------------------------------------
-const DynamicAttributeCurved::ControlPointList& DynamicAttributeCurved::getControlPoints (void) const
+const PUDynamicAttributeCurved::ControlPointList& PUDynamicAttributeCurved::getControlPoints (void) const
 {
     return _controlPoints;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeCurved::processControlPoints(void)
+void PUDynamicAttributeCurved::processControlPoints(void)
 {
     if (_controlPoints.empty())
         return;
 
-    std::sort(_controlPoints.begin(), _controlPoints.end(), ControlPointSorter());
+    std::sort(_controlPoints.begin(), _controlPoints.end(), PUControlPointSorter());
     _range = (*getLastValidIterator()).x - (*getFirstValidIterator()).x;
 
     if (_interpolationType == IT_SPLINE)
     {
         // Add all sorted control points to the spline
-        DynamicAttributeCurved::ControlPointList::iterator it;
+        PUDynamicAttributeCurved::ControlPointList::iterator it;
         _spline.clear();
         for (it = _controlPoints.begin(); it != _controlPoints.end(); ++it)
             _spline.addPoint(Vec3((*it).x, (*it).y, 0));
     }
 }
 //-----------------------------------------------------------------------
-size_t DynamicAttributeCurved::getNumControlPoints(void) const
+size_t PUDynamicAttributeCurved::getNumControlPoints(void) const
 {
     return _controlPoints.size();
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeCurved::removeAllControlPoints(void)
+void PUDynamicAttributeCurved::removeAllControlPoints(void)
 {
     _controlPoints.clear();
 }
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::ControlPointList::iterator DynamicAttributeCurved::findNearestControlPointIterator(float x)
+PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::findNearestControlPointIterator(float x)
 {
     // Assume that the ControlPointList is not empty
     ControlPointList::iterator it;
@@ -268,87 +268,87 @@ DynamicAttributeCurved::ControlPointList::iterator DynamicAttributeCurved::findN
     return --it;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::ControlPointList::iterator DynamicAttributeCurved::getFirstValidIterator(void)
+PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::getFirstValidIterator(void)
 {
     return _controlPoints.begin();
 }
 //-----------------------------------------------------------------------
-DynamicAttributeCurved::ControlPointList::iterator DynamicAttributeCurved::getLastValidIterator(void)
+PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::getLastValidIterator(void)
 {
     return _controlPoints.end() - 1;
 }
 
 //-----------------------------------------------------------------------
-DynamicAttributeOscillate::DynamicAttributeOscillate (void) :
-    _oscillationType(DynamicAttributeOscillate::OSCT_SINE),
+PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (void) :
+    _oscillationType(PUDynamicAttributeOscillate::OSCT_SINE),
     _frequency(1.0f),
     _phase(0.0f),
     _base(0.0f),
     _amplitude(1.0f)
 {
-    _type = DynamicAttribute::DAT_OSCILLATE;
+    _type = PUDynamicAttribute::DAT_OSCILLATE;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeOscillate::DynamicAttributeOscillate (const DynamicAttributeOscillate& dynamicAttributeOscillate)
+PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (const PUDynamicAttributeOscillate& dynamicAttributeOscillate)
 {
-    _type = DynamicAttribute::DAT_OSCILLATE;
+    _type = PUDynamicAttribute::DAT_OSCILLATE;
 }
 //-----------------------------------------------------------------------
-DynamicAttributeOscillate::~DynamicAttributeOscillate (void)
+PUDynamicAttributeOscillate::~PUDynamicAttributeOscillate (void)
 {
 }
 //-----------------------------------------------------------------------
-DynamicAttributeOscillate::OscillationType DynamicAttributeOscillate::getOscillationType (void) const
+PUDynamicAttributeOscillate::OscillationType PUDynamicAttributeOscillate::getOscillationType (void) const
 {
     return _oscillationType;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeOscillate::setOscillationType (DynamicAttributeOscillate::OscillationType oscillationType)
+void PUDynamicAttributeOscillate::setOscillationType (PUDynamicAttributeOscillate::OscillationType oscillationType)
 {
     _oscillationType = oscillationType;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeOscillate::getFrequency (void) const
+float PUDynamicAttributeOscillate::getFrequency (void) const
 {
     return _frequency;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeOscillate::setFrequency (float frequency)
+void PUDynamicAttributeOscillate::setFrequency (float frequency)
 {
     _frequency = frequency;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeOscillate::getPhase (void) const
+float PUDynamicAttributeOscillate::getPhase (void) const
 {
     return _phase;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeOscillate::setPhase (float phase)
+void PUDynamicAttributeOscillate::setPhase (float phase)
 {
     _phase = phase;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeOscillate::getBase (void) const
+float PUDynamicAttributeOscillate::getBase (void) const
 {
     return _base;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeOscillate::setBase (float base)
+void PUDynamicAttributeOscillate::setBase (float base)
 {
     _base = base;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeOscillate::getAmplitude (void) const
+float PUDynamicAttributeOscillate::getAmplitude (void) const
 {
     return _amplitude;
 }
 //-----------------------------------------------------------------------
-void DynamicAttributeOscillate::setAmplitude (float amplitude)
+void PUDynamicAttributeOscillate::setAmplitude (float amplitude)
 {
     _amplitude = amplitude;
 }
 //-----------------------------------------------------------------------
-float DynamicAttributeOscillate::getValue (float x)
+float PUDynamicAttributeOscillate::getValue (float x)
 {
     switch (_oscillationType)
     {
@@ -372,7 +372,7 @@ float DynamicAttributeOscillate::getValue (float x)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-float DynamicAttributeHelper::calculate(DynamicAttribute* dyn, float x, float defaultValue)
+float PUDynamicAttributeHelper::calculate(PUDynamicAttribute* dyn, float x, float defaultValue)
 {
     if (dyn)
     {

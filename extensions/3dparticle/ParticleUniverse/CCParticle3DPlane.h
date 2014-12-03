@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_PLANE_H__
-#define __CC_PARTICLE_3D_PLANE_H__
+#ifndef __CC_PU_PARTICLE_3D_PLANE_H__
+#define __CC_PU_PARTICLE_3D_PLANE_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
@@ -41,19 +41,19 @@ NS_CC_BEGIN
         respectively), and a constant (D) which is the distance along
         the normal you have to go to move the plane back to the origin.
     */
-class Plane
+class PUPlane
 {
 public:
     /** Default constructor - sets everything to 0.
     */
-    Plane ();
-    Plane (const Plane& rhs);
+    PUPlane ();
+    PUPlane (const PUPlane& rhs);
     /** Construct a plane through a normal, and a distance to move the plane along the normal.*/
-    Plane (const Vec3& rkNormal, float fConstant);
+    PUPlane (const Vec3& rkNormal, float fConstant);
 	/** Construct a plane using the 4 constants directly **/
-	Plane (float a, float b, float c, float d);
-    Plane (const Vec3& rkNormal, const Vec3& rkPoint);
-    Plane (const Vec3& rkPoint0, const Vec3& rkPoint1,
+	PUPlane (float a, float b, float c, float d);
+    PUPlane (const Vec3& rkNormal, const Vec3& rkPoint);
+    PUPlane (const Vec3& rkPoint0, const Vec3& rkPoint1,
         const Vec3& rkPoint2);
 
     /** The "positive side" of the plane is the half space to which the
@@ -128,17 +128,17 @@ public:
     float d;
 
     /// Comparison operator
-    bool operator==(const Plane& rhs) const
+    bool operator==(const PUPlane& rhs) const
     {
         return (rhs.d == d && rhs.normal == normal);
     }
-    bool operator!=(const Plane& rhs) const
+    bool operator!=(const PUPlane& rhs) const
     {
         return (rhs.d != d || rhs.normal != normal);
     }
 };
 
-typedef std::vector<Plane> PlaneList;
+typedef std::vector<PUPlane> PlaneList;
 NS_CC_END
 
 #endif

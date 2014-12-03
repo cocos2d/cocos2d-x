@@ -23,21 +23,21 @@
  ****************************************************************************/
 
 #include "CCParticle3DCircleEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 #include "base/ccRandom.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DCircleEmitter::DEFAULT_RADIUS = 100.0f;
-const float Particle3DCircleEmitter::DEFAULT_STEP = 0.1f;
-const float Particle3DCircleEmitter::DEFAULT_ANGLE = 0.0f;
-const bool Particle3DCircleEmitter::DEFAULT_RANDOM = true;
-const Vec3 Particle3DCircleEmitter::DEFAULT_NORMAL(0, 0, 0);
+const float PUParticle3DCircleEmitter::DEFAULT_RADIUS = 100.0f;
+const float PUParticle3DCircleEmitter::DEFAULT_STEP = 0.1f;
+const float PUParticle3DCircleEmitter::DEFAULT_ANGLE = 0.0f;
+const bool PUParticle3DCircleEmitter::DEFAULT_RANDOM = true;
+const Vec3 PUParticle3DCircleEmitter::DEFAULT_NORMAL(0, 0, 0);
 
 //-----------------------------------------------------------------------
-Particle3DCircleEmitter::Particle3DCircleEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DCircleEmitter::PUParticle3DCircleEmitter(void) : 
+    PUParticle3DEmitter(),
     _radius(DEFAULT_RADIUS),
     _circleAngle(DEFAULT_ANGLE),
     _originalCircleAngle(DEFAULT_ANGLE),
@@ -50,71 +50,71 @@ Particle3DCircleEmitter::Particle3DCircleEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-const float Particle3DCircleEmitter::getRadius(void) const
+const float PUParticle3DCircleEmitter::getRadius(void) const
 {
     return _radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::setRadius(const float radius)
+void PUParticle3DCircleEmitter::setRadius(const float radius)
 {
     _radius = radius;
 }
 //-----------------------------------------------------------------------
-const float Particle3DCircleEmitter::getCircleAngle(void) const
+const float PUParticle3DCircleEmitter::getCircleAngle(void) const
 {
     return _originalCircleAngle;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::setCircleAngle(const float circleAngle)
+void PUParticle3DCircleEmitter::setCircleAngle(const float circleAngle)
 {
     _originalCircleAngle = circleAngle;
     _circleAngle = circleAngle;
 }
 //-----------------------------------------------------------------------
-const float Particle3DCircleEmitter::getStep(void) const
+const float PUParticle3DCircleEmitter::getStep(void) const
 {
     return _step;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::setStep(const float step)
+void PUParticle3DCircleEmitter::setStep(const float step)
 {
     _step = step;
 }
 //-----------------------------------------------------------------------
-const bool Particle3DCircleEmitter::isRandom(void) const
+const bool PUParticle3DCircleEmitter::isRandom(void) const
 {
     return _random;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::setRandom(const bool random)
+void PUParticle3DCircleEmitter::setRandom(const bool random)
 {
     _random = random;
 }
 //-----------------------------------------------------------------------
-const Quaternion& Particle3DCircleEmitter::getOrientation(void) const
+const Quaternion& PUParticle3DCircleEmitter::getOrientation(void) const
 {
     return _orientation;
 }
 //----------------------------------------------------------------------- 
-const Vec3& Particle3DCircleEmitter::getNormal(void) const
+const Vec3& PUParticle3DCircleEmitter::getNormal(void) const
 { 
     return _normal;
 } 
 //----------------------------------------------------------------------- 
-void Particle3DCircleEmitter::setNormal(const Vec3& normal) 
+void PUParticle3DCircleEmitter::setNormal(const Vec3& normal) 
 { 
     //_orientation = Vec3::UNIT_Y.getRotationTo(normal, Vec3::UNIT_X);
     _orientation = getRotationTo(Vec3::UNIT_Y, normal, Vec3::UNIT_X);
     _normal = normal;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::notifyStart (void)
+void PUParticle3DCircleEmitter::notifyStart (void)
 {
     // Reset the attributes to allow a restart.
     _circleAngle = _originalCircleAngle;
 }
 //----------------------------------------------------------------------- 
-void Particle3DCircleEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DCircleEmitter::initParticlePosition(PUParticle3D* particle)
 {
     float angle = 0;
     if (_random)
@@ -148,7 +148,7 @@ void Particle3DCircleEmitter::initParticlePosition(Particle3D* particle)
     particle->originalPosition = particle->position;
 }
 //-----------------------------------------------------------------------
-void Particle3DCircleEmitter::initParticleDirection(Particle3D* particle)
+void PUParticle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
 {
     if (_autoDirection)
     {
@@ -181,18 +181,18 @@ void Particle3DCircleEmitter::initParticleDirection(Particle3D* particle)
     else
     {
         // Use the standard way
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 
-Particle3DCircleEmitter* Particle3DCircleEmitter::create()
+PUParticle3DCircleEmitter* PUParticle3DCircleEmitter::create()
 {
-    auto pe = new Particle3DCircleEmitter();
+    auto pe = new PUParticle3DCircleEmitter();
     pe->autorelease();
     return pe;
 }
 
-cocos2d::Quaternion Particle3DCircleEmitter::getRotationTo( const Vec3 &src, const Vec3& dest, const Vec3& fallbackAxis /*= Vec3::ZERO*/ ) const
+cocos2d::Quaternion PUParticle3DCircleEmitter::getRotationTo( const Vec3 &src, const Vec3& dest, const Vec3& fallbackAxis /*= Vec3::ZERO*/ ) const
 {
     // Based on Stan Melax's article in Game Programming Gems
     Quaternion q;
@@ -213,7 +213,7 @@ cocos2d::Quaternion Particle3DCircleEmitter::getRotationTo( const Vec3 &src, con
         if (fallbackAxis != Vec3::ZERO)
         {
             // rotate 180 degrees about the fallback axis
-            q.set(fallbackAxis, M_PI);
+            q.set(fallbackAxis, (float)M_PI);
             //q.FromAngleAxis(Radian(Math::PI), fallbackAxis);
         }
         else
@@ -227,7 +227,7 @@ cocos2d::Quaternion Particle3DCircleEmitter::getRotationTo( const Vec3 &src, con
             axis.normalize();
 
             //q.FromAngleAxis(Radian(Math::PI), axis);
-            q.set(axis, M_PI);
+            q.set(axis, (float)M_PI);
         }
     }
     else

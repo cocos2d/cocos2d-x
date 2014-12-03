@@ -23,23 +23,23 @@
  ****************************************************************************/
 
 #include "CCParticle3DScaleVelocityAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DScaleVelocityAffector::DEFAULT_VELOCITY_SCALE = 1.0f;
+const float PUParticle3DScaleVelocityAffector::DEFAULT_VELOCITY_SCALE = 1.0f;
 
 //-----------------------------------------------------------------------
-Particle3DScaleVelocityAffector::Particle3DScaleVelocityAffector(void) : 
-    Particle3DAffector(),
+PUParticle3DScaleVelocityAffector::PUParticle3DScaleVelocityAffector(void) : 
+    PUParticle3DAffector(),
     _sinceStartSystem(false),
     _stopAtFlip(false)
 {
-    _dynScaleVelocity = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
+    _dynScaleVelocity = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
 }
 //-----------------------------------------------------------------------
-Particle3DScaleVelocityAffector::~Particle3DScaleVelocityAffector(void)
+PUParticle3DScaleVelocityAffector::~PUParticle3DScaleVelocityAffector(void)
 {
     if (_dynScaleVelocity)
     {
@@ -47,16 +47,16 @@ Particle3DScaleVelocityAffector::~Particle3DScaleVelocityAffector(void)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DScaleVelocityAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DScaleVelocityAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-       // Particle3D *particle = iter;
+       // PUParticle3D *particle = iter;
         float ds = 0;
         if (_sinceStartSystem)
         {
             // If control points are used (curved type), the first value of each control point is seconds from the start of the system
-            ds = deltaTime * _dynamicAttributeHelper.calculate(_dynScaleVelocity, _particleSystem->getTimeElapsedSinceStart());
+            ds = deltaTime * _dynamicAttributeHelper.calculate(_dynScaleVelocity, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
         }
         else
         {
@@ -85,7 +85,7 @@ void Particle3DScaleVelocityAffector::updateAffector( Particle3D *particle, floa
 }
 
 //-----------------------------------------------------------------------
-void Particle3DScaleVelocityAffector::setDynScaleVelocity(DynamicAttribute* dynScaleVelocity)
+void PUParticle3DScaleVelocityAffector::setDynScaleVelocity(PUDynamicAttribute* dynScaleVelocity)
 {
     if (_dynScaleVelocity)
         CC_SAFE_DELETE(_dynScaleVelocity);
@@ -93,13 +93,13 @@ void Particle3DScaleVelocityAffector::setDynScaleVelocity(DynamicAttribute* dynS
     _dynScaleVelocity = dynScaleVelocity;
 }
 //-----------------------------------------------------------------------
-void Particle3DScaleVelocityAffector::resetDynScaleVelocity(bool resetToDefault)
+void PUParticle3DScaleVelocityAffector::resetDynScaleVelocity(bool resetToDefault)
 {
     if (resetToDefault)
     {
         CC_SAFE_DELETE(_dynScaleVelocity);
-        _dynScaleVelocity = new DynamicAttributeFixed();
-        (static_cast<DynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
+        _dynScaleVelocity = new PUDynamicAttributeFixed();
+        (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
     }
 }
 NS_CC_END

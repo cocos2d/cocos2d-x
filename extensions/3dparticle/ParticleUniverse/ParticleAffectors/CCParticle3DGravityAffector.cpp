@@ -23,40 +23,40 @@
  ****************************************************************************/
 
 #include "CCParticle3DGravityAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DGravityAffector::DEFAULT_GRAVITY = 1.0f;
+const float PUParticle3DGravityAffector::DEFAULT_GRAVITY = 1.0f;
 
 //-----------------------------------------------------------------------
-Particle3DGravityAffector::Particle3DGravityAffector(void) : 
-    Particle3DAffector(),
+PUParticle3DGravityAffector::PUParticle3DGravityAffector(void) : 
+    PUParticle3DAffector(),
     _gravity(DEFAULT_GRAVITY)
 {
 }
 //-----------------------------------------------------------------------
-Particle3DGravityAffector::~Particle3DGravityAffector( void )
+PUParticle3DGravityAffector::~PUParticle3DGravityAffector( void )
 {
 
 }
 //-----------------------------------------------------------------------
-float Particle3DGravityAffector::getGravity(void) const
+float PUParticle3DGravityAffector::getGravity(void) const
 {
     return _gravity;
 }
 //-----------------------------------------------------------------------
-void Particle3DGravityAffector::setGravity(float gravity)
+void PUParticle3DGravityAffector::setGravity(float gravity)
 {
     _gravity = gravity;
 }
 
-void Particle3DGravityAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DGravityAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Applied scaling in V1.3.1
         /** Applying Newton's law of universal gravitation.	*/
         Vec3 distance = _derivedPosition - particle->position;
@@ -64,7 +64,7 @@ void Particle3DGravityAffector::updateAffector( Particle3D *particle, float delt
         float scaleVelocity = 1.0f;
         //if (mParentTechnique)
         {
-            scaleVelocity = _particleSystem->getParticleSystemScaleVelocity();
+            scaleVelocity = (static_cast<PUParticleSystem3D *>(_particleSystem))->getParticleSystemScaleVelocity();
         }
         if (length > 0/* && mParentTechnique*/)
         {
@@ -75,7 +75,7 @@ void Particle3DGravityAffector::updateAffector( Particle3D *particle, float delt
     }
 }
 
-void Particle3DGravityAffector::preUpdateAffector( float deltaTime )
+void PUParticle3DGravityAffector::preUpdateAffector( float deltaTime )
 {
     getDerivedPosition();
 }

@@ -23,43 +23,43 @@
  ****************************************************************************/
 
 #include "CCParticle3DBaseForceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const Vec3 Particle3DBaseForceAffector::DEFAULT_FORCE_VECTOR(0, 0, 0);
-const Particle3DBaseForceAffector::ForceApplication Particle3DBaseForceAffector::DEFAULT_FORCE_APPL = Particle3DBaseForceAffector::FA_ADD;
+const Vec3 PUParticle3DBaseForceAffector::DEFAULT_FORCE_VECTOR(0, 0, 0);
+const PUParticle3DBaseForceAffector::ForceApplication PUParticle3DBaseForceAffector::DEFAULT_FORCE_APPL = PUParticle3DBaseForceAffector::FA_ADD;
 
 //-----------------------------------------------------------------------
-Particle3DBaseForceAffector::Particle3DBaseForceAffector() 
-    : Particle3DAffector()
+PUParticle3DBaseForceAffector::PUParticle3DBaseForceAffector() 
+    : PUParticle3DAffector()
     , _forceVector(DEFAULT_FORCE_VECTOR)
     , _scaledVector(Vec3::ZERO)
     , _forceApplication(DEFAULT_FORCE_APPL)
 {
 }
 
-Particle3DBaseForceAffector::~Particle3DBaseForceAffector()
+PUParticle3DBaseForceAffector::~PUParticle3DBaseForceAffector()
 {
 }
 
-const Vec3& Particle3DBaseForceAffector::getForceVector() const
+const Vec3& PUParticle3DBaseForceAffector::getForceVector() const
 {
     return _forceVector;
 }
 
-void Particle3DBaseForceAffector::setForceVector( const Vec3& forceVector )
+void PUParticle3DBaseForceAffector::setForceVector( const Vec3& forceVector )
 {
     _forceVector = forceVector;
 }
 
-Particle3DBaseForceAffector::ForceApplication Particle3DBaseForceAffector::getForceApplication() const
+PUParticle3DBaseForceAffector::ForceApplication PUParticle3DBaseForceAffector::getForceApplication() const
 {
     return _forceApplication;
 }
 
-void Particle3DBaseForceAffector::setForceApplication( ForceApplication forceApplication )
+void PUParticle3DBaseForceAffector::setForceApplication( ForceApplication forceApplication )
 {
     _forceApplication = forceApplication;
 }

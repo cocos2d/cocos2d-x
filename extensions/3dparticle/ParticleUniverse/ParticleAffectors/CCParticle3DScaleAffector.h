@@ -23,16 +23,16 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_SCALE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_SCALE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_SCALE_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DScaleAffector : public Particle3DAffector
+class  PUParticle3DScaleAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -41,33 +41,33 @@ public:
     static const float DEFAULT_Z_SCALE;
     static const float DEFAULT_XYZ_SCALE;
 
-    Particle3DScaleAffector(void);
-    virtual ~Particle3DScaleAffector(void);
+    PUParticle3DScaleAffector(void);
+    virtual ~PUParticle3DScaleAffector(void);
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */
-    DynamicAttribute* getDynScaleX(void) const {return _dynScaleX;};
-    void setDynScaleX(DynamicAttribute* dynScaleX);
+    PUDynamicAttribute* getDynScaleX(void) const {return _dynScaleX;};
+    void setDynScaleX(PUDynamicAttribute* dynScaleX);
     void resetDynScaleX(bool resetToDefault = true);
 
     /** 
     */
-    DynamicAttribute* getDynScaleY(void) const {return _dynScaleY;};
-    void setDynScaleY(DynamicAttribute* dynScaleY);
+    PUDynamicAttribute* getDynScaleY(void) const {return _dynScaleY;};
+    void setDynScaleY(PUDynamicAttribute* dynScaleY);
     void resetDynScaleY(bool resetToDefault = true);
 
     /** 
     */
-    DynamicAttribute* getDynScaleZ(void) const {return _dynScaleZ;};
-    void setDynScaleZ(DynamicAttribute* dynScaleZ);
+    PUDynamicAttribute* getDynScaleZ(void) const {return _dynScaleZ;};
+    void setDynScaleZ(PUDynamicAttribute* dynScaleZ);
     void resetDynScaleZ(bool resetToDefault = true);
 
     /** 
     */
-    DynamicAttribute* getDynScaleXYZ(void) const {return _dynScaleXYZ;};
-    void setDynScaleXYZ(DynamicAttribute* dynScaleXYZ);
+    PUDynamicAttribute* getDynScaleXYZ(void) const {return _dynScaleXYZ;};
+    void setDynScaleXYZ(PUDynamicAttribute* dynScaleXYZ);
     void resetDynScaleXYZ(bool resetToDefault = true);
 
     /** 
@@ -79,19 +79,19 @@ protected:
 
     /** Returns the scale value for the dynamic Scale.
     */
-    float calculateScale(DynamicAttribute* dynScale, Particle3D* particle);
+    float calculateScale(PUDynamicAttribute* dynScale, PUParticle3D* particle);
 
 protected:
 
-    DynamicAttribute* _dynScaleX;
-    DynamicAttribute* _dynScaleY;
-    DynamicAttribute* _dynScaleZ;
-    DynamicAttribute* _dynScaleXYZ;
+    PUDynamicAttribute* _dynScaleX;
+    PUDynamicAttribute* _dynScaleY;
+    PUDynamicAttribute* _dynScaleZ;
+    PUDynamicAttribute* _dynScaleXYZ;
     bool _dynScaleXSet;
     bool _dynScaleYSet;
     bool _dynScaleZSet;
     bool _dynScaleXYZSet;
-    DynamicAttributeHelper _dynamicAttributeHelper;
+    PUDynamicAttributeHelper _dynamicAttributeHelper;
     bool _sinceStartSystem;
 
     float _latestTimeElapsed;

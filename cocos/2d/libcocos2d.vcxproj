@@ -193,6 +193,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DNoise.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DPlane.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DSimpleSpline.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3D.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DAlignAffector.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DBaseCollider.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DBaseForceAffector.cpp" />
@@ -219,6 +220,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DTextureRotator.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DVelocityMatchingAffector.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DVortexAffector.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DAffector.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DBoxEmitter.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DCircleEmitter.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DLineEmitter.cpp" />
@@ -228,6 +230,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSlaveEmitter.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSphereSurfaceEmitter.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DVertexEmitter.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCPUParticle3DEmitter.cpp" />
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp" />
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManagerEx.cpp" />
     <ClCompile Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp" />
@@ -588,6 +591,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DPlane.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DSimpleSpline.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCParticle3DSphere.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3D.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DAlignAffector.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DBaseCollider.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DBaseForceAffector.h" />
@@ -614,6 +618,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DTextureRotator.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DVelocityMatchingAffector.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCParticle3DVortexAffector.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DAffector.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DBoxEmitter.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DCircleEmitter.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DLineEmitter.h" />
@@ -623,6 +628,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSlaveEmitter.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DSphereSurfaceEmitter.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCParticle3DVertexEmitter.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCPUParticle3DEmitter.h" />
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManager.h" />
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManagerEx.h" />
     <ClInclude Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.h" />

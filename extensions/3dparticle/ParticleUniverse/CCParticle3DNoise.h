@@ -22,20 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_NOISE_H__
-#define __CC_PARTICLE_3D_NOISE_H__
+#ifndef __CC_PU_PARTICLE_3D_NOISE_H__
+#define __CC_PU_PARTICLE_3D_NOISE_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
 
-class Noise3D
+class PUNoise3D
 {
 public:
     /* Constructor / Destructor */
-    Noise3D(void);
-    virtual ~Noise3D(void);
+    PUNoise3D(void);
+    virtual ~PUNoise3D(void);
 
     /* Inititialises the noise function */
     void initialise(unsigned short octaves, double frequency = 1.0, double amplitude = 1.0, double persistence = 1.0);

@@ -23,16 +23,16 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_VERTEX_EMITTER_H__
-#define __CC_PARTICLE_3D_VERTEX_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_VERTEX_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_VERTEX_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 #include <list>
 
 //Particle3DVertexEmitter NOT SUPPORT YET
 NS_CC_BEGIN
 //
-//class  Particle3DVertexEmitter : public Particle3DEmitter
+//class  Particle3DVertexEmitter : public PUParticle3DEmitter
 //{
 //protected:
 //

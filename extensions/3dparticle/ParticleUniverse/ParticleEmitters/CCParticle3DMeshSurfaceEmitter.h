@@ -23,16 +23,16 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_MESH_SURFACE_EMITTER_H__
-#define __CC_PARTICLE_MESH_SURFACE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
+#define __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
 /** Definition of a Triangle
 */
-class Triangle
+class PUTriangle
 {
 public:
     /** The struct is used to return both the position and the normal
@@ -57,7 +57,7 @@ public:
     Vec3 en3;			// Normal of edge v3-v1
 
     /** Constructor **/
-    Triangle(void){};
+    PUTriangle(void){};
 
     /** Calculate the (square) surface of the triangle **/
     void calculateSquareSurface (void);
@@ -80,9 +80,9 @@ public:
 
 /** Comparer used for sorting vector in ascending order
 */
-struct SortAscending
+struct PUSortAscending
 {
-    bool operator() (const Triangle& a, const Triangle& b)
+    bool operator() (const PUTriangle& a, const PUTriangle& b)
     {
         return a.squareSurface < b.squareSurface;
     }
@@ -90,9 +90,9 @@ struct SortAscending
 
 /** Comparer used for sorting vector in descending order
 */
-struct SortDescending
+struct PUSortDescending
 {
-    bool operator() (const Triangle& a, const Triangle& b)
+    bool operator() (const PUTriangle& a, const PUTriangle& b)
     {
         return a.squareSurface > b.squareSurface;
     }
@@ -100,7 +100,7 @@ struct SortDescending
 
 /** Define a template class for a vector of triangles.
 */
-typedef std::vector<Triangle> Triangles;
+typedef std::vector<PUTriangle> Triangles;
 
 /** Class that constructs mesh information of a given mesh name
 @remarks
@@ -143,7 +143,7 @@ public:
     //						const Vec3& scale = Vec3::ONE);
 
     /** Get a triangle based on the index. */
-    const Triangle& getTriangle (size_t triangleIndex);
+    const PUTriangle& getTriangle (size_t triangleIndex);
 
         /** Get a random triangle (index) from the mesh. */
     const size_t getRandomTriangleIndex (void);
@@ -151,7 +151,7 @@ public:
     /** Returns both a random point on a given triangle and its normal vector.
         How the random point and the normal are determined depends on the distribution type.
     **/
-    const Triangle::PositionAndNormal getRandomPositionAndNormal (const size_t triangleIndex);
+    const PUTriangle::PositionAndNormal getRandomPositionAndNormal (const size_t triangleIndex);
 
 protected:
     Triangles _triangles;
@@ -163,14 +163,15 @@ protected:
     There are several ways of emitting it on the surface, from the vertices, edges and faces of a mesh.
     It is also possible to define whether more particles emit on larger faces.
 */
-class CC_DLL Particle3DMeshSurfaceEmitter : public Particle3DEmitter
+
+class CC_DLL PUParticle3DMeshSurfaceEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
     static const Vec3 DEFAULT_SCALE;
     static const MeshInfo::MeshSurfaceDistribution DEFAULT_DISTRIBUTION;
 
-    static Particle3DMeshSurfaceEmitter* create();
+    static PUParticle3DMeshSurfaceEmitter* create();
 
     /** Returns the mesh name.
     */
@@ -223,7 +224,7 @@ public:
 
     /** Determine a particle position on the mesh surface.
     */
-    virtual void initParticlePosition(Particle3D* particle) override;
+    virtual void initParticlePosition(PUParticle3D* particle) override;
 
     /** See ParticleEmitter.
     */
@@ -231,11 +232,11 @@ public:
 
     /** Determine the particle direction.
     */
-    virtual void initParticleDirection(Particle3D* particle) override;
+    virtual void initParticleDirection(PUParticle3D* particle) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DMeshSurfaceEmitter(void);
-    virtual ~Particle3DMeshSurfaceEmitter(void);
+    PUParticle3DMeshSurfaceEmitter(void);
+    virtual ~PUParticle3DMeshSurfaceEmitter(void);
 
 protected:
     std::string _meshName;

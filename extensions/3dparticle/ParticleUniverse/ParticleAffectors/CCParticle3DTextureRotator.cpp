@@ -23,28 +23,28 @@
  ****************************************************************************/
 
 #include "CCParticle3DTextureRotator.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const bool Particle3DTextureRotator::DEFAULT_USE_OWN_SPEED = false;
-const float Particle3DTextureRotator::DEFAULT_ROTATION_SPEED = 10.0f;
-const float Particle3DTextureRotator::DEFAULT_ROTATION = 0.0f;
+const bool PUParticle3DTextureRotator::DEFAULT_USE_OWN_SPEED = false;
+const float PUParticle3DTextureRotator::DEFAULT_ROTATION_SPEED = 10.0f;
+const float PUParticle3DTextureRotator::DEFAULT_ROTATION = 0.0f;
 
 //-----------------------------------------------------------------------
-Particle3DTextureRotator::Particle3DTextureRotator(void) : 
-    Particle3DAffector(),
+PUParticle3DTextureRotator::PUParticle3DTextureRotator(void) : 
+    PUParticle3DAffector(),
     _useOwnRotationSpeed(DEFAULT_USE_OWN_SPEED),
     _scaledRotationSpeed(0.0f),
     _twoPiRad(float(2.0 * M_PI))
 {
-    _dynRotation = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynRotation))->setValue(DEFAULT_ROTATION);
-    _dynRotationSpeed = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
+    _dynRotation = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynRotation))->setValue(DEFAULT_ROTATION);
+    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
-Particle3DTextureRotator::~Particle3DTextureRotator(void)
+PUParticle3DTextureRotator::~PUParticle3DTextureRotator(void)
 {
     if (_dynRotation)
     {
@@ -57,22 +57,22 @@ Particle3DTextureRotator::~Particle3DTextureRotator(void)
     }
 }
 //-----------------------------------------------------------------------
-bool Particle3DTextureRotator::useOwnRotationSpeed (void) const
+bool PUParticle3DTextureRotator::useOwnRotationSpeed (void) const
 {
     return _useOwnRotationSpeed;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed)
+void PUParticle3DTextureRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed)
 {
     _useOwnRotationSpeed = useOwnRotationSpeed;
 }
 //-----------------------------------------------------------------------
-DynamicAttribute* Particle3DTextureRotator::getRotation(void) const
+PUDynamicAttribute* PUParticle3DTextureRotator::getRotation(void) const
 {
     return _dynRotation;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureRotator::setRotation(DynamicAttribute* dynRotation)
+void PUParticle3DTextureRotator::setRotation(PUDynamicAttribute* dynRotation)
 {
     if (_dynRotation)
         CC_SAFE_DELETE(_dynRotation);
@@ -80,12 +80,12 @@ void Particle3DTextureRotator::setRotation(DynamicAttribute* dynRotation)
     _dynRotation = dynRotation;
 }
 //-----------------------------------------------------------------------
-DynamicAttribute* Particle3DTextureRotator::getRotationSpeed(void) const
+PUDynamicAttribute* PUParticle3DTextureRotator::getRotationSpeed(void) const
 {
     return _dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureRotator::setRotationSpeed(DynamicAttribute* dynRotationSpeed)
+void PUParticle3DTextureRotator::setRotationSpeed(PUDynamicAttribute* dynRotationSpeed)
 {
     if (_dynRotationSpeed)
         CC_SAFE_DELETE(_dynRotationSpeed);
@@ -93,20 +93,20 @@ void Particle3DTextureRotator::setRotationSpeed(DynamicAttribute* dynRotationSpe
     _dynRotationSpeed = dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-float Particle3DTextureRotator::calculateRotation(void)
+float PUParticle3DTextureRotator::calculateRotation(void)
 {
-    return float(_dynamicAttributeHelper.calculate(_dynRotation, _particleSystem->getTimeElapsedSinceStart()));
+    return float(_dynamicAttributeHelper.calculate(_dynRotation, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart()));
 }
 //-----------------------------------------------------------------------
-float Particle3DTextureRotator::calculateRotationSpeed(Particle3D* particle)
+float PUParticle3DTextureRotator::calculateRotationSpeed(PUParticle3D* particle)
 {
     return float(_dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction));
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureRotator::initParticleForEmission(Particle3D* particle)
+void PUParticle3DTextureRotator::initParticleForEmission(PUParticle3D* particle)
 {
     //// Only continue if the particle is a visual particle
-    //if (particle->particleType != Particle3D::PT_VISUAL)
+    //if (particle->particleType != PUParticle3D::PT_VISUAL)
     //	return;
 
     // Set initial random zRotation
@@ -123,13 +123,13 @@ void Particle3DTextureRotator::initParticleForEmission(Particle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DTextureRotator::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DTextureRotator::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         //// Only continue if the particle is a visual particle
-        //if (particle->particleType != Particle3D::PT_VISUAL)
+        //if (particle->particleType != PUParticle3D::PT_VISUAL)
         //	return;
 
         if (_useOwnRotationSpeed)

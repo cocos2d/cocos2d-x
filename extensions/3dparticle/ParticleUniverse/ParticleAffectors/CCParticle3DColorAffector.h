@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_COLOR_AFFECTOR_H__
-#define __CC_PARTICLE_3D_COLOR_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DColorAffector : public Particle3DAffector
+class  PUParticle3DColorAffector : public PUParticle3DAffector
 {
 public:
     typedef std::map<float, Vec4> ColorMap;
@@ -46,12 +46,12 @@ public:
     static const ColorOperation DEFAULT_COLOR_OPERATION;
 
     // Constructor
-    Particle3DColorAffector();
+    PUParticle3DColorAffector();
 
     // Destructor
-    virtual ~Particle3DColorAffector();
+    virtual ~PUParticle3DColorAffector();
 
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */

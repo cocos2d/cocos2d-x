@@ -23,28 +23,28 @@
  ****************************************************************************/
 
 #include "CCParticle3DSineForceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DSineForceAffector::DEFAULT_FREQ_MIN = 1.0f;
-const float Particle3DSineForceAffector::DEFAULT_FREQ_MAX = 1.0f;
+const float PUParticle3DSineForceAffector::DEFAULT_FREQ_MIN = 1.0f;
+const float PUParticle3DSineForceAffector::DEFAULT_FREQ_MAX = 1.0f;
 
 //-----------------------------------------------------------------------
-Particle3DSineForceAffector::Particle3DSineForceAffector(void) : 
-    Particle3DBaseForceAffector(),
+PUParticle3DSineForceAffector::PUParticle3DSineForceAffector(void) : 
+    PUParticle3DBaseForceAffector(),
     _angle(361),
     _frequencyMin(DEFAULT_FREQ_MIN),
     _frequencyMax(DEFAULT_FREQ_MAX),
     _frequency(1.0f)
 {
 }
-Particle3DSineForceAffector::~Particle3DSineForceAffector( void )
+PUParticle3DSineForceAffector::~PUParticle3DSineForceAffector( void )
 {
 
 }
 //-----------------------------------------------------------------------
-void Particle3DSineForceAffector::preUpdateAffector(float deltaTime)
+void PUParticle3DSineForceAffector::preUpdateAffector(float deltaTime)
 {
     // Scale by time
     _angle += _frequency * deltaTime;
@@ -62,12 +62,12 @@ void Particle3DSineForceAffector::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-const float Particle3DSineForceAffector::getFrequencyMin(void) const
+const float PUParticle3DSineForceAffector::getFrequencyMin(void) const
 {
     return _frequencyMin;
 }
 //-----------------------------------------------------------------------
-void Particle3DSineForceAffector::setFrequencyMin(const float frequencyMin)
+void PUParticle3DSineForceAffector::setFrequencyMin(const float frequencyMin)
 {
     _frequencyMin = frequencyMin;
     if (frequencyMin > _frequencyMax)
@@ -76,23 +76,23 @@ void Particle3DSineForceAffector::setFrequencyMin(const float frequencyMin)
     }
 }
 //-----------------------------------------------------------------------
-const float Particle3DSineForceAffector::getFrequencyMax(void) const
+const float PUParticle3DSineForceAffector::getFrequencyMax(void) const
 {
     return _frequencyMax;
 }
 //-----------------------------------------------------------------------
-void Particle3DSineForceAffector::setFrequencyMax(const float frequencyMax)
+void PUParticle3DSineForceAffector::setFrequencyMax(const float frequencyMax)
 {
     _frequencyMax = frequencyMax;
     _frequency = frequencyMax;
 }
 //-----------------------------------------------------------------------
 
-void Particle3DSineForceAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DSineForceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Affect the direction
         if (_forceApplication == FA_ADD)
         {

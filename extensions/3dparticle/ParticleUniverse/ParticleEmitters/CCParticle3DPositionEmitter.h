@@ -23,20 +23,20 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_POSITION_EMITTER_H__
-#define __CC_PARTICLE_3D_POSITION_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_POSITION_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_POSITION_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  CC_DLL Particle3DPositionEmitter : public Particle3DEmitter
+class  CC_DLL PUParticle3DPositionEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
     static const bool DEFAULT_RANDOMIZE;
 
-    static Particle3DPositionEmitter* create();
+    static PUParticle3DPositionEmitter* create();
     /** 
     */
     bool isRandomized(void) const;
@@ -67,11 +67,11 @@ public:
 
     /** Generate a particle position based on the added positions.
     */
-    virtual void initParticlePosition(Particle3D* particle) override;
+    virtual void initParticlePosition(PUParticle3D* particle) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DPositionEmitter(void);
-    virtual ~Particle3DPositionEmitter(void) {};
+    PUParticle3DPositionEmitter(void);
+    virtual ~PUParticle3DPositionEmitter(void) {};
 
 protected:
     std::vector<Vec3> _positionList;

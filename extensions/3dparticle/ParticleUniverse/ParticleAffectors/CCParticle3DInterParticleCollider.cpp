@@ -23,64 +23,64 @@
  ****************************************************************************/
 
 #include "CCParticle3DInterParticleCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DInterParticleCollider::DEFAULT_ADJUSTMENT = 1.0f;
-const Particle3DInterParticleCollider::InterParticleCollisionResponse Particle3DInterParticleCollider::DEFAULT_COLLISION_RESPONSE = 
-         Particle3DInterParticleCollider::IPCR_AVERAGE_VELOCITY;
+const float PUParticle3DInterParticleCollider::DEFAULT_ADJUSTMENT = 1.0f;
+const PUParticle3DInterParticleCollider::InterParticleCollisionResponse PUParticle3DInterParticleCollider::DEFAULT_COLLISION_RESPONSE = 
+         PUParticle3DInterParticleCollider::IPCR_AVERAGE_VELOCITY;
 
 //-----------------------------------------------------------------------
-Particle3DInterParticleCollider::Particle3DInterParticleCollider(void) : 
-    Particle3DBaseCollider(),
+PUParticle3DInterParticleCollider::PUParticle3DInterParticleCollider(void) : 
+    PUParticle3DBaseCollider(),
     _adjustment(DEFAULT_ADJUSTMENT),
     _interParticleCollisionResponse(DEFAULT_COLLISION_RESPONSE)
 {
 }
 
-Particle3DInterParticleCollider::~Particle3DInterParticleCollider( void )
+PUParticle3DInterParticleCollider::~PUParticle3DInterParticleCollider( void )
 {
 
 }
 //-----------------------------------------------------------------------
-float Particle3DInterParticleCollider::getAdjustment(void) const
+float PUParticle3DInterParticleCollider::getAdjustment(void) const
 {
     return _adjustment;
 }
 //-----------------------------------------------------------------------
-void Particle3DInterParticleCollider::setAdjustment(float adjustment)
+void PUParticle3DInterParticleCollider::setAdjustment(float adjustment)
 {
     _adjustment = adjustment;
 }
 //-----------------------------------------------------------------------
-Particle3DInterParticleCollider::InterParticleCollisionResponse Particle3DInterParticleCollider::getInterParticleCollisionResponse(void) const
+PUParticle3DInterParticleCollider::InterParticleCollisionResponse PUParticle3DInterParticleCollider::getInterParticleCollisionResponse(void) const
 {
     return _interParticleCollisionResponse;
 }
 //-----------------------------------------------------------------------
-void Particle3DInterParticleCollider::setInterParticleCollisionResponse(Particle3DInterParticleCollider::InterParticleCollisionResponse interParticleCollisionResponse)
+void PUParticle3DInterParticleCollider::setInterParticleCollisionResponse(PUParticle3DInterParticleCollider::InterParticleCollisionResponse interParticleCollisionResponse)
 {
     _interParticleCollisionResponse = interParticleCollisionResponse;
 }
 //-----------------------------------------------------------------------
-void Particle3DInterParticleCollider::prepare()
+void PUParticle3DInterParticleCollider::prepare()
 {
     // Activate spatial hashing
     //particleTechnique->setSpatialHashingUsed(true);
 }
 //-----------------------------------------------------------------------
-void Particle3DInterParticleCollider::unPrepare()
+void PUParticle3DInterParticleCollider::unPrepare()
 {
     // Deactivate spatial hashing
     //particleTechnique->setSpatialHashingUsed(false);
 }
 //-----------------------------------------------------------------------
-bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particle3D* particle1, Particle3D* particle2, float timeElapsed)
+bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float timeElapsed)
 {
-    Particle3D* vp1 = static_cast<Particle3D*>(particle1);
-    Particle3D* vp2 = static_cast<Particle3D*>(particle2);
+    PUParticle3D* vp1 = static_cast<PUParticle3D*>(particle1);
+    PUParticle3D* vp2 = static_cast<PUParticle3D*>(particle2);
     if ((vp1->position - vp2->position).length() < _adjustment * (vp1->radius + vp2->radius))
     {
         /** Collision detected.
@@ -116,8 +116,8 @@ bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particl
         }
         vp1->direction *= _bouncyness;
         vp2->direction *= _bouncyness;
-        vp1->addEventFlags(Particle3D::PEF_COLLIDED);
-        vp2->addEventFlags(Particle3D::PEF_COLLIDED);
+        vp1->addEventFlags(PUParticle3D::PEF_COLLIDED);
+        vp2->addEventFlags(PUParticle3D::PEF_COLLIDED);
         return true;
     }
 
@@ -125,16 +125,16 @@ bool Particle3DInterParticleCollider::validateAndExecuteSphereCollision (Particl
 }
 //-----------------------------------------------------------------------
 
-void Particle3DInterParticleCollider::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DInterParticleCollider::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())
     //{
-    //    Particle3D *particle = iter;
+    //    PUParticle3D *particle = iter;
     //     Fast rejection: only visible, moving particles are able to collide, unless they are colliding already
     //     Changed && into || in V1.3.1
     //    if (//particle->particleType != Particle::PT_VISUAL || 
-    //        particle->hasEventFlags(Particle3D::PEF_COLLIDED) || 
+    //        particle->hasEventFlags(PUParticle3D::PEF_COLLIDED) || 
     //        particle->direction == Vec3::ZERO)
     //    {
     //        return;
@@ -154,7 +154,7 @@ void Particle3DInterParticleCollider::updateAffector( Particle3D *particle, floa
     //    		Particle* p = cell[i];
 
     //    		// Don't check if it is the same particle or the particle is already colliding.
-    //    		if (particle != p  && !p->hasEventFlags(Particle3D::PEF_COLLIDED))
+    //    		if (particle != p  && !p->hasEventFlags(PUParticle3D::PEF_COLLIDED))
     //    		{
     //    			// Check for collision
     //    			if (validateAndExecuteSphereCollision(particle, p, deltaTime))

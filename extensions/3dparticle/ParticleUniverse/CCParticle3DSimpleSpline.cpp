@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 //---------------------------------------------------------------------
-SimpleSpline::SimpleSpline()
+PUSimpleSpline::PUSimpleSpline()
 {
     // Set up matrix
     // Hermite polynomial
@@ -50,11 +50,11 @@ SimpleSpline::SimpleSpline()
     _autoCalc = true;
 }
 //---------------------------------------------------------------------
-SimpleSpline::~SimpleSpline()
+PUSimpleSpline::~PUSimpleSpline()
 {
 }
 //---------------------------------------------------------------------
-void SimpleSpline::addPoint(const Vec3& p)
+void PUSimpleSpline::addPoint(const Vec3& p)
 {
     _points.push_back(p);
     if (_autoCalc)
@@ -63,7 +63,7 @@ void SimpleSpline::addPoint(const Vec3& p)
     }
 }
 //---------------------------------------------------------------------
-Vec3 SimpleSpline::interpolate(float t) const
+Vec3 PUSimpleSpline::interpolate(float t) const
 {
     // Currently assumes points are evenly spaced, will cause velocity
     // change where this is not the case
@@ -80,7 +80,7 @@ Vec3 SimpleSpline::interpolate(float t) const
 
 }
 //---------------------------------------------------------------------
-Vec3 SimpleSpline::interpolate(unsigned int fromIndex, float t) const
+Vec3 PUSimpleSpline::interpolate(unsigned int fromIndex, float t) const
 {
     // Bounds check
     assert (fromIndex < _points.size() &&
@@ -146,7 +146,7 @@ Vec3 SimpleSpline::interpolate(unsigned int fromIndex, float t) const
 
 }
 //---------------------------------------------------------------------
-void SimpleSpline::recalcTangents(void)
+void PUSimpleSpline::recalcTangents(void)
 {
     // Catmull-Rom approach
     // 
@@ -217,25 +217,25 @@ void SimpleSpline::recalcTangents(void)
 
 }
 //---------------------------------------------------------------------
-const Vec3& SimpleSpline::getPoint(unsigned short index) const
+const Vec3& PUSimpleSpline::getPoint(unsigned short index) const
 {
     assert (index < _points.size() && "Point index is out of bounds!!");
 
     return _points[index];
 }
 //---------------------------------------------------------------------
-unsigned short SimpleSpline::getNumPoints(void) const
+unsigned short PUSimpleSpline::getNumPoints(void) const
 {
     return (unsigned short)_points.size();
 }
 //---------------------------------------------------------------------
-void SimpleSpline::clear(void)
+void PUSimpleSpline::clear(void)
 {
     _points.clear();
     _tangents.clear();
 }
 //---------------------------------------------------------------------
-void SimpleSpline::updatePoint(unsigned short index, const Vec3& value)
+void PUSimpleSpline::updatePoint(unsigned short index, const Vec3& value)
 {
     assert (index < _points.size() && "Point index is out of bounds!!");
 
@@ -246,7 +246,7 @@ void SimpleSpline::updatePoint(unsigned short index, const Vec3& value)
     }
 }
 //---------------------------------------------------------------------
-void SimpleSpline::setAutoCalculate(bool autoCalc)
+void PUSimpleSpline::setAutoCalculate(bool autoCalc)
 {
     _autoCalc = autoCalc;
 }

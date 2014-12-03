@@ -23,18 +23,18 @@
  ****************************************************************************/
 
 #include "CCParticle3DBoxCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DBoxCollider::DEFAULT_WIDTH = 100.0f;
-const float Particle3DBoxCollider::DEFAULT_HEIGHT = 100.0f;
-const float Particle3DBoxCollider::DEFAULT_DEPTH = 100.0f;
+const float PUParticle3DBoxCollider::DEFAULT_WIDTH = 100.0f;
+const float PUParticle3DBoxCollider::DEFAULT_HEIGHT = 100.0f;
+const float PUParticle3DBoxCollider::DEFAULT_DEPTH = 100.0f;
 
 //-----------------------------------------------------------------------
-Particle3DBoxCollider::Particle3DBoxCollider() : 
-    Particle3DBaseCollider(),
+PUParticle3DBoxCollider::PUParticle3DBoxCollider() : 
+    PUParticle3DBaseCollider(),
     _width(DEFAULT_WIDTH),
     _height(DEFAULT_HEIGHT),
     _depth(DEFAULT_DEPTH),
@@ -50,55 +50,55 @@ Particle3DBoxCollider::Particle3DBoxCollider() :
 }
 
 
-Particle3DBoxCollider::~Particle3DBoxCollider()
+PUParticle3DBoxCollider::~PUParticle3DBoxCollider()
 {
 }
 //-----------------------------------------------------------------------
-const float Particle3DBoxCollider::getWidth() const
+const float PUParticle3DBoxCollider::getWidth() const
 {
     return _width;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::setWidth(const float width)
+void PUParticle3DBoxCollider::setWidth(const float width)
 {
     _width = width;
 }
 //-----------------------------------------------------------------------
-const float Particle3DBoxCollider::getHeight() const
+const float PUParticle3DBoxCollider::getHeight() const
 {
     return _height;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::setHeight(const float height)
+void PUParticle3DBoxCollider::setHeight(const float height)
 {
     _height = height;
 }
 //-----------------------------------------------------------------------
-const float Particle3DBoxCollider::getDepth() const
+const float PUParticle3DBoxCollider::getDepth() const
 {
     return _depth;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::setDepth(const float depth)
+void PUParticle3DBoxCollider::setDepth(const float depth)
 {
     _depth = depth;
 }
 //-----------------------------------------------------------------------
-bool Particle3DBoxCollider::isInnerCollision(void) const
+bool PUParticle3DBoxCollider::isInnerCollision(void) const
 {
     return _innerCollision;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::setInnerCollision(bool innerCollision)
+void PUParticle3DBoxCollider::setInnerCollision(bool innerCollision)
 {
     _innerCollision = innerCollision;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::calculateDirectionAfterCollision(Particle3D* particle)
+void PUParticle3DBoxCollider::calculateDirectionAfterCollision(PUParticle3D* particle)
 {
     switch (_collisionType)
     {
-        case Particle3DBaseCollider::CT_BOUNCE:
+        case PUParticle3DBaseCollider::CT_BOUNCE:
         {
             // Determine the nearest side and reverse the direction
             if (isSmallestValue (particle->position.x - _xmin, particle->position))
@@ -128,7 +128,7 @@ void Particle3DBoxCollider::calculateDirectionAfterCollision(Particle3D* particl
             particle->direction *= _bouncyness;
         }
         break;
-        case Particle3DBaseCollider::CT_FLOW:
+        case PUParticle3DBaseCollider::CT_FLOW:
         {
             if (isSmallestValue (particle->position.x - _xmin, particle->position))
             {		
@@ -162,7 +162,7 @@ void Particle3DBoxCollider::calculateDirectionAfterCollision(Particle3D* particl
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxCollider::calculateBounds ()
+void PUParticle3DBoxCollider::calculateBounds ()
 {
     float scaledWidth = _affectorScale.x * _width;
     float scaledHeight = _affectorScale.y * _height;
@@ -176,7 +176,7 @@ void Particle3DBoxCollider::calculateBounds ()
     _zmax = _derivedPosition.z + 0.5f * scaledDepth;
 }
 //-----------------------------------------------------------------------
-bool Particle3DBoxCollider::isSmallestValue(float value, const Vec3& particlePosition)
+bool PUParticle3DBoxCollider::isSmallestValue(float value, const Vec3& particlePosition)
 {
     float value1 = particlePosition.x - _xmin;
     float value2 = _xmax - particlePosition.x;
@@ -194,11 +194,11 @@ bool Particle3DBoxCollider::isSmallestValue(float value, const Vec3& particlePos
         value <= value6);
 }
 
-void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DBoxCollider::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
 
@@ -210,7 +210,7 @@ void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTim
         */
         switch(_intersectionType)
         {
-            case Particle3DBaseCollider::IT_POINT:
+            case PUParticle3DBaseCollider::IT_POINT:
             {
                 // Validate for a point-box intersection
                 if (_innerCollision != _box.containPoint(particle->position))
@@ -227,7 +227,7 @@ void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTim
             }
             break;
 
-            case Particle3DBaseCollider::IT_BOX:
+            case PUParticle3DBaseCollider::IT_BOX:
             {
                 AABB box;
                 populateAlignedBox(box,
@@ -264,13 +264,13 @@ void Particle3DBoxCollider::updateAffector( Particle3D *particle, float deltaTim
         {
             calculateDirectionAfterCollision(particle);
             calculateRotationSpeedAfterCollision(particle);
-            particle->addEventFlags(Particle3D::PEF_COLLIDED);
+            particle->addEventFlags(PUParticle3D::PEF_COLLIDED);
         }
     }
 
 }
 
-void Particle3DBoxCollider::preUpdateAffector( float deltaTime )
+void PUParticle3DBoxCollider::preUpdateAffector( float deltaTime )
 {
     // Calculate the affectors' center position in worldspace, set the box and calculate the bounds
     // Applied scaling in V 1.3.1.

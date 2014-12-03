@@ -30,6 +30,7 @@
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPointEmitter.h"
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DBoxEmitter.h"
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DCircleEmitter.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 
 void Particle3DTestScene::runThisTest()
@@ -117,26 +118,26 @@ bool Particle3DTestDemo::init()
 
 ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
-    auto ps = ParticleSystem3D::create();
+    auto ps = PUParticleSystem3D::create();
 
     //emitter
     {
-        auto ppe = Particle3DCircleEmitter::create();
+        auto ppe = PUParticle3DCircleEmitter::create();
         ppe->setParticleDirection(Vec3(0.0f, 1.0f, 0.0f));
 
         ppe->setRadius(20.0f);
         ppe->setNormal(Vec3(0.0f, 0.0f, 1.0f));
 
-        DynamicAttributeFixed *velocity = new DynamicAttributeFixed();
+        PUDynamicAttributeFixed *velocity = new PUDynamicAttributeFixed();
         velocity->setValue(10.0f);
         ppe->setDynVelocity(velocity);
-        DynamicAttributeFixed *alive = new DynamicAttributeFixed();
+        PUDynamicAttributeFixed *alive = new PUDynamicAttributeFixed();
         alive->setValue(3.0f);
         ppe->setDynTotalTimeToLive(alive);
-        DynamicAttributeFixed *dim = new DynamicAttributeFixed();
+        PUDynamicAttributeFixed *dim = new PUDynamicAttributeFixed();
         dim->setValue(2.0f);
         ppe->setDynParticleAllDimensions(dim);
-        DynamicAttributeFixed *rate = new DynamicAttributeFixed();
+        PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
         rate->setValue(30.0f);
         ppe->setDynEmissionRate(rate);
         ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -159,7 +160,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
     //auto pr = Particle3DModelRender::create(Sprite3D::create("Sprite3DTest/axe.c3b"));
     //ps->setRender(pr);
 
-    ps->startSystem();
+    ps->startParticle();
     //this->addChild(ps);
 
     ps->setCameraMask((unsigned short)CameraFlag::USER1);

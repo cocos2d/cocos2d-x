@@ -23,17 +23,17 @@
  ****************************************************************************/
 
 #include "CCParticle3DParticleFollower.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DParticleFollower::DEFAULT_MAX_DISTANCE = 3.40282e+038f;
-const float Particle3DParticleFollower::DEFAULT_MIN_DISTANCE = 10.0f;
+const float PUParticle3DParticleFollower::DEFAULT_MAX_DISTANCE = 3.40282e+038f;
+const float PUParticle3DParticleFollower::DEFAULT_MIN_DISTANCE = 10.0f;
 
 //-----------------------------------------------------------------------
-Particle3DParticleFollower::Particle3DParticleFollower(void) : 
-    Particle3DAffector(),
+PUParticle3DParticleFollower::PUParticle3DParticleFollower(void) : 
+    PUParticle3DAffector(),
     _minDistance(DEFAULT_MIN_DISTANCE),
     _maxDistance(DEFAULT_MAX_DISTANCE),
     _positionPreviousParticle(Vec3::ZERO),
@@ -41,37 +41,37 @@ Particle3DParticleFollower::Particle3DParticleFollower(void) :
 {
 }
 
-Particle3DParticleFollower::~Particle3DParticleFollower( void )
+PUParticle3DParticleFollower::~PUParticle3DParticleFollower( void )
 {
 
 }
 //-----------------------------------------------------------------------
-float Particle3DParticleFollower::getMaxDistance(void) const
+float PUParticle3DParticleFollower::getMaxDistance(void) const
 {
     return _maxDistance;
 }
 //-----------------------------------------------------------------------
-void Particle3DParticleFollower::setMaxDistance(float maxDistance)
+void PUParticle3DParticleFollower::setMaxDistance(float maxDistance)
 {
     _maxDistance = maxDistance;
 }
 //-----------------------------------------------------------------------
-float Particle3DParticleFollower::getMinDistance(void) const
+float PUParticle3DParticleFollower::getMinDistance(void) const
 {
     return _minDistance;
 }
 //-----------------------------------------------------------------------
-void Particle3DParticleFollower::setMinDistance(float minDistance)
+void PUParticle3DParticleFollower::setMinDistance(float minDistance)
 {
     _minDistance = minDistance;
 }
 
-void Particle3DParticleFollower::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DParticleFollower::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         if (!_first)
         {
             // Change in V 1.3.1
@@ -91,7 +91,7 @@ void Particle3DParticleFollower::updateAffector( Particle3D *particle, float del
     }
 }
 
-void Particle3DParticleFollower::firstParticleUpdate( Particle3D *particle, float deltaTime )
+void PUParticle3DParticleFollower::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
     _first = true;
 }

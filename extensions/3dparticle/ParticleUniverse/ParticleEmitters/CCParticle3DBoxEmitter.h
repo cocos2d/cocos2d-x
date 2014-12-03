@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_BOX_EMITTER_H__
-#define __CC_PARTICLE_3D_BOX_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_BOX_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_BOX_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  CC_DLL Particle3DBoxEmitter : public Particle3DEmitter
+class  CC_DLL PUParticle3DBoxEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
@@ -38,7 +38,7 @@ public:
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
 
-    static Particle3DBoxEmitter* create();
+    static PUParticle3DBoxEmitter* create();
 
     /** 
     */
@@ -56,14 +56,14 @@ public:
     void setDepth(const float depth);
 
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DBoxEmitter(void);
-    virtual ~Particle3DBoxEmitter(void) {};
+    PUParticle3DBoxEmitter(void);
+    virtual ~PUParticle3DBoxEmitter(void) {};
 
 protected:
 
     /** 
     */
-    virtual void initParticlePosition(Particle3D* particle) override;
+    virtual void initParticlePosition(PUParticle3D* particle) override;
 
 protected:
     float _height;

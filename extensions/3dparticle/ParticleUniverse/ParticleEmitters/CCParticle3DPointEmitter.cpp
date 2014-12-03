@@ -23,24 +23,24 @@
  ****************************************************************************/
 
 #include "CCParticle3DPointEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 
-    Particle3DPointEmitter::Particle3DPointEmitter( void )
+    PUParticle3DPointEmitter::PUParticle3DPointEmitter( void )
 {
 
 }
 
-Particle3DPointEmitter::~Particle3DPointEmitter( void )
+PUParticle3DPointEmitter::~PUParticle3DPointEmitter( void )
 {
 
 }
 
-Particle3DPointEmitter* Particle3DPointEmitter::create()
+PUParticle3DPointEmitter* PUParticle3DPointEmitter::create()
 {
-    auto pe = new Particle3DPointEmitter();
+    auto pe = new PUParticle3DPointEmitter();
     pe->autorelease();
     return pe;
 }

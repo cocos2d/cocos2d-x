@@ -23,18 +23,18 @@
  ****************************************************************************/
 
 #include "CCParticle3DBoxEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DBoxEmitter::DEFAULT_WIDTH = 100.0f;
-const float Particle3DBoxEmitter::DEFAULT_HEIGHT = 100.0f;
-const float Particle3DBoxEmitter::DEFAULT_DEPTH = 100.0f;
+const float PUParticle3DBoxEmitter::DEFAULT_WIDTH = 100.0f;
+const float PUParticle3DBoxEmitter::DEFAULT_HEIGHT = 100.0f;
+const float PUParticle3DBoxEmitter::DEFAULT_DEPTH = 100.0f;
 
 //-----------------------------------------------------------------------
-Particle3DBoxEmitter::Particle3DBoxEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DBoxEmitter::PUParticle3DBoxEmitter(void) : 
+    PUParticle3DEmitter(),
     _width(DEFAULT_WIDTH),
     _height(DEFAULT_HEIGHT),
     _depth(DEFAULT_DEPTH),
@@ -44,40 +44,40 @@ Particle3DBoxEmitter::Particle3DBoxEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-const float Particle3DBoxEmitter::getHeight(void) const
+const float PUParticle3DBoxEmitter::getHeight(void) const
 {
     return _height;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxEmitter::setHeight(const float height)
+void PUParticle3DBoxEmitter::setHeight(const float height)
 {
     _height = height;
     _yRange = 0.5f * height;
 }
 //-----------------------------------------------------------------------
-const float Particle3DBoxEmitter::getWidth(void) const
+const float PUParticle3DBoxEmitter::getWidth(void) const
 {
     return _width;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxEmitter::setWidth(const float width)
+void PUParticle3DBoxEmitter::setWidth(const float width)
 {
     _width = width;
     _xRange = 0.5f * width;
 }
 //-----------------------------------------------------------------------
-const float Particle3DBoxEmitter::getDepth(void) const
+const float PUParticle3DBoxEmitter::getDepth(void) const
 {
     return _depth;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxEmitter::setDepth(const float depth)
+void PUParticle3DBoxEmitter::setDepth(const float depth)
 {
     _depth = depth;
     _zRange = 0.5f * depth;
 }
 //-----------------------------------------------------------------------
-void Particle3DBoxEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DBoxEmitter::initParticlePosition(PUParticle3D* particle)
 {
     //ParticleSystem* sys = mParentTechnique->getParentSystem();
 
@@ -103,9 +103,9 @@ void Particle3DBoxEmitter::initParticlePosition(Particle3D* particle)
     particle->originalPosition = particle->position;
 }
 
-Particle3DBoxEmitter* Particle3DBoxEmitter::create()
+PUParticle3DBoxEmitter* PUParticle3DBoxEmitter::create()
 {
-    auto pe = new Particle3DBoxEmitter();
+    auto pe = new PUParticle3DBoxEmitter();
     pe->autorelease();
     return pe;
 }

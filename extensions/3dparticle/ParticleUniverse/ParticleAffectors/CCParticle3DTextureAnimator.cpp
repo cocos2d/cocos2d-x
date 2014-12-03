@@ -23,19 +23,19 @@
  ****************************************************************************/
 
 #include "CCParticle3DTextureAnimator.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DTextureAnimator::DEFAULT_TIME_STEP = 0.0f;
-const unsigned short Particle3DTextureAnimator::DEFAULT_TEXCOORDS_START = 0;
-const unsigned short Particle3DTextureAnimator::DEFAULT_TEXCOORDS_END = 0;
-const Particle3DTextureAnimator::TextureAnimationType Particle3DTextureAnimator::DEFAULT_ANIMATION_TYPE = Particle3DTextureAnimator::TAT_LOOP;
-const bool Particle3DTextureAnimator::DEFAULT_START_RANDOM = true;
+const float PUParticle3DTextureAnimator::DEFAULT_TIME_STEP = 0.0f;
+const unsigned short PUParticle3DTextureAnimator::DEFAULT_TEXCOORDS_START = 0;
+const unsigned short PUParticle3DTextureAnimator::DEFAULT_TEXCOORDS_END = 0;
+const PUParticle3DTextureAnimator::TextureAnimationType PUParticle3DTextureAnimator::DEFAULT_ANIMATION_TYPE = PUParticle3DTextureAnimator::TAT_LOOP;
+const bool PUParticle3DTextureAnimator::DEFAULT_START_RANDOM = true;
 
 //-----------------------------------------------------------------------
-Particle3DTextureAnimator::Particle3DTextureAnimator(void) : 
-    Particle3DAffector(),
+PUParticle3DTextureAnimator::PUParticle3DTextureAnimator(void) : 
+    PUParticle3DAffector(),
     _animationTimeStep(DEFAULT_TIME_STEP),
     _animationTimeStepSet(false),
     _nextIndex(false),
@@ -47,62 +47,62 @@ Particle3DTextureAnimator::Particle3DTextureAnimator(void) :
 {
 }
 //-----------------------------------------------------------------------
-Particle3DTextureAnimator::~Particle3DTextureAnimator(void)
+PUParticle3DTextureAnimator::~PUParticle3DTextureAnimator(void)
 {
 }
 //-----------------------------------------------------------------------
-float Particle3DTextureAnimator::getAnimationTimeStep(void) const
+float PUParticle3DTextureAnimator::getAnimationTimeStep(void) const
 {
     return _animationTimeStep;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::setAnimationTimeStep(float animationTimeStep)
+void PUParticle3DTextureAnimator::setAnimationTimeStep(float animationTimeStep)
 {
     _animationTimeStep = animationTimeStep;
     _animationTimeStepSet = true;
 }
 //-----------------------------------------------------------------------
-Particle3DTextureAnimator::TextureAnimationType Particle3DTextureAnimator::getTextureAnimationType(void) const
+PUParticle3DTextureAnimator::TextureAnimationType PUParticle3DTextureAnimator::getTextureAnimationType(void) const
 {
     return _textureAnimationType;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::setTextureAnimationType(Particle3DTextureAnimator::TextureAnimationType textureAnimationType)
+void PUParticle3DTextureAnimator::setTextureAnimationType(PUParticle3DTextureAnimator::TextureAnimationType textureAnimationType)
 {
     _textureAnimationType = textureAnimationType;
 }
 //-----------------------------------------------------------------------
-unsigned short Particle3DTextureAnimator::getTextureCoordsStart(void) const
+unsigned short PUParticle3DTextureAnimator::getTextureCoordsStart(void) const
 {
     return _textureCoordsStart;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::setTextureCoordsStart(unsigned short textureCoordsStart)
+void PUParticle3DTextureAnimator::setTextureCoordsStart(unsigned short textureCoordsStart)
 {
     _textureCoordsStart = textureCoordsStart;
 }
 //-----------------------------------------------------------------------
-unsigned short Particle3DTextureAnimator::getTextureCoordsEnd(void) const
+unsigned short PUParticle3DTextureAnimator::getTextureCoordsEnd(void) const
 {
     return _textureCoordsEnd;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::setTextureCoordsEnd(unsigned short textureCoordsEnd)
+void PUParticle3DTextureAnimator::setTextureCoordsEnd(unsigned short textureCoordsEnd)
 {
     _textureCoordsEnd = textureCoordsEnd;
 }
 //-----------------------------------------------------------------------
-bool Particle3DTextureAnimator::isStartRandom(void) const
+bool PUParticle3DTextureAnimator::isStartRandom(void) const
 {
     return _startRandom;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::setStartRandom(bool startRandom)
+void PUParticle3DTextureAnimator::setStartRandom(bool startRandom)
 {
     _startRandom = startRandom;
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::initParticleForEmission(Particle3D* particle)
+void PUParticle3DTextureAnimator::initParticleForEmission(PUParticle3D* particle)
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
@@ -145,7 +145,7 @@ void Particle3DTextureAnimator::initParticleForEmission(Particle3D* particle)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::preUpdateAffector(float deltaTime)
+void PUParticle3DTextureAnimator::preUpdateAffector(float deltaTime)
 {
     // Determine the next texture coords index (global)
     if (_animationTimeStepSet)
@@ -160,7 +160,7 @@ void Particle3DTextureAnimator::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-void Particle3DTextureAnimator::determineNextTextureCoords(Particle3D* visualParticle)
+void PUParticle3DTextureAnimator::determineNextTextureCoords(PUParticle3D* visualParticle)
 {
     switch(_textureAnimationType)
     {
@@ -217,7 +217,7 @@ void Particle3DTextureAnimator::determineNextTextureCoords(Particle3D* visualPar
     }
 }
 
-void Particle3DTextureAnimator::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DTextureAnimator::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
@@ -225,7 +225,7 @@ void Particle3DTextureAnimator::updateAffector( Particle3D *particle, float delt
 
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Determine the next texture coords index
         if (_animationTimeStepSet)
         {

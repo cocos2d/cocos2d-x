@@ -23,39 +23,39 @@
  ****************************************************************************/
 
 #include "CCParticle3DCollisionAvoidanceAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DCollisionAvoidanceAffector::DEFAULT_RADIUS = 100.0f;
+const float PUParticle3DCollisionAvoidanceAffector::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-Particle3DCollisionAvoidanceAffector::Particle3DCollisionAvoidanceAffector(void) : 
-    Particle3DAffector(),
+PUParticle3DCollisionAvoidanceAffector::PUParticle3DCollisionAvoidanceAffector(void) : 
+    PUParticle3DAffector(),
     _radius(DEFAULT_RADIUS)
 {
 }
-Particle3DCollisionAvoidanceAffector::~Particle3DCollisionAvoidanceAffector()
+PUParticle3DCollisionAvoidanceAffector::~PUParticle3DCollisionAvoidanceAffector()
 {
 
 }
 //-----------------------------------------------------------------------
-float Particle3DCollisionAvoidanceAffector::getRadius(void) const
+float PUParticle3DCollisionAvoidanceAffector::getRadius(void) const
 {
     return _radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DCollisionAvoidanceAffector::setRadius(float radius)
+void PUParticle3DCollisionAvoidanceAffector::setRadius(float radius)
 {
     _radius = radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DCollisionAvoidanceAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DCollisionAvoidanceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())
     //{
-    //	Particle3D *particle = iter;
+    //	PUParticle3D *particle = iter;
     //	// Activate spatial hashing
     //	particleTechnique->setSpatialHashingUsed(true);
 

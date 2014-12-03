@@ -23,19 +23,19 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_FORCE_FIELD_AFFECTOR_H__
-#define __CC_PARTICLE_3D_FORCE_FIELD_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_FORCE_FIELD_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_FORCE_FIELD_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DForceField.h"
 
 NS_CC_BEGIN
 
-class  Particle3DForceFieldAffector : public Particle3DAffector
+class  PUParticle3DForceFieldAffector : public PUParticle3DAffector
 {
 public:
     // Constants
-    static const ForceField::ForceFieldType DEFAULT_FORCEFIELD_TYPE;
+    static const PUForceField::ForceFieldType DEFAULT_FORCEFIELD_TYPE;
     static const float DEFAULT_DELTA;
     static const float DEFAULT_FORCE;
     static const unsigned short DEFAULT_OCTAVES;
@@ -47,18 +47,18 @@ public:
     static const Vec3 DEFAULT_MOVEMENT;
     static const float DEFAULT_MOVEMENT_FREQUENCY;
 
-    Particle3DForceFieldAffector();
-    ~Particle3DForceFieldAffector();
+    PUParticle3DForceFieldAffector();
+    ~PUParticle3DForceFieldAffector();
 
     virtual void notifyStart() override;
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     virtual void prepare() override;
 
     /** Get/Set Forcefield type
     */
-    const ForceField::ForceFieldType getForceFieldType(void) const;
-    void setForceFieldType(const ForceField::ForceFieldType forceFieldType);
+    const PUForceField::ForceFieldType getForceFieldType(void) const;
+    void setForceFieldType(const PUForceField::ForceFieldType forceFieldType);
 
     /** Get/Set Delta
     */
@@ -128,8 +128,8 @@ public:
 
 protected:
 
-    ForceField _forceField; // Local force field
-    ForceField::ForceFieldType _forceFieldType; // Type of force field
+    PUForceField _forceField; // Local force field
+    PUForceField::ForceFieldType _forceFieldType; // Type of force field
     float _delta; // Radius of particle position
     Vec3 _force; // Force value that is used to calculate the force and reused for all particles
     float _scaleForce; // Scaling factor used in calculation of the direction vector of the particle

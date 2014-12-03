@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_RANDOMISER_H__
-#define __CC_PARTICLE_3D_RANDOMISER_H__
+#ifndef __CC_PU_PARTICLE_3D_RANDOMISER_H__
+#define __CC_PU_PARTICLE_3D_RANDOMISER_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DRandomiser : public Particle3DAffector
+class  PUParticle3DRandomiser : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -39,11 +39,11 @@ public:
     static const float DEFAULT_TIME_STEP;
     static const bool DEFAULT_RANDOM_DIRECTION;
 
-    Particle3DRandomiser(void);
-    virtual ~Particle3DRandomiser(void);
+    PUParticle3DRandomiser(void);
+    virtual ~PUParticle3DRandomiser(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     virtual void postUpdateAffector(float deltaTime) override;
     /** 
     */

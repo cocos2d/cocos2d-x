@@ -23,18 +23,18 @@
  ****************************************************************************/
 
 #include "CCParticle3DLineEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const Vec3 Particle3DLineEmitter::DEFAULT_END(0, 0, 0);
-const float Particle3DLineEmitter::DEFAULT_MIN_INCREMENT = 0.0f;
-const float Particle3DLineEmitter::DEFAULT_MAX_INCREMENT = 0.0f;
-const float Particle3DLineEmitter::DEFAULT_MAX_DEVIATION = 0.0f;
+const Vec3 PUParticle3DLineEmitter::DEFAULT_END(0, 0, 0);
+const float PUParticle3DLineEmitter::DEFAULT_MIN_INCREMENT = 0.0f;
+const float PUParticle3DLineEmitter::DEFAULT_MAX_INCREMENT = 0.0f;
+const float PUParticle3DLineEmitter::DEFAULT_MAX_DEVIATION = 0.0f;
 
 //-----------------------------------------------------------------------
-Particle3DLineEmitter::Particle3DLineEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DLineEmitter::PUParticle3DLineEmitter(void) : 
+    PUParticle3DEmitter(),
     _end(DEFAULT_END),
     _perpendicular(Vec3::ZERO),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
@@ -52,19 +52,19 @@ Particle3DLineEmitter::Particle3DLineEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::notifyStart (void)
+void PUParticle3DLineEmitter::notifyStart (void)
 {
     // Reset the incremental attributes to allow a restart.
-    Particle3DEmitter::notifyStart();
+    PUParticle3DEmitter::notifyStart();
     _increment = 0.0f;
     _incrementsLeft = true;
     _first = true;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::notifyRescaled(const Vec3& scale)
+void PUParticle3DLineEmitter::notifyRescaled(const Vec3& scale)
 {
     // Scale the internal attributes and use them, otherwise this results in too many calculations per particle
-    Particle3DEmitter::notifyRescaled(scale);
+    PUParticle3DEmitter::notifyRescaled(scale);
     float scaleLength = scale.length();
     _scaledEnd = Vec3(_end.x * scale.x, _end.y * scale.y, _end.z * scale.z);
     _scaledMaxDeviation = _maxDeviation * scaleLength;
@@ -73,9 +73,9 @@ void Particle3DLineEmitter::notifyRescaled(const Vec3& scale)
     _scaledLength = _scaledEnd.length();
 }
 //-----------------------------------------------------------------------
-unsigned short Particle3DLineEmitter::calculateRequestedParticles(float timeElapsed)
+unsigned short PUParticle3DLineEmitter::calculateRequestedParticles(float timeElapsed)
 {
-    unsigned short requested = Particle3DEmitter::calculateRequestedParticles(timeElapsed);
+    unsigned short requested = PUParticle3DEmitter::calculateRequestedParticles(timeElapsed);
 
     if (_scaledMaxIncrement > 0)
     {
@@ -98,52 +98,52 @@ unsigned short Particle3DLineEmitter::calculateRequestedParticles(float timeElap
     return requested;
 }
 //-----------------------------------------------------------------------
-const Vec3& Particle3DLineEmitter::getEnd(void) const
+const Vec3& PUParticle3DLineEmitter::getEnd(void) const
 {
     return _end;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::setEnd(const Vec3& end)
+void PUParticle3DLineEmitter::setEnd(const Vec3& end)
 {
     _end = end;
     _scaledEnd = Vec3(_end.x * _emitterScale.x, _end.y * _emitterScale.y, _end.z * _emitterScale.z);
     _length = _end.length();
 }
 //-----------------------------------------------------------------------
-float Particle3DLineEmitter::getMaxIncrement(void) const
+float PUParticle3DLineEmitter::getMaxIncrement(void) const
 {
     return _maxIncrement;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::setMaxIncrement(float maxIncrement)
+void PUParticle3DLineEmitter::setMaxIncrement(float maxIncrement)
 {
     _maxIncrement = maxIncrement;
     _scaledMaxIncrement = _maxIncrement * _emitterScale.length();
 }
 //-----------------------------------------------------------------------
-float Particle3DLineEmitter::getMinIncrement(void) const
+float PUParticle3DLineEmitter::getMinIncrement(void) const
 {
     return _minIncrement;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::setMinIncrement(float minIncrement)
+void PUParticle3DLineEmitter::setMinIncrement(float minIncrement)
 {
     _minIncrement = minIncrement;
     _scaledMinIncrement = _minIncrement * _emitterScale.length();
 }
 //-----------------------------------------------------------------------
-float Particle3DLineEmitter::getMaxDeviation(void) const
+float PUParticle3DLineEmitter::getMaxDeviation(void) const
 {
     return _maxDeviation;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::setMaxDeviation(float maxDeviation)
+void PUParticle3DLineEmitter::setMaxDeviation(float maxDeviation)
 {
     _maxDeviation = maxDeviation;
     _scaledMaxDeviation = _maxDeviation * _emitterScale.length();
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DLineEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Remark: Don´t take the orientation of the node into account. The mEnd position is leading.
     if (_autoDirection || (_scaledMaxDeviation > 0.0f && !_first))
@@ -200,7 +200,7 @@ void Particle3DLineEmitter::initParticlePosition(Particle3D* particle)
     _first = false;
 }
 //-----------------------------------------------------------------------
-void Particle3DLineEmitter::initParticleDirection(Particle3D* particle)
+void PUParticle3DLineEmitter::initParticleDirection(PUParticle3D* particle)
 {
     if (_autoDirection)
     {
@@ -221,13 +221,13 @@ void Particle3DLineEmitter::initParticleDirection(Particle3D* particle)
     else
     {
         // Use the standard way
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 
-Particle3DLineEmitter* Particle3DLineEmitter::create()
+PUParticle3DLineEmitter* PUParticle3DLineEmitter::create()
 {
-    auto pe = new Particle3DLineEmitter();
+    auto pe = new PUParticle3DLineEmitter();
     pe->autorelease();
     return pe;
 }

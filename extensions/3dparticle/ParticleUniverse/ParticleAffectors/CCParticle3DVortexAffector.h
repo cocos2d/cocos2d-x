@@ -23,27 +23,27 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_VORTEX_AFFECTOR_H__
-#define __CC_PARTICLE_3D_VORTEX_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_VORTEX_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_VORTEX_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DVortexAffector : public Particle3DAffector
+class  PUParticle3DVortexAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const Vec3 DEFAULT_ROTATION_VECTOR;
     static const float DEFAULT_ROTATION_SPEED;
         
-    Particle3DVortexAffector(void);
-    virtual ~Particle3DVortexAffector(void);
+    PUParticle3DVortexAffector(void);
+    virtual ~PUParticle3DVortexAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** 
     */
     const Vec3& getRotationVector(void) const;
@@ -54,11 +54,11 @@ public:
 
     /** 
     */
-    DynamicAttribute* getRotationSpeed(void) const;
+    PUDynamicAttribute* getRotationSpeed(void) const;
 
     /** 
     */
-    void setRotationSpeed(DynamicAttribute* dynRotationSpeed);
+    void setRotationSpeed(PUDynamicAttribute* dynRotationSpeed);
 
 protected:
 
@@ -69,8 +69,8 @@ protected:
 protected:
     Vec3 _rotationVector;
     Quaternion _rotation;
-    DynamicAttribute* _dynRotationSpeed;
-    DynamicAttributeHelper _dynamicAttributeHelper;
+    PUDynamicAttribute* _dynRotationSpeed;
+    PUDynamicAttributeHelper _dynamicAttributeHelper;
 };
 NS_CC_END
 

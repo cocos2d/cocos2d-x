@@ -23,25 +23,25 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_GRAVITY_AFFECTOR_H__
-#define __CC_PARTICLE_3D_GRAVITY_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_GRAVITY_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_GRAVITY_AFFECTOR_H__
 
-#include "3dparticle/CCParticle3DAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DGravityAffector : public Particle3DAffector
+class  PUParticle3DGravityAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_GRAVITY;
             
-    Particle3DGravityAffector(void);
-    virtual ~Particle3DGravityAffector(void);
+    PUParticle3DGravityAffector(void);
+    virtual ~PUParticle3DGravityAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** 
     */

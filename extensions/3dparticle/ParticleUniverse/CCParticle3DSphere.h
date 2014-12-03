@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_SPHERE_H__
-#define __CC_PARTICLE_3D_SPHERE_H__
+#ifndef __CC_PU_PARTICLE_3D_SPHERE_H__
+#define __CC_PU_PARTICLE_3D_SPHERE_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
@@ -37,19 +37,19 @@ NS_CC_BEGIN
     x^2 + y^2 + z^2 = r^2 (for sphere's centered on the origin). Ogre stores spheres
     simply as a center point and a radius.
 */
-class Sphere
+class PUSphere
 {
 protected:
     float _radius;
     Vec3 _center;
 public:
     /** Standard constructor - creates a unit sphere around the origin.*/
-    Sphere() : _radius(1.0), _center(Vec3::ZERO) {}
+    PUSphere() : _radius(1.0), _center(Vec3::ZERO) {}
     /** Constructor allowing arbitrary spheres. 
         @param center The center point of the sphere.
         @param radius The radius of the sphere.
     */
-    Sphere(const Vec3& center, float radius)
+    PUSphere(const Vec3& center, float radius)
         : _radius(radius), _center(center) {}
 
     /** Returns the radius of the sphere. */
@@ -65,7 +65,7 @@ public:
     void setCenter(const Vec3& center) { _center = center; }
 
     /** Returns whether or not this sphere intersects another sphere. */
-    bool intersects(const Sphere& s) const
+    bool intersects(const PUSphere& s) const
     {
         return (s._center - _center).lengthSquared() <= (s._radius + _radius) * (s._radius + _radius);
     }
@@ -85,7 +85,7 @@ public:
         return ((v - _center).lengthSquared() <= _radius * _radius);
     }
     /** Merges another Sphere into the current sphere */
-    void merge(const Sphere& oth)
+    void merge(const PUSphere& oth)
     {
         Vec3 diff =  oth.getCenter() - _center;
         float lengthSq = diff.lengthSquared();

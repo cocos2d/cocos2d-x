@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_DYNAMIC_ATTRIBUTE_H__
-#define __CC_PARTICLE_3D_DYNAMIC_ATTRIBUTE_H__
+#ifndef __CC_PU_PARTICLE_3D_DYNAMIC_ATTRIBUTE_H__
+#define __CC_PU_PARTICLE_3D_DYNAMIC_ATTRIBUTE_H__
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
@@ -32,7 +32,7 @@
 
 NS_CC_BEGIN
 
-enum InterpolationType
+enum PUInterpolationType
 {
     IT_LINEAR,
     IT_SPLINE
@@ -40,7 +40,7 @@ enum InterpolationType
 
 /** Comparer used for sorting vector in ascending order
 */
-struct ControlPointSorter
+struct PUControlPointSorter
 {
     inline bool operator() (const Vec2& a, const Vec2& b)
     {
@@ -58,7 +58,7 @@ struct ControlPointSorter
     but where implementation of this behaviour may not be scattered or duplicated within the application that needs 
     it.
 */
-class CC_DLL DynamicAttribute : Ref
+class CC_DLL PUDynamicAttribute : Ref
 {
     public:
         enum DynamicAttributeType
@@ -71,11 +71,11 @@ class CC_DLL DynamicAttribute : Ref
 
         /** Constructor
         */
-        DynamicAttribute (void);
+        PUDynamicAttribute (void);
 
         /** Destructor
         */
-        virtual ~DynamicAttribute (void);
+        virtual ~PUDynamicAttribute (void);
 
         /** Virtual function that needs to be implemented by its childs.
         */
@@ -104,20 +104,20 @@ class CC_DLL DynamicAttribute : Ref
     Although use of a regular attribute within the class that needs it is preferred, its benefit is that it makes
     use of the generic 'getValue' mechanism of a DynamicAttribute.
 */
-class CC_DLL DynamicAttributeFixed : public DynamicAttribute
+class CC_DLL PUDynamicAttributeFixed : public PUDynamicAttribute
 {
     public:
         /** Constructor
         */
-        DynamicAttributeFixed (void);
+        PUDynamicAttributeFixed (void);
 
         /** Copy constructor
         */
-        DynamicAttributeFixed (const DynamicAttributeFixed& dynamicAttributeFixed);
+        PUDynamicAttributeFixed (const PUDynamicAttributeFixed& dynamicAttributeFixed);
 
         /** Destructor
         */
-        ~DynamicAttributeFixed (void);
+        ~PUDynamicAttributeFixed (void);
 
         /** Todo
         */
@@ -133,20 +133,20 @@ class CC_DLL DynamicAttributeFixed : public DynamicAttribute
 
 /* This class generates random values within a given minimum and maximum interval.
 */
-class CC_DLL DynamicAttributeRandom : public DynamicAttribute
+class CC_DLL PUDynamicAttributeRandom : public PUDynamicAttribute
 {
     public:
         /** Constructor
         */
-        DynamicAttributeRandom (void);
+        PUDynamicAttributeRandom (void);
 
         /** Copy constructor
         */
-        DynamicAttributeRandom (const DynamicAttributeRandom& dynamicAttributeRandom);
+        PUDynamicAttributeRandom (const PUDynamicAttributeRandom& dynamicAttributeRandom);
 
         /** Destructor
         */
-        ~DynamicAttributeRandom (void);
+        ~PUDynamicAttributeRandom (void);
 
         /** Todo
         */
@@ -170,28 +170,28 @@ protected:
     on these control points. Interpolation is done in different flavours. linear?provides linear interpolation
     of a value on the curve, while spline?generates a smooth curve and the returns a value that lies on that curve.
 */
-class CC_DLL DynamicAttributeCurved : public DynamicAttribute
+class CC_DLL PUDynamicAttributeCurved : public PUDynamicAttribute
 {
     public:
         typedef std::vector<Vec2> ControlPointList;
 
         /** Constructor
         */
-        DynamicAttributeCurved (void);
-        DynamicAttributeCurved (InterpolationType interpolationType);
+        PUDynamicAttributeCurved (void);
+        PUDynamicAttributeCurved (PUInterpolationType interpolationType);
 
         /** Copy constructor
         */
-        DynamicAttributeCurved (const DynamicAttributeCurved& dynamicAttributeCurved);
+        PUDynamicAttributeCurved (const PUDynamicAttributeCurved& dynamicAttributeCurved);
 
         /** Destructor
         */
-        ~DynamicAttributeCurved (void);
+        ~PUDynamicAttributeCurved (void);
 
         /** Get and set the curve type
         */
-        void setInterpolationType (InterpolationType interpolationType);
-        InterpolationType getInterpolationType (void) const;
+        void setInterpolationType (PUInterpolationType interpolationType);
+        PUInterpolationType getInterpolationType (void) const;
 
         /** Todo
         */
@@ -225,11 +225,11 @@ class CC_DLL DynamicAttributeCurved : public DynamicAttribute
 
         /** Todo
         */
-        SimpleSpline _spline;
+        PUSimpleSpline _spline;
 
         /** Todo
         */
-        InterpolationType _interpolationType;
+        PUInterpolationType _interpolationType;
 
         /** Todo
         */
@@ -247,7 +247,7 @@ class CC_DLL DynamicAttributeCurved : public DynamicAttribute
 
 /* This class generates values based on an oscillating functione (i.e. Sine).
 */
-class CC_DLL DynamicAttributeOscillate : public DynamicAttribute
+class CC_DLL PUDynamicAttributeOscillate : public PUDynamicAttribute
 {
     public:
         enum OscillationType
@@ -258,15 +258,15 @@ class CC_DLL DynamicAttributeOscillate : public DynamicAttribute
 
         /** Constructor
         */
-        DynamicAttributeOscillate (void);
+        PUDynamicAttributeOscillate (void);
 
         /** Copy constructor
         */
-        DynamicAttributeOscillate (const DynamicAttributeOscillate& dynamicAttributeOscillate);
+        PUDynamicAttributeOscillate (const PUDynamicAttributeOscillate& dynamicAttributeOscillate);
 
         /** Destructor
         */
-        ~DynamicAttributeOscillate (void);
+        ~PUDynamicAttributeOscillate (void);
 
         /** Todo
         */
@@ -307,12 +307,12 @@ class CC_DLL DynamicAttributeOscillate : public DynamicAttribute
 
 /* Helper class to do some generic calculation.
 */
-class DynamicAttributeHelper
+class PUDynamicAttributeHelper
 {
     public:
         /* Return the value of a DynamicAttribute, given te x value.
         */
-        float calculate(DynamicAttribute* dyn, float x, float defaultValue = 0.0f);
+        float calculate(PUDynamicAttribute* dyn, float x, float defaultValue = 0.0f);
 };
 NS_CC_END
 

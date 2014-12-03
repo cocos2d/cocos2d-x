@@ -23,12 +23,12 @@
  ****************************************************************************/
 
 #include "CCParticle3DSlaveEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
-Particle3DSlaveEmitter::Particle3DSlaveEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DSlaveEmitter::PUParticle3DSlaveEmitter(void) : 
+    PUParticle3DEmitter(),
     //TechniqueListener(),
     _masterParticle(0),
     _masterTechniqueName(),
@@ -39,28 +39,28 @@ Particle3DSlaveEmitter::Particle3DSlaveEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-const std::string& Particle3DSlaveEmitter::getMasterTechniqueName(void) const
+const std::string& PUParticle3DSlaveEmitter::getMasterTechniqueName(void) const
 {
     return _masterTechniqueName;
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::setMasterTechniqueName(const std::string& masterTechniqueName)
+void PUParticle3DSlaveEmitter::setMasterTechniqueName(const std::string& masterTechniqueName)
 {
     _masterTechniqueName = masterTechniqueName;
 }
 //-----------------------------------------------------------------------
-const std::string& Particle3DSlaveEmitter::getMasterEmitterName(void) const
+const std::string& PUParticle3DSlaveEmitter::getMasterEmitterName(void) const
 {
     return _masterEmitterName;
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::setMasterEmitterName(const std::string& masterEmitterName)
+void PUParticle3DSlaveEmitter::setMasterEmitterName(const std::string& masterEmitterName)
 {
     _masterEmitterName = masterEmitterName;
     _masterEmitterNameSet = true;
 }
 ////-----------------------------------------------------------------------
-//void Particle3DSlaveEmitter::particleEmitted(ParticleTechnique* particleTechnique, Particle3D* particle)
+//void Particle3DSlaveEmitter::particleEmitted(ParticleTechnique* particleTechnique, PUParticle3D* particle)
 //{
 //	if (_masterEmitterNameSet && _masterEmitterName != particle->parentEmitter->getName())
 //	{
@@ -80,14 +80,14 @@ void Particle3DSlaveEmitter::setMasterEmitterName(const std::string& masterEmitt
 //	mEnabled = false;
 //}
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DSlaveEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Remark: Don't take the orientation of the node into account, because the position of the master particle is leading.
     particle->position = _masterPosition;
     particle->originalPosition = particle->position;
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::initParticleDirection(Particle3D* particle)
+void PUParticle3DSlaveEmitter::initParticleDirection(PUParticle3D* particle)
 {
     particle->direction = _masterDirection;
     particle->originalDirection = particle->direction;
@@ -101,7 +101,7 @@ void Particle3DSlaveEmitter::initParticleDirection(Particle3D* particle)
     //}
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::prepare()
+void PUParticle3DSlaveEmitter::prepare()
 {
     //ParticleSystem* system = particleTechnique->getParentSystem();
     //if (system)
@@ -115,7 +115,7 @@ void Particle3DSlaveEmitter::prepare()
     //}
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::unPrepare()
+void PUParticle3DSlaveEmitter::unPrepare()
 {
     //ParticleSystem* system = particleTechnique->getParentSystem();
     //if (system)
@@ -128,15 +128,15 @@ void Particle3DSlaveEmitter::unPrepare()
     //}
 }
 //-----------------------------------------------------------------------
-void Particle3DSlaveEmitter::notifyStart (void)
+void PUParticle3DSlaveEmitter::notifyStart (void)
 {
-    Particle3DEmitter::notifyStart();
+    PUParticle3DEmitter::notifyStart();
     setEnabled(false);
 }
 
-Particle3DSlaveEmitter* Particle3DSlaveEmitter::create()
+PUParticle3DSlaveEmitter* PUParticle3DSlaveEmitter::create()
 {
-    auto pe = new Particle3DSlaveEmitter();
+    auto pe = new PUParticle3DSlaveEmitter();
     pe->autorelease();
     return pe;
 }

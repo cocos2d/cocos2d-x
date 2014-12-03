@@ -23,22 +23,22 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
 
 #include "CCParticle3DBaseForceAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-class  Particle3DLinearForceAffector : public Particle3DBaseForceAffector
+class  PUParticle3DLinearForceAffector : public PUParticle3DBaseForceAffector
 {
 public:
-    Particle3DLinearForceAffector(void);
-    virtual ~Particle3DLinearForceAffector(void);
+    PUParticle3DLinearForceAffector(void);
+    virtual ~PUParticle3DLinearForceAffector(void);
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(Particle3D *particle, float deltaTime) override;
+    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 };
 NS_CC_END
 

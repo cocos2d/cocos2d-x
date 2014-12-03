@@ -23,37 +23,37 @@
  ****************************************************************************/
 
 #include "CCParticle3DPathFollower.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
-Particle3DPathFollower::Particle3DPathFollower( void )
+PUParticle3DPathFollower::PUParticle3DPathFollower( void )
 {
 
 }
 
-Particle3DPathFollower::~Particle3DPathFollower( void )
+PUParticle3DPathFollower::~PUParticle3DPathFollower( void )
 {
 
 }
 
 //-----------------------------------------------------------------------
-void Particle3DPathFollower::addPoint(const Vec3& point)
+void PUParticle3DPathFollower::addPoint(const Vec3& point)
 {
     _spline.addPoint(point);
 }
 //-----------------------------------------------------------------------
-void Particle3DPathFollower::clearPoints (void)
+void PUParticle3DPathFollower::clearPoints (void)
 {
     _spline.clear();
 }
 //-----------------------------------------------------------------------
 
-void Particle3DPathFollower::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DPathFollower::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         if (_spline.getNumPoints() > 0)
         {
             // PU 1.4

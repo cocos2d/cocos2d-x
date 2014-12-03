@@ -23,14 +23,15 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_LINE_EMITTER_H__
-#define __CC_PARTICLE_3D_LINE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_LINE_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_LINE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
-struct Particle3D;
-class  CC_DLL Particle3DLineEmitter : public Particle3DEmitter
+
+struct PUParticle3D;
+class  CC_DLL PUParticle3DLineEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
@@ -39,7 +40,7 @@ public:
     static const float DEFAULT_MAX_INCREMENT;
     static const float DEFAULT_MAX_DEVIATION;
 
-    static Particle3DLineEmitter* create();
+    static PUParticle3DLineEmitter* create();
     /** 
     */
     virtual void notifyStart (void);
@@ -79,15 +80,15 @@ public:
 
     /** 
     */
-    virtual void initParticlePosition(Particle3D* particle);
+    virtual void initParticlePosition(PUParticle3D* particle);
 
     /** 
     */
-    virtual void initParticleDirection(Particle3D* particle);
+    virtual void initParticleDirection(PUParticle3D* particle);
 
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DLineEmitter(void);
-    virtual ~Particle3DLineEmitter(void) {};
+    PUParticle3DLineEmitter(void);
+    virtual ~PUParticle3DLineEmitter(void) {};
 
 protected:
 

@@ -26,59 +26,59 @@
 
 NS_CC_BEGIN
 
-const Vec3 ForceFieldCalculationFactory::DEFAULT_WORLDSIZE = Vec3(500.0f, 500.0f, 500.0f);
+const Vec3 PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE = Vec3(500.0f, 500.0f, 500.0f);
 
 //-----------------------------------------------------------------------
-unsigned short ForceFieldCalculationFactory::getOctaves(void) const
+unsigned short PUForceFieldCalculationFactory::getOctaves(void) const
 {
     return _octaves;
 }
 //-----------------------------------------------------------------------
-void ForceFieldCalculationFactory::setOctaves(unsigned short octaves)
+void PUForceFieldCalculationFactory::setOctaves(unsigned short octaves)
 {
     _octaves = octaves;
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-double ForceFieldCalculationFactory::getFrequency(void) const
+double PUForceFieldCalculationFactory::getFrequency(void) const
 {
     return _frequency;
 }
 //-----------------------------------------------------------------------
-void ForceFieldCalculationFactory::setFrequency(double frequency)
+void PUForceFieldCalculationFactory::setFrequency(double frequency)
 {
     _frequency = frequency;
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-double ForceFieldCalculationFactory::getAmplitude(void) const
+double PUForceFieldCalculationFactory::getAmplitude(void) const
 {
     return _amplitude;
 }
 //-----------------------------------------------------------------------
-void ForceFieldCalculationFactory::setAmplitude(double amplitude)
+void PUForceFieldCalculationFactory::setAmplitude(double amplitude)
 {
     _amplitude = amplitude;
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-double ForceFieldCalculationFactory::getPersistence(void) const
+double PUForceFieldCalculationFactory::getPersistence(void) const
 {
     return _persistence;
 }
 //-----------------------------------------------------------------------
-void ForceFieldCalculationFactory::setPersistence(double persistence)
+void PUForceFieldCalculationFactory::setPersistence(double persistence)
 {
     _persistence = persistence;
     generate(getForceFieldSize(), _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-unsigned int ForceFieldCalculationFactory::getForceFieldSize(void) const
+unsigned int PUForceFieldCalculationFactory::getForceFieldSize(void) const
 {
     return 1; // Return default cubic size
 }
 //-----------------------------------------------------------------------
-void ForceFieldCalculationFactory::setForceFieldSize(unsigned int forceFieldSize)
+void PUForceFieldCalculationFactory::setForceFieldSize(unsigned int forceFieldSize)
 {
     // The forcefield cannot be zero
     if (forceFieldSize == 0)
@@ -87,12 +87,12 @@ void ForceFieldCalculationFactory::setForceFieldSize(unsigned int forceFieldSize
     generate(forceFieldSize, _octaves, _frequency, _amplitude, _persistence, _worldSize);
 }
 //-----------------------------------------------------------------------
-Vec3 ForceFieldCalculationFactory::getWorldSize(void) const
+Vec3 PUForceFieldCalculationFactory::getWorldSize(void) const
 {
     return _worldSize;
 }
 //-----------------------------------------------------------------------
-void ForceFieldCalculationFactory::setWorldSize(const Vec3& worldSize)
+void PUForceFieldCalculationFactory::setWorldSize(const Vec3& worldSize)
 {
     // The worldsize cannot be zero
     if (worldSize == Vec3::ZERO)
@@ -104,7 +104,7 @@ void ForceFieldCalculationFactory::setWorldSize(const Vec3& worldSize)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-void RealTimeForceFieldCalculationFactory::generate(unsigned int forceFieldSize, 
+void PURealTimeForceFieldCalculationFactory::generate(unsigned int forceFieldSize, 
                                                     unsigned short octaves, 
                                                     double frequency, 
                                                     double amplitude, 
@@ -126,7 +126,7 @@ void RealTimeForceFieldCalculationFactory::generate(unsigned int forceFieldSize,
     }
 }
 //-----------------------------------------------------------------------
-void RealTimeForceFieldCalculationFactory::determineForce(const Vec3& position, Vec3& force, float delta)
+void PURealTimeForceFieldCalculationFactory::determineForce(const Vec3& position, Vec3& force, float delta)
 {
     _mappedPosition.x = _mapScale.x * position.x;
     _mappedPosition.y = _mapScale.y * position.y;
@@ -318,7 +318,7 @@ void RealTimeForceFieldCalculationFactory::determineForce(const Vec3& position, 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ForceField::ForceField(void) :
+PUForceField::PUForceField(void) :
     _forceFieldCalculationFactory(0),
     _forceFieldPositionBase(Vec3::ZERO),
     _forceFieldType(FF_REALTIME_CALC),
@@ -327,11 +327,11 @@ ForceField::ForceField(void) :
     _amplitude(1.0f),
     _persistence(1.0f),
     _forceFieldSize(64),
-    _worldSize(ForceFieldCalculationFactory::DEFAULT_WORLDSIZE)
+    _worldSize(PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE)
 {
 }
 //-----------------------------------------------------------------------
-ForceField::~ForceField(void)
+PUForceField::~PUForceField(void)
 {
     if (_forceFieldCalculationFactory)
     {
@@ -339,7 +339,7 @@ ForceField::~ForceField(void)
     }
 }
 //-----------------------------------------------------------------------
-void ForceField::initialise(ForceFieldType type,
+void PUForceField::initialise(ForceFieldType type,
                             const Vec3& position,
                             unsigned int forceFieldSize, 
                             unsigned short octaves, 
@@ -359,7 +359,7 @@ void ForceField::initialise(ForceFieldType type,
     _forceFieldPositionBase.z -= 0.5f * worldSize.z;
 }
 //-----------------------------------------------------------------------
-void ForceField::initialise(ForceFieldType type,
+void PUForceField::initialise(ForceFieldType type,
                             unsigned int forceFieldSize, 
                             unsigned short octaves, 
                             double frequency, 
@@ -374,17 +374,17 @@ void ForceField::initialise(ForceFieldType type,
     _forceFieldCalculationFactory->generate(forceFieldSize, octaves, frequency, amplitude, persistence, worldSize);
 }
 //-----------------------------------------------------------------------
-const Vec3& ForceField::getForceFieldPositionBase(void) const
+const Vec3& PUForceField::getForceFieldPositionBase(void) const
 {
     return _forceFieldPositionBase;
 }
 //-----------------------------------------------------------------------
-void ForceField::setForceFieldPositionBase(const Vec3& position)
+void PUForceField::setForceFieldPositionBase(const Vec3& position)
 {
     _forceFieldPositionBase = position;
 }
 //-----------------------------------------------------------------------
-void ForceField::determineForce(const Vec3& position, Vec3& force, float delta)
+void PUForceField::determineForce(const Vec3& position, Vec3& force, float delta)
 {
     force.x = 0.0f;
     force.y = 0.0f;
@@ -396,12 +396,12 @@ void ForceField::determineForce(const Vec3& position, Vec3& force, float delta)
     }
 }
 //-----------------------------------------------------------------------
-ForceFieldCalculationFactory* ForceField::getForceFieldCalculationFactory() const
+PUForceFieldCalculationFactory* PUForceField::getForceFieldCalculationFactory() const
 {
     return _forceFieldCalculationFactory;
 }
 //-----------------------------------------------------------------------
-void ForceField::setForceFieldCalculationFactory(ForceFieldCalculationFactory* forceFieldCalculationFactory)
+void PUForceField::setForceFieldCalculationFactory(PUForceFieldCalculationFactory* forceFieldCalculationFactory)
 {
     if (_forceFieldCalculationFactory)
     {
@@ -410,7 +410,7 @@ void ForceField::setForceFieldCalculationFactory(ForceFieldCalculationFactory* f
     _forceFieldCalculationFactory = forceFieldCalculationFactory;
 }
 //-----------------------------------------------------------------------
-ForceFieldCalculationFactory* ForceField::createForceFieldCalculationFactory(ForceFieldType type)
+PUForceFieldCalculationFactory* PUForceField::createForceFieldCalculationFactory(ForceFieldType type)
 {
     _forceFieldType = type;
     if (type == FF_MATRIX_CALC)
@@ -422,17 +422,17 @@ ForceFieldCalculationFactory* ForceField::createForceFieldCalculationFactory(For
     else
     {
         // Use realtime calculation
-        setForceFieldCalculationFactory(new RealTimeForceFieldCalculationFactory());
+        setForceFieldCalculationFactory(new PURealTimeForceFieldCalculationFactory());
         return getForceFieldCalculationFactory();
     }
 }
 //-----------------------------------------------------------------------
-const ForceField::ForceFieldType ForceField::getForceFieldType(void) const
+const PUForceField::ForceFieldType PUForceField::getForceFieldType(void) const
 {
     return _forceFieldType;
 }
 //-----------------------------------------------------------------------
-void ForceField::setForceFieldType(const ForceField::ForceFieldType forceFieldType)
+void PUForceField::setForceFieldType(const PUForceField::ForceFieldType forceFieldType)
 {
     _forceFieldType = forceFieldType;
     if (_forceFieldCalculationFactory)
@@ -441,12 +441,12 @@ void ForceField::setForceFieldType(const ForceField::ForceFieldType forceFieldTy
     }
 }
 //-----------------------------------------------------------------------
-unsigned short ForceField::getOctaves(void) const
+unsigned short PUForceField::getOctaves(void) const
 {
     return _octaves;
 }
 //-----------------------------------------------------------------------
-void ForceField::setOctaves(unsigned short octaves)
+void PUForceField::setOctaves(unsigned short octaves)
 {
     _octaves = octaves;
     if (_forceFieldCalculationFactory)
@@ -455,12 +455,12 @@ void ForceField::setOctaves(unsigned short octaves)
     }
 }
 //-----------------------------------------------------------------------
-double ForceField::getFrequency(void) const
+double PUForceField::getFrequency(void) const
 {
     return _frequency;
 }
 //-----------------------------------------------------------------------
-void ForceField::setFrequency(double frequency)
+void PUForceField::setFrequency(double frequency)
 {
     _frequency = frequency;
     if (_forceFieldCalculationFactory)
@@ -469,12 +469,12 @@ void ForceField::setFrequency(double frequency)
     }
 }
 //-----------------------------------------------------------------------
-double ForceField::getAmplitude(void) const
+double PUForceField::getAmplitude(void) const
 {
     return _amplitude;
 }
 //-----------------------------------------------------------------------
-void ForceField::setAmplitude(double amplitude)
+void PUForceField::setAmplitude(double amplitude)
 {
     _amplitude = amplitude;
     if (_forceFieldCalculationFactory)
@@ -483,12 +483,12 @@ void ForceField::setAmplitude(double amplitude)
     }
 }
 //-----------------------------------------------------------------------
-double ForceField::getPersistence(void) const
+double PUForceField::getPersistence(void) const
 {
     return _persistence;
 }
 //-----------------------------------------------------------------------
-void ForceField::setPersistence(double persistence)
+void PUForceField::setPersistence(double persistence)
 {
     _persistence = persistence;
     if (_forceFieldCalculationFactory)
@@ -497,12 +497,12 @@ void ForceField::setPersistence(double persistence)
     }
 }
 //-----------------------------------------------------------------------
-unsigned int ForceField::getForceFieldSize(void) const
+unsigned int PUForceField::getForceFieldSize(void) const
 {
     return _forceFieldSize;
 }
 //-----------------------------------------------------------------------
-void ForceField::setForceFieldSize(unsigned int forceFieldSize)
+void PUForceField::setForceFieldSize(unsigned int forceFieldSize)
 {
     _forceFieldSize = forceFieldSize;
     if (_forceFieldCalculationFactory)
@@ -511,12 +511,12 @@ void ForceField::setForceFieldSize(unsigned int forceFieldSize)
     }
 }
 //-----------------------------------------------------------------------
-Vec3 ForceField::getWorldSize(void) const
+Vec3 PUForceField::getWorldSize(void) const
 {
     return _worldSize;
 }
 //-----------------------------------------------------------------------
-void ForceField::setWorldSize(const Vec3& worldSize)
+void PUForceField::setWorldSize(const Vec3& worldSize)
 {
     _worldSize = worldSize;
     if (_forceFieldCalculationFactory)

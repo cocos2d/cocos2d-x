@@ -23,18 +23,18 @@
  ****************************************************************************/
 
 #include "CCParticle3DBaseCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const float Particle3DBaseCollider::DEFAULT_BOUNCYNESS = 1.0f;
-const float Particle3DBaseCollider::DEFAULT_FRICTION = 0.0f;
-const Particle3DBaseCollider::IntersectionType Particle3DBaseCollider::DEFAULT_INTERSECTION_TYPE = Particle3DBaseCollider::IT_POINT;
-const Particle3DBaseCollider::CollisionType Particle3DBaseCollider::DEFAULT_COLLISION_TYPE = Particle3DBaseCollider::CT_BOUNCE;
+const float PUParticle3DBaseCollider::DEFAULT_BOUNCYNESS = 1.0f;
+const float PUParticle3DBaseCollider::DEFAULT_FRICTION = 0.0f;
+const PUParticle3DBaseCollider::IntersectionType PUParticle3DBaseCollider::DEFAULT_INTERSECTION_TYPE = PUParticle3DBaseCollider::IT_POINT;
+const PUParticle3DBaseCollider::CollisionType PUParticle3DBaseCollider::DEFAULT_COLLISION_TYPE = PUParticle3DBaseCollider::CT_BOUNCE;
 //-----------------------------------------------------------------------
-Particle3DBaseCollider::Particle3DBaseCollider() 
-    : Particle3DAffector()
+PUParticle3DBaseCollider::PUParticle3DBaseCollider() 
+    : PUParticle3DAffector()
     , _bouncyness(DEFAULT_BOUNCYNESS)
     , _friction(DEFAULT_FRICTION)
     , _intersectionType(DEFAULT_INTERSECTION_TYPE)
@@ -43,51 +43,51 @@ Particle3DBaseCollider::Particle3DBaseCollider()
 {
 }
 
-Particle3DBaseCollider::~Particle3DBaseCollider()
+PUParticle3DBaseCollider::~PUParticle3DBaseCollider()
 {
 }
 
-const Particle3DBaseCollider::IntersectionType Particle3DBaseCollider::getIntersectionType() const
+const PUParticle3DBaseCollider::IntersectionType PUParticle3DBaseCollider::getIntersectionType() const
 {
     return _intersectionType;
 }
 
-void Particle3DBaseCollider::setIntersectionType( const IntersectionType& intersectionType )
+void PUParticle3DBaseCollider::setIntersectionType( const IntersectionType& intersectionType )
 {
     _intersectionType = intersectionType;
 }
 
-const Particle3DBaseCollider::CollisionType Particle3DBaseCollider::getCollisionType() const
+const PUParticle3DBaseCollider::CollisionType PUParticle3DBaseCollider::getCollisionType() const
 {
     return _collisionType;
 }
 
-void Particle3DBaseCollider::setCollisionType( const CollisionType& collisionType )
+void PUParticle3DBaseCollider::setCollisionType( const CollisionType& collisionType )
 {
     _collisionType = collisionType;
 }
 
-const float Particle3DBaseCollider::getFriction() const
+const float PUParticle3DBaseCollider::getFriction() const
 {
     return _friction;
 }
 
-void Particle3DBaseCollider::setFriction( const float friction )
+void PUParticle3DBaseCollider::setFriction( const float friction )
 {
     _friction = friction;
 }
 
-const float Particle3DBaseCollider::getBouncyness() const
+const float PUParticle3DBaseCollider::getBouncyness() const
 {
     return _bouncyness;
 }
 
-void Particle3DBaseCollider::setBouncyness( const float bouncyness )
+void PUParticle3DBaseCollider::setBouncyness( const float bouncyness )
 {
     _bouncyness = bouncyness;
 }
 
-void Particle3DBaseCollider::populateAlignedBox( AABB& box, const Vec3& position, const float width, const float height, const float depth )
+void PUParticle3DBaseCollider::populateAlignedBox( AABB& box, const Vec3& position, const float width, const float height, const float depth )
 {
     float halfWidth = 0.5f * width;
     float halfHeight = 0.5f * height;
@@ -100,7 +100,7 @@ void Particle3DBaseCollider::populateAlignedBox( AABB& box, const Vec3& position
         position.z + halfDepth));
 }
 
-void Particle3DBaseCollider::calculateRotationSpeedAfterCollision( Particle3D* particle )
+void PUParticle3DBaseCollider::calculateRotationSpeedAfterCollision( PUParticle3D* particle )
 {
     float signedFriction = CCRANDOM_0_1() > 0.5 ? -(_friction - 1) : (_friction - 1);
 
@@ -108,10 +108,10 @@ void Particle3DBaseCollider::calculateRotationSpeedAfterCollision( Particle3D* p
     particle->zRotationSpeed *= signedFriction;
 }
 
-void Particle3DBaseCollider::preUpdateAffector( float deltaTime )
+void PUParticle3DBaseCollider::preUpdateAffector( float deltaTime )
 {
     // Take scaled velocity into account
-    _velocityScale = deltaTime * _particleSystem->getParticleSystemScaleVelocity();
+    _velocityScale = deltaTime * (static_cast<PUParticleSystem3D *>(_particleSystem))->getParticleSystemScaleVelocity();
 }
 
 NS_CC_END

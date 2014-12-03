@@ -23,87 +23,87 @@
  ****************************************************************************/
 
 #include "CCParticle3DGeometryRotator.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
 // Constants
-const bool Particle3DGeometryRotator::DEFAULT_USE_OWN = false;
-const float Particle3DGeometryRotator::DEFAULT_ROTATION_SPEED = 10.0f;
-const Vec3 Particle3DGeometryRotator::DEFAULT_ROTATION_AXIS(0, 0, 0);
+const bool PUParticle3DGeometryRotator::DEFAULT_USE_OWN = false;
+const float PUParticle3DGeometryRotator::DEFAULT_ROTATION_SPEED = 10.0f;
+const Vec3 PUParticle3DGeometryRotator::DEFAULT_ROTATION_AXIS(0, 0, 0);
 
 //-----------------------------------------------------------------------
-Particle3DGeometryRotator::Particle3DGeometryRotator() : 
-    Particle3DAffector(),
+PUParticle3DGeometryRotator::PUParticle3DGeometryRotator() : 
+    PUParticle3DAffector(),
     _scaledRotationSpeed(0.0f),
     _useOwnRotationSpeed(DEFAULT_USE_OWN),
     //mQ(Quaternion::IDENTITY),
     _rotationAxis(DEFAULT_ROTATION_AXIS),
     _rotationAxisSet(false)
 {
-    _dynRotationSpeed = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
+    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 };
 //-----------------------------------------------------------------------
-Particle3DGeometryRotator::~Particle3DGeometryRotator()
+PUParticle3DGeometryRotator::~PUParticle3DGeometryRotator()
 {
     if (_dynRotationSpeed)
         CC_SAFE_DELETE(_dynRotationSpeed);
 }
 //-----------------------------------------------------------------------
-const Vec3& Particle3DGeometryRotator::getRotationAxis() const
+const Vec3& PUParticle3DGeometryRotator::getRotationAxis() const
 {
     return _rotationAxis;
 }
 //-----------------------------------------------------------------------
-void Particle3DGeometryRotator::setRotationAxis(const Vec3& rotationAxis)
+void PUParticle3DGeometryRotator::setRotationAxis(const Vec3& rotationAxis)
 {
     _rotationAxis = rotationAxis;
     _rotationAxisSet = true;
 }
 //-----------------------------------------------------------------------
-void Particle3DGeometryRotator::resetRotationAxis(void)
+void PUParticle3DGeometryRotator::resetRotationAxis(void)
 {
-    _dynRotationSpeed = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
+    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
     _rotationAxisSet = false;
 }
 //-----------------------------------------------------------------------
-DynamicAttribute* Particle3DGeometryRotator::getRotationSpeed(void) const
+PUDynamicAttribute* PUParticle3DGeometryRotator::getRotationSpeed(void) const
 {
     return _dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-void Particle3DGeometryRotator::setRotationSpeed(DynamicAttribute* dynRotationSpeed)
+void PUParticle3DGeometryRotator::setRotationSpeed(PUDynamicAttribute* dynRotationSpeed)
 {
     if (_dynRotationSpeed)
         CC_SAFE_DELETE(_dynRotationSpeed);
     _dynRotationSpeed = dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-bool Particle3DGeometryRotator::useOwnRotationSpeed (void) const
+bool PUParticle3DGeometryRotator::useOwnRotationSpeed (void) const
 {
     return _useOwnRotationSpeed;
 }
 //-----------------------------------------------------------------------
-void Particle3DGeometryRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed)
+void PUParticle3DGeometryRotator::setUseOwnRotationSpeed (bool useOwnRotationSpeed)
 {
     _useOwnRotationSpeed = useOwnRotationSpeed;
 }
 //-----------------------------------------------------------------------
-float Particle3DGeometryRotator::calculateRotationSpeed(Particle3D* particle)
+float PUParticle3DGeometryRotator::calculateRotationSpeed(PUParticle3D* particle)
 {
     return _dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction);
 }
 //-----------------------------------------------------------------------
-void Particle3DGeometryRotator::initParticleForEmission(Particle3D* particle)
+void PUParticle3DGeometryRotator::initParticleForEmission(PUParticle3D* puParticle)
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
     //	return;
     for (auto iter : _particleSystem->getParticles())
     {
-        Particle3D *particle = iter;
+        PUParticle3D *particle = static_cast<PUParticle3D*>(iter);
         if (!_rotationAxisSet)
         {
             // Set initial random rotation axis and orientation(PU 1.4)
@@ -127,11 +127,11 @@ void Particle3DGeometryRotator::initParticleForEmission(Particle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void Particle3DGeometryRotator::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DGeometryRotator::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Rotate the geometry
 
         if (_useOwnRotationSpeed)

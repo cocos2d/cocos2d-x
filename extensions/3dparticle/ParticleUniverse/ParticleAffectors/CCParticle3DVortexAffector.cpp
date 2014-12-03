@@ -23,24 +23,24 @@
  ****************************************************************************/
 
 #include "CCParticle3DVortexAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const Vec3 Particle3DVortexAffector::DEFAULT_ROTATION_VECTOR(0, 0, 0);
-const float Particle3DVortexAffector::DEFAULT_ROTATION_SPEED = 1.0f;
+const Vec3 PUParticle3DVortexAffector::DEFAULT_ROTATION_VECTOR(0, 0, 0);
+const float PUParticle3DVortexAffector::DEFAULT_ROTATION_SPEED = 1.0f;
 
 //-----------------------------------------------------------------------
-Particle3DVortexAffector::Particle3DVortexAffector(void) : 
-    Particle3DAffector(),
+PUParticle3DVortexAffector::PUParticle3DVortexAffector(void) : 
+    PUParticle3DAffector(),
     _rotationVector(DEFAULT_ROTATION_VECTOR)
 {
-    _dynRotationSpeed = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
+    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
-Particle3DVortexAffector::~Particle3DVortexAffector(void)
+PUParticle3DVortexAffector::~PUParticle3DVortexAffector(void)
 {
     if (_dynRotationSpeed)
     {
@@ -48,22 +48,22 @@ Particle3DVortexAffector::~Particle3DVortexAffector(void)
     }
 }
 //-----------------------------------------------------------------------
-const Vec3& Particle3DVortexAffector::getRotationVector(void) const
+const Vec3& PUParticle3DVortexAffector::getRotationVector(void) const
 {
     return _rotationVector;
 }
 //-----------------------------------------------------------------------
-void Particle3DVortexAffector::setRotationVector(const Vec3& rotationVector)
+void PUParticle3DVortexAffector::setRotationVector(const Vec3& rotationVector)
 {
     _rotationVector = rotationVector;
 }
 //-----------------------------------------------------------------------
-DynamicAttribute* Particle3DVortexAffector::getRotationSpeed(void) const
+PUDynamicAttribute* PUParticle3DVortexAffector::getRotationSpeed(void) const
 {
     return _dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-void Particle3DVortexAffector::setRotationSpeed(DynamicAttribute* dynRotationSpeed)
+void PUParticle3DVortexAffector::setRotationSpeed(PUDynamicAttribute* dynRotationSpeed)
 {
     if (_dynRotationSpeed)
         CC_SAFE_DELETE(_dynRotationSpeed);
@@ -71,17 +71,17 @@ void Particle3DVortexAffector::setRotationSpeed(DynamicAttribute* dynRotationSpe
     _dynRotationSpeed = dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-float Particle3DVortexAffector::calculateRotationSpeed(void)
+float PUParticle3DVortexAffector::calculateRotationSpeed(void)
 {
-    return float(_dynamicAttributeHelper.calculate(_dynRotationSpeed, _particleSystem->getTimeElapsedSinceStart()));
+    return float(_dynamicAttributeHelper.calculate(_dynRotationSpeed, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart()));
 }
 //-----------------------------------------------------------------------
 
-void Particle3DVortexAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DVortexAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         // Explicitly check on 'freezed', because it passes the techniques' validation.
         if (particle->isFreezed())
             return;
@@ -97,7 +97,7 @@ void Particle3DVortexAffector::updateAffector( Particle3D *particle, float delta
     }
 }
 
-void Particle3DVortexAffector::preUpdateAffector( float deltaTime )
+void PUParticle3DVortexAffector::preUpdateAffector( float deltaTime )
 {
     //ParticleSystem* sys = mParentTechnique->getParentSystem();
 

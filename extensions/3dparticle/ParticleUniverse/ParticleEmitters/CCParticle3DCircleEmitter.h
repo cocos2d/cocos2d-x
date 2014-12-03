@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_CIRCLE_EMITTER_H__
-#define __CC_PARTICLE_3D_CIRCLE_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_CIRCLE_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_CIRCLE_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  CC_DLL Particle3DCircleEmitter : public Particle3DEmitter
+class  CC_DLL PUParticle3DCircleEmitter : public PUParticle3DEmitter
 {
 public:
     // Constants
@@ -40,7 +40,7 @@ public:
     static const bool DEFAULT_RANDOM;
     static const Vec3 DEFAULT_NORMAL;
 
-    static Particle3DCircleEmitter* create();
+    static PUParticle3DCircleEmitter* create();
 
     /** 
     */
@@ -73,18 +73,18 @@ public:
     virtual void notifyStart(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DCircleEmitter(void);
-    virtual ~Particle3DCircleEmitter(void) {};
+    PUParticle3DCircleEmitter(void);
+    virtual ~PUParticle3DCircleEmitter(void) {};
 
 protected:
 
     /** Determine a particle position on the circle.
     */
-    virtual void initParticlePosition(Particle3D* particle);
+    virtual void initParticlePosition(PUParticle3D* particle);
 
     /** Determine the particle direction.
     */
-    virtual void initParticleDirection(Particle3D* particle);
+    virtual void initParticleDirection(PUParticle3D* particle);
 
     Quaternion getRotationTo(const Vec3 &src, const Vec3& dest,
         const Vec3& fallbackAxis = Vec3::ZERO) const;

@@ -23,21 +23,21 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PARTICLE_3D_POINT_EMITTER_H__
-#define __CC_PARTICLE_3D_POINT_EMITTER_H__
+#ifndef __CC_PU_PARTICLE_3D_POINT_EMITTER_H__
+#define __CC_PU_PARTICLE_3D_POINT_EMITTER_H__
 
-#include "3dparticle/CCParticle3DEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
-class  CC_DLL Particle3DPointEmitter : public Particle3DEmitter
+class  CC_DLL PUParticle3DPointEmitter : public PUParticle3DEmitter
 {
 public:
-     static Particle3DPointEmitter* create();
+     static PUParticle3DPointEmitter* create();
 
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DPointEmitter(void);
-    virtual ~Particle3DPointEmitter(void);
+    PUParticle3DPointEmitter(void);
+    virtual ~PUParticle3DPointEmitter(void);
 
 };
 NS_CC_END

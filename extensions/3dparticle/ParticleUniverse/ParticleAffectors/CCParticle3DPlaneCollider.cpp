@@ -23,48 +23,48 @@
  ****************************************************************************/
 
 #include "CCParticle3DPlaneCollider.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 // Constants
-const Vec3 Particle3DPlaneCollider::DEFAULT_NORMAL(0, 0, 0);
+const Vec3 PUParticle3DPlaneCollider::DEFAULT_NORMAL(0, 0, 0);
 
 //-----------------------------------------------------------------------
-Particle3DPlaneCollider::Particle3DPlaneCollider(void) : 
-    Particle3DBaseCollider(),
+PUParticle3DPlaneCollider::PUParticle3DPlaneCollider(void) : 
+    PUParticle3DBaseCollider(),
     _predictedPosition(Vec3::ZERO),
     _normal(DEFAULT_NORMAL)
 {
 }
-Particle3DPlaneCollider::~Particle3DPlaneCollider( void )
+PUParticle3DPlaneCollider::~PUParticle3DPlaneCollider( void )
 {
 
 }
 //-----------------------------------------------------------------------
-const Vec3 Particle3DPlaneCollider::getNormal(void) const
+const Vec3 PUParticle3DPlaneCollider::getNormal(void) const
 {
     return _normal;
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::setNormal(const Vec3& normal)
+void PUParticle3DPlaneCollider::setNormal(const Vec3& normal)
 {
     _normal = normal;
     _plane.redefine(_normal, getDerivedPosition()); // Changed in 1.3.1
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::notifyRescaled(const Vec3& scale)
+void PUParticle3DPlaneCollider::notifyRescaled(const Vec3& scale)
 {
 	// Function added in 1.3.1
 	_plane.redefine(_normal, getDerivedPosition());
 }
 //-----------------------------------------------------------------------
-void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* particle, float timeElapsed)
+void PUParticle3DPlaneCollider::calculateDirectionAfterCollision(PUParticle3D* particle, float timeElapsed)
 {
     float directionLength = particle->direction.length();
     switch (_collisionType)
     {
-        case Particle3DBaseCollider::CT_BOUNCE:
+        case PUParticle3DBaseCollider::CT_BOUNCE:
         {
             /** If the particle is on the plane or at the back of the plane, bounce it.
                 Make use of the same formula as the sphere collider.
@@ -79,7 +79,7 @@ void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* parti
             particle->direction *= _bouncyness;
         }
         break;
-        case Particle3DBaseCollider::CT_FLOW:
+        case PUParticle3DBaseCollider::CT_FLOW:
         {
             /** Reset the position (just in front of the plane), but keep the direction.
             @remarks
@@ -92,17 +92,17 @@ void Particle3DPlaneCollider::calculateDirectionAfterCollision(Particle3D* parti
     }
 }
 
-void Particle3DPlaneCollider::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DPlaneCollider::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
-        //Particle3D *particle = iter;
+        //PUParticle3D *particle = iter;
         _predictedPosition = particle->position + _velocityScale * particle->direction;
         bool collision = false;
 
         switch(_intersectionType)
         {
-        case Particle3DBaseCollider::IT_POINT:
+        case PUParticle3DBaseCollider::IT_POINT:
             {
                 // Validate for a point-plane intersection (on the plane or the back side)
                 // First determine whether it is now colliding (some affector made the particle move), else
@@ -121,7 +121,7 @@ void Particle3DPlaneCollider::updateAffector( Particle3D *particle, float deltaT
             }
             break;
 
-        case Particle3DBaseCollider::IT_BOX:
+        case PUParticle3DBaseCollider::IT_BOX:
             {
 
                 AABB box;
@@ -158,7 +158,7 @@ void Particle3DPlaneCollider::updateAffector( Particle3D *particle, float deltaT
         {
             calculateDirectionAfterCollision(particle, deltaTime);
             calculateRotationSpeedAfterCollision(particle);
-            particle->addEventFlags(Particle3D::PEF_COLLIDED);
+            particle->addEventFlags(PUParticle3D::PEF_COLLIDED);
         }
     }
 

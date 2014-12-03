@@ -23,31 +23,31 @@
  ****************************************************************************/
 
 #include "CCParticle3DVelocityMatchingAffector.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DVelocityMatchingAffector::DEFAULT_RADIUS = 100.0f;
+const float PUParticle3DVelocityMatchingAffector::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-Particle3DVelocityMatchingAffector::Particle3DVelocityMatchingAffector(void) : 
-    Particle3DAffector(),
+PUParticle3DVelocityMatchingAffector::PUParticle3DVelocityMatchingAffector(void) : 
+    PUParticle3DAffector(),
     _radius(DEFAULT_RADIUS)
 {
 }
 
-Particle3DVelocityMatchingAffector::~Particle3DVelocityMatchingAffector( void )
+PUParticle3DVelocityMatchingAffector::~PUParticle3DVelocityMatchingAffector( void )
 {
 
 }
 
 //-----------------------------------------------------------------------
-float Particle3DVelocityMatchingAffector::getRadius(void) const
+float PUParticle3DVelocityMatchingAffector::getRadius(void) const
 {
     return _radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DVelocityMatchingAffector::setRadius(float radius)
+void PUParticle3DVelocityMatchingAffector::setRadius(float radius)
 {
     _radius = radius;
 }
@@ -65,11 +65,11 @@ void Particle3DVelocityMatchingAffector::setRadius(float radius)
 //}
 //-----------------------------------------------------------------------
 
-void Particle3DVelocityMatchingAffector::updateAffector( Particle3D *particle, float deltaTime )
+void PUParticle3DVelocityMatchingAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     //{
-    //    Particle3D *particle = iter;
+    //    PUParticle3D *particle = iter;
     //	// Determine neighbouring particles.
     //	SpatialHashTable<Particle*>* hashtable = particleTechnique->getSpatialHashTable();
     //	if (hashtable)

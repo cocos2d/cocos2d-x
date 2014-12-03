@@ -1409,6 +1409,15 @@
     <ClCompile Include="..\..\extensions\3dparticle\CCParticle3DRender.cpp">
       <Filter>extension\3dparticle</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DAffector.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCPUParticle3DEmitter.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3D.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2807,6 +2816,15 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\3dparticle\CCParticle3DRender.h">
       <Filter>extension\3dparticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DAffector.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleEmitters\CCPUParticle3DEmitter.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3D.h">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,31 +23,31 @@
  ****************************************************************************/
 
 #include "CCParticle3DSphereSurfaceEmitter.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
-const float Particle3DSphereSurfaceEmitter::DEFAULT_RADIUS = 10.0f;
+const float PUParticle3DSphereSurfaceEmitter::DEFAULT_RADIUS = 10.0f;
 
 //-----------------------------------------------------------------------
-Particle3DSphereSurfaceEmitter::Particle3DSphereSurfaceEmitter(void) : 
-    Particle3DEmitter(),
+PUParticle3DSphereSurfaceEmitter::PUParticle3DSphereSurfaceEmitter(void) : 
+    PUParticle3DEmitter(),
     _radius(DEFAULT_RADIUS),
     _randomVector(Vec3::ZERO)
 {
 }
 //-----------------------------------------------------------------------
-const float Particle3DSphereSurfaceEmitter::getRadius(void) const
+const float PUParticle3DSphereSurfaceEmitter::getRadius(void) const
 {
     return _radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DSphereSurfaceEmitter::setRadius(const float radius)
+void PUParticle3DSphereSurfaceEmitter::setRadius(const float radius)
 {
     _radius = radius;
 }
 //-----------------------------------------------------------------------
-void Particle3DSphereSurfaceEmitter::initParticlePosition(Particle3D* particle)
+void PUParticle3DSphereSurfaceEmitter::initParticlePosition(PUParticle3D* particle)
 {
     // Generate a random unit vector to calculate a point on the sphere. This unit vector is
     // also used as direction vector if mAutoDirection has been set.
@@ -67,7 +67,7 @@ void Particle3DSphereSurfaceEmitter::initParticlePosition(Particle3D* particle)
     particle->originalPosition = particle->position;
 }
 //-----------------------------------------------------------------------
-void Particle3DSphereSurfaceEmitter::initParticleDirection(Particle3D* particle)
+void PUParticle3DSphereSurfaceEmitter::initParticleDirection(PUParticle3D* particle)
 {
     if (_autoDirection)
     {
@@ -94,13 +94,13 @@ void Particle3DSphereSurfaceEmitter::initParticleDirection(Particle3D* particle)
     else
     {
         // Use the standard way
-        Particle3DEmitter::initParticleDirection(particle);
+        PUParticle3DEmitter::initParticleDirection(particle);
     }
 }
 
-Particle3DSphereSurfaceEmitter* Particle3DSphereSurfaceEmitter::create()
+PUParticle3DSphereSurfaceEmitter* PUParticle3DSphereSurfaceEmitter::create()
 {
-    auto pe = new Particle3DSphereSurfaceEmitter();
+    auto pe = new PUParticle3DSphereSurfaceEmitter();
     pe->autorelease();
     return pe;
 }
