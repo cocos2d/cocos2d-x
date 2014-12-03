@@ -130,7 +130,7 @@ int register_all_cocos2dx_csloader_manual(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "createTimeline", lua_cocos2dx_csloader_CSLoader_createTimeline);
-		tolua_function(L, "createActionTimelineNode", lua_cocos2dx_csloader_CSLoader_createActionTimelineNode);
+        tolua_function(L, "createActionTimelineNode", lua_cocos2dx_csloader_CSLoader_createActionTimelineNode);
     }
     lua_pop(L, 1);
     
