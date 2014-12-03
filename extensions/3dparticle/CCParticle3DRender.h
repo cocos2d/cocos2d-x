@@ -27,7 +27,6 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include <vector>
 
 NS_CC_BEGIN

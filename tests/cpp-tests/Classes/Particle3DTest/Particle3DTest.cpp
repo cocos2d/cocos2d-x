@@ -27,9 +27,9 @@
 #include "3dparticle/CCParticle3DEmitter.h"
 #include "3dparticle/CCParticle3DAffector.h"
 #include "3dparticle/CCParticle3DRender.h"
-#include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DPointEmitter.h"
-#include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DBoxEmitter.h"
-#include "3dparticle/ParticleUniverse/ParticleEmitters/CCParticle3DCircleEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitter.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 
