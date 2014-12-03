@@ -182,9 +182,9 @@ function player:buildUI()
 
     -- direction
     menuBar:addItem("DIRECTION_MENU_SEP", "-", "VIEW_MENU")
-    local portait = menuBar:addItem("DIRECTION_PORTAIT_MENU", "Portrait", "VIEW_MENU")
-    portait.type  = "portrait"
-    if self.projectConfig_:isPortraitFrame() then portait:setChecked(true) end
+    local portrait = menuBar:addItem("DIRECTION_PORTRAIT_MENU", "Portrait", "VIEW_MENU")
+    portrait.type  = "portrait"
+    if self.projectConfig_:isPortraitFrame() then portrait:setChecked(true) end
 
     local landscape = menuBar:addItem("DIRECTION_LANDSCAPE_MENU", "Landscape", "VIEW_MENU")
     landscape.type  = "landscape"

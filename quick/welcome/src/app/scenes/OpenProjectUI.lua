@@ -55,11 +55,11 @@ function OpenProjectUI:updatePanelInfo()
 
         -- screen direction
         if config.CONFIG_SCREEN_ORIENTATION == "portrait" then
-            self.portaitCheckBox:setButtonSelected(true)
+            self.portraitCheckBox:setButtonSelected(true)
             self.landscapeCheckBox:setButtonSelected(false)
         elseif config.CONFIG_SCREEN_ORIENTATION == "landscape" then
             self.landscapeCheckBox:setButtonSelected(true)
-            self.portaitCheckBox:setButtonSelected(false)
+            self.portraitCheckBox:setButtonSelected(false)
         end
     end
 
@@ -114,13 +114,13 @@ function OpenProjectUI:onEnter()
     :align(display.LEFT_CENTER, 40, display.top - 300)
     :addTo(self)
 
-    self.portaitCheckBox = 
+    self.portraitCheckBox = 
     cc.ui.UICheckBoxButton.new(checkboxImages)
-        :setButtonLabel(cc.ui.UILabel.new({text = "Portait", size = fontSize,  color = display.COLOR_WHITE}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "Portrait", size = fontSize,  color = display.COLOR_WHITE}))
         :setButtonLabelOffset(30, 0)
         :setButtonLabelAlignment(display.LEFT_CENTER)
         :align(display.LEFT_CENTER, 40, display.cy-20)
-        :onButtonClicked(function() self.landscapeCheckBox:setButtonSelected(not self.portaitCheckBox:isButtonSelected()) end)
+        :onButtonClicked(function() self.landscapeCheckBox:setButtonSelected(not self.portraitCheckBox:isButtonSelected()) end)
         :addTo(self)
         :setButtonSelected(true)
 
@@ -130,7 +130,7 @@ function OpenProjectUI:onEnter()
         :setButtonLabelOffset(30, 0)
         :setButtonLabelAlignment(display.LEFT_CENTER)
         :align(display.LEFT_CENTER, 200, display.cy-20)
-        :onButtonClicked(function() self.portaitCheckBox:setButtonSelected(not self.landscapeCheckBox:isButtonSelected()) end)
+        :onButtonClicked(function() self.portraitCheckBox:setButtonSelected(not self.landscapeCheckBox:isButtonSelected()) end)
         :addTo(self)
 
     -- Options:
@@ -211,7 +211,7 @@ function OpenProjectUI:createYesOrNoButton()
         projectConfig:setLoadPrecompiledFramework(self.loadPrecompiledFramework:isButtonSelected())
 
         -- screen direction
-        if self.portaitCheckBox:isButtonSelected() then
+        if self.portraitCheckBox:isButtonSelected() then
             projectConfig:changeFrameOrientationToPortait()
         else
             projectConfig:changeFrameOrientationToLandscape()
@@ -298,11 +298,11 @@ function OpenProjectUI:updatePanelInfo()
 
         -- screen direction
         if config.CONFIG_SCREEN_ORIENTATION == "portrait" then
-            self.portaitCheckBox:setButtonSelected(true)
+            self.portraitCheckBox:setButtonSelected(true)
             self.landscapeCheckBox:setButtonSelected(false)
         elseif config.CONFIG_SCREEN_ORIENTATION == "landscape" then
             self.landscapeCheckBox:setButtonSelected(true)
-            self.portaitCheckBox:setButtonSelected(false)
+            self.portraitCheckBox:setButtonSelected(false)
         end
     end
 
