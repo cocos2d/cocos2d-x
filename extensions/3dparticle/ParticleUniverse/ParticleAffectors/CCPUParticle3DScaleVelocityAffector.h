@@ -32,14 +32,13 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DScaleVelocityAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DScaleVelocityAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_VELOCITY_SCALE;
 
-    PUParticle3DScaleVelocityAffector(void);
-    virtual ~PUParticle3DScaleVelocityAffector(void);
+    static PUParticle3DScaleVelocityAffector* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
@@ -58,6 +57,10 @@ public:
     */
     bool isStopAtFlip(void) const {return _stopAtFlip;};
     void setStopAtFlip(bool stopAtFlip){_stopAtFlip = stopAtFlip;};
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DScaleVelocityAffector(void);
+    virtual ~PUParticle3DScaleVelocityAffector(void);
 
 protected:
     PUDynamicAttribute* _dynScaleVelocity;

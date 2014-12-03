@@ -74,4 +74,11 @@ void PUParticle3DJetAffector::updateAffector( PUParticle3D *particle, float delt
     }
 }
 
+PUParticle3DJetAffector* PUParticle3DJetAffector::create()
+{
+    auto pja = new PUParticle3DJetAffector();
+    pja->autorelease();
+    return pja;
+}
+
 NS_CC_END

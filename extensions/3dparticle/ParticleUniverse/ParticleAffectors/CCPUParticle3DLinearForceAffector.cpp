@@ -54,4 +54,11 @@ void PUParticle3DLinearForceAffector::updateAffector( PUParticle3D *particle, fl
 
 }
 
+PUParticle3DLinearForceAffector* PUParticle3DLinearForceAffector::create()
+{
+    auto plfa = new PUParticle3DLinearForceAffector();
+    plfa->autorelease();
+    return plfa;
+}
+
 NS_CC_END

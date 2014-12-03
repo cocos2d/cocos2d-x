@@ -30,15 +30,14 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DBoxCollider : public PUParticle3DBaseCollider
+class  CC_DLL PUParticle3DBoxCollider : public PUParticle3DBaseCollider
 {
 public:
     static const float DEFAULT_WIDTH;
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
 
-    PUParticle3DBoxCollider();
-    virtual ~PUParticle3DBoxCollider();
+	static PUParticle3DBoxCollider* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -82,6 +81,10 @@ public:
     /** 
     */
     void calculateDirectionAfterCollision(PUParticle3D* particle);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DBoxCollider();
+    virtual ~PUParticle3DBoxCollider();
 
 protected:
         /** 

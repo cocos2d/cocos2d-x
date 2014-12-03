@@ -153,4 +153,11 @@ void PUParticle3DTextureRotator::updateAffector( PUParticle3D *particle, float d
     }
 }
 
+PUParticle3DTextureRotator* PUParticle3DTextureRotator::create()
+{
+    auto ptr = new PUParticle3DTextureRotator();
+    ptr->autorelease();
+    return ptr;
+}
+
 NS_CC_END

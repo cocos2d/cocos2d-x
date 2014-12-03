@@ -22,8 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
-#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/CCParticleSystem3D.h"
 #include "3dparticle/CCParticle3DRender.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
@@ -114,26 +113,26 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     int index = 0;
     for (ssize_t i = 0; i < particles.size(); i++)
     {
-        auto particle = static_cast<PUParticle3D*>(particles[i]);
+        auto particle = static_cast<Particle3D*>(particles[i]);
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
         transform.transformPoint(particle->position, &position);
         
         _posuvcolors[vertexindex].position = position - halfwidth - halfheight;
         _posuvcolors[vertexindex].color = particle->color;
-        _posuvcolors[vertexindex].uv = Vec2(0.0f, 0.0f);
+        _posuvcolors[vertexindex].uv = Vec2(particle->lb_uv);
 
         _posuvcolors[vertexindex + 1].position = position + halfwidth - halfheight;
         _posuvcolors[vertexindex + 1].color = particle->color;
-        _posuvcolors[vertexindex + 1].uv = Vec2(1.0f, 0.0f);
+        _posuvcolors[vertexindex + 1].uv = Vec2(particle->rt_uv.x, particle->lb_uv.y);
         
         _posuvcolors[vertexindex + 2].position = position - halfwidth + halfheight;
         _posuvcolors[vertexindex + 2].color = particle->color;
-        _posuvcolors[vertexindex + 2].uv = Vec2(0.0f, 1.0f);
+        _posuvcolors[vertexindex + 2].uv = Vec2(particle->lb_uv.x, particle->rt_uv.y);
         
         _posuvcolors[vertexindex + 3].position = position + halfwidth + halfheight;
         _posuvcolors[vertexindex + 3].color = particle->color;
-        _posuvcolors[vertexindex + 3].uv = Vec2(1.0f, 1.0f);
+        _posuvcolors[vertexindex + 3].uv = Vec2(particle->rt_uv);
         
         
         _indexData[index] = vertexindex;
@@ -190,7 +189,7 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     Mat4 mat;
     for (auto it : particles)
     {
-        auto particle = static_cast<PUParticle3D*>(it);
+        auto particle = static_cast<Particle3D*>(it);
         Mat4::createRotation(particle->orientation, &mat);
         mat.m[12] = particle->position.x;
         mat.m[13] = particle->position.y;

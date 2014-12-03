@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DLineAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DLineAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -39,9 +39,8 @@ public:
     static const float DEFAULT_TIME_STEP;
     static const Vec3 DEFAULT_END;
     static const float DEFAULT_DRIFT;
-            
-    PUParticle3DLineAffector(void);
-    virtual ~PUParticle3DLineAffector(void);
+
+    static PUParticle3DLineAffector* create();
 
         /**
     */
@@ -69,6 +68,10 @@ public:
     */
     float getDrift(void) const;
     void setDrift(float drift);
+
+CC_CONSTRUCTOR_ACCESS:          
+    PUParticle3DLineAffector(void);
+    virtual ~PUParticle3DLineAffector(void);
 
 protected:
 

@@ -51,9 +51,9 @@ void PUParticle3DSphereSurfaceEmitter::initParticlePosition(PUParticle3D* partic
 {
     // Generate a random unit vector to calculate a point on the sphere. This unit vector is
     // also used as direction vector if mAutoDirection has been set.
-    _randomVector = Vec3(CCRANDOM_0_1(), 
-        CCRANDOM_0_1(),
-        CCRANDOM_0_1());
+    _randomVector = Vec3(CCRANDOM_MINUS1_1(), 
+        CCRANDOM_MINUS1_1(),
+        CCRANDOM_MINUS1_1());
     _randomVector.normalize();
     //ParticleSystem* sys = mParentTechnique->getParentSystem();
     //if (sys)

@@ -87,9 +87,6 @@ PUParticle3D::PUParticle3D():
     rotationSpeed(0.0f),
     rotationAxis(Vec3::UNIT_Z),
     ownDimensions(false),
-    width(1.0f),
-    height(1.0f),
-    depth(1.0f),
     radius(0.87f),
     textureAnimationTimeStep(0.1f),
     textureAnimationTimeStepCount(0.0f),
@@ -97,8 +94,6 @@ PUParticle3D::PUParticle3D():
     textureAnimationDirectionUp(true),
     alive(true)
 {
-    position = Vec3::ZERO;
-    color = Vec4::ONE;
 }
 
 //-----------------------------------------------------------------------
@@ -244,7 +239,7 @@ void PUParticleSystem3D::prepared()
             emitter->prepare();
         }
 
-        for (auto& it : _affectors) {
+        for (auto it : _affectors) {
             if (it->isEnabled())
                 (static_cast<PUParticle3DAffector*>(it))->prepare();
         }
@@ -260,7 +255,7 @@ void PUParticleSystem3D::unPrepared()
         emitter->unPrepare();
     }
 
-    for (auto& it : _affectors) {
+    for (auto it : _affectors) {
         if (it->isEnabled())
             (static_cast<PUParticle3DAffector*>(it))->unPrepare();
     }
@@ -274,7 +269,7 @@ void PUParticleSystem3D::preUpdator( float elapsedTime )
         emitter->preUpdateEmitter(elapsedTime);
     }
 
-    for (auto& it : _affectors) {
+    for (auto it : _affectors) {
         if (it->isEnabled())
             (static_cast<PUParticle3DAffector*>(it))->preUpdateAffector(elapsedTime);
     }
@@ -343,7 +338,7 @@ void PUParticleSystem3D::postUpdator( float elapsedTime )
         emitter->postUpdateEmitter(elapsedTime);
     }
 
-    for (auto& it : _affectors) {
+    for (auto it : _affectors) {
         if (it->isEnabled())
         {
             auto affector = static_cast<PUParticle3DAffector*>(it);

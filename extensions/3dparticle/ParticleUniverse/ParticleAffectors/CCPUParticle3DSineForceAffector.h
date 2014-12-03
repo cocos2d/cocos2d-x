@@ -31,15 +31,14 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DSineForceAffector : public PUParticle3DBaseForceAffector
+class  CC_DLL PUParticle3DSineForceAffector : public PUParticle3DBaseForceAffector
 {
 public:
     // Constants
     static const float DEFAULT_FREQ_MIN;
     static const float DEFAULT_FREQ_MAX;
 
-    PUParticle3DSineForceAffector(void);
-    virtual ~PUParticle3DSineForceAffector(void);
+    static PUParticle3DSineForceAffector* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -53,6 +52,10 @@ public:
     */
     const float getFrequencyMax(void) const;
     void setFrequencyMax(const float frequencyMax);
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DSineForceAffector(void);
+    virtual ~PUParticle3DSineForceAffector(void);
 
 protected:
     float _angle;

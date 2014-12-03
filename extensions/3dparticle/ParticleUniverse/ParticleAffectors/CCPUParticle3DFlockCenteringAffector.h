@@ -30,14 +30,18 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DFlockCenteringAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DFlockCenteringAffector : public PUParticle3DAffector
 {
 public:
-    PUParticle3DFlockCenteringAffector();
-    virtual ~PUParticle3DFlockCenteringAffector();
+
+    static PUParticle3DFlockCenteringAffector* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DFlockCenteringAffector();
+    virtual ~PUParticle3DFlockCenteringAffector();
 
 protected:
 

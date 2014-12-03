@@ -30,6 +30,14 @@
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitter.h"
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DLineEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DPositionEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitter.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAlignAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DBoxCollider.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DColorAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleAffector.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 
@@ -77,7 +85,7 @@ bool Particle3DTestDemo::init()
 
     Size size = Director::getInstance()->getWinSize();
     _camera = Camera::createPerspective(60.0f, size.width / size.height, 1.0f, 1000.0f);
-    _camera->setPosition3D(Vec3(0.0f, 0.0f, 50.f));
+    _camera->setPosition3D(Vec3(0.0f, 0.0f, 100.0f));
     _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     _camera->setCameraFlag(CameraFlag::USER1);
     this->addChild(_camera);
@@ -122,12 +130,13 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 
     //emitter
     {
-        auto ppe = PUParticle3DCircleEmitter::create();
+        auto ppe = PUParticle3DPointEmitter::create();
         ppe->setParticleDirection(Vec3(0.0f, 1.0f, 0.0f));
+        //ppe->setRadius(12.0f);
 
-        ppe->setRadius(20.0f);
-        ppe->setNormal(Vec3(0.0f, 0.0f, 1.0f));
-
+        //PUDynamicAttributeFixed *angle = new PUDynamicAttributeFixed();
+        //angle->setValue(0.0f);
+        //ppe->setDynAngle(angle);
         PUDynamicAttributeFixed *velocity = new PUDynamicAttributeFixed();
         velocity->setValue(10.0f);
         ppe->setDynVelocity(velocity);
@@ -135,24 +144,38 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         alive->setValue(3.0f);
         ppe->setDynTotalTimeToLive(alive);
         PUDynamicAttributeFixed *dim = new PUDynamicAttributeFixed();
-        dim->setValue(2.0f);
+        dim->setValue(10.0f);
         ppe->setDynParticleAllDimensions(dim);
         PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
-        rate->setValue(30.0f);
+        rate->setValue(200.0f);
         ppe->setDynEmissionRate(rate);
-        ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
-        ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+        //ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
+        //ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
         ps->setEmitter(ppe);
     }
 
     //affector
     {
+        //auto pca = PUParticle3DColorAffector::create();
+        //pca->addColor(0.0f, Vec4(0.0f, 0.0f, 0.2f, 1.0f));
+        //pca->addColor(0.9f, Vec4(0.8f, 0.8f, 1.0f, 1.0f));
+        //pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+        //ps->addAffector(pca);
 
+        //auto pga = PUParticle3DGravityAffector::create();
+        //pga->setGravity(5700);
+        //ps->addAffector(pga);
+
+        //auto psa = PUParticle3DScaleAffector::create();
+        //PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
+        //scl->setValue(-4.5f);
+        //psa->setDynScaleXYZ(scl);
+        //ps->addAffector(psa);
     }
 
     //render
     {
-        auto pr = Particle3DQuadRender::create("Images/stars.png");
+        auto pr = Particle3DQuadRender::create("Images/fire.png");
         ps->setRender(pr);
     }
 
@@ -170,14 +193,14 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 void Particle3DTestDemo::rotateCameraLeft( cocos2d::Ref *sender )
 {
     _angle -= 0.1f;
-    _camera->setPosition3D(Vec3(50.0f * sinf(_angle), 0.0f, 50.0f * cosf(_angle)));
+    _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 0.0f, 100.0f * cosf(_angle)));
     _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Particle3DTestDemo::rotateCameraRight( cocos2d::Ref *sender )
 {
     _angle += 0.1f;
-    _camera->setPosition3D(Vec3(50.0f * sinf(_angle), 0.0f, 50.0f * cosf(_angle)));
+    _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 0.0f, 100.0f * cosf(_angle)));
     _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 }
 

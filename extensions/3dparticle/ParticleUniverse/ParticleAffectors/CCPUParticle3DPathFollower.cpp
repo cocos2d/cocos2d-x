@@ -67,4 +67,11 @@ void PUParticle3DPathFollower::updateAffector( PUParticle3D *particle, float del
     }
 }
 
+PUParticle3DPathFollower* PUParticle3DPathFollower::create()
+{
+    auto ppf = new PUParticle3DPathFollower();
+    ppf->autorelease();
+    return ppf;
+}
+
 NS_CC_END

@@ -65,4 +65,11 @@ void PUParticle3DFlockCenteringAffector::preUpdateAffector( float deltaTime )
     _count = 0;
 }
 
+PUParticle3DFlockCenteringAffector* PUParticle3DFlockCenteringAffector::create()
+{
+    auto pfca = new PUParticle3DFlockCenteringAffector();
+    pfca->autorelease();
+    return pfca;
+}
+
 NS_CC_END

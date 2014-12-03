@@ -96,4 +96,11 @@ void PUParticle3DParticleFollower::firstParticleUpdate( PUParticle3D *particle, 
     _first = true;
 }
 
+PUParticle3DParticleFollower* PUParticle3DParticleFollower::create()
+{
+    auto ppf = new PUParticle3DParticleFollower();
+    ppf->autorelease();
+    return ppf;
+}
+
 NS_CC_END

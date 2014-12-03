@@ -109,4 +109,11 @@ void PUParticle3DVelocityMatchingAffector::updateAffector( PUParticle3D *particl
     //}
 }
 
+PUParticle3DVelocityMatchingAffector* PUParticle3DVelocityMatchingAffector::create()
+{
+    auto pvma = new PUParticle3DVelocityMatchingAffector();
+    pvma->autorelease();
+    return pvma;
+}
+
 NS_CC_END

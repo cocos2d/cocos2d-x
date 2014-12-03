@@ -32,15 +32,14 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DVortexAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DVortexAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const Vec3 DEFAULT_ROTATION_VECTOR;
     static const float DEFAULT_ROTATION_SPEED;
-        
-    PUParticle3DVortexAffector(void);
-    virtual ~PUParticle3DVortexAffector(void);
+
+    static PUParticle3DVortexAffector* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -59,6 +58,10 @@ public:
     /** 
     */
     void setRotationSpeed(PUDynamicAttribute* dynRotationSpeed);
+
+CC_CONSTRUCTOR_ACCESS:	      
+    PUParticle3DVortexAffector(void);
+    virtual ~PUParticle3DVortexAffector(void);
 
 protected:
 

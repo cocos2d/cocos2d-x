@@ -49,7 +49,7 @@ public:
         is an incremental emission of particles (along a path), and the end of the line has
         been reached.
     */
-    virtual unsigned short calculateRequestedParticles(float timeElapsed);
+    virtual unsigned short calculateRequestedParticles(float timeElapsed) override;
 
     /** 
     */

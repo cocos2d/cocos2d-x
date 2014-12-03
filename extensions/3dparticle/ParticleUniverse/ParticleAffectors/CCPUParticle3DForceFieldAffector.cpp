@@ -315,4 +315,11 @@ void PUParticle3DForceFieldAffector::prepare()
     }
 }
 
+PUParticle3DForceFieldAffector* PUParticle3DForceFieldAffector::create()
+{
+    auto pffa = new PUParticle3DForceFieldAffector();
+    pffa->autorelease();
+    return pffa;
+}
+
 NS_CC_END

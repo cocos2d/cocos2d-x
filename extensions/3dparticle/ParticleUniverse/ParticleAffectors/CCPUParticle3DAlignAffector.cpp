@@ -79,4 +79,11 @@ void PUParticle3DAlignAffector::firstParticleUpdate( PUParticle3D *particle, flo
     _previousParticle = particle;
 }
 
+PUParticle3DAlignAffector* PUParticle3DAlignAffector::create()
+{
+    auto paa = new PUParticle3DAlignAffector();
+    paa->autorelease();
+    return paa;
+}
+
 NS_CC_END

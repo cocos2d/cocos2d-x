@@ -80,4 +80,11 @@ void PUParticle3DGravityAffector::preUpdateAffector( float deltaTime )
     getDerivedPosition();
 }
 
+PUParticle3DGravityAffector* PUParticle3DGravityAffector::create()
+{
+    auto pga = new PUParticle3DGravityAffector();
+    pga->autorelease();
+    return pga;
+}
+
 NS_CC_END

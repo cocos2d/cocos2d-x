@@ -55,8 +55,8 @@ void PUParticle3DPlaneCollider::setNormal(const Vec3& normal)
 //-----------------------------------------------------------------------
 void PUParticle3DPlaneCollider::notifyRescaled(const Vec3& scale)
 {
-	// Function added in 1.3.1
-	_plane.redefine(_normal, getDerivedPosition());
+    // Function added in 1.3.1
+    _plane.redefine(_normal, getDerivedPosition());
 }
 //-----------------------------------------------------------------------
 void PUParticle3DPlaneCollider::calculateDirectionAfterCollision(PUParticle3D* particle, float timeElapsed)
@@ -109,14 +109,14 @@ void PUParticle3DPlaneCollider::updateAffector( PUParticle3D *particle, float de
                 // determine whether it WILL be colliding
                 if (_plane.getDistance(particle->position) <= 0.0f)
                 {
-                	// Collision detected (re-position the particle)
-                	particle->position -= _velocityScale * particle->direction;
-                	collision = true;
+                    // Collision detected (re-position the particle)
+                    particle->position -= _velocityScale * particle->direction;
+                    collision = true;
                 }
                 else if (_plane.getDistance(_predictedPosition) <= 0.0f)
                 {
-                	// Collision detected
-                	collision = true;
+                    // Collision detected
+                    collision = true;
                 }
             }
             break;
@@ -130,7 +130,7 @@ void PUParticle3DPlaneCollider::updateAffector( PUParticle3D *particle, float de
                     particle->width, 
                     particle->height,
                     particle->depth);
-				//FIXME
+                //FIXME
                 //if (box.intersects(_plane))
                 //{
                 //	// Collision detected (re-position the particle)
@@ -162,6 +162,13 @@ void PUParticle3DPlaneCollider::updateAffector( PUParticle3D *particle, float de
         }
     }
 
+}
+
+PUParticle3DPlaneCollider* PUParticle3DPlaneCollider::create()
+{
+    auto ppc = new PUParticle3DPlaneCollider();
+    ppc->autorelease();
+    return ppc;
 }
 
 NS_CC_END

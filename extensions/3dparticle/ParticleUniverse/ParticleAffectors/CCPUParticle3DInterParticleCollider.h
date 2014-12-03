@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 struct PUParticle3D;
-class  PUParticle3DInterParticleCollider : public PUParticle3DBaseCollider
+class  CC_DLL PUParticle3DInterParticleCollider : public PUParticle3DBaseCollider
 {
 public:
 
@@ -41,12 +41,11 @@ public:
         IPCR_ANGLE_BASED_VELOCITY
     };
 
+    static PUParticle3DInterParticleCollider* create();
+
     // Constants
     static const float DEFAULT_ADJUSTMENT;
     static const InterParticleCollisionResponse DEFAULT_COLLISION_RESPONSE;
-
-    PUParticle3DInterParticleCollider(void);
-    virtual ~PUParticle3DInterParticleCollider(void);
 
     virtual void prepare() override;
     virtual void unPrepare() override;
@@ -68,6 +67,9 @@ public:
     */
     void setInterParticleCollisionResponse(InterParticleCollisionResponse interParticleCollisionResponse);
 
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DInterParticleCollider(void);
+    virtual ~PUParticle3DInterParticleCollider(void);
 
 protected:
 

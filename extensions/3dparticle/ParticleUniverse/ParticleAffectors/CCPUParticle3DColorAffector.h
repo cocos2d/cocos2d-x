@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DColorAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DColorAffector : public PUParticle3DAffector
 {
 public:
     typedef std::map<float, Vec4> ColorMap;
@@ -45,11 +45,7 @@ public:
     // Constants
     static const ColorOperation DEFAULT_COLOR_OPERATION;
 
-    // Constructor
-    PUParticle3DColorAffector();
-
-    // Destructor
-    virtual ~PUParticle3DColorAffector();
+    static PUParticle3DColorAffector* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
@@ -72,6 +68,10 @@ public:
     /** 
     */
     void setColorOperation (const ColorOperation& colorOperation);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DColorAffector();
+    virtual ~PUParticle3DColorAffector();
 
 protected:
 

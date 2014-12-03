@@ -147,4 +147,12 @@ void PUParticle3DRandomiser::postUpdateAffector(float deltaTime)
 {
     _update = false;
 }
+
+PUParticle3DRandomiser* PUParticle3DRandomiser::create()
+{
+    auto pr = new PUParticle3DRandomiser();
+    pr->autorelease();
+    return pr;
+}
+
 NS_CC_END

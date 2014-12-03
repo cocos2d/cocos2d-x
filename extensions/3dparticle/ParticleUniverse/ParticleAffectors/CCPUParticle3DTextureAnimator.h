@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DTextureAnimator : public PUParticle3DAffector
+class  CC_DLL PUParticle3DTextureAnimator : public PUParticle3DAffector
 {
 public:
     enum TextureAnimationType
@@ -48,8 +48,7 @@ public:
     static const TextureAnimationType DEFAULT_ANIMATION_TYPE;
     static const bool DEFAULT_START_RANDOM;
 
-    PUParticle3DTextureAnimator(void);
-    virtual ~PUParticle3DTextureAnimator(void);
+    static PUParticle3DTextureAnimator* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void initParticleForEmission(PUParticle3D* particle) override;
@@ -84,6 +83,10 @@ public:
 
     /** Todo */
     void setStartRandom(bool startRandom);
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DTextureAnimator(void);
+    virtual ~PUParticle3DTextureAnimator(void);
 
 protected:
 

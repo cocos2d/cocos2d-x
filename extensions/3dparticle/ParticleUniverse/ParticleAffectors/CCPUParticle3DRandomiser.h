@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DRandomiser : public PUParticle3DAffector
+class  CC_DLL PUParticle3DRandomiser : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -39,8 +39,7 @@ public:
     static const float DEFAULT_TIME_STEP;
     static const bool DEFAULT_RANDOM_DIRECTION;
 
-    PUParticle3DRandomiser(void);
-    virtual ~PUParticle3DRandomiser(void);
+    static PUParticle3DRandomiser* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -69,6 +68,10 @@ public:
     */
     bool isRandomDirection(void) const;
     void setRandomDirection(bool randomDirection);
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DRandomiser(void);
+    virtual ~PUParticle3DRandomiser(void);
 
 protected:
     float _maxDeviationX;

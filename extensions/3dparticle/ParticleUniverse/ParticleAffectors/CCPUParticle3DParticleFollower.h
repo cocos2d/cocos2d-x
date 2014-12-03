@@ -31,15 +31,14 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DParticleFollower : public PUParticle3DAffector
+class  CC_DLL PUParticle3DParticleFollower : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_MAX_DISTANCE;
     static const float DEFAULT_MIN_DISTANCE;
 
-    PUParticle3DParticleFollower(void);
-    virtual ~PUParticle3DParticleFollower(void);
+    static PUParticle3DParticleFollower* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
@@ -53,6 +52,10 @@ public:
     */
     float getMinDistance(void) const;
     void setMinDistance(float minDistance);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DParticleFollower(void);
+    virtual ~PUParticle3DParticleFollower(void);
 
 protected:
     float _minDistance;

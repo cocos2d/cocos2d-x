@@ -31,14 +31,13 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DVelocityMatchingAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DVelocityMatchingAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_RADIUS;
 
-    PUParticle3DVelocityMatchingAffector(void);
-    virtual ~PUParticle3DVelocityMatchingAffector(void);
+    static PUParticle3DVelocityMatchingAffector* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** Todo
@@ -54,6 +53,10 @@ public:
 
     /** @copydoc ParticleAffector::_unprepare */
     //virtual void _unprepare(ParticleTechnique* particleTechnique);
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DVelocityMatchingAffector(void);
+    virtual ~PUParticle3DVelocityMatchingAffector(void);
         
 protected:
     float _radius;

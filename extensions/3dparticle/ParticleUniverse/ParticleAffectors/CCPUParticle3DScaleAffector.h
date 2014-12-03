@@ -32,7 +32,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DScaleAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DScaleAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -41,8 +41,7 @@ public:
     static const float DEFAULT_Z_SCALE;
     static const float DEFAULT_XYZ_SCALE;
 
-    PUParticle3DScaleAffector(void);
-    virtual ~PUParticle3DScaleAffector(void);
+    static PUParticle3DScaleAffector* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
@@ -74,6 +73,10 @@ public:
     */
     bool isSinceStartSystem(void) const {return _sinceStartSystem;};
     void setSinceStartSystem(bool sinceStartSystem){_sinceStartSystem = sinceStartSystem;};
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DScaleAffector(void);
+    virtual ~PUParticle3DScaleAffector(void);
 
 protected:
 

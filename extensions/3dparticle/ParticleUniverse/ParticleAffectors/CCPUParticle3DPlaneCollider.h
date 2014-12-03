@@ -32,14 +32,13 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DPlaneCollider : public PUParticle3DBaseCollider
+class  CC_DLL PUParticle3DPlaneCollider : public PUParticle3DBaseCollider
 {
 public:
     // Constants
     static const Vec3 DEFAULT_NORMAL;
 
-    PUParticle3DPlaneCollider(void);
-    virtual ~PUParticle3DPlaneCollider(void);
+	static PUParticle3DPlaneCollider* create();
 
     virtual void notifyRescaled(const Vec3& scale) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -55,6 +54,10 @@ public:
     /** 
     */
     void calculateDirectionAfterCollision(PUParticle3D* particle, float timeElapsed);
+
+CC_CONSTRUCTOR_ACCESS:	
+	PUParticle3DPlaneCollider(void);
+	virtual ~PUParticle3DPlaneCollider(void);
 
 protected:
     Vec3 _normal;

@@ -32,7 +32,7 @@
 NS_CC_BEGIN
 
 struct PUParticle3D;
-class  PUParticle3DBaseCollider : public PUParticle3DAffector
+class  CC_DLL PUParticle3DBaseCollider : public PUParticle3DAffector
 {
 public:
     /** Determines how a particle collision should be determined. IT_POINT means that the position of 
@@ -66,9 +66,6 @@ public:
     static const float DEFAULT_FRICTION;
     static const IntersectionType DEFAULT_INTERSECTION_TYPE;
     static const CollisionType DEFAULT_COLLISION_TYPE;
-
-    PUParticle3DBaseCollider();
-    virtual ~PUParticle3DBaseCollider();
 
     virtual void preUpdateAffector(float deltaTime) override;
 
@@ -117,6 +114,10 @@ public:
         BaseCollider.
     */
     void calculateRotationSpeedAfterCollision(PUParticle3D* particle);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DBaseCollider();
+    virtual ~PUParticle3DBaseCollider();
 
 protected:
 

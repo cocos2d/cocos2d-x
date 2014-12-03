@@ -162,6 +162,13 @@ void PUParticle3DGeometryRotator::updateAffector( PUParticle3D *particle, float 
     }
 }
 
+PUParticle3DGeometryRotator* PUParticle3DGeometryRotator::create()
+{
+    auto pgr = new PUParticle3DGeometryRotator();
+    pgr->autorelease();
+    return pgr;
+}
+
 //-----------------------------------------------------------------------
 
 NS_CC_END

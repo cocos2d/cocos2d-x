@@ -32,14 +32,13 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DSphereCollider : public PUParticle3DBaseCollider
+class  CC_DLL PUParticle3DSphereCollider : public PUParticle3DBaseCollider
 {
 public:
     // Constants
     static const float DEFAULT_RADIUS;
 
-    PUParticle3DSphereCollider(void);
-    virtual ~PUParticle3DSphereCollider(void);
+    static PUParticle3DSphereCollider* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -67,6 +66,10 @@ public:
     /** 
     */
     void calculateDirectionAfterCollision(PUParticle3D* particle, Vec3 distance, float distanceLength);
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DSphereCollider(void);
+    virtual ~PUParticle3DSphereCollider(void);
 
 protected:
     float _radius;

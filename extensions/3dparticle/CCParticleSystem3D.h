@@ -41,11 +41,17 @@ class Particle3DRender;
 
 struct Particle3D
 {
+    Particle3D();
+    virtual ~Particle3D();
     // property of particles
     Vec3 position; // position
+    Quaternion orientation;//  Orientation of the particle.
     Vec4 color;  // particle color
     Vec2 lb_uv; // left bottom uv
     Vec2 rt_uv; // right top uv
+    float width;//Own width
+    float height;//Own height
+    float depth;//Own depth
     
     //user defined property
     std::map<std::string, void*> userDefs;
@@ -100,7 +106,7 @@ public:
     /**
      * add particle affector
      */
-    void addAddAffector(Particle3DAffector* affector);
+    void addAffector(Particle3DAffector* affector);
     
     /**
      * remove affector by index

@@ -115,4 +115,11 @@ void PUParticle3DVortexAffector::preUpdateAffector( float deltaTime )
     getDerivedPosition();
 }
 
+PUParticle3DVortexAffector* PUParticle3DVortexAffector::create()
+{
+    auto pvf = new PUParticle3DVortexAffector();
+    pvf->autorelease();
+    return pvf;
+}
+
 NS_CC_END

@@ -29,6 +29,23 @@
 
 NS_CC_BEGIN
 
+Particle3D::Particle3D()
+: position(Vec3::ZERO)
+, color(Vec4::ONE)
+, lb_uv(Vec2::ZERO)
+, rt_uv(Vec2::ONE)
+, width(1.0f)
+, height(1.0f)
+, depth(1.0f)
+{
+
+}
+
+Particle3D::~Particle3D()
+{
+
+}
+
 ParticleSystem3D::ParticleSystem3D()
 : _emitter(nullptr)
 , _render(nullptr)
@@ -109,10 +126,11 @@ void ParticleSystem3D::setRender(Particle3DRender* render)
     }
 }
 
-void ParticleSystem3D::addAddAffector(Particle3DAffector* affector)
+void ParticleSystem3D::addAffector(Particle3DAffector* affector)
 {
-    if (std::find(_affectors.begin(), _affectors.end(), affector) != _affectors.end()){
+    if (affector && std::find(_affectors.begin(), _affectors.end(), affector) == _affectors.end()){
         affector->_particleSystem = this;
+        affector->retain();
         _affectors.push_back(affector);
     }
 }

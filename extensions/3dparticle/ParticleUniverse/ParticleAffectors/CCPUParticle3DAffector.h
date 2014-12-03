@@ -35,7 +35,7 @@ NS_CC_BEGIN
 struct PUParticle3D;
 class PUParticleSystem3D;
 
-class PUParticle3DAffector : public Particle3DAffector
+class CC_DLL PUParticle3DAffector : public Particle3DAffector
 {
     friend class PUParticleSystem3D;
 public:
@@ -49,9 +49,6 @@ public:
         AFSP_TTL_INCREASE,
         AFSP_TTL_DECREASE
     };
-
-    PUParticle3DAffector();
-    virtual ~PUParticle3DAffector();
     
     virtual void notifyStart();
     virtual void notifyStop();
@@ -88,6 +85,10 @@ public:
     */
     const std::string& getName(void) const {return _name;};
     void setName(const std::string& name) {_name = name;};
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DAffector();
+    virtual ~PUParticle3DAffector();
 
 protected:
 

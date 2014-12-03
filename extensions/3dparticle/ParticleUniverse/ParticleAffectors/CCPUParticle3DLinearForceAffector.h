@@ -31,14 +31,18 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DLinearForceAffector : public PUParticle3DBaseForceAffector
+class  CC_DLL PUParticle3DLinearForceAffector : public PUParticle3DBaseForceAffector
 {
 public:
-    PUParticle3DLinearForceAffector(void);
-    virtual ~PUParticle3DLinearForceAffector(void);
+
+    static PUParticle3DLinearForceAffector* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+
+CC_CONSTRUCTOR_ACCESS:          
+    PUParticle3DLinearForceAffector(void){};
+    virtual ~PUParticle3DLinearForceAffector(void){};
 };
 NS_CC_END
 

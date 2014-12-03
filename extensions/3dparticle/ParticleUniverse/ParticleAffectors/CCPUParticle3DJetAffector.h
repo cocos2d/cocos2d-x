@@ -32,14 +32,13 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DJetAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DJetAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const float DEFAULT_ACCELERATION;
 
-    PUParticle3DJetAffector(void);
-    virtual ~PUParticle3DJetAffector(void);
+    static PUParticle3DJetAffector* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
@@ -47,6 +46,10 @@ public:
     */
     //DynamicAttribute* getDynAcceleration(void) const {return _dynAcceleration;};
     void setDynAcceleration(PUDynamicAttribute* dynAcceleration);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DJetAffector(void);
+    virtual ~PUParticle3DJetAffector(void);
 
 protected:
 

@@ -94,4 +94,11 @@ void PUParticle3DCollisionAvoidanceAffector::updateAffector( PUParticle3D *parti
 
 }
 
+PUParticle3DCollisionAvoidanceAffector* PUParticle3DCollisionAvoidanceAffector::create()
+{
+    auto pcaa = new PUParticle3DCollisionAvoidanceAffector();
+    pcaa->autorelease();
+    return pcaa;
+}
+
 NS_CC_END

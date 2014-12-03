@@ -105,4 +105,11 @@ void PUParticle3DSineForceAffector::updateAffector( PUParticle3D *particle, floa
     }
 }
 
+PUParticle3DSineForceAffector* PUParticle3DSineForceAffector::create()
+{
+    auto psfa = new PUParticle3DSineForceAffector();
+    psfa->autorelease();
+    return psfa;
+}
+
 NS_CC_END

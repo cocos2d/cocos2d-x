@@ -278,4 +278,11 @@ void PUParticle3DBoxCollider::preUpdateAffector( float deltaTime )
     calculateBounds();
 }
 
+PUParticle3DBoxCollider* PUParticle3DBoxCollider::create()
+{
+    auto pbc = new PUParticle3DBoxCollider();
+    pbc->autorelease();
+    return pbc;
+}
+
 NS_CC_END

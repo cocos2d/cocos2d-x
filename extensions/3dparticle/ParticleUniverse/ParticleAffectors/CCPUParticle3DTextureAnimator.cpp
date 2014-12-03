@@ -247,4 +247,11 @@ void PUParticle3DTextureAnimator::updateAffector( PUParticle3D *particle, float 
     }
 }
 
+PUParticle3DTextureAnimator* PUParticle3DTextureAnimator::create()
+{
+    auto pta = new PUParticle3DTextureAnimator();
+    pta->autorelease();
+    return pta;
+}
+
 NS_CC_END

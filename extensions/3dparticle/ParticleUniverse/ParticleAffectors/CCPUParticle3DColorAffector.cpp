@@ -124,4 +124,11 @@ void PUParticle3DColorAffector::updateAffector( PUParticle3D *particle, float de
     }
 }
 
+PUParticle3DColorAffector* PUParticle3DColorAffector::create()
+{
+    auto pca = new PUParticle3DColorAffector();
+    pca->autorelease();
+    return pca;
+}
+
 NS_CC_END

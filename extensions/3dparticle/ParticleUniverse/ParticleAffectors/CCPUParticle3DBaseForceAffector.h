@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DBaseForceAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DBaseForceAffector : public PUParticle3DAffector
 {
 public:
     enum ForceApplication
@@ -44,9 +44,6 @@ public:
     static const Vec3 DEFAULT_FORCE_VECTOR;
     static const ForceApplication DEFAULT_FORCE_APPL;
 
-    PUParticle3DBaseForceAffector();
-    virtual ~PUParticle3DBaseForceAffector();
-
     /** 
     */
     const Vec3& getForceVector() const;
@@ -56,6 +53,10 @@ public:
     */
     ForceApplication getForceApplication() const;
     void setForceApplication(ForceApplication forceApplication);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DBaseForceAffector();
+    virtual ~PUParticle3DBaseForceAffector();
 
 protected:
 

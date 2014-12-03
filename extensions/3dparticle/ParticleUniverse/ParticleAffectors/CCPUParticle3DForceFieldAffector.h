@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DForceFieldAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DForceFieldAffector : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -47,8 +47,7 @@ public:
     static const Vec3 DEFAULT_MOVEMENT;
     static const float DEFAULT_MOVEMENT_FREQUENCY;
 
-    PUParticle3DForceFieldAffector();
-    ~PUParticle3DForceFieldAffector();
+    static PUParticle3DForceFieldAffector* create();
 
     virtual void notifyStart() override;
     virtual void preUpdateAffector(float deltaTime) override;
@@ -125,6 +124,10 @@ public:
     /** Suppress (re)generation of the forcefield everytime an attribute is changed.
     */
     void suppressGeneration(bool suppress);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DForceFieldAffector();
+    ~PUParticle3DForceFieldAffector();
 
 protected:
 

@@ -32,11 +32,11 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DPathFollower : public PUParticle3DAffector
+class  CC_DLL PUParticle3DPathFollower : public PUParticle3DAffector
 {
 public:
-    PUParticle3DPathFollower(void);
-    virtual ~PUParticle3DPathFollower(void);
+
+    static PUParticle3DPathFollower* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** 
@@ -54,6 +54,10 @@ public:
     /** 
     */
     const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DPathFollower(void);
+    virtual ~PUParticle3DPathFollower(void);
 
 protected:
 

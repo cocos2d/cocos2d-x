@@ -32,7 +32,7 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DTextureRotator : public PUParticle3DAffector
+class  CC_DLL PUParticle3DTextureRotator : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -40,8 +40,7 @@ public:
     static const float DEFAULT_ROTATION_SPEED;
     static const float DEFAULT_ROTATION;
 
-    PUParticle3DTextureRotator(void);
-    virtual ~PUParticle3DTextureRotator(void);
+    static PUParticle3DTextureRotator* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
 
@@ -80,6 +79,10 @@ public:
 
     /** @copydoc ParticleAffector::_initParticleForEmission */
     virtual void initParticleForEmission(PUParticle3D* particle);
+
+CC_CONSTRUCTOR_ACCESS:	
+    PUParticle3DTextureRotator(void);
+    virtual ~PUParticle3DTextureRotator(void);
 
 protected:
     bool _useOwnRotationSpeed;

@@ -191,4 +191,11 @@ void PUParticle3DSphereCollider::preUpdateAffector( float deltaTime )
     _sphere.setCenter(getDerivedPosition());
 }
 
+PUParticle3DSphereCollider* PUParticle3DSphereCollider::create()
+{
+    auto psc = new PUParticle3DSphereCollider();
+    psc->autorelease();
+    return psc;
+}
+
 NS_CC_END

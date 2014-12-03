@@ -257,4 +257,11 @@ void PUParticle3DScaleAffector::updateAffector( PUParticle3D *particle, float de
 
 }
 
+PUParticle3DScaleAffector* PUParticle3DScaleAffector::create()
+{
+    auto psa = new PUParticle3DScaleAffector();
+    psa->autorelease();
+    return psa;
+}
+
 NS_CC_END

@@ -30,14 +30,13 @@
 
 NS_CC_BEGIN
 
-class  PUParticle3DAlignAffector : public PUParticle3DAffector
+class  CC_DLL PUParticle3DAlignAffector : public PUParticle3DAffector
 {
 public:
     // Constants
     static const bool DEFAULT_RESIZE;
 
-    PUParticle3DAlignAffector();
-    virtual ~PUParticle3DAlignAffector();
+    static PUParticle3DAlignAffector* create();
 
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
@@ -51,10 +50,14 @@ public:
     */
     void setResize(bool resize);
 
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DAlignAffector();
+    virtual ~PUParticle3DAlignAffector();
+
 protected:
 
     bool _resize;
-	PUParticle3D* _previousParticle;
+    PUParticle3D* _previousParticle;
 };
 NS_CC_END
 

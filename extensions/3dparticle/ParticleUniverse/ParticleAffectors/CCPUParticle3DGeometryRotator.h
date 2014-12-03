@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 struct PUParticle3D;
-class  PUParticle3DGeometryRotator : public PUParticle3DAffector
+class  CC_DLL PUParticle3DGeometryRotator : public PUParticle3DAffector
 {
 public:
     // Constants
@@ -39,8 +39,7 @@ public:
     static const float DEFAULT_ROTATION_SPEED;
     static const Vec3 DEFAULT_ROTATION_AXIS;
 
-    PUParticle3DGeometryRotator();
-    virtual ~PUParticle3DGeometryRotator();
+    static PUParticle3DGeometryRotator* create();
 
     virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
     /** @copydoc ParticleAffector::_initParticleForEmission */
@@ -75,6 +74,10 @@ public:
     /** 
     */
     void resetRotationAxis(void);
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DGeometryRotator();
+    virtual ~PUParticle3DGeometryRotator();
 
 protected:
 

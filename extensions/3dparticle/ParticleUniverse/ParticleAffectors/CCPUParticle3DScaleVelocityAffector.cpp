@@ -102,4 +102,12 @@ void PUParticle3DScaleVelocityAffector::resetDynScaleVelocity(bool resetToDefaul
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
     }
 }
+
+PUParticle3DScaleVelocityAffector* PUParticle3DScaleVelocityAffector::create()
+{
+    auto psva = new PUParticle3DScaleVelocityAffector();
+    psva->autorelease();
+    return psva;
+}
+
 NS_CC_END

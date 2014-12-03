@@ -167,4 +167,11 @@ void PUParticle3DInterParticleCollider::updateAffector( PUParticle3D *particle, 
     //}
 }
 
+PUParticle3DInterParticleCollider* PUParticle3DInterParticleCollider::create()
+{
+    auto pipc = new PUParticle3DInterParticleCollider();
+    pipc->autorelease();
+    return pipc;
+}
+
 NS_CC_END

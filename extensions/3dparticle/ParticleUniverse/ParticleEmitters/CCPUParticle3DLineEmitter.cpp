@@ -86,9 +86,9 @@ unsigned short PUParticle3DLineEmitter::calculateRequestedParticles(float timeEl
             requested = 0;
         }
 
-        //FIXME
+        ////FIXME
         //// For duration + repeat/delay: Clear the particles and start all over again.
-        //if (!mEnabled)
+        //if (!_isEnabled)
         //{
         //	notifyStart();
         //	mParentTechnique->lockAllParticles(); // Needed to set the first generated particle also first in the list with particles
@@ -145,7 +145,7 @@ void PUParticle3DLineEmitter::setMaxDeviation(float maxDeviation)
 //-----------------------------------------------------------------------
 void PUParticle3DLineEmitter::initParticlePosition(PUParticle3D* particle)
 {
-    // Remark: Don´t take the orientation of the node into account. The mEnd position is leading.
+    // Remark: Don't take the orientation of the node into account. The mEnd position is leading.
     if (_autoDirection || (_scaledMaxDeviation > 0.0f && !_first))
     {
         // Generate a random vector perpendicular on the line if this is required
@@ -208,8 +208,12 @@ void PUParticle3DLineEmitter::initParticleDirection(PUParticle3D* particle)
         generateAngle(angle);
         if (angle != 0.0f)
         {
-            //FIXME
             //particle->direction = _perpendicular.randomDeviant(angle, mUpVector);
+			Mat4 mat;
+			Mat4::createRotation(_perpendicular, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
+			Vec3 newUp = mat * _upVector;
+			Mat4::createRotation(newUp, angle, &mat);
+			particle->direction = mat * _perpendicular;
             particle->originalDirection = particle->direction;
         }
         else

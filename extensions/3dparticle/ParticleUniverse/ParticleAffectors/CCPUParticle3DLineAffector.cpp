@@ -117,7 +117,7 @@ void PUParticle3DLineAffector::preUpdateAffector(float deltaTime)
 
 void PUParticle3DLineAffector::updateAffector( PUParticle3D *particle, float deltaTime )
 {
-	//_first = true;
+    //_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;
@@ -154,6 +154,13 @@ void PUParticle3DLineAffector::postUpdateAffector(float deltaTime)
 void PUParticle3DLineAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
     _first = true;
+}
+
+PUParticle3DLineAffector* PUParticle3DLineAffector::create()
+{
+    auto pla = new PUParticle3DLineAffector();
+    pla->autorelease();
+    return pla;
 }
 
 NS_CC_END
