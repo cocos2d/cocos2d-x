@@ -22,6 +22,9 @@ function CryptoTestScene:AES256Test()
     local p = "Test123"
     local k = "KEYKEY"
     local c = crypto.encryptAES256(p, k)
+    if not c then
+        return
+    end
     printf("source: %s", p)
     printf("encrypt AES256: %s", bin2hex(c))
     printf("decrypt AES256: %s", crypto.decryptAES256(c, k))
