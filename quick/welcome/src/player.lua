@@ -155,7 +155,7 @@ function player:buildUI()
                       {title = "iPhone 4",  w=640,h=960},
                       {title = "iPhone 5",  w=640,h=1136},
                       {title = "iPad",      w=768,h=1024},
-                      {title = "iPad Retina", w=1436,h=2048},
+                      {title = "iPad Retina", w=1536,h=2048},
                       {title = "Android",   w=480,h=800},
                       {title = "Android",   w=480,h=854},
                       {title = "Android",   w=540,h=960},
