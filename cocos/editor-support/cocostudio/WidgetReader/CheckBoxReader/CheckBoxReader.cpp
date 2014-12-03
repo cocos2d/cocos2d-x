@@ -446,31 +446,31 @@ namespace cocostudio
         //load background image
         auto backGroundDic = options->backGroundBoxData();
         int backGroundType = backGroundDic->resourceType();
-        std::string backGroundTexturePath = this->getResourcePath(backGroundDic->path()->c_str(), (Widget::TextureResType)backGroundType);
+        std::string backGroundTexturePath = backGroundDic->path()->c_str();
         checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
         
         //load background selected image
         auto backGroundSelectedDic = options->backGroundBoxSelectedData();
         int backGroundSelectedType = backGroundSelectedDic->resourceType();
-        std::string backGroundSelectedTexturePath = this->getResourcePath(backGroundSelectedDic->path()->c_str(), (Widget::TextureResType)backGroundSelectedType);
+        std::string backGroundSelectedTexturePath = backGroundSelectedDic->path()->c_str();
         checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
         
         //load frontCross image
         auto frontCrossDic = options->frontCrossData();
         int frontCrossType = frontCrossDic->resourceType();
-        std::string frontCrossFileName = this->getResourcePath(frontCrossDic->path()->c_str(), (Widget::TextureResType)frontCrossType);
+        std::string frontCrossFileName = frontCrossDic->path()->c_str();
         checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
         
         //load backGroundBoxDisabledData
         auto backGroundDisabledDic = options->backGroundBoxDisabledData();
         int backGroundDisabledType = backGroundDisabledDic->resourceType();
-        std::string backGroundDisabledFileName = this->getResourcePath(backGroundDisabledDic->path()->c_str(), (Widget::TextureResType)backGroundDisabledType);
+        std::string backGroundDisabledFileName = backGroundDisabledDic->path()->c_str();
         checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
         
         ///load frontCrossDisabledData
         auto frontCrossDisabledDic = options->frontCrossDisabledData();
         int frontCrossDisabledType = frontCrossDisabledDic->resourceType();
-        std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic->path()->c_str(), (Widget::TextureResType)frontCrossDisabledType);
+        std::string frontCrossDisabledFileName = frontCrossDisabledDic->path()->c_str();
         checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         
         bool selectedstate = options->selectedState();

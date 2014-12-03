@@ -603,7 +603,7 @@ namespace cocostudio
         
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = imageFileNameDic->path()->c_str();
         panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         

@@ -478,31 +478,31 @@ namespace cocostudio
         
         auto imageFileNameDic = options->barFileNameData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = imageFileNameDic->path()->c_str();
         slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         //loading normal slider ball texture
         auto normalDic = options->ballNormalData();
         int normalType = normalDic->resourceType();
-        std::string normalFileName = this->getResourcePath(normalDic->path()->c_str(), (Widget::TextureResType)normalType);
+        std::string normalFileName = normalDic->path()->c_str();
         slider->loadSlidBallTextureNormal(normalFileName, (Widget::TextureResType)normalType);
         
         //loading slider ball press texture
         auto pressedDic = options->ballPressedData();
         int pressedType = pressedDic->resourceType();
-        std::string pressedFileName = this->getResourcePath(pressedDic->path()->c_str(), (Widget::TextureResType)pressedType);
+        std::string pressedFileName = pressedDic->path()->c_str();
         slider->loadSlidBallTexturePressed(pressedFileName, (Widget::TextureResType)pressedType);
         
         //loading silder ball disable texture
         auto disabledDic = options->ballDisabledData();
         int disabledType = disabledDic->resourceType();
-        std::string disabledFileName = this->getResourcePath(disabledDic->path()->c_str(), (Widget::TextureResType)disabledType);
+        std::string disabledFileName = disabledDic->path()->c_str();
         slider->loadSlidBallTextureDisabled(disabledFileName, (Widget::TextureResType)disabledType);
         
         //load slider progress texture
         auto progressBarDic = options->progressBarData();
         int progressBarType = progressBarDic->resourceType();
-        std::string progressBarFileName = this->getResourcePath(progressBarDic->path()->c_str(), (Widget::TextureResType)progressBarType);
+        std::string progressBarFileName = progressBarDic->path()->c_str();
         slider->loadProgressBarTexture(progressBarFileName, (Widget::TextureResType)progressBarType);
         
         bool displaystate = options->displaystate();

@@ -246,7 +246,7 @@ namespace cocostudio
         
         auto imageFileNameDic = options->textureData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = imageFileNameDic->path()->c_str();
         loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         int direction = options->direction();

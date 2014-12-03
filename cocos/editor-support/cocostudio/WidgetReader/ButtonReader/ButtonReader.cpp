@@ -559,17 +559,17 @@ namespace cocostudio
         
         auto normalDic = options->normalData();
         int normalType = normalDic->resourceType();
-        std::string normalTexturePath = this->getResourcePath(normalDic->path()->c_str(), (Widget::TextureResType)normalType);
+        std::string normalTexturePath = normalDic->path()->c_str();
         button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
         
         auto pressedDic = options->pressedData();
         int pressedType = pressedDic->resourceType();
-        std::string pressedTexturePath = this->getResourcePath(pressedDic->path()->c_str(), (Widget::TextureResType)pressedType);
+        std::string pressedTexturePath = pressedDic->path()->c_str();
         button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
         
         auto disabledDic = options->disabledData();
         int disabledType = disabledDic->resourceType();
-        std::string disabledTexturePath = this->getResourcePath(disabledDic->path()->c_str(), (Widget::TextureResType)disabledType);
+        std::string disabledTexturePath = disabledDic->path()->c_str();
         button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
         
         if (scale9Enabled)
