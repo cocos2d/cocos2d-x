@@ -460,7 +460,7 @@ void MeshCommand::setLightUniforms()
     else // normal does not exist
     {
         Vec3 ambient(0.0f, 0.0f, 0.0f);
-        bool hasAmbient;
+        bool hasAmbient = false;
         for (const auto& light : lights)
         {
             if (light->getLightType() == LightType::AMBIENT)
