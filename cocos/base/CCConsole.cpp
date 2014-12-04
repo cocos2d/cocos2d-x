@@ -200,6 +200,24 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+void SendLogToWindow(const char *log)
+{
+    // Send data as a message
+    COPYDATASTRUCT myCDS;
+    myCDS.dwData = 1;
+    myCDS.cbData = (DWORD)strlen(log) + 1;
+    myCDS.lpData = (PVOID)log;
+    if (Director::getInstance()->getOpenGLView())
+    {
+        HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
+        SendMessage(hwnd,
+            WM_COPYDATA,
+            (WPARAM)(HWND)hwnd,
+            (LPARAM)(LPVOID)&myCDS);
+    }
+}
+#endif
 
 //
 // Free functions to log
@@ -216,6 +234,11 @@ static void _log(const char *format, va_list args)
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
 
 #elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+    
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    SendLogToWindow(buf);
+    #endif
+    
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);

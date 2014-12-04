@@ -355,6 +355,17 @@ int PlayerWin::run()
         }
     }
 
+    // log file
+    if (_project.isWriteDebugLogToFile())
+    {
+        const string debugLogFilePath = _project.getDebugLogFilePath();
+        _writeDebugLogFile = fopen(debugLogFilePath.c_str(), "w");
+        if (!_writeDebugLogFile)
+        {
+            CCLOG("Cannot create debug log file %s", debugLogFilePath.c_str());
+        }
+    }
+
     // set environments
     SetCurrentDirectoryA(_project.getProjectDir().c_str());
     FileUtils::getInstance()->setSearchRootPath(_project.getProjectDir().c_str());
@@ -530,7 +541,11 @@ void PlayerWin::setZoom(float frameScale)
 // debug log
 void PlayerWin::writeDebugLog(const char *log)
 {
+    if (!_writeDebugLogFile) return;
 
+    fputs(log, _writeDebugLogFile);
+    fputc('\n', _writeDebugLogFile);
+    fflush(_writeDebugLogFile);
 }
 
 
@@ -710,6 +725,17 @@ LRESULT CALLBACK PlayerWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
         }
         break;
     }
+
+    case WM_COPYDATA:
+        {
+            PCOPYDATASTRUCT pMyCDS = (PCOPYDATASTRUCT) lParam;
+            if (pMyCDS->dwData == 1)
+            {
+                const char *szBuf = (const char*)(pMyCDS->lpData);
+                PlayerWin::getInstance()->writeDebugLog(szBuf);
+                break;
+            }
+        }
     }
     return g_oldWindowProc(hWnd, uMsg, wParam, lParam);
 }
