@@ -1289,8 +1289,8 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNode.cpp">
-      <Filter>cocostudio\TimelineAction</Filter>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNodee.cpp">
+      <Filter>cocostudio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2508,8 +2508,8 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNode.h">
-      <Filter>cocostudio\TimelineAction</Filter>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeLineNodee.h">
+      <Filter>cocostudio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
