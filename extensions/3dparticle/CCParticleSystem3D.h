@@ -52,6 +52,7 @@ struct Particle3D
     float width;//Own width
     float height;//Own height
     float depth;//Own depth
+    float depthInView;
     
     //user defined property
     std::map<std::string, void*> userDefs;

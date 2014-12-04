@@ -38,6 +38,7 @@
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DColorAffector.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffector.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DFlockCenteringAffector.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 
@@ -127,27 +128,27 @@ bool Particle3DTestDemo::init()
 ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
     auto ps = PUParticleSystem3D::create();
-
+    ps->setBlendFunc(BlendFunc::ADDITIVE);
     //emitter
     {
-        auto ppe = PUParticle3DPointEmitter::create();
+        auto ppe = PUParticle3DSphereSurfaceEmitter::create();
         ppe->setParticleDirection(Vec3(0.0f, 1.0f, 0.0f));
-        //ppe->setRadius(12.0f);
+        ppe->setRadius(12.0f);
 
         //PUDynamicAttributeFixed *angle = new PUDynamicAttributeFixed();
         //angle->setValue(0.0f);
         //ppe->setDynAngle(angle);
         PUDynamicAttributeFixed *velocity = new PUDynamicAttributeFixed();
-        velocity->setValue(10.0f);
+        velocity->setValue(3.0f);
         ppe->setDynVelocity(velocity);
         PUDynamicAttributeFixed *alive = new PUDynamicAttributeFixed();
         alive->setValue(3.0f);
         ppe->setDynTotalTimeToLive(alive);
         PUDynamicAttributeFixed *dim = new PUDynamicAttributeFixed();
-        dim->setValue(10.0f);
+        dim->setValue(12.0f);
         ppe->setDynParticleAllDimensions(dim);
         PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
-        rate->setValue(200.0f);
+        rate->setValue(1000.0f);
         ppe->setDynEmissionRate(rate);
         //ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
         //ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -156,21 +157,24 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 
     //affector
     {
-        //auto pca = PUParticle3DColorAffector::create();
-        //pca->addColor(0.0f, Vec4(0.0f, 0.0f, 0.2f, 1.0f));
-        //pca->addColor(0.9f, Vec4(0.8f, 0.8f, 1.0f, 1.0f));
-        //pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
-        //ps->addAffector(pca);
+        auto pca = PUParticle3DColorAffector::create();
+        pca->addColor(0.0f, Vec4(0.0f, 0.0f, 0.2f, 1.0f));
+        pca->addColor(0.9f, Vec4(0.8f, 0.8f, 1.0f, 1.0f));
+        pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+        ps->addAffector(pca);
 
-        //auto pga = PUParticle3DGravityAffector::create();
-        //pga->setGravity(5700);
-        //ps->addAffector(pga);
+        auto pga = PUParticle3DGravityAffector::create();
+        pga->setGravity(2700);
+        ps->addAffector(pga);
 
-        //auto psa = PUParticle3DScaleAffector::create();
-        //PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
-        //scl->setValue(-4.5f);
-        //psa->setDynScaleXYZ(scl);
-        //ps->addAffector(psa);
+        auto psa = PUParticle3DScaleAffector::create();
+        PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
+        scl->setValue(-4.5f);
+        psa->setDynScaleXYZ(scl);
+        ps->addAffector(psa);
+
+        auto pfca = PUParticle3DFlockCenteringAffector::create();
+        ps->addAffector(pfca);
     }
 
     //render

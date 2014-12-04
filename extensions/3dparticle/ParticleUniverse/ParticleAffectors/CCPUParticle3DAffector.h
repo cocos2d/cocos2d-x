@@ -29,6 +29,7 @@
 #include "math/CCMath.h"
 #include "3dparticle/CCParticle3DAffector.h"
 #include <vector>
+#include <string>
 
 NS_CC_BEGIN
 

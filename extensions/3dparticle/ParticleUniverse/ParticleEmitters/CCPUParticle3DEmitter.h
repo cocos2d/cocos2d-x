@@ -30,6 +30,7 @@
 #include "3dparticle/CCParticle3DEmitter.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
 #include <vector>
+#include <string>
 
 NS_CC_BEGIN
 struct PUParticle3D;

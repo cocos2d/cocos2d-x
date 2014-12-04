@@ -296,9 +296,8 @@ void PUParticleSystem3D::updator( float elapsedTime )
                     }
                 }
 
-                //need update render?
-
-                //processMotion(Particle* particle, Real timeElapsed, bool firstParticle)
+                // Keep latest position
+                particle->latestPosition = particle->position;
 
                 // Update the position with the direction.
                 particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);

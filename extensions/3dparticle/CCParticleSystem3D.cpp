@@ -37,6 +37,7 @@ Particle3D::Particle3D()
 , width(1.0f)
 , height(1.0f)
 , depth(1.0f)
+, depthInView(0.0f)
 {
 
 }

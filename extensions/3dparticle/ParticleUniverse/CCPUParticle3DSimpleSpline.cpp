@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DSimpleSpline.h"
+#include "base/ccMacros.h"
 
 NS_CC_BEGIN
 //---------------------------------------------------------------------
@@ -83,8 +84,7 @@ Vec3 PUSimpleSpline::interpolate(float t) const
 Vec3 PUSimpleSpline::interpolate(unsigned int fromIndex, float t) const
 {
     // Bounds check
-    assert (fromIndex < _points.size() &&
-        "fromIndex out of bounds");
+    CCASSERT (fromIndex < _points.size(), "fromIndex out of bounds");
 
     if ((fromIndex + 1) == _points.size())
     {
@@ -219,7 +219,7 @@ void PUSimpleSpline::recalcTangents(void)
 //---------------------------------------------------------------------
 const Vec3& PUSimpleSpline::getPoint(unsigned short index) const
 {
-    assert (index < _points.size() && "Point index is out of bounds!!");
+    CCASSERT (index < _points.size(), "Point index is out of bounds!!");
 
     return _points[index];
 }
@@ -237,7 +237,7 @@ void PUSimpleSpline::clear(void)
 //---------------------------------------------------------------------
 void PUSimpleSpline::updatePoint(unsigned short index, const Vec3& value)
 {
-    assert (index < _points.size() && "Point index is out of bounds!!");
+    CCASSERT (index < _points.size(),  "Point index is out of bounds!!");
 
     _points[index] = value;
     if (_autoCalc)

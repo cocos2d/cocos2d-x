@@ -44,13 +44,12 @@ protected:
     Vec3 _center;
 public:
     /** Standard constructor - creates a unit sphere around the origin.*/
-    PUSphere() : _radius(1.0), _center(Vec3::ZERO) {}
+    PUSphere();
     /** Constructor allowing arbitrary spheres. 
         @param center The center point of the sphere.
         @param radius The radius of the sphere.
     */
-    PUSphere(const Vec3& center, float radius)
-        : _radius(radius), _center(center) {}
+    PUSphere(const Vec3& center, float radius);
 
     /** Returns the radius of the sphere. */
     float getRadius(void) const { return _radius; }
@@ -85,42 +84,7 @@ public:
         return ((v - _center).lengthSquared() <= _radius * _radius);
     }
     /** Merges another Sphere into the current sphere */
-    void merge(const PUSphere& oth)
-    {
-        Vec3 diff =  oth.getCenter() - _center;
-        float lengthSq = diff.lengthSquared();
-        float radiusDiff = oth.getRadius() - _radius;
-            
-        // Early-out
-        if ((radiusDiff * radiusDiff) >= lengthSq) 
-        {
-            // One fully contains the other
-            if (radiusDiff <= 0.0f) 
-                return; // no change
-            else 
-            {
-                _center = oth.getCenter();
-                _radius = oth.getRadius();
-                return;
-            }
-        }
-            
-        float length = lengthSq * lengthSq;
-            
-        Vec3 newCenter;
-        float newRadius;
-        if ((length + oth.getRadius()) > _radius) 
-        {
-            float t = (length + radiusDiff) / (2.0f * length);
-            newCenter = _center + diff * t;
-        } 
-        // otherwise, we keep our existing center
-            
-        newRadius = 0.5f * (length + _radius + oth.getRadius());
-            
-        _center = newCenter;
-        _radius = newRadius;
-    }
+    void merge(const PUSphere& oth);
         
 
 };

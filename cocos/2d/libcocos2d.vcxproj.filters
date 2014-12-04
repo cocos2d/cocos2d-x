@@ -1418,6 +1418,9 @@
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DVortexAffector.cpp">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DSphere.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
