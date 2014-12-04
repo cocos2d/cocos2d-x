@@ -1,4 +1,5 @@
 cocos2d-x-3.3  ???
+    [FIX]           C++: use 100% of one core on Windows
     [FIX]           Label: when a label is added to a invisible parent node, app will crash if switching from background
     [FIX]           Label: label will not be shown when using system font on Mac
     [FIX]           Studio reader: replace protocol buffer with flatbuffer 
