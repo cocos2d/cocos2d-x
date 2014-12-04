@@ -29,7 +29,7 @@
 #include "../../cocos/ui/CocosGUI.h"
 #include "CCActionTimelineCache.h"
 #include "CCActionTimeline.h"
-#include "CCActionTimeLineNode.h"
+#include "CCActionTimelineNode.h"
 #include "../CCSGUIReader.h"
 #include "cocostudio/CocoStudio.h"
 #include "cocostudio/CSParseBinary_generated.h"
