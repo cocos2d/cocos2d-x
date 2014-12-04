@@ -1,6 +1,6 @@
 cocos2d-x-3.3  ???
-
     [FIX]           Label: when a label is added to a invisible parent node, app will crash if switching from background
+    [FIX]           Studio reader: replace protocol buffer with flatbuffer 
 
 cocos2d-x-3.3-rc1  Nov.29 2014
     [NEW]           Vec2: added greater than operator

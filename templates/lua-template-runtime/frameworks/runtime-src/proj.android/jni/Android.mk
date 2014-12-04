@@ -6,8 +6,7 @@ LOCAL_MODULE := cocos2dlua_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dlua
 
-LOCAL_SRC_FILES := hellolua/main.cpp \
-hellolua/Runtime_android.cpp \
+LOCAL_SRC_FILES := \
 ../../Classes/protobuf-lite/google/protobuf/io/coded_stream.cc \
 ../../Classes/protobuf-lite/google/protobuf/stubs/common.cc \
 ../../Classes/protobuf-lite/google/protobuf/extension_set.cc \
@@ -20,18 +19,22 @@ hellolua/Runtime_android.cpp \
 ../../Classes/protobuf-lite/google/protobuf/io/zero_copy_stream.cc \
 ../../Classes/protobuf-lite/google/protobuf/io/zero_copy_stream_impl_lite.cc \
 ../../Classes/protobuf-lite/google/protobuf/stubs/stringprintf.cc \
+../../Classes/runtime/ConnectWaitLayer.cpp \
+../../Classes/runtime/ConsoleCommand.cpp \
+../../Classes/runtime/FileServer.cpp \
 ../../Classes/runtime/Landscape_png.cpp \
+../../Classes/runtime/lua_debugger.c \
 ../../Classes/runtime/PlayDisable_png.cpp \
 ../../Classes/runtime/PlayEnable_png.cpp \
 ../../Classes/runtime/Portrait_png.cpp \
-../../Classes/runtime/Shine_png.cpp \
-../../Classes/runtime/Runtime.cpp \
 ../../Classes/runtime/Protos.pb.cc \
-../../Classes/runtime/lua_debugger.c \
+../../Classes/runtime/Runtime.cpp \
+../../Classes/runtime/Shine_png.cpp \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
-../../Classes/ConfigParser.cpp
-
+../../Classes/ConfigParser.cpp \
+hellolua/Runtime_android.cpp \
+hellolua/main.cpp
 
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \

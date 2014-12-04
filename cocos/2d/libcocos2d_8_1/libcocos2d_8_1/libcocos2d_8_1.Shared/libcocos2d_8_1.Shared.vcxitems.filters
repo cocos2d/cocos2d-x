@@ -802,101 +802,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.h">
       <Filter>external\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream_inl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_arm_gcc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_arm_qnx.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_atomicword_compat.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_macosx.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_mips_gcc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_pnacl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_gcc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\common.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\hash.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\map-util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\once.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\platform_macros.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\stl_util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\template_util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\type_traits.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\config.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\extension_set.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\message_lite.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\repeated_field.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite_inl.h">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CSLoader.h">
       <Filter>cocostudio\TimelineAction</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParseBinary.pb.h">
-      <Filter>cocostudio</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UILayoutComponent.h">
       <Filter>ui\Layouts</Filter>
@@ -1305,6 +1212,51 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ZipUtils.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\util.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParseBinary_generated.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ComAudioReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReader\NodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\NodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\SpriteReader\SingleNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h">
+      <Filter>cocostudio\reader\WidgetReader\SpriteReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h">
+      <Filter>cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.h">
+      <Filter>cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ParticleReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1952,50 +1904,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.cpp">
       <Filter>external\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\coded_stream.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\io\zero_copy_stream_impl_lite.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\io</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_gcc.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\common.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\once.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf\stubs</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\generated_message_util.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\message_lite.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\repeated_field.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.cc">
-      <Filter>cocostudio\json\protobuf-lite\src\google\protobuf</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParseBinary.pb.cc">
-      <Filter>cocostudio</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UILayoutComponent.cpp">
       <Filter>ui\Layouts</Filter>
@@ -2369,6 +2279,57 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ZipUtils.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_cpp.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_fbs.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_general.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_go.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_text.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_parser.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ComAudioReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReader\NodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\NodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\SpriteReader\SingleNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\SpriteReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp">
+      <Filter>cocostudio\reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.cpp">
+      <Filter>cocostudio\reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ParticleReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -2575,23 +2536,29 @@
     <Filter Include="cocosdenshion\Source Files">
       <UniqueIdentifier>{5f37f118-5902-4683-9243-fcc77bdbf3e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite">
-      <UniqueIdentifier>{f51f496d-43b3-4c80-b01d-8db1ff82ba87}</UniqueIdentifier>
+    <Filter Include="cocostudio\json\flatbuffers">
+      <UniqueIdentifier>{ea248cf4-798f-418c-8beb-39c9c864a802}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src">
-      <UniqueIdentifier>{897038a8-2cd2-4c8b-adac-5d716757ebb8}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\ComAudioReader">
+      <UniqueIdentifier>{a9889035-45b0-4671-97a0-61df5b0d9283}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google">
-      <UniqueIdentifier>{768b728a-70a8-4dd0-b04d-c8d7f70e7677}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\GameMapReader">
+      <UniqueIdentifier>{9020bd24-1e83-4a61-98ce-3727c6677cc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf">
-      <UniqueIdentifier>{6d403f90-95d9-4ebf-9f53-5e79db30f68c}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\NodeReader">
+      <UniqueIdentifier>{c98f9dbc-048a-4efe-95eb-a0867f320928}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf\io">
-      <UniqueIdentifier>{5f6acaf0-cbff-42f8-bdf2-21b43efa5680}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\SpriteReader">
+      <UniqueIdentifier>{1b632e54-5bd0-4d5b-98b2-8d656f96fa5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\protobuf-lite\src\google\protobuf\stubs">
-      <UniqueIdentifier>{b16255cc-6a35-4ee4-b77b-46a781b40d9b}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\ParticleReader">
+      <UniqueIdentifier>{0bffceb2-5483-4697-a6d6-4e56f469e0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\SpriteReader\SingleNodeReader">
+      <UniqueIdentifier>{b6756a21-fab2-49e2-94ee-8100c134e797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\ProjectNodeReader">
+      <UniqueIdentifier>{a6638f35-5c81-4835-9897-0f9efb0be02b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

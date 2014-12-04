@@ -2,6 +2,7 @@
 #include "../../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
+#include "VisibleRect.h"
 
 
 using namespace cocos2d;
@@ -25,9 +26,11 @@ Layer *CreateAnimationLayer(int index)
     case TEST_CHANGE_PLAY_SECTION:
         pLayer = new (std::nothrow) TestChangePlaySection();
         break;
+    /*
     case TEST_TIMELINE_FRAME_EVENT:
         pLayer = new (std::nothrow) TestTimelineFrameEvent();
         break;
+     */
     case TEST_TIMELINE_PERFORMACE:
         pLayer = new (std::nothrow) TestTimelinePerformance();
         break;
@@ -194,12 +197,10 @@ void TestActionTimeline::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
-
-    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/boy_1.csb", 0, 60, true);
+    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
 
     node->setScale(0.2f);
-    node->setPosition(150,100);
+    node->setPosition(VisibleRect::center());
 
     addChild(node);
 }
@@ -216,13 +217,16 @@ void TestChangePlaySection::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
+    //ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 130, true);
+    //action = node->getActionTimeline();
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
 
-    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/boy_1.csb", 70, 130, true);
-    action = node->getActionTimeline();
+    node->runAction(action);
+    action->gotoFrameAndPlay(41, action->getDuration(), true);
 
     node->setScale(0.2f);
-    node->setPosition(150,100);
+    node->setPosition(VisibleRect::center());
 
     // add touch event listener
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -292,11 +296,14 @@ void TestTimelinePerformance::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
-
     for (int i = 0; i< 100; i++)
     {
-        ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/boy_1.csb", 70, 130, true);
+        //ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/boy_1.csb", 41, 130, true);
+        Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
+        ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
+
+        node->runAction(action);
+        action->gotoFrameAndPlay(41, action->getDuration(), true);
 
         node->setScale(0.1f);
         node->setPosition(i*2,100);
