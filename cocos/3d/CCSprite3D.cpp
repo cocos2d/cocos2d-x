@@ -92,25 +92,24 @@ void Sprite3D::createAsync(const std::string &modelPath, const std::string &text
     }
     
     sprite->_asyncLoadParam.afterLoadCallback = callback;
-    sprite->_asyncLoadParam.asyncFuture = AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](Sprite3D* sp, const std::string& path)
+    sprite->_asyncLoadParam.texPath = texturePath;
+    sprite->_asyncLoadParam.path = modelPath;
+    sprite->_asyncLoadParam.materialdatas = new (std::nothrow) MaterialDatas();
+    sprite->_asyncLoadParam.meshdatas = new (std::nothrow) MeshDatas();
+    sprite->_asyncLoadParam.nodeDatas = new (std::nothrow) NodeDatas();
+    AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, CC_CALLBACK_1(Sprite3D::afterAsyncLoad, sprite), (void*)(&sprite->_asyncLoadParam), [](Sprite3D* sp)
     {
-        sp->_asyncLoadParam.materialdatas = new (std::nothrow) MaterialDatas();
-        sp->_asyncLoadParam.meshdatas = new (std::nothrow) MeshDatas();
-        sp->_asyncLoadParam.nodeDatas = new (std::nothrow) NodeDatas();
-        sp->_asyncLoadParam.path = path;
-        sp->_asyncLoadParam.result = sp->loadFromFile(path, sp->_asyncLoadParam.nodeDatas, sp->_asyncLoadParam.meshdatas, sp->_asyncLoadParam.materialdatas);
-    }, sprite, modelPath);
-    
-    sprite->schedule(SEL_SCHEDULE(&Sprite3D::asyncLoadChecker), 0);
+        sp->_asyncLoadParam.result = sp->loadFromFile(sp->_asyncLoadParam.path, sp->_asyncLoadParam.nodeDatas, sp->_asyncLoadParam.meshdatas, sp->_asyncLoadParam.materialdatas);
+    }, sprite);
     
 }
 
-void Sprite3D::asyncLoadChecker(float delta)
+void Sprite3D::afterAsyncLoad(void* param)
 {
-    static std::chrono::milliseconds span(0);
-    if (_asyncLoadParam.asyncFuture.valid() && _asyncLoadParam.asyncFuture.wait_for(span) == std::future_status::ready)
+    Sprite3D::AsyncLoadParam* asyncParam = (Sprite3D::AsyncLoadParam*)param;
+    if (asyncParam)
     {
-        if (_asyncLoadParam.result)
+        if (asyncParam->result)
         {
             _meshes.clear();
             _meshVertexDatas.clear();
@@ -118,9 +117,9 @@ void Sprite3D::asyncLoadChecker(float delta)
             removeAllAttachNode();
             
             //create in the main thread
-            auto& meshdatas = _asyncLoadParam.meshdatas;
-            auto& materialdatas = _asyncLoadParam.materialdatas;
-            auto&   nodeDatas = _asyncLoadParam.nodeDatas;
+            auto& meshdatas = asyncParam->meshdatas;
+            auto& materialdatas = asyncParam->materialdatas;
+            auto&   nodeDatas = asyncParam->nodeDatas;
             if (initFrom(*nodeDatas, *meshdatas, *materialdatas))
             {
                 //add to cache
@@ -132,7 +131,7 @@ void Sprite3D::asyncLoadChecker(float delta)
                     data->glProgramStates.pushBack(mesh->getGLProgramState());
                 }
                 
-                Sprite3DCache::getInstance()->addSprite3DData(_asyncLoadParam.path, data);
+                Sprite3DCache::getInstance()->addSprite3DData(asyncParam->path, data);
                 meshdatas = nullptr;
                 materialdatas = nullptr;
                 nodeDatas = nullptr;
@@ -140,9 +139,13 @@ void Sprite3D::asyncLoadChecker(float delta)
             delete meshdatas;
             delete materialdatas;
             delete nodeDatas;
+            
+            if (asyncParam->texPath != "")
+            {
+                setTexture(asyncParam->texPath);
+            }
         }
-        _asyncLoadParam.afterLoadCallback(this);
-        unschedule(SEL_SCHEDULE(&Sprite3D::asyncLoadChecker));
+        asyncParam->afterLoadCallback(this);
     }
 }
 

@@ -26,7 +26,6 @@
 #define __CCSPRITE3D_H__
 
 #include <unordered_map>
-#include <future>
 
 #include "base/CCVector.h"
 #include "base/ccTypes.h"
@@ -163,7 +162,7 @@ CC_CONSTRUCTOR_ACCESS:
     
     void onAABBDirty() { _aabbDirty = true; }
     
-    void asyncLoadChecker(float delta);
+    void afterAsyncLoad(void* param);
     
 protected:
 
@@ -185,10 +184,10 @@ protected:
     
     struct AsyncLoadParam
     {
-        std::future<void>            asyncFuture; // future for load 3d sprite async
         std::function<void(Sprite3D*)> afterLoadCallback; // callback after load
         bool                            result; // sprite load result
         std::string                     path;
+        std::string                     texPath; //
         MeshDatas* meshdatas;
         MaterialDatas* materialdatas;
         NodeDatas*   nodeDatas;

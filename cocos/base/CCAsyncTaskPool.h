@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCSYNC_TASK_POOL_H_
 
 #include "platform/CCPlatformMacros.h"
+#include "base/CCRef.h"
 #include <vector>
 #include <queue>
 #include <memory>
@@ -43,6 +44,8 @@ NS_CC_BEGIN
 class AsyncTaskPool
 {
 public:
+    typedef std::function<void(void*)> TaskCallBack;
+    
     enum class TaskType
     {
         TASK_IO,
@@ -50,12 +53,35 @@ public:
         TASK_OTHER,
         TASK_MAX_TYPE,
     };
+    /**
+     * get instance
+     */
     static AsyncTaskPool* getInstance();
-    
+    /**
+     * destroy instance
+     */
     static void destoryInstance();
     
+    /**
+     * get max number of call back per process, -1 means unlimited (-1 is the default value)
+     */
+    static int getMaxTaskCallBackPerProcess();
+    
+    /**
+     * set max number of call back per process, -1 means unlimited
+     */
+    static void setMaxTaskCallBackPerProcess(int numTaskCallBack);
+    
+    /**
+     * process the call back after task, this should be called in the main thread
+     */
+    void processTaskCallBack()
+    {
+        _taskcallbackDispatcher.update();
+    }
+    
     template<class F, class... Args>
-    auto enqueue(TaskType type, F&& f, Args&&... args)
+    auto enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
     -> std::future<typename std::result_of<F(Args...)>::type>;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -63,6 +89,12 @@ CC_CONSTRUCTOR_ACCESS:
     ~AsyncTaskPool();
     
 protected:
+    struct AsyncTaskCallBack
+    {
+        TaskCallBack          callback;
+        void*                 callbackParam;
+    };
+    
     // thread tasks internally used
     class ThreadTasks {
         friend class AsyncTaskPool;
@@ -76,7 +108,7 @@ protected:
                                       for(;;)
                                       {
                                           std::function<void()> task;
-                                          
+                                          AsyncTaskCallBack callback;
                                           {
                                               std::unique_lock<std::mutex> lock(this->_queue_mutex);
                                               this->_condition.wait(lock,
@@ -84,10 +116,14 @@ protected:
                                               if(this->_stop && this->_tasks.empty())
                                                   return;
                                               task = std::move(this->_tasks.front());
+                                              callback = std::move(this->_taskCallBacks.front());
                                               this->_tasks.pop();
+                                              this->_taskCallBacks.pop();
                                           }
                                           
                                           task();
+                                          AsyncTaskPool::getInstance()->_taskcallbackDispatcher.enqueue(callback);
+                                          //task();
                                       }
                                   }
                                   );
@@ -100,10 +136,13 @@ protected:
             _thread.join();
         }
     private:
+        
         // need to keep track of thread so we can join them
         std::thread _thread;
         // the task queue
         std::queue< std::function<void()> > _tasks;
+        std::queue<AsyncTaskCallBack>            _taskCallBacks;
+//        std::queue< AsyncTask > _tasks;
         
         // synchronization
         std::mutex _queue_mutex;
@@ -111,13 +150,55 @@ protected:
         bool _stop;
     };
     
+    class AfterAsyncTaskDispatcher
+    {
+    public:
+        void update()
+        {
+            if (_callBacks.empty())
+                return;
+            
+            std::unique_lock<std::mutex> lock(_queue_mutex);
+            int numCallBack = 0;
+            
+            for (auto& it : _callBacks) {
+                if (s_maxCallBackPerProcess != -1 && ++numCallBack > s_maxCallBackPerProcess)
+                    break;
+                
+                if (it.callback)
+                {
+                    it.callback(it.callbackParam);
+                }
+            }
+            
+            _callBacks.erase(_callBacks.begin(), _callBacks.begin() + numCallBack);
+        }
+        
+        AfterAsyncTaskDispatcher() {}
+        ~AfterAsyncTaskDispatcher() {}
+        
+        void enqueue(const AsyncTaskCallBack& callback)
+        {
+            std::unique_lock<std::mutex> lock(_queue_mutex);
+            _callBacks.push_back(callback);
+        }
+        
+    protected:
+        
+        std::vector<AsyncTaskCallBack> _callBacks;
+        std::mutex _queue_mutex;
+    };
+    
     //tasks
     ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
+    //deal task call back
+    AfterAsyncTaskDispatcher _taskcallbackDispatcher;
     static AsyncTaskPool* s_asyncTaskPool;
+    static int s_maxCallBackPerProcess;
 };
 
 template<class F, class... Args>
-auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, F&& f, Args&&... args)
+auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
 -> std::future<typename std::result_of<F(Args...)>::type>
 {
     auto& threadTask = _threadTasks[(int)type];
@@ -132,6 +213,7 @@ auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, F&& f, Args&&... args)
     auto& stop = threadTask._stop;
     auto& tasks = threadTask._tasks;
     auto& condition = threadTask._condition;
+    auto& taskcallbacks = threadTask._taskCallBacks;
     std::future<return_type> res = task->get_future();
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
@@ -143,7 +225,11 @@ auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, F&& f, Args&&... args)
             return res;
         }
         
+        AsyncTaskCallBack taskCallBack;
+        taskCallBack.callback = callback;
+        taskCallBack.callbackParam = callbackParam;
         tasks.emplace([task](){ (*task)(); });
+        taskcallbacks.emplace(taskCallBack);
     }
     condition.notify_one();
     

@@ -57,6 +57,7 @@ THE SOFTWARE.
 #include "base/CCConsole.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
+#include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
 
@@ -266,6 +267,7 @@ void Director::drawScene()
     {
         _scheduler->update(_deltaTime);
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
+        AsyncTaskPool::getInstance()->processTaskCallBack();
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

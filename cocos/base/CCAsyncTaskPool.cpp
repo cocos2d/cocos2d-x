@@ -29,6 +29,8 @@ NS_CC_BEGIN
 
 AsyncTaskPool* AsyncTaskPool::s_asyncTaskPool = nullptr;
 
+int AsyncTaskPool::s_maxCallBackPerProcess = -1;
+
 AsyncTaskPool* AsyncTaskPool::getInstance()
 {
     if (s_asyncTaskPool == nullptr)
@@ -42,6 +44,17 @@ void AsyncTaskPool::destoryInstance()
 {
     delete s_asyncTaskPool;
     s_asyncTaskPool = nullptr;
+}
+
+int AsyncTaskPool::getMaxTaskCallBackPerProcess()
+{
+    return s_maxCallBackPerProcess;
+}
+
+void AsyncTaskPool::setMaxTaskCallBackPerProcess(int numTaskCallBack)
+{
+    if (numTaskCallBack > 0 || numTaskCallBack == -1)
+        s_maxCallBackPerProcess = numTaskCallBack;
 }
 
 AsyncTaskPool::AsyncTaskPool()
