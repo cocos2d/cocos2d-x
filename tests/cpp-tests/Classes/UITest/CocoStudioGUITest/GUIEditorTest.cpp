@@ -120,6 +120,7 @@ g_guisTests[] =
         }
 	},
      */
+    /*
     {
         "gui TextAtlas Editor Test",
         [](Ref* sender)
@@ -132,6 +133,7 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+     */
     {
         "gui Text Editor Test",
         [](Ref* sender)
@@ -270,9 +272,7 @@ static Vec2 s_tCurPos = Vec2::ZERO;
 ////////////////////////////////////////////////////////
 void GUIEditorMainLayer::onEnter()
 {
-    Layer::onEnter();
-    
-    CSLoader::getInstance()->setRecordProtocolBuffersPath(true);
+    Layer::onEnter();    
     
     auto s = Director::getInstance()->getWinSize();
     

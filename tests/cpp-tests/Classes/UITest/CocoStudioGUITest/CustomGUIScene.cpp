@@ -4,6 +4,7 @@
 #include "CocoStudioGUITest.h"
 #include "CustomTest/CustomImageTest/CustomImageTest.h"
 #include "CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.h"
+#include "CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.h"
 
 
 enum
@@ -19,6 +20,16 @@ static struct
 }
 g_guisTests[] =
 {
+    {
+        "custom widget call back bind Test",
+        [](Ref* sender)
+        {
+            CustomWidgetCallbackBindScene* pScene = new (std::nothrow) CustomWidgetCallbackBindScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+    },
+    /*
 	{
         "custom gui image Test",
         [](Ref* sender)
@@ -37,6 +48,7 @@ g_guisTests[] =
             pScene->release();
         }
 	},
+     */
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);

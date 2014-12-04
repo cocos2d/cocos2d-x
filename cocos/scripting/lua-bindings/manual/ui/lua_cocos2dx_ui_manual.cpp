@@ -93,7 +93,7 @@ static int lua_cocos2dx_Widget_addTouchEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addTouchEventListener' function of Widget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addTouchEventListener' function of Widget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -154,7 +154,7 @@ static int lua_cocos2dx_CheckBox_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of CheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of CheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -216,7 +216,7 @@ static int lua_cocos2dx_Slider_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of Slider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of Slider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -278,7 +278,7 @@ static int lua_cocos2dx_TextField_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of TextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of TextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -340,7 +340,7 @@ static int lua_cocos2dx_PageView_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of PageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of PageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -402,7 +402,7 @@ static int lua_cocos2dx_ScrollView_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of ScrollView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of ScrollView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -465,7 +465,7 @@ static int lua_cocos2dx_ListView_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -517,7 +517,7 @@ static int lua_cocos2dx_ListView_addScrollViewEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addScrollViewEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addScrollViewEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -597,7 +597,7 @@ static int lua_cocos2dx_LayoutParameter_setMargin(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -656,7 +656,7 @@ static int lua_cocos2dx_LayoutParameter_getMargin(lua_State* L)
         return 1;
     }
     
-    CCLOG("'getMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'getMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     
     return 0;
     
@@ -717,7 +717,7 @@ static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:registerScriptEditBoxHandler", argc, 1);
+    luaL_error(L, "%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:registerScriptEditBoxHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -759,7 +759,7 @@ static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:unregisterScriptEditBoxHandler", argc, 0);
+    luaL_error(L, "%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:unregisterScriptEditBoxHandler", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -828,7 +828,7 @@ static int tolua_cocos2dx_EventListenerFocus_create(lua_State* L)
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:create", argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:create", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -899,7 +899,7 @@ static int tolua_cocos2dx_EventListenerFocus_clone(lua_State* L)
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:clone", argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:clone", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -955,7 +955,7 @@ static int tolua_cocos2dx_EventListenerFocus_registerScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:registerScriptHandler", argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:registerScriptHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1

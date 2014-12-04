@@ -116,6 +116,9 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp \
+../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNode.cpp \
+../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNodeReader.cpp \
+../../Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.cpp \
 ../../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
 ../../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
 ../../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \

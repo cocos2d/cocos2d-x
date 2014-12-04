@@ -162,7 +162,10 @@ _layoutParameterType(LayoutParameter::Type::NONE),
 _focused(false),
 _focusEnabled(true),
 _touchEventListener(nullptr),
-_touchEventSelector(nullptr)
+_touchEventSelector(nullptr),
+_ccEventCallback(nullptr),
+_callbackType(""),
+_callbackName("")
 {
   
 }
@@ -872,6 +875,11 @@ void Widget::addTouchEventListener(const ccWidgetTouchCallback& callback)
 void Widget::addClickEventListener(const ccWidgetClickCallback &callback)
 {
     this->_clickEventListener = callback;
+}
+    
+void Widget::addCCSEventListener(const ccWidgetEventCallback &callback)
+{
+    this->_ccEventCallback = callback;
 }
 
 bool Widget::hitTest(const Vec2 &pt)

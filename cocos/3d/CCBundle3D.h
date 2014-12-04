@@ -144,14 +144,17 @@ protected:
     void getModelRelativePath(const std::string& path);
 
     /*
-    * set the read position in buffer to the target type
-    * @param The data type
-    */
-    Reference* seekToFirstType(unsigned int type);
+     * set the read position in buffer to the target type
+     * @param The data type
+     * @param The data id
+     */
+    Reference* seekToFirstType(unsigned int type, const std::string& id = "");
 
 CC_CONSTRUCTOR_ACCESS:
     Bundle3D();
     virtual ~Bundle3D();
+    
+    static AABB calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
     
 protected:
     static Bundle3D* _instance;

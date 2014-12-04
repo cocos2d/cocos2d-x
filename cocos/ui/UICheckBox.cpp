@@ -360,6 +360,10 @@ void CheckBox::selectedEvent()
     {
         _checkBoxEventCallback(this, EventType::SELECTED);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SELECTED));
+    }
     
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
@@ -373,6 +377,10 @@ void CheckBox::unSelectedEvent()
     this->retain();
     if (_checkBoxEventCallback) {
         _checkBoxEventCallback(this, EventType::UNSELECTED);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::UNSELECTED));
     }
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
@@ -575,6 +583,7 @@ void CheckBox::copySpecialProperties(Widget *widget)
         _checkBoxEventListener = checkBox->_checkBoxEventListener;
         _checkBoxEventSelector = checkBox->_checkBoxEventSelector;
         _checkBoxEventCallback = checkBox->_checkBoxEventCallback;
+        _ccEventCallback = checkBox->_ccEventCallback;
     }
 }
 
