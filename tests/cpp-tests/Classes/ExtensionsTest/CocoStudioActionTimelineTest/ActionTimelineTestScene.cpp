@@ -217,13 +217,8 @@ void TestChangePlaySection::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
 
-    //ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 130, true);
-    //action = node->getActionTimeline();
-    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
-    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-
-    node->runAction(action);
-    action->gotoFrameAndPlay(41, action->getDuration(), true);
+    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
+    action = node->getActionTimeline();
 
     node->setScale(0.2f);
     node->setPosition(VisibleRect::center());
@@ -245,9 +240,9 @@ std::string TestChangePlaySection::title() const
 void TestChangePlaySection::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     if(action->getStartFrame() == 0)
-        action->gotoFrameAndPlay(70, action->getDuration(), true);
+        action->gotoFrameAndPlay(41, 81, true);
     else
-        action->gotoFrameAndPlay(0, 60, true);
+        action->gotoFrameAndPlay(0, 40, true);
 }
 
 // TestFrameEvent
@@ -255,9 +250,7 @@ void TestTimelineFrameEvent::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
-
-    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/boy_1.csb", 0, 60, true);
+    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
     ActionTimeline* action = node->getActionTimeline();
 
     node->setScale(0.2f);
@@ -298,12 +291,7 @@ void TestTimelinePerformance::onEnter()
 
     for (int i = 0; i< 100; i++)
     {
-        //ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/boy_1.csb", 41, 130, true);
-        Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
-        ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-
-        node->runAction(action);
-        action->gotoFrameAndPlay(41, action->getDuration(), true);
+        ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
 
         node->setScale(0.1f);
         node->setPosition(i*2,100);
