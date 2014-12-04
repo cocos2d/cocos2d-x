@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCActionTimeLineNode.h"
+#include "CCActionTimelineNode.h"
 #include "CSLoader.h"
 
 USING_NS_CC;
