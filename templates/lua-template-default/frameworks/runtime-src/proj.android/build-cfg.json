@@ -13,13 +13,6 @@
         {
             "from": "../../../res",
             "to": "res"
-        },
-        {
-            "from": "../../cocos2d-x/external/lua/luasocket",
-            "to": "src",
-            "include": [
-                "*.lua"
-            ]
         }
     ]
 }
