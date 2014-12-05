@@ -506,11 +506,8 @@ namespace cocostudio
         slider->loadProgressBarTexture(progressBarFileName, (Widget::TextureResType)progressBarType);
         
         bool displaystate = options->displaystate();
-        if(!displaystate)
-        {
-            slider->setBright(displaystate);
-            slider->setEnabled(false);
-        }
+        slider->setBright(displaystate);
+        slider->setEnabled(displaystate);
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());

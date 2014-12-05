@@ -275,6 +275,7 @@ namespace cocostudio
         auto options = (TextFieldOptions*)textFieldOptions;
         
         textField->setUnifySizeEnabled(false);
+        textField->ignoreContentAdaptWithSize(false);
         
         std::string placeholder = options->placeHolder()->c_str();
         textField->setPlaceHolder(placeholder);
