@@ -41,7 +41,7 @@ class PUParticle3DEmitter;
 class PUParticle3DAffector;
 class Particle3DRender;
 
-struct PUParticle3D : public Particle3D
+struct CC_DLL PUParticle3D : public Particle3D
 {
     static float DEFAULT_TTL;
     static float DEFAULT_MASS;
@@ -169,8 +169,6 @@ struct PUParticle3D : public Particle3D
     float textureAnimationTimeStepCount;
     unsigned short textureCoordsCurrent;
     bool textureAnimationDirectionUp;
-
-    bool alive;
 };
 
 class CC_DLL PUParticleSystem3D : public ParticleSystem3D
@@ -180,6 +178,7 @@ public:
     static const float DEFAULT_WIDTH;
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
+    static const unsigned short DEFAULT_PARTICLE_QUOTA;
 
     static PUParticleSystem3D* create();
     

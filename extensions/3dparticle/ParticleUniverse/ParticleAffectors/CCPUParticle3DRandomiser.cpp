@@ -102,7 +102,7 @@ void PUParticle3DRandomiser::setRandomDirection(bool randomDirection)
 //-----------------------------------------------------------------------
 void PUParticle3DRandomiser::preUpdateAffector(float deltaTime)
 {
-    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticles().size() > 0)
+    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticlePool().getActiveParticleList().size() > 0)
     {
         _timeSinceLastUpdate += deltaTime;
         if (_timeSinceLastUpdate > _timeStep)

@@ -129,6 +129,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
     auto ps = PUParticleSystem3D::create();
     ps->setBlendFunc(BlendFunc::ADDITIVE);
+	ps->setParticleQuota(10000);
     //emitter
     {
         auto ppe = PUParticle3DSphereSurfaceEmitter::create();
@@ -148,7 +149,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         dim->setValue(12.0f);
         ppe->setDynParticleAllDimensions(dim);
         PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
-        rate->setValue(1000.0f);
+        rate->setValue(2000.0f);
         ppe->setDynEmissionRate(rate);
         //ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
         //ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));

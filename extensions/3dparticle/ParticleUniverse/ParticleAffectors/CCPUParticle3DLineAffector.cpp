@@ -102,7 +102,7 @@ void PUParticle3DLineAffector::notifyRescaled(const Vec3& scale)
 //-----------------------------------------------------------------------
 void PUParticle3DLineAffector::preUpdateAffector(float deltaTime)
 {
-    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticles().size() > 0)
+    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticlePool().getActiveParticleList().size() > 0)
     {
         _timeSinceLastUpdate += deltaTime;
         while (_timeSinceLastUpdate > _timeStep)

@@ -29,6 +29,7 @@
 #include "math/CCMath.h"
 #include <vector>
 #include <map>
+#include <list>
 
 NS_CC_BEGIN
 
@@ -39,7 +40,7 @@ class Particle3DEmitter;
 class Particle3DAffector;
 class Particle3DRender;
 
-struct Particle3D
+struct CC_DLL Particle3D
 {
     Particle3D();
     virtual ~Particle3D();
@@ -56,6 +57,32 @@ struct Particle3D
     
     //user defined property
     std::map<std::string, void*> userDefs;
+};
+
+class CC_DLL ParticlePool
+{
+public:
+    typedef std::vector<Particle3D *> PoolList;
+    typedef std::vector<Particle3D *>::iterator PoolIterator;
+
+    ParticlePool();
+    ~ParticlePool();
+
+    Particle3D* createParticle();
+    void lockLatestParticle();
+    void lockAllParticles();
+    Particle3D* getFirst();
+    Particle3D* getNext();
+    const PoolList& getActiveParticleList() const;
+    void addParticle(Particle3D *particle);
+    bool empty() const;
+    void removeAllParticles(bool needDelete = false);
+
+private:
+
+    PoolIterator _releasedIter;
+    PoolList _released;
+    PoolList _locked;
 };
 
 class CC_DLL ParticleSystem3D : public Node, public BlendProtocol
@@ -118,15 +145,20 @@ public:
      * remove all particle affector
      */
     void removeAllAffector();
+
+        /** 
+    */
+    unsigned short getParticleQuota() const;
+    void setParticleQuota(unsigned short quota);
     
     /**
      * get particle affector by index
      */
     Particle3DAffector* getAffector(int index);
     
-    const std::vector<Particle3D*>& getParticles()
+    const ParticlePool& getParticlePool()
     {
-        return  _particles;
+        return  _particlePool;
     }
     
     int getAliveParticleCnt() const
@@ -148,8 +180,9 @@ protected:
     Particle3DRender*                _render;
     
     //particles
-    std::vector<Particle3D*>         _particles;
+    ParticlePool                _particlePool;
     int                              _aliveParticlesCnt;
+    unsigned short            _particleQuota;
     
     BlendFunc                        _blend;
 };

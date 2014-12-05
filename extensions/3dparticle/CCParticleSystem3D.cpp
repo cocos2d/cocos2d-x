@@ -47,10 +47,94 @@ Particle3D::~Particle3D()
 
 }
 
+
+ParticlePool::ParticlePool()
+{
+
+}
+
+ParticlePool::~ParticlePool()
+{
+
+}
+
+Particle3D* ParticlePool::createParticle()
+{
+    if (_locked.empty()) return nullptr;
+    Particle3D* p = _locked.front();
+    _released.push_back(p);
+    _locked.erase(_locked.begin());
+    //_released.splice(_released.end(), _locked, _locked.begin());
+    return p;
+}
+
+void ParticlePool::lockLatestParticle()
+{
+    _locked.push_back(*_releasedIter);
+    _releasedIter = _released.erase(_releasedIter);
+    if (_releasedIter != _released.begin() && _releasedIter != _released.end())
+    {
+        --_releasedIter;
+    }
+}
+
+void ParticlePool::lockAllParticles()
+{
+    //_locked.splice(_locked.end(), _released);
+    _locked.insert(_locked.end(), _released.begin(), _released.end());
+    _released.clear();
+    _releasedIter = _released.begin();
+}
+
+Particle3D* ParticlePool::getFirst()
+{
+    _releasedIter = _released.begin();
+    if (_releasedIter == _released.end()) return nullptr;
+    return *_releasedIter;
+}
+
+Particle3D* ParticlePool::getNext()
+{
+    if (_releasedIter == _released.end()) return nullptr;
+    ++_releasedIter;
+    if (_releasedIter == _released.end()) return nullptr;
+    return *_releasedIter;
+}
+
+void ParticlePool::addParticle( Particle3D *particle )
+{
+    _locked.push_back(particle);
+}
+
+bool ParticlePool::empty() const
+{
+    return _released.empty();
+}
+
+void ParticlePool::removeAllParticles( bool needDelete /*= false*/ )
+{
+    lockAllParticles();
+    if (needDelete){
+        for (auto iter : _locked){
+            delete iter;
+        }
+        _locked.clear();
+    }
+    else{
+        _locked.clear();
+    }
+}
+
+const ParticlePool::PoolList& ParticlePool::getActiveParticleList() const
+{
+    return _released;
+}
+
 ParticleSystem3D::ParticleSystem3D()
 : _emitter(nullptr)
 , _render(nullptr)
 , _aliveParticlesCnt(0)
+, _particleQuota(0)
 , _state(State::STOP)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
@@ -68,8 +152,6 @@ void ParticleSystem3D::startParticle()
 {
     if (_state != State::RUNNING)
     {
-        _particles.clear();
-        
         if (_render)
             _render->notifyStart();
         
@@ -162,7 +244,9 @@ void ParticleSystem3D::update(float delta)
     if (_state != State::RUNNING)
         return;
     
-    for (auto& particle : _particles) {
+    Particle3D *particle = _particlePool.getFirst();
+    while (particle)
+    {
         if (_emitter)
         {
             _emitter->updateEmitter(particle, delta);
@@ -171,7 +255,9 @@ void ParticleSystem3D::update(float delta)
         for (auto& it : _affectors) {
             it->updateAffector(particle, delta);
         }
-    }    
+
+        particle = _particlePool.getNext();
+    }
 }
 
 void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -190,6 +276,16 @@ void ParticleSystem3D::setBlendFunc(const BlendFunc &blendFunc)
 const BlendFunc &ParticleSystem3D::getBlendFunc() const
 {
     return _blend;
+}
+
+void ParticleSystem3D::setParticleQuota( unsigned short quota )
+{
+    _particleQuota = quota;
+}
+
+unsigned short ParticleSystem3D::getParticleQuota() const
+{
+    return _particleQuota;
 }
 
 NS_CC_END

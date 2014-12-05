@@ -32,6 +32,7 @@ NS_CC_BEGIN
 float PUParticle3D::DEFAULT_TTL = 10.0f;
 float PUParticle3D::DEFAULT_MASS = 1.0f;
 
+
 void PUParticle3D::setOwnDimensions( float newWidth, float newHeight, float newDepth )
 {
     ownDimensions = true;
@@ -91,8 +92,7 @@ PUParticle3D::PUParticle3D():
     textureAnimationTimeStep(0.1f),
     textureAnimationTimeStepCount(0.0f),
     textureCoordsCurrent(0),
-    textureAnimationDirectionUp(true),
-    alive(true)
+    textureAnimationDirectionUp(true)
 {
 }
 
@@ -101,6 +101,7 @@ PUParticle3D::PUParticle3D():
 const float PUParticleSystem3D::DEFAULT_WIDTH = 50;
 const float PUParticleSystem3D::DEFAULT_HEIGHT = 50;
 const float PUParticleSystem3D::DEFAULT_DEPTH = 50;
+const unsigned short PUParticleSystem3D::DEFAULT_PARTICLE_QUOTA = 500;
 
 PUParticleSystem3D::PUParticleSystem3D()
 : _prepared(false)
@@ -109,15 +110,11 @@ PUParticleSystem3D::PUParticleSystem3D()
 , _defaultHeight(DEFAULT_HEIGHT)
 , _defaultDepth(DEFAULT_DEPTH)
 {
-    
+    _particleQuota = DEFAULT_PARTICLE_QUOTA;
 }
 PUParticleSystem3D::~PUParticleSystem3D()
 {
     unPrepared();
-
-    for (auto iter : _particles){
-        CC_SAFE_DELETE(iter);
-    }
 }
 
 void PUParticleSystem3D::startParticle()
@@ -163,6 +160,7 @@ void PUParticleSystem3D::stopParticle()
             _render->notifyStop();
 
         unscheduleUpdate();
+        _particlePool.lockAllParticles();
         _state = State::STOP;
     }
 }
@@ -243,6 +241,10 @@ void PUParticleSystem3D::prepared()
             if (it->isEnabled())
                 (static_cast<PUParticle3DAffector*>(it))->prepare();
         }
+        
+        for (unsigned short i = 0; i < _particleQuota; ++i){
+            _particlePool.addParticle(new PUParticle3D());
+        }
         _prepared = true;
     }
 }
@@ -259,6 +261,8 @@ void PUParticleSystem3D::unPrepared()
         if (it->isEnabled())
             (static_cast<PUParticle3DAffector*>(it))->unPrepare();
     }
+
+    _particlePool.removeAllParticles(true);
 }
 
 void PUParticleSystem3D::preUpdator( float elapsedTime )
@@ -278,54 +282,49 @@ void PUParticleSystem3D::preUpdator( float elapsedTime )
 void PUParticleSystem3D::updator( float elapsedTime )
 {
     bool firstActiveParticle = true; // The first non-expired particle
-    for (auto iter = _particles.begin(); iter != _particles.end();){
-        PUParticle3D *particle = static_cast<PUParticle3D *>(*iter);
+    PUParticle3D *particle = static_cast<PUParticle3D *>(_particlePool.getFirst());
 
-        if (particle->alive){
-            if (!isExpired(particle, elapsedTime)){
-                particle->timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;
+    while (particle){
 
-                if (_emitter && _emitter->isEnabled())
-                    _emitter->updateEmitter(particle, elapsedTime);
+        if (!isExpired(particle, elapsedTime)){
+            particle->timeFraction = (particle->totalTimeToLive - particle->timeToLive) / particle->totalTimeToLive;
 
-                for (auto& it : _affectors) {
-                    if (it->isEnabled()){
-                        if (firstActiveParticle)
-                             (static_cast<PUParticle3DAffector*>(it))->firstParticleUpdate(particle, elapsedTime);
-                         (static_cast<PUParticle3DAffector*>(it))->updateAffector(particle, elapsedTime);
-                    }
+            if (_emitter && _emitter->isEnabled())
+                _emitter->updateEmitter(particle, elapsedTime);
+
+            for (auto& it : _affectors) {
+                if (it->isEnabled()){
+                    if (firstActiveParticle)
+                            (static_cast<PUParticle3DAffector*>(it))->firstParticleUpdate(particle, elapsedTime);
+                        (static_cast<PUParticle3DAffector*>(it))->updateAffector(particle, elapsedTime);
                 }
-
-                // Keep latest position
-                particle->latestPosition = particle->position;
-
-                // Update the position with the direction.
-                particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
-
-                firstActiveParticle = false;
-            }
-            else{
-                particle->alive = false;
             }
 
-            if (particle->hasEventFlags(PUParticle3D::PEF_EXPIRED))
-            {
-                particle->setEventFlags(0);
-                particle->addEventFlags(PUParticle3D::PEF_EXPIRED);
-            }
-            else
-            {
-                particle->setEventFlags(0);
-            }
+            // Keep latest position
+            particle->latestPosition = particle->position;
 
-            particle->timeToLive -= elapsedTime;
+            // Update the position with the direction.
+            particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
 
-            ++iter;
+            firstActiveParticle = false;
         }
         else{
-            CC_SAFE_DELETE(particle);
-            iter = _particles.erase(iter);
+            _particlePool.lockLatestParticle();
         }
+
+        if (particle->hasEventFlags(PUParticle3D::PEF_EXPIRED))
+        {
+            particle->setEventFlags(0);
+            particle->addEventFlags(PUParticle3D::PEF_EXPIRED);
+        }
+        else
+        {
+            particle->setEventFlags(0);
+        }
+
+        particle->timeToLive -= elapsedTime;
+
+        particle = static_cast<PUParticle3D *>(_particlePool.getNext());
     }
 }
 
@@ -357,24 +356,25 @@ void PUParticleSystem3D::emitParticles( float elapsedTime )
 
     for (unsigned short i = 0; i < requested; ++i)
     {
-        PUParticle3D *particle = new PUParticle3D;
-        _particles.push_back(particle);
-        particle->initForEmission();
-        emitter->initParticleForEmission(particle);
+        PUParticle3D *particle = static_cast<PUParticle3D *>(_particlePool.createParticle());
+        if (particle){
+            particle->initForEmission();
+            emitter->initParticleForEmission(particle);
 
-        particle->direction = (/*getDerivedOrientation() * */particle->direction);
-        particle->originalDirection = (/*getDerivedOrientation() * */particle->originalDirection);
+            particle->direction = (/*getDerivedOrientation() * */particle->direction);
+            particle->originalDirection = (/*getDerivedOrientation() * */particle->originalDirection);
 
-        for (auto& it : _affectors) {
-            if (it->isEnabled())
-            {
-                (static_cast<PUParticle3DAffector*>(it))->initParticleForEmission(particle);
+            for (auto& it : _affectors) {
+                if (it->isEnabled())
+                {
+                    (static_cast<PUParticle3DAffector*>(it))->initParticleForEmission(particle);
+                }
             }
-        }
 
-        particle->position += (particle->direction * _particleSystemScaleVelocity * timePoint);
-        // Increment time fragment
-        timePoint += timeInc;
+            particle->position += (particle->direction * _particleSystemScaleVelocity * timePoint);
+            // Increment time fragment
+            timePoint += timeInc;
+        }
     }
 }
 
