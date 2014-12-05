@@ -96,14 +96,14 @@ float PUParticle3DGeometryRotator::calculateRotationSpeed(PUParticle3D* particle
     return _dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction);
 }
 //-----------------------------------------------------------------------
-void PUParticle3DGeometryRotator::initParticleForEmission(PUParticle3D* puParticle)
+void PUParticle3DGeometryRotator::initParticleForEmission(PUParticle3D* particle)
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
     //	return;
-    for (auto iter : _particleSystem->getParticlePool().getActiveParticleList())
+    //for (auto iter : _particleSystem->getParticlePool().getActiveParticleList())
     {
-        PUParticle3D *particle = static_cast<PUParticle3D*>(iter);
+        //PUParticle3D *particle = static_cast<PUParticle3D*>(iter);
         if (!_rotationAxisSet)
         {
             // Set initial random rotation axis and orientation(PU 1.4)

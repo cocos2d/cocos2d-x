@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PU_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
-#define __CC_PU_PARTICLE_3D_LINEAR_FORCE_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_PLANE_COLLIDER_H__
+#define __CC_PU_PARTICLE_3D_PLANE_COLLIDER_H__
 
 #include "CCPUParticle3DBaseCollider.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DPlane.h"

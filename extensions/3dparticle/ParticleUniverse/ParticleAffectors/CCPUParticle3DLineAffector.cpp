@@ -121,7 +121,7 @@ void PUParticle3DLineAffector::updateAffector( PUParticle3D *particle, float del
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;
-        //mParentTechnique->getParentSystem()->rotationOffset(particle->originalPosition); // Always update
+        (static_cast<PUParticleSystem3D *>(_particleSystem))->rotationOffset(particle->originalPosition); // Always update
         if (_update && CCRANDOM_0_1() > 0.5 && !_first)
         {
             // Generate a random vector perpendicular on the line

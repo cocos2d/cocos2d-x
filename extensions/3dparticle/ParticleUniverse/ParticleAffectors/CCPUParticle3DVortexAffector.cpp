@@ -103,7 +103,8 @@ void PUParticle3DVortexAffector::preUpdateAffector( float deltaTime )
 
     //if (sys)
     //{
-    //	_rotation.FromAngleAxis(float(calculateRotationSpeed() * timeElapsed), sys->getDerivedOrientation() * _rotationVector);
+        //_rotation.FromAngleAxis(float(calculateRotationSpeed() * timeElapsed), sys->getDerivedOrientation() * _rotationVector);
+        _rotation.set(_rotationVector, float(calculateRotationSpeed() * deltaTime));
     //}
     //else
     //{

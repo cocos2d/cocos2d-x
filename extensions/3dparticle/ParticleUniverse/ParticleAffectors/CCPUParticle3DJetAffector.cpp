@@ -61,7 +61,7 @@ void PUParticle3DJetAffector::updateAffector( PUParticle3D *particle, float delt
    // for (auto iter : _particleSystem->getParticles())
     {
        // PUParticle3D *particle = iter;
-        //_scaled = deltaTime * (_dynAcceleration->getValue(particle->timeFraction));
+        _scaled = deltaTime * (_dynAcceleration->getValue(particle->timeFraction));
         if (particle->direction == Vec3::ZERO)
         {
             // Existing direction is zero, so use original direction

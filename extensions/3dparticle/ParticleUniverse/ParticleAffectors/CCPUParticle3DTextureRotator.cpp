@@ -145,6 +145,7 @@ void PUParticle3DTextureRotator::updateAffector( PUParticle3D *particle, float d
 
         particle->zRotation += _scaledRotationSpeed;
         particle->zRotation = particle->zRotation > _twoPiRad ? particle->zRotation - _twoPiRad : particle->zRotation;
+
         //FIXME
         //if (particleTechnique->getRenderer())
         //{

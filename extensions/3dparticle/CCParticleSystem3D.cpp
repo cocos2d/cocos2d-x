@@ -38,6 +38,7 @@ Particle3D::Particle3D()
 , height(1.0f)
 , depth(1.0f)
 , depthInView(0.0f)
+, zRotation(0.0f)
 {
 
 }

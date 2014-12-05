@@ -53,7 +53,8 @@ struct CC_DLL Particle3D
     float width;//Own width
     float height;//Own height
     float depth;//Own depth
-    float depthInView;
+    float depthInView;//depth in camera view
+    float zRotation; //zRotation is used to rotate the particle in 2D (around the Z-axis)   (radian)
     
     //user defined property
     std::map<std::string, void*> userDefs;

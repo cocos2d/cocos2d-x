@@ -83,7 +83,7 @@ PUParticle3D::PUParticle3D():
     parentEmitter(nullptr),
     //color(Vec4::ONE),
     originalColor(Vec4::ONE),
-    zRotation(0.0f),
+    //zRotation(0.0f),
     zRotationSpeed(0.0f),
     rotationSpeed(0.0f),
     rotationAxis(Vec3::UNIT_Z),

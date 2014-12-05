@@ -129,9 +129,10 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     }
 
     std::sort(activeParticleList.begin(), activeParticleList.end(), compareParticle3D);
-   
+   Mat4 pRotMat;
     Vec3 right(cameraMat.m[0], cameraMat.m[1], cameraMat.m[2]);
     Vec3 up(cameraMat.m[4], cameraMat.m[5], cameraMat.m[6]);
+    Vec3 backward(cameraMat.m[8], cameraMat.m[9], cameraMat.m[10]);
     
     Vec3 position; //particle position
     int vertexindex = 0;
@@ -142,20 +143,20 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
         transform.transformPoint(particle->position, &position);
-        
-        _posuvcolors[vertexindex].position = position - halfwidth - halfheight;
+        Mat4::createRotation(backward, particle->zRotation, &pRotMat);
+        _posuvcolors[vertexindex].position = (position + pRotMat * (- halfwidth - halfheight));
         _posuvcolors[vertexindex].color = particle->color;
         _posuvcolors[vertexindex].uv = Vec2(particle->lb_uv);
 
-        _posuvcolors[vertexindex + 1].position = position + halfwidth - halfheight;
+        _posuvcolors[vertexindex + 1].position = (position + pRotMat * (halfwidth - halfheight));
         _posuvcolors[vertexindex + 1].color = particle->color;
         _posuvcolors[vertexindex + 1].uv = Vec2(particle->rt_uv.x, particle->lb_uv.y);
         
-        _posuvcolors[vertexindex + 2].position = position - halfwidth + halfheight;
+        _posuvcolors[vertexindex + 2].position = (position + pRotMat * (- halfwidth + halfheight));
         _posuvcolors[vertexindex + 2].color = particle->color;
         _posuvcolors[vertexindex + 2].uv = Vec2(particle->lb_uv.x, particle->rt_uv.y);
         
-        _posuvcolors[vertexindex + 3].position = position + halfwidth + halfheight;
+        _posuvcolors[vertexindex + 3].position = (position + pRotMat * (halfwidth + halfheight));
         _posuvcolors[vertexindex + 3].color = particle->color;
         _posuvcolors[vertexindex + 3].uv = Vec2(particle->rt_uv);
         

@@ -39,6 +39,15 @@
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffector.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleAffector.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DFlockCenteringAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DForceFieldAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DLinearForceAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DParticleFollower.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DPathFollower.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DPlaneCollider.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DRandomiser.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DSineForceAffector.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureRotator.h"
+#include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffector.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 
 
@@ -119,6 +128,8 @@ bool Particle3DTestDemo::init()
     this->addChild(sprite3d);
 
     auto ps = createParticleSystem();
+	auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
+	ps->runAction(RepeatForever::create(Sequence::create(moveby, moveby->reverse(), nullptr)));
     this->addChild(ps);
     //sprite3d->getAttachNode("Bip001 R Hand")->addChild(ps);
 
@@ -129,7 +140,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
     auto ps = PUParticleSystem3D::create();
     ps->setBlendFunc(BlendFunc::ADDITIVE);
-	ps->setParticleQuota(10000);
+	ps->setParticleQuota(2500);
     //emitter
     {
         auto ppe = PUParticle3DSphereSurfaceEmitter::create();
@@ -149,38 +160,81 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         dim->setValue(12.0f);
         ppe->setDynParticleAllDimensions(dim);
         PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
-        rate->setValue(2000.0f);
+        rate->setValue(200.0f);
         ppe->setDynEmissionRate(rate);
-        //ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
-        //ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
+		ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
         ps->setEmitter(ppe);
     }
 
     //affector
     {
-        auto pca = PUParticle3DColorAffector::create();
-        pca->addColor(0.0f, Vec4(0.0f, 0.0f, 0.2f, 1.0f));
-        pca->addColor(0.9f, Vec4(0.8f, 0.8f, 1.0f, 1.0f));
-        pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
-        ps->addAffector(pca);
+		auto pca = PUParticle3DColorAffector::create();
+		pca->addColor(0.0f, Vec4(0.0f, 0.0f, 0.2f, 1.0f));
+		pca->addColor(0.9f, Vec4(0.8f, 0.8f, 1.0f, 1.0f));
+		pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		ps->addAffector(pca);
 
-        auto pga = PUParticle3DGravityAffector::create();
-        pga->setGravity(2700);
-        ps->addAffector(pga);
+		auto pga = PUParticle3DGravityAffector::create();
+		pga->setGravity(2700);
+		ps->addAffector(pga);
 
-        auto psa = PUParticle3DScaleAffector::create();
-        PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
-        scl->setValue(-4.5f);
-        psa->setDynScaleXYZ(scl);
-        ps->addAffector(psa);
+		auto psa = PUParticle3DScaleAffector::create();
+		PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
+		scl->setValue(-4.5f);
+		psa->setDynScaleXYZ(scl);
+		ps->addAffector(psa);
 
-        auto pfca = PUParticle3DFlockCenteringAffector::create();
-        ps->addAffector(pfca);
+  //      auto pfca = PUParticle3DFlockCenteringAffector::create();
+  //      ps->addAffector(pfca);
+
+		//auto pffa = PUParticle3DForceFieldAffector::create();
+		//ps->addAffector(pffa);
+
+		//auto plfa = PUParticle3DLinearForceAffector::create();
+		//plfa->setForceVector(Vec3(0.0f, 10.0f, 0.0f));
+		//ps->addAffector(plfa);
+
+		//auto ppf = PUParticle3DParticleFollower::create();
+		//ps->addAffector(ppf);
+
+		//auto pptf = PUParticle3DPathFollower::create();
+		//pptf->addPoint(Vec3(0.0f, 0.0f, 0.0f));
+		//pptf->addPoint(Vec3(50.0f, 50.0f, -50.0f));
+		//pptf->addPoint(Vec3(0.0f, 50.0f, -50.0f));
+		//pptf->addPoint(Vec3(50.0f, 0.0f, 0.0f));
+		//pptf->addPoint(Vec3(0.0f, 0.0f, 0.0f));
+		//ps->addAffector(pptf);
+
+		//auto ppc = PUParticle3DPlaneCollider::create();
+		//ppc->setNormal(Vec3(0.0f, 1.0f, 0.0f));
+		//ps->addAffector(ppc);
+
+		//auto pr = PUParticle3DRandomiser::create();
+		//ps->addAffector(pr);
+
+		//auto psfa = PUParticle3DSineForceAffector::create();
+		//psfa->setForceVector(Vec3(0.0f, 10.0f, 0.0f));
+		//psfa->setFrequencyMax(10.0f);
+		//ps->addAffector(psfa);
+
+		//auto ptr = PUParticle3DTextureRotator::create();
+		//PUDynamicAttributeFixed *rSpeed = new PUDynamicAttributeFixed();
+		//rSpeed->setValue(2.0f);
+		//ptr->setRotationSpeed(rSpeed);
+		//ps->addAffector(ptr);
+
+		//auto pva = PUParticle3DVortexAffector::create();
+		//PUDynamicAttributeFixed *rSpeed = new PUDynamicAttributeFixed();
+		//rSpeed->setValue(10.0f);
+		//pva->setRotationSpeed(rSpeed);
+		//pva->setRotationVector(Vec3(0.0f, 1.0f, 0.0f));
+		//ps->addAffector(pva);
     }
 
     //render
     {
-        auto pr = Particle3DQuadRender::create("Images/fire.png");
+        auto pr = Particle3DQuadRender::create("Images/Comet.png");
         ps->setRender(pr);
     }
 

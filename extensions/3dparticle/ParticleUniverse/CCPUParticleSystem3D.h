@@ -75,14 +75,6 @@ struct CC_DLL PUParticle3D : public Particle3D
     /** Current and original colour */
 
     Vec4 originalColor;
-    /** zRotation is used to rotate the particle in 2D (around the Z-axis)
-    @remarks
-        There is no relation between zRotation and orientation.
-        rotationSpeed in combination with orientation are used for 3D rotation of the particle, while
-        zRotation means the rotation around the Z-axis. This type of rotation is typically used for 
-        rotating textures. This also means that both types of rotation can be used together.
-    */
-    float zRotation; //radian
 
     /** The zRotationSpeed is used in combination with zRotation and defines tha actual rotationspeed
         in 2D. */
