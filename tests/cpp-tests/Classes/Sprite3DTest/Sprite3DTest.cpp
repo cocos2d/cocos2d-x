@@ -776,11 +776,12 @@ AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
     _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
     _paths.push_back("Sprite3DTest/axe.c3b");
     
-    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
     auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
     auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite,this) );
     
-    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+    auto s = Director::getInstance()->getWinSize();
+    item1->setPosition( s.width * .5f, s.height * .8f);
     
     auto pMenu1 = CCMenu::create(item1, nullptr);
     pMenu1->setPosition(Vec2(0,0));
@@ -789,6 +790,8 @@ AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
     auto node = Node::create();
     node->setTag(101);
     this->addChild(node);
+    
+    menuCallback_asyncLoadSprite(nullptr);
 }
 std::string AsyncLoadSprite3DTest::title() const
 {
