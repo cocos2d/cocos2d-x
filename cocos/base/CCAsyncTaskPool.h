@@ -85,8 +85,9 @@ public:
      * @param type task type is io task, network task or others, each type of task has a thread to deal with it.
      * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread
      * @param callbackParam parameter used by the callback
-     * @f task can be lambda function
-     * @args task parameters
+     * @param f task can be lambda function
+     * @param args task parameters
+     * @return the return value is a type of std::future. You can future->get() to wait until it is finished. Or get the notice in the callback
      */
     template<class F, class... Args>
     auto enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
