@@ -795,7 +795,7 @@ AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
 }
 std::string AsyncLoadSprite3DTest::title() const
 {
-    return "Sprite3D::createAsync Testing";
+    return "Testing Sprite3D::createAsync";
 }
 std::string AsyncLoadSprite3DTest::subtitle() const
 {
