@@ -141,6 +141,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
     auto ps = PUParticleSystem3D::create();
     ps->setBlendFunc(BlendFunc::ADDITIVE);
 	ps->setParticleQuota(2500);
+	//ps->setKeepLocal(true);
     //emitter
     {
         auto ppe = PUParticle3DSphereSurfaceEmitter::create();
@@ -157,7 +158,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         alive->setValue(3.0f);
         ppe->setDynTotalTimeToLive(alive);
         PUDynamicAttributeFixed *dim = new PUDynamicAttributeFixed();
-        dim->setValue(12.0f);
+        dim->setValue(2.0f);
         ppe->setDynParticleAllDimensions(dim);
         PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
         rate->setValue(200.0f);
@@ -175,15 +176,15 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 		pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		ps->addAffector(pca);
 
-		auto pga = PUParticle3DGravityAffector::create();
-		pga->setGravity(2700);
-		ps->addAffector(pga);
+		//auto pga = PUParticle3DGravityAffector::create();
+		//pga->setGravity(2700);
+		//ps->addAffector(pga);
 
-		auto psa = PUParticle3DScaleAffector::create();
-		PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
-		scl->setValue(-4.5f);
-		psa->setDynScaleXYZ(scl);
-		ps->addAffector(psa);
+		//auto psa = PUParticle3DScaleAffector::create();
+		//PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
+		//scl->setValue(-4.5f);
+		//psa->setDynScaleXYZ(scl);
+		//ps->addAffector(psa);
 
   //      auto pfca = PUParticle3DFlockCenteringAffector::create();
   //      ps->addAffector(pfca);

@@ -222,6 +222,9 @@ public:
     const float getDefaultDepth(void) const;
     void setDefaultDepth(const float depth);
 
+    Vec3 getDerivedPosition();
+    Quaternion getDerivedOrientation();
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();

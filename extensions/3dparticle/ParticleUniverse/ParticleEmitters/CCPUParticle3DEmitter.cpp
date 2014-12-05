@@ -180,7 +180,12 @@ void PUParticle3DEmitter::initParticlePosition( PUParticle3D* particle )
 
 const Vec3& PUParticle3DEmitter::getDerivedPosition()
 {
-    return _derivedPosition;
+	if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
+		_derivedPosition =  static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
+	else
+		_derivedPosition = Vec3::ZERO;
+
+	return _derivedPosition;
 }
 
 void PUParticle3DEmitter::initParticleOrientation( PUParticle3D* particle )

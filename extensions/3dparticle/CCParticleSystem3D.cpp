@@ -138,6 +138,7 @@ ParticleSystem3D::ParticleSystem3D()
 , _particleQuota(0)
 , _state(State::STOP)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+, _keepLocal(true)
 {
     
 }

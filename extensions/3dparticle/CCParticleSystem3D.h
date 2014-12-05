@@ -169,6 +169,9 @@ public:
     
     State getState() const { return _state; }
 
+    bool isKeepLocal(void) const { return _keepLocal; }
+    void setKeepLocal(bool keepLocal) { _keepLocal = keepLocal; }
+
 CC_CONSTRUCTOR_ACCESS:
     ParticleSystem3D();
     virtual ~ParticleSystem3D();
@@ -186,6 +189,8 @@ protected:
     unsigned short            _particleQuota;
     
     BlendFunc                        _blend;
+
+    bool _keepLocal;
 };
 
 NS_CC_END

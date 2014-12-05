@@ -427,4 +427,20 @@ PUParticleSystem3D* PUParticleSystem3D::create()
     return pups;
 }
 
+cocos2d::Vec3 PUParticleSystem3D::getDerivedPosition()
+{
+    if (_keepLocal) return Vec3::ZERO;
+
+    Mat4 mat = getNodeToWorldTransform();
+    return Vec3(mat.m[12], mat.m[13], mat.m[14]);
+}
+
+cocos2d::Quaternion PUParticleSystem3D::getDerivedOrientation()
+{
+    if (_keepLocal) return Quaternion();
+    Quaternion q;
+    Mat4 mat = getNodeToWorldTransform();
+    mat.decompose(nullptr, &q, nullptr);
+    return q;
+}
 NS_CC_END

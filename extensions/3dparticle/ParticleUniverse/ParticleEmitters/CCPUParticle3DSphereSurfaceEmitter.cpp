@@ -58,7 +58,9 @@ void PUParticle3DSphereSurfaceEmitter::initParticlePosition(PUParticle3D* partic
     //ParticleSystem* sys = mParentTechnique->getParentSystem();
     //if (sys)
     {
-        particle->position = getDerivedPosition() + /*_particleSystem->getDerivedOrientation() * */(Vec3(_emitterScale.x * _randomVector.x, _emitterScale.y * _randomVector.y, _emitterScale.z * _randomVector.z) * _radius);
+		Mat4 rotMat;
+		Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation(), &rotMat);
+        particle->position = getDerivedPosition() + rotMat * (Vec3(_emitterScale.x * _randomVector.x, _emitterScale.y * _randomVector.y, _emitterScale.z * _randomVector.z) * _radius);
     }
     //else
     //{

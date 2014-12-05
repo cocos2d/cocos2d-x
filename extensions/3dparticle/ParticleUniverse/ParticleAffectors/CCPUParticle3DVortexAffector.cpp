@@ -99,20 +99,19 @@ void PUParticle3DVortexAffector::updateAffector( PUParticle3D *particle, float d
 
 void PUParticle3DVortexAffector::preUpdateAffector( float deltaTime )
 {
-    //ParticleSystem* sys = mParentTechnique->getParentSystem();
+    PUParticleSystem3D* sys = static_cast<PUParticleSystem3D *>(_particleSystem);
 
-    //if (sys)
-    //{
-        //_rotation.FromAngleAxis(float(calculateRotationSpeed() * timeElapsed), sys->getDerivedOrientation() * _rotationVector);
+    if (sys)
+    {
+        Mat4 rotMat;
+        Mat4::createRotation(sys->getDerivedOrientation(), &rotMat);
+        _rotation.set(rotMat * _rotationVector, float(calculateRotationSpeed() * deltaTime));
+    }
+    else
+    {
         _rotation.set(_rotationVector, float(calculateRotationSpeed() * deltaTime));
-    //}
-    //else
-    //{
-    //	_rotation.FromAngleAxis(float(calculateRotationSpeed() * timeElapsed), _rotationVector);
-    //}
+    }
 
-    //FIXME
-    _rotation.set(/*_particleSystem->getDerivedOrientation() * */_rotationVector, calculateRotationSpeed() * deltaTime);
     getDerivedPosition();
 }
 

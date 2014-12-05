@@ -461,8 +461,9 @@ void PUParticle3DMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle
                 // Set position and direction of the particle
                 //if (sys)
                 {
-                    //FIXME
-                    particle->position = _derivedPosition + /*_particleSystem->getDerivedOrientation() * */Vec3(_emitterScale.x * pAndN.position.x, _emitterScale.y * pAndN.position.y, _emitterScale.z * pAndN.position.z);
+                    Mat4 rotMat;
+                    Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation(), &rotMat);
+                    particle->position = _derivedPosition + rotMat * Vec3(_emitterScale.x * pAndN.position.x, _emitterScale.y * pAndN.position.y, _emitterScale.z * pAndN.position.z);
                 }
                 //else
                 //{
@@ -474,11 +475,11 @@ void PUParticle3DMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle
                 if (angle != 0.0f)
                 {
                     //particle->direction = (pAndN.normal).randomDeviant(angle, mUpVector);
-					Mat4 mat;
-					Mat4::createRotation(pAndN.normal, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
-					Vec3 newUp = mat * _upVector;
-					Mat4::createRotation(newUp, angle, &mat);
-					particle->direction = mat * pAndN.normal;
+                    Mat4 mat;
+                    Mat4::createRotation(pAndN.normal, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
+                    Vec3 newUp = mat * _upVector;
+                    Mat4::createRotation(newUp, angle, &mat);
+                    particle->direction = mat * pAndN.normal;
                 }
                 else
                 {
@@ -494,7 +495,9 @@ void PUParticle3DMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle
             // Set position of the particle
             //if (sys)
             {
-                particle->position = _derivedPosition + /*sys->getDerivedOrientation() * */Vec3(_emitterScale.x * pAndN.position.x, _emitterScale.y * pAndN.position.y, _emitterScale.z * pAndN.position.z);
+                Mat4 rotMat;
+                Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation(), &rotMat);
+                particle->position = _derivedPosition + rotMat * Vec3(_emitterScale.x * pAndN.position.x, _emitterScale.y * pAndN.position.y, _emitterScale.z * pAndN.position.z);
             }
             //else
             //{

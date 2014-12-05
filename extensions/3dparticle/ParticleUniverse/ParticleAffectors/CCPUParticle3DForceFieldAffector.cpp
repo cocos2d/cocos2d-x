@@ -300,9 +300,8 @@ void PUParticle3DForceFieldAffector::prepare()
     {
         // Forcefield position is same position as particle system position
         _forceField.initialise(_forceFieldType,
-            //FIXME need use  _particleSystem->getDerivedPosition()
+            // _particleSystem->getDerivedPosition()
             getDerivedPosition(),
-            //end FIXME
             _forceFieldSize,
             _octaves,
             _frequency,
