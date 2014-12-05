@@ -2,7 +2,7 @@
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.3rc1 Release Notes](#)
+- [cocos2d-x v3.3rc2 Release Notes](#)
 - [Misc Information](#)
 - [Requirements](#)
 	- [Runtime Requirements](#)
@@ -13,6 +13,7 @@
 		- [Windows](#)
 		- [Linux](#)
 	- [How to start a new game](#)
+- [Highlights of v3.3rc2](#)
 - [Notes of v3.3rc1](#)
 - [Highlights of v3.3rc1](#)
 - [Notes of v3.3rc0](#)
