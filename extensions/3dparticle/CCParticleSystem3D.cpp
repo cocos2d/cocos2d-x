@@ -31,6 +31,7 @@ NS_CC_BEGIN
 
 Particle3D::Particle3D()
 : position(Vec3::ZERO)
+, positionInWorld(Vec3::ZERO)
 , color(Vec4::ONE)
 , lb_uv(Vec2::ZERO)
 , rt_uv(Vec2::ONE)
@@ -138,7 +139,7 @@ ParticleSystem3D::ParticleSystem3D()
 , _particleQuota(0)
 , _state(State::STOP)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _keepLocal(true)
+, _keepLocal(false)
 {
     
 }

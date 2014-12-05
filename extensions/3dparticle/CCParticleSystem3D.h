@@ -46,6 +46,7 @@ struct CC_DLL Particle3D
     virtual ~Particle3D();
     // property of particles
     Vec3 position; // position
+    Vec3 positionInWorld;
     Quaternion orientation;//  Orientation of the particle.
     Vec4 color;  // particle color
     Vec2 lb_uv; // left bottom uv

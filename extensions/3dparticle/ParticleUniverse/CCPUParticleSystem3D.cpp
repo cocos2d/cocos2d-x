@@ -305,7 +305,11 @@ void PUParticleSystem3D::updator( float elapsedTime )
 
             // Update the position with the direction.
             particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
+            particle->positionInWorld = particle->position;
 
+            if (_keepLocal){
+                getNodeToWorldTransform().transformPoint(particle->positionInWorld, &particle->positionInWorld);
+            }
             firstActiveParticle = false;
         }
         else{

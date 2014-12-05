@@ -125,7 +125,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     
 
     for (auto iter : activeParticleList){
-        iter->depthInView = -(viewMat.m[2] * iter->position.x + viewMat.m[6] * iter->position.y + viewMat.m[10] * iter->position.z + viewMat.m[14]);
+        iter->depthInView = -(viewMat.m[2] * iter->positionInWorld.x + viewMat.m[6] * iter->positionInWorld.y + viewMat.m[10] * iter->positionInWorld.z + viewMat.m[14]);
     }
 
     std::sort(activeParticleList.begin(), activeParticleList.end(), compareParticle3D);
@@ -142,7 +142,8 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         auto particle = iter;
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
-        transform.transformPoint(particle->position, &position);
+        //transform.transformPoint(particle->position, &position);
+        position = particle->positionInWorld;
         Mat4::createRotation(backward, particle->zRotation, &pRotMat);
         _posuvcolors[vertexindex].position = (position + pRotMat * (- halfwidth - halfheight));
         _posuvcolors[vertexindex].color = particle->color;
