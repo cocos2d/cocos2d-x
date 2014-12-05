@@ -610,16 +610,16 @@ namespace cocostudio
         button->setEnabled(displaystate);
         
         Size contentSize;
-        bool isNeedRefreshSize = button->isUnifySizeEnabled() && (!button->isScale9Enabled());
-        if (isNeedRefreshSize)
+        if (!button->isScale9Enabled())
         {
+            button->setUnifySizeEnabled(true);
             contentSize = button->getVirtualRendererSize();
         }
 
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
 
-        if (isNeedRefreshSize)
+        if (!button->isScale9Enabled())
         {
             button->setContentSize(contentSize);
         }
