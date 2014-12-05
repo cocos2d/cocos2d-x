@@ -57,9 +57,12 @@ public:
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
     
     /* create 3d sprite asynchronously
-     * If the 3d model was not previously loaded, it will create a new 3d sprite and it will return it.
-     * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the Sprite3D as a parameter.
+     * If the 3d model was previously loaded, it will create a new 3d sprite and the callback will be called at once.
+     * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the created Sprite3D and a userdefined parameter.
      * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
+     * @param modelPath model to be loaded
+     * @param callback callback after loading
+     * @param callbackparam user defined parameter for the callback
      */
     static void createAsync(const std::string &modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
     
