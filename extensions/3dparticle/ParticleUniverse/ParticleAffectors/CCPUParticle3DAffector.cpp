@@ -28,8 +28,7 @@
 NS_CC_BEGIN
 
 PUParticle3DAffector::PUParticle3DAffector()
-: _particleSystem(nullptr)
-, _affectorScale(Vec3::ONE)
+: _affectorScale(Vec3::ONE)
 , _affectSpecialisation(AFSP_DEFAULT)
 {
     
@@ -47,6 +46,12 @@ void PUParticle3DAffector::updateAffector(PUParticle3D *particle, float deltaTim
 
 const Vec3& PUParticle3DAffector::getDerivedPosition()
 {
+    if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
+        _derivedPosition = static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
+	else
+		_derivedPosition = Vec3::ZERO;
+
+	return _derivedPosition;
     //if (mMarkedForEmission)
     //{
     //	// Use the affector position, because it is emitted
@@ -60,9 +65,10 @@ const Vec3& PUParticle3DAffector::getDerivedPosition()
     //		mParentTechnique->getParentSystem()->getDerivedOrientation() * (_mAffectorScale * position);
     //}
     //return _derivedPosition;
+    
 
-    //incorrect result (FIXME)
-    return _position;
+    ////incorrect result (FIXME)
+    //return _position;
 }
 
 float PUParticle3DAffector::calculateAffectSpecialisationFactor( const PUParticle3D* particle )

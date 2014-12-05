@@ -31,21 +31,24 @@
 NS_CC_BEGIN
 
 class ParticleSystem3D;
+struct Particle3D;
 
-class Particle3DAffector : public Ref
+class CC_DLL Particle3DAffector : public Ref
 {
     friend class ParticleSystem3D;
 public:
-    Particle3DAffector();
-    virtual ~Particle3DAffector();
     
-    virtual void updateAffector(float deltaTime);
+    virtual void updateAffector(Particle3D* particle, float deltaTime);
     
     /** Enables or disables the emitter.
      */
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
     bool isEnabled(void) const { return _isEnabled; }
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DAffector();
+    virtual ~Particle3DAffector();
     
 protected:
     ParticleSystem3D* _particleSystem;

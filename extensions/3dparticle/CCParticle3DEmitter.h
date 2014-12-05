@@ -35,12 +35,10 @@ struct Particle3D;
 /**
  * 3d particle emitter
  */
-class Particle3DEmitter : public Ref
+class CC_DLL Particle3DEmitter : public Ref
 {
     friend class ParticleSystem3D;
 public:
-    Particle3DEmitter();
-    virtual ~Particle3DEmitter();
     
     virtual void updateEmitter(Particle3D* particle, float deltaTime);
     
@@ -51,6 +49,10 @@ public:
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
     bool isEnabled(void) const { return _isEnabled; }
+
+CC_CONSTRUCTOR_ACCESS:
+    Particle3DEmitter();
+    virtual ~Particle3DEmitter();
     
 protected:
     ParticleSystem3D* _particleSystem;

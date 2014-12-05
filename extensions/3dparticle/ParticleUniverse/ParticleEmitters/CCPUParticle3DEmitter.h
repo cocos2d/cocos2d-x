@@ -28,8 +28,9 @@
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 #include "3dparticle/CCParticle3DEmitter.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
 #include <vector>
+#include <string>
 
 NS_CC_BEGIN
 struct PUParticle3D;
@@ -37,7 +38,7 @@ class PUParticleSystem3D;
 /**
  * 3d particle emitter
  */
-class PUParticle3DEmitter : public Particle3DEmitter
+class CC_DLL PUParticle3DEmitter : public Particle3DEmitter
 {
     friend class PUParticleSystem3D;
 public:
@@ -114,63 +115,63 @@ public:
 
     /** Todo
     */
-    inline DynamicAttribute* getDynAngle(void) const {return _dynAngle;};
-    void setDynAngle(DynamicAttribute* dynAngle);
+    inline PUDynamicAttribute* getDynAngle(void) const {return _dynAngle;};
+    void setDynAngle(PUDynamicAttribute* dynAngle);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynEmissionRate(void) const {return _dynEmissionRate;};
-    void setDynEmissionRate(DynamicAttribute* dynEmissionRate);
+    inline PUDynamicAttribute* getDynEmissionRate(void) const {return _dynEmissionRate;};
+    void setDynEmissionRate(PUDynamicAttribute* dynEmissionRate);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynTotalTimeToLive(void) const {return _dynTotalTimeToLive;};
-    void setDynTotalTimeToLive(DynamicAttribute* dynTotalTimeToLive);
+    inline PUDynamicAttribute* getDynTotalTimeToLive(void) const {return _dynTotalTimeToLive;};
+    void setDynTotalTimeToLive(PUDynamicAttribute* dynTotalTimeToLive);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynParticleMass(void) const {return _dynParticleMass;};
-    void setDynParticleMass(DynamicAttribute* dynParticleMass);
+    inline PUDynamicAttribute* getDynParticleMass(void) const {return _dynParticleMass;};
+    void setDynParticleMass(PUDynamicAttribute* dynParticleMass);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynVelocity(void) const {return _dynVelocity;};
-    void setDynVelocity(DynamicAttribute* dynVelocity);
+    inline PUDynamicAttribute* getDynVelocity(void) const {return _dynVelocity;};
+    void setDynVelocity(PUDynamicAttribute* dynVelocity);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynDuration(void) const {return _dynDuration;};
-    void setDynDuration(DynamicAttribute* dynDuration);
+    inline PUDynamicAttribute* getDynDuration(void) const {return _dynDuration;};
+    void setDynDuration(PUDynamicAttribute* dynDuration);
     void setDynDurationSet(bool durationSet);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynRepeatDelay(void) const {return _dynRepeatDelay;};
-    void setDynRepeatDelay(DynamicAttribute* dynRepeatDelay);
+    inline PUDynamicAttribute* getDynRepeatDelay(void) const {return _dynRepeatDelay;};
+    void setDynRepeatDelay(PUDynamicAttribute* dynRepeatDelay);
     void setDynRepeatDelaySet(bool repeatDelaySet);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynParticleAllDimensions(void) const {return _dynParticleAllDimensions;};
-    void setDynParticleAllDimensions(DynamicAttribute* dynParticleAllDimensions);
+    inline PUDynamicAttribute* getDynParticleAllDimensions(void) const {return _dynParticleAllDimensions;};
+    void setDynParticleAllDimensions(PUDynamicAttribute* dynParticleAllDimensions);
     void setDynParticleAllDimensionsSet(bool particleAllDimensionsSet);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynParticleWidth(void) const {return _dynParticleWidth;};
-    void setDynParticleWidth(DynamicAttribute* dynParticleWidth);
+    inline PUDynamicAttribute* getDynParticleWidth(void) const {return _dynParticleWidth;};
+    void setDynParticleWidth(PUDynamicAttribute* dynParticleWidth);
     void setDynParticleWidthSet(bool particleWidthSet);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynParticleHeight(void) const {return _dynParticleHeight;};
-    void setDynParticleHeight(DynamicAttribute* dynParticleHeight);
+    inline PUDynamicAttribute* getDynParticleHeight(void) const {return _dynParticleHeight;};
+    void setDynParticleHeight(PUDynamicAttribute* dynParticleHeight);
     void setDynParticleHeightSet(bool particleHeightSet);
 
     /** Todo
     */
-    inline DynamicAttribute* getDynParticleDepth(void) const {return _dynParticleDepth;};
-    void setDynParticleDepth(DynamicAttribute* dynParticleDepth);
+    inline PUDynamicAttribute* getDynParticleDepth(void) const {return _dynParticleDepth;};
+    void setDynParticleDepth(PUDynamicAttribute* dynParticleDepth);
     void setDynParticleDepthSet(bool particleDepthSet);
 
     ///** Todo
@@ -340,12 +341,10 @@ protected:
 
         /**  Internal method for generating the angle.
     */
-    void generateAngle(float angle);
+    void generateAngle(float &angle);
 
     
 protected:
-
-    PUParticleSystem3D* _particleSystem;
 
     Vec3 _latestPosition;
 
@@ -386,10 +385,10 @@ protected:
     bool _particleOrientationRangeSet;
 
     // Angle around direction which particles may be emitted
-    DynamicAttribute* _dynAngle;
+    PUDynamicAttribute* _dynAngle;
 
     // Rate of particle emission.
-    DynamicAttribute* _dynEmissionRate;
+    PUDynamicAttribute* _dynEmissionRate;
 
     //// Identifies the type of particle this emitter emits (default is visual particle).
     //ParticleType mEmitsType;
@@ -399,23 +398,23 @@ protected:
 
     /** Dynamic attribute used to generate the total time to live.
     */
-    DynamicAttribute* _dynTotalTimeToLive;
+    PUDynamicAttribute* _dynTotalTimeToLive;
 
     /** Dynamic attribute used to generate the mass of a particle.
     */
-    DynamicAttribute* _dynParticleMass;
+    PUDynamicAttribute* _dynParticleMass;
 
     /** Dynamic attribute used to generate the velocity of a particle.
     */
-    DynamicAttribute* _dynVelocity;
+    PUDynamicAttribute* _dynVelocity;
 
     /** Dynamic attribute used to define the duration of the emitter.
     */
-    DynamicAttribute* _dynDuration;
+    PUDynamicAttribute* _dynDuration;
 
     /** Dynamic attribute used to define the repeat/delay of the emitter.
     */
-    DynamicAttribute* _dynRepeatDelay;
+    PUDynamicAttribute* _dynRepeatDelay;
 
     /** Dynamic attribute used to define the (own) dimensions of a particle.
     @remarks
@@ -423,7 +422,7 @@ protected:
         is also possible to set the dimensions per particle. Note, that this only applies to visual particles,
         of course. This attribute is used to x, y and z dimensions with the value.
     */
-    DynamicAttribute* _dynParticleAllDimensions;
+    PUDynamicAttribute* _dynParticleAllDimensions;
     bool _dynParticleAllDimensionsSet;
 
     /** Dynamic attribute used to define the (own) width of a particle.
@@ -432,7 +431,7 @@ protected:
         is also possible to set the width per particle. Note, that this only applies to visual particles,
         of course.
     */
-    DynamicAttribute* _dynParticleWidth;
+    PUDynamicAttribute* _dynParticleWidth;
     bool _dynParticleWidthSet;
 
     /** Dynamic attribute used to define the (own) height of a particle.
@@ -441,7 +440,7 @@ protected:
         is also possible to set the height per particle. Note, that this only applies to visual particles,
         of course.
     */
-    DynamicAttribute* _dynParticleHeight;
+    PUDynamicAttribute* _dynParticleHeight;
     bool _dynParticleHeightSet;
 
     /** Dynamic attribute used to define the (own) depth of a particle.
@@ -450,7 +449,7 @@ protected:
         is also possible to set the depth per particle. Note, that this only applies to visual particles,
         of course.
     */
-    DynamicAttribute* _dynParticleDepth;
+    PUDynamicAttribute* _dynParticleDepth;
     bool _dynParticleDepthSet;
 
     /** Notional up vector, just used to speed up generation of variant directions.
@@ -467,7 +466,7 @@ protected:
 
     /** Helper class
     */
-    DynamicAttributeHelper _dynamicAttributeHelper;
+    PUDynamicAttributeHelper _dynamicAttributeHelper;
 
     /** Duration remainder.
     */

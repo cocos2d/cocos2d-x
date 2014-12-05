@@ -57,8 +57,7 @@ const float PUParticle3DEmitter::DEFAULT_HEIGHT = 0.0f;
 const float PUParticle3DEmitter::DEFAULT_DEPTH = 0.0f;
 
 PUParticle3DEmitter::PUParticle3DEmitter()
-: _particleSystem(nullptr),
-//mEmitsType(DEFAULT_EMITS),
+: //mEmitsType(DEFAULT_EMITS),
 //mEmitsName(StringUtil::BLANK),
 _remainder(0),
 _durationRemain(0),
@@ -95,30 +94,30 @@ _particleTextureCoordsRangeSet(false)
 {
     //particleType = PT_EMITTER;
     //mAliasType = AT_EMITTER;
-    _dynEmissionRate = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynEmissionRate))->setValue(DEFAULT_EMISSION_RATE);
-    _dynTotalTimeToLive = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynTotalTimeToLive))->setValue(DEFAULT_TIME_TO_LIVE);
-    _dynParticleMass = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynParticleMass))->setValue(DEFAULT_MASS);
-    _dynVelocity = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynVelocity))->setValue(DEFAULT_VELOCITY);
-    _dynDuration = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynDuration))->setValue(DEFAULT_DURATION);
-    _dynRepeatDelay = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynRepeatDelay))->setValue(DEFAULT_REPEAT_DELAY);
-    _dynAngle = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynAngle))->setValue(DEFAULT_ANGLE);
+    _dynEmissionRate = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynEmissionRate))->setValue(DEFAULT_EMISSION_RATE);
+    _dynTotalTimeToLive = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynTotalTimeToLive))->setValue(DEFAULT_TIME_TO_LIVE);
+    _dynParticleMass = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynParticleMass))->setValue(DEFAULT_MASS);
+    _dynVelocity = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynVelocity))->setValue(DEFAULT_VELOCITY);
+    _dynDuration = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynDuration))->setValue(DEFAULT_DURATION);
+    _dynRepeatDelay = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynRepeatDelay))->setValue(DEFAULT_REPEAT_DELAY);
+    _dynAngle = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynAngle))->setValue(DEFAULT_ANGLE);
 
     // Set the dimensions attributes to 0; the default is to use the default dimensions of the ParticleTechnique
-    _dynParticleAllDimensions = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynParticleAllDimensions))->setValue(DEFAULT_DIMENSIONS);
-    _dynParticleWidth = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynParticleWidth))->setValue(DEFAULT_WIDTH);
-    _dynParticleHeight = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynParticleHeight))->setValue(DEFAULT_HEIGHT);
-    _dynParticleDepth = new DynamicAttributeFixed();
-    (static_cast<DynamicAttributeFixed*>(_dynParticleDepth))->setValue(DEFAULT_DEPTH);
+    _dynParticleAllDimensions = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynParticleAllDimensions))->setValue(DEFAULT_DIMENSIONS);
+    _dynParticleWidth = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynParticleWidth))->setValue(DEFAULT_WIDTH);
+    _dynParticleHeight = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynParticleHeight))->setValue(DEFAULT_HEIGHT);
+    _dynParticleDepth = new PUDynamicAttributeFixed();
+    (static_cast<PUDynamicAttributeFixed*>(_dynParticleDepth))->setValue(DEFAULT_DEPTH);
 }
 
 PUParticle3DEmitter::~PUParticle3DEmitter()
@@ -181,7 +180,12 @@ void PUParticle3DEmitter::initParticlePosition( PUParticle3D* particle )
 
 const Vec3& PUParticle3DEmitter::getDerivedPosition()
 {
-    return _derivedPosition;
+	if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
+		_derivedPosition =  static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
+	else
+		_derivedPosition = Vec3::ZERO;
+
+	return _derivedPosition;
 }
 
 void PUParticle3DEmitter::initParticleOrientation( PUParticle3D* particle )
@@ -207,8 +211,13 @@ void PUParticle3DEmitter::initParticleDirection( PUParticle3D* particle )
     generateAngle(angle);
     if (angle != 0.0f)
     {
-        //FIXME
         //particle->direction = _particleDirection.randomDeviant(angle, _upVector);
+        // Rotate up vector by random amount around this
+        Mat4 mat;
+        Mat4::createRotation(_particleDirection, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
+        Vec3 newUp = mat * _upVector;
+        Mat4::createRotation(newUp, angle, &mat);
+        particle->direction = mat * _particleDirection;
     }
     else
     {
@@ -218,13 +227,13 @@ void PUParticle3DEmitter::initParticleDirection( PUParticle3D* particle )
     particle->originalDirectionLength = particle->direction.length();
 }
 
-void PUParticle3DEmitter::generateAngle( float angle )
+void PUParticle3DEmitter::generateAngle( float &angle )
 {
-    float a = _dynamicAttributeHelper.calculate(_dynAngle, _particleSystem->getTimeElapsedSinceStart());
+    float a = _dynamicAttributeHelper.calculate(_dynAngle, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
     angle = a;
-    if (_dynAngle->getType() == DynamicAttribute::DAT_FIXED)
+    if (_dynAngle->getType() == PUDynamicAttribute::DAT_FIXED)
     {
-        // Make an exception here and don´t use the fixed angle.
+        // Make an exception here and don't use the fixed angle.
         angle = CCRANDOM_0_1() * angle;
     }
 }
@@ -238,7 +247,7 @@ unsigned short PUParticle3DEmitter::calculateRequestedParticles( float timeElaps
     {
         if (_dynEmissionRate)
         {
-            float rate = _dynEmissionRate->getValue(_particleSystem->getTimeElapsedSinceStart());
+            float rate = _dynEmissionRate->getValue((static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
             //if (_emissionRateCameraDependency)
             //{
             //	// Affect the emission rate based on the camera distance
@@ -328,7 +337,7 @@ void PUParticle3DEmitter::notifyStart()
 
 void PUParticle3DEmitter::notifyRescaled( const Vec3& scale )
 {
-
+    _emitterScale = scale;
 }
 
 void PUParticle3DEmitter::notifyStop()
@@ -471,7 +480,7 @@ void PUParticle3DEmitter::setEmitsName(const std::string& emitsName)
 }
 
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynEmissionRate(DynamicAttribute* dynEmissionRate)
+void PUParticle3DEmitter::setDynEmissionRate(PUDynamicAttribute* dynEmissionRate)
 {
     if (_dynEmissionRate)
         delete _dynEmissionRate;
@@ -479,7 +488,7 @@ void PUParticle3DEmitter::setDynEmissionRate(DynamicAttribute* dynEmissionRate)
     _dynEmissionRate = dynEmissionRate;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynTotalTimeToLive(DynamicAttribute* dynTotalTimeToLive)
+void PUParticle3DEmitter::setDynTotalTimeToLive(PUDynamicAttribute* dynTotalTimeToLive)
 {
     if (_dynTotalTimeToLive)
         delete _dynTotalTimeToLive;
@@ -487,7 +496,7 @@ void PUParticle3DEmitter::setDynTotalTimeToLive(DynamicAttribute* dynTotalTimeTo
     _dynTotalTimeToLive = dynTotalTimeToLive;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynParticleMass(DynamicAttribute* dynParticleMass)
+void PUParticle3DEmitter::setDynParticleMass(PUDynamicAttribute* dynParticleMass)
 {
     if (_dynParticleMass)
         delete _dynParticleMass;
@@ -495,7 +504,7 @@ void PUParticle3DEmitter::setDynParticleMass(DynamicAttribute* dynParticleMass)
     _dynParticleMass = dynParticleMass;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynAngle(DynamicAttribute* dynAngle)
+void PUParticle3DEmitter::setDynAngle(PUDynamicAttribute* dynAngle)
 {
     if (_dynAngle)
         delete _dynAngle;
@@ -503,7 +512,7 @@ void PUParticle3DEmitter::setDynAngle(DynamicAttribute* dynAngle)
     _dynAngle = dynAngle;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynVelocity(DynamicAttribute* dynVelocity)
+void PUParticle3DEmitter::setDynVelocity(PUDynamicAttribute* dynVelocity)
 {
     if (_dynVelocity)
         delete _dynVelocity;
@@ -511,7 +520,7 @@ void PUParticle3DEmitter::setDynVelocity(DynamicAttribute* dynVelocity)
     _dynVelocity = dynVelocity;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynDuration(DynamicAttribute* dynDuration)
+void PUParticle3DEmitter::setDynDuration(PUDynamicAttribute* dynDuration)
 {
     if (_dynDuration)
         delete _dynDuration;
@@ -526,7 +535,7 @@ void PUParticle3DEmitter::setDynDurationSet(bool durationSet)
     _dynDurationSet = durationSet;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynRepeatDelay(DynamicAttribute* dynRepeatDelay)
+void PUParticle3DEmitter::setDynRepeatDelay(PUDynamicAttribute* dynRepeatDelay)
 {
     if (_dynRepeatDelay)
         delete _dynRepeatDelay;
@@ -541,7 +550,7 @@ void PUParticle3DEmitter::setDynRepeatDelaySet(bool repeatDelaySet)
     _dynRepeatDelaySet = repeatDelaySet;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynParticleAllDimensions(DynamicAttribute* dynParticleAllDimensions)
+void PUParticle3DEmitter::setDynParticleAllDimensions(PUDynamicAttribute* dynParticleAllDimensions)
 {
     if (_dynParticleAllDimensions)
         delete _dynParticleAllDimensions;
@@ -555,7 +564,7 @@ void PUParticle3DEmitter::setDynParticleAllDimensionsSet(bool particleAllDimensi
     _dynParticleAllDimensionsSet = particleAllDimensionsSet;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynParticleWidth(DynamicAttribute* dynParticleWidth)
+void PUParticle3DEmitter::setDynParticleWidth(PUDynamicAttribute* dynParticleWidth)
 {
     if (_dynParticleWidth)
         delete _dynParticleWidth;
@@ -569,7 +578,7 @@ void PUParticle3DEmitter::setDynParticleWidthSet(bool particleWidthSet)
     _dynParticleWidthSet = particleWidthSet;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynParticleHeight(DynamicAttribute* dynParticleHeight)
+void PUParticle3DEmitter::setDynParticleHeight(PUDynamicAttribute* dynParticleHeight)
 {
     if (_dynParticleHeight)
         delete _dynParticleHeight;
@@ -583,7 +592,7 @@ void PUParticle3DEmitter::setDynParticleHeightSet(bool particleHeightSet)
     _dynParticleHeightSet = particleHeightSet;
 }
 //-----------------------------------------------------------------------
-void PUParticle3DEmitter::setDynParticleDepth(DynamicAttribute* dynParticleDepth)
+void PUParticle3DEmitter::setDynParticleDepth(PUDynamicAttribute* dynParticleDepth)
 {
     if (_dynParticleDepth)
         delete _dynParticleDepth;
@@ -694,7 +703,7 @@ void PUParticle3DEmitter::initTimeBased( void )
     {
         if (_dynDurationSet)
         {
-            _durationRemain = _dynamicAttributeHelper.calculate(_dynDuration, _particleSystem->getTimeElapsedSinceStart());
+            _durationRemain = _dynamicAttributeHelper.calculate(_dynDuration, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
         }
 
         /** Determine whether duration must be used. If it is used, the emitter should at least be enabled.
@@ -712,127 +721,127 @@ void PUParticle3DEmitter::initTimeBased( void )
     {
         if (_dynRepeatDelaySet)
         {
-            _repeatDelayRemain = _dynamicAttributeHelper.calculate(_dynRepeatDelay, _particleSystem->getTimeElapsedSinceStart());
+            _repeatDelayRemain = _dynamicAttributeHelper.calculate(_dynRepeatDelay, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
         }
     }
 }
 
 void PUParticle3DEmitter::initParticleForEmission( PUParticle3D* particle )
 {
-	// Initialise the particle position (localspace)
-	particle->parentEmitter = this;
-	initParticlePosition(particle);
-	initParticleDirection(particle);
-	initParticleVelocity(particle);
-	initParticleOrientation(particle);
-	initParticleMass(particle);
-	initParticleColor(particle);
-	initParticleTextureCoords(particle);
-	particle->totalTimeToLive = initParticleTimeToLive();
-	particle->timeToLive = particle->totalTimeToLive;
+    // Initialise the particle position (localspace)
+    particle->parentEmitter = this;
+    initParticlePosition(particle);
+    initParticleDirection(particle);
+    initParticleVelocity(particle);
+    initParticleOrientation(particle);
+    initParticleMass(particle);
+    initParticleColor(particle);
+    initParticleTextureCoords(particle);
+    particle->totalTimeToLive = initParticleTimeToLive();
+    particle->timeToLive = particle->totalTimeToLive;
 
-	// Generate particles' own dimensions if defined.
-	initParticleDimensions(particle);
+    // Generate particles' own dimensions if defined.
+    initParticleDimensions(particle);
 }
 
 void PUParticle3DEmitter::initParticleVelocity( PUParticle3D* particle )
 {
-	float scalar = _dynamicAttributeHelper.calculate(_dynVelocity, _particleSystem->getTimeElapsedSinceStart(), 1.0f);
-	particle->direction *= scalar;
-	particle->originalVelocity = scalar;
-	particle->originalScaledDirectionLength = particle->direction.length();
+    float scalar = _dynamicAttributeHelper.calculate(_dynVelocity, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart(), 1.0f);
+    particle->direction *= scalar;
+    particle->originalVelocity = scalar;
+    particle->originalScaledDirectionLength = particle->direction.length();
 }
 
 void PUParticle3DEmitter::initParticleMass( PUParticle3D* particle )
 {
-	float mass = _dynamicAttributeHelper.calculate(_dynParticleMass, _particleSystem->getTimeElapsedSinceStart(), PUParticle3D::DEFAULT_MASS);
-	particle->mass = mass;
+    float mass = _dynamicAttributeHelper.calculate(_dynParticleMass, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart(), PUParticle3D::DEFAULT_MASS);
+    particle->mass = mass;
 }
 
 void PUParticle3DEmitter::initParticleColor( PUParticle3D* particle )
 {
-	if (_particleColorRangeSet)
-	{
-		particle->color.x = cocos2d::random(_particleColorRangeStart.x, _particleColorRangeEnd.x);
-		particle->color.y = cocos2d::random(_particleColorRangeStart.y, _particleColorRangeEnd.y);
-		particle->color.z = cocos2d::random(_particleColorRangeStart.z, _particleColorRangeEnd.z);
-		particle->color.w = cocos2d::random(_particleColorRangeStart.w, _particleColorRangeEnd.w);
-	}
-	else
-	{
-		particle->color = _particleColor;
-	}
+    if (_particleColorRangeSet)
+    {
+        particle->color.x = cocos2d::random(_particleColorRangeStart.x, _particleColorRangeEnd.x);
+        particle->color.y = cocos2d::random(_particleColorRangeStart.y, _particleColorRangeEnd.y);
+        particle->color.z = cocos2d::random(_particleColorRangeStart.z, _particleColorRangeEnd.z);
+        particle->color.w = cocos2d::random(_particleColorRangeStart.w, _particleColorRangeEnd.w);
+    }
+    else
+    {
+        particle->color = _particleColor;
+    }
 
-	// Set original colour
-	particle->originalColor = particle->color;
+    // Set original colour
+    particle->originalColor = particle->color;
 }
 
 void PUParticle3DEmitter::initParticleTextureCoords( PUParticle3D* particle )
 {
-	if (_particleTextureCoordsRangeSet)
-	{
-		particle->textureCoordsCurrent = (unsigned short)cocos2d::random((float)_particleTextureCoordsRangeStart, (float)_particleTextureCoordsRangeEnd + 0.999f);
-	}
-	else
-	{
-		particle->textureCoordsCurrent = _particleTextureCoords;
-	}
+    if (_particleTextureCoordsRangeSet)
+    {
+        particle->textureCoordsCurrent = (unsigned short)cocos2d::random((float)_particleTextureCoordsRangeStart, (float)_particleTextureCoordsRangeEnd + 0.999f);
+    }
+    else
+    {
+        particle->textureCoordsCurrent = _particleTextureCoords;
+    }
 }
 
 float PUParticle3DEmitter::initParticleTimeToLive()
 {
-	return _dynamicAttributeHelper.calculate(_dynTotalTimeToLive, _particleSystem->getTimeElapsedSinceStart(), PUParticle3D::DEFAULT_TTL);
+    return _dynamicAttributeHelper.calculate(_dynTotalTimeToLive, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart(), PUParticle3D::DEFAULT_TTL);
 }
 
 void PUParticle3DEmitter::initParticleDimensions( PUParticle3D* particle )
 {
-	// Only continue if one of them is set
-	if (_dynParticleAllDimensionsSet || _dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
-	{
-		// Set all dimensions equal ...
-		float extend = 0;
-		if (_dynParticleAllDimensionsSet && _dynParticleAllDimensions)
-		{
-			extend = _dynamicAttributeHelper.calculate(_dynParticleAllDimensions, _particleSystem->getTimeElapsedSinceStart());
-			particle->setOwnDimensions(_emitterScale.x * extend, _emitterScale.y * extend, _emitterScale.z * extend);
-			return;
-		}
+    // Only continue if one of them is set
+    if (_dynParticleAllDimensionsSet || _dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
+    {
+        // Set all dimensions equal ...
+        float extend = 0;
+        if (_dynParticleAllDimensionsSet && _dynParticleAllDimensions)
+        {
+            extend = _dynamicAttributeHelper.calculate(_dynParticleAllDimensions, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
+            particle->setOwnDimensions(_emitterScale.x * extend, _emitterScale.y * extend, _emitterScale.z * extend);
+            return;
+        }
 
-		// ... or set the dimensions independent from each other
-		float width = 0;
-		float height = 0;
-		float depth = 0;
-		if (_dynParticleWidthSet && _dynParticleWidth)
-		{
-			width = _dynamicAttributeHelper.calculate(_dynParticleWidth, _particleSystem->getTimeElapsedSinceStart());
-		}
-		if (_dynParticleHeightSet && _dynParticleHeight)
-		{
-			height = _dynamicAttributeHelper.calculate(_dynParticleHeight, _particleSystem->getTimeElapsedSinceStart());
-		}
-		if (_dynParticleDepthSet && _dynParticleDepth)
-		{
-			depth = _dynamicAttributeHelper.calculate(_dynParticleDepth, _particleSystem->getTimeElapsedSinceStart());
-		}
-	
-		/** Set the width, height and depth if at least one of them is set.
-		@remarks
-			If one of the dimensions is 0, it will be overridden by the default value later on.
-		*/
-		if (_dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
-		{
-			particle->setOwnDimensions(_emitterScale.x * width, _emitterScale.y * height, _emitterScale.z * depth);
-		}
-	}
-	else
-	{
-		// Just set the width, height and depth, but these are just the default settings; the particle doesn't
-		// have own dimensions. Recalculate the bounding sphere radius.
-		particle->width = _emitterScale.x * _particleSystem->getDefaultWidth();
-		particle->height = _emitterScale.y * _particleSystem->getDefaultHeight();
-		particle->depth = _emitterScale.z * _particleSystem->getDefaultDepth();
-		particle->calculateBoundingSphereRadius();
-	}
+        // ... or set the dimensions independent from each other
+        float width = 0;
+        float height = 0;
+        float depth = 0;
+        if (_dynParticleWidthSet && _dynParticleWidth)
+        {
+            width = _dynamicAttributeHelper.calculate(_dynParticleWidth, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
+        }
+        if (_dynParticleHeightSet && _dynParticleHeight)
+        {
+            height = _dynamicAttributeHelper.calculate(_dynParticleHeight, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
+        }
+        if (_dynParticleDepthSet && _dynParticleDepth)
+        {
+            depth = _dynamicAttributeHelper.calculate(_dynParticleDepth, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
+        }
+    
+        /** Set the width, height and depth if at least one of them is set.
+        @remarks
+            If one of the dimensions is 0, it will be overridden by the default value later on.
+        */
+        if (_dynParticleWidthSet || _dynParticleHeightSet || _dynParticleDepthSet)
+        {
+            particle->setOwnDimensions(_emitterScale.x * width, _emitterScale.y * height, _emitterScale.z * depth);
+        }
+    }
+    else
+    {
+        // Just set the width, height and depth, but these are just the default settings; the particle doesn't
+        // have own dimensions. Recalculate the bounding sphere radius.
+        particle->width = _emitterScale.x * (static_cast<PUParticleSystem3D *>(_particleSystem))->getDefaultWidth();
+        particle->height = _emitterScale.y * (static_cast<PUParticleSystem3D *>(_particleSystem))->getDefaultHeight();
+        particle->depth = _emitterScale.z * (static_cast<PUParticleSystem3D *>(_particleSystem))->getDefaultDepth();
+        particle->calculateBoundingSphereRadius();
+    }
 }
 
 NS_CC_END

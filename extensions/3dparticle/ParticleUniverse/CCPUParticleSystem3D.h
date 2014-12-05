@@ -41,11 +41,12 @@ class PUParticle3DEmitter;
 class PUParticle3DAffector;
 class Particle3DRender;
 
-struct PUParticle3D : public Particle3D
+struct CC_DLL PUParticle3D : public Particle3D
 {
-	static float DEFAULT_TTL;
-	static float DEFAULT_MASS;
+    static float DEFAULT_TTL;
+    static float DEFAULT_MASS;
 
+    PUParticle3D();
         /** Enumeration which lists a number of reserved event flags. Although custom flags can be used to
         indicate that a certain condition occurs, the first number of flags may not be used as custom flags.
     */
@@ -56,7 +57,7 @@ struct PUParticle3D : public Particle3D
         PEF_COLLIDED = 1<<2
     };
 
-	PUParticle3DEmitter* parentEmitter;
+    PUParticle3DEmitter* parentEmitter;
 
     // Values that are assigned as soon as the particle is emitted (non-transformed)
     Vec3 originalPosition;
@@ -65,8 +66,8 @@ struct PUParticle3D : public Particle3D
     Vec3 direction;
     Vec3 originalDirection;
     float originalDirectionLength; // Length of the direction that has been set
-	float originalVelocity;
-	float originalScaledDirectionLength; // Length of the direction after multiplication with the velocity
+    float originalVelocity;
+    float originalScaledDirectionLength; // Length of the direction after multiplication with the velocity
 
     /** The rotation axis is used in combination with orientation. Because the rotation axis is part
         of the particle itself, it can be changed independently. */
@@ -74,41 +75,20 @@ struct PUParticle3D : public Particle3D
     /** Current and original colour */
 
     Vec4 originalColor;
-    /** zRotation is used to rotate the particle in 2D (around the Z-axis)
-    @remarks
-        There is no relation between zRotation and orientation.
-        rotationSpeed in combination with orientation are used for 3D rotation of the particle, while
-        zRotation means the rotation around the Z-axis. This type of rotation is typically used for 
-        rotating textures. This also means that both types of rotation can be used together.
-    */
-    float zRotation; //radian
 
     /** The zRotationSpeed is used in combination with zRotation and defines tha actual rotationspeed
         in 2D. */
     float zRotationSpeed; //radian
 
-    /*  Orientation of the particle.
-    @remarks
+    /*@remarks
         The orientation of the particle is only visible if the Particle Renderer - such as the Box renderer - 
         supports orientation.
     */
-    Quaternion orientation;
     Quaternion originalOrientation;
 
     /** The rotation is used in combination with orientation. Because the rotation speed is part
         of the particle itself, it can be changed independently. */
     float rotationSpeed;
-        /** Own width
-    */
-    float width;
-        
-    /** Own height
-    */
-    float height;
-
-    /** Own depth
-    */
-    float depth;
 
     /** Radius of the particle, to be used for inter-particle collision and such.
     */
@@ -119,7 +99,7 @@ struct PUParticle3D : public Particle3D
     void setOwnDimensions(float newWidth, float newHeight, float newDepth);
     void calculateBoundingSphereRadius();
 
-	void initForEmission();
+    void initForEmission();
 
     /** Does this particle have it's own dimensions? */
     bool ownDimensions;
@@ -183,38 +163,38 @@ struct PUParticle3D : public Particle3D
     bool textureAnimationDirectionUp;
 };
 
-class PUParticleSystem3D : public ParticleSystem3D
+class CC_DLL PUParticleSystem3D : public ParticleSystem3D
 {
 public:
 
-	static const float DEFAULT_WIDTH;
-	static const float DEFAULT_HEIGHT;
-	static const float DEFAULT_DEPTH;
+    static const float DEFAULT_WIDTH;
+    static const float DEFAULT_HEIGHT;
+    static const float DEFAULT_DEPTH;
+    static const unsigned short DEFAULT_PARTICLE_QUOTA;
 
-    PUParticleSystem3D();
-    virtual ~PUParticleSystem3D();
+    static PUParticleSystem3D* create();
     
     virtual void update(float delta) override;
     
     /**
      * particle system play control
      */
-    virtual void start() override;
+    virtual void startParticle() override;
     
     /**
      * stop particle
      */
-    virtual void stop() override;
+    virtual void stopParticle() override;
     
     /**
      * pause particle
      */
-    virtual void pause() override;
+    virtual void pauseParticle() override;
     
     /**
      * resume particle
      */
-    virtual void resume() override;
+    virtual void resumeParticle() override;
 
     /** Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
     */
@@ -227,34 +207,41 @@ public:
 
     inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
 
-	/** 
-	*/
-	const float getDefaultWidth(void) const;
-	void setDefaultWidth(const float width);
+    /** 
+    */
+    const float getDefaultWidth(void) const;
+    void setDefaultWidth(const float width);
 
-	/** 
-	*/
-	const float getDefaultHeight(void) const;
-	void setDefaultHeight(const float height);
+    /** 
+    */
+    const float getDefaultHeight(void) const;
+    void setDefaultHeight(const float height);
 
-	/** 
-	*/
-	const float getDefaultDepth(void) const;
-	void setDefaultDepth(const float depth);
+    /** 
+    */
+    const float getDefaultDepth(void) const;
+    void setDefaultDepth(const float depth);
+
+    Vec3 getDerivedPosition();
+    Quaternion getDerivedOrientation();
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticleSystem3D();
+    virtual ~PUParticleSystem3D();
 
 protected:
 
-	void prepared();
-	void unPrepared();
-	void preUpdator(float elapsedTime);
-	void updator(float elapsedTime);
-	void postUpdator(float elapsedTime);
-	void emitParticles(float elapsedTime);
+    void prepared();
+    void unPrepared();
+    void preUpdator(float elapsedTime);
+    void updator(float elapsedTime);
+    void postUpdator(float elapsedTime);
+    void emitParticles(float elapsedTime);
     
-	inline bool isExpired(PUParticle3D* particle, float timeElapsed);
+    inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
 protected:
-	bool _prepared;
+    bool _prepared;
 
     float _particleSystemScaleVelocity;
     float _timeElapsedSinceStart;
@@ -267,17 +254,17 @@ protected:
     Vec3 _rotationCentre;
     
 
-	/** Default width of each visual particle.
-	*/
-	float _defaultWidth;
+    /** Default width of each visual particle.
+    */
+    float _defaultWidth;
 
-	/** Default height of each visual particle.
-	*/
-	float _defaultHeight;
+    /** Default height of each visual particle.
+    */
+    float _defaultHeight;
 
-	/** Default depth of each visual particle.
-	*/
-	float _defaultDepth;
+    /** Default depth of each visual particle.
+    */
+    float _defaultDepth;
     
 };
 

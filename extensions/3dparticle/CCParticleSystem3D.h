@@ -29,6 +29,7 @@
 #include "math/CCMath.h"
 #include <vector>
 #include <map>
+#include <list>
 
 NS_CC_BEGIN
 
@@ -39,19 +40,54 @@ class Particle3DEmitter;
 class Particle3DAffector;
 class Particle3DRender;
 
-struct Particle3D
+struct CC_DLL Particle3D
 {
+    Particle3D();
+    virtual ~Particle3D();
     // property of particles
     Vec3 position; // position
+    Vec3 positionInWorld;
+    Quaternion orientation;//  Orientation of the particle.
     Vec4 color;  // particle color
     Vec2 lb_uv; // left bottom uv
     Vec2 rt_uv; // right top uv
+    float width;//Own width
+    float height;//Own height
+    float depth;//Own depth
+    float depthInView;//depth in camera view
+    float zRotation; //zRotation is used to rotate the particle in 2D (around the Z-axis)   (radian)
     
     //user defined property
     std::map<std::string, void*> userDefs;
 };
 
-class ParticleSystem3D : public Node, public BlendProtocol
+class CC_DLL ParticlePool
+{
+public:
+    typedef std::vector<Particle3D *> PoolList;
+    typedef std::vector<Particle3D *>::iterator PoolIterator;
+
+    ParticlePool();
+    ~ParticlePool();
+
+    Particle3D* createParticle();
+    void lockLatestParticle();
+    void lockAllParticles();
+    Particle3D* getFirst();
+    Particle3D* getNext();
+    const PoolList& getActiveParticleList() const;
+    void addParticle(Particle3D *particle);
+    bool empty() const;
+    void removeAllParticles(bool needDelete = false);
+
+private:
+
+    PoolIterator _releasedIter;
+    PoolList _released;
+    PoolList _locked;
+};
+
+class CC_DLL ParticleSystem3D : public Node, public BlendProtocol
 {
 public:
     enum class State
@@ -60,9 +96,6 @@ public:
         RUNNING,
         PAUSE,
     };
-    
-    ParticleSystem3D();
-    virtual ~ParticleSystem3D();
     
     virtual void update(float delta) override;
     
@@ -75,22 +108,22 @@ public:
     /**
      * particle system play control
      */
-    virtual void start();
+    virtual void startParticle();
     
     /**
      * stop particle
      */
-    virtual void stop();
+    virtual void stopParticle();
     
     /**
      * pause particle
      */
-    virtual void pause();
+    virtual void pauseParticle();
     
     /**
      * resume particle
      */
-    virtual void resume();
+    virtual void resumeParticle();
     
     /**
      * set emitter for particle system, can set your own particle emitter
@@ -103,7 +136,7 @@ public:
     /**
      * add particle affector
      */
-    void addAddAffector(Particle3DAffector* affector);
+    void addAffector(Particle3DAffector* affector);
     
     /**
      * remove affector by index
@@ -114,15 +147,20 @@ public:
      * remove all particle affector
      */
     void removeAllAffector();
+
+        /** 
+    */
+    unsigned short getParticleQuota() const;
+    void setParticleQuota(unsigned short quota);
     
     /**
      * get particle affector by index
      */
     Particle3DAffector* getAffector(int index);
     
-    const std::vector<Particle3D*>& getParticles()
+    const ParticlePool& getParticlePool()
     {
-        return  _particles;
+        return  _particlePool;
     }
     
     int getAliveParticleCnt() const
@@ -131,6 +169,13 @@ public:
     }
     
     State getState() const { return _state; }
+
+    bool isKeepLocal(void) const { return _keepLocal; }
+    void setKeepLocal(bool keepLocal) { _keepLocal = keepLocal; }
+
+CC_CONSTRUCTOR_ACCESS:
+    ParticleSystem3D();
+    virtual ~ParticleSystem3D();
     
 protected:
     
@@ -140,10 +185,13 @@ protected:
     Particle3DRender*                _render;
     
     //particles
-    std::vector<Particle3D*>         _particles;
+    ParticlePool                _particlePool;
     int                              _aliveParticlesCnt;
+    unsigned short            _particleQuota;
     
     BlendFunc                        _blend;
+
+    bool _keepLocal;
 };
 
 NS_CC_END

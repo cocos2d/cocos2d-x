@@ -29,13 +29,14 @@
 #include "math/CCMath.h"
 #include "3dparticle/CCParticle3DAffector.h"
 #include <vector>
+#include <string>
 
 NS_CC_BEGIN
 
 struct PUParticle3D;
 class PUParticleSystem3D;
 
-class PUParticle3DAffector : public Particle3DAffector
+class CC_DLL PUParticle3DAffector : public Particle3DAffector
 {
     friend class PUParticleSystem3D;
 public:
@@ -49,9 +50,6 @@ public:
         AFSP_TTL_INCREASE,
         AFSP_TTL_DECREASE
     };
-
-    PUParticle3DAffector();
-    virtual ~PUParticle3DAffector();
     
     virtual void notifyStart();
     virtual void notifyStop();
@@ -89,13 +87,16 @@ public:
     const std::string& getName(void) const {return _name;};
     void setName(const std::string& name) {_name = name;};
 
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DAffector();
+    virtual ~PUParticle3DAffector();
+
 protected:
 
     float calculateAffectSpecialisationFactor (const PUParticle3D* particle);
     
 protected:
 
-    PUParticleSystem3D* _particleSystem;
     Vec3 _position;
         /** Although the scale is on a Particle System level, the affector can also be scaled.
     */

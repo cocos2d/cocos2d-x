@@ -27,7 +27,6 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "3dparticle/ParticleUniverse/CCParticle3DDynamicAttribute.h"
 #include <vector>
 
 NS_CC_BEGIN
@@ -44,37 +43,37 @@ class Texture2D;
 /**
  * 3d particle render
  */
-class Particle3DRender : public Ref
+class CC_DLL Particle3DRender : public Ref
 {
 public:
 
-	virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
+    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
 
-	/** Perform activities when a Renderer is started.
-	*/
-	virtual void notifyStart(void);
-	/** Perform activities when a Renderer is stopped.
-	*/
-	virtual void notifyStop(void);
-	/** Notify that the Particle System is rescaled.
-	*/
-	virtual void notifyRescaled(const Vec3& scale);
+    /** Perform activities when a Renderer is started.
+    */
+    virtual void notifyStart(void);
+    /** Perform activities when a Renderer is stopped.
+    */
+    virtual void notifyStop(void);
+    /** Notify that the Particle System is rescaled.
+    */
+    virtual void notifyRescaled(const Vec3& scale);
     
     void setVisible(bool isVisible) { _isVisible = isVisible; }
     
     bool isVisible() const { return _isVisible; }
     
 CC_CONSTRUCTOR_ACCESS:
-	Particle3DRender(){};
-	virtual ~Particle3DRender(){};
+    Particle3DRender(){};
+    virtual ~Particle3DRender(){};
     
 protected:
     bool  _isVisible;
-	Vec3 _rendererScale;
+    Vec3 _rendererScale;
 };
 
 // particle render for quad
-class Particle3DQuadRender : public Particle3DRender
+class CC_DLL Particle3DQuadRender : public Particle3DRender
 {
 public:
     static Particle3DQuadRender* create(const std::string& texFile = "");
@@ -104,7 +103,7 @@ protected:
 };
 
 // particle render for Sprite3D
-class Particle3DModelRender : public Particle3DRender
+class CC_DLL Particle3DModelRender : public Particle3DRender
 {
 public:
     static Particle3DModelRender* create(Sprite3D* sprite);
