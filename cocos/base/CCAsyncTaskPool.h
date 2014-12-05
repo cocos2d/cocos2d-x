@@ -130,11 +130,13 @@ protected:
         }
         ~ThreadTasks()
         {
-            std::unique_lock<std::mutex> lock(_queue_mutex);
-            _stop = true;
-            while(_tasks.size())_tasks.pop();
-            while (_taskCallBacks.size()) {
-                _taskCallBacks.pop();
+            {
+                std::unique_lock<std::mutex> lock(_queue_mutex);
+                _stop = true;
+                while(_tasks.size())_tasks.pop();
+                while (_taskCallBacks.size()) {
+                    _taskCallBacks.pop();
+                }
             }
             _condition.notify_all();
             _thread.join();
