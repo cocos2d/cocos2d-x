@@ -61,9 +61,9 @@ public:
      * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the Sprite3D as a parameter.
      * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
      */
-    static void createAsync(const std::string &modelPath, const std::function<void(Sprite3D*)>& callback);
+    static void createAsync(const std::string &modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
     
-    static void createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*)>& callback);
+    static void createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
     
     /**set texture, set the first if multiple textures exist*/
     void setTexture(const std::string& texFile);
@@ -184,7 +184,8 @@ protected:
     
     struct AsyncLoadParam
     {
-        std::function<void(Sprite3D*)> afterLoadCallback; // callback after load
+        std::function<void(Sprite3D*, void*)> afterLoadCallback; // callback after load
+        void*                           callbackParam;
         bool                            result; // sprite load result
         std::string                     path;
         std::string                     texPath; //

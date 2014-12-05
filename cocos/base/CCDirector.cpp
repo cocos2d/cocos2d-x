@@ -978,6 +978,7 @@ void Director::purgeDirector()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
+    AsyncTaskPool::destoryInstance();
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();

@@ -132,6 +132,10 @@ protected:
         {
             std::unique_lock<std::mutex> lock(_queue_mutex);
             _stop = true;
+            while(_tasks.size())_tasks.pop();
+            while (_taskCallBacks.size()) {
+                _taskCallBacks.pop();
+            }
             _condition.notify_all();
             _thread.join();
         }
@@ -162,7 +166,8 @@ protected:
             int numCallBack = 0;
             
             for (auto& it : _callBacks) {
-                if (s_maxCallBackPerProcess != -1 && ++numCallBack > s_maxCallBackPerProcess)
+                numCallBack++;
+                if (s_maxCallBackPerProcess != -1 && numCallBack > s_maxCallBackPerProcess)
                     break;
                 
                 if (it.callback)
@@ -190,7 +195,8 @@ protected:
     };
     
     //tasks
-    ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
+    //ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
+    ThreadTasks *_threadTasks;
     //deal task call back
     AfterAsyncTaskDispatcher _taskcallbackDispatcher;
     static AsyncTaskPool* s_asyncTaskPool;

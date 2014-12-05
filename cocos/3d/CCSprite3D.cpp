@@ -74,12 +74,12 @@ Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &text
     return sprite;
 }
 
-void Sprite3D::createAsync(const std::string &modelPath, const std::function<void(Sprite3D*)>& callback)
+void Sprite3D::createAsync(const std::string &modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam)
 {
-    createAsync(modelPath, "", callback);
+    createAsync(modelPath, "", callback, callbackparam);
 }
 
-void Sprite3D::createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*)>& callback)
+void Sprite3D::createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam)
 {
     Sprite3D *sprite = new (std::nothrow) Sprite3D();
     if (sprite->loadFromCache(modelPath))
@@ -87,13 +87,14 @@ void Sprite3D::createAsync(const std::string &modelPath, const std::string &text
         sprite->autorelease();
         if (!texturePath.empty())
             sprite->setTexture(texturePath);
-        callback(sprite);
+        callback(sprite, callbackparam);
         return;
     }
     
     sprite->_asyncLoadParam.afterLoadCallback = callback;
     sprite->_asyncLoadParam.texPath = texturePath;
     sprite->_asyncLoadParam.path = modelPath;
+    sprite->_asyncLoadParam.callbackParam = callbackparam;
     sprite->_asyncLoadParam.materialdatas = new (std::nothrow) MaterialDatas();
     sprite->_asyncLoadParam.meshdatas = new (std::nothrow) MeshDatas();
     sprite->_asyncLoadParam.nodeDatas = new (std::nothrow) NodeDatas();
@@ -107,6 +108,7 @@ void Sprite3D::createAsync(const std::string &modelPath, const std::string &text
 void Sprite3D::afterAsyncLoad(void* param)
 {
     Sprite3D::AsyncLoadParam* asyncParam = (Sprite3D::AsyncLoadParam*)param;
+    autorelease();
     if (asyncParam)
     {
         if (asyncParam->result)
@@ -122,19 +124,23 @@ void Sprite3D::afterAsyncLoad(void* param)
             auto&   nodeDatas = asyncParam->nodeDatas;
             if (initFrom(*nodeDatas, *meshdatas, *materialdatas))
             {
-                //add to cache
-                auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
-                data->materialdatas = materialdatas;
-                data->nodedatas = nodeDatas;
-                data->meshVertexDatas = _meshVertexDatas;
-                for (const auto mesh : _meshes) {
-                    data->glProgramStates.pushBack(mesh->getGLProgramState());
+                auto spritedata = Sprite3DCache::getInstance()->getSpriteData(asyncParam->path);
+                if (spritedata == nullptr)
+                {
+                    //add to cache
+                    auto data = new (std::nothrow) Sprite3DCache::Sprite3DData();
+                    data->materialdatas = materialdatas;
+                    data->nodedatas = nodeDatas;
+                    data->meshVertexDatas = _meshVertexDatas;
+                    for (const auto mesh : _meshes) {
+                        data->glProgramStates.pushBack(mesh->getGLProgramState());
+                    }
+                    
+                    Sprite3DCache::getInstance()->addSprite3DData(asyncParam->path, data);
+                    meshdatas = nullptr;
+                    materialdatas = nullptr;
+                    nodeDatas = nullptr;
                 }
-                
-                Sprite3DCache::getInstance()->addSprite3DData(asyncParam->path, data);
-                meshdatas = nullptr;
-                materialdatas = nullptr;
-                nodeDatas = nullptr;
             }
             delete meshdatas;
             delete materialdatas;
@@ -145,7 +151,7 @@ void Sprite3D::afterAsyncLoad(void* param)
                 setTexture(asyncParam->texPath);
             }
         }
-        asyncParam->afterLoadCallback(this);
+        asyncParam->afterLoadCallback(this, asyncParam->callbackParam);
     }
 }
 

@@ -59,12 +59,12 @@ void AsyncTaskPool::setMaxTaskCallBackPerProcess(int numTaskCallBack)
 
 AsyncTaskPool::AsyncTaskPool()
 {
-    
+    _threadTasks = new ThreadTasks[int(TaskType::TASK_MAX_TYPE)];
 }
 
 AsyncTaskPool::~AsyncTaskPool()
 {
-    
+    delete[] _threadTasks;
 }
 
 NS_CC_END
