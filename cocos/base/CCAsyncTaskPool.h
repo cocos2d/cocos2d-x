@@ -80,6 +80,14 @@ public:
         _taskcallbackDispatcher.update();
     }
     
+    /**
+     * enqueue a asynchronous task
+     * @param type task type is io task, network task or others, each type of task has a thread to deal with it.
+     * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread
+     * @param callbackParam parameter used by the callback
+     * @f task can be lambda function
+     * @args task parameters
+     */
     template<class F, class... Args>
     auto enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
     -> std::future<typename std::result_of<F(Args...)>::type>;
