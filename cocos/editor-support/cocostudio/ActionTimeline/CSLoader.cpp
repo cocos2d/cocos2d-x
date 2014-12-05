@@ -822,6 +822,12 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
             node = ActionTimelineNode::create(root, action);
             node->setName(root->getName());
         }
+        cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
+        if(action)
+        {
+            node->runAction(action);
+            action->gotoFrameAndPlay(0);
+        }
     }
     else if (classname == "SimpleAudio")
     {
