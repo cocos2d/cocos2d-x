@@ -1092,12 +1092,13 @@ void ClippingToRenderTextureTest::reproduceBug()
     img->drawPolygon(triangle, 3, red, 0, red);
     clipper->addChild(img);
 
-    // container rendered on Texture the size of the screen
-    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height);
+    // container rendered on Texture the size of the screen and because Clipping node use stencil buffer so we need to
+    // create RenderTexture with depthStencil format parameter
+    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 
-    rt->beginWithClear(0.3f, 0, 0, 1);
+    rt->begin();
     container->visit();
     rt->end();
 }
