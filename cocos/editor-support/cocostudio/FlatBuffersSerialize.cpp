@@ -241,7 +241,10 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
                                                  builder.CreateVector(_texturePngs),
                                                  nodeTree,
                                                  aciton);
-        builder.Finish(csparsebinary);        
+        builder.Finish(csparsebinary);
+        
+        _textures.clear();
+        _texturePngs.clear();
         
         
         std::string outFullPath = FileUtils::getInstance()->fullPathForFilename(flatbuffersFileName);

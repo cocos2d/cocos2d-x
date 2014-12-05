@@ -17,7 +17,11 @@ To report bugs, please use the [Issue Tracker](https://github.com/cocos2d/cocos2
 
 Steps to report a bug:
 * Open the [url](https://github.com/cocos2d/cocos2d-x/issues/new)
-* Add all the needed information to reproduce the bug
+* Add all the needed information to reproduce the bug, the information include
+    * engine version
+    * steps to reproduce the bug
+    * some pseudocode
+    * resources link if needed
 
 
 ## Submitting patches
