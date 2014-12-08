@@ -41,7 +41,7 @@ public:
 
     static PUParticle3DGeometryRotator* create();
 
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
     /** @copydoc ParticleAffector::_initParticleForEmission */
     virtual void initParticleForEmission(PUParticle3D* particle) override;
 

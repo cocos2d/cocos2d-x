@@ -187,7 +187,7 @@ float PUParticle3DScaleAffector::calculateScale(PUDynamicAttribute* dynScale, PU
     }
 }
 
-void PUParticle3DScaleAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DScaleAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
 
     //// Only continue if the particle is a visual particle

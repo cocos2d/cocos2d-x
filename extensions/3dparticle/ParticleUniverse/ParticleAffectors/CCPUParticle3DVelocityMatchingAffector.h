@@ -39,7 +39,7 @@ public:
 
     static PUParticle3DVelocityMatchingAffector* create();
 
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
     /** Todo
     */
     float getRadius(void) const;

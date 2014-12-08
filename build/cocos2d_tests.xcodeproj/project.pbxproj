@@ -773,6 +773,8 @@
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
+		3EA530F71A3549AA001FDBD4 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA530F51A3549AA001FDBD4 /* Particle3DTest.cpp */; };
+		3EA530F81A3549AA001FDBD4 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA530F51A3549AA001FDBD4 /* Particle3DTest.cpp */; };
 		527B1F3019EF9819000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */; };
 		527B1F3119EF9819000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */; };
 		527B1F3419EF9CF8000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */; };
@@ -1693,6 +1695,8 @@
 		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
 		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
+		3EA530F51A3549AA001FDBD4 /* Particle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle3DTest.cpp; path = Particle3DTest/Particle3DTest.cpp; sourceTree = "<group>"; };
+		3EA530F61A3549AA001FDBD4 /* Particle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle3DTest.h; path = Particle3DTest/Particle3DTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
@@ -2135,6 +2139,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3EA530F41A354983001FDBD4 /* Particle3DTest */,
 				B6C039D619C95D28007207DC /* LightTest */,
 				B609E67019C18D90003D0074 /* BillBoardTest */,
 				3E2BDACD19BEA3410055CDCD /* NewAudioEngineTest */,
@@ -3865,6 +3870,15 @@
 			path = UIVideoPlayerTest;
 			sourceTree = "<group>";
 		};
+		3EA530F41A354983001FDBD4 /* Particle3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				3EA530F51A3549AA001FDBD4 /* Particle3DTest.cpp */,
+				3EA530F61A3549AA001FDBD4 /* Particle3DTest.h */,
+			);
+			name = Particle3DTest;
+			sourceTree = "<group>";
+		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4729,6 +4743,7 @@
 				1AC35B6318CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
 				1AC35C5F18CECF0C00F37B72 /* Paddle.cpp in Sources */,
 				1AC35BDB18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
+				3EA530F71A3549AA001FDBD4 /* Particle3DTest.cpp in Sources */,
 				1AC35B4B18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
 				1AC35C5118CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B7918CECF0C00F37B72 /* EnemyController.cpp in Sources */,
@@ -4898,6 +4913,7 @@
 				1AC35BE418CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DD4191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
 				1AC35B2418CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
+				3EA530F81A3549AA001FDBD4 /* Particle3DTest.cpp in Sources */,
 				1AC35C1A18CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */,
 				29080DB8191B595E0066F8DF /* UIListViewTest_Editor.cpp in Sources */,
 				29080DBC191B595E0066F8DF /* UILoadingBarTest_Editor.cpp in Sources */,

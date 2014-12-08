@@ -84,7 +84,7 @@ PUParticle3DColorAffector::ColorMapIterator PUParticle3DColorAffector::findNeare
     return --it;
 }
 
-void PUParticle3DColorAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DColorAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     // Fast rejection
     if (_colorMap.empty())

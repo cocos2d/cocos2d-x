@@ -42,7 +42,7 @@ public:
     static PUParticle3DRandomiser* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
     virtual void postUpdateAffector(float deltaTime) override;
     /** 
     */

@@ -127,7 +127,7 @@ void PUParticle3DGeometryRotator::initParticleForEmission(PUParticle3D* particle
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DGeometryRotator::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DGeometryRotator::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

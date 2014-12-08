@@ -49,7 +49,7 @@ void PUParticle3DPathFollower::clearPoints (void)
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DPathFollower::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DPathFollower::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

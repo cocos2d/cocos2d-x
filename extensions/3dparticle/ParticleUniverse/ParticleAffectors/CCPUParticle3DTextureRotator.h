@@ -42,7 +42,7 @@ public:
 
     static PUParticle3DTextureRotator* create();
 
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns an indication whether the 2D rotation speed is the same for all particles in this 
         particle technique, or whether the 2D rotation speed of the particle itself is used.

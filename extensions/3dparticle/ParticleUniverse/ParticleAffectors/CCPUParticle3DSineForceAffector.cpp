@@ -88,7 +88,7 @@ void PUParticle3DSineForceAffector::setFrequencyMax(const float frequencyMax)
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DSineForceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DSineForceAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

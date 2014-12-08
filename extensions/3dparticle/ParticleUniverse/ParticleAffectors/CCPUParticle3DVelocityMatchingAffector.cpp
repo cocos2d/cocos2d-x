@@ -65,7 +65,7 @@ void PUParticle3DVelocityMatchingAffector::setRadius(float radius)
 //}
 //-----------------------------------------------------------------------
 
-void PUParticle3DVelocityMatchingAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DVelocityMatchingAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     //{

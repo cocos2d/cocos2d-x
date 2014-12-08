@@ -52,7 +52,7 @@ void PUParticle3DGravityAffector::setGravity(float gravity)
     _gravity = gravity;
 }
 
-void PUParticle3DGravityAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DGravityAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

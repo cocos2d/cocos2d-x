@@ -39,7 +39,7 @@ PUParticle3DFlockCenteringAffector::~PUParticle3DFlockCenteringAffector()
 {
 }
 
-void PUParticle3DFlockCenteringAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DFlockCenteringAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

@@ -92,7 +92,7 @@ void PUParticle3DPlaneCollider::calculateDirectionAfterCollision(PUParticle3D* p
     }
 }
 
-void PUParticle3DPlaneCollider::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DPlaneCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

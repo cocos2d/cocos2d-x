@@ -40,7 +40,7 @@ public:
 	static PUParticle3DBoxCollider* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the width of the box
     */

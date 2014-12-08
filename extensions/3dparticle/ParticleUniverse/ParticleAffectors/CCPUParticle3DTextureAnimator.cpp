@@ -217,7 +217,7 @@ void PUParticle3DTextureAnimator::determineNextTextureCoords(PUParticle3D* visua
     }
 }
 
-void PUParticle3DTextureAnimator::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DTextureAnimator::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //// Only continue if the particle is a visual particle
     //if (particle->particleType != Particle::PT_VISUAL)
