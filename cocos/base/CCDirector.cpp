@@ -67,7 +67,7 @@ THE SOFTWARE.
  */
 #ifndef CC_DIRECTOR_STATS_POSITION
 #define CC_DIRECTOR_STATS_POSITION Director::getInstance()->getVisibleOrigin()
-#endif
+#endif // CC_DIRECTOR_STATS_POSITION
 
 using namespace std;
 
@@ -117,7 +117,7 @@ bool Director::init(void)
     _accumDt = 0.0f;
     _frameRate = 0.0f;
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
-    _totalFrames = _frames = 0;
+    _totalFrames = 0;
     _lastUpdate = new struct timeval;
 
     // paused ?
@@ -430,7 +430,13 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 {
     _nextDeltaTimeZero = nextDeltaTimeZero;
 }
-   
+
+//
+// FIXME TODO
+// Matrix code MUST NOT be part of the Director
+// MUST BE moved outide.
+// Why the Director must have this code ?
+//
 void Director::initMatrixStack()
 {
     while (!_modelViewMatrixStack.empty())
@@ -1069,22 +1075,27 @@ void Director::showStats()
 {
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
+    static float prevDeltaTime  = 0.016; // 60FPS
+    static const float FPS_FILTER = 0.10;
 
-    ++_frames;
     _accumDt += _deltaTime;
     
     if (_displayStats && _FPSLabel && _drawnBatchesLabel && _drawnVerticesLabel)
     {
         char buffer[30];
 
+        float dt = _deltaTime * FPS_FILTER + (1-FPS_FILTER) * prevDeltaTime;
+        prevDeltaTime = dt;
+        _frameRate = 1/dt;
+
+        // Probably we don't need this anymore since
+        // the framerate is using a low-pass filter
+        // to make the FPS stable
         if (_accumDt > CC_DIRECTOR_STATS_INTERVAL)
         {
-            _frameRate = _frames / _accumDt;
-            _frames = 0;
-            _accumDt = 0;
-
             sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
             _FPSLabel->setString(buffer);
+            _accumDt = 0;
         }
 
         auto currentCalls = (unsigned long)_renderer->getDrawnBatches();
@@ -1102,7 +1113,6 @@ void Director::showStats()
         }
 
         Mat4 identity = Mat4::IDENTITY;
-
         _drawnVerticesLabel->visit(_renderer, identity, 0);
         _drawnBatchesLabel->visit(_renderer, identity, 0);
         _FPSLabel->visit(_renderer, identity, 0);
@@ -1111,10 +1121,16 @@ void Director::showStats()
 
 void Director::calculateMPF()
 {
+    static float prevSecondsPerFrame = 0;
+    static const float MPF_FILTER = 0.10;
+
     struct timeval now;
     gettimeofday(&now, nullptr);
     
     _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
+
+    _secondsPerFrame = _secondsPerFrame * MPF_FILTER + (1-MPF_FILTER) * prevSecondsPerFrame;
+    prevSecondsPerFrame = _secondsPerFrame;
 }
 
 // returns the FPS image data pointer and len

@@ -27,6 +27,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -360,6 +361,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lParams.leftMargin = mVisibleLeft;
         lParams.topMargin = mVisibleTop;
+        lParams.gravity = Gravity.TOP | Gravity.LEFT;
         setLayoutParams(lParams);
     }
 

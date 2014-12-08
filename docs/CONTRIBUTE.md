@@ -17,7 +17,11 @@ To report bugs, please use the [Issue Tracker](https://github.com/cocos2d/cocos2
 
 Steps to report a bug:
 * Open the [url](https://github.com/cocos2d/cocos2d-x/issues/new)
-* Add all the needed information to reproduce the bug
+* Add all the needed information to reproduce the bug, the information include
+    * engine version
+    * steps to reproduce the bug
+    * some pseudocode
+    * resources link if needed
 
 
 ## Submitting patches
@@ -68,6 +72,7 @@ The patch must be _complete_. And by that, we mean:
 
 [*]: If you don't have access to test your code in all the supported platforms, let us know.
 
+__TBD__: Is this applicable for big features ? What is the best way to merge big features ?
 
 # Promoting cocos2d
 

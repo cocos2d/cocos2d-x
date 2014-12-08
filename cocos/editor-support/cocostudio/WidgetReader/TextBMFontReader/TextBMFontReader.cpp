@@ -1,13 +1,17 @@
 
 
 #include "TextBMFontReader.h"
+
 #include "ui/UITextBMFont.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
+#include "cocostudio/CSParseBinary_generated.h"
+
 #include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -16,7 +20,7 @@ namespace cocostudio
     
     static TextBMFontReader* instanceTextBMFontReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(TextBMFontReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(TextBMFontReader)
     
     TextBMFontReader::TextBMFontReader()
     {
@@ -105,56 +109,19 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
+    }        
     
-    void TextBMFontReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    Offset<Table> TextBMFontReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                                 flatbuffers::FlatBufferBuilder *builder)
     {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string text = "Fnt Text Label";
         
-        TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
-        const protocolbuffers::TextBMFontOptions& options = nodeTree.textbmfontoptions();
-        
-        
-        const protocolbuffers::ResourceData& cmftDic = options.filenamedata();
-        int cmfType = cmftDic.resourcetype();
-        switch (cmfType)
-        {
-            case 0:
-            {
-                std::string tp_c = jsonPath;
-                const char* cmfPath = cmftDic.path().c_str();
-                const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelBMFont->setFntFile(cmf_tp);
-                break;
-            }
-            case 1:
-                CCLOG("Wrong res type of LabelAtlas!");
-                break;
-            default:
-                break;
-        }
-        
-        const char* text = (options.has_text()) ? options.text().c_str() : "Text Label";
-        labelBMFont->setString(text);
-        
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
-    
-    void TextBMFontReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
-    {
-        WidgetReader::setPropsFromXML(widget, objectData);
-        
-        TextBMFont* labelBMFont = static_cast<TextBMFont*>(widget);
-        
-        std::string xmlPath = GUIReader::getInstance()->getFilePath();
-        
-        std::string text = "";
-        
-        int opacity = 255;
+        std::string path = "";
+        std::string plistFlie = "";
+        int resourceType = 0;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -167,14 +134,9 @@ namespace cocostudio
             {
                 text = value;
             }
-            else if (name == "Alpha")
-            {
-                opacity = atoi(value.c_str());
-            }
             
             attribute = attribute->Next();
         }
-        
         
         // child elements
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
@@ -185,8 +147,6 @@ namespace cocostudio
             if (name == "LabelBMFontFile_CNB")
             {
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -199,35 +159,69 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                        resourceType = 0;
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        plistFlie = value;
                     }
                     
                     attribute = attribute->Next();
-                }
-                
-                switch (resourceType)
-                {
-                    case 0:
-                    {
-                        labelBMFont->setFntFile(xmlPath + path);
-                        break;
-                    }
-                        
-                    default:
-                        break;
                 }
             }
             
             child = child->NextSiblingElement();
         }
         
+        auto options = CreateTextBMFontOptions(*builder,
+                                               widgetOptions,
+                                               CreateResourceData(*builder,
+                                                                  builder->CreateString(path),
+                                                                  builder->CreateString(plistFlie),
+                                                                  resourceType),
+                                               builder->CreateString(text));
+        
+        return *(Offset<Table>*)(&options);
+    }
+    
+    void TextBMFontReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *textBMFontOptions)
+    {
+        TextBMFont* labelBMFont = static_cast<TextBMFont*>(node);
+        auto options = (TextBMFontOptions*)textBMFontOptions;
+        
+        auto cmftDic = options->fileNameData();
+        int cmfType = cmftDic->resourceType();
+        switch (cmfType)
+        {
+            case 0:
+            {
+                const char* cmfPath = cmftDic->path()->c_str();
+                labelBMFont->setFntFile(cmfPath);
+                break;
+            }
+                
+            case 1:
+                CCLOG("Wrong res type of LabelAtlas!");
+                break;
+                
+            default:
+                break;
+        }
+        
+        std::string text = options->text()->c_str();
         labelBMFont->setString(text);
         
-        labelBMFont->setOpacity(opacity);
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+    }
+    
+    Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)
+    {
+        TextBMFont* textBMFont = TextBMFont::create();
+        
+        setPropsWithFlatBuffers(textBMFont, (Table*)textBMFontOptions);
+        
+        return textBMFont;
     }
     
 }

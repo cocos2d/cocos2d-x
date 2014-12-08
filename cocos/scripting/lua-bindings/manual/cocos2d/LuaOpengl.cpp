@@ -26,7 +26,6 @@
 #include <string>
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
@@ -34,8 +33,6 @@
 #include "LuaBasicConversions.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
-
 
     
 void GLNode::draw(Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)

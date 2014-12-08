@@ -35,8 +35,6 @@ THE SOFTWARE.
 #include "deprecated/CCDictionary.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCSAXParser.h"
-#include "unzip.h"
-
 
 NS_CC_BEGIN
 

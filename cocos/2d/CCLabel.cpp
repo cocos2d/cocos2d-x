@@ -270,7 +270,14 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             _batchNodes.clear();
             _batchNodes.push_back(this);
 
-            alignText();
+            if (_contentDirty)
+            {
+                updateContent();
+            }
+            else
+            {
+                alignText();
+            }
         }
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
@@ -498,7 +505,7 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
     }
 }
 
-void Label::setDimensions(unsigned int width,unsigned int height)
+void Label::setDimensions(unsigned int width, unsigned int height)
 {
     if (height != _labelHeight || width != _labelWidth)
     {

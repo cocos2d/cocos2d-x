@@ -167,7 +167,7 @@ public:
      * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
      *         nullptr if the sprite isn't used batch node.
      */
-    virtual SpriteBatchNode* getBatchNode(void);
+    virtual SpriteBatchNode* getBatchNode() const;
     /**
      * Sets the batch node to sprite
      * @warning This method is not recommended for game developers. Sample code for using batch node
@@ -181,7 +181,6 @@ public:
     virtual void setBatchNode(SpriteBatchNode *spriteBatchNode);
 
     /// @} end of BatchNode methods
-
 
 
     /// @{

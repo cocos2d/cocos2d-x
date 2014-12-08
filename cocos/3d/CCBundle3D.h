@@ -79,6 +79,9 @@ public:
     
     //load .obj file
     static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
+    
+    //calculate aabb
+    static AABB calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
   
 protected:
 
@@ -144,10 +147,11 @@ protected:
     void getModelRelativePath(const std::string& path);
 
     /*
-    * set the read position in buffer to the target type
-    * @param The data type
-    */
-    Reference* seekToFirstType(unsigned int type);
+     * set the read position in buffer to the target type
+     * @param The data type
+     * @param The data id
+     */
+    Reference* seekToFirstType(unsigned int type, const std::string& id = "");
 
 CC_CONSTRUCTOR_ACCESS:
     Bundle3D();

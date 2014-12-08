@@ -85,7 +85,7 @@ public:
     float getWeight() const { return _weight; }
     void setWeight(float weight);
     
-    /** animate transistion time */
+    /** animate transition time */
     static float getTransitionTime() { return _transTime; }
     
     /**get & set play reverse, these are deprecated, use set negative speed instead*/

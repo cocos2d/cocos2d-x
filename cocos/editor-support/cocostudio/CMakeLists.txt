@@ -1,5 +1,5 @@
 
-if(WINDOWS AND NOT BUILD_STATIC)
+if(WINDOWS AND BUILD_SHARED_LIBS)
   ADD_DEFINITIONS (-D_USRSTUDIODLL)
 endif()
 
@@ -40,6 +40,14 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/TriggerBase.cpp
   editor-support/cocostudio/TriggerMng.cpp
   editor-support/cocostudio/TriggerObj.cpp
+  editor-support/cocostudio/FlatBuffersSerialize.cpp
+  editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.cpp
+  editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.cpp
+  editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.cpp 
+  editor-support/cocostudio/WidgetReader/ParticleReader/ParticleReader.cpp 
+  editor-support/cocostudio/WidgetReader/GameMapReader/GameMapReader.cpp 
+  editor-support/cocostudio/WidgetReader/ProjectNodeReader/ProjectNodeReader.cpp 
+  editor-support/cocostudio/WidgetReader/ComAudioReader/ComAudioReader.cpp 
   editor-support/cocostudio/WidgetReader/WidgetReader.cpp
   editor-support/cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.cpp
   editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.cpp
@@ -60,7 +68,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCFrame.cpp
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
   editor-support/cocostudio/ActionTimeline/CSLoader.cpp
-  editor-support/cocostudio/CSParseBinary.pb.cc
+  editor-support/cocostudio/FlatBuffersSerialize.cpp
 )
 
 include_directories( editor-support )

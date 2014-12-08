@@ -78,7 +78,10 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
+-- Set the rendering size of the text, you should call this method<br>
+-- along with calling `ignoreContentAdaptWithSize(false)`, otherwise the text area<br>
+-- size is caculated by the real size of the text content<br>
+-- param size   The text rendering area size
 -- @function [parent=#Text] setTextAreaSize 
 -- @param self
 -- @param #size_table size
