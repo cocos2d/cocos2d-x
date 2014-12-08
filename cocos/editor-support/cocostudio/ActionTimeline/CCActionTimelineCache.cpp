@@ -682,6 +682,15 @@ Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::T
     TextureFrame* frame = TextureFrame::create();
     
     std::string path = flatbuffers->path()->c_str();
+    if (FileUtils::getInstance()->isFileExist(path))
+    {
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+        path = fullPath;
+    }
+    else
+    {
+        path = "";
+    }
     frame->setTextureName(path);
     
     int frameIndex = flatbuffers->frameIndex();
