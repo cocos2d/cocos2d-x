@@ -1102,11 +1102,14 @@ bool FileUtils::createDirectory(const std::string& path)
 
     // Create path recursively
     subpath = "";
-    for (int i = 0; i < dirs.size(); ++i) {
+    for (int i = 0; i < dirs.size(); ++i)
+    {
         subpath += dirs[i];
         dir = opendir(subpath.c_str());
         if (!dir)
         {
+            closedir(dir);
+            
             int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
             if (ret != 0 && (errno != EEXIST))
             {
@@ -1122,8 +1125,9 @@ bool FileUtils::createDirectory(const std::string& path)
 static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
 {
     auto ret = remove(fpath);
-    if (ret) {
-        log("Fail to remove:%s ",fpath);
+    if (ret)
+    {
+        log("Fail to remove: %s ",fpath);
     }
     
     return ret;
