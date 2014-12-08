@@ -41,7 +41,7 @@ THE SOFTWARE.
 #endif
 #include <sys/stat.h>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include <regex>
 #endif
 
@@ -1242,33 +1242,44 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
     CCASSERT(!path.empty(), "Invalid path");
     std::string oldPath = path + oldname;
     std::string newPath = path + name;
-    
+ 
     // Rename a file
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    std::regex pat("\\/");
+    std::string _old = std::regex_replace(oldPath, pat, "\\");
+    std::string _new = std::regex_replace(newPath, pat, "\\");
+    if (MoveFileEx(std::wstring(_old.begin(), _old.end()).c_str(), 
+        std::wstring(_new.begin(), _new.end()).c_str(),
+        MOVEFILE_REPLACE_EXISTING & MOVEFILE_WRITE_THROUGH))
+    {
+        return true;
+    }
+    return false;
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
+    std::regex pat("\\/");
+    std::string _old = std::regex_replace(oldPath, pat, "\\");
+    std::string _new = std::regex_replace(newPath, pat, "\\");
+
+    if(FileUtils::getInstance()->isFileExist(_new))
+    {
+        DeleteFileA(_new.c_str());
+    }
+
+    MoveFileA(_old.c_str(), _new.c_str());
+
+    if (0 == GetLastError())
+        return true;
+    else
+        return false;
+#else
     int errorCode = rename(oldPath.c_str(), newPath.c_str());
-    
+
     if (0 != errorCode)
     {
         CCLOGERROR("Fail to rename file %s to %s !Error code is %d", oldPath.c_str(), newPath.c_str(), errorCode);
         return false;
     }
     return true;
-#else
-    std::regex pat("\\/");
-    std::string _old = std::regex_replace(oldPath, pat, "\\");
-    std::string _new = std::regex_replace(newPath, pat, "\\");
-    
-    if(FileUtils::getInstance()->isFileExist(_new))
-    {
-        DeleteFileA(_new.c_str());
-    }
-    
-    MoveFileA(_old.c_str(), _new.c_str());
-    
-    if(0 == GetLastError())
-        return true;
-    else
-        return false;
 #endif
 }
 
