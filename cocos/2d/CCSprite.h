@@ -538,6 +538,7 @@ protected:
     //
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
+    SpriteFrame*     _spriteFrame;
     QuadCommand      _quadCommand;          /// quad command
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;
