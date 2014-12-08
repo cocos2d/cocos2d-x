@@ -158,10 +158,10 @@ void loadDataJNI(const int index, const std::string &data, const std::string &MI
 void loadHTMLStringJNI(const int index, const std::string &string, const std::string &baseURL) {
     // LOGD("error: %s,%d",__func__,__LINE__);
     cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;)V")) {
         jstring jString = t.env->NewStringUTF(string.c_str());
         jstring jBaseURL = t.env->NewStringUTF(baseURL.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL,nullptr);
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
 
         t.env->DeleteLocalRef(jString);
         t.env->DeleteLocalRef(jBaseURL);
