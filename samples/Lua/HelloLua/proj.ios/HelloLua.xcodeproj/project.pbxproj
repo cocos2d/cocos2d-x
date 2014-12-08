@@ -2019,6 +2019,7 @@
 					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios",
+					"$(SRCROOT)/../../../../scripting/lua",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
@@ -2079,6 +2080,7 @@
 					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios",
+					"$(SRCROOT)/../../../../scripting/lua",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;

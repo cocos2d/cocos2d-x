@@ -38,7 +38,7 @@ extern "C" {
 #include "lua_cocos2dx_manual.h"
 #include "lua_cocos2dx_extensions_manual.h"
 #include "lua_cocos2dx_cocostudio_manual.h"
-#include "xxtea.h"
+#include "xxtea/xxtea.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"
