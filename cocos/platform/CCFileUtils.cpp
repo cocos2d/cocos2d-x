@@ -1106,15 +1106,23 @@ bool FileUtils::createDirectory(const std::string& path)
     {
         subpath += dirs[i];
         dir = opendir(subpath.c_str());
+        
         if (!dir)
         {
-            closedir(dir);
+            // directory doesn't exist, should create a new one
             
             int ret = mkdir(subpath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
             if (ret != 0 && (errno != EEXIST))
             {
+                // current directory can not be created, sub directories can not be created too
+                // should return
                 return false;
             }
+        }
+        else
+        {
+            // directory exists, should close opened dir
+            closedir(dir);
         }
     }
     return true;
