@@ -207,7 +207,6 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
-    /*
     {
         "gui ListView Editor Test",
         [](Ref* sender)
@@ -220,7 +219,6 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
-     */
     /*
     {
         "gui GridViewTest",

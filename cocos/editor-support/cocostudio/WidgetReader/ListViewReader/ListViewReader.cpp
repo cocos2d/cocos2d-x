@@ -89,8 +89,8 @@ namespace cocostudio
         auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
         auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        std::string path = "";
-        std::string plistFile = "";
+        std::string path;
+        std::string plistFile;
         int resourceType = 0;
         
         bool clipEnabled = false;
@@ -107,12 +107,12 @@ namespace cocostudio
         int direction = 0;
         bool bounceEnabled = false;
         int itemMargin = 0;
-        std::string directionType = "";
-        std::string horizontalType = "";
-        std::string verticalType = "";
+        std::string directionType;
+        std::string horizontalType;
+        std::string verticalType;
         
         // attributes
-        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        auto attribute = objectData->FirstAttribute();
         while (attribute)
         {
             std::string name = attribute->Name();
@@ -185,7 +185,7 @@ namespace cocostudio
             
             if (name == "InnerNodeSize")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 while (attribute)
                 {
                     name = attribute->Name();
@@ -205,7 +205,7 @@ namespace cocostudio
             }
             else if (name == "Size" && backGroundScale9Enabled)
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
@@ -226,7 +226,7 @@ namespace cocostudio
             }
             else if (name == "SingleColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
@@ -251,7 +251,7 @@ namespace cocostudio
             }
             else if (name == "EndColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
@@ -276,7 +276,7 @@ namespace cocostudio
             }
             else if (name == "FirstColor")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
@@ -301,7 +301,7 @@ namespace cocostudio
             }
             else if (name == "ColorVector")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 while (attribute)
                 {
                     name = attribute->Name();
@@ -321,10 +321,10 @@ namespace cocostudio
             }
             else if (name == "FileData")
             {
-                std::string texture = "";
-                std::string texturePng = "";
+                std::string texture;
+                std::string texturePng;
                 
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                auto attribute = child->FirstAttribute();
                 
                 while (attribute)
                 {
@@ -457,15 +457,9 @@ namespace cocostudio
         auto f_innerSize = options->innerSize();
         Size innerSize(f_innerSize->width(), f_innerSize->height());
         listView->setInnerContainerSize(innerSize);
-//         int direction = options->direction();
-//         listView->setDirection((ScrollView::Direction)direction);
         bool bounceEnabled = options->bounceEnabled();
         listView->setBounceEnabled(bounceEnabled);
         
-//         int gravityValue = options->gravity();
-//         ListView::Gravity gravity = (ListView::Gravity)gravityValue;
-//         listView->setGravity(gravity);
-
         std::string directionType = options->directionType()->c_str();
         if (directionType == "")
         {
