@@ -1,5 +1,7 @@
-cocos2d-x-2.2.6 ???
+cocos2d-x-2.2.6 @Dec.12 2014
      [FIX]    CCClippingNode: effect is wrong if apply CCClippingNode in a Node and its children
+     [FIX]    EditBox: orientation issue on iOS8+
+     [FIX]    EditBox: text position and move animation error on iPhone6 Plus
      [FIX]    LabelReader: compilation fix on Android
      [FIX]    Optimize FPS control algorithm on Android
 
