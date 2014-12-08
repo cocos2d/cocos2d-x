@@ -6,7 +6,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "..\external\Box2D\proj.wp8\Box2D.vcxproj", "{C55734A3-702C-4FA1-B950-32C8E169302F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-tests", "cpp-tests", "{671E147E-1DBD-41FC-99B3-2119CA828C8A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-tests-wp8-xaml", "cpp-tests-wp8-xaml", "{671E147E-1DBD-41FC-99B3-2119CA828C8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cpp-tests", "..\tests\cpp-tests\proj.wp8-xaml\cpp-tests\cpp-tests.csproj", "{60D53713-1675-4466-81DC-D67A031C3D21}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cpp-tests", "..\tests\cpp-t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-testsComponent", "..\tests\cpp-tests\proj.wp8-xaml\cpp-testsComponent\cpp-testsComponent.vcxproj", "{86B2C23C-3A6C-4C4E-AB0E-16A8CC1523E9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-empty-test", "cpp-empty-test", "{2C306303-EB4F-4058-8CA0-1F28A4FECE39}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp-empty-test-wp8-xaml", "cpp-empty-test-wp8-xaml", "{2C306303-EB4F-4058-8CA0-1F28A4FECE39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cpp-empty-test", "..\tests\cpp-empty-test\proj-wp8-xaml\cpp-empty-test\cpp-empty-test.csproj", "{5921FE12-7EF3-4847-8453-42EF286DDBE7}"
 	ProjectSection(ProjectDependencies) = postProject

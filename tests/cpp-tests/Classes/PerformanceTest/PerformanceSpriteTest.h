@@ -28,7 +28,10 @@
 #ifndef __PERFORMANCE_SPRITE_TEST_H__
 #define __PERFORMANCE_SPRITE_TEST_H__
 
+#include <vector>
+
 #include "PerformanceTest.h"
+
 
 class SubTest
 {
@@ -39,7 +42,7 @@ public:
     void initWithSubTest(int nSubTest, Node* parent);
 
 protected:
-    int subtestNumber;
+    int _subtestNumber;
     Node *_parentNode;
 };
 
@@ -73,93 +76,83 @@ public:
 
     virtual void doTest(Sprite* sprite) = 0;
 
-    int getSubTestNum() { return subtestNumber; }
-    int getNodesNum() { return quantityNodes; }
+    int getSubTestNum() { return _subtestNumber; }
+    int getNodesNum() { return _quantityNodes; }
     
     virtual void onEnter() override;
     virtual void onExit() override;
-    void  updateAutoTest(float dt);
-    void  onAutoTest(Ref* sender);
+    void updateAutoTest(float dt);
+    void onAutoTest(Ref* sender);
 
+    // auto tests
     static bool _s_autoTest;
-    static int  _s_nSpriteCurCase;
+    static int _s_nSpriteCurCase;
+    static int _s_spritesQuatityIndex;
+    static int _s_spritesQuanityArray[];
+    static std::vector<float> _s_saved_fps;
 
 protected:
-    void  dumpProfilerFPS();
-    void  beginAutoTest();
-    void  endAutoTest();
-    void  nextAutoTest();
-    void  finishAutoTest();
-    void  autoShowSpriteTests(int curCase, int subTest,int nodes);
+    void dumpProfilerFPS();
+    void saveFPS();
+    void beginAutoTest();
+    void endAutoTest();
+    void nextAutoTest();
+    void finishAutoTest();
+    void autoShowSpriteTests(int curCase, int subTest,int nodes);
 
-    int            lastRenderedCount;
-    int            quantityNodes;
-    SubTest        *_subTest;
-    int            subtestNumber;
-    std::vector<float> _vecFPS;
-    int            _executeTimes;
-
-    static const  int MAX_AUTO_TEST_TIMES  = 25;
-    static const  int MAX_SPRITE_TEST_CASE = 7;
-    static const  int MAX_SUB_TEST_NUMS    = 13;
-    static const  int AUTO_TEST_NODE_NUM1  = 500;
-    static const  int AUTO_TEST_NODE_NUM2  = 1500;
+    int _lastRenderedCount;
+    int _quantityNodes;
+    SubTest* _subTest;
+    int _subtestNumber;
 };
 
-class SpritePerformTest1 : public SpriteMainScene
+class SpritePerformTestA : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-class SpritePerformTest2 : public SpriteMainScene
+class SpritePerformTestB : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-class SpritePerformTest3 : public SpriteMainScene
+class SpritePerformTestC : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-class SpritePerformTest4 : public SpriteMainScene
+class SpritePerformTestD : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-class SpritePerformTest5 : public SpriteMainScene
+class SpritePerformTestE : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-class SpritePerformTest6 : public SpriteMainScene
+class SpritePerformTestF : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-class SpritePerformTest7 : public SpriteMainScene
+class SpritePerformTestG : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
 void runSpriteTest();

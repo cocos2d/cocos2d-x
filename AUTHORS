@@ -820,6 +820,7 @@ Developers:
         
     aeonmine
         Fixed ActionObject memory leak in ActionManagerEx::initWithDictionary
+        Fixed memory leak in cocos studiov2.0 reader
         
     LoungeKatt
         Corrected a mistake of building android project in README.md
@@ -1052,6 +1053,13 @@ Developers:
         
     vovkasm
         Fix warnings for Xcode6.1
+        
+    nilium
+        Unignore libs dir in plugin and fix Travis script to descend into included directories
+        
+    shrimpz
+        Fix two typos in luaval_to_quaternion
+        Fix label crashed on android
     
 Retired Core Developers:
     WenSheng Yang

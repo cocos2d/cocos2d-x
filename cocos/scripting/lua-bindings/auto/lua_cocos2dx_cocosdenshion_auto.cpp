@@ -37,11 +37,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadBackgroundMusic(lua_Stat
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.SimpleAudioEngine:preloadBackgroundMusic"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->preloadBackgroundMusic(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:preloadBackgroundMusic",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:preloadBackgroundMusic",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -80,7 +83,10 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopBackgroundMusic(lua_State* 
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->stopBackgroundMusic();
         return 0;
     }
@@ -90,11 +96,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopBackgroundMusic(lua_State* 
 
         ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.SimpleAudioEngine:stopBackgroundMusic");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->stopBackgroundMusic(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:stopBackgroundMusic",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:stopBackgroundMusic",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -133,11 +142,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopAllEffects(lua_State* tolua
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopAllEffects'", nullptr);
             return 0;
+        }
         cobj->stopAllEffects();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:stopAllEffects",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:stopAllEffects",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -176,12 +188,15 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getBackgroundMusicVolume(lua_St
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getBackgroundMusicVolume'", nullptr);
             return 0;
+        }
         double ret = cobj->getBackgroundMusicVolume();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:getBackgroundMusicVolume",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:getBackgroundMusicVolume",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -220,11 +235,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeBackgroundMusic(lua_State
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->resumeBackgroundMusic();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:resumeBackgroundMusic",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:resumeBackgroundMusic",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -266,11 +284,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setBackgroundMusicVolume(lua_St
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.SimpleAudioEngine:setBackgroundMusicVolume");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setBackgroundMusicVolume'", nullptr);
             return 0;
+        }
         cobj->setBackgroundMusicVolume(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:setBackgroundMusicVolume",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:setBackgroundMusicVolume",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -312,11 +333,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadEffect(lua_State* tolua_
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.SimpleAudioEngine:preloadEffect"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadEffect'", nullptr);
             return 0;
+        }
         cobj->preloadEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:preloadEffect",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:preloadEffect",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -355,12 +379,15 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_isBackgroundMusicPlaying(lua_St
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_isBackgroundMusicPlaying'", nullptr);
             return 0;
+        }
         bool ret = cobj->isBackgroundMusicPlaying();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:isBackgroundMusicPlaying",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:isBackgroundMusicPlaying",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -399,12 +426,15 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getEffectsVolume(lua_State* tol
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getEffectsVolume'", nullptr);
             return 0;
+        }
         double ret = cobj->getEffectsVolume();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:getEffectsVolume",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:getEffectsVolume",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -443,12 +473,15 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_willPlayBackgroundMusic(lua_Sta
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_willPlayBackgroundMusic'", nullptr);
             return 0;
+        }
         bool ret = cobj->willPlayBackgroundMusic();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:willPlayBackgroundMusic",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:willPlayBackgroundMusic",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -490,11 +523,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.SimpleAudioEngine:pauseEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseEffect'", nullptr);
             return 0;
+        }
         cobj->pauseEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:pauseEffect",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:pauseEffect",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -536,7 +572,10 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.SimpleAudioEngine:playEffect"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect'", nullptr);
             return 0;
+        }
         unsigned int ret = cobj->playEffect(arg0);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
@@ -550,7 +589,10 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.SimpleAudioEngine:playEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect'", nullptr);
             return 0;
+        }
         unsigned int ret = cobj->playEffect(arg0, arg1);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
@@ -567,7 +609,10 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.SimpleAudioEngine:playEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect'", nullptr);
             return 0;
+        }
         unsigned int ret = cobj->playEffect(arg0, arg1, arg2);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
@@ -587,7 +632,10 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.SimpleAudioEngine:playEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect'", nullptr);
             return 0;
+        }
         unsigned int ret = cobj->playEffect(arg0, arg1, arg2, arg3);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
@@ -610,12 +658,15 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 6,&arg4, "cc.SimpleAudioEngine:playEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect'", nullptr);
             return 0;
+        }
         unsigned int ret = cobj->playEffect(arg0, arg1, arg2, arg3, arg4);
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:playEffect",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:playEffect",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -654,11 +705,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_rewindBackgroundMusic(lua_State
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_rewindBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->rewindBackgroundMusic();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:rewindBackgroundMusic",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:rewindBackgroundMusic",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -700,7 +754,10 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playBackgroundMusic(lua_State* 
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.SimpleAudioEngine:playBackgroundMusic"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->playBackgroundMusic(arg0);
         return 0;
     }
@@ -713,11 +770,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playBackgroundMusic(lua_State* 
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.SimpleAudioEngine:playBackgroundMusic");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->playBackgroundMusic(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:playBackgroundMusic",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:playBackgroundMusic",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -756,11 +816,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeAllEffects(lua_State* tol
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeAllEffects'", nullptr);
             return 0;
+        }
         cobj->resumeAllEffects();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:resumeAllEffects",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:resumeAllEffects",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -802,11 +865,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setEffectsVolume(lua_State* tol
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.SimpleAudioEngine:setEffectsVolume");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setEffectsVolume'", nullptr);
             return 0;
+        }
         cobj->setEffectsVolume(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:setEffectsVolume",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:setEffectsVolume",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -848,11 +914,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.SimpleAudioEngine:stopEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopEffect'", nullptr);
             return 0;
+        }
         cobj->stopEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:stopEffect",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:stopEffect",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -891,11 +960,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseBackgroundMusic(lua_State*
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseBackgroundMusic'", nullptr);
             return 0;
+        }
         cobj->pauseBackgroundMusic();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:pauseBackgroundMusic",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:pauseBackgroundMusic",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -934,11 +1006,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseAllEffects(lua_State* tolu
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseAllEffects'", nullptr);
             return 0;
+        }
         cobj->pauseAllEffects();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:pauseAllEffects",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:pauseAllEffects",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -980,11 +1055,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_unloadEffect(lua_State* tolua_S
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.SimpleAudioEngine:unloadEffect"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_unloadEffect'", nullptr);
             return 0;
+        }
         cobj->unloadEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:unloadEffect",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:unloadEffect",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1026,11 +1104,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeEffect(lua_State* tolua_S
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.SimpleAudioEngine:resumeEffect");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeEffect'", nullptr);
             return 0;
+        }
         cobj->resumeEffect(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:resumeEffect",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SimpleAudioEngine:resumeEffect",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1058,11 +1139,14 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_end(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_end'", nullptr);
             return 0;
+        }
         CocosDenshion::SimpleAudioEngine::end();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SimpleAudioEngine:end",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SimpleAudioEngine:end",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -1088,12 +1172,15 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getInstance'", nullptr);
             return 0;
+        }
         CocosDenshion::SimpleAudioEngine* ret = CocosDenshion::SimpleAudioEngine::getInstance();
         object_to_luaval<CocosDenshion::SimpleAudioEngine>(tolua_S, "cc.SimpleAudioEngine",(CocosDenshion::SimpleAudioEngine*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SimpleAudioEngine:getInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SimpleAudioEngine:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

@@ -54,6 +54,7 @@ local function addSearchPath(resPrefix, height)
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/TmxMapComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/UIComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/TriggerTest")
+        table.insert(searchPaths, 1, resPrefix .. "hd/ActionTimeline")
     else
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/Images")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/ArmatureComponentTest")
@@ -66,6 +67,7 @@ local function addSearchPath(resPrefix, height)
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/TmxMapComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/UIComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/TriggerTest")
+        table.insert(searchPaths, 1, resPrefix .. "ActionTimeline")
     end
 
     fileUtils:setSearchPaths(searchPaths)

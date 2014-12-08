@@ -141,6 +141,8 @@
 		1A1645A9191B6283008C7C7F /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9C191771E300FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A221C9D191771E400FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
+		1A97AC001A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */; };
+		1A97AC011A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */; };
 		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
@@ -715,6 +717,12 @@
 		29AFEF6719ACCAA000F6B10A /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
 		29FBBBFE196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
+		3825CC491A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */; };
+		3825CC4A1A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */; };
+		3825CC4B1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */; };
+		3825CC4C1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */; };
+		3825CC4D1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */; };
+		3825CC4E1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */; };
 		38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
 		38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
 		38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
@@ -1067,6 +1075,8 @@
 		1A0EE41318CDF775004CD58F /* cpp-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE47E18CDF799004CD58F /* lua-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A221C9B191771E300FD2BE4 /* ccs-res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ccs-res"; path = "../tests/cpp-tests/Resources/ccs-res"; sourceTree = "<group>"; };
+		1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceMathTest.cpp; sourceTree = "<group>"; };
+		1A97ABFF1A1DC3E30076D9CC /* PerformanceMathTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceMathTest.h; sourceTree = "<group>"; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
 		1ABCA28618CD91510087CE3A /* lua-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1644,6 +1654,12 @@
 		29AFEF6619ACCAA000F6B10A /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Test.html; path = "../tests/cpp-tests/Resources/Test.html"; sourceTree = "<group>"; };
 		29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocostudioParserJsonTest.cpp; sourceTree = "<group>"; };
 		29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocostudioParserJsonTest.h; sourceTree = "<group>"; };
+		3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomRootNode.cpp; sourceTree = "<group>"; };
+		3825CC441A2C982A00C92EA8 /* CustomRootNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRootNode.h; sourceTree = "<group>"; };
+		3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomRootNodeReader.cpp; sourceTree = "<group>"; };
+		3825CC461A2C982A00C92EA8 /* CustomRootNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRootNodeReader.h; sourceTree = "<group>"; };
+		3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomWidgetCallbackBindTest.cpp; sourceTree = "<group>"; };
+		3825CC481A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomWidgetCallbackBindTest.h; sourceTree = "<group>"; };
 		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
 		38FA2E72194AEBE100FF2BE4 /* ActionTimelineTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionTimelineTestScene.h; sourceTree = "<group>"; };
 		38FA2E75194AECF800FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ActionTimeline; path = "../tests/cpp-tests/Resources/ActionTimeline"; sourceTree = "<group>"; };
@@ -2898,12 +2914,16 @@
 			children = (
 				1AC35AC218CECF0C00F37B72 /* PerformanceAllocTest.cpp */,
 				1AC35AC318CECF0C00F37B72 /* PerformanceAllocTest.h */,
+				1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */,
+				1AF152D818FD252A00A52F3D /* PerformanceCallbackTest.h */,
 				1AC35AC418CECF0C00F37B72 /* PerformanceContainerTest.cpp */,
 				1AC35AC518CECF0C00F37B72 /* PerformanceContainerTest.h */,
 				1AC35AC618CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp */,
 				1AC35AC718CECF0C00F37B72 /* PerformanceEventDispatcherTest.h */,
 				1AC35AC818CECF0C00F37B72 /* PerformanceLabelTest.cpp */,
 				1AC35AC918CECF0C00F37B72 /* PerformanceLabelTest.h */,
+				1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */,
+				1A97ABFF1A1DC3E30076D9CC /* PerformanceMathTest.h */,
 				1AC35ACA18CECF0C00F37B72 /* PerformanceNodeChildrenTest.cpp */,
 				1AC35ACB18CECF0C00F37B72 /* PerformanceNodeChildrenTest.h */,
 				1AC35ACC18CECF0C00F37B72 /* PerformanceParticleTest.cpp */,
@@ -2920,8 +2940,6 @@
 				1AC35AD718CECF0C00F37B72 /* PerformanceTextureTest.h */,
 				1AC35AD818CECF0C00F37B72 /* PerformanceTouchesTest.cpp */,
 				1AC35AD918CECF0C00F37B72 /* PerformanceTouchesTest.h */,
-				1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */,
-				1AF152D818FD252A00A52F3D /* PerformanceCallbackTest.h */,
 			);
 			path = PerformanceTest;
 			sourceTree = "<group>";
@@ -3392,6 +3410,7 @@
 		29080D25191B595E0066F8DF /* CustomTest */ = {
 			isa = PBXGroup;
 			children = (
+				3825CC421A2C982A00C92EA8 /* CustomWidgetCallbackBindTest */,
 				29080D2C191B595E0066F8DF /* CustomWidget */,
 				29080D23191B595E0066F8DF /* CustomGUIScene.cpp */,
 				29080D24191B595E0066F8DF /* CustomGUIScene.h */,
@@ -3753,6 +3772,19 @@
 			);
 			name = UIAndEditorTests;
 			path = UITest/CocoStudioGUITest;
+			sourceTree = "<group>";
+		};
+		3825CC421A2C982A00C92EA8 /* CustomWidgetCallbackBindTest */ = {
+			isa = PBXGroup;
+			children = (
+				3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */,
+				3825CC441A2C982A00C92EA8 /* CustomRootNode.h */,
+				3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */,
+				3825CC461A2C982A00C92EA8 /* CustomRootNodeReader.h */,
+				3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */,
+				3825CC481A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.h */,
+			);
+			path = CustomWidgetCallbackBindTest;
 			sourceTree = "<group>";
 		};
 		38FA2E70194AEBE100FF2BE4 /* CocoStudioActionTimelineTest */ = {
@@ -4679,6 +4711,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3825CC491A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */,
 				1AC35B3118CECF0C00F37B72 /* GLES-Render.cpp in Sources */,
 				29080DE1191B595E0066F8DF /* UITextTest_Editor.cpp in Sources */,
 				1AC35C5318CECF0C00F37B72 /* TextInputTest.cpp in Sources */,
@@ -4710,6 +4743,7 @@
 				59620E8F1921E5CF002021B6 /* Bug-Child.cpp in Sources */,
 				29080DCD191B595E0066F8DF /* UIScrollViewTest_Editor.cpp in Sources */,
 				1AC35B5118CECF0C00F37B72 /* ClippingNodeTest.cpp in Sources */,
+				3825CC4D1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */,
 				1AC35C1318CECF0C00F37B72 /* LayerTest.cpp in Sources */,
 				29080D97191B595E0066F8DF /* CustomImageView.cpp in Sources */,
 				1AC35C1F18CECF0C00F37B72 /* NodeTest.cpp in Sources */,
@@ -4783,6 +4817,7 @@
 				1AC35C1118CECF0C00F37B72 /* LabelTestNew.cpp in Sources */,
 				1AC35B4D18CECF0C00F37B72 /* ChipmunkTest.cpp in Sources */,
 				1AC35BDF18CECF0C00F37B72 /* cons.cpp in Sources */,
+				3825CC4B1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */,
 				1AC35B5718CECF0C00F37B72 /* ConsoleTest.cpp in Sources */,
 				29080DA7191B595E0066F8DF /* UICheckBoxTest.cpp in Sources */,
 				29080DDD191B595E0066F8DF /* UITextFieldTest_Editor.cpp in Sources */,
@@ -4840,6 +4875,7 @@
 				29080DC9191B595E0066F8DF /* UISceneManager_Editor.cpp in Sources */,
 				1AC35B3F18CECF0C00F37B72 /* Bug-458.cpp in Sources */,
 				3E2F27B919CFF4AF00E7C490 /* NewAudioEngineTest.cpp in Sources */,
+				1A97AC001A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */,
 				1AC35C3918CECF0C00F37B72 /* PerformanceTextureTest.cpp in Sources */,
 				1AC35B5318CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				29080DD3191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
@@ -4957,6 +4993,7 @@
 				1AC35C5018CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
 				3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */,
 				1AC35C0418CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
+				3825CC4C1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */,
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
 				29080D92191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
@@ -5020,6 +5057,7 @@
 				1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				29080D90191B595E0066F8DF /* CocoStudioGUITest.cpp in Sources */,
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
+				3825CC4A1A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */,
 				29080DC6191B595E0066F8DF /* UIScene_Editor.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B6A18CECF0C00F37B72 /* ButtonTestLayer.cpp in Sources */,
@@ -5031,6 +5069,7 @@
 				29080DC8191B595E0066F8DF /* UISceneManager.cpp in Sources */,
 				1AC35C6A18CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
 				1AC35C4018CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */,
+				1A97AC011A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */,
 				1AC35C5818CECF0C00F37B72 /* TextureCacheTest.cpp in Sources */,
 				1AC35B6E18CECF0C00F37B72 /* HelloCocosBuilderLayer.cpp in Sources */,
 				29080D96191B595E0066F8DF /* CustomParticleWidgetTest.cpp in Sources */,
@@ -5047,6 +5086,7 @@
 				1AC35B5418CECF0C00F37B72 /* CocosDenshionTest.cpp in Sources */,
 				1AC35B8018CECF0C00F37B72 /* ProjectileController.cpp in Sources */,
 				1AC35C2618CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */,
+				3825CC4E1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */,
 				3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
 				1AC35C2A18CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
@@ -5644,7 +5684,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5668,7 +5707,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (

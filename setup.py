@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#coding=utf-8
+# coding=utf-8
 """****************************************************************************
 Copyright (c) 2014 cocos2d-x.org
 
@@ -26,11 +26,13 @@ THE SOFTWARE.
 
 '''
 This script will install environment variables needed to by cocos2d-x. It will set these envrironment variables:
-* COCOS_CONSOLE_ROOT: used to run cocos console tools, more information about cocos console tools please refer to 
+* COCOS_CONSOLE_ROOT: used to run cocos console tools, more information about cocos console tools please refer to
 https://github.com/cocos2d/cocos2d-console
 * NDK_ROOT: used to build android native codes
 * ANDROID_SDK_ROOT: used to generate applicatoin on Android through commands
 * ANT_ROOT: used to generate applicatoin on Android through commands
+* COCOS_X_ROOT: path where cocos2d-x is installed
+* COCOS_TEMPLATES_ROOT: path where cocos2d-x's templates are installed
 
 On Max OS X, when start a shell, it will read these files and execute commands in sequence:
 
@@ -45,7 +47,6 @@ Which means that
 * otherwise it will the add environment variables into ~/.profile if it exists
 
 Will create ~/.bash_profile when none of them exist, and add environment variables into it.
-
 '''
 
 import os
@@ -56,9 +57,12 @@ import subprocess
 from optparse import OptionParser
 
 COCOS_CONSOLE_ROOT = 'COCOS_CONSOLE_ROOT'
+COCOS_X_ROOT = 'COCOS_X_ROOT'
+COCOS_TEMPLATES_ROOT = 'COCOS_TEMPLATES_ROOT'
 NDK_ROOT = 'NDK_ROOT'
 ANDROID_SDK_ROOT = 'ANDROID_SDK_ROOT'
 ANT_ROOT = 'ANT_ROOT'
+
 
 def _check_python_version():
     major_ver = sys.version_info[0]
@@ -69,6 +73,7 @@ def _check_python_version():
 
     return True
 
+
 class SetEnvVar(object):
 
     RESULT_UPDATE_FAILED = -2
@@ -77,15 +82,16 @@ class SetEnvVar(object):
     RESULT_UPDATED = 1
     RESULT_ADDED = 2
 
-    MAC_CHECK_FILES = [ '.bash_profile', '.bash_login', '.profile' ]
-    LINUX_CHECK_FILES = [ '.bashrc' ]
-    ZSH_CHECK_FILES = ['.zshrc' ]
+    MAC_CHECK_FILES = ['.bash_profile', '.bash_login', '.profile']
+    LINUX_CHECK_FILES = ['.bashrc']
+    ZSH_CHECK_FILES = ['.zshrc']
     RE_FORMAT = r'^export[ \t]+%s=(.+)'
 
     def __init__(self):
         self.need_backup = True
         self.backup_file = None
-        self.current_absolute_path = os.path.dirname(os.path.realpath(__file__))
+        self.current_absolute_path = os.path.dirname(
+            os.path.realpath(__file__))
         self.file_used_for_setup = ''
 
     def _isWindows(self):
@@ -113,11 +119,11 @@ class SetEnvVar(object):
             file_list = SetEnvVar.LINUX_CHECK_FILES
         elif self._is_mac():
             file_list = SetEnvVar.MAC_CHECK_FILES
-        
+
         return file_list
 
     def _get_filepath_for_setup(self):
-        file_list = self._get_unix_file_list();
+        file_list = self._get_unix_file_list()
 
         file_to_write = None
         if file_list is None:
@@ -145,9 +151,9 @@ class SetEnvVar(object):
         try:
             env = None
             env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
-                                'Environment',
-                                0,
-                                _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
+                                    'Environment',
+                                    0,
+                                    _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
             _winreg.SetValueEx(env, key, 0, _winreg.REG_SZ, value)
             _winreg.FlushKey(env)
             _winreg.CloseKey(env)
@@ -185,7 +191,8 @@ class SetEnvVar(object):
         file.write('export %s=%s\n' % (key, value))
         file.write('export PATH=$%s:$PATH\n' % key)
         if key == ANDROID_SDK_ROOT:
-            file.write('export PATH=$%s/tools:$%s/platform-tools:$PATH\n' % (key, key))
+            file.write(
+                'export PATH=$%s/tools:$%s/platform-tools:$PATH\n' % (key, key))
         file.close()
         return True
 
@@ -242,9 +249,9 @@ class SetEnvVar(object):
                 try:
                     env = None
                     env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
-                                'Environment',
-                                0,
-                                _winreg.KEY_READ)
+                                            'Environment',
+                                            0,
+                                            _winreg.KEY_READ)
 
                     ret = _winreg.QueryValueEx(env, var)[0]
                     _winreg.CloseKey(env)
@@ -261,16 +268,17 @@ class SetEnvVar(object):
         return ret
 
     def _get_input_value(self, var_name):
-        ret = raw_input('  ->Please enter the path of %s (or press Enter to skip):' % var_name)
+        ret = raw_input(
+            '  ->Please enter the path of %s (or press Enter to skip):' % var_name)
         ret.rstrip(" \t")
         return ret
 
-#         # python on linux doesn't include Tkinter model, so let user input in terminal
+# python on linux doesn't include Tkinter model, so let user input in terminal
 #         if self._isLinux():
-#             input_value = raw_input('Couldn\'t find the "%s" envrironment variable. Please enter it: ' % sys_var)        
+#             input_value = raw_input('Couldn\'t find the "%s" envrironment variable. Please enter it: ' % sys_var)
 #         else:
 
-#             # pop up a window to let user select path for ndk root
+# pop up a window to let user select path for ndk root
 #             import Tkinter
 #             import tkFileDialog
 
@@ -290,7 +298,7 @@ class SetEnvVar(object):
 #             if sys_var == NDK_ROOT:
 #                 label_content = 'Select path for Android NDK:'
 #                 label_help = """
-# The Android NDK is needed to develop games for Android. 
+# The Android NDK is needed to develop games for Android.
 # For further information, go to:
 # http://developer.android.com/tools/sdk/ndk/index.html.
 
@@ -300,9 +308,9 @@ class SetEnvVar(object):
 #             if sys_var == ANDROID_SDK_ROOT:
 #                 label_content = 'Select path for Android SDK'
 #                 label_help = """
-# The Android SDK is needed to develop games for Android. 
+# The Android SDK is needed to develop games for Android.
 # For further information, go to:
-# https://developer.android.com/tools/sdk/ndk/index.html. 
+# https://developer.android.com/tools/sdk/ndk/index.html.
 
 # You can safely skip this step now. You can set the ANDROID_SDK_ROOT later.
 #                 """
@@ -314,10 +322,10 @@ class SetEnvVar(object):
 
 #             input_value = self.tmp_input_value
 #             self.tmp_input_value = None
-       
+
 #         return input_value
 
-#     # display a window in center and put it on top
+# display a window in center and put it on top
 #     def _center(self, win):
 #         win.update_idletasks()
 #         width = win.winfo_width()
@@ -339,7 +347,8 @@ class SetEnvVar(object):
             ret = False
 
         if not ret:
-            print('    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name))
+            print(
+                '    ->Error: "%s" is not a valid path of %s. Ignoring it.' % (value, var_name))
 
         return ret
 
@@ -358,7 +367,8 @@ class SetEnvVar(object):
             return False
 
         if self._isWindows():
-            android_path = os.path.join(android_sdk_root, 'tools', 'android.bat')
+            android_path = os.path.join(
+                android_sdk_root, 'tools', 'android.bat')
         else:
             android_path = os.path.join(android_sdk_root, 'tools', 'android')
         if os.path.isfile(android_path):
@@ -385,9 +395,9 @@ class SetEnvVar(object):
             env = None
             path = None
             env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
-                                'Environment',
-                                0,
-                                _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
+                                    'Environment',
+                                    0,
+                                    _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
             path = _winreg.QueryValueEx(env, 'Path')[0]
 
             path_lower = path.lower()
@@ -405,7 +415,8 @@ class SetEnvVar(object):
 
             print('  ->Remove directory \"%s\" from PATH!\n' % remove_dir)
         except Exception:
-            print('  ->Remove directory \"%s\" from PATH failed!\n' % remove_dir)
+            print('  ->Remove directory \"%s\" from PATH failed!\n' %
+                  remove_dir)
 
     def set_windows_path(self, add_dir):
         ret = False
@@ -414,9 +425,9 @@ class SetEnvVar(object):
             env = None
             path = None
             env = _winreg.OpenKeyEx(_winreg.HKEY_CURRENT_USER,
-                                'Environment',
-                                0,
-                                _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
+                                    'Environment',
+                                    0,
+                                    _winreg.KEY_SET_VALUE | _winreg.KEY_READ)
             path = _winreg.QueryValueEx(env, 'Path')[0]
 
             # add variable if can't find it in PATH
@@ -448,28 +459,73 @@ class SetEnvVar(object):
         else:
             print("  ->Add directory \"%s\" into PATH failed!\n" % add_dir)
 
-
     def set_console_root(self):
         print("->Check environment variable %s" % COCOS_CONSOLE_ROOT)
-        cocos_consle_root = os.path.join(self.current_absolute_path, 'tools', 'cocos2d-console', 'bin')
+        cocos_consle_root = os.path.join(
+            self.current_absolute_path, 'tools', 'cocos2d-console', 'bin')
         old_dir = self._find_environment_variable(COCOS_CONSOLE_ROOT)
         if old_dir is None:
             # add environment variable
             if self._isWindows():
                 self.set_windows_path(cocos_consle_root)
 
-            self._set_environment_variable(COCOS_CONSOLE_ROOT, cocos_consle_root)
+            self._set_environment_variable(
+                COCOS_CONSOLE_ROOT, cocos_consle_root)
         else:
             if old_dir == cocos_consle_root:
                 # is same with before, nothing to do
                 return
 
             # update the environment variable
-            if self._isWindows(): 
+            if self._isWindows():
                 self.remove_dir_from_win_path(old_dir)
                 self.set_windows_path(cocos_consle_root)
 
             self._force_update_env(COCOS_CONSOLE_ROOT, cocos_consle_root)
+
+    def set_cocos_x_root(self):
+        print("->Check environment variable %s" % COCOS_X_ROOT)
+        cocos_x_root = self.current_absolute_path
+        old_dir = self._find_environment_variable(COCOS_X_ROOT)
+        if old_dir is None:
+            # add environment variable
+            if self._isWindows():
+                self.set_windows_path(cocos_x_root)
+
+            self._set_environment_variable(COCOS_X_ROOT, cocos_x_root)
+        else:
+            if old_dir == cocos_x_root:
+                # is same with before, nothing to do
+                return
+
+            # update the environment variable
+            if self._isWindows():
+                self.remove_dir_from_win_path(old_dir)
+                self.set_windows_path(cocos_x_root)
+
+            self._force_update_env(COCOS_X_ROOT, cocos_x_root)
+
+    def set_templates_root(self):
+        print("->Check environment variable %s" % COCOS_TEMPLATES_ROOT)
+        cocos_templates_root = os.path.join(self.current_absolute_path, 'templates')
+        old_dir = self._find_environment_variable(COCOS_TEMPLATES_ROOT)
+        if old_dir is None:
+            # add environment variable
+            if self._isWindows():
+                self.set_windows_path(cocos_templates_root)
+
+            self._set_environment_variable(COCOS_TEMPLATES_ROOT, cocos_templates_root)
+        else:
+            if old_dir == cocos_templates_root:
+                # is same with before, nothing to do
+                return
+
+            # update the environment variable
+            if self._isWindows():
+                self.remove_dir_from_win_path(old_dir)
+                self.set_windows_path(cocos_templates_root)
+
+            self._force_update_env(COCOS_TEMPLATES_ROOT, cocos_templates_root)
 
     def _force_update_unix_env(self, var_name, value):
         import re
@@ -482,13 +538,14 @@ class SetEnvVar(object):
         if self._isLinux():
             file_list = SetEnvVar.LINUX_CHECK_FILES
 
-        print("  ->Update variable %s in files %s" % (var_name, str(file_list)))
+        print("  ->Update variable %s in files %s" %
+              (var_name, str(file_list)))
         variable_updated = False
         for file_name in file_list:
             path = os.path.join(home, file_name)
             if os.path.isfile(path):
                 lines = []
-                # read files 
+                # read files
                 need_over_write = False
                 file_obj = open(path, 'r')
                 for line in file_obj:
@@ -511,13 +568,13 @@ class SetEnvVar(object):
 
         # nothing updated, should add variable
         if not variable_updated:
-            print("\n  ->No files updated, add variable %s instead!" % var_name)
+            print("\n  ->No files updated, add variable %s instead!" %
+                  var_name)
             ret = self._set_environment_variable(var_name, value)
         else:
             ret = True
 
         return ret
-
 
     def _force_update_env(self, var_name, value):
         ret = False
@@ -626,13 +683,17 @@ class SetEnvVar(object):
         print('\nSetting up cocos2d-x...')
 
         self.file_used_for_setup = self._get_filepath_for_setup()
-        
+
         self.set_console_root()
+        self.set_cocos_x_root()
+        self.set_templates_root()
 
         if self._isWindows():
-            print('->Configuration for Android platform only, you can also skip and manually edit your environment variables\n')
+            print(
+                '->Configuration for Android platform only, you can also skip and manually edit your environment variables\n')
         else:
-            print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' % self.file_used_for_setup)
+            print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' %
+                  self.file_used_for_setup)
 
         ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
         sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
@@ -640,26 +701,33 @@ class SetEnvVar(object):
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
-            print('\nA backup file \"%s\" is created for \"%s\".' % (self.backup_file, self.file_used_for_setup))
+            print('\nA backup file \"%s\" is created for \"%s\".' %
+                  (self.backup_file, self.file_used_for_setup))
 
         if self._isWindows():
-            print('\nPlease restart the terminal or restart computer to make added system variables take effect\n')
+            print(
+                '\nPlease restart the terminal or restart computer to make added system variables take effect\n')
         else:
-            print('\nPlease execute command: "source %s" to make added system variables take effect\n' % self.file_used_for_setup)
+            print('\nPlease execute command: "source %s" to make added system variables take effect\n' %
+                  self.file_used_for_setup)
 
 if __name__ == '__main__':
     if not _check_python_version():
         exit()
 
     parser = OptionParser()
-    parser.add_option('-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
-    parser.add_option('-a', '--androidsdkroot', dest='android_sdk_root', help='directory of android sdk root')
-    parser.add_option('-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
+    parser.add_option(
+        '-n', '--ndkroot', dest='ndk_root', help='directory of ndk root')
+    parser.add_option('-a', '--androidsdkroot',
+                      dest='android_sdk_root', help='directory of android sdk root')
+    parser.add_option(
+        '-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
     opts, args = parser.parse_args()
 
     # set environment variables
     env = SetEnvVar()
-    env.set_environment_variables(opts.ndk_root, opts.android_sdk_root, opts.ant_root)
+    env.set_environment_variables(
+        opts.ndk_root, opts.android_sdk_root, opts.ant_root)
 
     if env._isWindows():
         import ctypes
@@ -668,4 +736,5 @@ if __name__ == '__main__':
         SMTO_ABORTIFHUNG = 0x0002
         result = ctypes.c_long()
         SendMessageTimeoutW = ctypes.windll.user32.SendMessageTimeoutW
-        SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0, u'Environment', SMTO_ABORTIFHUNG, 5000, ctypes.byref(result))
+        SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+                            u'Environment', SMTO_ABORTIFHUNG, 5000, ctypes.byref(result))

@@ -664,6 +664,10 @@ void TextField::attachWithIMEEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ATTACH_WITH_IME);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::ATTACH_WITH_IME));
+    }
     this->release();
 }
 
@@ -676,6 +680,10 @@ void TextField::detachWithIMEEvent()
     }
     if (_eventCallback) {
         _eventCallback(this, EventType::DETACH_WITH_IME);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::DETACH_WITH_IME));
     }
     this->release();
 }
@@ -690,6 +698,10 @@ void TextField::insertTextEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::INSERT_TEXT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::INSERT_TEXT));
+    }
     this->release();
 }
 
@@ -702,6 +714,10 @@ void TextField::deleteBackwardEvent()
     }
     if (_eventCallback) {
         _eventCallback(this, EventType::DELETE_BACKWARD);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::DELETE_BACKWARD));
     }
     this->release();
 }
@@ -784,6 +800,7 @@ void TextField::copySpecialProperties(Widget *widget)
         setInsertText(textField->getInsertText());
         setDeleteBackward(textField->getDeleteBackward());
         _eventCallback = textField->_eventCallback;
+        _ccEventCallback = textField->_ccEventCallback;
         _textFieldEventListener = textField->_textFieldEventListener;
         _textFieldEventSelector = textField->_textFieldEventSelector;
     }

@@ -290,7 +290,7 @@ bool UIButtonTest_Title::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("Button with title", "fonts/Marker Felt.ttf", 30);
+        Text* alert = Text::create("Button with title, title should be flipped!", "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
@@ -305,7 +305,9 @@ bool UIButtonTest_Title::init()
         CCASSERT(button->getTitleColor() == Color3B::YELLOW, "Button setTitleColotr & getTitleColor not match!");
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Title::touchEvent, this));
         _uiLayer->addChild(button);
-        
+        button->setFlippedX(true);
+        auto label = button->getTitleRenderer();
+        label->setScale(4.0);
         button->runAction(RepeatForever::create(Sequence::create(ScaleTo::create(1.0f, 1.2f),
                                                                  ScaleTo::create(1.0f, 1.0f),nullptr)));
         
@@ -470,14 +472,6 @@ bool UIButtonTestSwitchScale9::init()
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
         
-        // Add the alert
-        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
-        alert->setColor(Color3B(159, 168, 176));
-        
-        alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
-        
-        _uiLayer->addChild(alert);
         
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
@@ -550,14 +544,6 @@ bool UIButtonTestZoomScale::init()
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
         _uiLayer->addChild(_displayValueLabel);
         
-        // Add the alert
-        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
-        alert->setColor(Color3B(159, 168, 176));
-        
-        alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
-        
-        _uiLayer->addChild(alert);
         
         // Create the button
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
@@ -622,14 +608,6 @@ bool UIButtonTextOnly::init()
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
         _uiLayer->addChild(_displayValueLabel);
         
-        // Add the alert
-        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
-        alert->setColor(Color3B(159, 168, 176));
-        
-        alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
-        
-        _uiLayer->addChild(alert);
         
         // Create the button
         auto button = Button::create();
@@ -673,14 +651,6 @@ bool UIButtonIgnoreContentSizeTest::init()
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
         _uiLayer->addChild(_displayValueLabel);
         
-        // Add the alert
-        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
-        alert->setColor(Color3B(159, 168, 176));
-        
-        alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
-        
-        _uiLayer->addChild(alert);
         
         // Create the button
         auto button = Button::create("cocosui/animationbuttonnormal.png",
@@ -741,14 +711,6 @@ bool UIButtonTitleEffectTest::init()
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 20));
         _uiLayer->addChild(_displayValueLabel);
         
-        // Add the alert
-        Text* alert = Text::create("Button","fonts/Marker Felt.ttf",30);
-        alert->setColor(Color3B(159, 168, 176));
-        
-        alert->setPosition(Vec2(widgetSize.width / 2.0f,
-                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
-        
-        _uiLayer->addChild(alert);
         
         // Create the button
         auto button = Button::create("cocosui/animationbuttonnormal.png",
@@ -779,5 +741,57 @@ bool UIButtonTitleEffectTest::init()
     }
     return false;
 }
+// UIButtonFlipTest
+UIButtonFlipTest::UIButtonFlipTest()
+: _displayValueLabel(nullptr)
+{
+    
+}
 
+UIButtonFlipTest::~UIButtonFlipTest()
+{
+}
+
+bool UIButtonFlipTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("Button X Flipped", "fonts/Marker Felt.ttf",20);
+        _displayValueLabel->setNormalizedPosition(Vec2(0.3, 0.7));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        
+        // Create the button
+        auto button = Button::create("cocosui/animationbuttonnormal.png",
+                                     "cocosui/animationbuttonpressed.png");
+        button->setNormalizedPosition(Vec2(0.3f, 0.5f));
+        button->setTitleText("PLAY GAME");
+        button->setTitleFontName("fonts/Marker Felt.ttf");
+        button->setZoomScale(0.3f);
+        button->setScale(2.0f);
+        button->setFlippedX(true);
+        button->setPressedActionEnabled(true);
+        
+        
+        _uiLayer->addChild(button);
+        
+        // Create the button
+        auto button2 = Button::create("cocosui/animationbuttonnormal.png",
+                                      "cocosui/animationbuttonpressed.png");
+        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
+        button2->setTitleText("PLAY GAME");
+        button2->setFlippedY(true);
+        _uiLayer->addChild(button2);
+        
+        auto titleLabel = Text::create("Button Y flipped", "Arial", 20);
+        titleLabel->setNormalizedPosition(Vec2(0.8, 0.7));
+        this->addChild(titleLabel);
+        
+        return true;
+    }
+    return false;
+}
 

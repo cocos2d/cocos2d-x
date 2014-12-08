@@ -31,10 +31,6 @@ if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 endif()
 
-if(WINDOWS AND NOT BUILD_STATIC)
-  ADD_DEFINITIONS (-D_USRDLL)
-endif()
-
 include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)
@@ -46,19 +42,25 @@ include(deprecated/CMakeLists.txt)
 include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
+include_directories(audio/include)
 include(storage/CMakeLists.txt)
 
+if(BUILD_EDITOR_COCOSBUILDER)
 include(editor-support/cocosbuilder/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC})
+endif(BUILD_EDITOR_COCOSBUILDER)
+
+if(BUILD_EDITOR_COCOSTUDIO)
 include(editor-support/cocostudio/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CS_SRC})
+endif(BUILD_EDITOR_COCOSTUDIO)
+
+if(BUILD_EDITOR_SPINE)
 include(editor-support/spine/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
+endif(BUILD_EDITOR_SPINE)
 
 include(../extensions/CMakeLists.txt)
-
-set(COCOS_EDITOR_SUPPORT_SRC
-  ${COCOS_CCB_SRC}
-  ${COCOS_CS_SRC}
-  ${COCOS_SPINE_SRC}
-)
 
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
@@ -76,78 +78,27 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EXTENSIONS_SRC}
     )
 
-if(MACOSX OR APPLE)
-  include(FindFreetype REQUIRED)
-
-  if(NOT FREETYPE_FOUND)
-    if(IOS)
-      FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype PATHS "../external/freetype2/prebuilt/ios" DOC "Freetype includes")
-      find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/ios" "../external/freetype2/include/ios/freetype" DOC "Freetype includes")
-
-    elseif()
-      FIND_LIBRARY(FREETYPE_LIBRARIES NAMES libfreetype PATHS "../external/freetype2/prebuilt/mac" DOC "Freetype includes")
-      find_path(FREETYPE_INCLUDE_DIRS ft2build.h "../external/freetype2/include/mac" "../external/freetype2/include/mac/freetype" DOC "Freetype includes")
-    endif(IOS)
-  endif(NOT FREETYPE_FOUND)
-
-  find_package(Freetype REQUIRED)
-  include_directories(${FREETYPE_INCLUDE_DIRS})
-
-endif()
-
-if(MINGW)
-  find_package(Freetype REQUIRED)
-  find_package(WebP REQUIRED)
-  #find_package(MiniZip REQUIRED)
-  #${MINIZIP_INCLUDE_DIR}
-
-  #find_package(GLFW REQUIRED)
-  #${GLFW_INCLUDE_DIRS}
-
-  find_package(ZLIB REQUIRED)
-
-  find_package(Chipmunk REQUIRED)
-
-  message( STATUS "ZLIB dirs: ${ZLIB_INCLUDE_DIRS}")
-  message( STATUS "WEBP dirs: ${WEBP_INCLUDE_DIRS}")
-  message( STATUS "FREETYPE dirs: ${FREETYPE_INCLUDE_DIRS}")
-  message( STATUS "Chipmunk dirs: ${CHIPMUNK_INCLUDE_DIRS}")
-
-  include_directories(${FREETYPE_INCLUDE_DIRS} ${WEBP_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${CHIPMUNK_INCLUDE_DIRS})
-
-else()
-
-  #todo: provide prebuild versions of minizip for android ios mac and msvc
-  #done: prebuilt version for mingw-w64 (linux distros should have them also)
-  # check for opensuse the buildbot system arch and ubuntu
-
-  include_directories(
-    ../external/unzip)
-
-endif()
-
   #todo: provide prebuild versions of the xx libs for all platforms
   include_directories(
     ../external/xxhash
     ../external/xxtea)
 
 
-add_library(cocos2d ${BUILD_TYPE} ${COCOS_SRC})
+add_library(cocos2d ${COCOS_SRC})
 
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(FMOD_LIB "fmodex64")
-elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    set(FMOD_LIB "fmodex")
-endif()
-
-if(MINGW)
-  set(PLATFORM_SPECIFIC_LIBS z jpeg png webp tiff curl websockets glfw3 glew32 opengl32 iconv freetype bz2)
-elseif(WINDOWS)
-  set(PLATFORM_SPECIFIC_LIBS libjpeg libpng libwebp libtiff libcurl_imp libwebsockets freetype250 glfw3 glew32 opengl32 libiconv libzlib)
+set(PLATFORM_SPECIFIC_LIBS)
+if(WINDOWS)
+  foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
+    cocos_use_pkg(cocos2d ${_pkg})
+  endforeach()
+  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm)
 elseif(LINUX)
-  set(PLATFORM_SPECIFIC_LIBS jpeg webp tiff freetype curl websockets ssl crypto
-  fontconfig png pthread glfw GLEW GL X11 rt z protobuf ${FMOD_LIB})
+  foreach(_pkg OPENGL GLEW GLFW3 FMODEX FONTCONFIG THREADS)
+    cocos_use_pkg(cocos2d ${_pkg})
+  endforeach()
 elseif(MACOSX OR APPLE)
+  cocos_use_pkg(cocos2d GLFW3)
+
  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
  FIND_LIBRARY(COCOA_LIBRARY Cocoa)
@@ -160,8 +111,6 @@ elseif(MACOSX OR APPLE)
  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 
   set(PLATFORM_SPECIFIC_LIBS
-    z jpeg png webp tiff curl glfw3
-    websockets freetype
     ${COCOA_LIBRARY}
     ${OPENGL_LIBRARY}
     ${OPENAL_LIBRARY}
@@ -173,12 +122,31 @@ elseif(MACOSX OR APPLE)
   )
 
 elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv2 log z android)
+  set(PLATFORM_SPECIFIC_LIBS GLESv2 log android)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-target_link_libraries(cocos2d chipmunk box2d tinyxml2 unzip xxhash ${PLATFORM_SPECIFIC_LIBS})
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS)
+  cocos_use_pkg(cocos2d ${pkg})
+endforeach()
+
+target_link_libraries(cocos2d xxhash ${PLATFORM_SPECIFIC_LIBS})
+
+if(USE_WEBP)
+  add_definitions(-DCC_USE_WEBP=1)
+  cocos_use_pkg(cocos2d WEBP)
+else()
+  add_definitions(-DCC_USE_WEBP=0)
+endif()
+
+if(USE_CHIPMUNK)
+  cocos_use_pkg(cocos2d CHIPMUNK)
+endif()
+
+if(USE_BOX2D)
+  cocos_use_pkg(cocos2d Box2D)
+endif()
 
 set_target_properties(cocos2d
     PROPERTIES

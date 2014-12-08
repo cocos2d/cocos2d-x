@@ -5,10 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
---  Inverted. If this is set to true,<br>
--- the stencil is inverted, so the content is drawn where the stencil is NOT drawn.<br>
--- This default to false.
--- @function [parent=#ClippingNode] isInverted 
+--  If stencil has no childre it will not be drawn.<br>
+-- If you have custom stencil-based node with stencil drawing mechanics other then children-based,<br>
+-- then this method should return true every time you wish stencil to be visited.<br>
+-- By default returns true if has any children attached.
+-- @function [parent=#ClippingNode] hasContent 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
@@ -46,6 +47,14 @@
 -- @function [parent=#ClippingNode] setAlphaThreshold 
 -- @param self
 -- @param #float alphaThreshold
+        
+--------------------------------
+--  Inverted. If this is set to true,<br>
+-- the stencil is inverted, so the content is drawn where the stencil is NOT drawn.<br>
+-- This default to false.
+-- @function [parent=#ClippingNode] isInverted 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, cc.Node         

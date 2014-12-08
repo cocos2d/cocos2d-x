@@ -1124,7 +1124,7 @@ local function runSpriteTest()
             pSprite = cc.Sprite:createWithTexture(pBatchNode:getTexture(), cc.rect(nX,nY,32,32))
             pBatchNode:addChild(pSprite, 0, nTag+100)
         end
-        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_DEFAULT )
+        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_DEFAULT)
         
         return  pSprite     
     end
@@ -1246,7 +1246,7 @@ local function runSpriteTest()
             pBatchNode:retain()
         end
     
-        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE_PIXELFORMAT_DEFAULT )
+        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_DEFAULT)
     end
         
     local function InitWithSpriteTest(nSubtest,nNodes)

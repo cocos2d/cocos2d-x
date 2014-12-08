@@ -420,6 +420,10 @@ void Slider::percentChangedEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::ON_PERCENTAGE_CHANGED));
+    }
     this->release();
 }
 
@@ -586,6 +590,7 @@ void Slider::copySpecialProperties(Widget *widget)
         _sliderEventListener = slider->_sliderEventListener;
         _sliderEventSelector = slider->_sliderEventSelector;
         _eventCallback = slider->_eventCallback;
+        _ccEventCallback = slider->_ccEventCallback;
     }
 }
 
