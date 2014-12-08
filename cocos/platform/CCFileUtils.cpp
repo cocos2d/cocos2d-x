@@ -699,7 +699,7 @@ std::string FileUtils::getNewFilename(const std::string &filename) const
     {
         newFileName = iter->second.asString();
     }
-    return newFileName;
+    return normalizePath(newFileName);
 }
 
 std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
@@ -1299,6 +1299,63 @@ long FileUtils::getFileSize(const std::string &filepath)
         return (long)(info.st_size);
     }
 }
+
+std::string FileUtils::normalizePath(const std::string& path) const
+{
+    auto pos = path.find("../");
+    if (pos == std::string::npos || pos == 0)
+    {
+        return path;
+    }
+
+    std::vector<std::string> v(5);
+    v.resize(0);
+    auto change = false;
+    size_t size = path.size();
+    size_t idx = 0;
+    bool noexit = true;
+    while (noexit)
+    {
+        pos = path.find('/', idx);
+        std::string tmp;
+        if (pos == std::string::npos)
+        {
+            tmp = path.substr(idx, size - idx);
+            noexit = false;
+        }else
+        {
+            tmp = path.substr(idx, pos - idx + 1);
+        }
+
+        auto t = v.size();
+        if (t > 0 && v[t-1] != "../" && (tmp == "../" || tmp == ".."))
+        {
+            // ../
+            v.pop_back();
+            change = true;
+        } else if (t > 0  && tmp == "/" && v[t-1].at(v[t-1].size()-1) == '/')
+        {
+            // xx// or ..//
+            change = true;
+        }else
+        {
+            v.push_back(tmp);
+        }
+        idx = pos + 1;
+    }
+
+    if (!change)
+    {
+        return path;
+    }
+    std::string newpath;
+    for (auto s : v)
+    {
+        newpath.append(s);
+    }
+    return newpath;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
