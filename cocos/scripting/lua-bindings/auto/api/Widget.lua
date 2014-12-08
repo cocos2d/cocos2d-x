@@ -52,6 +52,12 @@
 -- @param #bool isPropagate
         
 --------------------------------
+-- return true represent the widget use Unify Size, false represent the widget couldn't use Unify Size
+-- @function [parent=#Widget] isUnifySizeEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Returns size percent of widget<br>
 -- return size percent
 -- @function [parent=#Widget] getSizePercent 
