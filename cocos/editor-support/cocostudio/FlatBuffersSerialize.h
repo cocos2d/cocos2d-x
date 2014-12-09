@@ -110,6 +110,13 @@ public:
     flatbuffers::Offset<flatbuffers::TimeLineTextureFrame> createTimeLineTextureFrame(const tinyxml2::XMLElement* objectData);
     /**/
     
+    flatbuffers::FlatBufferBuilder* createFlatBuffersWithXMLFileForSimulator(const std::string& xmlFileName);
+    flatbuffers::Offset<flatbuffers::NodeTree> createNodeTreeForSimulator(const tinyxml2::XMLElement* objectData,
+                                                                          std::string classType);
+    flatbuffers::Offset<flatbuffers::ProjectNodeOptions> createProjectNodeOptionsForSimulator(const tinyxml2::XMLElement* objectData);
+    
+    void deleteFlatBufferBuilder();
+    
     int getResourceType(std::string key);
     std::string getGUIClassName(const std::string &name);
     std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
