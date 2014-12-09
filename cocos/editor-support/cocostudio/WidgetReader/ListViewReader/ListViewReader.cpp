@@ -491,6 +491,15 @@ namespace cocostudio
             Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
             listView->setContentSize(scale9Size);
         }
+        else
+        {
+            auto widgetOptions = options->widgetOptions();
+            if (!listView->isIgnoreContentAdaptWithSize())
+            {
+                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+                listView->setContentSize(contentSize);
+            }
+        }
         
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
@@ -519,6 +528,11 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
+        if (!listView->isIgnoreContentAdaptWithSize())
+        {
+            Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+            listView->setContentSize(contentSize);
+        }
     }
     
     Node* ListViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *listViewOptions)
