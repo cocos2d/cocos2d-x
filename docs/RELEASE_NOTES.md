@@ -13,7 +13,7 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [Highlights of v3.3rc2](#highlights-of-v33rc2)e
+- [Highlights of v3.3rc2](#highlights-of-v33rc2)
 - [Notes of v3.3rc1](#notes-of-v33rc1)
 - [Highlights of v3.3rc1](#highlights-of-v33rc1)
 - [Notes of v3.3rc0](#notes-of-v33rc0)
