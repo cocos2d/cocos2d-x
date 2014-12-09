@@ -323,7 +323,7 @@ You can refer to [this document](http://www.cocos2d-x.org/wiki/Integrate_the_Fac
 * 3d: `BillBoard`
 * audio: new audio is added on iOS and Android
 * DrawNode: added as many functions as `DrawPrimitive`, and `DrawPrimitive` is deprecated
-* Renderer: added `trianle command`
+* Renderer: added `triangle command`
 * UI: added `WebView` on iOS and Android
 * Many other small features added and many bugs fixed
 
