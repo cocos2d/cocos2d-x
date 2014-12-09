@@ -37,6 +37,8 @@ THE SOFTWARE.
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
+#include "cocostudio/FlatBuffersSerialize.h"
+
 #include <fstream>
 
 using namespace cocos2d;
@@ -666,6 +668,9 @@ Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::Tim
     Color3B color(f_color->r(), f_color->g(), f_color->b());
     frame->setColor(color);
     
+    int alpha = f_color->a();
+    frame->setAlpha(alpha);
+    
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
@@ -680,6 +685,15 @@ Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::T
     TextureFrame* frame = TextureFrame::create();
     
     std::string path = flatbuffers->path()->c_str();
+    if (FileUtils::getInstance()->isFileExist(path))
+    {
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+        path = fullPath;
+    }
+    else
+    {
+        path = "";
+    }
     frame->setTextureName(path);
     
     int frameIndex = flatbuffers->frameIndex();
@@ -689,6 +703,41 @@ Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::T
     frame->setTween(tween);
     
     return frame;
+}
+    
+ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(const std::string& fileName)
+{
+    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+    fbs->_isSimulator = true;
+    auto builder = fbs->createFlatBuffersWithXMLFileForSimulator(fileName);
+    
+    ActionTimeline* action = ActionTimeline::create();
+    
+    auto csparsebinary = GetCSParseBinary(builder->GetBufferPointer());
+    auto nodeAction = csparsebinary->action();
+    
+    action = ActionTimeline::create();
+    
+    int duration = nodeAction->duration();
+    action->setDuration(duration);
+    
+    float speed = nodeAction->speed();
+    action->setTimeSpeed(speed);
+    
+    auto timeLines = nodeAction->timeLines();
+    int timelineLength = timeLines->size();
+    for (int i = 0; i < timelineLength; i++)
+    {
+        auto timelineFlatBuf = timeLines->Get(i);
+        Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
+        
+        if (timeline)
+            action->addTimeline(timeline);
+    }
+    
+    fbs->deleteFlatBufferBuilder();
+    
+    return action;
 }
 
 }

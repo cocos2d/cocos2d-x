@@ -524,11 +524,11 @@ bool createDir(const char *sPathName)
         {
             DirName[i] = 0;
 #ifdef _WIN32
-            if(_access(DirName, NULL) != 0)
+            if(_access(DirName, 0) != 0)
             {
                 if(_mkdir(DirName/*, 0755*/) == -1)
 #else
-			if (access(DirName, NULL) != 0)
+			if (access(DirName, 0) != 0)
 			{
                 if(mkdir(DirName, 0755) == -1)
 #endif

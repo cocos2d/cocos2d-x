@@ -1,3 +1,8 @@
+cocos2d-x-3.3 Dec.12
+    [FIX]           Billboard: allow billboard rotate along z axis
+    [FIX]           Bundle3D: create aabb for mesh whose aabb does not exist (user custom mesh)
+    [FIX]           FileUtils: createDirectory(): doesn't invoke closedir() after opendir on platforms other than WP8/WinRT/Windows
+
 cocos2d-x-3.3-rc2  Dec.5
     [FIX]           C++: use 100% of one core on Windows
     [FIX]           Label: when a label is added to a invisible parent node, app will crash if switching from background

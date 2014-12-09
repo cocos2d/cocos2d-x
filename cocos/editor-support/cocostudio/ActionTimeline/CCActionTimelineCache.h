@@ -79,6 +79,8 @@ public:
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
     
+    ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
+    
 protected:
 
     Timeline* loadTimeline(const rapidjson::Value& json);

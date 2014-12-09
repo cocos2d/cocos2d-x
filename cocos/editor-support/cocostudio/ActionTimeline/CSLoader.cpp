@@ -61,6 +61,8 @@
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
+#include "cocostudio/FlatBuffersSerialize.h"
+
 #include "cocostudio/WidgetCallBackHandlerProtocol.h"
 
 #include <fstream>
@@ -782,16 +784,17 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         auto projectNodeOptions = (ProjectNodeOptions*)options->data();
         std::string filePath = projectNodeOptions->fileName()->c_str();
         CCLOG("filePath = %s", filePath.c_str());
-        if (filePath != "")
+        if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
             node = createNodeWithFlatBuffersFile(filePath);
             reader->setPropsWithFlatBuffers(node, options->data());
-        }
-        cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
-        if(action)
-        {
-            node->runAction(action);
-            action->gotoFrameAndPlay(0);
+            
+            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
+            if(action)
+            {
+                node->runAction(action);
+                action->gotoFrameAndPlay(0);
+            }
         }
     }
     else if (classname == "SimpleAudio")
@@ -1058,6 +1061,141 @@ void CSLoader::registReaderObject(const std::string &className,
     t._fun = ins;
     
     ObjectFactory::getInstance()->registerType(t);
+}
+
+Node* CSLoader::createNodeWithFlatBuffersForSimulator(const std::string& filename)
+{
+    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+    fbs->_isSimulator = true;
+    FlatBufferBuilder* builder = fbs->createFlatBuffersWithXMLFileForSimulator(filename);
+    
+    auto csparsebinary = GetCSParseBinary(builder->GetBufferPointer());
+    
+    // decode plist
+    auto textures = csparsebinary->textures();
+    auto texturePngs = csparsebinary->texturePngs();
+    int textureSize = csparsebinary->textures()->size();
+    //    CCLOG("textureSize = %d", textureSize);
+    for (int i = 0; i < textureSize; ++i)
+    {
+        std::string texture = textures->Get(i)->c_str();
+        std::string texturePng = texturePngs->Get(i)->c_str();
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(texture,
+                                                                 texturePng);
+    }
+    
+    auto nodeTree = csparsebinary->nodeTree();
+    Node* node = nodeWithFlatBuffersForSimulator(nodeTree);
+    
+    _rootNode = nullptr;
+    
+    fbs->deleteFlatBufferBuilder();
+    
+    return node;
+}
+
+Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nodetree)
+{
+    Node* node = nullptr;
+    
+    std::string classname = nodetree->classname()->c_str();
+    CCLOG("classname = %s", classname.c_str());
+    
+    auto options = nodetree->options();
+    
+    if (classname == "ProjectNode")
+    {
+        auto reader = ProjectNodeReader::getInstance();
+        auto projectNodeOptions = (ProjectNodeOptions*)options->data();
+        std::string filePath = projectNodeOptions->fileName()->c_str();
+        CCLOG("filePath = %s", filePath.c_str());
+        
+        if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
+        {
+            node = createNodeWithFlatBuffersForSimulator(filePath);
+            reader->setPropsWithFlatBuffers(node, options->data());
+            
+            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator(filePath);
+            if (action)
+            {
+                node->runAction(action);
+                action->gotoFrameAndPlay(0);
+            }
+        }
+    }
+    else if (classname == "SimpleAudio")
+    {
+        node = Node::create();
+        auto reader = ComAudioReader::getInstance();
+        Component* component = reader->createComAudioWithFlatBuffers(options->data());
+        if (component)
+        {
+            node->addComponent(component);
+            reader->setPropsWithFlatBuffers(node, options->data());
+        }
+    }
+    else
+    {
+        std::string readername = getGUIClassName(classname);
+        readername.append("Reader");
+        
+        NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
+        node = reader->createNodeWithFlatBuffers(options->data());
+        
+        Widget* widget = dynamic_cast<Widget*>(node);
+        if (widget)
+        {
+            std::string callbackName = widget->getCallbackName();
+            std::string callbackType = widget->getCallbackType();
+            
+            bindCallback(callbackName, callbackType, widget, _rootNode);
+        }
+        
+        if (_rootNode == nullptr)
+        {
+            _rootNode = node;
+        }
+//        _loadingNodeParentHierarchy.push_back(node);
+    }
+    
+    auto children = nodetree->children();
+    int size = children->size();
+    CCLOG("size = %d", size);
+    for (int i = 0; i < size; ++i)
+    {
+        auto subNodeTree = children->Get(i);
+        Node* child = nodeWithFlatBuffersForSimulator(subNodeTree);
+        CCLOG("child = %p", child);
+        if (child)
+        {
+            PageView* pageView = dynamic_cast<PageView*>(node);
+            ListView* listView = dynamic_cast<ListView*>(node);
+            if (pageView)
+            {
+                Layout* layout = dynamic_cast<Layout*>(child);
+                if (layout)
+                {
+                    pageView->addPage(layout);
+                }
+            }
+            else if (listView)
+            {
+                Widget* widget = dynamic_cast<Widget*>(child);
+                if (widget)
+                {
+                    listView->pushBackCustomItem(widget);
+                }
+            }
+            else
+            {
+                node->addChild(child);
+            }
+        }
+    }
+    
+//    _loadingNodeParentHierarchy.pop_back();
+    
+    return node;
 }
 
 NS_CC_END
