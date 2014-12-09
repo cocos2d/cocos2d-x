@@ -13,7 +13,7 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [Highlights of v3.3rc2](#highlights-of-v33rc2)
+- [Highlights of v3.3rc2](#highlights-of-v33rc2)e
 - [Notes of v3.3rc1](#notes-of-v33rc1)
 - [Highlights of v3.3rc1](#highlights-of-v33rc1)
 - [Notes of v3.3rc0](#notes-of-v33rc0)
@@ -211,7 +211,7 @@ require "cocos.init"
 * Application: added openURL()
 * Added `AssetsManagerEx`, it is an enhancement version of `AssetsManager`
 * TileMap: supported staggered tile map
-* Added `ClippingRectangNode`, it is more effecient for renctangle clipping
+* Added `ClippingRectanglNode`, it is more efficient for renctangle clipping
 * Node: schedule/unschedule lambda functions
 * Facebook platform support in `plugin` on iOS and Android, all features has been added, but the API needs to be polished with Facebook guys
 
