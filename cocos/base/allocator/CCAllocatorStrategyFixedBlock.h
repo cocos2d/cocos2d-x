@@ -33,9 +33,10 @@
      allocator. Failure to do so will result in recursive memory allocation.
  ****************************************************************************/
 
-#include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocator.h"
+#include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorGlobal.h"
+#include "base/allocator/CCAllocatorMutex.h"
 #include <vector>
 
 NS_CC_BEGIN
@@ -44,14 +45,6 @@ NS_CC_ALLOCATOR_BEGIN
 // @brief define this to cause this allocator to fallback to the global allocator
 // this is just for testing purposes to see if this allocator is broken.
 //#define FALLBACK_TO_GLOBAL
-
-// so we cannot use std::mutex because it allocates memory
-// which causes an infinite loop of death and exceptions.
-#define LOCK \
-    pthread_mutex_lock((pthread_mutex_t*)_opaque_mutex);
-
-#define UNLOCK \
-    pthread_mutex_unlock((pthread_mutex_t*)_opaque_mutex);
 
 // @brief
 // Fixed sized block allocator strategy for allocating blocks
@@ -75,13 +68,7 @@ public:
         : _list(nullptr)
         , _pages(nullptr)
         , _available(0)
-    {
-        _opaque_mutex = ccAllocatorGlobal.allocate(sizeof(pthread_mutex_t));
-        pthread_mutexattr_t mta;
-        pthread_mutexattr_init(&mta);
-        pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
-        pthread_mutex_init((pthread_mutex_t*)_opaque_mutex, &mta);
-    }
+    {}
     
     virtual ~AllocatorStrategyFixedBlock()
     {
@@ -124,12 +111,12 @@ public:
     // @brief Checks allocated pages to determine whether or not a block
     // is owned by this allocator. This should be reasonably fast
     // for properly configured allocators with few large pages.
-    CC_ALLOCATOR_INLINE bool owns(const void* const address) const
+    CC_ALLOCATOR_INLINE bool owns(const void* const address)
     {
 #ifdef FALLBACK_TO_GLOBAL
         return true; // since everything uses the global allocator, we can just lie and say we own this address.
 #else
-        LOCK
+        LOCK(_mutex);
         
         const uint8_t* const a = (const uint8_t* const)address;
         const uint8_t* p = (uint8_t*)_pages;
@@ -138,12 +125,12 @@ public:
         {
             if (a >= p && a < (p + pSize))
             {
-                UNLOCK
+                UNLOCK(_mutex);
                 return true;
             }
             p = (uint8_t*)(*(uintptr_t*)p);
         }
-        UNLOCK
+        UNLOCK(_mutex);
         return false;
 #endif
     }
@@ -165,7 +152,7 @@ protected:
         CC_ASSERT(block);
         CC_ASSERT(block_size < AllocatorBase::kDefaultAlignment || 0 == ((intptr_t)block & (AllocatorBase::kDefaultAlignment - 1)));
 
-        LOCK
+        LOCK(_mutex);
         
         VALIDATE
         
@@ -182,7 +169,7 @@ protected:
         }
         ++_available;
         
-        UNLOCK
+        UNLOCK(_mutex);
     }
     
     // @brief Method to pop a block off the free list.
@@ -192,7 +179,7 @@ protected:
     // for the number of blocks of this size being allocated.
     CC_ALLOCATOR_INLINE void* pop_front()
     {
-        LOCK
+        LOCK(_mutex);
         
         VALIDATE
 
@@ -205,7 +192,7 @@ protected:
         _list = next;
         --_available;
         
-        UNLOCK
+        UNLOCK(_mutex);
         
         CC_ASSERT(block_size < AllocatorBase::kDefaultAlignment || 0 == ((intptr_t)block & (AllocatorBase::kDefaultAlignment - 1)));
         return block;
@@ -251,14 +238,14 @@ protected:
     // @brief Linked list of free blocks.
     void* _list;
     
-    // @brief Linked list of allocated pages
+    // @brief Linked list of allocated pages.
     void* _pages;
     
     // @brief Number of blocks that are free in the list.
     size_t _available;
     
-    // @brief POSIX mutex for locking
-    void* _opaque_mutex;
+    // @brief mutex for thread safety.
+    AllocatorMutex _mutex;
 };
 
 NS_CC_ALLOCATOR_END

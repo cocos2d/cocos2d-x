@@ -3009,6 +3009,7 @@
 		D0EB3C851A3785CA0086DE3F /* CCAllocatorStrategyFixedBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorStrategyFixedBlock.h; sourceTree = "<group>"; };
 		D0EB3C861A3785CA0086DE3F /* CCAllocatorStrategyGlobalSmallBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorStrategyGlobalSmallBlock.h; sourceTree = "<group>"; };
 		D0EB3C871A3785CA0086DE3F /* CCAllocatorStrategyPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorStrategyPool.h; sourceTree = "<group>"; };
+		D0EB3CA11A37AD680086DE3F /* CCAllocatorMutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCAllocatorMutex.h; sourceTree = "<group>"; };
 		DA8C62A019E52C6400000516 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA8C62A119E52C6400000516 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRectangleNode.cpp; sourceTree = "<group>"; };
@@ -5150,6 +5151,7 @@
 				D0EB3C811A3785CA0086DE3F /* CCAllocatorGlobal.h */,
 				D0EB3C821A3785CA0086DE3F /* CCAllocatorGlobalNewDelete.cpp */,
 				D0EB3C831A3785CA0086DE3F /* CCAllocatorMacros.h */,
+				D0EB3CA11A37AD680086DE3F /* CCAllocatorMutex.h */,
 				D0EB3C841A3785CA0086DE3F /* CCAllocatorStrategyDefault.h */,
 				D0EB3C851A3785CA0086DE3F /* CCAllocatorStrategyFixedBlock.h */,
 				D0EB3C861A3785CA0086DE3F /* CCAllocatorStrategyGlobalSmallBlock.h */,
