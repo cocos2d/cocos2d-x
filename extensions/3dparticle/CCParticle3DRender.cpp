@@ -77,7 +77,7 @@ Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
     auto glProgramState = GLProgramState::create(glProgram);
     glProgramState->retain();
     
-    GLsizei stride = 9 * sizeof(float);
+    GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
     
     glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_POSITION], 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, position));
     glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_TEX_COORD], 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, uv));
@@ -103,7 +103,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         return;
     
     if (_vertexBuffer == nullptr){
-        GLsizei stride = 9 * sizeof(float);
+        GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
         _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
         _vertexBuffer->retain();
     }

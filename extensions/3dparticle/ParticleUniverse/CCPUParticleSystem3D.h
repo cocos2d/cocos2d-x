@@ -94,6 +94,8 @@ struct CC_DLL PUParticle3D : public Particle3D
     */
     float radius;
 
+    float calculateVelocity() const;
+
     /** Set own dimensions
     */
     void setOwnDimensions(float newWidth, float newHeight, float newDepth);
@@ -171,6 +173,7 @@ public:
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
     static const unsigned short DEFAULT_PARTICLE_QUOTA;
+    static const float DEFAULT_MAX_VELOCITY;
 
     static PUParticleSystem3D* create();
     
@@ -225,6 +228,15 @@ public:
     Vec3 getDerivedPosition();
     Quaternion getDerivedOrientation();
 
+    /** Return the maximum velocity a particle can have, even if the velocity of the particle has been set higher (either by 
+        initialisation of the particle or by means of an affector).
+    */
+    float getMaxVelocity() const;
+
+    /** Set the maximum velocity a particle can have.
+    */
+    void setMaxVelocity(float maxVelocity);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
@@ -266,6 +278,10 @@ protected:
     */
     float _defaultDepth;
     
+        /** Attributes that limit the velocity of the particles in this technique.
+    */
+    float _maxVelocity;
+    bool _maxVelocitySet;
 };
 
 NS_CC_END

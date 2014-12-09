@@ -32,6 +32,18 @@ NS_CC_BEGIN
 float PUParticle3D::DEFAULT_TTL = 10.0f;
 float PUParticle3D::DEFAULT_MASS = 1.0f;
 
+float PUParticle3D::calculateVelocity() const
+{
+    if (originalScaledDirectionLength != 0)
+    {
+        return originalVelocity * (direction.length() / originalScaledDirectionLength);
+    }
+    else
+    {
+        // Assume originalScaledDirectionLength to be 1.0 (unit vector)
+        return originalVelocity * direction.length();
+    }
+}
 
 void PUParticle3D::setOwnDimensions( float newWidth, float newHeight, float newDepth )
 {
@@ -95,13 +107,14 @@ PUParticle3D::PUParticle3D():
     textureAnimationDirectionUp(true)
 {
 }
-
 //-----------------------------------------------------------------------
 
 const float PUParticleSystem3D::DEFAULT_WIDTH = 50;
 const float PUParticleSystem3D::DEFAULT_HEIGHT = 50;
 const float PUParticleSystem3D::DEFAULT_DEPTH = 50;
 const unsigned short PUParticleSystem3D::DEFAULT_PARTICLE_QUOTA = 500;
+const float PUParticleSystem3D::DEFAULT_MAX_VELOCITY = 9999.0f;
+
 
 PUParticleSystem3D::PUParticleSystem3D()
 : _prepared(false)
@@ -109,6 +122,8 @@ PUParticleSystem3D::PUParticleSystem3D()
 , _defaultWidth(DEFAULT_WIDTH)
 , _defaultHeight(DEFAULT_HEIGHT)
 , _defaultDepth(DEFAULT_DEPTH)
+, _maxVelocity(DEFAULT_MAX_VELOCITY)
+, _maxVelocitySet(false)
 {
     _particleQuota = DEFAULT_PARTICLE_QUOTA;
 }
@@ -303,6 +318,11 @@ void PUParticleSystem3D::updator( float elapsedTime )
             // Keep latest position
             particle->latestPosition = particle->position;
 
+            if (_maxVelocitySet && particle->calculateVelocity() > _maxVelocity)
+            {
+                particle->direction *= (_maxVelocity / particle->direction.length());
+            }
+
             // Update the position with the direction.
             particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
             particle->positionInWorld = particle->position;
@@ -447,4 +467,16 @@ cocos2d::Quaternion PUParticleSystem3D::getDerivedOrientation()
     mat.decompose(nullptr, &q, nullptr);
     return q;
 }
+
+float PUParticleSystem3D::getMaxVelocity() const
+{
+    return _maxVelocity;
+}
+
+void PUParticleSystem3D::setMaxVelocity( float maxVelocity )
+{
+    _maxVelocity = maxVelocity;
+    _maxVelocitySet = true;
+}
+
 NS_CC_END

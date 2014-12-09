@@ -140,6 +140,7 @@ ParticleSystem3D::ParticleSystem3D()
 , _state(State::STOP)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _keepLocal(false)
+, _isEnabled(true)
 {
     
 }
@@ -281,12 +282,12 @@ const BlendFunc &ParticleSystem3D::getBlendFunc() const
     return _blend;
 }
 
-void ParticleSystem3D::setParticleQuota( unsigned short quota )
+void ParticleSystem3D::setParticleQuota( unsigned int quota )
 {
     _particleQuota = quota;
 }
 
-unsigned short ParticleSystem3D::getParticleQuota() const
+unsigned int ParticleSystem3D::getParticleQuota() const
 {
     return _particleQuota;
 }

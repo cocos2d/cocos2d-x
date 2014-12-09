@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
-#define __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_JET_AFFECTOR_H__
+#define __CC_PU_PARTICLE_3D_JET_AFFECTOR_H__
 
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"

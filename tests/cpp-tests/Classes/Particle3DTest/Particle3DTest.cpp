@@ -49,6 +49,7 @@
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureRotator.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffector.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
 
 void Particle3DTestScene::runThisTest()
@@ -142,6 +143,20 @@ bool Particle3DTestDemo::init()
 
 ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
+	FILE *fp = fopen("Particles/atomicity.pu", "rb");
+	char * pBuffer = NULL;
+	fseek(fp,0,SEEK_END);
+	int pSize = ftell(fp);
+	fseek(fp,0,SEEK_SET);
+	pBuffer = new char[pSize];
+	//文本的长度//
+	int tLength = fread(pBuffer,sizeof(char), pSize,fp);
+	fclose(fp);
+
+	std::string str(pBuffer);
+	PUScriptCompiler sc;
+	sc.compile(str, "atomicity.pu");
+
     auto ps = PUParticleSystem3D::create();
     ps->setBlendFunc(BlendFunc::ADDITIVE);
     ps->setParticleQuota(2500);

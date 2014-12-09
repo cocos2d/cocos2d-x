@@ -150,8 +150,8 @@ public:
 
         /** 
     */
-    unsigned short getParticleQuota() const;
-    void setParticleQuota(unsigned short quota);
+    unsigned int getParticleQuota() const;
+    void setParticleQuota(unsigned int quota);
     
     /**
      * get particle affector by index
@@ -173,6 +173,12 @@ public:
     bool isKeepLocal(void) const { return _keepLocal; }
     void setKeepLocal(bool keepLocal) { _keepLocal = keepLocal; }
 
+     /** Enables or disables the system.
+     */
+    void setEnabled (bool enabled) { _isEnabled = enabled; }
+    
+    bool isEnabled(void) const { return _isEnabled; }
+
 CC_CONSTRUCTOR_ACCESS:
     ParticleSystem3D();
     virtual ~ParticleSystem3D();
@@ -187,11 +193,12 @@ protected:
     //particles
     ParticlePool                _particlePool;
     int                              _aliveParticlesCnt;
-    unsigned short            _particleQuota;
+    unsigned int            _particleQuota;
     
     BlendFunc                        _blend;
 
     bool _keepLocal;
+    bool _isEnabled;
 };
 
 NS_CC_END
