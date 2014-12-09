@@ -428,7 +428,7 @@ Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAu
 * Device: added `setKeepScreenOn()` on iOS and Android 
 * Added c++11 random support
 * RenderTexture: added a call back function for `saveToFile()`
-* Primitive: Support Points, Lines and Triagles for rendering
+* Primitive: Support Points, Lines and Triangles for rendering
 * SpriteFrameCache: support loading from plist file content data
 * Added a consistent way to set GL context attributes for all platforms
 * Only two libraries in cocos2d-x, one for c++ codes, another one for lua-binding codes
