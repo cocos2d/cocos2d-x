@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef CC_ALLOCATOR_MACROS_H
+#define CC_ALLOCATOR_MACROS_H
 
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
@@ -124,3 +125,5 @@
         p = p + C > e ? e : p + C; \
     } \
 }
+
+#endif//CC_ALLOCATOR_MACROS_H

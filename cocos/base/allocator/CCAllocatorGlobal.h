@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef CC_ALLOCATOR_GLOBAL_H
+#define CC_ALLOCATOR_GLOBAL_H
 
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
@@ -26,8 +27,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocator.h"
+#include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorStrategyDefault.h"
 
 NS_CC_BEGIN
@@ -38,3 +39,5 @@ extern CC_ALLOCATOR_GLOBAL ccAllocatorGlobal;
 
 NS_CC_ALLOCATOR_END
 NS_CC_END
+
+#endif//CC_ALLOCATOR_GLOBAL_H

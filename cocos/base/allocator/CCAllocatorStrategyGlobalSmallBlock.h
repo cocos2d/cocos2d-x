@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef CC_ALLOCATOR_STRATEGY_GLOBAL_SMALL_BLOCK_H
+#define CC_ALLOCATOR_STRATEGY_GLOBAL_SMALL_BLOCK_H
 
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
@@ -251,3 +252,5 @@ protected:
 
 NS_CC_ALLOCATOR_END
 NS_CC_END
+
+#endif//CC_ALLOCATOR_STRATEGY_GLOBAL_SMALL_BLOCK_H

@@ -1,5 +1,6 @@
 
-#pragma once
+#ifndef CC_ALLOCATOR_STRATEGY_DEFAULT_H
+#define CC_ALLOCATOR_STRATEGY_DEFAULT_H
 
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
@@ -53,3 +54,5 @@ public:
 
 NS_CC_ALLOCATOR_END
 NS_CC_END
+
+#endif//CC_ALLOCATOR_STRATEGY_DEFAULT_H
