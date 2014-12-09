@@ -211,7 +211,7 @@ require "cocos.init"
 * Application: added openURL()
 * Added `AssetsManagerEx`, it is an enhancement version of `AssetsManager`
 * TileMap: supported staggered tile map
-* Added `ClippingRectanglNode`, it is more efficient for renctangle clipping
+* Added `ClippingRectangleNode`, it is more efficient for renctangle clipping
 * Node: schedule/unschedule lambda functions
 * Facebook platform support in `plugin` on iOS and Android, all features has been added, but the API needs to be polished with Facebook guys
 
