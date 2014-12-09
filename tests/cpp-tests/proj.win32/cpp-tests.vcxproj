@@ -195,6 +195,9 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp" />
@@ -388,6 +391,9 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h" />

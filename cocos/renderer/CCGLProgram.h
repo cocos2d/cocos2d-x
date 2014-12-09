@@ -46,7 +46,7 @@ NS_CC_BEGIN
  */
 
 class GLProgram;
-
+class Director;
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
@@ -359,6 +359,8 @@ protected:
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
     std::unordered_map<GLint, GLvoid*> _hashForUniforms;
+    //cached director pointer for calling
+    Director* _director;
 };
 
 NS_CC_END

@@ -31,6 +31,7 @@
 #include "3d/CCObjLoader.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCMesh.h"
+#include "3d/CCBundle3D.h"
 
 #include "base/ccMacros.h"
 #include "base/CCEventCustom.h"
@@ -102,32 +103,27 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
         vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
     }
     
-    AABB aabb;
+    bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
     for (size_t i = 0; i < meshdata.subMeshIndices.size(); i++) {
-        
+
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
         indexBuffer->updateIndices(&index[0], (int)index.size(), 0);
-        aabb = MeshVertexData::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), index);
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
-        MeshIndexData* indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, aabb);
+        MeshIndexData* indexdata = nullptr;
+        if (needCalcAABB)
+        {
+            auto aabb = Bundle3D::calculateAABB(meshdata.vertex, meshdata.getPerVertexSize(), index);
+            indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, aabb);
+        }
+        else
+            indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, meshdata.subMeshAABB[i]);
+        
         vertexdata->_indexs.pushBack(indexdata);
     }
     
     vertexdata->autorelease();
     return vertexdata;
-}
-
-AABB MeshVertexData::calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index)
-{
-    AABB aabb;
-    stride /= 4;
-    for(const auto& it : index)
-    {
-        Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
-        aabb.updateMinMax(&point, 1);
-    }
-    return aabb;
 }
 
 MeshIndexData* MeshVertexData::getMeshIndexDataById(const std::string& id) const
