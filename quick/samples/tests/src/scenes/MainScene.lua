@@ -16,7 +16,8 @@ function MainScene:ctor()
         "framework.socketTcp",
         "framework.timer",
         "framework.gamestate",
-        "framework.transition"
+        "framework.transition",
+        "framework.nvgdrawnode"
     }
 
     self:addChild(game.createMenu(items, handler(self, self.openTest)))

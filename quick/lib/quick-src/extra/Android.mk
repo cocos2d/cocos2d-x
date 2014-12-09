@@ -41,6 +41,13 @@ LOCAL_SRC_FILES += \
     $(LOCAL_PATH)/filters/nodes/CCFilteredSprite.cpp \
     $(LOCAL_PATH)/filters/shaders/ccFilterShaders.cpp 
 
+#nanovg
+LOCAL_SRC_FILES += \
+    $(LOCAL_PATH)/luabinding/lua_cocos2dx_extension_nanovg_auto.cpp \
+    $(LOCAL_PATH)/luabinding/lua_cocos2dx_extension_nanovg_manual.cpp \
+    $(LOCAL_PATH)/nanovg/nanovg/nanovg.c \
+    $(LOCAL_PATH)/nanovg/nanonode/NVGNode.cpp \
+    $(LOCAL_PATH)/nanovg/nanonode/NVGDrawNode.cpp
 
 ifeq ($(ANYSDK_DEFINE),1)
 LOCAL_SRC_FILES += \
