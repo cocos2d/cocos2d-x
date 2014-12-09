@@ -743,6 +743,7 @@
 		15A3DBC71682FC3C002FB0C5 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				15D8B77F1A2DBF0A0068B5F8 /* xxtea */,
 				15A3DBC81682FC3C002FB0C5 /* cocos2dx_support */,
 				1AA88BAC171E32410023E7B2 /* luajit */,
 				15A3DC181682FC3C002FB0C5 /* tolua */,
@@ -1253,6 +1254,7 @@
 				15D8B7811A2DBF2B0068B5F8 /* xxtea.h */,
 			);
 			name = xxtea;
+			path = ../../samples/Lua/HelloLua/proj.ios;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -1300,7 +1302,6 @@
 				BF82F41413A864B000616D55 /* Classes */,
 				15A3DB1F1682FB86002FB0C5 /* CocosDenshion */,
 				464EA2E0175DC601004C192B /* extensions */,
-				15D8B77F1A2DBF0A0068B5F8 /* xxtea */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				15A3DBC71682FC3C002FB0C5 /* lua */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -2019,7 +2020,6 @@
 					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios",
-					"$(SRCROOT)/../../../../scripting/lua",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
@@ -2080,7 +2080,6 @@
 					"$(SRCROOT)/../../../../extensions",
 					"$(SRCROOT)/../../../../external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios",
-					"$(SRCROOT)/../../../../scripting/lua",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;

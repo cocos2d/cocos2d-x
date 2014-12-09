@@ -6,6 +6,7 @@ INCLUDES =  -I.. \
 	-I$(COCOS_ROOT)/CocosDenshion/include \
 	-I$(COCOS_ROOT)/scripting/lua/lua \
 	-I$(COCOS_ROOT)/scripting/lua/tolua \
+	-I$(COCOS_ROOT)/scripting/lua/xxtea \
 	-I$(COCOS_ROOT)/scripting/lua/cocos2dx_support \
 	-I$(NACL_SDK_ROOT)/include \
 	-I$(COCOS_ROOT)/external \

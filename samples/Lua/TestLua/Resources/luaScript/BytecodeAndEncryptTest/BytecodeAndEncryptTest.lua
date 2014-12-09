@@ -1,11 +1,13 @@
 local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
 local isIOS64bit     = CCApplication:sharedApplication():isIOS64bit()
 require("luaScript/BytecodeAndEncryptTest/EncryptFileTest")
-if kTargetLinux ~= targetPlatform and isIOS64bit ~= true then
+
+if (kTargetWindows == targetPlatform) or (kTargetMacOS == targetPlatform) or (kTargetAndroid == targetPlatform) 
+    or ((kTargetIphone == targetPlatform or kTargetIpad == targetPlatform) and isIOS64bit ~= true) then
 require("luaScript/BytecodeAndEncryptTest/ByteCodeFileTest")
 require("luaScript/BytecodeAndEncryptTest/ByteCodeAndEncryptFileTest")
 end
-
+ 
 local LINE_SPACE = 40
 local ItemTagBasic = 1000
 
@@ -59,7 +61,7 @@ local function byteCodeEncryptMainLayer()
         item:registerScriptTapHandler(menuCallback)
         item:setPosition(size.width / 2, size.height - i * LINE_SPACE)
         menu:addChild(item, ItemTagBasic + i)
-        if kTargetLinux == targetPlatform or isIOS64bit == true then
+        if (kTargetLinux == targetPlatform or isIOS64bit == true) and 1 ~= i then
             item:setEnabled(false)
         end
     end

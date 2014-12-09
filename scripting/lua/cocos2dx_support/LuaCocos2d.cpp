@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri Jan 17 14:29:43 2014.
+** Generated automatically by tolua++-1.0.92 on Mon Dec  8 17:25:38 2014.
 */
 
 /****************************************************************************
@@ -67385,6 +67385,11 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kTargetIphone",kTargetIphone);
   tolua_constant(tolua_S,"kTargetIpad",kTargetIpad);
   tolua_constant(tolua_S,"kTargetBlackBerry",kTargetBlackBerry);
+  tolua_constant(tolua_S,"kTargetNaCl",kTargetNaCl);
+  tolua_constant(tolua_S,"kTargetEmscripten",kTargetEmscripten);
+  tolua_constant(tolua_S,"kTargetTizen",kTargetTizen);
+  tolua_constant(tolua_S,"kTargetWinRT",kTargetWinRT);
+  tolua_constant(tolua_S,"kTargetWP8",kTargetWP8);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"CCApplication","CCApplication","",tolua_collect_CCApplication);
   #else
