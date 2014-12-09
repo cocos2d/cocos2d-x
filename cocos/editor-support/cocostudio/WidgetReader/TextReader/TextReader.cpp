@@ -330,7 +330,7 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
-        const WidgetOptions* widgetOptions = options->widgetOptions();
+        auto widgetOptions = options->widgetOptions();
         if (!label->isIgnoreContentAdaptWithSize())
         {
             Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());

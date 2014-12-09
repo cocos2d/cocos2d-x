@@ -444,6 +444,15 @@ namespace cocostudio
             Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
             scrollView->setContentSize(scale9Size);
         }
+        else
+        {
+            auto widgetOptions = options->widgetOptions();
+            if (!scrollView->isIgnoreContentAdaptWithSize())
+            {
+                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+                scrollView->setContentSize(contentSize);
+            }
+        }
         
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
