@@ -27,10 +27,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
-#include "base/allocator/CCAllocatorGlobal.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "pthread.h"
+#define MUTEX pthread_mutex_t
+#define MUTEX_INIT(m) \
+    pthread_mutexattr_t mta; \
+    pthread_mutexattr_init(&mta); \
+    pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE); \
+    pthread_mutex_init(&m, &mta)
+#define MUTEX_LOCK(m) \
+    pthread_mutex_lock(&m);
+#define MUTEX_UNLOCK(m) \
+    pthread_mutex_unlock(&m);
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS
+#include "windows.h"
+#define MUTEX HANDLE
+#define MUTEX_INIT(m) \
+    m = CreateMutex(0, FALSE, 0)
+#define MUTEX_LOCK(m) \
+    WaitForSingleObject(m, INFINITE)
+#define MUTEX_UNLOCK(m) \
+    ReleaseMutex(m)
+#else
+#error "Unsupported platform for AllocatorMutex"
+#endif
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
@@ -43,25 +65,22 @@ public:
     
     AllocatorMutex()
     {
-        pthread_mutexattr_t mta;
-        pthread_mutexattr_init(&mta);
-        pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
-        pthread_mutex_init(&_mutex, &mta);
+        MUTEX_INIT(_mutex);
     }
     
     void lock()
     {
-        pthread_mutex_lock(&_mutex);
+        MUTEX_LOCK(_mutex);
     }
     
     void unlock()
     {
-        pthread_mutex_unlock(&_mutex);
+        MUTEX_UNLOCK(_mutex);
     }
     
 protected:
     
-    pthread_mutex_t _mutex;
+    MUTEX _mutex;
 };
 
 #define LOCK(m)   m.lock()
