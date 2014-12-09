@@ -109,6 +109,15 @@
     <ClInclude Include="..\Classes\runtime\lua_debugger.h">
       <Filter>Classes\runtime</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConnectWaitLayer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConsoleCommand.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\FileServer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -187,6 +196,15 @@
       <Filter>Classes\runtime\protobuf-lite</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\runtime\lua_debugger.c">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp">
       <Filter>Classes\runtime</Filter>
     </ClCompile>
   </ItemGroup>

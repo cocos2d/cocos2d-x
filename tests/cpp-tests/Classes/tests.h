@@ -30,8 +30,10 @@
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
+#if CC_ENABLE_BOX2D_INTEGRATION
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
+#endif
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "InputTest/MouseTest.h"
 #include "PerformanceTest/PerformanceTest.h"

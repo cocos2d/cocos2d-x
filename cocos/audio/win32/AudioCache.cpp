@@ -51,7 +51,7 @@ AudioCache::AudioCache()
     
 }
 
-AudioCache::AudioCache(AudioCache& cache)
+AudioCache::AudioCache(const AudioCache& cache)
 {
     _pcmData = cache._pcmData;
     _pcmDataSize = cache._pcmDataSize;

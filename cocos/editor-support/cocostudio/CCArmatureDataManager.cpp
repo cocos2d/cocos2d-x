@@ -111,7 +111,7 @@ void ArmatureDataManager::removeArmatureFileInfo(const std::string& configFilePa
 
         for (std::string str : data->plistFiles)
         {
-            SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(str.c_str());
+            SpriteFrameCacheHelper::getInstance()->removeSpriteFrameFromFile(str);
         }
 
         _relativeDatas.erase(configFilePath);
@@ -210,7 +210,7 @@ void ArmatureDataManager::addArmatureFileInfo(const std::string& imagePath, cons
 
     _autoLoadSpriteFile = false;
     DataReaderHelper::getInstance()->addDataFromFile(configFilePath);
-    addSpriteFrameFromFile(plistPath, imagePath);
+    addSpriteFrameFromFile(plistPath, imagePath, configFilePath);
 }
 
 void ArmatureDataManager::addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, Ref *target, SEL_SCHEDULE selector)
@@ -219,7 +219,7 @@ void ArmatureDataManager::addArmatureFileInfoAsync(const std::string& imagePath,
 
     _autoLoadSpriteFile = false;
     DataReaderHelper::getInstance()->addDataFromFileAsync(imagePath, plistPath, configFilePath, target, selector);
-    addSpriteFrameFromFile(plistPath, imagePath);
+    addSpriteFrameFromFile(plistPath, imagePath, configFilePath);
 }
 
 void ArmatureDataManager::addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath, const std::string& configFilePath)

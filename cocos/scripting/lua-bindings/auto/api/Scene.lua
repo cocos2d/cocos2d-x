@@ -36,24 +36,6 @@
 -- @return Scene#Scene ret (return value: cc.Scene)
         
 --------------------------------
--- 
--- @function [parent=#Scene] getDescription 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#Scene] getScene 
--- @param self
--- @return Scene#Scene ret (return value: cc.Scene)
-        
---------------------------------
--- 
--- @function [parent=#Scene] update 
--- @param self
--- @param #float delta
-        
---------------------------------
 -- @overload self, cc.Node, int, string         
 -- @overload self, cc.Node, int, int         
 -- @function [parent=#Scene] addChild
@@ -62,4 +44,16 @@
 -- @param #int zOrder
 -- @param #int tag
 
+--------------------------------
+-- 
+-- @function [parent=#Scene] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] update 
+-- @param self
+-- @param #float delta
+        
 return nil

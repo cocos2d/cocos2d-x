@@ -340,6 +340,9 @@
     <Filter Include="Classes\OpenURLTest">
       <UniqueIdentifier>{fc47533b-f876-4254-b0f8-4af8f5e2837f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
+      <UniqueIdentifier>{65be3b70-58d6-47f4-bc67-fac9ee134c42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -887,6 +890,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
       <Filter>Classes\OpenURLTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1633,6 +1648,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
       <Filter>Classes\OpenURLTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

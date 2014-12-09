@@ -45,7 +45,7 @@ AudioPlayer::AudioPlayer()
 
 }
 
-AudioPlayer::AudioPlayer(AudioPlayer& player)
+AudioPlayer::AudioPlayer(const AudioPlayer& player)
 {
     _exitThread = player._exitThread;
     _timeDirty = player._timeDirty;

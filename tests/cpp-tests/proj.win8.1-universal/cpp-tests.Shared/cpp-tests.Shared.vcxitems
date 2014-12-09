@@ -119,6 +119,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
@@ -157,6 +158,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp" />
@@ -372,6 +376,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceContainerTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceLabelTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticleTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceRendererTest.h" />
@@ -414,6 +419,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h" />

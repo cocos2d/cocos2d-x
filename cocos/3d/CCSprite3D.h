@@ -60,11 +60,14 @@ public:
     void setTexture(const std::string& texFile);
     void setTexture(Texture2D* texture);
     
-    /**get SubMeshState by index*/
+    /**get Mesh by index*/
     Mesh* getMeshByIndex(int index) const;
     
-    /**get SubMeshState by Name */
+    /**get Mesh by Name, it returns the first one if there are more than one mesh with the same name */
     Mesh* getMeshByName(const std::string& name) const;
+    
+    /** get mesh array by name, returns all meshes with the given name */
+    std::vector<Mesh*> getMeshArrayByName(const std::string& name) const;
 
     /**get mesh*/
     Mesh* getMesh() const { return _meshes.at(0); }

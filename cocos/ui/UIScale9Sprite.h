@@ -354,6 +354,16 @@ namespace ui {
          */
         virtual bool isFlippedY()const;
         
+        //override the setScale function of Node
+        virtual void setScaleX(float scaleX) override;
+        virtual void setScaleY(float scaleY) override;
+        virtual void setScale(float scale) override;
+        virtual void setScale(float scalex, float scaley) override;
+        using Node::setScaleZ;
+        virtual float getScaleX() const override;
+        virtual float getScaleY() const override;
+        virtual float getScale() const override;
+        using Node::getScaleZ;
     protected:
         void updateCapInset();
         void updatePositions();

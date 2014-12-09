@@ -167,9 +167,8 @@ void Box2DTestLayer::onDraw()
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMV;
-    oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    auto oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
@@ -210,7 +209,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(Vec2 p)
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
-    sprite->setPosition(p.x, p.y);
+    sprite->setPosition(cocos2d::Vec2(p.x, p.y));
 #endif
 }
 

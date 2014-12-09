@@ -535,13 +535,13 @@ void TextWritePlist::onEnter()
     auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
     auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
     auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
-    CCLOG("%s",boolValue->getCString());
+    log("%s",boolValue->getCString());
     auto floatValue = (__String*)loadDictInDict->objectForKey("float");
-    CCLOG("%s",floatValue->getCString());
+    log("%s",floatValue->getCString());
     auto intValue = (__String*)loadDictInDict->objectForKey("integer");
-    CCLOG("%s",intValue->getCString());
+    log("%s",intValue->getCString());
     auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
-    CCLOG("%s",doubleValue->getCString());
+    log("%s",doubleValue->getCString());
 
 }
 

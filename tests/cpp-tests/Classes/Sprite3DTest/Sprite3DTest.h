@@ -35,6 +35,7 @@ namespace cocos2d {
     class Delay;
     class Ray;
     class DrawNode3D;
+    class GLProgramState;
 }
 
 class Sprite3DTestDemo : public BaseTest
@@ -51,9 +52,6 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-
-protected:
-    std::string    _title;
 };
 
 class Sprite3DBasicTest : public Sprite3DTestDemo
@@ -68,6 +66,21 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
+class Sprite3DUVAnimationTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DUVAnimationTest);
+    Sprite3DUVAnimationTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    void cylinderUpdate(float dt);
+    
+    float _cylinder_texture_offset;
+    float _shining_duraion;
+    GLProgramState * _state;
+};
 class EffectSprite3D;
 
 class Effect3D : public Ref
@@ -107,7 +120,7 @@ protected:
     float _outlineWidth;
     //weak reference
     EffectSprite3D* _sprite;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
 #endif
     
@@ -255,20 +268,25 @@ public:
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Vec2 p);
-    void menuCallback_switchHair(Ref* sender);
-    void menuCallback_switchGlasses(Ref* sender);
-    void menuCallback_switchCoat(Ref* sender);
-    void menuCallback_switchPants(Ref* sender);
-    void menuCallback_switchShoes(Ref* sender);
+    
+    void menuCallback_reSkin(Ref* sender);
 protected:
-    std::string  _girlPants[2];
-    int _usePantsId;
-    std::string  _girlUpperBody[2];
-    int _useUpBodyId;
-    std::string  _girlShoes[2];
-    int _useShoesId;
-    std::string  _girlHair[2];
-    int _useHairId;
+    void applyCurSkin();
+    
+    enum class SkinType
+    {
+        UPPER_BODY = 0,
+        PANTS,
+        SHOES,
+        HAIR,
+        FACE,
+        HAND,
+        GLASSES,
+        MAX_TYPE,
+    };
+    
+    std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
+    int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
 };
 class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo

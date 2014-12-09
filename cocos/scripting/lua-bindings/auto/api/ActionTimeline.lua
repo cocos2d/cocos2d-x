@@ -5,10 +5,16 @@
 -- @parent_module ccs
 
 --------------------------------
--- 
--- @function [parent=#ActionTimeline] getTimelines 
+--  Set ActionTimeline's frame event callback function 
+-- @function [parent=#ActionTimeline] setFrameEventCallFunc 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @param #function listener
+        
+--------------------------------
+--  add Timeline to ActionTimeline 
+-- @function [parent=#ActionTimeline] addTimeline 
+-- @param self
+-- @param #ccs.Timeline timeline
         
 --------------------------------
 --  Get current frame. 
@@ -28,10 +34,28 @@
 -- @param self
         
 --------------------------------
---  Set ActionTimeline's frame event callback function 
--- @function [parent=#ActionTimeline] setFrameEventCallFunc 
+-- 
+-- @function [parent=#ActionTimeline] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] removeTimeline 
+-- @param self
+-- @param #ccs.Timeline timeline
+        
+--------------------------------
+--  Last frame callback will call when arriving last frame 
+-- @function [parent=#ActionTimeline] setLastFrameCallFunc 
 -- @param self
 -- @param #function listener
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] getTimelines 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 --  Resume the animation. 
@@ -39,54 +63,16 @@
 -- @param self
         
 --------------------------------
--- 
--- @function [parent=#ActionTimeline] getDuration 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
---  add Timeline to ActionTimeline 
--- @function [parent=#ActionTimeline] addTimeline 
--- @param self
--- @param #ccs.Timeline timeline
-        
---------------------------------
---  End frame of this action.<br>
--- When action play to this frame, if action is not loop, then it will stop, <br>
--- or it will play from start frame again. 
--- @function [parent=#ActionTimeline] getEndFrame 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
---  Set current frame index, this will cause action plays to this frame. 
--- @function [parent=#ActionTimeline] setCurrentFrame 
--- @param self
--- @param #int frameIndex
-        
---------------------------------
---  Set the animation speed, this will speed up or slow down the speed. 
--- @function [parent=#ActionTimeline] setTimeSpeed 
--- @param self
--- @param #float speed
-        
---------------------------------
--- 
--- @function [parent=#ActionTimeline] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
---  duration of the whole action
--- @function [parent=#ActionTimeline] setDuration 
--- @param self
--- @param #int duration
-        
---------------------------------
 --  Get current animation speed. 
 -- @function [parent=#ActionTimeline] getTimeSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] getDuration 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Goto the specified frame index, and pause at this index.<br>
@@ -115,14 +101,39 @@
 
 --------------------------------
 -- 
--- @function [parent=#ActionTimeline] removeTimeline 
+-- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
 -- @param self
--- @param #ccs.Timeline timeline
+        
+--------------------------------
+--  End frame of this action.<br>
+-- When action play to this frame, if action is not loop, then it will stop, <br>
+-- or it will play from start frame again. 
+-- @function [parent=#ActionTimeline] getEndFrame 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Set the animation speed, this will speed up or slow down the speed. 
+-- @function [parent=#ActionTimeline] setTimeSpeed 
+-- @param self
+-- @param #float speed
         
 --------------------------------
 -- 
--- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
+-- @function [parent=#ActionTimeline] clearLastFrameCallFunc 
 -- @param self
+        
+--------------------------------
+--  duration of the whole action
+-- @function [parent=#ActionTimeline] setDuration 
+-- @param self
+-- @param #int duration
+        
+--------------------------------
+--  Set current frame index, this will cause action plays to this frame. 
+-- @function [parent=#ActionTimeline] setCurrentFrame 
+-- @param self
+-- @param #int frameIndex
         
 --------------------------------
 -- 

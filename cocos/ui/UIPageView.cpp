@@ -31,22 +31,22 @@ namespace ui {
 IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
+_isAutoScrolling(false),
+_autoScrollDistance(0.0f),
+_autoScrollSpeed(0.0f),
+_autoScrollDirection(AutoScrollDirection::LEFT),
 _curPageIdx(0),
 _touchMoveDirection(TouchDirection::LEFT),
 _leftBoundaryChild(nullptr),
 _rightBoundaryChild(nullptr),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
-_isAutoScrolling(false),
-_autoScrollDistance(0.0f),
-_autoScrollSpeed(0.0f),
-_autoScrollDirection(AutoScrollDirection::LEFT),
+_customScrollThreshold(0.0),
+_usingCustomScrollThreshold(false),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
-_eventCallback(nullptr),
-_customScrollThreshold(0.0),
-_usingCustomScrollThreshold(false)
+_eventCallback(nullptr)
 {
     this->setTouchEnabled(true);
 }
@@ -573,6 +573,10 @@ void PageView::pageTurningEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::TURNING);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::TURNING));
+    }
     this->release();
 }
 
@@ -632,6 +636,7 @@ void PageView::copySpecialProperties(Widget *widget)
     {
         Layout::copySpecialProperties(widget);
         _eventCallback = pageView->_eventCallback;
+        _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
         _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;

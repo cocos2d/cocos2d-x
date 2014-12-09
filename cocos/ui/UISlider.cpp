@@ -57,14 +57,14 @@ _capInsetsBarRenderer(Rect::ZERO),
 _capInsetsProgressBarRenderer(Rect::ZERO),
 _sliderEventListener(nullptr),
 _sliderEventSelector(nullptr),
+_eventCallback(nullptr),
 _barTexType(TextureResType::LOCAL),
 _progressBarTexType(TextureResType::LOCAL),
 _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-_progressBarRendererDirty(true),
-_eventCallback(nullptr)
+_progressBarRendererDirty(true)
 {
     setTouchEnabled(true);
 }
@@ -420,6 +420,10 @@ void Slider::percentChangedEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::ON_PERCENTAGE_CHANGED));
+    }
     this->release();
 }
 
@@ -586,6 +590,7 @@ void Slider::copySpecialProperties(Widget *widget)
         _sliderEventListener = slider->_sliderEventListener;
         _sliderEventSelector = slider->_sliderEventSelector;
         _eventCallback = slider->_eventCallback;
+        _ccEventCallback = slider->_ccEventCallback;
     }
 }
 

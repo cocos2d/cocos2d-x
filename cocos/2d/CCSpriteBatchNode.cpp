@@ -378,7 +378,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     renderer->addCommand(&_batchCommand);
 }
 
-void SpriteBatchNode::increaseAtlasCapacity(void)
+void SpriteBatchNode::increaseAtlasCapacity()
 {
     // if we're going beyond the current TextureAtlas's capacity,
     // all the previously initialized sprites will need to redo their texture coords
@@ -574,7 +574,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     }
 }
 
-void SpriteBatchNode::updateBlendFunc(void)
+void SpriteBatchNode::updateBlendFunc()
 {
     if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
     {
@@ -594,12 +594,12 @@ void SpriteBatchNode::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 
-const BlendFunc& SpriteBatchNode::getBlendFunc(void) const
+const BlendFunc& SpriteBatchNode::getBlendFunc() const
 {
     return _blendFunc;
 }
 
-Texture2D* SpriteBatchNode::getTexture(void) const
+Texture2D* SpriteBatchNode::getTexture() const
 {
     return _textureAtlas->getTexture();
 }

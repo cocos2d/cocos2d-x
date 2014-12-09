@@ -1643,6 +1643,10 @@ void ScrollView::scrollToTopEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_TOP);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_TOP));
+    }
     this->release();
 }
 
@@ -1655,6 +1659,10 @@ void ScrollView::scrollToBottomEvent()
     }
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_BOTTOM);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_BOTTOM));
     }
     this->release();
 }
@@ -1669,6 +1677,10 @@ void ScrollView::scrollToLeftEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_LEFT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_LEFT));
+    }
     this->release();
 }
 
@@ -1681,6 +1693,10 @@ void ScrollView::scrollToRightEvent()
     }
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLL_TO_RIGHT);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_RIGHT));
     }
     this->release();
 }
@@ -1695,6 +1711,10 @@ void ScrollView::scrollingEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::SCROLLING);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLLING));
+    }
     this->release();
 }
 
@@ -1707,6 +1727,10 @@ void ScrollView::bounceTopEvent()
     }
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_TOP);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_TOP));
     }
     this->release();
 }
@@ -1721,6 +1745,10 @@ void ScrollView::bounceBottomEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_BOTTOM);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_BOTTOM));
+    }
     this->release();
 }
 
@@ -1734,6 +1762,10 @@ void ScrollView::bounceLeftEvent()
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_LEFT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_LEFT));
+    }
     this->release();
 }
 
@@ -1746,6 +1778,10 @@ void ScrollView::bounceRightEvent()
     }
     if (_eventCallback) {
         _eventCallback(this,EventType::BOUNCE_RIGHT);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_RIGHT));
     }
     this->release();
 }
@@ -1843,6 +1879,7 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _scrollViewEventListener = scrollView->_scrollViewEventListener;
         _scrollViewEventSelector = scrollView->_scrollViewEventSelector;
         _eventCallback = scrollView->_eventCallback;
+        _ccEventCallback = scrollView->_ccEventCallback;
     }
 }
     

@@ -33,10 +33,10 @@ THE SOFTWARE.
 
 
 #include <agile.h>
+#include <concurrent_queue.h>
 #include <string>
+#include <memory>
 #include <wrl/client.h>
-#include <mutex>
-#include <queue>
 #include <Keyboard-winrt.h>
 
 NS_CC_BEGIN
@@ -61,7 +61,7 @@ public:
     virtual void setIMEKeyboardState(bool bOpen);
     virtual void setIMEKeyboardState(bool bOpen, std::string str);
 
-    virtual bool Create(float width, float height ,Windows::Graphics::Display::DisplayOrientations orientation);
+    virtual bool Create(float width, float height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
 
     void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
     Windows::UI::Core::CoreDispatcher^ getDispatcher() {return m_dispatcher.Get();}
@@ -97,8 +97,11 @@ public:
     void centerWindow();
 
  	void UpdateOrientation(Windows::Graphics::Display::DisplayOrientations orientation);
- 	void UpdateForWindowSizeChange(float width, float height);
-   
+    void UpdateForWindowSizeChange(float width, float height);
+
+    void SetDPI(float dpi) { m_dpi = dpi; }
+    float GetDPI() { return m_dpi; }
+
     // static function
     /**
     @brief    get the shared main open gl window
@@ -141,6 +144,7 @@ private:
 
     float m_width;
     float m_height;
+    float m_dpi;
 
     Windows::Graphics::Display::DisplayOrientations m_orientation;
 	Windows::Foundation::Rect m_keyboardRect;
@@ -156,8 +160,7 @@ private:
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
     Cocos2dEditBoxDelegate^ m_editBoxDelegate;
 
-    std::queue<std::shared_ptr<InputEvent>> mInputEvents;
-    std::mutex mMutex;
+    Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;

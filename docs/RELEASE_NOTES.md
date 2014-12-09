@@ -1,51 +1,54 @@
-# cocos2d-x v3.3rc0 Release Notes #
+# cocos2d-x v3.3rc2 Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.3rc0 Release Notes](#user-content-cocos2d-x-v33rc0-release-notes)
-- [Misc Information](#user-content-misc-information)
-- [Requirements](#user-content-requirements)
-	- [Runtime Requirements](#user-content-runtime-requirements)
-	- [Compiler Requirements](#user-content-compiler-requirements)
-	- [How to run tests](#user-content-how-to-run-tests)
-		- [Mac OSX & iOS](#user-content-mac-osx--ios)
-		- [Android](#user-content-android)
-		- [Windows](#user-content-windows)
-		- [Linux](#user-content-linux)
-	- [How to start a new game](#user-content-how-to-start-a-new-game)
-- [Notes of v3.3rc0](#user-content-notes-of-v33rc0)
-- [Highlights of v3.3rc0](#user-content-highlights-of-v33rc0)
-- [Features in detail](#user-content-features-in-detail)
-	- [Light](#user-content-light)
-	- [Spine runtime](#user-content-spine-runtime)
-	- [AssetsManagerEx](#user-content-assetsmanagerex)
-	- [Application::openURL](#user-content-applicationopenurl)
-	- [ClippingRectangleNode](#user-content-clippingrectanglenode)
-	- [Facebook platform support](#user-content-facebook-platform-support)
-- [Highlights of v3.3beta0](#user-content-highlights-of-v33beta0)
-- [Features in detail](#user-content-features-in-detail-1)
-	- [BillBoard](#user-content-billboard)
-	- [Triangles command](#user-content-triangles-command)
-	- [WebView](#user-content-webview)
-	- [New audio](#user-content-new-audio)
-- [Highlights of v3.3alpha0](#user-content-highlights-of-v33alpha0)
-- [Features in detail](#user-content-features-in-detail-2)
-	- [Camera](#user-content-camera)
-	- [Reskin](#user-content-reskin)
-	- [Attachment](#user-content-attachment)
-	- [Better support for FBX](#user-content-better-support-for-fbx)
-	- [New fbx-conv](#user-content-new-fbx-conv)
-	- [AABB, OBB and Ray](#user-content-aabb-obb-and-ray)
-	- [ui::Scale9Sprite](#user-content-uiscale9sprite)
-	- [c++11 random support](#user-content-c11-random-support)
-	- [RenderTexture save function](#user-content-rendertexture-save-function)
-	- [Primitive](#user-content-primitive)
-	- [Consistent way to set GL context attributes](#user-content-consistent-way-to-set-gl-context-attributes)
-	- [Only two libraries left](#user-content-only-two-libraries-left)
+- [cocos2d-x v3.3rc2 Release Notes](#cocos2d-x-v33rc2-release-notes)
+- [Misc Information](#misc-information)
+- [Requirements](#requirements)
+  - [Runtime Requirements](#runtime-requirements)
+  - [Compiler Requirements](#compiler-requirements)
+  - [How to run tests](#how-to-run-tests)
+    - [Mac OSX & iOS](#mac-osx-&-ios)
+    - [Android](#android)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [How to start a new game](#how-to-start-a-new-game)
+- [Highlights of v3.3rc2](#highlights-of-v33rc2)
+- [Notes of v3.3rc1](#notes-of-v33rc1)
+- [Highlights of v3.3rc1](#highlights-of-v33rc1)
+- [Notes of v3.3rc0](#notes-of-v33rc0)
+- [Highlights of v3.3rc0](#highlights-of-v33rc0)
+- [Features in detail](#features-in-detail)
+  - [Light](#light)
+  - [Spine runtime](#spine-runtime)
+  - [AssetsManagerEx](#assetsmanagerex)
+  - [Application::openURL](#applicationopenurl)
+  - [ClippingRectangleNode](#clippingrectanglenode)
+  - [Facebook platform support](#facebook-platform-support)
+- [Highlights of v3.3beta0](#highlights-of-v33beta0)
+- [Features in detail](#features-in-detail-1)
+  - [BillBoard](#billboard)
+  - [Triangles command](#triangles-command)
+  - [WebView](#webview)
+  - [New audio](#new-audio)
+- [Highlights of v3.3alpha0](#highlights-of-v33alpha0)
+- [Features in detail](#features-in-detail-2)
+  - [Camera](#camera)
+  - [Reskin](#reskin)
+  - [Attachment](#attachment)
+  - [Better support for FBX](#better-support-for-fbx)
+  - [New fbx-conv](#new-fbx-conv)
+  - [AABB, OBB and Ray](#aabb-obb-and-ray)
+  - [ui::Scale9Sprite](#uiscale9sprite)
+  - [c++11 random support](#c11-random-support)
+  - [RenderTexture save function](#rendertexture-save-function)
+  - [Primitive](#primitive)
+  - [Consistent way to set GL context attributes](#consistent-way-to-set-gl-context-attributes)
+  - [Only two libraries left](#only-two-libraries-left)
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3alpha0/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3rc2/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -58,13 +61,12 @@
 * Windows 7 or newer
 * Windows Phone 8 or newer
 * Linux Ubuntu 14.04 or newer
-* ~~Browsers via Emscripten~~ N/A for the moment
 
 ## Compiler Requirements
 
 * Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
-* ndk-r9d for Android
+* ndk-r10c for Android
 * Visual Studio 2012  or newer for Windows (win32)
 * Visual Studio 2012  or newer for Windows Phone 8
 
@@ -132,6 +134,22 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# Highlights of v3.3rc2
+* Support for android arm64 architecture, all test cases run on Nexus 9
+* Cocostudio Reader: Replace [Protobuffer](https://github.com/google/protobuf) by [FlatBuffer](https://github.com/google/flatbuffers)
+
+# Notes of v3.3rc1
+
+**android**
+
+Android NDK-r10c is needed. Here is the detailed link for this:
+http://discuss.cocos2d-x.org/t/build-android-base-on-ndk-r10c/18543.
+
+# Highlights of v3.3rc1
+
+* WP8: add Win8.1 universal app support
+* Many other bugfix.
+
 # Notes of v3.3rc0
 
 **wp8**
@@ -173,6 +191,16 @@ All lua files used for deprecated API are not loaded by default. If you want to 
 require "cocos.init"
 
 ```
+
+`cc.EditBox` and `cc.Scale9Sprite` were deprecated, you should use `ccui.EditBox` and `ccui.Scale9Sprite` instead.
+
+`ccs.NodeReader` was removed because native class `cocostudio::timeline::NodeReader` was removed.In the v3.3rc0,you could use `cc.CSLoader` instead.
+
+`sp.Skeleton` was removed because native class `spine::Skeleton` was removed after updating spine runtime.
+
+`registerSpineEventHandler` of `sp.SkeletonAnimation` has changed:
+
+* registerSpineEventHandler(fucntion)  -> registerSpineEventHandler(funtion, eventType)
 
 
 # Highlights of v3.3rc0

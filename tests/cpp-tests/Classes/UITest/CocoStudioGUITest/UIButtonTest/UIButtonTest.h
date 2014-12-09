@@ -153,4 +153,16 @@ protected:
     UI_SCENE_CREATE_FUNC(UIButtonTitleEffectTest)
     Text* _displayValueLabel;
 };
+
+class UIButtonFlipTest : public UIScene
+{
+public:
+    UIButtonFlipTest();
+    ~UIButtonFlipTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonFlipTest)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIButtonTest__) */
