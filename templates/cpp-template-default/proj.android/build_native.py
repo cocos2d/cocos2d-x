@@ -2,87 +2,77 @@
 # build_native.py
 # Build native codes
 
-
-import sys
-import os, os.path
-import shutil
 from optparse import OptionParser
+import os.path
+from pipes import quote
+import shutil
+import sys
+
 
 def get_num_of_cpu():
-	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
-	'''
-	try:
-		import multiprocessing
-		return multiprocessing.cpu_count()
-	except Exception:
-		print "Can't know cpuinfo, use default 1 cpu"
-		return 1
+    ''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
+    '''
+    try:
+        import multiprocessing
+        return multiprocessing.cpu_count()
+    except Exception:
+        print("Can't know cpuinfo, use default 1 cpu")
+        return 1
 
 def check_environment_variables_sdk():
     ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
     '''
-
     try:
-        SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+        return os.environ['ANDROID_SDK_ROOT']
     except Exception:
-        print "ANDROID_SDK_ROOT not defined. Please define ANDROID_SDK_ROOT in your environment"
-        sys.exit(1)
-
-    return SDK_ROOT
+        sys.exit("ANDROID_SDK_ROOT not defined. Please define ANDROID_SDK_ROOT in your environment")
 
 def check_environment_variables():
-    ''' Checking the environment NDK_ROOT, which will be used for building
-    '''
-
+    '''Checking the environment NDK_ROOT, which will be used for building'''
     try:
-        NDK_ROOT = os.environ['NDK_ROOT']
+        return os.environ['NDK_ROOT']
     except Exception:
-        print "NDK_ROOT not defined. Please define NDK_ROOT in your environment"
-        sys.exit(1)
-
-    return NDK_ROOT
+        sys.exit("NDK_ROOT not defined. Please define NDK_ROOT in your environment")
 
 def select_toolchain_version():
-
     ndk_root = check_environment_variables()
-    if os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.9")):
+    if os.path.isdir(os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.9")):
         os.environ['NDK_TOOLCHAIN_VERSION'] = '4.9'
-        print "The Selected NDK toolchain version was 4.9 !"
-    elif os.path.isdir(os.path.join(ndk_root,"toolchains/arm-linux-androideabi-4.8")):
+        print("The Selected NDK toolchain version was 4.9 !")
+    elif os.path.isdir(os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8")):
         os.environ['NDK_TOOLCHAIN_VERSION'] = '4.8'
-        print "The Selected NDK toolchain version was 4.8 !"
+        print("The Selected NDK toolchain version was 4.8 !")
     else:
-        print "Couldn't find the gcc toolchain."
-        exit(1)
+        sys.exit("Couldn't find the gcc toolchain.")
 
-def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode):
-
-    ndk_path = os.path.join(ndk_root, "ndk-build")
-
+def do_build(cocos_root, ndk_root, app_android_root,
+             ndk_build_param, sdk_root, android_platform, build_mode):
+    ndk_path = quote(os.path.join(ndk_root, "ndk-build"))
     num_of_cpu = get_num_of_cpu()
+    app_android_root = quote(app_android_root)
 
-    app_android_root = app_android_root.replace(' ', '\\ ')
-    if ndk_build_param == None:
-        command = '%s -j%d -C %s NDK_DEBUG=%d' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug')
+    if ndk_build_param is None:
+        command = "%s -j%d -C %s NDK_DEBUG=%d" % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug')
     else:
-        command = '%s -j%d -C %s NDK_DEBUG=%d %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ' '.join(str(e) for e in ndk_build_param))
+        command = "%s -j%d -C %s NDK_DEBUG=%d %s" % (
+            ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ' '.join(str(e) for e in ndk_build_param))
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
-    elif android_platform is not None:
-    	  sdk_tool_path = os.path.join(sdk_root, "tools/android")
-    	  cocoslib_path = os.path.join(cocos_root, "cocos/platform/android/java")
-    	  command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path) 
-    	  if os.system(command) != 0:
-    	  	  raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")  	  
-    	  command = '%s update project -t %s -p %s -s' % (sdk_tool_path,android_platform,app_android_root)
-    	  if os.system(command) != 0:
-    	  	  raise Exception("update project [ " + app_android_root + " ] fails!")    	  	  
-    	  buildfile_path = os.path.join(app_android_root, "build.xml")
-    	  command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
-    	  os.system(command)
+
+    if android_platform is not None:
+        sdk_tool_path = os.path.join(sdk_root, "tools/android")
+        cocoslib_path = os.path.join(cocos_root, "cocos/platform/android/java")
+        command = '%s update lib-project -t %s -p %s' % (sdk_tool_path, android_platform, cocoslib_path)
+        if os.system(command) != 0:
+            raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")
+        command = '%s update project -t %s -p %s -s' % (sdk_tool_path, android_platform, app_android_root)
+        if os.system(command) != 0:
+            raise Exception("update project [ " + app_android_root + " ] fails!")
+        buildfile_path = os.path.join(app_android_root, "build.xml")
+        command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode, buildfile_path, sdk_root)
+        os.system(command)
 
 def copy_files(src, dst):
-
     for item in os.listdir(src):
         path = os.path.join(src, item)
         # Android can not package the file that ends with ".gz"
@@ -94,7 +84,6 @@ def copy_files(src, dst):
             copy_files(path, new_dst)
 
 def copy_resources(app_android_root):
-
     # remove app_android_root/assets if it exists
     assets_dir = os.path.join(app_android_root, "assets")
     if os.path.isdir(assets_dir):
@@ -106,8 +95,7 @@ def copy_resources(app_android_root):
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 
-def build(ndk_build_param,android_platform,build_mode):
-
+def build(ndk_build_param, android_platform, build_mode):
     ndk_root = check_environment_variables()
     sdk_root = None
     select_toolchain_version()
@@ -117,33 +105,29 @@ def build(ndk_build_param,android_platform,build_mode):
 
     app_android_root = current_dir
     copy_resources(app_android_root)
-    
+
     if android_platform is not None:
-				sdk_root = check_environment_variables_sdk()
-				if android_platform.isdigit():
-						android_platform = 'android-'+android_platform
-				else:
-						print 'please use vaild android platform'
-						exit(1)
-		
-    if build_mode is None:
-    	  build_mode = 'debug'
-    elif build_mode != 'release':
+        sdk_root = check_environment_variables_sdk()
+        if android_platform.isdigit():
+            android_platform = 'android-' + android_platform
+        else:
+            exit('please use vaild android platform')
+
+    if build_mode != 'release':
         build_mode = 'debug'
-    
-    do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode)
+
+    do_build(cocos_root, ndk_root, app_android_root, ndk_build_param, sdk_root, android_platform, build_mode)
 
 # -------------- main --------------
 if __name__ == '__main__':
-
     parser = OptionParser()
     parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build', action="append")
-    parser.add_option("-p", "--platform", dest="android_platform", 
-    help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
-    parser.add_option("-b", "--build", dest="build_mode", 
-    help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
+    parser.add_option("-p", "--platform", dest="android_platform",
+                      help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
+    parser.add_option("-b", "--build", dest="build_mode",
+                      help='the build mode for java project,debug[default] or release. Get more information, please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
-    
-    print "We will remove this script next version,you should use cocos console to build android project.\n"
-    
-    build(opts.ndk_build_param,opts.android_platform,opts.build_mode)
+
+    print("We will remove this script next version,you should use cocos console to build android project.\n")
+
+    build(opts.ndk_build_param, opts.android_platform, opts.build_mode)
