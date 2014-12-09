@@ -422,7 +422,7 @@ Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAu
 
 # Highlights of v3.3alpha0
 
-* 3d: `Camera`, 'Reskin', 'Attachment', 'Better support for FBX', 'New fbx-conv', `AABB`, `OBB` and `Ray`
+* 3d: `Camera`, `Reskin`, `Attachment`, `Better support for FBX`, `New fbx-conv`, `AABB`, `OBB` and `Ray`
 * ui: added `Scale9Sprite`
 * FileUitls: added `isDirectoryExist()`, `createDirectory()`, `removeDirectory()`, `removeFile()`, `renameFile()` and `getFileSize()`
 * Device: added `setKeepScreenOn()` on iOS and Android 
