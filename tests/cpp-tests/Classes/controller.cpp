@@ -38,6 +38,7 @@ Controller g_aTestNames[] = {
 	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
 	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
 	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
+    { "Allocator - Basic", [](){return new AllocatorTestNS::AllocatorTestScene(); } },
 	{ "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); } },
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
