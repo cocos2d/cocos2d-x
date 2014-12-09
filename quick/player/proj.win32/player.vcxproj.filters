@@ -91,6 +91,15 @@
     <Filter Include="Classes\runtime\protobuf-lite\stubs">
       <UniqueIdentifier>{c1d05e40-b8aa-4c22-a247-b921267c9845}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\quick-src\extra\nanovg">
+      <UniqueIdentifier>{e2973556-1a2a-4032-ae35-0e09edb88f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\nanovg\nanovg">
+      <UniqueIdentifier>{637f4ef7-c926-460f-adaf-12cae9823338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\nanovg\nanonode">
+      <UniqueIdentifier>{9ca55602-f554-40dc-a516-f27d6facc62c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -399,6 +408,36 @@
     <ClInclude Include="Resource.h">
       <Filter>win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\fontstash.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg_gl.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg_gl_utils.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\stb_image.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\stb_truetype.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGDrawNode.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGNode.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.hpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.hpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -655,6 +694,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.cc">
       <Filter>Classes\runtime\protobuf-lite\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg.c">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGDrawNode.cpp">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGNode.cpp">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

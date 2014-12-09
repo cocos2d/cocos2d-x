@@ -19,6 +19,16 @@
 		3EB5152C19528284006966AA /* Protos.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EB5152A19528284006966AA /* Protos.pb.cc */; };
 		3EB5152D19528284006966AA /* Protos.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3EB5152A19528284006966AA /* Protos.pb.cc */; };
 		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
+		49C655E61A36F6F800603AF5 /* NVGDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655DA1A36F6F800603AF5 /* NVGDrawNode.cpp */; };
+		49C655E71A36F6F800603AF5 /* NVGDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655DA1A36F6F800603AF5 /* NVGDrawNode.cpp */; };
+		49C655E81A36F6F800603AF5 /* NVGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655DC1A36F6F800603AF5 /* NVGNode.cpp */; };
+		49C655E91A36F6F800603AF5 /* NVGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655DC1A36F6F800603AF5 /* NVGNode.cpp */; };
+		49C655EA1A36F6F800603AF5 /* nanovg.c in Sources */ = {isa = PBXBuildFile; fileRef = 49C655E01A36F6F800603AF5 /* nanovg.c */; };
+		49C655EB1A36F6F800603AF5 /* nanovg.c in Sources */ = {isa = PBXBuildFile; fileRef = 49C655E01A36F6F800603AF5 /* nanovg.c */; };
+		49C655F01A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655EC1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp */; };
+		49C655F11A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655EC1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp */; };
+		49C655F21A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655EE1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp */; };
+		49C655F31A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C655EE1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp */; };
 		5023811817EBBCAC00990C9B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
 		5023811917EBBCAC00990C9B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5023810917EBBCAC00990C9B /* Default-568h@2x.png */; };
 		5023811A17EBBCAC00990C9B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5023810A17EBBCAC00990C9B /* Default.png */; };
@@ -274,6 +284,21 @@
 		3EB5152A19528284006966AA /* Protos.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Protos.pb.cc; sourceTree = "<group>"; };
 		3EB5152B19528284006966AA /* Protos.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protos.pb.h; sourceTree = "<group>"; };
 		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
+		49C655DA1A36F6F800603AF5 /* NVGDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NVGDrawNode.cpp; sourceTree = "<group>"; };
+		49C655DB1A36F6F800603AF5 /* NVGDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVGDrawNode.h; sourceTree = "<group>"; };
+		49C655DC1A36F6F800603AF5 /* NVGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NVGNode.cpp; sourceTree = "<group>"; };
+		49C655DD1A36F6F800603AF5 /* NVGNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVGNode.h; sourceTree = "<group>"; };
+		49C655DF1A36F6F800603AF5 /* fontstash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontstash.h; sourceTree = "<group>"; };
+		49C655E01A36F6F800603AF5 /* nanovg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nanovg.c; sourceTree = "<group>"; };
+		49C655E11A36F6F800603AF5 /* nanovg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nanovg.h; sourceTree = "<group>"; };
+		49C655E21A36F6F800603AF5 /* nanovg_gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nanovg_gl.h; sourceTree = "<group>"; };
+		49C655E31A36F6F800603AF5 /* nanovg_gl_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nanovg_gl_utils.h; sourceTree = "<group>"; };
+		49C655E41A36F6F800603AF5 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		49C655E51A36F6F800603AF5 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_truetype.h; sourceTree = "<group>"; };
+		49C655EC1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_nanovg_auto.cpp; sourceTree = "<group>"; };
+		49C655ED1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_nanovg_auto.hpp; sourceTree = "<group>"; };
+		49C655EE1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_extension_nanovg_manual.cpp; sourceTree = "<group>"; };
+		49C655EF1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_extension_nanovg_manual.hpp; sourceTree = "<group>"; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5023810817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		5023810917EBBCAC00990C9B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -587,6 +612,40 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		49C655D81A36F6F800603AF5 /* nanovg */ = {
+			isa = PBXGroup;
+			children = (
+				49C655D91A36F6F800603AF5 /* nanonode */,
+				49C655DE1A36F6F800603AF5 /* nanovg */,
+			);
+			path = nanovg;
+			sourceTree = "<group>";
+		};
+		49C655D91A36F6F800603AF5 /* nanonode */ = {
+			isa = PBXGroup;
+			children = (
+				49C655DA1A36F6F800603AF5 /* NVGDrawNode.cpp */,
+				49C655DB1A36F6F800603AF5 /* NVGDrawNode.h */,
+				49C655DC1A36F6F800603AF5 /* NVGNode.cpp */,
+				49C655DD1A36F6F800603AF5 /* NVGNode.h */,
+			);
+			path = nanonode;
+			sourceTree = "<group>";
+		};
+		49C655DE1A36F6F800603AF5 /* nanovg */ = {
+			isa = PBXGroup;
+			children = (
+				49C655DF1A36F6F800603AF5 /* fontstash.h */,
+				49C655E01A36F6F800603AF5 /* nanovg.c */,
+				49C655E11A36F6F800603AF5 /* nanovg.h */,
+				49C655E21A36F6F800603AF5 /* nanovg_gl.h */,
+				49C655E31A36F6F800603AF5 /* nanovg_gl_utils.h */,
+				49C655E41A36F6F800603AF5 /* stb_image.h */,
+				49C655E51A36F6F800603AF5 /* stb_truetype.h */,
+			);
+			path = nanovg;
+			sourceTree = "<group>";
+		};
 		5023810617EBBCAC00990C9B /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,6 +717,7 @@
 		9F91057519F5614700AD5CAB /* extra */ = {
 			isa = PBXGroup;
 			children = (
+				49C655D81A36F6F800603AF5 /* nanovg */,
 				9F9105A619F5614800AD5CAB /* apptools */,
 				9F9105A919F5614800AD5CAB /* cocos2dx_extra.h */,
 				9F9105AA19F5614800AD5CAB /* crypto */,
@@ -839,6 +899,10 @@
 		9F91061719F5614800AD5CAB /* luabinding */ = {
 			isa = PBXGroup;
 			children = (
+				49C655EC1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp */,
+				49C655ED1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.hpp */,
+				49C655EE1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp */,
+				49C655EF1A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.hpp */,
 				9F91061A19F5614800AD5CAB /* cocos2dx_extra_ios_iap_luabinding.cpp */,
 				9F91061B19F5614800AD5CAB /* cocos2dx_extra_ios_iap_luabinding.h */,
 				9F91061D19F5614800AD5CAB /* cocos2dx_extra_luabinding.cpp */,
@@ -1374,18 +1438,22 @@
 				9F91077319F5614900AD5CAB /* debugger.c in Sources */,
 				9F91071F19F5614900AD5CAB /* cocos2dx_extra_luabinding.cpp in Sources */,
 				9F9106B919F5614900AD5CAB /* md5.c in Sources */,
+				49C655E91A36F6F800603AF5 /* NVGNode.cpp in Sources */,
 				9F91074319F5614900AD5CAB /* SBJsonBase.m in Sources */,
 				9F91074919F5614900AD5CAB /* OpenUDIDIOS.m in Sources */,
 				9F9106BD19F5614900AD5CAB /* CCBlurFilter.cpp in Sources */,
 				9F9106DD19F5614900AD5CAB /* CCTestFilter.cpp in Sources */,
+				49C655F31A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */,
 				9F9106DF19F5614900AD5CAB /* CCFilteredSprite.cpp in Sources */,
 				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
 				9F9106C119F5614900AD5CAB /* CCContrastFilter.cpp in Sources */,
 				9F9106C719F5614900AD5CAB /* CCExposureFilter.cpp in Sources */,
+				49C655F11A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp in Sources */,
 				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				9F91077919F5614900AD5CAB /* lpack.c in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				9F91074B19F5614900AD5CAB /* CCNetworkIOSMac.mm in Sources */,
+				49C655E71A36F6F800603AF5 /* NVGDrawNode.cpp in Sources */,
 				C00FD49B1938512100C6382D /* Runtime.cpp in Sources */,
 				9F91072319F5614900AD5CAB /* HelperFunc_luabinding.cpp in Sources */,
 				9F91077D19F5614900AD5CAB /* sqlite3.c in Sources */,
@@ -1407,6 +1475,7 @@
 				9F91077F19F5614900AD5CAB /* lua_extensions_more.c in Sources */,
 				9F91074F19F5614900AD5CAB /* CCCryptoMac.mm in Sources */,
 				9F9106C919F5614900AD5CAB /* CCFilter.cpp in Sources */,
+				49C655EB1A36F6F800603AF5 /* nanovg.c in Sources */,
 				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
 				9F91074719F5614900AD5CAB /* SBJsonWriter.m in Sources */,
 				9F91078E19F5658D00AD5CAB /* lua_cocos2dx_extension_filter_auto.cpp in Sources */,
@@ -1422,12 +1491,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F91077219F5614900AD5CAB /* debugger.c in Sources */,
+				49C655F21A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */,
 				15AA9648199B6D4600725633 /* lua_debugger.c in Sources */,
+				49C655EA1A36F6F800603AF5 /* nanovg.c in Sources */,
 				9F91074819F5614900AD5CAB /* OpenUDIDIOS.m in Sources */,
 				9F9106D619F5614900AD5CAB /* CCSaturationFilter.cpp in Sources */,
+				49C655F01A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp in Sources */,
 				9F91073819F5614900AD5CAB /* CCStore.mm in Sources */,
 				9F91073619F5614900AD5CAB /* CCNativeIOS.mm in Sources */,
 				9F91074219F5614900AD5CAB /* SBJsonBase.m in Sources */,
+				49C655E61A36F6F800603AF5 /* NVGDrawNode.cpp in Sources */,
 				9F9106E019F5614900AD5CAB /* ccFilterShaders.cpp in Sources */,
 				9F91078D19F5658D00AD5CAB /* lua_cocos2dx_extension_filter_auto.cpp in Sources */,
 				9F9106D819F5614900AD5CAB /* CCSepiaFilter.cpp in Sources */,
@@ -1477,6 +1550,7 @@
 				9F91073219F5614900AD5CAB /* CCCryptoIOS.mm in Sources */,
 				9F91076619F5614900AD5CAB /* CCStorePaymentTransaction.cpp in Sources */,
 				5023812417EBBCAC00990C9B /* main.m in Sources */,
+				49C655E81A36F6F800603AF5 /* NVGNode.cpp in Sources */,
 				9F91072819F5614900AD5CAB /* CCNetwork.cpp in Sources */,
 				9F91078719F561CD00AD5CAB /* HelperFunc.cpp in Sources */,
 				9F91073C19F5614900AD5CAB /* CCStorePaymentTransactionWrapper.mm in Sources */,

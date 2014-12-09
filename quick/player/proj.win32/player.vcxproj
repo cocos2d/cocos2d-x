@@ -181,6 +181,16 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.hpp" />
+    <ClInclude Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.hpp" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGDrawNode.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGNode.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\fontstash.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg_gl.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg_gl_utils.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\stb_image.h" />
+    <ClInclude Include="..\..\lib\quick-src\extra\nanovg\nanovg\stb_truetype.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ConfigParser.h" />
     <ClInclude Include="..\Classes\PlayerEditBoxServiceProtocol.h" />
@@ -299,6 +309,11 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClCompile Include="..\..\..\external\protobuf-lite\src\google\protobuf\stubs\once.cc" />
     <ClCompile Include="..\..\..\external\protobuf-lite\src\google\protobuf\stubs\stringprintf.cc" />
     <ClCompile Include="..\..\..\external\protobuf-lite\src\google\protobuf\wire_format_lite.cc" />
+    <ClCompile Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.cpp" />
+    <ClCompile Include="..\..\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.cpp" />
+    <ClCompile Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGDrawNode.cpp" />
+    <ClCompile Include="..\..\lib\quick-src\extra\nanovg\nanonode\NVGNode.cpp" />
+    <ClCompile Include="..\..\lib\quick-src\extra\nanovg\nanovg\nanovg.c" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
     <ClCompile Include="..\Classes\PlayerLuaCore.cpp" />
