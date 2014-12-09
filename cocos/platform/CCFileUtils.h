@@ -388,7 +388,7 @@ public:
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
 
-    virtual std::string normalizePath(const std::string& path) const;
+    virtual std::string getNormalizePath(const std::string& path) const;
 
 protected:
     /**

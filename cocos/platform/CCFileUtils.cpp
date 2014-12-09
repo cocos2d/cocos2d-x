@@ -699,7 +699,7 @@ std::string FileUtils::getNewFilename(const std::string &filename) const
     {
         newFileName = iter->second.asString();
     }
-    return normalizePath(newFileName);
+    return getNormalizePath(newFileName);
 }
 
 std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
@@ -1300,7 +1300,7 @@ long FileUtils::getFileSize(const std::string &filepath)
     }
 }
 
-std::string FileUtils::normalizePath(const std::string& path) const
+std::string FileUtils::getNormalizePath(const std::string& path) const
 {
     auto pos = path.find("../");
     if (pos == std::string::npos || pos == 0)
