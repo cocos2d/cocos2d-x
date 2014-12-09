@@ -136,7 +136,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 # Highlights of v3.3rc2
 * Support for android arm64 architecture, all test cases run on Nexus 9
-* Cocostudio Reader: Replace [Protobuffer](https://github.com/google/protobuf) by [FlatBuffer](https://github.com/google/flatbuffers)
+* Cocos Studio Reader: Replace [Protobuffer](https://github.com/google/protobuf) by [FlatBuffer](https://github.com/google/flatbuffers)
 
 # Notes of v3.3rc1
 
