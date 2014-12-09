@@ -1,53 +1,54 @@
-# cocos2d-x v3.3rc1 Release Notes #
+# cocos2d-x v3.3rc2 Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.3rc1 Release Notes](#)
-- [Misc Information](#)
-- [Requirements](#)
-	- [Runtime Requirements](#)
-	- [Compiler Requirements](#)
-	- [How to run tests](#)
-		- [Mac OSX & iOS](#)
-		- [Android](#)
-		- [Windows](#)
-		- [Linux](#)
-	- [How to start a new game](#)
-- [Notes of v3.3rc1](#)
-- [Highlights of v3.3rc1](#)
-- [Notes of v3.3rc0](#)
-- [Highlights of v3.3rc0](#)
-- [Features in detail](#)
-	- [Light](#)
-	- [Spine runtime](#)
-	- [AssetsManagerEx](#)
-	- [Application::openURL](#)
-	- [ClippingRectangleNode](#)
-	- [Facebook platform support](#)
-- [Highlights of v3.3beta0](#)
-- [Features in detail](#)
-	- [BillBoard](#)
-	- [Triangles command](#)
-	- [WebView](#)
-	- [New audio](#)
-- [Highlights of v3.3alpha0](#)
-- [Features in detail](#)
-	- [Camera](#)
-	- [Reskin](#)
-	- [Attachment](#)
-	- [Better support for FBX](#)
-	- [New fbx-conv](#)
-	- [AABB, OBB and Ray](#)
-	- [ui::Scale9Sprite](#)
-	- [c++11 random support](#)
-	- [RenderTexture save function](#)
-	- [Primitive](#)
-	- [Consistent way to set GL context attributes](#)
-	- [Only two libraries left](#)
+- [cocos2d-x v3.3rc2 Release Notes](#cocos2d-x-v33rc2-release-notes)
+- [Misc Information](#misc-information)
+- [Requirements](#requirements)
+  - [Runtime Requirements](#runtime-requirements)
+  - [Compiler Requirements](#compiler-requirements)
+  - [How to run tests](#how-to-run-tests)
+    - [Mac OSX & iOS](#mac-osx-&-ios)
+    - [Android](#android)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [How to start a new game](#how-to-start-a-new-game)
+- [Highlights of v3.3rc2](#highlights-of-v33rc2)
+- [Notes of v3.3rc1](#notes-of-v33rc1)
+- [Highlights of v3.3rc1](#highlights-of-v33rc1)
+- [Notes of v3.3rc0](#notes-of-v33rc0)
+- [Highlights of v3.3rc0](#highlights-of-v33rc0)
+- [Features in detail](#features-in-detail)
+  - [Light](#light)
+  - [Spine runtime](#spine-runtime)
+  - [AssetsManagerEx](#assetsmanagerex)
+  - [Application::openURL](#applicationopenurl)
+  - [ClippingRectangleNode](#clippingrectanglenode)
+  - [Facebook platform support](#facebook-platform-support)
+- [Highlights of v3.3beta0](#highlights-of-v33beta0)
+- [Features in detail](#features-in-detail-1)
+  - [BillBoard](#billboard)
+  - [Triangles command](#triangles-command)
+  - [WebView](#webview)
+  - [New audio](#new-audio)
+- [Highlights of v3.3alpha0](#highlights-of-v33alpha0)
+- [Features in detail](#features-in-detail-2)
+  - [Camera](#camera)
+  - [Reskin](#reskin)
+  - [Attachment](#attachment)
+  - [Better support for FBX](#better-support-for-fbx)
+  - [New fbx-conv](#new-fbx-conv)
+  - [AABB, OBB and Ray](#aabb-obb-and-ray)
+  - [ui::Scale9Sprite](#uiscale9sprite)
+  - [c++11 random support](#c11-random-support)
+  - [RenderTexture save function](#rendertexture-save-function)
+  - [Primitive](#primitive)
+  - [Consistent way to set GL context attributes](#consistent-way-to-set-gl-context-attributes)
+  - [Only two libraries left](#only-two-libraries-left)
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3rc1/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3rc2/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -133,6 +134,10 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# Highlights of v3.3rc2
+* Support for android arm64 architecture, all test cases run on Nexus 9
+* Cocos Studio Reader: Replace [Protobuffer](https://github.com/google/protobuf) by [FlatBuffer](https://github.com/google/flatbuffers)
+
 # Notes of v3.3rc1
 
 **android**
@@ -206,7 +211,7 @@ require "cocos.init"
 * Application: added openURL()
 * Added `AssetsManagerEx`, it is an enhancement version of `AssetsManager`
 * TileMap: supported staggered tile map
-* Added `ClippingRectangNode`, it is more effecient for renctangle clipping
+* Added `ClippingRectangleNode`, it is more efficient for renctangle clipping
 * Node: schedule/unschedule lambda functions
 * Facebook platform support in `plugin` on iOS and Android, all features has been added, but the API needs to be polished with Facebook guys
 
@@ -318,7 +323,7 @@ You can refer to [this document](http://www.cocos2d-x.org/wiki/Integrate_the_Fac
 * 3d: `BillBoard`
 * audio: new audio is added on iOS and Android
 * DrawNode: added as many functions as `DrawPrimitive`, and `DrawPrimitive` is deprecated
-* Renderer: added `trianle command`
+* Renderer: added `triangle command`
 * UI: added `WebView` on iOS and Android
 * Many other small features added and many bugs fixed
 
@@ -417,13 +422,13 @@ Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAu
 
 # Highlights of v3.3alpha0
 
-* 3d: `Camera`, 'Reskin', 'Attachment', 'Better support for FBX', 'New fbx-conv', `AABB`, `OBB` and `Ray`
+* 3d: `Camera`, `Reskin`, `Attachment`, `Better support for FBX`, `New fbx-conv`, `AABB`, `OBB` and `Ray`
 * ui: added `Scale9Sprite`
 * FileUitls: added `isDirectoryExist()`, `createDirectory()`, `removeDirectory()`, `removeFile()`, `renameFile()` and `getFileSize()`
 * Device: added `setKeepScreenOn()` on iOS and Android 
 * Added c++11 random support
 * RenderTexture: added a call back function for `saveToFile()`
-* Primitive: Support Points, Lines and Triagles for rendering
+* Primitive: Support Points, Lines and Triangles for rendering
 * SpriteFrameCache: support loading from plist file content data
 * Added a consistent way to set GL context attributes for all platforms
 * Only two libraries in cocos2d-x, one for c++ codes, another one for lua-binding codes
