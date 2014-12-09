@@ -77,6 +77,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#CSLoader] createNodeWithFlatBuffersForSimulator 
+-- @param self
+-- @param #string filename
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
 -- @function [parent=#CSLoader] destroyInstance 
 -- @param self
         

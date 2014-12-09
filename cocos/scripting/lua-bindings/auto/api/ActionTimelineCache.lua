@@ -56,6 +56,13 @@
 -- @param #string fileName
         
 --------------------------------
+-- 
+-- @function [parent=#ActionTimelineCache] createActionWithFlatBuffersForSimulator 
+-- @param self
+-- @param #string fileName
+-- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
+        
+--------------------------------
 --  Destroys the singleton 
 -- @function [parent=#ActionTimelineCache] destroyInstance 
 -- @param self
