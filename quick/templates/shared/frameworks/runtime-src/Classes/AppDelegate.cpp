@@ -11,6 +11,9 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include "Runtime.h"
+
+#include "luabinding/lua_cocos2dx_extension_nanovg_auto.hpp"
+#include "luabinding/lua_cocos2dx_extension_nanovg_manual.hpp"
 #endif
 
 // extra lua module
@@ -43,6 +46,10 @@ static void quick_module_register(lua_State *L)
         // extra
         luaopen_cocos2dx_extra_luabinding(L);
         register_all_cocos2dx_extension_filter(L);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+        register_all_cocos2dx_extension_nanovg(L);
+        register_all_cocos2dx_extension_nanovg_manual(L);
+#endif
         luaopen_HelperFunc_luabinding(L);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         luaopen_cocos2dx_extra_ios_iap_luabinding(L);
