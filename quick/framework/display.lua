@@ -332,17 +332,17 @@ display.replaceScene(transition)
 -   zoomFlipX 水平翻转的同时放大，可用的附加参数同上
 -   zoomFlipY 垂直翻转的同时放大，可用的附加参数同上
 -   jumpZoom 跳跃放大切换场景
--   moveInB 新场景从底部进入，现有场景同时从顶部退出
--   moveInL 新场景从左侧进入，现有场景同时从右侧退出
--   moveInR 新场景从右侧进入，现有场景同时从左侧退出
--   moveInT 新场景从顶部进入，现有场景同时从底部退出
+-   moveInB 新场景从底部进入，直接覆盖现有场景
+-   moveInL 新场景从左侧进入，直接覆盖现有场景
+-   moveInR 新场景从右侧进入，直接覆盖现有场景
+-   moveInT 新场景从顶部进入，直接覆盖现有场景
 -   pageTurn 翻页效果，如果指定附加参数为 true，则表示从左侧往右翻页
 -   rotoZoom 旋转放大切换场景
 -   shrinkGrow 收缩交叉切换场景
--   slideInB 新场景从底部进入，直接覆盖现有场景
--   slideInL 新场景从左侧进入，直接覆盖现有场景
--   slideInR 新场景从右侧进入，直接覆盖现有场景
--   slideInT 新场景从顶部进入，直接覆盖现有场景
+-   slideInB 新场景从底部进入，现有场景同时从顶部退出
+-   slideInL 新场景从左侧进入，现有场景同时从右侧退出
+-   slideInR 新场景从右侧进入，现有场景同时从左侧退出
+-   slideInT 新场景从顶部进入，现有场景同时从底部退出
 -   splitCols 分成多列切换入新场景
 -   splitRows 分成多行切换入新场景，类似百叶窗
 -   turnOffTiles 当前场景分成多个块，逐渐替换为新场景
