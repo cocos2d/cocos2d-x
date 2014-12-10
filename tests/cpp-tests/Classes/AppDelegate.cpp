@@ -118,6 +118,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UISlider");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UITextField");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIWidgetAddNode");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIListView/New");
         
         searchPaths.push_back("ccs-res/hd/cocosui/CustomTest/CustomWidgetCallbackBindTest");
         searchPaths.push_back("hd/ActionTimeline");
@@ -156,9 +157,9 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UISlider");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UITextField");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIWidgetAddNode");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIListView/New");
         
         searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
-        
         searchPaths.push_back("ActionTimeline");
     }
     
