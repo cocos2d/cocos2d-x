@@ -235,7 +235,7 @@ bool NodeInRect::init()
 bool NodeInRect::detect()
 {
 	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
-	if (pNode != NULL && abs(pNode->getPositionX() - _origin.x) <= _size.width && abs(pNode->getPositionY() - _origin.y) <= _size.height)
+	if (pNode != NULL && fabs(pNode->getPositionX() - _origin.x) <= _size.width && fabs(pNode->getPositionY() - _origin.y) <= _size.height)
 	{
 		return true;
 	}
