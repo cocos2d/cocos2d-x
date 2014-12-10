@@ -232,7 +232,7 @@ namespace cocostudio
         button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
         
 
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName));
         
         
         

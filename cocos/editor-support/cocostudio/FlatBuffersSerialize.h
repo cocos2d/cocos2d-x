@@ -78,18 +78,27 @@ namespace flatbuffers
     struct TimeLineTextureFrame;
 }
 
-namespace cocostudio {
+namespace tinyxml2
+{
+    class XMLElement;
+}
 
+namespace cocostudio {
+    
 class CC_STUDIO_DLL FlatBuffersSerialize
 {
     
 public:
+    static FlatBuffersSerialize* getInstance();
+    static void purge();
     
     FlatBuffersSerialize();
     ~FlatBuffersSerialize();
     
-    static FlatBuffersSerialize* getInstance();
-    static void purge();
+    void deleteFlatBufferBuilder();
+    
+    std::string test(const std::string& xmlFileName,
+                     const std::string& flatbuffersFileName);
     
     /* serialize flat buffers with XML */
     std::string serializeFlatBuffersWithXMLFile(const std::string& xmlFileName,
@@ -97,7 +106,7 @@ public:
     
     // NodeTree
     flatbuffers::Offset<flatbuffers::NodeTree> createNodeTree(const tinyxml2::XMLElement* objectData,
-                                                              std::string classType);    
+                                                              std::string classType);
     
     // NodeAction
     flatbuffers::Offset<flatbuffers::NodeAction> createNodeAction(const tinyxml2::XMLElement* objectData);
@@ -110,16 +119,16 @@ public:
     flatbuffers::Offset<flatbuffers::TimeLineTextureFrame> createTimeLineTextureFrame(const tinyxml2::XMLElement* objectData);
     /**/
     
-    flatbuffers::FlatBufferBuilder* createFlatBuffersWithXMLFileForSimulator(const std::string& xmlFileName);
-    flatbuffers::Offset<flatbuffers::NodeTree> createNodeTreeForSimulator(const tinyxml2::XMLElement* objectData,
-                                                                          std::string classType);
-    flatbuffers::Offset<flatbuffers::ProjectNodeOptions> createProjectNodeOptionsForSimulator(const tinyxml2::XMLElement* objectData);
-    
-    void deleteFlatBufferBuilder();
-    
     int getResourceType(std::string key);
     std::string getGUIClassName(const std::string &name);
     std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
+    
+    /* create flat buffers with XML */
+    flatbuffers::FlatBufferBuilder* createFlatBuffersWithXMLFileForSimulator(const std::string& xmlFileName);
+    flatbuffers::Offset<flatbuffers::NodeTree> createNodeTreeForSimulator(const tinyxml2::XMLElement* objectData,
+                                                                          std::string classType);
+    flatbuffers::Offset<flatbuffers::ProjectNodeOptions> createProjectNodeOptionsForSimulator(const tinyxml2::XMLElement* objectData);	
+	/**/
     
 public:
     std::vector<flatbuffers::Offset<flatbuffers::String>> _textures;
@@ -131,7 +140,6 @@ private:
     flatbuffers::Offset<flatbuffers::CSParseBinary>* _csparsebinary;
     
 };
-    
 }
 
 #endif /* defined(__cocos2d_libs__FlatBuffersSerialize__) */
