@@ -111,7 +111,7 @@ namespace cocostudio
       
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
-        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName);
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
         
         std::string fontFilePath = jsonPath.append(fontName);
 		if (FileUtils::getInstance()->isFileExist(fontFilePath))
