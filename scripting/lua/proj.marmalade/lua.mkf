@@ -2,6 +2,7 @@ includepaths
 {
     ../lua/
     ../tolua/
+    ../xxtea/
     ../cocos2dx_support/
     ../../../extensions
 }
@@ -46,4 +47,9 @@ files
     "lua_cocos2dx_cocostudio_manual.h"
     "tolua_fix.c"
     "tolua_fix.h"
+
+    [xxtea]
+    ("../xxtea")
+    "*.h"
+    "*.cpp"
 }
