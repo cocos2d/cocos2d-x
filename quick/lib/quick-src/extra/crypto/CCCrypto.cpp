@@ -201,7 +201,7 @@ LUA_STRING Crypto::encodingBase64Lua(bool isDecoding,
 
     if (buffer)
     {
-        size = isDecoding ? Base64decode(buffer, input) : Base64encode(buffer, input, inputLength);
+        size = isDecoding ? Base64decode(buffer, input) : (Base64encode(buffer, input, inputLength) - 1);
     }
     if (size)
     {
