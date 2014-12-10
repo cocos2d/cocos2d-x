@@ -26,7 +26,7 @@ NVGcontext* NVGNode::getNVGCtx() {
         flag = flag | NVG_DEBUG;
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         gNVGCtx = nvgCreateGLES2(flag);
 #else
         gNVGCtx = nvgCreateGL2(flag);

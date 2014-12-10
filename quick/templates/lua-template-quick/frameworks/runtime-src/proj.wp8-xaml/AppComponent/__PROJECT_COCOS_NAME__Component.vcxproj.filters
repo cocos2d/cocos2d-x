@@ -151,6 +151,21 @@
     <ClCompile Include="..\..\Classes\quick-src\extra\platform\wp8\CCNativeWP8.cpp">
       <Filter>Classes\quick-src\extra\platform\wp8</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg.c">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGDrawNode.cpp">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGNode.cpp">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.cpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cocos2dRenderer.h">
@@ -396,6 +411,36 @@
     <ClInclude Include="..\..\Classes\quick-src\extra\network\CCNetwork.h">
       <Filter>Classes\quick-src\extra\network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\fontstash.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg_gl.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg_gl_utils.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\stb_image.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\stb_truetype.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGDrawNode.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGNode.h">
+      <Filter>Classes\quick-src\extra\nanovg\nanonode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.hpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.hpp">
+      <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
@@ -460,6 +505,15 @@
     </Filter>
     <Filter Include="Classes\quick-src\extra\platform\wp8">
       <UniqueIdentifier>{981a71f2-f77b-42c9-9a54-79a837465a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\nanovg">
+      <UniqueIdentifier>{e11e0e99-d202-4d19-ab9b-4494be8bf622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\nanovg\nanovg">
+      <UniqueIdentifier>{44088d78-37aa-49d1-80d0-6734ebd7a6fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\quick-src\extra\nanovg\nanonode">
+      <UniqueIdentifier>{0bc34e79-dffd-404b-8e1b-f61da834e11f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

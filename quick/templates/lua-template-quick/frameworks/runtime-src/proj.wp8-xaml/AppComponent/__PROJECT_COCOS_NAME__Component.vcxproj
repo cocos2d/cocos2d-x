@@ -248,6 +248,17 @@
     <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\cocos2dx_extra_luabinding.cpp" />
     <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\HelperFunc_luabinding.cpp" />
     <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_filter_auto.cpp" />
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.cpp" />
+    <ClCompile Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.cpp" />
+    <ClCompile Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGDrawNode.cpp" />
+    <ClCompile Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGNode.cpp" />
+    <ClCompile Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Classes\quick-src\extra\network\CCHTTPRequest.cpp" />
     <ClCompile Include="..\..\Classes\quick-src\extra\network\CCNetwork.cpp" />
     <ClCompile Include="..\..\Classes\quick-src\extra\platform\wp8\CCCryptoWP8.cpp" />
@@ -487,6 +498,16 @@
     <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\cocos2dx_extra_luabinding.h" />
     <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\HelperFunc_luabinding.h" />
     <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_filter_auto.hpp" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_auto.hpp" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.hpp" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGDrawNode.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanonode\NVGNode.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\fontstash.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg_gl.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\nanovg_gl_utils.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\stb_image.h" />
+    <ClInclude Include="..\..\Classes\quick-src\extra\nanovg\nanovg\stb_truetype.h" />
     <ClInclude Include="..\..\Classes\quick-src\extra\native\CCAlertViewDelegate.h" />
     <ClInclude Include="..\..\Classes\quick-src\extra\native\CCNative.h" />
     <ClInclude Include="..\..\Classes\quick-src\extra\network\CCHTTPRequest.h" />
