@@ -348,26 +348,6 @@ namespace cocostudio
         pageView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         
-        if (backGroundScale9Enabled)
-        {
-            auto f_capInsets = options->capInsets();
-            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
-            pageView->setBackGroundImageCapInsets(capInsets);
-            
-            auto f_scale9Size = options->scale9Size();
-            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
-            pageView->setContentSize(scale9Size);
-        }
-        else
-        {
-            auto widgetOptions = options->widgetOptions();
-            if (!pageView->isIgnoreContentAdaptWithSize())
-            {
-                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
-                pageView->setContentSize(contentSize);
-            }
-        }
-        
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
         Color3B color(f_color->r(), f_color->g(), f_color->b());
@@ -380,6 +360,24 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
+        if (backGroundScale9Enabled)
+        {
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            pageView->setBackGroundImageCapInsets(capInsets);
+            
+            auto f_scale9Size = options->scale9Size();
+            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
+            pageView->setContentSize(scale9Size);
+        }
+        else
+        {
+            if (!pageView->isIgnoreContentAdaptWithSize())
+            {
+                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+                pageView->setContentSize(contentSize);
+            }
+        }
     }
     
     Node* PageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *pageViewOptions)

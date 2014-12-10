@@ -434,27 +434,6 @@ namespace cocostudio
         std::string imageFileName = imageFileNameDic->path()->c_str();
         listView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
-        
-        if (backGroundScale9Enabled)
-        {
-            auto f_capInsets = options->capInsets();
-            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
-            listView->setBackGroundImageCapInsets(capInsets);
-            
-            auto f_scale9Size = options->scale9Size();
-            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
-            listView->setContentSize(scale9Size);
-        }
-        else
-        {
-            auto widgetOptions = options->widgetOptions();
-            if (!listView->isIgnoreContentAdaptWithSize())
-            {
-                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
-                listView->setContentSize(contentSize);
-            }
-        }
-        
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
         Color3B color(f_color->r(), f_color->g(), f_color->b());
@@ -511,10 +490,24 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
-        if (!listView->isIgnoreContentAdaptWithSize())
+        if (backGroundScale9Enabled)
         {
-            Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
-            listView->setContentSize(contentSize);
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            listView->setBackGroundImageCapInsets(capInsets);
+            
+            auto f_scale9Size = options->scale9Size();
+            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
+            listView->setContentSize(scale9Size);
+        }
+        else
+        {
+            auto widgetOptions = options->widgetOptions();
+            if (!listView->isIgnoreContentAdaptWithSize())
+            {
+                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+                listView->setContentSize(contentSize);
+            }
         }
     }
     

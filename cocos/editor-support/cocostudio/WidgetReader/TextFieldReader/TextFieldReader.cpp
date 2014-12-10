@@ -274,9 +274,6 @@ namespace cocostudio
         TextField* textField = static_cast<TextField*>(node);
         auto options = (TextFieldOptions*)textFieldOptions;
         
-        textField->setUnifySizeEnabled(false);
-        textField->ignoreContentAdaptWithSize(false);
-        
         std::string placeholder = options->placeHolder()->c_str();
         textField->setPlaceHolder(placeholder);
         
@@ -315,6 +312,9 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        textField->setUnifySizeEnabled(false);
+        textField->ignoreContentAdaptWithSize(false);
         
         auto widgetOptions = options->widgetOptions();
         if (!textField->isIgnoreContentAdaptWithSize())

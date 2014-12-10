@@ -572,19 +572,6 @@ namespace cocostudio
         std::string disabledTexturePath = disabledDic->path()->c_str();
         button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
         
-        if (scale9Enabled)
-        {
-            button->setUnifySizeEnabled(false);
-            button->ignoreContentAdaptWithSize(false);
-            
-            auto f_capInsets = options->capInsets();
-            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
-            button->setCapInsets(capInsets);
-            
-            Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
-            button->setContentSize(scale9Size);
-        }
-        
         std::string titleText = options->text()->c_str();
         button->setTitleText(titleText);
         
@@ -608,20 +595,21 @@ namespace cocostudio
         bool displaystate = options->displaystate();
         button->setBright(displaystate);
         button->setEnabled(displaystate);
-        
-        Size contentSize;
-        if (!button->isScale9Enabled())
-        {
-            button->setUnifySizeEnabled(true);
-            contentSize = button->getVirtualRendererSize();
-        }
 
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-
-        if (!button->isScale9Enabled())
+        
+        if (scale9Enabled)
         {
-            button->setContentSize(contentSize);
+            button->setUnifySizeEnabled(false);
+            button->ignoreContentAdaptWithSize(false);
+            
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            button->setCapInsets(capInsets);
+            
+            Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
+            button->setContentSize(scale9Size);
         }
     }
     
