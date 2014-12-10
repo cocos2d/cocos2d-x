@@ -56,21 +56,21 @@ public class Cocos2dxTypefaces {
     // Methods
     // ===========================================================
 
-    public static synchronized Typeface get(final Context pContext, final String pAssetName) {
-        if (!Cocos2dxTypefaces.sTypefaceCache.containsKey(pAssetName)) {
+    public static synchronized Typeface get(final Context context, final String assetName) {
+        if (!Cocos2dxTypefaces.sTypefaceCache.containsKey(assetName)) {
             Typeface typeface = null;
-            if (pAssetName.startsWith("/"))
+            if (assetName.startsWith("/"))
             {
-                typeface = Typeface.createFromFile(pAssetName);
+                typeface = Typeface.createFromFile(assetName);
             }
             else
             {
-                typeface = Typeface.createFromAsset(pContext.getAssets(), pAssetName);
+                typeface = Typeface.createFromAsset(context.getAssets(), assetName);
             }
-            Cocos2dxTypefaces.sTypefaceCache.put(pAssetName, typeface);
+            Cocos2dxTypefaces.sTypefaceCache.put(assetName, typeface);
         }
 
-        return Cocos2dxTypefaces.sTypefaceCache.get(pAssetName);
+        return Cocos2dxTypefaces.sTypefaceCache.get(assetName);
     }
 
     // ===========================================================
