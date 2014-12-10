@@ -137,10 +137,10 @@ public class Cocos2dxMusic {
         	mBackgroundMediaPlayer.release();
         	mBackgroundMediaPlayer = createMediaplayer(mCurrentPath);
         	
-        	/**
-        	 * should set the state, if not, the following sequence will be error
-        	 * play -> pause -> stop -> resume
-        	 */
+            /**
+             * should set the state, if not, the following sequence will be error
+             * play -> pause -> stop -> resume
+             */
             this.mPaused = false;
         }
     }
@@ -197,11 +197,11 @@ public class Cocos2dxMusic {
 
     public void setBackgroundVolume(float volume) {
         if (volume < 0.0f) {
-        	volume = 0.0f;
+            volume = 0.0f;
         }
 
         if (volume > 1.0f) {
-        	volume = 1.0f;
+            volume = 1.0f;
         }
 
         this.mLeftVolume = this.mRightVolume = volume;

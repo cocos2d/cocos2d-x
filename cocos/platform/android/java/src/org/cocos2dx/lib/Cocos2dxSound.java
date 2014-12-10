@@ -250,10 +250,10 @@ public class Cocos2dxSound {
     public void setEffectsVolume(float volume) {
         // volume should be in [0, 1.0]
         if (volume < 0) {
-        	volume = 0;
+            volume = 0;
         }
         if (volume > 1) {
-        	volume = 1;
+            volume = 1;
         }
 
         this.mLeftVolume = this.mRightVolume = volume;
