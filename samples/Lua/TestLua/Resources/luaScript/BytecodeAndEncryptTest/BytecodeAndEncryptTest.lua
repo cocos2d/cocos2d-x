@@ -61,7 +61,10 @@ local function byteCodeEncryptMainLayer()
         item:registerScriptTapHandler(menuCallback)
         item:setPosition(size.width / 2, size.height - i * LINE_SPACE)
         menu:addChild(item, ItemTagBasic + i)
-        if (kTargetLinux == targetPlatform or isIOS64bit == true) and 1 ~= i then
+        if (kTargetWindows == targetPlatform) or (kTargetMacOS == targetPlatform) or (kTargetAndroid == targetPlatform) 
+          or ((kTargetIphone == targetPlatform or kTargetIpad == targetPlatform) and isIOS64bit ~= true) or 1 == i then
+            item:setEnabled(true)
+        else
             item:setEnabled(false)
         end
     end
