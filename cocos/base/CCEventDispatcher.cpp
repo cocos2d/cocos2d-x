@@ -287,6 +287,36 @@ void EventDispatcher::visitTarget(Node* node, bool isRootNode)
     }
 }
 
+void EventDispatcher::setEnableEventListenersForTarget(Node* target, bool isEnabled, bool recursive/* = false */)
+{
+    auto listenerIter = _nodeListenersMap.find(target);
+    if (listenerIter != _nodeListenersMap.end())
+    {
+        auto listeners = listenerIter->second;
+        for (auto& l : *listeners)
+        {
+            l->setEnabled(isEnabled);
+        }
+    }
+    
+    for (auto& listener : _toAddedListeners)
+    {
+        if (listener->getAssociatedNode() == target)
+        {
+            listener->setEnabled(isEnabled);
+        }
+    }
+    
+    if (recursive)
+    {
+        const auto& children = target->getChildren();
+        for (const auto& child : children)
+        {
+            setEnableEventListenersForTarget(child, isEnabled, true);
+        }
+    }
+}
+
 void EventDispatcher::pauseEventListenersForTarget(Node* target, bool recursive/* = false */)
 {
     auto listenerIter = _nodeListenersMap.find(target);

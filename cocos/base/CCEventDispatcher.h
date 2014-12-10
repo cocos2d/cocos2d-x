@@ -105,6 +105,8 @@ public:
     
     // Pauses / Resumes event listener
     
+    void setEnableEventListenersForTarget(Node* target, bool isEnabled, bool recursive/* = false */);
+
     /** Pauses all listeners which are associated the specified target. */
     void pauseEventListenersForTarget(Node* target, bool recursive = false);
     
