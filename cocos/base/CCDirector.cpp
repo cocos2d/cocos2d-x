@@ -971,7 +971,9 @@ void Director::purgeDirector()
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
+#ifndef __clang_analyzer__
     DrawPrimitives::free();
+#endif
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher

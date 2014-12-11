@@ -87,7 +87,9 @@ void ccDrawInit()
 
 void ccDrawFree()
 {
+#ifndef __clang_analyzer__
     DrawPrimitives::free();
+#endif
 }
 
 void ccDrawPoint( const Vec2& point )
