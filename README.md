@@ -83,6 +83,12 @@ Run
 
     $ cocos run -p win32
 
+### Build and run new project for Windows 8.1 and Windows Phone 8.1 ###
+
+    $ cocos new MyGame -p com.bar.foo -l cpp -d projects
+
+With the Cocos2d-x v3.3, you can create Universal App (Two projects at the same time: Windows(Tablet) and Windows Phone 8.1 )
+See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
 
 Main features
 -------------
@@ -124,15 +130,18 @@ Build Requirements
 * or Windows 7+, VS 2012+
 * Python 2.7.5
 * NDK r9d is required to build Android games
+* Windows Phone/Store 8.0 VS 2012+
+* Windows Phone/Store 8.1 VS 2013 Update 3+
 
 
 Runtime Requirements
 --------------------
   * iOS 5.0+ for iPhone / iPad games
   * Android 2.3+ for Android games
-  * Windows Phone 8+ for Windows Phone games
+  * Windows Phone 8 and 8.1 for Windows Phone games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
+  * Windows 8+ for WinRT games (Modern Apps)
 
 
 Running Tests
