@@ -301,7 +301,7 @@ public class Cocos2dxBitmap {
         if (pMaxWidth != 0) {
             final LinkedList<String> strList = new LinkedList<String>();
             for (final String line : lines) {
-                
+
                 if (line.contains(PILCROW)) {
                     strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidthWithPilcrow(line, pMaxWidth, pPaint));
                 } else {
@@ -472,32 +472,32 @@ public class Cocos2dxBitmap {
         final Paint pPaint) {
         final LinkedList<String> strList = new LinkedList<String>();
         String[] sChunks = pString.split(PILCROW);
-        
+
         LinkedList<String> chunks = new LinkedList<String>(Arrays.asList(sChunks));
-        
+
         StringBuilder sb = new StringBuilder();
         int k = 0;
         float measuredWidth = 0f;
 
         while (k < chunks.size()) {
             float textLength = pPaint.measureText(chunks.get(k));
-            if (textLength >= pMaxWidth) {
-                //This chunk is bigger than the max size.  We'll do it the original way.
+            if (textLength > pMaxWidth) {
+                // This chunk is bigger than the max size. We'll do it the original way.
                 List<String> toAdd = Cocos2dxBitmap.divideStringWithMaxWidth(chunks.get(k), pMaxWidth, pPaint);
                 k++;
-                
-                //We want to include the next line with our other chunks.
+
+                // We want to include the next line with our other chunks.
                 String last = toAdd.remove(toAdd.size() - 1);
                 chunks.add(k, last);
                 strList.addAll(toAdd);
-                //TODO: If wrapping seems weird, this may be the culprit, set measuredWidth = 0;
+                // TODO: If wrapping seems weird, this may be the culprit, set measuredWidth = 0;
                 continue;
             }
             // try and append some more chunks to see if it will fit in the width
             for (; k < chunks.size(); k++) {
                 measuredWidth += pPaint.measureText(chunks.get(k));
 
-                if (measuredWidth < pMaxWidth) {
+                if (measuredWidth <= pMaxWidth) {
                     sb.append(chunks.get(k));
                     continue;
                 }
@@ -507,10 +507,9 @@ public class Cocos2dxBitmap {
                 break;
             }
         }
-        
-        if (sb.length() > 0)
-            strList.add(sb.toString());
-        
+
+        if (sb.length() > 0) strList.add(sb.toString());
+
         return strList;
     }
 
