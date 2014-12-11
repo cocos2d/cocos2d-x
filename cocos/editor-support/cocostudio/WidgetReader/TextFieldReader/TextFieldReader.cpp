@@ -107,7 +107,7 @@ namespace cocostudio
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     
        
-        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
         
         bool tsw = DICTOOL->checkObjectExist_json(options, P_TouchSizeWidth);
         bool tsh = DICTOOL->checkObjectExist_json(options, P_TouchSizeHeight);
@@ -274,9 +274,6 @@ namespace cocostudio
         TextField* textField = static_cast<TextField*>(node);
         auto options = (TextFieldOptions*)textFieldOptions;
         
-        textField->setUnifySizeEnabled(false);
-        textField->ignoreContentAdaptWithSize(false);
-        
         std::string placeholder = options->placeHolder()->c_str();
         textField->setPlaceHolder(placeholder);
         
@@ -316,9 +313,13 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
+        textField->setUnifySizeEnabled(false);
+        textField->ignoreContentAdaptWithSize(false);
+        
         auto widgetOptions = options->widgetOptions();
         if (!textField->isIgnoreContentAdaptWithSize())
         {
+            ((Label*)(textField->getVirtualRenderer()))->setLineBreakWithoutSpace(true);
             Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
             textField->setContentSize(contentSize);
         }

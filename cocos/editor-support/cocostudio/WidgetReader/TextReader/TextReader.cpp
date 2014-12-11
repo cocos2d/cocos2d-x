@@ -111,7 +111,7 @@ namespace cocostudio
       
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
-        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
         
         std::string fontFilePath = jsonPath.append(fontName);
 		if (FileUtils::getInstance()->isFileExist(fontFilePath))
@@ -292,11 +292,6 @@ namespace cocostudio
         Text* label = static_cast<Text*>(node);
         auto options = (TextOptions*)textOptions;
         
-        bool IsCustomSize = options->isCustomSize();
-        label->ignoreContentAdaptWithSize(!IsCustomSize);
-        
-        label->setUnifySizeEnabled(false);
-        
         bool touchScaleEnabled = options->touchScaleEnable();
         label->setTouchScaleChangeEnabled(touchScaleEnabled);
         std::string text = options->text()->c_str();
@@ -329,6 +324,11 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        label->setUnifySizeEnabled(false);
+        
+        bool IsCustomSize = options->isCustomSize();
+        label->ignoreContentAdaptWithSize(!IsCustomSize);
         
         auto widgetOptions = options->widgetOptions();
         if (!label->isIgnoreContentAdaptWithSize())

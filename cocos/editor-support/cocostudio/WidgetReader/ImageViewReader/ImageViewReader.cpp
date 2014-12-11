@@ -302,6 +302,8 @@ namespace cocostudio
         bool scale9Enabled = options->scale9Enabled();
         imageView->setScale9Enabled(scale9Enabled);
         
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
         if (scale9Enabled)
         {
@@ -317,9 +319,6 @@ namespace cocostudio
             Rect capInsets(f_capInset->x(), f_capInset->y(), f_capInset->width(), f_capInset->height());
             imageView->setCapInsets(capInsets);
         }
-        
-        auto widgetReader = WidgetReader::getInstance();
-        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
     }
     

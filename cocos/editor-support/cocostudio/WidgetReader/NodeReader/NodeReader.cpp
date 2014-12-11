@@ -290,7 +290,7 @@ namespace cocostudio
         
         auto options = CreateWidgetOptions(*builder,
                                            builder->CreateString(name),
-                                           actionTag,
+                                           (int)actionTag,
                                            &f_rotationskew,
                                            zOrder,
                                            visible,
