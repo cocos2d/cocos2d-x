@@ -84,10 +84,6 @@ public:
     CC_SYNTHESIZE(float, _onPosition, OnPosition)
     CC_SYNTHESIZE(float, _offPosition, OffPosition)
     
-    CC_SYNTHESIZE_RETAIN(Texture2D*, _maskTexture, MaskTexture)
-    CC_SYNTHESIZE(GLuint, _textureLocation, TextureLocation)
-    CC_SYNTHESIZE(GLuint, _maskLocation, MaskLocation)
-    
     CC_SYNTHESIZE_RETAIN(Sprite*, _onSprite, OnSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _offSprite, OffSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
@@ -139,9 +135,6 @@ ControlSwitchSprite::ControlSwitchSprite()
 : _sliderXPosition(0.0f)
 , _onPosition(0.0f)
 , _offPosition(0.0f)
-, _maskTexture(nullptr)
-, _textureLocation(0)
-, _maskLocation(0)
 , _onSprite(nullptr)
 , _offSprite(nullptr)
 , _thumbSprite(nullptr)
@@ -159,7 +152,6 @@ ControlSwitchSprite::~ControlSwitchSprite()
     CC_SAFE_RELEASE(_thumbSprite);
     CC_SAFE_RELEASE(_onLabel);
     CC_SAFE_RELEASE(_offLabel);
-    CC_SAFE_RELEASE(_maskTexture);
     CC_SAFE_RELEASE(_clipperStencil);
 }
 
@@ -171,8 +163,9 @@ bool ControlSwitchSprite::initWithMaskSprite(
     Label* onLabel, 
     Label* offLabel)
 {
-    if (Sprite::initWithTexture(maskSprite->getTexture()))
+    if (Sprite::init())
     {
+        setSpriteFrame(maskSprite->getSpriteFrame());
         // Sets the default values
         _onPosition             = 0;
         _offPosition            = -onSprite->getContentSize().width + thumbSprite->getContentSize().width / 2;
@@ -185,7 +178,7 @@ bool ControlSwitchSprite::initWithMaskSprite(
         setOffLabel(offLabel);
 
         ClippingNode* clipper = ClippingNode::create();
-        _clipperStencil = Sprite::createWithTexture(maskSprite->getTexture());
+        _clipperStencil = Sprite::createWithSpriteFrame(maskSprite->getSpriteFrame());
         _clipperStencil->retain();
         clipper->setAlphaThreshold(0.1f);
         
@@ -199,11 +192,6 @@ bool ControlSwitchSprite::initWithMaskSprite(
         
         addChild(clipper);
 
-        // Set up the mask with the Mask shader
-        setMaskTexture(maskSprite->getTexture());
-
-        setContentSize(_maskTexture->getContentSize());
-
         needsLayout();
         return true;
     }
@@ -212,8 +200,8 @@ bool ControlSwitchSprite::initWithMaskSprite(
 
 void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
 {
-    CCLOGINFO("key = %s, value = %f", key.c_str(), value);
-    setSliderXPosition(value);
+    if (key == "sliderXPosition")
+        setSliderXPosition(value);
 }
 
 void ControlSwitchSprite::needsLayout()
@@ -223,10 +211,10 @@ void ControlSwitchSprite::needsLayout()
     _offSprite->setPosition(_onSprite->getContentSize().width + _offSprite->getContentSize().width / 2 + _sliderXPosition,
         _offSprite->getContentSize().height / 2);
     _thumbSprite->setPosition(_onSprite->getContentSize().width + _sliderXPosition,
-        _maskTexture->getContentSize().height / 2);
+        getContentSize().height / 2);
 
-    _clipperStencil->setPosition(_maskTexture->getContentSize().width/2,
-                                    _maskTexture->getContentSize().height / 2);
+    _clipperStencil->setPosition(getContentSize().width/2,
+                                    getContentSize().height / 2);
 
     if (_onLabel)
     {
