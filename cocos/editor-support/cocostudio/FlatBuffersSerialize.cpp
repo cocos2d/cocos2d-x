@@ -944,10 +944,7 @@ Offset<TimeLineColorFrame> FlatBuffersSerialize::createTimeLineColorFrame(const 
             
             if (resourceType == 1)
             {
-                _textures.push_back(_builder->CreateString(texture));
-                
-                texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                _texturePngs.push_back(_builder->CreateString(texturePng));
+                _textures.push_back(_builder->CreateString(texture));                                
             }
             
             child = child->NextSiblingElement();
