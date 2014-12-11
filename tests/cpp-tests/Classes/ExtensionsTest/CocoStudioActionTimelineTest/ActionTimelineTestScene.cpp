@@ -222,7 +222,7 @@ void TestChangePlaySection::onEnter()
     ActionTimelineTestLayer::onEnter();
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
-    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
+    action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
 
     node->runAction(action);
     action->gotoFrameAndPlay(41, action->getDuration(), true);
@@ -247,9 +247,9 @@ std::string TestChangePlaySection::title() const
 void TestChangePlaySection::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     if(action->getStartFrame() == 0)
-        action->gotoFrameAndPlay(70, action->getDuration(), true);
+        action->gotoFrameAndPlay(41, action->getDuration(), true);
     else
-        action->gotoFrameAndPlay(0, 60, true);
+        action->gotoFrameAndPlay(0, 40, true);
 }
 
 // TestFrameEvent

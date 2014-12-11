@@ -682,18 +682,51 @@ Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::Tim
 
 Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::TimeLineTextureFrame *flatbuffers)
 {
+    std::string path = "";
+    int resourceType = 0;
+    std::string plist = "";
+    
     TextureFrame* frame = TextureFrame::create();
     
-    std::string path = flatbuffers->path()->c_str();
-    if (FileUtils::getInstance()->isFileExist(path))
+    auto fileNameData = flatbuffers->fileNameData();
+    
+    resourceType = fileNameData->resourceType();
+    switch (resourceType)
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-        path = fullPath;
+        case 0:
+        {
+            path = fileNameData->path()->c_str();
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+                path = fullPath;
+            }
+            else
+            {
+                path = "";
+            }
+            break;
+        }
+            
+        case 1:
+        {
+            plist = fileNameData->plistFile()->c_str();
+            if (FileUtils::getInstance()->isFileExist(plist))
+            {
+                path = fileNameData->path()->c_str();
+            }
+            else
+            {
+                path = "";
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
-    else
-    {
-        path = "";
-    }
+    
+    
     frame->setTextureName(path);
     
     int frameIndex = flatbuffers->frameIndex();

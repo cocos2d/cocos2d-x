@@ -2038,13 +2038,13 @@ inline flatbuffers::Offset<TimeLineColorFrame> CreateTimeLineColorFrame(flatbuff
 struct TimeLineTextureFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
-  const flatbuffers::String *path() const { return GetPointer<const flatbuffers::String *>(8); }
+  const ResourceData *fileNameData() const { return GetPointer<const ResourceData *>(8); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* path */) &&
-           verifier.Verify(path()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* fileNameData */) &&
+           verifier.VerifyTable(fileNameData()) &&
            verifier.EndTable();
   }
 };
@@ -2054,7 +2054,7 @@ struct TimeLineTextureFrameBuilder {
   flatbuffers::uoffset_t start_;
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
-  void add_path(flatbuffers::Offset<flatbuffers::String> path) { fbb_.AddOffset(8, path); }
+  void add_fileNameData(flatbuffers::Offset<ResourceData> fileNameData) { fbb_.AddOffset(8, fileNameData); }
   TimeLineTextureFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TimeLineTextureFrameBuilder &operator=(const TimeLineTextureFrameBuilder &);
   flatbuffers::Offset<TimeLineTextureFrame> Finish() {
@@ -2066,9 +2066,9 @@ struct TimeLineTextureFrameBuilder {
 inline flatbuffers::Offset<TimeLineTextureFrame> CreateTimeLineTextureFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   flatbuffers::Offset<flatbuffers::String> path = 0) {
+   flatbuffers::Offset<ResourceData> fileNameData = 0) {
   TimeLineTextureFrameBuilder builder_(_fbb);
-  builder_.add_path(path);
+  builder_.add_fileNameData(fileNameData);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
   return builder_.Finish();
