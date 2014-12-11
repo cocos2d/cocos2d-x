@@ -78,7 +78,7 @@ public:
     void addPOSTValue(const char *key, const char *value);
 
     /** @brief Set POST data to the request body, POST only. */
-    void setPOSTData(const char *data);
+    void setPOSTData(const char *data, size_t len = 0);
 
 
 	void addFormFile(const char *name, const char *filePath, const char *fileType="application/octet-stream");
@@ -150,6 +150,8 @@ private:
     , m_responseBufferLength(0)
     , m_responseDataLength(0)
     , m_curlState(kCCHTTPRequestCURLStateIdle)
+    , m_postData(NULL)
+    , m_postDataLen(0)
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     , m_httpConnect(NULL)
     , m_cookies(NULL)
@@ -195,10 +197,13 @@ private:
     typedef map<string, string> Fields;
     Fields m_postFields;
     HTTPRequestHeaders m_headers;
+    
+    void* m_postData;
+    size_t m_postDataLen;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     jobject m_httpConnect;
-    char* m_httpMethod;
+    const char* m_httpMethod;
     Fields m_postFile;
     Fields m_postContent;
     int m_nTimeOut;
@@ -206,7 +211,7 @@ private:
 #endif
 
     // response
-    int m_responseCode;
+    long m_responseCode;
     HTTPRequestHeaders m_responseHeaders;
     void *m_responseBuffer;
     size_t m_responseBufferLength;
@@ -251,6 +256,7 @@ private:
     void setTimeoutJava(int msTime);
     int connectJava();
     void postContentJava(const char* key, const char* value, bool bConnectSym);
+    void postContentByteArrayJava(void* val, size_t len);
     void postFromContentJava(const char* key, const char* value);
     void postFromFileJava(const char* fileName, const char* filePath);
     void postFormEndJava(bool bBoundary);

@@ -98,6 +98,18 @@ public class QuickHTTPInterface {
         }
     }
 
+    static void postContentByteArray(HttpURLConnection http, byte[] byteArray) {
+        try {
+            OutputStream out = http.getOutputStream();
+
+            out.write(byteArray);
+
+            out.flush();
+        } catch (IOException e) {
+            Log.e("QuickHTTPInterface", e.toString());
+        }
+    }
+
     static void postFormContent(HttpURLConnection http, String key, String val) {
         try {
             OutputStream out = http.getOutputStream();
