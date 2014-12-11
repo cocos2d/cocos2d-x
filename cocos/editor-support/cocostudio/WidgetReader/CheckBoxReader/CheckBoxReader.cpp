@@ -164,7 +164,7 @@ namespace cocostudio
         auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
         auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        bool selectedState = true;
+        bool selectedState = false;
         bool displaystate = true;
         
         int backgroundboxResourceType = 0;
