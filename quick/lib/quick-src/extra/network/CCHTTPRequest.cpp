@@ -62,6 +62,9 @@ bool HTTPRequest::initWithUrl(const char *url, int method)
     curl_easy_setopt(m_curl, CURLOPT_TIMEOUT, DEFAULT_TIMEOUT);
     curl_easy_setopt(m_curl, CURLOPT_NOSIGNAL, 1L);
 
+    curl_easy_setopt(m_curl, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYPEER, 0L);
+
     if (method == kCCHTTPRequestMethodPOST)
     {
         curl_easy_setopt(m_curl, CURLOPT_POST, 1L);
@@ -109,13 +112,35 @@ void HTTPRequest::addPOSTValue(const char *key, const char *value)
     m_postFields[string(key)] = string(value ? value : "");
 }
 
-void HTTPRequest::setPOSTData(const char *data)
+void HTTPRequest::setPOSTData(const char *data, size_t len)
 {
     CCAssert(m_state == kCCHTTPRequestStateIdle, "HTTPRequest::setPOSTData() - request not idle");
     CCAssert(data, "HTTPRequest::setPOSTData() - invalid post data");
     m_postFields.clear();
+    if (0 == len) {
+        len = strlen(data);
+    }
+    if (0 == len) {
+        return;
+    }
+    if (m_postData)
+    {
+        free(m_postData);
+        m_postDataLen = 0;
+        m_postData = NULL;
+    }
+    m_postData = malloc(len + 1);
+    memset(m_postData, 0, len + 1);
+    if (NULL == m_postData)
+    {
+        return;
+    }
+    memcpy(m_postData, data, len);
+    m_postDataLen = len;
     curl_easy_setopt(m_curl, CURLOPT_POST, 1L);
-    curl_easy_setopt(m_curl, CURLOPT_COPYPOSTFIELDS, data);
+    //curl_easy_setopt(m_curl, CURLOPT_COPYPOSTFIELDS, data);
+    curl_easy_setopt(m_curl, CURLOPT_POSTFIELDS, m_postData);
+    curl_easy_setopt(m_curl, CURLOPT_POSTFIELDSIZE, m_postDataLen);
 }
 
 void HTTPRequest::addFormFile(const char *name, const char *filePath, const char *contentType)
@@ -169,9 +194,10 @@ void HTTPRequest::setAcceptEncoding(int acceptEncoding)
 
 void HTTPRequest::setTimeout(int timeout)
 {
+    long to = timeout;
     CCAssert(m_state == kCCHTTPRequestStateIdle, "HTTPRequest::setTimeout() - request not idle");
-    curl_easy_setopt(m_curl, CURLOPT_CONNECTTIMEOUT, timeout);
-    curl_easy_setopt(m_curl, CURLOPT_TIMEOUT, timeout);
+    curl_easy_setopt(m_curl, CURLOPT_CONNECTTIMEOUT, to);
+    curl_easy_setopt(m_curl, CURLOPT_TIMEOUT, to);
 }
 
 bool HTTPRequest::start(void)
@@ -182,7 +208,7 @@ bool HTTPRequest::start(void)
     m_curlState = kCCHTTPRequestCURLStateBusy;
     retain();
 
-    curl_easy_setopt(m_curl, CURLOPT_HTTP_CONTENT_DECODING, 1);
+    curl_easy_setopt(m_curl, CURLOPT_HTTP_CONTENT_DECODING, 1L);
     curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, writeDataCURL);
     curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
     curl_easy_setopt(m_curl, CURLOPT_HEADERFUNCTION, writeHeaderCURL);
@@ -235,7 +261,7 @@ int HTTPRequest::getState(void)
 int HTTPRequest::getResponseStatusCode(void)
 {
     CCAssert(m_state == kCCHTTPRequestStateCompleted, "Request not completed");
-    return m_responseCode;
+    return static_cast<int>(m_responseCode);
 }
 
 const HTTPRequestHeaders &HTTPRequest::getResponseHeaders(void)
@@ -507,6 +533,12 @@ void HTTPRequest::cleanup(void)
     m_state = kCCHTTPRequestStateCleared;
     m_responseBufferLength = 0;
     m_responseDataLength = 0;
+    m_postDataLen = 0;
+    if (m_postData)
+    {
+        free(m_postData);
+        m_postData = NULL;
+    }
     if (m_responseBuffer)
     {
         free(m_responseBuffer);

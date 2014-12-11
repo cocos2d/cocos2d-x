@@ -118,7 +118,26 @@ void HTTPRequest::setPOSTData(const char *data)
     CCAssert(m_state == kCCHTTPRequestStateIdle, "HTTPRequest::setPOSTData() - request not idle");
     CCAssert(data, "HTTPRequest::setPOSTData() - invalid post data");
     m_postFields.clear();
-    m_postFields[string("")] = string(data ? data : "");
+    if (0 == len) {
+        len = strlen(data);
+    }
+    if (0 == len) {
+        return;
+    }
+    if (m_postData)
+    {
+        free(m_postData);
+        m_postDataLen = 0;
+        m_postData = NULL;
+    }
+    m_postData = malloc(len + 1);
+    memset(m_postData, 0, len + 1);
+    if (NULL == m_postData)
+    {
+        return;
+    }
+    memcpy(m_postData, data, len);
+    m_postDataLen = len;
 }
 
 void HTTPRequest::addFormFile(const char *name, const char *filePath, const char *contentType)
@@ -402,6 +421,11 @@ void HTTPRequest::onRequest(void)
             }
         }
 
+        if (m_postDataLen > 0)
+        {
+            postContentByteArrayJava(m_postData, m_postDataLen);
+        }
+
         if (m_postContent.size() > 0)
         {
             for (Fields::iterator it = m_postContent.begin(); it != m_postContent.end(); ++it)
@@ -523,6 +547,12 @@ void HTTPRequest::cleanup(void)
     m_state = kCCHTTPRequestStateCleared;
     m_responseBufferLength = 0;
     m_responseDataLength = 0;
+    m_postDataLen = 0;
+    if (m_postData)
+    {
+        free(m_postData);
+        m_postData = NULL;
+    }
     if (m_responseBuffer)
     {
         free(m_responseBuffer);
@@ -667,6 +697,23 @@ void HTTPRequest::postContentJava(const char* key, const char* value, bool bConn
             methodInfo.classID, methodInfo.methodID, m_httpConnect, jstrKey, jstrVal, bConnectSym);
         methodInfo.env->DeleteLocalRef(jstrKey);
         methodInfo.env->DeleteLocalRef(jstrVal);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+}
+
+void HTTPRequest::postContentByteArrayJava(void* val, size_t len) {
+    JniMethodInfo methodInfo;
+    if (JniHelper::getStaticMethodInfo(methodInfo,
+        "org/cocos2dx/lib/QuickHTTPInterface",
+        "postContentByteArray",
+        "(Ljava/net/HttpURLConnection;[B)V"))
+    {
+        jbyteArray bytearray;
+        bytearray = methodInfo.env->NewByteArray(len);
+        methodInfo.env->SetByteArrayRegion(bytearray, 0, len, (const jbyte*)val);
+        methodInfo.env->CallStaticVoidMethod(
+            methodInfo.classID, methodInfo.methodID, m_httpConnect, bytearray);
+        methodInfo.env->DeleteLocalRef(bytearray);
         methodInfo.env->DeleteLocalRef(methodInfo.classID);
     }
 }

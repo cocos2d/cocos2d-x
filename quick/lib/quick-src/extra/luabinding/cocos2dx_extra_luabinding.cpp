@@ -840,7 +840,9 @@ static int tolua_cocos2dx_extra_luabinding_HTTPRequest_setPOSTData00(lua_State* 
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPOSTData'", NULL);
 #endif
   {
-   self->setPOSTData(data);
+      size_t len;
+      lua_tolstring(tolua_S, 2, &len);
+      self->setPOSTData(data, len);
   }
  }
  return 0;

@@ -1771,4 +1771,32 @@ function display.newProgressTimer(image, progresssType)
     return progress
 end
 
+-- start --
+
+--------------------------------
+-- 截屏并保存为一个文件
+-- @function [parent=#display] captureScreen
+-- @param function callback 截屏的回调函数
+-- @param string fileName 保存的文件, 绝对路径就直接保存, 只有文件名会保存在writePath下
+
+--[[--
+
+~~~ lua
+
+display.captureScreen(
+    function (bSuc, filePath)
+        --bSuc 截屏是否成功
+        --filePath 文件保存所在的绝对路径
+    end, "screen.png")
+
+~~~
+
+]]
+
+-- end --
+
+function display.captureScreen(callback, fileName)
+    cc.utils:captureScreen(callback, fileName)
+end
+
 return display
