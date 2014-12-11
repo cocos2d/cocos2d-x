@@ -360,6 +360,7 @@ void Text::copySpecialProperties(Widget *widget)
         setTextHorizontalAlignment(label->_labelRenderer->getHorizontalAlignment());
         setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());
         setTextAreaSize(label->_labelRenderer->getDimensions());
+        setContentSize(label->getContentSize());
     }
 }
 
