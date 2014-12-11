@@ -554,7 +554,7 @@ class ProjectCreator
         $dirname = "/quick-src";
         $src = $quickSrcPath . $dirname;
         $dst = $cocosPath . $dirname;
-        $this->copyDir($src, $dst);
+        $this->copyDir($src, $dst, false);
 
         return true;
     }
