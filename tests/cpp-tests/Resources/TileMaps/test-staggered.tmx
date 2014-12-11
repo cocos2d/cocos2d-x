@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="staggered" width="3" height="3" tilewidth="127" tileheight="97">
+ <tileset firstgid="1" name="grass" tilewidth="127" tileheight="97">
+  <image source="grass.png" width="127" height="97"/>
+ </tileset>
+ <tileset firstgid="2" name="grass01" tilewidth="127" tileheight="97">
+  <image source="grass01.png" width="127" height="97"/>
+ </tileset>
+ <layer name="块层 1" width="3" height="3">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYCSAAQDYAAo=
+  </data>
+ </layer>
+ <layer name="块层 2" width="3" height="3">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAAJiSMDAAAnAAH
+  </data>
+ </layer>
+</map>

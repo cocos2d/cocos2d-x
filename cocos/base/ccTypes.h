@@ -32,8 +32,8 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
-#include "CCGL.h"
-#include "CCRef.h"
+#include "base/CCRef.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
@@ -348,6 +348,11 @@ struct CC_DLL BlendFunc
         return src == a.src && dst == a.dst;
     }
 
+    bool operator!=(const BlendFunc &a) const
+    {
+        return src != a.src || dst != a.dst;
+    }
+
     bool operator<(const BlendFunc &a) const
     {
         return src < a.src || (src == a.src && dst < a.dst);
@@ -357,22 +362,22 @@ struct CC_DLL BlendFunc
 // Label::VAlignment
 // Label::HAlignment
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
 enum class CC_DLL TextVAlignment
 {
     TOP,
     CENTER,
-    BOTTOM,
+    BOTTOM
 };
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
 enum class CC_DLL TextHAlignment
 {
     LEFT,
     CENTER,
-    RIGHT,
+    RIGHT
 };
 
 // types for animation in particle systems

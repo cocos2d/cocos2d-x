@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhoneDirect3DXamlAppInterop</RootNamespace>
-    <AssemblyName>PhoneDirect3DXamlAppInterop</AssemblyName>
+    <RootNamespace>cocos2d</RootNamespace>
+    <AssemblyName>HelloCpp</AssemblyName>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -19,9 +19,9 @@
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>PhoneDirect3DXamlAppInterop_$(Configuration)_$(Platform).xap</XapFilename>
+    <XapFilename>HelloCpp_$(Configuration)_$(Platform).xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-    <SilverlightAppEntry>PhoneDirect3DXamlAppInterop.App</SilverlightAppEntry>
+    <SilverlightAppEntry>cocos2d.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -102,12 +102,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Resources\fonts\Marker Felt.ttf">
+      <Link>Assets\Resources\fonts\Marker Felt.ttf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Resources\CloseNormal.png">
+      <Link>Assets\Resources\CloseNormal.png</Link>
+    </Content>
+    <Content Include="..\..\Resources\CloseSelected.png">
+      <Link>Assets\Resources\CloseSelected.png</Link>
+    </Content>
+    <Content Include="..\..\Resources\HelloWorld.png">
+      <Link>Assets\Resources\HelloWorld.png</Link>
+    </Content>
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -154,14 +167,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\..\Resources\**\*">
-      <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
@@ -172,6 +178,5 @@
   <Target Name="AfterBuild">
   </Target>
     -->
-<ProjectExtensions />
- 
+  <ProjectExtensions />
 </Project>

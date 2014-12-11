@@ -1,11 +1,18 @@
 
 
 #include "ButtonReader.h"
+
 #include "ui/UIButton.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -31,7 +38,7 @@ namespace cocostudio
     
     static ButtonReader* instanceButtonReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(ButtonReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(ButtonReader)
     
     ButtonReader::ButtonReader()
     {
@@ -47,7 +54,7 @@ namespace cocostudio
     {
         if (!instanceButtonReader)
         {
-            instanceButtonReader = new ButtonReader();
+            instanceButtonReader = new (std::nothrow) ButtonReader();
         }
         return instanceButtonReader;
     }
@@ -73,7 +80,6 @@ namespace cocostudio
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue(cocoLoader);
-//            CCLOG("Button: key = %s, value = %d", key.c_str(), i);
 
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
@@ -226,10 +232,412 @@ namespace cocostudio
         button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
         
 
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
         
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }    
+    
+    Offset<Table> ButtonReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData, flatbuffers::FlatBufferBuilder *builder)
+    {
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        
+        bool displaystate = true;
+        bool scale9Enabled = false;
+        Rect capInsets;
+        std::string text = "";
+        int fontSize = 14;
+        std::string fontName = "";
+        cocos2d::Size scale9Size;
+        Color4B textColor(255, 255, 255, 255);
+        
+        std::string normalPath = "";
+        std::string normalPlistFile = "";
+        int normalResourceType = 0;
+        
+        std::string pressedPath = "";
+        std::string pressedPlistFile = "";
+        int pressedResourceType = 0;
+        
+        std::string disabledPath = "";
+        std::string disabledPlistFile = "";
+        int disabledResourceType = 0;
+        
+        std::string fontResourcePath = "";
+        std::string fontResourcePlistFile = "";
+        int fontResourceResourceType = 0;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "Scale9Enable")
+            {
+                if (value == "True")
+                {
+                    scale9Enabled = true;
+                }
+            }
+            else if (name == "Scale9OriginX")
+            {
+                capInsets.origin.x = atof(value.c_str());
+            }
+            else if (name == "Scale9OriginY")
+            {
+                capInsets.origin.y = atof(value.c_str());
+            }
+            else if (name == "Scale9Width")
+            {
+                capInsets.size.width = atof(value.c_str());
+            }
+            else if (name == "Scale9Height")
+            {
+                capInsets.size.height = atof(value.c_str());
+            }
+            else if (name == "ButtonText")
+            {
+                text = value;
+            }
+            else if (name == "FontSize")
+            {
+                fontSize = atoi(value.c_str());
+            }
+            else if (name == "FontName")
+            {
+                fontName = value;
+            }
+            else if (name == "DisplayState")
+            {
+                displaystate = (value == "True") ? true : false;
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "Size" && scale9Enabled)
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "X")
+                    {
+                        scale9Size.width = atof(value.c_str());
+                    }
+                    else if (name == "Y")
+                    {
+                        scale9Size.height = atof(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "TextColor")
+            {
+                attribute = child->FirstAttribute();
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "R")
+                    {
+                        textColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        textColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        textColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "DisabledFileData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        disabledPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        disabledResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        disabledPlistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (disabledResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "PressedFileData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        pressedPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        pressedResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        pressedPlistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (pressedResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "NormalFileData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        normalPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        normalResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        normalPlistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (normalResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "FontResource")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        fontResourcePath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        fontResourceResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        fontResourcePlistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        Color f_textColor(255, textColor.r, textColor.g, textColor.b);
+        CapInsets f_capInsets(capInsets.origin.x, capInsets.origin.y, capInsets.size.width, capInsets.size.height);
+        FlatSize f_scale9Size(scale9Size.width, scale9Size.height);
+        
+        auto options = CreateButtonOptions(*builder,
+                                           widgetOptions,
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(normalPath),
+                                                              builder->CreateString(normalPlistFile),
+                                                              normalResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(pressedPath),
+                                                              builder->CreateString(pressedPlistFile),
+                                                              pressedResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(disabledPath),
+                                                              builder->CreateString(disabledPlistFile),
+                                                              disabledResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(fontResourcePath),
+                                                              builder->CreateString(fontResourcePlistFile),
+                                                              fontResourceResourceType),
+                                           builder->CreateString(text),
+                                           builder->CreateString(fontName),
+                                           fontSize,
+                                           &f_textColor,
+                                           &f_capInsets,
+                                           &f_scale9Size,
+                                           scale9Enabled,
+                                           displaystate
+                                           );
+        
+        return *(Offset<Table>*)(&options);
     }
+    
+    void ButtonReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *buttonOptions)
+    {
+        Button* button = static_cast<Button*>(node);
+        auto options = (ButtonOptions*)buttonOptions;
+        
+        bool scale9Enabled = options->scale9Enabled();
+        button->setScale9Enabled(scale9Enabled);
+        
+        
+        auto normalDic = options->normalData();
+        int normalType = normalDic->resourceType();
+        std::string normalTexturePath = normalDic->path()->c_str();
+        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        
+        auto pressedDic = options->pressedData();
+        int pressedType = pressedDic->resourceType();
+        std::string pressedTexturePath = pressedDic->path()->c_str();
+        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        
+        auto disabledDic = options->disabledData();
+        int disabledType = disabledDic->resourceType();
+        std::string disabledTexturePath = disabledDic->path()->c_str();
+        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        
+        std::string titleText = options->text()->c_str();
+        button->setTitleText(titleText);
+        
+        auto textColor = options->textColor();
+        Color3B titleColor(textColor->r(), textColor->g(), textColor->b());
+        button->setTitleColor(titleColor);
+        
+        int titleFontSize = options->fontSize();
+        button->setTitleFontSize(titleFontSize);
+        
+        std::string titleFontName = options->fontName()->c_str();
+        button->setTitleFontName(titleFontName);
+        
+        auto resourceData = options->fontResource();
+        std::string path = resourceData->path()->c_str();
+        if (path != "")
+        {
+            button->setTitleFontName(path);
+        }
+        
+        bool displaystate = options->displaystate();
+        button->setBright(displaystate);
+        button->setEnabled(displaystate);
+
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        if (scale9Enabled)
+        {
+            button->setUnifySizeEnabled(false);
+            button->ignoreContentAdaptWithSize(false);
+            
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            button->setCapInsets(capInsets);
+            
+            Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
+            button->setContentSize(scale9Size);
+        }
+    }
+    
+    Node* ButtonReader::createNodeWithFlatBuffers(const flatbuffers::Table *buttonOptions)
+    {
+        Button* button = Button::create();
+        
+        setPropsWithFlatBuffers(button, (Table*)buttonOptions);
+        
+        return button;
+    }
+    
+    int ButtonReader::getResourceType(std::string key)
+    {
+        if(key == "Normal" || key == "Default")
+        {
+            return 	0;
+        }
+        
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
+        {
+            if(key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    
 }

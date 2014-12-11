@@ -23,15 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCController.h"
+#include "base/CCController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "ccMacros.h"
-#include "CCEventDispatcher.h"
-#include "CCEventController.h"
-#include "CCEventListenerController.h"
-#include "CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventController.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -61,9 +59,9 @@ void Controller::init()
     }
 
     _eventDispatcher = Director::getInstance()->getEventDispatcher();
-    _connectEvent = new EventController(EventController::ControllerEventType::CONNECTION, this, false);
-    _keyEvent = new EventController(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, this, 0);
-    _axisEvent = new EventController(EventController::ControllerEventType::AXIS_STATUS_CHANGED, this, 0);
+    _connectEvent = new (std::nothrow) EventController(EventController::ControllerEventType::CONNECTION, this, false);
+    _keyEvent = new (std::nothrow) EventController(EventController::ControllerEventType::BUTTON_STATUS_CHANGED, this, 0);
+    _axisEvent = new (std::nothrow) EventController(EventController::ControllerEventType::AXIS_STATUS_CHANGED, this, 0);
 }
 
 const Controller::KeyStatus& Controller::getKeyStatus(int keyCode)

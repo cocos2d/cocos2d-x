@@ -30,14 +30,11 @@
 #define __CCNODE_H__
 
 #include "base/ccMacros.h"
-#include "base/CCEventDispatcher.h"
 #include "base/CCVector.h"
-#include "base/CCScriptSupport.h"
 #include "base/CCProtocols.h"
+#include "base/CCScriptSupport.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
-#include "renderer/ccGLStateCache.h"
-#include "CCGL.h"
 
 NS_CC_BEGIN
 
@@ -153,9 +150,11 @@ public:
     virtual void setLocalZOrder(int localZOrder);
 
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    
     /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      */
-    virtual void _setLocalZOrder(int z);
+    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
+
     /**
      * Gets the local Z order of this node.
      *
@@ -293,7 +292,7 @@ public:
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Vec2(size.width/2, size.height/2) )
+     node->setPosition(size.width/2, size.height/2)
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
@@ -961,7 +960,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
     GLProgramState *getGLProgramState() const;
-    void setGLProgramState(GLProgramState *glProgramState);
+    virtual void setGLProgramState(GLProgramState *glProgramState);
 
     /**
      * Sets the shader program for this node
@@ -974,7 +973,7 @@ public:
      *
      * @param shaderProgram The shader program
      */
-    void setGLProgram(GLProgram *glprogram);
+    virtual void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     /// @} end of Shader Program
 
@@ -1130,6 +1129,13 @@ public:
      * @param tag   A tag that indicates the action to be removed.
      */
     void stopActionByTag(int tag);
+    
+    /**
+     * Removes all actions from the running action list by its tag.
+     *
+     * @param tag   A tag that indicates the action to be removed.
+     */
+    void stopAllActionsByTag(int tag);
 
     /**
      * Gets an action from the running action list by its tag.
@@ -1189,6 +1195,16 @@ public:
     bool isScheduled(SEL_SCHEDULE selector);
 
     /**
+     * Checks whether a lambda function is scheduled.
+     *
+     * @param key      key of the callback
+     * @return Whether the lambda function selector is scheduled.
+     * @js NA
+     * @lua NA
+     */
+    bool isScheduled(const std::string &key);
+
+    /**
      * Schedules the "update" method.
      *
      * It will use the order number 0. This method will be called every frame.
@@ -1224,12 +1240,12 @@ public:
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
      // wrap this function into a selector via schedule_selector marco.
-     this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
+     this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
      * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
+     * @param repeat    The selector will be excuted (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
      * @lua NA
      */
@@ -1256,6 +1272,16 @@ public:
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /**
+     * Schedules a lambda function that runs only once, with a delay of 0 or larger
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param delay         The amount of time that the first tick will wait before execution.
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void scheduleOnce(const std::function<void(float)>& callback, float delay, const std::string &key);
+
+    /**
      * Schedules a custom selector, the scheduled selector will be ticked every frame
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
@@ -1263,6 +1289,37 @@ public:
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every frame
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, const std::string &key);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every "interval" seconds
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param interval      Callback interval time in seconds. 0 means every frame,
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, float interval, const std::string &key);
+
+    /**
+     * Schedules a lambda function.
+     *
+     * @param callback  The lambda function to be schedule
+     * @param interval  Tick interval in seconds. 0 means tick every frame.
+     * @param repeat    The selector will be executed (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
+     * @param delay     The amount of time that the first tick will wait before execution.
+     * @param key       The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, float interval, unsigned int repeat, float delay, const std::string &key);
 
     /**
      * Unschedules a custom selector.
@@ -1274,22 +1331,32 @@ public:
     void unschedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedule all scheduled selectors: custom selectors, and the 'update' selector.
+     * Unschedules a lambda function
+     *
+     * @param key      The key of the lambda function to be unscheduled
+     * @lua NA
+     */
+    void unschedule(const std::string &key);
+
+    /**
+     * Unschedule all scheduled selectors and lambda functions: custom selectors, and the 'update' selector and lambda functions
      * Actions are not affected by this method.
      * @lua NA
      */
-    void unscheduleAllSelectors(void);
+    void unscheduleAllCallbacks();
+
+    CC_DEPRECATED_ATTRIBUTE void unscheduleAllSelectors() { unscheduleAllCallbacks(); }
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    void resume(void);
+    virtual void resume(void);
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    void pause(void);
+    virtual void pause(void);
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1455,6 +1522,11 @@ public:
      *   get the PhysicsBody the sprite have
      */
     PhysicsBody* getPhysicsBody() const;
+    
+    /**
+     *   remove this node from physics world. it will remove all the physics bodies in it's children too.
+     */
+    void removeFromPhysicsWorld();
 
 #endif
     
@@ -1521,6 +1593,9 @@ protected:
     bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
+    //check whether this camera mask is visible by the current visiting camera
+    bool isVisitableByVisitingCamera() const;
+    
 #if CC_USE_PHYSICS
     void updatePhysicsBodyTransform(Scene* layer);
     virtual void updatePhysicsBodyPosition(Scene* layer);
@@ -1548,6 +1623,7 @@ protected:
     float _positionZ;               ///< OpenGL real Z position
     Vec2 _normalizedPosition;
     bool _usingNormalizedPosition;
+    bool _normalizedPositionDirty;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis

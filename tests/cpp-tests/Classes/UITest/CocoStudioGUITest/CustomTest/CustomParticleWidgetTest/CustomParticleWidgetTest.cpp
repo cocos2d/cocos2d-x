@@ -34,7 +34,7 @@ void CustomParticleWidgetLayer::onEnter()
     
     CustomParticleWidget* custom = CustomParticleWidget::create();
     custom->setParticlePlist("Particles/BoilingFoam.plist");
-    
+    custom->setPosition(Vec2(VisibleRect::center()));
     addChild(custom, 10, -1);
 }
 
@@ -46,7 +46,7 @@ void CustomParticleWidgetScene::onEnter()
 {
     CCScene::onEnter();
     
-    Layer* pLayer = new CustomParticleWidgetLayer();
+    Layer* pLayer = new (std::nothrow) CustomParticleWidgetLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -57,14 +57,14 @@ void CustomParticleWidgetScene::onEnter()
     Menu* pMenu = Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void CustomParticleWidgetScene::runThisTest()
 {
-    Layer* pLayer = new CustomParticleWidgetLayer();
+    Layer* pLayer = new (std::nothrow) CustomParticleWidgetLayer();
     addChild(pLayer);
     pLayer->release();
     
@@ -73,7 +73,7 @@ void CustomParticleWidgetScene::runThisTest()
 
 void CustomParticleWidgetScene::BackCallback(Ref* pSender)
 {
-    CustomGUITestScene* pScene = new CustomGUITestScene();
+    CustomGUITestScene* pScene = new (std::nothrow) CustomGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

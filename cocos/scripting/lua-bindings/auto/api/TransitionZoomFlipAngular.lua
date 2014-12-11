@@ -9,9 +9,9 @@
 -- @overload self, float, cc.Scene, int         
 -- @function [parent=#TransitionZoomFlipAngular] create
 -- @param self
--- @param #float float
--- @param #cc.Scene scene
--- @param #int orientation
--- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular ret (retunr value: cc.TransitionZoomFlipAngular)
+-- @param #float t
+-- @param #cc.Scene s
+-- @param #int o
+-- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular ret (return value: cc.TransitionZoomFlipAngular)
 
 return nil

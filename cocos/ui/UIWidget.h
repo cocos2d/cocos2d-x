@@ -37,7 +37,7 @@ class EventListenerTouchOneByOne;
 
 
 namespace ui {
-    
+    class LayoutComponent;
 typedef enum
 {
     TOUCH_EVENT_BEGAN,
@@ -108,6 +108,8 @@ public:
 
     
     typedef std::function<void(Ref*,Widget::TouchEventType)> ccWidgetTouchCallback;
+    typedef std::function<void(Ref*)> ccWidgetClickCallback;
+    typedef std::function<void(Ref*, int)> ccWidgetEventCallback;
     /**
      * Default constructor
      */
@@ -232,11 +234,19 @@ public:
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**
-     * Sets the touch event target/selector of the menu item
+     * Sets the touch event target/selector to the widget
      */
     CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
-    void addTouchEventListener(ccWidgetTouchCallback callback);
-
+    void addTouchEventListener(const ccWidgetTouchCallback& callback);
+    /**
+     * Set a click event handler to the widget
+     */
+    void addClickEventListener(const ccWidgetClickCallback& callback);
+    /**
+     * Set a event handler to the widget in order to use cocostudio editor and framework
+     */
+    virtual void addCCSEventListener(const ccWidgetEventCallback& callback);
+    /**/
 
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -329,6 +339,17 @@ public:
     /** @deprecated Use setFlippedY() instead */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
 
+    //override the setScale function of Node
+    virtual void setScaleX(float scaleX) override;
+    virtual void setScaleY(float scaleY) override;
+    virtual void setScale(float scale) override;
+    virtual void setScale(float scalex, float scaley) override;
+    using Node::setScaleZ;
+    virtual float getScaleX() const override;
+    virtual float getScaleY() const override;
+    virtual float getScale() const override;
+    using Node::getScaleZ;
+    
     /*
      * Checks a point if in parent's area.
      *
@@ -412,7 +433,7 @@ public:
      *
      * @return size percent
      */
-    const Vec2& getSizePercent() const;
+    const Vec2& getSizePercent();
 
     /**
      * Checks a point if is in widget's space
@@ -485,7 +506,7 @@ public:
     virtual Node* getVirtualRenderer();
 
 
-    virtual const Size& getVirtualRendererSize() const;
+    virtual Size getVirtualRendererSize() const;
     
 
     /**
@@ -502,9 +523,33 @@ public:
 
     void updateSizeAndPosition(const Size& parentSize);
     
-    /*temp action*/
     void setActionTag(int tag);
 	int getActionTag()const;
+    
+    /**
+     * @brief Allow widget touch events to propagate to its parents. Set false will disable propagation
+     * @since v3.3
+     */
+    void setPropagateTouchEvents(bool isPropagate);
+    
+    /**
+     * Return whether the widget is propagate touch events to its parents or not
+     * @since v3.3
+     */
+     
+    bool isPropagateTouchEvents()const;
+    
+    /**
+     * @brief Specify widget to swallow touches or not
+     * @since v3.3
+     */
+    void setSwallowTouches(bool swallow);
+    
+    /**
+     * Return whether the widget is swallowing touch or not
+     * @since v3.3
+     */
+    bool isSwallowTouches()const;
     
     /**
      *@return  whether the widget is focused or not
@@ -568,6 +613,27 @@ public:
      * use this function to manually specify the next focused widget regards to each direction
      */
     std::function<Widget*(FocusDirection)> onNextFocusedWidget;
+    
+    /**
+     *@param enable Unify Size of a widget
+     *@return void
+     */
+    void setUnifySizeEnabled(bool enable);
+    /**
+    *@return true represent the widget use Unify Size, false represent the widget couldn't use Unify Size
+    */
+    bool isUnifySizeEnabled()const;
+    /**
+     * callbackName getter and setter.
+     */
+    void setCallbackName(const std::string& callbackName) { _callbackName = callbackName; }
+    const std::string& getCallbackName() const{ return _callbackName; }
+    
+    /**
+     * callbackType getter and setter.
+     */
+    void setCallbackType(const std::string& callbackType) { _callbackType = callbackType; }
+    const std::string& getCallbackType() const{ return _callbackType; }
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -575,12 +641,19 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
     /*
-     * Sends the touch event to widget's parent
+     * @brief Sends the touch event to widget's parent, if a widget wants to handle touch event under another widget, 
+     *        it must overide this function.
      * @param  event  the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
      * @param parent
      * @param point
      */
     virtual void interceptTouchEvent(TouchEventType event, Widget* sender, Touch *touch);
+    
+    /**
+     *@brief Propagate touch events to its parents
+     */
+    void propagateTouchEvent(TouchEventType event, Widget* sender, Touch *touch);
+    
     friend class PageView;
     /**
      * This method is called when a focus change event happens
@@ -618,8 +691,7 @@ protected:
     virtual void releaseUpEvent();
     virtual void cancelUpEvent();
 
-    virtual void updateFlippedX(){};
-    virtual void updateFlippedY(){};
+    
     virtual void adaptRenderers(){};
     void updateChildrenDisplayedRGBA();
     
@@ -636,15 +708,17 @@ protected:
     bool isAncestorsVisible(Node* node);
 
     void cleanupWidget();
+    LayoutComponent* getOrCreateLayoutComponent();
 
 protected:
+    bool _unifySize;
     bool _enabled;
     bool _bright;
     bool _touchEnabled;
     bool _highlight;
-    bool _reorderWidgetChildDirty;
     bool _affectByClipping;
     bool _ignoreSize;
+    bool _propagateTouchEvents;
 
     BrightStyle _brightStyle;
     SizeType _sizeType;
@@ -692,6 +766,11 @@ protected:
     #pragma warning (pop)
     #endif
     ccWidgetTouchCallback _touchEventCallback;
+    ccWidgetClickCallback _clickEventListener;
+    ccWidgetEventCallback _ccEventCallback;
+    
+    std::string _callbackType;
+    std::string _callbackName;
 private:
     class FocusNavigationController;
     static FocusNavigationController* _focusNavigationController;

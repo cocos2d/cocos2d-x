@@ -152,11 +152,11 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    auto menuLayer = new ContainerBasicLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) ContainerBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
 
-    log("Size of Node: %u\n", sizeof(Node));
+    log("Size of Node: %d\n", (int)sizeof(Node));
     
     int oldFontSize = MenuItemFont::getFontSize();
     MenuItemFont::setFontSize(24);
@@ -190,7 +190,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         auto sched = director->getScheduler();
         
         CC_PROFILER_PURGE_ALL();
-        sched->schedule(schedule_selector(PerformanceContainerScene::dumpProfilerInfo), this, 2, false);
+        sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceContainerScene::dumpProfilerInfo), this, 2, false);
         
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -208,7 +208,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->unschedule(schedule_selector(PerformanceContainerScene::dumpProfilerInfo), this);
+        sched->unschedule(CC_SCHEDULE_SELECTOR(PerformanceContainerScene::dumpProfilerInfo), this);
         
         this->unscheduleUpdate();
         this->_startItem->setEnabled(true);

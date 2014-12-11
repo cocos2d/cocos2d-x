@@ -46,7 +46,7 @@ Box2DTestLayer::Box2DTestLayer()
     auto label = Label::createWithTTF("Tap screen", "fonts/Marker Felt.ttf", 32.0f);
     addChild(label, 0);
     label->setColor(Color3B(0,0,255));
-    label->setPosition(Vec2( VisibleRect::center().x, VisibleRect::top().y-50));
+    label->setPosition(VisibleRect::center().x, VisibleRect::top().y-50);
     
     scheduleUpdate();
 #else
@@ -54,7 +54,7 @@ Box2DTestLayer::Box2DTestLayer()
                                             "fonts/arial.ttf",
                                             18);
     auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Vec2(size.width/2, size.height/2));
+    label->setPosition(size.width/2, size.height/2);
     
     addChild(label);
 #endif
@@ -78,7 +78,7 @@ void Box2DTestLayer::initPhysics()
 
     world->SetContinuousPhysics(true);
 
-//     _debugDraw = new GLESDebugDraw( PTM_RATIO );
+//     _debugDraw = new (std::nothrow) GLESDebugDraw( PTM_RATIO );
 //     world->SetDebugDraw(_debugDraw);
 
     uint32 flags = 0;
@@ -122,8 +122,8 @@ void Box2DTestLayer::initPhysics()
 void Box2DTestLayer::createResetButton()
 {
     auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", [](Ref *sender) {
-		auto s = new Box2DTestScene();
-		auto child = new Box2DTestLayer();
+		auto s = new (std::nothrow) Box2DTestScene();
+		auto child = new (std::nothrow) Box2DTestLayer();
 		s->addChild(child);
 		child->release();
 		Director::getInstance()->replaceScene(s);
@@ -132,7 +132,7 @@ void Box2DTestLayer::createResetButton()
 
     auto menu = Menu::create(reset, nullptr);
 
-    menu->setPosition(Vec2(VisibleRect::bottom().x, VisibleRect::bottom().y + 30));
+    menu->setPosition(VisibleRect::bottom().x, VisibleRect::bottom().y + 30);
     this->addChild(menu, -1);
 
 }
@@ -167,9 +167,8 @@ void Box2DTestLayer::onDraw()
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMV;
-    oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    auto oldMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV);
     world->DrawDebugData();
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
@@ -210,7 +209,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(Vec2 p)
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
-    sprite->setPosition( Vec2( p.x, p.y) );
+    sprite->setPosition(cocos2d::Vec2(p.x, p.y));
 #endif
 }
 
@@ -269,7 +268,7 @@ void Box2DTestLayer::accelerometer(UIAccelerometer* accelerometer, Acceleration*
 
 void Box2DTestScene::runThisTest()
 {
-    auto layer = new Box2DTestLayer();
+    auto layer = new (std::nothrow) Box2DTestLayer();
     addChild(layer);
     layer->release();
 

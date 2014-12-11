@@ -35,10 +35,10 @@ ListView::ListView():
 _model(nullptr),
 _gravity(Gravity::CENTER_VERTICAL),
 _itemsMargin(0.0f),
-_listViewEventListener(nullptr),
-_listViewEventSelector(nullptr),
 _curSelectedIndex(0),
 _refreshViewDirty(true),
+_listViewEventListener(nullptr),
+_listViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     this->setTouchEnabled(true);
@@ -54,7 +54,7 @@ ListView::~ListView()
 
 ListView* ListView::create()
 {
-    ListView* widget = new ListView();
+    ListView* widget = new (std::nothrow) ListView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -484,6 +484,10 @@ void ListView::selectedItemEvent(TouchEventType event)
             if (_eventCallback) {
                 _eventCallback(this,EventType::ON_SELECTED_ITEM_START);
             }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_START));
+            }
         }
         break;
         default:
@@ -494,6 +498,10 @@ void ListView::selectedItemEvent(TouchEventType event)
             }
             if (_eventCallback) {
                 _eventCallback(this, EventType::ON_SELECTED_ITEM_END);
+            }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_END));
             }
         }
         break;

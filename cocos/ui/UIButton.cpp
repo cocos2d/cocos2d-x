@@ -37,6 +37,7 @@ static const int NORMAL_RENDERER_Z = (-2);
 static const int PRESSED_RENDERER_Z = (-2);
 static const int DISABLED_RENDERER_Z = (-2);
 static const int TITLE_RENDERER_Z = (-1);
+static const float ZOOM_ACTION_TIME_STEP = 0.05f;
     
 IMPLEMENT_CLASS_GUI_INFO(Button)
     
@@ -45,6 +46,7 @@ _buttonNormalRenderer(nullptr),
 _buttonClickedRenderer(nullptr),
 _buttonDisableRenderer(nullptr),
 _titleRenderer(nullptr),
+_zoomScale(0.1f),
 _normalFileName(""),
 _clickedFileName(""),
 _disabledFileName(""),
@@ -83,7 +85,7 @@ Button::~Button()
 
 Button* Button::create()
 {
-    Button* widget = new Button();
+    Button* widget = new (std::nothrow) Button();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -98,7 +100,7 @@ Button* Button::create(const std::string &normalImage,
                        const std::string& disableImage,
                        TextureResType texType)
 {
-    Button *btn = new Button;
+    Button *btn = new (std::nothrow) Button;
     if (btn && btn->init(normalImage,selectedImage,disableImage,texType)) {
         btn->autorelease();
         return btn;
@@ -190,6 +192,11 @@ bool Button::isScale9Enabled()const
 
 void Button::ignoreContentAdaptWithSize(bool ignore)
 {
+    if (_unifySize)
+    {
+        this->updateContentSize();
+        return;
+    }
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
         Widget::ignoreContentAdaptWithSize(ignore);
@@ -209,7 +216,7 @@ void Button::loadTextures(const std::string& normal,
 
 void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if (normal.empty())
+    if (normal.empty() || (_normalFileName == normal && _normalTexType == texType))
     {
         return;
     }
@@ -229,18 +236,27 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     }
     
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
-    updateFlippedX();
-    updateFlippedY();
+   
     this->updateChildrenDisplayedRGBA();
     
-    updateContentSizeWithTextureSize(_normalTextureSize);
+    if (_unifySize )
+    {
+        if (!_scale9Enabled)
+        {
+            updateContentSizeWithTextureSize(this->getNormalSize());
+        }
+    }
+    else
+    {
+        updateContentSizeWithTextureSize(_normalTextureSize);
+    }
     _normalTextureLoaded = true;
     _normalTextureAdaptDirty = true;
 }
 
 void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
 {
-    if (selected.empty())
+    if (selected.empty() || (_clickedFileName == selected && _pressedTexType == texType))
     {
         return;
     }
@@ -260,9 +276,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     }
     
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
-    //TODO: mark as dirty
-    updateFlippedX();
-    updateFlippedY();
+  
     this->updateChildrenDisplayedRGBA();
 
     _pressedTextureLoaded = true;
@@ -271,7 +285,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
 
 void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
 {
-    if (disabled.empty())
+    if (disabled.empty() || (_disabledFileName == disabled && _disabledTexType == texType))
     {
         return;
     }
@@ -291,8 +305,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     }
 
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
-    updateFlippedX();
-    updateFlippedY();
+   
     this->updateChildrenDisplayedRGBA();
 
     _disabledTextureLoaded = true;
@@ -308,12 +321,29 @@ void Button::setCapInsets(const Rect &capInsets)
 
 void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
 {
-    _capInsetsNormal = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_normalTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_normalTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsNormal = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonNormalRenderer->setCapInsets(capInsets);
+    _buttonNormalRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsNormalRenderer()const
@@ -323,12 +353,29 @@ const Rect& Button::getCapInsetsNormalRenderer()const
 
 void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
 {
-    _capInsetsPressed = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_pressedTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_pressedTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsPressed = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonClickedRenderer->setCapInsets(capInsets);
+    _buttonClickedRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsPressedRenderer()const
@@ -338,12 +385,29 @@ const Rect& Button::getCapInsetsPressedRenderer()const
 
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
 {
-    _capInsetsDisabled = capInsets;
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (_disabledTextureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (_disabledTextureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    Rect rect(x, y, width, height);
+    
+    _capInsetsDisabled = rect;
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonDisableRenderer->setCapInsets(capInsets);
+    _buttonDisableRenderer->setCapInsets(rect);
 }
 
 const Rect& Button::getCapInsetsDisabledRenderer()const
@@ -362,15 +426,45 @@ void Button::onPressStateChangedToNormal()
         {
             _buttonNormalRenderer->stopAllActions();
             _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
             _buttonNormalRenderer->runAction(zoomAction);
             _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+            
+            _titleRenderer->stopAllActions();
+            if (_unifySize)
+            {
+                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1, 1);
+                _titleRenderer->runAction(zoomTitleAction);
+            }
+            else
+            {
+                _titleRenderer->runAction(zoomAction->clone());
+            }
         }
     }
     else
     {
-        _buttonNormalRenderer->stopAllActions();
-        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+        if (_scale9Enabled)
+        {
+            _buttonNormalRenderer->setColor(Color3B::WHITE);
+        }
+        else
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            
+            _titleRenderer->stopAllActions();
+            if (_unifySize)
+            {
+                _titleRenderer->setScaleX(1.0f);
+                _titleRenderer->setScaleY(1.0f);
+            }
+            else
+            {
+                _titleRenderer->setScaleX(_normalTextureScaleXInSize);
+                _titleRenderer->setScaleY(_normalTextureScaleYInSize);
+            }
+        }
     }
 }
 
@@ -386,9 +480,22 @@ void Button::onPressStateChangedToPressed()
         {
             _buttonNormalRenderer->stopAllActions();
             _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
             _buttonClickedRenderer->runAction(zoomAction);
-            _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
+            _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+            
+            _titleRenderer->stopAllActions();
+            //we must call zoomAction->clone here
+            _titleRenderer->runAction(zoomAction->clone());
+            if (_unifySize)
+            {
+                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1 + _zoomScale, 1 + _zoomScale);
+                _titleRenderer->runAction(zoomTitleAction);
+            }
+            else
+            {
+                _titleRenderer->runAction(zoomAction->clone());
+            }
         }
     }
     else
@@ -403,7 +510,19 @@ void Button::onPressStateChangedToPressed()
         else
         {
             _buttonNormalRenderer->stopAllActions();
-            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize + 0.1f, _normalTextureScaleYInSize + 0.1f);
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize +_zoomScale, _normalTextureScaleYInSize + _zoomScale);
+            
+            _titleRenderer->stopAllActions();
+            if (_unifySize)
+            {
+                _titleRenderer->setScaleX(1.0f + _zoomScale);
+                _titleRenderer->setScaleY(1.0f + _zoomScale);
+            }
+            else
+            {
+                _titleRenderer->setScaleX(_normalTextureScaleXInSize + _zoomScale);
+                _titleRenderer->setScaleY(_normalTextureScaleYInSize + _zoomScale);
+            }
         }
     }
 }
@@ -416,29 +535,31 @@ void Button::onPressStateChangedToDisabled()
     _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
     _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
-
-void Button::updateFlippedX()
-{
-    float flip = _flippedX ? -1.0f : 1.0f;
-    _titleRenderer->setScaleX(flip);
-
-    _buttonNormalRenderer->setFlippedX(_flippedX);
-    _buttonClickedRenderer->setFlippedX(_flippedX);
-    _buttonDisableRenderer->setFlippedX(_flippedX);
-}
-    
-void Button::updateFlippedY()
-{
-    float flip = _flippedY ? -1.0f : 1.0f;
-    _titleRenderer->setScaleY(flip);
-    _buttonNormalRenderer->setFlippedY(_flippedY);
-    _buttonClickedRenderer->setFlippedY(_flippedY);
-    _buttonDisableRenderer->setFlippedY(_flippedY);
-}
     
 void Button::updateTitleLocation()
 {
-    _titleRenderer->setPosition(Vec2(_contentSize.width * 0.5f, _contentSize.height * 0.5f));
+    _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
+}
+
+void Button::updateContentSize()
+{
+    if (_unifySize)
+    {
+        if (_scale9Enabled)
+        {
+            ProtectedNode::setContentSize(_customSize);
+        }
+        else
+        {
+            Size s = getNormalSize();
+            ProtectedNode::setContentSize(s);
+        }
+        onSizeChanged();
+        return;
+    }
+    if (_ignoreSize) {
+        this->setContentSize(getVirtualRendererSize());
+    }
 }
 
 void Button::onSizeChanged()
@@ -469,8 +590,16 @@ void Button::adaptRenderers()
     }
 }
 
-const Size& Button::getVirtualRendererSize() const
+Size Button::getVirtualRendererSize() const
 {
+    if (_unifySize)
+    {
+        return this->getNormalSize();
+    }
+    Size titleSize = _titleRenderer->getContentSize();
+    if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0) {
+        return titleSize;
+    }
     return _normalTextureSize;
 }
 
@@ -496,7 +625,8 @@ Node* Button::getVirtualRenderer()
 
 void Button::normalTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+
+    if (_ignoreSize && !_unifySize)
     {
         if (!_scale9Enabled)
         {
@@ -528,12 +658,14 @@ void Button::normalTextureScaleChangedWithSize()
             _normalTextureScaleYInSize = scaleY;
         }
     }
+
     _buttonNormalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void Button::pressedTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+
+    if (_ignoreSize && !_unifySize)
     {
         if (!_scale9Enabled)
         {
@@ -570,7 +702,8 @@ void Button::pressedTextureScaleChangedWithSize()
 
 void Button::disabledTextureScaleChangedWithSize()
 {
-    if (_ignoreSize)
+
+    if (_ignoreSize && !_unifySize)
     {
         if (!_scale9Enabled)
         {
@@ -608,7 +741,12 @@ void Button::setPressedActionEnabled(bool enabled)
 
 void Button::setTitleText(const std::string& text)
 {
+    if (text == getTitleText())
+    {
+        return;
+    }
     _titleRenderer->setString(text);
+    updateContentSize();
 }
 
 const std::string& Button::getTitleText() const
@@ -636,12 +774,23 @@ void Button::setTitleFontSize(float size)
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
     }
+    updateContentSize();
     _fontSize = size;
 }
 
 float Button::getTitleFontSize() const
 {
     return _fontSize;
+}
+    
+void Button::setZoomScale(float scale)
+{
+    _zoomScale = scale;
+}
+    
+float Button::getZoomScale()const
+{
+    return _zoomScale;
 }
 
 void Button::setTitleFontName(const std::string& fontName)
@@ -655,9 +804,20 @@ void Button::setTitleFontName(const std::string& fontName)
         _type = FontType::TTF;
     } else{
         _titleRenderer->setSystemFontName(fontName);
+        if (_type == FontType::TTF)
+        {
+            _titleRenderer->requestSystemFontRefresh();
+        }
+        _titleRenderer->setSystemFontSize(_fontSize);
         _type = FontType::SYSTEM;
     }
     _fontName = fontName;
+	this->updateContentSize();
+}
+    
+Label* Button::getTitleRenderer()const
+{
+    return _titleRenderer;
 }
 
 const std::string& Button::getTitleFontName() const
@@ -693,7 +853,26 @@ void Button::copySpecialProperties(Widget *widget)
         setTitleFontSize(button->getTitleFontSize());
         setTitleColor(button->getTitleColor());
         setPressedActionEnabled(button->_pressedActionEnabled);
+        setZoomScale(button->_zoomScale);
     }
+	
+}
+Size Button::getNormalSize() const
+{
+    Size titleSize;
+    if (_titleRenderer != nullptr)
+    {
+        titleSize = _titleRenderer->getContentSize();
+    }
+    Size imageSize;
+    if (_buttonNormalRenderer != nullptr)
+    {
+        imageSize = _buttonNormalRenderer->getContentSize();
+    }
+    float width = titleSize.width > imageSize.width ? titleSize.width : imageSize.width;
+    float height = titleSize.height > imageSize.height ? titleSize.height : imageSize.height;
+
+    return Size(width,height);
 }
 
 }

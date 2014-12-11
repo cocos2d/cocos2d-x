@@ -84,7 +84,7 @@ void EventDispatcherTestDemo::onEnter()
 
 void EventDispatcherTestDemo::backCallback(Ref* sender)
 {
-    auto scene = new EventDispatcherTestScene();
+    auto scene = new (std::nothrow) EventDispatcherTestScene();
     auto layer = backAction();
     
     scene->addChild(layer);
@@ -94,7 +94,7 @@ void EventDispatcherTestDemo::backCallback(Ref* sender)
 
 void EventDispatcherTestDemo::nextCallback(Ref* sender)
 {
-    auto scene = new EventDispatcherTestScene();
+    auto scene = new (std::nothrow) EventDispatcherTestScene();
     auto layer = nextAction();
     
     scene->addChild(layer);
@@ -104,7 +104,7 @@ void EventDispatcherTestDemo::nextCallback(Ref* sender)
 
 void EventDispatcherTestDemo::restartCallback(Ref* sender)
 {
-    auto scene = new EventDispatcherTestScene();
+    auto scene = new (std::nothrow) EventDispatcherTestScene();
     auto layer = restartAction();
     
     scene->addChild(layer);
@@ -233,7 +233,7 @@ class TouchableSprite : public Sprite
 public:
     static TouchableSprite* create(int priority = 0)
     {
-        auto ret = new TouchableSprite(priority);
+        auto ret = new (std::nothrow) TouchableSprite(priority);
         if (ret && ret->init())
         {
             ret->autorelease();
@@ -1298,7 +1298,7 @@ public:
     
     static DanglingNodePointersTestSprite * create(const TappedCallback & tappedCallback)
     {
-        auto ret = new DanglingNodePointersTestSprite(tappedCallback);
+        auto ret = new (std::nothrow) DanglingNodePointersTestSprite(tappedCallback);
         
         if (ret && ret->init())
         {
@@ -1350,17 +1350,14 @@ public:
         Sprite::onExit();
     }
     
-private:
-    
-    EventListenerTouchOneByOne *    _eventListener;
-    int                             _fixedPriority;
-    TappedCallback                  _tappedCallback;
+private:    
+    EventListenerTouchOneByOne* _eventListener;
+    TappedCallback _tappedCallback;
 };
 
 DanglingNodePointersTest::DanglingNodePointersTest()
 {
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
-    
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     

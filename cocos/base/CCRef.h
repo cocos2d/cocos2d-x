@@ -26,10 +26,10 @@ THE SOFTWARE.
 #ifndef __BASE_CCREF_H__
 #define __BASE_CCREF_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccConfig.h"
 
-#define CC_USE_MEM_LEAK_DETECTION 0
+#define CC_REF_LEAK_DETECTION 0
 
 NS_CC_BEGIN
 
@@ -146,8 +146,8 @@ public:
     void* _scriptObject;
 #endif
 
-    // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined and its value isn't zero)
-#if CC_USE_MEM_LEAK_DETECTION
+    // Memory leak diagnostic data (only included when CC_REF_LEAK_DETECTION is defined and its value isn't zero)
+#if CC_REF_LEAK_DETECTION
 public:
     static void printLeaks();
 #endif
@@ -162,12 +162,21 @@ typedef void (Ref::*SEL_CallFuncO)(Ref*);
 typedef void (Ref::*SEL_MenuHandler)(Ref*);
 typedef void (Ref::*SEL_SCHEDULE)(float);
 
-#define callfunc_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
-#define callfuncN_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
-#define callfuncND_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
-#define callfuncO_selector(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
-#define menu_selector(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
-#define schedule_selector(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
+#define CC_CALLFUNC_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_CallFunc>(&_SELECTOR)
+#define CC_CALLFUNCN_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_CallFuncN>(&_SELECTOR)
+#define CC_CALLFUNCND_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_CallFuncND>(&_SELECTOR)
+#define CC_CALLFUNCO_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_CallFuncO>(&_SELECTOR)
+#define CC_MENU_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
+#define CC_SCHEDULE_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
+
+// Deprecated
+#define callfunc_selector(_SELECTOR) CC_CALLFUNC_SELECTOR(_SELECTOR)
+#define callfuncN_selector(_SELECTOR) CC_CALLFUNCN_SELECTOR(_SELECTOR)
+#define callfuncND_selector(_SELECTOR) CC_CALLFUNCND_SELECTOR(_SELECTOR)
+#define callfuncO_selector(_SELECTOR) CC_CALLFUNCO_SELECTOR(_SELECTOR)
+#define menu_selector(_SELECTOR) CC_MENU_SELECTOR(_SELECTOR)
+#define schedule_selector(_SELECTOR) CC_SCHEDULE_SELECTOR(_SELECTOR)
+
 
 // end of base_nodes group
 /// @}

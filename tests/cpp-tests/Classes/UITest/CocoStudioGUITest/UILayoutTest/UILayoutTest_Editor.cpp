@@ -1,6 +1,7 @@
 
 
 #include "UILayoutTest_Editor.h"
+#include "VisibleRect.h"
 
 
 // UILayoutTest_Editor
@@ -19,20 +20,64 @@ void UILayoutTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Layout/windows_ui_layout_editor_1.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Layout/windows_ui_layout_editor_1.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Layout/crossplatform_UILayout_Editor_1.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+         
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Layout/crossplatform_UILayout_Editor_1.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -75,10 +120,20 @@ bool UILayoutTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json"));
-       
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Layout/crossplatform_UILayout_Editor_1.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
         
         return true;
     }
@@ -103,20 +158,64 @@ void UILayoutTest_Color_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Color/windows_ui_color.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Color/windows_ui_color.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_Colo.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_Color.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -157,10 +256,21 @@ bool UILayoutTest_Color_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json"));
-       
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_Color.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
@@ -184,20 +294,64 @@ void UILayoutTest_Gradient_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Gradient_Color/windows_ui_gradient_color.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Gradient_Color/windows_ui_gradient_color.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Gradient_Color/crossplatform_Gradient_Color.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Gradient_Color/crossplatform_Gradient_Color.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -239,10 +393,21 @@ bool UILayoutTest_Gradient_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json"));
-        
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Gradient_Color/crossplatform_Gradient_Color.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
@@ -266,20 +431,64 @@ void UILayoutTest_BackGroundImage_Editor::switchLoadMethod(cocos2d::Ref *pSender
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/BackgroundImage/windows_ui_backgroundimage.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/BackgroundImage/windows_ui_backgroundimage.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/BackgroundImage/crossplatform_BackgroundImage.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/BackgroundImage/crossplatform_BackgroundImage.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -321,11 +530,21 @@ bool UILayoutTest_BackGroundImage_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json"));
-
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/BackgroundImage/crossplatform_BackgroundImage.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-      
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 3.75f));
+         */
+        
         return true;
     }
     
@@ -349,20 +568,64 @@ void UILayoutTest_BackGroundImage_Scale9_Editor::switchLoadMethod(cocos2d::Ref *
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/windows_ui_scale9_backgroundimage.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/windows_ui_scale9_backgroundimage.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/crossplatform_Scale9_BackgroundImage.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/crossplatform_Scale9_BackgroundImage.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -404,11 +667,21 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json"));
- 
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/crossplatform_Scale9_BackgroundImage.csb");
+        Node* child = node->getChildByTag(5);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-       
+        
         this->configureGUIScene();
+        
+        /*
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
+         */
+        
         return true;
     }
     
@@ -432,20 +705,64 @@ void UILayoutTest_Layout_Linear_Vertical_Editor::switchLoadMethod(cocos2d::Ref *
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/windows_ui_linear_vertical_layout.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/windows_ui_linear_vertical_layout.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+         
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/crossplatform_Linear_Vertical_Layout.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/crossplatform_Linear_Vertical_Layout.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -487,11 +804,17 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/windows_ui_linear_vertical_layout.json"));
 
         _touchGroup->addChild(_layout);
         
         this->configureGUIScene();
+        
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
+        
         return true;
     }
     
@@ -515,20 +838,64 @@ void UILayoutTest_Layout_Linear_Horizontal_Editor::switchLoadMethod(cocos2d::Ref
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/windows_ui_linear_horizontal_layout.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/windows_ui_linear_horizontal_layout.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/crossplatform_Linear_Horizontal_Layout.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/crossplatform_Linear_Horizontal_Layout.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -570,10 +937,15 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/windows_ui_linear_horizontal_layout.json"));
         _touchGroup->addChild(_layout);
       
         this->configureGUIScene();
+        
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
         
         return true;
     }
@@ -598,20 +970,64 @@ void UILayoutTest_Layout_Relative_Align_Parent_Editor::switchLoadMethod(cocos2d:
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/windows_ui_relative_align_parent.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/windows_ui_relative_align_parent.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/crossplatform_Relative_Align_Parent.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/crossplatform_Relative_Align_Parent.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -653,9 +1069,14 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/windows_ui_relative_align_parent.json"));
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
+        
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
         
         return true;
     }
@@ -680,20 +1101,64 @@ void UILayoutTest_Layout_Relative_Location_Editor::switchLoadMethod(cocos2d::Ref
 {
     MenuItemToggle *item = (MenuItemToggle*)pSender;
     
-    if (item->getSelectedIndex() == 0){
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
-    }else{
-        _layout->removeFromParentAndCleanup(true);
-        
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.csb"));
-        _touchGroup->addChild(_layout);
-        
-        this->configureGUIScene();
+    switch (item->getSelectedIndex())
+    {
+        case 0:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Location/windows_ui_relative_align_location.json"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 1:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Relative_Align_Location/windows_ui_relative_align_location.csb"));
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 2:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Relative_Align_Location/crossplatform_Relative_Align_Location.ExportJson");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        case 3:
+        {
+            _layout->removeFromParentAndCleanup(true);
+            
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Relative_Align_Location/crossplatform_Relative_Align_Location.csb");
+            Node* child = node->getChildByTag(5);
+            child->removeFromParent();
+            _layout = static_cast<Layout*>(child);
+            _touchGroup->addChild(_layout);
+            
+            this->configureGUIScene();
+            
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
@@ -735,9 +1200,15 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Location/windows_ui_relative_align_location.json"));
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
+        
+        Menu* menu = static_cast<Menu*>(getChildByTag(1));
+        MenuItemToggle* menuItemToggle = static_cast<MenuItemToggle*>(menu->getChildByTag(1));
+        MenuItem* selectedItem = menuItemToggle->getSelectedItem();
+        menuItemToggle->setPosition(Vec2(VisibleRect::center().x, VisibleRect::center().y + selectedItem->getContentSize().height * 4.25f));
+        
         return true;
     }
     

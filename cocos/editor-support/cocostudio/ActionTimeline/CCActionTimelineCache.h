@@ -25,10 +25,26 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_ACTION_CACHE_H__
 #define __CCTIMELINE_ACTION_CACHE_H__
 
-#include "cocos2d.h"
+#include <unordered_map>
+#include "base/CCMap.h"
+
 #include "cocostudio/DictionaryHelper.h"
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
+
+namespace flatbuffers
+{
+    struct FlatBufferBuilder;
+    
+    struct NodeAction;
+    struct TimeLine;
+    struct TimeLineBoolFrame;
+    struct TimeLineIntFrame;
+    struct TimeLineStringFrame;
+    struct TimeLinePointFrame;
+    struct TimeLineColorFrame;
+    struct TimeLineTextureFrame;
+}
 
 NS_TIMELINE_BEGIN
 
@@ -51,12 +67,20 @@ public:
 
     /** Remove action with filename, and also remove other resource relate with this file */
     void removeAction(const std::string& fileName);
+    
+    static ActionTimeline* createAction(const std::string& fileName);
 
     /** Clone a action with the specified name from the container. */
-    ActionTimeline* createAction(const std::string& fileName);
+    ActionTimeline* createActionFromJson(const std::string& fileName);
 
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
+    
+    ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
+    ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
+    
+    ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
+    
 protected:
 
     Timeline* loadTimeline(const rapidjson::Value& json);
@@ -73,6 +97,19 @@ protected:
     Frame* loadTextureFrame     (const rapidjson::Value& json);
     Frame* loadEventFrame       (const rapidjson::Value& json);
     Frame* loadZOrderFrame      (const rapidjson::Value& json);
+    
+    
+    Timeline* loadTimelineWithFlatBuffers(const flatbuffers::TimeLine* flatbuffers);
+    
+    Frame* loadVisibleFrameWithFlatBuffers      (const flatbuffers::TimeLineBoolFrame* flatbuffers);
+    Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::TimeLineIntFrame* flatbuffers);
+    Frame* loadRotationSkewFrameWithFlatBuffers (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadEventFrameWithFlatBuffers        (const flatbuffers::TimeLineStringFrame* flatbuffers);
+    Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadPositionFrameWithFlatBuffers     (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadScaleFrameWithFlatBuffers        (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadColorFrameWithFlatBuffers        (const flatbuffers::TimeLineColorFrame* flatbuffers);
+    Frame* loadTextureFrameWithFlatBuffers      (const flatbuffers::TimeLineTextureFrame* flatbuffers);
 
 protected:
 

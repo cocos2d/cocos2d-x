@@ -26,12 +26,24 @@ THE SOFTWARE.
 #define  _RUNTIME__H_
 
 #include <string>
-using namespace std;
 
-bool initRuntime();
-bool startRuntime();
+void recvBuf(int fd, char *pbuf, unsigned long bufsize);
 
-bool reloadScript(string modulefile);
+void sendBuf(int fd, const char *pbuf, unsigned long bufsize);
+
+std::string& replaceAll(std::string& str, const std::string& old_value, const std::string& new_value);
+
+std::string getIPAddress();
+
+const char* getRuntimeVersion();
+
+void startScript(std::string strDebugArg);
+
+void initRuntime();
+
+void startRuntime();
+
+void endRuntime();
 
 #endif // _RUNTIME__H_
 

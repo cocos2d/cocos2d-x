@@ -96,7 +96,7 @@ static int tolua_cocos2dx_ScrollView_setDelegate(lua_State* tolua_S)
     
     if (0 == argc)
     {
-        LuaScrollViewDelegate* delegate = new LuaScrollViewDelegate();
+        LuaScrollViewDelegate* delegate = new (std::nothrow) LuaScrollViewDelegate();
         if (nullptr == delegate)
             return 0;
         
@@ -108,7 +108,7 @@ static int tolua_cocos2dx_ScrollView_setDelegate(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'setDelegate' function of ScrollView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(tolua_S, "'setDelegate' function of ScrollView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -156,7 +156,7 @@ static int tolua_cocos2d_ScrollView_registerScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of ScrollView has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:registerScriptHandler",argc, 2);
+    luaL_error(tolua_S, "%s function of ScrollView has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -201,7 +201,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:unregisterScriptHandler", argc, 1);
+    luaL_error(tolua_S, "%s function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:unregisterScriptHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -277,7 +277,7 @@ static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of Control has wrong number of arguments: %d, was expecting %d\n", "cc.Control:registerControlEventHandler", argc, 2);
+    luaL_error(tolua_S, "%s function of Control has wrong number of arguments: %d, was expecting %d\n", "cc.Control:registerControlEventHandler", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -330,7 +330,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("%s function of Control  has wrong number of arguments: %d, was expecting %d\n", "cc.Control:unregisterControlEventHandler", argc, 1);
+    luaL_error(tolua_S, "%s function of Control  has wrong number of arguments: %d, was expecting %d\n", "cc.Control:unregisterControlEventHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -356,110 +356,7 @@ static void extendControl(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S)
-{
-    if (NULL == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    EditBox* self = nullptr;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"cc.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    self = static_cast<EditBox*>(tolua_tousertype(tolua_S,1,0));
-    
-#if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'\n", NULL);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (1 == argc)
-    {
-#if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
-        {
-            goto tolua_lerror;
-        }
-#endif
-        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        self->registerScriptEditBoxHandler(handler);
-        return 0;
-    }
-    
-    CCLOG("%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "cc.EditBox:registerScriptEditBoxHandler", argc, 1);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'.",&tolua_err);
-    return 0;
-#endif
 
-}
-
-static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* tolua_S)
-{
-    
-    if (NULL == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    EditBox* self = nullptr;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"cc.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    self = static_cast<EditBox*>(tolua_tousertype(tolua_S,1,0));
-    
-#if COCOS2D_DEBUG >= 1
-	if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'\n", NULL);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (0 == argc)
-    {
-        self->unregisterScriptEditBoxHandler();
-        return 0;
-    }
-    
-    CCLOG("%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "cc.EditBox:unregisterScriptEditBoxHandler", argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-static void extendEditBox(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.EditBox");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"registerScriptEditBoxHandler");
-        lua_pushcfunction(tolua_S,tolua_cocos2d_EditBox_registerScriptEditBoxHandler );
-        lua_rawset(tolua_S,-3);
-        lua_pushstring(tolua_S,"unregisterScriptEditBoxHandler");
-        lua_pushcfunction(tolua_S,tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler );
-        lua_rawset(tolua_S,-3);
-    }
-    lua_pop(tolua_S, 1);
-}
 
 class LuaAssetsManagerDelegateProtocol:public Ref, public AssetsManagerDelegateProtocol
 {
@@ -538,7 +435,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         LuaAssetsManagerDelegateProtocol* delegate = dynamic_cast<LuaAssetsManagerDelegateProtocol*>( self->getDelegate());
         if (nullptr == delegate)
         {
-            delegate = new LuaAssetsManagerDelegateProtocol();
+            delegate = new (std::nothrow) LuaAssetsManagerDelegateProtocol();
             if (nullptr == delegate)
                 return 0;
             
@@ -554,7 +451,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -698,7 +595,7 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
     
     if (0 == argc)
     {
-        LUA_TableViewDelegate* delegate = new LUA_TableViewDelegate();
+        LUA_TableViewDelegate* delegate = new (std::nothrow) LUA_TableViewDelegate();
         if (nullptr == delegate)
             return 0;
         
@@ -720,7 +617,7 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -835,7 +732,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
     
     if (0 == argc)
     {
-        LUA_TableViewDataSource* dataSource = new LUA_TableViewDataSource();
+        LUA_TableViewDataSource* dataSource = new (std::nothrow) LUA_TableViewDataSource();
         if (nullptr == dataSource)
             return 0;
         
@@ -859,7 +756,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -886,7 +783,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
     
     if (2 == argc || 1 == argc)
     {
-        LUA_TableViewDataSource* dataSource = new LUA_TableViewDataSource();
+        LUA_TableViewDataSource* dataSource = new (std::nothrow) LUA_TableViewDataSource();
         Size size;
         ok &= luaval_to_size(L, 2, &size, "cc.TableView:create");
         
@@ -924,7 +821,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         return 1;
     }
-    CCLOG("'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -972,7 +869,7 @@ static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1017,7 +914,7 @@ static int lua_cocos2d_TableView_unregisterScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1042,13 +939,81 @@ static void extendTableView(lua_State* L)
     lua_pop(L, 1);
 }
 
+static void extendManifest(lua_State* L)
+{
+    lua_pushstring(L, "cc.Manifest");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    lua_pop(L, 1);
+}
+
+static int lua_cocos2dx_Extension_EventListenerAssetsManagerEx_create(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertable(L,1,"cc.EventListenerAssetsManagerEx",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(L)-1;
+    
+    if (argc == 2)
+    {
+        
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isusertype(L, 2, "cc.AssetsManagerEx", 0, &tolua_err) ||
+            !toluafix_isfunction(L,3,"LUA_FUNCTION",0,&tolua_err))
+            goto tolua_lerror;
+#endif
+        cocos2d::extension::AssetsManagerEx* assetManager =  static_cast<cocos2d::extension::AssetsManagerEx*>(tolua_tousertype(L,2,nullptr));
+        
+        LUA_FUNCTION handler = toluafix_ref_function(L,3,0);
+        
+        cocos2d::extension::EventListenerAssetsManagerEx* ret = cocos2d::extension::EventListenerAssetsManagerEx::create(assetManager, [=](EventAssetsManagerEx* event){
+            int id = event? (int)event->_ID : -1;
+            int* luaID = event? &event->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(L, id, luaID, (void*)event,"cc.EventAssetsManagerEx");
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
+        });
+        
+        int  id = (ret) ? (int)ret->_ID : -1;
+        int* luaID = (ret) ? &ret->_luaID : nullptr;
+        toluafix_pushusertype_ccobject(L, id, luaID, (void*)ret,"cc.EventListenerAssetsManagerEx");
+        return 1;
+    }
+    
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "create",argc, 2);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_Extension_EventListenerAssetsManagerEx_create'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendEventListenerAssetsManagerEx(lua_State* L)
+{
+    lua_pushstring(L, "cc.EventListenerAssetsManagerEx");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "create", lua_cocos2dx_Extension_EventListenerAssetsManagerEx_create);
+    }
+    lua_pop(L, 1);
+}
+
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
-    extendEditBox(tolua_S);
     extendAssetsManager(tolua_S);
     extendScrollView(tolua_S);
     extendTableView(tolua_S);
+    extendManifest(tolua_S);
+    extendEventListenerAssetsManagerEx(tolua_S);
     return 0;
 }
 
@@ -1061,9 +1026,5 @@ int register_extension_module(lua_State* tolua_S)
         register_all_cocos2dx_extension_manual(tolua_S);
     }
     lua_pop(tolua_S, 1);
-    
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedExtensionClass");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedExtensionEnum");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedExtensionFunc");
     return 1;
 }

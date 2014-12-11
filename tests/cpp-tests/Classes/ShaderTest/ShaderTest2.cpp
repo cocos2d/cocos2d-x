@@ -34,6 +34,7 @@ namespace ShaderTest2
     static std::function<Layer*()> createFunctions[] =
     {
         CL(EffectSpriteTest),
+        CL(EffectSpriteLamp),
     };
     
     static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
@@ -208,7 +209,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _fragSource = fragSource;
 #endif
     
@@ -221,7 +222,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
 Effect::Effect()
 : _glprogramstate(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
@@ -239,7 +240,7 @@ Effect::Effect()
 Effect::~Effect()
 {
     CC_SAFE_RELEASE_NULL(_glprogramstate);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
 #endif
 }
@@ -433,6 +434,77 @@ protected:
     }
 };
 
+class EffectNormalMapped : public Effect
+{
+public:
+    CREATE_FUNC(EffectNormalMapped);
+    static EffectNormalMapped* create(const std::string&normalMapFileName)
+    {
+        EffectNormalMapped *normalMappedSprite = new (std::nothrow) EffectNormalMapped();
+        if (normalMappedSprite && normalMappedSprite->init() && normalMappedSprite->initNormalMap(normalMapFileName))
+        {
+            
+            normalMappedSprite->autorelease();
+            return normalMappedSprite;
+        }
+        CC_SAFE_DELETE(normalMappedSprite);
+        return nullptr;
+    }
+    void setKBump(float value);
+    void setLightPos(const Vec3& pos);
+    void setLightColor(const Color4F& color);
+    float getKBump()const{return _kBump;}
+protected:
+    bool init();
+    bool initNormalMap(const std::string&normalMapFileName);
+    virtual void setTarget(EffectSprite* sprite) override;
+    EffectSprite* _sprite;
+    Vec3 _lightPos;
+    Color4F _lightColor;
+    float  _kBump;
+};
+
+bool EffectNormalMapped::init()
+{
+    initGLProgramState("Shaders3D/Normal.frag");
+    _kBump = 2;
+    return true;
+}
+bool EffectNormalMapped::initNormalMap(const std::string& normalMapFileName)
+{
+    auto normalMapTextrue = Director::getInstance()->getTextureCache()->addImage(normalMapFileName);
+    getGLProgramState()->setUniformTexture("u_normalMap", normalMapTextrue);
+    return true;
+}
+void EffectNormalMapped::setTarget(EffectSprite* sprite)
+{
+    _sprite = sprite;
+    getGLProgramState()->setUniformFloat("u_kBump", _kBump);
+    getGLProgramState()->setUniformVec2("u_contentSize", Vec2(sprite->getContentSize().width,sprite->getContentSize().height));
+}
+
+void EffectNormalMapped::setKBump(float value)
+{
+    _kBump = value;
+    auto glProgramState = getGLProgramState();
+    if(glProgramState) glProgramState->setUniformFloat("u_kBump", _kBump);
+}
+
+void EffectNormalMapped::setLightPos(const Vec3& pos)
+{
+    _lightPos = pos;
+    auto glProgramState = getGLProgramState();
+    if(glProgramState) glProgramState->setUniformVec4("u_lightPosInLocalSpace", Vec4(_lightPos.x,_lightPos.y,_lightPos.z,1));
+    
+}
+
+void EffectNormalMapped::setLightColor(const Color4F& color)
+{
+    _lightColor = color;
+    auto glProgramState = getGLProgramState();
+    if(glProgramState) getGLProgramState()->setUniformVec3("u_diffuseL", Vec3(_lightColor.r,_lightColor.g,_lightColor.b));
+    
+}
 
 EffectSpriteTest::EffectSpriteTest()
 {
@@ -495,3 +567,79 @@ EffectSpriteTest::EffectSpriteTest()
     }
 }
 
+EffectSpriteLamp::EffectSpriteLamp()
+{
+    if (ShaderTestDemo2::init()) {
+        
+        auto s = Director::getInstance()->getWinSize();
+        _sprite = EffectSprite::create("Images/elephant1_Diffuse.png");
+        //auto contentSize = _sprite->getContentSize();
+        _sprite->setPosition(Vec2(s.width/2, s.height/2));
+        addChild(_sprite);
+        
+        auto lampEffect = EffectNormalMapped::create("Images/elephant1_Normal.png");
+        
+        Vec3 pos(150,150, 50);
+        _lightSprite = Sprite::create("Images/ball.png");
+        this->addChild(_lightSprite);
+        _lightSprite->setPosition(Vec2(pos.x, s.height- pos.y));
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        lampEffect->setLightColor(Color4F(1,1,1,1));
+        lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+        lampEffect->setKBump(2);
+        _sprite->setEffect(lampEffect);
+        _effect = lampEffect;
+        auto listerner = EventListenerTouchAllAtOnce::create();
+        listerner->onTouchesBegan = CC_CALLBACK_2(EffectSpriteLamp::onTouchesBegan, this);
+        listerner->onTouchesMoved = CC_CALLBACK_2(EffectSpriteLamp::onTouchesMoved, this);
+        listerner->onTouchesEnded = CC_CALLBACK_2(EffectSpriteLamp::onTouchesEnded, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listerner, this);
+    }
+}
+
+
+void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event)
+{
+    for ( auto &item: touches )
+    {
+        auto touch = item;
+        auto s = Director::getInstance()->getWinSize();
+        Point loc_winSpace = touch->getLocationInView();
+        _lightSprite->setPosition(Vec2( loc_winSpace.x,  s.height - loc_winSpace.y));
+        Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+    }
+}
+
+void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event)
+{
+    for ( auto &item: touches )
+    {
+        auto touch = item;
+        auto s = Director::getInstance()->getWinSize();
+        Point loc_winSpace = touch->getLocationInView();
+        _lightSprite->setPosition(Vec2( loc_winSpace.x, s.height - loc_winSpace.y));
+        Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+    }
+}
+
+void EffectSpriteLamp::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
+{
+    for ( auto &item: touches )
+    {
+        auto touch = item;
+        auto s = Director::getInstance()->getWinSize();
+        Point loc_winSpace = touch->getLocationInView();
+        _lightSprite->setPosition(Vec2( loc_winSpace.x, s.height - loc_winSpace.y));
+        Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
+    }
+}

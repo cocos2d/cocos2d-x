@@ -107,10 +107,11 @@ public:
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Action();
     virtual ~Action();
 
+protected:
     Node    *_originalTarget;
     /** The "target".
     The target will be set with the 'startWithTarget' method.
@@ -156,12 +157,13 @@ public:
         return nullptr;
     }
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     FiniteTimeAction()
     : _duration(0)
     {}
     virtual ~FiniteTimeAction(){}
 
+protected:
     //! duration in seconds
     float _duration;
 
@@ -242,7 +244,8 @@ public:
 
     inline bool isBoundarySet() const { return _boundarySet; }
     /** alter behavior - turn on/off boundary */
-    inline void setBoudarySet(bool value) { _boundarySet = value; }
+    inline void setBoundarySet(bool value) { _boundarySet = value; }
+    CC_DEPRECATED_ATTRIBUTE inline void setBoudarySet(bool value) { setBoundarySet(value); }
 
     //
     // Override

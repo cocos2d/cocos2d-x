@@ -30,8 +30,8 @@
 
 #include <vector>
 #include <unordered_map>
+#include "platform/CCPlatformMacros.h"
 #include "chipmunk.h"
-#include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 

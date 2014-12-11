@@ -28,7 +28,6 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "2d/CCSpriteBatchNode.h"
-#include "base/ccTypes.h"
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCFontAtlas.h"
 
@@ -132,6 +131,7 @@ public:
     virtual void setSystemFontSize(float fontSize);
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
+    virtual void requestSystemFontRefresh() { _systemFontDirty = true;}
     /** changes the string to render
     * @warning It is as expensive as changing the string if you haven't set up TTF/BMFont/CharMap for the label.
     */
@@ -236,7 +236,7 @@ public:
     float getAdditionalKerning() const;
 
     // string related stuff
-    int getStringNumLines() const { return _currNumLines;}
+    int getStringNumLines() const;
     int getStringLength() const;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
@@ -273,7 +273,19 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
-    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return getLineHeight();}
+    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
+
+CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js NA
+     */
+    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT,
+      TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Label();
 
 protected:
     void onDraw(const Mat4& transform, bool transformUpdated);
@@ -293,17 +305,6 @@ protected:
         CHARMAP,
         STRING_TEXTURE
     };
-
-    /**
-    * @js NA
-    */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT, 
-        TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
-    /**
-    * @js NA
-    * @lua NA
-    */
-    virtual ~Label();
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 

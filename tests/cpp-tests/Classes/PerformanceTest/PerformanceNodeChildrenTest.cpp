@@ -78,7 +78,7 @@ void NodeChildrenMenuLayer::onExitTransitionDidStart()
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
 
-    sched->unschedule(schedule_selector(NodeChildrenMenuLayer::dumpProfilerInfo), this);
+    sched->unschedule(CC_SCHEDULE_SELECTOR(NodeChildrenMenuLayer::dumpProfilerInfo), this);
 }
 
 void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
@@ -87,7 +87,7 @@ void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
     auto sched = director->getScheduler();
 
     CC_PROFILER_PURGE_ALL();
-    sched->schedule(schedule_selector(NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
+    sched->schedule(CC_SCHEDULE_SELECTOR(NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
 }
 
 
@@ -176,7 +176,7 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    auto menuLayer = new NodeChildrenMenuLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) NodeChildrenMenuLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
 
@@ -487,7 +487,7 @@ void AddSprite::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
         int *zs = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
@@ -550,7 +550,7 @@ void AddSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
         int *zs = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
@@ -613,7 +613,7 @@ void GetSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
         int *zs = new int[totalToAdd];
 
         // Don't include the sprite creation time and random as part of the profiling
@@ -678,7 +678,7 @@ void RemoveSprite::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
@@ -733,7 +733,7 @@ void RemoveSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0;i<totalToAdd;i++)
@@ -788,7 +788,7 @@ void ReorderSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
 
         // Don't include the sprite creation time as part of the profiling
         for(int i=0; i<totalToAdd; i++)
@@ -851,7 +851,7 @@ void SortAllChildrenSpriteSheet::update(float dt)
 
     if( totalToAdd > 0 )
     {
-        Sprite **sprites = new Sprite*[totalToAdd];
+        Sprite **sprites = new (std::nothrow) Sprite*[totalToAdd];
 
         // Don't include the sprite's creation time as part of the profiling
         for(int i=0; i<totalToAdd; i++)

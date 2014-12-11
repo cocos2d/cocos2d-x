@@ -26,15 +26,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "2d/CCTMXXMLParser.h"
 #include <unordered_map>
 #include <sstream>
-#include "CCTMXXMLParser.h"
-#include "CCTMXTiledMap.h"
-#include "base/ccMacros.h"
-#include "platform/CCFileUtils.h"
+#include "2d/CCTMXTiledMap.h"
 #include "base/ZipUtils.h"
 #include "base/base64.h"
 #include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
@@ -100,7 +99,7 @@ Rect TMXTilesetInfo::getRectForGID(uint32_t gid)
 
 TMXMapInfo * TMXMapInfo::create(const std::string& tmxFile)
 {
-    TMXMapInfo *ret = new TMXMapInfo();
+    TMXMapInfo *ret = new (std::nothrow) TMXMapInfo();
     if(ret->initWithTMXFile(tmxFile))
     {
         ret->autorelease();
@@ -112,7 +111,7 @@ TMXMapInfo * TMXMapInfo::create(const std::string& tmxFile)
 
 TMXMapInfo * TMXMapInfo::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    TMXMapInfo *ret = new TMXMapInfo();
+    TMXMapInfo *ret = new (std::nothrow) TMXMapInfo();
     if(ret->initWithXML(tmxString, resourcePath))
     {
         ret->autorelease();
@@ -234,6 +233,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tmxMapInfo->setOrientation(TMXOrientationIso);
         else if(orientationStr == "hexagonal")
             tmxMapInfo->setOrientation(TMXOrientationHex);
+        else if(orientationStr == "staggered")
+            tmxMapInfo->setOrientation(TMXOrientationStaggered);
         else
             CCLOG("cocos2d: TMXFomat: Unsupported orientation: %d", tmxMapInfo->getOrientation());
 
@@ -278,7 +279,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else
         {
-            TMXTilesetInfo *tileset = new TMXTilesetInfo();
+            TMXTilesetInfo *tileset = new (std::nothrow) TMXTilesetInfo();
             tileset->_name = attributeDict["name"].asString();
             
             if (_recordFirstGID)
@@ -332,7 +333,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
     else if (elementName == "layer")
     {
-        TMXLayerInfo *layer = new TMXLayerInfo();
+        TMXLayerInfo *layer = new (std::nothrow) TMXLayerInfo();
         layer->_name = attributeDict["name"].asString();
 
         Size s;
@@ -359,7 +360,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     } 
     else if (elementName == "objectgroup")
     {
-        TMXObjectGroup *objectGroup = new TMXObjectGroup();
+        TMXObjectGroup *objectGroup = new (std::nothrow) TMXObjectGroup();
         objectGroup->setGroupName(attributeDict["name"].asString());
         Vec2 positionOffset;
         positionOffset.x = attributeDict["x"].asFloat() * tmxMapInfo->getTileSize().width;

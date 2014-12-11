@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
@@ -45,9 +45,8 @@ NS_CC_BEGIN
  * @{
  */
 
-struct _hashUniformEntry;
 class GLProgram;
-
+class Director;
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
@@ -84,10 +83,12 @@ public:
         VERTEX_ATTRIB_POSITION,
         VERTEX_ATTRIB_COLOR,
         VERTEX_ATTRIB_TEX_COORD,
+        VERTEX_ATTRIB_TEX_COORD1,
+        VERTEX_ATTRIB_TEX_COORD2,
+        VERTEX_ATTRIB_TEX_COORD3,
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
-
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -96,9 +97,11 @@ public:
     
     enum
     {
+        UNIFORM_AMBIENT_COLOR,
         UNIFORM_P_MATRIX,
         UNIFORM_MV_MATRIX,
         UNIFORM_MVP_MATRIX,
+        UNIFORM_NORMAL_MATRIX,
         UNIFORM_TIME,
         UNIFORM_SIN_TIME,
         UNIFORM_COS_TIME,
@@ -133,11 +136,16 @@ public:
     static const char* SHADER_3D_POSITION;
     static const char* SHADER_3D_POSITION_TEXTURE;
     static const char* SHADER_3D_SKINPOSITION_TEXTURE;
+    static const char* SHADER_3D_POSITION_NORMAL;
+    static const char* SHADER_3D_POSITION_NORMAL_TEXTURE;
+    static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
     
     // uniform names
+    static const char* UNIFORM_NAME_AMBIENT_COLOR;
     static const char* UNIFORM_NAME_P_MATRIX;
     static const char* UNIFORM_NAME_MV_MATRIX;
     static const char* UNIFORM_NAME_MVP_MATRIX;
+    static const char* UNIFORM_NAME_NORMAL_MATRIX;
     static const char* UNIFORM_NAME_TIME;
     static const char* UNIFORM_NAME_SIN_TIME;
     static const char* UNIFORM_NAME_COS_TIME;
@@ -152,6 +160,9 @@ public:
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
+    static const char* ATTRIBUTE_NAME_TEX_COORD1;
+    static const char* ATTRIBUTE_NAME_TEX_COORD2;
+    static const char* ATTRIBUTE_NAME_TEX_COORD3;
     static const char* ATTRIBUTE_NAME_NORMAL;
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;
@@ -163,7 +174,7 @@ public:
      * @lua initWithString
      */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     /** Initializes the CCGLProgram with precompiled shader program */
     static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
@@ -183,8 +194,8 @@ public:
     static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
 
-	//void bindUniform(std::string uniformName, int value);
-	Uniform* getUniform(const std::string& name);
+    //void bindUniform(std::string uniformName, int value);
+    Uniform* getUniform(const std::string& name);
     VertexAttrib* getVertexAttrib(const std::string& name);
 
     /**  It will add a new attribute to the shader by calling glBindAttribLocation */
@@ -263,6 +274,9 @@ public:
      */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
+    /** calls glUniformfv only if the values are different than the previous call for this same shader program. */
+    void setUniformLocationWith1fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
+
     /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
@@ -325,26 +339,28 @@ protected:
     GLuint            _vertShader;
     GLuint            _fragShader;
     GLint             _builtInUniforms[UNIFORM_MAX];
-    struct _hashUniformEntry* _hashForUniforms;
-	bool              _hasShaderCompiler;
+    bool              _hasShaderCompiler;
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     std::string       _shaderId;
 #endif
 
     struct flag_struct {
         unsigned int usesTime:1;
+        unsigned int usesNormal:1;
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
         unsigned int usesP:1;
-		unsigned int usesRandom:1;
-
+        unsigned int usesRandom:1;
         // handy way to initialize the bitfield
         flag_struct() { memset(this, 0, sizeof(*this)); }
     } _flags;
 
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
+    std::unordered_map<GLint, GLvoid*> _hashForUniforms;
+    //cached director pointer for calling
+    Director* _director;
 };
 
 NS_CC_END

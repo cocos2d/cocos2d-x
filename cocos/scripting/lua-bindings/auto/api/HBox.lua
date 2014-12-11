@@ -10,9 +10,10 @@
 -- @function [parent=#HBox] create
 -- @param self
 -- @param #size_table size
--- @return HBox#HBox ret (retunr value: ccui.HBox)
+-- @return HBox#HBox ret (return value: ccui.HBox)
 
 --------------------------------
+-- Default constructor
 -- @function [parent=#HBox] HBox 
 -- @param self
         

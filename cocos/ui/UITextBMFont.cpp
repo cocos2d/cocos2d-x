@@ -49,7 +49,7 @@ TextBMFont::~TextBMFont()
 
 TextBMFont* TextBMFont::create()
 {
-    TextBMFont* widget = new TextBMFont();
+    TextBMFont* widget = new (std::nothrow) TextBMFont();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -61,7 +61,7 @@ TextBMFont* TextBMFont::create()
     
 TextBMFont* TextBMFont::create(const std::string &text, const std::string &filename)
 {
-    TextBMFont* widget = new TextBMFont();
+    TextBMFont* widget = new (std::nothrow) TextBMFont();
     if (widget && widget->init())
     {
         widget->setFntFile(filename);
@@ -94,6 +94,10 @@ void TextBMFont::setFntFile(const std::string& fileName)
 
 void TextBMFont::setString(const std::string& value)
 {
+    if (value == _labelBMFontRenderer->getString())
+    {
+        return;
+    }
     _stringValue = value;
     if (!_fntFileHasInit)
     {
@@ -129,7 +133,7 @@ void TextBMFont::adaptRenderers()
     }
 }
 
-const Size& TextBMFont::getVirtualRendererSize() const
+Size TextBMFont::getVirtualRendererSize() const
 {
     return _labelBMFontRenderer->getContentSize();
 }

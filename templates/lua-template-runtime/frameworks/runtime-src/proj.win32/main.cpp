@@ -24,8 +24,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         int iLen = 2*wcslen(szArgList[1]);    
         char* chRtn = new char[iLen+1];    
         wcstombs(chRtn,szArgList[1],iLen+1);
-        extern std::string g_resourcePath;
-        g_resourcePath = chRtn;
         delete [] chRtn;
     }
     LocalFree(szArgList);
@@ -39,7 +37,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE

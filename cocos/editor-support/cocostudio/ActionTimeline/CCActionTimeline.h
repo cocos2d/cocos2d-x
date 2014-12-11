@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __CCTIMELINE_ACTION_H__
 
 #include "CCTimeLine.h"
-#include "renderer/CCRenderer.h"
 #include "cocostudio/CocosStudioExport.h"
+#include "2d/CCAction.h"
 
 NS_TIMELINE_BEGIN
 
@@ -129,6 +129,10 @@ public:
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
     void clearFrameEventCallFunc();
 
+    /** Last frame callback will call when arriving last frame */
+    void setLastFrameCallFunc(std::function<void()> listener);
+    void clearLastFrameCallFunc();
+
     /** Inherit from Action. */
 
     /** Returns a clone of ActionTimeline */
@@ -163,6 +167,7 @@ protected:
     bool    _loop;
 
     std::function<void(Frame*)> _frameEventListener;
+    std::function<void()> _lastFrameListener;
 };
 
 NS_TIMELINE_END

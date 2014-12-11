@@ -28,10 +28,7 @@ THE SOFTWARE.
 #ifndef __CCINSTANT_ACTION_H__
 #define __CCINSTANT_ACTION_H__
 
-#include <string>
 #include <functional>
-
-#include "CCStdC.h"
 #include "2d/CCAction.h"
 
 NS_CC_BEGIN
@@ -412,13 +409,14 @@ public:
     virtual __CCCallFuncND* clone() const override;
     virtual void execute() override;
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __CCCallFuncND() {}
     virtual ~__CCCallFuncND() {}
     
     /** initializes the action with the callback and the data to pass as an argument */
     bool initWithTarget(Ref* target, SEL_CallFuncND selector, void* d);
 
+protected:
     SEL_CallFuncND _callFuncND;
     void* _data;
 
@@ -451,7 +449,7 @@ public:
     Ref* getObject() const;
     void setObject(Ref* obj);
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     __CCCallFuncO();
     virtual ~__CCCallFuncO();
     /** initializes the action with the callback
@@ -460,7 +458,7 @@ protected:
      */
     bool initWithTarget(Ref* target, SEL_CallFuncO selector, Ref* object);
     
-
+protected:
     /** object to be passed as argument */
     Ref* _object;
     SEL_CallFuncO _callFuncO;

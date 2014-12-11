@@ -5,6 +5,10 @@ collectgarbage("setstepmul", 5000)
 
 ----------------
 -- run
+cc.FileUtils:getInstance():addSearchPath("src")
+CC_USE_DEPRECATED_API = true
+require "cocos.init"
+
 local director = cc.Director:getInstance()
 local glView   = director:getOpenGLView()
 if nil == glView then
@@ -50,6 +54,7 @@ local function addSearchPath(resPrefix, height)
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/TmxMapComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/UIComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/TriggerTest")
+        table.insert(searchPaths, 1, resPrefix .. "hd/ActionTimeline")
     else
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/Images")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/ArmatureComponentTest")
@@ -62,6 +67,7 @@ local function addSearchPath(resPrefix, height)
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/TmxMapComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/UIComponentTest")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/TriggerTest")
+        table.insert(searchPaths, 1, resPrefix .. "ActionTimeline")
     end
 
     fileUtils:setSearchPaths(searchPaths)
@@ -71,7 +77,7 @@ end
 addSearchPath("res/", screenSize.height)
 addSearchPath("", screenSize.height)
 
-require "src/mainMenu"
+require "mainMenu"
 
 local scene = cc.Scene:create()
 scene:addChild(CreateTestMenu())

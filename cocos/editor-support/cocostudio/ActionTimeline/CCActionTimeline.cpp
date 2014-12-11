@@ -31,7 +31,7 @@ NS_TIMELINE_BEGIN
 // ActionTimelineData
 ActionTimelineData* ActionTimelineData::create(int actionTag)
 {
-    ActionTimelineData * ret = new ActionTimelineData();
+    ActionTimelineData * ret = new (std::nothrow) ActionTimelineData();
     if (ret && ret->init(actionTag))
     {
         ret->autorelease();
@@ -58,7 +58,7 @@ bool ActionTimelineData::init(int actionTag)
 // ActionTimeline
 ActionTimeline* ActionTimeline::create()
 {
-    ActionTimeline* object = new ActionTimeline();
+    ActionTimeline* object = new (std::nothrow) ActionTimeline();
     if (object && object->init())
     {
         object->autorelease();
@@ -78,6 +78,7 @@ ActionTimeline::ActionTimeline()
     , _startFrame(0)
     , _endFrame(0)
     , _frameEventListener(nullptr)
+    , _lastFrameListener(nullptr)
 {
 }
 
@@ -143,7 +144,7 @@ bool ActionTimeline::isPlaying() const
 
 void ActionTimeline::setCurrentFrame(int frameIndex)
 {
-    if (frameIndex >= _startFrame && frameIndex >= _endFrame)
+    if (frameIndex >= _startFrame && frameIndex <= _endFrame)
     {
         _currentFrame = frameIndex;
         _time = _currentFrame*_frameInternal;
@@ -186,6 +187,9 @@ void ActionTimeline::step(float delta)
 
     if(_time > _endFrame * _frameInternal)
     {
+        if(_lastFrameListener != nullptr)
+            _lastFrameListener();
+
         _playing = _loop;
         if(!_playing)
             _time = _endFrame * _frameInternal;
@@ -210,6 +214,7 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
 void ActionTimeline::startWithTarget(Node *target)
 {
     Action::startWithTarget(target);
+    this->setTag(target->getTag());
 
     foreachNodeDescendant(target, 
         [this, target](Node* child)
@@ -271,6 +276,15 @@ void ActionTimeline::clearFrameEventCallFunc()
     _frameEventListener = nullptr;
 }
 
+void ActionTimeline::setLastFrameCallFunc(std::function<void()> listener)
+{
+    _lastFrameListener = listener;
+}
+
+void ActionTimeline::clearLastFrameCallFunc()
+{
+    _lastFrameListener = nullptr;
+}
 
 void ActionTimeline::emitFrameEvent(Frame* frame)
 {
@@ -282,6 +296,9 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
 
 void ActionTimeline::gotoFrame(int frameIndex)
 {
+    if(_target == nullptr)
+        return;
+
     ssize_t size = _timelineList.size();
     for(ssize_t i = 0; i < size; i++)
     {      

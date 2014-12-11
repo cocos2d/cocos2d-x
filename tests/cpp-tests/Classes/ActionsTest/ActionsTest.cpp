@@ -151,9 +151,9 @@ void ActionsDemo::onEnter()
     addChild(_tamara, 2);
     addChild(_kathia, 3);
 
-    _grossini->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3));
-    _tamara->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3));
-    _kathia->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2)); 
+    _grossini->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/3);
+    _tamara->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2/3);
+    _kathia->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height/2);
 }
 
 void ActionsDemo::onExit()
@@ -167,7 +167,7 @@ void ActionsDemo::onExit()
 
 void ActionsDemo::restartCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( restartAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -175,7 +175,7 @@ void ActionsDemo::restartCallback(Ref* sender)
 
 void ActionsDemo::nextCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -183,7 +183,7 @@ void ActionsDemo::nextCallback(Ref* sender)
 
 void ActionsDemo::backCallback(Ref* sender)
 {
-    auto s = new ActionsTestScene();
+    auto s = new (std::nothrow) ActionsTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -203,19 +203,19 @@ void ActionsDemo::centerSprites(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vec2(s.width/2, s.height/2));
+        _grossini->setPosition(s.width/2, s.height/2);
     }
     else if( numberOfSprites == 2 ) 
     {        
-        _kathia->setPosition( Vec2(s.width/3, s.height/2));
-        _tamara->setPosition( Vec2(2*s.width/3, s.height/2));
+        _kathia->setPosition(s.width/3, s.height/2);
+        _tamara->setPosition(2*s.width/3, s.height/2);
         _grossini->setVisible(false);
     } 
     else if( numberOfSprites == 3 ) 
     {
-        _grossini->setPosition( Vec2(s.width/2, s.height/2));
-        _tamara->setPosition( Vec2(s.width/4, s.height/2));
-        _kathia->setPosition( Vec2(3 * s.width/4, s.height/2));
+        _grossini->setPosition(s.width/2, s.height/2);
+        _tamara->setPosition(s.width/4, s.height/2);
+        _kathia->setPosition(3 * s.width/4, s.height/2);
     }
 }
 
@@ -227,19 +227,19 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
     {
         _tamara->setVisible(false);
         _kathia->setVisible(false);
-        _grossini->setPosition(Vec2(60, s.height/2));
+        _grossini->setPosition(60, s.height/2);
     } 
     else if( numberOfSprites == 2 ) 
     {        
-        _kathia->setPosition( Vec2(60, s.height/3));
-        _tamara->setPosition( Vec2(60, 2*s.height/3));
+        _kathia->setPosition(60, s.height/3);
+        _tamara->setPosition(60, 2*s.height/3);
         _grossini->setVisible( false );
     } 
     else if( numberOfSprites == 3 ) 
     {
-        _grossini->setPosition( Vec2(60, s.height/2));
-        _tamara->setPosition( Vec2(60, 2*s.height/3));
-        _kathia->setPosition( Vec2(60, s.height/3));
+        _grossini->setPosition(60, s.height/2);
+        _tamara->setPosition(60, 2*s.height/3);
+        _kathia->setPosition(60, s.height/3);
     }
 }
 
@@ -256,14 +256,14 @@ void ActionManual::onEnter()
 
     _tamara->setScaleX( 2.5f);
     _tamara->setScaleY( -1.0f);
-    _tamara->setPosition( Vec2(100,70) );
+    _tamara->setPosition(100,70);
     _tamara->setOpacity( 128);
 
     _grossini->setRotation( 120);
-    _grossini->setPosition( Vec2(s.width/2, s.height/2));
+    _grossini->setPosition(s.width/2, s.height/2);
     _grossini->setColor( Color3B( 255,0,0));
 
-    _kathia->setPosition( Vec2(s.width-100, s.height/2));
+    _kathia->setPosition(s.width-100, s.height/2);
     _kathia->setColor( Color3B::BLUE);
 }
 
@@ -396,11 +396,11 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize( boxSize );
     box->ignoreAnchorPointForPosition(false);
-    box->setPosition(Vec2(s.width/2, s.height - 100 - box->getContentSize().height/2));
+    box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
     this->addChild(box);
 
     auto label = Label::createWithTTF("Standard cocos2d Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2(s.width/2, s.height - 100 + label->getContentSize().height));
+    label->setPosition(s.width/2, s.height - 100 + label->getContentSize().height);
     this->addChild(label);
 
     auto actionTo = SkewBy::create(2, 360, 0);
@@ -412,11 +412,11 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize(boxSize);
     box->ignoreAnchorPointForPosition(false);
-    box->setPosition(Vec2(s.width/2, s.height - 250 - box->getContentSize().height/2));
+    box->setPosition(s.width/2, s.height - 250 - box->getContentSize().height/2);
     this->addChild(box);
 
     label = Label::createWithTTF("Rotational Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2(s.width/2, s.height - 250 + label->getContentSize().height/2));
+    label->setPosition(s.width/2, s.height - 250 + label->getContentSize().height/2);
     this->addChild(label);
     auto actionTo2 = RotateBy::create(2, 360, 0);
     auto actionToBack2 = RotateBy::create(2, -360, 0);
@@ -440,20 +440,20 @@ void ActionSkewRotateScale::onEnter()
 
     auto box = LayerColor::create(Color4B(255, 255, 0, 255));
     box->setAnchorPoint(Vec2(0, 0));
-    box->setPosition(Vec2(190, 110));
+    box->setPosition(190, 110);
     box->setContentSize(boxSize);
 
     static float markrside = 10.0f;
     auto uL = LayerColor::create(Color4B(255, 0, 0, 255));
     box->addChild(uL);
     uL->setContentSize(Size(markrside, markrside));
-    uL->setPosition(Vec2(0.f, boxSize.height - markrside));
+    uL->setPosition(0.f, boxSize.height - markrside);
     uL->setAnchorPoint(Vec2(0, 0));
 
     auto uR = LayerColor::create(Color4B(0, 0, 255, 255));
     box->addChild(uR);
     uR->setContentSize(Size(markrside, markrside));
-    uR->setPosition(Vec2(boxSize.width - markrside, boxSize.height - markrside));
+    uR->setPosition(boxSize.width - markrside, boxSize.height - markrside);
     uR->setAnchorPoint(Vec2(0, 0));
     addChild(box);
 
@@ -583,7 +583,7 @@ void ActionBezier::onEnter()
 
 
     // sprite 2
-    _tamara->setPosition(Vec2(80,160));
+    _tamara->setPosition(80,160);
 	ccBezierConfig bezier2;
     bezier2.controlPoint_1 = Vec2(100, s.height/2);
     bezier2.controlPoint_2 = Vec2(200, -s.height/2);
@@ -592,7 +592,7 @@ void ActionBezier::onEnter()
     auto bezierTo1 = BezierTo::create(2, bezier2);    
 
     // sprite 3
-    _kathia->setPosition(Vec2(400,160));
+    _kathia->setPosition(400,160);
     auto bezierTo2 = BezierTo::create(2, bezier2);
 
     _grossini->runAction( rep);
@@ -813,7 +813,7 @@ void ActionSequence2::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*1,s.height/2));
+    label->setPosition(s.width/4*1,s.height/2);
 
     addChild(label);
 }
@@ -822,7 +822,7 @@ void ActionSequence2::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*2,s.height/2));
+    label->setPosition(s.width/4*2,s.height/2);
 
     addChild(label);
 }
@@ -831,7 +831,7 @@ void ActionSequence2::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*3,s.height/2));
+    label->setPosition(s.width/4*3,s.height/2);
 
     addChild(label);
 }
@@ -964,7 +964,7 @@ void ActionCallFunction::onEnter()
                              [&](){
                                  auto s = Director::getInstance()->getWinSize();
                                  auto label = Label::createWithTTF("called:lambda callback", "fonts/Marker Felt.ttf", 16.0f);
-                                 label->setPosition(Vec2( s.width/4*1,s.height/2-40));
+                                 label->setPosition(s.width/4*1,s.height/2-40);
                                  this->addChild(label);
                              }  ),
                         nullptr);
@@ -991,7 +991,7 @@ void ActionCallFunction::callback1()
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 1 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*1,s.height/2));
+    label->setPosition(s.width/4*1,s.height/2);
 
     addChild(label);
 }
@@ -1000,7 +1000,7 @@ void ActionCallFunction::callback2(Node* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 2 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*2,s.height/2));
+    label->setPosition(s.width/4*2,s.height/2);
 
     addChild(label);
 
@@ -1011,7 +1011,7 @@ void ActionCallFunction::callback3(Node* sender, long data)
 {
     auto s = Director::getInstance()->getWinSize();
     auto label = Label::createWithTTF("callback 3 called", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(Vec2( s.width/4*3,s.height/2));
+    label->setPosition(s.width/4*3,s.height/2);
     addChild(label);
 
 	CCLOG("target is: %p, data is: %ld", sender, data);
@@ -1339,7 +1339,16 @@ void ActionFollow::onEnter()
     centerSprites(1);
     auto s = Director::getInstance()->getWinSize();
 
-    _grossini->setPosition(Vec2(-200, s.height / 2));
+    DrawNode* drawNode = DrawNode::create();
+    float x = s.width*2 - 100;
+    float y = s.height;
+    
+    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
+    drawNode->drawPoly(vertices, 4, true,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    
+    this->addChild(drawNode);
+
+    _grossini->setPosition(-200, s.height / 2);
     auto move = MoveBy::create(2, Vec2(s.width * 3, 0));
     auto move_back = move->reverse();
     auto seq = Sequence::create(move, move_back, nullptr);
@@ -1348,32 +1357,6 @@ void ActionFollow::onEnter()
     _grossini->runAction(rep);
 
     this->runAction(Follow::create(_grossini, Rect(0, 0, s.width * 2 - 100, s.height)));
-}
-
-void ActionFollow::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this, transform, flags);
-    
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionFollow::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto winSize = Director::getInstance()->getWinSize();
-    
-    float x = winSize.width*2 - 100;
-    float y = winSize.height;
-    
-    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
-    DrawPrimitives::drawPoly(vertices, 4, true);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 std::string ActionFollow::subtitle() const
@@ -1597,7 +1580,7 @@ void ActionCatmullRomStacked::onEnter()
     // is relative to the Catmull Rom curve, it is better to start with (0,0).
     //
     
-    _tamara->setPosition(Vec2(50,50));
+    _tamara->setPosition(50,50);
     
     auto array = PointArray::create(20);
     
@@ -1622,6 +1605,11 @@ void ActionCatmullRomStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(10,0)),
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
+    
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCatmullRom(array, 50, Color4F(1.0, 1.0, 0.0, 0.5));
+    this->addChild(drawNode1);
     
     //
     // sprite 2 (To)
@@ -1652,54 +1640,13 @@ void ActionCatmullRomStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
     
-    array->retain();
-    _array1 = array;
-    array2->retain();
-    _array2 = array2;
+    auto drawNode2 = DrawNode::create();
+    drawNode2->drawCatmullRom(array2, 50, Color4F(1.0, 0.0, 0.0, 0.5));
+    this->addChild(drawNode2);
 }
 
 ActionCatmullRomStacked::~ActionCatmullRomStacked()
 {
-    CC_SAFE_RELEASE(_array1);
-    CC_SAFE_RELEASE(_array2);
-}
-
-void ActionCatmullRomStacked::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionCatmullRomStacked::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCatmullRom(_array1,50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCatmullRom(_array2,50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCatmullRomStacked::title() const
@@ -1743,7 +1690,7 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto seq = Sequence::create(action, reverse, nullptr);
     
-    _tamara->setPosition(Vec2(50,50));
+    _tamara->setPosition(50,50);
     _tamara->runAction(seq);
     
     _tamara->runAction(
@@ -1752,6 +1699,11 @@ void ActionCardinalSplineStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(10,0)),
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
+    
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCardinalSpline(array, 0, 100, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode1);
     
     //
     // sprite 2 (By)
@@ -1764,7 +1716,7 @@ void ActionCardinalSplineStacked::onEnter()
     
     auto seq2 = Sequence::create(action2, reverse2, nullptr);
     
-    _kathia->setPosition(Vec2(s.width/2,50));
+    _kathia->setPosition(s.width/2,50);
     
     _kathia->runAction(seq2);
     
@@ -1775,61 +1727,14 @@ void ActionCardinalSplineStacked::onEnter()
                 MoveBy::create(0.05f, Vec2(-10,0)),
                 nullptr)));
     
-    array->retain();
-    _array = array;
+    auto drawNode2 = DrawNode::create();
+    drawNode2->setPosition(Vec2(s.width/2,50));
+    drawNode2->drawCardinalSpline(array, 1, 100, Color4F(0.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode2);
 }
 
 ActionCardinalSplineStacked::~ActionCardinalSplineStacked()
 {
-    CC_SAFE_RELEASE(_array);
-}
-
-void ActionCardinalSplineStacked::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    auto s = Director::getInstance()->getWinSize();
-    
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(s.width/2, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionCardinalSplineStacked::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCardinalSplineStacked::title() const
@@ -1849,16 +1754,14 @@ void Issue1305::onEnter()
     centerSprites(0);
 
     _spriteTmp = Sprite::create("Images/grossini.png");
-    /* c++ can't support block, so we use CallFuncN instead.
-    [spriteTmp_ runAction:[CallBlockN actionWithBlock:^(Node* node) {
-        NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
-    }] );
-    */
-
     _spriteTmp->runAction(CallFunc::create(std::bind(&Issue1305::log, this, _spriteTmp)));
     _spriteTmp->retain();
 
-    scheduleOnce(schedule_selector(Issue1305::addSprite), 2);
+    scheduleOnce([&](float dt) {
+        _spriteTmp->setPosition(250,250);
+        addChild(_spriteTmp);
+    },2 ,"update_key");
+
 }
 
 void Issue1305::log(Node* sender)
@@ -1871,12 +1774,6 @@ void Issue1305::onExit()
     _spriteTmp->stopAllActions();
     _spriteTmp->release();
     ActionsDemo::onExit();
-}
-
-void Issue1305::addSprite(float dt)
-{
-    _spriteTmp->setPosition(Vec2(250,250));
-    addChild(_spriteTmp);
 }
 
 std::string Issue1305::title() const
@@ -1895,7 +1792,7 @@ void Issue1305_2::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(200,200));
+    spr->setPosition(200,200);
     addChild(spr);
 
     auto act1 = MoveBy::create(2 ,Vec2(0, 100));
@@ -1968,7 +1865,7 @@ void Issue1288::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(100, 100));
+    spr->setPosition(100, 100);
     addChild(spr);
 
     auto act1 = MoveBy::create(0.5, Vec2(100, 0));
@@ -1995,7 +1892,7 @@ void Issue1288_2::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(100, 100));
+    spr->setPosition(100, 100);
     addChild(spr);
 
     auto act1 = MoveBy::create(0.5, Vec2(100, 0));
@@ -2019,7 +1916,7 @@ void Issue1327::onEnter()
     centerSprites(0);
 
     auto spr = Sprite::create("Images/grossini.png");
-    spr->setPosition(Vec2(100, 100));
+    spr->setPosition(100, 100);
     addChild(spr);
 
     auto act1 = CallFunc::create( std::bind(&Issue1327::logSprRotation, this, spr));
@@ -2144,7 +2041,7 @@ void ActionCatmullRom::onEnter()
     // is relative to the Catmull Rom curve, it is better to start with (0,0).
     //
     
-    _tamara->setPosition(Vec2(50, 50));
+    _tamara->setPosition(50, 50);
     
     auto array = PointArray::create(20);
     
@@ -2163,6 +2060,10 @@ void ActionCatmullRom::onEnter()
     
     _tamara->runAction(seq);
     
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCatmullRom(array, 50, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode1);
     
     //
     // sprite 2 (To)
@@ -2186,57 +2087,14 @@ void ActionCatmullRom::onEnter()
     
     _kathia->runAction(seq2);
     
-    _array1 = array;
-    _array1->retain();
-    _array2 = array2;
-    _array2->retain();
+    auto drawNode2 = DrawNode::create();
+    drawNode2->drawCatmullRom(array2, 50, Color4F(0.0, 1.0, 1.0, 1.0));
+    this->addChild(drawNode2);
 }
 
 ActionCatmullRom::~ActionCatmullRom()
 {
-    _array1->release();
-    _array2->release();
 }
-
-void ActionCatmullRom::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-
-void ActionCatmullRom::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCatmullRom(_array1, 50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCatmullRom(_array2,50);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
-}
-
 
 std::string ActionCatmullRom::title() const
 {
@@ -2277,8 +2135,13 @@ void ActionCardinalSpline::onEnter()
     
     auto seq = Sequence::create(action, reverse, nullptr);
     
-    _tamara->setPosition(Vec2(50, 50));
+    _tamara->setPosition(50, 50);
     _tamara->runAction(seq);
+    
+    auto drawNode1 = DrawNode::create();
+    drawNode1->setPosition(Vec2(50,50));
+    drawNode1->drawCardinalSpline(array, 0, 100, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode1);
     
     //
     // sprite 2 (By)
@@ -2291,62 +2154,17 @@ void ActionCardinalSpline::onEnter()
     
     auto seq2 = Sequence::create(action2, reverse2, nullptr);
     
-    _kathia->setPosition(Vec2(s.width/2, 50));
+    _kathia->setPosition(s.width/2, 50);
     _kathia->runAction(seq2);
     
-    _array = array;
-    array->retain();
+    auto drawNode2 = DrawNode::create();
+    drawNode2->setPosition(Vec2(s.width/2, 50));
+    drawNode2->drawCardinalSpline(array, 1, 100, Color4F(1.0, 0.0, 1.0, 1.0));
+    this->addChild(drawNode2);
 }
 
 ActionCardinalSpline::~ActionCardinalSpline()
 {
-    _array->release();
-}
-
-void ActionCardinalSpline::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    ActionsDemo::draw(renderer, transform, flags);
-    
-    // move to 50,50 since the "by" path will start at 50,50
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    Mat4 translation;
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(50, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    _modelViewMV1 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    auto s = Director::getInstance()->getWinSize();
-    
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    //Create a rotation matrix using the axis and the angle
-    Mat4::createTranslation(s.width/2, 50, 0, &translation);
-    director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, translation);
-    _modelViewMV2 = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void ActionCardinalSpline::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    Mat4 oldMat;
-    oldMat = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV1);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewMV2);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMat);
 }
 
 std::string ActionCardinalSpline::title() const
@@ -2382,8 +2200,21 @@ void PauseResumeActions::onEnter()
     _grossini->runAction(RepeatForever::create(RotateBy::create(3, -360)));
     _kathia->runAction(RepeatForever::create(RotateBy::create(3, 360)));
     
-    this->schedule(schedule_selector(PauseResumeActions::pause), 3, false, 0);
-    this->schedule(schedule_selector(PauseResumeActions::resume), 5, false, 0);
+    this->schedule([&](float dt){
+        log("Pausing");
+        auto director = Director::getInstance();
+
+        _pausedTargets = director->getActionManager()->pauseAllRunningActions();
+    }
+                   ,3 ,false ,0 ,"pause_key");
+
+    this->schedule([&](float dt) {
+        log("Resuming");
+        auto director = Director::getInstance();
+        director->getActionManager()->resumeTargets(_pausedTargets);
+        _pausedTargets.clear();
+    }
+                   ,5 ,false ,0, "resume_key");
 }
 
 std::string PauseResumeActions::title() const
@@ -2394,22 +2225,6 @@ std::string PauseResumeActions::title() const
 std::string PauseResumeActions::subtitle() const
 {
     return "All actions pause at 3s and resume at 5s";
-}
-
-void PauseResumeActions::pause(float dt)
-{
-    log("Pausing");
-    auto director = Director::getInstance();
-
-    _pausedTargets = director->getActionManager()->pauseAllRunningActions();
-}
-
-void PauseResumeActions::resume(float dt)
-{
-    log("Resuming");
-    auto director = Director::getInstance();
-    director->getActionManager()->resumeTargets(_pausedTargets);
-    _pausedTargets.clear();
 }
 
 //------------------------------------------------------------------

@@ -13,7 +13,7 @@ uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
 // Varyings
 varying vec2 TextureCoordOut;
 
-vec4 SkinnedVec3(vec3 vec)
+vec4 SkinnedVec3(vec4 vec)
 {
     float blendWeight = a_blendWeight[0];
 
@@ -54,7 +54,7 @@ vec4 SkinnedVec3(vec3 vec)
     
 
     vec4 _skinnedPosition;
-    vec4 postion = vec4(vec, 1.0);
+    vec4 postion = vec;
     _skinnedPosition.x = dot(postion, matrixPalette1);
     _skinnedPosition.y = dot(postion, matrixPalette2);
     _skinnedPosition.z = dot(postion, matrixPalette3);
@@ -65,9 +65,9 @@ vec4 SkinnedVec3(vec3 vec)
 
 void main()
 {
-    vec4 pos = CC_MVPMatrix * SkinnedVec3(a_position);
+    vec4 pos = CC_MVPMatrix * SkinnedVec3(vec4(a_position,1.0));
     
-    vec4 normalproj = CC_MVPMatrix * vec4(SkinnedVec3(a_normal).xyz, 0);
+    vec4 normalproj = CC_MVPMatrix * vec4(SkinnedVec3(vec4(a_normal,0.0)).xyz, 0);
     normalproj = normalize(normalproj);
     pos.xy += normalproj.xy * (OutlineWidth * (pos.z * 0.5 + 0.5));
 

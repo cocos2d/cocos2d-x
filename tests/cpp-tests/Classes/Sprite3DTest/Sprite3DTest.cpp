@@ -26,8 +26,11 @@
 #include "Sprite3DTest.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
-#include "3d/CCSubMesh.h"
 #include "3d/CCAttachNode.h"
+#include "3d/CCRay.h"
+#include "3d/CCSprite3D.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "DrawNode3D.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -49,13 +52,17 @@ static std::function<Layer*()> createFunctions[] =
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
+    CL(Sprite3DUVAnimationTest),
 #endif
     CL(Sprite3DWithSkinTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     CL(Sprite3DWithSkinOutlineTest),
 #endif
     CL(Animate3DTest),
-    CL(AttachmentTest)
+    CL(AttachmentTest),
+    CL(Sprite3DReskinTest),
+    CL(Sprite3DWithOBBPerfromanceTest),
+    CL(Sprite3DMirrorTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -118,7 +125,7 @@ void Sprite3DTestDemo::onEnter()
 
 void Sprite3DTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild(restartSpriteTestAction());
     
     Director::getInstance()->replaceScene(s);
@@ -127,7 +134,7 @@ void Sprite3DTestDemo::restartCallback(Ref* sender)
 
 void Sprite3DTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -135,7 +142,7 @@ void Sprite3DTestDemo::nextCallback(Ref* sender)
 
 void Sprite3DTestDemo::backCallback(Ref* sender)
 {
-    auto s = new Sprite3DTestScene();
+    auto s = new (std::nothrow) Sprite3DTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -221,11 +228,106 @@ std::string Sprite3DBasicTest::subtitle() const
 
 //------------------------------------------------------------------
 //
-// Sprite3DHitTest
+// Sprite3DUVAnimationTest
 //
 //------------------------------------------------------------------
 
+Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
+{
+    //the offset use to translating texture
+    _cylinder_texture_offset = 0;
+    _shining_duraion = 0;
+    Size visibleSize = Director::getInstance()->getVisibleSize();
 
+    //use custom camera
+    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    camera->setCameraFlag(CameraFlag::USER1);
+
+    //create cylinder
+    auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
+
+    //create and set our custom shader
+    auto shader =GLProgram::createWithFilenames("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
+    _state = GLProgramState::create(shader);
+    cylinder->setGLProgramState(_state);
+
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
+    //pass mesh's attribute to shader
+    long offset = 0;
+    auto attributeCount = cylinder->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++) {
+        auto meshattribute = cylinder->getMesh()->getMeshVertexAttribute(i);
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            cylinder->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+
+    //create the second texture for cylinder
+    auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
+    Texture2D::TexParams tRepeatParams;//set texture parameters
+    tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_REPEAT;
+    tRepeatParams.wrapT = GL_REPEAT;
+    shining_texture->setTexParameters(tRepeatParams); 
+    //pass the texture sampler to our custom shader
+    _state->setUniformTexture("caustics",shining_texture);
+
+
+    this->addChild(cylinder);
+    this->setCameraMask(2); 
+    this->addChild(camera);
+
+    //adjust cylinder's position & rotation
+    cylinder->setPosition3D(Vec3(0,-15,-50));
+    cylinder->setRotation3D(Vec3(-90,0,0));
+
+    //the callback function update cylinder's texcoord
+    schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+}
+
+std::string Sprite3DUVAnimationTest::title() const 
+{
+    return "Testing UV Animation";
+}
+
+std::string Sprite3DUVAnimationTest::subtitle() const 
+{
+    return "";
+}
+
+void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
+{
+    //callback function to update cylinder's texcoord
+    static bool fade_in = true;
+    _cylinder_texture_offset += 0.3*dt;
+    _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
+    if(fade_in)
+    {
+        _shining_duraion += 0.5*dt;
+        if(_shining_duraion>1) fade_in = false;
+    }
+    else
+    {
+        _shining_duraion -= 0.5*dt;
+        if(_shining_duraion<0) fade_in = true;
+    }
+
+    //pass the result to shader
+    _state->setUniformFloat("offset",_cylinder_texture_offset);
+    _state->setUniformFloat("duration",_shining_duraion);
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DHitTest
+//
+//------------------------------------------------------------------
 Sprite3DHitTest::Sprite3DHitTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -235,7 +337,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite1->setScale(4.f);
     sprite1->setTexture("Sprite3DTest/boss.png");
     sprite1->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite1->setContentSize(Size(20, 20));
     
     //add to scene
     addChild( sprite1 );
@@ -246,7 +347,6 @@ Sprite3DHitTest::Sprite3DHitTest()
     sprite2->setScale(4.f);
     sprite2->setTexture("Sprite3DTest/boss.png");
     sprite2->setPosition( Vec2(s.width/2, s.height/2) );
-    sprite2->setContentSize(Size(20, 20));
     sprite2->setAnchorPoint(Vec2(0.5, 0.5));
     
     //add to scene
@@ -260,14 +360,11 @@ Sprite3DHitTest::Sprite3DHitTest()
     
     listener1->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
-        
-        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-        Size s = target->getContentSize();
-        Rect rect = Rect(-s.width/2, -s.height/2, s.width, s.height);
-        
-        if (rect.containsPoint(locationInNode))
+      
+        Rect rect = target->getBoundingBox();        
+        if (rect.containsPoint(touch->getLocation()))
         {
-            log("sprite3d began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("sprite3d began... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
             target->setOpacity(100);
             return true;
         }
@@ -308,6 +405,11 @@ void Sprite3DTestScene::runThisTest()
     Director::getInstance()->replaceScene(this);
 }
 
+Sprite3DTestScene::Sprite3DTestScene()
+{
+    
+}
+
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
 {
     return std::get<0>(tuple1) < std::get<0>(tuple2);
@@ -315,7 +417,7 @@ static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1
 
 EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &objFilePath, const std::string &textureFilePath)
 {
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
@@ -332,7 +434,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
     if (path.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
     
-    auto sprite = new EffectSprite3D();
+    auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(path))
     {
         sprite->autorelease();
@@ -380,7 +482,7 @@ const std::string Effect3DOutline::_vertShaderFile = "Shaders3D/OutLine.vert";
 const std::string Effect3DOutline::_fragShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outline";
 
-const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutLine.vert";
+const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutline.vert";
 const std::string Effect3DOutline::_fragSkinnedShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keySkinnedInGLProgramCache = "Effect3DLibrary_Outline";
 GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
@@ -410,7 +512,7 @@ GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
 
 Effect3DOutline* Effect3DOutline::create()
 {
-    Effect3DOutline* effect = new Effect3DOutline();
+    Effect3DOutline* effect = new (std::nothrow) Effect3DOutline();
     if(effect && effect->init())
     {
         effect->autorelease();
@@ -434,7 +536,7 @@ Effect3DOutline::Effect3DOutline()
 , _outlineColor(1, 1, 1)
 , _sprite(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                           [this](EventCustom*)
                                                           {
@@ -451,7 +553,7 @@ Effect3DOutline::Effect3DOutline()
 
 Effect3DOutline::~Effect3DOutline()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -483,7 +585,7 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     if(sprite != _sprite)
     {
         GLProgram* glprogram;
-        if(!sprite->getSkin())
+        if(!sprite->getMesh()->getSkin())
             glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
         else
             glprogram = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
@@ -539,22 +641,21 @@ void Effect3DOutline::draw(const Mat4 &transform)
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         
-        if(_sprite && _sprite->getSkin())
+        auto skin = _sprite->getMesh()->getSkin();
+        if(_sprite && skin)
         {
             auto function = std::bind(MatrixPalleteCallBack, std::placeholders::_1, std::placeholders::_2,
-                                      _sprite->getSkin()->getMatrixPaletteSize(), (float*)_sprite->getSkin()->getMatrixPalette());
+                                      skin->getMatrixPaletteSize(), (float*)skin->getMatrixPalette());
             _glProgramState->setUniformCallback("u_matrixPalette", function);
         }
         
         if(_sprite)
             _glProgramState->apply(transform);
  
-        for (ssize_t i = 0; i < mesh->getSubMeshCount(); i++) {
-            auto submesh = mesh->getSubMesh((int)i);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, submesh->getIndexBuffer());
-            glDrawElements((GLenum)submesh->getPrimitiveType(), (GLsizei)submesh->getIndexCount(), (GLenum)submesh->getIndexFormat(), 0);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, submesh->getIndexCount());
-        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
+        glDrawElements(mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), mesh->getIndexFormat(), 0);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
@@ -803,7 +904,6 @@ Animate3DTest::Animate3DTest()
 , _swim(nullptr)
 , _sprite(nullptr)
 , _moveAction(nullptr)
-, _transTime(0.1f)
 , _elapseTransTime(0.f)
 {
     addSprite3D();
@@ -837,28 +937,21 @@ void Animate3DTest::update(float dt)
     if (_state == State::HURT_TO_SWIMMING)
     {
         _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
         
-        if (t >= 1.f)
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
         {
-            t = 1.f;
             _sprite->stopAction(_hurt);
             _state = State::SWIMMING;
         }
-        _swim->setWeight(t);
-        _hurt->setWeight(1.f - t);
     }
     else if (_state == State::SWIMMING_TO_HURT)
     {
         _elapseTransTime += dt;
-        float t = _elapseTransTime / _transTime;
-        if (t >= 1.f)
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
         {
-            t = 1.f;
+            _sprite->stopAction(_swim);
             _state = State::HURT;
         }
-        _swim->setWeight(1.f - t);
-        _hurt->setWeight(t);
     }
 }
 
@@ -875,8 +968,9 @@ void Animate3DTest::addSprite3D()
     if (animation)
     {
         auto animate = Animate3D::create(animation, 0.f, 1.933f);
-        sprite->runAction(RepeatForever::create(animate));
-        _swim = animate;
+        _swim = RepeatForever::create(animate);
+        sprite->runAction(_swim);
+        
         _swim->retain();
         _hurt = Animate3D::create(animation, 1.933f, 2.8f);
         _hurt->retain();
@@ -905,8 +999,10 @@ void Animate3DTest::reachEndCallBack()
 
 void Animate3DTest::renewCallBack()
 {
-    _sprite->stopActionByTag(101);
+    //rerun swim action
+    _sprite->runAction(_swim);
     _state = State::HURT_TO_SWIMMING;
+    _elapseTransTime = 0.0f;
 }
 
 void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
@@ -923,12 +1019,14 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
                 //hurt the tortoise
                 if (_state == State::SWIMMING)
                 {
+                    _elapseTransTime = 0.0f;
+                    _state = State::SWIMMING_TO_HURT;
+                    _sprite->stopAction(_hurt);
                     _sprite->runAction(_hurt);
-                    auto delay = DelayTime::create(_hurt->getDuration() - 0.1f);
+                    auto delay = DelayTime::create(_hurt->getDuration() - Animate3D::getTransitionTime());
                     auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
                     seq->setTag(101);
                     _sprite->runAction(seq);
-                    _state = State::SWIMMING_TO_HURT;
                 }
                 return;
             }
@@ -992,4 +1090,446 @@ void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* e
         _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
     }
     _hasWeapon = !_hasWeapon;
+}
+Sprite3DReskinTest::Sprite3DReskinTest()
+: _sprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"Hair");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
+    auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label3 = Label::createWithTTF(ttfConfig,"Coat");
+    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label4 = Label::createWithTTF(ttfConfig,"Pants");
+    auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
+    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+    item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
+    item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
+    item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
+    item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    item1->setUserData((void*)SkinType::HAIR);
+    item2->setUserData((void*)SkinType::GLASSES);
+    item3->setUserData((void*)SkinType::UPPER_BODY);
+    item4->setUserData((void*)SkinType::PANTS);
+    item5->setUserData((void*)SkinType::SHOES);
+    auto pMenu1 = CCMenu::create(item1, item2, item3, item4, item5, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+}
+void Sprite3DReskinTest::menuCallback_reSkin(Ref* sender)
+{
+    long index = (long)(((MenuItemLabel*)sender)->getUserData());
+    if (index < (int)SkinType::MAX_TYPE)
+    {
+        _curSkin[index] = (_curSkin[index] + 1) % _skins[index].size();
+        applyCurSkin();
+    }
+}
+
+std::string Sprite3DReskinTest::title() const
+{
+    return "Testing Sprite3D Reskin";
+}
+std::string Sprite3DReskinTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(4);
+    sprite->setRotation3D(Vec3(0,0,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y-60) );
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+    
+    auto& body = _skins[(int)SkinType::UPPER_BODY];
+    body.push_back("Girl_UpperBody01");
+    body.push_back("Girl_UpperBody02");
+    
+    auto& pants = _skins[(int)SkinType::PANTS];
+    pants.push_back("Girl_LowerBody01");
+    pants.push_back("Girl_LowerBody02");
+    
+    auto& shoes = _skins[(int)SkinType::SHOES];
+    shoes.push_back("Girl_Shoes01");
+    shoes.push_back("Girl_Shoes02");
+    
+    auto& hair = _skins[(int)SkinType::HAIR];
+    hair.push_back("Girl_Hair01");
+    hair.push_back("Girl_Hair02");
+    
+    auto& face = _skins[(int)SkinType::FACE];
+    face.push_back("Girl_Face01");
+    face.push_back("Girl_Face02");
+    
+    auto& hand = _skins[(int)SkinType::HAND];
+    hand.push_back("Girl_Hand01");
+    hand.push_back("Girl_Hand02");
+    
+    auto& glasses = _skins[(int)SkinType::GLASSES];
+    glasses.push_back("");
+    glasses.push_back("Girl_Glasses01");
+    
+    memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
+    
+    applyCurSkin();
+}
+
+void Sprite3DReskinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+}
+
+void Sprite3DReskinTest::applyCurSkin()
+{
+    for (ssize_t i = 0; i < _sprite->getMeshCount(); i++) {
+        auto mesh = _sprite->getMeshByIndex(static_cast<int>(i));
+        bool isVisible = false;
+        for (int j = 0; j < (int)SkinType::MAX_TYPE; j++) {
+            if (mesh->getName() == _skins[j].at(_curSkin[j]))
+            {
+                isVisible = true;
+                break;
+            }
+        }
+        _sprite->getMeshByIndex(static_cast<int>(i))->setVisible(isVisible);
+    }
+}
+
+Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesEnded, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto s = Director::getInstance()->getWinSize();
+    initDrawBox();
+    
+    addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(65);
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::delOBBCallback, this));
+    decrease->setColor(Color3B(0,200,20));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::addOBBCallback, this));
+    increase->setColor(Color3B(0,200,20));
+    
+    auto menu = Menu::create(decrease, increase, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setPosition(Vec2(s.width/2, s.height-65));
+    addChild(menu, 1);
+    
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 30);
+    _labelCubeCount = Label::createWithTTF(ttfCount,"0 cubes");
+    _labelCubeCount->setColor(Color3B(0,200,20));
+    _labelCubeCount->setPosition(Vec2(s.width/2, s.height-90));
+    addChild(_labelCubeCount);
+    _hasCollider = false;
+    addOBBCallback(nullptr);
+    scheduleUpdate();
+}
+std::string Sprite3DWithOBBPerfromanceTest::title() const
+{
+    return "OBB Collison Perfromance Test";
+}
+std::string Sprite3DWithOBBPerfromanceTest::subtitle() const
+{
+    return "";
+}
+void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
+{
+    Vec3 extents = Vec3(10, 10, 10);
+    AABB aabb(-extents, extents);
+    auto obb = OBB(aabb);
+    obb._center = Vec3(p.x,p.y,0);
+    _obb.push_back(obb);
+}
+
+void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+{
+    for (const auto& touch: touches)
+    {
+        auto location = touch->getLocationInView();
+        auto obbSize = _obb.size();
+        if(obbSize)
+        {
+            _intersetList.clear();
+            Ray ray;
+            calculateRayByLocationInView(&ray,location);
+            for(decltype(obbSize) i = 0; i < obbSize; i++)
+            {
+                if(ray.intersects(_obb[i]))
+                {
+                    _intersetList.insert((int)i);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
+void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+{
+    for (const auto& touch: touches)
+    {
+        auto location = touch->getLocation();       
+        auto obbSize = _obb.size();
+
+        for(decltype(obbSize) i = 0; i < obbSize; i++)
+        {
+            if(_intersetList.find((int)i) != _intersetList.end())
+                _obb[i]._center = Vec3(location.x,location.y,0);
+        }
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::update(float dt)
+{
+    char szText[16];
+    sprintf(szText,"%lu cubes",_obb.size());
+    _labelCubeCount->setString(szText);
+    
+    if (_drawDebug)
+    {
+        _drawDebug->clear();
+        
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        mat.getRightVector(&_obbt._xAxis);
+        _obbt._xAxis.normalize();
+        
+        mat.getUpVector(&_obbt._yAxis);
+        _obbt._yAxis.normalize();
+        
+        mat.getForwardVector(&_obbt._zAxis);
+        _obbt._zAxis.normalize();
+        
+        _obbt._center = _sprite->getPosition3D();
+        
+        Vec3 corners[8] = {};
+        _obbt.getCorners(corners);
+        _drawDebug->drawCube(corners, Color4F(0,0,1,1));
+    }
+    if(_obb.size() > 0)
+    {
+        _drawOBB->clear();
+        auto obbSize = _obb.size();
+        for(decltype(obbSize) i =0; i < obbSize; i++)
+        {
+            Vec3 corners[8] = {};
+            _obb[i].getCorners(corners);
+            _drawOBB->drawCube(corners, _obbt.intersects(_obb[i])?Color4F(1,0,0,1):Color4F(0,1,0,1));
+        }
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::initDrawBox()
+{
+    _drawOBB = DrawNode3D::create();
+    addChild(_drawOBB);
+}
+
+void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
+    
+    AABB aabb = _sprite->getAABB();
+    _obbt = OBB(aabb);
+    
+    _drawDebug = DrawNode3D::create();
+    addChild(_drawDebug);
+}
+
+void Sprite3DWithOBBPerfromanceTest::reachEndCallBack()
+{
+    _sprite->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Sprite3DWithOBBPerfromanceTest::addOBBCallback(Ref* sender)
+{
+    addOBBWithCount(10);
+}
+
+void Sprite3DWithOBBPerfromanceTest::addOBBWithCount(float value)
+{
+    for(int i = 0; i < value; i++)
+    {
+        Vec2 randompos = Vec2(CCRANDOM_0_1() * Director::getInstance()->getWinSize().width,CCRANDOM_0_1() * Director::getInstance()->getWinSize().height);
+        Vec3 extents = Vec3(10, 10, 10);
+        AABB aabb(-extents, extents);
+        auto obb = OBB(aabb);
+        obb._center = Vec3(randompos.x,randompos.y,0);
+        _obb.push_back(obb);
+    }
+}
+
+void Sprite3DWithOBBPerfromanceTest::delOBBCallback(Ref* sender)
+{
+    delOBBWithCount(10);
+}
+
+void Sprite3DWithOBBPerfromanceTest::delOBBWithCount(float value)
+{
+    if(_obb.size() >= 10)
+    {
+        _obb.erase(_obb.begin(),_obb.begin() + value);
+        _drawOBB->clear();
+    }
+    else
+        return;
+}
+void Sprite3DWithOBBPerfromanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
+{
+    assert(dst);
+    
+    assert(viewport->width != 0.0f && viewport->height != 0.0f);
+    Vec4 screen(src->x / viewport->width, ((viewport->height - src->y)) / viewport->height, src->z, 1.0f);
+    
+    screen.x = screen.x * 2.0f - 1.0f;
+    screen.y = screen.y * 2.0f - 1.0f;
+    screen.z = screen.z * 2.0f - 1.0f;
+    
+    viewProjection.getInversed().transformVector(screen, &screen);
+    
+    if (screen.w != 0.0f)
+    {
+        screen.x /= screen.w;
+        screen.y /= screen.w;
+        screen.z /= screen.w;
+    }
+    
+    dst->set(screen.x, screen.y, screen.z);
+}
+
+void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
+{
+    auto dir = Director::getInstance();
+    auto view = dir->getWinSize();
+    auto mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+    Vec3 src = Vec3(location.x, location.y, -1);
+    Vec3 nearPoint;
+    unproject(mat, &view, &src, &nearPoint);
+    
+    src = Vec3(location.x, location.y, 1);
+    Vec3 farPoint;
+    unproject(mat, &view, &src, &farPoint);
+    
+    Vec3 direction;
+    Vec3::subtract(farPoint, nearPoint, &direction);
+    direction.normalize();
+    
+    ray->_origin = nearPoint;
+    ray->_direction = direction;
+}
+
+Sprite3DMirrorTest::Sprite3DMirrorTest()
+: _sprite(nullptr)
+, _mirrorSprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DMirrorTest::title() const
+{
+    return "Sprite3D Mirror Test";
+}
+std::string Sprite3DMirrorTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x - 80, p.y) );
+    
+    //test attach
+    auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+    _hasWeapon = true;
+    
+    //create mirror Sprite3D
+    sprite = Sprite3D::create(fileName);
+    sprite->setScale(5);
+    sprite->setScaleX(-5);
+    sprite->setCullFace(GL_FRONT);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x + 80, p.y) );
+    
+    //test attach
+    sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _mirrorSprite = sprite;
 }

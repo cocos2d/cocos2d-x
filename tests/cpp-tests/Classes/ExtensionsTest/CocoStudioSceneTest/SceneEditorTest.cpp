@@ -23,34 +23,34 @@ Layer *createTests(int index)
     switch(index)
     {
     case TEST_LOADSCENEEDITORFILE:
-        layer = new LoadSceneEdtiorFileTest();
+        layer = new (std::nothrow) LoadSceneEdtiorFileTest();
         break;
     case TEST_SPIRTECOMPONENT:
-        layer = new SpriteComponentTest();
+        layer = new (std::nothrow) SpriteComponentTest();
         break;
     case TEST_ARMATURECOMPONENT:
-        layer = new ArmatureComponentTest();
+        layer = new (std::nothrow) ArmatureComponentTest();
         break;
     case TEST_UICOMPONENT:
-        layer = new UIComponentTest();
+        layer = new (std::nothrow) UIComponentTest();
         break;
     case TEST_TMXMAPCOMPONENT:
-        layer = new TmxMapComponentTest();
+        layer = new (std::nothrow) TmxMapComponentTest();
         break;
     case TEST_PARTICLECOMPONENT:
-        layer = new ParticleComponentTest();
+        layer = new (std::nothrow) ParticleComponentTest();
         break;
     case TEST_EFEECTCOMPONENT:
-        layer = new EffectComponentTest();
+        layer = new (std::nothrow) EffectComponentTest();
         break;
     case TEST_BACKGROUNDCOMPONENT:
-        layer = new BackgroundComponentTest();
+        layer = new (std::nothrow) BackgroundComponentTest();
         break;
     case TEST_ATTRIBUTECOMPONENT:
-        layer = new AttributeComponentTest();
+        layer = new (std::nothrow) AttributeComponentTest();
         break;
     case TEST_TRIGGER:
-        layer = new TriggerTest();
+        layer = new (std::nothrow) TriggerTest();
         break;
     default:
         break;
@@ -179,7 +179,7 @@ std::string SceneEditorTestLayer::subtitle()
 
 void SceneEditorTestLayer::restartCallback(Ref *pSender)
 {
-    Scene *s = new SceneEditorTestScene();
+    Scene *s = new (std::nothrow) SceneEditorTestScene();
     s->addChild(Restart());
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -187,7 +187,7 @@ void SceneEditorTestLayer::restartCallback(Ref *pSender)
 
 void SceneEditorTestLayer::nextCallback(Ref *pSender)
 {
-    Scene *s = new SceneEditorTestScene();
+    Scene *s = new (std::nothrow) SceneEditorTestScene();
     s->addChild(Next());
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -195,7 +195,7 @@ void SceneEditorTestLayer::nextCallback(Ref *pSender)
 
 void SceneEditorTestLayer::backCallback(Ref *pSender)
 {
-    Scene *s = new SceneEditorTestScene();
+    Scene *s = new (std::nothrow) SceneEditorTestScene();
     s->addChild(Back());
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -214,6 +214,7 @@ void SceneEditorTestLayer::changeLoadTypeCallback(cocos2d::Ref *pSender)
 	
 	if(_rootNode != nullptr)
 	{
+        ActionManagerEx::getInstance()->releaseActions();
 		this->removeChild(_rootNode);
 		_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
 		if (_rootNode == nullptr)
@@ -789,8 +790,7 @@ void AttributeComponentTest::defaultPlay()
 }
 
 TriggerTest::TriggerTest()
-: _node(nullptr)
-, _touchListener(nullptr)
+: _touchListener(nullptr)
 {
 	
 }
@@ -811,7 +811,7 @@ void TriggerTest::onEnter()
 	SceneEditorTestLayer::onEnter();
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
-    this->schedule(schedule_selector(TriggerTest::gameLogic));
+    this->schedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -827,7 +827,7 @@ void TriggerTest::onEnter()
 void TriggerTest::onExit()
 {
 	sendEvent(TRIGGEREVENT_LEAVESCENE);
-    this->unschedule(schedule_selector(TriggerTest::gameLogic));
+    this->unschedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);

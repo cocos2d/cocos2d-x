@@ -26,19 +26,22 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 
 #include <string>
-#include "base/CCPlatformConfig.h"
-#include "CCPlatformDefine.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCPlatformDefine.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCFileUtilsAndroid.h"
+#include "platform/android/CCFileUtils-android.h"
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 // for import ssize_t on win32 platform
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 #endif
 
 namespace cocos2d
 {
+#ifndef _unz64_H
+typedef struct unz_file_info_s unz_file_info;
+#endif
     /* XXX: pragma pack ??? */
     /** @struct CCZHeader
     */
@@ -214,6 +217,7 @@ namespace cocos2d
 
     // forward declaration
     class ZipFilePrivate;
+    struct unz_file_info_s;
 
     /**
     * Zip file - reader helper class.
@@ -223,7 +227,7 @@ namespace cocos2d
     *
     * @since v2.0.5
     */
-    class ZipFile
+    class CC_DLL ZipFile
     {
     public:
         /**
@@ -270,7 +274,18 @@ namespace cocos2d
         */
         unsigned char *getFileData(const std::string &fileName, ssize_t *size);
 
+        std::string getFirstFilename();
+        std::string getNextFilename();
+        
+        static ZipFile *createWithBuffer(const void* buffer, unsigned long size);
+        
     private:
+        /* Only used internal for createWithBuffer() */
+        ZipFile();
+        
+        bool initWithBuffer(const void *buffer, unsigned long size);
+        int getCurrentFileInfo(std::string *filename, unz_file_info *info);
+        
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *_data;
     };

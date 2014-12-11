@@ -27,9 +27,8 @@ THE SOFTWARE.
 #define __MATH_CCGEOMETRY_H__
 
 #include <math.h>
-#include <functional>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
 
@@ -184,6 +183,8 @@ public:
      * @lua NA
      */
     Rect unionWithRect(const Rect & rect) const;
+
+    void merge(const Rect& rect);
     
     static const Rect ZERO;
 };

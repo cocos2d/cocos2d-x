@@ -29,6 +29,7 @@
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionTween.h"
 #include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
 
 #include <algorithm>
@@ -61,8 +62,8 @@ ScrollView::ScrollView()
 , _touchLength(0.0f)
 , _minScale(0.0f)
 , _maxScale(0.0f)
-, _touchListener(nullptr)
 , _scissorRestored(false)
+, _touchListener(nullptr)
 {
 
 }
@@ -74,7 +75,7 @@ ScrollView::~ScrollView()
 
 ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
     {
         pRet->autorelease();
@@ -88,7 +89,7 @@ ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
 
 ScrollView* ScrollView::create()
 {
-    ScrollView* pRet = new ScrollView();
+    ScrollView* pRet = new (std::nothrow) ScrollView();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -125,7 +126,7 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = nullptr*/)
         _clippingToBounds = true;
         //_container->setContentSize(Size::ZERO);
         _direction  = Direction::BOTH;
-        _container->setPosition(Vec2(0.0f, 0.0f));
+        _container->setPosition(0.0f, 0.0f);
         _touchLength = 0.0f;
         
         this->addChild(_container);
@@ -236,7 +237,7 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
     _container->runAction(Sequence::create(scroll, expire, nullptr));
-    this->schedule(schedule_selector(ScrollView::performedAnimatedScroll));
+    this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
 }
 
 Vec2 ScrollView::getContentOffset()
@@ -342,6 +343,19 @@ void ScrollView::setContainer(Node * pContainer)
     this->setViewSize(this->_viewSize);
 }
 
+bool ScrollView::hasVisibleParents() const
+{
+    auto parent = this->getParent();
+    for( auto c = parent; c != nullptr; c = c->getParent() )
+    {
+        if( !c->isVisible() )
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void ScrollView::relocateContainer(bool animated)
 {
     Vec2 oldPoint, min, max;
@@ -387,7 +401,7 @@ void ScrollView::deaccelerateScrolling(float dt)
 {
     if (_dragging)
     {
-        this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
+        this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         return;
     }
     
@@ -418,14 +432,14 @@ void ScrollView::deaccelerateScrolling(float dt)
         newY >= maxInset.y || newY <= minInset.y ||
         newX >= maxInset.x || newX <= minInset.x)
     {
-        this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
+        this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
     }
 }
 
 void ScrollView::stoppedAnimatedScroll(Node * node)
 {
-    this->unschedule(schedule_selector(ScrollView::performedAnimatedScroll));
+    this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
     // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
     if (_delegate != nullptr)
     {
@@ -437,7 +451,7 @@ void ScrollView::performedAnimatedScroll(float dt)
 {
     if (_dragging)
     {
-        this->unschedule(schedule_selector(ScrollView::performedAnimatedScroll));
+        this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
         return;
     }
 
@@ -564,10 +578,10 @@ void ScrollView::onAfterDraw()
 
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-	// quick return if not visible
-	if (!isVisible())
+    // quick return if not visible
+    if (!isVisible() || !isVisitableByVisitingCamera())
     {
-		return;
+        return;
     }
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -581,49 +595,50 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     this->beforeDraw();
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
-	if (!_children.empty())
+    if (!_children.empty())
     {
-		int i=0;
+        int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children.size(); i++ )
+        for( ; i < _children.size(); i++ )
         {
-			Node *child = _children.at(i);
-			if ( child->getLocalZOrder() < 0 )
+            Node *child = _children.at(i);
+            if ( child->getLocalZOrder() < 0 )
             {
-				child->visit(renderer, _modelViewTransform, flags);
-			}
+                child->visit(renderer, _modelViewTransform, flags);
+            }
             else
             {
-				break;
+                break;
             }
-		}
+        }
 		
 		// this draw
-		this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
         
-		// draw children zOrder >= 0
-		for( ; i < _children.size(); i++ )
+        // draw children zOrder >= 0
+        for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
 			child->visit(renderer, _modelViewTransform, flags);
-		}
-        
-	}
-    else
+        }
+    }
+    else if (visibleByCamera)
     {
-		this->draw(renderer, _modelViewTransform, flags);
+        this->draw(renderer, _modelViewTransform, flags);
     }
 
     this->afterDraw();
 
-	director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 {
-    if (!this->isVisible())
+    if (!this->isVisible() || !this->hasVisibleParents())
     {
         return false;
     }
@@ -773,7 +788,7 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
     {
         if (_touches.size() == 1 && _touchMoved)
         {
-            this->schedule(schedule_selector(ScrollView::deaccelerateScrolling));
+            this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         }
         _touches.erase(touchIter);
     } 

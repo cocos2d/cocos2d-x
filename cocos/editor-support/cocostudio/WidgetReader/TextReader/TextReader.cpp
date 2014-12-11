@@ -1,11 +1,17 @@
 
 
 #include "TextReader.h"
+
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary_generated.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -20,7 +26,7 @@ namespace cocostudio
     
     static TextReader* instanceTextReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(TextReader)
     
     TextReader::TextReader()
     {
@@ -36,7 +42,7 @@ namespace cocostudio
     {
         if (!instanceTextReader)
         {
-            instanceTextReader = new TextReader();
+            instanceTextReader = new (std::nothrow) TextReader();
         }
         return instanceTextReader;
     }
@@ -105,7 +111,7 @@ namespace cocostudio
       
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
-        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
         
         std::string fontFilePath = jsonPath.append(fontName);
 		if (FileUtils::getInstance()->isFileExist(fontFilePath))
@@ -136,5 +142,209 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }        
+    
+    Offset<Table> TextReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                           flatbuffers::FlatBufferBuilder *builder)
+    {
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        
+        bool touchScaleEnabled = false;
+        bool isCustomSize = false;
+        std::string fontName = "";
+        int fontSize = 20;
+        std::string text = "Text Label";
+        int areaWidth = 0;
+        int areaHeight = 0;
+        int h_alignment = 0;
+        int v_alignment = 0;
+        
+        std::string path = "";
+        std::string plistFile = "";
+        int resourceType = 0;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "TouchScaleChangeAble")
+            {
+                touchScaleEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "LabelText")
+            {
+                text = value;
+            }
+            else if (name == "FontSize")
+            {
+                fontSize = atoi(value.c_str());
+            }
+            else if (name == "FontName")
+            {
+                fontName = value;
+            }
+            else if (name == "AreaWidth")
+            {
+                areaWidth = atoi(value.c_str());
+            }
+            else if (name == "AreaHeight")
+            {
+                areaHeight = atoi(value.c_str());
+            }
+            else if (name == "HorizontalAlignmentType")
+            {
+                if (value == "HT_Left")
+                {
+                    h_alignment = 0;
+                }
+                else if (value == "HT_Center")
+                {
+                    h_alignment = 1;
+                }
+                else if (value == "HT_Right")
+                {
+                    h_alignment = 2;
+                }
+            }
+            else if (name == "VerticalAlignmentType")
+            {
+                if (value == "VT_Top")
+                {
+                    v_alignment = 0;
+                }
+                else if (value == "VT_Center")
+                {
+                    v_alignment = 1;
+                }
+                else if (value == "VT_Bottom")
+                {
+                    v_alignment = 2;
+                }
+            }
+            else if (name == "IsCustomSize")
+            {
+                isCustomSize = (value == "True") ? true : false;
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "FontResource")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = 0;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        auto options = CreateTextOptions(*builder,
+                                         widgetOptions,
+                                         CreateResourceData(*builder,
+                                                            builder->CreateString(path),
+                                                            builder->CreateString(plistFile),
+                                                            resourceType),
+                                         builder->CreateString(fontName),
+                                         fontSize,
+                                         builder->CreateString(text),
+                                         areaWidth,
+                                         areaHeight,
+                                         h_alignment,
+                                         v_alignment,
+                                         touchScaleEnabled,
+                                         isCustomSize);
+        
+        return *(Offset<Table>*)(&options);
     }
+    
+    void TextReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *textOptions)
+    {
+        Text* label = static_cast<Text*>(node);
+        auto options = (TextOptions*)textOptions;
+        
+        bool touchScaleEnabled = options->touchScaleEnable();
+        label->setTouchScaleChangeEnabled(touchScaleEnabled);
+        std::string text = options->text()->c_str();
+        label->setString(text);
+        
+        int fontSize = options->fontSize();
+        label->setFontSize(fontSize);
+        
+        std::string fontName = options->fontName()->c_str();
+        label->setFontName(fontName);
+        
+        Size areaSize = Size(options->areaWidth(), options->areaHeight());
+        if (!areaSize.equals(Size::ZERO))
+        {
+            label->setTextAreaSize(areaSize);
+        }
+        
+        TextHAlignment h_alignment = (TextHAlignment)options->hAlignment();
+        label->setTextHorizontalAlignment(h_alignment);
+        
+        TextVAlignment v_alignment = (TextVAlignment)options->vAlignment();
+        label->setTextVerticalAlignment((TextVAlignment)v_alignment);
+        
+        auto resourceData = options->fontResource();
+        std::string path = resourceData->path()->c_str();
+        if (path != "")
+        {
+            label->setFontName(path);
+        }
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        label->setUnifySizeEnabled(false);
+        
+        bool IsCustomSize = options->isCustomSize();
+        label->ignoreContentAdaptWithSize(!IsCustomSize);
+        
+        auto widgetOptions = options->widgetOptions();
+        if (!label->isIgnoreContentAdaptWithSize())
+        {
+            Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+            label->setContentSize(contentSize);
+        }
+    }
+    
+    Node* TextReader::createNodeWithFlatBuffers(const flatbuffers::Table *textOptions)
+    {
+        Text* text = Text::create();
+        
+        setPropsWithFlatBuffers(text, (Table*)textOptions);
+        
+        return text;
+    }
+    
 }

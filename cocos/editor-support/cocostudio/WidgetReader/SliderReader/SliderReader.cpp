@@ -1,11 +1,18 @@
 
 
 #include "SliderReader.h"
+
 #include "ui/UISlider.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -20,7 +27,7 @@ namespace cocostudio
     
     static SliderReader* instanceSliderReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(SliderReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(SliderReader)
     
     SliderReader::SliderReader()
     {
@@ -36,7 +43,7 @@ namespace cocostudio
     {
         if (!instanceSliderReader)
         {
-            instanceSliderReader = new SliderReader();
+            instanceSliderReader = new (std::nothrow) SliderReader();
         }
         return instanceSliderReader;
     }
@@ -185,5 +192,353 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }        
+    
+    Offset<Table> SliderReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                             flatbuffers::FlatBufferBuilder *builder)
+    {
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        
+        std::string barFileNamePath = "";
+        std::string barFileNamePlistFile = "";
+        int barFileNameResourceType = 0;
+        
+        std::string ballNormalPath = "";
+        std::string ballNormalPlistFile = "";
+        int ballNormalResourceType = 0;
+        
+        std::string ballPressedPath = "";
+        std::string ballPressedPlistFile = "";
+        int ballPressedResourceType = 0;
+        
+        std::string ballDisabledPath = "";
+        std::string ballDisabledPlistFile = "";
+        int ballDisabledResourceType = 0;
+        
+        std::string progressBarPath = "";
+        std::string progressBarPlistFile = "";
+        int progressBarResourceType = 0;
+        
+        int percent = 0;
+        bool displaystate = true;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "PercentInfo")
+            {
+                percent = atoi(value.c_str());
+            }
+            else if (name == "DisplayState")
+            {
+                displaystate = (value == "True") ? true : false;
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "BackGroundData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        barFileNamePath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        barFileNameResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        barFileNamePlistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (barFileNameResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "BallNormalData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        ballNormalPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        ballNormalResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        ballNormalPlistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (ballNormalResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "BallPressedData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        ballPressedPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        ballPressedResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        ballPressedPlistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (ballPressedResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "BallDisabledData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        ballDisabledPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        ballDisabledResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        ballDisabledPlistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (ballDisabledResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            else if (name == "ProgressBarData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        progressBarPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        progressBarResourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        progressBarPlistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (progressBarResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
+                    
+                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
+                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        auto options = CreateSliderOptions(*builder,
+                                           widgetOptions,
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(barFileNamePath),
+                                                              builder->CreateString(barFileNamePlistFile),
+                                                              barFileNameResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(ballNormalPath),
+                                                              builder->CreateString(ballNormalPlistFile),
+                                                              ballNormalResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(ballPressedPath),
+                                                              builder->CreateString(ballPressedPlistFile),
+                                                              ballPressedResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(ballDisabledPath),
+                                                              builder->CreateString(ballDisabledPlistFile),
+                                                              ballDisabledResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(progressBarPath),
+                                                              builder->CreateString(progressBarPlistFile),
+                                                              progressBarResourceType),
+                                           percent,
+                                           displaystate);
+        
+        return *(Offset<Table>*)(&options);
     }
+    
+    void SliderReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *sliderOptions)
+    {
+        Slider* slider = static_cast<Slider*>(node);
+        auto options = (SliderOptions*)sliderOptions;
+        
+        int percent = options->percent();
+        slider->setPercent(percent);
+        
+        auto imageFileNameDic = options->barFileNameData();
+        int imageFileNameType = imageFileNameDic->resourceType();
+        std::string imageFileName = imageFileNameDic->path()->c_str();
+        slider->loadBarTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+        
+        //loading normal slider ball texture
+        auto normalDic = options->ballNormalData();
+        int normalType = normalDic->resourceType();
+        std::string normalFileName = normalDic->path()->c_str();
+        slider->loadSlidBallTextureNormal(normalFileName, (Widget::TextureResType)normalType);
+        
+        //loading slider ball press texture
+        auto pressedDic = options->ballPressedData();
+        int pressedType = pressedDic->resourceType();
+        std::string pressedFileName = pressedDic->path()->c_str();
+        slider->loadSlidBallTexturePressed(pressedFileName, (Widget::TextureResType)pressedType);
+        
+        //loading silder ball disable texture
+        auto disabledDic = options->ballDisabledData();
+        int disabledType = disabledDic->resourceType();
+        std::string disabledFileName = disabledDic->path()->c_str();
+        slider->loadSlidBallTextureDisabled(disabledFileName, (Widget::TextureResType)disabledType);
+        
+        //load slider progress texture
+        auto progressBarDic = options->progressBarData();
+        int progressBarType = progressBarDic->resourceType();
+        std::string progressBarFileName = progressBarDic->path()->c_str();
+        slider->loadProgressBarTexture(progressBarFileName, (Widget::TextureResType)progressBarType);
+        
+        bool displaystate = options->displaystate();
+        slider->setBright(displaystate);
+        slider->setEnabled(displaystate);
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+    }
+    
+    Node* SliderReader::createNodeWithFlatBuffers(const flatbuffers::Table *sliderOptions)
+    {
+        Slider* slider = Slider::create();
+        
+        setPropsWithFlatBuffers(slider, (Table*)sliderOptions);
+        
+        return slider;
+    }
+    
+    int SliderReader::getResourceType(std::string key)
+    {
+        if(key == "Normal" || key == "Default")
+        {
+            return 	0;
+        }
+        
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
+        {
+            if(key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    
 }

@@ -59,7 +59,7 @@ ControlStepper::ControlStepper()
 
 ControlStepper::~ControlStepper()
 {
-    unscheduleAllSelectors();
+    unscheduleAllCallbacks();
     
     CC_SAFE_RELEASE(_minusSprite);
     CC_SAFE_RELEASE(_plusSprite);
@@ -86,25 +86,25 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
     
         // Add the minus components
         this->setMinusSprite(minusSprite);
-		_minusSprite->setPosition( Vec2(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2) );
+		_minusSprite->setPosition(minusSprite->getContentSize().width / 2, minusSprite->getContentSize().height / 2);
 		this->addChild(_minusSprite);
         
         this->setMinusLabel( Label::createWithSystemFont("-", ControlStepperLabelFont, 40));
         _minusLabel->setColor(ControlStepperLabelColorDisabled);
         _minusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        _minusLabel->setPosition(Vec2(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2) );
+        _minusLabel->setPosition(_minusSprite->getContentSize().width / 2, _minusSprite->getContentSize().height / 2);
         _minusSprite->addChild(_minusLabel);
         
         // Add the plus components 
         this->setPlusSprite( plusSprite );
-		_plusSprite->setPosition( Vec2(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2, 
-                                                  minusSprite->getContentSize().height / 2) );
+		_plusSprite->setPosition(minusSprite->getContentSize().width + plusSprite->getContentSize().width / 2,
+                                                  minusSprite->getContentSize().height / 2);
 		this->addChild(_plusSprite);
         
         this->setPlusLabel( Label::createWithSystemFont("+", ControlStepperLabelFont, 40 ));
         _plusLabel->setColor( ControlStepperLabelColorEnabled );
         _plusLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        _plusLabel->setPosition( Vec2(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2) );
+        _plusLabel->setPosition(_plusSprite->getContentSize().width / 2, _plusSprite->getContentSize().height / 2);
         _plusSprite->addChild(_plusLabel);
         
         // Defines the content size
@@ -117,7 +117,7 @@ bool ControlStepper::initWithMinusSpriteAndPlusSprite(Sprite *minusSprite, Sprit
 
 ControlStepper* ControlStepper::create(Sprite *minusSprite, Sprite *plusSprite)
 {
-    ControlStepper* pRet = new ControlStepper();
+    ControlStepper* pRet = new (std::nothrow) ControlStepper();
     if (pRet != nullptr && pRet->initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite))
     {
         pRet->autorelease();
@@ -221,13 +221,13 @@ void ControlStepper::startAutorepeat()
 {
     _autorepeatCount    = -1;
     
-    this->schedule(schedule_selector(ControlStepper::update), kAutorepeatDeltaTime, kRepeatForever, kAutorepeatDeltaTime * 3);
+    this->schedule(CC_SCHEDULE_SELECTOR(ControlStepper::update), kAutorepeatDeltaTime, CC_REPEAT_FOREVER, kAutorepeatDeltaTime * 3);
 }
 
 /** Stop the autorepeat. */
 void ControlStepper::stopAutorepeat()
 {
-    this->unschedule(schedule_selector(ControlStepper::update));
+    this->unschedule(CC_SCHEDULE_SELECTOR(ControlStepper::update));
 }
 
 void ControlStepper::update(float dt)

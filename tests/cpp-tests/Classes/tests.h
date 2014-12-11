@@ -30,13 +30,18 @@
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
+#if CC_ENABLE_BOX2D_INTEGRATION
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
+#endif
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "InputTest/MouseTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "NewAudioEngineTest/NewAudioEngineTest.h"
+#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
@@ -70,5 +75,9 @@
 
 #include "Sprite3DTest/Sprite3DTest.h"
 #include "Camera3DTest/Camera3DTest.h"
+#include "BillBoardTest/BillBoardTest.h"
+#include "LightTest/LightTest.h"
+
+#include "OpenURLTest/OpenURLTest.h"
 
 #endif

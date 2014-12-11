@@ -36,10 +36,12 @@ static const char* s_testArray[] =
     "UILayoutTest_Gradient_Editor",
     "UILayoutTest_BackGroundImage_Editor",
     "UILayoutTest_BackGroundImage_Scale9_Editor",
+    /*
     "UILayoutTest_Layout_Linear_Vertical_Editor",
     "UILayoutTest_Layout_Linear_Horizontal_Editor",
     "UILayoutTest_Layout_Relative_Align_Parent_Editor",
     "UILayoutTest_Layout_Relative_Location_Editor",
+    */
     "UIListViewTest_Vertical_Editor",
     "UIListViewTest_Horizontal_Editor",
     "UIPageViewTest_Editor",
@@ -64,7 +66,7 @@ UISceneManager_Editor* UISceneManager_Editor::sharedUISceneManager_Editor()
 {
     if (sharedInstance == nullptr)
     {
-        sharedInstance = new UISceneManager_Editor();
+        sharedInstance = new (std::nothrow) UISceneManager_Editor();
     }
     return sharedInstance;
 }
@@ -147,6 +149,7 @@ Scene* UISceneManager_Editor::currentUIScene()
         case kUILayoutTest_BackGroundImage_Scale9_Editor:
             return UILayoutTest_BackGroundImage_Scale9_Editor::sceneWithTitle(s_testArray[_currentUISceneId]);
             
+            /*
         case kUILayoutTest_Layout_Linear_Vertical_Editor:
             return UILayoutTest_Layout_Linear_Vertical_Editor::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -158,7 +161,7 @@ Scene* UISceneManager_Editor::currentUIScene()
             
         case kUILayoutTest_Layout_Relative_Location_Editor:
             return UILayoutTest_Layout_Relative_Location_Editor::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+             */
         case kUIListViewTest_Vertical_Editor:
             return UIListViewTest_Vertical_Editor::sceneWithTitle(s_testArray[_currentUISceneId]);
             

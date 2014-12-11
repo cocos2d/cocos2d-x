@@ -27,15 +27,12 @@ THE SOFTWARE.
 #ifndef __CC_FAST_TMX_LAYER_H__
 #define __CC_FAST_TMX_LAYER_H__
 
-#include "CCTMXObjectGroup.h"
-#include "CCTMXXMLParser.h"
-#include "CCNode.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCPrimitiveCommand.h"
-
 #include <map>
 #include <unordered_map>
+#include "2d/CCNode.h"
+#include "2d/CCTMXXMLParser.h"
+#include "renderer/CCPrimitiveCommand.h"
+#include "base/CCMap.h"
 
 NS_CC_BEGIN
 
@@ -244,7 +241,7 @@ protected:
     bool _quadsDirty;
     std::vector<int> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
-    std::vector<int> _indices;
+    std::vector<GLushort> _indices;
     std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<PrimitiveCommand> _renderCommands;

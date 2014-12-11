@@ -1,17 +1,20 @@
 #ifndef __CCLIBGUI_H__
 #define __CCLIBGUI_H__
 
-#if defined(WIN32) && defined(_WINDOWS)
+#if (defined(WIN32) && defined(_WINDOWS)) || defined(WINRT) || defined(WP8)
     #ifdef __MINGW32__
         #include <string.h>
     #endif
 
-    #if defined(_USEGUIDLL)
-        #define CC_GUI_DLL     __declspec(dllexport)
-    #else         /* use a DLL library */
-        #define CC_GUI_DLL     __declspec(dllimport)
+    #if defined(CC_STATIC)
+        #define CC_GUI_DLL
+    #else
+        #if defined(_USEGUIDLL)
+            #define CC_GUI_DLL     __declspec(dllexport)
+        #else
+            #define CC_GUI_DLL     __declspec(dllimport)
+        #endif
     #endif
-
 
     /* Define NULL pointer value */
     #ifndef NULL

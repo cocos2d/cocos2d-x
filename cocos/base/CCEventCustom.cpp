@@ -23,8 +23,7 @@
  ****************************************************************************/
 
 #include "base/CCEventCustom.h"
-#include "base/ccMacros.h"
-#include <functional>
+#include "base/CCEvent.h"
 
 NS_CC_BEGIN
 

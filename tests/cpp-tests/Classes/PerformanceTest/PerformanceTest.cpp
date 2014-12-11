@@ -12,6 +12,7 @@
 #include "PerformanceEventDispatcherTest.h"
 #include "PerformanceScenarioTest.h"
 #include "PerformanceCallbackTest.h"
+#include "PerformanceMathTest.h"
 
 enum
 {
@@ -36,6 +37,7 @@ struct {
     { "EventDispatcher Perf Test", [](Ref* sender ) { runEventDispatcherPerformanceTest(); } },
     { "Scenario Perf Test", [](Ref* sender ) { runScenarioTest(); } },
     { "Callback Perf Test", [](Ref* sender ) { runCallbackPerformanceTest(); } },
+    { "Math Perf Test", [](Ref* sender ) { runMathPerformanceTest(); } },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
@@ -176,7 +178,7 @@ void PerformBasicLayer::onEnter()
 
 void PerformBasicLayer::toMainLayer(Ref* sender)
 {
-    auto scene = new PerformanceTestScene();
+    auto scene = new (std::nothrow) PerformanceTestScene();
     scene->runThisTest();
 
     scene->release();
@@ -212,7 +214,7 @@ void PerformBasicLayer::backCallback(Ref* sender)
 
 void PerformanceTestScene::runThisTest()
 {
-    auto layer = new PerformanceMainLayer();
+    auto layer = new (std::nothrow) PerformanceMainLayer();
     addChild(layer);
     layer->release();
 

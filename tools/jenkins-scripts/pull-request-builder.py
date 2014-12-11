@@ -1,4 +1,4 @@
-#Github pull reqest builder for Jenkins 
+#Github pull reqest builder for Jenkins
 
 import json
 import os
@@ -22,7 +22,7 @@ def set_description(desc, url):
     req_data = urllib.urlencode({'description': desc})
     req = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
-    req.add_header('Content-Type', 'application/x-www-form-urlencoded') 
+    req.add_header('Content-Type', 'application/x-www-form-urlencoded')
     base64string = base64.encodestring(os.environ['JENKINS_ADMIN']+ ":" + os.environ['JENKINS_ADMIN_PW']).replace('\n', '')
     req.add_header("Authorization", "Basic " + base64string)
     try:
@@ -31,6 +31,7 @@ def set_description(desc, url):
         traceback.print_exc()
 
 def check_current_3rd_libs(branch):
+    print("start backup old 3rd libs...")
     #get current_libs config
     backup_files = range(2)
     current_files = range(2)
@@ -56,6 +57,7 @@ def check_current_3rd_libs(branch):
         if os.path.isfile(backup_file):
           copy(backup_file, current_file)
     #run download-deps.py
+    print("prepare to downloading ...")
     os.system('python download-deps.py -r no')
     #backup file
     for i, backup_file in enumerate(backup_files):
@@ -67,18 +69,27 @@ def connect_db():
     db_user = os.environ['db_user']
     db_pw = os.environ['db_pw']
     db_name=os.environ['db_name']
-    db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
+    try:
+        db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
+    except:
+        traceback.print_exc()
     return db
 
 def close_db(db):
-    db.close()
+    try:
+        db.close()
+    except:
+        traceback.print_exc()
 
 def save_build_stats(db, pr, filename, size):
-    cursor = db.cursor()
-    sql = "INSERT INTO %s (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
-    print sql
-    cursor.execute(sql)
-    db.commit()
+    try:
+        cursor = db.cursor()
+        sql = "INSERT INTO `%s` (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
+        print sql
+        cursor.execute(sql)
+        db.commit()
+    except:
+        traceback.print_exc()
 
 def scan_all_libs(db, pr_num):
     stats = {}
@@ -116,11 +127,11 @@ def main():
     print 'action: ' + action
 
     #pr = payload['pull_request']
-    
+
     url = payload['html_url']
     print "url:" + url
     pr_desc = '<h3><a href='+ url + '> pr#' + str(pr_num) + ' is '+ action +'</a></h3>'
-    
+
 
 
     #get statuses url
@@ -137,11 +148,11 @@ def main():
     target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
     set_description(pr_desc, target_url)
- 
-    
+
+
     data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build started..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
-    Headers = {"Authorization":"token " + access_token} 
+    Headers = {"Authorization":"token " + access_token}
 
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
@@ -155,14 +166,14 @@ def main():
     os.system("git checkout v3")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
-    print "Before checkout: git clean -xdf -f"    
+    print "Before checkout: git clean -xdf -f"
     os.system("git clean -xdf -f")
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     ret = os.system(git_fetch_pr)
     if(ret != 0):
         return(2)
- 
+
     #checkout a new branch from v3
     git_checkout = "git checkout -b " + "pull" + str(pr_num)
     os.system(git_checkout)
@@ -173,9 +184,9 @@ def main():
     if r.find('CONFLICT') > 0:
         print r
         return(3)
- 
+
     # After checkout a new branch, clean workspace again
-    print "After checkout: git clean -xdf -f"    
+    print "After checkout: git clean -xdf -f"
     os.system("git clean -xdf -f")
 
     #update submodule
@@ -212,7 +223,7 @@ def main():
     print platform.system()
     if(platform.system() == 'Darwin'):
         for item in PROJECTS:
-          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
+          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"
           os.system(cmd)
     elif(platform.system() == 'Windows'):
         for item in PROJECTS:
@@ -220,7 +231,7 @@ def main():
           cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
           print cmd
           os.system(cmd)
- 
+
     #build
     #TODO: add android-linux build
     #TODO: add mac build
@@ -304,13 +315,13 @@ def main():
 
     #get build result
     print "build finished and return " + str(ret)
-    
+
     exit_code = 1
     if ret == 0:
         exit_code = 0
     else:
         exit_code = 1
-    
+
     #clean workspace
     os.system("cd " + os.environ['WORKSPACE'])
     os.system("git reset --hard")
@@ -323,7 +334,7 @@ def main():
 # -------------- main --------------
 if __name__ == '__main__':
     sys_ret = 0
-    try:    
+    try:
         sys_ret = main()
     except:
         traceback.print_exc()

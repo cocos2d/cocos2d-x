@@ -65,7 +65,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 void ShaderTestDemo::backCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();
+    auto s = new (std::nothrow) ShaderTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -73,7 +73,7 @@ void ShaderTestDemo::backCallback(Ref* sender)
 
 void ShaderTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();//CCScene::create();
+    auto s = new (std::nothrow) ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -91,7 +91,7 @@ std::string ShaderTestDemo::subtitle() const
 
 void ShaderTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();
+    auto s = new (std::nothrow) ShaderTestScene();
     s->addChild(restartAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -122,7 +122,7 @@ ShaderNode::~ShaderNode()
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
 {
-    auto node = new ShaderNode();
+    auto node = new (std::nothrow) ShaderNode();
     node->initWithVertex(vert, frag);
     node->autorelease();
 
@@ -259,13 +259,14 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
     
@@ -292,13 +293,14 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
 
@@ -439,7 +441,7 @@ SpriteBlur::~SpriteBlur()
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
-    SpriteBlur* pRet = new SpriteBlur();
+    SpriteBlur* pRet = new (std::nothrow) SpriteBlur();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -562,6 +564,7 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();
@@ -572,7 +575,7 @@ bool ShaderBlur::init()
         addChild(sprite);
 
         createSliderCtls();
-
+#endif
         return true;
     }
 

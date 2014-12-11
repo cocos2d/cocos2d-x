@@ -135,6 +135,10 @@ public:
     
     void setPlaceHolder(const std::string& value);
     const std::string& getPlaceHolder()const;
+    const Color4B& getPlaceHolderColor()const;
+    void setPlaceHolderColor(const Color3B& color);
+    void setPlaceHolderColor(const Color4B& color);
+    void setTextColor(const Color4B& textColor);
     
     void setFontSize(int size);
     int getFontSize()const;
@@ -143,8 +147,11 @@ public:
     
     virtual void didNotSelectSelf();
     
-    void setText(const std::string& text);
-    const std::string& getStringValue()const;
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+    
+    void setString(const std::string& text);
+    const std::string& getString()const;
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     
@@ -180,7 +187,7 @@ public:
      */
     virtual std::string getDescription() const override;
 
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     void attachWithIME();
     virtual void onEnter() override;

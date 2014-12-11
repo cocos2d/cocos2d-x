@@ -151,7 +151,6 @@ class PageTransitionForward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, false);
     }
 };
@@ -161,7 +160,6 @@ class PageTransitionBackward : public TransitionPageTurn
 public:
     static TransitionScene* create(float t, Scene* s)
     {
-        Director::getInstance()->setDepthTest(true);
         return TransitionPageTurn::create(t, s, true);
     }
 };
@@ -246,7 +244,7 @@ TransitionScene* createTransition(int index, float t, Scene* s)
 
 void TransitionsTestScene::runThisTest()
 {
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     addChild(layer);
     layer->release();
 
@@ -289,7 +287,7 @@ TestLayer1::TestLayer1(void)
 
     addChild(menu, 1);    
 
-    schedule( schedule_selector(TestLayer1::step), 1.0f); 
+    schedule( CC_SCHEDULE_SELECTOR(TestLayer1::step), 1.0f); 
 }
 
 TestLayer1::~TestLayer1(void)
@@ -299,9 +297,9 @@ TestLayer1::~TestLayer1(void)
 
 void TestLayer1::restartCallback(Ref* sender)
 {
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer2();
+    auto layer = new (std::nothrow) TestLayer2();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -318,9 +316,9 @@ void TestLayer1::nextCallback(Ref* sender)
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer2();
+    auto layer = new (std::nothrow) TestLayer2();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -339,9 +337,9 @@ void TestLayer1::backCallback(Ref* sender)
     if( s_nSceneIdx < 0 )
         s_nSceneIdx += total;    
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer2();
+    auto layer = new (std::nothrow) TestLayer2();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -419,7 +417,7 @@ TestLayer2::TestLayer2()
 
     addChild(menu, 1);    
 
-    schedule(schedule_selector(TestLayer2::step), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(TestLayer2::step), 1.0f);
 }
 
 TestLayer2::~TestLayer2()
@@ -429,9 +427,9 @@ TestLayer2::~TestLayer2()
 
 void TestLayer2::restartCallback(Ref* sender)
 {
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -448,9 +446,9 @@ void TestLayer2::nextCallback(Ref* sender)
     s_nSceneIdx++;
     s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
@@ -469,9 +467,9 @@ void TestLayer2::backCallback(Ref* sender)
     if( s_nSceneIdx < 0 )
         s_nSceneIdx += total;    
 
-    auto s = new TransitionsTestScene();
+    auto s = new (std::nothrow) TransitionsTestScene();
 
-    auto layer = new TestLayer1();
+    auto layer = new (std::nothrow) TestLayer1();
     s->addChild(layer);
 
     auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);

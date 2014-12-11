@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string.h>
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #define MATH_DEG_TO_RAD(x)          ((x) * 0.0174532925f)
 #define MATH_RAD_TO_DEG(x)          ((x)* 57.29577951f)

@@ -56,6 +56,10 @@ jclass _getClassID(const char *className) {
     return _clazz;
 }
 
+void _detachCurrentThread(void* a) {
+    cocos2d::JniHelper::getJavaVM()->DetachCurrentThread();
+}
+
 namespace cocos2d {
 
     JavaVM* JniHelper::_psJavaVM = nullptr;
@@ -73,7 +77,7 @@ namespace cocos2d {
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %ld", javaVM, thisthread);
         _psJavaVM = javaVM;
 
-        pthread_key_create(&g_key, nullptr);
+        pthread_key_create(&g_key, _detachCurrentThread);
     }
 
     JNIEnv* JniHelper::cacheEnv(JavaVM* jvm) {
@@ -89,11 +93,6 @@ namespace cocos2d {
                 
         case JNI_EDETACHED :
             // Thread not attached
-                
-            // TODO : If calling AttachCurrentThread() on a native thread
-            // must call DetachCurrentThread() in future.
-            // see: http://developer.android.com/guide/practices/design/jni.html
-                
             if (jvm->AttachCurrentThread(&_env, nullptr) < 0)
                 {
                     LOGE("Failed to get the environment using AttachCurrentThread()");

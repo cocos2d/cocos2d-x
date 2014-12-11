@@ -1,3 +1,4 @@
+
 cc = cc or {}
 
 cc.SPRITE_INDEX_NOT_INITIALIZED = 0xffffffff
@@ -185,6 +186,8 @@ cc.PLATFORM_OS_BLACKBERRY = 6
 cc.PLATFORM_OS_NACL    = 7
 cc.PLATFORM_OS_EMSCRIPTEN = 8
 cc.PLATFORM_OS_TIZEN   = 9
+cc.PLATFORM_OS_WINRT   = 10
+cc.PLATFORM_OS_WP8     = 11
 
 cc.LANGUAGE_ENGLISH    = 0
 cc.LANGUAGE_CHINESE    = 1
@@ -202,7 +205,7 @@ cc.LANGUAGE_ARABIC     = 11
 cc.NODE_ON_ENTER       = 0
 cc.NODE_ON_EXIT        = 1
 cc.NODE_ON_ENTER_TRANSITION_DID_FINISH = 2
-cc.NODE_ON_EXIT_TRANSITION_DID_START   = 3 
+cc.NODE_ON_EXIT_TRANSITION_DID_START   = 3
 cc.NODE_ON_CLEAN_UP    = 4
 
 cc.Handler = cc.Handler or {}
@@ -270,6 +273,10 @@ cc.Handler.EVENT_CONTROLLER_KEYDOWN = 60
 cc.Handler.EVENT_CONTROLLER_KEYUP = 61
 cc.Handler.EVENT_CONTROLLER_KEYREPEAT = 62
 cc.Handler.EVENT_CONTROLLER_AXIS = 63
+cc.Handler.EVENT_SPINE_ANIMATION_START = 64
+cc.Handler.EVENT_SPINE_ANIMATION_END = 65
+cc.Handler.EVENT_SPINE_ANIMATION_COMPLETE = 66
+cc.Handler.EVENT_SPINE_ANIMATION_EVENT = 67
 
 
 cc.EVENT_UNKNOWN = 0
@@ -287,7 +294,7 @@ cc.GLYPHCOLLECTION_NEHE    = 1
 cc.GLYPHCOLLECTION_ASCII   = 2
 cc.GLYPHCOLLECTION_CUSTOM  = 3
 
-cc.ResolutionPolicy = 
+cc.ResolutionPolicy =
 {
     EXACT_FIT = 0,
     NO_BORDER = 1,
@@ -297,7 +304,7 @@ cc.ResolutionPolicy =
     UNKNOWN  = 5,
 }
 
-cc.LabelEffect = 
+cc.LabelEffect =
 {
     NORMAL  = 0,
     OUTLINE = 1,
@@ -474,7 +481,6 @@ cc.KeyCodeKey =
 
 cc.KeyCode =
 {
-
 }
 
 for k,v in ipairs(cc.KeyCodeKey) do
@@ -482,6 +488,28 @@ for k,v in ipairs(cc.KeyCodeKey) do
 end
 
 cc.KeyCode.KEY_BACK = cc.KeyCode.KEY_ESCAPE
+
+cc.EventAssetsManagerEx =
+{
+    EventCode = 
+    {
+        ERROR_NO_LOCAL_MANIFEST = 0,
+        ERROR_DOWNLOAD_MANIFEST = 1,
+        ERROR_PARSE_MANIFEST = 2,
+        NEW_VERSION_FOUND = 3,
+        ALREADY_UP_TO_DATE = 4,
+        UPDATE_PROGRESSION = 5,
+        ASSET_UPDATED = 6,
+        ERROR_UPDATING = 7,
+        UPDATE_FINISHED = 8,
+    },
+}
+
+cc.AssetsManagerExStatic =
+{
+    VERSION_ID  = "@version",
+    MANIFEST_ID = "@manifest",
+}
 
 cc.EventCode =
 {
@@ -494,8 +522,85 @@ cc.EventCode =
 cc.DIRECTOR_PROJECTION_2D = 0
 cc.DIRECTOR_PROJECTION_3D = 1
 
-cc.ConfigType = 
+cc.ConfigType =
 {
     NONE = 0,
     COCOSTUDIO = 1,
+}
+
+cc.AUDIO_INVAILD_ID   = -1
+cc.AUDIO_TIME_UNKNOWN  = -1.0
+
+cc.CameraFlag =
+{
+    DEFAULT = 1,
+    USER1 = 2,
+    USER2 = 4,
+    USER3 = 8,
+    USER4 = 16,
+    USER5 = 32,
+    USER6 = 64,
+    USER7 = 128,
+    USER8 = 256,
+}
+
+cc.BillBoard_Mode =
+{
+    VIEW_POINT_ORIENTED = 0,
+    VIEW_PLANE_ORIENTED = 1,
+}
+
+cc.GLProgram_VERTEX_ATTRIB =
+{
+    POSITION = 0,
+    COLOR = 1,
+    TEX_COORD = 2,
+    TEX_COORD1 = 3,
+    TEX_COORD2 = 4,
+    TEX_COORD3 = 5,
+    TEX_COORD4 = 6,
+    TEX_COORD5 = 7,
+    TEX_COORD6 = 8,
+    TEX_COORD7 = 9,
+    NORMAL = 10,
+    BLEND_WEIGHT = 11,
+    BLEND_INDEX =12,
+    MAX = 13,
+    --backward compatibility
+    TEX_COORDS = 2,
+}
+
+cc.MATRIX_STACK_TYPE =
+{
+    MODELVIEW = 0,
+    PROJECTION = 1,
+    TEXTURE = 2,
+}
+
+cc.LightType = 
+{
+    DIRECTIONAL = 0,
+    POINT = 1,
+    SPOT = 2,
+    AMBIENT = 3,
+}
+
+cc.LightFlag = 
+{
+    LIGHT0  = math.pow(2,0),
+    LIGHT1  = math.pow(2,1),
+    LIGHT2  = math.pow(2,2),
+    LIGHT3  = math.pow(2,3),
+    LIGHT4  = math.pow(2,4),
+    LIGHT5  = math.pow(2,5),
+    LIGHT6  = math.pow(2,6),
+    LIGHT7  = math.pow(2,7),
+    LIGHT8  = math.pow(2,8),
+    LIGHT9  = math.pow(2,9),
+    LIGHT10 = math.pow(2,10),
+    LIGHT11 = math.pow(2,11),
+    LIGHT12 = math.pow(2,12),
+    LIGHT13 = math.pow(2,13),
+    LIGHT14 = math.pow(2,14),
+    LIGHT15 = math.pow(2,15),
 }

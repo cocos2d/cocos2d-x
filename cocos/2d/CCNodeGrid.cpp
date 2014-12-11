@@ -24,17 +24,13 @@
 
 #include "2d/CCNodeGrid.h"
 #include "2d/CCGrid.h"
-
-#include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
-
 
 NS_CC_BEGIN
 
 NodeGrid* NodeGrid::create()
 {
-    NodeGrid * ret = new NodeGrid();
+    NodeGrid * ret = new (std::nothrow) NodeGrid();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -126,6 +122,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     }
     
     int i = 0;
+    bool visibleByCamera = isVisitableByVisitingCamera();
 
     if(!_children.empty())
     {
@@ -141,19 +138,21 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
                 break;
         }
         // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
-        this->draw(renderer, _modelViewTransform, dirty);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, dirty);
 
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
             (*it)->visit(renderer, _modelViewTransform, dirty);
         }
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, dirty);
     }
     
-    // reset for next frame
-    _orderOfArrival = 0;
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // setOrderOfArrival(0);
     
     if(_nodeGrid && _nodeGrid->isActive())
     {

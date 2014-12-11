@@ -25,6 +25,8 @@ THE SOFTWARE.
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
 
 USING_NS_CC;
 
@@ -34,6 +36,7 @@ NS_TIMELINE_BEGIN
 Frame::Frame()
     : _frameIndex(0)
     , _tween(true)
+    , _enterWhenPassed(false)
     , _timeline(nullptr)
     , _node(nullptr)
 {
@@ -61,7 +64,7 @@ void Frame::cloneProperty(Frame* frame)
 // VisibleFrame
 VisibleFrame* VisibleFrame::create()
 {
-    VisibleFrame* frame = new VisibleFrame();
+    VisibleFrame* frame = new (std::nothrow) VisibleFrame();
     if (frame)
     {
         frame->autorelease();
@@ -76,7 +79,7 @@ VisibleFrame::VisibleFrame()
 {
 }
 
-void VisibleFrame::onEnter(Frame *nextFrame)
+void VisibleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setVisible(_visible);
 }
@@ -97,7 +100,7 @@ Frame* VisibleFrame::clone()
 // TextureFrame
 TextureFrame* TextureFrame::create()
 {
-    TextureFrame* frame = new TextureFrame();
+    TextureFrame* frame = new (std::nothrow) TextureFrame();
     if (frame)
     {
         frame->autorelease();
@@ -119,7 +122,7 @@ void TextureFrame::setNode(Node* node)
     _sprite = dynamic_cast<Sprite*>(node);
 }
 
-void TextureFrame::onEnter(Frame *nextFrame)
+void TextureFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     if(_sprite)
     {
@@ -148,7 +151,7 @@ Frame* TextureFrame::clone()
 // RotationFrame
 RotationFrame* RotationFrame::create()
 {
-    RotationFrame* frame = new RotationFrame();
+    RotationFrame* frame = new (std::nothrow) RotationFrame();
     if (frame)
     {
         frame->autorelease();
@@ -163,10 +166,10 @@ RotationFrame::RotationFrame()
 {
 }
 
-void RotationFrame::onEnter(Frame *nextFrame)
+void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setRotation(_rotation);
-    
+
     if(_tween)
     {
         _betwennRotation = static_cast<RotationFrame*>(nextFrame)->_rotation - _rotation;
@@ -197,7 +200,7 @@ Frame* RotationFrame::clone()
 // SkewFrame
 SkewFrame* SkewFrame::create()
 {
-    SkewFrame* frame = new SkewFrame();
+    SkewFrame* frame = new (std::nothrow) SkewFrame();
     if (frame)
     {
         frame->autorelease();
@@ -213,11 +216,11 @@ SkewFrame::SkewFrame()
 {
 }
 
-void SkewFrame::onEnter(Frame *nextFrame)
+void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setSkewX(_skewX);
     _node->setSkewY(_skewY);
-    
+
     if(_tween)
     {
         _betweenSkewX = static_cast<SkewFrame*>(nextFrame)->_skewX - _skewX;
@@ -254,7 +257,7 @@ Frame* SkewFrame::clone()
 // RotationSkewFrame
 RotationSkewFrame* RotationSkewFrame::create()
 {
-    RotationSkewFrame* frame = new RotationSkewFrame();
+    RotationSkewFrame* frame = new (std::nothrow) RotationSkewFrame();
     if (frame)
     {
         frame->autorelease();
@@ -268,11 +271,11 @@ RotationSkewFrame::RotationSkewFrame()
 {
 }
 
-void RotationSkewFrame::onEnter(Frame *nextFrame)
+void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setRotationSkewX(_skewX);
     _node->setRotationSkewY(_skewY);
-    
+
     if (_tween)
     {
         _betweenSkewX = static_cast<RotationSkewFrame*>(nextFrame)->_skewX - _skewX;
@@ -307,7 +310,7 @@ Frame* RotationSkewFrame::clone()
 // PositionFrame
 PositionFrame* PositionFrame::create()
 {
-    PositionFrame* frame = new PositionFrame();
+    PositionFrame* frame = new (std::nothrow) PositionFrame();
     if (frame)
     {
         frame->autorelease();
@@ -322,7 +325,7 @@ PositionFrame::PositionFrame()
 {
 }
 
-void PositionFrame::onEnter(Frame *nextFrame)
+void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setPosition(_position);
 
@@ -359,7 +362,7 @@ Frame* PositionFrame::clone()
 // ScaleFrame
 ScaleFrame* ScaleFrame::create()
 {
-    ScaleFrame* frame = new ScaleFrame();
+    ScaleFrame* frame = new (std::nothrow) ScaleFrame();
     if (frame)
     {
         frame->autorelease();
@@ -375,11 +378,11 @@ ScaleFrame::ScaleFrame()
 {
 }
 
-void ScaleFrame::onEnter(Frame *nextFrame)
+void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setScaleX(_scaleX);
     _node->setScaleY(_scaleY);
-    
+
     if(_tween)
     {
         _betweenScaleX = static_cast<ScaleFrame*>(nextFrame)->_scaleX - _scaleX;
@@ -414,7 +417,7 @@ Frame* ScaleFrame::clone()
 // AnchorPointFrame
 AnchorPointFrame* AnchorPointFrame::create()
 {
-    AnchorPointFrame* frame = new AnchorPointFrame();
+    AnchorPointFrame* frame = new (std::nothrow) AnchorPointFrame();
     if (frame)
     {
         frame->autorelease();
@@ -429,7 +432,7 @@ AnchorPointFrame::AnchorPointFrame()
 {
 }
 
-void AnchorPointFrame::onEnter(Frame *nextFrame)
+void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setAnchorPoint(_anchorPoint);
 }
@@ -450,7 +453,7 @@ Frame* AnchorPointFrame::clone()
 // InnerActionFrame
 InnerActionFrame* InnerActionFrame::create()
 {
-    InnerActionFrame* frame = new InnerActionFrame();
+    InnerActionFrame* frame = new (std::nothrow) InnerActionFrame();
     if (frame)
     {
         frame->autorelease();
@@ -466,7 +469,7 @@ InnerActionFrame::InnerActionFrame()
 {
 }
 
-void InnerActionFrame::onEnter(Frame *nextFrame)
+void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
 }
 
@@ -486,7 +489,7 @@ Frame* InnerActionFrame::clone()
 // ColorFrame
 ColorFrame* ColorFrame::create()
 {
-    ColorFrame* frame = new ColorFrame();
+    ColorFrame* frame = new (std::nothrow) ColorFrame();
     if (frame)
     {
         frame->autorelease();
@@ -502,11 +505,11 @@ ColorFrame::ColorFrame()
 {
 }
 
-void ColorFrame::onEnter(Frame *nextFrame)
+void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setOpacity(_alpha);
     _node->setColor(_color);
-    
+
     if(_tween)
     {
         _betweenAlpha = static_cast<ColorFrame*>(nextFrame)->_alpha - _alpha;
@@ -516,9 +519,6 @@ void ColorFrame::onEnter(Frame *nextFrame)
         _betweenGreen = color.g - _color.g;
         _betweenBlue  = color.b - _color.b;
     }
-
-    _node->setCascadeColorEnabled(true);
-    _node->setCascadeOpacityEnabled(true);
 }
 
 void ColorFrame::apply(float percent)
@@ -552,9 +552,10 @@ Frame* ColorFrame::clone()
 // EventFrame
 EventFrame* EventFrame::create()
 {
-    EventFrame* frame = new EventFrame();
+    EventFrame* frame = new (std::nothrow) EventFrame();
     if (frame)
     {
+        frame->init();
         frame->autorelease();
         return frame;
     }
@@ -562,14 +563,20 @@ EventFrame* EventFrame::create()
     return nullptr;
 }
 
+void EventFrame::init()
+{
+    _enterWhenPassed = true;
+}
+
 EventFrame::EventFrame()
     : _event("")
 {
 }
 
-void EventFrame::onEnter(Frame *nextFrame)
+void EventFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    emitEvent();
+    if(currentFrameIndex>=_frameIndex)
+        emitEvent();
 }
 
 
@@ -587,7 +594,7 @@ Frame* EventFrame::clone()
 // ZOrderFrame
 ZOrderFrame* ZOrderFrame::create()
 {
-    ZOrderFrame* frame = new ZOrderFrame();
+    ZOrderFrame* frame = new (std::nothrow) ZOrderFrame();
     if (frame)
     {
         frame->autorelease();
@@ -602,7 +609,7 @@ ZOrderFrame::ZOrderFrame()
 {
 }
 
-void ZOrderFrame::onEnter(Frame *nextFrame)
+void ZOrderFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     if(_node)
         _node->setLocalZOrder(_zorder);

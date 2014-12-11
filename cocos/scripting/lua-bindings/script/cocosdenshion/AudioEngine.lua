@@ -1,4 +1,5 @@
---Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects. 
+
+--Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects.
 local M = {}
 
 function M.stopAllEffects()
@@ -105,16 +106,4 @@ function M.destroyInstance()
     return cc.SimpleAudioEngine:destroyInstance()
 end
 
-local modename = "AudioEngine"
-local proxy = {}
-local mt    = {
-    __index = M,
-    __newindex =  function (t ,k ,v)
-        print("attemp to update a read-only table")
-    end
-} 
-setmetatable(proxy,mt)
-_G[modename] = proxy
-package.loaded[modename] = proxy
-
-
+AudioEngine = M

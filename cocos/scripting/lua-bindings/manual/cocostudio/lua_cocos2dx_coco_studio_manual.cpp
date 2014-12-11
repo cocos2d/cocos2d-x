@@ -23,6 +23,8 @@
  ****************************************************************************/
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 #include "lua_cocos2dx_studio_auto.hpp"
+#include "lua_cocos2dx_csloader_auto.hpp"
+#include "lua_cocos2dx_csloader_manual.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -30,6 +32,7 @@
 #include "CCLuaValue.h"
 #include "CocoStudio.h"
 #include "CCLuaEngine.h"
+#include "CustomGUIReader.h"
 
 using namespace cocostudio;
 
@@ -100,7 +103,7 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         Vector<LuaArmatureWrapper*> vec;
@@ -124,7 +127,7 @@ static int lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setMovementEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setMovementEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -169,7 +172,7 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         Vector<LuaArmatureWrapper*> vec;
@@ -197,7 +200,7 @@ static int lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(lua_State* L)
     }
     
     
-    CCLOG("'setFrameEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setFrameEventCallFunc' function of ArmatureAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -253,7 +256,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         const char* configFilePath = tolua_tostring(L, 2, "");
         LUA_FUNCTION handler = (  toluafix_ref_function(L, 3, 0));
     
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
@@ -279,7 +282,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,5,0));
         
-        LuaArmatureWrapper* wrapper = new LuaArmatureWrapper();
+        LuaArmatureWrapper* wrapper = new (std::nothrow) LuaArmatureWrapper();
         wrapper->autorelease();
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
@@ -289,7 +292,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         return 0;
     }
     
-    CCLOG("'addArmatureFileInfoAsync' function of ArmatureDataManager has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addArmatureFileInfoAsync' function of ArmatureDataManager has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -344,7 +347,7 @@ static int lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setIgnoreMovementBoneData' function of Bone  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setIgnoreMovementBoneData' function of Bone  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -384,7 +387,7 @@ static int lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData(lua_State* L)
         return 1;
     }
     
-    CCLOG("'getIgnoreMovementBoneData' function of Bone  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'getIgnoreMovementBoneData' function of Bone  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -402,49 +405,6 @@ static void extendBone(lua_State* L)
     {
         tolua_function(L, "setIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData);
         tolua_function(L, "getIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData);
-    }
-    lua_pop(L, 1);
-}
-
-int lua_cocos2dx_studio_NodeReader_getInstance(lua_State* L)
-{
-    int argc = 0;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(L,1,"ccs.NodeReader",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    argc = lua_gettop(L) - 1;
-    
-    if (argc == 0)
-    {
-        if(!ok)
-            return 0;
-        cocostudio::timeline::NodeReader* ret = cocostudio::timeline::NodeReader::getInstance();
-        tolua_pushusertype(L,(void*)ret, "ccs.NodeReader");
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.NodeReader:getInstance",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(L,"#ferror in function 'lua_cocos2dx_studio_NodeReader_getInstance'.",&tolua_err);
-#endif
-    return 0;
-}
-
-static void extendNodeReader(lua_State* L)
-{
-    lua_pushstring(L, "ccs.NodeReader");
-    lua_rawget(L, LUA_REGISTRYINDEX);
-    if (lua_istable(L,-1))
-    {
-        tolua_function(L, "getInstance", lua_cocos2dx_studio_NodeReader_getInstance);
     }
     lua_pop(L, 1);
 }
@@ -472,7 +432,7 @@ int lua_cocos2dx_studio_ActionTimelineCache_getInstance(lua_State* L)
         tolua_pushusertype(L,(void*)ret, "ccs.ActionTimelineCache");
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ActionTimelineCache:getInstance",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ActionTimelineCache:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -534,7 +494,7 @@ static int lua_cocos2dx_ActionTimeline_setFrameEventCallFunc(lua_State* L)
     }
     
     
-    CCLOG("'setFrameEventCallFunc' function of ActionTimeline has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setFrameEventCallFunc' function of ActionTimeline has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -554,6 +514,53 @@ static void extendActionTimeline(lua_State* L)
     lua_pop(L, 1);
 }
 
+int lua_cocos2dx_CustomGUIReader_create(lua_State* L)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(L,1,"ccs.CustomGUIReader",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(L)-1;
+
+    do 
+    {
+        if (argc == 3)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(L, 2,&arg0, "ccs.CustomGUIReader:create");
+            if (!ok) { break; }
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(L,3,"LUA_FUNCTION",0,&tolua_err)) {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION arg1 = toluafix_ref_function(L,3,0);
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(L,4,"LUA_FUNCTION",0,&tolua_err)) {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION arg2 = toluafix_ref_function(L,4,0);
+
+            cocostudio::CustomGUIReader* ret = cocostudio::CustomGUIReader::create(arg0, arg1, arg2);
+            object_to_luaval<cocostudio::CustomGUIReader>(L, "ccs.CustomGUIReader",(cocostudio::CustomGUIReader*)ret);
+            return 1;
+        }
+    } while (0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d", "ccs.CustomGUIReader:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_CustomGUIReader_create'.",&tolua_err);
+#endif
+    return 0;
+}
 
 int register_all_cocos2dx_coco_studio_manual(lua_State* L)
 {
@@ -563,10 +570,29 @@ int register_all_cocos2dx_coco_studio_manual(lua_State* L)
     extendArmatureDataManager(L);
     extendBone(L);
     extendActionTimelineCache(L);
-    extendNodeReader(L);
     extendActionTimeline(L);
     
     return 0;
+}
+
+int lua_register_cocos2dx_coco_studio_CustomGUIReader(lua_State* L)
+{
+    tolua_module(L,"ccs",0);
+    tolua_beginmodule(L,"ccs");
+    
+
+    tolua_usertype(L,"ccs.CustomGUIReader");
+    tolua_cclass(L,"CustomGUIReader","ccs.CustomGUIReader","cc.Ref",nullptr);
+
+    tolua_beginmodule(L,"CustomGUIReader");
+        tolua_function(L,"create",lua_cocos2dx_CustomGUIReader_create);
+    tolua_endmodule(L);
+    std::string typeName = typeid(cocostudio::CustomGUIReader).name();
+    g_luaType[typeName] = "ccs.CustomGUIReader";
+    g_typeCast["CustomGUIReader"] = "ccs.CustomGUIReader";
+
+    tolua_endmodule(L);
+    return 1;
 }
 
 int register_cocostudio_module(lua_State* L)
@@ -575,11 +601,11 @@ int register_cocostudio_module(lua_State* L)
     if (lua_istable(L,-1))//stack:...,_G,
     {
         register_all_cocos2dx_studio(L);
+        register_all_cocos2dx_csloader(L);
         register_all_cocos2dx_coco_studio_manual(L);
+        register_all_cocos2dx_csloader_manual(L);
+        lua_register_cocos2dx_coco_studio_CustomGUIReader(L);
     }
     lua_pop(L, 1);
-
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocoStudioClass");
-    LuaEngine::getInstance()->executeScriptFile("DeprecatedCocoStudioFunc");
     return 1;
 }

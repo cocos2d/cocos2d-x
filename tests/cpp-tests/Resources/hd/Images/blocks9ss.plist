@@ -30,6 +30,32 @@
 			<key>sourceSize</key>
 			<string>{192,192}</string>
 		</dict>
+		<key>blocks9c.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{204,374},{100,120}}</string>
+			<key>offset</key>
+			<string>{26,36}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0,0},{192,192}}</string>
+			<key>sourceSize</key>
+			<string>{192,192}</string>
+		</dict>
+		<key>blocks9cr.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{204,180},{100,120}}</string>
+			<key>offset</key>
+			<string>{26,36}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0,0},{192,192}}</string>
+			<key>sourceSize</key>
+			<string>{192,192}</string>
+		</dict>
 		<key>grossini_dance_01.png</key>
 		<dict>
 			<key>frame</key>

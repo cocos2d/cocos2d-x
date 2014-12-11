@@ -29,17 +29,13 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "base/CCDirector.h"
-#include "2d/CCNode.h"
-#include "renderer/CCTexture2D.h"
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
 class Texture2D;
 class Grabber;
 class GLProgram;
+class Node;
 
 /**
  * @addtogroup effects
@@ -86,6 +82,8 @@ public:
 
     void beforeDraw(void);
     void afterDraw(Node *target);
+    virtual void beforeBlit() {}
+    virtual void afterBlit() {}
     virtual void blit(void);
     virtual void reuse(void);
     virtual void calculateVertexPoints(void);
@@ -108,9 +106,6 @@ protected:
  Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
  */
 class CC_DLL Grid3D : public GridBase
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** create one Grid */
@@ -153,17 +148,23 @@ public:
      * @lua NA
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
-
+    
+    virtual void beforeBlit() override;
+    virtual void afterBlit() override;
     // Overrides
     virtual void blit() override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
-
+    
+    void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
+    bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;
     GLvoid *_originalVertices;
     GLushort *_indices;
+    bool _needDepthTestForBlit;
+    bool _oldDepthTestValue;
 };
 
 /**
@@ -171,9 +172,6 @@ protected:
  the tiles can be separated from the grid.
 */
 class CC_DLL TiledGrid3D : public GridBase
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** create one Grid */

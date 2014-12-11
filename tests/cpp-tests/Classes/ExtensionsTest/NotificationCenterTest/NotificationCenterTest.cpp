@@ -38,7 +38,7 @@ Light::~Light()
 
 Light* Light::lightWithFile(const char* name)
 {
-    Light* pLight = new Light();
+    Light* pLight = new (std::nothrow) Light();
     pLight->initWithFile(name);
     pLight->autorelease();
     return pLight;
@@ -49,7 +49,7 @@ void Light::setIsConnectToSwitch(bool bConnectToSwitch)
     _connected = bConnectToSwitch;
     if (_connected)
     {
-        NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Light::switchStateChanged), MSG_SWITCH_STATE, nullptr);
+        NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(Light::switchStateChanged), MSG_SWITCH_STATE, nullptr);
     }
     else
     {
@@ -77,7 +77,6 @@ void Light::updateLightState()
 }
 
 NotificationCenterTest::NotificationCenterTest()
-: _showImage(false)
 {
     auto s = Director::getInstance()->getWinSize();
 
@@ -128,9 +127,9 @@ NotificationCenterTest::NotificationCenterTest()
     NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)item->getSelectedIndex());
 
     /* for testing removeAllObservers */
-    NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer1", nullptr);
-    NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer2", nullptr);
-    NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(NotificationCenterTest::doNothing), "random-observer3", nullptr);
+    NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer1", nullptr);
+    NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer2", nullptr);
+    NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer3", nullptr);
 }
 
 void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Ref* sender)
@@ -139,7 +138,7 @@ void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Ref* sender)
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
     CCASSERT(numObserversRemoved >= 3, "All observers were not removed!");
 
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }
@@ -167,7 +166,7 @@ void NotificationCenterTest::doNothing(cocos2d::Ref *sender)
 void runNotificationCenterTest()
 {
     auto scene = Scene::create();
-    NotificationCenterTest* layer = new NotificationCenterTest();
+    NotificationCenterTest* layer = new (std::nothrow) NotificationCenterTest();
     scene->addChild(layer);
     Director::getInstance()->replaceScene(scene);
     layer->release();

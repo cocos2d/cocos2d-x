@@ -28,7 +28,7 @@
 #include "2d/CCNode.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteBatchNode.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
 
 NS_CC_BEGIN
@@ -233,6 +233,10 @@ namespace ui {
         virtual bool init();
         virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
         virtual bool init(Sprite* sprite, const Rect& rect, const Rect& capInsets);
+        virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets);
+        CC_DEPRECATED_ATTRIBUTE virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
+        CC_DEPRECATED_ATTRIBUTE virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets);
+
         /**
          * Creates and returns a new sprite object with the specified cap insets.
          * You use this method to add cap insets to a sprite or to change the existing
@@ -241,10 +245,13 @@ namespace ui {
          *
          * @param capInsets The values to use for the cap insets.
          */
-        Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets);
+        Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets) const;
         
         virtual bool updateWithSprite(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
-        virtual void setSpriteFrame(SpriteFrame * spriteFrame);
+        virtual bool updateWithSprite(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets);
+        CC_DEPRECATED_ATTRIBUTE bool updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets);
+
+        virtual void setSpriteFrame(SpriteFrame * spriteFrame, const Rect& capInsets = Rect::ZERO);
         
         // overrides
         virtual void setContentSize(const Size & size) override;
@@ -305,6 +312,7 @@ namespace ui {
         virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
         virtual void updateDisplayedColor(const Color3B& parentColor) override;
         virtual void disableCascadeColor() override;
+        virtual void disableCascadeOpacity() override;
         
         Sprite* getSprite()const;
         
@@ -346,10 +354,20 @@ namespace ui {
          */
         virtual bool isFlippedY()const;
         
+        //override the setScale function of Node
+        virtual void setScaleX(float scaleX) override;
+        virtual void setScaleY(float scaleY) override;
+        virtual void setScale(float scale) override;
+        virtual void setScale(float scalex, float scaley) override;
+        using Node::setScaleZ;
+        virtual float getScaleX() const override;
+        virtual float getScaleY() const override;
+        virtual float getScale() const override;
+        using Node::getScaleZ;
     protected:
         void updateCapInset();
         void updatePositions();
-        void createSlicedSprites(const Rect& rect, bool rotated);
+        void createSlicedSprites();
         void cleanupSlicedSprites();
         void adjustScale9ImagePosition();
         /**
@@ -378,8 +396,14 @@ namespace ui {
         
         bool _scale9Enabled;
         
+        Size _topLeftSize;
+        Size _centerSize;
+        Size _bottomRightSize;
+        Vec2 _centerOffset;
+        
         /** Original sprite's size. */
         Size _originalSize;
+        Vec2 _offset;
         /** Prefered sprite's size. By default the prefered size is the original size. */
         
         //if the preferredSize component is given as -1, it is ignored

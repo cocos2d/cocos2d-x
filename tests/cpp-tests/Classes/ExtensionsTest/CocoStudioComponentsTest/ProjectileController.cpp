@@ -78,7 +78,7 @@ void ProjectileController::update(float delta)
 
 ProjectileController* ProjectileController::create(void)
 {
-    ProjectileController * pRet = new ProjectileController();
+    ProjectileController * pRet = new (std::nothrow) ProjectileController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

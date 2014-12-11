@@ -24,9 +24,9 @@
  ****************************************************************************/
 
 #include "2d/CCFontFNT.h"
+#include <set>
 #include "base/uthash.h"
 #include "2d/CCFontAtlas.h"
-#include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
@@ -103,7 +103,7 @@ typedef struct _KerningHashElement
 */
 class CC_DLL BMFontConfiguration : public Ref
 {
-    // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
+    // FIXME: Creating a public interface so that the bitmapFontArray[] is accessible
 public://@public
     // BMFont definitions
     tFontDefHashElement *_fontDefDictionary;
@@ -168,7 +168,7 @@ BMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 
     if( s_configurations == nullptr )
     {
-        s_configurations = new Map<std::string, BMFontConfiguration*>();
+        s_configurations = new (std::nothrow) Map<std::string, BMFontConfiguration*>();
     }
 
     ret = s_configurations->at(fntFile);
@@ -190,7 +190,7 @@ BMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 
 BMFontConfiguration * BMFontConfiguration::create(const std::string& FNTfile)
 {
-    BMFontConfiguration * ret = new BMFontConfiguration();
+    BMFontConfiguration * ret = new (std::nothrow) BMFontConfiguration();
     if (ret->initWithFNTfile(FNTfile))
     {
         ret->autorelease();
@@ -314,7 +314,7 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
 
         if(line.substr(0,strlen("info face")) == "info face") 
         {
-            // XXX: info parsing is incomplete
+            // FIXME: info parsing is incomplete
             // Not needed for the Hiero editors, but needed for the AngelCode editor
             //            [self parseInfoArguments:line];
             this->parseInfoArguments(line);
@@ -676,7 +676,6 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffse
     Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(newConf->getAtlasName());
     if (!tempTexture)
     {
-        delete newConf;
         return nullptr;
     }
     
@@ -684,7 +683,6 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffse
     
     if (!tempFont)
     {
-        delete newConf;
         return nullptr;
     }
     tempFont->autorelease();
@@ -753,7 +751,7 @@ int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned sh
 
 FontAtlas * FontFNT::createFontAtlas()
 {
-    FontAtlas *tempAtlas = new FontAtlas(*this);
+    FontAtlas *tempAtlas = new (std::nothrow) FontAtlas(*this);
     if (!tempAtlas)
         return nullptr;
     

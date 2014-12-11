@@ -108,7 +108,7 @@ public:
      */
     virtual std::string getDescription() const override;
 
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -119,9 +119,6 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
-  
-    virtual void updateFlippedX() override;
-    virtual void updateFlippedY() override;
     
     virtual void adaptRenderers() override;
     

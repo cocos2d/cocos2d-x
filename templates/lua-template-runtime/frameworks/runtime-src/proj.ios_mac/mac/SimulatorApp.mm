@@ -40,9 +40,9 @@
 using namespace cocos2d;
 
 bool g_landscape = false;
-bool g_windTop = true;
+bool g_windTop = false;
 cocos2d::Size g_screenSize;
-GLView* g_eglView = nullptr;
+GLViewImpl* g_eglView = nullptr;
 
 static AppController* g_nsAppDelegate=nullptr;
 
@@ -58,6 +58,16 @@ std::string getCurAppPath(void)
     return [[[NSBundle mainBundle] bundlePath] UTF8String];
 }
 
+std::string getCurAppName(void)
+{
+    string appName = [[[NSProcessInfo processInfo] processName] UTF8String];
+    int found = appName.find(" ");
+    if (found!=std::string::npos)
+        appName = appName.substr(0,found);
+    
+    return appName;
+}
+
 -(void) dealloc
 {
     Director::getInstance()->end();
@@ -71,18 +81,13 @@ std::string getCurAppPath(void)
 {
     NSArray *args = [[NSProcessInfo processInfo] arguments];
 
-    if (args!=nullptr && [args count]>=2) {
-        extern std::string g_resourcePath;
-        g_resourcePath = [[args objectAtIndex:1]UTF8String];
-        if (g_resourcePath.at(0) != '/') {
-            g_resourcePath="";
-        }
+    if (args != nullptr && [args count] >= 2) {
     }
-    g_nsAppDelegate =self;
+    g_nsAppDelegate = self;
     AppDelegate app;
     Application::getInstance()->run();
     // After run, application needs to be terminated immediately.
-    [NSApp terminate: self];
+    [[NSApplication sharedApplication] terminate: self];
 }
 
 
@@ -102,13 +107,13 @@ std::string getCurAppPath(void)
         width = height;
         height = tmpvalue;
     }
-    g_windTop = true;
-    g_eglView = cocos2d::GLViewImpl::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
+    g_windTop = ConfigParser::getInstance()->isWindowTop();
+    g_eglView = GLViewImpl::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
 
-    window = g_eglView->getCocoaWindow();
-    [NSApp setDelegate: self];
+    window = glfwGetCocoaWindow(g_eglView->getWindow());
+    [[NSApplication sharedApplication] setDelegate: self];
     
     [self createViewMenu];
     [self updateMenu];
@@ -336,7 +341,7 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
 {
     if ([sender state] == NSOnState) return;
     float scale = (float)[sender tag] / 100.0f;
-    (dynamic_cast<GLViewImpl*>(g_eglView))->setFrameZoomFactor(scale);
+    g_eglView->setFrameZoomFactor(scale);
     [self updateView];
 }
 

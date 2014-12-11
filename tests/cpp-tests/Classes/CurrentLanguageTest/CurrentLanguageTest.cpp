@@ -4,10 +4,17 @@ CurrentLanguageTest::CurrentLanguageTest()
 {
     auto label = Label::createWithTTF("Current language Test", "fonts/arial.ttf", 28);
     addChild(label, 0);
-    label->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y-50) );
+    label->setPosition(VisibleRect::center().x, VisibleRect::top().y-50);
 
     auto labelLanguage = Label::createWithTTF("", "fonts/arial.ttf", 20);
     labelLanguage->setPosition(VisibleRect::center());
+    
+    auto labelLanguageCode = Label::createWithTTF("", "fonts/arial.ttf", 20);
+    labelLanguageCode->setPosition(VisibleRect::center().x, VisibleRect::center().y-50);
+    
+    const char* currentLanguageCode = Application::getInstance()->getCurrentLanguageCode();
+    
+    labelLanguageCode->setString(currentLanguageCode);
 
     LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
     switch (currentLanguageType)
@@ -63,11 +70,12 @@ CurrentLanguageTest::CurrentLanguageTest()
     }
 
     addChild(labelLanguage);
+    addChild(labelLanguageCode);
 }
 
 void CurrentLanguageTestScene::runThisTest()
 {
-    auto layer = new CurrentLanguageTest();
+    auto layer = new (std::nothrow) CurrentLanguageTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

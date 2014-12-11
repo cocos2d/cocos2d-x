@@ -1,17 +1,18 @@
+
 if(WINDOWS)
   set(PLATFORM_LINK websockets)
 elseif(LINUX)
   set(PLATFORM_LINK websockets ssl crypto)
+else()
+  set(PLATFORM_LINK websockets)
 endif()
 
 set(COCOS_NETWORK_SRC
-    HttpClient.cpp
-    SocketIO.cpp
-    WebSocket.cpp
-)
 
-add_library(network STATIC
-    ${COCOS_NETWORK_SRC}
+    network/HttpClient.cpp
+    network/SocketIO.cpp
+    network/WebSocket.cpp
+
 )
 
 if(MSVC)
@@ -25,13 +26,3 @@ else()
     ${PLATFORM_LINK} 
   )
 endif()
-
-target_link_libraries(network
-  ${COCOS_NETWORK_LINK}
-)
-
-set_target_properties(network
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-)

@@ -123,7 +123,7 @@ std::string PhysicsDemo::subtitle() const
 
 void PhysicsDemo::restartCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -131,7 +131,7 @@ void PhysicsDemo::restartCallback(Ref* sender)
 
 void PhysicsDemo::nextCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -139,7 +139,7 @@ void PhysicsDemo::nextCallback(Ref* sender)
 
 void PhysicsDemo::backCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -513,7 +513,7 @@ void PhysicsDemoPyramidStack::onEnter()
     ball->setPosition(VisibleRect::bottom() + Vec2(0, 60));
     this->addChild(ball);
     
-    scheduleOnce(schedule_selector(PhysicsDemoPyramidStack::updateOnce), 3.0);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsDemoPyramidStack::updateOnce), 3.0);
 
     for(int i=0; i<14; i++)
     {
@@ -1215,7 +1215,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     PhysicsBody* body = shape->getBody();
     int count = shape->getPointsCount();
     int pointsCount = 0;
-    Vec2* points = new Vec2[count + 1];
+    Vec2* points = new (std::nothrow) Vec2[count + 1];
     
     for (int i=0, j=count-1; i<count; j=i, ++i)
     {
@@ -1649,7 +1649,7 @@ void PhysicsSetGravityEnableTest::onEnter()
     ball->getPhysicsBody()->setGravityEnable(false);
     addChild(ball);
     ball->getPhysicsBody()->setMass(50);
-    scheduleOnce(schedule_selector(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
 }
 
 void PhysicsSetGravityEnableTest::onScheduleOnce(float delta)
@@ -1750,7 +1750,7 @@ void PhysicsFixedUpdate::onEnter()
     
     addBall();
     
-    scheduleOnce(schedule_selector(PhysicsFixedUpdate::updateStart), 2);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsFixedUpdate::updateStart), 2);
 }
 
 void PhysicsFixedUpdate::addBall()

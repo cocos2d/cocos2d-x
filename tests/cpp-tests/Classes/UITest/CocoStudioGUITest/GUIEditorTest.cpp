@@ -1,6 +1,8 @@
 
 
 #include "GUIEditorTest.h"
+
+#include "cocostudio/ActionTimeline/CSLoader.h"
 #include "CocoStudioGUITest.h"
 #include "UISceneManager_Editor.h"
 
@@ -118,8 +120,9 @@ g_guisTests[] =
         }
 	},
      */
+    /*
     {
-        "gui TextAtals Editor Test",
+        "gui TextAtlas Editor Test",
         [](Ref* sender)
         {
             UISceneManager_Editor* pManager = UISceneManager_Editor::sharedUISceneManager_Editor();
@@ -130,6 +133,7 @@ g_guisTests[] =
             Director::getInstance()->replaceScene(pScene);
         }
 	},
+     */
     {
         "gui Text Editor Test",
         [](Ref* sender)
@@ -173,7 +177,8 @@ g_guisTests[] =
             UISceneManager_Editor* pManager = UISceneManager_Editor::sharedUISceneManager_Editor();
             pManager->setCurrentUISceneId(kUILayoutTest_Editor);
             pManager->setMinUISceneId(kUILayoutTest_Editor);
-            pManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location_Editor);
+            pManager->setMaxUISceneId(kUILayoutTest_BackGroundImage_Scale9_Editor);
+//            pManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location_Editor);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);
         }
@@ -265,7 +270,7 @@ static Vec2 s_tCurPos = Vec2::ZERO;
 ////////////////////////////////////////////////////////
 void GUIEditorMainLayer::onEnter()
 {
-    Layer::onEnter();
+    Layer::onEnter();    
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -276,7 +281,7 @@ void GUIEditorMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -314,7 +319,7 @@ void GUIEditorMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Even
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -340,14 +345,14 @@ void GUIEditorTestScene::onEnter()
     Menu* pMenu =CCMenu::create(pMenuItem, nullptr);
 
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void GUIEditorTestScene::runThisTest()
 {
-    auto layer = new GUIEditorMainLayer();
+    auto layer = new (std::nothrow) GUIEditorMainLayer();
     addChild(layer);
     layer->release();
     
@@ -356,7 +361,7 @@ void GUIEditorTestScene::runThisTest()
 
 void GUIEditorTestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

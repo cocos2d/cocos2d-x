@@ -28,12 +28,11 @@ THE SOFTWARE.
 #define __CCTMX_TILE_MAP_H__
 
 #include "2d/CCNode.h"
-#include "CCTMXObjectGroup.h"
+#include "2d/CCTMXObjectGroup.h"
 #include "base/CCValue.h"
 
 NS_CC_BEGIN
 
-class TMXObjectGroup;
 class TMXLayer;
 class TMXLayerInfo;
 class TMXTilesetInfo;
@@ -55,6 +54,9 @@ enum
 
     /** Isometric orientation */
     TMXOrientationIso,
+    
+    /** Isometric staggered orientation*/
+    TMXOrientationStaggered,
 };
 
 /** @brief TMXTiledMap knows how to parse and render a TMX map.

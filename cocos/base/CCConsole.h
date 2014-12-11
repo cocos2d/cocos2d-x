@@ -49,7 +49,7 @@ typedef SSIZE_T ssize_t;
 
 #include "base/CCRef.h"
 #include "base/ccMacros.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 
 NS_CC_BEGIN
@@ -72,7 +72,6 @@ void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
  ```
  */
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class CC_DLL Console
     : public Ref
 {
@@ -148,7 +147,6 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) */
 NS_CC_END
 
 #endif /* defined(__CCCONSOLE_H__) */

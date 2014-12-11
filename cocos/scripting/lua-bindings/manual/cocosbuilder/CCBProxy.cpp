@@ -28,7 +28,7 @@
 CCBReader* CCBProxy::createCCBReader()
 {
     NodeLoaderLibrary *ccNodeLoaderLibrary = NodeLoaderLibrary::getInstance();
-    CCBReader * pCCBReader = new CCBReader(ccNodeLoaderLibrary);
+    CCBReader * pCCBReader = new (std::nothrow) CCBReader(ccNodeLoaderLibrary);
     pCCBReader->autorelease();
     
     return pCCBReader;
@@ -77,7 +77,7 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
         return "cc.LayerColor";
     }
     
-    if (NULL != dynamic_cast<Scale9Sprite*>(pNode)) {
+    if (NULL != dynamic_cast<ui::Scale9Sprite*>(pNode)) {
         return "cc.LayerGradient";
     }
     

@@ -105,4 +105,64 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UIButtonTestZoomScale : public UIScene
+{
+public:
+    UIButtonTestZoomScale();
+    ~UIButtonTestZoomScale();
+    bool init();
+    void sliderEvent(Ref* pSender, Slider::EventType type);
+
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTestZoomScale)
+    Text* _displayValueLabel;
+};
+
+class UIButtonTextOnly : public UIScene
+{
+public:
+    UIButtonTextOnly();
+    ~UIButtonTextOnly();
+    bool init();
+
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTextOnly)
+    Text* _displayValueLabel;
+};
+
+class UIButtonIgnoreContentSizeTest : public UIScene
+{
+public:
+    UIButtonIgnoreContentSizeTest();
+    ~UIButtonIgnoreContentSizeTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonIgnoreContentSizeTest)
+    Text* _displayValueLabel;
+};
+
+class UIButtonTitleEffectTest : public UIScene
+{
+public:
+    UIButtonTitleEffectTest();
+    ~UIButtonTitleEffectTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonTitleEffectTest)
+    Text* _displayValueLabel;
+};
+
+class UIButtonFlipTest : public UIScene
+{
+public:
+    UIButtonFlipTest();
+    ~UIButtonFlipTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonFlipTest)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIButtonTest__) */
