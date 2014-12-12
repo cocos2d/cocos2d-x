@@ -612,7 +612,7 @@
 				49C6564C1A39A1A200603AF5 /* nanovg */,
 			);
 			name = nanovg;
-			path = "../../../Documents/Work/cocos2d-x/quick/lib/quick-src/extra/nanovg";
+			path = "quick/lib/quick-src/extra/nanovg";
 			sourceTree = QUICK_V3_ROOT;
 		};
 		49C656471A39A1A200603AF5 /* nanonode */ = {
