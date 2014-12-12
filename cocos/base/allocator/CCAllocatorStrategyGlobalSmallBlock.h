@@ -41,6 +41,12 @@
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
 
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+#define TRACK(slot, size, op) _smallBlockAllocations[slot] op size
+#else
+#define TRACK(...)
+#endif
+
 // @brief
 class AllocatorStrategyGlobalSmallBlock
     : public Allocator<AllocatorStrategyGlobalSmallBlock>
@@ -76,14 +82,24 @@ public:
         {
             once = false;
             
-            memset(_smallBlockAllocators, 0, sizeof(_smallBlockAllocators));
+            _maxBlockSize = 2^kMaxSmallBlockPower;
             
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+            AllocatorDiagnostics::instance()->trackAllocator(this);
+            AllocatorBase::setTag("GlobalSmallBlock");
+#endif
+            
+            memset(_smallBlockAllocators, 0, sizeof(_smallBlockAllocators));
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+            memset(_smallBlockAllocations, 0, sizeof(_smallBlockAllocations));
+#endif
             // cannot call new on the allocator here because it will recurse
             // so instead we allocate from the global allocator and construct in place.
             #define SBA(n, size) \
+            if (size >= _maxBlockSize) \
             { \
                 auto v = ccAllocatorGlobal.allocate(sizeof(SType(size))); \
-                _smallBlockAllocators[n] = (void*)(new (v) SType(size)("Global::"#size)); \
+                _smallBlockAllocators[n] = (AllocatorBase*)(new (v) SType(size)("GlobalSmallBlock::"#size)); \
             }
             
             SBA(2,  4);
@@ -108,6 +124,10 @@ public:
         for (int i = 0; i <= kMaxSmallBlockPower; ++i)
             if (_smallBlockAllocators[i])
                 ccAllocatorGlobal.deallocate(_smallBlockAllocators[i]);
+        
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+        AllocatorDiagnostics::instance()->untrackAllocator(this);
+#endif
     }
     
     // @brief Allocate a block of some size. If the block is <= 8192 it is allocated out of an array
@@ -136,6 +156,7 @@ public:
                 CC_ASSERT(nullptr != v); \
                 auto a = (SType(size)*)v; \
                 address = a->allocate(adjusted_size); \
+                TRACK(slot, size, +=); \
             } \
             break;
         
@@ -227,6 +248,7 @@ public:
                 CC_ASSERT(nullptr != v); \
                 auto a = (SType(size)*)v; \
                 a->deallocate(address, size); \
+                TRACK(slot, size, -=); \
             } \
             break;
         
@@ -252,13 +274,34 @@ public:
         #undef DEALLOCATE
     }
     
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+    std::string diagnostics() const
+    {
+        std::stringstream s;
+        for (auto i = 2; i <= kMaxSmallBlockPower; ++i)
+        {
+            auto a = _smallBlockAllocators[i];
+            if (a)
+            {
+                s << a->tag() << " allocated:" << _smallBlockAllocations[i] << "\n";
+            }
+        }
+        return s.str();
+    }
+    size_t _highestCount;
+#endif
+    
 protected:
     
     // @brief array of small block allocators from 2^2 -> 2^13
-    void* _smallBlockAllocators[kMaxSmallBlockPower + 1];
+    AllocatorBase* _smallBlockAllocators[kMaxSmallBlockPower + 1];
     
     // @brief the max size of a block this allocator will pool before using global allocator
     size_t _maxBlockSize;
+    
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+    size_t _smallBlockAllocations[kMaxSmallBlockPower + 1];
+#endif
 };
 
 NS_CC_ALLOCATOR_END
