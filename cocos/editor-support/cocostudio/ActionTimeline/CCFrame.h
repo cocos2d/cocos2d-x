@@ -37,6 +37,7 @@ THE SOFTWARE.
 NS_TIMELINE_BEGIN
 
 class Timeline;
+class ActionTimeline;
 
 class CC_STUDIO_DLL Frame : public cocos2d::Ref
 {
@@ -307,6 +308,8 @@ public:
 
     EventFrame();
 
+    virtual void setNode(cocos2d::Node* node);
+    
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
@@ -315,6 +318,7 @@ public:
 
 protected:
     std::string _event;
+    ActionTimeline* _action;
 };
 
 class CC_STUDIO_DLL ZOrderFrame : public Frame
