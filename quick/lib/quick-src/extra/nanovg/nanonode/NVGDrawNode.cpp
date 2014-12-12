@@ -38,6 +38,10 @@ NVGDrawNode* NVGDrawNode::create() {
 void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     NVGcontext *nvg = getNVGCtx();
+    if (nullptr == nvg) {
+        CCLOG("ERROR! NVGDrawNode - onDraw nvg is null");
+        return;
+    }
     nvgBeginFrame(nvg, visibleSize.width, visibleSize.height, 1);
     
     //   [a c e]
