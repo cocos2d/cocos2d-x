@@ -44,7 +44,8 @@ static void DumpChar(int y, DumpState* D)
 
 static void DumpInt(int x, DumpState* D)
 {
- DumpVar(x,D);
+ int32_t i = x;
+ DumpVar(i,D);
 }
 
 static void DumpNumber(lua_Number x, DumpState* D)
@@ -62,12 +63,12 @@ static void DumpString(const TString* s, DumpState* D)
 {
  if (s==NULL || getstr(s)==NULL)
  {
-  size_t size=0;
+  uint32_t size=0;
   DumpVar(size,D);
  }
  else
  {
-  size_t size=s->tsv.len+1;		/* include trailing '\0' */
+  uint32_t size=s->tsv.len+1;		/* include trailing '\0' */
   DumpVar(size,D);
   DumpBlock(getstr(s),size,D);
  }

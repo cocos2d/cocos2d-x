@@ -60,7 +60,7 @@ static int LoadChar(LoadState* S)
 
 static int LoadInt(LoadState* S)
 {
- int x;
+ int32_t x;
  LoadVar(S,x);
  IF (x<0, "bad integer");
  return x;
@@ -75,7 +75,7 @@ static lua_Number LoadNumber(LoadState* S)
 
 static TString* LoadString(LoadState* S)
 {
- size_t size;
+ uint32_t size;
  LoadVar(S,size);
  if (size==0)
   return NULL;
@@ -219,8 +219,8 @@ void luaU_header (char* h)
  *h++=(char)LUAC_VERSION;
  *h++=(char)LUAC_FORMAT;
  *h++=(char)*(char*)&x;				/* endianness */
- *h++=(char)sizeof(int);
- *h++=(char)sizeof(size_t);
+ *h++=(char)sizeof(int32_t);
+ *h++=(char)sizeof(uint32_t);
  *h++=(char)sizeof(Instruction);
  *h++=(char)sizeof(lua_Number);
  *h++=(char)(((lua_Number)0.5)==0);		/* is lua_Number integral? */
