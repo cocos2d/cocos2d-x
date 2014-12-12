@@ -164,12 +164,12 @@ void MeshCommand::applyRenderState()
     if (_cullFaceEnabled && !s_cullFaceEnabled)
     {
         glEnable(GL_CULL_FACE);
-        if (s_cullFace != _cullFace)
-        {
-            glCullFace(_cullFace);
-            s_cullFace = _cullFace;
-        }
         s_cullFaceEnabled = true;
+    }
+    if (s_cullFace != _cullFace)
+    {
+        glCullFace(_cullFace);
+        s_cullFace = _cullFace;
     }
     if (_depthTestEnabled && !s_depthTestEnabled)
     {
