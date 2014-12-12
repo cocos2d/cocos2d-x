@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticleSystem3DTranslator.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3DBuilder.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +46,8 @@ void PUParticleSystem3DTranslator::translate(PUScriptCompiler* compiler, PUAbstr
         }
         
         //// Create a particle system with the given name
-        _system = PUParticleSystem3D::create();
+        //_system = PUParticleSystem3D::create();
+        //PUParticleSystem3DBuilder::Instance()->puParticleSystem3DList.push_back(_system);
         //if (!mSystem)
         //{
         //	return;

@@ -102,16 +102,17 @@ void PUParticle3DAffectorTranslator::translate(PUScriptCompiler* compiler, PUAbs
             }
             else if (prop->name == token[TOKEN_POSITION])
             {
-      //          // Property: positon
-      //          if (passValidateProperty(compiler, prop, token[TOKEN_POSITION], VAL_VECTOR3))
-      //          {
-      //              Vec3 val;
-      //              if(getVector3(prop->values.begin(), prop->values.end(), &val))
-      //              {
-                        //	mAffector->position = val;
+                // Property: positon
+                if (passValidateProperty(compiler, prop, token[TOKEN_POSITION], VAL_VECTOR3))
+                {
+                    Vec3 val;
+                    if(getVector3(prop->values.begin(), prop->values.end(), &val))
+                    {
+                        //mAffector->position = val;
                         //mAffector->originalPosition = val;
-      //              }
-      //          }
+                        _affector->setLocalPosition(val);
+                    }
+                }
             }
             else if (prop->name == token[TOKEN_AFFECTOR_MASS])
             {

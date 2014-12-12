@@ -24,6 +24,7 @@
 
 #include "CCPUParticle3DRendererTranslator.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
 PUParticle3DRendererTranslator::PUParticle3DRendererTranslator()
@@ -64,15 +65,20 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     //    compiler->addError(ScriptCompiler::CE_INVALIDPARAMETERS, obj->file, obj->line);
     //    return;
     //}
-
-    if (type == "Billboard"){
-        _renderer = Particle3DQuadRender::create();
-    }
-    
     
     if (parent && parent->context)
     {
-        PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
+		 PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
+
+		if (type == "Billboard"){
+			PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(system->getMaterialName());
+			std::string texFile;
+			if (material){
+				texFile = material->textureFile;
+			}
+			_renderer = Particle3DQuadRender::create(texFile);
+		}
+
         system->setRender(_renderer);
     }
     

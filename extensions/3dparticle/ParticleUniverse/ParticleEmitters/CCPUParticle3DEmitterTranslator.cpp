@@ -106,16 +106,17 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
             }
             else if (prop->name == token[TOKEN_POSITION])
             {
-                //// Property: positon
-                //if (passValidateProperty(compiler, prop, token[TOKEN_POSITION], VAL_VECTOR3))
-                //{
-                //	Vector3 val;
-                //	if(getVector3(prop->values.begin(), prop->values.end(), &val))
-                //	{
-                //		mEmitter->position = val;
-                //		mEmitter->originalPosition = val;
-                //	}
-                //}
+                // Property: positon
+                if (passValidateProperty(compiler, prop, token[TOKEN_POSITION], VAL_VECTOR3))
+                {
+                    Vec3 val;
+                    if(getVector3(prop->values.begin(), prop->values.end(), &val))
+                    {
+                        //mEmitter->position = val;
+                        //mEmitter->originalPosition = val;
+                        _emitter->setLocalPosition(val);
+                    }
+                }
             }
             else if (prop->name == token[TOKEN_EMITTER_DIRECTION])
             {

@@ -1562,6 +1562,15 @@
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DScaleVelocityAffectorTranslator.cpp">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialTranslator.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialManager.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DUtil.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3110,6 +3119,15 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DScaleVelocityAffectorTranslator.h">
       <Filter>extension\3dparticle\ParticleUniverse\ParticleAffectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialTranslator.h">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialManager.h">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DUtil.h">
+      <Filter>extension\3dparticle\ParticleUniverse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

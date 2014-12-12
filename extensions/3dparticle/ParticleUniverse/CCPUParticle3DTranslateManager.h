@@ -32,6 +32,7 @@
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
 
@@ -48,6 +49,7 @@ private:
         PUParticle3DRendererTranslator _rendererTranslator;
         PUParticle3DEmitterTranslator _emitterTranslator;
         PUParticle3DAffectorTranslator _affectorTranslator;
+		PUParticle3DMaterialTranslator _materialTranslator;
         //EmitterTranslator mEmitterTranslator;
         //AffectorTranslator mAffectorTranslator;
         //BehaviourTranslator mBehaviourTranslator;

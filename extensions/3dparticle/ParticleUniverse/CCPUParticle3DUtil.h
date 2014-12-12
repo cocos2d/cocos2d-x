@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,47 +22,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _PARTICLE3D_TEST_H_
-#define _PARTICLE3D_TEST_H_
+#ifndef __CC_PU_PARTICLE_3D_UTIL_H__
+#define __CC_PU_PARTICLE_3D_UTIL_H__
 
-#include "../testBasic.h"
-#include "../BaseTest.h"
-#include "3dparticle/CCParticleSystem3D.h"
-#include <string>
-class Particle3DTestDemo : public BaseTest
+#include "base/CCRef.h"
+#include "math/CCMath.h"
+#include <vector>
+
+NS_CC_BEGIN
+
+class PUParticle3DUtil
 {
 public:
-    CREATE_FUNC(Particle3DTestDemo);
-    Particle3DTestDemo(void);
-    virtual ~Particle3DTestDemo(void){};
-    
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-    
-    // overrides
-    virtual bool init() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-	virtual void onExit() override;
+    static Vec3 perpendicular(const Vec3 &src);
+    static Vec3 randomDeviant(const Vec3 &src, float angle, const Vec3& up = Vec3::ZERO);
 
-    cocos2d::ParticleSystem3D* createParticleSystem();
-
-    void rotateCameraLeft(cocos2d::Ref *sender);
-    void rotateCameraRight(cocos2d::Ref *sender);
-
-protected:
-    std::string    _title;
-    cocos2d::Camera *_camera;
-    float _angle;
 };
-
-class Particle3DTestScene : public TestScene
-{
-public:
-    Particle3DTestScene(){};
-    virtual void runThisTest();
-};
+NS_CC_END
 
 #endif

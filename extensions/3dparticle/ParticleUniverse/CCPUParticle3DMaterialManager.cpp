@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,47 +22,59 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _PARTICLE3D_TEST_H_
-#define _PARTICLE3D_TEST_H_
+#include "CCPUParticle3DMaterialManager.h"
 
-#include "../testBasic.h"
-#include "../BaseTest.h"
-#include "3dparticle/CCParticleSystem3D.h"
-#include <string>
-class Particle3DTestDemo : public BaseTest
+NS_CC_BEGIN
+
+
+PUParticle3DMaterial::PUParticle3DMaterial()
+: isEnabledLight(true)
+, ambientColor(Vec4::ONE)
+, diffuseColor(Vec4::ONE)
+, specularColor(Vec4::ZERO)
+, emissiveColor(Vec4::ZERO)
+, shininess(0.0f)
+, depthTest(true)
+, depthWrite(true)
+, wrapMode(GL_CLAMP)
 {
-public:
-    CREATE_FUNC(Particle3DTestDemo);
-    Particle3DTestDemo(void);
-    virtual ~Particle3DTestDemo(void){};
-    
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-    
-    // overrides
-    virtual bool init() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-	virtual void onExit() override;
+    blendFunc.src = GL_ONE;
+    blendFunc.dst = GL_ZERO;
+}
 
-    cocos2d::ParticleSystem3D* createParticleSystem();
-
-    void rotateCameraLeft(cocos2d::Ref *sender);
-    void rotateCameraRight(cocos2d::Ref *sender);
-
-protected:
-    std::string    _title;
-    cocos2d::Camera *_camera;
-    float _angle;
-};
-
-class Particle3DTestScene : public TestScene
+PUParticle3DMaterialManager::PUParticle3DMaterialManager()
 {
-public:
-    Particle3DTestScene(){};
-    virtual void runThisTest();
-};
+}
 
-#endif
+
+PUParticle3DMaterialManager::~PUParticle3DMaterialManager()
+{
+    for (auto iter : materialList){
+        iter->release();
+    }
+}
+
+PUParticle3DMaterialManager* PUParticle3DMaterialManager::Instance()
+{
+    static PUParticle3DMaterialManager pmm;
+    return &pmm;
+}
+
+PUParticle3DMaterial* PUParticle3DMaterialManager::getMaterial( const std::string &name )
+{
+    for (auto iter : materialList){
+        if (iter->name == name)
+            return iter;
+    }
+    return nullptr;
+}
+
+void PUParticle3DMaterialManager::clearAllMaterials()
+{
+    for (auto iter : materialList){
+        iter->release();
+    }
+    materialList.clear();
+}
+
+NS_CC_END

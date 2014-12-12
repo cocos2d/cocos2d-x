@@ -176,6 +176,7 @@ public:
     static const float DEFAULT_MAX_VELOCITY;
 
     static PUParticleSystem3D* create();
+    static PUParticleSystem3D* create(const std::string &filePath, const std::string &materialPath);
     
     virtual void update(float delta) override;
     
@@ -237,6 +238,9 @@ public:
     */
     void setMaxVelocity(float maxVelocity);
 
+	void setMaterialName(const std::string &name) { _matName = name; };
+	const std::string getMaterialName() const { return _matName; };
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
@@ -251,6 +255,8 @@ protected:
     void emitParticles(float elapsedTime);
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
+
+	void initSystem(const std::string &filePath, const std::string &materialPath);
 
 protected:
     bool _prepared;
@@ -282,6 +288,8 @@ protected:
     */
     float _maxVelocity;
     bool _maxVelocitySet;
+
+	std::string _matName;
 };
 
 NS_CC_END

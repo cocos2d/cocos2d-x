@@ -26,6 +26,9 @@
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/CCParticle3DRender.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -150,6 +153,13 @@ void PUParticleSystem3D::startParticle()
         if (_render)
             _render->notifyStart();
 
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->startParticle();
+        }
+
         scheduleUpdate();
         _state = State::RUNNING;
         _timeElapsedSinceStart = 0.0f;
@@ -174,6 +184,13 @@ void PUParticleSystem3D::stopParticle()
         if (_render)
             _render->notifyStop();
 
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->stopParticle();
+        }
+
         unscheduleUpdate();
         _particlePool.lockAllParticles();
         _state = State::STOP;
@@ -194,6 +211,14 @@ void PUParticleSystem3D::pauseParticle()
             auto affector = static_cast<PUParticle3DAffector*>(it);
             affector->notifyPause();
         }
+
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->pauseParticle();
+        }
+
         _state = State::PAUSE;
     }
 }
@@ -211,6 +236,13 @@ void PUParticleSystem3D::resumeParticle()
         for (auto& it : _affectors) {
             auto affector = static_cast<PUParticle3DAffector*>(it);
             affector->notifyResume();
+        }
+
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->resumeParticle();
         }
 
         _state = State::RUNNING;
@@ -278,6 +310,7 @@ void PUParticleSystem3D::unPrepared()
     }
 
     _particlePool.removeAllParticles(true);
+    PUParticle3DMaterialManager::Instance()->clearAllMaterials();
 }
 
 void PUParticleSystem3D::preUpdator( float elapsedTime )
@@ -451,6 +484,16 @@ PUParticleSystem3D* PUParticleSystem3D::create()
     return pups;
 }
 
+PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
+{
+    PUParticleSystem3D* ps = PUParticleSystem3D::create();
+    if (ps){
+        ps->initSystem(filePath, materialPath);
+    }
+
+    return ps;
+}
+
 cocos2d::Vec3 PUParticleSystem3D::getDerivedPosition()
 {
     if (_keepLocal) return Vec3::ZERO;
@@ -477,6 +520,17 @@ void PUParticleSystem3D::setMaxVelocity( float maxVelocity )
 {
     _maxVelocity = maxVelocity;
     _maxVelocitySet = true;
+}
+
+void PUParticleSystem3D::initSystem( const std::string &filePath, const std::string &materialPath )
+{
+    std::string data = FileUtils::getInstance()->getStringFromFile(materialPath);
+    PUScriptCompiler sc;
+    sc.compile(data, materialPath);
+
+    sc.setParticleSystem3D(this);
+    data = FileUtils::getInstance()->getStringFromFile(filePath);
+    sc.compile(data, filePath);
 }
 
 NS_CC_END

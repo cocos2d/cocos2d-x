@@ -89,6 +89,8 @@ public:
     
     virtual void emit(int count) override;
 
+    void setLocalPosition(const Vec3 &pos) { _position = pos; };
+    const Vec3 getLocalPosition() const { return _position; };
         /** Calculate the derived position of the affector.
     @remarks
         Note, that in script, the position is set as localspace, while if the affector is
@@ -321,19 +323,19 @@ protected:
     */
     virtual void initParticleOrientation(PUParticle3D* particle);
 
-	virtual void initParticleVelocity(PUParticle3D* particle);
+    virtual void initParticleVelocity(PUParticle3D* particle);
 
-	virtual void initParticleMass(PUParticle3D* particle);
+    virtual void initParticleMass(PUParticle3D* particle);
 
-	virtual void initParticleColor(PUParticle3D* particle);
+    virtual void initParticleColor(PUParticle3D* particle);
 
-	virtual void initParticleTextureCoords(PUParticle3D* particle);
+    virtual void initParticleTextureCoords(PUParticle3D* particle);
 
-	virtual float initParticleTimeToLive();
+    virtual float initParticleTimeToLive();
 
-	virtual void initParticleDimensions(PUParticle3D* particle);
+    virtual void initParticleDimensions(PUParticle3D* particle);
 
-	virtual void initParticleForEmission(PUParticle3D* particle);
+    virtual void initParticleForEmission(PUParticle3D* particle);
 
     /** Initialise some attributes that are time-based.
     */
@@ -345,6 +347,8 @@ protected:
 
     
 protected:
+
+    Vec3 _position;
 
     Vec3 _latestPosition;
 

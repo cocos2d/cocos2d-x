@@ -79,10 +79,10 @@ bool PUScriptTranslator::getBoolean(const PUAbstractNode &node, bool *result)
     if(node.type != ANT_ATOM)
         return false;
     PUAtomAbstractNode *atom = (PUAtomAbstractNode*)&node;
-    if(atom->id != 1 && atom->id != 2)
-        return false;
+    //if(atom->id != 1 && atom->id != 2)
+    //    return false;
     
-    *result = atom->id == 1 ? true : false;
+    *result = atom->value == "true" ? true : false;
     return true;
 }
 

@@ -53,6 +53,11 @@ PUScriptTranslator* PUParticle3DTranslateManager::getTranslator(PUAbstractNode *
             // Parse Particle System
             translator = &_systemTranslator;
         }
+		else if(obj->cls == token[TOKEN_MATERIAL])
+		{
+			// Parse Particle System
+			translator = &_materialTranslator;
+		}
         //else if(obj->cls == token[TOKEN_ALIAS])
         //{
         //    // Parse the Alias

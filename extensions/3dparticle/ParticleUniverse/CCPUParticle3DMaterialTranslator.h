@@ -22,33 +22,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PU_PARTICLE_SYSTEM_3D_TRANSLATOR_H__
-#define __CC_PU_PARTICLE_SYSTEM_3D_TRANSLATOR_H__
+#ifndef __CC_PU_PARTICLE_3D_MATERIAL_TRANSLATOR_H__
+#define __CC_PU_PARTICLE_3D_MATERIAL_TRANSLATOR_H__
 
-//#include <iostream>
-#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
-
-class PUParticleSystem3DTranslator:public PUScriptTranslator
+class  PUParticle3DMaterialTranslator : public PUScriptTranslator
 {
 public:
-    PUParticleSystem3DTranslator();
-    ~PUParticleSystem3DTranslator();
-
-	void setParticleSystem3D(PUParticleSystem3D *pu) { _system = pu; };
-
-public:
-
+    PUParticle3DMaterialTranslator();
+    virtual ~PUParticle3DMaterialTranslator();
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
 
 protected:
+    PUParticle3DMaterial *_material;
+};
 
-    PUParticleSystem3D *_system;
+class PUParticle3DMaterialTechniqueTranslator : public PUScriptTranslator
+{
+public:
+    PUParticle3DMaterialTechniqueTranslator(){};
+    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
+};
+
+class PUParticle3DMaterialPassTranslator : public PUScriptTranslator
+{
+public:
+    PUParticle3DMaterialPassTranslator(){};
+    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
+};
+
+class PUParticle3DMaterialTextureUnitTranslator : public PUScriptTranslator
+{
+public:
+    PUParticle3DMaterialTextureUnitTranslator(){};
+    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
 };
 
 NS_CC_END
 
-#endif 
+
+#endif /* defined(__cocos2d_libs__CCParticle3DTechniqueTranslator__) */

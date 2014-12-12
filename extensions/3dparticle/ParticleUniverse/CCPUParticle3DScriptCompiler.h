@@ -121,8 +121,8 @@ private:
     void parseNumber() const;
 };
 
-
-class CC_DLL PUScriptCompiler
+class PUParticleSystem3D;
+class PUScriptCompiler
 {
 
 private:
@@ -136,6 +136,7 @@ public:
     PUScriptCompiler();
     virtual ~PUScriptCompiler();
 
+	void setParticleSystem3D(PUParticleSystem3D *pu);
 
     bool compile(const std::string &str, const std::string &source);
     
@@ -150,6 +151,7 @@ private:
     
     PUAbstractNode *_current;
     PUAbstractNodeList *_nodes;
+	PUParticleSystem3D *_puSystem;
 };
 
 

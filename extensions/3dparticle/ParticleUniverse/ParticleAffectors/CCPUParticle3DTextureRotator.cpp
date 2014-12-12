@@ -95,12 +95,12 @@ void PUParticle3DTextureRotator::setRotationSpeed(PUDynamicAttribute* dynRotatio
 //-----------------------------------------------------------------------
 float PUParticle3DTextureRotator::calculateRotation(void)
 {
-    return float(_dynamicAttributeHelper.calculate(_dynRotation, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart()));
+    return _dynamicAttributeHelper.calculate(_dynRotation, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
 }
 //-----------------------------------------------------------------------
 float PUParticle3DTextureRotator::calculateRotationSpeed(PUParticle3D* particle)
 {
-    return float(_dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction));
+    return _dynamicAttributeHelper.calculate(_dynRotationSpeed, particle->timeFraction);
 }
 //-----------------------------------------------------------------------
 void PUParticle3DTextureRotator::initParticleForEmission(PUParticle3D* particle)

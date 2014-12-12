@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,47 +22,53 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _PARTICLE3D_TEST_H_
-#define _PARTICLE3D_TEST_H_
+#ifndef __CC_PU_PARTICLE_3D_MATERIAL_MANAGER_H__
+#define __CC_PU_PARTICLE_3D_MATERIAL_MANAGER_H__
+#include "math/CCMath.h"
+#include "base/ccTypes.h"
+#include <vector>
 
-#include "../testBasic.h"
-#include "../BaseTest.h"
-#include "3dparticle/CCParticleSystem3D.h"
-#include <string>
-class Particle3DTestDemo : public BaseTest
+NS_CC_BEGIN
+
+class PUParticle3DMaterial : public Ref
 {
 public:
-    CREATE_FUNC(Particle3DTestDemo);
-    Particle3DTestDemo(void);
-    virtual ~Particle3DTestDemo(void){};
-    
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-    
-    // overrides
-    virtual bool init() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-	virtual void onExit() override;
 
-    cocos2d::ParticleSystem3D* createParticleSystem();
+    PUParticle3DMaterial();
 
-    void rotateCameraLeft(cocos2d::Ref *sender);
-    void rotateCameraRight(cocos2d::Ref *sender);
+    std::string name;
+    bool isEnabledLight;
+    Vec4 ambientColor;
+    Vec4 diffuseColor;
+    Vec4 specularColor;
+    Vec4 emissiveColor;
+    float shininess;
 
-protected:
-    std::string    _title;
-    cocos2d::Camera *_camera;
-    float _angle;
+    BlendFunc blendFunc;
+    bool depthTest;
+    bool depthWrite;
+
+    std::string textureFile;
+    GLuint wrapMode;
 };
 
-class Particle3DTestScene : public TestScene
+class PUParticle3DMaterialManager
 {
 public:
-    Particle3DTestScene(){};
-    virtual void runThisTest();
+
+    typedef std::vector<PUParticle3DMaterial *> MaterialList;
+
+    PUParticle3DMaterialManager();
+    ~PUParticle3DMaterialManager();
+
+    static PUParticle3DMaterialManager* Instance();
+    PUParticle3DMaterial* getMaterial(const std::string &name);
+    void clearAllMaterials();
+
+    MaterialList materialList;
 };
+
+NS_CC_END
 
 #endif
+

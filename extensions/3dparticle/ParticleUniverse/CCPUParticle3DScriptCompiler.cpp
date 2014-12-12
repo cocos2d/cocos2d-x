@@ -172,8 +172,11 @@ bool PUScriptCompiler::compile(const PUConcreteNodeList &nodes)
     for(PUAbstractNodeList::iterator i = aNodes.begin(); i != aNodes.end(); ++i)
     {
         PUScriptTranslator *translator = PUParticle3DTranslateManager::Instance()->getTranslator(*i);
-        if(translator)
+        if(translator){
+            PUParticleSystem3DTranslator *ps = dynamic_cast<PUParticleSystem3DTranslator *>(translator);
+            if (ps) ps->setParticleSystem3D(_puSystem);
             translator->translate(this, *i);
+        }
     }
     
     return true;
@@ -187,7 +190,7 @@ bool PUScriptCompiler::compile(const std::string &str, const std::string &source
     PUConcreteNodeList creteNodeList;
     lexer.openLexer(str, source, tokenList);
     parser.parse(creteNodeList, tokenList);
-    return     compile(creteNodeList);
+    return  compile(creteNodeList);
 }
 
 
@@ -353,6 +356,12 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
         }
     }
 }
+
+void PUScriptCompiler::setParticleSystem3D( PUParticleSystem3D *pu )
+{
+    _puSystem = pu;
+}
+
 
 
 

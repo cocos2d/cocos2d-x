@@ -191,6 +191,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DDynamicAttribute.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DDynamicAttributeTranslator.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DForceField.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialManager.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialTranslator.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DNoise.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DPlane.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DRendererTranslator.cpp" />
@@ -202,6 +204,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DSphere.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DTechniqueTranslator.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DTranslateManager.cpp" />
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DUtil.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3D.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3DTranslator.cpp" />
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DAffector.cpp" />
@@ -636,6 +639,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DDynamicAttribute.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DDynamicAttributeTranslator.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DForceField.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialManager.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DMaterialTranslator.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DNoise.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DPlane.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DRendererTranslator.h" />
@@ -647,6 +652,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DSphere.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DTechniqueTranslator.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DTranslateManager.h" />
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DUtil.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3D.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticleSystem3DTranslator.h" />
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleAffectors\CCPUParticle3DAffector.h" />

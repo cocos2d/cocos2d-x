@@ -24,6 +24,7 @@
 
 #include "CCPUParticle3DSphereSurfaceEmitter.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DUtil.h"
 
 NS_CC_BEGIN
 // Constants
@@ -80,11 +81,7 @@ void PUParticle3DSphereSurfaceEmitter::initParticleDirection(PUParticle3D* parti
         if (angle != 0.0f)
         {
             //particle->direction = _randomVector.randomDeviant(angle, mUpVector);
-            Mat4 mat;
-            Mat4::createRotation(_randomVector, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
-            Vec3 newUp = mat * _upVector;
-            Mat4::createRotation(newUp, angle, &mat);
-            particle->direction = mat * _randomVector;
+			particle->direction = PUParticle3DUtil::randomDeviant(_randomVector, angle, _upVector);
             particle->originalDirection = particle->direction;
         }
         else

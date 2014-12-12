@@ -24,6 +24,7 @@
 
 #include "CCPUParticle3DCircleEmitter.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DUtil.h"
 #include "base/ccRandom.h"
 
 NS_CC_BEGIN
@@ -163,10 +164,7 @@ void PUParticle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
             Mat4::createRotation(_orientation, &mat);
             Vec3 temp = mat * Vec3(_x, 0, _z);
 
-            Mat4::createRotation(temp, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
-            Vec3 newUp = mat * _upVector;
-            Mat4::createRotation(newUp, angle, &mat);
-            particle->direction = mat * temp;
+            particle->direction = PUParticle3DUtil::randomDeviant(temp, angle, _upVector);
 
             particle->originalDirection = particle->direction;
         }
