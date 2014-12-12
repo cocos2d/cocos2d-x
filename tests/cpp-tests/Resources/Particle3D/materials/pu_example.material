@@ -1,0 +1,541 @@
+//-----------------------------------------------------------------------------------------------------------------------
+// This script is part of the Particle Universe Media Pack product.
+//
+// Copyright (c) 2008 Henry van Merode
+//
+// Usage of this program is licensed under the terms of the Particle Universe Commercial License.
+// You can find a copy of the Commercial License in the Particle Universe package.
+//-----------------------------------------------------------------------------------------------------------------------
+
+material mp_fire_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_fire_02_2x2.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Tornado
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture pu_sand_336x330.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Stone
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            texture_unit
+            {
+                texture pu_stone.jpeg
+                scale 0.5 0.5
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Circle
+{
+    technique
+    {
+        pass
+        {
+            depth_write off
+            scene_blend alpha_blend
+            texture_unit
+            {
+                texture pu_circle.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Rain_01
+{
+    technique
+    {
+        pass
+        {
+            scene_blend add
+            depth_write off
+            texture_unit
+            {
+                texture pu_rain_01.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Barrel_01
+{
+    technique
+    {
+        pass
+        {
+            depth_write off
+            depth_write off
+            texture_unit
+            {
+                texture pu_barrel_01.png
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Barrel_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            texture_unit
+            {
+                texture pu_barrel_02.png
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Lightning
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_lightning_20x64.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material fxpression/ac3dmat1
+{
+    technique
+    {
+        pass
+        {
+            ambient 1 0.05 0
+            diffuse 1 0.05 0
+            texture_unit
+            {
+                texture pu_plate.jpg
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Flame
+{
+    technique
+    {
+        pass
+        {
+            scene_blend add
+            depth_write off
+            texture_unit
+            {
+                texture pu_flame.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Fire
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+            texture_unit
+            {
+                texture pu_flame.png
+                tex_address_mode clamp
+                wave_xform scroll_x sine 0 0.3 0 0.15
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Smoke
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture pu_smoke_brown_336x330.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Smoke_02
+{
+    technique
+    {
+        pass
+        {
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture pu_smoke_brown_336x330.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/ExplosionFire
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+            fog_override true
+
+            texture_unit
+            {
+                texture pu_smoke_02_128x128.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Nucleus
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_nucleus.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Debris
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_fire_01_64x64.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Dirt
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+            texture_unit
+            {
+                texture pu_dirt_256x512.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------
+material PUMediaPack/Smoke
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+            texture_unit
+            {
+                texture pu_smoke_02_128x128.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/BurstFlare
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+            texture_unit
+            {
+                texture pu_dot_03_64x64.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/GreenBall
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+            texture_unit
+            {
+                texture pu_green_ball.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Crate
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture crate6.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Star
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+            fog_override true
+
+            texture_unit
+            {
+                texture pu_flare_12_256x256.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Hart
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_hart.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Interpolate
+{
+    technique
+    {
+        pass
+        {
+            lighting on
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture interpolate.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Fish
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture steelhead.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Flare
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_flare.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/RibbonTrail
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_ribbontrail.png 1d
+                tex_address_mode clamp
+                filtering none
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Rain
+{
+    technique
+    {
+        pass
+        {
+            scene_blend colour_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_rain.png
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Beam_1
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_beam_01.png 1d
+                tex_address_mode clamp
+                filtering none
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+material ParticleUniverse/Beam_2
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_beam_02.png 1d
+                tex_address_mode clamp
+                filtering none
+            }
+        }
+    }
+}

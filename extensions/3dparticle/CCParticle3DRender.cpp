@@ -187,6 +187,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
 
 //////////////////////////////////////////////////////////////////////////////
 Particle3DModelRender::Particle3DModelRender()
+    : _spriteSize(Vec3::ONE)
 {
     
 }
@@ -198,10 +199,11 @@ Particle3DModelRender::~Particle3DModelRender()
 }
 
 
-Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile)
+Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile, const std::string &texFile)
 {
     auto ret = new Particle3DModelRender();
     ret->_modelFile = modelFile;
+    ret->_texFile = texFile;
     return ret;
 }
 
@@ -213,8 +215,15 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     if (_spriteList.empty()){
         for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
             Sprite3D *sprite = Sprite3D::create(_modelFile);
+            sprite->setTexture(_texFile);
             sprite->retain();
             _spriteList.push_back(sprite);
+        }
+        if (!_spriteList.empty()){
+            const AABB &aabb = _spriteList[0]->getAABB();
+            Vec3 corners[8];
+            aabb.getCorners(corners);
+            _spriteSize = corners[3] - corners[6];
         }
     }
 
@@ -228,6 +237,10 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
         auto particle = activeParticleList[i];
         q = particle->orientation * transform;
         Mat4::createRotation(q, &mat);
+
+        mat.m[0] *= particle->width / _spriteSize.x;
+        mat.m[5]  *= particle->height / _spriteSize.y; 
+        mat.m[10] *= particle->depth / _spriteSize.z;
         mat.m[12] = particle->positionInWorld.x;
         mat.m[13] = particle->positionInWorld.y;
         mat.m[14] = particle->positionInWorld.z;

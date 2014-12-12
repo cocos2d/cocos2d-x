@@ -68,16 +68,38 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     
     if (parent && parent->context)
     {
-		 PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
+         PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
+         PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(system->getMaterialName());
+         std::string texFile;
+         if (material){
+             texFile = material->textureFile;
+         }
 
-		if (type == "Billboard"){
-			PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(system->getMaterialName());
-			std::string texFile;
-			if (material){
-				texFile = material->textureFile;
-			}
-			_renderer = Particle3DQuadRender::create(texFile);
-		}
+        if (type == "Billboard"){
+            _renderer = Particle3DQuadRender::create(texFile);
+        }
+
+        if (type == "Entity"){
+            for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
+            {
+                if((*i)->type == ANT_PROPERTY)
+                {
+                    PUPropertyAbstractNode* prop = reinterpret_cast<PUPropertyAbstractNode*>((*i));
+                    if (prop->name == token[TOKEN_MESH_NAME])
+                    {
+                        // Property: mesh_name
+                        if (passValidateProperty(compiler, prop, token[TOKEN_MESH_NAME], VAL_STRING))
+                        {
+                            std::string val;
+                            if(getString(*prop->values.front(), &val))
+                            {
+                                _renderer = Particle3DModelRender::create(val, texFile);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         system->setRender(_renderer);
     }
@@ -188,10 +210,10 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     //            //    }
     //            //}
     //        }
-    //        else if (particleRendererFactory->translateChildProperty(compiler, *i))
-    //        {
-    //            // Parsed the property by another translator; do nothing
-    //        }
+    //        //else if (particleRendererFactory->translateChildProperty(compiler, *i))
+    //        //{
+    //        //    // Parsed the property by another translator; do nothing
+    //        //}
     //        else
     //        {
     //            errorUnexpectedProperty(compiler, prop);
@@ -199,21 +221,21 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     //    }
     //    else if((*i)->type == ANT_OBJECT)
     //    {
-    //        ObjectAbstractNode* child = reinterpret_cast<ObjectAbstractNode*>((*i).get());
-    //        if (child->cls == token[TOKEN_RENDERER_TEXCOORDS_SET])
-    //        {
-    //            // Property: soft_particles_delta
-    //            RendererSetTranslator rendererSetTranslator;
-    //            rendererSetTranslator.translate(compiler, *i);
-    //        }
-    //        else if (particleRendererFactory->translateChildObject(compiler, *i))
-    //        {
-    //            // Parsed the object by another translator; do nothing
-    //        }
-    //        else
-    //        {
-    //            processNode(compiler, *i);
-    //        }
+    //        //ObjectAbstractNode* child = reinterpret_cast<ObjectAbstractNode*>((*i).get());
+    //        //if (child->cls == token[TOKEN_RENDERER_TEXCOORDS_SET])
+    //        //{
+    //        //    // Property: soft_particles_delta
+    //        //    RendererSetTranslator rendererSetTranslator;
+    //        //    rendererSetTranslator.translate(compiler, *i);
+    //        //}
+    //        //else if (particleRendererFactory->translateChildObject(compiler, *i))
+    //        //{
+    //        //    // Parsed the object by another translator; do nothing
+    //        //}
+    //        //else
+    //        //{
+    //        //    processNode(compiler, *i);
+    //        //}
     //    }
     //    else
     //    {

@@ -92,16 +92,16 @@ void Particle3DTestDemo::onEnter()
 
 void Particle3DTestDemo::onExit()
 {
-	BaseTest::onExit();
+    BaseTest::onExit();
 }
 
 bool Particle3DTestDemo::init()
 {
     if (!BaseTest::init()) return false;
 
-	FileUtils::getInstance()->addSearchPath("Particle3D/materials");
-	FileUtils::getInstance()->addSearchPath("Particle3D/scripts");
-	FileUtils::getInstance()->addSearchPath("Particle3D/textures");
+    FileUtils::getInstance()->addSearchPath("Particle3D/materials");
+    FileUtils::getInstance()->addSearchPath("Particle3D/scripts");
+    FileUtils::getInstance()->addSearchPath("Particle3D/textures");
 
     Size size = Director::getInstance()->getWinSize();
     _camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
@@ -137,30 +137,28 @@ bool Particle3DTestDemo::init()
 
     //this->addChild(sprite3d);
 
-	//PUParticleSystem3D *rootps = PUParticleSystem3D::create();
-	//{
-	//	auto ps = createParticleSystem();
-	//	//ps->setPosition(-25.0f, -25.0f);
-	//	rootps->addChild(ps);
-	//}
+    //PUParticleSystem3D *rootps = PUParticleSystem3D::create();
+    //{
+    //	auto ps = createParticleSystem();
+    //	//ps->setPosition(-25.0f, -25.0f);
+    //	rootps->addChild(ps);
+    //}
 
-	//{
-	//	auto ps = createParticleSystem();
-	//	//ps->setPosition(25.0f, 25.0f);
-	//	rootps->addChild(ps);
-	//}
+    //{
+    //	auto ps = createParticleSystem();
+    //	//ps->setPosition(25.0f, 25.0f);
+    //	rootps->addChild(ps);
+    //}
 
-	//PUParticleSystem3DBuilder::Instance()->BuildPUParticleSystems("timeShift.pu", "pu_mediapack_01.material");
-	//PUParticleSystem3D *rootps = PUParticleSystem3DBuilder::Instance()->puParticleSystem3DList.front();
-	PUParticleSystem3D *rootps = PUParticleSystem3D::create("woosh.pu", "pu_mediapack_01.material");
-	rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    PUParticleSystem3D *rootps = PUParticleSystem3D::create("advancedLodSystem.pu", "pu_example.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
 
-	auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));
-	auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-	auto moveby2 = MoveBy::create(2.0f, Vec2(50.0f, -50.0f));
-	auto moveby3 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-	//rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, moveby2, moveby3, nullptr)));
-	rootps->startParticle();
+    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));
+    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+    auto moveby2 = MoveBy::create(2.0f, Vec2(50.0f, -50.0f));
+    auto moveby3 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+    //rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, moveby2, moveby3, nullptr)));
+    rootps->startParticle();
 
     this->addChild(rootps);
     //sprite3d->getAttachNode("Bip001 R Hand")->addChild(ps);
@@ -171,10 +169,10 @@ bool Particle3DTestDemo::init()
 ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
     auto ps = PUParticleSystem3D::create();
-	BlendFunc blend;
-	blend.src = GL_ONE;
-	blend.dst = GL_ONE;
-	ps->setBlendFunc(blend);
+    BlendFunc blend;
+    blend.src = GL_ONE;
+    blend.dst = GL_ONE;
+    ps->setBlendFunc(blend);
     ps->setParticleQuota(2500);
     ps->setKeepLocal(false);
     //emitter
