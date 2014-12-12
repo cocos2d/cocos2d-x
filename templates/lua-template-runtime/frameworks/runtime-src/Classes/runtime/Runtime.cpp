@@ -98,7 +98,7 @@ std::string& replaceAll(std::string& str, const std::string& old_value, const st
 
 const char* getRuntimeVersion()
 {
-    return "1.6";
+    return "1.7";
 }
 
 int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
