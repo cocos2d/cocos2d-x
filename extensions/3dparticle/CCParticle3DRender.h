@@ -106,7 +106,7 @@ protected:
 class CC_DLL Particle3DModelRender : public Particle3DRender
 {
 public:
-    static Particle3DModelRender* create(Sprite3D* sprite);
+    static Particle3DModelRender* create(const std::string& modelFile);
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
     
@@ -115,7 +115,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Particle3DModelRender();
     
 protected:
-    Sprite3D* _sprite; //3d sprite to be rendered
+
+    std::vector<Sprite3D *> _spriteList;
+    std::string _modelFile;
 };
 
 NS_CC_END

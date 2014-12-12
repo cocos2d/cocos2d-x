@@ -187,40 +187,52 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
 
 //////////////////////////////////////////////////////////////////////////////
 Particle3DModelRender::Particle3DModelRender()
-: _sprite(nullptr)
 {
     
 }
 Particle3DModelRender::~Particle3DModelRender()
 {
-    CC_SAFE_RELEASE(_sprite);
+    for (auto iter : _spriteList){
+        iter->autorelease();
+    }
 }
 
 
-Particle3DModelRender* Particle3DModelRender::create(Sprite3D* sprite)
+Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile)
 {
     auto ret = new Particle3DModelRender();
-    ret->_sprite = sprite;
-    sprite->retain();
-    
+    ret->_modelFile = modelFile;
     return ret;
 }
 
 void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem)
 {
-    if (!_isVisible || _sprite == nullptr)
+    if (!_isVisible)
         return;
     
+    if (_spriteList.empty()){
+        for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
+            Sprite3D *sprite = Sprite3D::create(_modelFile);
+            sprite->retain();
+            _spriteList.push_back(sprite);
+        }
+    }
+
+
     const ParticlePool& particlePool = particleSystem->getParticlePool();
+    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
     Mat4 mat;
-    for (auto it : particlePool.getActiveParticleList())
+    Quaternion q;
+    for (unsigned int i = 0; i < activeParticleList.size(); ++i)
     {
-        auto particle = it;
-        Mat4::createRotation(particle->orientation, &mat);
-        mat.m[12] = particle->position.x;
-        mat.m[13] = particle->position.y;
-        mat.m[14] = particle->position.z;
-        _sprite->draw(renderer, transform * mat, 0);
+        auto particle = activeParticleList[i];
+        q = particle->orientation * transform;
+        Mat4::createRotation(q, &mat);
+        mat.m[12] = particle->positionInWorld.x;
+        mat.m[13] = particle->positionInWorld.y;
+        mat.m[14] = particle->positionInWorld.z;
+
+        _spriteList[i]->draw(renderer, mat, 0);
     }
 }
 
