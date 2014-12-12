@@ -35,8 +35,8 @@ NS_CC_ALLOCATOR_BEGIN
 
 // @brief
 // AllocatorBase
-// Provides a base that contains a few methods and definitions
-// that are helpful to all allocation strategies.
+// Provides a base that contains a few methods and definitions that are helpful to all allocation strategies.
+// Also provides a common base that can be used to point to all allocators generically.
 class AllocatorBase
 {
 public:
@@ -84,7 +84,7 @@ public:
 #if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
     void setTag(const char* tag)
     {
-        strncpy(_tag, tag, sizeof(_tag));
+        strncpy(_tag, tag, sizeof(_tag)-1);
     }
     
     const char* tag() const
@@ -92,6 +92,8 @@ public:
         return _tag;
     }
     
+    // cannot use std::string as it allocates memory.
+    // for some allocator this tag is set before the new/delete allocator has finished initializing.
     char _tag[1000];
     
     // @brief return any diagnostic info for this allocator

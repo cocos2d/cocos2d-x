@@ -50,7 +50,6 @@ AllocatorDiagnostics* AllocatorDiagnostics::instance()
 void AllocatorDiagnostics::trackAllocator(AllocatorBase* allocator)
 {
     LOCK(_mutex);
-    LOG("adding allocator to diag %p\n", allocator);
     auto p = _allocators;
     for (; nullptr != p; p = p->_next_allocator)
     {

@@ -30,9 +30,6 @@
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
 
-// printf is safe to use
-#define LOG printf
-
 // namespace allocator {}
 #ifdef __cplusplus
     #define NS_CC_ALLOCATOR_BEGIN   namespace allocator {
@@ -46,13 +43,21 @@
     #define NS_CC_ALLOCATOR
 #endif
 
-// @brief CC_ALLOCATOR_INLINE
-// Turn off inlining of methods when debugging to make stack traces readable and stepping through code sane.
-// By default inlined methods are hidden symbols since symbols are unique and inlines are not.
 #if COCOS2D_DEBUG
+
+    // @brief CC_ALLOCATOR_INLINE
+    // Turn off inlining of methods when debugging to make stack traces readable and stepping through code sane.
+    // By default inlined methods are hidden symbols since symbols are unique and inlines are not.
     #define CC_ALLOCATOR_INLINE
+
+    // printf is safe to use
+    #define LOG printf
+
 #else
+
     #define CC_ALLOCATOR_INLINE _LIBCPP_INLINE_VISIBILITY
+    #define LOG
+
 #endif
 
 // allocator macros
