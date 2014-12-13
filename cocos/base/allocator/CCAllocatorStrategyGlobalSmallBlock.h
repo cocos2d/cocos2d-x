@@ -286,7 +286,7 @@ public:
     {
         std::stringstream s;
         size_t total = 0;
-        for (auto i = 2; i < kMaxSmallBlockPower; ++i)
+        for (auto i = 2; i <= kMaxSmallBlockPower; ++i)
         {
             auto a = _smallBlockAllocators[i];
             if (a)
