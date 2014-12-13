@@ -49,7 +49,7 @@ NS_CC_ALLOCATOR_BEGIN
 
 // @brief
 class AllocatorStrategyGlobalSmallBlock
-: public Allocator<AllocatorStrategyGlobalSmallBlock>
+    : public Allocator<AllocatorStrategyGlobalSmallBlock>
 {
 public:
     
@@ -168,22 +168,22 @@ public:
         
         switch (adjusted_size)
         {
-                ALLOCATE(2,  4);
-                ALLOCATE(3,  8);
-                ALLOCATE(4,  16);
-                ALLOCATE(5,  32);
-                ALLOCATE(6,  64);
-                ALLOCATE(7,  128);
-                ALLOCATE(8,  256);
-                ALLOCATE(9,  512);
-                ALLOCATE(10, 1024);
-                ALLOCATE(11, 2048);
-                ALLOCATE(12, 4096);
-                ALLOCATE(13, 8192);
-            default:
-                CC_ASSERT(false);
-                throw std::bad_alloc();
-                break;
+        ALLOCATE(2,  4);
+        ALLOCATE(3,  8);
+        ALLOCATE(4,  16);
+        ALLOCATE(5,  32);
+        ALLOCATE(6,  64);
+        ALLOCATE(7,  128);
+        ALLOCATE(8,  256);
+        ALLOCATE(9,  512);
+        ALLOCATE(10, 1024);
+        ALLOCATE(11, 2048);
+        ALLOCATE(12, 4096);
+        ALLOCATE(13, 8192);
+        default:
+            CC_ASSERT(false);
+            throw std::bad_alloc();
+            break;
         }
         
         #undef ALLOCATE
@@ -285,14 +285,17 @@ public:
     std::string diagnostics() const
     {
         std::stringstream s;
+        size_t total = 0;
         for (auto i = 2; i < kMaxSmallBlockPower; ++i)
         {
             auto a = _smallBlockAllocators[i];
             if (a)
             {
+                total += _smallBlockAllocations[i];
                 s << a->tag() << " allocated:" << _smallBlockAllocations[i] << "\n";
             }
         }
+        s << "Total:" << total << "\n";
         return s.str();
     }
     size_t _highestCount;
