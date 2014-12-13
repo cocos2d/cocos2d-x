@@ -387,7 +387,13 @@ public:
     /** Returns the full path cache */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
-
+    /** 
+     * Normalize a pathname by collapsing redundant separators and up-level references 
+     * so that A//B, A/B/, A/./B and A/foo/../B all become A/B.
+     *
+     * @param path of file or directory
+     * @param normalize path of file or directory
+     */
     virtual std::string getNormalizePath(const std::string& path) const;
 
 protected:
