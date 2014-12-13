@@ -28,9 +28,9 @@
  ****************************************************************************/
 
 /****************************************************************************
-                                   WARNING!
-     Do not use Console::log or any other methods that use NEW inside of this
-     allocator. Failure to do so will result in recursive memory allocation.
+ WARNING!
+ Do not use Console::log or any other methods that use NEW inside of this
+ allocator. Failure to do so will result in recursive memory allocation.
  ****************************************************************************/
 
 #include "base/allocator/CCAllocatorMacros.h"
@@ -49,7 +49,7 @@ NS_CC_ALLOCATOR_BEGIN
 
 // @brief
 class AllocatorStrategyGlobalSmallBlock
-    : public Allocator<AllocatorStrategyGlobalSmallBlock>
+: public Allocator<AllocatorStrategyGlobalSmallBlock>
 {
 public:
     
@@ -57,17 +57,19 @@ public:
     static constexpr size_t kDefaultSmallBlockCount = 100;
     
     // default max small block size pool.
-    static constexpr size_t kMaxSmallBlockPower = 13; // 2^13 16k
-  
+    static constexpr size_t kMaxSmallBlockPower = 13; // 2^13 8kb
+    
     // @brief define for allocator strategy, cannot be typedef because we want to eval at use
-    #define SType(size) AllocatorStrategyFixedBlock<size>
+#define SType(size) AllocatorStrategyFixedBlock<size>
     
     void _lazy_init()
     {
-        static bool first = true;
-        if (first)
+        // this gets called before static constructors
+        // so make sure we only get called once.
+        static bool once = true;
+        if (once)
         {
-            first = false;
+            once = false;
             
             // call our own constructor. Global new can be called before the constructors are called.
             // Make sure it gets called by having it done lazily in the call to allocate.
@@ -77,12 +79,14 @@ public:
     
     AllocatorStrategyGlobalSmallBlock()
     {
+        // this gets called before static constructors
+        // so make sure we only get called once.
         static bool once = true;
         if (once)
         {
             once = false;
             
-            _maxBlockSize = 2 << (kMaxSmallBlockPower - 1);
+            _maxBlockSize = 1 << kMaxSmallBlockPower;
             
 #if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
             AllocatorDiagnostics::instance()->trackAllocator(this);
@@ -96,24 +100,24 @@ public:
             // cannot call new on the allocator here because it will recurse
             // so instead we allocate from the global allocator and construct in place.
             #define SBA(n, size) \
-            if (size <= _maxBlockSize) \
-            { \
-                auto v = ccAllocatorGlobal.allocate(sizeof(SType(size))); \
-                _smallBlockAllocators[n] = (AllocatorBase*)(new (v) SType(size)("GlobalSmallBlock::"#size)); \
-            }
-            
-            SBA(1,  4)
-            SBA(2,  8);
-            SBA(3,  16);
-            SBA(4,  32);
-            SBA(5,  64);
-            SBA(6,  128);
-            SBA(7,  256);
-            SBA(8,  512);
-            SBA(9,  1024);
-            SBA(10, 2048);
-            SBA(11, 4096);
-            SBA(12, 8192);
+                if (size <= _maxBlockSize) \
+                { \
+                    auto v = ccAllocatorGlobal.allocate(sizeof(SType(size))); \
+                    _smallBlockAllocators[n] = (AllocatorBase*)(new (v) SType(size)("GlobalSmallBlock::"#size)); \
+                }
+                
+            SBA(2,  4)
+            SBA(3,  8);
+            SBA(4,  16);
+            SBA(5,  32);
+            SBA(6,  64);
+            SBA(7,  128);
+            SBA(8,  256);
+            SBA(9,  512);
+            SBA(10, 1024);
+            SBA(11, 2048);
+            SBA(12, 4096);
+            SBA(13, 8192);
             
             #undef SBA
         }
@@ -121,7 +125,7 @@ public:
     
     virtual ~AllocatorStrategyGlobalSmallBlock()
     {
-        for (int i = 0; i < kMaxSmallBlockPower; ++i)
+        for (int i = 0; i <= kMaxSmallBlockPower; ++i)
             if (_smallBlockAllocators[i])
                 ccAllocatorGlobal.deallocate(_smallBlockAllocators[i]);
         
@@ -148,7 +152,7 @@ public:
         // make sure the size fits into one of the
         // fixed sized block allocators we have above.
         size_t adjusted_size = AllocatorBase::nextPow2BlockSize(size);
-       
+        
         #define ALLOCATE(slot, size) \
             case size: \
             { \
@@ -159,29 +163,29 @@ public:
                 TRACK(slot, size, +=); \
             } \
             break;
-        
+            
         void* address;
         
         switch (adjusted_size)
         {
-        ALLOCATE(1,  4);
-        ALLOCATE(2,  8);
-        ALLOCATE(3,  16);
-        ALLOCATE(4,  32);
-        ALLOCATE(5,  64);
-        ALLOCATE(6,  128);
-        ALLOCATE(7,  256);
-        ALLOCATE(8,  512);
-        ALLOCATE(9,  1024);
-        ALLOCATE(10, 2048);
-        ALLOCATE(11, 4096);
-        ALLOCATE(12, 8192);
-        default:
-            CC_ASSERT(false);
-            throw std::bad_alloc();
-            break;
+                ALLOCATE(2,  4);
+                ALLOCATE(3,  8);
+                ALLOCATE(4,  16);
+                ALLOCATE(5,  32);
+                ALLOCATE(6,  64);
+                ALLOCATE(7,  128);
+                ALLOCATE(8,  256);
+                ALLOCATE(9,  512);
+                ALLOCATE(10, 1024);
+                ALLOCATE(11, 2048);
+                ALLOCATE(12, 4096);
+                ALLOCATE(13, 8192);
+            default:
+                CC_ASSERT(false);
+                throw std::bad_alloc();
+                break;
         }
-
+        
         #undef ALLOCATE
         
         CC_ASSERT(adjusted_size < AllocatorBase::kDefaultAlignment || 0 == ((intptr_t)address & (AllocatorBase::kDefaultAlignment - 1)));
@@ -200,32 +204,35 @@ public:
         if (0 == size)
         {
             #define OWNS(slot, S, address) \
-            case S: \
-            { \
-                void* v = _smallBlockAllocators[slot]; \
-                CC_ASSERT(nullptr != v); \
-                auto a = (SType(S)*)v; \
-                if (a->owns(address)) \
+                case S: \
                 { \
-                    size = SType(S)::block_size; \
-                    break; \
-                } \
-            }
+                    void* v = _smallBlockAllocators[slot]; \
+                    if (v) \
+                    { \
+                        auto a = (SType(S)*)v; \
+                        if (a->owns(address)) \
+                        { \
+                            size = SType(S)::block_size; \
+                            break; \
+                        } \
+                    } \
+                }
             
+            // falls through until found
             switch (sizeof(uint32_t))
             {
-            OWNS(1,  4,    address);
-            OWNS(2,  8,    address);
-            OWNS(3,  16,   address);
-            OWNS(4,  32,   address);
-            OWNS(5,  64,   address);
-            OWNS(6,  128,  address);
-            OWNS(7,  256,  address);
-            OWNS(8,  512,  address);
-            OWNS(9,  1024, address);
-            OWNS(10, 2048, address);
-            OWNS(11, 4096, address);
-            OWNS(12, 8192, address);
+            OWNS(2,  4,    address);
+            OWNS(3,  8,    address);
+            OWNS(4,  16,   address);
+            OWNS(5,  32,   address);
+            OWNS(6,  64,   address);
+            OWNS(7,  128,  address);
+            OWNS(8,  256,  address);
+            OWNS(9,  512,  address);
+            OWNS(10, 1024, address);
+            OWNS(11, 2048, address);
+            OWNS(12, 4096, address);
+            OWNS(13, 8192, address);
             }
         }
         
@@ -236,7 +243,7 @@ public:
         
         if (size < sizeof(intptr_t)) // always allocate at least enough space to store a pointer. this is
             size = sizeof(intptr_t); // so we can link the empty blocks together in the block allocator.
-
+        
         // make sure the size fits into one of the
         // fixed sized block allocators we have above.
         size_t adjusted_size = AllocatorBase::nextPow2BlockSize(size);
@@ -254,21 +261,21 @@ public:
         
         switch (adjusted_size)
         {
-        DEALLOCATE(1,  4,    address);
-        DEALLOCATE(2,  8,    address);
-        DEALLOCATE(3,  16,   address);
-        DEALLOCATE(4,  32,   address);
-        DEALLOCATE(5,  64,   address);
-        DEALLOCATE(6,  128,  address);
-        DEALLOCATE(7,  256,  address);
-        DEALLOCATE(8,  512,  address);
-        DEALLOCATE(9,  1024, address);
-        DEALLOCATE(10, 2048, address);
-        DEALLOCATE(11, 4096, address);
-        DEALLOCATE(12, 8192, address);
-        default:
-            CC_ASSERT(false);
-            throw std::bad_alloc();
+                DEALLOCATE(2,  4,    address);
+                DEALLOCATE(3,  8,    address);
+                DEALLOCATE(4,  16,   address);
+                DEALLOCATE(5,  32,   address);
+                DEALLOCATE(6,  64,   address);
+                DEALLOCATE(7,  128,  address);
+                DEALLOCATE(8,  256,  address);
+                DEALLOCATE(9,  512,  address);
+                DEALLOCATE(10, 1024, address);
+                DEALLOCATE(11, 2048, address);
+                DEALLOCATE(12, 4096, address);
+                DEALLOCATE(13, 8192, address);
+            default:
+                CC_ASSERT(false);
+                throw std::bad_alloc();
         }
         
         #undef DEALLOCATE
@@ -293,11 +300,11 @@ public:
     
 protected:
     
-    // @brief array of small block allocators from 2^2 -> 2^13
-    AllocatorBase* _smallBlockAllocators[kMaxSmallBlockPower + 1];
-    
     // @brief the max size of a block this allocator will pool before using global allocator
     size_t _maxBlockSize;
+    
+    // @brief array of small block allocators from 2^0 -> 2^kMaxSmallBlockPower
+    AllocatorBase* _smallBlockAllocators[kMaxSmallBlockPower + 1];
     
 #if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
     size_t _smallBlockAllocations[kMaxSmallBlockPower + 1];
