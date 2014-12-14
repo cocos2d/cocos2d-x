@@ -121,6 +121,7 @@ protected:
     void pushToContainer(Node* renderer);
     void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
     void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity);
+    void handleCustomRendererWithSpriteFrameName(const std::string& spriteFrameName, const Color3B &color, GLubyte opacity);
     void handleCustomRenderer(Node* renderer);
     void formarRenderers();
     void addNewLine();

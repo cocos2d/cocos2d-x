@@ -320,6 +320,11 @@ void RichText::handleImageRenderer(const std::string& fileParh, const Color3B &c
     Sprite* imageRenderer = Sprite::create(fileParh);
     handleCustomRenderer(imageRenderer);
 }
+
+void RichText::handleCustomRendererWithSpriteFrameName(const std::string& spriteFrameName, const Color3B &color, GLubyte opacity) {
+    Sprite* imageRenderer = Sprite::createWithSpriteFrameName(spriteFrameName);
+    handleCustomRenderer(imageRenderer);
+}
     
 void RichText::handleCustomRenderer(cocos2d::Node *renderer)
 {
