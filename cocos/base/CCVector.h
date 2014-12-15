@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <vector>
 #include <functional>
 #include <algorithm> // for std::find
+#include <initializer_list>
 
 NS_CC_BEGIN
 
@@ -79,6 +80,14 @@ public:
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
+    }
+    
+    /** Constructor with a initializer_list */
+    Vector<T>(std::initializer_list<T> list)
+      : _data(list)
+    {
+        static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
+        addRefForAllObjects();
     }
 
     /** Destructor */
