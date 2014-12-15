@@ -31,7 +31,10 @@ THE SOFTWARE.
 #include <vector>
 #include <functional>
 #include <algorithm> // for std::find
+
+#if _MSC_VER >= 1800
 #include <initializer_list>
+#endif
 
 NS_CC_BEGIN
 
@@ -83,12 +86,14 @@ public:
     }
     
     /** Constructor with a initializer_list */
+#if _MSC_VER >= 1800
     Vector<T>(std::initializer_list<T> list)
       : _data(list)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
         addRefForAllObjects();
     }
+#endif
 
     /** Destructor */
     ~Vector<T>()
