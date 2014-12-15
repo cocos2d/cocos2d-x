@@ -191,7 +191,7 @@ void GLViewImpl::end()
     release();
 }
 
-void GLView::setBuffers()
+void GLViewImpl::setBuffers()
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
     [eaglview setBuffers];
