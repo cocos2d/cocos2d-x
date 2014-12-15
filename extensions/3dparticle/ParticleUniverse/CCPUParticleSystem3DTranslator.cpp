@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "CCPUParticleSystem3DTranslator.h"
-#include "3dparticle/ParticleUniverse/CCPUParticleSystem3DBuilder.h"
 
 NS_CC_BEGIN
 
