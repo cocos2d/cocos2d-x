@@ -32,8 +32,18 @@ THE SOFTWARE.
 #include <functional>
 #include <algorithm> // for std::find
 
-#if !define(_MSC_VER) || _MSC_VER >= 1800
+#ifdef _MSC_VER
+
+#if _MSC_VER >= 1800
 #include <initializer_list>
+#define __CCVECTOR_ENABLE_INITIALIZER_LIST
+#endif
+
+#else
+
+#include <initializer_list>
+#define __CCVECTOR_ENABLE_INITIALIZER_LIST
+
 #endif
 
 NS_CC_BEGIN
@@ -86,7 +96,7 @@ public:
     }
     
     /** Constructor with a initializer_list */
-#if !define(_MSC_VER) || _MSC_VER >= 1800
+#ifdef __CCVECTOR_ENABLE_INITIALIZER_LIST
     Vector<T>(std::initializer_list<T> list)
       : _data(list)
     {
