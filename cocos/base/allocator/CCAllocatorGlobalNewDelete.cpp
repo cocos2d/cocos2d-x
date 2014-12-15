@@ -24,7 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "base/allocator/CCAllocator.h"
 #include "base/allocator/CCAllocatorStrategyGlobalSmallBlock.h"
 #include <new>
 #include <exception>

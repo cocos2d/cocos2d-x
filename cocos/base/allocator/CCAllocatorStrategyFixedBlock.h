@@ -33,7 +33,7 @@
      allocator. Failure to do so will result in recursive memory allocation.
  ****************************************************************************/
 
-#include "base/allocator/CCAllocator.h"
+#include "base/allocator/CCAllocatorBase.h"
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorGlobal.h"
 #include "base/allocator/CCAllocatorMutex.h"
@@ -59,7 +59,7 @@ NS_CC_ALLOCATOR_BEGIN
 // @param _alignment the alignment size in bytes of each block.
 template <size_t _block_size, size_t _alignment = 16>
 class AllocatorStrategyFixedBlock
-    : public Allocator<AllocatorStrategyFixedBlock<_block_size, _alignment>>
+    : public AllocatorBase
 {
 public:
     

@@ -28,7 +28,7 @@
  ****************************************************************************/
 
 #include "base/allocator/CCAllocatorMacros.h"
-#include "base/allocator/CCAllocator.h"
+#include "base/allocator/CCAllocatorBase.h"
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
@@ -36,7 +36,7 @@ NS_CC_ALLOCATOR_BEGIN
 // @brief
 // The default allocation strategy that just falls through to malloc and free
 class AllocatorStrategyDefault
-    : public Allocator<AllocatorStrategyDefault>
+    : public AllocatorBase
 {
 public:
     

@@ -34,7 +34,7 @@
  ****************************************************************************/
 
 #include "base/allocator/CCAllocatorMacros.h"
-#include "base/allocator/CCAllocator.h"
+#include "base/allocator/CCAllocatorBase.h"
 #include "base/allocator/CCAllocatorGlobal.h"
 #include "base/allocator/CCAllocatorStrategyFixedBlock.h"
 
@@ -49,7 +49,7 @@ NS_CC_ALLOCATOR_BEGIN
 
 // @brief
 class AllocatorStrategyGlobalSmallBlock
-    : public Allocator<AllocatorStrategyGlobalSmallBlock>
+    : public AllocatorBase
 {
 public:
     

@@ -27,7 +27,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "base/allocator/CCAllocator.h"
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorStrategyDefault.h"
 
