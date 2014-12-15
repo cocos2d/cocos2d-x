@@ -409,7 +409,7 @@ void PUParticle3DMaterialTextureUnitTranslator::translate( PUScriptCompiler* com
                     {
                         if (val == matToken[TOKEN_MAT_TEXTURE_CLAMP])
                         {
-                            material->wrapMode = GL_CLAMP;
+                            material->wrapMode = GL_CLAMP_TO_EDGE;
                         }
                         else if (val == matToken[TOKEN_MAT_TEXTURE_REPEAT])
                         {
@@ -417,7 +417,7 @@ void PUParticle3DMaterialTextureUnitTranslator::translate( PUScriptCompiler* com
                         }
                         else if (val == matToken[TOKEN_MAT_TEXTURE_MIRROR])
                         {
-                            material->wrapMode = GL_MIRROR_CLAMP_EXT;
+                            material->wrapMode = GL_MIRRORED_REPEAT;//GL_MIRROR_CLAMP_EXT;
                         }
                     }
                 }
