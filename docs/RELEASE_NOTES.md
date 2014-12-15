@@ -1,54 +1,60 @@
-# cocos2d-x v3.3rc2 Release Notes #
+# cocos2d-x v3.3 Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.3rc2 Release Notes](#cocos2d-x-v33rc2-release-notes)
-- [Misc Information](#misc-information)
-- [Requirements](#requirements)
-  - [Runtime Requirements](#runtime-requirements)
-  - [Compiler Requirements](#compiler-requirements)
-  - [How to run tests](#how-to-run-tests)
-    - [Mac OSX & iOS](#mac-osx-&-ios)
-    - [Android](#android)
-    - [Windows](#windows)
-    - [Linux](#linux)
-  - [How to start a new game](#how-to-start-a-new-game)
-- [Highlights of v3.3rc2](#highlights-of-v33rc2)
-- [Notes of v3.3rc1](#notes-of-v33rc1)
-- [Highlights of v3.3rc1](#highlights-of-v33rc1)
-- [Notes of v3.3rc0](#notes-of-v33rc0)
-- [Highlights of v3.3rc0](#highlights-of-v33rc0)
-- [Features in detail](#features-in-detail)
-  - [Light](#light)
-  - [Spine runtime](#spine-runtime)
-  - [AssetsManagerEx](#assetsmanagerex)
-  - [Application::openURL](#applicationopenurl)
-  - [ClippingRectangleNode](#clippingrectanglenode)
-  - [Facebook platform support](#facebook-platform-support)
-- [Highlights of v3.3beta0](#highlights-of-v33beta0)
-- [Features in detail](#features-in-detail-1)
-  - [BillBoard](#billboard)
-  - [Triangles command](#triangles-command)
-  - [WebView](#webview)
-  - [New audio](#new-audio)
-- [Highlights of v3.3alpha0](#highlights-of-v33alpha0)
-- [Features in detail](#features-in-detail-2)
-  - [Camera](#camera)
-  - [Reskin](#reskin)
-  - [Attachment](#attachment)
-  - [Better support for FBX](#better-support-for-fbx)
-  - [New fbx-conv](#new-fbx-conv)
-  - [AABB, OBB and Ray](#aabb-obb-and-ray)
-  - [ui::Scale9Sprite](#uiscale9sprite)
-  - [c++11 random support](#c11-random-support)
-  - [RenderTexture save function](#rendertexture-save-function)
-  - [Primitive](#primitive)
-  - [Consistent way to set GL context attributes](#consistent-way-to-set-gl-context-attributes)
-  - [Only two libraries left](#only-two-libraries-left)
+- [cocos2d-x v3.3 Release Notes](#)
+- [Misc Information](#)
+- [Requirements](#)
+	- [Runtime Requirements](#)
+	- [Compiler Requirements](#)
+	- [How to run tests](#)
+		- [Mac OSX & iOS](#)
+		- [Android](#)
+		- [Windows](#)
+		- [Linux](#)
+	- [How to start a new game](#)
+- [v3.3](#)
+- [v3.3rc2](#)
+	- [Highlights of v3.3rc2](#)
+	- [Notes of v3.3rc1](#)
+- [v3.3rc1](#)
+	- [Highlights of v3.3rc1](#)
+	- [Notes of v3.3rc0](#)
+- [v3.3rc0](#)
+	- [Highlights of v3.3rc0](#)
+	- [Features in detail](#)
+		- [Light](#)
+		- [Spine runtime](#)
+		- [AssetsManagerEx](#)
+		- [Application::openURL](#)
+		- [ClippingRectangleNode](#)
+		- [Facebook platform support](#)
+- [v3.3beta0](#)
+	- [Highlights of v3.3beta0](#)
+	- [Features in detail](#)
+		- [BillBoard](#)
+		- [Triangles command](#)
+		- [WebView](#)
+		- [New audio](#)
+- [v3.3alpha0](#)
+	- [Highlights of v3.3alpha0](#)
+	- [Features in detail](#)
+		- [Camera](#)
+		- [Reskin](#)
+		- [Attachment](#)
+		- [Better support for FBX](#)
+		- [New fbx-conv](#)
+		- [AABB, OBB and Ray](#)
+		- [ui::Scale9Sprite](#)
+		- [c++11 random support](#)
+		- [RenderTexture save function](#)
+		- [Primitive](#)
+		- [Consistent way to set GL context attributes](#)
+		- [Only two libraries left](#)
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3rc2/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -134,23 +140,31 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# Highlights of v3.3rc2
+# v3.3
+
+It just fixed some bugs since v3.3rc2.
+
+# v3.3rc2
+
+## Highlights of v3.3rc2
 * Support for android arm64 architecture, all test cases run on Nexus 9
 * Cocos Studio Reader: Replace [Protobuffer](https://github.com/google/protobuf) by [FlatBuffer](https://github.com/google/flatbuffers)
 
-# Notes of v3.3rc1
+## Notes of v3.3rc1
 
 **android**
 
 Android NDK-r10c is needed. Here is the detailed link for this:
 http://discuss.cocos2d-x.org/t/build-android-base-on-ndk-r10c/18543.
 
-# Highlights of v3.3rc1
+# v3.3rc1
+
+## Highlights of v3.3rc1
 
 * WP8: add Win8.1 universal app support
 * Many other bugfix.
 
-# Notes of v3.3rc0
+## Notes of v3.3rc0
 
 **wp8**
 
@@ -203,7 +217,9 @@ require "cocos.init"
 * registerSpineEventHandler(fucntion)  -> registerSpineEventHandler(funtion, eventType)
 
 
-# Highlights of v3.3rc0
+# v3.3rc0
+
+## Highlights of v3.3rc0
 
 * 3d: added light support: including directional light, point light, spot light and ambient light
 * New audio: more platfroms supported(Mac OS X and Windows)
@@ -215,9 +231,9 @@ require "cocos.init"
 * Node: schedule/unschedule lambda functions
 * Facebook platform support in `plugin` on iOS and Android, all features has been added, but the API needs to be polished with Facebook guys
 
-# Features in detail
+## Features in detail
 
-## Light
+### Light
 
 To make 3d objects looks realistic, we add lights to this version. cocos2d-x supports four types of lights, directional light, point light, spot light and ambient light.
 
@@ -261,7 +277,7 @@ Note that we use forward render method, the number of lights can effect the perf
 <integer>1</integer>
 ```
 
-## Spine runtime
+### Spine runtime
 
 Spine runtime is updated to latest version `v2.0.18`. This version supports `Free-Form-Deformation(FFD)`, which allows meshes to stretch, squash, blend and bounce in ways that aren't possible using rectangle images.
 
@@ -269,7 +285,7 @@ Spine runtime is updated to latest version `v2.0.18`. This version supports `Fre
 
 Please refer to `tests/cpp-tests/Classes/SpineTest/SpineTest.cpp` for usage.
 
-## AssetsManagerEx
+### AssetsManagerEx
 
 `AssetsMangerEx` is an enhancement version of `AssetsManager`. Compared to `AssetsManager`, there are some pros using `AssetsManagerEx`:
 
@@ -279,7 +295,7 @@ Please refer to `tests/cpp-tests/Classes/SpineTest/SpineTest.cpp` for usage.
 
 Please refer to [this document](http://cocos2d-x.org/wiki/Assets_manager) for detail information.
 
-## Application::openURL
+### Application::openURL
 
 Because in iOS, there is an function named `openURL` in `UIApplication`, so we added this function in Application too. You can use this function to open a url.
 
@@ -287,7 +303,7 @@ Because in iOS, there is an function named `openURL` in `UIApplication`, so we a
 Application::getInstance()->openURL("http://www.cocos2d-x.org/");
 ```
 
-## ClippingRectangleNode
+### ClippingRectangleNode
 
 `ClippingRectangleNode` is a lite version of `ClippingNode`. Compared to `ClippingNode`, there re some pros and cons:
 
@@ -308,7 +324,7 @@ auto content = Sprite::create("MyPicture.png");
 clipper->addChild(content);
 ```
 
-## Facebook platform support
+### Facebook platform support
 
 All features has been added, but the API needs to be polished with Facebook guys. There is a test case in `plugin` for it. Steps to run test case
 
@@ -318,7 +334,9 @@ All features has been added, but the API needs to be polished with Facebook guys
 
 You can refer to [this document](http://www.cocos2d-x.org/wiki/Integrate_the_Facebook_SDK_for_Cocos2d-x) for detail information.
 
-# Highlights of v3.3beta0
+# v3.3beta0
+
+## Highlights of v3.3beta0
 
 * 3d: `BillBoard`
 * audio: new audio is added on iOS and Android
@@ -327,9 +345,9 @@ You can refer to [this document](http://www.cocos2d-x.org/wiki/Integrate_the_Fac
 * UI: added `WebView` on iOS and Android
 * Many other small features added and many bugs fixed
 
-# Features in detail
+## Features in detail
 
-## BillBoard
+### BillBoard
 
 `BillBoard` is a rectangle always faces to the camera. It is useful in the 3D world. People use BillBoard to create trees in some racing games. It looks real, but the cost is much lower than 3d tree.
 
@@ -349,7 +367,7 @@ addChild(camera); //add this camera
 billboard->setCameraMask((unsigned short)CameraFlag::CAMERA_USER1);
 ```
 
-## Triangles command
+### Triangles command
 
 We have enhanced auto batching feature by introduce `TrianglesCommand`, the rendering of the `Triangles` can be auto batched. Now if we have anything which can be rendered by `Triangles`, we can use `TrianglesCommand` or inherit from `TrianglesCommand` to take use of auto batching feature and gain rendering improvements. The `QuadCommand`, which is used for `Quad` rendering, is a good example of inheriting from `TrianglesCommand`.
 
@@ -362,7 +380,7 @@ The step to use Triangle Command is very simple.
 ```
 To improve performance, `Triangles` will hold a weak reference to the vertices and indices data to be rendered, which is the same like `QuadCommand`. The userer should not release any rendered data before the `Command` is executed by `Renderer`.
 
-## WebView
+### WebView
 
 WebView is an new widget type which allows you to display web content inside Cocos2D-X. We only provide iOS and Android implementation currently, more platform might be added in the future.
 
@@ -397,7 +415,7 @@ We could also set some callback to the WebView:
 For full test case, please refer to [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp)
 
 
-## New audio
+### New audio
 
 New audio is more powerful than old one, and it is not compatible with old one. We will deprecated old one when new audio is ready on all supported platforms. Now it only supports iOS and Android. We plan to finish it on v3.4.
 
@@ -419,8 +437,9 @@ The difference compared to old audio engine
 
 Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAudioEngineTest.cpp`.
 
+# v3.3alpha0
 
-# Highlights of v3.3alpha0
+## Highlights of v3.3alpha0
 
 * 3d: `Camera`, `Reskin`, `Attachment`, `Better support for FBX`, `New fbx-conv`, `AABB`, `OBB` and `Ray`
 * ui: added `Scale9Sprite`
@@ -434,9 +453,9 @@ Full test case please refer to `tests/cpp-tests/Classes/NewAudioEngineTest/NewAu
 * Only two libraries in cocos2d-x, one for c++ codes, another one for lua-binding codes
 * Many other small features added and many bugs fixed
 
-# Features in detail
+## Features in detail
 
-## Camera
+### Camera
 
 This version of camera is powerful than previous one. And you can add it as a child anywhere. If you want to let a Node to be visited by a camera, Node's camera mask should include Camera's flag:
 
@@ -467,7 +486,7 @@ scene->addChild(camera);
 
 Full test case please  refer to `tests/cpp-tests/res/Camera3DTest/Camera3DTest.cpp`.
 
-## Reskin
+### Reskin
 
 It is a powerful feature, all the user change the appearance of character.
 
@@ -490,7 +509,7 @@ mesh1->setVisible(false);
 
 Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
 
-## Attachment
+### Attachment
 
 Allows to attach a node to a bone
 
@@ -505,17 +524,17 @@ attachNode->addChild(weapon);
 
 Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
 
-## Better support for FBX
+### Better support for FBX
 
 support multiple mesh
 support multiple material
 bones bind to each mesh limited to 40. But the FBX model can contain more meshes. So the model can contain much more bones.
 
-## New fbx-conv
+### New fbx-conv
 
 It can export more complex model, which contains multiple meshes and multiple materials.
 
-## AABB, OBB and Ray
+### AABB, OBB and Ray
 
 AABB means Axis Aligned Bounding Box
 OBB means Oriented Bounding Box
@@ -539,7 +558,7 @@ ray.intersects(sprite3d->getAABB( ) );
 
 Full test case please refer to 'tests/cpp-tests/Classes/Spret3DTest/Sprite3DTest.cpp'
 
-## ui::Scale9Sprite
+### ui::Scale9Sprite
 
 Now we have implemented a new Scale9Sprite class under ui module. Its internal implementation is concise than the previous one plus more features.
 The main reason of reimplementing this class is that the Scale9Sprite is heavily used in ui module. Now the ui module is not dependent from extension module.
@@ -566,7 +585,7 @@ you could call `sprite->getSprite()` to access it.
 
 Full test case please refer to `tests/cpp-tests/Classes/UITests/CocostudioGUITest/UIScale9SpriteTest.cpp`.
 
-## c++11 random support
+### c++11 random support
 
 Since `rand()` is not good(refer to [this document](http://c-faq.com/lib/randrange.html)), we use c++11 random library to do generate random number, and provide a function to easily using:
 
@@ -575,7 +594,7 @@ int randInt = cocos2d::random(1, 10);
 float randFloat = cocos2d::random(1.f, 10.f);
 ```
 
-## RenderTexture save function
+### RenderTexture save function
 
 `RenderTexture::saveToFile()` will not save rendertexture when the function returns, because it just send render command to renderer. The file will be saved after render command is executed. It is not convenient if you want to use the saved file to do some work. So we added a parameter in `RenderTexture::saveToFile()` to set a call back function when the file is saved.
 
@@ -588,7 +607,7 @@ renderTexture->saveToFile("myFile.png", true, callback);
 
 ```
 
-## Primitive
+### Primitive
 
 `Primitive` is added to support `Points`,`Lines`,`Triangles` rendering. Previously, if we want to draw a custom geometry(sphere, line), we can only do this by using `CustomCommand`. Now, what is need is to create a Primitive, set datas, and use the corresponding `PrimitiveCommand` to draw the Primitive. 
 
@@ -635,7 +654,7 @@ Primitive supports three typs of primitives (POINTS, LINES, TRIANGLES), vertex a
 1. The size of vertex and index Buffer is fixed, which means data must be pre allocated.
 2. Batching is not supported.
 
-## Consistent way to set GL context attributes
+### Consistent way to set GL context attributes
 
 Now you can set GL context attributes by override `Application::initGLContextAttrs()`, then set GL context attributes there.
 
@@ -650,7 +669,7 @@ void AppDelegate::initGLContextAttrs()
 
 Now can only support setting bits of `r`, `g`, `b`, `a`, `depth buffer` and `stencil buffer`. We will support other attributes if needed.
 
-## Only two libraries left
+### Only two libraries left
 
 Now there are two libraries left: one for all c++ codes and another one for lua-bindings codes. 
 

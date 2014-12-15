@@ -755,13 +755,11 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
     
     // decode plist
     auto textures = csparsebinary->textures();
-    auto texturePngs = csparsebinary->texturePngs();
     int textureSize = csparsebinary->textures()->size();
     CCLOG("textureSize = %d", textureSize);
     for (int i = 0; i < textureSize; ++i)
     {
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str(),
-                                                                 texturePngs->Get(i)->c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());        
     }
     
     Node* node = nodeWithFlatBuffers(csparsebinary->nodeTree());
