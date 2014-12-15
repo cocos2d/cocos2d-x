@@ -44,20 +44,20 @@ function StaticObjectEditorBehavior:bind(object)
         object.idLabel_.offsetY = math.floor(-object.radius_ - EditorConstants.LABEL_OFFSET_Y)
         debugLayer:addChild(object.idLabel_, EditorConstants.LABEL_ZORDER)
 
-        object.radiusCircle_ = display.newCircle(object.radius_)
-        object.radiusCircle_:setLineColor(cc.c4fFromc4b(cc.c4b(unpack(EditorConstants.UNSELECTED_COLOR))))
-        object.radiusCircle_:setLineStipple(checknumber("1111000011110000", 2))
-        object.radiusCircle_:setLineStippleEnabled(true)
+        object.radiusCircle_ = utils.drawCircle(object.radius_)
+        -- object.radiusCircle_:setLineColor(cc.c4fFromc4b(cc.c4b(unpack(EditorConstants.UNSELECTED_COLOR))))
+        -- object.radiusCircle_:setLineStipple(checknumber("1111000011110000", 2))
+        -- object.radiusCircle_:setLineStippleEnabled(true)
         debugLayer:addChild(object.radiusCircle_, EditorConstants.CIRCLE_ZORDER)
 
         object.flagSprite_ = display.newSprite("#CenterFlag.png")
         debugLayer:addChild(object.flagSprite_, EditorConstants.FLAG_ZORDER)
 
         if object:hasBehavior("FireBehavior") then
-            object.fireRangeCircle_ = display.newCircle(object.fireRange_)
+            object.fireRangeCircle_ = utils.drawCircle(object.fireRange_)
             -- object.fireRangeCircle_:setScaleY(MapConstants.RADIUS_CIRCLE_SCALE_Y)
-            object.fireRangeCircle_:setLineStipple(checknumber("1111000011110000", 2))
-            object.fireRangeCircle_:setLineStippleEnabled(true)
+            -- object.fireRangeCircle_:setLineStipple(checknumber("1111000011110000", 2))
+            -- object.fireRangeCircle_:setLineStippleEnabled(true)
             debugLayer:addChild(object.fireRangeCircle_)
         end
 
@@ -72,13 +72,13 @@ function StaticObjectEditorBehavior:bind(object)
         end
 
         if object:hasBehavior("PlayerBehavior") then
-            object.playerIdLabel_ = cc.ui.UILabel.newWithOutline({
+            object.playerIdLabel_ = cc.ui.UILabel.new({
                 text         = "Player",
                 size         = 24,
-                outlineColor = cc.c3b(10, 115, 107),
                 color        = cc.c3b(255, 255, 255),
                 align        = ui.TEXT_ALIGN_CENTER,
             })
+            object.playerIdLabel_:enableOutline(cc.c4b(10, 115, 107, 255), 2)
             debugLayer:addChild(object.playerIdLabel_)
         end
     end
@@ -118,9 +118,14 @@ function StaticObjectEditorBehavior:bind(object)
     object:bindMethod(self, "removeView", removeView)
 
     local function updateView(object)
+        if not object.debugLayer_ then
+            return
+        end
+        
         local x, y = math.floor(object.x_), math.floor(object.y_)
 
-        local scale = object.debugLayer_:getScale()
+        local scale = 1
+        scale = object.debugLayer_:getScale()
         if scale > 1 then scale = 1 / scale end
 
         local idString = {object:getId(), "/"}
@@ -152,11 +157,11 @@ function StaticObjectEditorBehavior:bind(object)
         object.flagSprite_:setScale(scale)
 
         if object:hasBehavior("CollisionBehavior") then
-            if object:isCollisionEnabled() then
-                object.radiusCircle_:setLineStippleEnabled(false)
-            else
-                object.radiusCircle_:setLineStippleEnabled(true)
-            end
+            -- if object:isCollisionEnabled() then
+            --     object.radiusCircle_:setLineStippleEnabled(false)
+            -- else
+            --     object.radiusCircle_:setLineStippleEnabled(true)
+            -- end
         end
 
         if object:hasBehavior("FireBehavior") then
@@ -164,10 +169,10 @@ function StaticObjectEditorBehavior:bind(object)
             circle:setPosition(x + object.radiusOffsetX_, y + object.radiusOffsetY_)
             if object.isSelected_ then
                 circle:setLineColor(cc.c4fFromc4b(cc.c4b(unpack(StaticObjectEditorBehavior.FIRE_CIRCLE_SELECTED_COLOR))))
-                object.fireRangeCircle_:setLineStippleEnabled(false)
+                -- object.fireRangeCircle_:setLineStippleEnabled(false)
             else
                 circle:setLineColor(cc.c4fFromc4b(cc.c4b(unpack(StaticObjectEditorBehavior.FIRE_CIRCLE_UNSELECTED_COLOR))))
-                object.fireRangeCircle_:setLineStippleEnabled(true)
+                -- object.fireRangeCircle_:setLineStippleEnabled(true)
             end
         end
 

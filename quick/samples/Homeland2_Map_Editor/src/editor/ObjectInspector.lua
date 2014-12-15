@@ -40,7 +40,7 @@ function ObjectInspector:ctor(map, scale, toolbarLines)
 end
 
 function ObjectInspector:checkPointIn(x, y)
-    local worldPosition = self.sprite_:convertToWorldSpace(ccp(0, 0))
+    local worldPosition = self.sprite_:convertToWorldSpace(cc.p(0, 0))
     local wx, wy = worldPosition.x, worldPosition.y
 
     return x >= wx
@@ -52,7 +52,7 @@ end
 function ObjectInspector:onTouch(event, x, y)
     if event ~= "began" then return false end
 
-    local worldPosition = self.sprite_:convertToWorldSpace(ccp(0, 0))
+    local worldPosition = self.sprite_:convertToWorldSpace(cc.p(0, 0))
     local wx, wy = worldPosition.x, worldPosition.y
     x = x - wx
     y = y - wy

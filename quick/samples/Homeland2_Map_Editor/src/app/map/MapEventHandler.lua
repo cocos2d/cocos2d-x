@@ -98,7 +98,9 @@ function MapEventHandler:hit(object, target, bullet, time)
         if target:hasBehavior("MovableBehavior") then
             target:stopMoving()
         end
-        target:showDestroyedStatus()
+        if target.showDestroyedStatus then
+            target:showDestroyedStatus()
+        end
         target:updateView()
         self:objectDestroyed(target)
     end

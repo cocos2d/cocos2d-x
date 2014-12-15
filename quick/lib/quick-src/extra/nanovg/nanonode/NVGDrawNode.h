@@ -79,6 +79,12 @@ public:
     /** draw a triangle with color */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
     
+    void setColor(const Color4F &color);
+    void setFillColor(const Color4F &color);
+    void setLineColor(const Color4F &color);
+    void setLineWidth(float width);
+    void setRadius(float radius);
+
     /** Clear the geometry in the node's buffer. */
     void clear();
     

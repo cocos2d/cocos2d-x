@@ -108,15 +108,15 @@ function ObjectTool:createObjectBindingLabel(text, isStaticLabel)
     self:removeObjectBindingLabel()
 
     local x, y = self.currentObject_:getPosition()
-    local label = cc.ui.UILabel.newWithOutline({
+    local label = cc.ui.UILabel.new({
         text         = text,
         size         = 20,
         align        = ui.TEXT_ALIGN_CENTER,
         color        = cc.c3b(255, 100, 100),
-        colorOutline = cc.c3b(255, 255, 255),
         x            = labelX,
         y            = labelY,
     })
+    label:enableOutline(cc.c4b(255, 255, 255, 255), 2)
     label:setPosition(x, y + 100)
     self.map_:getDebugLayer():addChild(label, EditorConstants.BINDING_LABEL_ZORDER)
 
@@ -297,12 +297,18 @@ function ObjectTool:showToolbox(mapX, mapY)
 
     local bgWidth = columns * ObjectTool.TOOLBOX_PADDING + 4
     local bgHeight = rows * ObjectTool.TOOLBOX_PADDING + 4
-    local rect = display.newRect(bgWidth, bgHeight)
-    rect:setFill(true)
-    rect:setLineColor(cc.c4fFromc4b(cc.c4b(120, 120, 120, 80)))
-    rect:setOpacity(80)
-    rect:setPosition(x + bgWidth / 2 - ObjectTool.TOOLBOX_PADDING / 2 - 2,
-                     y - bgHeight / 2 + ObjectTool.TOOLBOX_PADDING / 2 + 2)
+    local rect = display.newRect(
+                    cc.rect(x - ObjectTool.TOOLBOX_PADDING / 2 - 2,
+                        y - bgHeight + ObjectTool.TOOLBOX_PADDING / 2 + 2,
+                        bgWidth,
+                        bgHeight),
+                    {fillColor = cc.c4f(1,1,1,80/255),
+                    borderColor = cc.c4f(0.5,0.5,0.5,80/255)})
+    -- rect:setFill(true)
+    -- rect:setLineColor(cc.c4fFromc4b(cc.c4b(120, 120, 120, 80)))
+    -- rect:setOpacity(80)
+    -- rect:setPosition(x + bgWidth / 2 - ObjectTool.TOOLBOX_PADDING / 2 - 2,
+    --                  y - bgHeight / 2 + ObjectTool.TOOLBOX_PADDING / 2 + 2)
     layer:addChild(rect)
 
     local col = 0
@@ -329,12 +335,17 @@ function ObjectTool:showToolbox(mapX, mapY)
         end
         sprite:setScale(scale)
 
-        local rect = display.newRect(ObjectTool.TOOLBOX_ICON_SIZE,
-                                     ObjectTool.TOOLBOX_ICON_SIZE)
-        rect:setFill(true)
-        rect:setLineColor(cc.c4fFromc4b(cc.c4b(32, 32, 32, 120)))
-        rect:setOpacity(70)
-        rect:setPosition(x, y)
+        local rect = display.newRect(
+                    cc.rect(x - ObjectTool.TOOLBOX_ICON_SIZE/2,
+                        y - ObjectTool.TOOLBOX_ICON_SIZE/2,
+                        ObjectTool.TOOLBOX_ICON_SIZE,
+                        ObjectTool.TOOLBOX_ICON_SIZE),
+                    {fillColor = cc.c4f(1,1,1,70/255),
+                    borderColor = cc.c4f(32/255, 32/255, 32/255, 120/255)})
+        -- rect:setFill(true)
+        -- rect:setLineColor(cc.c4fFromc4b(cc.c4b(32, 32, 32, 120)))
+        -- rect:setOpacity(70)
+        -- rect:setPosition(x, y)
         layer:addChild(rect)
 
         layer:addChild(sprite)

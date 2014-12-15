@@ -70,12 +70,20 @@ function StaticObject:createView(batch, marksLayer, debugLayer)
 end
 
 function StaticObject:removeView()
+    if not self.sprite_ then
+        return
+    end
+
     self.sprite_:removeSelf()
     self.sprite_ = nil
     StaticObject.super.removeView(self)
 end
 
 function StaticObject:updateView()
+    if not self.sprite_ then
+        return
+    end
+
     local sprite = self.sprite_
     sprite:setPosition(math.floor(self.x_ + self.offsetX_), math.floor(self.y_ + self.offsetY_))
     sprite:setFlippedX(self.flipSprite_)

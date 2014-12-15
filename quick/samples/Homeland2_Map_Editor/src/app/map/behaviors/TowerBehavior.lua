@@ -30,10 +30,12 @@ function TowerBehavior:bind(object)
             object.towerId_ = object.defineId_ .. "L01"
             define = TowerProperties.get(object.towerId_)
         end
-        for k, v in pairs(define) do
-            local kn = k .. "_"
-            object[kn] = v
-            object.state_[k] = v
+        if define then
+            for k, v in pairs(define) do
+                local kn = k .. "_"
+                object[kn] = v
+                object.state_[k] = v
+            end
         end
 
         if object.staticIndex_ then

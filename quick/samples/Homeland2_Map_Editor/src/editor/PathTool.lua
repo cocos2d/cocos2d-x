@@ -80,14 +80,14 @@ end
 
 function PathTool:showPointLabel(x, y, text)
     if not self.currentPointLabel_ then
-        self.currentPointLabel_ = cc.ui.UILabel.newWithOutline({
+        self.currentPointLabel_ = cc.ui.UILabel.new({
             text         = "000",
             font         = EditorConstants.LABEL_FONT,
             size         = EditorConstants.LABEL_FONT_SIZE + 10,
             color        = cc.c3b(255, 0, 0),
-            outlineColor = cc.c3b(255, 255, 255),
             align        = ui.TEXT_ALIGN_CENTER,
         })
+        self.currentPointLabel_:enableOutline(cc.c4b(255, 255, 255, 255), 2)
         self.map_:getDebugLayer():addChild(self.currentPointLabel_, EditorConstants.LABEL_ZORDER)
     else
         self.currentPointLabel_:setVisible(true)

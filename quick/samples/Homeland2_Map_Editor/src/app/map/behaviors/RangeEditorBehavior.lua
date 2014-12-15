@@ -41,7 +41,7 @@ function RangeEditorBehavior:bind(object)
         })
         debugLayer:addChild(object.idLabel_, EditorConstants.LABEL_ZORDER)
 
-        object.radiusCircle_ = display.newCircle(object.radius_)
+        object.radiusCircle_ = utils.drawCircle(object.radius_)
         debugLayer:addChild(object.radiusCircle_, EditorConstants.CIRCLE_ZORDER)
 
         object.flagSprite_ = display.newSprite("#RangeFlag.png")

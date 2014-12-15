@@ -24,64 +24,6 @@ int lua_register_cocos2dx_extension_nanovg_NVGNode(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::extension::NVGDrawNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 4) 
-    {
-        cocos2d::Vec2 arg0;
-        cocos2d::Vec2 arg1;
-        cocos2d::Vec2 arg2;
-        cocos2d::Color4F arg3;
-
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawTriangle");
-
-        ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawTriangle");
-
-        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawTriangle");
-
-        ok &=luaval_to_color4f(tolua_S, 5, &arg3, "cc.NVGDrawNode:drawTriangle");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle'", nullptr);
-            return 0;
-        }
-        cobj->drawTriangle(arg0, arg1, arg2, arg3);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawTriangle",argc, 4);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawArc(lua_State* tolua_S)
 {
     int argc = 0;
@@ -201,6 +143,594 @@ int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawLine(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 5) {
+            cocos2d::Vec2 arg0;
+            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg1;
+            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg2;
+            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg3;
+            ok &= luaval_to_vec2(tolua_S, 5, &arg3, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cocos2d::Color4F arg4;
+            ok &=luaval_to_color4f(tolua_S, 6, &arg4, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cobj->drawRect(arg0, arg1, arg2, arg3, arg4);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            cocos2d::Vec2 arg0;
+            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg1;
+            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cocos2d::Color4F arg2;
+            ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawRect");
+
+            if (!ok) { break; }
+            cobj->drawRect(arg0, arg1, arg2);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.NVGDrawNode:drawRect",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4F arg0;
+
+        ok &=luaval_to_color4f(tolua_S, 2, &arg0, "cc.NVGDrawNode:setLineColor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineColor'", nullptr);
+            return 0;
+        }
+        cobj->setLineColor(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:setLineColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Vec2 arg0;
+        double arg1;
+        cocos2d::Color4F arg2;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawSolidCircle");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawSolidCircle");
+
+        ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawSolidCircle");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle'", nullptr);
+            return 0;
+        }
+        cobj->drawSolidCircle(arg0, arg1, arg2);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawSolidCircle",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineWidth(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineWidth'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.NVGDrawNode:setLineWidth");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineWidth'", nullptr);
+            return 0;
+        }
+        cobj->setLineWidth(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:setLineWidth",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineWidth'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Vec2 arg0;
+        double arg1;
+        cocos2d::Color4F arg2;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawDot");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawDot");
+
+        ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawDot");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot'", nullptr);
+            return 0;
+        }
+        cobj->drawDot(arg0, arg1, arg2);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawDot",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_setFillColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setFillColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4F arg0;
+
+        ok &=luaval_to_color4f(tolua_S, 2, &arg0, "cc.NVGDrawNode:setFillColor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setFillColor'", nullptr);
+            return 0;
+        }
+        cobj->setFillColor(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:setFillColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setFillColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 3) {
+            cocos2d::Vec2 arg0;
+            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            cocos2d::Color4F arg2;
+            ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            cobj->drawCircle(arg0, arg1, arg2);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 8) {
+            cocos2d::Vec2 arg0;
+            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            unsigned int arg3;
+            ok &= luaval_to_uint32(tolua_S, 5,&arg3, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            bool arg4;
+            ok &= luaval_to_boolean(tolua_S, 6,&arg4, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            double arg5;
+            ok &= luaval_to_number(tolua_S, 7,&arg5, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            double arg6;
+            ok &= luaval_to_number(tolua_S, 8,&arg6, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            cocos2d::Color4F arg7;
+            ok &=luaval_to_color4f(tolua_S, 9, &arg7, "cc.NVGDrawNode:drawCircle");
+
+            if (!ok) { break; }
+            cobj->drawCircle(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+            return 0;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.NVGDrawNode:drawCircle",argc, 8);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 4) 
+    {
+        cocos2d::Vec2 arg0;
+        cocos2d::Vec2 arg1;
+        cocos2d::Vec2 arg2;
+        cocos2d::Color4F arg3;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawQuadBezier");
+
+        ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawQuadBezier");
+
+        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawQuadBezier");
+
+        ok &=luaval_to_color4f(tolua_S, 5, &arg3, "cc.NVGDrawNode:drawQuadBezier");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier'", nullptr);
+            return 0;
+        }
+        cobj->drawQuadBezier(arg0, arg1, arg2, arg3);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawQuadBezier",argc, 4);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 4) 
+    {
+        cocos2d::Vec2 arg0;
+        cocos2d::Vec2 arg1;
+        cocos2d::Vec2 arg2;
+        cocos2d::Color4F arg3;
+
+        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawTriangle");
+
+        ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawTriangle");
+
+        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawTriangle");
+
+        ok &=luaval_to_color4f(tolua_S, 5, &arg3, "cc.NVGDrawNode:drawTriangle");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle'", nullptr);
+            return 0;
+        }
+        cobj->drawTriangle(arg0, arg1, arg2, arg3);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawTriangle",argc, 4);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_setColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::NVGDrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4F arg0;
+
+        ok &=luaval_to_color4f(tolua_S, 2, &arg0, "cc.NVGDrawNode:setColor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setColor'", nullptr);
+            return 0;
+        }
+        cobj->setColor(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:setColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_extension_nanovg_NVGDrawNode_clear(lua_State* tolua_S)
 {
     int argc = 0;
@@ -302,119 +832,6 @@ int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidRect(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::extension::NVGDrawNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 4) 
-    {
-        cocos2d::Vec2 arg0;
-        cocos2d::Vec2 arg1;
-        cocos2d::Vec2 arg2;
-        cocos2d::Color4F arg3;
-
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawQuadBezier");
-
-        ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawQuadBezier");
-
-        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawQuadBezier");
-
-        ok &=luaval_to_color4f(tolua_S, 5, &arg3, "cc.NVGDrawNode:drawQuadBezier");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier'", nullptr);
-            return 0;
-        }
-        cobj->drawQuadBezier(arg0, arg1, arg2, arg3);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawQuadBezier",argc, 4);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::extension::NVGDrawNode* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 3) 
-    {
-        cocos2d::Vec2 arg0;
-        double arg1;
-        cocos2d::Color4F arg2;
-
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawDot");
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawDot");
-
-        ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawDot");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot'", nullptr);
-            return 0;
-        }
-        cobj->drawDot(arg0, arg1, arg2);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawDot",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawPoint(lua_State* tolua_S)
 {
     int argc = 0;
@@ -463,172 +880,6 @@ int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawPoint(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawPoint'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::extension::NVGDrawNode* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 5) {
-            cocos2d::Vec2 arg0;
-            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg1;
-            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg2;
-            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg3;
-            ok &= luaval_to_vec2(tolua_S, 5, &arg3, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cocos2d::Color4F arg4;
-            ok &=luaval_to_color4f(tolua_S, 6, &arg4, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cobj->drawRect(arg0, arg1, arg2, arg3, arg4);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            cocos2d::Vec2 arg0;
-            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg1;
-            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cocos2d::Color4F arg2;
-            ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawRect");
-
-            if (!ok) { break; }
-            cobj->drawRect(arg0, arg1, arg2);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.NVGDrawNode:drawRect",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::extension::NVGDrawNode* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.NVGDrawNode",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::extension::NVGDrawNode*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 3) {
-            cocos2d::Vec2 arg0;
-            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            cocos2d::Color4F arg2;
-            ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            cobj->drawCircle(arg0, arg1, arg2);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 8) {
-            cocos2d::Vec2 arg0;
-            ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            double arg2;
-            ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            unsigned int arg3;
-            ok &= luaval_to_uint32(tolua_S, 5,&arg3, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            bool arg4;
-            ok &= luaval_to_boolean(tolua_S, 6,&arg4, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            double arg5;
-            ok &= luaval_to_number(tolua_S, 7,&arg5, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            double arg6;
-            ok &= luaval_to_number(tolua_S, 8,&arg6, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            cocos2d::Color4F arg7;
-            ok &=luaval_to_color4f(tolua_S, 9, &arg7, "cc.NVGDrawNode:drawCircle");
-
-            if (!ok) { break; }
-            cobj->drawCircle(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.NVGDrawNode:drawCircle",argc, 8);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle'.",&tolua_err);
 #endif
 
     return 0;
@@ -694,7 +945,7 @@ int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCubicBezier(lua_State* tolua_S
 
     return 0;
 }
-int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle(lua_State* tolua_S)
+int lua_cocos2dx_extension_nanovg_NVGDrawNode_setRadius(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::NVGDrawNode* cobj = nullptr;
@@ -714,37 +965,31 @@ int lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setRadius'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 3) 
+    if (argc == 1) 
     {
-        cocos2d::Vec2 arg0;
-        double arg1;
-        cocos2d::Color4F arg2;
+        double arg0;
 
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "cc.NVGDrawNode:drawSolidCircle");
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.NVGDrawNode:drawSolidCircle");
-
-        ok &=luaval_to_color4f(tolua_S, 4, &arg2, "cc.NVGDrawNode:drawSolidCircle");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.NVGDrawNode:setRadius");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setRadius'", nullptr);
             return 0;
         }
-        cobj->drawSolidCircle(arg0, arg1, arg2);
+        cobj->setRadius(arg0);
         return 0;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawSolidCircle",argc, 3);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:setRadius",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_nanovg_NVGDrawNode_setRadius'.",&tolua_err);
 #endif
 
     return 0;
@@ -795,18 +1040,23 @@ int lua_register_cocos2dx_extension_nanovg_NVGDrawNode(lua_State* tolua_S)
     tolua_cclass(tolua_S,"NVGDrawNode","cc.NVGDrawNode","cc.NVGNode",nullptr);
 
     tolua_beginmodule(tolua_S,"NVGDrawNode");
-        tolua_function(tolua_S,"drawTriangle",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle);
         tolua_function(tolua_S,"drawArc",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawArc);
         tolua_function(tolua_S,"drawLine",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawLine);
+        tolua_function(tolua_S,"drawRect",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect);
+        tolua_function(tolua_S,"setLineColor",lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineColor);
+        tolua_function(tolua_S,"drawSolidCircle",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle);
+        tolua_function(tolua_S,"setLineWidth",lua_cocos2dx_extension_nanovg_NVGDrawNode_setLineWidth);
+        tolua_function(tolua_S,"drawDot",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot);
+        tolua_function(tolua_S,"setFillColor",lua_cocos2dx_extension_nanovg_NVGDrawNode_setFillColor);
+        tolua_function(tolua_S,"drawCircle",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle);
+        tolua_function(tolua_S,"drawQuadBezier",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier);
+        tolua_function(tolua_S,"drawTriangle",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawTriangle);
+        tolua_function(tolua_S,"setColor",lua_cocos2dx_extension_nanovg_NVGDrawNode_setColor);
         tolua_function(tolua_S,"clear",lua_cocos2dx_extension_nanovg_NVGDrawNode_clear);
         tolua_function(tolua_S,"drawSolidRect",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidRect);
-        tolua_function(tolua_S,"drawQuadBezier",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawQuadBezier);
-        tolua_function(tolua_S,"drawDot",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawDot);
         tolua_function(tolua_S,"drawPoint",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawPoint);
-        tolua_function(tolua_S,"drawRect",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawRect);
-        tolua_function(tolua_S,"drawCircle",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCircle);
         tolua_function(tolua_S,"drawCubicBezier",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawCubicBezier);
-        tolua_function(tolua_S,"drawSolidCircle",lua_cocos2dx_extension_nanovg_NVGDrawNode_drawSolidCircle);
+        tolua_function(tolua_S,"setRadius",lua_cocos2dx_extension_nanovg_NVGDrawNode_setRadius);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_nanovg_NVGDrawNode_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::extension::NVGDrawNode).name();

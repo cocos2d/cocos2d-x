@@ -12,8 +12,12 @@ NS_CC_EXT_BEGIN
 
 NVGDrawNode::NVGDrawNode()
 : _radius(0)
+, _borderWidth(0)
 , _drawType(NVGDrawType_None) {
-    
+    _color.r = 0;
+    _color.g = 0;
+    _color.b = 0;
+    _color.a = 255;
 }
 
 NVGDrawNode::~NVGDrawNode() {
@@ -37,6 +41,7 @@ NVGDrawNode* NVGDrawNode::create() {
 
 void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto bStroke = false;
     NVGcontext *nvg = getNVGCtx();
     if (nullptr == nvg) {
         CCLOG("ERROR! NVGDrawNode - onDraw nvg is null");
@@ -106,16 +111,20 @@ void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
     if (_colorFill.a >= 0) {
         nvgFillColor(nvg, _colorFill);
         nvgFill(nvg);
-    } else {
-        nvgStrokeColor(nvg, _color);
-        nvgStroke(nvg);
-    }
-    if (_bDrawStroke) {
-        nvgStrokeWidth(nvg, _borderWidth);
-        nvgStrokeColor(nvg, _color);
-        nvgStroke(nvg);
     }
     
+    if (_borderWidth > 0 ) {
+        nvgStrokeWidth(nvg, _borderWidth);
+        bStroke = true;
+    }
+    if (_color.a >= 0) {
+        nvgStrokeColor(nvg, _color);
+        bStroke = true;
+    }
+    if (bStroke) {
+        nvgStroke(nvg);
+    }
+
     nvgEndFrame(getNVGCtx());
     
     GL::bindTexture2D(0);
@@ -307,12 +316,37 @@ void NVGDrawNode::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, c
     _colorFill.a = -1;
 }
 
+void NVGDrawNode::setColor(const Color4F &color) {
+    _color = clr4f2NVGClr(color);
+}
+
+void NVGDrawNode::setFillColor(const Color4F &color) {
+    _colorFill = clr4f2NVGClr(color);
+}
+
+void NVGDrawNode::setLineColor(const Color4F &color) {
+    _color = clr4f2NVGClr(color);
+}
+
+void NVGDrawNode::setLineWidth(float width) {
+    _borderWidth = width;
+}
+
+void NVGDrawNode::setRadius(float radius) {
+    _radius = radius;
+}
+
+
 /** Clear the geometry in the node's buffer. */
 void NVGDrawNode::clear() {
     _points.clear();
     _rects.clear();
     _drawType = NVGDrawType_None;
     _colorFill.a = -1;
+    _color.r = 0;
+    _color.g = 0;
+    _color.b = 0;
+    _color.a = 255;
 }
 
 NVGcolor NVGDrawNode::clr4f2NVGClr(Color4F clr) {
