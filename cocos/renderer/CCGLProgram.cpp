@@ -131,6 +131,8 @@ GLProgram::GLProgram()
 , _fragShader(0)
 , _flags()
 {
+    _director = Director::getInstance();
+    CCASSERT(nullptr != _director, "Director is null when init a GLProgram");
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
 }
 
@@ -319,6 +321,12 @@ void GLProgram::parseVertexAttribs()
             }
         }
     }
+    else
+    {
+        GLchar ErrorLog[1024];
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        CCLOG("Error linking shader program: '%s'\n", ErrorLog);
+    }
 }
 
 void GLProgram::parseUniforms()
@@ -371,6 +379,14 @@ void GLProgram::parseUniforms()
             }
         }
     }
+    else
+    {
+        GLchar ErrorLog[1024];
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        CCLOG("Error linking shader program: '%s'\n", ErrorLog);
+
+    }
+
 }
 
 Uniform* GLProgram::getUniform(const std::string &name)
@@ -841,17 +857,12 @@ void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* m
 
 void GLProgram::setUniformsForBuiltins()
 {
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    auto matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    setUniformsForBuiltins(matrixMV);
+    setUniformsForBuiltins(_director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
 }
 
 void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    auto matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
@@ -878,11 +889,10 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     }
 
     if(_flags.usesTime) {
-        Director *director = Director::getInstance();
         // This doesn't give the most accurate global time value.
         // Cocos2D doesn't store a high precision time value, so this will have to do.
         // Getting Mach time per frame per shader using time could be extremely expensive.
-        float time = director->getTotalFrames() * director->getAnimationInterval();
+        float time = _director->getTotalFrames() * _director->getAnimationInterval();
         
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));

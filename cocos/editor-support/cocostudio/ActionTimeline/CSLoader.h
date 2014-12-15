@@ -28,22 +28,23 @@
 #include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocos2d.h"
+#include "base/ObjectFactory.h"
 
-namespace protocolbuffers
+namespace flatbuffers
 {
-    class NodeTree;
-	class WidgetOptions;
-    class SpriteOptions;
-    class ProjectNodeOptions;
-    class ParticleSystemOptions;
-    class TMXTiledMapOptions;
-    class ComponentOptions;
-    class ComAudioOptions;
-}
-
-namespace tinyxml2
-{
-    class XMLElement;
+    struct FlatBufferBuilder;
+    
+    struct NodeTree;
+    
+    struct WidgetOptions;
+    struct SingleNodeOptions;
+    struct SpriteOptions;
+    struct ParticleSystemOptions;
+    struct TMXTiledMapOptions;
+    struct ProjectNodeOptions;
+    
+    struct ComponentOptions;
+    struct ComAudioOptions;
 }
 
 namespace cocostudio
@@ -85,26 +86,20 @@ public:
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
     std::string getJsonPath() const { return _jsonPath; }
     
-    cocos2d::Node* createNodeFromProtocolBuffers(const std::string& filename);
-    cocos2d::Node* nodeFromProtocolBuffersFile(const std::string& fileName);
-    cocos2d::Node* nodeFromProtocolBuffers(const protocolbuffers::NodeTree& nodetree);
+    cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename);
+    cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName);
+    cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree);
     
-    void setRecordProtocolBuffersPath(bool record) { _recordProtocolBuffersPath = record; }
-    bool isRecordProtocolBuffersPath() const { return _recordProtocolBuffersPath; }
+    bool bindCallback(const std::string& callbackName,
+                      const std::string& callbackType,
+                      cocos2d::ui::Widget* sender,
+                      cocos2d::Node* handler);
     
-    void setProtocolBuffersPath(std::string protocolBuffersPath) { _protocolBuffersPath = protocolBuffersPath; }
-    std::string getProtocolBuffersPath() const { return _protocolBuffersPath; }
+    void registReaderObject(const std::string& className,
+                            ObjectFactory::Instance ins);
     
-    cocos2d::Node* createNodeFromXML(const std::string& filename);
-    cocos2d::Node* nodeFromXMLFile(const std::string& fileName);
-    cocos2d::Node* nodeFromXML(const tinyxml2::XMLElement* objectData,
-                               const std::string& classType);
-    
-    void setRecordXMLPath(bool record) { _recordXMLPath = record; }
-    bool isRecordXMLPath() const { return _recordXMLPath; }
-    
-    void setXMLPath(std::string xmlPath) { _xmlPath = xmlPath; }
-    std::string getXMLPath() const { return _xmlPath; }
+    cocos2d::Node* createNodeWithFlatBuffersForSimulator(const std::string& filename);
+    cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
     
 protected:
     
@@ -126,48 +121,7 @@ protected:
     
     // load component
     cocos2d::Component* loadComponent(const rapidjson::Value& json);
-    cocos2d::Component* loadComAudio(const rapidjson::Value& json);
-    
-    void setPropsForNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForSingleNodeFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForSpriteFromProtocolBuffers(cocos2d::Node* node,
-                                              const protocolbuffers::SpriteOptions& spriteOptions,
-                                              const protocolbuffers::WidgetOptions& nodeOptions);
-	cocos2d::Node* createParticleFromProtocolBuffers(const protocolbuffers::ParticleSystemOptions& particleSystemOptions,
-													 const protocolbuffers::WidgetOptions& nodeOptions);    
-	cocos2d::Node* createTMXTiledMapFromProtocolBuffers(const protocolbuffers::TMXTiledMapOptions& tmxTiledMapOptions,
-														const protocolbuffers::WidgetOptions& nodeOptions);    
-    void setPropsForProjectNodeFromProtocolBuffers(cocos2d::Node* node,
-                                                   const protocolbuffers::ProjectNodeOptions& projectNodeOptions,
-                                                   const protocolbuffers::WidgetOptions& nodeOptions);
-    void setPropsForSimpleAudioFromProtocolBuffers(cocos2d::Node* node, const protocolbuffers::WidgetOptions& nodeOptions);
-    
-    cocos2d::Component* createComponentFromProtocolBuffers(const protocolbuffers::ComponentOptions& componentOptions);
-    void setPropsForComponentFromProtocolBuffers(cocos2d::Component* component, const protocolbuffers::ComponentOptions& componentOptions);
-    
-    void setPropsForComAudioFromProtocolBuffers(cocos2d::Component* component,
-                                                const protocolbuffers::ComAudioOptions& comAudioOptions);
-    
-    void setPropsForNodeFromXML(cocos2d::Node* node,
-                                const tinyxml2::XMLElement* nodeObjectData);
-    void setPropsForSingleNodeFromXML(cocos2d::Node* node,
-                                      const tinyxml2::XMLElement* nodeObjectData);
-    void setPropsForSpriteFromXML(cocos2d::Node* node,
-                                  const tinyxml2::XMLElement* spriteObjectData);
-    cocos2d::Node* createParticleFromXML(const tinyxml2::XMLElement* particleObjectData);
-	cocos2d::Node* createTMXTiledMapFromXML(const tinyxml2::XMLElement* tmxTiledMapObjectData);
-    void setPropsForProjectNodeFromXML(cocos2d::Node* node,
-                                       const tinyxml2::XMLElement* projectNodeObjectData);
-    void setPropsForSimpleAudioFromXML(cocos2d::Node* node,
-                                       const tinyxml2::XMLElement* simpleAudioObjectData);
-    
-    cocos2d::Component* createComponentFromXML(const tinyxml2::XMLElement* componentObjectData,
-                                               const std::string& componentType);
-    void setPropsForComponentFromXML(cocos2d::Component* component,
-                                     const tinyxml2::XMLElement* componentObjectData);
-    
-    void setPropsForComAudioFromXML(cocos2d::Component* component,
-                                    const tinyxml2::XMLElement* comAudioObjectData);
+    cocos2d::Component* loadComAudio(const rapidjson::Value& json);    
     
     bool isWidget(const std::string& type);
     bool isCustomWidget(const std::string& type);
@@ -189,13 +143,10 @@ protected:
     
     std::string _jsonPath;
     
-    bool _recordProtocolBuffersPath;
-    std::string _protocolBuffersPath;
-    
-    bool _recordXMLPath;
-    std::string _xmlPath;
-    
     std::string _monoCocos2dxVersion;
+    
+    Node* _rootNode;
+//    std::vector<Node*> _loadingNodeParentHierarchy;
 };
 
 NS_CC_END

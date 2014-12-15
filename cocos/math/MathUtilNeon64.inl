@@ -225,23 +225,34 @@ inline void MathUtilNeon64::transformVec4(const float* m, const float* v, float*
 
 inline void MathUtilNeon64::crossVec3(const float* v1, const float* v2, float* dst)
 {
-    asm volatile(
-        "ld1 {v0.2s},    [%2]         \n\t" //
-        "ld1 {v0.s}[3],  [%1]         \n\t" //
-        "mov v0.s[2], v0.s[1]         \n\t" // q0 = (v1y, v1z, v1z, v1x)
+        asm volatile(
+        "ld1 {v0.2s},  [%2]           \n\t"
+        "ld1 {v0.s}[2],  [%1]           \n\t"
+        "mov v0.s[3], v0.s[0]         \n\t" // q0 = (v1y, v1z, v1x, v1x)
 
-        "ld1 {v1.s}[1],  [%3]           \n\t" //
-        "ld1 {v1.s}[2], [%4], 4         \n\t" //
-        "ld1 {v1.s}[3], [%4]            \n\t" //
-        "mov v1.s[0], v1.s[3]           \n\t" // q1 = (v2z, v2x, v2y, v2z)
+        "ld1 {v1.4s},  [%3]           \n\t"
+        "mov v1.s[3], v1.s[0]           \n\t" // q1 = (v2x, v2y, v2z, v2x)
 
         "fmul v2.4s, v0.4s, v1.4s            \n\t" // x = v1y * v2z, y = v1z * v2x
-        "fsub s8, s8, s10            	     \n\t"
-        "fsub s9, s9, s11                    \n\t"  // x -= v1z * v2y, y-= v1x - v2z
 
-        "fmul s10, s3, s6         \n\t" // z = v1x * v2y
-        "fmul s11, s0, s5         \n\t" // z-= v1y * vx
-        "fsub s10, s10, s11	      \n\t"
+
+        "mov v0.s[0], v0.s[1]           \n\t"
+        "mov v0.s[1], v0.s[2]           \n\t"
+        "mov v0.s[2], v0.s[3]           \n\t"
+
+        "mov v1.s[3], v1.s[2]           \n\t"
+
+        "fmul v0.4s, v0.4s, v1.4s            \n\t"
+
+        "mov v0.s[3], v0.s[1]           \n\t"
+        "mov v0.s[1], v0.s[2]           \n\t"
+        "mov v0.s[2], v0.s[0]           \n\t"
+
+        "fsub v2.4s, v0.4s, v2.4s            \n\t"
+
+        "mov v2.s[0], v2.s[1]           \n\t"
+        "mov v2.s[1], v2.s[2]           \n\t"
+        "mov v2.s[2], v2.s[3]           \n\t"
 
         "st1 {v2.2s},       [%0], 8      \n\t" // V[x, y]
         "st1 {v2.s}[2],     [%0]         \n\t" // V[z]

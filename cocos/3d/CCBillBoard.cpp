@@ -99,14 +99,12 @@ BillBoard* BillBoard::create(Mode mode)
 void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     auto camera = Camera::getVisitingCamera();
-    
     const Mat4& camWorldMat = camera->getNodeToWorldTransform();
     if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_mvTransform.m, transform.m, sizeof(float) * 16) != 0 || _modeDirty)
     {
         Vec3 anchorPoint(_anchorPointInPoints.x , _anchorPointInPoints.y , 0.0f);
         Mat4 localToWorld = transform;
         localToWorld.translate(anchorPoint);
-
         Vec3 camDir;
         switch (_mode)
         {
@@ -121,14 +119,20 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             break;
         }
         _modeDirty = false;
-
         if (camDir.length() < MATH_TOLERANCE)
         {
             camDir.set(camWorldMat.m[8], camWorldMat.m[9], camWorldMat.m[10]);
         }
         camDir.normalize();
-
-        static Vec3 upAxis(0.0f, 1.0f, 0.0f);
+        Quaternion rotationQuaternion;
+        this->getNodeToWorldTransform().getRotation(&rotationQuaternion);
+        // fetch the rotation angle of z
+        float rotationZ = atan2(2*(rotationQuaternion.w*rotationQuaternion.z + rotationQuaternion.x*rotationQuaternion.y),
+            (1 - 2* (rotationQuaternion.y*rotationQuaternion.y + rotationQuaternion.z *rotationQuaternion.z)));
+        Mat4 rotationMatrix;
+        rotationMatrix.setIdentity();
+        rotationMatrix.rotateZ(rotationZ);
+        Vec3 upAxis = Vec3(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
         Vec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
         Vec3::cross(camDir, y, &x);

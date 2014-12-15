@@ -68,6 +68,7 @@ static const char* s_testArray[] =
     "UITextTest_LineWrap",
     "UILabelTest_Effect",
     "UITextTest_TTF",
+    "UITextTest_IgnoreConentSize",
     "UITextBMFontTest",
     
     "UITextFieldTest",
@@ -272,7 +273,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUITextTest_TTF:
             return UITextTest_TTF::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUITextTest_IgnoreConentSize:
+            return UITextTest_IgnoreConentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUITextFieldTest:
             return UITextFieldTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             

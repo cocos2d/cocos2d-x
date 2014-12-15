@@ -216,7 +216,7 @@ void Button::loadTextures(const std::string& normal,
 
 void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 {
-    if (normal.empty())
+    if (normal.empty() || (_normalFileName == normal && _normalTexType == texType))
     {
         return;
     }
@@ -256,7 +256,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 
 void Button::loadTexturePressed(const std::string& selected,TextureResType texType)
 {
-    if (selected.empty())
+    if (selected.empty() || (_clickedFileName == selected && _pressedTexType == texType))
     {
         return;
     }
@@ -285,7 +285,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
 
 void Button::loadTextureDisabled(const std::string& disabled,TextureResType texType)
 {
-    if (disabled.empty())
+    if (disabled.empty() || (_disabledFileName == disabled && _disabledTexType == texType))
     {
         return;
     }
@@ -741,6 +741,10 @@ void Button::setPressedActionEnabled(bool enabled)
 
 void Button::setTitleText(const std::string& text)
 {
+    if (text == getTitleText())
+    {
+        return;
+    }
     _titleRenderer->setString(text);
     updateContentSize();
 }

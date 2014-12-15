@@ -1,13 +1,17 @@
 
 
 #include "TextFieldReader.h"
+
 #include "ui/UITextField.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
-#include "tinyxml2.h"
+#include "cocostudio/CSParseBinary_generated.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -24,7 +28,7 @@ namespace cocostudio
     static const char* P_PasswordEnable = "passwordEnable";
     static const char* P_PasswordStyleText = "passwordStyleText";
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(TextFieldReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(TextFieldReader)
     
     TextFieldReader::TextFieldReader()
     {
@@ -103,7 +107,7 @@ namespace cocostudio
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     
        
-        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
         
         bool tsw = DICTOOL->checkObjectExist_json(options, P_TouchSizeWidth);
         bool tsh = DICTOOL->checkObjectExist_json(options, P_TouchSizeHeight);
@@ -135,89 +139,30 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
+    }        
     
-    void TextFieldReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    Offset<Table> TextFieldReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                                flatbuffers::FlatBufferBuilder *builder)
     {
-        TextField* textField = static_cast<TextField*>(widget);
-        const protocolbuffers::TextFieldOptions& options = nodeTree.textfieldoptions();
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();
+        std::string path = "";
+        std::string plistFile = "";
+        int resourceType = 0;
         
-		bool IsCustomSize = options.iscustomsize();
-		widget->ignoreContentAdaptWithSize(!IsCustomSize);
-        
-        if (IsCustomSize)
-        {
-            const protocolbuffers::WidgetOptions& widgetOptions = nodeTree.widgetoptions();
-            textField->setContentSize(Size(widgetOptions.width(), widgetOptions.height()));
-        }
-
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
-        WidgetReader::setAnchorPointForWidget(widget, nodeTree);
-        
-        textField->setUnifySizeEnabled(false);
-        
-        bool ph = options.has_placeholder();
-        if (ph)
-        {
-            std::string placeholder = options.has_placeholder() ? options.placeholder() : "inputs words here";
-            textField->setPlaceHolder(placeholder);
-        }
-        std::string text = options.has_text() ? options.text() : "Text Field";
-        textField->setString(text);
-        
-        int fontSize = options.has_fontsize() ? options.fontsize() : 20;
-        textField->setFontSize(fontSize);
-        
-        
-        std::string fontName = options.has_fontname() ? options.fontname() : "微软雅黑";
-        textField->setFontName(fontName);
-        
-
-        bool maxLengthEnable = options.maxlengthenable();
-        textField->setMaxLengthEnabled(maxLengthEnable);
-        
-        if (maxLengthEnable)
-        {
-            int maxLength = options.has_maxlength() ? options.maxlength() : 10;
-            textField->setMaxLength(maxLength);
-        }
-        bool passwordEnable = options.passwordenable();
-        textField->setPasswordEnabled(passwordEnable);
-        if (passwordEnable)
-        {
-            std::string passwordStyleText = options.has_passwordstyletext() ? options.passwordstyletext() : "*";
-            textField->setPasswordStyleText(passwordStyleText.c_str());
-        }
-        
-		if (options.has_fontresource())
-		{
-			const protocolbuffers::ResourceData& resourceData = options.fontresource();
-		    textField->setFontName(protocolBuffersPath + resourceData.path());
-		}
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-
-    }
-    
-    void TextFieldReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
-    {
-        WidgetReader::setPropsFromXML(widget, objectData);
-        
-        TextField* textField = static_cast<TextField*>(widget);
-        
-        std::string xmlPath = GUIReader::getInstance()->getFilePath();
-        
+        std::string fontName = "";
+        int fontSize = 20;
+        std::string text = "";
+        std::string placeHolder = "Text Field";
+        bool passwordEnabled = false;
+        std::string passwordStyleText = "*";
+        bool maxLengthEnabled = false;
+        int maxLength = 10;
+        int areaWidth = 0;
+        int areaHeight = 0;
         bool isCustomSize = false;
-        float width = 0.0f, height = 0.0f;
         
-        int opacity = 255;
-        
-        textField->setUnifySizeEnabled(false);
-        
-        textField->setFontName("微软雅黑");
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -228,44 +173,41 @@ namespace cocostudio
             
             if (name == "PlaceHolderText")
             {
-                textField->setPlaceHolder(value);
+                placeHolder = value;
             }
             else if (name == "LabelText")
             {
-                textField->setString(value);
+                text = value;
             }
             else if (name == "FontSize")
             {
-                textField->setFontSize(atoi(value.c_str()));
+                fontSize = atoi(value.c_str());
             }
             else if (name == "FontName")
             {
-                textField->setFontName(value);
+                fontName = value;
             }
             else if (name == "MaxLengthEnable")
             {
-                textField->setMaxLengthEnabled((value == "True") ? true : false);
+                maxLengthEnabled = (value == "True") ? true : false;
             }
             else if (name == "MaxLengthText")
             {
-                textField->setMaxLength(atoi(value.c_str()));
+                maxLength = atoi(value.c_str());
             }
             else if (name == "PasswordEnable")
             {
-                textField->setPasswordEnabled((value == "True") ? true : false);
+                passwordEnabled = (value == "True") ? true : false;
             }
             else if (name == "PasswordStyleText")
             {
-                textField->setPasswordStyleText(value.c_str());
+                passwordStyleText = value;
             }
             else if (name == "IsCustomSize")
             {
-                isCustomSize = ((value == "True") ? true : false);
+                isCustomSize = (value == "True") ? true : false;
             }
-            else if (name == "Alpha")
-            {
-                opacity = atoi(value.c_str());
-            }
+            
             
             attribute = attribute->Next();
         }
@@ -276,32 +218,9 @@ namespace cocostudio
         {
             std::string name = child->Name();
             
-            if (name == "Size")
+            if (name == "FontResource")
             {
                 attribute = child->FirstAttribute();
-                
-                while (attribute)
-                {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
-                    
-                    if (name == "X")
-                    {
-                        width = atof(value.c_str());
-                    }
-                    else if (name == "Y")
-                    {
-                        height = atof(value.c_str());
-                    }
-                    
-                    attribute = attribute->Next();
-                }
-            }
-            else if (name == "FontResource")
-            {
-                attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -314,7 +233,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                        resourceType = 0;
                     }
                     else if (name == "Plist")
                     {
@@ -323,30 +242,96 @@ namespace cocostudio
                     
                     attribute = attribute->Next();
                 }
-                
-                switch (resourceType)
-                {
-                    case 0:
-                    {
-                        textField->setFontName(xmlPath + path);
-                        break;
-                    }
-                        
-                    default:
-                        break;
-                }
             }
             
             child = child->NextSiblingElement();
         }
         
-        if (isCustomSize)
+        auto options = CreateTextFieldOptions(*builder,
+                                              widgetOptions,
+                                              CreateResourceData(*builder,
+                                                                 builder->CreateString(path),
+                                                                 builder->CreateString(plistFile),
+                                                                 resourceType),
+                                              builder->CreateString(fontName),
+                                              fontSize,
+                                              builder->CreateString(text),
+                                              builder->CreateString(placeHolder),
+                                              passwordEnabled,
+                                              builder->CreateString(passwordStyleText),
+                                              maxLengthEnabled,
+                                              maxLength,
+                                              areaWidth,
+                                              areaHeight,
+                                              isCustomSize
+                                              );
+        
+        return *(Offset<Table>*)(&options);
+    }
+    
+    void TextFieldReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *textFieldOptions)
+    {
+        TextField* textField = static_cast<TextField*>(node);
+        auto options = (TextFieldOptions*)textFieldOptions;
+        
+        std::string placeholder = options->placeHolder()->c_str();
+        textField->setPlaceHolder(placeholder);
+        
+        std::string text = options->text()->c_str();
+        textField->setString(text);
+        
+        int fontSize = options->fontSize();
+        textField->setFontSize(fontSize);
+        
+        std::string fontName = options->fontName()->c_str();
+        textField->setFontName(fontName);
+        
+        bool maxLengthEnabled = options->maxLengthEnabled();
+        textField->setMaxLengthEnabled(maxLengthEnabled);
+        
+        if (maxLengthEnabled)
         {
-            textField->ignoreContentAdaptWithSize(!isCustomSize);
-            textField->setContentSize(Size(width, height));
+            int maxLength = options->maxLength();
+            textField->setMaxLength(maxLength);
+        }
+        bool passwordEnabled = options->passwordEnabled();
+        textField->setPasswordEnabled(passwordEnabled);
+        if (passwordEnabled)
+        {
+            std::string passwordStyleText = options->passwordStyleText()->c_str();
+            textField->setPasswordStyleText(passwordStyleText.c_str());
         }
         
-        textField->setOpacity(opacity);
+        
+        auto resourceData = options->fontResource();
+        std::string path = resourceData->path()->c_str();
+        if (path != "")
+        {
+            textField->setFontName(path);
+        }
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        textField->setUnifySizeEnabled(false);
+        textField->ignoreContentAdaptWithSize(false);
+        
+        auto widgetOptions = options->widgetOptions();
+        if (!textField->isIgnoreContentAdaptWithSize())
+        {
+            ((Label*)(textField->getVirtualRenderer()))->setLineBreakWithoutSpace(true);
+            Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+            textField->setContentSize(contentSize);
+        }
+    }
+    
+    Node* TextFieldReader::createNodeWithFlatBuffers(const flatbuffers::Table *textFieldOptions)
+    {
+        TextField* textField = TextField::create();
+        
+        setPropsWithFlatBuffers(textField, (Table*)textFieldOptions);
+        
+        return textField;
     }
     
 }

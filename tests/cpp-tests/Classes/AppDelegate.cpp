@@ -98,6 +98,30 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res");
         searchPaths.push_back("Manifests");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
+        
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIButton");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UICheckBox");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIImageView");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabel");
+//        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabelAtlas");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabelBMFont");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/BackgroundImage");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Color");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Layout");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Gradient_Color");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILoadingBar");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIPageView");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Both");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Horizontal");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Vertical");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UISlider");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UITextField");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIWidgetAddNode");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIListView/New");
+        
+        searchPaths.push_back("ccs-res/hd/cocosui/CustomTest/CustomWidgetCallbackBindTest");
+        searchPaths.push_back("hd/ActionTimeline");
     }
     else
     {
@@ -112,6 +136,31 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/scenetest/TmxMapComponentTest");
         searchPaths.push_back("ccs-res/scenetest/UIComponentTest");
         searchPaths.push_back("ccs-res/scenetest/TriggerTest");
+        
+        
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIButton");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UICheckBox");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIImageView");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabel");
+//        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabelAtlas");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabelBMFont");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/BackgroundImage");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Color");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Layout");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Gradient_Color");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILoadingBar");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIPageView");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Both");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Horizontal");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UISlider");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UITextField");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIWidgetAddNode");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIListView/New");
+        
+        searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
+        searchPaths.push_back("ActionTimeline");
     }
     
     fileUtils->setSearchPaths(searchPaths);

@@ -63,33 +63,48 @@ Manifest::Manifest(const std::string& manifestUrl/* = ""*/)
         parse(manifestUrl);
 }
 
-void Manifest::parse(const std::string& manifestUrl)
+void Manifest::loadJson(const std::string& url)
 {
     clear();
-	std::string content;
-	if (_fileUtils->isFileExist(manifestUrl))
-	{
-		// Load file content
-		content = _fileUtils->getStringFromFile(manifestUrl);
+    std::string content;
+    if (_fileUtils->isFileExist(url))
+    {
+        // Load file content
+        content = _fileUtils->getStringFromFile(url);
+        
+        if (content.size() == 0)
+        {
+            CCLOG("Fail to retrieve local file content: %s\n", url.c_str());
+        }
+        else
+        {
+            // Parse file with rapid json
+            _json.Parse<0>(content.c_str());
+            // Print error
+            if (_json.HasParseError()) {
+                size_t offset = _json.GetErrorOffset();
+                if (offset > 0)
+                    offset--;
+                std::string errorSnippet = content.substr(offset, 10);
+                CCLOG("File parse error %s at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
+            }
+        }
+    }
+}
 
-		if (content.size() == 0)
-		{
-			CCLOG("Fail to retrieve local file content: %s\n", manifestUrl.c_str());
-		}
-		else
-		{
-			// Parse file with rapid json
-			_json.Parse<0>(content.c_str());
-			// Print error
-			if (_json.HasParseError()) {
-			size_t offset = _json.GetErrorOffset();
-			if (offset > 0)
-			offset--;
-			std::string errorSnippet = content.substr(offset, 10);
-			CCLOG("File parse error %s at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
-			}
-		}
-	}
+void Manifest::parseVersion(const std::string& versionUrl)
+{
+    loadJson(versionUrl);
+    
+    if (_json.IsObject())
+    {
+        loadVersion(_json);
+    }
+}
+
+void Manifest::parse(const std::string& manifestUrl)
+{
+    loadJson(manifestUrl);
 	
     if (_json.IsObject())
     {

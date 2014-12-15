@@ -77,6 +77,12 @@
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
 		521A8E7019F0C3D200D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */; };
 		521A8E7119F0C3D200D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */; };
+		AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
+		AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
+		AB6CB6F41A1F275E009C2562 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
+		AB6CB6F51A1F275E009C2562 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
+		AB6CB6F61A1F275E009C2562 /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6F01A1F275E009C2562 /* FileServer.cpp */; };
+		AB6CB6F71A1F275E009C2562 /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6F01A1F275E009C2562 /* FileServer.cpp */; };
 		C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48B1938512100C6382D /* PlayDisable_png.cpp */; };
@@ -256,6 +262,12 @@
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
+		AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectWaitLayer.cpp; sourceTree = "<group>"; };
+		AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectWaitLayer.h; sourceTree = "<group>"; };
+		AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleCommand.cpp; sourceTree = "<group>"; };
+		AB6CB6EF1A1F275E009C2562 /* ConsoleCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleCommand.h; sourceTree = "<group>"; };
+		AB6CB6F01A1F275E009C2562 /* FileServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileServer.cpp; sourceTree = "<group>"; };
+		AB6CB6F11A1F275E009C2562 /* FileServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileServer.h; sourceTree = "<group>"; };
 		C00FD48A1938512100C6382D /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
 		C00FD48B1938512100C6382D /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
 		C00FD48C1938512100C6382D /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
@@ -478,6 +490,12 @@
 		C00FD4891938512100C6382D /* runtime */ = {
 			isa = PBXGroup;
 			children = (
+				AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */,
+				AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */,
+				AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */,
+				AB6CB6EF1A1F275E009C2562 /* ConsoleCommand.h */,
+				AB6CB6F01A1F275E009C2562 /* FileServer.cpp */,
+				AB6CB6F11A1F275E009C2562 /* FileServer.h */,
 				15AA9646199B6D4600725633 /* lua_debugger.c */,
 				15AA9647199B6D4600725633 /* lua_debugger.h */,
 				3EB5152E1952865D006966AA /* protobuf-lite */,
@@ -759,10 +777,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
 				C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */,
 				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
+				AB6CB6F51A1F275E009C2562 /* ConsoleCommand.cpp in Sources */,
 				C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */,
 				C00FD49D1938512100C6382D /* Shine_png.cpp in Sources */,
 				3EB515691952865D006966AA /* common.cc in Sources */,
@@ -782,6 +802,7 @@
 				3EB5155B1952865D006966AA /* generated_message_util.cc in Sources */,
 				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
 				3EB5152D19528284006966AA /* Protos.pb.cc in Sources */,
+				AB6CB6F71A1F275E009C2562 /* FileServer.cpp in Sources */,
 				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
 				3EB5155F1952865D006966AA /* zero_copy_stream.cc in Sources */,
 				3EB515671952865D006966AA /* atomicops_internals_x86_msvc.cc in Sources */,
@@ -809,16 +830,19 @@
 				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
 				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
 				3EB5156E1952865D006966AA /* wire_format_lite.cc in Sources */,
+				AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				3EB515581952865D006966AA /* extension_set.cc in Sources */,
 				5023812417EBBCAC00990C9B /* main.m in Sources */,
 				3EB5156C1952865D006966AA /* stringprintf.cc in Sources */,
 				3EB515681952865D006966AA /* common.cc in Sources */,
 				C033B51C191B337200D06937 /* VisibleRect.cpp in Sources */,
 				3EB5155A1952865D006966AA /* generated_message_util.cc in Sources */,
+				AB6CB6F61A1F275E009C2562 /* FileServer.cpp in Sources */,
 				3EB5155E1952865D006966AA /* zero_copy_stream.cc in Sources */,
 				3EB5155C1952865D006966AA /* coded_stream.cc in Sources */,
 				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
 				5023811817EBBCAC00990C9B /* AppController.mm in Sources */,
+				AB6CB6F41A1F275E009C2562 /* ConsoleCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
