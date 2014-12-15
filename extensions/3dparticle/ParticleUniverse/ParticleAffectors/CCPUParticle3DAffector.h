@@ -65,6 +65,9 @@ public:
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime);
     virtual void initParticleForEmission(PUParticle3D* particle);
 
+	void setLocalPosition(const Vec3 &pos) { _position = pos; };
+	const Vec3 getLocalPosition() const { return _position; };
+
     /** Calculate the derived position of the affector.
     @remarks
         Note, that in script, the position is set as localspace, while if the affector is

@@ -1,0 +1,76 @@
+system blackHole
+{
+    technique 
+    {
+        visual_particle_quota                   2500
+        material                                PUMediaPack/Flare_04
+        default_particle_width                  12
+        default_particle_height                 12
+        renderer                                Billboard
+        {
+        }
+        emitter                                 SphereSurface 
+        {
+            emission_rate                       200
+            velocity                            3
+            radius                              12
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0 0 0.2 1
+            time_colour                         0.9  0.8 0.8 1 1
+            time_colour                         1    1 1 1 1
+        }
+        affector                                Gravity 
+        {
+            gravity                             2700
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           -4.5
+        }
+    }
+    technique 
+    {
+        visual_particle_quota                   250
+        material                                PUMediaPack/Streak_03
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       50
+            angle                               360
+            time_to_live                        4
+            velocity                            1
+            particle_width                      dyn_random
+            {
+                min                             2
+                max                             4
+            }
+            particle_height                     dyn_random
+            {
+                min                             45
+                max                             60
+            }
+            colour                              0.1 0.1 1 1
+        }
+        affector                                Scale 
+        {
+            x_scale                             -1.2
+        }
+        affector                                Scale 
+        {
+            y_scale                             -45
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0 0 0 0
+            time_colour                         0.2  1 1 1 1
+            time_colour                         0.8  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+}

@@ -94,6 +94,8 @@ struct CC_DLL PUParticle3D : public Particle3D
     */
     float radius;
 
+    float calculateVelocity() const;
+
     /** Set own dimensions
     */
     void setOwnDimensions(float newWidth, float newHeight, float newDepth);
@@ -171,8 +173,10 @@ public:
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
     static const unsigned short DEFAULT_PARTICLE_QUOTA;
+    static const float DEFAULT_MAX_VELOCITY;
 
     static PUParticleSystem3D* create();
+    static PUParticleSystem3D* create(const std::string &filePath, const std::string &materialPath);
     
     virtual void update(float delta) override;
     
@@ -225,6 +229,18 @@ public:
     Vec3 getDerivedPosition();
     Quaternion getDerivedOrientation();
 
+    /** Return the maximum velocity a particle can have, even if the velocity of the particle has been set higher (either by 
+        initialisation of the particle or by means of an affector).
+    */
+    float getMaxVelocity() const;
+
+    /** Set the maximum velocity a particle can have.
+    */
+    void setMaxVelocity(float maxVelocity);
+
+	void setMaterialName(const std::string &name) { _matName = name; };
+	const std::string getMaterialName() const { return _matName; };
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
@@ -239,6 +255,8 @@ protected:
     void emitParticles(float elapsedTime);
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
+
+	void initSystem(const std::string &filePath, const std::string &materialPath);
 
 protected:
     bool _prepared;
@@ -266,6 +284,12 @@ protected:
     */
     float _defaultDepth;
     
+        /** Attributes that limit the velocity of the particles in this technique.
+    */
+    float _maxVelocity;
+    bool _maxVelocitySet;
+
+	std::string _matName;
 };
 
 NS_CC_END

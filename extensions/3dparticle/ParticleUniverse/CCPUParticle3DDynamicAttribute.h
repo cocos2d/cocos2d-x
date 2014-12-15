@@ -58,7 +58,7 @@ struct PUControlPointSorter
     but where implementation of this behaviour may not be scattered or duplicated within the application that needs 
     it.
 */
-class CC_DLL PUDynamicAttribute : Ref
+class CC_DLL PUDynamicAttribute : public Ref
 {
     public:
         enum DynamicAttributeType

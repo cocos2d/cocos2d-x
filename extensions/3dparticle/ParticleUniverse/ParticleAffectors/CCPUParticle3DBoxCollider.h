@@ -37,7 +37,7 @@ public:
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
 
-	static PUParticle3DBoxCollider* create();
+    static PUParticle3DBoxCollider* create();
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;

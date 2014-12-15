@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#ifndef __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
-#define __CC_PU_PARTICLE_3D_COLOR_AFFECTOR_H__
+#ifndef __CC_PU_PARTICLE_3D_INNER_PARTICLE_COLLIDER_H__
+#define __CC_PU_PARTICLE_3D_INNER_PARTICLE_COLLIDER_H__
 
 #include "CCPUParticle3DBaseCollider.h"
 #include "base/ccTypes.h"

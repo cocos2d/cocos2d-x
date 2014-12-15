@@ -24,6 +24,7 @@
 
 #include "CCPUParticle3DEmitter.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DUtil.h"
 
 NS_CC_BEGIN
 
@@ -180,12 +181,14 @@ void PUParticle3DEmitter::initParticlePosition( PUParticle3D* particle )
 
 const Vec3& PUParticle3DEmitter::getDerivedPosition()
 {
-	if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
-		_derivedPosition =  static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
-	else
-		_derivedPosition = Vec3::ZERO;
+    if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
+	{
+        _derivedPosition =  _particleSystem->getNodeToWorldTransform() * _position;
+	}
+    else
+        _derivedPosition = Vec3::ZERO;
 
-	return _derivedPosition;
+    return _derivedPosition;
 }
 
 void PUParticle3DEmitter::initParticleOrientation( PUParticle3D* particle )
@@ -211,13 +214,7 @@ void PUParticle3DEmitter::initParticleDirection( PUParticle3D* particle )
     generateAngle(angle);
     if (angle != 0.0f)
     {
-        //particle->direction = _particleDirection.randomDeviant(angle, _upVector);
-        // Rotate up vector by random amount around this
-        Mat4 mat;
-        Mat4::createRotation(_particleDirection, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
-        Vec3 newUp = mat * _upVector;
-        Mat4::createRotation(newUp, angle, &mat);
-        particle->direction = mat * _particleDirection;
+        particle->direction = PUParticle3DUtil::randomDeviant(_particleDirection, angle, _upVector);
     }
     else
     {
@@ -229,7 +226,7 @@ void PUParticle3DEmitter::initParticleDirection( PUParticle3D* particle )
 
 void PUParticle3DEmitter::generateAngle( float &angle )
 {
-    float a = _dynamicAttributeHelper.calculate(_dynAngle, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart());
+    float a = CC_DEGREES_TO_RADIANS(_dynamicAttributeHelper.calculate(_dynAngle, (static_cast<PUParticleSystem3D *>(_particleSystem))->getTimeElapsedSinceStart()));
     angle = a;
     if (_dynAngle->getType() == PUDynamicAttribute::DAT_FIXED)
     {
@@ -617,24 +614,8 @@ void PUParticle3DEmitter::setParticleDirection(const Vec3& direction)
     _originalParticleDirection = direction;
     _particleDirection.normalize();
 
-    //temp method to implement perpendicular function
-    //_upVector = _particleDirection.perpendicular();
-    //_upVector.normalize();
-    {
-        static const float fSquareZero = (float)(1e-06 * 1e-06);
-        Vec3 perp;
-        Vec3::cross(_particleDirection, Vec3::UNIT_X, &perp);
-        // Check length
-        if( perp.lengthSquared() < fSquareZero )
-        {
-            /* This vector is the Y axis multiplied by a scalar, so we have
-                to use another axis.
-            */
-            Vec3::cross(_particleDirection, Vec3::UNIT_Y, &perp);
-        }
-        perp.normalize();
-        _upVector = perp;
-    }
+    _upVector = PUParticle3DUtil::perpendicular(_particleDirection);
+    _upVector.normalize();
 }
 //-----------------------------------------------------------------------
 const Vec3& PUParticle3DEmitter::getOriginalParticleDirection(void) const

@@ -24,6 +24,7 @@
 
 #include "CCPUParticle3DLineEmitter.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DUtil.h"
 
 NS_CC_BEGIN
 // Constants
@@ -209,11 +210,7 @@ void PUParticle3DLineEmitter::initParticleDirection(PUParticle3D* particle)
         if (angle != 0.0f)
         {
             //particle->direction = _perpendicular.randomDeviant(angle, mUpVector);
-			Mat4 mat;
-			Mat4::createRotation(_perpendicular, CCRANDOM_0_1() * M_PI * 2.0f, &mat);
-			Vec3 newUp = mat * _upVector;
-			Mat4::createRotation(newUp, angle, &mat);
-			particle->direction = mat * _perpendicular;
+            particle->direction = PUParticle3DUtil::randomDeviant(_perpendicular, angle, _upVector);
             particle->originalDirection = particle->direction;
         }
         else

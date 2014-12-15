@@ -26,12 +26,27 @@
 #include "3dparticle/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "3dparticle/CCParticle3DRender.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
 float PUParticle3D::DEFAULT_TTL = 10.0f;
 float PUParticle3D::DEFAULT_MASS = 1.0f;
 
+float PUParticle3D::calculateVelocity() const
+{
+    if (originalScaledDirectionLength != 0)
+    {
+        return originalVelocity * (direction.length() / originalScaledDirectionLength);
+    }
+    else
+    {
+        // Assume originalScaledDirectionLength to be 1.0 (unit vector)
+        return originalVelocity * direction.length();
+    }
+}
 
 void PUParticle3D::setOwnDimensions( float newWidth, float newHeight, float newDepth )
 {
@@ -95,13 +110,14 @@ PUParticle3D::PUParticle3D():
     textureAnimationDirectionUp(true)
 {
 }
-
 //-----------------------------------------------------------------------
 
 const float PUParticleSystem3D::DEFAULT_WIDTH = 50;
 const float PUParticleSystem3D::DEFAULT_HEIGHT = 50;
 const float PUParticleSystem3D::DEFAULT_DEPTH = 50;
 const unsigned short PUParticleSystem3D::DEFAULT_PARTICLE_QUOTA = 500;
+const float PUParticleSystem3D::DEFAULT_MAX_VELOCITY = 9999.0f;
+
 
 PUParticleSystem3D::PUParticleSystem3D()
 : _prepared(false)
@@ -109,6 +125,8 @@ PUParticleSystem3D::PUParticleSystem3D()
 , _defaultWidth(DEFAULT_WIDTH)
 , _defaultHeight(DEFAULT_HEIGHT)
 , _defaultDepth(DEFAULT_DEPTH)
+, _maxVelocity(DEFAULT_MAX_VELOCITY)
+, _maxVelocitySet(false)
 {
     _particleQuota = DEFAULT_PARTICLE_QUOTA;
 }
@@ -135,6 +153,13 @@ void PUParticleSystem3D::startParticle()
         if (_render)
             _render->notifyStart();
 
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->startParticle();
+        }
+
         scheduleUpdate();
         _state = State::RUNNING;
         _timeElapsedSinceStart = 0.0f;
@@ -159,6 +184,13 @@ void PUParticleSystem3D::stopParticle()
         if (_render)
             _render->notifyStop();
 
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->stopParticle();
+        }
+
         unscheduleUpdate();
         _particlePool.lockAllParticles();
         _state = State::STOP;
@@ -179,6 +211,14 @@ void PUParticleSystem3D::pauseParticle()
             auto affector = static_cast<PUParticle3DAffector*>(it);
             affector->notifyPause();
         }
+
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->pauseParticle();
+        }
+
         _state = State::PAUSE;
     }
 }
@@ -196,6 +236,13 @@ void PUParticleSystem3D::resumeParticle()
         for (auto& it : _affectors) {
             auto affector = static_cast<PUParticle3DAffector*>(it);
             affector->notifyResume();
+        }
+
+        for (auto iter : _children)
+        {
+            PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (system)
+                system->resumeParticle();
         }
 
         _state = State::RUNNING;
@@ -263,6 +310,7 @@ void PUParticleSystem3D::unPrepared()
     }
 
     _particlePool.removeAllParticles(true);
+    PUParticle3DMaterialManager::Instance()->clearAllMaterials();
 }
 
 void PUParticleSystem3D::preUpdator( float elapsedTime )
@@ -302,6 +350,11 @@ void PUParticleSystem3D::updator( float elapsedTime )
 
             // Keep latest position
             particle->latestPosition = particle->position;
+
+            if (_maxVelocitySet && particle->calculateVelocity() > _maxVelocity)
+            {
+                particle->direction *= (_maxVelocity / particle->direction.length());
+            }
 
             // Update the position with the direction.
             particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
@@ -431,6 +484,16 @@ PUParticleSystem3D* PUParticleSystem3D::create()
     return pups;
 }
 
+PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
+{
+    PUParticleSystem3D* ps = PUParticleSystem3D::create();
+    if (ps){
+        ps->initSystem(filePath, materialPath);
+    }
+
+    return ps;
+}
+
 cocos2d::Vec3 PUParticleSystem3D::getDerivedPosition()
 {
     if (_keepLocal) return Vec3::ZERO;
@@ -447,4 +510,27 @@ cocos2d::Quaternion PUParticleSystem3D::getDerivedOrientation()
     mat.decompose(nullptr, &q, nullptr);
     return q;
 }
+
+float PUParticleSystem3D::getMaxVelocity() const
+{
+    return _maxVelocity;
+}
+
+void PUParticleSystem3D::setMaxVelocity( float maxVelocity )
+{
+    _maxVelocity = maxVelocity;
+    _maxVelocitySet = true;
+}
+
+void PUParticleSystem3D::initSystem( const std::string &filePath, const std::string &materialPath )
+{
+    std::string data = FileUtils::getInstance()->getStringFromFile(materialPath);
+    PUScriptCompiler sc;
+    sc.compile(data, materialPath);
+
+    sc.setParticleSystem3D(this);
+    data = FileUtils::getInstance()->getStringFromFile(filePath);
+    sc.compile(data, filePath);
+}
+
 NS_CC_END

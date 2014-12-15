@@ -49,6 +49,7 @@
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureRotator.h"
 #include "3dparticle/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffector.h"
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
 
 void Particle3DTestScene::runThisTest()
@@ -89,12 +90,21 @@ void Particle3DTestDemo::onEnter()
     BaseTest::onEnter();
 }
 
+void Particle3DTestDemo::onExit()
+{
+    BaseTest::onExit();
+}
+
 bool Particle3DTestDemo::init()
 {
     if (!BaseTest::init()) return false;
 
+    FileUtils::getInstance()->addSearchPath("Particle3D/materials");
+    FileUtils::getInstance()->addSearchPath("Particle3D/scripts");
+    FileUtils::getInstance()->addSearchPath("Particle3D/textures");
+
     Size size = Director::getInstance()->getWinSize();
-    _camera = Camera::createPerspective(60.0f, size.width / size.height, 1.0f, 1000.0f);
+    _camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
     _camera->setPosition3D(Vec3(0.0f, 0.0f, 100.0f));
     _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     _camera->setCameraFlag(CameraFlag::USER1);
@@ -125,16 +135,32 @@ bool Particle3DTestDemo::init()
         sprite3d->runAction(RepeatForever::create(animate));
     }
 
-    this->addChild(sprite3d);
+    //this->addChild(sprite3d);
 
-    auto ps = createParticleSystem();
-    ps->setPosition(-25.0f, -25.0f);
+    //PUParticleSystem3D *rootps = PUParticleSystem3D::create();
+    //{
+    //	auto ps = createParticleSystem();
+    //	//ps->setPosition(-25.0f, -25.0f);
+    //	rootps->addChild(ps);
+    //}
+
+    //{
+    //	auto ps = createParticleSystem();
+    //	//ps->setPosition(25.0f, 25.0f);
+    //	rootps->addChild(ps);
+    //}
+
+    PUParticleSystem3D *rootps = PUParticleSystem3D::create("advancedLodSystem.pu", "pu_example.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+
     auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));
     auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
     auto moveby2 = MoveBy::create(2.0f, Vec2(50.0f, -50.0f));
     auto moveby3 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-    ps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, moveby2, moveby3, nullptr)));
-    this->addChild(ps);
+    //rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, moveby2, moveby3, nullptr)));
+    rootps->startParticle();
+
+    this->addChild(rootps);
     //sprite3d->getAttachNode("Bip001 R Hand")->addChild(ps);
 
     return true;
@@ -143,13 +169,15 @@ bool Particle3DTestDemo::init()
 ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 {
     auto ps = PUParticleSystem3D::create();
-    ps->setBlendFunc(BlendFunc::ADDITIVE);
+    BlendFunc blend;
+    blend.src = GL_ONE;
+    blend.dst = GL_ONE;
+    ps->setBlendFunc(blend);
     ps->setParticleQuota(2500);
     ps->setKeepLocal(false);
     //emitter
     {
         auto ppe = PUParticle3DSphereSurfaceEmitter::create();
-        ppe->setParticleDirection(Vec3(0.0f, 1.0f, 0.0f));
         ppe->setRadius(12.0f);
 
         //PUDynamicAttributeFixed *angle = new PUDynamicAttributeFixed();
@@ -167,8 +195,8 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
         rate->setValue(200.0f);
         ppe->setDynEmissionRate(rate);
-        ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
-        ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
+        //ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
+        //ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
         ps->setEmitter(ppe);
     }
 
@@ -187,8 +215,8 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         auto psa = PUParticle3DScaleAffector::create();
         PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
         scl->setValue(-4.5f);
-        psa->setDynScaleXYZ(scl);
-        ps->addAffector(psa);
+        //psa->setDynScaleXYZ(scl);
+        //ps->addAffector(psa);
 
   //      auto pfca = PUParticle3DFlockCenteringAffector::create();
   //      ps->addAffector(pfca);
@@ -239,7 +267,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
 
     //render
     {
-        auto pr = Particle3DQuadRender::create("Images/Comet.png");
+        auto pr = Particle3DQuadRender::create("pump_flare_04.png");
         ps->setRender(pr);
     }
 
@@ -247,7 +275,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
     //auto pr = Particle3DModelRender::create(Sprite3D::create("Sprite3DTest/axe.c3b"));
     //ps->setRender(pr);
 
-    ps->startParticle();
+    //ps->startParticle();
     //this->addChild(ps);
 
     ps->setCameraMask((unsigned short)CameraFlag::USER1);

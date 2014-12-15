@@ -52,11 +52,11 @@ void PUParticle3DAffector::updatePUAffector(PUParticle3D* particle, float delta)
 const Vec3& PUParticle3DAffector::getDerivedPosition()
 {
     if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
-        _derivedPosition = static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
-	else
-		_derivedPosition = Vec3::ZERO;
+        _derivedPosition =  _particleSystem->getNodeToWorldTransform() * _position;
+    else
+        _derivedPosition = Vec3::ZERO;
 
-	return _derivedPosition;
+    return _derivedPosition;
     //if (mMarkedForEmission)
     //{
     //	// Use the affector position, because it is emitted
