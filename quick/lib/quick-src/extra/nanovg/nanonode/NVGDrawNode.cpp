@@ -52,14 +52,15 @@ void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
     //   [a c e]
     //   [b d f]
     //   [0 0 1]
-    nvgTransform(nvg, transform.m[0], transform.m[1], transform.m[4], transform.m[5], transform.m[12], transform.m[13]);
+    //nvgTransform(nvg, transform.m[0], transform.m[1], transform.m[4], transform.m[5], transform.m[12], transform.m[13]);
 
     nvgBeginPath(nvg);
 
     switch (_drawType) {
         case NVGDrawType_Point: {
             for (int i = 0; i < _points.size(); i++) {
-                nvgCircle(nvg, _points.at(i)->x, visibleSize.height - _points.at(i)->y, 1);
+                const Point pos = convertToWorldSpace(*_points.at(i));
+                nvgCircle(nvg, pos.x, visibleSize.height - pos.y, 1);
             }
             break;
         }
@@ -69,20 +70,23 @@ void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
             }
             nvgMoveTo(nvg, _points.at(0)->x, visibleSize.height - _points.at(0)->y);
             for (int i = 1; i < _points.size(); i++) {
-                nvgLineTo(nvg, _points.at(i)->x, visibleSize.height - _points.at(i)->y);
+                const Point pos = convertToWorldSpace(*_points.at(i));
+                nvgLineTo(nvg, pos.x, visibleSize.height - pos.y);
             }
             nvgClosePath(nvg);
             break;
         }
         case NVGDrawType_Rect: {
             for (int i = 0; i < _rects.size(); i++) {
-                nvgRect(nvg, _rects.at(i)->origin.x, visibleSize.height - _rects.at(i)->origin.y - _rects.at(i)->size.height, _rects.at(i)->size.width, _rects.at(i)->size.height);
+                const Point pos = convertToWorldSpace(_rects.at(i)->origin);
+                nvgRect(nvg, pos.x, visibleSize.height - pos.y - _rects.at(i)->size.height, _rects.at(i)->size.width, _rects.at(i)->size.height);
             }
             break;
         }
         case NVGDrawType_Circle: {
             for (int i = 0; i < _points.size(); i++) {
-                nvgCircle(nvg, _points.at(i)->x, visibleSize.height - _points.at(i)->y, _radius);
+                const Point pos = convertToWorldSpace(*_points.at(i));
+                nvgCircle(nvg, pos.x, visibleSize.height - pos.y, _radius);
             }
             break;
         }
@@ -90,17 +94,24 @@ void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
             if (3 != _points.size() && 4 != _points.size()) {
                 break;
             }
-            nvgMoveTo(nvg, _points.at(0)->x, visibleSize.height - _points.at(0)->y);
+            const Point pos0 = convertToWorldSpace(*_points.at(0));
+            nvgMoveTo(nvg, pos0.x, visibleSize.height - pos0.y);
             if (3 == _points.size()) {
-                nvgQuadTo(nvg, _points.at(1)->x, visibleSize.height - _points.at(1)->y, _points.at(2)->x, visibleSize.height - _points.at(2)->y);
+                const Point pos1 = convertToWorldSpace(*_points.at(1));
+                const Point pos2 = convertToWorldSpace(*_points.at(2));
+                nvgQuadTo(nvg, pos1.x, visibleSize.height - pos1.y, pos2.x, visibleSize.height - pos2.y);
             } else {
-                nvgBezierTo(nvg, _points.at(1)->x, visibleSize.height - _points.at(1)->y, _points.at(2)->x, visibleSize.height - _points.at(2)->y, _points.at(3)->x, visibleSize.height - _points.at(3)->y);
+                const Point pos1 = convertToWorldSpace(*_points.at(1));
+                const Point pos2 = convertToWorldSpace(*_points.at(2));
+                const Point pos3 = convertToWorldSpace(*_points.at(3));
+                nvgBezierTo(nvg, pos1.x, visibleSize.height - pos1.y, pos2.x, visibleSize.height - pos2.y, pos3.x, visibleSize.height - pos3.y);
             }
 
             break;
         }
         case NVGDrawType_Arc: {
-            nvgArc(nvg, _points.at(0)->x, visibleSize.height - _points.at(0)->y, _radius, _arc0, _arc1, _dir);
+            const Point pos = convertToWorldSpace(*_points.at(0));
+            nvgArc(nvg, pos.x, visibleSize.height - pos.y, _radius, _arc0, _arc1, _dir);
             break;
         }
         default: {
