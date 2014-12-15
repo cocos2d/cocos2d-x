@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <functional>
 #include <algorithm> // for std::find
 
-#if _MSC_VER >= 1800
+#if !define(_MSC_VER) || _MSC_VER >= 1800
 #include <initializer_list>
 #endif
 
@@ -86,7 +86,7 @@ public:
     }
     
     /** Constructor with a initializer_list */
-#if _MSC_VER >= 1800
+#if !define(_MSC_VER) || _MSC_VER >= 1800
     Vector<T>(std::initializer_list<T> list)
       : _data(list)
     {
