@@ -197,14 +197,10 @@ void GLView::setFrameSize(float width, float height)
     {
        director->_winSizeInPoints = _designResolutionSize;
 
-       //auto ds = isDisplayStats();
-       //director->setDefaultValues();
        director->setGLDefaultValues();
        director->setProjection(director->_projection);
-       //director->createStatsLabel();
-       //director->setDisplayStats(ds);
 
-       // It seems the scene content size doews not matter in most cases but just to be on the safe side.
+       // It seems that the scene content size does not matter in most cases but just to be on the safe side.
        auto scene = director->getRunningScene();
        if (scene)
           scene->setContentSize(_designResolutionSize);
@@ -476,7 +472,7 @@ float GLView::getScaleY() const
     return _scaleY;
 }
 
-void GLViewProtocol::addResizeCalback(const std::function<void(const Size&)>& callback)
+void GLView::addResizeCalback(const std::function<void(const Size&)>& callback)
 {
    _resizeCallbacks.push_back(callback);
 }
