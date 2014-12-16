@@ -315,7 +315,7 @@ To enable set it to a value different than 0. Disabled by default.
  more memory, and should not be used for production builds.
  */
 #ifndef CC_ENABLE_ALLOCATOR_DIAGNOSTICS
-# define CC_ENABLE_ALLOCATOR_DIAGNOSTICS 1
+# define CC_ENABLE_ALLOCATOR_DIAGNOSTICS CC_ENABLE_ALLOCATOR
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
