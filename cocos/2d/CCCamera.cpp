@@ -69,6 +69,8 @@ Camera::Camera()
 : _scene(nullptr)
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
+, _frustumDirty(true)
+, _enableFrustumCull(true)
 {
     
 }
@@ -246,6 +248,26 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     }
     
     dst->set(screen.x, screen.y, screen.z);
+}
+
+void Camera::enableFrustumCull(bool bEnalbe, bool bClipZ)
+{
+    _enableFrustumCull = bEnalbe;
+    _frustum.setClipZ(bClipZ);
+}
+
+bool Camera::visibleInFrustum(const AABB& aabb) const
+{
+    if (_enableFrustumCull)
+    {
+        if (_frustumDirty)
+        {
+            _frustum.initFrustum(this);
+            _frustumDirty = false;
+        }
+        return !_frustum.isOutFrustum(aabb);
+    }
+    return true;
 }
 
 void Camera::onEnter()

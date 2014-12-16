@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,46 +22,59 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCATTACHNODE_H__
-#define __CCATTACHNODE_H__
+#ifndef __CC_FRUSTUM_H_
+#define __CC_FRUSTUM_H_
 
+#include "base/ccMacros.h"
 #include "math/CCMath.h"
-#include "2d/CCNode.h"
+#include "3d/CCAABB.h"
+#include "3d/CCOBB.h"
+#include "3d/CCPlane.h"
 
 NS_CC_BEGIN
 
-class Bone3D;
-
-/** 
- * attach a node to a bone
- * usage: auto sprite = Sprite3D::create("girl.c3b");
- *        auto weapon = Sprite3D::create("weapon.c3b");
- *        auto attachNode = sprite->getAttachNode("left hand");
- *        attachNode->addChild(weapon);
- */
-class CC_DLL AttachNode : public Node
+class Camera;
+class CC_DLL Frustum
 {
+    friend class Camera;
 public:
-    /** 
-     * creates an AttachNode
-     * @param attachBone The bone to which the AttachNode is going to attach, the attacheBone must be a bone of the AttachNode's parent
+    /**
+     * Constructor & Destructor.
      */
-    static AttachNode* create(Bone3D* attachBone);
-    
-    virtual Mat4 getWorldToNodeTransform() const override;
-    virtual Mat4 getNodeToWorldTransform() const override;
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    Frustum(): _bInit(false), _bClipZ(true){}
+    ~Frustum(){}
 
-CC_CONSTRUCTOR_ACCESS:
-    
-    AttachNode();
-    virtual ~AttachNode();
-    
+    /**
+     * init frustum from camera.
+     */
+    bool initFrustum(const Camera* pCamera);
 
+    /**
+     * is aabb out of frustum.
+     */
+    bool isOutFrustum(const AABB& aabb) const;
+    /**
+     * is obb out of frustum
+     */
+    bool isOutFrustum(const OBB& obb) const;
+
+    /**
+     * get & set z clip. if bclipZ == true use near and far plane
+     */
+    void setClipZ(bool bclipZ) { _bClipZ = bclipZ; }
+    bool isClipZ() { return _bClipZ; }
+    
 protected:
-    Bone3D* _attachBone;
+    /**
+     * create clip plane
+     */
+    void createPlane(const Camera* pcamera);
+
+    Plane _plane[6];             // clip plane, left, right, top, bottom, near, far
+    bool _bClipZ;                // use near and far clip plane
+    bool _bInit;
 };
 
-
 NS_CC_END
-#endif // __CCATTACHNODE_H__
+
+#endif//__CC_FRUSTUM_H_

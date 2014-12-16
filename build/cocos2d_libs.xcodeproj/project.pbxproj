@@ -1735,6 +1735,14 @@
 		50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
+		5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */; };
+		5E9F61271A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */; };
+		5E9F61281A3FFE3D0038DE01 /* CCFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */; };
+		5E9F61291A3FFE3D0038DE01 /* CCFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */; };
+		5E9F612A1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
+		5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
+		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
+		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -2871,6 +2879,10 @@
 		50FCEB9018C72017004AD434 /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		50FCEB9118C72017004AD434 /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
+		5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrustum.cpp; sourceTree = "<group>"; };
+		5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrustum.h; sourceTree = "<group>"; };
+		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
+		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -5069,6 +5081,10 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */,
+				5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */,
+				5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */,
+				5E9F61251A3FFE3D0038DE01 /* CCPlane.h */,
 				B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */,
 				B60C5BD319AC68B10056FBDE /* CCBillBoard.h */,
 				15AE17E419AAD2F700C27E9E /* CCAABB.cpp */,
@@ -5274,6 +5290,7 @@
 				5034CA47191D591100CE6051 /* ccShader_Label_normal.frag in Headers */,
 				15AE182219AAD2F700C27E9E /* CCBundleReader.h in Headers */,
 				15AE18A519AAD33D00C27E9E /* CCScale9SpriteLoader.h in Headers */,
+				5E9F61281A3FFE3D0038DE01 /* CCFrustum.h in Headers */,
 				50ED2BE019BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
 				15AE197119AAD35700C27E9E /* CCFrame.h in Headers */,
 				15AE1A6519AAD40300C27E9E /* b2TimeStep.h in Headers */,
@@ -5554,6 +5571,7 @@
 				50ABBFFD1926664800A911A9 /* CCFileUtils-apple.h in Headers */,
 				15B3708219EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
 				15B3708619EE414C00ABE682 /* Downloader.h in Headers */,
+				5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */,
 				5034CA41191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
 				50ABBE7F1925AB6F00A911A9 /* CCEventTouch.h in Headers */,
 				50ABBE5B1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
@@ -5844,6 +5862,7 @@
 				15AE182F19AAD2F700C27E9E /* CCMeshVertexIndexData.h in Headers */,
 				15AE1BAA19AADFDF00C27E9E /* UIVBox.h in Headers */,
 				3EACC9A719F5014D00EB3C5E /* CCLight.h in Headers */,
+				5E9F61291A3FFE3D0038DE01 /* CCFrustum.h in Headers */,
 				15AE194E19AAD35100C27E9E /* CCDataReaderHelper.h in Headers */,
 				15AE1ADB19AAD41000C27E9E /* b2Rope.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
@@ -6121,6 +6140,7 @@
 				15AE19AD19AAD39700C27E9E /* LoadingBarReader.h in Headers */,
 				50ABBE5C1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
 				B375107D1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
+				5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */,
 				50ABC01C1926664800A911A9 /* CCSAXParser.h in Headers */,
 				503DD8F11926736A00CD74DD /* OpenGL_Internal-ios.h in Headers */,
 				38ACD1FF1A27111900C3093D /* WidgetCallBackHandlerProtocol.h in Headers */,
@@ -6257,6 +6277,7 @@
 				15AE189819AAD33D00C27E9E /* CCMenuItemLoader.cpp in Sources */,
 				15AE1A5719AAD40300C27E9E /* b2Settings.cpp in Sources */,
 				50ABBE271925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
+				5E9F612A1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */,
 				15AE197419AAD35700C27E9E /* CCTimeLine.cpp in Sources */,
 				15AE188E19AAD33D00C27E9E /* CCLabelTTFLoader.cpp in Sources */,
 				15AE1A3019AAD3D500C27E9E /* b2ChainShape.cpp in Sources */,
@@ -6526,6 +6547,7 @@
 				15AE196E19AAD35700C27E9E /* CCActionTimelineCache.cpp in Sources */,
 				50ABBEB31925AB6F00A911A9 /* CCUserDefault-apple.mm in Sources */,
 				50ABBEB51925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
+				5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */,
 				29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				382383FC1A258FA7002C4610 /* idl_gen_text.cpp in Sources */,
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
@@ -6821,6 +6843,7 @@
 				B29A7E0019EE1B7700872B35 /* Json.c in Sources */,
 				1A570120180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				15AE181119AAD2F700C27E9E /* CCAnimation3D.cpp in Sources */,
+				5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */,
 				1A57019E180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				15AE1ACC19AAD40300C27E9E /* b2PrismaticJoint.cpp in Sources */,
 				15AE195F19AAD35100C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
@@ -6988,6 +7011,7 @@
 				1A57030D180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				15AE1B8F19AADA9A00C27E9E /* UIDeprecated.cpp in Sources */,
 				464AD6E6197EBB1400E502D8 /* pvr.cpp in Sources */,
+				5E9F61271A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */,
 				15AE1B7619AADA9A00C27E9E /* UIPageView.cpp in Sources */,
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
