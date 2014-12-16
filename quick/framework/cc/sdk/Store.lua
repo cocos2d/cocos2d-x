@@ -2,7 +2,7 @@
 local Store = {}
 
 local function checkCCStore()
-    if not CCStore then
+    if not Store then
         printError("framework.cc.sdk.Store - CCStore not exists.")
         return false
     end
@@ -22,7 +22,7 @@ function Store.init(listener)
         return false
     end
 
-    cc.storeProvider = CCStore:sharedStore() -- avoid gc
+    cc.storeProvider = Store:sharedStore() -- avoid gc
     return cc.storeProvider:postInitWithTransactionListener(listener)
 end
 
