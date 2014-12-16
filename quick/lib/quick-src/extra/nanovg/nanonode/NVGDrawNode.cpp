@@ -13,6 +13,7 @@ NS_CC_EXT_BEGIN
 NVGDrawNode::NVGDrawNode()
 : _radius(0)
 , _borderWidth(0)
+, _bClose(false)
 , _drawType(NVGDrawType_None) {
     _color.r = 0;
     _color.g = 0;
@@ -68,12 +69,15 @@ void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
             if (_points.size() < 2) {
                 break;
             }
-            nvgMoveTo(nvg, _points.at(0)->x, visibleSize.height - _points.at(0)->y);
+            const Point pos0 = convertToWorldSpace(*_points.at(0));
+            nvgMoveTo(nvg, pos0.x, visibleSize.height - pos0.y);
             for (int i = 1; i < _points.size(); i++) {
-                const Point pos = convertToWorldSpace(*_points.at(i));
-                nvgLineTo(nvg, pos.x, visibleSize.height - pos.y);
+                const Point pos1 = convertToWorldSpace(*_points.at(i));
+                nvgLineTo(nvg, pos1.x, visibleSize.height - pos1.y);
             }
-            nvgClosePath(nvg);
+            if (_bClose) {
+                nvgClosePath(nvg);
+            }
             break;
         }
         case NVGDrawType_Rect: {
@@ -119,7 +123,7 @@ void NVGDrawNode::onDraw(const Mat4 &transform, uint32_t flags) {
         }
     }
 
-    if (_colorFill.a >= 0) {
+    if (_bFill && _colorFill.a >= 0) {
         nvgFillColor(nvg, _colorFill);
         nvgFill(nvg);
     }
@@ -151,7 +155,6 @@ void NVGDrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags
 
 void NVGDrawNode::drawPoint(const Vec2& point, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Point;
     _points.push_back(new Vec2(point));
     _radius = 1;
@@ -161,7 +164,6 @@ void NVGDrawNode::drawPoint(const Vec2& point, const Color4F &color) {
 
 void NVGDrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Point;
     for (int i = 0; i < numberOfPoints; i++, position++) {
         _points.push_back(new Vec2(*position));
@@ -173,7 +175,6 @@ void NVGDrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, 
 
 void NVGDrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Line;
     _points.push_back(new Vec2(origin));
     _points.push_back(new Vec2(destination));
@@ -184,28 +185,24 @@ void NVGDrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Co
 void NVGDrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color) {
     _points.clear();
     _rects.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Rect;
     _rects.push_back(new Rect(origin.x, origin.y, destination.x - origin.x, destination.y - origin.y));
     _color = clr4f2NVGClr(color);
-    _colorFill.a = -1;
 }
 
-void NVGDrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color) {
+void NVGDrawNode::drawPolygon(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Line;
     for (int i = 0; i < numberOfPoints; i++, poli++) {
         _points.push_back(new Vec2(*poli));
     }
     _radius = 1;
     _color = clr4f2NVGClr(color);
-    _colorFill.a = -1;
+    _bClose = closePolygon;
 }
 
 void NVGDrawNode::drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Circle;
     _points.push_back(new Vec2(center));
     _radius = radius;
@@ -215,7 +212,6 @@ void NVGDrawNode::drawCircle( const Vec2& center, float radius, float angle, uns
 
 void NVGDrawNode::drawCircle(const Vec2 &center, float radius, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Circle;
     _points.push_back(new Vec2(center));
     _radius = radius;
@@ -225,7 +221,6 @@ void NVGDrawNode::drawCircle(const Vec2 &center, float radius, const Color4F &co
 
 void NVGDrawNode::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Bezier;
     _points.push_back(new Vec2(origin));
     _points.push_back(new Vec2(control));
@@ -237,7 +232,6 @@ void NVGDrawNode::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const 
 /** draw a cubic bezier curve with color and number of segments */
 void NVGDrawNode::drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Bezier;
     _points.push_back(new Vec2(origin));
     _points.push_back(new Vec2(control1));
@@ -251,37 +245,35 @@ void NVGDrawNode::drawCubicBezier(const Vec2 &origin, const Vec2 &control1, cons
 void NVGDrawNode::drawDot(const Vec2 &pos, float radius, const Color4F &color) {
     drawCircle(pos, radius, color);
     _colorFill = clr4f2NVGClr(color);
+    _bFill = true;
 }
 
 void NVGDrawNode::drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Vec2& rb, const Color4F &color) {
     _points.clear();
     _rects.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Rect;
     _rects.push_back(new Rect(lb.x, lb.y, rt.x - lb.x, rt.y - lb.y));
     _color = clr4f2NVGClr(color);
-    _colorFill.a = -1;
 }
 
 void NVGDrawNode::drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color) {
-    drawRect(origin, destination, color);
+    _points.clear();
+    _rects.clear();
+    _drawType = NVGDrawType_Rect;
+    _rects.push_back(new Rect(origin.x, origin.y, destination.x - origin.x, destination.y - origin.y));
     _colorFill = clr4f2NVGClr(color);
-}
-
-void NVGDrawNode::drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color) {
-    drawPoly(poli, numberOfPoints, true, color);
-    _colorFill = clr4f2NVGClr(color);
+    _bFill = true;
 }
 
 void NVGDrawNode::drawSolidCircle(const Vec2& center, float radius, const Color4F &color) {
     drawCircle(center, radius, color);
     _colorFill = clr4f2NVGClr(color);
+    _bFill = true;
 }
 
 /** draw a segment with a radius and color */
 void NVGDrawNode::drawArc(const Vec2 &pos, float radius, float a0, float a1, int dir, const Color4F &color) {
     _points.clear();
-    _bDrawStroke = false;
     _drawType = NVGDrawType_Arc;
     _points.push_back(new Vec2(pos));
     _radius = radius;
@@ -293,38 +285,24 @@ void NVGDrawNode::drawArc(const Vec2 &pos, float radius, float a0, float a1, int
     } else {
         _dir = NVG_CCW;
     }
-    _colorFill.a = -1;
 }
 
-/** draw a polygon with a fill color and line color
- * @code
- * When this function bound into js or lua,the parameter will be changed
- * In js: var drawPolygon(var Arrayofpoints, var fillColor, var width, var borderColor)
- * In lua:local drawPolygon(local pointTable,local tableCount,local fillColor,local width,local borderColor)
- * @endcode
- */
-void NVGDrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor) {
+void NVGDrawNode::drawSolidPolygon(const Vec2 *verts, int count, const Color4F &color) {
     _points.clear();
     _drawType = NVGDrawType_Line;
     for (int i = 0; i < count; i++) {
         _points.push_back(new Vec2(verts[i]));
     }
-    _color = clr4f2NVGClr(borderColor);
-    _colorFill = clr4f2NVGClr(fillColor);
-    _borderWidth = borderWidth;
-    _bDrawStroke = true;
+    _colorFill = clr4f2NVGClr(color);
+    _bFill = true;
+    _bClose = true;
 }
 
-/** draw a triangle with color */
-void NVGDrawNode::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color) {
-    _points.clear();
-    _bDrawStroke = false;
-    _drawType = NVGDrawType_Line;
-    _points.push_back(new Vec2(p1));
-    _points.push_back(new Vec2(p2));
-    _points.push_back(new Vec2(p3));
+void NVGDrawNode::drawRect(const Rect &rect, const Color4F &color) {
+    _rects.clear();
+    _drawType = NVGDrawType_Rect;
+    _rects.push_back(new Rect(rect));
     _color = clr4f2NVGClr(color);
-    _colorFill.a = -1;
 }
 
 void NVGDrawNode::setColor(const Color4F &color) {
@@ -333,6 +311,10 @@ void NVGDrawNode::setColor(const Color4F &color) {
 
 void NVGDrawNode::setFillColor(const Color4F &color) {
     _colorFill = clr4f2NVGClr(color);
+}
+
+void NVGDrawNode::setFill(bool bFill) {
+    _bFill = bFill;
 }
 
 void NVGDrawNode::setLineColor(const Color4F &color) {
@@ -345,6 +327,11 @@ void NVGDrawNode::setLineWidth(float width) {
 
 void NVGDrawNode::setRadius(float radius) {
     _radius = radius;
+}
+
+void NVGDrawNode::setOpacityf(float opacity) {
+    _color.a = opacity;
+    _colorFill.a = opacity;
 }
 
 

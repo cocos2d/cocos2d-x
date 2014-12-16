@@ -45,7 +45,7 @@ function NVGDrawNodeScene:draw()
 	points[4] = cc.p(300, 150)
 	local drawNode5 = cc.NVGDrawNode:create()
 	self:addChild(drawNode5)
-    drawNode5:drawPoly(points, 4, true, cc.c4f(0, 1, 1, 1))
+    drawNode5:drawPolygon(points, 4, true, cc.c4f(0, 1, 1, 1))
     
 	local drawNode6 = cc.NVGDrawNode:create()
 	self:addChild(drawNode6)
@@ -65,6 +65,7 @@ function NVGDrawNodeScene:draw()
     
     local drawNode10 = cc.NVGDrawNode:create()
 	self:addChild(drawNode10)
+	drawNode10:setColor(cc.c4f(1, 1, 1, 1))
     drawNode10:drawSolidRect(cc.p(330, 120), cc.p(430, 220), cc.c4f(0, 0, 0.5, 1))
 
     points = {}
@@ -73,10 +74,12 @@ function NVGDrawNodeScene:draw()
 	points[3] = cc.p(550, 500)
 	local drawNode11 = cc.NVGDrawNode:create()
 	self:addChild(drawNode11)
-    drawNode11:drawSolidPoly(points, 3, cc.c4f(0.5, 0.5, 0, 1))
+    drawNode11:drawSolidPolygon(points, 3, cc.c4f(0.5, 0.5, 0, 1))
     
     local drawNode12 = cc.NVGDrawNode:create()
 	self:addChild(drawNode12)
+	drawNode12:setFill(true)
+	drawNode12:setFillColor(cc.c4f(1, 1, 1, 1))
     drawNode12:drawArc(cc.p(50, 200), 50, 30, 200, 1, cc.c4f(0, 0.5, 0.5, 1))
 
 	local points = {}
@@ -86,8 +89,9 @@ function NVGDrawNodeScene:draw()
 	points[4] = cc.p(220, 410)
 	local drawNode13 = cc.NVGDrawNode:create()
 	self:addChild(drawNode13)
-    drawNode13:drawPolygon(points, 4, cc.c4f(0.5, 0, 0.5, 1), 2, cc.c4f(0, 0.5, 0.5, 1))
-
+    drawNode13:setLineWidth(4)
+    drawNode13:setColor(cc.c4f(0, 0.5, 0.5, 1))
+    drawNode13:drawSolidPolygon(points, 4, cc.c4f(0.5, 0, 0.5, 1))
 
 end
 
