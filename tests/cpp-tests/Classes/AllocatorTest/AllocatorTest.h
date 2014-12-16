@@ -27,7 +27,6 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "base/allocator/CCAllocator.h"
 #include "base/allocator/CCAllocatorStrategyPool.h"
 
 namespace AllocatorTestNS
