@@ -583,6 +583,7 @@ void Label::alignText()
 {
     if (_fontAtlas == nullptr || _currentUTF16String.empty())
     {
+        setContentSize(Size::ZERO);
         return;
     }
 
