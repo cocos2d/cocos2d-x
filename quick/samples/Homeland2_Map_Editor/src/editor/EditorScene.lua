@@ -74,7 +74,7 @@ function EditorScene:ctor()
         align = ui.TEXT_ALIGN_LEFT,
         x     = display.left + 10,
         y     = display.bottom + EditorConstants.MAP_TOOLBAR_HEIGHT * self.editorUIScale * self.toolbarLines + 20,
-    })
+    }):align(display.CENTER)
     self.mapNameLabel_:enableOutline(cc.c4b(255, 0, 0), 2)
     self.mapLayer_:addChild(self.mapNameLabel_)
 

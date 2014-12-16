@@ -39,6 +39,7 @@ function RangeEditorBehavior:bind(object)
             size  = EditorConstants.LABEL_FONT_SIZE,
             align = ui.TEXT_ALIGN_CENTER,
         })
+        :align(display.CENTER)
         debugLayer:addChild(object.idLabel_, EditorConstants.LABEL_ZORDER)
 
         object.radiusCircle_ = utils.drawCircle(object.radius_)

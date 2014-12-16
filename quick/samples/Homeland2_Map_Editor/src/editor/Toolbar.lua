@@ -184,7 +184,7 @@ function Toolbar:createView(parent, bgImageName, padding, scale, toolbarLines)
         align = ui.TEXT_ALIGN_RIGHT,
         x     = display.right - 96 * scale,
         y     = self.toolbarHeight_ / 2,
-    })
+    }):align(display.CENTER)
     self.scaleLabel_:align(display.CENTER_RIGHT, display.right - 96 * scale, self.toolbarHeight_ / 2)
     self.sprite_:addChild(self.scaleLabel_)
 
@@ -227,7 +227,7 @@ function Toolbar:showNotice(text, fontsize, delay)
         size = fontsize or 96,
         color = cc.c3b(100, 255, 100),
         align = ui.TEXT_ALIGN_CENTER,
-    })
+    }):align(display.CENTER)
 
     label:setPosition(display.cx, display.cy)
     self:getView():addChild(label)

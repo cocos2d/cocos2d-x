@@ -340,7 +340,8 @@ function Map:createView(parent)
     self.bgSprite_:align(display.LEFT_BOTTOM, 0, 0)
     parent:addChild(self.bgSprite_)
 
-    self.batch_ = display.newBatchNode("SheetMapBattle.png", 1000)
+    -- self.batch_ = display.newBatchNode("SheetMapBattle.png", 1000)
+    self.batch_ = display.newNode()
     parent:addChild(self.batch_)
 
     self.marksLayer_ = display.newNode()

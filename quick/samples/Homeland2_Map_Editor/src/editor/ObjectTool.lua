@@ -115,7 +115,7 @@ function ObjectTool:createObjectBindingLabel(text, isStaticLabel)
         color        = cc.c3b(255, 100, 100),
         x            = labelX,
         y            = labelY,
-    })
+    }):align(display.CENTER)
     label:enableOutline(cc.c4b(255, 255, 255, 255), 2)
     label:setPosition(x, y + 100)
     self.map_:getDebugLayer():addChild(label, EditorConstants.BINDING_LABEL_ZORDER)
@@ -297,7 +297,7 @@ function ObjectTool:showToolbox(mapX, mapY)
 
     local bgWidth = columns * ObjectTool.TOOLBOX_PADDING + 4
     local bgHeight = rows * ObjectTool.TOOLBOX_PADDING + 4
-    local rect = display.newRect(
+    local rect = utils.drawRect(
                     cc.rect(x - ObjectTool.TOOLBOX_PADDING / 2 - 2,
                         y - bgHeight + ObjectTool.TOOLBOX_PADDING / 2 + 2,
                         bgWidth,
@@ -335,7 +335,7 @@ function ObjectTool:showToolbox(mapX, mapY)
         end
         sprite:setScale(scale)
 
-        local rect = display.newRect(
+        local rect = utils.drawRect(
                     cc.rect(x - ObjectTool.TOOLBOX_ICON_SIZE/2,
                         y - ObjectTool.TOOLBOX_ICON_SIZE/2,
                         ObjectTool.TOOLBOX_ICON_SIZE,

@@ -41,6 +41,7 @@ function StaticObjectEditorBehavior:bind(object)
             size  = EditorConstants.LABEL_FONT_SIZE,
             align = ui.TEXT_ALIGN_CENTER,
         })
+        :align(display.CENTER)
         object.idLabel_.offsetY = math.floor(-object.radius_ - EditorConstants.LABEL_OFFSET_Y)
         debugLayer:addChild(object.idLabel_, EditorConstants.LABEL_ZORDER)
 
@@ -68,6 +69,7 @@ function StaticObjectEditorBehavior:bind(object)
                 size  = MapConstants.LEVEL_LABEL_FONT_SIZE,
                 align = ui.TEXT_ALIGN_CENTER,
             })
+            :align(display.CENTER)
             debugLayer:addChild(object.levelLabel_)
         end
 
@@ -78,6 +80,7 @@ function StaticObjectEditorBehavior:bind(object)
                 color        = cc.c3b(255, 255, 255),
                 align        = ui.TEXT_ALIGN_CENTER,
             })
+            :align(display.CENTER)
             object.playerIdLabel_:enableOutline(cc.c4b(10, 115, 107, 255), 2)
             debugLayer:addChild(object.playerIdLabel_)
         end
@@ -124,8 +127,7 @@ function StaticObjectEditorBehavior:bind(object)
         
         local x, y = math.floor(object.x_), math.floor(object.y_)
 
-        local scale = 1
-        scale = object.debugLayer_:getScale()
+        local scale = object.debugLayer_:getScale()
         if scale > 1 then scale = 1 / scale end
 
         local idString = {object:getId(), "/"}

@@ -51,6 +51,7 @@ function PathEditorBehavior:bind(object)
             size  = EditorConstants.LABEL_FONT_SIZE,
             align = ui.TEXT_ALIGN_CENTER,
         })
+        :align(display.CENTER)
         debugLayer:addChild(object.idLabel_, EditorConstants.LABEL_ZORDER)
     end
     object:bindMethod(self, "createView", createView)
@@ -77,8 +78,8 @@ function PathEditorBehavior:bind(object)
 
         if #object.points_ < 1 then return end
 
-        object.polygon_ = display.newPolygon(object.points_)
-        object.polygon_:setLineStipple(checknumber("0101010101010101", 2))
+        object.polygon_ = utils.drawPolygon(object.points_)
+        -- object.polygon_:setLineStipple(checknumber("0101010101010101", 2))
         -- object.polygon_:setLineStippleEnabled(true)
         object.debugLayer_:addChild(object.polygon_, EditorConstants.POLYGON_ZORDER)
 
