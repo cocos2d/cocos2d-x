@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIButton.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/UIHelper.h"
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
@@ -101,7 +102,8 @@ Button* Button::create(const std::string &normalImage,
                        TextureResType texType)
 {
     Button *btn = new (std::nothrow) Button;
-    if (btn && btn->init(normalImage,selectedImage,disableImage,texType)) {
+    if (btn && btn->init(normalImage,selectedImage,disableImage,texType))
+    {
         btn->autorelease();
         return btn;
     }
@@ -115,8 +117,10 @@ bool Button::init(const std::string &normalImage,
                   TextureResType texType)
 {
     bool ret = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             ret = false;
             break;
         }
@@ -197,6 +201,7 @@ void Button::ignoreContentAdaptWithSize(bool ignore)
         this->updateContentSize();
         return;
     }
+    
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
         Widget::ignoreContentAdaptWithSize(ignore);
@@ -319,97 +324,54 @@ void Button::setCapInsets(const Rect &capInsets)
     setCapInsetsDisabledRenderer(capInsets);
 }
 
+
+
 void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
 {
-    float x = capInsets.origin.x;
-    float y = capInsets.origin.y;
-    float width = capInsets.size.width;
-    float height = capInsets.size.height;
+    _capInsetsNormal = Helper::restrictCapInsetRect(capInsets, this->_normalTextureSize);
     
-    if (_normalTextureSize.width < width)
-    {
-        x = 0.0f;
-        width = 0.0f;
-    }
-    if (_normalTextureSize.height < height)
-    {
-        y = 0.0f;
-        height = 0.0f;
-    }
-    Rect rect(x, y, width, height);
-    
-    _capInsetsNormal = rect;
+    //for performance issue
     if (!_scale9Enabled)
     {
         return;
     }
-    _buttonNormalRenderer->setCapInsets(rect);
+    _buttonNormalRenderer->setCapInsets(_capInsetsNormal);
+}
+
+void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
+{
+    _capInsetsPressed = Helper::restrictCapInsetRect(capInsets, this->_pressedTextureSize);
+    
+    //for performance issue
+    if (!_scale9Enabled)
+    {
+        return;
+    }
+    _buttonClickedRenderer->setCapInsets(_capInsetsPressed);
+}
+
+void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
+{
+    _capInsetsDisabled = Helper::restrictCapInsetRect(capInsets, this->_disabledTextureSize);
+    
+    //for performance issue
+    if (!_scale9Enabled)
+    {
+        return;
+    }
+    _buttonDisableRenderer->setCapInsets(_capInsetsDisabled);
 }
 
 const Rect& Button::getCapInsetsNormalRenderer()const
 {
     return _capInsetsNormal;
 }
-
-void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
-{
-    float x = capInsets.origin.x;
-    float y = capInsets.origin.y;
-    float width = capInsets.size.width;
-    float height = capInsets.size.height;
     
-    if (_pressedTextureSize.width < width)
-    {
-        x = 0.0f;
-        width = 0.0f;
-    }
-    if (_pressedTextureSize.height < height)
-    {
-        y = 0.0f;
-        height = 0.0f;
-    }
-    Rect rect(x, y, width, height);
-    
-    _capInsetsPressed = rect;
-    if (!_scale9Enabled)
-    {
-        return;
-    }
-    _buttonClickedRenderer->setCapInsets(rect);
-}
-
 const Rect& Button::getCapInsetsPressedRenderer()const
 {
     return _capInsetsPressed;
 }
-
-void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
-{
-    float x = capInsets.origin.x;
-    float y = capInsets.origin.y;
-    float width = capInsets.size.width;
-    float height = capInsets.size.height;
     
-    if (_disabledTextureSize.width < width)
-    {
-        x = 0.0f;
-        width = 0.0f;
-    }
-    if (_disabledTextureSize.height < height)
-    {
-        y = 0.0f;
-        height = 0.0f;
-    }
-    Rect rect(x, y, width, height);
-    
-    _capInsetsDisabled = rect;
-    if (!_scale9Enabled)
-    {
-        return;
-    }
-    _buttonDisableRenderer->setCapInsets(rect);
-}
-
 const Rect& Button::getCapInsetsDisabledRenderer()const
 {
     return _capInsetsDisabled;
@@ -557,7 +519,9 @@ void Button::updateContentSize()
         onSizeChanged();
         return;
     }
-    if (_ignoreSize) {
+    
+    if (_ignoreSize)
+    {
         this->setContentSize(getVirtualRendererSize());
     }
 }
@@ -578,11 +542,13 @@ void Button::adaptRenderers()
         normalTextureScaleChangedWithSize();
         _normalTextureAdaptDirty = false;
     }
+    
     if (_pressedTextureAdaptDirty)
     {
         pressedTextureScaleChangedWithSize();
         _pressedTextureAdaptDirty = false;
     }
+    
     if (_disabledTextureAdaptDirty)
     {
         disabledTextureScaleChangedWithSize();
@@ -596,8 +562,10 @@ Size Button::getVirtualRendererSize() const
     {
         return this->getNormalSize();
     }
+    
     Size titleSize = _titleRenderer->getContentSize();
-    if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0) {
+    if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0)
+    {
         return titleSize;
     }
     return _normalTextureSize;
@@ -766,10 +734,12 @@ const Color3B& Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    if (_type == FontType::SYSTEM) {
+    if (_type == FontType::SYSTEM)
+    {
         _titleRenderer->setSystemFontSize(size);
     }
-    else{
+    else
+    {
         TTFConfig config = _titleRenderer->getTTFConfig();
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
@@ -802,7 +772,9 @@ void Button::setTitleFontName(const std::string& fontName)
         config.fontSize = _fontSize;
         _titleRenderer->setTTFConfig(config);
         _type = FontType::TTF;
-    } else{
+    }
+    else
+    {
         _titleRenderer->setSystemFontName(fontName);
         if (_type == FontType::TTF)
         {
@@ -864,6 +836,7 @@ Size Button::getNormalSize() const
     {
         titleSize = _titleRenderer->getContentSize();
     }
+    
     Size imageSize;
     if (_buttonNormalRenderer != nullptr)
     {

@@ -55,7 +55,8 @@ ImageView::~ImageView()
 ImageView* ImageView::create(const std::string &imageFileName, TextureResType texType)
 {
     ImageView *widget = new (std::nothrow) ImageView;
-    if (widget && widget->init(imageFileName, texType)) {
+    if (widget && widget->init(imageFileName, texType))
+    {
         widget->autorelease();
         return widget;
     }
@@ -78,8 +79,10 @@ ImageView* ImageView::create()
 bool ImageView::init()
 {
     bool ret = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             ret = false;
             break;
         }
@@ -91,8 +94,10 @@ bool ImageView::init()
 bool ImageView::init(const std::string &imageFileName, TextureResType texType)
 {
     bool bRet = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             bRet = false;
             break;
         }

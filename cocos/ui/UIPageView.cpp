@@ -570,7 +570,8 @@ void PageView::pageTurningEvent()
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::TURNING);
     }
     if (_ccEventCallback)
