@@ -32,7 +32,7 @@
 
 namespace flatbuffers
 {
-    struct FlatBufferBuilder;
+    class FlatBufferBuilder;
     
     struct NodeTree;
     
