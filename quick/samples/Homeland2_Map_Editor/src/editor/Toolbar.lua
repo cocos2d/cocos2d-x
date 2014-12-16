@@ -62,7 +62,7 @@ function Toolbar:onButtonTap(selectedTool, selectedButton)
     self.currentToolName_ = selectedTool:getName()
     selectedButton.sprite:setButtonSelected(true)
     selectedTool:selected(selectedButton.name)
-print("toolbar onbutton tap")
+
     self:dispatchEvent({
         name       = "SELECT_TOOL",
         toolName   = self.currentToolName_,
