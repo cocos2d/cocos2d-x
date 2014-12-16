@@ -52,10 +52,9 @@ protected:
     AllocatorMutex _mutex;
     AllocatorBase* _allocators;
 };
-
-#endif
+#endif//CC_ENABLE_ALLOCATOR_DIAGNOSTICS
 
 NS_CC_ALLOCATOR_END
 NS_CC_END
 
-#endif//CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+#endif//CC_ALLOCATOR_DIAGNOSTICS_H

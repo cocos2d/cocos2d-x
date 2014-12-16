@@ -30,6 +30,7 @@
 
 USING_NS_CC_ALLOCATOR;
 
+#if CC_ENABLE_ALLOCATOR
 #if CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
 
 namespace
@@ -42,8 +43,10 @@ namespace
 void* operator new[] (std::size_t size)
 {
     void* ptr = global.allocate(size);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
     if (nullptr == ptr)
         throw std::bad_alloc();
+#endif
     return ptr;    
 }
 
@@ -51,8 +54,10 @@ void* operator new[] (std::size_t size)
 void* operator new(std::size_t size)
 {
     void* ptr = global.allocate(size);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
     if (nullptr == ptr)
         throw std::bad_alloc();
+#endif
     return ptr;
 }
 
@@ -64,3 +69,4 @@ void operator delete(void* p) throw()
 }
 
 #endif // CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
+#endif // CC_ENABLE_ALLOCATOR

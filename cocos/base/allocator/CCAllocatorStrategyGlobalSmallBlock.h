@@ -182,7 +182,9 @@ public:
         ALLOCATE(13, 8192);
         default:
             CC_ASSERT(false);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
             throw std::bad_alloc();
+#endif
             break;
         }
         
@@ -261,21 +263,23 @@ public:
         
         switch (adjusted_size)
         {
-                DEALLOCATE(2,  4,    address);
-                DEALLOCATE(3,  8,    address);
-                DEALLOCATE(4,  16,   address);
-                DEALLOCATE(5,  32,   address);
-                DEALLOCATE(6,  64,   address);
-                DEALLOCATE(7,  128,  address);
-                DEALLOCATE(8,  256,  address);
-                DEALLOCATE(9,  512,  address);
-                DEALLOCATE(10, 1024, address);
-                DEALLOCATE(11, 2048, address);
-                DEALLOCATE(12, 4096, address);
-                DEALLOCATE(13, 8192, address);
-            default:
-                CC_ASSERT(false);
-                throw std::bad_alloc();
+        DEALLOCATE(2,  4,    address);
+        DEALLOCATE(3,  8,    address);
+        DEALLOCATE(4,  16,   address);
+        DEALLOCATE(5,  32,   address);
+        DEALLOCATE(6,  64,   address);
+        DEALLOCATE(7,  128,  address);
+        DEALLOCATE(8,  256,  address);
+        DEALLOCATE(9,  512,  address);
+        DEALLOCATE(10, 1024, address);
+        DEALLOCATE(11, 2048, address);
+        DEALLOCATE(12, 4096, address);
+        DEALLOCATE(13, 8192, address);
+        default:
+            CC_ASSERT(false);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+            throw std::bad_alloc();
+#endif
         }
         
         #undef DEALLOCATE
