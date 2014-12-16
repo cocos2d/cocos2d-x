@@ -1,3 +1,6 @@
+cocos2d-x-3.4 ??
+    [FIX]           Label: content size of Label is incorrect if the string is set to empty string
+
 cocos2d-x-3.3 Dec.12
     [FIX]           Billboard: allow billboard rotate along z axis
     [FIX]           Bundle3D: create aabb for mesh whose aabb does not exist (user custom mesh)
