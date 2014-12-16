@@ -417,8 +417,11 @@
 #define LUAI_INT32	int32_t
 #define LUAI_MAXINT32	0x7fffffff
 #define LUAI_UMEM	size_t
+#if defined WIN32
+#define LUAI_MEM	intptr_t
+#else
 #define LUAI_MEM	ssize_t
-
+#endif
 
 /*
 @@ LUAI_MAXCALLS limits the number of nested calls.
