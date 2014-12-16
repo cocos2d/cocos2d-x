@@ -441,7 +441,7 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
     _dirtyGLPoint = true;
 }
 
-void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
+void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color)
 {
     ensureCapacityGLPoint(numberOfPoints);
     
@@ -453,6 +453,7 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
         *point = a;
     }
     
+    _pointSize = pointSize;
     _pointColor = color;
     
     _bufferCountGLPoint += numberOfPoints;
