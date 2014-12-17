@@ -64656,6 +64656,25 @@ int lua_cocos2dx_GLViewImpl_createWithRect(lua_State* tolua_S)
         object_to_luaval<cocos2d::GLViewImpl>(tolua_S, "cc.GLViewImpl",(cocos2d::GLViewImpl*)ret);
         return 1;
     }
+    if (argc == 4)
+    {
+        std::string arg0;
+        cocos2d::Rect arg1;
+        double arg2;
+        bool arg3;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLViewImpl:createWithRect");
+        ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.GLViewImpl:createWithRect");
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.GLViewImpl:createWithRect");
+        ok &= luaval_to_boolean(tolua_S, 5,&arg3, "cc.GLViewImpl:createWithRect");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLViewImpl_createWithRect'", nullptr);
+            return 0;
+        }
+        cocos2d::GLViewImpl* ret = cocos2d::GLViewImpl::createWithRect(arg0, arg1, arg2, arg3);
+        object_to_luaval<cocos2d::GLViewImpl>(tolua_S, "cc.GLViewImpl",(cocos2d::GLViewImpl*)ret);
+        return 1;
+    }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.GLViewImpl:createWithRect",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
