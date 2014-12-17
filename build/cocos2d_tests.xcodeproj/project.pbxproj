@@ -714,7 +714,6 @@
 		295824591987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		2958245A1987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		298D7F6F19AC31F300FF096D /* UIWebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */; };
-		29AFEF6719ACCAA000F6B10A /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
 		29FBBBFE196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		3825CC491A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */; };
@@ -821,6 +820,10 @@
 		C08689C218D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C318D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
+		D0FE389A1A20293C0071F6F9 /* www in Resources */ = {isa = PBXBuildFile; fileRef = D0FE38991A20293C0071F6F9 /* www */; };
+		D0FE389B1A20293C0071F6F9 /* www in Resources */ = {isa = PBXBuildFile; fileRef = D0FE38991A20293C0071F6F9 /* www */; };
+		D0FE389C1A20293C0071F6F9 /* www in Resources */ = {isa = PBXBuildFile; fileRef = D0FE38991A20293C0071F6F9 /* www */; };
+		D0FE389D1A20293C0071F6F9 /* www in Resources */ = {isa = PBXBuildFile; fileRef = D0FE38991A20293C0071F6F9 /* www */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
@@ -1651,7 +1654,6 @@
 		295824581987415900F9746D /* UIScale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9SpriteTest.h; sourceTree = "<group>"; };
 		298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIWebViewTest.cpp; path = UIWebViewTest/UIWebViewTest.cpp; sourceTree = "<group>"; };
 		298D7F6E19AC31F300FF096D /* UIWebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewTest.h; path = UIWebViewTest/UIWebViewTest.h; sourceTree = "<group>"; };
-		29AFEF6619ACCAA000F6B10A /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Test.html; path = "../tests/cpp-tests/Resources/Test.html"; sourceTree = "<group>"; };
 		29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocostudioParserJsonTest.cpp; sourceTree = "<group>"; };
 		29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocostudioParserJsonTest.h; sourceTree = "<group>"; };
 		3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomRootNode.cpp; sourceTree = "<group>"; };
@@ -1744,6 +1746,7 @@
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
+		D0FE38991A20293C0071F6F9 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = "../tests/cpp-tests/Resources/www"; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -3206,6 +3209,7 @@
 				1AC35CC818CED84500F37B72 /* TileMaps */,
 				1AC35CC918CED84500F37B72 /* zwoptex */,
 				C08689C018D370C90093E810 /* background.caf */,
+				D0FE38991A20293C0071F6F9 /* www */,
 				1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */,
 				1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */,
 				1AC35CC218CED84500F37B72 /* music.mid */,
@@ -3217,7 +3221,6 @@
 				1AC35CB518CED84500F37B72 /* effect1.raw */,
 				1AC35CB618CED84500F37B72 /* effect1.wav */,
 				1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */,
-				29AFEF6619ACCAA000F6B10A /* Test.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -4322,6 +4325,7 @@
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1AC35DE118CEE65900F37B72 /* background.ogg in Resources */,
 				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
+				D0FE389B1A20293C0071F6F9 /* www in Resources */,
 				1AC35D7518CEE58500F37B72 /* src in Resources */,
 				1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */,
 				1A1645A6191B6281008C7C7F /* ccs-res in Resources */,
@@ -4372,6 +4376,7 @@
 				1AC35DCE18CEE65200F37B72 /* components in Resources */,
 				1AC35D7618CEE58500F37B72 /* src in Resources */,
 				1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */,
+				D0FE389D1A20293C0071F6F9 /* www in Resources */,
 				1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DED18CEE65B00F37B72 /* music.mid in Resources */,
 				527B1F4519EFAE13000A1F82 /* Default-736h@3x.png in Resources */,
@@ -4402,6 +4407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0FE389A1A20293C0071F6F9 /* www in Resources */,
 				1AC35CFE18CED84500F37B72 /* Particles in Resources */,
 				1AC35CF418CED84500F37B72 /* Images in Resources */,
 				1AC35CE018CED84500F37B72 /* configs in Resources */,
@@ -4472,6 +4478,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0FE389C1A20293C0071F6F9 /* www in Resources */,
 				1AC35CDF18CED84500F37B72 /* components in Resources */,
 				1AC35C8E18CECF1400F37B72 /* Icon-144.png in Resources */,
 				1AC35C9218CECF1400F37B72 /* Icon-50.png in Resources */,
@@ -4484,7 +4491,6 @@
 				1AC35D0918CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CFF18CED84500F37B72 /* Particles in Resources */,
 				1AC35C8818CECF1400F37B72 /* Default-568h@2x.png in Resources */,
-				29AFEF6719ACCAA000F6B10A /* Test.html in Resources */,
 				1AC35CD518CED84500F37B72 /* ccb in Resources */,
 				1AC35CE118CED84500F37B72 /* configs in Resources */,
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
