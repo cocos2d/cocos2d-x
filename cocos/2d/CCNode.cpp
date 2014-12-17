@@ -60,7 +60,7 @@ THE SOFTWARE.
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-extern int g_physicsSceneCount;
+extern int g_physicsNodeCount;
 
 NS_CC_BEGIN
 
@@ -333,7 +333,7 @@ void Node::setRotation(float rotation)
 #if CC_USE_PHYSICS
     if (!_physicsBody || !_physicsBody->_rotationResetTag)
     {
-        updatePhysicsBodyRotation(getScene());
+        updatePhysicsBodyRotation(getPhysicsNode());
     }
 #endif
 }
@@ -428,12 +428,12 @@ void Node::setScale(float scale)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
+    if(g_physicsNodeCount == 0)
         return;
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
+    PhysicsNode* physicsNode = getPhysicsNode();
+    if (!physicsNode || physicsNode->getPhysicsWorld())
     {
-        updatePhysicsBodyTransform(scene);
+        updatePhysicsBodyTransform(physicsNode);
     }
 #endif
 }
@@ -455,12 +455,12 @@ void Node::setScale(float scaleX,float scaleY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
+    if(g_physicsNodeCount == 0)
         return;
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
+    PhysicsNode* physicsNode = getPhysicsNode();
+    if (!physicsNode || physicsNode->getPhysicsWorld())
     {
-        updatePhysicsBodyTransform(scene);
+        updatePhysicsBodyTransform(physicsNode);
     }
 #endif
 }
@@ -475,12 +475,12 @@ void Node::setScaleX(float scaleX)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
+    if(g_physicsNodeCount == 0)
         return;
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
+    PhysicsNode* physicsNode = getPhysicsNode();
+    if (!physicsNode || physicsNode->getPhysicsWorld())
     {
-        updatePhysicsBodyTransform(scene);
+        updatePhysicsBodyTransform(physicsNode);
     }
 #endif
 }
@@ -524,12 +524,12 @@ void Node::setScaleY(float scaleY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
+    if(g_physicsNodeCount == 0)
         return;
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
+    PhysicsNode* physicsNode = getPhysicsNode();
+    if (!physicsNode || physicsNode->getPhysicsWorld())
     {
-        updatePhysicsBodyTransform(scene);
+        updatePhysicsBodyTransform(physicsNode);
     }
 #endif
 }
@@ -567,7 +567,7 @@ void Node::setPosition(float x, float y)
 #if CC_USE_PHYSICS
     if (!_physicsBody || !_physicsBody->_positionResetTag)
     {
-        updatePhysicsBodyPosition(getScene());
+        updatePhysicsBodyPosition(getPhysicsNode());
     }
 #endif
 }
@@ -1026,11 +1026,11 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
     
 #if CC_USE_PHYSICS
     // Recursive add children with which have physics body.
-    auto scene = this->getScene();
-    if (scene && scene->getPhysicsWorld())
+    PhysicsNode* physicsNode = getPhysicsNode();
+    if (physicsNode && physicsNode->getPhysicsWorld())
     {
-        child->updatePhysicsBodyTransform(scene);
-        scene->addChildToPhysicsWorld(child);
+        child->updatePhysicsBodyTransform(physicsNode);
+        physicsNode->addChildToPhysicsWorld(child);
     }
 #endif
     
@@ -1980,20 +1980,20 @@ void Node::removeAllComponents()
 
 // MARK: Physics
 
-void Node::updatePhysicsBodyTransform(Scene* scene)
+void Node::updatePhysicsBodyTransform(PhysicsNode* scene)
 {
     updatePhysicsBodyScale(scene);
     updatePhysicsBodyPosition(scene);
     updatePhysicsBodyRotation(scene);
 }
 
-void Node::updatePhysicsBodyPosition(Scene* scene)
+void Node::updatePhysicsBodyPosition(PhysicsNode* physicsNode)
 {
     if (_physicsBody != nullptr)
     {
-        if (scene && scene->getPhysicsWorld())
+        if (physicsNode && physicsNode->getPhysicsWorld())
         {
-            Vec2 pos = _parent == scene ? _position : scene->convertToNodeSpace(_parent->convertToWorldSpace(_position));
+            Vec2 pos = getParent() == physicsNode ? getPosition() : physicsNode->convertToNodeSpace(_parent->convertToWorldSpace(getPosition()));
             _physicsBody->setPosition(pos);
         }
         else
@@ -2004,18 +2004,18 @@ void Node::updatePhysicsBodyPosition(Scene* scene)
     
     for (Node* child : _children)
     {
-        child->updatePhysicsBodyPosition(scene);
+        child->updatePhysicsBodyPosition(physicsNode);
     }
 }
 
-void Node::updatePhysicsBodyRotation(Scene* scene)
+void Node::updatePhysicsBodyRotation(PhysicsNode* physicsNode)
 {
     if (_physicsBody != nullptr)
     {
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
+        if (physicsNode != nullptr && physicsNode->getPhysicsWorld() != nullptr)
         {
             float rotation = _rotationZ_X;
-            for (Node* parent = _parent; parent != scene; parent = parent->_parent)
+            for (Node* parent = _parent; parent != physicsNode; parent = parent->_parent)
             {
                 rotation += parent->getRotation();
             }
@@ -2029,20 +2029,20 @@ void Node::updatePhysicsBodyRotation(Scene* scene)
     
     for (auto child : _children)
     {
-        child->updatePhysicsBodyRotation(scene);
-        child->updatePhysicsBodyPosition(scene);
+        child->updatePhysicsBodyRotation(physicsNode);
+        child->updatePhysicsBodyPosition(physicsNode);
     }
 }
 
-void Node::updatePhysicsBodyScale(Scene* scene)
+void Node::updatePhysicsBodyScale(PhysicsNode* physicsNode)
 {
     if (_physicsBody != nullptr)
     {
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
+        if (physicsNode != nullptr && physicsNode->getPhysicsWorld() != nullptr)
         {
             float scaleX = _scaleX / _physicsScaleStartX;
             float scaleY = _scaleY / _physicsScaleStartY;
-            for (Node* parent = _parent; parent != scene; parent = parent->_parent)
+            for (Node* parent = _parent; parent != physicsNode; parent = parent->_parent)
             {
                 scaleX *= parent->_scaleX;
                 scaleY *= parent->_scaleY;
@@ -2057,7 +2057,7 @@ void Node::updatePhysicsBodyScale(Scene* scene)
     
     for (auto child : _children)
     {
-        child->updatePhysicsBodyScale(scene);
+        child->updatePhysicsBodyScale(physicsNode);
     }
 }
 
@@ -2106,24 +2106,14 @@ void Node::setPhysicsBody(PhysicsBody* body)
     
     if (body != nullptr)
     {
-        Node* node;
-        Scene* scene = nullptr;
-        for (node = this->getParent(); node != nullptr; node = node->getParent())
+        PhysicsNode* physicsNode = getPhysicsNode();
+        
+        if (physicsNode != nullptr)
         {
-            Scene* tmpScene = dynamic_cast<Scene*>(node);
-            if (tmpScene != nullptr && tmpScene->getPhysicsWorld() != nullptr)
-            {
-                scene = tmpScene;
-                break;
-            }
+            physicsNode->getPhysicsWorld()->addBody(body);
         }
         
-        if (scene != nullptr)
-        {
-            scene->getPhysicsWorld()->addBody(body);
-        }
-        
-        updatePhysicsBodyTransform(scene);
+        updatePhysicsBodyTransform(physicsNode);
     }
 }
 
@@ -2131,6 +2121,28 @@ PhysicsBody* Node::getPhysicsBody() const
 {
     return _physicsBody;
 }
+
+PhysicsNode* Node::getPhysicsNode() const
+{
+    if(!_parent)
+        return nullptr;
+    
+    return _parent->getPhysicsNode();
+}
+
+Vec2 Node::convertToPhysicsSpace(const Vec2& nodePoint) const
+{
+    if(_physicsBody)
+    {
+        PhysicsNode &physicsNode = _physicsBody->getWorld()->getPhysicsNode();
+        return physicsNode.convertToNodeSpace(convertToWorldSpace(nodePoint));
+    }
+    else
+    {
+        return convertToWorldSpace(nodePoint);
+    }
+}
+
 #endif //CC_USE_PHYSICS
 
 // MARK: Opacity and Color

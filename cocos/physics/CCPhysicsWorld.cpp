@@ -289,7 +289,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     {
         contact.setEventCode(PhysicsContact::EventCode::BEGIN);
         contact.setWorld(this);
-        _scene->getEventDispatcher()->dispatchEvent(&contact);
+        _physicsNode->getEventDispatcher()->dispatchEvent(&contact);
     }
     
     return ret ? contact.resetResult() : false;
@@ -305,7 +305,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _physicsNode->getEventDispatcher()->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -319,7 +319,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _physicsNode->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -331,7 +331,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _physicsNode->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
@@ -416,10 +416,10 @@ PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
     return shape == nullptr ? nullptr : PhysicsShapeInfo::getMap().find(shape)->second->getShape();
 }
 
-PhysicsWorld* PhysicsWorld::construct(Scene& scene)
+PhysicsWorld* PhysicsWorld::construct(PhysicsNode& physicsNode)
 {
     PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
-    if(world && world->init(scene))
+    if(world && world->init(physicsNode))
     {
         return world;
     }
@@ -428,14 +428,14 @@ PhysicsWorld* PhysicsWorld::construct(Scene& scene)
     return nullptr;
 }
 
-bool PhysicsWorld::init(Scene& scene)
+bool PhysicsWorld::init(PhysicsNode& physicsNode)
 {
     do
     {
         _info = new (std::nothrow) PhysicsWorldInfo();
         CC_BREAK_IF(_info == nullptr);
         
-        _scene = &scene;
+        _physicsNode = &physicsNode;
         
         _info->setGravity(_gravity);
         
@@ -954,7 +954,7 @@ PhysicsWorld::PhysicsWorld()
 , _updateTime(0.0f)
 , _substeps(1)
 , _info(nullptr)
-, _scene(nullptr)
+, _physicsNode(nullptr)
 , _delayDirty(false)
 , _autoStep(true)
 , _debugDraw(nullptr)
@@ -976,7 +976,7 @@ PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
 , _world(world)
 {
     _drawNode = DrawNode::create();
-    _world.getScene().addChild(_drawNode);
+    _world.getPhysicsNode().addChild(_drawNode);
 }
 
 PhysicsDebugDraw::~PhysicsDebugDraw()

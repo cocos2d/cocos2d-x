@@ -30,7 +30,7 @@
 
 #include "chipmunk.h"
 
-#include "2d/CCScene.h"
+#include "2d/CCPhysicsNode.h"
 
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsJoint.h"
@@ -792,11 +792,11 @@ void PhysicsBody::update(float delta)
         }
         
         Node* parent = _node->getParent();
-        Node* scene = &_world->getScene();
+        PhysicsNode* physicsNode = &_world->getPhysicsNode();
         
-        Vec2 position = parent != scene ? parent->convertToNodeSpace(scene->convertToWorldSpace(getPosition())) : getPosition();
+        Vec2 position = parent != physicsNode ? parent->convertToNodeSpace(physicsNode->convertToWorldSpace(getPosition())) : getPosition();
         float rotation = getRotation();
-        for (; parent != scene; parent = parent->getParent())
+        for (; parent != physicsNode; parent = parent->getParent())
         {
             rotation -= parent->getRotation();
         }

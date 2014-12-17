@@ -439,6 +439,9 @@
     <ClCompile Include="CCParticleSystemQuad.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="CCPhysicsNode.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
     <ClCompile Include="CCProgressTimer.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -1500,6 +1503,9 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCParticleSystemQuad.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="CCPhysicsNode.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCProgressTimer.h">
