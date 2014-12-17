@@ -87,9 +87,9 @@ public:
 // @param _page_size Number of objects of T in each page.
 // @param O ObjectTraits for type T
 // @see CC_USE_ALLOCATOR_POOL
-template <typename T, typename O = ObjectTraits<T>>
+template <typename T, typename O = ObjectTraits<T>, typename locking_traits = lockless_semantics>
 class AllocatorStrategyPool
-    : public AllocatorStrategyFixedBlock<sizeof(T)>
+    : public AllocatorStrategyFixedBlock<sizeof(T), O::alignment, locking_traits>
     , public O
 {
 public:
@@ -98,7 +98,7 @@ public:
     typedef value_type* pointer;
     
     // ugh wish I knew a way that I could declare this just once
-    typedef AllocatorStrategyFixedBlock<sizeof(T)> tParentStrategy;
+    typedef AllocatorStrategyFixedBlock<sizeof(T), O::alignment, locking_traits> tParentStrategy;
     
     AllocatorStrategyPool(const char* tag = nullptr, size_t poolSize = 100)
         : tParentStrategy(tag)

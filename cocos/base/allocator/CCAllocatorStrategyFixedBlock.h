@@ -57,9 +57,11 @@ NS_CC_ALLOCATOR_BEGIN
 // @param _block_size the size of the fixed block allocated by this allocator.
 // @param _page_size the number of blocks to allocate when growing the free list.
 // @param _alignment the alignment size in bytes of each block.
-template <size_t _block_size, size_t _alignment = 16>
+// @param locking_semantics which locking strategy to use.
+template <size_t _block_size, size_t _alignment = 16, typename lock_traits = locking_semantics>
 class AllocatorStrategyFixedBlock
     : public AllocatorBase
+    , public lock_traits
 {
 public:
     
@@ -105,7 +107,10 @@ public:
 #ifdef FALLBACK_TO_GLOBAL
         return ccAllocatorGlobal.allocate(size);
 #else
-        return pop_front();
+        lock_traits::lock();
+        auto r = pop_front();
+        lock_traits::unlock();
+        return r;
 #endif
     }
     
@@ -116,7 +121,9 @@ public:
 #ifdef FALLBACK_TO_GLOBAL
         ccAllocatorGlobal.deallocate(address);
 #else
+        lock_traits::lock();
         push_front(address);
+        lock_traits::unlock();
 #endif
     }
     
@@ -128,7 +135,7 @@ public:
 #ifdef FALLBACK_TO_GLOBAL
         return true; // since everything uses the global allocator, we can just lie and say we own this address.
 #else
-        LOCK(_mutex);
+        lock_traits::lock();
         
         const uint8_t* const a = (const uint8_t* const)address;
         const uint8_t* p = (uint8_t*)_pages;
@@ -137,12 +144,12 @@ public:
         {
             if (a >= p && a < (p + pSize))
             {
-                UNLOCK(_mutex);
+                lock_traits::unlock();
                 return true;
             }
             p = (uint8_t*)(*(uintptr_t*)p);
         }
-        UNLOCK(_mutex);
+        lock_traits::unlock();
         return false;
 #endif
     }
@@ -159,16 +166,6 @@ public:
     
 protected:
     
-#if COCOS2D_DEBUG
-    #define VALIDATE \
-        if (nullptr != _list) \
-        { \
-            CC_ASSERT(nullptr != _pages); \
-        }
-#else
-    #define VALIDATE
-#endif
-    
     // @brief Method to push an allocated block onto the free list.
     // No check is made that the block hasn't been already added to this allocator.
     CC_ALLOCATOR_INLINE void push_front(void* block)
@@ -177,13 +174,9 @@ protected:
         CC_ASSERT(block_size < AllocatorBase::kDefaultAlignment || 0 == ((intptr_t)block & (AllocatorBase::kDefaultAlignment - 1)));
 
 #if COCOS2D_DEBUG
-        // additional check that we own this block
+        // additional debug build checks
         CC_ASSERT(true == owns(block));
 #endif
-        
-        LOCK(_mutex);
-        
-        VALIDATE
         
         if (nullptr == _list)
         {
@@ -198,8 +191,6 @@ protected:
         }
         CC_ASSERT(_allocated > 0);
         --_allocated;
-        
-        UNLOCK(_mutex);
     }
     
     // @brief Method to pop a block off the free list.
@@ -209,10 +200,6 @@ protected:
     // for the number of blocks of this size being allocated.
     CC_ALLOCATOR_INLINE void* pop_front()
     {
-        LOCK(_mutex);
-        
-        VALIDATE
-
         if (nullptr == _list)
         {
             allocatePage();
@@ -226,9 +213,6 @@ protected:
         if (_allocated > _highestCount)
             _highestCount = _allocated;
 #endif
-        
-        UNLOCK(_mutex);
-        
         CC_ASSERT(block_size < AllocatorBase::kDefaultAlignment || 0 == ((intptr_t)block & (AllocatorBase::kDefaultAlignment - 1)));
         return block;
     }
@@ -282,9 +266,6 @@ protected:
     
     // @brief Number of blocks that are currently allocated.
     size_t _allocated;
-    
-    // @brief mutex for thread safety.
-    AllocatorMutex _mutex;
 };
 
 NS_CC_ALLOCATOR_END

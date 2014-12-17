@@ -86,6 +86,27 @@ protected:
 #define LOCK(m)   m.lock()
 #define UNLOCK(m) m.unlock()
 
+// @param implementation that provides a mutex with locking semantics.
+struct locking_semantics
+{
+    AllocatorMutex _mutex;
+    CC_ALLOCATOR_INLINE void lock()
+    {
+        _mutex.lock();
+    }
+    CC_ALLOCATOR_INLINE void unlock()
+    {
+        _mutex.unlock();
+    }
+};
+
+// @param implementation that provides lockless semantics that should optimize away.
+struct lockless_semantics
+{
+    CC_ALLOCATOR_INLINE void lock() {}
+    CC_ALLOCATOR_INLINE void unlock() {}
+};
+
 NS_CC_ALLOCATOR_END
 NS_CC_END
 
