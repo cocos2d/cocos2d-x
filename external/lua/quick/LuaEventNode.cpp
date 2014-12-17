@@ -65,7 +65,7 @@ Node *LuaEventNode::getDetachedNode() const
 
 bool LuaEventNode::isDetached()
 {
-	return (_nodePreuse != nullptr) ;
+	return (_node == nullptr) ;
 }
 
 Node *LuaEventNode::getActiveNode() const
