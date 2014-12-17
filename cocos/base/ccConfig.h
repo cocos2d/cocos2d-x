@@ -323,7 +323,7 @@ To enable set it to a value different than 0. Disabled by default.
  as specified by CC_ALLOCATOR_GLOBAL_NEW_DELETE below.
  */
 #ifndef CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
-# define CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE 1
+# define CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE 0
 # endif//CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
 
 /** @def CC_ALLOCATOR_GLOBAL
