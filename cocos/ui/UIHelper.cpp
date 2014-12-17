@@ -183,6 +183,26 @@ void Helper::doLayout(cocos2d::Node *rootNode)
         }
     }
 }
+    
+Rect Helper::restrictCapInsetRect(const cocos2d::Rect &capInsets, const Size& textureSize )
+{
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (textureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (textureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    return Rect(x, y, width, height);
+}
 }
 
 NS_CC_END
