@@ -58,6 +58,7 @@ public:
     Node *getDetachedNode() const;
     Node *getActiveNode() const;
     void detachNode();
+	bool isDetached();
 
     virtual LuaEventNode* getParent();
     
