@@ -92,11 +92,11 @@ struct locking_semantics
     AllocatorMutex _mutex;
     CC_ALLOCATOR_INLINE void lock()
     {
-        _mutex.lock();
+        LOCK(_mutex);
     }
     CC_ALLOCATOR_INLINE void unlock()
     {
-        _mutex.unlock();
+        UNLOCK(_mutex);
     }
 };
 
