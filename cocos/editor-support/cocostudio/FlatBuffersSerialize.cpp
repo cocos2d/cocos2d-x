@@ -54,7 +54,7 @@
 #include "WidgetReader/PageViewReader/PageViewReader.h"
 #include "WidgetReader/ListViewReader/ListViewReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 

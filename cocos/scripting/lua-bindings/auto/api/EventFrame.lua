@@ -17,6 +17,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#EventFrame] setNode 
+-- @param self
+-- @param #cc.Node node
+        
+--------------------------------
+-- 
 -- @function [parent=#EventFrame] getEvent 
 -- @param self
 -- @return string#string ret (return value: string)

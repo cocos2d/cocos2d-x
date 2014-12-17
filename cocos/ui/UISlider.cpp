@@ -250,7 +250,10 @@ const Rect& Slider::getCapInsetsProgressBarRebderer()const
     return _capInsetsProgressBarRenderer;
 }
 
-    void Slider::loadSlidBallTextures(const std::string& normal,const std::string& pressed,const std::string& disabled,TextureResType texType)
+void Slider::loadSlidBallTextures(const std::string& normal,
+                                      const std::string& pressed,
+                                      const std::string& disabled,
+                                      TextureResType texType)
 {
     loadSlidBallTextureNormal(normal, texType);
     loadSlidBallTexturePressed(pressed,texType);
@@ -358,7 +361,8 @@ bool Slider::hitTest(const cocos2d::Vec2 &pt)
     Vec2 nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
     Size ballSize = this->_slidBallNormalRenderer->getContentSize();
     Rect ballRect = Rect(0,0, ballSize.width, ballSize.height);
-    if (ballRect.containsPoint(nsp)) {
+    if (ballRect.containsPoint(nsp))
+    {
         return true;
     }
     return false;
@@ -417,7 +421,8 @@ void Slider::percentChangedEvent()
     {
         (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
     if (_ccEventCallback)
