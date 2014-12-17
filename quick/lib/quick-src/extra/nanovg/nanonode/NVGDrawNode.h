@@ -83,6 +83,9 @@ public:
     void setLineWidth(float width);
     void setRadius(float radius);
     void setOpacityf(float opacity);
+    
+    void addPoint(const Vec2 &point);
+    void setPoints(const Vec2 *poli, unsigned int numberOfPoints);
 
     /** Clear the geometry in the node's buffer. */
     void clear();

@@ -1,4 +1,6 @@
 
+local scheduler = require("framework.scheduler")
+
 local LEVEL_ID = "A0002"
 
 local EditorConstants = require("editor.EditorConstants")
@@ -16,6 +18,7 @@ function EditorScene:ctor()
     -- 根据设备类型确定工具栏的缩放比例
     self.toolbarLines = 1
     self.editorUIScale = 1
+    self.statusCount_ = 1
     if (device.platform == "ios" and device.model == "iphone") or device.platform == "android" then
         self.editorUIScale = 2
         self.toolbarLines = 2
@@ -110,6 +113,17 @@ function EditorScene:ctor()
         :addTo(self.playToolbar_)
         :setScale(self.editorUIScale)
 
+    cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
+        :setButtonLabel(cc.ui.UILabel.new({text = "记录运行状态", size = 20, color = display.COLOR_BLACK}))
+        :setButtonSize(130, 40)
+        :align(display.CENTER, display.left + 190 * self.editorUIScale, display.top - 32 * self.editorUIScale)
+        :addTo(self.playToolbar_)  
+        :onButtonClicked(function()
+            print("Record State")
+            self:showStatus()
+            self:statusTimerBegin()
+        end)
+
     -- local toggleDebugButton = ui.newImageMenuItem({
     --     image         = "#ToggleDebugButton.png",
     --     imageSelected = "#ToggleDebugButtonSelected.png",
@@ -134,7 +148,11 @@ function EditorScene:ctor()
     self.playToolbar_:setVisible(false)
     self:addChild(self.playToolbar_)
 
-    self:editMap()
+    if (device.platform == "mac" or device.platform == "ios" or device.platform == "android") then
+        self:playMap()
+    else
+        self:editMap()
+    end
 end
 
 -- 开始运行地图
@@ -269,6 +287,60 @@ function EditorScene:onExit()
 
     self.objectInspector_:removeAllEventListeners()
     self.toolbar_:removeAllEventListeners()
+end
+
+
+function EditorScene:showStatus()
+    if not self.bgStatus_ then
+        self.bgStatus_ = display.newColorLayer(cc.c4b(255, 255, 255, 80))
+        self.bgStatus_:setContentSize(display.width, 60)
+        self:addChild(self.bgStatus_)
+    end
+    self.bgStatus_:setVisible(true)
+
+    self.fps_ = self.fps_ or {}
+
+    if not self.statusDraw_ then
+        self.statusDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
+        self.statusDraw_:drawPolygon(self.fps_, #self.fps_, false, cc.c4f(1, 1, 1, 1))
+    end
+    self.statusDraw_:setVisible(true)
+end
+
+function EditorScene:disableStatus()
+    if self.bgStatus_ then
+        self.bgStatus_:setVisible(false)
+    end
+    if self.statusDraw_ then
+        self.statusDraw_:setVisible(false)
+    end
+end
+
+function EditorScene:addFPS()
+    self.statusCount_ = self.statusCount_ + 1
+    local deltaTime = cc.Director:getInstance():getDeltaTime
+    local fps = 1/deltaTime
+
+    local pos = cc.p(display.x + display.width/60 * self.statusCount_, fps)
+    table.insert(self.fps_, pos)
+    self.statusDraw_:addPoint(pos)
+
+    if self.statusCount_ > 60 then
+        self:statusTimerEnd()
+    end
+end
+
+function EditorScene:statusTimerBegin()
+    self.statusTimer_ = scheduler.scheduleGlobal(handler(self, self.addFPS), 1)
+end
+
+function EditorScene:statusTimerEnd()
+    if not self.statusTimer_ then
+        return
+    end
+
+    scheduler.unscheduleGlobal(self.statusTimer_)
+    self.statusTimer_ = nil
 end
 
 return EditorScene

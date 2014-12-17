@@ -334,6 +334,17 @@ void NVGDrawNode::setOpacityf(float opacity) {
     _colorFill.a = opacity;
 }
 
+void NVGDrawNode::addPoint(const Vec2 &point) {
+    _points.push_back(new Vec2(point));
+}
+
+void NVGDrawNode::setPoints(const Vec2 *poli, unsigned int numberOfPoints) {
+    _points.clear();
+    for (int i = 0; i < numberOfPoints; i++, poli++) {
+        _points.push_back(new Vec2(*poli));
+    }
+}
+
 
 /** Clear the geometry in the node's buffer. */
 void NVGDrawNode::clear() {
