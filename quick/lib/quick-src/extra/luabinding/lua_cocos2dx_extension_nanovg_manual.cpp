@@ -210,7 +210,7 @@ int tolua_cocos2dx_NVGDrawNode_drawPolygon(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!self)
     {
-        tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_NVGDrawNode_drawPoly'", NULL);
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_NVGDrawNode_drawPolygon'", NULL);
         return 0;
     }
 #endif
@@ -262,12 +262,12 @@ int tolua_cocos2dx_NVGDrawNode_drawPolygon(lua_State* tolua_S)
         }
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawPoly",argc, 4);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.NVGDrawNode:drawPolygon",argc, 4);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_NVGDrawNode_drawPoly'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_NVGDrawNode_drawPolygon'.",&tolua_err);
 #endif
     
     return 0;

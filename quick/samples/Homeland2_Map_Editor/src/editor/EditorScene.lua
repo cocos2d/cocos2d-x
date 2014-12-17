@@ -19,6 +19,7 @@ function EditorScene:ctor()
     self.toolbarLines = 1
     self.editorUIScale = 1
     self.statusCount_ = 1
+    self.totalScore_ = 0
     if (device.platform == "ios" and device.model == "iphone") or device.platform == "android" then
         self.editorUIScale = 2
         self.toolbarLines = 2
@@ -113,14 +114,13 @@ function EditorScene:ctor()
         :addTo(self.playToolbar_)
         :setScale(self.editorUIScale)
 
-    cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "记录运行状态", size = 20, color = display.COLOR_BLACK}))
+    self.recordBtn_ = cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
+        :setButtonLabel(cc.ui.UILabel.new({text = "统计运行状态", size = 20, color = display.COLOR_BLACK}))
         :setButtonSize(130, 40)
         :align(display.CENTER, display.left + 190 * self.editorUIScale, display.top - 32 * self.editorUIScale)
         :addTo(self.playToolbar_)  
         :onButtonClicked(function()
-            print("Record State")
-            self:showStatus()
+            self:showStatusCurve()
             self:statusTimerBegin()
         end)
 
@@ -148,7 +148,7 @@ function EditorScene:ctor()
     self.playToolbar_:setVisible(false)
     self:addChild(self.playToolbar_)
 
-    if (device.platform == "mac" or device.platform == "ios" or device.platform == "android") then
+    if (device.platform == "windows" or device.platform == "ios" or device.platform == "android") then
         self:playMap()
     else
         self:editMap()
@@ -290,21 +290,46 @@ function EditorScene:onExit()
 end
 
 
-function EditorScene:showStatus()
+function EditorScene:showStatusCurve()
     if not self.bgStatus_ then
-        self.bgStatus_ = display.newColorLayer(cc.c4b(255, 255, 255, 80))
+        self.bgStatus_ = cc.LayerColor:create(cc.c4b(255, 255, 255, 80))
         self.bgStatus_:setContentSize(display.width, 60)
+        self.bgStatus_:setTouchEnabled(false)
         self:addChild(self.bgStatus_)
     end
     self.bgStatus_:setVisible(true)
 
     self.fps_ = self.fps_ or {}
+    if 0 == #self.fps_ then
+        table.insert(self.fps_, cc.p(0, 0))
+    end
 
     if not self.statusDraw_ then
         self.statusDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
-        self.statusDraw_:drawPolygon(self.fps_, #self.fps_, false, cc.c4f(1, 1, 1, 1))
+        self.statusDraw_:drawPolygon(self.fps_, #self.fps_, false, cc.c4f(1, 0, 0, 1))
     end
     self.statusDraw_:setVisible(true)
+
+    self.objectsCount_ = self.objectsCount_ or {}
+    if 0 == #self.objectsCount_ then
+        table.insert(self.objectsCount_, cc.p(0, 0))
+    end
+
+    if not self.objectsDraw_ then
+        self.objectsDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
+        self.objectsDraw_:drawPolygon(self.objectsCount_, #self.objectsCount_, false, cc.c4f(0, 0, 1, 1))
+    end
+    self.objectsDraw_:setVisible(true)
+
+    if not self.statusLabel_ then
+        self.statusLabel_ = cc.ui.UILabel.new({text = " ", size = 10, color = display.COLOR_BLACK})
+        :align(display.CENTER_RIGHT, display.right - 10, 10)
+        :addTo(self)
+    end
+
+    self.statusLabel_:setVisible(true)
+
+    self.recordBtn_:setButtonLabel(cc.ui.UILabel.new({text = "统计中", size = 20, color = display.COLOR_BLACK}))
 end
 
 function EditorScene:disableStatus()
@@ -314,16 +339,30 @@ function EditorScene:disableStatus()
     if self.statusDraw_ then
         self.statusDraw_:setVisible(false)
     end
+    if self.objectsDraw_ then
+        self.objectsDraw_:setVisible(false)
+    end
 end
 
 function EditorScene:addFPS()
     self.statusCount_ = self.statusCount_ + 1
-    local deltaTime = cc.Director:getInstance():getDeltaTime
+    local deltaTime = cc.Director:getInstance():getDeltaTime()
     local fps = 1/deltaTime
 
-    local pos = cc.p(display.x + display.width/60 * self.statusCount_, fps)
+    self.totalScore_ = self.totalScore_ + fps
+
+    -- print(string.format("deltaTime:%f, fps:%d", deltaTime, fps))
+
+    local pos = cc.p(display.left + display.width/60 * self.statusCount_, fps)
     table.insert(self.fps_, pos)
     self.statusDraw_:addPoint(pos)
+
+    local count = table.nums(self.map_.objects_)
+    pos = cc.p(display.left + display.width/60 * self.statusCount_, count)
+    table.insert(self.objectsCount_, pos)
+    self.objectsDraw_:addPoint(pos)
+
+    self.statusLabel_:setString(string.format("Object:%d,FPS:%d", count, fps))
 
     if self.statusCount_ > 60 then
         self:statusTimerEnd()
@@ -341,6 +380,33 @@ function EditorScene:statusTimerEnd()
 
     scheduler.unscheduleGlobal(self.statusTimer_)
     self.statusTimer_ = nil
+
+    self:showResult()
+end
+
+--显示统计结果
+function EditorScene:showResult()
+    self.recordBtn_:setButtonLabel(cc.ui.UILabel.new({text = "统计运行状态", size = 20, color = display.COLOR_BLACK}))
+
+    local dialogSize = cc.size(display.width/2, display.height/2)
+    local bg = cc.LayerColor:create(cc.c4b(128, 128, 128, 200))
+                :pos((display.width - dialogSize.width)/2, (display.height - dialogSize.height)/2)
+                :addTo(self)
+    bg:setContentSize(dialogSize.width, dialogSize.height)
+
+    cc.ui.UILabel.new({text = "总分:", size = 24, color = display.COLOR_BLACK})
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 20)
+        :addTo(bg)
+    cc.ui.UILabel.new({text = string.format("%d", self.totalScore_), size = 24, color = display.COLOR_RED})
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 20)
+        :addTo(bg)
+
+    self.resultDialog_ = bg
+end
+
+function EditorScene:disabelResult()
+    self.resultDialog_:removeFromParent()
+    self.resultDialog_ = nil
 end
 
 return EditorScene
