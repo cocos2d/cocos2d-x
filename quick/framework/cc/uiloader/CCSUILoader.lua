@@ -461,6 +461,9 @@ function CCSUILoader:createImage(options)
 		node:setTouchEnabled(true)
 		node:setTouchSwallowEnabled(true)
 	end
+	if options.opacity then
+		node:setOpacity(options.opacity)
+	end
 
 	return node
 end
