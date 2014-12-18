@@ -71,8 +71,8 @@ public:
     AllocatorStrategyFixedBlock(const char* tag = nullptr, size_t pageSize = 100)
         : _list(nullptr)
         , _pages(nullptr)
-        , _allocated(0)
         , _pageSize(pageSize)
+        , _allocated(0)
     {
 #if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
         _highestCount = 0;

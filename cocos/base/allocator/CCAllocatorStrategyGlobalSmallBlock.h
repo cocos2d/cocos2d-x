@@ -182,9 +182,6 @@ public:
         ALLOCATE(13, 8192);
         default:
             CC_ASSERT(false);
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-            throw std::bad_alloc();
-#endif
             break;
         }
         
@@ -277,9 +274,6 @@ public:
         DEALLOCATE(13, 8192, address);
         default:
             CC_ASSERT(false);
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-            throw std::bad_alloc();
-#endif
         }
         
         #undef DEALLOCATE
