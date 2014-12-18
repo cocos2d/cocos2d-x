@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "DrawNode3D.h"
+#include "../Sprite3DTest/DrawNode3D.h"
 #include <string>
 
 namespace cocos2d {
