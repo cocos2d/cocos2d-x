@@ -91,7 +91,9 @@ _keepLocal(false),
 _particleTextureCoords(DEFAULT_TEXTURE_COORDS),
 _particleTextureCoordsRangeStart(DEFAULT_START_TEXTURE_COORDS),
 _particleTextureCoordsRangeEnd(DEFAULT_END_TEXTURE_COORDS),
-_particleTextureCoordsRangeSet(false)
+_particleTextureCoordsRangeSet(false),
+_originEnabled(true),
+_originEnabledSet(false)
 {
     //particleType = PT_EMITTER;
     //mAliasType = AT_EMITTER;
@@ -182,9 +184,9 @@ void PUParticle3DEmitter::initParticlePosition( PUParticle3D* particle )
 const Vec3& PUParticle3DEmitter::getDerivedPosition()
 {
     if (static_cast<PUParticleSystem3D *>(_particleSystem)) 
-	{
+    {
         _derivedPosition =  _particleSystem->getNodeToWorldTransform() * _position;
-	}
+    }
     else
         _derivedPosition = Vec3::ZERO;
 
@@ -313,6 +315,10 @@ unsigned short PUParticle3DEmitter::calculateRequestedParticles( float timeElaps
 void PUParticle3DEmitter::setEnabled( bool enabled )
 {
     _isEnabled = enabled;
+    if (!_originEnabledSet){
+        _originEnabled = enabled;
+        _originEnabledSet = true;
+    }
     initTimeBased();
 }
 
@@ -329,7 +335,7 @@ void PUParticle3DEmitter::notifyStart()
     _remainder = 0;
     _durationRemain = 0;
     _repeatDelayRemain = 0;
-    setEnabled(true/*mOriginalEnabled*/); // Also calls _initTimeBased
+    setEnabled(_originEnabled); // Also calls _initTimeBased
 }
 
 void PUParticle3DEmitter::notifyRescaled( const Vec3& scale )

@@ -23,7 +23,8 @@
  ****************************************************************************/
 
 #include "3dparticle/CCParticleSystem3D.h"
-#include "3dparticle/CCParticle3DRender.h"
+#include "3dparticle/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
+#include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -41,33 +42,15 @@ static bool compareParticle3D(Particle3D* left, Particle3D* right)
     return left->depthInView > right->depthInView;
 }
 
-Particle3DQuadRender::Particle3DQuadRender()
-: _meshCommand(nullptr)
-, _texture(nullptr)
-, _glProgramState(nullptr)
-, _indexBuffer(nullptr)
-, _vertexBuffer(nullptr)
+PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
-    
-}
-Particle3DQuadRender::~Particle3DQuadRender()
-{
-    CC_SAFE_DELETE(_meshCommand);
-    CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_glProgramState);
-    CC_SAFE_RELEASE(_vertexBuffer);
-    CC_SAFE_RELEASE(_indexBuffer);
-}
-
-Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
-{
-    auto ret = new Particle3DQuadRender();
+    auto ret = new PUParticle3DQuadRender();
     ret->autorelease();
     ret->initQuadRender(texFile);
     return ret;
 }
 
-void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem)
+void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem)
 {
     //batch and generate draw
     const ParticlePool &particlePool = particleSystem->getParticlePool();
@@ -109,27 +92,45 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     Vec3 position; //particle position
     int vertexindex = 0;
     int index = 0;
+    int offsetX,offsetY;
+    getOriginOffset(offsetX, offsetY);
+
+    if (_type == PERPENDICULAR_COMMON){
+        up = _commonUp;
+        up.normalize();
+        Vec3::cross(up, _commonDir, &right);
+        right.normalize();
+    }
+
     for (auto iter : activeParticleList)
     {
-        auto particle = iter;
+        auto particle = static_cast<PUParticle3D *>(iter);
+        if (_type == ORIENTED_SELF){
+            Vec3 direction;
+            transform.transformVector(particle->direction, &direction);
+            up = direction;
+            up.normalize();
+            Vec3::cross(direction, backward, &right);
+            right.normalize();
+        }
         Vec3 halfwidth = particle->width * 0.5f * right;
         Vec3 halfheight = particle->height * 0.5f * up;
         //transform.transformPoint(particle->position, &position);
         position = particle->positionInWorld;
         Mat4::createRotation(backward, particle->zRotation, &pRotMat);
-        _posuvcolors[vertexindex].position = (position + pRotMat * (- halfwidth - halfheight));
+        _posuvcolors[vertexindex].position = (position + pRotMat * (- halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY));
         _posuvcolors[vertexindex].color = particle->color;
         _posuvcolors[vertexindex].uv = Vec2(particle->lb_uv);
 
-        _posuvcolors[vertexindex + 1].position = (position + pRotMat * (halfwidth - halfheight));
+        _posuvcolors[vertexindex + 1].position = (position + pRotMat * (halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY));
         _posuvcolors[vertexindex + 1].color = particle->color;
         _posuvcolors[vertexindex + 1].uv = Vec2(particle->rt_uv.x, particle->lb_uv.y);
         
-        _posuvcolors[vertexindex + 2].position = (position + pRotMat * (- halfwidth + halfheight));
+        _posuvcolors[vertexindex + 2].position = (position + pRotMat * (- halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY));
         _posuvcolors[vertexindex + 2].color = particle->color;
         _posuvcolors[vertexindex + 2].uv = Vec2(particle->lb_uv.x, particle->rt_uv.y);
         
-        _posuvcolors[vertexindex + 3].position = (position + pRotMat * (halfwidth + halfheight));
+        _posuvcolors[vertexindex + 3].position = (position + pRotMat * (halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY));
         _posuvcolors[vertexindex + 3].color = particle->color;
         _posuvcolors[vertexindex + 3].uv = Vec2(particle->rt_uv);
         
@@ -157,118 +158,87 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     renderer->addCommand(_meshCommand);
 }
 
-void Particle3DQuadRender::initQuadRender( const std::string& texFile )
+PUParticle3DQuadRender::PUParticle3DQuadRender()
+    : _type(POINT)
+    , _origin(CENTER)
+    , _commonDir(Vec3(0.0f, 0.0f, 1.0f))
+    , _commonUp(Vec3(0.0f, 1.0f, 0.0f))
 {
-    GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
-    if (!texFile.empty())
+
+}
+
+PUParticle3DQuadRender::~PUParticle3DQuadRender()
+{
+
+}
+
+void PUParticle3DQuadRender::getOriginOffset( int &offsetX, int &offsetY )
+{
+    switch (_origin)
     {
-        auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
-        if (tex)
+    case TOP_LEFT:
         {
-            _texture = tex;
-            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
+            offsetX = 1;
+            offsetY = -1;
         }
-    }
-    auto glProgramState = GLProgramState::create(glProgram);
-    glProgramState->retain();
+        break;
 
-    GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
-
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_POSITION], 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, position));
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_TEX_COORD], 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, uv));
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_COLOR], 4, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, color));
-
-    _glProgramState = glProgramState;
-    //ret->_vertexBuffer = VertexBuffer::create(stride, 4 * 10000);
-    //ret->_vertexBuffer->retain();
-    //ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 10000);
-    //ret->_indexBuffer->retain();
-
-    _meshCommand = new MeshCommand();
-    _meshCommand->setTransparent(true);
-    _meshCommand->setDepthWriteEnabled(false);
-    _meshCommand->setCullFace(GL_BACK);
-    _meshCommand->setCullFaceEnabled(true);
-}
-
-//////////////////////////////////////////////////////////////////////////////
-Particle3DModelRender::Particle3DModelRender()
-    : _spriteSize(Vec3::ONE)
-{
-    
-}
-Particle3DModelRender::~Particle3DModelRender()
-{
-    for (auto iter : _spriteList){
-        iter->autorelease();
-    }
-}
-
-
-Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile, const std::string &texFile)
-{
-    auto ret = new Particle3DModelRender();
-    ret->_modelFile = modelFile;
-    ret->_texFile = texFile;
-    return ret;
-}
-
-void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem)
-{
-    if (!_isVisible)
-        return;
-    
-    if (_spriteList.empty()){
-        for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
-            Sprite3D *sprite = Sprite3D::create(_modelFile);
-            sprite->setTexture(_texFile);
-            sprite->retain();
-            _spriteList.push_back(sprite);
+    case TOP_CENTER:
+        {
+            offsetX = 0;
+            offsetY = -1;
         }
-        if (!_spriteList.empty()){
-            const AABB &aabb = _spriteList[0]->getAABB();
-            Vec3 corners[8];
-            aabb.getCorners(corners);
-            _spriteSize = corners[3] - corners[6];
+        break;
+
+    case TOP_RIGHT:
+        {
+            offsetX = -1;
+            offsetY = -1;
         }
+        break;
+
+    case CENTER_LEFT:
+        {
+            offsetX = 1;
+            offsetY = 0;
+        }
+        break;
+
+    case CENTER:
+        {
+            offsetX = 0;
+            offsetY = 0;
+        }
+        break;
+
+    case CENTER_RIGHT:
+        {
+            offsetX = -1;
+            offsetY = 0;
+        }
+        break;
+
+    case BOTTOM_LEFT:
+        {
+            offsetX = 1;
+            offsetY = 1;
+        }
+        break;
+
+    case BOTTOM_CENTER:
+        {
+            offsetX = 0;
+            offsetY = 1;
+        }
+        break;
+
+    case BOTTOM_RIGHT:
+        {
+            offsetX = -1;
+            offsetY = 1;
+        }
+        break;
     }
-
-
-    const ParticlePool& particlePool = particleSystem->getParticlePool();
-    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
-    Mat4 mat;
-    Quaternion q;
-    for (unsigned int i = 0; i < activeParticleList.size(); ++i)
-    {
-        auto particle = activeParticleList[i];
-        q = particle->orientation * transform;
-        Mat4::createRotation(q, &mat);
-
-        mat.m[0] *= particle->width / _spriteSize.x;
-        mat.m[5]  *= particle->height / _spriteSize.y; 
-        mat.m[10] *= particle->depth / _spriteSize.z;
-        mat.m[12] = particle->positionInWorld.x;
-        mat.m[13] = particle->positionInWorld.y;
-        mat.m[14] = particle->positionInWorld.z;
-
-        _spriteList[i]->draw(renderer, mat, 0);
-    }
-}
-
-
-void Particle3DRender::notifyStart( void )
-{
-    setVisible(true);
-}
-
-void Particle3DRender::notifyStop( void )
-{
-    setVisible(false);
-}
-
-void Particle3DRender::notifyRescaled( const Vec3& scale )
-{
-    _rendererScale = scale;
 }
 
 NS_CC_END

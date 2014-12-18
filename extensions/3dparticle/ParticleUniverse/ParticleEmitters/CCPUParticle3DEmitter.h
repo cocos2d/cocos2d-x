@@ -554,6 +554,8 @@ protected:
     */
     bool _particleTextureCoordsRangeSet;
 
+    bool _originEnabled;
+    bool _originEnabledSet;
 };
 
 NS_CC_END

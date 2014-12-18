@@ -83,6 +83,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Particle3DQuadRender();
     virtual ~Particle3DQuadRender();
+
+protected:
+
+	void initQuadRender(const std::string& texFile);
     
 protected:
     MeshCommand* _meshCommand;

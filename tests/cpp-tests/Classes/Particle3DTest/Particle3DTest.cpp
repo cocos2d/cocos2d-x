@@ -150,7 +150,7 @@ bool Particle3DTestDemo::init()
     //	rootps->addChild(ps);
     //}
 
-    PUParticleSystem3D *rootps = PUParticleSystem3D::create("advancedLodSystem.pu", "pu_example.material");
+    PUParticleSystem3D *rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
 
     auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));

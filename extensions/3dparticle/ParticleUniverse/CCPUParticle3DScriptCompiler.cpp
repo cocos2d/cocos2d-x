@@ -165,6 +165,8 @@ PUScriptCompiler::~PUScriptCompiler()
 
 bool PUScriptCompiler::compile(const PUConcreteNodeList &nodes)
 {
+    if (nodes.empty()) return false;
+
     PUAbstractNodeList aNodes;
     convertToAST(nodes,aNodes);
     

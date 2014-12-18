@@ -404,7 +404,7 @@ void PUParticleSystem3D::postUpdator( float elapsedTime )
 
 void PUParticleSystem3D::emitParticles( float elapsedTime )
 {
-    if (!_emitter || !_emitter->isEnabled()) return;
+    if (!_emitter) return;
 
     auto emitter = static_cast<PUParticle3DEmitter*>(_emitter);
     unsigned short requested = emitter->calculateRequestedParticles(elapsedTime);
@@ -487,10 +487,9 @@ PUParticleSystem3D* PUParticleSystem3D::create()
 PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
 {
     PUParticleSystem3D* ps = PUParticleSystem3D::create();
-    if (ps){
-        ps->initSystem(filePath, materialPath);
+    if (!ps->initSystem(filePath, materialPath)){
+        CC_SAFE_DELETE(ps);
     }
-
     return ps;
 }
 
@@ -522,7 +521,7 @@ void PUParticleSystem3D::setMaxVelocity( float maxVelocity )
     _maxVelocitySet = true;
 }
 
-void PUParticleSystem3D::initSystem( const std::string &filePath, const std::string &materialPath )
+bool PUParticleSystem3D::initSystem( const std::string &filePath, const std::string &materialPath )
 {
     std::string data = FileUtils::getInstance()->getStringFromFile(materialPath);
     PUScriptCompiler sc;
@@ -530,7 +529,8 @@ void PUParticleSystem3D::initSystem( const std::string &filePath, const std::str
 
     sc.setParticleSystem3D(this);
     data = FileUtils::getInstance()->getStringFromFile(filePath);
-    sc.compile(data, filePath);
+    if (!sc.compile(data, filePath)) return false;
+    return true;
 }
 
 NS_CC_END
