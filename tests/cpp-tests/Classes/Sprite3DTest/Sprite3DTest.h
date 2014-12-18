@@ -89,8 +89,24 @@ public:
     Sprite3DFakeShadowTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    void Move(cocos2d::Ref* sender,int value);
+private:
+    cocos2d::Sprite3D * _plane;
+    cocos2d::Sprite3D * _orc;
 };
 
+
+class Sprite3DLightMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DLightMapTest);
+    Sprite3DLightMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+private:
+    Camera * _camera;
+};
 class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
 {
 public:
@@ -98,6 +114,7 @@ public:
     Sprite3DBasicToonShaderTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+
 };
 class EffectSprite3D;
 

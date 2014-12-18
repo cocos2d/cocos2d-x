@@ -55,6 +55,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DUVAnimationTest),
     CL(Sprite3DFakeShadowTest),
     CL(Sprite3DBasicToonShaderTest),
+    CL(Sprite3DLightMapTest),
 #endif
     CL(Sprite3DWithSkinTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -1545,28 +1546,54 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
 Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
+
+    //create UI
+    TTFConfig ttfConfig("fonts/arial.ttf", 16);
+    auto label1 = Label::createWithTTF(ttfConfig,"move_left");
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Sprite3DFakeShadowTest::Move,this,-1));
+    auto label2 = Label::createWithTTF(ttfConfig,"move_right");
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Sprite3DFakeShadowTest::Move,this,1));
+    auto menu = Menu::create(menuItem1, menuItem2,nullptr);
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition( Vec2( visibleSize.width-80, visibleSize.height-160) );
+    menuItem2->setPosition( Vec2( visibleSize.width-80, visibleSize.height-190) );
+
+    
+    auto layer = Layer::create();
+    addChild(layer,0);
+    addChild(menu, 10);
+
+    //create Camera
     auto _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
     _camera->setCameraFlag(CameraFlag::USER1);
-    _camera->setPositionY(3);
-    auto plane = Sprite3D::create("Sprite3DTest/plane.c3t");
-    plane->setRotation3D(Vec3(90,0,0));
+    _camera->setPosition3D(Vec3(0,20,25));
+    _camera->setRotation3D(Vec3(-60,0,0));
+
+    //create a plane
+    _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
+    _plane->setRotation3D(Vec3(90,0,0));
+
+    // use custom shader
     auto shader =GLProgram::createWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
     auto state = GLProgramState::create(shader);
-    plane->setGLProgramState(state);
+    _plane->setGLProgramState(state);
+
     //pass mesh's attribute to shader
     long offset = 0; 
-    auto attributeCount = plane->getMesh()->getMeshVertexAttribCount();
+    auto attributeCount = _plane->getMesh()->getMeshVertexAttribCount();
     for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = plane->getMesh()->getMeshVertexAttribute(i);
+        auto meshattribute = _plane->getMesh()->getMeshVertexAttribute(i);
         state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
             meshattribute.size, 
             meshattribute.type,
             GL_FALSE,
-            plane->getMesh()->getVertexSizeInBytes(),
+            _plane->getMesh()->getVertexSizeInBytes(),
             (GLvoid*)offset);
         offset += meshattribute.attribSizeBytes;
-    }
-    state->setUniformMat4("u_model_matrix",plane->getNodeToWorldTransform());
+    } 
+    state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+
+    //create shadow texture
     auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
     Texture2D::TexParams tRepeatParams;//set texture parameters
     tRepeatParams.magFilter = GL_LINEAR;
@@ -1575,15 +1602,17 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     shadowTexture->setTexParameters(tRepeatParams); 
     state->setUniformTexture("u_shadowTexture",shadowTexture);
-    this->addChild(plane); 
-            
-    auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
-    orc->setScale(0.2);
-    orc->setPosition3D(Vec3(0,0,-10));
-    plane->getGLProgramState()->setUniformVec3("u_target_pos",orc->getPosition3D());
-    this->addChild(orc);
-    this->addChild(_camera);
-    this->setCameraMask(2);
+    layer->addChild(_plane); 
+
+    //create the orc
+    _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    _orc->setScale(0.2);
+    _orc->setRotation3D(Vec3(0,180,0));
+    _orc->setPosition3D(Vec3(0,0,10));
+    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+    layer->addChild(_orc);
+    layer->addChild(_camera);
+    layer->setCameraMask(2);
 }
 
 std::string Sprite3DFakeShadowTest::title() const 
@@ -1593,8 +1622,16 @@ std::string Sprite3DFakeShadowTest::title() const
 
 std::string Sprite3DFakeShadowTest::subtitle() const 
 {
-    return "fake shadow effect";
+    return "touch the label to move it";
 }
+
+void Sprite3DFakeShadowTest::Move(cocos2d::Ref* sender,int value)
+{
+    _orc->setPositionX(_orc->getPositionX()+value);
+    //pass the newest orc position
+    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+}
+
 
 //the basic toon shader test
 Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
@@ -1638,4 +1675,66 @@ std::string Sprite3DBasicToonShaderTest::title() const
 std::string Sprite3DBasicToonShaderTest::subtitle() const 
 {
     return " ";
+}
+//basic light map test 
+//the assets are from the OpenVR demo
+Sprite3DLightMapTest::Sprite3DLightMapTest()
+{
+    //get the visible size.
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(0,15,15));
+    auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
+    LightMapScene->setScale(0.1); 
+    addChild(LightMapScene);
+    addChild(_camera); 
+    setCameraMask(2); 
+
+    //add a point light
+    auto light = PointLight::create(Vec3(35,75,-20.5),Color3B(255,255,255),700);
+    addChild(light);
+    //set the ambient light 
+    auto ambient = AmbientLight::create(Color3B(100,100,100));
+    addChild(ambient);
+
+    //create a listener
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DLightMapTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+std::string Sprite3DLightMapTest::title() const 
+{
+    return "light map test";
+}
+
+std::string Sprite3DLightMapTest::subtitle() const 
+{
+    return "drag the screen to move around";
+}
+
+void Sprite3DLightMapTest::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    if(touches.size()==1)
+    {
+        float delta = Director::getInstance()->getDeltaTime();
+        auto touch = touches[0];
+        auto location = touch->getLocation();
+        auto PreviousLocation = touch->getPreviousLocation();
+        Point newPos = PreviousLocation - location;
+
+        Vec3 cameraDir;
+        Vec3 cameraRightDir;
+        _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+        cameraDir.normalize();
+        cameraDir.y=0;
+        _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+        cameraRightDir.normalize();
+        cameraRightDir.y=0;
+        Vec3 cameraPos=  _camera->getPosition3D();
+        cameraPos+=cameraDir*newPos.y*delta;  
+        cameraPos+=cameraRightDir*newPos.x*delta;
+        _camera->setPosition3D(cameraPos);      
+    }
 }
