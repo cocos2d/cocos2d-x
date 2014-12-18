@@ -87,6 +87,11 @@ quick 中带有一个 AnySDK 的示例，我们可以编译这个示例来检查
     Install        : libgame.so => libs/armeabi/libgame.so
     ~~~
 
+注意:
+
+1.  `proj.android` 包含了anysdk,需要用anysdk来集成第三方sdk的推荐用这个工程, `proj.android_no_anysdk` 不包含anysdk
+2.  `build_native.sh` 编译的是debug版本, `build_native_release.sh` 编译的是release版本
+
 
 
 如果编译失败，请仔细检查 SDK/NDK 版本、安装路径。
@@ -213,6 +218,10 @@ build_apk 支持下列参数：
     不对 apk 进行签名。
 
     指定这个参数后，输出的 apk 文件名是 `proj.android/<项目名-日期-时间>-unsigned.apk` 。
+   
+-  -bldm release
+
+   编译relase版本, 要debug版不要加此参数
 
 
 ### 注意事项
