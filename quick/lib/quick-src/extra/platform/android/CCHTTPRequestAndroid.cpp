@@ -113,7 +113,7 @@ void HTTPRequest::addPOSTValue(const char *key, const char *value)
     m_postFields[string(key)] = string(value ? value : "");
 }
 
-void HTTPRequest::setPOSTData(const char *data)
+void HTTPRequest::setPOSTData(const char *data, size_t len)
 {
     CCAssert(m_state == kCCHTTPRequestStateIdle, "HTTPRequest::setPOSTData() - request not idle");
     CCAssert(data, "HTTPRequest::setPOSTData() - invalid post data");

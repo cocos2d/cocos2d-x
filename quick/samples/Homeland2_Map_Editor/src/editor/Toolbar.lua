@@ -178,10 +178,10 @@ function Toolbar:createView(parent, bgImageName, padding, scale, toolbarLines)
 
     self.scaleLabel_ = cc.ui.UILabel.new({
         text  = "1.00",
-        font  = ui.DEFAULT_TTF_FONT,
+        font  = display.DEFAULT_TTF_FONT,
         size  = 24 * scale,
         color = cc.c3b(255, 255, 255),
-        align = ui.TEXT_ALIGN_RIGHT,
+        align = cc.ui.TEXT_ALIGN_RIGHT,
         x     = display.right - 96 * scale,
         y     = self.toolbarHeight_ / 2,
     }):align(display.CENTER)
@@ -226,7 +226,7 @@ function Toolbar:showNotice(text, fontsize, delay)
         text = "Save map ok",
         size = fontsize or 96,
         color = cc.c3b(100, 255, 100),
-        align = ui.TEXT_ALIGN_CENTER,
+        align = cc.ui.TEXT_ALIGN_CENTER,
     }):align(display.CENTER)
 
     label:setPosition(display.cx, display.cy)

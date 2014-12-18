@@ -39,7 +39,7 @@ function StaticObjectEditorBehavior:bind(object)
             text  = object:getId(),
             font  = EditorConstants.LABEL_FONT,
             size  = EditorConstants.LABEL_FONT_SIZE,
-            align = ui.TEXT_ALIGN_CENTER,
+            align = cc.ui.TEXT_ALIGN_CENTER,
         })
         :align(display.CENTER)
         object.idLabel_.offsetY = math.floor(-object.radius_ - EditorConstants.LABEL_OFFSET_Y)
@@ -67,7 +67,7 @@ function StaticObjectEditorBehavior:bind(object)
                 text = "00",
                 font  = MapConstants.LEVEL_LABEL_FONT,
                 size  = MapConstants.LEVEL_LABEL_FONT_SIZE,
-                align = ui.TEXT_ALIGN_CENTER,
+                align = cc.ui.TEXT_ALIGN_CENTER,
             })
             :align(display.CENTER)
             debugLayer:addChild(object.levelLabel_)
@@ -78,7 +78,7 @@ function StaticObjectEditorBehavior:bind(object)
                 text         = "Player",
                 size         = 24,
                 color        = cc.c3b(255, 255, 255),
-                align        = ui.TEXT_ALIGN_CENTER,
+                align        = cc.ui.TEXT_ALIGN_CENTER,
             })
             :align(display.CENTER)
             object.playerIdLabel_:enableOutline(cc.c4b(10, 115, 107, 255), 2)

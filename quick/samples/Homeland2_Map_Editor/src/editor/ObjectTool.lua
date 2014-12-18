@@ -111,7 +111,7 @@ function ObjectTool:createObjectBindingLabel(text, isStaticLabel)
     local label = cc.ui.UILabel.new({
         text         = text,
         size         = 20,
-        align        = ui.TEXT_ALIGN_CENTER,
+        align        = cc.ui.TEXT_ALIGN_CENTER,
         color        = cc.c3b(255, 100, 100),
         x            = labelX,
         y            = labelY,

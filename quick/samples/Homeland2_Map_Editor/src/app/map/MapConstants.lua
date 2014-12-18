@@ -22,7 +22,7 @@ MapConstants.HP_BAR_OFFSET_Y        = 20
 MapConstants.RADIUS_CIRCLE_SCALE_Y  = 0.85
 
 MapConstants.LEVEL_LABEL_OFFSET_Y   = 26
-MapConstants.LEVEL_LABEL_FONT       = ui.DEFAULT_TTF_FONT
+MapConstants.LEVEL_LABEL_FONT       = display.DEFAULT_TTF_FONT
 MapConstants.LEVEL_LABEL_FONT_SIZE  = 16
 
 MapConstants.PLAYER_CAMP            = 1

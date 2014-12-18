@@ -409,7 +409,7 @@ function ObjectInspector:setObject(object)
             text  = text,
             font  = EditorConstants.PANEL_LABEL_FONT,
             size  = EditorConstants.PANEL_LABEL_FONT_SIZE,
-            align = ui.TEXT_ALIGN_LEFT,
+            align = cc.ui.TEXT_ALIGN_LEFT,
             x     = labelX,
             y     = labelY,
         }):align(display.CENTER)
@@ -449,7 +449,7 @@ function ObjectInspector:setObject(object)
         local text = cc.ui.UILabel.new({
             text = string.upper(string.sub(behavior, 1, -9)),
             size = 10,
-            align = ui.TEXT_ALIGN_LEFT,
+            align = cc.ui.TEXT_ALIGN_LEFT,
             x = 20,
             y = 12,
         }):align(display.CENTER)

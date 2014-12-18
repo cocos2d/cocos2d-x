@@ -85,7 +85,7 @@ function PathTool:showPointLabel(x, y, text)
             font         = EditorConstants.LABEL_FONT,
             size         = EditorConstants.LABEL_FONT_SIZE + 10,
             color        = cc.c3b(255, 0, 0),
-            align        = ui.TEXT_ALIGN_CENTER,
+            align        = cc.ui.TEXT_ALIGN_CENTER,
         }):align(display.CENTER)
         self.currentPointLabel_:enableOutline(cc.c4b(255, 255, 255, 255), 2)
         self.map_:getDebugLayer():addChild(self.currentPointLabel_, EditorConstants.LABEL_ZORDER)

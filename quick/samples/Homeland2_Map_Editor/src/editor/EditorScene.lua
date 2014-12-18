@@ -19,7 +19,6 @@ function EditorScene:ctor()
     self.toolbarLines = 1
     self.editorUIScale = 1
     self.statusCount_ = 1
-    self.totalScore_ = 0
     if (device.platform == "ios" and device.model == "iphone") or device.platform == "android" then
         self.editorUIScale = 2
         self.toolbarLines = 2
@@ -75,7 +74,7 @@ function EditorScene:ctor()
     self.mapNameLabel_ = cc.ui.UILabel.new({
         text  = string.format("module: %s, image: %s", self.map_.mapModuleName_, self.map_.imageName_),
         size  = 16 * self.editorUIScale,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         x     = display.left + 10,
         y     = display.bottom + EditorConstants.MAP_TOOLBAR_HEIGHT * self.editorUIScale * self.toolbarLines + 20,
     }):align(display.CENTER)
@@ -98,6 +97,8 @@ function EditorScene:ctor()
 
     -- 创建运行地图时的工具栏
     self.playToolbar_ = display.newNode()
+    if (device.platform == "mac" or device.platform == "windows") then
+
     cc.ui.UIPushButton.new({normal = "#ToggleDebugButton.png", pressed = "#ToggleDebugButtonSelected.png"})
         :onButtonClicked(function(event)
             self.map_:setDebugViewEnabled(not self.map_:isDebugViewEnabled())
@@ -114,15 +115,22 @@ function EditorScene:ctor()
         :addTo(self.playToolbar_)
         :setScale(self.editorUIScale)
 
+    else
+
     self.recordBtn_ = cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
         :setButtonLabel(cc.ui.UILabel.new({text = "统计运行状态", size = 20, color = display.COLOR_BLACK}))
         :setButtonSize(130, 40)
-        :align(display.CENTER, display.left + 190 * self.editorUIScale, display.top - 32 * self.editorUIScale)
+        :align(display.CENTER, display.left + 70 * self.editorUIScale, display.top - 32 * self.editorUIScale)
         :addTo(self.playToolbar_)  
         :onButtonClicked(function()
+            self:disabelResult()
+            self:disableStatus()
+
             self:showStatusCurve()
             self:statusTimerBegin()
         end)
+
+    end
 
     -- local toggleDebugButton = ui.newImageMenuItem({
     --     image         = "#ToggleDebugButton.png",
@@ -148,10 +156,10 @@ function EditorScene:ctor()
     self.playToolbar_:setVisible(false)
     self:addChild(self.playToolbar_)
 
-    if (device.platform == "windows" or device.platform == "ios" or device.platform == "android") then
-        self:playMap()
-    else
+    if (device.platform == "mac" or device.platform == "windows") then
         self:editMap()
+    else
+        self:playMap()
     end
 end
 
@@ -299,14 +307,19 @@ function EditorScene:showStatusCurve()
     end
     self.bgStatus_:setVisible(true)
 
+    self.fpsArray_ = {}
     self.fps_ = self.fps_ or {}
     if 0 == #self.fps_ then
         table.insert(self.fps_, cc.p(0, 0))
     end
 
     if not self.statusDraw_ then
-        self.statusDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
-        self.statusDraw_:drawPolygon(self.fps_, #self.fps_, false, cc.c4f(1, 0, 0, 1))
+        if utils.useNVGDrawNode then
+            self.statusDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
+            self.statusDraw_:drawPolygon(self.fps_, #self.fps_, false, cc.c4f(1, 0, 0, 1))
+        else
+            self.statusDraw_ = display.newDrawNode():addTo(self.bgStatus_)
+        end
     end
     self.statusDraw_:setVisible(true)
 
@@ -316,8 +329,12 @@ function EditorScene:showStatusCurve()
     end
 
     if not self.objectsDraw_ then
-        self.objectsDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
-        self.objectsDraw_:drawPolygon(self.objectsCount_, #self.objectsCount_, false, cc.c4f(0, 0, 1, 1))
+        if utils.useNVGDrawNode then
+            self.objectsDraw_ = cc.NVGDrawNode:create():addTo(self.bgStatus_)
+            self.objectsDraw_:drawPolygon(self.objectsCount_, #self.objectsCount_, false, cc.c4f(0, 0, 1, 1))
+        else
+            self.objectsDraw_ = display.newDrawNode():addTo(self.bgStatus_)
+        end
     end
     self.objectsDraw_:setVisible(true)
 
@@ -333,14 +350,19 @@ function EditorScene:showStatusCurve()
 end
 
 function EditorScene:disableStatus()
+    self.fps_ = nil
+    self.objectsCount_ = nil
+    self.statusCount_ = 1
     if self.bgStatus_ then
         self.bgStatus_:setVisible(false)
     end
     if self.statusDraw_ then
-        self.statusDraw_:setVisible(false)
+        self.statusDraw_:removeFromParent()
+        self.statusDraw_ = nil
     end
     if self.objectsDraw_ then
-        self.objectsDraw_:setVisible(false)
+        self.objectsDraw_:removeFromParent()
+        self.objectsDraw_ = nil
     end
 end
 
@@ -349,18 +371,34 @@ function EditorScene:addFPS()
     local deltaTime = cc.Director:getInstance():getDeltaTime()
     local fps = 1/deltaTime
 
-    self.totalScore_ = self.totalScore_ + fps
+    table.insert(self.fpsArray_, fps)
 
     -- print(string.format("deltaTime:%f, fps:%d", deltaTime, fps))
 
     local pos = cc.p(display.left + display.width/60 * self.statusCount_, fps)
     table.insert(self.fps_, pos)
-    self.statusDraw_:addPoint(pos)
+    if utils.useNVGDrawNode then
+        self.statusDraw_:addPoint(pos)
+    else
+        -- print("drawnode:" .. tostring(self.statusDraw_))
+        self.statusDraw_:drawSegment(
+            self.fps_[#self.fps_ - 1],
+            self.fps_[#self.fps_],
+            0.5, cc.c4f(1, 0, 0, 1))
+    end
 
     local count = table.nums(self.map_.objects_)
     pos = cc.p(display.left + display.width/60 * self.statusCount_, count)
     table.insert(self.objectsCount_, pos)
-    self.objectsDraw_:addPoint(pos)
+
+    if utils.useNVGDrawNode then
+        self.objectsDraw_:addPoint(pos)
+    else
+        self.objectsDraw_:drawSegment(
+            self.objectsCount_[#self.objectsCount_ - 1],
+            self.objectsCount_[#self.objectsCount_],
+            0.5, cc.c4f(0, 0, 1, 1))
+    end
 
     self.statusLabel_:setString(string.format("Object:%d,FPS:%d", count, fps))
 
@@ -394,19 +432,56 @@ function EditorScene:showResult()
                 :addTo(self)
     bg:setContentSize(dialogSize.width, dialogSize.height)
 
-    cc.ui.UILabel.new({text = "总分:", size = 24, color = display.COLOR_BLACK})
-        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 20)
+    local totoalScore = 0
+    local minScore = 60
+    local maxScore = 0
+
+    table.walk(self.fpsArray_, function(v, k)
+            if v < minScore then
+                minScore = v
+            end
+            if v > maxScore then
+                maxScore = v
+            end
+            totoalScore = totoalScore + v
+        end)
+
+    cc.ui.UILabel.new({text = "Score:", size = 24, color = display.COLOR_BLACK})
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 40)
         :addTo(bg)
-    cc.ui.UILabel.new({text = string.format("%d", self.totalScore_), size = 24, color = display.COLOR_RED})
-        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 20)
+    cc.ui.UILabel.new({text = string.format("%d", totoalScore), size = 24, color = display.COLOR_RED})
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 40)
+        :addTo(bg)
+
+    cc.ui.UILabel.new({text = "Min FPS:", size = 24, color = display.COLOR_BLACK})
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 120)
+        :addTo(bg)
+    cc.ui.UILabel.new({text = string.format("%d", minScore), size = 24, color = display.COLOR_RED})
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 120)
+        :addTo(bg)
+
+    cc.ui.UILabel.new({text = "Max FPS:", size = 24, color = display.COLOR_BLACK})
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 200)
+        :addTo(bg)
+    cc.ui.UILabel.new({text = string.format("%d", maxScore), size = 24, color = display.COLOR_RED})
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 200)
+        :addTo(bg)
+
+    cc.ui.UILabel.new({text = "Average FPS:", size = 24, color = display.COLOR_BLACK})
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 280)
+        :addTo(bg)
+    cc.ui.UILabel.new({text = string.format("%d", totoalScore/#self.fpsArray_), size = 24, color = display.COLOR_RED})
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 280)
         :addTo(bg)
 
     self.resultDialog_ = bg
 end
 
 function EditorScene:disabelResult()
-    self.resultDialog_:removeFromParent()
-    self.resultDialog_ = nil
+    if self.resultDialog_ then
+        self.resultDialog_:removeFromParent()
+        self.resultDialog_ = nil
+    end
 end
 
 return EditorScene
