@@ -148,9 +148,16 @@ void LuaTouchEventManager::onTouchesBegan(const std::vector<Touch*>& touches, Ev
     // check current in touching
     if (_touchingTargets.size())
     {
+        _bDispatching = true;
         dispatchingTouchEvent(touches, event, CCTOUCHADDED);
+        _bDispatching = false;
+        
+        cleanDetachNode();
+        
         return;
     }
+    
+    _bDispatching = true;
 
     // start new touching event
     // sort touchable nodes
@@ -270,11 +277,19 @@ void LuaTouchEventManager::onTouchesBegan(const std::vector<Touch*>& touches, Ev
 
         // continue dispatching, try to next
     }
+    
+    _bDispatching = false;
+    
+    cleanDetachNode();
 }
 
 void LuaTouchEventManager::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
+    _bDispatching = true;
     dispatchingTouchEvent(touches, event, CCTOUCHMOVED);
+    _bDispatching = false;
+    
+    cleanDetachNode();
 }
 
 void LuaTouchEventManager::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
