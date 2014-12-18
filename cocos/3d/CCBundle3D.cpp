@@ -269,7 +269,6 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         }
         meshdatas.meshDatas.push_back(meshdata);
 
-        NMaterialData materialdata;
         int i = 0;
         char str[20];
         std::string dir = "";
@@ -279,6 +278,8 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
         for (const auto& it : shapes.shapes)
         {
+            NMaterialData materialdata;
+            
             NTextureData tex;
             tex.filename = dir + it.material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;

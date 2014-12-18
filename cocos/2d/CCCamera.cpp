@@ -98,6 +98,7 @@ const Mat4& Camera::getViewMatrix() const
     if (memcmp(viewInv.m, _viewInv.m, count) != 0)
     {
         _viewProjectionDirty = true;
+        _frustumDirty = true;
         _viewInv = viewInv;
         _view = viewInv.getInversed();
     }
@@ -207,6 +208,7 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     }
 #endif
     _viewProjectionDirty = true;
+    _frustumDirty = true;
     
     return true;
 }
@@ -227,6 +229,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     }
 #endif
     _viewProjectionDirty = true;
+    _frustumDirty = true;
     
     return true;
 }

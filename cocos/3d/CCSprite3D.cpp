@@ -537,6 +537,10 @@ static Texture2D * getDummyTexture()
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    // camera clipping
+    if(!Camera::getVisitingCamera()->visibleInFrustum(this->getAABB()))
+        return;
+    
     if (_skeleton)
         _skeleton->updateBoneMatrix();
     
