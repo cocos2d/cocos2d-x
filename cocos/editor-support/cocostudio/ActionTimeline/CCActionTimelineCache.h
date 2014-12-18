@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 namespace flatbuffers
 {
-    struct FlatBufferBuilder;
+    class FlatBufferBuilder;
     
     struct NodeAction;
     struct TimeLine;

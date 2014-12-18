@@ -10774,7 +10774,42 @@ int lua_cocos2dx_ui_LoadingBar_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "ccui.LoadingBar:create",argc, 0);
+    do 
+    {
+        if (argc == 2)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.LoadingBar:create");
+            if (!ok) { break; }
+            cocos2d::ui::Widget::TextureResType arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.LoadingBar:create");
+            if (!ok) { break; }
+            cocos2d::ui::LoadingBar* ret = cocos2d::ui::LoadingBar::create(arg0, arg1);
+            object_to_luaval<cocos2d::ui::LoadingBar>(tolua_S, "ccui.LoadingBar",(cocos2d::ui::LoadingBar*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 3)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.LoadingBar:create");
+            if (!ok) { break; }
+            cocos2d::ui::Widget::TextureResType arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.LoadingBar:create");
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "ccui.LoadingBar:create");
+            if (!ok) { break; }
+            cocos2d::ui::LoadingBar* ret = cocos2d::ui::LoadingBar::create(arg0, arg1, arg2);
+            object_to_luaval<cocos2d::ui::LoadingBar>(tolua_S, "ccui.LoadingBar",(cocos2d::ui::LoadingBar*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "ccui.LoadingBar:create",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

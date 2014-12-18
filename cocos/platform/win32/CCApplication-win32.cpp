@@ -63,11 +63,9 @@ int Application::run()
     PVRFrameEnableControlWindow(false);
 
     // Main message loop:
-    LARGE_INTEGER nFreq;
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
 
-    QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
     initGLContextAttrs();

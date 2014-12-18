@@ -72,9 +72,11 @@
 --------------------------------
 -- @overload self, string, float         
 -- @overload self         
+-- @overload self, string, int, float         
 -- @function [parent=#LoadingBar] create
 -- @param self
 -- @param #string textureName
+-- @param #int texType
 -- @param #float percentage
 -- @return LoadingBar#LoadingBar ret (return value: ccui.LoadingBar)
 
