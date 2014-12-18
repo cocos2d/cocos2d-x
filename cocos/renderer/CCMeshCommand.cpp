@@ -46,7 +46,7 @@ NS_CC_BEGIN
 static bool   s_cullFaceEnabled = false;
 static GLenum s_cullFace = 0;
 static bool   s_depthTestEnabled = false;
-static bool   s_depthWriteEnabled = false;
+static bool   s_depthWriteEnabled = true;
 
 static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
 static std::vector<Vec3> s_dirLightUniformColorValues;
@@ -88,7 +88,7 @@ MeshCommand::MeshCommand()
 , _cullFaceEnabled(false)
 , _cullFace(GL_BACK)
 , _depthTestEnabled(false)
-, _depthWriteEnabled(false)
+, _depthWriteEnabled(true)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
@@ -176,10 +176,10 @@ void MeshCommand::applyRenderState()
         glEnable(GL_DEPTH_TEST);
         s_depthTestEnabled = true;
     }
-    if (_depthWriteEnabled && !s_depthWriteEnabled)
+    if (!_depthWriteEnabled && s_depthWriteEnabled)
     {
-        glDepthMask(GL_TRUE);
-        s_depthWriteEnabled = true;
+        glDepthMask(GL_FALSE);
+        s_depthWriteEnabled = false;
     }
 }
 
@@ -195,10 +195,10 @@ void MeshCommand::restoreRenderState()
         glDisable(GL_DEPTH_TEST);
         s_depthTestEnabled = false;
     }
-    if (s_depthWriteEnabled)
+    if (!s_depthWriteEnabled)
     {
-        glDepthMask(GL_FALSE);
-        s_depthWriteEnabled = false;
+        glDepthMask(GL_TRUE);
+        s_depthWriteEnabled = true;
     }
     s_cullFace = 0;
 }

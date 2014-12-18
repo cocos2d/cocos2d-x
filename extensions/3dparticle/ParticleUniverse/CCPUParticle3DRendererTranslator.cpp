@@ -70,13 +70,9 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     {
          PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
          PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(system->getMaterialName());
-         std::string texFile;
-         if (material){
-             texFile = material->textureFile;
-         }
 
         if (type == "Billboard"){
-            _renderer = PUParticle3DQuadRender::create(texFile);
+            _renderer = PUParticle3DQuadRender::create(material->textureFile);
             for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
             {
                 if((*i)->type == ANT_PROPERTY)
@@ -209,7 +205,7 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                             std::string val;
                             if(getString(*prop->values.front(), &val))
                             {
-                                _renderer = Particle3DModelRender::create(val, texFile);
+                                _renderer = Particle3DModelRender::create(val, material->textureFile);
                             }
                         }
                     }
@@ -217,7 +213,11 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
             }
         }
 
-        system->setRender(_renderer);
+        if (_renderer){
+            _renderer->setDepthTest(material->depthTest);
+            _renderer->setDepthWrite(material->depthWrite);
+            system->setRender(_renderer);
+        }
     }
     
     // Set it in the context

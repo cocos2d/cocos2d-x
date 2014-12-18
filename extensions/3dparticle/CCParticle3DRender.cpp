@@ -186,7 +186,8 @@ void Particle3DQuadRender::initQuadRender( const std::string& texFile )
 
     _meshCommand = new MeshCommand();
     _meshCommand->setTransparent(true);
-    _meshCommand->setDepthWriteEnabled(false);
+	_meshCommand->setDepthTestEnabled(_depthTest);
+    _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
 }

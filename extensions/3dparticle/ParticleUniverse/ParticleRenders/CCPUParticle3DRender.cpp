@@ -79,11 +79,11 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     const Mat4 &viewMat = cameraMat.getInversed();
     
 
-    for (auto iter : activeParticleList){
-        iter->depthInView = -(viewMat.m[2] * iter->positionInWorld.x + viewMat.m[6] * iter->positionInWorld.y + viewMat.m[10] * iter->positionInWorld.z + viewMat.m[14]);
-    }
+    //for (auto iter : activeParticleList){
+    //    iter->depthInView = -(viewMat.m[2] * iter->positionInWorld.x + viewMat.m[6] * iter->positionInWorld.y + viewMat.m[10] * iter->positionInWorld.z + viewMat.m[14]);
+    //}
 
-    std::sort(activeParticleList.begin(), activeParticleList.end(), compareParticle3D);
+    //std::sort(activeParticleList.begin(), activeParticleList.end(), compareParticle3D);
     Mat4 pRotMat;
     Vec3 right(cameraMat.m[0], cameraMat.m[1], cameraMat.m[2]);
     Vec3 up(cameraMat.m[4], cameraMat.m[5], cameraMat.m[6]);
@@ -151,7 +151,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     
     _vertexBuffer->updateVertices(&_posuvcolors[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
     _indexBuffer->updateIndices(&_indexData[0], index/* * sizeof(unsigned short)*/, 0);
-    
+
     GLuint texId = (_texture ? _texture->getName() : 0);
     float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
     _meshCommand->init(depthZ, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform);
