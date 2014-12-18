@@ -92,14 +92,11 @@ function UIPushButton:setButtonImage(state, image, ignoreEmpty)
 end
 
 function UIPushButton:onTouch_(event)
-    -- print("----UIPushButton:onTouch_")
     local name, x, y = event.name, event.x, event.y
-    -- print("----name, x, y = ", name, x, y)
     if name == "began" then
         self.touchBeganX = x
         self.touchBeganY = y
         if not self:checkTouchInSprite_(x, y) then return false end
-        -- print("----doEvent('press')")
         self.fsm_:doEvent("press")
         self:dispatchEvent({name = UIButton.PRESSED_EVENT, x = x, y = y, touchInTarget = true})
         return true
