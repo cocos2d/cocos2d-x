@@ -87,11 +87,9 @@ public:
      * @param callbackParam parameter used by the callback
      * @param f task can be lambda function
      * @param args task parameters
-     * @return the return value is a type of std::future. You can future->get() to wait until it is finished. Or get the notice in the callback
      */
     template<class F, class... Args>
-    auto enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
-    -> std::future<typename std::result_of<F(Args...)>::type>;
+    inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args);
     
 CC_CONSTRUCTOR_ACCESS:
     AsyncTaskPool();
@@ -215,23 +213,21 @@ protected:
 };
 
 template<class F, class... Args>
-auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
--> std::future<typename std::result_of<F(Args...)>::type>
+inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
 {
     auto& threadTask = _threadTasks[(int)type];
     //return _threadTasks[taskType].enqueue(f, args);
     
     using return_type = typename std::result_of<F(Args...)>::type;
     
-    auto task = std::make_shared< std::packaged_task<return_type()> >(
-                                                                      std::bind(std::forward<F>(f), std::forward<Args>(args)...)
-                                                                      );
+    auto task = std::bind(std::forward<F>(f), std::forward<Args>(args)...);
+    
     auto& queue_mutex = threadTask._queue_mutex;
     auto& stop = threadTask._stop;
     auto& tasks = threadTask._tasks;
     auto& condition = threadTask._condition;
     auto& taskcallbacks = threadTask._taskCallBacks;
-    std::future<return_type> res = task->get_future();
+    
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
         
@@ -239,18 +235,16 @@ auto AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& ca
         if(stop)
         {
             CC_ASSERT(0 && "already stop");
-            return res;
+            return;
         }
         
         AsyncTaskCallBack taskCallBack;
         taskCallBack.callback = callback;
         taskCallBack.callbackParam = callbackParam;
-        tasks.emplace([task](){ (*task)(); });
+        tasks.emplace([task](){ task(); });
         taskcallbacks.emplace(taskCallBack);
     }
     condition.notify_one();
-    
-    return res;
 }
 
 NS_CC_END
