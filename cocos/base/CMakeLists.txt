@@ -8,6 +8,9 @@ endif()
 # todo: also base/CCController-android.cpp
 
 set(COCOS_BASE_SRC
+  base/allocator/CCAllocatorDiagnostics.cpp
+  base/allocator/CCAllocatorGlobal.cpp
+  base/allocator/CCAllocatorGlobalNewDelete.cpp
   base/ccFPSImages.c
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp

@@ -307,7 +307,7 @@ To enable set it to a value different than 0. Disabled by default.
  as specified by CC_ALLOCATOR_GLOBAL below.
  */
 #ifndef CC_ENABLE_ALLOCATOR
-# define CC_ENABLE_ALLOCATOR 1
+# define CC_ENABLE_ALLOCATOR 0
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR_DIAGNOSTICS
