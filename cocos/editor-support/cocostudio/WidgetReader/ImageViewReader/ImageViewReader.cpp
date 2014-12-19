@@ -291,10 +291,69 @@ namespace cocostudio
         auto options = (ImageViewOptions*)imageViewOptions;
         
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
         auto imageFileNameDic = options->fileNameData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = imageFileNameDic->path()->c_str();
-        imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        switch (imageFileNameType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(imageFileName))
+                {
+                    fileExist = true;
+                }
+                else
+                {
+                    errorFilePath = imageFileName;
+                    fileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = imageFileNameDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName);
+                if (spriteFrame)
+                {
+                    fileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            errorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        errorFilePath = plist;
+                    }
+                    fileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (fileExist)
+        {
+            imageView->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            imageView->addChild(label);
+        }
         
         bool scale9Enabled = options->scale9Enabled();
         imageView->setScale9Enabled(scale9Enabled);
