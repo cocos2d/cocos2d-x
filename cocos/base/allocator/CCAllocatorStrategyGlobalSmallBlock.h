@@ -54,10 +54,10 @@ class AllocatorStrategyGlobalSmallBlock
 public:
     
     // default number of block to allocate per page.
-    static constexpr size_t kDefaultSmallBlockCount = 100;
+    static const size_t kDefaultSmallBlockCount = 100;
     
     // default max small block size pool.
-    static constexpr size_t kMaxSmallBlockPower = 13; // 2^13 8kb
+	static const size_t kMaxSmallBlockPower = 13; // 2^13 8kb
     
     // @brief define for allocator strategy, cannot be typedef because we want to eval at use
 #define SType(size) AllocatorStrategyFixedBlock<size>

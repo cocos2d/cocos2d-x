@@ -33,14 +33,16 @@
      allocator. Failure to do so will result in recursive memory allocation.
  ****************************************************************************/
 
+#include <stdint.h>
+#include <vector>
+#include <typeinfo>
+#include <sstream>
+
 #include "base/allocator/CCAllocatorBase.h"
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorGlobal.h"
 #include "base/allocator/CCAllocatorMutex.h"
 #include "base/allocator/CCAllocatorDiagnostics.h"
-#include <vector>
-#include <typeinfo>
-#include <sstream>
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
@@ -65,8 +67,8 @@ class AllocatorStrategyFixedBlock
 {
 public:
     
-    static constexpr size_t block_size = _block_size;
-    static constexpr size_t alignment  = _alignment;
+	static const size_t block_size = _block_size;
+	static const size_t alignment = _alignment;
     
     AllocatorStrategyFixedBlock(const char* tag = nullptr, size_t pageSize = 100)
         : _list(nullptr)
@@ -220,7 +222,7 @@ protected:
 protected:
         
     // @brief Returns the size of a page in bytes + overhead.
-    constexpr size_t pageSize() const
+    const size_t pageSize() const
     {
         return AllocatorBase::kDefaultAlignment + AllocatorBase::nextPow2BlockSize(block_size) * _pageSize;
     }

@@ -26,15 +26,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include <vector>
+#include <typeinfo>
+#include <sstream>
 
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorGlobal.h"
 #include "base/allocator/CCAllocatorStrategyFixedBlock.h"
 #include "base/allocator/CCAllocatorDiagnostics.h"
 #include "base/CCConfiguration.h"
-#include <vector>
-#include <typeinfo>
-#include <sstream>
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
@@ -52,7 +52,7 @@ public:
     
     typedef T value_type;
     
-    static constexpr size_t alignment = _alignment;
+    static const size_t alignment = _alignment;
     
     virtual ~ObjectTraits()
     {}

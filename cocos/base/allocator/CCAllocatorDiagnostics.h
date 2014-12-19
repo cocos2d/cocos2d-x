@@ -27,10 +27,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include <unordered_set>
+
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorMutex.h"
 #include "base/allocator/CCAllocatorBase.h"
-#include <unordered_set>
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN

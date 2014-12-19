@@ -238,6 +238,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\SpriteReader">
       <UniqueIdentifier>{9aee531c-f935-4836-bf84-be42e78e38bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\allocator">
+      <UniqueIdentifier>{92ff4e66-3943-47da-a439-c8f182bb871a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1288,6 +1291,15 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
       <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorDiagnostics.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobal.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
+      <Filter>base\allocator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2504,6 +2516,33 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorGlobal.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorBase.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorDiagnostics.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorMacros.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorMutex.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyDefault.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyFixedBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyPool.h">
+      <Filter>base\allocator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
