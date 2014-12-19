@@ -87,6 +87,22 @@ Slider* Slider::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+Slider* Slider::create(const std::string& barTextureName,
+                      const std::string& normalBallTextureName,
+                      TextureResType resType)
+{
+    Slider* widget = new (std::nothrow) Slider();
+    if (widget && widget->init())
+    {
+        widget->loadBarTexture(barTextureName);
+        widget->loadSlidBallTextureNormal(normalBallTextureName);
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
 
 bool Slider::init()
 {

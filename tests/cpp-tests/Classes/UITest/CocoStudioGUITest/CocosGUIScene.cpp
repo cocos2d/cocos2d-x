@@ -115,7 +115,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUISliderTest);
             sceneManager->setMinUISceneId(kUISliderTest);
-            sceneManager->setMaxUISceneId(kUISliderTest_Scale9);
+            sceneManager->setMaxUISceneId(kUISliderDisabledDefaultTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

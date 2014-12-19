@@ -55,6 +55,7 @@ static const char* s_testArray[] =
     "UICheckBoxDefaultBehaviorTest",
     "UISliderTest",
     "UISliderTest_Scale9",
+    "UISliderNormalDefaultTest",
   
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
@@ -241,6 +242,10 @@ Scene *UISceneManager::currentUIScene()
             
         case kUISliderTest_Scale9:
             return UISliderTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderNormalDefaultTest:
+            return UISliderNormalDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderDisabledDefaultTest:
+            return UISliderDisabledDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIImageViewTest:
             return UIImageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);

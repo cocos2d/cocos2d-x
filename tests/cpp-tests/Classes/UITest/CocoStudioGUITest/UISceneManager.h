@@ -51,6 +51,8 @@ enum
     kUICheckBoxDefaultBehaviorTest,
     kUISliderTest,
     kUISliderTest_Scale9,
+    kUISliderNormalDefaultTest,
+    kUISliderDisabledDefaultTest,
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
     kUIImageViewTest_ContentSize,
