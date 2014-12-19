@@ -56,6 +56,7 @@ static const char* s_testArray[] =
     "UISliderTest",
     "UISliderTest_Scale9",
     "UISliderNormalDefaultTest",
+    "UISliderDisabledDefaultTest",
   
     "UIImageViewTest",
     "UIImageViewTest_Scale9",

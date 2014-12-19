@@ -213,6 +213,18 @@ public:
      */
     virtual std::string getDescription() const override;
     
+    /** When user pressed the button, the button will zoom to a scale.
+     * The final scale of the button  equals (button original scale + _zoomScale)
+     * @since v3.3
+     */
+    void setZoomScale(float scale);
+    /**
+     * @brief Return a zoom scale
+     * @since v3.3
+     */
+    float getZoomScale()const;
+
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -245,6 +257,11 @@ protected:
     
     bool _scale9Enabled;
     bool _prevIgnoreSize;
+    
+    float _zoomScale;
+    float _sliderBallNormalTextureScaleX;
+    float _sliderBallNormalTextureScaleY;
+    
     std::string _textureFile;
     std::string _progressBarTextureFile;
     std::string _slidBallNormalTextureFile;

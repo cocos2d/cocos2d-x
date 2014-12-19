@@ -159,6 +159,7 @@ bool UISliderNormalDefaultTest::init()
         Slider* sliderScale9 = Slider::create("cocosui/sliderTrack2.png", "cocosui/sliderThumb.png");
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
+        sliderScale9->setZoomScale(1.0);
         sliderScale9->setContentSize(Size(250.0f, 19));
         sliderScale9->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 20));
         _uiLayer->addChild(sliderScale9);
@@ -194,7 +195,7 @@ bool UISliderDisabledDefaultTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("when pressed, the slider ball should scale","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("slider should be displayed with half opacity","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));
