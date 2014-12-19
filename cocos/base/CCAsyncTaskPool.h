@@ -81,6 +81,12 @@ public:
     }
     
     /**
+     * stop tasks
+     * @param type task type you want to stop
+     */
+    void stopTasks(TaskType type);
+    
+    /**
      * enqueue a asynchronous task
      * @param type task type is io task, network task or others, each type of task has a thread to deal with it.
      * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread
@@ -88,8 +94,8 @@ public:
      * @param f task can be lambda function
      * @param args task parameters
      */
-    template<class F, class... Args>
-    inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args);
+    template<class F>
+    inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);
     
 CC_CONSTRUCTOR_ACCESS:
     AsyncTaskPool();
@@ -191,6 +197,12 @@ protected:
         AfterAsyncTaskDispatcher() {}
         ~AfterAsyncTaskDispatcher() {}
         
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_queue_mutex);
+            _callBacks.clear();
+        }
+        
         void enqueue(const AsyncTaskCallBack& callback)
         {
             std::unique_lock<std::mutex> lock(_queue_mutex);
@@ -212,15 +224,27 @@ protected:
     static int s_maxCallBackPerProcess;
 };
 
-template<class F, class... Args>
-inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Args&&... args)
+inline void AsyncTaskPool::stopTasks(TaskType type)
+{
+    auto& threadTask = _threadTasks[(int)type];
+    auto& queue_mutex = threadTask._queue_mutex;
+    auto& tasks = threadTask._tasks;
+    std::unique_lock<std::mutex> lock(queue_mutex);
+    auto& taskcallbacks = threadTask._taskCallBacks;
+    while(tasks.size())
+        tasks.pop();
+    while(taskcallbacks.size())
+        taskcallbacks.pop();
+    _taskcallbackDispatcher.clear();
+}
+
+template<class F>
+inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f)
 {
     auto& threadTask = _threadTasks[(int)type];
     //return _threadTasks[taskType].enqueue(f, args);
     
-    using return_type = typename std::result_of<F(Args...)>::type;
-    
-    auto task = std::bind(std::forward<F>(f), std::forward<Args>(args)...);
+    auto task = f;//std::bind(std::forward<F>(f), std::forward<Args>(args)...);
     
     auto& queue_mutex = threadTask._queue_mutex;
     auto& stop = threadTask._stop;
