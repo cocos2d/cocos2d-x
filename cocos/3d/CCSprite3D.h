@@ -200,7 +200,7 @@ protected:
 };
 
 ///////////////////////////////////////////////////////
-class Sprite3DCache
+class CC_DLL Sprite3DCache
 {
 public:
     struct Sprite3DData
