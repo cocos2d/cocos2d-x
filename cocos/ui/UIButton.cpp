@@ -382,6 +382,8 @@ void Button::onPressStateChangedToNormal()
     _buttonNormalRenderer->setVisible(true);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(false);
+    _buttonNormalRenderer->setOpacity(255.0f);
+    
     if (_pressedTextureLoaded)
     {
         if (_pressedActionEnabled)
@@ -426,6 +428,7 @@ void Button::onPressStateChangedToNormal()
 
 void Button::onPressStateChangedToPressed()
 {
+    _buttonNormalRenderer->setOpacity(255.0f);
     
     if (_pressedTextureLoaded)
     {

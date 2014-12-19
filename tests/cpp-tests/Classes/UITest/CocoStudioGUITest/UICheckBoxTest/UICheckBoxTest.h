@@ -46,7 +46,6 @@ public:
     UICheckBoxDefaultBehaviorTest();
     ~UICheckBoxDefaultBehaviorTest();
     bool init();
-    void selectedEvent(Ref* pSender,CheckBox::EventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UICheckBoxDefaultBehaviorTest)
