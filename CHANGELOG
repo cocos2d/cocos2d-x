@@ -1,5 +1,6 @@
 cocos2d-x-3.4 ??
     [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
+    [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool.
 
     [FIX]           FileUtils: WebP format with alpha channel displayed wrong
     [FIX]           Label: content size of Label is incorrect if the string is set to empty string
