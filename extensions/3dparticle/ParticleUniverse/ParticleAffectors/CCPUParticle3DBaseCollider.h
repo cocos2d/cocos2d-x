@@ -110,7 +110,7 @@ public:
         const float depth);
 
     /** Recalculates the rotation speed after collision.
-        This function must be explicitly called in the updateAffector(float deltaTime) function of the class that inherits from 
+        This function must be explicitly called in the updatePUAffector(float deltaTime) function of the class that inherits from 
         BaseCollider.
     */
     void calculateRotationSpeedAfterCollision(PUParticle3D* particle);

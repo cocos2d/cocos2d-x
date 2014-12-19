@@ -245,7 +245,7 @@ void PUParticle3DForceFieldAffector::suppressGeneration(bool suppress)
     _suppressGeneration = suppress;
 }
 
-void PUParticle3DForceFieldAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DForceFieldAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

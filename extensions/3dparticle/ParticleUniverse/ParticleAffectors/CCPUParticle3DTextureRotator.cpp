@@ -123,7 +123,7 @@ void PUParticle3DTextureRotator::initParticleForEmission(PUParticle3D* particle)
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DTextureRotator::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DTextureRotator::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

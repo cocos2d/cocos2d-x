@@ -52,7 +52,7 @@ public:
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void initParticleForEmission(PUParticle3D* particle) override;
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the AnimationTimeStep. The AnimationTimeStep defines the time between each animation frame. */
     float getAnimationTimeStep(void) const;

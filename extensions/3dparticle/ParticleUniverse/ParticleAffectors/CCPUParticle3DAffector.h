@@ -59,7 +59,8 @@ public:
     virtual void prepare();
     virtual void unPrepare();
     virtual void preUpdateAffector(float deltaTime);
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime);
+    virtual void updateAffector(Particle3D *particle, float deltaTime);
+    virtual void updatePUAffector(PUParticle3D* particle, float delta);
     virtual void postUpdateAffector(float deltaTime);
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime);
     virtual void initParticleForEmission(PUParticle3D* particle);

@@ -36,7 +36,7 @@ void PUParticle3DLinearForceAffector::preUpdateAffector(float deltaTime)
 //-----------------------------------------------------------------------
 
 
-void PUParticle3DLinearForceAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DLinearForceAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

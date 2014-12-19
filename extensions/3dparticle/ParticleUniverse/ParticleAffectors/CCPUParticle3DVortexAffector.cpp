@@ -77,7 +77,7 @@ float PUParticle3DVortexAffector::calculateRotationSpeed(void)
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DVortexAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DVortexAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

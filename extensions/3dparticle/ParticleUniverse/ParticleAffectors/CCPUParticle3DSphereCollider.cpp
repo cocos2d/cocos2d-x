@@ -104,7 +104,7 @@ void PUParticle3DSphereCollider::calculateDirectionAfterCollision(PUParticle3D* 
     }
 }
 
-void PUParticle3DSphereCollider::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DSphereCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

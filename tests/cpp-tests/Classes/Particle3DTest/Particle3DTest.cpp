@@ -153,10 +153,10 @@ bool Particle3DTestDemo::init()
     PUParticleSystem3D *rootps = PUParticleSystem3D::create("blackHole.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
 
-    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));
-    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-    auto moveby2 = MoveBy::create(2.0f, Vec2(50.0f, -50.0f));
-    auto moveby3 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+//    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));
+//    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+//    auto moveby2 = MoveBy::create(2.0f, Vec2(50.0f, -50.0f));
+//    auto moveby3 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
     //rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, moveby2, moveby3, nullptr)));
     rootps->startParticle();
 
@@ -212,7 +212,7 @@ ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
         pga->setGravity(2700);
         ps->addAffector(pga);
 
-        auto psa = PUParticle3DScaleAffector::create();
+//        auto psa = PUParticle3DScaleAffector::create();
         PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
         scl->setValue(-4.5f);
         //psa->setDynScaleXYZ(scl);

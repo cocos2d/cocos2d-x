@@ -39,7 +39,7 @@ public:
     static PUParticle3DAlignAffector* create();
 
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
-    virtual void updateAffector(PUParticle3D *particle, float deltaTime) override;
+    virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** See setResize().
     */

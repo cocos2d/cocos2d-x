@@ -36,7 +36,7 @@ PUParticle3DMaterial::PUParticle3DMaterial()
 , shininess(0.0f)
 , depthTest(true)
 , depthWrite(true)
-, wrapMode(GL_CLAMP)
+, wrapMode(GL_CLAMP_TO_EDGE)
 {
     blendFunc.src = GL_ONE;
     blendFunc.dst = GL_ZERO;

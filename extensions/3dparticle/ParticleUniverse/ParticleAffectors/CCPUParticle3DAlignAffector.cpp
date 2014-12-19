@@ -51,7 +51,7 @@ void PUParticle3DAlignAffector::setResize(bool resize)
     _resize = resize;
 }
 
-void PUParticle3DAlignAffector::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DAlignAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //auto particles = _particleSystem->getParticles();
     //if (!particles.empty())

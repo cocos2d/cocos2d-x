@@ -344,7 +344,7 @@ void PUParticleSystem3D::updator( float elapsedTime )
                 if (it->isEnabled()){
                     if (firstActiveParticle)
                             (static_cast<PUParticle3DAffector*>(it))->firstParticleUpdate(particle, elapsedTime);
-                        (static_cast<PUParticle3DAffector*>(it))->updateAffector(particle, elapsedTime);
+                        (static_cast<PUParticle3DAffector*>(it))->updatePUAffector(particle, elapsedTime);
                 }
             }
 

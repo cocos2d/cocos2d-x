@@ -194,7 +194,7 @@ bool PUParticle3DBoxCollider::isSmallestValue(float value, const Vec3& particleP
         value <= value6);
 }
 
-void PUParticle3DBoxCollider::updateAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DBoxCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
