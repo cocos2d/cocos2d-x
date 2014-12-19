@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "base/CCAsyncTaskPool.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
 #include "3d/CCAttachNode.h"
@@ -793,6 +794,11 @@ AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
     
     menuCallback_asyncLoadSprite(nullptr);
 }
+
+AsyncLoadSprite3DTest::~AsyncLoadSprite3DTest()
+{
+}
+
 std::string AsyncLoadSprite3DTest::title() const
 {
     return "Testing Sprite3D::createAsync";
@@ -804,6 +810,9 @@ std::string AsyncLoadSprite3DTest::subtitle() const
 
 void AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite(Ref* sender)
 {
+    //Note that you must stop the tasks before leaving the scene.
+    AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+    
     auto node = getChildByTag(101);
     node->removeAllChildren(); //remove all loaded sprite
     

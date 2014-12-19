@@ -181,6 +181,7 @@ class AsyncLoadSprite3DTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(AsyncLoadSprite3DTest);
     AsyncLoadSprite3DTest();
+    virtual ~AsyncLoadSprite3DTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
