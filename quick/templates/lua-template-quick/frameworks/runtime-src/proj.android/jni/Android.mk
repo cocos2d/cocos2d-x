@@ -14,14 +14,17 @@ LOCAL_SRC_FILES := hellolua/main.cpp \
 ifeq ($(NDK_DEBUG),1)
 LOCAL_SRC_FILES += \
 hellolua/Runtime_android.cpp \
+../../Classes/runtime/ConnectWaitLayer.cpp \
+../../Classes/runtime/ConsoleCommand.cpp \
+../../Classes/runtime/FileServer.cpp \
 ../../Classes/runtime/Landscape_png.cpp \
+../../Classes/runtime/lua_debugger.c \
 ../../Classes/runtime/PlayDisable_png.cpp \
 ../../Classes/runtime/PlayEnable_png.cpp \
 ../../Classes/runtime/Portrait_png.cpp \
-../../Classes/runtime/Shine_png.cpp \
-../../Classes/runtime/Runtime.cpp \
 ../../Classes/runtime/Protos.pb.cc \
-../../Classes/runtime/lua_debugger.c
+../../Classes/runtime/Runtime.cpp \
+../../Classes/runtime/Shine_png.cpp \
 endif
 
 #anysdk

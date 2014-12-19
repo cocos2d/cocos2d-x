@@ -34,11 +34,6 @@ script:
 before_install:
 - tools/travis-scripts/before-install.sh
 
-notifications:
-  email:
-    - xiaoming.zhang@cocos2d-x.org
-    - jianhua.chen@cocos2d-x.org
-
 # whitelist
 branches:
   only:
