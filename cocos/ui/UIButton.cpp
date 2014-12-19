@@ -426,6 +426,7 @@ void Button::onPressStateChangedToNormal()
 
 void Button::onPressStateChangedToPressed()
 {
+    
     if (_pressedTextureLoaded)
     {
         _buttonNormalRenderer->setVisible(false);
@@ -436,8 +437,12 @@ void Button::onPressStateChangedToPressed()
         {
             _buttonNormalRenderer->stopAllActions();
             _buttonClickedRenderer->stopAllActions();
-            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
+            
+            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP,
+                                                 _pressedTextureScaleXInSize + _zoomScale,
+                                                 _pressedTextureScaleYInSize + _zoomScale);
             _buttonClickedRenderer->runAction(zoomAction);
+            
             _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
             
             _titleRenderer->stopAllActions();
@@ -477,9 +482,21 @@ void Button::onPressStateChangedToPressed()
 
 void Button::onPressStateChangedToDisabled()
 {
-    _buttonNormalRenderer->setVisible(false);
+    //if disable resource is null
+    if (!_disabledTextureLoaded)
+    {
+        if (_normalTextureLoaded)
+        {
+            _buttonNormalRenderer->setOpacity(127.5);
+        }
+    }
+    else
+    {
+        _buttonNormalRenderer->setVisible(false);
+        _buttonDisableRenderer->setVisible(true);
+    }
+    
     _buttonClickedRenderer->setVisible(false);
-    _buttonDisableRenderer->setVisible(true);
     _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
     _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
