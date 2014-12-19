@@ -24,7 +24,7 @@ hellolua/Runtime_android.cpp \
 ../../Classes/runtime/Portrait_png.cpp \
 ../../Classes/runtime/Protos.pb.cc \
 ../../Classes/runtime/Runtime.cpp \
-../../Classes/runtime/Shine_png.cpp \
+../../Classes/runtime/Shine_png.cpp
 endif
 
 #anysdk
@@ -36,6 +36,7 @@ LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
 $(COCOS2DX_ROOT)/external \
+$(COCOS2DX_ROOT)/external/protobuf-lite/src \
 $(LOCAL_PATH)/../../Classes/quick-src \
 $(LOCAL_PATH)/../../Classes/quick-src/extra
 
@@ -50,7 +51,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += PluginProtocolStatic
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 LOCAL_STATIC_LIBRARIES += lua_extensions_static
 LOCAL_STATIC_LIBRARIES += extra_static
+ifeq ($(NDK_DEBUG),1)
 LOCAL_STATIC_LIBRARIES += cocos_protobuf-lite_static
+endif
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -58,6 +61,7 @@ $(call import-module,scripting/lua-bindings/proj.android)
 
 $(call import-module, quick-src/lua_extensions)
 $(call import-module, quick-src/extra)
+$(call import-module, protobuf-lite)
 
 #anysdk
 $(call import-module,protocols/android)
