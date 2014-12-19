@@ -756,13 +756,29 @@ namespace cocostudio
         
         widget->setUnifySizeEnabled(true);
         std::string versionString = CSLoader::getInstance()->getCsdVersion();
-        if (versionString.length() == 7)
+
+        //assume versionString is like "2.0.6.0"
+        if (versionString.length() > 0)
         {
-            versionString.erase(5, 1);
-            versionString.erase(3, 1);
-            versionString.erase(1, 1);
-            int version = atoi(versionString.c_str());
-            if (version > 2060)
+            int p1, p2, p3, v1, v2, v3;
+            p1 = p2 = p3 = v1 = v2 = v3 = 0;
+            p1 = versionString.find('.');
+            if (p1 > 0)
+            {
+                p2 = versionString.find('.', p1 + 1);
+                v1 = atoi(versionString.substr(0, p1).c_str());
+            }
+            if (p2 > p1)
+            {
+                p3 = versionString.find('.', p2 + 1);
+                v2 = atoi(versionString.substr(p1 + 1, p2 - p1 - 1).c_str());
+            }
+            if (p3 > p2)
+            {
+                v3 = atoi(versionString.substr(p2 + 1, p3 - p2 - 1).c_str());
+            }
+
+            if (v1 >= 2 && v2 >= 0 && v3 >= 7)
                 widget->setUnifySizeEnabled(false);
         }
 
