@@ -1289,6 +1289,9 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCAsyncTaskPool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2504,6 +2507,9 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCAsyncTaskPool.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

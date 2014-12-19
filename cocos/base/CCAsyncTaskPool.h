@@ -41,7 +41,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 /////////////////////////////////////////////////////////////////////////////
 
-class AsyncTaskPool
+class CC_DLL AsyncTaskPool
 {
 public:
     typedef std::function<void(void*)> TaskCallBack;
