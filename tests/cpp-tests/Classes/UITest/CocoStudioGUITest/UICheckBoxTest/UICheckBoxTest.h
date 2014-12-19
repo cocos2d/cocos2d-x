@@ -40,4 +40,17 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UICheckBoxDefaultBehaviorTest : public UIScene
+{
+public:
+    UICheckBoxDefaultBehaviorTest();
+    ~UICheckBoxDefaultBehaviorTest();
+    bool init();
+    void selectedEvent(Ref* pSender,CheckBox::EventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UICheckBoxDefaultBehaviorTest)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UICheckBoxTest__) */

@@ -95,6 +95,13 @@ public:
                             const std::string& backGroundDisabled,
                             const std::string& frontCrossDisabled,
                             TextureResType texType = TextureResType::LOCAL);
+    
+    /**
+     * use less resource to create a CheckBox
+     */
+    static CheckBox* create(const std::string& backGround,
+                            const std::string& cross,
+                            TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load textures for checkbox.

@@ -104,6 +104,25 @@ CheckBox* CheckBox::create(const std::string& backGround,
     return nullptr;
 }
     
+CheckBox* CheckBox::create(const std::string& backGround,
+                           const std::string& cross,
+                           TextureResType texType)
+{
+    CheckBox *pWidget = new (std::nothrow) CheckBox;
+    if (pWidget && pWidget->init(backGround,
+                                 "",
+                                 cross,
+                                 "",
+                                 "",
+                                 texType))
+    {
+        pWidget->autorelease();
+        return pWidget;
+    }
+    CC_SAFE_DELETE(pWidget);
+    return nullptr;
+}
+    
 bool CheckBox::init(const std::string& backGround,
                     const std::string& backGroundSeleted,
                     const std::string& cross,

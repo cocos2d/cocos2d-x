@@ -165,4 +165,28 @@ protected:
     UI_SCENE_CREATE_FUNC(UIButtonFlipTest)
     Text* _displayValueLabel;
 };
+
+class UIButtonNormalDefaultTest : public UIScene
+{
+public:
+    UIButtonNormalDefaultTest();
+    ~UIButtonNormalDefaultTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonNormalDefaultTest)
+    Text* _displayValueLabel;
+};
+
+class UIButtonDisableDefaultTest : public UIScene
+{
+public:
+    UIButtonDisableDefaultTest();
+    ~UIButtonDisableDefaultTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIButtonDisableDefaultTest)
+    Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIButtonTest__) */
