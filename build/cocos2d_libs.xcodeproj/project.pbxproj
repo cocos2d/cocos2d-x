@@ -2113,6 +2113,10 @@
 		B60C5BD519AC68B10056FBDE /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */; };
 		B60C5BD619AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
 		B60C5BD719AC68B10056FBDE /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = B60C5BD319AC68B10056FBDE /* CCBillBoard.h */; };
+		B61A0C2B1A43FF71008E5DF7 /* CCPUParticle3DRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61A0C291A43FF71008E5DF7 /* CCPUParticle3DRender.cpp */; };
+		B61A0C2C1A43FF71008E5DF7 /* CCPUParticle3DRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61A0C291A43FF71008E5DF7 /* CCPUParticle3DRender.cpp */; };
+		B61A0C2D1A43FF71008E5DF7 /* CCPUParticle3DRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B61A0C2A1A43FF71008E5DF7 /* CCPUParticle3DRender.h */; };
+		B61A0C2E1A43FF71008E5DF7 /* CCPUParticle3DRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B61A0C2A1A43FF71008E5DF7 /* CCPUParticle3DRender.h */; };
 		B621CC421A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B621CC2A1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.cpp */; };
 		B621CC431A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B621CC2A1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.cpp */; };
 		B621CC441A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B621CC2B1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.h */; };
@@ -3485,6 +3489,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B60C5BD219AC68B10056FBDE /* CCBillBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBillBoard.cpp; sourceTree = "<group>"; };
 		B60C5BD319AC68B10056FBDE /* CCBillBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBillBoard.h; sourceTree = "<group>"; };
+		B61A0C291A43FF71008E5DF7 /* CCPUParticle3DRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticle3DRender.cpp; path = 3dparticle/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.cpp; sourceTree = "<group>"; };
+		B61A0C2A1A43FF71008E5DF7 /* CCPUParticle3DRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticle3DRender.h; path = 3dparticle/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h; sourceTree = "<group>"; };
 		B621CC2A1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticle3DDynamicAttributeTranslator.cpp; path = 3dparticle/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.cpp; sourceTree = "<group>"; };
 		B621CC2B1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticle3DDynamicAttributeTranslator.h; path = 3dparticle/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h; sourceTree = "<group>"; };
 		B621CC2C1A3E836F00646956 /* CCPUParticle3DMaterialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticle3DMaterialManager.cpp; path = 3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.cpp; sourceTree = "<group>"; };
@@ -5709,6 +5715,15 @@
 			path = ../cocos/3d;
 			sourceTree = "<group>";
 		};
+		B61A0C281A43FF43008E5DF7 /* ParticleRenders */ = {
+			isa = PBXGroup;
+			children = (
+				B61A0C291A43FF71008E5DF7 /* CCPUParticle3DRender.cpp */,
+				B61A0C2A1A43FF71008E5DF7 /* CCPUParticle3DRender.h */,
+			);
+			name = ParticleRenders;
+			sourceTree = "<group>";
+		};
 		B67880721A198D05002425C1 /* 3d particle */ = {
 			isa = PBXGroup;
 			children = (
@@ -5728,6 +5743,7 @@
 		B67880731A198D1F002425C1 /* Particle Universe */ = {
 			isa = PBXGroup;
 			children = (
+				B61A0C281A43FF43008E5DF7 /* ParticleRenders */,
 				B621CC2A1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.cpp */,
 				B621CC2B1A3E836F00646956 /* CCPUParticle3DDynamicAttributeTranslator.h */,
 				B621CC2C1A3E836F00646956 /* CCPUParticle3DMaterialManager.cpp */,
@@ -6503,6 +6519,7 @@
 				15AE18E219AAD35000C27E9E /* TriggerMng.h in Headers */,
 				50ABBE2F1925AB6F00A911A9 /* ccConfig.h in Headers */,
 				15AE188019AAD33D00C27E9E /* CCBMemberVariableAssigner.h in Headers */,
+				B61A0C2D1A43FF71008E5DF7 /* CCPUParticle3DRender.h in Headers */,
 				B621CC681A3E836F00646956 /* CCPUParticle3DTranslateManager.h in Headers */,
 				3828C09919EB8ACA002AB57B /* extension_set.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
@@ -6953,6 +6970,7 @@
 				15AE195E19AAD35100C27E9E /* CCSkin.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				15AE18AE19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
+				B61A0C2E1A43FF71008E5DF7 /* CCPUParticle3DRender.h in Headers */,
 				15AE197819AAD35700C27E9E /* CCActionTimeline.h in Headers */,
 				15AE1AA019AAD40300C27E9E /* b2Timer.h in Headers */,
 				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
@@ -7689,6 +7707,7 @@
 				B276EF611988D1D500CD400F /* CCVertexIndexData.cpp in Sources */,
 				15AE199819AAD39600C27E9E /* LoadingBarReader.cpp in Sources */,
 				503DD8F71926B0DB00CD74DD /* CCIMEDispatcher.cpp in Sources */,
+				B61A0C2B1A43FF71008E5DF7 /* CCPUParticle3DRender.cpp in Sources */,
 				50ABBE751925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				15AE18F019AAD35000C27E9E /* CCArmatureAnimation.cpp in Sources */,
 				50ABBE511925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
@@ -7967,6 +7986,7 @@
 				B621CD2F1A3E8CD200646956 /* CCPUParticle3DPlaneColliderTranslator.cpp in Sources */,
 				15AE1AD019AAD40300C27E9E /* b2RevoluteJoint.cpp in Sources */,
 				B621CD2B1A3E8CD200646956 /* CCPUParticle3DPathFollowerTranslator.cpp in Sources */,
+				B61A0C2C1A43FF71008E5DF7 /* CCPUParticle3DRender.cpp in Sources */,
 				B621CC871A3E8C8F00646956 /* CCPUParticle3DBoxEmitterTranslator.cpp in Sources */,
 				15AE192419AAD35100C27E9E /* CocoLoader.cpp in Sources */,
 				50ABBE421925AB6F00A911A9 /* CCDirector.cpp in Sources */,
