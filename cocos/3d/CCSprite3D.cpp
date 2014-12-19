@@ -204,12 +204,18 @@ bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshD
     else if (ext == ".c3b" || ext == ".c3t")
     {
         //load from .c3b or .c3t
-        auto bundle = Bundle3D::getInstance();
+        auto bundle = Bundle3D::createBundle();
         if (!bundle->load(fullPath))
+        {
+            Bundle3D::destroyBundle(bundle);
             return false;
+        }
         
-        return bundle->loadMeshDatas(*meshdatas)
+        auto ret = bundle->loadMeshDatas(*meshdatas)
             && bundle->loadMaterials(*materialdatas) && bundle->loadNodes(*nodedatas);
+        Bundle3D::destroyBundle(bundle);
+        
+        return ret;
     }
     return false;
 }
