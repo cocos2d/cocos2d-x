@@ -203,6 +203,10 @@ class EncryptSetter
             system($this->config['packer'], $rnvalue);
             print("\nSuccess!\n");
         }
+        else
+        {
+            print("\nSuccess!\n");
+        }
 
         print("\n\n");
 
