@@ -59,6 +59,7 @@ struct Zio {
   lua_Reader reader;
   void* data;			/* additional data */
   lua_State *L;			/* Lua state (for reader) */
+  int eoz;			/* true if reader has no more data */
 };
 
 
