@@ -82,15 +82,33 @@ protected:
     GLProgramState * _state;
 };
 
+
 class Sprite3DFakeShadowTest : public Sprite3DTestDemo
 {
 public:
+    enum State
+    {
+        State_None = 0,
+        State_Idle = 0x01,
+        State_Move = 0x02,
+        State_Rotate = 0x04
+    };
     CREATE_FUNC(Sprite3DFakeShadowTest);
     Sprite3DFakeShadowTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void Move(cocos2d::Ref* sender,int value);
+    void updateCamera(float fDelta);
+    void move3D(float elapsedTime);
+    void updateState(float elapsedTime);
+    bool isState(unsigned int state,unsigned int bit) const;
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
 private:
+    cocos2d::Camera * _camera;
+    Vec3           _targetPos;
+    unsigned int   _curState;
     cocos2d::Sprite3D * _plane;
     cocos2d::Sprite3D * _orc;
 };

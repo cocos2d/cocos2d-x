@@ -1546,25 +1546,17 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
 Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
-
-    //create UI
-    TTFConfig ttfConfig("fonts/arial.ttf", 16);
-    auto label1 = Label::createWithTTF(ttfConfig,"move_left");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Sprite3DFakeShadowTest::Move,this,-1));
-    auto label2 = Label::createWithTTF(ttfConfig,"move_right");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Sprite3DFakeShadowTest::Move,this,1));
-    auto menu = Menu::create(menuItem1, menuItem2,nullptr);
-    menu->setPosition(Vec2::ZERO);
-    menuItem1->setPosition( Vec2( visibleSize.width-80, visibleSize.height-160) );
-    menuItem2->setPosition( Vec2( visibleSize.width-80, visibleSize.height-190) );
-
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto layer = Layer::create();
     addChild(layer,0);
-    addChild(menu, 10);
-
     //create Camera
-    auto _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
     _camera->setCameraFlag(CameraFlag::USER1);
     _camera->setPosition3D(Vec3(0,20,25));
     _camera->setRotation3D(Vec3(-60,0,0));
@@ -1609,10 +1601,13 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _orc->setScale(0.2);
     _orc->setRotation3D(Vec3(0,180,0));
     _orc->setPosition3D(Vec3(0,0,10));
+    _targetPos = _orc->getPosition3D();
     _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
     layer->addChild(_orc);
     layer->addChild(_camera);
     layer->setCameraMask(2);
+
+    schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
 }
 
 std::string Sprite3DFakeShadowTest::title() const 
@@ -1622,14 +1617,155 @@ std::string Sprite3DFakeShadowTest::title() const
 
 std::string Sprite3DFakeShadowTest::subtitle() const 
 {
-    return "touch the label to move it";
+    return "touch the screen to move around";
 }
 
 void Sprite3DFakeShadowTest::Move(cocos2d::Ref* sender,int value)
 {
     _orc->setPositionX(_orc->getPositionX()+value);
+
+}
+
+void Sprite3DFakeShadowTest::updateCamera(float fDelta)
+{
+    updateState(fDelta);
+    if(isState(_curState,State_Move))
+    {
+        move3D(fDelta);
+        if(isState(_curState,State_Rotate))
+        {
+            Vec3 curPos = _orc->getPosition3D();
+
+            Vec3 newFaceDir = _targetPos - curPos;
+            newFaceDir.y = 0;
+            newFaceDir.normalize();
+            Vec3 up;
+            _orc->getNodeToWorldTransform().getUpVector(&up);
+            up.normalize();
+            Vec3 right;
+            Vec3::cross(-newFaceDir,up,&right);
+            right.normalize();
+            Vec3 pos = Vec3(0,0,0);
+            Mat4 mat;
+            mat.m[0] = right.x;
+            mat.m[1] = right.y;
+            mat.m[2] = right.z;
+            mat.m[3] = 0.0f;
+
+            mat.m[4] = up.x;
+            mat.m[5] = up.y;
+            mat.m[6] = up.z;
+            mat.m[7] = 0.0f;
+
+            mat.m[8]  = newFaceDir.x;
+            mat.m[9]  = newFaceDir.y;
+            mat.m[10] = newFaceDir.z;
+            mat.m[11] = 0.0f;
+
+            mat.m[12] = pos.x;
+            mat.m[13] = pos.y;
+            mat.m[14] = pos.z;
+            mat.m[15] = 1.0f;
+            _orc->setAdditionalTransform(&mat);
+        }
+    }
+}
+
+
+void Sprite3DFakeShadowTest::move3D(float elapsedTime)
+{
+    Vec3 curPos=  _orc->getPosition3D();
+    Vec3 newFaceDir = _targetPos - curPos;
+    newFaceDir.y = 0.0f;
+    newFaceDir.normalize();
+    Vec3 offset = newFaceDir * 25.0f * elapsedTime;
+    curPos+=offset;
+    _orc->setPosition3D(curPos);
+    offset.x=offset.x;
+    offset.z=offset.z;
     //pass the newest orc position
     _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+}
+
+void Sprite3DFakeShadowTest::updateState(float elapsedTime)
+{
+    Vec3 curPos=  _orc->getPosition3D();
+    Vec3 curFaceDir;
+    _orc->getNodeToWorldTransform().getForwardVector(&curFaceDir);
+    curFaceDir=-curFaceDir;
+    curFaceDir.normalize();
+    Vec3 newFaceDir = _targetPos - curPos;
+    newFaceDir.y = 0.0f;
+    newFaceDir.normalize();
+    float cosAngle = std::fabs(Vec3::dot(curFaceDir,newFaceDir) - 1.0f);
+    float dist = curPos.distanceSquared(_targetPos);
+    if(dist<=4.0f)
+    {
+        if(cosAngle<=0.01f)
+            _curState = State_Idle;
+        else
+            _curState = State_Rotate;
+    }
+    else
+    {
+        if(cosAngle>0.01f)
+            _curState = State_Rotate | State_Move;
+        else
+            _curState = State_Move;
+    }
+}
+
+bool Sprite3DFakeShadowTest::isState(unsigned int state,unsigned int bit) const
+{
+    return (state & bit) == bit;
+}
+
+void Sprite3DFakeShadowTest::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+
+}
+
+void Sprite3DFakeShadowTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+}
+
+void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+    for ( auto &item: touches )
+    {
+        auto touch = item;
+        auto location = touch->getLocationInView();
+        if(_camera)
+        {
+            if(_orc )
+            {
+                Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
+
+                auto size = Director::getInstance()->getWinSize();
+                _camera->unproject(size, &nearP, &nearP);
+                _camera->unproject(size, &farP, &farP);
+                Vec3 dir(farP - nearP);
+                float dist=0.0f;
+                float ndd = Vec3::dot(Vec3(0,1,0),dir);
+                if(ndd == 0)
+                    dist=0.0f;
+                float ndo = Vec3::dot(Vec3(0,1,0),nearP);
+                dist= (0 - ndo) / ndd;
+                Vec3 p =   nearP + dist *  dir;
+
+                if( p.x > 100)
+                    p.x = 100;
+                if( p.x < -100)
+                    p.x = -100;
+                if( p.z > 100)
+                    p.z = 100;
+                if( p.z < -100)
+                    p.z = -100;
+
+                _targetPos=p;
+            }
+        }
+    }
 }
 
 
@@ -1647,7 +1783,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     teapot->setGLProgramState(state);
     teapot->setPosition3D(Vec3(0,-5,-20));
     teapot->setRotation3D(Vec3(-90,180,0)); 
-    auto rotate_action = RotateBy::create(3,Vec3(0,30,0));
+    auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
     teapot->runAction(RepeatForever::create(rotate_action)); 
     //pass mesh's attribute to shader
     long offset = 0;
@@ -1684,7 +1820,8 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
     _camera->setCameraFlag(CameraFlag::USER1);
-    _camera->setPosition3D(Vec3(0,15,15));
+    _camera->setPosition3D(Vec3(0,25,15));
+    _camera->setRotation3D(Vec3(-35,0,0));
     auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
     LightMapScene->setScale(0.1); 
     addChild(LightMapScene);
@@ -1692,10 +1829,10 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     setCameraMask(2); 
 
     //add a point light
-    auto light = PointLight::create(Vec3(35,75,-20.5),Color3B(255,255,255),700);
+    auto light = PointLight::create(Vec3(35,75,-20.5),Color3B(255,255,255),150);
     addChild(light);
     //set the ambient light 
-    auto ambient = AmbientLight::create(Color3B(100,100,100));
+    auto ambient = AmbientLight::create(Color3B(55,55,55));
     addChild(ambient);
 
     //create a listener
