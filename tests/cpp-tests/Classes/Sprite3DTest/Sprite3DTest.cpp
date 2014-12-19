@@ -103,7 +103,7 @@ static Layer* restartSpriteTestAction()
 //------------------------------------------------------------------
 
 Sprite3DTestDemo::Sprite3DTestDemo(void)
-    : BaseTest()
+: BaseTest()
 {
 }
 

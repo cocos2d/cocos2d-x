@@ -1,7 +1,7 @@
 #ifdef GL_ES
-varying mediump vec2 TextureCoordOut;
+varying mediump vec2 v_texture_coord;
 #else
-varying vec2 TextureCoordOut;
+varying vec2 v_texture_coord;
 #endif
 
 uniform vec4 u_color;
@@ -12,5 +12,5 @@ void main(void)
 {
     vec4 color = duration*vec4(0,0.8,0.4,1.0);
     //blend two texture
-    gl_FragColor = u_color*texture2D(CC_Texture0, vec2(TextureCoordOut.x- 2.0 * offset,TextureCoordOut.y)) * vec4(0.3,0.3,0.3,1)+texture2D(caustics,vec2(TextureCoordOut.x-offset,TextureCoordOut.y)).r*color;
+    gl_FragColor = u_color*texture2D(CC_Texture0, vec2(v_texture_coord.x- 2.0 * offset,v_texture_coord.y)) * vec4(0.3,0.3,0.3,1)+texture2D(caustics,vec2(v_texture_coord.x-offset,v_texture_coord.y)).r*color;
 }
