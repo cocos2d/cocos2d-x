@@ -82,7 +82,6 @@ protected:
     GLProgramState * _state;
 };
 
-
 class Sprite3DFakeShadowTest : public Sprite3DTestDemo
 {
 public:
@@ -113,7 +112,6 @@ private:
     cocos2d::Sprite3D * _orc;
 };
 
-
 class Sprite3DLightMapTest : public Sprite3DTestDemo
 {
 public:
@@ -125,6 +123,7 @@ public:
 private:
     Camera * _camera;
 };
+
 class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
 {
 public:
@@ -321,11 +320,11 @@ public:
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Vec2 p);
-
+    
     void menuCallback_reSkin(Ref* sender);
 protected:
     void applyCurSkin();
-
+    
     enum class SkinType
     {
         UPPER_BODY = 0,
@@ -337,7 +336,7 @@ protected:
         GLASSES,
         MAX_TYPE,
     };
-
+    
     std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
     int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
