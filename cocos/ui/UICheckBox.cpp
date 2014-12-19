@@ -341,9 +341,10 @@ void CheckBox::onPressStateChangedToNormal()
     _backGroundSelectedBoxRenderer->setVisible(false);
     _backGroundBoxDisabledRenderer->setVisible(false);
     _frontCrossDisabledRenderer->setVisible(false);
-    //restore opacity
-    _backGroundBoxRenderer->setOpacity(255.0);
-    _frontCrossRenderer->setOpacity(255.0);
+    
+    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState());
+    
     
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
     _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
@@ -357,8 +358,8 @@ void CheckBox::onPressStateChangedToNormal()
 
 void CheckBox::onPressStateChangedToPressed()
 {
-    _backGroundBoxRenderer->setOpacity(255.0);
-    _frontCrossRenderer->setOpacity(255.0);
+    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState());
     
     if (_backGroundSelectedFileName.empty())
     {
@@ -380,8 +381,8 @@ void CheckBox::onPressStateChangedToDisabled()
 {
     if (_backGroundDisabledFileName.empty() || _frontCrossDisabledFileName.empty())
     {
-        _backGroundBoxRenderer->setOpacity(127.5);
-        _frontCrossRenderer->setOpacity(127.5);
+        _backGroundBoxRenderer->setGLProgramState(this->getGrayGLProgramState());
+        _frontCrossRenderer->setGLProgramState(this->getGrayGLProgramState());
     }
     else
     {

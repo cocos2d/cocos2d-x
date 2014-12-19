@@ -29,9 +29,6 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
-#include "renderer/CCGLProgram.h"
-#include "shaders/UIShaders.h"
-#include "renderer/ccShaders.h"
 
 NS_CC_BEGIN
 

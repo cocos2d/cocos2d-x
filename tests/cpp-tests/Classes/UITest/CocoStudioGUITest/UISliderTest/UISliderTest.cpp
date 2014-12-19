@@ -195,7 +195,7 @@ bool UISliderDisabledDefaultTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("slider should be displayed with half opacity","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("slider ball should be gray.","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));
@@ -203,20 +203,20 @@ bool UISliderDisabledDefaultTest::init()
         
         // Create the slider
         Slider* slider = Slider::create();
-        slider->loadBarTexture("cocosui/sliderTrack.png");
-        slider->loadSlidBallTextureNormal("cocosui/sliderThumb.png");
+        slider->loadBarTexture("cocosui/slidbar.png");
+        slider->loadSlidBallTextureNormal("cocosui/sliderballnormal.png");
         slider->setEnabled(false);
         slider->setBright(false);
         slider->setPosition(Vec2(widgetSize.width / 2.0f,
                                  widgetSize.height / 2.0f + 50));
         _uiLayer->addChild(slider);
         
-        Slider* sliderScale9 = Slider::create("cocosui/sliderTrack2.png", "cocosui/sliderThumb.png");
+        Slider* sliderScale9 = Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setEnabled(false);
         sliderScale9->setBright(false);
         sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
-        sliderScale9->setContentSize(Size(250.0f, 19));
+        sliderScale9->setContentSize(Size(250.0f, 10));
         sliderScale9->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 20));
         _uiLayer->addChild(sliderScale9);
         

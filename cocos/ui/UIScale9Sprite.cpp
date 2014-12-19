@@ -28,7 +28,7 @@
 #include "base/CCVector.h"
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
-#include "shaders/UIShaders.h"
+#include "ui/shaders/UIShaders.h"
 #include "renderer/ccShaders.h"
 
 NS_CC_BEGIN

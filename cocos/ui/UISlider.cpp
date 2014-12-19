@@ -575,13 +575,14 @@ void Slider::onPressStateChangedToNormal()
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
     
-    _slidBallNormalRenderer->setOpacity(255.0f);
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
     _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
 }
 
 void Slider::onPressStateChangedToPressed()
 {
-    _slidBallNormalRenderer->setOpacity(255.0f);
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+
     
     if (_slidBallPressedTextureFile.empty())
     {
@@ -600,7 +601,7 @@ void Slider::onPressStateChangedToDisabled()
 {
     if (_slidBallDisabledTextureFile.empty())
     {
-        _slidBallNormalRenderer->setOpacity(127.5f);
+        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState());
     }
     else
     {
