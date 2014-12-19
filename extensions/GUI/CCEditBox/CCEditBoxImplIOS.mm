@@ -255,7 +255,6 @@ CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 , m_obAnchorPoint(ccp(0.5f, 0.5f))
 , m_nMaxTextLength(-1)
 {
-    m_bInRetinaMode = [[cc2dEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
 }
 
 CCEditBoxImplIOS::~CCEditBoxImplIOS()
