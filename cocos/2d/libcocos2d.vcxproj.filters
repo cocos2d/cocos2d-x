@@ -235,6 +235,9 @@
     <Filter Include="extension\3dparticle\ParticleUniverse\ParticleEmitters">
       <UniqueIdentifier>{55ba4137-2e9f-42bd-8303-840ce04cd2af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extension\3dparticle\ParticleUniverse\ParticleRenders">
+      <UniqueIdentifier>{d319cd5d-45e3-4e13-8de3-dbf5ea7db3f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1570,6 +1573,9 @@
     </ClCompile>
     <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DUtil.cpp">
       <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleRenders\CCPUParticle3DRender.cpp">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleRenders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3128,6 +3134,9 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\CCPUParticle3DUtil.h">
       <Filter>extension\3dparticle\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\3dparticle\ParticleUniverse\ParticleRenders\CCPUParticle3DRender.h">
+      <Filter>extension\3dparticle\ParticleUniverse\ParticleRenders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

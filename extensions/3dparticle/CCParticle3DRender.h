@@ -62,14 +62,22 @@ public:
     void setVisible(bool isVisible) { _isVisible = isVisible; }
     
     bool isVisible() const { return _isVisible; }
+
+    void setDepthTest(bool isDepthTest) { _depthTest = isDepthTest; }
+    void setDepthWrite(bool isDepthWrite) {_depthWrite = isDepthWrite; }
     
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DRender(){};
+    Particle3DRender()
+        : _depthTest(true)
+        , _depthWrite(false)
+    {};
     virtual ~Particle3DRender(){};
     
 protected:
     bool  _isVisible;
     Vec3 _rendererScale;
+    bool _depthTest;
+    bool _depthWrite;
 };
 
 // particle render for quad
@@ -83,6 +91,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Particle3DQuadRender();
     virtual ~Particle3DQuadRender();
+
+protected:
+
+    void initQuadRender(const std::string& texFile);
     
 protected:
     MeshCommand* _meshCommand;

@@ -256,7 +256,7 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-	void initSystem(const std::string &filePath, const std::string &materialPath);
+	bool initSystem(const std::string &filePath, const std::string &materialPath);
 
 protected:
     bool _prepared;

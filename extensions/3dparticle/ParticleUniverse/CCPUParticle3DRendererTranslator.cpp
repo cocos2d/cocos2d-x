@@ -70,13 +70,125 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     {
          PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
          PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(system->getMaterialName());
-         std::string texFile;
-         if (material){
-             texFile = material->textureFile;
-         }
 
         if (type == "Billboard"){
-            _renderer = Particle3DQuadRender::create(texFile);
+            _renderer = PUParticle3DQuadRender::create(material->textureFile);
+            for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
+            {
+                if((*i)->type == ANT_PROPERTY)
+                {
+                    PUPropertyAbstractNode* prop = reinterpret_cast<PUPropertyAbstractNode*>((*i));
+                    if (prop->name == token[TOKEN_BILLBOARD_TYPE])
+                    {
+                        // Property: billboard_type
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BILLBOARD_TYPE], VAL_STRING))
+                        {
+                            std::string val;
+                            if(getString(*prop->values.front(), &val))
+                            {
+                                if (val == token[TOKEN_POINT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setType(PUParticle3DQuadRender::POINT);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_ORIENTED_SELF])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setType(PUParticle3DQuadRender::ORIENTED_SELF);
+                                }
+                                //else if (val == token[TOKEN_BILLBOARD_ORIENTED_COMMON])
+                                //{
+                                //	renderer->setBillboardType(BillboardRenderer::BBT_ORIENTED_COMMON);
+                                //	return true;
+                                //}
+                                //else if (val == token[TOKEN_BILLBOARD_ORIENTED_SHAPE])
+                                //{
+                                //	renderer->setBillboardType(BillboardRenderer::BBT_ORIENTED_SHAPE);
+                                //	return true;
+                                //}
+                                else if (val == token[TOKEN_BILLBOARD_PERPENDICULAR_COMMON])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setType(PUParticle3DQuadRender::PERPENDICULAR_COMMON);
+                                }
+                                //else if (val == token[TOKEN_BILLBOARD_PERPENDICULAR_SELF])
+                                //{
+                                //	renderer->setBillboardType(BillboardRenderer::BBT_PERPENDICULAR_SELF);
+                                //	return true;
+                                //}
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BILLBOARD_ORIGIN])
+                    {
+                        // Property: billboard_origin
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BILLBOARD_ORIGIN], VAL_STRING))
+                        {
+                            std::string val;
+                            if(getString(*prop->values.front(), &val))
+                            {
+                                if (val == token[TOKEN_BILLBOARD_CENTER])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::CENTER);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_BOTTOM_CENTER])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::BOTTOM_CENTER);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_BOTTON_LEFT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::BOTTOM_LEFT);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_BOTTOM_RIGHT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::BOTTOM_RIGHT);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_CENTER_LEFT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::CENTER_LEFT);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_CENTER_RIGHT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::CENTER_RIGHT);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_TOP_CENTER])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::TOP_CENTER);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_TOP_LEFT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::TOP_LEFT);
+                                }
+                                else if (val == token[TOKEN_BILLBOARD_TOP_RIGHT])
+                                {
+                                    static_cast<PUParticle3DQuadRender *>(_renderer)->setOrigin(PUParticle3DQuadRender::TOP_RIGHT);
+                                }
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BILLBOARD_COMMON_DIRECTION])
+                    {
+                        // Property: common_direction
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BILLBOARD_COMMON_DIRECTION], VAL_VECTOR3))
+                        {
+                            Vec3 val;
+                            if(getVector3(prop->values.begin(), prop->values.end(), &val))
+                            {
+                                static_cast<PUParticle3DQuadRender *>(_renderer)->setCommonDirection(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BILLBOARD_COMMON_UP_VECTOR])
+                    {
+                        // Property: common_up_vector
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BILLBOARD_COMMON_UP_VECTOR], VAL_VECTOR3))
+                        {
+                            Vec3 val;
+                            if(getVector3(prop->values.begin(), prop->values.end(), &val))
+                            {
+                                static_cast<PUParticle3DQuadRender *>(_renderer)->setCommonUp(val);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         if (type == "Entity"){
@@ -93,7 +205,7 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                             std::string val;
                             if(getString(*prop->values.front(), &val))
                             {
-                                _renderer = Particle3DModelRender::create(val, texFile);
+                                _renderer = Particle3DModelRender::create(val, material->textureFile);
                             }
                         }
                     }
@@ -101,7 +213,11 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
             }
         }
 
-        system->setRender(_renderer);
+        if (_renderer){
+            _renderer->setDepthTest(material->depthTest);
+            _renderer->setDepthWrite(material->depthWrite);
+            system->setRender(_renderer);
+        }
     }
     
     // Set it in the context
