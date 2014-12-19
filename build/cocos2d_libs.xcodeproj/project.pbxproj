@@ -1735,6 +1735,20 @@
 		50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
+		87BA71921A44AB6D00929C43 /* extension_set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6DFF1A441CA0009135D3 /* extension_set.cc */; };
+		87BA71931A44AB7000929C43 /* generated_message_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E011A441CA0009135D3 /* generated_message_util.cc */; };
+		87BA71941A44AB7800929C43 /* coded_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E041A441CA0009135D3 /* coded_stream.cc */; };
+		87BA71951A44AB7D00929C43 /* zero_copy_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E071A441CA0009135D3 /* zero_copy_stream.cc */; };
+		87BA71961A44AB8500929C43 /* zero_copy_stream_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E091A441CA0009135D3 /* zero_copy_stream_impl.cc */; };
+		87BA71971A44AB8800929C43 /* zero_copy_stream_impl_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E0B1A441CA0009135D3 /* zero_copy_stream_impl_lite.cc */; };
+		87BA71981A44AB8C00929C43 /* message_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E0D1A441CA0009135D3 /* message_lite.cc */; };
+		87BA71991A44AB8F00929C43 /* repeated_field.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E0F1A441CA0009135D3 /* repeated_field.cc */; };
+		87BA719A1A44AB9D00929C43 /* atomicops_internals_x86_gcc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E191A441CA0009135D3 /* atomicops_internals_x86_gcc.cc */; };
+		87BA719B1A44ABA000929C43 /* atomicops_internals_x86_msvc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E1B1A441CA0009135D3 /* atomicops_internals_x86_msvc.cc */; };
+		87BA719C1A44ABA400929C43 /* common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E1D1A441CA0009135D3 /* common.cc */; };
+		87BA719D1A44ABB900929C43 /* wire_format_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E2A1A441CA0009135D3 /* wire_format_lite.cc */; };
+		87BA719F1A44ABE900929C43 /* once.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E211A441CA0009135D3 /* once.cc */; };
+		87BA71A01A44ABED00929C43 /* stringprintf.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6E251A441CA0009135D3 /* stringprintf.cc */; };
 		87EB6E2C1A441CA0009135D3 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 87EB6DFE1A441CA0009135D3 /* config.h */; };
 		87EB6E2D1A441CA0009135D3 /* extension_set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6DFF1A441CA0009135D3 /* extension_set.cc */; };
 		87EB6E2E1A441CA0009135D3 /* extension_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 87EB6E001A441CA0009135D3 /* extension_set.h */; };
@@ -6907,6 +6921,7 @@
 				15AE192919AAD35100C27E9E /* TriggerMng.cpp in Sources */,
 				B29A7E0C19EE1B7700872B35 /* Atlas.c in Sources */,
 				15AE185E19AAD31200C27E9E /* CocosDenshion.m in Sources */,
+				87BA719D1A44ABB900929C43 /* wire_format_lite.cc in Sources */,
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
@@ -6918,11 +6933,15 @@
 				15AE1BEF19AAE01E00C27E9E /* CCControlHuePicker.cpp in Sources */,
 				15AE197B19AAD35700C27E9E /* CCFrame.cpp in Sources */,
 				B29A7E3E19EE1B7700872B35 /* AnimationState.c in Sources */,
+				87BA71971A44AB8800929C43 /* zero_copy_stream_impl_lite.cc in Sources */,
+				87BA71941A44AB7800929C43 /* coded_stream.cc in Sources */,
 				15AE1ABE19AAD40300C27E9E /* b2PolygonContact.cpp in Sources */,
 				1A57006E180BC5A10088DEC7 /* CCActionEase.cpp in Sources */,
 				50ABBD8C1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				15AE196119AAD35100C27E9E /* CCSSceneReader.cpp in Sources */,
+				87BA71951A44AB7D00929C43 /* zero_copy_stream.cc in Sources */,
 				1A570072180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
+				87BA71961A44AB8500929C43 /* zero_copy_stream_impl.cc in Sources */,
 				15AE1ABC19AAD40300C27E9E /* b2PolygonAndCircleContact.cpp in Sources */,
 				15AE1ADA19AAD41000C27E9E /* b2Rope.cpp in Sources */,
 				B29A7E1619EE1B7700872B35 /* BoundingBoxAttachment.c in Sources */,
@@ -6982,6 +7001,7 @@
 				15AE18C119AAD33D00C27E9E /* CCLayerColorLoader.cpp in Sources */,
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				15AE1BB919AADFF000C27E9E /* HttpClient.cpp in Sources */,
+				87BA719F1A44ABE900929C43 /* once.cc in Sources */,
 				50ABBD551925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				292DB14419B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */,
 				15AE193619AAD35100C27E9E /* CCArmature.cpp in Sources */,
@@ -6990,6 +7010,7 @@
 				15AE1BEC19AAE01E00C27E9E /* CCControlColourPicker.cpp in Sources */,
 				382383FD1A258FA7002C4610 /* idl_gen_text.cpp in Sources */,
 				3823841B1A2590D2002C4610 /* ComAudioReader.cpp in Sources */,
+				87BA71981A44AB8C00929C43 /* message_lite.cc in Sources */,
 				50ABBEC01925AB6F00A911A9 /* CCValue.cpp in Sources */,
 				50ABBD591925AB0000A911A9 /* Vec2.cpp in Sources */,
 				15AE1AD019AAD40300C27E9E /* b2RevoluteJoint.cpp in Sources */,
@@ -7010,9 +7031,11 @@
 				15AE1AA119AAD40300C27E9E /* b2Body.cpp in Sources */,
 				15AE1ABA19AAD40300C27E9E /* b2EdgeAndPolygonContact.cpp in Sources */,
 				15AE181B19AAD2F700C27E9E /* CCBundle3D.cpp in Sources */,
+				87BA719C1A44ABA400929C43 /* common.cc in Sources */,
 				1A57008E180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
 				1A570092180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				1A570099180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
+				87BA71931A44AB7000929C43 /* generated_message_util.cc in Sources */,
 				50ABBD4D1925AB0000A911A9 /* MathUtil.cpp in Sources */,
 				50ABBE3E1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
@@ -7068,6 +7091,7 @@
 				B29A7DE219EE1B7700872B35 /* MeshAttachment.c in Sources */,
 				50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
 				15AE1BAD19AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
+				87BA71A01A44ABED00929C43 /* stringprintf.cc in Sources */,
 				3823843E1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
 				B29A7DDE19EE1B7700872B35 /* BoneData.c in Sources */,
 				B375107E1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
@@ -7196,6 +7220,7 @@
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				15AE193219AAD35100C27E9E /* CCActionNode.cpp in Sources */,
 				15AE195319AAD35100C27E9E /* CCDisplayFactory.cpp in Sources */,
+				87BA719A1A44AB9D00929C43 /* atomicops_internals_x86_gcc.cc in Sources */,
 				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
 				B375107C1823ACA100B3BA6A /* CCPhysicsBodyInfo_chipmunk.cpp in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
@@ -7261,6 +7286,7 @@
 				15AE1BA719AADFDF00C27E9E /* UIRelativeBox.cpp in Sources */,
 				15AE1ACE19AAD40300C27E9E /* b2PulleyJoint.cpp in Sources */,
 				1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
+				87BA71921A44AB6D00929C43 /* extension_set.cc in Sources */,
 				15AE1BF919AAE01E00C27E9E /* CCControlSwitch.cpp in Sources */,
 				15AE196719AAD35100C27E9E /* CCUtilMath.cpp in Sources */,
 				50ABBE201925AB6F00A911A9 /* atitc.cpp in Sources */,
@@ -7289,6 +7315,7 @@
 				15AE194F19AAD35100C27E9E /* CCDatas.cpp in Sources */,
 				50ABBE841925AB6F00A911A9 /* ccFPSImages.c in Sources */,
 				50ABBE4A1925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
+				87BA71991A44AB8F00929C43 /* repeated_field.cc in Sources */,
 				15AE1AA319AAD40300C27E9E /* b2ContactManager.cpp in Sources */,
 				15AE196519AAD35100C27E9E /* CCTween.cpp in Sources */,
 				46C02E0818E91123004B7456 /* xxhash.c in Sources */,
@@ -7310,6 +7337,7 @@
 				15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
 				15AE1BBF19AADFF000C27E9E /* WebSocket.cpp in Sources */,
+				87BA719B1A44ABA000929C43 /* atomicops_internals_x86_msvc.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
