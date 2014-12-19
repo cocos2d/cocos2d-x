@@ -29,7 +29,7 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-
+#include "ui/UILayoutComponent.h"
 
 USING_NS_CC;
 using namespace flatbuffers;
@@ -87,6 +87,23 @@ namespace cocostudio
         bool touchEnabled = false;
         std::string frameEvent = "";
         std::string customProperty = "";
+
+        bool positionXPercentEnabled = false;
+        bool positionYPercentEnabled = false;
+        float positionXPercent = 0;
+        float positionYPercent = 0;
+        bool sizeXPercentEnable = false;
+        bool sizeYPercentEnable = false;
+        float sizeXPercent = 0;
+        float sizeYPercent = 0;
+        bool stretchHorizontalEnabled = false;
+        bool stretchVerticalEnabled = false;
+        std::string horizontalEdge;
+        std::string verticalEdge;
+        float leftMargin = 0;
+        float rightMargin = 0;
+        float topMargin = 0;
+        float bottomMargin = 0;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -150,6 +167,54 @@ namespace cocostudio
             else if (attriname == "FrameEvent")
             {
                 frameEvent = value;
+            }
+            else if (attriname == "PositionPrecentXEnabled")
+            {
+                positionXPercentEnabled = value == "True";
+            }
+            else if (attriname == "PositionPrecentYEnabled")
+            {
+                positionYPercentEnabled = value == "True";
+            }
+            else if (attriname == "PercentWidthEnable")
+            {
+                sizeXPercentEnable = value == "True";
+            }
+            else if (attriname == "PercentHeightEnbale")
+            {
+                sizeYPercentEnable = value == "True";
+            }
+            else if (attriname == "StretchWidthEnable")
+            {
+                stretchHorizontalEnabled = value == "True";
+            }
+            else if (attriname == "StretchHeightEnable")
+            {
+                stretchVerticalEnabled = value == "True";
+            }
+            else if (attriname == "HorizontalEage")
+            {
+                horizontalEdge = value;
+            }
+            else if (attriname == "VerticalEage")
+            {
+                verticalEdge = value;
+            }
+            else if (attriname == "LeftMargin")
+            {
+                leftMargin = atof(value.c_str());
+            }
+            else if (attriname == "RightMargin")
+            {
+                rightMargin = atof(value.c_str());
+            }
+            else if (attriname == "TopMargin")
+            {
+                topMargin = atof(value.c_str());
+            }
+            else if (attriname == "ButtomMargin")
+            {
+                bottomMargin = atof(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -276,7 +341,48 @@ namespace cocostudio
                     attribute = attribute->Next();
                 }
             }
-            
+            else if (attriname == "PrePosition")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    attriname = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (attriname == "X")
+                    {
+                        positionXPercent = atof(value.c_str());
+                    }
+                    else if (attriname == "Y")
+                    {
+                        positionYPercent = atof(value.c_str());
+                    }
+
+                    attribute = attribute->Next();
+                }
+            }
+            else if (attriname == "PreSize")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    attriname = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (attriname == "X")
+                    {
+                        sizeXPercent = atof(value.c_str());
+                    }
+                    else if (attriname == "Y")
+                    {
+                        sizeYPercent = atof(value.c_str());
+                    }
+
+                    attribute = attribute->Next();
+                }
+            }
             child = child->NextSiblingElement();
         }
         
@@ -286,7 +392,23 @@ namespace cocostudio
         AnchorPoint f_anchortpoint(anchorPoint.x, anchorPoint.y);
         Color f_color(color.a, color.r, color.g, color.b);
         FlatSize f_size(size.x, size.y);
-        
+        auto f_layoutComponent = CreateLayoutComponentTable(*builder,
+                                                            positionXPercentEnabled,
+                                                            positionYPercentEnabled,
+                                                            positionXPercent,
+                                                            positionYPercent,
+                                                            sizeXPercentEnable,
+                                                            sizeYPercentEnable,
+                                                            sizeXPercent,
+                                                            sizeYPercent,
+                                                            stretchHorizontalEnabled,
+                                                            stretchVerticalEnabled,
+                                                            builder->CreateString(horizontalEdge),
+                                                            builder->CreateString(verticalEdge),
+                                                            leftMargin,
+                                                            rightMargin,
+                                                            topMargin,
+                                                            bottomMargin);
         
         auto options = CreateWidgetOptions(*builder,
                                            builder->CreateString(name),
@@ -306,8 +428,10 @@ namespace cocostudio
                                            ignoreSize,
                                            touchEnabled,
                                            builder->CreateString(frameEvent),
-                                           builder->CreateString(customProperty)
-                                           );
+                                           builder->CreateString(customProperty),
+                                           0,
+                                           0,
+                                           f_layoutComponent);
         
         return *(Offset<Table>*)(&options);
     }
@@ -368,8 +492,80 @@ namespace cocostudio
         
         node->setCascadeColorEnabled(true);
         node->setCascadeOpacityEnabled(true);
+
+        setLayoutComponentPropsWithFlatBuffers(node, nodeOptions);
     }
-    
+
+    void NodeReader::setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* nodeOptions)
+    {
+        auto layoutComponentTable = ((WidgetOptions*)nodeOptions)->layoutComponent();
+        if (!layoutComponentTable) return;
+
+        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
+        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
+        float positionXPercent = layoutComponentTable->positionXPercent();
+        float positionYPercent = layoutComponentTable->positionYPercent();
+        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable();
+        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable();
+        float sizeXPercent = layoutComponentTable->sizeXPercent();
+        float sizeYPercent = layoutComponentTable->sizeYPercent();
+        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled();
+        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled();
+        std::string horizontalEdge = layoutComponentTable->horizontalEdge()->c_str();
+        std::string verticalEdge = layoutComponentTable->verticalEdge()->c_str();
+        float leftMargin = layoutComponentTable->leftMargin();
+        float rightMargin = layoutComponentTable->rightMargin();
+        float topMargin = layoutComponentTable->topMargin();
+        float bottomMargin = layoutComponentTable->bottomMargin();
+
+        auto layoutComponent = ui::LayoutComponent::create();
+        node->addComponent(layoutComponent);
+
+        layoutComponent->setPositionPercentXEnabled(positionXPercentEnabled);
+        layoutComponent->setPositionPercentYEnabled(positionYPercentEnabled);
+        layoutComponent->setPositionPercentX(positionXPercent);
+        layoutComponent->setPositionPercentY(positionYPercent);
+        layoutComponent->setPercentWidthEnabled(sizeXPercentEnable);
+        layoutComponent->setPercentHeightEnabled(sizeYPercentEnable);
+        layoutComponent->setPercentWidth(sizeXPercent);
+        layoutComponent->setPercentHeight(sizeYPercent);
+        layoutComponent->setStretchWidthEnabled(stretchHorizontalEnabled);
+        layoutComponent->setStretchHeightEnabled(stretchVerticalEnabled);
+        ui::LayoutComponent::HorizontalEage horizontalEdgeType = ui::LayoutComponent::HorizontalEage::None;
+        if (horizontalEdge == "LeftEage")
+        {
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Left;
+        }
+        else if (horizontalEdge == "RightEage")
+        {
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Right;
+        }
+        else if (horizontalEdge == "BothEage")
+        {
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Center;
+        }
+        layoutComponent->setHorizontalEage(horizontalEdgeType);
+        ui::LayoutComponent::VerticalEage verticalEdgeType = ui::LayoutComponent::VerticalEage::None;
+        if (verticalEdge == "TopEage")
+        {
+            verticalEdgeType = ui::LayoutComponent::VerticalEage::Top;
+        }
+        else if (verticalEdge == "ButtomEage")
+        {
+            verticalEdgeType = ui::LayoutComponent::VerticalEage::Buttom;
+        }
+        else if (verticalEdge == "BothEage")
+        {
+            verticalEdgeType = ui::LayoutComponent::VerticalEage::Center;
+        }
+        layoutComponent->setVerticalEage(verticalEdgeType);
+
+        layoutComponent->setTopMargin(topMargin);
+        layoutComponent->setButtomMargin(bottomMargin);
+        layoutComponent->setLeftMargin(leftMargin);
+        layoutComponent->setRightMargin(rightMargin);
+    }
+
     Node* NodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
     {
         Node* node = Node::create();

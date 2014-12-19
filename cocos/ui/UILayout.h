@@ -270,7 +270,7 @@ public:
     /**
      * force refresh widget layout
      */
-    void forceDoLayout();
+    virtual void forceDoLayout();
     
     /**
      * request to refresh widget layout
