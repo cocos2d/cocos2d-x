@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,64 +22,59 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "3d/CCAttachNode.h"
-#include "3d/CCSkeleton3D.h"
+#ifndef __CC_FRUSTUM_H_
+#define __CC_FRUSTUM_H_
+
+#include "base/ccMacros.h"
+#include "math/CCMath.h"
+#include "3d/CCAABB.h"
+#include "3d/CCOBB.h"
+#include "3d/CCPlane.h"
 
 NS_CC_BEGIN
 
-AttachNode* AttachNode::create(Bone3D* attachBone)
+class Camera;
+class CC_DLL Frustum
 {
-    auto attachnode = new (std::nothrow) AttachNode();
-    attachnode->_attachBone = attachBone;
-    attachnode->autorelease();
+    friend class Camera;
+public:
+    /**
+     * Constructor & Destructor.
+     */
+    Frustum(): _bInit(false), _bClipZ(true){}
+    ~Frustum(){}
+
+    /**
+     * init frustum from camera.
+     */
+    bool initFrustum(const Camera* pCamera);
+
+    /**
+     * is aabb out of frustum.
+     */
+    bool isOutFrustum(const AABB& aabb) const;
+    /**
+     * is obb out of frustum
+     */
+    bool isOutFrustum(const OBB& obb) const;
+
+    /**
+     * get & set z clip. if bclipZ == true use near and far plane
+     */
+    void setClipZ(bool bclipZ) { _bClipZ = bclipZ; }
+    bool isClipZ() { return _bClipZ; }
     
-    return attachnode;
-}
+protected:
+    /**
+     * create clip plane
+     */
+    void createPlane(const Camera* pcamera);
 
-AttachNode::AttachNode()
-: _attachBone(nullptr)
-{
-    
-}
-AttachNode::~AttachNode()
-{
-    
-}
+    Plane _plane[6];             // clip plane, left, right, top, bottom, near, far
+    bool _bClipZ;                // use near and far clip plane
+    bool _bInit;
+};
 
-Mat4 AttachNode::getWorldToNodeTransform() const
-{
-    static Mat4 mat;
-    mat.setIdentity();
-    auto parent = getParent();
-    if (parent)
-    {
-        mat = parent->getWorldToNodeTransform() * _attachBone->getWorldMat() * getNodeToParentTransform();
-    }
-    else
-    {
-        mat = _attachBone->getWorldMat() * getNodeToParentTransform();
-    }
-    return mat;
-}
-
-Mat4 AttachNode::getNodeToWorldTransform() const
-{
-    Mat4 mat;
-    auto parent = getParent();
-    if (parent)
-    {
-        mat = parent->getNodeToWorldTransform() * _attachBone->getWorldMat();
-    }
-    else
-    {
-        mat = _attachBone->getWorldMat();
-    }
-    return mat;
-}
-
-void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
-{
-    Node::visit(renderer, parentTransform * _attachBone->getWorldMat(), Node::FLAGS_DIRTY_MASK);
-}
 NS_CC_END
 
+#endif//__CC_FRUSTUM_H_

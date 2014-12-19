@@ -22,72 +22,79 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_RAY_H_
-#define __CC_RAY_H_
+#ifndef __CC_PLANE_H_
+#define __CC_PLANE_H_
 
+#include "base/ccMacros.h"
 #include "math/CCMath.h"
-#include "3d/CCAABB.h"
-#include "3d/CCOBB.h"
-#include "3d/CCPlane.h"
 
 NS_CC_BEGIN
 
-class CC_DLL Ray
+class CC_DLL Plane
 {
 public:
+    enum POINT_SIDE
+    {
+       ON_PLANE,
+       FRONT_PLANE,
+       BEHIND_PLANE,
+    };
+
+public:
     /**
-     * Constructor.
-     */
-    Ray();
+    * create plane from tree point.
+    */
+    Plane(const Vec3& p1, const Vec3& p2, const Vec3& p3);
 
     /**
-     * Constructor.
-     */
-    Ray(const Ray& ray);
+    * create plane from normal and dist.
+    */
+    Plane(const Vec3& normal, float dist);
+
+    /**
+    * create plane from normal and a point on plane.
+    */
+    Plane(const Vec3& normal, const Vec3& point);
+    Plane();
     
     /**
-     * Constructs a new ray initialized to the specified values.
-     *
-     * @param origin The ray's origin.
-     * @param direction The ray's direction.
-     */
-    Ray(const Vec3& origin, const Vec3& direction);
+    * init plane from tree point.
+    */
+    void initPlane(const Vec3& p1, const Vec3& p2, const Vec3& p3);
 
     /**
-     * Destructor.
-     */
-    ~Ray();
+    * init plane from normal and dist.
+    */
+    void initPlane(const Vec3& normal, float dist);
 
     /**
-     * Check whether this ray intersects the specified bounding box.
-     */
-    bool intersects(const AABB& aabb) const;
+    * init plane from normal and a point on plane.
+    */
+    void initPlane(const Vec3& normal, const Vec3& point);
 
     /**
-     * Check whether this ray intersects the specified obb.
-     */
-    bool intersects(const OBB& obb) const;
-
-    float dist(const Plane& plane) const;
-    Vec3 intersects(const Plane& plane) const;
-    
-    /**
-     * Sets this ray to the specified values.
-     *
-     * @param origin The ray's origin.
-     * @param direction The ray's direction.
-     */
-    void set(const Vec3& origin, const Vec3& direction);
+    * dist to plane, > 0 normal direction
+    */
+    float dist2Plane(const Vec3& p) const;
 
     /**
-     * Transforms this ray by the given transformation matrix.
-     *
-     * @param matrix The transformation matrix to transform by.
-     */
-    void transform(const Mat4& matrix);
+    * Gets the plane's normal.
+    */
+    const Vec3& getNormal() const { return _normal; }
 
-    Vec3 _origin;        // The ray origin position.
-    Vec3 _direction;     // The ray direction vector.
+    /**
+    * Gets the plane's distance to the origin along its normal.
+    */
+    float getDist() const  { return _dist; }
+
+    /**
+    * Return the side where the point is.
+    */
+    POINT_SIDE getSide(const Vec3& point) const;
+
+protected:
+    Vec3 _normal;
+    float _dist;
 };
 
 NS_CC_END
