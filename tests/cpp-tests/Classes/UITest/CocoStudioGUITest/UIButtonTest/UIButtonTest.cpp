@@ -877,7 +877,7 @@ bool UIButtonDisableDefaultTest::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("Button should displayed half opacity and can't be clicked","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("Left button will turn normal when clicked","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
@@ -891,7 +891,9 @@ bool UIButtonDisableDefaultTest::init()
         button->setZoomScale(0.4f);
         button->setPressedActionEnabled(true);
         button->setBright(false);
-        button->setEnabled(false);
+        button->addClickEventListener([=](Ref*){
+            button->setBright(true);
+        });
         _uiLayer->addChild(button);
         
         // Create the button

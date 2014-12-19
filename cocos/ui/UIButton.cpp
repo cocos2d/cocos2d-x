@@ -29,6 +29,9 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
+#include "renderer/CCGLProgram.h"
+#include "shaders/UIShaders.h"
+#include "renderer/ccShaders.h"
 
 NS_CC_BEGIN
 
@@ -382,7 +385,7 @@ void Button::onPressStateChangedToNormal()
     _buttonNormalRenderer->setVisible(true);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(false);
-    _buttonNormalRenderer->setOpacity(255.0f);
+    _buttonNormalRenderer->setState(Scale9Sprite::State::NORMAL);
     
     if (_pressedTextureLoaded)
     {
@@ -428,7 +431,7 @@ void Button::onPressStateChangedToNormal()
 
 void Button::onPressStateChangedToPressed()
 {
-    _buttonNormalRenderer->setOpacity(255.0f);
+    _buttonNormalRenderer->setState(Scale9Sprite::State::NORMAL);
     
     if (_pressedTextureLoaded)
     {
@@ -490,7 +493,7 @@ void Button::onPressStateChangedToDisabled()
     {
         if (_normalTextureLoaded)
         {
-            _buttonNormalRenderer->setOpacity(127.5);
+            _buttonNormalRenderer->setState(Scale9Sprite::State::GRAY);
         }
     }
     else
