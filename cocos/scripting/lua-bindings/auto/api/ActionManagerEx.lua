@@ -5,15 +5,16 @@
 -- @parent_module ccs
 
 --------------------------------
--- @overload self, char, char, cc.CallFunc         
--- @overload self, char, char         
--- @function [parent=#ActionManagerEx] playActionByName
+-- Stop an Action with a name.<br>
+-- param jsonName  UI file name<br>
+-- param actionName  action name in teh UIfile.<br>
+-- return  ActionObject which named as the param name
+-- @function [parent=#ActionManagerEx] stopActionByName 
 -- @param self
 -- @param #char jsonName
 -- @param #char actionName
--- @param #cc.CallFunc func
 -- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
-
+        
 --------------------------------
 -- Gets an ActionObject with a name.<br>
 -- param jsonName  UI file name<br>
@@ -25,6 +26,16 @@
 -- @param #char actionName
 -- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
         
+--------------------------------
+-- @overload self, char, char, cc.CallFunc         
+-- @overload self, char, char         
+-- @function [parent=#ActionManagerEx] playActionByName
+-- @param self
+-- @param #char jsonName
+-- @param #char actionName
+-- @param #cc.CallFunc func
+-- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
+
 --------------------------------
 -- Release all actions.
 -- @function [parent=#ActionManagerEx] releaseActions 
