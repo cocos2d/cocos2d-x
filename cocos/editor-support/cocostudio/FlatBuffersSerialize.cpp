@@ -167,7 +167,15 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     while (element)
     {
 //        CCLOG("entity name = %s", element->Name());
-        
+        if (strcmp("PropertyGroup", element->Name()) == 0)
+        {
+            const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+            while (attribute && strcmp("Version", attribute->Name()) != 0)
+                attribute = attribute->Next();
+            if (attribute)
+                _csdVersion = attribute->Value();
+        }
+
         if (strcmp("Content", element->Name()) == 0)
         {
             const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
@@ -248,10 +256,11 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
         
         auto csparsebinary = CreateCSParseBinary(*_builder,
                                                  _builder->CreateVector(_textures),
-												 _builder->CreateVector(_texturePngs),
+                                                 _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 aciton);
-		_builder->Finish(csparsebinary);
+                                                 aciton,
+                                                 _builder->CreateString(_csdVersion));
+        _builder->Finish(csparsebinary);
         
         _textures.clear();
         _texturePngs.clear();
@@ -988,7 +997,15 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     while (element)
     {
 //        CCLOG("entity name = %s", element->Name());
-        
+        if (strcmp("PropertyGroup", element->Name()) == 0)
+        {
+            const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+            while (attribute && strcmp("Version", attribute->Name()) != 0)
+                attribute = attribute->Next();
+            if (attribute)
+                _csdVersion = attribute->Value();
+        }
+
         if (strcmp("Content", element->Name()) == 0)
         {
             const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
@@ -1046,10 +1063,11 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
         }
         
 		auto csparsebinary = CreateCSParseBinary(*_builder,
-			_builder->CreateVector(_textures),
-			_builder->CreateVector(_texturePngs),
+                                                 _builder->CreateVector(_textures),
+                                                 _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 aciton);        
+                                                 aciton,
+                                                 _builder->CreateString(_csdVersion));
 		_builder->Finish(csparsebinary);
         
         _textures.clear();

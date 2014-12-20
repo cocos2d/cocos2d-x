@@ -29,68 +29,138 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-    namespace ui {
-        class CC_GUI_DLL LayoutComponent : public Component
+namespace ui {
+    class CC_GUI_DLL LayoutComponent : public Component
+    {
+    public:
+        LayoutComponent();
+        ~LayoutComponent();
+        virtual bool init()override;
+        CREATE_FUNC(LayoutComponent);
+
+        enum class HorizontalEage
         {
-        public:
-            LayoutComponent();
-            ~LayoutComponent();
-            virtual bool init()override;
-            CREATE_FUNC(LayoutComponent);
-            /**
-            * When a node has a ReferencePositoin with value equals LEFT_BOTTOM,
-            * it will treat the left bottom corner of its parent as the origin(0,0) when positioning itself
-            * which is the same as cocos2d-x does. But you can change it by assigning a
-            * different ReferencePosition.
-            * For example: If you use ReferencePosition with value equals RIGHT_TOP,
-            * then it will treat the right top corner of its parent as the origin(0,0) when positioning itself.
-            */
-            enum class ReferencePoint
-            {
-                BOTTOM_LEFT,
-                TOP_LEFT,
-                BOTTOM_RIGHT,
-                TOP_RIGHT
-            };
-
-            bool isUsingPercentPosition();
-            void setUsingPercentPosition(bool flag);
-
-            const Vec2& getPercentPosition();
-            void setPercentPosition(const Vec2& percent);
-
-            const Vec2& getRelativePosition();
-            void setRelativePosition(const Vec2& position);
-
-            void setReferencePoint(ReferencePoint point);
-            ReferencePoint getReferencePoint();
-
-            const Vec2& getOwnerPosition()const;
-            void setOwnerPosition(const Vec2& point); 
-
-            Vec2 getOwnerContentSize()const;
-            void setOwnerContentSize(const Vec2& size);
-
-            const Vec2& getPercentContentSize()const;
-            void setPercentContentSize(const Vec2& percent);
-
-            bool isUsingPercentContentSize();
-            void setUsingPercentContentSize(bool flag);
-
-            void setActiveEnable(bool enable);
-        private:
-            Vec2 converPointWithReferencePointAndSize(const Vec2& point,const Size& size);
-        private:
-
-            Vec2 _percentContentSize;
-            bool _usingPercentContentSize;
-
-            ReferencePoint _referencePoint;
-            Vec2 _relativePosition;
-            Vec2 _percentPosition;
-            bool _usingPercentPosition;
-            bool _actived;
+            None,
+            Left,
+            Right,
+            Center
         };
+        enum class VerticalEage
+        {
+            None,
+            Buttom,
+            Top,
+            Center
+        };
+#pragma region OldVersion
+        virtual void setUsingPercentContentSize(bool isUsed);
+        virtual bool getUsingPercentContentSize();
+
+        virtual void setPercentContentSize(const Vec2 &percent);
+        virtual Vec2 getPercentContentSize();
+#pragma endregion
+
+#pragma region Position & Margin
+        virtual Point getAnchorPosition();
+        virtual void setAnchorPosition(Point point);
+
+        virtual Point getPosition();
+        virtual void setPosition(Point position);
+
+        virtual bool isUsingPositionPercentX();
+        virtual void setPositionPercentXEnabled(bool isUsed);
+
+        virtual float getPositionPercentX();
+        virtual void setPositionPercentX(float percentMargin);
+
+        virtual bool isUsingPositionPercentY();
+        virtual void setPositionPercentYEnabled(bool isUsed);
+
+        virtual float getPositionPercentY();
+        virtual void setPositionPercentY(float percentMargin);
+
+        virtual HorizontalEage getHorizontalEage();
+        virtual void setHorizontalEage(HorizontalEage hEage);
+
+        virtual VerticalEage getVerticalEage();
+        virtual void setVerticalEage(VerticalEage vEage);
+
+        virtual float getLeftMargin();
+        virtual void setLeftMargin(float margin);
+
+        virtual float getRightMargin();
+        virtual void setRightMargin(float margin);
+
+        virtual float getTopMargin();
+        virtual void setTopMargin(float margin);
+
+        virtual float getButtomMargin();
+        virtual void setButtomMargin(float margin);
+
+#pragma endregion
+
+#pragma region Size & Percent
+        virtual Size getSize();
+        virtual void setSize(Size _size);
+
+        virtual bool isUsingPercentWidth();
+        virtual void setPercentWidthEnabled(bool isUsed);
+
+        virtual float getSizeWidth();
+        virtual void setSizeWidth(float width);
+
+        virtual float getPercentWidth();
+        virtual void setPercentWidth(float percentWidth);
+
+        virtual bool isUsingPercentHeight();
+        virtual void setPercentHeightEnabled(bool isUsed);
+
+        virtual float getSizeHeight();
+        virtual void setSizeHeight(float height);
+
+        virtual float getPercentHeight();
+        virtual void setPercentHeight(float percentHeight);
+
+        virtual bool isUsingStretchWidth();
+        virtual void setStretchWidthEnabled(bool isUsed);
+
+        virtual bool isUsingStretchHeight();
+        virtual void setStretchHeightEnabled(bool isUsed);
+
+#pragma endregion
+
+        virtual void setActiveEnable(bool enable);
+        virtual void refreshLayout();
+
+    protected:
+        Node* getOwnerParent();
+        virtual void refreshHorizontalMargin();
+        virtual void refreshVerticalMargin();
+    protected:
+        HorizontalEage  _horizontalEage;
+        VerticalEage    _verticalEage;
+
+        float           _leftMargin;
+        float           _rightMargin;
+        float           _buttomMargin;
+        float           _topMargin;
+
+        bool            _usingPositionPercentX;
+        float           _positionPercentX;
+        bool            _usingPositionPercentY;
+        float           _positionPercentY;
+
+        bool            _usingStretchWidth;
+        bool            _usingStretchHeight;
+
+        float           _percentWidth;
+        bool            _usingPercentWidth;
+        
+        float           _percentHeight;
+        bool            _usingPercentHeight;
+
+        bool _actived;
+    };
 }
 
 NS_CC_END
