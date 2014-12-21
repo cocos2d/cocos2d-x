@@ -63,11 +63,6 @@ Node *LuaEventNode::getDetachedNode() const
     return  _nodePreuse;
 }
 
-bool LuaEventNode::isDetached()
-{
-	return (_node == nullptr) ;
-}
-
 Node *LuaEventNode::getActiveNode() const
 {
     return  _node;
@@ -264,7 +259,7 @@ void LuaEventNode::ccTouchesCaptureRemoved(const std::vector<Touch*>& touches, L
 
 bool LuaEventNode::isTouchEnabled()
 {
-    return _bTouchEnabled;
+    return (_node!=nullptr) && _bTouchEnabled;
 }
 
 void LuaEventNode::setLuaTouchEnabled(bool enabled)
