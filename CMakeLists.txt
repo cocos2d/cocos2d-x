@@ -150,12 +150,14 @@ if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
 
-# GLFW3 used on Mac, Windows and Linux desktop platforms
+# desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
   cocos_find_package(OpenGL OPENGL REQUIRED)
 
   if(LINUX OR WINDOWS)
     cocos_find_package(GLEW GLEW REQUIRED)
+    #TODO: implement correct schema for pass cocos2d specific requirements to projects
+    include_directories(${GLEW_INCLUDE_DIRS})
   endif()
 
   cocos_find_package(GLFW3 GLFW3 REQUIRED)
