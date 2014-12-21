@@ -64,7 +64,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     if (_project.getDebuggerType() == kCCLuaDebuggerCodeIDE)
     {
-        initRuntime(_project.getProjectDir());
+        initRuntime();
         {
             ConfigParser::getInstance()->readConfig();
         }
