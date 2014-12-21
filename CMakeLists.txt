@@ -236,9 +236,11 @@ cocos_find_package(ZLIB ZLIB REQUIRED)
 # moreover our embedded version modified to quick provide
 # functionality needed by cocos.
 if(USE_PREBUILT_LIBS OR NOT MINGW)
+  #TODO: hack! should be in external/unzip/CMakeLists.txt
+  include_directories(${ZLIB_INCLUDE_DIRS})
   add_subdirectory(external/unzip)
-  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
-  set(MINIZIP_LIBRARIES unzip)
+  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip ${ZLIB_INCLUDE_DIRS})
+  set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
   message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
 else()
   cocos_find_package(MINIZIP MINIZIP REQUIRED)
