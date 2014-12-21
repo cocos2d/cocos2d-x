@@ -5222,6 +5222,7 @@
         "cocos/scripting/lua-bindings/script/ui/DeprecatedUIFunc.lua", 
         "cocos/scripting/lua-bindings/script/ui/GuiConstants.lua", 
         "cocos/scripting/lua-bindings/script/ui/experimentalUIConstants.lua", 
+        "external/lua/lua/Android.mk", 
         "external/lua/lua/build.bat", 
         "external/lua/lua/build.sh", 
         "external/lua/lua/clean.bat", 
