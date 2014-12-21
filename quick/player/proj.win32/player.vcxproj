@@ -280,6 +280,9 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClInclude Include="..\..\lib\quick-src\extra\platform\win32\CCNativeWin32def.h" />
     <ClInclude Include="..\..\lib\quick-src\ProjectConfig\ProjectConfig.h" />
     <ClInclude Include="..\..\lib\quick-src\ProjectConfig\SimulatorConfig.h" />
+    <ClInclude Include="..\Classes\runtime\ConnectWaitLayer.h" />
+    <ClInclude Include="..\Classes\runtime\ConsoleCommand.h" />
+    <ClInclude Include="..\Classes\runtime\FileServer.h" />
     <ClInclude Include="..\Classes\runtime\lua_debugger.h" />
     <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
@@ -442,6 +445,9 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClCompile Include="..\..\lib\quick-src\extra\platform\win32\CCNetworkWin32.cpp" />
     <ClCompile Include="..\..\lib\quick-src\ProjectConfig\ProjectConfig.cpp" />
     <ClCompile Include="..\..\lib\quick-src\ProjectConfig\SimulatorConfig.cpp" />
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp" />
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp" />
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp" />
     <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
     <ClCompile Include="..\Classes\runtime\lua_debugger.c" />
     <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />
