@@ -265,10 +265,10 @@ set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
 message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 
 
-# build for 3rd party libraries
-if(LINUX OR APPLE)
+# build xxhash
 add_subdirectory(external/xxhash)
-endif()
+set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
+set(XXHASH_LIBRARIES xxhash)
 
 # libcocos2d.a
 add_subdirectory(cocos)

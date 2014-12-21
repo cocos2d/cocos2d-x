@@ -79,9 +79,7 @@ set(COCOS_SRC cocos2d.cpp
     )
 
   #todo: provide prebuild versions of the xx libs for all platforms
-  include_directories(
-    ../external/xxhash
-    ../external/xxtea)
+  include_directories(../external/xxtea)
 
 
 add_library(cocos2d ${COCOS_SRC})
@@ -127,11 +125,11 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS)
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2d ${pkg})
 endforeach()
 
-target_link_libraries(cocos2d xxhash ${PLATFORM_SPECIFIC_LIBS})
+target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
