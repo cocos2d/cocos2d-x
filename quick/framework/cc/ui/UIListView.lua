@@ -109,7 +109,6 @@ function UIListView:ctor(params)
 	self.itemsFree_ = {}
 	self.delegate_ = {}
 	self.redundancyViewVal = 0 --异步的视图两个方向上的冗余大小,横向代表宽,竖向代表高
-	self.nTest = 0
 end
 
 function UIListView:onCleanup()
@@ -690,31 +689,43 @@ end
 
 ]]
 function UIListView:increaseOrReduceItem_()
-	-- if self.nTest > 0 then
-	-- 	return
-	-- end
-	-- print("enter increase reduceItem")
 
 	if 0 == #self.items_ then
 		print("ERROR items count is 0")
 		return
 	end
 
+	local getContainerCascadeBoundingBox = function ()
+		local boundingBox
+		for i, item in ipairs(self.items_) do
+			local w,h = item:getItemSize()
+			local x,y = item:getPosition()
+			local anchor = item:getAnchorPoint()
+			x = x - anchor.x * w
+			y = y - anchor.y * h
+
+			if boundingBox then
+				boundingBox = cc.rectUnion(boundingBox, cc.rect(x, y, w, h))
+			else
+				boundingBox = cc.rect(x, y, w, h)
+			end
+		end
+
+		local point = self.container:convertToWorldSpace(cc.p(boundingBox.x, boundingBox.y))
+		boundingBox.x = point.x
+		boundingBox.y = point.y
+		return boundingBox
+	end
+
 	local count = self.delegate_[UIListView.DELEGATE](self, UIListView.COUNT_TAG)
 	local nNeedAdjust = 2 --作为是否还需要再增加或减少item的标志,2表示上下两个方向或左右都需要调整
-	local cascadeBound = self.container:getCascadeBoundingBox()
+	local cascadeBound = getContainerCascadeBoundingBox()
 	local item
 	local itemW, itemH
 
 	-- print("child count:" .. self.container:getChildrenCount())
 	-- dump(cascadeBound, "increaseOrReduceItem_ cascadeBound:")
 	-- dump(self.viewRect_, "increaseOrReduceItem_ viewRect:")
-
-	if self.bTest1 then
-		print("===================================================")
-		return
-		-- dump(cascadeBound, "cascadeBound:")
-	end
 
 	if UIScrollView.DIRECTION_VERTICAL == self.direction then
 
@@ -746,10 +757,6 @@ function UIListView:increaseOrReduceItem_()
 			if nil == item then
 				nNeedAdjust = nNeedAdjust - 1
 			end
-		end
-
-		if self.bTest1 then
-			-- dump(cascadeBound, "cascadeBound:")
 		end
 
 		--part after view
@@ -954,7 +961,7 @@ end
 
 ]]
 function UIListView:loadOneItem_(originPoint, idx, bBefore)
-	print("UIListView loadOneItem idx:" .. idx)
+	-- print("UIListView loadOneItem idx:" .. idx)
 	-- dump(originPoint, "originPoint:")
 
 	local itemW, itemH = 0, 0
@@ -1026,9 +1033,7 @@ end
 
 ]]
 function UIListView:unloadOneItem_(idx)
-	print("UIListView unloadOneItem idx:" .. idx)
-
-	self.nTest = self.nTest + 1
+	-- print("UIListView unloadOneItem idx:" .. idx)
 
 	local item = self.items_[1]
 
