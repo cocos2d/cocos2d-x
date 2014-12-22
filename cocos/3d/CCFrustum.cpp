@@ -29,17 +29,17 @@ NS_CC_BEGIN
 
 bool Frustum::initFrustum(const Camera* pCamera)
 {
-    _bInit = true;
+    _initialized = true;
     createPlane(pCamera);
     return true;
 }
-bool Frustum::isOutFrustum(const AABB& aabb) const
+bool Frustum::isOutOfFrustum(const AABB& aabb) const
 {
-    if (_bInit)
+    if (_initialized)
     {
         Vec3 point;
 
-        int nplane = _bClipZ ? 6 : 4;
+        int nplane = _clipZ ? 6 : 4;
         for (int i = 0; i < nplane; i++)
         {
             const Vec3& normal = _plane[i].getNormal();
@@ -47,20 +47,20 @@ bool Frustum::isOutFrustum(const AABB& aabb) const
             point.y = normal.y < 0 ? aabb._max.y : aabb._min.y;
             point.z = normal.z < 0 ? aabb._max.z : aabb._min.z;
             
-            if (_plane[i].getSide(point) == Plane::FRONT_PLANE )
+            if (_plane[i].getSide(point) == PointSide::FRONT_PLANE )
                 return true;
         }
     }
     return false;
 }
 
-bool Frustum::isOutFrustum(const OBB& obb) const
+bool Frustum::isOutOfFrustum(const OBB& obb) const
 {
-    if (_bInit)
+    if (_initialized)
     {
         Vec3 point;
 
-        int nplane = _bClipZ ? 6 : 4;
+        int nplane = _clipZ ? 6 : 4;
 
         Vec3 obbExtentX = obb._xAxis * obb._extents.x;
         Vec3 obbExtentY = obb._yAxis * obb._extents.y;
@@ -74,7 +74,7 @@ bool Frustum::isOutFrustum(const OBB& obb) const
             point = normal.dot(obb._yAxis) > 0 ? point - obbExtentY : point + obbExtentY;
             point = normal.dot(obb._zAxis) > 0 ? point - obbExtentZ : point + obbExtentZ;
 
-            if (_plane[i].getSide(point) == Plane::FRONT_PLANE)
+            if (_plane[i].getSide(point) == PointSide::FRONT_PLANE)
                 return true;
         }
     }
