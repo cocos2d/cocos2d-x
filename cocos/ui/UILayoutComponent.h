@@ -54,82 +54,78 @@ namespace ui {
             Top,
             Center
         };
-#pragma region OldVersion
+
+        // OldVersion
         virtual void setUsingPercentContentSize(bool isUsed);
-        virtual bool getUsingPercentContentSize();
+        virtual bool getUsingPercentContentSize()const;
 
         virtual void setPercentContentSize(const Vec2 &percent);
-        virtual Vec2 getPercentContentSize();
-#pragma endregion
+        virtual Vec2 getPercentContentSize()const;
 
-#pragma region Position & Margin
-        virtual Point getAnchorPosition();
-        virtual void setAnchorPosition(Point point);
+        // Position & Margin
+        virtual const Point& getAnchorPosition()const;
+        virtual void setAnchorPosition(const Point& point);
 
-        virtual Point getPosition();
-        virtual void setPosition(Point position);
+        virtual const Point& getPosition()const;
+        virtual void setPosition(const Point& position);
 
-        virtual bool isUsingPositionPercentX();
+        virtual bool isUsingPositionPercentX()const;
         virtual void setPositionPercentXEnabled(bool isUsed);
 
-        virtual float getPositionPercentX();
+        virtual float getPositionPercentX()const;
         virtual void setPositionPercentX(float percentMargin);
 
-        virtual bool isUsingPositionPercentY();
+        virtual bool isUsingPositionPercentY()const;
         virtual void setPositionPercentYEnabled(bool isUsed);
 
-        virtual float getPositionPercentY();
+        virtual float getPositionPercentY()const;
         virtual void setPositionPercentY(float percentMargin);
 
-        virtual HorizontalEage getHorizontalEage();
+        virtual HorizontalEage getHorizontalEage()const;
         virtual void setHorizontalEage(HorizontalEage hEage);
 
-        virtual VerticalEage getVerticalEage();
+        virtual VerticalEage getVerticalEage()const;
         virtual void setVerticalEage(VerticalEage vEage);
 
-        virtual float getLeftMargin();
+        virtual float getLeftMargin()const;
         virtual void setLeftMargin(float margin);
 
-        virtual float getRightMargin();
+        virtual float getRightMargin()const;
         virtual void setRightMargin(float margin);
 
-        virtual float getTopMargin();
+        virtual float getTopMargin()const;
         virtual void setTopMargin(float margin);
 
-        virtual float getButtomMargin();
+        virtual float getButtomMargin()const;
         virtual void setButtomMargin(float margin);
 
-#pragma endregion
+        // Size & Percent
+        virtual const Size& getSize()const;
+        virtual void setSize(const Size& _size);
 
-#pragma region Size & Percent
-        virtual Size getSize();
-        virtual void setSize(Size _size);
-
-        virtual bool isUsingPercentWidth();
+        virtual bool isUsingPercentWidth()const;
         virtual void setPercentWidthEnabled(bool isUsed);
 
-        virtual float getSizeWidth();
+        virtual float getSizeWidth()const;
         virtual void setSizeWidth(float width);
 
-        virtual float getPercentWidth();
+        virtual float getPercentWidth()const;
         virtual void setPercentWidth(float percentWidth);
 
-        virtual bool isUsingPercentHeight();
+        virtual bool isUsingPercentHeight()const;
         virtual void setPercentHeightEnabled(bool isUsed);
 
-        virtual float getSizeHeight();
+        virtual float getSizeHeight()const;
         virtual void setSizeHeight(float height);
 
-        virtual float getPercentHeight();
+        virtual float getPercentHeight()const;
         virtual void setPercentHeight(float percentHeight);
 
-        virtual bool isUsingStretchWidth();
+        virtual bool isUsingStretchWidth()const;
         virtual void setStretchWidthEnabled(bool isUsed);
 
-        virtual bool isUsingStretchHeight();
+        virtual bool isUsingStretchHeight()const;
         virtual void setStretchHeightEnabled(bool isUsed);
-
-#pragma endregion
 
         virtual void setActiveEnable(bool enable);
         virtual void refreshLayout();
