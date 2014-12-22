@@ -31,10 +31,10 @@ NS_CC_BEGIN
 
 namespace ui {
     LayoutComponent::LayoutComponent()
-    :_actived(true)
-    ,_usingPercentContentSize(false)
-    ,_usingPercentPosition(false)
-    ,_referencePoint(ReferencePoint::BOTTOM_LEFT)
+    : _usingPercentContentSize(false)
+    , _referencePoint(ReferencePoint::BOTTOM_LEFT)
+    , _usingPercentPosition(false)
+    , _actived(true)
     {
         _name = __LAYOUT_COMPONENT_NAME;
     }

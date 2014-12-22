@@ -42,19 +42,16 @@ Controller g_aTestNames[] = {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
 #endif
+#if CC_ENABLE_BOX2D_INTEGRATION
 	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
 	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
+#endif
 	{ "Bugs", []() { return new BugsTestScene(); } },
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
 	{ "Configuration", []() { return new ConfigurationTestScene(); } },
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Console", []() { return new ConsoleTestScene(); } },
-
-#endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Curl", []() { return new CurlTestScene(); } },
-#endif
 	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
 	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
@@ -83,13 +80,11 @@ Controller g_aTestNames[] = {
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
-#endif
 	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
-	{ "MutiTouch", []() { return new MutiTouchTestScene(); } },
+	{ "MultiTouch", []() { return new MutiTouchTestScene(); } },
 	{ "Performance tests", []() { return new PerformanceTestScene(); } },
     { "Renderer", []() { return new NewRendererTestScene(); } },
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },

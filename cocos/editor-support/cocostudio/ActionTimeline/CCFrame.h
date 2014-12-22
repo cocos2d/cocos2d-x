@@ -37,6 +37,7 @@ THE SOFTWARE.
 NS_TIMELINE_BEGIN
 
 class Timeline;
+class ActionTimeline;
 
 class CC_STUDIO_DLL Frame : public cocos2d::Ref
 {
@@ -56,7 +57,7 @@ public:
 
     virtual bool isEnterWhenPassed() { return _enterWhenPassed; }
 
-    virtual void onEnter(Frame *nextFrame) = 0;
+    virtual void onEnter(Frame* nextFrame, int currentFrameIndex) = 0;
     virtual void apply(float percent) {}
 
     virtual Frame* clone() = 0;
@@ -84,7 +85,7 @@ public:
 
     VisibleFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
     inline void setVisible(bool visible) { _visible = visible;}
@@ -104,7 +105,7 @@ public:
 
     virtual void setNode(cocos2d::Node* node);
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
     inline void setTextureName(std::string textureName) { _textureName = textureName;}
@@ -122,7 +123,7 @@ public:
 
     RotationFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
@@ -141,7 +142,7 @@ public:
 
     SkewFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
@@ -166,7 +167,7 @@ public:
 
     RotationSkewFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 };
@@ -179,7 +180,7 @@ public:
 
     PositionFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
@@ -205,7 +206,7 @@ public:
 
     ScaleFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
@@ -232,7 +233,7 @@ public:
 
     AnchorPointFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
     inline void setAnchorPoint(const cocos2d::Point& point) { _anchorPoint = point; }
@@ -257,7 +258,7 @@ public:
     static InnerActionFrame* create();
     InnerActionFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
     inline void setInnerActionType(InnerActionType type) { _innerActionType = type; }
@@ -278,7 +279,7 @@ public:
     static ColorFrame* create();
     ColorFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
@@ -307,7 +308,9 @@ public:
 
     EventFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void setNode(cocos2d::Node* node);
+    
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
     inline void setEvent(std::string event) { _event = event;}
@@ -315,6 +318,7 @@ public:
 
 protected:
     std::string _event;
+    ActionTimeline* _action;
 };
 
 class CC_STUDIO_DLL ZOrderFrame : public Frame
@@ -324,7 +328,7 @@ public:
 
     ZOrderFrame();
 
-    virtual void onEnter(Frame *nextFrame) override;
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
     inline void setZOrder(int zorder) { _zorder = zorder;}

@@ -106,23 +106,23 @@ static inline Tex2F __t(const Vec2 &v)
 DrawNode::DrawNode()
 : _vao(0)
 , _vbo(0)
+, _vaoGLPoint(0)
+, _vboGLPoint(0)
+, _vaoGLLine(0)
+, _vboGLLine(0)
 , _bufferCapacity(0)
 , _bufferCount(0)
 , _buffer(nullptr)
-, _dirty(false)
-, _vaoGLPoint(0)
-, _vboGLPoint(0)
 , _bufferCapacityGLPoint(0)
 , _bufferCountGLPoint(0)
 , _bufferGLPoint(nullptr)
 , _pointColor(1,1,1,1)
 , _pointSize(1)
-, _dirtyGLPoint(false)
-, _vaoGLLine(0)
-, _vboGLLine(0)
 , _bufferCapacityGLLine(0)
 , _bufferCountGLLine(0)
 , _bufferGLLine(nullptr)
+, _dirty(false)
+, _dirtyGLPoint(false)
 , _dirtyGLLine(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -346,7 +346,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
         // texcood
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+
     glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
@@ -382,7 +382,6 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
     glLineWidth(2);
-    glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
@@ -399,12 +398,26 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
     glProgram->setUniformLocationWith4fv(glProgram->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_pointSize"), _pointSize);
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
-
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+    if (_dirtyGLPoint)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
+        
+        _dirtyGLPoint = false;
+    }
+    
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(_vaoGLPoint);
+    }
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+    }
     
     glDrawArrays(GL_POINTS, 0, _bufferCountGLPoint);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -415,6 +428,8 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
 
 void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Color4F &color)
 {
+    ensureCapacityGLPoint(1);
+    
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
     V2F_C4B_T2F a = {position, Color4B(color), Tex2F(0.0, 0.0) };
     *point = a;
@@ -423,6 +438,7 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
     _pointColor = color;
     
     _bufferCountGLPoint += 1;
+    _dirtyGLPoint = true;
 }
 
 void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
@@ -440,6 +456,7 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     _pointColor = color;
     
     _bufferCountGLPoint += numberOfPoints;
+    _dirtyGLPoint = true;
 }
 
 void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
@@ -740,109 +757,84 @@ void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const
 void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
     CCASSERT(count >= 0, "invalid count value");
-
-    struct ExtrudeVerts {Vec2 offset, n;};
-	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
-	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
-	
-	for (int i = 0; i < count; i++)
-    {
-		Vec2 v0 = __v2f(verts[(i-1+count)%count]);
-		Vec2 v1 = __v2f(verts[i]);
-		Vec2 v2 = __v2f(verts[(i+1)%count]);
-        
-		Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
-		Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
-		
-		Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0/(v2fdot(n1, n2) + 1.0));
-        struct ExtrudeVerts tmp = {offset, n2};
-		extrude[i] = tmp;
-	}
-	
-	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
-	
-	auto triangle_count = 3*count - 2;
-	auto vertex_count = 3*triangle_count;
+    
+    bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
+    
+    auto  triangle_count = outline ? (3*count - 2) : (count - 2);
+    auto vertex_count = 3*triangle_count;
     ensureCapacity(vertex_count);
-	
-	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
-	V2F_C4B_T2F_Triangle *cursor = triangles;
-	
-	float inset = (outline == false ? 0.5 : 0.0);
-	for (int i = 0; i < count-2; i++)
+    
+    V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+    V2F_C4B_T2F_Triangle *cursor = triangles;
+    
+    for (int i = 0; i < count-2; i++)
     {
-		Vec2 v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
-		Vec2 v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
-		Vec2 v2 = v2fsub(__v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
-		
         V2F_C4B_T2F_Triangle tmp = {
-            {v0, Color4B(fillColor), __t(v2fzero)},
-            {v1, Color4B(fillColor), __t(v2fzero)},
-            {v2, Color4B(fillColor), __t(v2fzero)},
+            {verts[0], Color4B(fillColor), __t(v2fzero)},
+            {verts[i+1], Color4B(fillColor), __t(v2fzero)},
+            {verts[i+2], Color4B(fillColor), __t(v2fzero)},
         };
-
-		*cursor++ = tmp;
-	}
-	
-	for(int i = 0; i < count; i++)
+        
+        *cursor++ = tmp;
+    }
+    
+    if(outline)
     {
-		int j = (i+1)%count;
-		Vec2 v0 = __v2f(verts[i]);
-		Vec2 v1 = __v2f(verts[j]);
-		
-		Vec2 n0 = extrude[i].n;
-		
-		Vec2 offset0 = extrude[i].offset;
-		Vec2 offset1 = extrude[j].offset;
-		
-		if(outline)
+        struct ExtrudeVerts {Vec2 offset, n;};
+        struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
+        memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
+        
+        for (int i = 0; i < count; i++)
         {
-			Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
-			Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
-			Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
-			Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
-			
+            Vec2 v0 = __v2f(verts[(i-1+count)%count]);
+            Vec2 v1 = __v2f(verts[i]);
+            Vec2 v2 = __v2f(verts[(i+1)%count]);
+            
+            Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
+            Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
+            
+            Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0/(v2fdot(n1, n2) + 1.0));
+            struct ExtrudeVerts tmp = {offset, n2};
+            extrude[i] = tmp;
+        }
+        
+        for(int i = 0; i < count; i++)
+        {
+            int j = (i+1)%count;
+            Vec2 v0 = __v2f(verts[i]);
+            Vec2 v1 = __v2f(verts[j]);
+            
+            Vec2 n0 = extrude[i].n;
+            
+            Vec2 offset0 = extrude[i].offset;
+            Vec2 offset1 = extrude[j].offset;
+            
+            Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
+            Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
+            Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
+            Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
+            
             V2F_C4B_T2F_Triangle tmp1 = {
                 {inner0, Color4B(borderColor), __t(v2fneg(n0))},
                 {inner1, Color4B(borderColor), __t(v2fneg(n0))},
                 {outer1, Color4B(borderColor), __t(n0)}
             };
-			*cursor++ = tmp1;
-
+            *cursor++ = tmp1;
+            
             V2F_C4B_T2F_Triangle tmp2 = {
                 {inner0, Color4B(borderColor), __t(v2fneg(n0))},
                 {outer0, Color4B(borderColor), __t(n0)},
                 {outer1, Color4B(borderColor), __t(n0)}
             };
-			*cursor++ = tmp2;
-		}
-        else {
-			Vec2 inner0 = v2fsub(v0, v2fmult(offset0, 0.5));
-			Vec2 inner1 = v2fsub(v1, v2fmult(offset1, 0.5));
-			Vec2 outer0 = v2fadd(v0, v2fmult(offset0, 0.5));
-			Vec2 outer1 = v2fadd(v1, v2fmult(offset1, 0.5));
-			
-            V2F_C4B_T2F_Triangle tmp1 = {
-                {inner0, Color4B(fillColor), __t(v2fzero)},
-                {inner1, Color4B(fillColor), __t(v2fzero)},
-                {outer1, Color4B(fillColor), __t(n0)}
-            };
-			*cursor++ = tmp1;
-
-            V2F_C4B_T2F_Triangle tmp2 = {
-                {inner0, Color4B(fillColor), __t(v2fzero)},
-                {outer0, Color4B(fillColor), __t(n0)},
-                {outer1, Color4B(fillColor), __t(n0)}
-            };
-			*cursor++ = tmp2;
-		}
-	}
-	
-	_bufferCount += vertex_count;
-	
-	_dirty = true;
-
-    free(extrude);
+            *cursor++ = tmp2;
+        }
+        
+        free(extrude);
+    }
+    
+    _bufferCount += vertex_count;
+    
+    _dirty = true;
 }
 
 void DrawNode::drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)

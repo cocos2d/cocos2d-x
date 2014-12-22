@@ -185,10 +185,9 @@ bool UIPageViewButtonTest::init()
     return false;
 }
 
-void UIPageViewButtonTest::onButtonClicked(Ref* pSender, Widget::TouchEventType type)
+void UIPageViewButtonTest::onButtonClicked(Ref* sender, Widget::TouchEventType type)
 {
-    Button *btn = (Button*)pSender;
-    CCLOG("button %s clicked", btn->getName().c_str());
+    log("button %s clicked", static_cast<Button*>(sender)->getName().c_str());
 }
 
 

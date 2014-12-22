@@ -69,7 +69,7 @@ public:
     bool intersects(const OBB& obb) const;
 
     float dist(const Plane& plane) const;
-	Vec3 intersects(const Plane& plane) const;
+    Vec3 intersects(const Plane& plane) const;
     
     /**
      * Sets this ray to the specified values.

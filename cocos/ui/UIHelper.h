@@ -82,6 +82,10 @@ public:
     static void doLayout(Node *rootNode);
 
     static void changeLayoutSystemActiveState(bool bActive);
+    
+private:
+    static Rect restrictCapInsetRect(const Rect& capInsets, const Size& textureSize);
+    friend class Button;
 };
 }
 

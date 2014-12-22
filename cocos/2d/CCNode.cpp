@@ -60,6 +60,8 @@ THE SOFTWARE.
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+extern int g_physicsSceneCount;
+
 NS_CC_BEGIN
 
 bool nodeComparisonLess(Node* n1, Node* n2)
@@ -82,16 +84,19 @@ Node::Node(void)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _scaleZ(1.0f)
-, _positionZ(0.0f)
 , _position(Vec2::ZERO)
+, _positionZ(0.0f)
+, _usingNormalizedPosition(false)
+, _normalizedPositionDirty(false)
 , _skewX(0.0f)
 , _skewY(0.0f)
 , _anchorPointInPoints(Vec2::ZERO)
 , _anchorPoint(Vec2::ZERO)
 , _contentSize(Size::ZERO)
-, _useAdditionalTransform(false)
+, _contentSizeDirty(true)
 , _transformDirty(true)
 , _inverseDirty(true)
+, _useAdditionalTransform(false)
 , _transformUpdated(true)
 // children (lazy allocs)
 // lazy alloc
@@ -100,6 +105,8 @@ Node::Node(void)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
+, _name("")
+, _hashOfName(0)
 // userData is always inited as nil
 , _userData(nullptr)
 , _userObject(nullptr)
@@ -125,10 +132,6 @@ Node::Node(void)
 , _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
-, _usingNormalizedPosition(false)
-, _normalizedPositionDirty(false)
-, _name("")
-, _hashOfName(0)
 , _cameraMask(1)
 {
     // set default scheduler and actionManager
@@ -425,7 +428,13 @@ void Node::setScale(float scale)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    updatePhysicsBodyTransform(getScene());
+    if(g_physicsSceneCount == 0)
+        return;
+    auto scene = getScene();
+    if (!scene || scene->getPhysicsWorld())
+    {
+        updatePhysicsBodyTransform(scene);
+    }
 #endif
 }
 
@@ -446,7 +455,13 @@ void Node::setScale(float scaleX,float scaleY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    updatePhysicsBodyTransform(getScene());
+    if(g_physicsSceneCount == 0)
+        return;
+    auto scene = getScene();
+    if (!scene || scene->getPhysicsWorld())
+    {
+        updatePhysicsBodyTransform(scene);
+    }
 #endif
 }
 
@@ -460,7 +475,13 @@ void Node::setScaleX(float scaleX)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    updatePhysicsBodyTransform(getScene());
+    if(g_physicsSceneCount == 0)
+        return;
+    auto scene = getScene();
+    if (!scene || scene->getPhysicsWorld())
+    {
+        updatePhysicsBodyTransform(scene);
+    }
 #endif
 }
 
@@ -503,7 +524,13 @@ void Node::setScaleY(float scaleY)
     _transformUpdated = _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
-    updatePhysicsBodyTransform(getScene());
+    if(g_physicsSceneCount == 0)
+        return;
+    auto scene = getScene();
+    if (!scene || scene->getPhysicsWorld())
+    {
+        updatePhysicsBodyTransform(scene);
+    }
 #endif
 }
 
@@ -794,7 +821,13 @@ Scene* Node::getScene() const
     if(!_parent)
         return nullptr;
     
-    return _parent->getScene();
+    auto sceneNode = _parent;
+    while (sceneNode->_parent)
+    {
+        sceneNode = sceneNode->_parent;
+    }
+
+    return dynamic_cast<Scene*>(sceneNode);
 }
 
 Rect Node::getBoundingBox() const
@@ -993,8 +1026,8 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
     
 #if CC_USE_PHYSICS
     // Recursive add children with which have physics body.
-    Scene* scene = this->getScene();
-    if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
+    auto scene = this->getScene();
+    if (scene && scene->getPhysicsWorld())
     {
         child->updatePhysicsBodyTransform(scene);
         scene->addChildToPhysicsWorld(child);
@@ -1958,14 +1991,14 @@ void Node::updatePhysicsBodyPosition(Scene* scene)
 {
     if (_physicsBody != nullptr)
     {
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
+        if (scene && scene->getPhysicsWorld())
         {
-            Vec2 pos = getParent() == scene ? getPosition() : scene->convertToNodeSpace(_parent->convertToWorldSpace(getPosition()));
+            Vec2 pos = _parent == scene ? _position : scene->convertToNodeSpace(_parent->convertToWorldSpace(_position));
             _physicsBody->setPosition(pos);
         }
         else
         {
-            _physicsBody->setPosition(getPosition());
+            _physicsBody->setPosition(_position);
         }
     }
     
@@ -1982,7 +2015,7 @@ void Node::updatePhysicsBodyRotation(Scene* scene)
         if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
         {
             float rotation = _rotationZ_X;
-            for (Node* parent = _parent; parent != scene; parent = parent->getParent())
+            for (Node* parent = _parent; parent != scene; parent = parent->_parent)
             {
                 rotation += parent->getRotation();
             }
@@ -2009,10 +2042,10 @@ void Node::updatePhysicsBodyScale(Scene* scene)
         {
             float scaleX = _scaleX / _physicsScaleStartX;
             float scaleY = _scaleY / _physicsScaleStartY;
-            for (Node* parent = _parent; parent != scene; parent = parent->getParent())
+            for (Node* parent = _parent; parent != scene; parent = parent->_parent)
             {
-                scaleX *= parent->getScaleX();
-                scaleY *= parent->getScaleY();
+                scaleX *= parent->_scaleX;
+                scaleY *= parent->_scaleY;
             }
             _physicsBody->setScale(scaleX, scaleY);
         }

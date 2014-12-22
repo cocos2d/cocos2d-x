@@ -276,6 +276,12 @@
     <ClCompile Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.cpp">
       <Filter>manual\audioengine</Filter>
     </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
@@ -481,6 +487,12 @@
     </ClInclude>
     <ClInclude Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.h">
       <Filter>manual\audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
+      <Filter>manual\cocostudio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

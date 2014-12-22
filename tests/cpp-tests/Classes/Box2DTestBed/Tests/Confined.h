@@ -25,8 +25,8 @@ public:
 
 	enum
 	{
-		e_columnCount = 0,
-		e_rowCount = 0
+		e_columnCount = 20,
+		e_rowCount = 10
 	};
 
 	Confined()

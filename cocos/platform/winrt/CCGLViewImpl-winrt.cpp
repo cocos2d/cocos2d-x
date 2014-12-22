@@ -24,7 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLViewImpl-winrt.h"
-#include "deprecated/CCSet.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
@@ -34,13 +33,16 @@ THE SOFTWARE.
 #include "deprecated/CCNotificationCenter.h"
 
 using namespace Platform;
+using namespace Concurrency;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Graphics::Display;
 using namespace Windows::UI::Input;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media;
+using namespace Windows::UI::Xaml::Input;
 using namespace Windows::System;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::ApplicationModel;
@@ -48,7 +50,6 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Platform;
 using namespace Microsoft::WRL;
-using namespace PhoneDirect3DXamlAppComponent;
 
 
 NS_CC_BEGIN
@@ -79,8 +80,6 @@ GLViewImpl::GLViewImpl()
 	, m_windowVisible(true)
     , m_width(0)
     , m_height(0)
-    , m_delegate(nullptr)
-    , m_messageBoxDelegate(nullptr)
     , m_orientation(DisplayOrientations::Landscape)
 {
 	s_pEglView = this;
@@ -109,11 +108,22 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 }
 
 
-bool GLViewImpl::Create(float width, float height, DisplayOrientations orientation)
+bool GLViewImpl::Create(float width, float height, float dpi, DisplayOrientations orientation)
 {
     m_orientation = orientation;
+    m_dpi = dpi;
     UpdateForWindowSizeChange(width, height);
     return true;
+}
+
+void GLViewImpl::setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher)
+{
+    m_dispatcher = dispatcher;
+}
+
+void GLViewImpl::setPanel(Windows::UI::Xaml::Controls::Panel^ panel)
+{
+    m_panel = panel;
 }
 
 
@@ -124,44 +134,55 @@ void GLViewImpl::setIMEKeyboardState(bool bOpen)
     setIMEKeyboardState(bOpen, str);
 }
 
+bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ message)
+{
+    if (m_dispatcher.Get())
+    {
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([title, message]()
+        {
+            // Show the message dialog
+            auto msg = ref new Windows::UI::Popups::MessageDialog(message, title);
+            // Set the command to be invoked when a user presses 'ESC'
+            msg->CancelCommandIndex = 1;
+            msg->ShowAsync();
+        }));
+
+        return true;
+    }
+    return false;
+}
+
 void GLViewImpl::setIMEKeyboardState(bool bOpen, std::string str)
 {
-    if(m_delegate)
+    if(bOpen)
     {
-        if(bOpen)
+        if (m_keyboard == nullptr)
         {
-            m_delegate->Invoke(Cocos2dEvent::ShowKeyboard, stringToPlatformString(str));
+            m_keyboard = ref new KeyBoardWinRT(m_dispatcher.Get(), m_panel.Get());
         }
-        else
+        m_keyboard->ShowKeyboard(PlatformStringFromString(str));
+    }
+    else
+    {
+        if (m_keyboard != nullptr)
         {
-            m_delegate->Invoke(Cocos2dEvent::HideKeyboard, stringToPlatformString(str));
+            m_keyboard->HideKeyboard(PlatformStringFromString(str));
         }
+        m_keyboard = nullptr;
     }
 }
 
-Platform::String^ GLViewImpl::stringToPlatformString(std::string strSrc)
-{
-    // to wide char
-    int strLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);
-    wchar_t* wstr = new wchar_t[strLen + 1];
-    memset(wstr, 0, strLen + 1);
-    MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, wstr, strLen);
-    Platform::String^ strDst = ref new Platform::String(wstr);
-    delete[] wstr;
-    return strDst;
-}
+
 
 void GLViewImpl::swapBuffers()
 {
-    //eglSwapBuffers(m_eglDisplay, m_eglSurface);  
+    
 }
 
 
 bool GLViewImpl::isOpenGLReady()
 {
     return true;
-	// TODO: need to revisit this
-    //return (m_eglDisplay && m_orientation != DisplayOrientations::None);
 }
 
 void GLViewImpl::end()
@@ -184,7 +205,7 @@ void GLViewImpl::OnBackKeyPress()
     std::string str;
     if(m_delegate)
     {
-        m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
+        //m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
     }
 }
 
@@ -308,30 +329,6 @@ void GLViewImpl::OnRendering()
 	}
 }
 
-
-
-bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ message)
-{
-    if(m_messageBoxDelegate)
-    {
-        m_messageBoxDelegate->Invoke(title, message);
-        return true;
-    }
-    return false;
-}
-
-bool GLViewImpl::OpenXamlEditBox(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
-{
-    if(m_editBoxDelegate)
-    {
-        m_editBoxDelegate->Invoke(strPlaceHolder, strText, maxLength, inputMode, inputFlag, receiveHandler);
-        return true;
-    }
-    return false;
-}
-
-
-
 // called by orientation change from WP8 XAML
 void GLViewImpl::UpdateOrientation(DisplayOrientations orientation)
 {
@@ -345,9 +342,12 @@ void GLViewImpl::UpdateOrientation(DisplayOrientations orientation)
 // called by size change from WP8 XAML
 void GLViewImpl::UpdateForWindowSizeChange(float width, float height)
 {
-    m_width = width;
-    m_height = height;
-    UpdateWindowSize();
+    if (width != m_width || height != m_height)
+    {
+        m_width = width;
+        m_height = height;
+        UpdateWindowSize();
+    }
 }
 
 #if 0
@@ -371,18 +371,9 @@ void GLViewImpl::UpdateWindowSize()
 {
     float width, height;
 
-    if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
-    {
-        width = m_height;
-        height = m_width;
-    }
-    else
-    {
-        width = m_width;
-        height = m_height;
-    }
+    width = m_width;
+    height = m_height;
 
-    UpdateOrientationMatrix();
 
     //CCSize designSize = getDesignResolutionSize();
     if(!m_initialized)
@@ -403,45 +394,15 @@ void GLViewImpl::UpdateWindowSize()
 	}
 }
 
-const Mat4& GLViewImpl::getOrientationMatrix() const 
-{
-    return m_orientationMatrix;
-};
-
-
-void GLViewImpl::UpdateOrientationMatrix()
-{
-    kmMat4Identity(&m_orientationMatrix);
-    kmMat4Identity(&m_reverseOrientationMatrix);
-    switch(m_orientation)
-	{
-		case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
-			kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(M_PI));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(-M_PI));
-			break;
-
-		case Windows::Graphics::Display::DisplayOrientations::Landscape:
-            kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(-M_PI_2));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(M_PI_2));
-			break;
-			
-		case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
-            kmMat4RotationZ(&m_orientationMatrix, static_cast<float>(M_PI_2));
-            kmMat4RotationZ(&m_reverseOrientationMatrix, static_cast<float>(-M_PI_2));
-			break;
-
-        default:
-            break;
-	}
-}
-
 cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
 {
     cocos2d::Vec2 returnValue;
 
     float x = p.X;
     float y = p.Y;  
+    returnValue = Vec2(x, y);
 
+#if 0
     switch (m_orientation)
     {
         case DisplayOrientations::Portrait:
@@ -458,6 +419,7 @@ cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
             returnValue = Vec2(m_height - y, x);
             break;
     }
+#endif
 
 	float zoomFactor = GLViewImpl::sharedOpenGLView()->getFrameZoomFactor();
 	if(zoomFactor > 0.0f) {
@@ -473,79 +435,48 @@ cocos2d::Vec2 GLViewImpl::TransformToOrientation(Windows::Foundation::Point p)
 Vec2 GLViewImpl::GetPoint(PointerEventArgs^ args) {
 
 	return TransformToOrientation(args->CurrentPoint->Position);
-
 }
 
 
 void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
-    switch(m_orientation)
-	{
-		case DisplayOrientations::Landscape:
-		case DisplayOrientations::LandscapeFlipped:
-            glViewport((GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLsizei)(h * _scaleY),
-                       (GLsizei)(w * _scaleX));
-			break;
-
-        default:
-            glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLsizei)(w * _scaleX),
-                       (GLsizei)(h * _scaleY));
-	}
+    glViewport((GLint) (x * _scaleX + _viewPortRect.origin.x),
+        (GLint) (y * _scaleY + _viewPortRect.origin.y),
+        (GLsizei) (w * _scaleX),
+        (GLsizei) (h * _scaleY));
 }
 
 void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 {
-    switch(m_orientation)
-	{
-		case DisplayOrientations::Landscape:
-		case DisplayOrientations::LandscapeFlipped:
-            glScissor((GLint)(y * _scaleX + _viewPortRect.origin.y),
-                       (GLint)((_viewPortRect.size.width - ((x + w) * _scaleX)) + _viewPortRect.origin.x),
-                       (GLsizei)(h * _scaleY),
-                       (GLsizei)(w * _scaleX));
-			break;
-
-        default:
-            glScissor((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                       (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                       (GLsizei)(w * _scaleX),
-                       (GLsizei)(h * _scaleY));
-	}
+    glScissor((GLint) (x * _scaleX + _viewPortRect.origin.x),
+        (GLint) (y * _scaleY + _viewPortRect.origin.y),
+        (GLsizei) (w * _scaleX),
+        (GLsizei) (h * _scaleY));
 }
 
 void GLViewImpl::QueueBackKeyPress()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());
     mInputEvents.push(e);
 }
 
 void GLViewImpl::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mInputEvents.push(e);
 }
 
 void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)
 {
-    std::lock_guard<std::mutex> guard(mMutex);
     mInputEvents.push(event);
 }
 
 void GLViewImpl::ProcessEvents()
 {
-    std::lock_guard<std::mutex> guard(mMutex);
-
-    while (!mInputEvents.empty())
+    std::shared_ptr<InputEvent> e;
+    while (mInputEvents.try_pop(e))
     {
-        InputEvent* e = mInputEvents.front().get();
         e->execute();
-        mInputEvents.pop();
     }
 }
 

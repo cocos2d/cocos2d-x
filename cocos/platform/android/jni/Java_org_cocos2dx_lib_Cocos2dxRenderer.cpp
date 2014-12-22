@@ -17,9 +17,11 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
-        Application::getInstance()->applicationDidEnterBackground();
-        cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+        if (Director::getInstance()->getOpenGLView()) {
+                Application::getInstance()->applicationDidEnterBackground();
+                cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+        }
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {

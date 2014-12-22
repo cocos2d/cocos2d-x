@@ -58,7 +58,7 @@ public class Cocos2dxBitmap {
     // Fields
     // ===========================================================
 
-    private static Context _context;
+    private static Context sContext;
 
     // ===========================================================
     // Constructors
@@ -69,7 +69,7 @@ public class Cocos2dxBitmap {
     // ===========================================================
 
     public static void setContext(final Context context) {
-        Cocos2dxBitmap._context = context;
+        Cocos2dxBitmap.sContext = context;
     }
 
     // ===========================================================
@@ -84,20 +84,19 @@ public class Cocos2dxBitmap {
             final int height, final byte[] pixels);
 
     /**
-     * @param pWidth
+     * @param width
      *            the width to draw, it can be 0
-     * @param pHeight
+     * @param height
      *            the height to draw, it can be 0
      */
     public static void createTextBitmap(String string, final String fontName,
             final int fontSize, final int alignment, final int width,
             final int height) {
         
-        //
         createTextBitmapShadowStroke( string, fontName, fontSize, 1.0f, 1.0f, 1.0f,     // text font and color
                                       alignment, width, height,                         // alignment and size
-                                      false, 0.0f, 0.0f, 0.0f, 0.0f,                        // no shadow
-                                      false, 1.0f, 1.0f, 1.0f, 1.0f);                       // no stroke
+                                      false, 0.0f, 0.0f, 0.0f, 0.0f,                    // no shadow
+                                      false, 1.0f, 1.0f, 1.0f, 1.0f);                   // no stroke
                                      
     }
 
@@ -113,13 +112,12 @@ public class Cocos2dxBitmap {
 
         string = Cocos2dxBitmap.refactorString(string);
         final Paint paint = Cocos2dxBitmap.newPaint(fontName, fontSize, horizontalAlignment);
-        /**
-         * if the first word width less than designed width,It means no words to show
-         */
+
+        // if the first word width less than designed width, it means no words to show
         if(0 != width)
         {
             final int firstWordWidth = (int) Math.ceil(paint.measureText(string, 0,1));
-            if ( firstWordWidth > width)
+            if (firstWordWidth > width)
             {
                 Log.w("createTextBitmapShadowStroke warning:","the input width is less than the width of the pString's first word\n");
                 return false;
@@ -151,7 +149,7 @@ public class Cocos2dxBitmap {
         
         final Canvas canvas = new Canvas(bitmap);
 
-        /* Draw string. */
+        // Draw string.
         final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
          
         // draw again with stroke on if needed 
@@ -204,17 +202,17 @@ public class Cocos2dxBitmap {
         paint.setTextSize(fontSize); 
         paint.setAntiAlias(true);
 
-        /* Set type face for paint, now it support .ttf file. */
+        // Set type face for paint, now it support .ttf file.
         if (fontName.endsWith(".ttf")) {
             try {
                 final Typeface typeFace = Cocos2dxTypefaces.get(
-                        Cocos2dxBitmap._context, fontName);
+                        Cocos2dxBitmap.sContext, fontName);
                 paint.setTypeface(typeFace);
             } catch (final Exception e) {
                 Log.e("Cocos2dxBitmap", "error to create ttf type face: "
                         + fontName);
 
-                /* The file may not find, use system font. */
+                // The file may not find, use system font.
                 paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
             }
         } else {
@@ -249,7 +247,7 @@ public class Cocos2dxBitmap {
         if (width != 0) {
             maxContentWidth = width;
         } else {
-            /* Compute the max width. */
+            // Compute the max width.
             int temp = 0;
             for (final String line : lines) {
                 temp = (int) Math.ceil(paint.measureText(line, 0,
@@ -335,13 +333,13 @@ public class Cocos2dxBitmap {
                     strList.add(line);
                 }
 
-                /* Should not exceed the max height. */
+                // Should not exceed the max height.
                 if (maxLines > 0 && strList.size() >= maxLines) {
                     break;
                 }
             }
 
-            /* Remove exceeding lines. */
+            // Remove exceeding lines.
             if (maxLines > 0 && strList.size() > maxLines) {
                 while (strList.size() > maxLines) {
                     strList.removeLast();
@@ -366,13 +364,13 @@ public class Cocos2dxBitmap {
     }
 
     private static LinkedList<String> divideStringWithMaxWidth(
-            final String string, final int maxWidth, final Paint paint) {
+        final String string, final int maxWidth, final Paint paint) {
         final int charLength = string.length();
         int start = 0;
         int tempWidth = 0;
         final LinkedList<String> strList = new LinkedList<String>();
 
-        /* Break a String into String[] by the width & should wrap the word. */
+        // Break a String into String[] by the width & should wrap the word.
         for (int i = 1; i <= charLength; ++i) {
             tempWidth = (int) Math.ceil(paint.measureText(string, start,
                     i));
@@ -381,21 +379,21 @@ public class Cocos2dxBitmap {
                         .lastIndexOf(" ");
 
                 if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
-                    /* Should wrap the word. */
+                    // Should wrap the word.
                     strList.add(string.substring(start, lastIndexOfSpace));
                     i = lastIndexOfSpace + 1; // skip space
                 } else {
-                    /* Should not exceed the width. */
+                    // Should not exceed the width.
                     if (tempWidth > maxWidth) {
                         strList.add(string.substring(start, i - 1));
-                        /* Compute from previous char. */
+                        // Compute from previous char.
                         --i;
                     } else {
                         strList.add(string.substring(start, i));
                     }
                 }
 
-                /* Remove spaces at the beginning of a new line. */
+                // Remove spaces at the beginning of a new line.
                 while (i < charLength && string.charAt(i) == ' ') {
                     ++i;
                 }
@@ -404,7 +402,7 @@ public class Cocos2dxBitmap {
             }
         }
 
-        /* Add the last chars. */
+        // Add the last chars.
         if (start < charLength) {
             strList.add(string.substring(start));
         }
@@ -413,7 +411,7 @@ public class Cocos2dxBitmap {
     }
 
     private static String refactorString(final String string) {
-        /* Avoid error when content is "". */
+        // Avoid error when content is "".
         if (string.compareTo("") == 0) {
             return " ";
         }

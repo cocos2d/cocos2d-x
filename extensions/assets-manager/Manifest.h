@@ -98,9 +98,19 @@ public:
 protected:
     
     /** @brief Constructor for Manifest class
-     @param manifestUrl Url of the local manifest
+     * @param manifestUrl Url of the local manifest
      */
     Manifest(const std::string& manifestUrl = "");
+    
+    /** @brief Load the json file into local json object
+     * @param url Url of the json file
+     */
+    void loadJson(const std::string& url);
+    
+    /** @brief Parse the version file information into this manifest
+     * @param versionUrl Url of the local version file
+     */
+    void parseVersion(const std::string& versionUrl);
     
     /** @brief Parse the manifest file information into this manifest
      * @param manifestUrl Url of the local manifest

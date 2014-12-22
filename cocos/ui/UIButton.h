@@ -220,9 +220,6 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
   
-    virtual void updateFlippedX() override;
-    virtual void updateFlippedY() override;
-        
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
@@ -234,6 +231,7 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
    
+    virtual Size getNormalSize() const;
 protected:
     Scale9Sprite* _buttonNormalRenderer;
     Scale9Sprite* _buttonClickedRenderer;

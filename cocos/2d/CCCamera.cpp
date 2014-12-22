@@ -66,9 +66,9 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
 }
 
 Camera::Camera()
-: _cameraFlag(1)
-, _scene(nullptr)
+: _scene(nullptr)
 , _viewProjectionDirty(true)
+, _cameraFlag(1)
 , _frustumDirty(true)
 , _enableFrustumCull(true)
 {
@@ -133,12 +133,15 @@ void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
     rotation.m[9] = zaxis.y;
     rotation.m[10] = zaxis.z;
     rotation.m[11] = 0;
+    
     Quaternion  quaternion;
     Quaternion::createFromRotationMatrix(rotation,&quaternion);
-    float fRoll  = atan2(2 * (quaternion.w * quaternion.z + quaternion.x * quaternion.y) , 1 - 2 * (quaternion.z * quaternion.z + quaternion.x * quaternion.x));
-    float fPitch = asin(clampf(2 * (quaternion.w * quaternion.x - quaternion.y * quaternion.z) , -1.0f , 1.0f));
-    float fYaw   = atan2(2 * (quaternion.w * quaternion.y + quaternion.z * quaternion.x) , 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y));
-    setRotation3D(Vec3(CC_RADIANS_TO_DEGREES(fPitch),CC_RADIANS_TO_DEGREES(fYaw),CC_RADIANS_TO_DEGREES(fRoll)));
+
+    float rotx = atan2f(2 * (quaternion.w * quaternion.x + quaternion.y * quaternion.z), 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y));
+    float roty = asin(clampf(2 * (quaternion.w * quaternion.y - quaternion.z * quaternion.x) , -1.0f , 1.0f));
+    float rotz = -atan2(2 * (quaternion.w * quaternion.z + quaternion.x * quaternion.y) , 1 - 2 * (quaternion.y * quaternion.y + quaternion.z * quaternion.z));
+    
+    setRotation3D(Vec3(CC_RADIANS_TO_DEGREES(rotx),CC_RADIANS_TO_DEGREES(roty),CC_RADIANS_TO_DEGREES(rotz)));
 }
 
 const Mat4& Camera::getViewProjectionMatrix() const
@@ -227,6 +230,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
 #endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
+    
     return true;
 }
 
@@ -249,13 +253,13 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::enableFrustumCull(bool enalbe, bool clipZ)
+void Camera::enableFrustumCull(bool bEnalbe, bool bClipZ)
 {
-    _enableFrustumCull = enalbe;
-    _frustum.setClipZ(clipZ);
+    _enableFrustumCull = bEnalbe;
+    _frustum.setClipZ(bClipZ);
 }
 
-bool Camera::isVisibleInFrustum(const AABB& aabb) const
+bool Camera::visibleInFrustum(const AABB& aabb) const
 {
     if (_enableFrustumCull)
     {
@@ -264,7 +268,7 @@ bool Camera::isVisibleInFrustum(const AABB& aabb) const
             _frustum.initFrustum(this);
             _frustumDirty = false;
         }
-        return !_frustum.isOutOfFrustum(aabb);
+        return !_frustum.isOutFrustum(aabb);
     }
     return true;
 }

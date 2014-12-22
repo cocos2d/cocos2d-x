@@ -52,7 +52,7 @@ public:
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
     
-private:
+protected:
     void rotateBufferThread(int offsetFrame);
     bool play2d(AudioCache* cache);
     

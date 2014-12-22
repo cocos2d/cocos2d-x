@@ -78,21 +78,21 @@ static const char          *s_ambientLightUniformColorName = "u_AmbientLightSour
 
 MeshCommand::MeshCommand()
 : _textureID(0)
-, _blendType(BlendFunc::DISABLE)
 , _glProgramState(nullptr)
-, _cullFaceEnabled(false)
-, _cullFace(GL_BACK)
-, _depthTestEnabled(false)
-, _depthWriteEnabled(false)
+, _blendType(BlendFunc::DISABLE)
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
 , _materialID(0)
 , _vao(0)
+, _cullFaceEnabled(false)
+, _cullFace(GL_BACK)
+, _depthTestEnabled(false)
+, _depthWriteEnabled(false)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // listen the event that renderer was recreated on Android/WP8
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
@@ -154,7 +154,7 @@ void MeshCommand::setDisplayColor(const Vec4& color)
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
@@ -164,12 +164,12 @@ void MeshCommand::applyRenderState()
     if (_cullFaceEnabled && !s_cullFaceEnabled)
     {
         glEnable(GL_CULL_FACE);
-        if (s_cullFace != _cullFace)
-        {
-            glCullFace(_cullFace);
-            s_cullFace = _cullFace;
-        }
         s_cullFaceEnabled = true;
+    }
+    if (s_cullFace != _cullFace)
+    {
+        glCullFace(_cullFace);
+        s_cullFace = _cullFace;
     }
     if (_depthTestEnabled && !s_depthTestEnabled)
     {
@@ -460,7 +460,7 @@ void MeshCommand::setLightUniforms()
     else // normal does not exist
     {
         Vec3 ambient(0.0f, 0.0f, 0.0f);
-        bool hasAmbient;
+        bool hasAmbient = false;
         for (const auto& light : lights)
         {
             if (light->getLightType() == LightType::AMBIENT)
@@ -506,7 +506,7 @@ void MeshCommand::resetLightUniformValues()
     s_spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;

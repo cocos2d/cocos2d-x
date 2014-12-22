@@ -222,15 +222,15 @@ enum WS_MSG {
 WebSocket::WebSocket()
 : _readyState(State::CONNECTING)
 , _port(80)
+, _pendingFrameDataLen(0)
+, _currentDataLen(0)
+, _currentData(nullptr)
 , _wsHelper(nullptr)
 , _wsInstance(nullptr)
 , _wsContext(nullptr)
 , _delegate(nullptr)
 , _SSLConnection(0)
 , _wsProtocols(nullptr)
-, _pendingFrameDataLen(0)
-, _currentDataLen(0)
-, _currentData(nullptr)
 {
 }
 

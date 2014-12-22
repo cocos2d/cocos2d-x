@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "2d/CCSprite.h"
 
+#include <algorithm>
+
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
@@ -259,10 +261,10 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 }
 
 Sprite::Sprite(void)
-: _shouldBeHidden(false)
+: _batchNode(nullptr)
+, _shouldBeHidden(false)
 , _texture(nullptr)
 , _insideBounds(true)
-, _batchNode(nullptr)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -306,7 +308,8 @@ void Sprite::setTexture(const std::string &filename)
     setTexture(texture);
 
     Rect rect = Rect::ZERO;
-    rect.size = texture->getContentSize();
+    if (texture)
+        rect.size = texture->getContentSize();
     setTextureRect(rect);
 }
 
@@ -438,12 +441,12 @@ void Sprite::setTextureCoords(Rect rect)
 
         if (_flippedX)
         {
-            CC_SWAP(top, bottom, float);
+            std::swap(top, bottom);
         }
 
         if (_flippedY)
         {
-            CC_SWAP(left, right, float);
+            std::swap(left, right);
         }
 
         _quad.bl.texCoords.u = left;
@@ -471,12 +474,12 @@ void Sprite::setTextureCoords(Rect rect)
 
         if(_flippedX)
         {
-            CC_SWAP(left,right,float);
+            std::swap(left, right);
         }
 
         if(_flippedY)
         {
-            CC_SWAP(top,bottom,float);
+            std::swap(top, bottom);
         }
 
         _quad.bl.texCoords.u = left;
@@ -926,7 +929,7 @@ void Sprite::setSpriteFrame(const std::string &spriteFrameName)
     SpriteFrameCache *cache = SpriteFrameCache::getInstance();
     SpriteFrame *spriteFrame = cache->getSpriteFrameByName(spriteFrameName);
 
-    CCASSERT(spriteFrame, "Invalid spriteFrameName");
+    CCASSERT(spriteFrame, std::string("Invalid spriteFrameName :").append(spriteFrameName).c_str());
 
     setSpriteFrame(spriteFrame);
 }
@@ -980,7 +983,7 @@ SpriteFrame* Sprite::getSpriteFrame() const
                                            CC_SIZE_POINTS_TO_PIXELS(_contentSize));
 }
 
-SpriteBatchNode* Sprite::getBatchNode()
+SpriteBatchNode* Sprite::getBatchNode() const
 {
     return _batchNode;
 }

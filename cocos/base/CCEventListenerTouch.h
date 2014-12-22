@@ -52,10 +52,14 @@ public:
     //
 
 public:
-    std::function<bool(Touch*, Event*)> onTouchBegan;
-    std::function<void(Touch*, Event*)> onTouchMoved;
-    std::function<void(Touch*, Event*)> onTouchEnded;
-    std::function<void(Touch*, Event*)> onTouchCancelled;
+
+    typedef std::function<bool(Touch*, Event*)> ccTouchBeganCallback;
+    typedef std::function<void(Touch*, Event*)> ccTouchCallback;
+
+    ccTouchBeganCallback onTouchBegan;
+    ccTouchCallback onTouchMoved;
+    ccTouchCallback onTouchEnded;
+    ccTouchCallback onTouchCancelled;
     
 CC_CONSTRUCTOR_ACCESS:
     EventListenerTouchOneByOne();
@@ -82,10 +86,13 @@ public:
     virtual bool checkAvailable() override;
     //
 public:
-    std::function<void(const std::vector<Touch*>&, Event*)> onTouchesBegan;
-    std::function<void(const std::vector<Touch*>&, Event*)> onTouchesMoved;
-    std::function<void(const std::vector<Touch*>&, Event*)> onTouchesEnded;
-    std::function<void(const std::vector<Touch*>&, Event*)> onTouchesCancelled;
+
+    typedef std::function<void(const std::vector<Touch*>&, Event*)> ccTouchesCallback;
+
+    ccTouchesCallback onTouchesBegan;
+    ccTouchesCallback onTouchesMoved;
+    ccTouchesCallback onTouchesEnded;
+    ccTouchesCallback onTouchesCancelled;
     
 CC_CONSTRUCTOR_ACCESS:
     EventListenerTouchAllAtOnce();

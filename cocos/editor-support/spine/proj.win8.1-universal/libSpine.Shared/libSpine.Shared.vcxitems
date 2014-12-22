@@ -133,7 +133,4 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\spine-cocos2dx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\spine.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="$(MSBuildThisFileDirectory)..\..\CMakeLists.txt" />
-  </ItemGroup>
 </Project>

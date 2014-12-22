@@ -92,6 +92,14 @@ bool Sprite3D::loadFromCache(const std::string& path)
             }
         }
         
+        for(const auto& it : spritedata->nodedatas->skeleton)
+        {
+            if(it)
+            {
+                createAttachSprite3DNode(it,*(spritedata->materialdatas));
+            }
+        }
+        
         for (ssize_t i = 0; i < _meshes.size(); i++) {
             _meshes.at(i)->setGLProgramState(spritedata->glProgramStates.at(i));
         }
@@ -510,8 +518,7 @@ void Sprite3D::removeAllAttachNode()
     }
     _attachments.clear();
 }
-
-#ifndef NDEBUG
+#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
 //Generate a dummy texture when the texture file is missing
 static Texture2D * getDummyTexture()
 {
@@ -531,7 +538,7 @@ static Texture2D * getDummyTexture()
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // camera clipping
-    if(Camera::getVisitingCamera() && !Camera::getVisitingCamera()->isVisibleInFrustum(this->getAABB()))
+    if(!Camera::getVisitingCamera()->visibleInFrustum(this->getAABB()))
         return;
     
     if (_skeleton)
@@ -560,9 +567,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         auto programstate = mesh->getGLProgramState();
         auto& meshCommand = mesh->getMeshCommand();
-#ifdef NDEBUG
-        GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
-#else
+
+#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
         GLuint textureID = 0;
         if(mesh->getTexture())
         {
@@ -573,7 +579,11 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             mesh->setTexture(texture);
             textureID = texture->getName();
         }
+
+#else
+        GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
 #endif
+
         float globalZ = _globalZOrder;
         bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
         if (isTransparent && Camera::getVisitingCamera())
@@ -680,7 +690,7 @@ Mesh* Sprite3D::getMeshByIndex(int index) const
     return _meshes.at(index);
 }
 
-/**get SubMeshState by Name */
+/**get Mesh by Name */
 Mesh* Sprite3D::getMeshByName(const std::string& name) const
 {
     for (const auto& it : _meshes) {
@@ -688,6 +698,16 @@ Mesh* Sprite3D::getMeshByName(const std::string& name) const
             return it;
     }
     return nullptr;
+}
+
+std::vector<Mesh*> Sprite3D::getMeshArrayByName(const std::string& name) const
+{
+    std::vector<Mesh*> meshes;
+    for (const auto& it : _meshes) {
+        if (it->getName() == name)
+            meshes.push_back(it);
+    }
+    return meshes;
 }
 
 MeshSkin* Sprite3D::getSkin() const

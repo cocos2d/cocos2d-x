@@ -21,6 +21,7 @@ DEPENDS+=' libfontconfig1-dev'
 DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew*-dev'
 DEPENDS+=' libssl-dev'
+DEPENDS+=' gnutls-dev'
 
 MISSING=
 echo "Checking for missing packages ..."

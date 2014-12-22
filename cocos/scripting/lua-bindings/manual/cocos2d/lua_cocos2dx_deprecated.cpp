@@ -27,10 +27,8 @@
 #include "LuaBasicConversions.h"
 #include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
-#include "cocos-ext.h"
 
 USING_NS_CC;
-USING_NS_CC_EXT;
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -2002,7 +2000,7 @@ static int lua_cocos2dx_LabelBMFont_setLineBreakWithoutSpace(lua_State* tolua_S)
         cobj->setLineBreakWithoutSpace(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setLineBreakWithoutSpace",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setLineBreakWithoutSpace",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2046,7 +2044,7 @@ static int lua_cocos2dx_LabelBMFont_getBlendFunc(lua_State* tolua_S)
         blendfunc_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getBlendFunc",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getBlendFunc",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2090,7 +2088,7 @@ static int lua_cocos2dx_LabelBMFont_isOpacityModifyRGB(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:isOpacityModifyRGB",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:isOpacityModifyRGB",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2137,7 +2135,7 @@ static int lua_cocos2dx_LabelBMFont_getLetter(lua_State* tolua_S)
         object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getLetter",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getLetter",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2181,7 +2179,7 @@ static int lua_cocos2dx_LabelBMFont_getString(lua_State* tolua_S)
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getString",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getString",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2227,7 +2225,7 @@ static int lua_cocos2dx_LabelBMFont_setBlendFunc(lua_State* tolua_S)
         cobj->setBlendFunc(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setBlendFunc",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setBlendFunc",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2273,7 +2271,7 @@ static int lua_cocos2dx_LabelBMFont_setString(lua_State* tolua_S)
         cobj->setString(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setString",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setString",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2383,7 +2381,7 @@ static int lua_cocos2dx_LabelBMFont_initWithString(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:initWithString",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:initWithString",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2429,7 +2427,7 @@ static int lua_cocos2dx_LabelBMFont_setOpacityModifyRGB(lua_State* tolua_S)
         cobj->setOpacityModifyRGB(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setOpacityModifyRGB",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setOpacityModifyRGB",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2473,7 +2471,7 @@ static int lua_cocos2dx_LabelBMFont_getFntFile(lua_State* tolua_S)
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getFntFile",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:getFntFile",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2532,7 +2530,7 @@ static int lua_cocos2dx_LabelBMFont_setFntFile(lua_State* tolua_S)
         cobj->setFntFile(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setFntFile",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setFntFile",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2578,7 +2576,7 @@ static int lua_cocos2dx_LabelBMFont_setAlignment(lua_State* tolua_S)
         cobj->setAlignment(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setAlignment",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setAlignment",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2624,7 +2622,7 @@ static int lua_cocos2dx_LabelBMFont_setWidth(lua_State* tolua_S)
         cobj->setWidth(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setWidth",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:setWidth",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2740,7 +2738,7 @@ static int lua_cocos2dx_LabelBMFont_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "cc.LabelBMFont:create",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.LabelBMFont:create",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -2772,7 +2770,7 @@ static int lua_cocos2dx_LabelBMFont_constructor(lua_State* tolua_S)
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.LabelBMFont");
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:new",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelBMFont:new",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2880,7 +2878,7 @@ static int lua_cocos2dx_LabelTTF_enableShadow(lua_State* tolua_S)
         cobj->enableShadow(arg0, arg1, arg2, arg3);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:enableShadow",argc, 3);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:enableShadow",argc, 3);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2926,7 +2924,7 @@ static int lua_cocos2dx_LabelTTF_setDimensions(lua_State* tolua_S)
         cobj->setDimensions(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setDimensions",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setDimensions",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -2970,7 +2968,7 @@ static int lua_cocos2dx_LabelTTF_getFontSize(lua_State* tolua_S)
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getFontSize",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getFontSize",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3014,7 +3012,7 @@ static int lua_cocos2dx_LabelTTF_getString(lua_State* tolua_S)
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getString",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getString",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3060,7 +3058,7 @@ static int lua_cocos2dx_LabelTTF_setFlippedY(lua_State* tolua_S)
         cobj->setFlippedY(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFlippedY",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFlippedY",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3106,7 +3104,7 @@ static int lua_cocos2dx_LabelTTF_setFlippedX(lua_State* tolua_S)
         cobj->setFlippedX(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFlippedX",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFlippedX",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3152,7 +3150,7 @@ static int lua_cocos2dx_LabelTTF_setTextDefinition(lua_State* tolua_S)
         cobj->setTextDefinition(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setTextDefinition",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setTextDefinition",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3198,7 +3196,7 @@ static int lua_cocos2dx_LabelTTF_setFontName(lua_State* tolua_S)
         cobj->setFontName(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFontName",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFontName",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3242,7 +3240,7 @@ static int lua_cocos2dx_LabelTTF_getHorizontalAlignment(lua_State* tolua_S)
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getHorizontalAlignment",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getHorizontalAlignment",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3292,7 +3290,7 @@ static int lua_cocos2dx_LabelTTF_initWithStringAndTextDefinition(lua_State* tolu
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:initWithStringAndTextDefinition",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:initWithStringAndTextDefinition",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3338,7 +3336,7 @@ static int lua_cocos2dx_LabelTTF_setString(lua_State* tolua_S)
         cobj->setString(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setString",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setString",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3460,7 +3458,7 @@ static int lua_cocos2dx_LabelTTF_initWithString(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:initWithString",argc, 3);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:initWithString",argc, 3);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3519,7 +3517,7 @@ static int lua_cocos2dx_LabelTTF_setFontFillColor(lua_State* tolua_S)
         cobj->setFontFillColor(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFontFillColor",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFontFillColor",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3563,7 +3561,7 @@ static int lua_cocos2dx_LabelTTF_getBlendFunc(lua_State* tolua_S)
         blendfunc_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getBlendFunc",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getBlendFunc",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3628,7 +3626,7 @@ static int lua_cocos2dx_LabelTTF_enableStroke(lua_State* tolua_S)
         cobj->enableStroke(arg0, arg1, arg2);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:enableStroke",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:enableStroke",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3672,7 +3670,7 @@ static int lua_cocos2dx_LabelTTF_getDimensions(lua_State* tolua_S)
         size_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getDimensions",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getDimensions",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3718,7 +3716,7 @@ static int lua_cocos2dx_LabelTTF_setVerticalAlignment(lua_State* tolua_S)
         cobj->setVerticalAlignment(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setVerticalAlignment",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setVerticalAlignment",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3764,7 +3762,7 @@ static int lua_cocos2dx_LabelTTF_setFontSize(lua_State* tolua_S)
         cobj->setFontSize(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFontSize",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setFontSize",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3808,7 +3806,7 @@ static int lua_cocos2dx_LabelTTF_getVerticalAlignment(lua_State* tolua_S)
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getVerticalAlignment",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getVerticalAlignment",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3852,7 +3850,7 @@ static int lua_cocos2dx_LabelTTF_getTextDefinition(lua_State* tolua_S)
         fontdefinition_to_luaval(tolua_S, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getTextDefinition",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getTextDefinition",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3898,7 +3896,7 @@ static int lua_cocos2dx_LabelTTF_setBlendFunc(lua_State* tolua_S)
         cobj->setBlendFunc(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setBlendFunc",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setBlendFunc",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3942,7 +3940,7 @@ static int lua_cocos2dx_LabelTTF_getFontName(lua_State* tolua_S)
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getFontName",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:getFontName",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -3988,7 +3986,7 @@ static int lua_cocos2dx_LabelTTF_setHorizontalAlignment(lua_State* tolua_S)
         cobj->setHorizontalAlignment(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setHorizontalAlignment",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:setHorizontalAlignment",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -4041,7 +4039,7 @@ static int lua_cocos2dx_LabelTTF_disableShadow(lua_State* tolua_S)
         cobj->disableShadow(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:disableShadow",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:disableShadow",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -4094,7 +4092,7 @@ static int lua_cocos2dx_LabelTTF_disableStroke(lua_State* tolua_S)
         cobj->disableStroke(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:disableStroke",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:disableStroke",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -4222,7 +4220,7 @@ static int lua_cocos2dx_LabelTTF_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d", "cc.LabelTTF:create",argc, 3);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.LabelTTF:create",argc, 3);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -4257,7 +4255,7 @@ static int lua_cocos2dx_LabelTTF_createWithFontDefinition(lua_State* tolua_S)
         object_to_luaval<cocos2d::LabelTTF>(tolua_S, "cc.LabelTTF",(cocos2d::LabelTTF*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.LabelTTF:createWithFontDefinition",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.LabelTTF:createWithFontDefinition",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -4289,7 +4287,7 @@ static int lua_cocos2dx_LabelTTF_constructor(lua_State* tolua_S)
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.LabelTTF");
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:new",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelTTF:new",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1

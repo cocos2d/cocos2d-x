@@ -68,7 +68,7 @@ static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
     }
 
 
-    CCLOG("'setBlendFunc' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    luaL_error(tolua_S, "'setBlendFunc' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -133,7 +133,7 @@ static int lua_cocos2dx_CCSkeletonAnimation_createWithFile(lua_State* L)
         return 1;
     }
     
-    CCLOG("'createWithFile' function of SkeletonAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    luaL_error(L, "'createWithFile' function of SkeletonAnimation has wrong number of arguments: %d, was expecting %d\n", argc, 2);
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -387,7 +387,7 @@ static int lua_cocos2dx_spine_SkeletonAnimation_addAnimation(lua_State* tolua_S)
 
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addAnimation",argc, 3);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "addAnimation",argc, 3);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -442,7 +442,7 @@ static int lua_cocos2dx_spine_SkeletonAnimation_setAnimation(lua_State* tolua_S)
         
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setAnimation",argc, 3);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "setAnimation",argc, 3);
     return 0;
     
 #if COCOS2D_DEBUG >= 1

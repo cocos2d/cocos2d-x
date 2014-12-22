@@ -26,12 +26,10 @@
 
 NS_CC_BEGIN
 
-
 Plane::Plane()
-:_normal(0.f, 0.f, 1.f)
-,_dist(0.f)
 {
-
+    _normal.set(0.0f, 0.0f, 1.0f);
+    _dist = 0.0f;
 }
 
 // create plane from tree point
@@ -50,10 +48,6 @@ Plane::Plane(const Vec3& normal, float dist)
 Plane::Plane(const Vec3& normal, const Vec3& point)
 {
     initPlane(normal, point);
-}
-
-Plane::~Plane()
-{
 }
 
 void Plane::initPlane(const Vec3& p1, const Vec3& p2, const Vec3& p3)
@@ -87,15 +81,15 @@ float Plane::dist2Plane(const Vec3& p) const
 }
 
 
-PointSide Plane::getSide(const Vec3& point) const
+Plane::POINT_SIDE Plane::getSide(const Vec3& point) const
 {
     float dist = dist2Plane(point);
     if (dist > 0)
-        return PointSide::FRONT_PLANE;
+        return Plane::FRONT_PLANE;
     else if (dist < 0)
-        return PointSide::BEHIND_PLANE;
-    else
-        return PointSide::IN_PLANE;
+        return Plane::BEHIND_PLANE;
+
+    return Plane::ON_PLANE;
 }
 
 NS_CC_END

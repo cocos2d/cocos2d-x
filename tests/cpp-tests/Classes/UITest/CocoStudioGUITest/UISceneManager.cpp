@@ -25,7 +25,7 @@
 #include "UIWebViewTest/UIWebViewTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "UIEditBoxTest.h"
 #endif
 
@@ -44,8 +44,9 @@ static const char* s_testArray[] =
     "UIButtonTextOnly",
     "UIButtonIgnoreContentSizeTest",
     "UIButtonTitleEffectTest",
+    "UIButtonFlipTest",
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     "UIEditBoxTest",
 #endif
     "UICheckBoxTest",
@@ -55,6 +56,7 @@ static const char* s_testArray[] =
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
     "UIImageViewTest_ContentSize",
+    "UIImageViewFlipTest",
     
     "UILoadingBarTest_Left",
     "UILoadingBarTest_Right",
@@ -66,6 +68,7 @@ static const char* s_testArray[] =
     "UITextTest_LineWrap",
     "UILabelTest_Effect",
     "UITextTest_TTF",
+    "UITextTest_IgnoreConentSize",
     "UITextBMFontTest",
     
     "UITextFieldTest",
@@ -218,6 +221,8 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonIgnoreContentSizeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTitleEffectTest:
             return UIButtonTitleEffectTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonFlipTest:
+            return UIButtonFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -234,6 +239,9 @@ Scene *UISceneManager::currentUIScene()
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewTest_ContentSize:
             return UIImageViewTest_ContentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIImageViewFlipTest:
+            return UIImageViewFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
         case kUILoadingBarTest_Left:
             return UILoadingBarTest_Left::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -265,7 +273,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUITextTest_TTF:
             return UITextTest_TTF::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUITextTest_IgnoreConentSize:
+            return UITextTest_IgnoreConentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUITextFieldTest:
             return UITextFieldTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -412,7 +421,7 @@ Scene *UISceneManager::currentUIScene()
             return UIS9Flip::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9ChangeAnchorPoint:
             return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         case kUIEditBoxTest:
             return UIEditBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif

@@ -108,7 +108,7 @@ extern "C"
         {
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
             stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
-            delete []chunk;
+            free(chunk);
         }
         else
         {

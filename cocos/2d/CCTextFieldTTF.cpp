@@ -55,8 +55,8 @@ TextFieldTTF::TextFieldTTF()
 , _charCount(0)
 , _inputText("")
 , _placeHolder("")   // prevent Label initWithString assertion
-, _secureTextEntry(false)
 , _colorText(Color4B::WHITE)
+, _secureTextEntry(false)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
@@ -195,7 +195,6 @@ void TextFieldTTF::insertText(const char * text, size_t len)
 
     if (len > 0)
     {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         if (_delegate && _delegate->onTextFieldInsertText(this, insert.c_str(), len))
         {
             // delegate doesn't want to insert text
@@ -206,15 +205,6 @@ void TextFieldTTF::insertText(const char * text, size_t len)
         std::string sText(_inputText);
         sText.append(insert);
         setString(sText);
-#else
-        size_t existlen = _inputText.length();
-        if (_delegate && _delegate->onTextFieldInsertText(this, insert.c_str() + existlen, len - existlen))
-        {
-            // delegate doesn't want to insert text
-            return;
-        }
-        setString(insert);
-#endif
     }
 
     if ((int)insert.npos == pos) {
@@ -250,7 +240,7 @@ void TextFieldTTF::deleteBackward()
 
     if (_delegate && _delegate->onTextFieldDeleteBackward(this, _inputText.c_str() + len - deleteLen, static_cast<int>(deleteLen)))
     {
-        // delegate doesn't wan't to delete backwards
+        // delegate doesn't want to delete backwards
         return;
     }
 

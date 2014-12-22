@@ -41,7 +41,8 @@ enum
     kUIButtonTextOnly,
     kUIButtonIgnoreContentSizeTest,
     kUIButtonTitleEffectTest,
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    kUIButtonFlipTest,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     kUIEditBoxTest,
 #endif
     kUICheckBoxTest,
@@ -50,6 +51,8 @@ enum
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
     kUIImageViewTest_ContentSize,
+    kUIImageViewFlipTest,
+    
     kUILoadingBarTest_Left,
     kUILoadingBarTest_Right,
     kUILoadingBarTest_Left_Scale9,
@@ -57,9 +60,10 @@ enum
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,
-    
     kUILabelTest_Effect,
     kUITextTest_TTF,
+    kUITextTest_IgnoreConentSize,
+    
     kUITextBMFontTest,
     kUITextFieldTest,
     kUITextFieldTest_MaxLength,

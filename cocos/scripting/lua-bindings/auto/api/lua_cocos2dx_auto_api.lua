@@ -1246,9 +1246,4 @@
 -- @field [parent=#cc] Component#Component Component preloaded module
 
 
---------------------------------------------------------
--- the cc CSLoader
--- @field [parent=#cc] CSLoader#CSLoader CSLoader preloaded module
-
-
 return nil

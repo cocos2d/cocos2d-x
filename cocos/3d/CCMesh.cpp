@@ -36,14 +36,14 @@ using namespace std;
 NS_CC_BEGIN
 
 Mesh::Mesh()
-: _visible(true)
-, _texture(nullptr)
+: _texture(nullptr)
 , _skin(nullptr)
+, _visible(true)
+, _isTransparent(false)
 , _meshIndexData(nullptr)
-, _visibleChanged(nullptr)
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _isTransparent(false)
+, _visibleChanged(nullptr)
 {
     
 }

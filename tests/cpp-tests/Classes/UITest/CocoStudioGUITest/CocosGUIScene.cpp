@@ -44,7 +44,7 @@ g_guisTests[] =
         }
     },
 #endif
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     {
         "EditBox Test",
         [](Ref* sender)
@@ -91,7 +91,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIButtonTest);
             sceneManager->setMinUISceneId(kUIButtonTest);
-            sceneManager->setMaxUISceneId(kUIButtonTitleEffectTest);
+            sceneManager->setMaxUISceneId(kUIButtonFlipTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -127,7 +127,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIImageViewTest);
             sceneManager->setMinUISceneId(kUIImageViewTest);
-            sceneManager->setMaxUISceneId(kUIImageViewTest_ContentSize);
+            sceneManager->setMaxUISceneId(kUIImageViewFlipTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -163,7 +163,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextTest);
             sceneManager->setMinUISceneId(kUITextTest);
-            sceneManager->setMaxUISceneId(kUITextTest_TTF);
+            sceneManager->setMaxUISceneId(kUITextTest_IgnoreConentSize);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

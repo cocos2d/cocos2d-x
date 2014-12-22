@@ -5,7 +5,8 @@ env:
   - GEN_COCOS_FILES=YES
   - PLATFORM=mac-ios PUSH_TO_MAC=YES
   - PLATFORM=linux DEBUG=1 CC_COMPILER=gcc CXX_COMPILER=g++
-  - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
+  # Disable clang build on linux temporarily since we're using "-stdlib=libc++ " which wasn't installed on travis machine.
+  # - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
   # Since switching to C++11 only the ARM version of the nactive client
   # port currently builds.  TODO(sbc): Re-enable all architectures.
   # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
@@ -32,11 +33,6 @@ script:
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
-
-notifications:
-  email:
-    - xiaoming.zhang@cocos2d-x.org
-    - jianhua.chen@cocos2d-x.org
 
 # whitelist
 branches:

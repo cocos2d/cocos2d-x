@@ -471,7 +471,7 @@ Image::~Image()
 {
     if(_unpack)
     {
-        for (unsigned int i = 0; i < _numberOfMipmaps; ++i)
+        for (int i = 0; i < _numberOfMipmaps; ++i)
             CC_SAFE_DELETE_ARRAY(_mipmaps[i].address);
     }
     else
@@ -1727,14 +1727,17 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
     
     if (ret)
     {
-        const unsigned char tgaSuffix[] = ".tga";
-        for(int i = 0; i < 4; ++i)
+        if (_filePath.length() > 0)
         {
-            if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+            const unsigned char tgaSuffix [] = ".tga";
+            for (int i = 0; i < 4; ++i)
             {
-                CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
-                break;
-            };
+                if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+                {
+                    CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
+                    break;
+                };
+            }
         }
     }
     else
@@ -2038,6 +2041,9 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
         _width    = config.input.width;
         _height   = config.input.height;
+        
+        //webp doesn't have premultipliedAlpha
+        _hasPremultipliedAlpha = false;
         
         _dataLen = _width * _height * 4;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));

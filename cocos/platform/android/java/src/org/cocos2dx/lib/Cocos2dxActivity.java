@@ -56,9 +56,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // Fields
     // ===========================================================
     
-    private Cocos2dxGLSurfaceView mGLSurfaceView;
-    private int[] glContextAttrs;
-    private Cocos2dxHandler mHandler;   
+    private Cocos2dxGLSurfaceView mGLSurfaceView = null;
+    private int[] mGLContextAttrs = null;
+    private Cocos2dxHandler mHandler = null;   
     private static Cocos2dxActivity sContext = null;
     private Cocos2dxVideoHelper mVideoHelper = null;
     private Cocos2dxWebViewHelper mWebViewHelper = null;
@@ -103,7 +103,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         
         Cocos2dxHelper.init(this);
         
-        this.glContextAttrs = getGLContextAttrs();
+        this.mGLContextAttrs = getGLContextAttrs();
         this.init();
 
         if (mVideoHelper == null) {
@@ -222,7 +222,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     public Cocos2dxGLSurfaceView onCreateView() {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
         //this line is need on some device if we specify an alpha bits
-        if(this.glContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        if(this.mGLContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         
         class cocos2dEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
         {
@@ -344,7 +344,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             }
 
         }
-        cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser(this.glContextAttrs);
+        cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser(this.mGLContextAttrs);
         glSurfaceView.setEGLConfigChooser(chooser);
 
         return glSurfaceView;

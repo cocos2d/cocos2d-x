@@ -27,61 +27,13 @@ THE SOFTWARE.
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "../Sprite3DTest/DrawNode3D.h"
 #include <string>
+
 namespace cocos2d {
     class Sprite3D;
     class Delay;
 }
-
-class DrawLine3D: public Node
-{
-public:
-    /** creates and initialize a node */
-    static DrawLine3D* create();
-    
-    /**
-     * Draw 3D Line
-     */
-    void drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color);
-    
-    void drawCube(Vec3* vertices, const Color4F &color);
-    
-    /** Clear the geometry in the node's buffer. */
-    void clear()
-    {
-        _buffer.clear();
-    }
-    
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
-    // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    
-CC_CONSTRUCTOR_ACCESS:
-    DrawLine3D()
-    {
-        
-    }
-    virtual ~DrawLine3D()
-    {
-        
-    }
-    virtual bool init();
-    
-protected:
-    struct V3F_C4B
-    {
-        Vec3     vertices;
-        Color4B  colors;
-    };
-    
-    std::vector<V3F_C4B> _buffer;
-    
-    CustomCommand _customCommand;
-    
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(DrawLine3D);
-};
 
 enum State
 {
@@ -158,71 +110,42 @@ protected:
     Label* _ZoomOutlabel;
 };
 
-class CameraClipDemo : public BaseTest
+class CameraClippingDemo : public BaseTest
 {
 public:
-    CREATE_FUNC(CameraClipDemo);
-    CameraClipDemo(void);
-    virtual ~CameraClipDemo(void);
+    CREATE_FUNC(CameraClippingDemo);
+    CameraClippingDemo(void);
+    virtual ~CameraClippingDemo(void);
     
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void backCallback(Ref* sender);
+    
     virtual void onEnter() override;
     virtual void onExit() override;
+    
+    virtual void update(float dt) override;
+    
     // overrides
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     void reachEndCallBack();
-    void switchViewCallback(Ref* sender,CameraType cameraType);
-    void update(float fDelta);
-    void drawCameraFrustum();
-    void initCamera();
-    
-protected:
-    std::string    _title;
-    Label*         _labelDrawCall;
-    Layer*         _layer3D;
-    std::vector<Sprite3D*> objects;
-    CameraType     _cameraType;
-    Camera*        _cameraFirst;
-    Camera*        _cameraThird;
-    MoveBy*         _moveAction;
-    DrawLine3D* _drawAABB;
-    DrawLine3D* _drawFrustum;
-};
+    void switchViewCallback(Ref* sender);
+    void addSpriteCallback(Ref* sender);
+    void delSpriteCallback(Ref* sender);
 
-class CameraClipPerformance : public BaseTest
-{
-public:
-    CREATE_FUNC(CameraClipPerformance);
-    CameraClipPerformance(void);
-    virtual ~CameraClipPerformance(void);
-    
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-    virtual void onEnter() override;
-    virtual void onExit() override;
-    // overrides
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    void reachEndCallBack();
-    void inFrustum(Ref* sender);
-    void partInFrustum(Ref* sender);
-    void outFrustum(Ref* sender);
-    void calculate(Ref* sender);
-    void initCamera();
+    void drawCameraFrustum();
     
 protected:
-    std::string    _title;
-    Label*         _labelDrawCall;
-    Layer*         _layer3D;
-    Camera*        _cameraFirst;
-    DrawLine3D*     _drawAABB;
-    //Sprite3D*       _sprite3D;
-    std::vector<AABB> listAABB;
-    float _posY;
+    Label*                  _labelSprite3DCount;
+    Layer*                  _layer3D;
+    std::vector<Sprite3D*>  _objects;
+    CameraType              _cameraType;
+    Camera*                 _cameraFirst;
+    Camera*                 _cameraThird;
+    MoveBy*                 _moveAction;
+    DrawNode3D*             _drawAABB;
+    DrawNode3D*             _drawFrustum;
+    int                     _row;
 };
 
 class Camera3DTestScene : public TestScene

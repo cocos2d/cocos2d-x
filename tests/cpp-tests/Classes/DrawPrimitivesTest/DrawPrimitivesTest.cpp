@@ -375,6 +375,10 @@ DrawNodeTest::DrawNodeTest()
 
 	// Draw triangle
     draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+    
+    for (int i = 0; i < 100; i++) {
+        draw->drawPoint(Vec2(i*7, 5), 5, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    }
 }
 
 string DrawNodeTest::title() const
