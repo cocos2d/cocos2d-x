@@ -31,6 +31,7 @@ typedef enum
     kRealNameRegister,/**< enum value is callback after registering realname. */
     kAccountSwitchSuccess,/**< enum alue is callback of succeeding in switching account. */
     kAccountSwitchFail,/**< enum value is callback of failing to switch account. */
+    kOpenShop,/**< enum value is callback of open the shop. */
 
 
 } UserActionResultCode;
@@ -78,9 +79,11 @@ public:
      @brief User login
      	 	if the process of logining need to know  the param of server_id ,
      	 	you can use the function
+     	 	and if you must change oauthloginserver, you can add the param of oauthLoginServer
      @param server_id
+     @param oauthLoginServer
     */
-     virtual  void login(std::string server_id) = 0 ;
+     virtual  void login(std::string server_id, std::string oauthLoginServer = "") = 0 ;
 
 
     /**

@@ -18,7 +18,7 @@ typedef std::map<std::string, std::string> TAchievementInfo;
 typedef enum
 {
     // code for leaderboard feature
-	kScoreSubmitSucceed = 1,/**< enum value is callback of succeeding in submiting. */
+	kScoreSubmitSucceed =1,/**< enum value is callback of succeeding in submiting. */
     kScoreSubmitfail,/**< enum value is callback of failing to submit . */
 
     // code for achievement feature
