@@ -2237,7 +2237,7 @@ bool Animate::initWithAnimation(Animation* animation)
         float accumUnitsOfTime = 0;
         float newUnitOfTimeValue = singleDuration / animation->getTotalDelayUnits();
 
-        auto frames = animation->getFrames();
+        auto& frames = animation->getFrames();
 
         for (auto& frame : frames)
         {
@@ -2312,7 +2312,7 @@ void Animate::update(float t)
         t = fmodf(t, 1.0f);
     }
 
-    auto frames = _animation->getFrames();
+    auto& frames = _animation->getFrames();
     auto numberOfFrames = frames.size();
     SpriteFrame *frameToDisplay = nullptr;
 
@@ -2346,7 +2346,7 @@ void Animate::update(float t)
 
 Animate* Animate::reverse() const
 {
-    auto oldArray = _animation->getFrames();
+    auto& oldArray = _animation->getFrames();
     Vector<AnimationFrame*> newArray(oldArray.size());
    
     if (oldArray.size() > 0)

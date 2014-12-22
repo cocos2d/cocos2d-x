@@ -161,14 +161,14 @@ static void printFileUtils(int fd)
     FileUtils* fu = FileUtils::getInstance();
 
     mydprintf(fd, "\nSearch Paths:\n");
-    auto list = fu->getSearchPaths();
+    auto& list = fu->getSearchPaths();
     for( const auto &item : list) {
         mydprintf(fd, "%s\n", item.c_str());
     }
 
     mydprintf(fd, "\nResolution Order:\n");
-    list = fu->getSearchResolutionsOrder();
-    for( const auto &item : list) {
+    auto& list1 = fu->getSearchResolutionsOrder();
+    for( const auto &item : list1) {
         mydprintf(fd, "%s\n", item.c_str());
     }
 
@@ -176,7 +176,7 @@ static void printFileUtils(int fd)
     mydprintf(fd, "%s\n", fu->getWritablePath().c_str());
 
     mydprintf(fd, "\nFull Path Cache:\n");
-    auto cache = fu->getFullPathCache();
+    auto& cache = fu->getFullPathCache();
     for( const auto &item : cache) {
         mydprintf(fd, "%s -> %s\n", item.first.c_str(), item.second.c_str());
     }
