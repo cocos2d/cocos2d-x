@@ -93,14 +93,14 @@ void Sprite3D::createAsync(const std::string &modelPath, const std::string &text
     
     sprite->_asyncLoadParam.afterLoadCallback = callback;
     sprite->_asyncLoadParam.texPath = texturePath;
-    sprite->_asyncLoadParam.path = modelPath;
+    sprite->_asyncLoadParam.modlePath = modelPath;
     sprite->_asyncLoadParam.callbackParam = callbackparam;
     sprite->_asyncLoadParam.materialdatas = new (std::nothrow) MaterialDatas();
     sprite->_asyncLoadParam.meshdatas = new (std::nothrow) MeshDatas();
     sprite->_asyncLoadParam.nodeDatas = new (std::nothrow) NodeDatas();
     AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, CC_CALLBACK_1(Sprite3D::afterAsyncLoad, sprite), (void*)(&sprite->_asyncLoadParam), [sprite]()
     {
-        sprite->_asyncLoadParam.result = sprite->loadFromFile(sprite->_asyncLoadParam.path, sprite->_asyncLoadParam.nodeDatas, sprite->_asyncLoadParam.meshdatas, sprite->_asyncLoadParam.materialdatas);
+        sprite->_asyncLoadParam.result = sprite->loadFromFile(sprite->_asyncLoadParam.modlePath, sprite->_asyncLoadParam.nodeDatas, sprite->_asyncLoadParam.meshdatas, sprite->_asyncLoadParam.materialdatas);
     });
     
 }
@@ -124,7 +124,7 @@ void Sprite3D::afterAsyncLoad(void* param)
             auto&   nodeDatas = asyncParam->nodeDatas;
             if (initFrom(*nodeDatas, *meshdatas, *materialdatas))
             {
-                auto spritedata = Sprite3DCache::getInstance()->getSpriteData(asyncParam->path);
+                auto spritedata = Sprite3DCache::getInstance()->getSpriteData(asyncParam->modlePath);
                 if (spritedata == nullptr)
                 {
                     //add to cache
@@ -136,7 +136,7 @@ void Sprite3D::afterAsyncLoad(void* param)
                         data->glProgramStates.pushBack(mesh->getGLProgramState());
                     }
                     
-                    Sprite3DCache::getInstance()->addSprite3DData(asyncParam->path, data);
+                    Sprite3DCache::getInstance()->addSprite3DData(asyncParam->modlePath, data);
                     meshdatas = nullptr;
                     materialdatas = nullptr;
                     nodeDatas = nullptr;

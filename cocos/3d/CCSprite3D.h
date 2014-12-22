@@ -190,7 +190,7 @@ protected:
         std::function<void(Sprite3D*, void*)> afterLoadCallback; // callback after load
         void*                           callbackParam;
         bool                            result; // sprite load result
-        std::string                     path;
+        std::string                     modlePath;
         std::string                     texPath; //
         MeshDatas* meshdatas;
         MaterialDatas* materialdatas;

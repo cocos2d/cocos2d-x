@@ -123,7 +123,7 @@ protected:
                                           std::function<void()> task;
                                           AsyncTaskCallBack callback;
                                           {
-                                              std::unique_lock<std::mutex> lock(this->_queue_mutex);
+                                              std::unique_lock<std::mutex> lock(this->_queueMutex);
                                               this->_condition.wait(lock,
                                                                     [this]{ return this->_stop || !this->_tasks.empty(); });
                                               if(this->_stop && this->_tasks.empty())
@@ -144,12 +144,13 @@ protected:
         ~ThreadTasks()
         {
             {
-                std::unique_lock<std::mutex> lock(_queue_mutex);
+                std::unique_lock<std::mutex> lock(_queueMutex);
                 _stop = true;
-                while(_tasks.size())_tasks.pop();
-                while (_taskCallBacks.size()) {
+                
+                while(_tasks.size())
+                    _tasks.pop();
+                while (_taskCallBacks.size())
                     _taskCallBacks.pop();
-                }
             }
             _condition.notify_all();
             _thread.join();
@@ -164,7 +165,7 @@ protected:
 //        std::queue< AsyncTask > _tasks;
         
         // synchronization
-        std::mutex _queue_mutex;
+        std::mutex _queueMutex;
         std::condition_variable _condition;
         bool _stop;
     };
@@ -177,7 +178,7 @@ protected:
             if (_callBacks.empty())
                 return;
             
-            std::unique_lock<std::mutex> lock(_queue_mutex);
+            std::unique_lock<std::mutex> lock(_queueMutex);
             int numCallBack = 0;
             
             for (auto& it : _callBacks) {
@@ -199,20 +200,20 @@ protected:
         
         void clear()
         {
-            std::unique_lock<std::mutex> lock(_queue_mutex);
+            std::unique_lock<std::mutex> lock(_queueMutex);
             _callBacks.clear();
         }
         
         void enqueue(const AsyncTaskCallBack& callback)
         {
-            std::unique_lock<std::mutex> lock(_queue_mutex);
+            std::unique_lock<std::mutex> lock(_queueMutex);
             _callBacks.push_back(callback);
         }
         
     protected:
         
         std::vector<AsyncTaskCallBack> _callBacks;
-        std::mutex _queue_mutex;
+        std::mutex _queueMutex;
     };
     
     //tasks
@@ -227,7 +228,7 @@ protected:
 inline void AsyncTaskPool::stopTasks(TaskType type)
 {
     auto& threadTask = _threadTasks[(int)type];
-    auto& queue_mutex = threadTask._queue_mutex;
+    auto& queue_mutex = threadTask._queueMutex;
     auto& tasks = threadTask._tasks;
     std::unique_lock<std::mutex> lock(queue_mutex);
     auto& taskcallbacks = threadTask._taskCallBacks;
@@ -246,7 +247,7 @@ inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallB
     
     auto task = f;//std::bind(std::forward<F>(f), std::forward<Args>(args)...);
     
-    auto& queue_mutex = threadTask._queue_mutex;
+    auto& queue_mutex = threadTask._queueMutex;
     auto& stop = threadTask._stop;
     auto& tasks = threadTask._tasks;
     auto& condition = threadTask._condition;
