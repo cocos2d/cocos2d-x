@@ -54,15 +54,15 @@ namespace ui {
             Top,
             Center
         };
-#pragma region OldVersion
+
+        // OldVersion
         virtual void setUsingPercentContentSize(bool isUsed);
         virtual bool getUsingPercentContentSize();
 
         virtual void setPercentContentSize(const Vec2 &percent);
         virtual Vec2 getPercentContentSize();
-#pragma endregion
 
-#pragma region Position & Margin
+        // Position & Margin
         virtual Point getAnchorPosition();
         virtual void setAnchorPosition(Point point);
 
@@ -99,9 +99,7 @@ namespace ui {
         virtual float getButtomMargin();
         virtual void setButtomMargin(float margin);
 
-#pragma endregion
-
-#pragma region Size & Percent
+        // Size & Percent
         virtual Size getSize();
         virtual void setSize(Size _size);
 
@@ -128,8 +126,6 @@ namespace ui {
 
         virtual bool isUsingStretchHeight();
         virtual void setStretchHeightEnabled(bool isUsed);
-
-#pragma endregion
 
         virtual void setActiveEnable(bool enable);
         virtual void refreshLayout();

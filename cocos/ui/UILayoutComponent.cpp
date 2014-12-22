@@ -125,7 +125,7 @@ namespace ui {
         _topMargin = parentSize.height - (ownerPoint.y + (1 - ownerAnchor.y) * ownerSize.height);
     }
 
-#pragma region OldVersion
+    //OldVersion
     void LayoutComponent::setUsingPercentContentSize(bool isUsed)
     {
         _usingPercentWidth = _usingPercentHeight = isUsed;
@@ -145,9 +145,8 @@ namespace ui {
         Vec2 vec2=Vec2(_percentWidth,_percentHeight);
         return vec2;
     }
-#pragma endregion
 
-#pragma region Position & Margin
+    //Position & Margin
     Point LayoutComponent::getAnchorPosition()
     {
         return _owner->getAnchorPoint();
@@ -340,9 +339,7 @@ namespace ui {
         _buttomMargin = margin;
     }
 
-#pragma endregion
-
-#pragma region Size & Percent
+    //Size & Percent
     Size LayoutComponent::getSize()
     {
         return this->getOwner()->getContentSize();
@@ -507,8 +504,6 @@ namespace ui {
             _usingPercentHeight = false;
         }
     }
-
-#pragma endregion
 
     void LayoutComponent::refreshLayout()
     {
