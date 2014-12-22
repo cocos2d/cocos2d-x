@@ -31,6 +31,13 @@ THE SOFTWARE.
 
 NS_TIMELINE_BEGIN
 
+struct ActionIndexes
+{
+    std::string name;
+    int startIndex;
+    int endIndex;
+};
+
 class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 {
 public:
@@ -57,6 +64,8 @@ public:
     virtual ~ActionTimeline();
 
     virtual bool init();
+    
+    virtual void play(std::string name, bool loop);
 
     /** Goto the specified frame index, and start playing from this index.
      * @param startIndex The animation will play from this index.
@@ -88,6 +97,7 @@ public:
      * @param startIndex The animation will pause at this index.
      */
     virtual void gotoFrameAndPause(int startIndex);
+    
 
     /** Pause the animation. */
     virtual void pause();
@@ -122,7 +132,11 @@ public:
     /** add Timeline to ActionTimeline */
     virtual void addTimeline(Timeline* timeline);
     virtual void removeTimeline(Timeline* timeline);
-
+    
+    /** add ActionIndexes */
+    virtual void addIndexes(const ActionIndexes& indexes);
+    virtual void removeIndexes(std::string name);
+    
     virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
 
     /** Set ActionTimeline's frame event callback function */
@@ -168,6 +182,7 @@ protected:
 
     std::function<void(Frame*)> _frameEventListener;
     std::function<void()> _lastFrameListener;
+    std::map<std::string, ActionIndexes> _indexes;
 };
 
 NS_TIMELINE_END
