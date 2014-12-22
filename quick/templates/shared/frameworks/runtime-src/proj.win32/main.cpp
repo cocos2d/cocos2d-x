@@ -35,7 +35,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     LPWSTR *szArgList=nullptr;
     int argCount=0;
 
-    bool isCodeIDEDebugger = false;
+    bool isCodeIDEDebugger = true;
     szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
     if (argCount >=2 )
     {
@@ -107,14 +107,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     // create the application instance
     AppDelegate app;
 
- //   if (isCodeIDEDebugger)
- //   {
- //       app.setLaunchMode(1);
- //   }
-	//else
-	//{
- //       app.setLaunchMode(0);
-	//}
+    if (isCodeIDEDebugger)
+    {
+        app.setLaunchMode(1);
+    }
+	else
+	{
+        app.setLaunchMode(0);
+	}
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE

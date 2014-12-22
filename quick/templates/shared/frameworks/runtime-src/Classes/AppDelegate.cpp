@@ -62,9 +62,14 @@ AppDelegate::~AppDelegate()
 {
     SimpleAudioEngine::end();
 
-#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
-	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	endRuntime();
+#elif (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+	if (_launchMode)
+	{
+		endRuntime();
+	}
 #endif
 
 	ConfigParser::purge();
@@ -83,12 +88,14 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    if (_launchMode)
-    {
-        initRuntime();
-    }
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	initRuntime();
+#elif (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
+	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+	if (_launchMode)
+	{
+		initRuntime();
+	}
 #endif
     
     // initialize director
