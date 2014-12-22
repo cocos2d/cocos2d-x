@@ -60,7 +60,8 @@ PayResultCode = {
     "kPayProductionInforIncomplete",	--/**< enum value is callback of incompleting info . */
 	"kPayInitSuccess",	--/**< enum value is callback of succeeding in initing sdk . */
 	"kPayInitFail",		--/**< enum value is callback of failing to init sdk . */
-	"kPayNowPaying" 	--/**< enum value is callback of paying now . */
+	"kPayNowPaying" ,	--/**< enum value is callback of paying now . */
+	"kPayRechareSuccess"--/**< enum value is callback of  succeeding in recharging. */
 };
 PayResultCode = CreatEnumTable(PayResultCode, 0)
 
@@ -112,7 +113,8 @@ UserActionResultCode = {
     "kAntiAddictionQuery",	--/**< enum value is callback after querying antiAddiction. */
     "kRealNameRegister",	--/**< enum value is callback after registering realname. */
     "kAccountSwitchSuccess",	--/**< enum alue is callback of succeeding in switching account. */
-    "kAccountSwitchFail"	--/**< enum value is callback of failing to switch account. */
+    "kAccountSwitchFail",	--/**< enum value is callback of failing to switch account. */
+    "kOpenShop"			--/**< enum value is callback of open the shop. */
 };
 UserActionResultCode = CreatEnumTable(UserActionResultCode, 0)
 
@@ -126,3 +128,41 @@ ToolBarPlace = {
     "kToolBarBottomRight" 	--/**< enum the toolbar is at bottomright. */
 };
 ToolBarPlace = CreatEnumTable(ToolBarPlace, 1)
+
+-------------for analytics---------------
+-- for analytics
+AccountType = {
+    "ANONYMOUS",
+    "REGISTED",
+    "SINA_WEIBO",
+    "TENCENT_WEIBO",
+    "QQ",
+    "QQ_WEIBO",
+    "ND91"
+}; 
+AccountType = CreatEnumTable(AccountType, 0)
+
+AccountOperate = {
+    "LOGIN",
+    "LOGOUT",
+    "REGISTER"
+};
+AccountOperate = CreatEnumTable(AccountOperate, 0)
+
+AccountGender = {
+    "MALE",
+    "FEMALE",
+    "UNKNOWN"
+}
+AccountGender = CreatEnumTable(AccountGender, 0)
+
+TaskType = {
+    "GUIDE_LINE",
+    "MAIN_LINE",
+    "BRANCH_LINE",
+    "DAILY",
+    "ACTIVITY",
+    "OTHER"
+};
+TaskType = CreatEnumTable(TaskType, 0)
+-------------for analytics---------------

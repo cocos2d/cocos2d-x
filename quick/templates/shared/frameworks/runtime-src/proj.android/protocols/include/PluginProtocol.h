@@ -120,7 +120,6 @@ public:
 	virtual float callFloatFuncWithParam(const char* funcName, std::vector<PluginParam*> params) = 0 ;
 
 
-
 };
 
 }} //namespace anysdk { namespace framework {

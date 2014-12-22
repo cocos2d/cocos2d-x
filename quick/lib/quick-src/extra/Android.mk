@@ -49,13 +49,6 @@ LOCAL_SRC_FILES += \
     $(LOCAL_PATH)/nanovg/nanonode/NVGNode.cpp \
     $(LOCAL_PATH)/nanovg/nanonode/NVGDrawNode.cpp
 
-ifeq ($(ANYSDK_DEFINE),1)
-LOCAL_SRC_FILES += \
-    $(LOCAL_PATH)/anysdk/src/AnySDKListener.cpp \
-    $(LOCAL_PATH)/anysdk/src/lua_anysdk_auto.cpp \
-    $(LOCAL_PATH)/anysdk/src/lua_anysdk_manual.cpp
-endif
-
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/luabinding
