@@ -57,6 +57,23 @@ namespace ui {
 
     }
 
+    LayoutComponent* LayoutComponent::boundingLayoutForNode(Node* node)
+    {
+        LayoutComponent * layout = (LayoutComponent*)node->getComponent(__LAYOUT_COMPONENT_NAME);
+        if (layout != nullptr)
+            return layout;
+
+        layout = new (std::nothrow) LayoutComponent();
+        if (layout && layout->init())
+        {
+            layout->autorelease();
+            node->addComponent(layout);
+            return layout;
+        }
+        CC_SAFE_DELETE(layout);
+        return nullptr;
+    }
+
     bool LayoutComponent::init()
     {
         bool ret = true;
@@ -559,7 +576,7 @@ namespace ui {
                     ownerSize.height = parentSize.height * _percentHeight;
             }
             break;
-        case VerticalEage::Buttom:
+        case VerticalEage::Bottom:
             if (_usingPercentHeight || _usingStretchHeight)
                 ownerSize.height = parentSize.height * _percentHeight;
             ownerPosition.y = _buttomMargin + ownerAnchor.y * ownerSize.height;

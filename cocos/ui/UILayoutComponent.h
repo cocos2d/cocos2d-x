@@ -38,6 +38,8 @@ namespace ui {
         virtual bool init()override;
         CREATE_FUNC(LayoutComponent);
 
+        static LayoutComponent* boundingLayoutForNode(Node* node);
+
         enum class HorizontalEage
         {
             None,
@@ -48,7 +50,7 @@ namespace ui {
         enum class VerticalEage
         {
             None,
-            Buttom,
+            Bottom,
             Top,
             Center
         };
