@@ -117,17 +117,26 @@ function EditorScene:ctor()
 
     else
 
+    self.recordBtnBg_ = cc.LayerColor:create(cc.c4b(255, 255, 255, 120)):addTo(self)
+    self.recordBtnBg_:setTouchEnabled(false)
     self.recordBtn_ = cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
-        :setButtonLabel(cc.ui.UILabel.new({text = "统计运行状态", size = 20, color = display.COLOR_BLACK}))
+        :setButtonLabel(cc.ui.UILabel.new({text = "开始性能测试", size = 20, color = display.COLOR_BLACK}))
         :setButtonSize(130, 40)
-        :align(display.CENTER, display.left + 70 * self.editorUIScale, display.top - 32 * self.editorUIScale)
-        :addTo(self.playToolbar_)  
+        :align(display.CENTER, display.cx, display.cy)
+        :addTo(self.recordBtnBg_)  
         :onButtonClicked(function()
+            self.mapLayer_:setPositionY(60)
+            -- self.mapRuntime_:setPositionY(60)
+            self.mapRuntime_:startPlay()
+
             self:disabelResult()
             self:disableStatus()
 
             self:showStatusCurve()
             self:statusTimerBegin()
+
+            self.recordBtnBg_:removeSelf()
+            self.recordBtnBg_ = nil
         end)
 
     end
@@ -165,7 +174,7 @@ end
 
 -- 开始运行地图
 function EditorScene:playMap()
-    cc.Director:getInstance():setDisplayStats(true)
+    -- cc.Director:getInstance():setDisplayStats(true)
 
     -- 隐藏编辑器界面
     self.toolbar_:getView():setVisible(false)
@@ -190,7 +199,6 @@ function EditorScene:playMap()
     -- 开始执行地图
     self.mapRuntime_ = require("app.map.MapRuntime").new(self.map_)
     self.mapRuntime_:preparePlay()
-    self.mapRuntime_:startPlay()
     self:addChild(self.mapRuntime_)
 end
 
@@ -300,7 +308,7 @@ end
 
 function EditorScene:showStatusCurve()
     if not self.bgStatus_ then
-        self.bgStatus_ = cc.LayerColor:create(cc.c4b(255, 255, 255, 80))
+        self.bgStatus_ = cc.LayerColor:create(cc.c4b(255, 255, 255, 255))
         self.bgStatus_:setContentSize(display.width, 60)
         self.bgStatus_:setTouchEnabled(false)
         self:addChild(self.bgStatus_)
@@ -346,7 +354,7 @@ function EditorScene:showStatusCurve()
 
     self.statusLabel_:setVisible(true)
 
-    self.recordBtn_:setButtonLabel(cc.ui.UILabel.new({text = "统计中", size = 20, color = display.COLOR_BLACK}))
+    -- self.recordBtn_:setButtonLabel(cc.ui.UILabel.new({text = "统计中", size = 20, color = display.COLOR_BLACK}))
 end
 
 function EditorScene:disableStatus()
@@ -424,7 +432,8 @@ end
 
 --显示统计结果
 function EditorScene:showResult()
-    self.recordBtn_:setButtonLabel(cc.ui.UILabel.new({text = "统计运行状态", size = 20, color = display.COLOR_BLACK}))
+    self.mapRuntime_:pausePlay()
+    -- self.recordBtn_:setButtonLabel(cc.ui.UILabel.new({text = "统计运行状态", size = 20, color = display.COLOR_BLACK}))
 
     local dialogSize = cc.size(display.width/2, display.height/2)
     local bg = cc.LayerColor:create(cc.c4b(128, 128, 128, 200))
@@ -454,25 +463,35 @@ function EditorScene:showResult()
         :addTo(bg)
 
     cc.ui.UILabel.new({text = "Min FPS:", size = 24, color = display.COLOR_BLACK})
-        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 120)
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 100)
         :addTo(bg)
     cc.ui.UILabel.new({text = string.format("%d", minScore), size = 24, color = display.COLOR_RED})
-        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 120)
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 100)
         :addTo(bg)
 
     cc.ui.UILabel.new({text = "Max FPS:", size = 24, color = display.COLOR_BLACK})
-        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 200)
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 160)
         :addTo(bg)
     cc.ui.UILabel.new({text = string.format("%d", maxScore), size = 24, color = display.COLOR_RED})
-        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 200)
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 160)
         :addTo(bg)
 
     cc.ui.UILabel.new({text = "Average FPS:", size = 24, color = display.COLOR_BLACK})
-        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 280)
+        :align(display.CENTER_RIGHT, dialogSize.width/2 - 10, dialogSize.height - 220)
         :addTo(bg)
     cc.ui.UILabel.new({text = string.format("%d", totoalScore/#self.fpsArray_), size = 24, color = display.COLOR_RED})
-        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 280)
+        :align(display.CENTER_LEFT, dialogSize.width/2 + 10, dialogSize.height - 220)
         :addTo(bg)
+
+    cc.ui.UIPushButton.new("GreenButton.png", {scale9 = true})
+        :setButtonLabel(cc.ui.UILabel.new({text = "结束", size = 20, color = display.COLOR_BLACK}))
+        :setButtonSize(130, 40)
+        :align(display.CENTER, dialogSize.width/2, dialogSize.height - 280)
+        :addTo(bg)
+        :onButtonClicked(function()
+            cc.Director:getInstance():endToLua()
+            os.exit()
+        end)
 
     self.resultDialog_ = bg
 end
