@@ -199,12 +199,9 @@ void TestActionTimeline::onEnter()
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-    
-    ActionIndexes indexes = {"walk", 0, 40};
-    action->addIndexes(indexes);
 
     node->runAction(action);
-    action->play("walk", true);
+    action->gotoFrameAndPlay(0, 40, true);
 
     node->setScale(0.2f);
     node->setPosition(VisibleRect::center());
