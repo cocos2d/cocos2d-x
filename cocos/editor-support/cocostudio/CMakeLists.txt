@@ -69,6 +69,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
   editor-support/cocostudio/ActionTimeline/CSLoader.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
+  editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
 )
 
 include_directories( editor-support )
