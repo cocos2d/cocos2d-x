@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 #include <vector>
 
-static std::string g_projectPath;
+std::string g_projectPath;
 
 void startScript(std::string strDebugArg)
 {
