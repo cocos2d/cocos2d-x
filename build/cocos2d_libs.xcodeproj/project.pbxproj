@@ -1301,9 +1301,7 @@
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		4DAB8DC61A1CBDB200F7B768 /* CCActionTimeLineNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DAB8DC41A1CBDB200F7B768 /* CCActionTimeLineNode.cpp */; };
-		4DAB8DC71A1CBDB200F7B768 /* CCActionTimeLineNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DAB8DC41A1CBDB200F7B768 /* CCActionTimeLineNode.cpp */; };
 		4DAB8DC81A1CBDB200F7B768 /* CCActionTimeLineNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DAB8DC51A1CBDB200F7B768 /* CCActionTimeLineNode.h */; };
-		4DAB8DC91A1CBDB200F7B768 /* CCActionTimeLineNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DAB8DC51A1CBDB200F7B768 /* CCActionTimeLineNode.h */; };
 		5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50272539190BF1B900AAF4ED /* cocos2d.cpp */; };
