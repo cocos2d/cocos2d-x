@@ -37,16 +37,15 @@ bool Frustum::isOutOfFrustum(const AABB& aabb) const
     if (_initialized)
     {
         Vec3 point;
-
         int nplane = _clipZ ? 6 : 4;
-        for (int i = 0; i < nplane; i++) {
+        for (int i = 0; i < nplane; i++)
+        {
             const Vec3& normal = _plane[i].getNormal();
             point.x = normal.x < 0 ? aabb._max.x : aabb._min.x;
             point.y = normal.y < 0 ? aabb._max.y : aabb._min.y;
             point.z = normal.z < 0 ? aabb._max.z : aabb._min.z;
             if (_plane[i].getSide(point) == PointSide::FRONT_PLANE )
                 return true;
-
         }
     }
     return false;
@@ -57,17 +56,14 @@ bool Frustum::isOutOfFrustum(const OBB& obb) const
     if (_initialized)
     {
         Vec3 point;
-
         int nplane = _clipZ ? 6 : 4;
-
-        for (int i = 0; i < nplane; i++) {
+        for (int i = 0; i < nplane; i++)
+        {
             const Vec3& normal = _plane[i].getNormal();
-
             point = obb._center;
             point = normal.dot(obb._xAxis) > 0 ? point - obb._extentX : point + obb._extentX;
             point = normal.dot(obb._yAxis) > 0 ? point - obb._extentY : point + obb._extentY;
             point = normal.dot(obb._zAxis) > 0 ? point - obb._extentZ : point + obb._extentZ;
-
             if (_plane[i].getSide(point) == PointSide::FRONT_PLANE)
                 return true;
         }
