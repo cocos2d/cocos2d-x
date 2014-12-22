@@ -186,7 +186,7 @@ void Particle3DQuadRender::initQuadRender( const std::string& texFile )
 
     _meshCommand = new MeshCommand();
     _meshCommand->setTransparent(true);
-	_meshCommand->setDepthTestEnabled(_depthTest);
+    _meshCommand->setDepthTestEnabled(_depthTest);
     _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
@@ -238,20 +238,22 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     const ParticlePool& particlePool = particleSystem->getParticlePool();
     ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
     Mat4 mat;
+    Mat4 rotMat;
+    Mat4 sclMat;
     Quaternion q;
+    transform.decompose(nullptr, &q, nullptr);
     for (unsigned int i = 0; i < activeParticleList.size(); ++i)
     {
         auto particle = activeParticleList[i];
-        q = particle->orientation * transform;
-        Mat4::createRotation(q, &mat);
-
-        mat.m[0] *= particle->width / _spriteSize.x;
-        mat.m[5]  *= particle->height / _spriteSize.y; 
-        mat.m[10] *= particle->depth / _spriteSize.z;
+        q *= particle->orientation;
+        Mat4::createRotation(q, &rotMat);
+        sclMat.m[0] = particle->width / _spriteSize.x;
+        sclMat.m[5]  = particle->height / _spriteSize.y; 
+        sclMat.m[10] = particle->depth / _spriteSize.z;
+        mat = rotMat * sclMat;
         mat.m[12] = particle->positionInWorld.x;
         mat.m[13] = particle->positionInWorld.y;
         mat.m[14] = particle->positionInWorld.z;
-
         _spriteList[i]->draw(renderer, mat, 0);
     }
 }

@@ -44,8 +44,6 @@ public:
     virtual bool init() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-	virtual void onExit() override;
 
     cocos2d::ParticleSystem3D* createParticleSystem();
 
@@ -56,6 +54,58 @@ protected:
     std::string    _title;
     cocos2d::Camera *_camera;
     float _angle;
+};
+
+class Particle3DAdvancedLodSystemDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DAdvancedLodSystemDemo);
+    Particle3DAdvancedLodSystemDemo(){};
+    virtual ~Particle3DAdvancedLodSystemDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
+class Particle3DBlackHoleDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DBlackHoleDemo);
+    Particle3DBlackHoleDemo(){};
+    virtual ~Particle3DBlackHoleDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
+class Particle3DHypnoDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DHypnoDemo);
+    Particle3DHypnoDemo(){};
+    virtual ~Particle3DHypnoDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
+class Particle3DTimeShiftDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DTimeShiftDemo);
+    Particle3DTimeShiftDemo(){};
+    virtual ~Particle3DTimeShiftDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
 };
 
 class Particle3DTestScene : public TestScene
