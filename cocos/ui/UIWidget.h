@@ -272,7 +272,7 @@ public:
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
-    Vec2 getPositionPercent();
+    const Vec2& getPositionPercent()const;
 
     /**
      * Changes the position type of the widget
