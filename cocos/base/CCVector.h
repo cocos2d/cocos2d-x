@@ -32,6 +32,20 @@ THE SOFTWARE.
 #include <functional>
 #include <algorithm> // for std::find
 
+#ifdef _MSC_VER
+
+#if _MSC_VER >= 1800
+#include <initializer_list>
+#define __CCVECTOR_ENABLE_INITIALIZER_LIST
+#endif
+
+#else
+
+#include <initializer_list>
+#define __CCVECTOR_ENABLE_INITIALIZER_LIST
+
+#endif
+
 NS_CC_BEGIN
 
 template<class T>
@@ -80,6 +94,16 @@ public:
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
     }
+    
+    /** Constructor with a initializer_list */
+#ifdef __CCVECTOR_ENABLE_INITIALIZER_LIST
+    Vector<T>(std::initializer_list<T> list)
+      : _data(list)
+    {
+        static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
+        addRefForAllObjects();
+    }
+#endif
 
     /** Destructor */
     ~Vector<T>()
