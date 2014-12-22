@@ -379,16 +379,31 @@ public class QuickHTTPInterface {
         String strKey = null;
         String strValue = null;
         String strExpire = null;
+        boolean bSecure = false;
+        boolean bFirst = false;
 
         for (String str : list) {
+        	bSecure = false;
+        	bFirst = true;
             String[] parts = str.split(";");
             for (String part : parts) {
                 String[] item = part.split("=");
+                if (bFirst) {
+                	if (2 == item.length) {
+                		strKey = item[0];
+                		strValue = item[1];
+                	} else {
+                		strKey = "";
+                		strValue = "";
+                	}
+                	bFirst = false;
+                }
                 if ("expires".equalsIgnoreCase(item[0].trim())) {
                     strExpire = str2Seconds(item[1].trim());
-                } else {
-                    strKey = item[0];
-                    strValue = item[1];
+                } else if("secure".equalsIgnoreCase(item[0].trim())) {
+                	bSecure = true;
+                } else if ("domain".equalsIgnoreCase(item[0].trim())) {
+                	strDomain = item[1];
                 }
             }
 
@@ -400,7 +415,11 @@ public class QuickHTTPInterface {
             sbCookies.append('\t');
             sbCookies.append("FALSE\t");       //access
             sbCookies.append("/\t");          //path
-            sbCookies.append("FALSE\t");     //secure
+            if (bSecure) {
+            	sbCookies.append("TRUE\t");     //secure
+            } else {
+            	sbCookies.append("FALSE\t");     //secure
+            }
             sbCookies.append(strExpire);    //expire tag
             sbCookies.append("\t");
             sbCookies.append(strKey);       //key
@@ -420,7 +439,12 @@ public class QuickHTTPInterface {
             c.setTime(new SimpleDateFormat("EEE, dd-MMM-yyyy hh:mm:ss zzz", Locale.US).parse(strTime));
             millisSecond = c.getTimeInMillis()/1000;
         } catch (ParseException e) {
-            Log.e("QuickHTTPInterface", e.toString());
+        	millisSecond = -1;
+            //Log.e("QuickHTTPInterface", e.toString());
+        }
+        
+        if (-1 == millisSecond) {
+        	return strTime;
         }
 
         return Long.toString(millisSecond);
