@@ -1087,12 +1087,12 @@ void CameraClipPerformance::outFrustum(Ref* sender)
 void CameraClipPerformance::calculate(Ref* sender)
 {
     AABB aabb;
-    _cameraFirst->visibleInFrustum(aabb);
+    _cameraFirst->isVisibleInFrustum(aabb);
 
     auto lastTime = utils::gettime();
     for (auto& iter : listAABB)
     {
-        _cameraFirst->visibleInFrustum(iter);
+        _cameraFirst->isVisibleInFrustum(iter);
     }
     auto deltaTime = utils::gettime() - lastTime;
     

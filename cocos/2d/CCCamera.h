@@ -131,12 +131,12 @@ public:
     /**
      * Enable frustum culling
      */
-    void enableFrustumCull(bool bEnalbe, bool bClipZ);
+    void enableFrustumCull(bool enalbe, bool clipZ);
     
     /**
      * Is this aabb visible in frustum
      */
-    bool visibleInFrustum(const AABB& aabb)const;
+    bool isVisibleInFrustum(const AABB& aabb)const;
     
     //override
     virtual void onEnter() override;

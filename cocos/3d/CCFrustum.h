@@ -41,38 +41,38 @@ public:
     /**
      * Constructor & Destructor.
      */
-    Frustum(): _bInit(false), _bClipZ(true){}
+    Frustum(): _initialized(false), _clipZ(true){}
     ~Frustum(){}
 
     /**
      * init frustum from camera.
      */
-    bool initFrustum(const Camera* pCamera);
+    bool initFrustum(const Camera* camera);
 
     /**
      * is aabb out of frustum.
      */
-    bool isOutFrustum(const AABB& aabb) const;
+    bool isOutOfFrustum(const AABB& aabb) const;
     /**
      * is obb out of frustum
      */
-    bool isOutFrustum(const OBB& obb) const;
+    bool isOutOfFrustum(const OBB& obb) const;
 
     /**
      * get & set z clip. if bclipZ == true use near and far plane
      */
-    void setClipZ(bool bclipZ) { _bClipZ = bclipZ; }
-    bool isClipZ() { return _bClipZ; }
+    void setClipZ(bool clipZ) { _clipZ = clipZ; }
+    bool isClipZ() { return _clipZ; }
     
 protected:
     /**
      * create clip plane
      */
-    void createPlane(const Camera* pcamera);
+    void createPlane(const Camera* camera);
 
     Plane _plane[6];             // clip plane, left, right, top, bottom, near, far
-    bool _bClipZ;                // use near and far clip plane
-    bool _bInit;
+    bool _clipZ;                // use near and far clip plane
+    bool _initialized;
 };
 
 NS_CC_END
