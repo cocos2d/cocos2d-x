@@ -241,6 +241,9 @@
     <Filter Include="base\allocator">
       <UniqueIdentifier>{92ff4e66-3943-47da-a439-c8f182bb871a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNode">
+      <UniqueIdentifier>{e1848cce-b225-42c4-bb6e-6430b6da123b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1300,6 +1303,9 @@
     </ClCompile>
     <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
       <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2543,6 +2549,12 @@
     </ClInclude>
     <ClInclude Include="..\base\allocator\CCAllocatorStrategyPool.h">
       <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
