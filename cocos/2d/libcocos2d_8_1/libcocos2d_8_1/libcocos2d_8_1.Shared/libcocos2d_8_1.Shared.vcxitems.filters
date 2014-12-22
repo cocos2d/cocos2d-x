@@ -1258,11 +1258,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNode\ArmatureNodeReader.h">
-      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNode\CSArmatureNode_generated.h">
-      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2336,8 +2336,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNode\ArmatureNodeReader.cpp">
-      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2569,7 +2569,7 @@
     <Filter Include="cocostudio\reader\WidgetReader\ProjectNodeReader">
       <UniqueIdentifier>{a6638f35-5c81-4835-9897-0f9efb0be02b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNode">
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
       <UniqueIdentifier>{2f0e4d96-518f-4067-8c50-a55f27c96721}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

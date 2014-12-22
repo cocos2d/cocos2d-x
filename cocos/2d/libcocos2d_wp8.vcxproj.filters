@@ -242,7 +242,7 @@
     <Filter Include="cocostudio\reader\WidgetReader\GameMapReader">
       <UniqueIdentifier>{02d389d5-8f57-4bd6-b12a-95af86c5b356}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNode">
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
       <UniqueIdentifier>{1dfee771-33de-4702-b4a2-a11c9446371f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1311,8 +1311,8 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\ArmatureNodeReader.cpp">
-      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2544,11 +2544,11 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\CSArmatureNode_generated.h">
-      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\ArmatureNodeReader.h">
-      <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
