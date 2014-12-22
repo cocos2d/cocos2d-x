@@ -336,6 +336,7 @@
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\ArmatureNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionFrame.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionFrameEasing.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionManagerEx.h" />
@@ -368,6 +369,7 @@
     <ClInclude Include="..\editor-support\cocostudio\CCTween.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCUtilMath.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CSArmatureNode_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary.pb.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h" />
@@ -814,6 +816,7 @@
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\ArmatureNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrame.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionManagerEx.cpp" />

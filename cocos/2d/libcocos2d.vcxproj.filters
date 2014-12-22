@@ -1304,7 +1304,7 @@
     <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
       <Filter>base\allocator</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\ArmatureNodeReader.cpp">
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNode\ArmatureNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2550,10 +2550,10 @@
     <ClInclude Include="..\base\allocator\CCAllocatorStrategyPool.h">
       <Filter>base\allocator</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\ArmatureNodeReader.h">
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNode\ArmatureNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\CSArmatureNode_generated.h">
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNode\CSArmatureNode_generated.h">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNode</Filter>
     </ClInclude>
   </ItemGroup>

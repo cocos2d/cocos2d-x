@@ -325,7 +325,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\ArmatureNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrame.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionManagerEx.cpp" />
@@ -363,6 +362,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerObj.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNode\ArmatureNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
@@ -725,7 +725,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h" />
-    <ClInclude Include="..\editor-support\cocostudio\ArmatureNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionFrame.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionFrameEasing.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCActionManagerEx.h" />
@@ -760,7 +759,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocosStudioExport.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocoStudio.h" />
-    <ClInclude Include="..\editor-support\cocostudio\CSArmatureNode_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\editor-support\cocostudio\FlatBuffersSerialize.h" />
@@ -768,6 +766,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerObj.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNode\ArmatureNodeReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNode\CSArmatureNode_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />

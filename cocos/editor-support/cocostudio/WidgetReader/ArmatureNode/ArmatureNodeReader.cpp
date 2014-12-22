@@ -3,7 +3,7 @@
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "CSArmatureNode_generated.h"
-#include "cocostudio/ArmatureNodeReader.h"
+#include "cocostudio/WidgetReader/ArmatureNode/ArmatureNodeReader.h"
 #include "cocostudio/CCArmature.h"
 
 
