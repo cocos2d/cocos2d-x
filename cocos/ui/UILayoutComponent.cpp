@@ -102,10 +102,10 @@ namespace ui {
         if (parent == nullptr)
             return;
 
-        Point ownerPoint = _owner->getPosition();
-        Point ownerAnchor = _owner->getAnchorPoint();
-        Size ownerSize = _owner->getContentSize();
-        Size parentSize = parent->getContentSize();
+        const Point& ownerPoint = _owner->getPosition();
+        const Point& ownerAnchor = _owner->getAnchorPoint();
+        const Size& ownerSize = _owner->getContentSize();
+        const Size& parentSize = parent->getContentSize();
 
         _leftMargin = ownerPoint.x - ownerAnchor.x * ownerSize.width;
         _rightMargin = parentSize.width - (ownerPoint.x + (1 - ownerAnchor.x) * ownerSize.width);
@@ -116,21 +116,21 @@ namespace ui {
         if (parent == nullptr)
             return;
 
-        Point ownerPoint = _owner->getPosition();
-        Point ownerAnchor = _owner->getAnchorPoint();
-        Size ownerSize = _owner->getContentSize();
-        Size parentSize = parent->getContentSize();
+        const Point& ownerPoint = _owner->getPosition();
+        const Point& ownerAnchor = _owner->getAnchorPoint();
+        const Size& ownerSize = _owner->getContentSize();
+        const Size& parentSize = parent->getContentSize();
 
         _buttomMargin = ownerPoint.y - ownerAnchor.y * ownerSize.height;
         _topMargin = parentSize.height - (ownerPoint.y + (1 - ownerAnchor.y) * ownerSize.height);
     }
 
-#pragma region OldVersion
+    //OldVersion
     void LayoutComponent::setUsingPercentContentSize(bool isUsed)
     {
         _usingPercentWidth = _usingPercentHeight = isUsed;
     }
-    bool LayoutComponent::getUsingPercentContentSize()
+    bool LayoutComponent::getUsingPercentContentSize()const
     {
         return _usingPercentWidth && _usingPercentHeight;
     }
@@ -140,19 +140,18 @@ namespace ui {
         this->setPercentWidth(percent.x);
         this->setPercentHeight(percent.y);
     }
-    Vec2 LayoutComponent::getPercentContentSize()
+    Vec2 LayoutComponent::getPercentContentSize()const
     {
         Vec2 vec2=Vec2(_percentWidth,_percentHeight);
         return vec2;
     }
-#pragma endregion
 
-#pragma region Position & Margin
-    Point LayoutComponent::getAnchorPosition()
+    //Position & Margin
+    const Point& LayoutComponent::getAnchorPosition()const
     {
         return _owner->getAnchorPoint();
     }
-    void LayoutComponent::setAnchorPosition(Point point)
+    void LayoutComponent::setAnchorPosition(const Point& point)
     {
         Rect oldRect = _owner->getBoundingBox();
         _owner->setAnchorPoint(point);
@@ -167,19 +166,19 @@ namespace ui {
         this->setPosition(ownerPosition);
     }
 
-    Point LayoutComponent::getPosition()
+    const Point& LayoutComponent::getPosition()const
     {
         return _owner->getPosition();
     }
-    void LayoutComponent::setPosition(Point position)
+    void LayoutComponent::setPosition(const Point& position)
     {
         _owner->setPosition(position);
 
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
         {
-            Point ownerPoint = _owner->getPosition();
-            Size parentSize = parent->getContentSize();
+            const Point& ownerPoint = _owner->getPosition();
+            const Size& parentSize = parent->getContentSize();
 
             if (parentSize.width != 0)
                 _positionPercentX = ownerPoint.x / parentSize.width;
@@ -196,7 +195,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPositionPercentX()
+    bool LayoutComponent::isUsingPositionPercentX()const
     {
         return _usingPositionPercentX;
     }
@@ -209,7 +208,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getPositionPercentX()
+    float LayoutComponent::getPositionPercentX()const
     {
         return _positionPercentX;
     }
@@ -225,7 +224,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPositionPercentY()
+    bool LayoutComponent::isUsingPositionPercentY()const
     {
         return _usingPositionPercentY;
     }
@@ -238,7 +237,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getPositionPercentY()
+    float LayoutComponent::getPositionPercentY()const
     {
         return _positionPercentY;
     }
@@ -254,7 +253,7 @@ namespace ui {
         }
     }
 
-    LayoutComponent::HorizontalEage LayoutComponent::getHorizontalEage()
+    LayoutComponent::HorizontalEage LayoutComponent::getHorizontalEage()const
     {
         return _horizontalEage;
     }
@@ -269,7 +268,7 @@ namespace ui {
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
         {
-            Size parentSize = parent->getContentSize();
+            const Size& parentSize = parent->getContentSize();
             if (parentSize.width != 0)
                 _positionPercentX = _owner->getPosition().x / parentSize.width;
             else
@@ -279,7 +278,7 @@ namespace ui {
         }
     }
 
-    LayoutComponent::VerticalEage LayoutComponent::getVerticalEage()
+    LayoutComponent::VerticalEage LayoutComponent::getVerticalEage()const
     {
         return _verticalEage;
     }
@@ -294,7 +293,7 @@ namespace ui {
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
         {
-            Size parentSize = parent->getContentSize();
+            const Size& parentSize = parent->getContentSize();
             if (parentSize.height != 0)
                 _positionPercentY = _owner->getPosition().y / parentSize.height;
             else
@@ -304,7 +303,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getLeftMargin()
+    float LayoutComponent::getLeftMargin()const
     {
         return _leftMargin;
     }
@@ -313,7 +312,7 @@ namespace ui {
         _leftMargin = margin;
     }
 
-    float LayoutComponent::getRightMargin()
+    float LayoutComponent::getRightMargin()const
     {
         return _rightMargin;
     }
@@ -322,7 +321,7 @@ namespace ui {
         _rightMargin = margin;
     }
 
-    float LayoutComponent::getTopMargin()
+    float LayoutComponent::getTopMargin()const
     {
         return _topMargin;
     }
@@ -331,7 +330,7 @@ namespace ui {
         _topMargin = margin;
     }
 
-    float LayoutComponent::getButtomMargin()
+    float LayoutComponent::getButtomMargin()const
     {
         return _buttomMargin;
     }
@@ -340,22 +339,20 @@ namespace ui {
         _buttomMargin = margin;
     }
 
-#pragma endregion
-
-#pragma region Size & Percent
-    Size LayoutComponent::getSize()
+    //Size & Percent
+    const Size& LayoutComponent::getSize()const
     {
         return this->getOwner()->getContentSize();
     }
-    void LayoutComponent::setSize(Size _size)
+    void LayoutComponent::setSize(const Size& _size)
     {
         _owner->setContentSize(_size);
 
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
         {
-            Size ownerSize = _owner->getContentSize();
-            Size parentSize = parent->getContentSize();
+            const Size& ownerSize = _owner->getContentSize();
+            const Size& parentSize = parent->getContentSize();
 
             if (parentSize.width != 0)
                 _percentWidth = ownerSize.width / parentSize.width;
@@ -372,7 +369,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPercentWidth()
+    bool LayoutComponent::isUsingPercentWidth()const
     {
         return _usingPercentWidth;
     }
@@ -385,7 +382,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getSizeWidth()
+    float LayoutComponent::getSizeWidth()const
     {
         return _owner->getContentSize().width;
     }
@@ -398,7 +395,7 @@ namespace ui {
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
         {
-            Size parentSize = parent->getContentSize();
+            const Size& parentSize = parent->getContentSize();
             if (parentSize.width != 0)
                 _percentWidth = ownerSize.width / parentSize.width;
             else
@@ -408,7 +405,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getPercentWidth()
+    float LayoutComponent::getPercentWidth()const
     {
         return _percentWidth;
     }
@@ -427,7 +424,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPercentHeight()
+    bool LayoutComponent::isUsingPercentHeight()const
     {
         return _usingPercentHeight;
     }
@@ -440,7 +437,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getSizeHeight()
+    float LayoutComponent::getSizeHeight()const
     {
         return _owner->getContentSize().height;
     }
@@ -453,7 +450,7 @@ namespace ui {
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
         {
-            Size parentSize = parent->getContentSize();
+            const Size& parentSize = parent->getContentSize();
             if (parentSize.height != 0)
                 _percentHeight = ownerSize.height / parentSize.height;
             else
@@ -463,7 +460,7 @@ namespace ui {
         }
     }
 
-    float LayoutComponent::getPercentHeight()
+    float LayoutComponent::getPercentHeight()const
     {
         return _percentHeight;
     }
@@ -482,7 +479,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingStretchWidth()
+    bool LayoutComponent::isUsingStretchWidth()const
     {
         return _usingStretchWidth;
     }
@@ -495,7 +492,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingStretchHeight()
+    bool LayoutComponent::isUsingStretchHeight()const
     {
         return _usingStretchHeight;
     }
@@ -508,17 +505,15 @@ namespace ui {
         }
     }
 
-#pragma endregion
-
     void LayoutComponent::refreshLayout()
     {
         Node* parent = this->getOwnerParent();
         if (parent == nullptr)
             return;
 
-        Size parentSize = parent->getContentSize();
+        const Size& parentSize = parent->getContentSize();
+        const Point& ownerAnchor = _owner->getAnchorPoint();
         Size ownerSize = _owner->getContentSize();
-        Point ownerAnchor = _owner->getAnchorPoint();
         Point ownerPosition = _owner->getPosition();
 
         switch (this->_horizontalEage)
