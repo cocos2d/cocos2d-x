@@ -667,7 +667,7 @@ CameraClippingDemo::CameraClippingDemo(void)
 , _moveAction(nullptr)
 , _drawAABB(nullptr)
 , _drawFrustum(nullptr)
-, _row(0)
+, _row(3)
 {
 }
 CameraClippingDemo::~CameraClippingDemo(void)
