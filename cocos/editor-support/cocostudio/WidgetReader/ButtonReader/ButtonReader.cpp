@@ -551,7 +551,7 @@ namespace cocostudio
         std::string normalErrorFilePath = "";
         auto normalDic = options->normalData();
         int normalType = normalDic->resourceType();
-        std::string normalTexturePath = this->getResourcePath(normalDic->path()->c_str(), (Widget::TextureResType)normalType);
+        std::string normalTexturePath = normalDic->path()->c_str();
         switch (normalType)
         {
             case 0:
@@ -613,7 +613,7 @@ namespace cocostudio
         std::string pressedErrorFilePath = "";
         auto pressedDic = options->pressedData();
         int pressedType = pressedDic->resourceType();
-        std::string pressedTexturePath = this->getResourcePath(pressedDic->path()->c_str(), (Widget::TextureResType)pressedType);
+        std::string pressedTexturePath = pressedDic->path()->c_str();
         switch (pressedType)
         {
             case 0:
@@ -677,7 +677,7 @@ namespace cocostudio
         std::string disabledErrorFilePath = "";
         auto disabledDic = options->disabledData();
         int disabledType = disabledDic->resourceType();
-        std::string disabledTexturePath = this->getResourcePath(disabledDic->path()->c_str(), (Widget::TextureResType)disabledType);
+        std::string disabledTexturePath = disabledDic->path()->c_str();
         switch (disabledType)
         {
             case 0:
