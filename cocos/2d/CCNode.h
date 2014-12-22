@@ -1614,6 +1614,8 @@ protected:
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    
+    Quaternion _rotation_quat;      ///rotation using quaternion
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis
