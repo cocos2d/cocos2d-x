@@ -13,7 +13,7 @@ namespace anysdk { namespace framework {
 /** @brief Plugin_type enum, with inline docs */
 typedef enum
 {
-	kPushReceiveMessage,/**value is callback of Receiving Message . */
+	kPushReceiveMessage = 0,/**value is callback of Receiving Message . */
 
 
 } PushActionResultCode;

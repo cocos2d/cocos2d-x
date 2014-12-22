@@ -357,7 +357,7 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 				bool temp = ((bool)  tolua_toboolean(tolua_S,2,true));
 				param = new PluginParam(temp);
 			}
-			else if( tolua_isnumber(tolua_S,2,0,&tolua_err) ) 
+      else if( lua_type(tolua_S, 2) == LUA_TNUMBER ) 
 			{
 				double arg1 = (double)tolua_tonumber(tolua_S, 2, 0);
 	            float argf = (float)arg1;

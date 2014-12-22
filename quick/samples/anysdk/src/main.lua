@@ -2,6 +2,7 @@
 cc.FileUtils:getInstance():addSearchPath("src")
 cc.FileUtils:getInstance():addSearchPath("res")
 
+-- CC_USE_DEPRECATED_API = true
 require "cocos.init"
 
 -- cclog
@@ -23,39 +24,47 @@ local function main()
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
-    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0);
-    cc.Director:getInstance():setDisplayStats(false);
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("src");
-	cc.FileUtils:getInstance():addSearchResolutionsOrder("res");
-	local schedulerID = 0
 
-    --support debug
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if (cc.PLATFORM_OS_ANDROID ~= targetPlatform) then
-        local hint = cc.Label:createWithSystemFont("Please run on android", "Helvetica", 24)
-        hint:setTextColor(cc.c4b(255, 255, 255, 255))
-        hint:setPosition(240, 160)
-
-        local sceneGame = cc.Scene:create()
-        sceneGame:addChild(hint)
-        
-        if cc.Director:getInstance():getRunningScene() then
-            cc.Director:getInstance():replaceScene(sceneGame)
-        else
-            cc.Director:getInstance():runWithScene(sceneGame)
-        end
-        return
+    -- initialize director
+    local director = cc.Director:getInstance()
+    local glview = director:getOpenGLView()
+    if nil == glview then
+        glview = cc.GLViewImpl:createWithRect("HelloLua", cc.rect(0,0,900,640))
+        director:setOpenGLView(glview)
     end
 
+    glview:setDesignResolutionSize(480, 320, cc.ResolutionPolicy.NO_BORDER)
+
+    --turn on display FPS
+    director:setDisplayStats(true)
+
+    --set FPS. the default value is 1.0/60 if you don't call this
+    director:setAnimationInterval(1.0 / 60)
+
+    local schedulerID = 0
+    --support debug
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or
+       (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
+       (cc.PLATFORM_OS_MAC == targetPlatform) then
+        cclog("result is ")
+        --require('debugger')()
+
+    end
+    require "hello2"
     require "anysdkConst"
+    cclog("result is " .. myadd(1, 1))
 
     --for anysdk
     local agent = AgentManager:getInstance()
     cclog("agent is---" .. type(agent))
     --init
-    local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
-    local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
-    local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
+    -- local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
+    -- local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
+    -- local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
+    local appKey = "D07766C0-6E82-3993-058C-83DF431DBB8A";
+    local appSecret = "efdcf8ff6afa6494f883f87a2d005c96";
+    local privateKey = "77663DB8B42A9FE0954DE5D36400280E";
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -82,7 +91,7 @@ local function main()
     
     --add user action listener
     local function onActionListener( ... )
-    	print("on user action listener.")
+        print("on user action listener.")
         print("agent is ", agent, "user_plugin is " , user_plugin)
     end
     user_plugin:setActionListener(onActionListener)
@@ -106,6 +115,7 @@ local function main()
     else
         cclog("social_plugin is nil.")
     end
+
     ---------------
 
     local visibleSize = cc.Director:getInstance():getVisibleSize()
@@ -306,8 +316,10 @@ local function main()
                 end
             elseif item < USER_LEVEL then
                 if item == user_menu.LOGIN then
-                    user_plugin:login()
-                    analytics_plugin:logEvent("login")
+                    user_plugin:login("server_id")
+                    -- if analytics_plugin != nil then
+                    --     analytics_plugin:logEvent("login")
+                    -- end
                 elseif item == user_menu.LOGOUT then
                     if user_plugin:isFunctionSupported("logout") then
                         user_plugin:callFuncWithParam("logout")
@@ -348,15 +360,15 @@ local function main()
                     cclog("on clicked pay.")
                     
                     local info = {
-                    		Product_Price="1", 
-                    		Product_Id="monthly",  
-                    		Product_Name="gold",  
-                    		Server_Id="13",  
-                    		Product_Count="1",  
-                    		Role_Id="1001",  
-                    		Role_Name="asd"
-                    	}
-                    analytics_plugin:logEvent("pay", info)
+                            Product_Price="0.1", 
+                            Product_Id="monthly",  
+                            Product_Name="gold",  
+                            Server_Id="13",  
+                            Product_Count="1",  
+                            Role_Id="1001",  
+                            Role_Name="asd"
+                        }
+                    -- analytics_plugin:logEvent("pay", info)
                     for key, value in pairs(iap_plugin_maps) do
                         print("key:" .. key)
                         cclog("value: " .. type(value))
@@ -376,23 +388,21 @@ local function main()
                             comment = "无",
                         }
                         share_plugin:share(info)
-                        analytics_plugin:logEvent("share")
+                        -- analytics_plugin:logEvent("share")
                     end
                 end
             elseif item < ADS_LEVEL then
                 if item == ads_menu.SHOW_ADS then
                     if ads_plugin ~= nil then
-                        ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
-                        -- if ads_plugin:isFunctionSupported("AD_TYPE_FULLSCREEN") then
-                        --     ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
-                        -- end
+                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
+                            ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
+                        end
                     end
                 elseif item == ads_menu.HIDE_ADS then
                     if ads_plugin ~= nil then
-                        ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
-                        -- if ads_plugin:isFunctionSupported("AD_TYPE_FULLSCREEN") then
-                        --     ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
-                        -- end
+                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
+                            ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
+                        end
                     end
                 end
             elseif item < SOCIAL_LEVEL then
@@ -410,7 +420,7 @@ local function main()
                         social_plugin:unlockAchievement(achInfo);
                     elseif item == social_menu.SHOW_ACHIEVEMENT then
                         social_plugin:showAchievements();
-                        analytics_plugin:logEvent("showAchievements");
+                        -- analytics_plugin:logEvent("showAchievements");
                     end
                 end
             elseif item < PUSH_LEVEL then
@@ -441,15 +451,187 @@ local function main()
     end
     local operateLy = createClickLayer()
 
+    -- add the moving dog
+    local function createDog()
+        local frameWidth = 105
+        local frameHeight = 95
+
+        -- create dog animate
+        local textureDog = cc.Director:getInstance():getTextureCache():addImage("dog.png")
+        local rect = cc.rect(0, 0, frameWidth, frameHeight)
+        local frame0 = cc.SpriteFrame:createWithTexture(textureDog, rect)
+        rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
+        local frame1 = cc.SpriteFrame:createWithTexture(textureDog, rect)
+
+        local spriteDog = cc.Sprite:createWithSpriteFrame(frame0)
+        spriteDog.isPaused = false
+        spriteDog:setPosition(origin.x, origin.y + visibleSize.height / 4 * 3)
+--[[
+        local animFrames = CCArray:create()
+
+        animFrames:addObject(frame0)
+        animFrames:addObject(frame1)
+]]--
+
+        local animation = cc.Animation:createWithSpriteFrames({frame0,frame1}, 0.5)
+        local animate = cc.Animate:create(animation);
+        spriteDog:runAction(cc.RepeatForever:create(animate))
+
+        -- moving dog at every frame
+        local function tick()
+            if spriteDog.isPaused then return end
+            local x, y = spriteDog:getPosition()
+            if x > origin.x + visibleSize.width then
+                x = origin.x
+            else
+                x = x + 1
+            end
+
+            spriteDog:setPositionX(x)
+        end
+
+        schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(tick, 0, false)
+
+        return spriteDog
+    end
+
+    -- create farm
+    local function createLayerFarm()
+        local layerFarm = cc.Layer:create()
+
+        -- add in farm background
+        local bg = cc.Sprite:create("farm.jpg")
+        bg:setPosition(origin.x + visibleSize.width / 2 + 80, origin.y + visibleSize.height / 2)
+        layerFarm:addChild(bg)
+
+        -- add land sprite
+        for i = 0, 3 do
+            for j = 0, 1 do
+                local spriteLand = cc.Sprite:create("land.png")
+                spriteLand:setPosition(200 + j * 180 - i % 2 * 90, 10 + i * 95 / 2)
+                layerFarm:addChild(spriteLand)
+            end
+        end
+
+        -- add crop
+        local frameCrop = cc.SpriteFrame:create("crop.png", cc.rect(0, 0, 105, 95))
+        for i = 0, 3 do
+            for j = 0, 1 do
+                local spriteCrop = cc.Sprite:createWithSpriteFrame(frameCrop);
+                spriteCrop:setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
+                layerFarm:addChild(spriteCrop)
+            end
+        end
+
+        -- add moving dog
+        local spriteDog = createDog()
+        layerFarm:addChild(spriteDog)
+
+        -- handing touch events
+        local touchBeginPoint = nil
+        local function onTouchBegan(touch, event)
+            local location = touch:getLocation()
+            cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
+            touchBeginPoint = {x = location.x, y = location.y}
+            spriteDog.isPaused = true
+            -- CCTOUCHBEGAN event must return true
+            return true
+        end
+
+        local function onTouchMoved(touch, event)
+            local location = touch:getLocation()
+            cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
+            if touchBeginPoint then
+                local cx, cy = layerFarm:getPosition()
+                layerFarm:setPosition(cx + location.x - touchBeginPoint.x,
+                                      cy + location.y - touchBeginPoint.y)
+                touchBeginPoint = {x = location.x, y = location.y}
+            end
+        end
+
+        local function onTouchEnded(touch, event)
+            local location = touch:getLocation()
+            cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
+            touchBeginPoint = nil
+            spriteDog.isPaused = false
+        end
+
+        local listener = cc.EventListenerTouchOneByOne:create()
+        listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+        listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+        listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+        local eventDispatcher = layerFarm:getEventDispatcher()
+        eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layerFarm)
+
+        local function onNodeEvent(event)
+           if "exit" == event then
+               cc.Director:getInstance():getScheduler():unscheduleScriptEntry(schedulerID)
+           end
+        end
+        layerFarm:registerScriptHandler(onNodeEvent)
+
+        return layerFarm
+    end
+
+
+    -- create menu
+    local function createLayerMenu()
+        local layerMenu = cc.Layer:create()
+
+        local menuPopup, menuTools, effectID
+
+        local function menuCallbackClosePopup()
+            -- stop test sound effect
+            cc.SimpleAudioEngine:getInstance():stopEffect(effectID)
+            menuPopup:setVisible(false)
+        end
+
+        local function menuCallbackOpenPopup()
+            -- loop test sound effect
+            local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
+            effectID = cc.SimpleAudioEngine:getInstance():playEffect(effectPath)
+            menuPopup:setVisible(true)
+        end
+
+        -- add a popup menu
+        local menuPopupItem = cc.MenuItemImage:create("menu2.png", "menu2.png")
+        menuPopupItem:setPosition(0, 0)
+        menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
+        menuPopup = cc.Menu:create(menuPopupItem)
+        menuPopup:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
+        menuPopup:setVisible(false)
+        layerMenu:addChild(menuPopup)
+
+        -- add the left-bottom "tools" menu to invoke menuPopup
+        local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
+        menuToolsItem:setPosition(0, 0)
+        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
+        menuTools = cc.Menu:create(menuToolsItem)
+        local itemWidth = menuToolsItem:getContentSize().width
+        local itemHeight = menuToolsItem:getContentSize().height
+        menuTools:setPosition(origin.x + itemWidth/2, origin.y + itemHeight/2)
+        layerMenu:addChild(menuTools)
+
+        return layerMenu
+    end
+
+    -- play background music, preload effect
+    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3")
+    cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
+    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
+    cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
+
     -- run
     local sceneGame = cc.Scene:create()
+    sceneGame:addChild(createLayerFarm())
+    sceneGame:addChild(createLayerMenu())
     sceneGame:addChild(operateLy)
-	
-	if cc.Director:getInstance():getRunningScene() then
-		cc.Director:getInstance():replaceScene(sceneGame)
-	else
-		cc.Director:getInstance():runWithScene(sceneGame)
-	end
+
+    if cc.Director:getInstance():getRunningScene() then
+        cc.Director:getInstance():replaceScene(sceneGame)
+    else
+        cc.Director:getInstance():runWithScene(sceneGame)
+    end
 
 end
 
