@@ -386,7 +386,8 @@ bool TextField::hitTest(const Vec2 &pt)
     {
         Vec2 nsp = convertToNodeSpace(pt);
         Rect bb = Rect(-_touchWidth * _anchorPoint.x, -_touchHeight * _anchorPoint.y, _touchWidth, _touchHeight);
-        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width
+            && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
         {
             return true;
         }
@@ -468,9 +469,12 @@ void TextField::setTextColor(const cocos2d::Color4B &textColor)
 
 void TextField::setFontSize(int size)
 {
-    if (_fontType == FontType::SYSTEM) {
+    if (_fontType == FontType::SYSTEM)
+    {
         _textFieldRenderer->setSystemFontSize(size);
-    } else {
+    }
+    else
+    {
         TTFConfig config = _textFieldRenderer->getTTFConfig();
         config.fontSize = size;
         _textFieldRenderer->setTTFConfig(config);
@@ -494,7 +498,9 @@ void TextField::setFontName(const std::string& name)
         config.fontSize = _fontSize;
         _textFieldRenderer->setTTFConfig(config);
         _fontType = FontType::TTF;
-    } else {
+    }
+    else
+    {
         _textFieldRenderer->setSystemFontName(name);
         if (_fontType == FontType::TTF)
         {
@@ -533,7 +539,9 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
-    } else {
+    }
+    else
+    {
         this->didNotSelectSelf();
     }
     return pass;
@@ -678,7 +686,8 @@ void TextField::detachWithIMEEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::DETACH_WITH_IME);
     }
     if (_ccEventCallback)
@@ -695,7 +704,8 @@ void TextField::insertTextEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::INSERT_TEXT);
     }
     if (_ccEventCallback)
@@ -712,7 +722,8 @@ void TextField::deleteBackwardEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::DELETE_BACKWARD);
     }
     if (_ccEventCallback)

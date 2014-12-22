@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CSParseBinary_generated.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
@@ -668,6 +668,9 @@ Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::Tim
     Color3B color(f_color->r(), f_color->g(), f_color->b());
     frame->setColor(color);
     
+    int alpha = f_color->a();
+    frame->setAlpha(alpha);
+    
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
@@ -679,18 +682,51 @@ Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::Tim
 
 Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::TimeLineTextureFrame *flatbuffers)
 {
+    std::string path = "";
+    int resourceType = 0;
+    std::string plist = "";
+    
     TextureFrame* frame = TextureFrame::create();
     
-    std::string path = flatbuffers->path()->c_str();
-    if (FileUtils::getInstance()->isFileExist(path))
+    auto fileNameData = flatbuffers->fileNameData();
+    
+    resourceType = fileNameData->resourceType();
+    switch (resourceType)
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-        path = fullPath;
+        case 0:
+        {
+            path = fileNameData->path()->c_str();
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+                path = fullPath;
+            }
+            else
+            {
+                path = "";
+            }
+            break;
+        }
+            
+        case 1:
+        {
+            plist = fileNameData->plistFile()->c_str();
+            if (FileUtils::getInstance()->isFileExist(plist))
+            {
+                path = fileNameData->path()->c_str();
+            }
+            else
+            {
+                path = "";
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
-    else
-    {
-        path = "";
-    }
+    
+    
     frame->setTextureName(path);
     
     int frameIndex = flatbuffers->frameIndex();

@@ -27,7 +27,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 
@@ -290,7 +290,7 @@ namespace cocostudio
         
         auto options = CreateWidgetOptions(*builder,
                                            builder->CreateString(name),
-                                           actionTag,
+                                           (int)actionTag,
                                            &f_rotationskew,
                                            zOrder,
                                            visible,
