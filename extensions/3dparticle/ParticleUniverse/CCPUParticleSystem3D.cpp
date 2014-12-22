@@ -253,7 +253,7 @@ void PUParticleSystem3D::update(float delta)
 {
     if (_state != State::RUNNING)
         return;
-
+    
     prepared();
     emitParticles(delta);
     preUpdator(delta);
@@ -318,12 +318,15 @@ void PUParticleSystem3D::preUpdator( float elapsedTime )
     if (_emitter && _emitter->isEnabled())
     {
          auto emitter = static_cast<PUParticle3DEmitter*>(_emitter);
+         emitter->notifyRescaled(getDerivedScale());
         emitter->preUpdateEmitter(elapsedTime);
     }
 
     for (auto it : _affectors) {
-        if (it->isEnabled())
+        if (it->isEnabled()){
+            (static_cast<PUParticle3DAffector*>(it))->notifyRescaled(getDerivedScale());
             (static_cast<PUParticle3DAffector*>(it))->preUpdateAffector(elapsedTime);
+        }
     }
 }
 
@@ -407,6 +410,7 @@ void PUParticleSystem3D::emitParticles( float elapsedTime )
     if (!_emitter) return;
 
     auto emitter = static_cast<PUParticle3DEmitter*>(_emitter);
+
     unsigned short requested = emitter->calculateRequestedParticles(elapsedTime);
     float timePoint = 0.0f;
     float timeInc = elapsedTime / requested;
@@ -510,6 +514,15 @@ cocos2d::Quaternion PUParticleSystem3D::getDerivedOrientation()
     return q;
 }
 
+cocos2d::Vec3 PUParticleSystem3D::getDerivedScale()
+{
+    if (_keepLocal) return Vec3::ZERO;
+    Vec3 s;
+    Mat4 mat = getNodeToWorldTransform();
+    mat.decompose(&s, nullptr, nullptr);
+    return s;
+}
+
 float PUParticleSystem3D::getMaxVelocity() const
 {
     return _maxVelocity;
@@ -532,5 +545,4 @@ bool PUParticleSystem3D::initSystem( const std::string &filePath, const std::str
     if (!sc.compile(data, filePath)) return false;
     return true;
 }
-
 NS_CC_END

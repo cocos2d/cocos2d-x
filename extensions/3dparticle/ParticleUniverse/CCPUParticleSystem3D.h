@@ -228,6 +228,7 @@ public:
 
     Vec3 getDerivedPosition();
     Quaternion getDerivedOrientation();
+    Vec3 getDerivedScale();
 
     /** Return the maximum velocity a particle can have, even if the velocity of the particle has been set higher (either by 
         initialisation of the particle or by means of an affector).
@@ -238,8 +239,8 @@ public:
     */
     void setMaxVelocity(float maxVelocity);
 
-	void setMaterialName(const std::string &name) { _matName = name; };
-	const std::string getMaterialName() const { return _matName; };
+    void setMaterialName(const std::string &name) { _matName = name; };
+    const std::string getMaterialName() const { return _matName; };
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
@@ -256,7 +257,7 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-	bool initSystem(const std::string &filePath, const std::string &materialPath);
+    bool initSystem(const std::string &filePath, const std::string &materialPath);
 
 protected:
     bool _prepared;
@@ -289,7 +290,7 @@ protected:
     float _maxVelocity;
     bool _maxVelocitySet;
 
-	std::string _matName;
+    std::string _matName;
 };
 
 NS_CC_END
