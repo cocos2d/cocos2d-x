@@ -57,6 +57,7 @@
 #include "cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
 #include "cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
 #include "cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
+#include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
 
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
@@ -199,6 +200,8 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(ScrollViewReader);
     CREATE_CLASS_NODE_READER_INFO(PageViewReader);
     CREATE_CLASS_NODE_READER_INFO(ListViewReader);
+    
+    CREATE_CLASS_NODE_READER_INFO(ArmatureNodeReader);
     
 }
 
