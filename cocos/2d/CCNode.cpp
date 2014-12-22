@@ -357,6 +357,8 @@ void Node::setRotation3D(const Vec3& rotation)
 
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     _rotationZ_Y = _rotationZ_X = rotation.z;
+    
+    updateRotationQuat();
 
 #if CC_USE_PHYSICS
     if (_physicsBody != nullptr)
@@ -372,6 +374,42 @@ Vec3 Node::getRotation3D() const
     CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
 
     return Vec3(_rotationX,_rotationY,_rotationZ_X);
+}
+
+void Node::updateRotationQuat()
+{
+    // convert Euler angle to quaternion
+    float halfRadx = CC_DEGREES_TO_RADIANS(_rotationX / 2.f), halfRady = CC_DEGREES_TO_RADIANS(_rotationY / 2.f), halfRadz = -CC_DEGREES_TO_RADIANS(_rotationZ_X / 2.f);
+    float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRady), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
+    _rotation_quat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
+    _rotation_quat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
+    _rotation_quat.z = coshalfRadx * coshalfRady * sinhalfRadz - sinhalfRadx * sinhalfRady * coshalfRadz;
+    _rotation_quat.w = coshalfRadx * coshalfRady * coshalfRadz + sinhalfRadx * sinhalfRady * sinhalfRadz;
+}
+
+void Node::updateRotation3D()
+{
+    //convert quaternion to Euler angle
+    float x = _rotation_quat.x, y = _rotation_quat.y, z = _rotation_quat.z, w = _rotation_quat.w;
+    _rotationX = atan2f(2.f * (w * x + y * z), 1.f - 2.f * (x * x + y * y));
+    _rotationY = asinf(2.f * (w * y - z * x));
+    _rotationZ_X = atanf(2.f * (w * z + x * y) / (1.f - 2.f * (y * y + z * z)));
+    
+    _rotationX = CC_RADIANS_TO_DEGREES(_rotationX);
+    _rotationY = CC_RADIANS_TO_DEGREES(_rotationY);
+    _rotationZ_X = _rotationZ_Y = CC_RADIANS_TO_DEGREES(_rotationZ_X);
+}
+
+void Node::setRotationQuat(const Quaternion& quat)
+{
+    _rotation_quat = quat;
+    updateRotation3D();
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
+Quaternion Node::getRotationQuat()
+{
+    return _rotation_quat;
 }
 
 void Node::setRotationSkewX(float rotationX)

@@ -541,6 +541,16 @@ public:
      * returns the rotation (X,Y,Z) in degrees.
      */
     virtual Vec3 getRotation3D() const;
+    
+    /**
+     * set rotation by quaternion
+     */
+    virtual void setRotationQuat(const Quaternion& quat);
+    
+    /**
+     * return the rotation by quaternion
+     */
+    virtual Quaternion getRotationQuat();
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -1595,6 +1605,11 @@ protected:
     
     //check whether this camera mask is visible by the current visiting camera
     bool isVisitableByVisitingCamera() const;
+    
+    // update quaternion from Rotation3D
+    void updateRotationQuat();
+    // update Rotation3D from quaternion
+    void updateRotation3D();
     
 #if CC_USE_PHYSICS
     void updatePhysicsBodyTransform(Scene* layer);
