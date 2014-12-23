@@ -52,6 +52,10 @@
     ReleaseMutex(m)
 #else
 #message "Unsupported platform for AllocatorMutex, Locking semantics will not be supported"
+#define MUTEX
+#define MUTEX_INIT(...)
+#define MUTEX_LOCK(...)
+#define MUTEX_UNLOCK(...)
 #endif
 
 NS_CC_BEGIN
