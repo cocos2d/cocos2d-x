@@ -41,7 +41,7 @@
     pthread_mutex_lock(&m);
 #define MUTEX_UNLOCK(m) \
     pthread_mutex_unlock(&m);
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "windows.h"
 #define MUTEX HANDLE
 #define MUTEX_INIT(m) \
