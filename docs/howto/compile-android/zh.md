@@ -2,7 +2,7 @@
 编译 Android 工程
 ================
 
-要编译 Android 功能，必须使用最新版本的 Android SDK 和`指定的 r9d 版本` Android NDK。
+要编译 Android 功能，必须使用最新版本的 Android SDK 和`指定的 r10c 版本` Android NDK。
 
 
 ## 安装 Android SDK 和 NDK
@@ -260,11 +260,13 @@ build_apk 支持下列参数：
 
 
 ```C++
+
     register_cocosdenshion_module(L);   // 简单音效模块
     register_network_module(L);         // 网络模块，如 socket 和 websocket
     register_ui_moudle(L);              // 基础UI库，如编辑框等
     register_extension_module(L);       // 基本扩展，如 TableView 等
     register_audioengine_module(L);     // audio engine 模块
+
 ```
 
 

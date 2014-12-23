@@ -61,6 +61,7 @@ set_encrypt.bat
 ### 加密环境的备份与恢复
 
 加密环境的切换与以下几个文件有关：
+
 -   lib/cocos2d-x/scripting/lua/lua/lua-5.1.5/src/lopcodes.def 
 -   lib/cocos2d-x/scripting/lua/lua/lua-5.1.5/src/lopmodes.def 
 -   mac平台:  bin/mac/luac
