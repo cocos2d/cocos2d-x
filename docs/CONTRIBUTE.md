@@ -17,7 +17,11 @@ To report bugs, please use the [Issue Tracker](https://github.com/cocos2d/cocos2
 
 Steps to report a bug:
 * Open the [url](https://github.com/cocos2d/cocos2d-x/issues/new)
-* Add all the needed information to reproduce the bug
+* Add all the needed information to reproduce the bug, the information include
+    * engine version
+    * steps to reproduce the bug
+    * some pseudocode
+    * resources link if needed
 
 
 ## Submitting patches
@@ -48,9 +52,10 @@ $ git submodule update --init
 
 The patch must be _complete_. And by that, we mean:
 
--   Follow the [Cocos2d C++ Coding Style][1]
+-   For C++ code follow the [Cocos2d C++ Coding Style][1]
+-   For Python code follow the [PEP8 guidelines][3]
 -   Describe what the patch does
--   Include test cases
+-   Include test cases if applicable
 -   Include unit tests if applicable
 -   Must be tested in all supported platforms [*]
 -   Must NOT degrade the performance
@@ -59,14 +64,15 @@ The patch must be _complete_. And by that, we mean:
 -   Must NOT break backward compatibility
 -   Must compile WITHOUT warnings
 -   New APIs MUST be **easy to use**, **familiar** to cocos2d-x users
--   New APIs MUST be documented using Doxgen strings
--   Code MUST be **easy to extend**
+-   Code MUST be **easy to extend** and **maintain**
+-   Must have documentation: C++ APIs must use Doxygen strings, tools must have a README.md file that describe how to use the tool
 -   Must be efficient (fast / low memory needs)
 -   It must not duplicate existing code, unless the new code deprecates the old one
 -   Patches that refactor key components will only be merged in the next major versions.
 
 [*]: If you don't have access to test your code in all the supported platforms, let us know.
 
+__TBD__: Is this applicable for big features ? What is the best way to merge big features ?
 
 # Promoting cocos2d
 
@@ -77,3 +83,4 @@ Help us promote cocos2d-x by using the cocos2d logo in your game, or by mentioni
 
 [1]: https://github.com/cocos2d/cocos2d-x/blob/v3/docs/CODING_STYLE.md
 [2]: http://www.cocos2d-x.org/wiki/Logo_Resources_of_Cocos2d-x
+[3]: https://www.python.org/dev/peps/pep-0008

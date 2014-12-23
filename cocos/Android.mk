@@ -140,6 +140,9 @@ base/pvr.cpp \
 base/s3tc.cpp \
 base/CCController.cpp \
 base/CCController-android.cpp \
+base/allocator/CCAllocatorDiagnostics.cpp \
+base/allocator/CCAllocatorGlobal.cpp \
+base/allocator/CCAllocatorGlobalNewDelete.cpp \
 base/ObjectFactory.cpp \
 renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
@@ -272,4 +275,4 @@ $(call import-module,extensions)
 $(call import-module,Box2D)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
-$(call import-module,protobuf-lite)
+$(call import-module,flatbuffers)

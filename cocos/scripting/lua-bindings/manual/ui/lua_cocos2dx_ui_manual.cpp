@@ -93,7 +93,7 @@ static int lua_cocos2dx_Widget_addTouchEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addTouchEventListener' function of Widget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addTouchEventListener' function of Widget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -154,7 +154,7 @@ static int lua_cocos2dx_CheckBox_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of CheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of CheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -216,7 +216,7 @@ static int lua_cocos2dx_Slider_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of Slider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of Slider has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -278,7 +278,7 @@ static int lua_cocos2dx_TextField_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of TextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of TextField has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -340,7 +340,7 @@ static int lua_cocos2dx_PageView_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of PageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of PageView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -402,7 +402,7 @@ static int lua_cocos2dx_ScrollView_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of ScrollView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of ScrollView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -465,7 +465,7 @@ static int lua_cocos2dx_ListView_addEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -517,7 +517,7 @@ static int lua_cocos2dx_ListView_addScrollViewEventListener(lua_State* L)
         return 0;
     }
     
-    CCLOG("'addScrollViewEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'addScrollViewEventListener' function of ListView has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -597,7 +597,7 @@ static int lua_cocos2dx_LayoutParameter_setMargin(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     
     return 0;
     
@@ -656,7 +656,7 @@ static int lua_cocos2dx_LayoutParameter_getMargin(lua_State* L)
         return 1;
     }
     
-    CCLOG("'getMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'getMargin' function of LayoutParameter has wrong number of arguments: %d, was expecting %d\n", argc, 0);
     
     return 0;
     
@@ -680,9 +680,9 @@ static void extendLayoutParameter(lua_State* L)
 }
 
 
-static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S)
+static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* L)
 {
-    if (NULL == tolua_S)
+    if (NULL == L)
         return 0;
     
     int argc = 0;
@@ -690,48 +690,48 @@ static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
-    self = static_cast<EditBox*>(tolua_tousertype(tolua_S,1,0));
+    self = static_cast<EditBox*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'\n", NULL);
+		tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'\n", NULL);
 		return 0;
 	}
 #endif
     
-    argc = lua_gettop(tolua_S) - 1;
+    argc = lua_gettop(L) - 1;
     
     if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err))
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
-        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         self->registerScriptEditBoxHandler(handler);
         return 0;
     }
     
-    CCLOG("%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:registerScriptEditBoxHandler", argc, 1);
+    luaL_error(L, "%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:registerScriptEditBoxHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'tolua_cocos2d_EditBox_registerScriptEditBoxHandler'.",&tolua_err);
     return 0;
 #endif
     
 }
 
-static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* tolua_S)
+static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* L)
 {
     
-    if (NULL == tolua_S)
+    if (NULL == L)
         return 0;
     
     int argc = 0;
@@ -739,19 +739,19 @@ static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* tolua
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
-    self = static_cast<EditBox*>(tolua_tousertype(tolua_S,1,0));
+    self = static_cast<EditBox*>(tolua_tousertype(L,1,0));
     
 #if COCOS2D_DEBUG >= 1
 	if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'\n", NULL);
+		tolua_error(L,"invalid 'self' in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'\n", NULL);
 		return 0;
 	}
 #endif
     
-    argc = lua_gettop(tolua_S) - 1;
+    argc = lua_gettop(L) - 1;
     
     if (0 == argc)
     {
@@ -759,30 +759,30 @@ static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* tolua
         return 0;
     }
     
-    CCLOG("%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:unregisterScriptEditBoxHandler", argc, 0);
+    luaL_error(L, "%s function of EditBox  has wrong number of arguments: %d, was expecting %d\n", "ccui.EditBox:unregisterScriptEditBoxHandler", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler'.",&tolua_err);
     return 0;
 #endif
 }
 
-static void extendEditBox(lua_State* tolua_S)
+static void extendEditBox(lua_State* L)
 {
-    lua_pushstring(tolua_S, "ccui.EditBox");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
+    lua_pushstring(L, "ccui.EditBox");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
     {
-        lua_pushstring(tolua_S,"registerScriptEditBoxHandler");
-        lua_pushcfunction(tolua_S,tolua_cocos2d_EditBox_registerScriptEditBoxHandler );
-        lua_rawset(tolua_S,-3);
-        lua_pushstring(tolua_S,"unregisterScriptEditBoxHandler");
-        lua_pushcfunction(tolua_S,tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler );
-        lua_rawset(tolua_S,-3);
+        lua_pushstring(L,"registerScriptEditBoxHandler");
+        lua_pushcfunction(L,tolua_cocos2d_EditBox_registerScriptEditBoxHandler );
+        lua_rawset(L,-3);
+        lua_pushstring(L,"unregisterScriptEditBoxHandler");
+        lua_pushcfunction(L,tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler );
+        lua_rawset(L,-3);
     }
-    lua_pop(tolua_S, 1);
+    lua_pop(L, 1);
 }
 
 int register_all_cocos2dx_ui_manual(lua_State* L)
@@ -802,6 +802,182 @@ int register_all_cocos2dx_ui_manual(lua_State* L)
     return 0;
 }
 
+static int tolua_cocos2dx_EventListenerFocus_create(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertable(L, 1, "cc.EventListenerFocus", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 0)
+    {
+        cocos2d::EventListenerFocus* tolua_ret = cocos2d::EventListenerFocus::create();
+        if(nullptr == tolua_ret)
+            return 0;
+        
+        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)tolua_ret,"cc.EventListenerFocus");
+        
+        return 1;
+    }
+    
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:create", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'tolua_cocos2dx_EventListenerFocus_create'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void cloneFocusHandler(const EventListenerFocus* src,EventListenerFocus* dst )
+{
+    if (nullptr == src || nullptr == dst)
+        return;
+    
+    LUA_FUNCTION handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)src, ScriptHandlerMgr::HandlerType::EVENT_FOCUS);
+    if (0 != handler)
+    {
+        int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, ScriptHandlerMgr::HandlerType::EVENT_FOCUS);
+        dst->onFocusChanged = [=](ui::Widget* widgetLostFocus, ui::Widget* widgetGetFocus){
+            lua_State* L = LuaEngine::getInstance()->getLuaStack()->getLuaState();
+            int id = (widgetLostFocus) ? (int)widgetLostFocus->_ID : -1;
+            int* luaID = (widgetLostFocus) ? &widgetLostFocus->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(L, id, luaID, (void*)widgetLostFocus,"ccui.Widget");
+            id = (widgetGetFocus) ? (int)widgetGetFocus->_ID : -1;
+            luaID = (widgetGetFocus) ? &widgetGetFocus->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(L, id, luaID, (void*)widgetGetFocus,"ccui.Widget");
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
+        };
+    }
+}
+
+static int tolua_cocos2dx_EventListenerFocus_clone(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    EventListenerFocus* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L, 1, "cc.EventListenerFocus", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerFocus*>(tolua_tousertype(L,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_clone'\n", nullptr);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 0)
+    {
+        cocos2d::EventListenerFocus* tolua_ret = cocos2d::EventListenerFocus::create();
+        if(nullptr == tolua_ret)
+            return 0;
+        
+        cloneFocusHandler(self, tolua_ret);
+        
+        int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)tolua_ret,"cc.EventListenerFocus");
+        
+        return 1;
+    }
+    
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:clone", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'tolua_cocos2dx_EventListenerFocus_clone'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+static int tolua_cocos2dx_EventListenerFocus_registerScriptHandler(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    EventListenerFocus* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L, 1, "cc.EventListenerFocus", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerFocus*>(tolua_tousertype(L,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'tolua_cocos2dx_EventListenerFocus_registerScriptHandler'\n", nullptr);
+		return 0;
+	}
+#endif
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = toluafix_ref_function(L,2,0);
+        
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_FOCUS);
+        
+        self->onFocusChanged = [=](ui::Widget* widgetLostFocus, ui::Widget* widgetGetFocus){
+            int id = (widgetLostFocus) ? (int)widgetLostFocus->_ID : -1;
+            int* luaID = (widgetLostFocus) ? &widgetLostFocus->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(L, id, luaID, (void*)widgetLostFocus,"ccui.Widget");
+            id = (widgetGetFocus) ? (int)widgetGetFocus->_ID : -1;
+            luaID = (widgetGetFocus) ? &widgetGetFocus->_luaID : nullptr;
+            toluafix_pushusertype_ccobject(L, id, luaID, (void*)widgetGetFocus,"ccui.Widget");
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
+        };
+        return 0;
+    }
+    
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.EventListenerFocus:registerScriptHandler", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'tolua_cocos2dx_EventListenerFocus_registerScriptHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendEventListenerFocusEvent(lua_State* L)
+{
+    lua_pushstring(L, "cc.EventListenerFocus");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "create", tolua_cocos2dx_EventListenerFocus_create);
+        tolua_function(L, "registerScriptHandler", tolua_cocos2dx_EventListenerFocus_registerScriptHandler);
+        tolua_function(L, "clone", tolua_cocos2dx_EventListenerFocus_clone);
+    }
+    lua_pop(L, 1);
+}
+
 int register_ui_moudle(lua_State* L)
 {
     lua_getglobal(L, "_G");
@@ -813,6 +989,7 @@ int register_ui_moudle(lua_State* L)
         register_all_cocos2dx_experimental_video(L);
         register_all_cocos2dx_experimental_video_manual(L);
 #endif
+        extendEventListenerFocusEvent(L);
     }
     lua_pop(L, 1);
     

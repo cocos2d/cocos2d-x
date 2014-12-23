@@ -107,8 +107,7 @@ public:
      */
      void setAliasTexParameters();
 
-private:
-
+protected:
     void relaseTextures();
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<unsigned short, FontLetterDefinition> _fontLetterDefinitions;
@@ -122,7 +121,6 @@ private:
     float _currentPageOrigX;
     float _currentPageOrigY;
     float _letterPadding;
-    bool  _makeDistanceMap;
 
     int _fontAscender;
     EventListenerCustom* _rendererRecreatedListener;

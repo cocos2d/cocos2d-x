@@ -2403,7 +2403,7 @@ void SpriteHybrid::reparentSprite(float dt)
     Vector<Node*> retArray(250);
 
     if( _usingSpriteBatchNode )
-        CC_SWAP(p1,p2, Node*);
+        std::swap(p1, p2);
 
     ////----CCLOG("New parent is: %x", p2);
     

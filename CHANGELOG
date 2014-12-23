@@ -1,19 +1,54 @@
-cocos2d-x-3.3 ??
-    [NEW]           Vec2: added greater than operator
+cocos2d-x-3.4 ??
+    [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
+    [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool.
 
+    [FIX]           FileUtils: WebP format with alpha channel displayed wrong
+    [FIX]           Label: content size of Label is incorrect if the string is set to empty string
+
+cocos2d-x-3.3 Dec.12
+    [FIX]           Billboard: allow billboard rotate along z axis
+    [FIX]           Bundle3D: create aabb for mesh whose aabb does not exist (user custom mesh)
+    [FIX]           EditBox: text position and move animation error on iPhone6 Plus
+    [FIX]           FileUtils: createDirectory(): doesn't invoke closedir() after opendir on platforms other than WP8/WinRT/Windows
+
+cocos2d-x-3.3-rc2  Dec.5
+    [FIX]           C++: use 100% of one core on Windows
+    [FIX]           Label: when a label is added to a invisible parent node, app will crash if switching from background
+    [FIX]           Label: label will not be shown when using system font on Mac
+    [FIX]           Studio reader: replace protocol buffer with flatbuffer 
+
+cocos2d-x-3.3-rc1  Nov.29 2014
+    [NEW]           Vec2: added greater than operator
+    [NEW]           Tools: Updated cocos console to v1.4 (from 1.2)
+    [NEW]           WP8: Win8.1 universal app support
+
+    [FIX]           Audio: `SimpleAudioEngine::sharedEngine()->playBackgroundMusic()` crashed freezen on Lollipop(Android5.0)
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
     [FIX]           Button: when the dimension of button title is larger than the button, button will scale to fit the dimension of the button title
     [FIX]           Camera: does not work correctly when the up is not (0, 1, 0)
-    [FIX]           Cocos console: compile failure on windows if using VS express version
+    [FIX]           Director: Uses a low-pass filter to diplay the FPS
     [FIX]           DrawNode: drawPoint() may cause crash
+    [FIX]           EventKeyboard: can not check right Shift, right Ctrl and right ALT
     [FIX]           GLProgramCache: doesn't release old program with the same key before adding a new one
     [FIX]           GLProgramState: enabled GLProgramState restoring on render recreated on WP8
     [FIX]           Label: label shifting when outline feature enabled
     [FIX]           Label: when applying additionalKerning to a Label that displays a string with only 1 character, the character is shifted
+    [FIX]           Label: display incompletely with multiline text with outline feature enabled
+    [FIX]           Label: crash if using BMFont but missing corresponding png file
+    [FIX]           Lua: logical error in luaval_to_quaternion
+    [FIX]           New audio: can not loop on Android 2.3.x
+    [FIX]           Random: CCRANDOM_0_1() and CCRANDOM_MINUS_1_1() can be seeded using std::srand(seed)
     [FIX]           Scale9Sprite: will be flipped if both flipX and flipY are false
-    [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong.
+    [FIX]           Scale9Sprite: if scale and flip property are set at the same time, the result would be wrong
+    [FIX]           Scene: setScale() doesn't work as expected
     [FIX]           Sprite3D: did not create attached sprite from cache
-    [FIX]           WP/WinRT: Windows 8.1 universal app support; `UIEditBox` support
+    [FIX]           Tests: Sprite Performance Test automation works as expected
+    [FIX]           UI: Text: invoke ignoreContentAdatpSize(false) will cause wrong effect
+    [FIX]           VideoPlayer: showed in wrong place on Android v2.3.x
+    [FIX]           WebView: showed in wrong place on Android v2.3.x
+    [FIX]           WP: back key behaviour and Director::getInstance()->end() works not correctly
+
+    [FIX]           Lua-binding: XmlHttpRequest would truncate binary data
 
 cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           3d: added light support: direction light, point light, spot light and ambient light
@@ -31,7 +66,7 @@ cocos2d-x-3.3-rc0  Oct.21 2014
     [NEW]           TileMap: added staggered tile map support
     [NEW]           Utils: added getCascadeBoundingBox()
     [NEW]           WP8: enabled screen orientation change handling
-    
+
     [FIX]           Accelerometer: using Accelerometer will freeze app and then crash on WP8
     [FIX]           Application: getCurrentLanguageCode() always return empty string
     [FIX]           Action: kRepeatForever macro superseded by CC_REPEAT_FOREVER macro
@@ -52,7 +87,7 @@ cocos2d-x-3.3-rc0  Oct.21 2014
     [FIX]           Node: crashed if remove/add child too quickly when using integrated physics
     [FIX]           TextFieldTTF: will get wrong characters if using Chinese input method on WP8
     [FIX]           TextureCache: memory leak in reloadTexture()
-    [FIX]           UI: Button: button remains gray when releasing it, this issue only happened if enable scale9 and only has one texture 
+    [FIX]           UI: Button: button remains gray when releasing it, this issue only happened if enable scale9 and only has one texture
     [FIX]           UI: Button: when creating a button with a title only, button content size is not immediately updated
     [FIX]           UI: EditBox: setMaxLength is invalid on mac
 
@@ -66,7 +101,7 @@ cocos2d-x-3.3-beta0  Sep.20 2014
     [NEW]           PhysicsWorld: add setSubsteps() and getSubsteps()
     [NEW]           Renderer: added TriangleCommand
     [NEW]           UI: added `WebView` on iOS and Android
-    
+
     [FIX]           C++: CMake works for Mac builds
     [FIX]           C++: Reorganized cocos2d/platform folder. Easier to add new platforms
     [FIX]           EditBox: moved to ui:EditBox
@@ -76,7 +111,7 @@ cocos2d-x-3.3-beta0  Sep.20 2014
     [FIX]           HttpClient: condition variable sleep on unrelated mutex
     [FIX]           Image: optimize decompress jpg data
     [FIX]           Label: outline effect may be wrong if outline width is big and font size is big too
-    [FIX]           MenuItem: memory leak if using menu_selector 
+    [FIX]           MenuItem: memory leak if using menu_selector
     [FIX]           MeshCommand: generate wrong meterial id which will cause problem that only first mesh is drawn
     [FIX]           Node: create unneeded temple `Vec2` object in `setPosition(int, int)`, `setPositionX()` and `setPositionY()`
     [FIX]           Node: skew effect is wrong
@@ -87,7 +122,7 @@ cocos2d-x-3.3-beta0  Sep.20 2014
 
 cocos2d-x-3.3alpha0  Aug.28 2014
     [NEW]           3D: Added Camera, AABB, OBB and Ray
-    [NEW]           3D: Added better reskin model support 
+    [NEW]           3D: Added better reskin model support
     [NEW]           Core: c++11 random support
     [NEW]	        Core: Using `(std::notrow)` for all the `new` statements
     [NEW]           Desktop: Added support for applicationDidEnterBackground / applicationWillEnterForeground on desktop
@@ -139,12 +174,12 @@ cocos2d-x-3.3alpha0  Aug.28 2014
     [FIX]           VideoPlayer: memory leak on iOS
     [FIX]           VideoPlayer: video frame size is not calculated correctly on iOS
     [FIX]           VideoPlayer: video player not showing on iOS if it's not in FullScreen mode
-    
+
     [FIX]           Others: can not import java library shift by engine correctly when using Eclispe on Android
     [FIX]           Others: optimize FPS control algorithm on Android
-    
+
     [FIX]           Lua-binding: replace dynamic_cast to std::is_base_of in object_to_luaval
-    
+
     [3rd]           fbx-conv: complex FBX model support which is useful for reskin, multiple meshes and multiple materials support
 
 cocos2d-x-3.2  Jul.17 2014
@@ -172,11 +207,11 @@ cocos2d-x-3.2  Jul.17 2014
     [FIX]           UITextField: keyboard can not hide if touching space outside of keyboard
     [FIX]           UITextField: can not wrap words automatically
     [FIX]           UIVideoPlayer: can not exit full screen mode on Android
-    
+
     [FIX]           Others: don't release singleton objects correctly that are needed in the whole game, which will be treated
     as memory leak when using VLD.
     [FIX]           Others: compiling error when building for iOS 64-bit devices with Xcode6 beta3
-    
+
 
 cocos2d-x-3.2rc0  Jul.7 2014
     [NEW]           FastTMXTiledMap: added fast tmx, which is much more faster for static tiled map
@@ -186,13 +221,13 @@ cocos2d-x-3.2rc0  Jul.7 2014
     [NEW]           Lua-binding: Animation3D supported
     [NEW]           Lua-binding: UIEditor test cases added
     [NEW]           Lua-binding: UI focus test cases added
-    [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren() 
+    [NEW]           Node: added getName(), setName(), getChildByName(), enumerateChildren()
     and addChild(Node* node, int localZOrder, const std::string &name)
     [NEW]           Node: physical body supports rotation
     [NEW]           Sprite3D: support c3b binary format
     [NEW]           utils: added findChildren() to find all children by name
-    [NEW]           Value: added operator == != 
-    
+    [NEW]           Value: added operator == !=
+
 
     [FIX]           Armature: blend func has no effect
     [FIX]           Armature:  crashed when remove armature in frame event
@@ -224,7 +259,7 @@ cocos2d-x-3.2-alpha0 Jun.17 2014
     [NEW]           UIText: added shadow, outline, glow filter support
     [NEW]           Sprite3D: support 3d animation
     [NEW]           Animation3D: 3d animation
-    
+
     [FIX]           Application.mk: not output debug message in release mode on Android
     [FIX]           Android: 3d model will be black when coming from background
     [FIX]           Android: don't trigger EVENT_COME_TO_BACKGROUND event when go to background
@@ -232,7 +267,7 @@ cocos2d-x-3.2-alpha0 Jun.17 2014
     [FIX]           Director: Director->convertToUI() returns wrong value.
     [FIX]           GLProgram: not abort if shader compilation fails, just return false.
     [FIX]           GLProgramState: sampler can not be changed
-    [FIX]           Image: Set jpeg save quality to 90 
+    [FIX]           Image: Set jpeg save quality to 90
     [FIX]           Image: premultiply alpha when loading png file to resolve black border issue
     [FIX]           Label: label is unsharp if it's created by smaller font
     [FIX]           Label: Label's display may go bonkers if invoking Label::setString() with outline feature enabled
@@ -256,7 +291,7 @@ cocos2d-x-3.2-alpha0 Jun.17 2014
     [FIX]           WP8: will be black if: 1. 3rd pops up a view; 2. go to background; 3. come to foreground
     [FIX]           WP8: project name of new project created by console is wrong
     [FIX]           WP8: missing texture after app switch
-    
+
     [3RD]           curl: will crash if use https request on iOS simulator
     [3RD]           curl: update OpenSSL to v1.0.1h
 
@@ -267,7 +302,7 @@ cocos2d-x-3.1  May.24 2014
     [FIX]           EventKeyboard::KeyCode: key code for back button changed from KEY_BACKSPACE to KEY_ESCAPE
     [FIX]           Label: may crash when using outline effect
     [FIX]           Label: using outline and invoking 'Director::setContentScaleFactor' cause label show nothing
-    [FIX]           ProgressTo: will start from 0 when it reaches 100 
+    [FIX]           ProgressTo: will start from 0 when it reaches 100
     [FIX]           Physics integration: may crashes if remove bodies at physics contact callback
     [FIX]           UIWidget: copyProperties() lost copy some properties
     [FIX]           WP8: orientation is not correct when it is set to portrait
@@ -331,7 +366,7 @@ cocos2d-x-3.1-alpha0 May.1 2014
 cocos2d-x-3.0 Apr.23 2014
      [NEW]          Lua: add `RichText` test cases
      [NEW]          EditBox: Added missing Text Font and Placeholder feature for Mac platform
-     
+
      [FIX]          cocos console: Zipalign the apk generated with release mode
      [FIX]          Director: Application crashes on closing if CC_ENABLE_CACHE_TEXTURE_DATA is enabled
      [FIX]          Image: memoery leak
@@ -339,13 +374,13 @@ cocos2d-x-3.0 Apr.23 2014
      [FIX]          Lua: 'EditBox' can't response 'changed','ended' and 'return' event on Windows
      [FIX]          Lua: new project will crash on iOS 5.1 devices
      [FIX]          Others: compiling error when CC_LABELBMFONT_DEBUG_DRAW or CC_LABELATLAS_DEBUG_DRAW is enabled
-     
+
      [3rd]          libcurl: support ssl again on iOS
 
 cocos2d-x-3.0rc2 Apr.15 2014
      [NEW]          Event: Adds `EventListener::setEnabled/isEnabled` to support enable/disable event listeners
      [NEW]          GLView: Added createWithFullscreen overloaded method for selecting monitor and setting video mode
-     
+
      [FIX]          Android: Cocos2dxHelper.runOnGLThread() can't work
      [FIX]          Animation: Added 'loops' parameter to Animation::createWithSpriteFrames
      [FIX]          Audio: can not resume after pausing on windows
@@ -371,7 +406,7 @@ cocos2d-x-3.0rc1 April.2 2014
      [NEW]          cocos2d::extension::ScrollView: Elastic bounce back effect support
      [NEW]          Constructor: Added CC_CONSTRUCTOR_ACCESS macro to re-define constructor/initXXX methods to 'public' access.
      [NEW]          Label: Added new methods 'set(Anti)AliasTexParameters' for enabling/disabling antialias
-     
+
      [FIX]          Android: Reloaded texture is not shown if it has the mipmap
      [FIX]          Android: Application may become black at first time entering on some devices
      [FIX]          Audio: Stopped music could also be resumed on iOS
@@ -411,7 +446,7 @@ cocos2d-x-3.0rc1 April.2 2014
      [FIX]          Tools: The apk generated with release mode in cocos-console can't be installed
      [FIX]          UI: Widget::addNode is confused, need to add ProtectedNode to remove addNode API.
      [FIX]          UI: Adding HBox, VBox layouts, refactoring 'doLayout' function
-     
+
      [3RD]          Chipmunk: Upgraded to v6.2.1
      [3RD]          libwebsockets: Upgraded to v1.23
 
@@ -492,13 +527,13 @@ cocos2d-x-3.0rc0 March.14 2014
      [FIX]          Tests: State is changed to RESUME when game comes back to foreground if pause button was clicked in Interval Test
      [FIX]          TMXLayer: Removing child from TMXLayer may cause crash
      [FIX]          TMXObjectGroup: Object values (x, y, width and height) from TMXObjectGroup are incorrect
-     [FIX]          TMXXMLParser: Refactored the codes of parsing pure xml layer format for tilemap 
-     [FIX]          TMXXMLParser: 'y' value is parsed incorrectly    
+     [FIX]          TMXXMLParser: Refactored the codes of parsing pure xml layer format for tilemap
+     [FIX]          TMXXMLParser: 'y' value is parsed incorrectly
      [FIX]          UI: Changes namespace from 'cocos2d::gui' to 'cocos2d::ui'.
      [FIX]          UI: Supports RichText
      [FIX]          Vector: Object which isn't in Vector would also be released when invoking Vector::eraseObject.
      [FIX]          Websocket: Potential crash when websocket connection closes.
-     [FIX]          Websocket: No callback is invoked when websocket connection fails  
+     [FIX]          Websocket: No callback is invoked when websocket connection fails
      [FIX]          Xcode 5.1: Added Xcode 5.1 to build arm64 version, but can not require socket module in lua, will fix it soon
      [3RD]          Kazmath: Upgraded to latest version of Kazmath
 
@@ -607,18 +642,18 @@ cocos2d-x-3.0beta Jan.7 2014
      [FIX]          GUI refactoring: Removes UI prefix, Widget is inherited from Node, uses new containers(Vector<T>, Map<K,V>).
      [FIX]          String itself is also modified in `String::componentsSeparatedByString`.
      [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
-     [FIX]          Crash if connection breaks during download using AssetManager.   
+     [FIX]          Crash if connection breaks during download using AssetManager.
      [FIX]          OpenAL context isn't destroyed correctly on mac and ios.
      [FIX]          Useless conversion in ScrollView::onTouchBegan.
-     [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).  
+     [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).
      [FIX]          CCTMXMap doesn't support TMX files reference external TSX files
-     [FIX]          Logical error in `CallFuncN::clone()`   
+     [FIX]          Logical error in `CallFuncN::clone()`
      [FIX]          Child's opacity will not be changed when its parent's cascadeOpacityEnabled was set to true and opacity was changed
      [FIX]          Disallow copy and assign for Scene Graph + Actions objects
      [FIX]          XMLHttpRequest receives wrong binary array
      [FIX]          XMLHttpRequest.status needs to be assigned even when connection fails
      [FIX]          TextureCache::addImageAsync may load a image even it is loaded in GL thread
-     [FIX]          EventCustom shouldn't use std::hash to generate unique ID, because the result is not unique 
+     [FIX]          EventCustom shouldn't use std::hash to generate unique ID, because the result is not unique
      [FIX]          CC_USE_PHYSICS is actually impossible to turn it off
      [FIX]          Crash if connection breaks during download using AssetManager
      [FIX]          Project_creator supports creating project at any folder and supports UI
@@ -650,7 +685,7 @@ cocos2d-x-3.0beta Jan.7 2014
      [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA
 [Javascript binding]
      [FIX]          `onEnter` event is triggered after children's `onEnter` event
-     
+
 cocos2d-x-3.0alpha1 Nov.19 2013
 [all platforms]
      [DOC]          Added RELEASE_NOTES and CODING_STYLE.md files

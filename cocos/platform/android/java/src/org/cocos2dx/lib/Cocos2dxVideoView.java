@@ -27,6 +27,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -51,11 +52,13 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     private static final int STATE_PAUSED             = 4;
     private static final int STATE_PLAYBACK_COMPLETED = 5;
 
-    // mCurrentState is a VideoView object's current state.
-    // mTargetState is the state that a method caller intends to reach.
-    // For instance, regardless the VideoView object's current state,
-    // calling pause() intends to bring the object to a target state
-    // of STATE_PAUSED.
+    /**
+     * mCurrentState is a VideoView object's current state.
+     * mTargetState is the state that a method caller intends to reach.
+     * For instance, regardless the VideoView object's current state,
+     * calling pause() intends to bring the object to a target state
+     * of STATE_PAUSED.
+     */
     private int mCurrentState = STATE_IDLE;
     private int mTargetState  = STATE_IDLE;
 
@@ -112,7 +115,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         
     }
     
-    public void setVideoRect(int left,int top,int maxWidth,int maxHeight) {
+    public void setVideoRect(int left, int top, int maxWidth, int maxHeight) {
         mViewLeft = left;
         mViewTop = top;
         mViewWidth = maxWidth;
@@ -295,8 +298,10 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             }
             
             mMediaPlayer.prepareAsync();
-            // we don't set the target state here either, but preserve the
-            // target state that was there before.
+
+            /**
+             * Don't set the target state here either, but preserve the target state that was there before.
+             */
             mCurrentState = STATE_PREPARING;
         } catch (IOException ex) {
             Log.w(TAG, "Unable to open content: " + mUri, ex);
@@ -328,7 +333,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         }
     }
     
-    public void fixSize(int left,int top,int width,int height) {
+    public void fixSize(int left, int top, int width, int height) {
         if (width != 0 && height != 0) {
             if (mKeepRatio) {
                 if ( mVideoWidth * height  > width * mVideoHeight ) {
@@ -360,6 +365,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lParams.leftMargin = mVisibleLeft;
         lParams.topMargin = mVisibleTop;
+        lParams.gravity = Gravity.TOP | Gravity.LEFT;
         setLayoutParams(lParams);
     }
 
@@ -387,7 +393,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
 
-            int seekToPosition = mSeekWhenPrepared;  // mSeekWhenPrepared may be changed after seekTo() call
+            // mSeekWhenPrepared may be changed after seekTo() call
+            int seekToPosition = mSeekWhenPrepared;  
             if (seekToPosition != 0) {
                 seekTo(seekToPosition);
             }
@@ -449,10 +456,10 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
                 int messageId;
                 
                 if (framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
-                    //messageId = com.android.internal.R.string.VideoView_error_text_invalid_progressive_playback;
+                    // messageId = com.android.internal.R.string.VideoView_error_text_invalid_progressive_playback;
                     messageId = r.getIdentifier("VideoView_error_text_invalid_progressive_playback", "string", "android");
                 } else {
-                    //messageId = com.android.internal.R.string.VideoView_error_text_unknown;
+                    // messageId = com.android.internal.R.string.VideoView_error_text_unknown;
                     messageId = r.getIdentifier("VideoView_error_text_unknown", "string", "android");
                 }
                 
@@ -500,7 +507,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     /**
      * Register a callback to be invoked when the end of a media file
-     * has been reached during playback.
+     * has been reached during play back.
      *
      * @param l The callback that will be run
      */
@@ -511,7 +518,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     /**
      * Register a callback to be invoked when an error occurs
-     * during playback or setup.  If no listener is specified,
+     * during play back or setup.  If no listener is specified,
      * or if the listener returned false, VideoView will inform
      * the user of any errors.
      *

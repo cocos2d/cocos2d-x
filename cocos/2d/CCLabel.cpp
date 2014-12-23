@@ -270,7 +270,14 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             _batchNodes.clear();
             _batchNodes.push_back(this);
 
-            alignText();
+            if (_contentDirty)
+            {
+                updateContent();
+            }
+            else
+            {
+                alignText();
+            }
         }
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
@@ -498,7 +505,7 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
     }
 }
 
-void Label::setDimensions(unsigned int width,unsigned int height)
+void Label::setDimensions(unsigned int width, unsigned int height)
 {
     if (height != _labelHeight || width != _labelWidth)
     {
@@ -576,6 +583,7 @@ void Label::alignText()
 {
     if (_fontAtlas == nullptr || _currentUTF16String.empty())
     {
+        setContentSize(Size::ZERO);
         return;
     }
 
@@ -584,12 +592,12 @@ void Label::alignText()
         batchNode->getTextureAtlas()->removeAllQuads();
     }
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
-    auto textures = _fontAtlas->getTextures();
+    auto& textures = _fontAtlas->getTextures();
     if (textures.size() > _batchNodes.size())
     {
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
-            auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
+            auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
             batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
             batchNode->setPosition(Vec2::ZERO);
             Node::addChild(batchNode,0,Node::INVALID_TAG);
@@ -622,9 +630,9 @@ void Label::alignText()
                 uvRect.origin.x    = _lettersInfo[tag].def.U;
                 uvRect.origin.y    = _lettersInfo[tag].def.V;
 
-                letterSprite->setTexture(textures[_lettersInfo[tag].def.textureID]);
+                letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
                 letterSprite->setTextureRect(uvRect);
-            }          
+            }
         }
     }
 

@@ -72,7 +72,7 @@ public class Cocos2dxEditText extends EditText {
     public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
         super.onKeyDown(pKeyCode, pKeyEvent);
 
-        /* Let GlSurfaceView get focus if back key is input. */
+        // Let GlSurfaceView get focus if back key is input.
         if (pKeyCode == KeyEvent.KEYCODE_BACK) {
             this.mCocos2dxGLSurfaceView.requestFocus();
         }

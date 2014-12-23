@@ -37,6 +37,8 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
+int g_physicsSceneCount = 0;
+
 NS_CC_BEGIN
 
 Scene::Scene()
@@ -58,6 +60,10 @@ Scene::Scene()
 Scene::~Scene()
 {
 #if CC_USE_PHYSICS
+    if (_physicsWorld)
+    {
+        g_physicsSceneCount--;
+    }
     CC_SAFE_DELETE(_physicsWorld);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
@@ -111,12 +117,6 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-Scene* Scene::getScene() const
-{
-    // FIX ME: should use const_case<> to fix compiling error
-    return const_cast<Scene*>(this);
-}
-
 void Scene::onProjectionChanged(EventCustom* event)
 {
     if (_defaultCamera)
@@ -129,6 +129,7 @@ void Scene::render(Renderer* renderer)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
+    const auto& transform = getNodeToParentTransform();
     for (const auto& camera : _cameras)
     {
         Camera::_visitingCamera = camera;
@@ -142,7 +143,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
         //visit the scene
-        visit(renderer, Mat4::IDENTITY, 0);
+        visit(renderer, transform, 0);
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -155,7 +156,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
         //visit the scene
-        visit(renderer, Mat4::IDENTITY, 0);
+        visit(renderer, transform, 0);
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -213,6 +214,7 @@ bool Scene::initWithPhysics()
         
         this->scheduleUpdate();
         // success
+        g_physicsSceneCount += 1;
         ret = true;
     } while (0);
     return ret;

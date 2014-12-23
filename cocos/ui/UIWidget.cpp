@@ -162,7 +162,10 @@ _layoutParameterType(LayoutParameter::Type::NONE),
 _focused(false),
 _focusEnabled(true),
 _touchEventListener(nullptr),
-_touchEventSelector(nullptr)
+_touchEventSelector(nullptr),
+_ccEventCallback(nullptr),
+_callbackType(""),
+_callbackName("")
 {
   
 }
@@ -873,6 +876,11 @@ void Widget::addClickEventListener(const ccWidgetClickCallback &callback)
 {
     this->_clickEventListener = callback;
 }
+    
+void Widget::addCCSEventListener(const ccWidgetEventCallback &callback)
+{
+    this->_ccEventCallback = callback;
+}
 
 bool Widget::hitTest(const Vec2 &pt)
 {
@@ -1135,17 +1143,77 @@ void Widget::copyProperties(Widget *widget)
     }
 }
     
-void Widget::setFlippedX(bool flippedX)
-{
-    _flippedX = flippedX;
-    updateFlippedX();
-}
-
-void Widget::setFlippedY(bool flippedY)
-{
-    _flippedY = flippedY;
-    updateFlippedY();
-}
+    void Widget::setFlippedX(bool flippedX)
+    {
+        
+        float realScale = this->getScaleX();
+        _flippedX = flippedX;
+        this->setScaleX(realScale);
+    }
+    
+    void Widget::setFlippedY(bool flippedY)
+    {
+        float realScale = this->getScaleY();
+        _flippedY = flippedY;
+        this->setScaleY(realScale);
+    }
+    
+   
+    
+    void Widget::setScaleX(float scaleX)
+    {
+        if (_flippedX) {
+            scaleX = scaleX * -1;
+        }
+        Node::setScaleX(scaleX);
+    }
+    
+    void Widget::setScaleY(float scaleY)
+    {
+        if (_flippedY) {
+            scaleY = scaleY * -1;
+        }
+        Node::setScaleY(scaleY);
+    }
+    
+    void Widget::setScale(float scale)
+    {
+        this->setScaleX(scale);
+        this->setScaleY(scale);
+        this->setScaleZ(scale);
+    }
+    
+    void Widget::setScale(float scaleX, float scaleY)
+    {
+        this->setScaleX(scaleX);
+        this->setScaleY(scaleY);
+    }
+    
+    float Widget::getScaleX()const
+    {
+        float originalScale = Node::getScaleX();
+        if (_flippedX)
+        {
+            originalScale = originalScale * -1.0;
+        }
+        return originalScale;
+    }
+    
+    float Widget::getScaleY()const
+    {
+        float originalScale = Node::getScaleY();
+        if (_flippedY)
+        {
+            originalScale = originalScale * -1.0;
+        }
+        return originalScale;
+    }
+    
+    float Widget::getScale()const
+    {
+        CCASSERT(this->getScaleX() == this->getScaleY(), "");
+        return this->getScaleX();
+    }
 
 
 /*temp action*/

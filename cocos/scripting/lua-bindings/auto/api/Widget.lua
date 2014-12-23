@@ -31,6 +31,12 @@
 -- @param #bool flippedX
         
 --------------------------------
+-- callbackName getter and setter.
+-- @function [parent=#Widget] setCallbackName 
+-- @param self
+-- @param #string callbackName
+        
+--------------------------------
 -- Gets the Virtual Renderer of widget.<br>
 -- For example, a button's Virtual Renderer is it's texture renderer.<br>
 -- return Node pointer.
@@ -44,6 +50,12 @@
 -- @function [parent=#Widget] setPropagateTouchEvents 
 -- @param self
 -- @param #bool isPropagate
+        
+--------------------------------
+-- return true represent the widget use Unify Size, false represent the widget couldn't use Unify Size
+-- @function [parent=#Widget] isUnifySizeEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns size percent of widget<br>
@@ -118,13 +130,10 @@
 -- @return LayoutParameter#LayoutParameter ret (return value: ccui.LayoutParameter)
         
 --------------------------------
--- Checks a point if is in widget's space<br>
--- param point<br>
--- return true if the point is in widget's space, flase otherwise.
--- @function [parent=#Widget] hitTest 
+-- Set a event handler to the widget in order to use cocostudio editor and framework
+-- @function [parent=#Widget] addCCSEventListener 
 -- @param self
--- @param #vec2_table pt
--- @return bool#bool ret (return value: bool)
+-- @param #function callback
         
 --------------------------------
 -- Gets the position type of the widget<br>
@@ -185,6 +194,12 @@
 -- @function [parent=#Widget] isTouchEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getCallbackName 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -312,6 +327,15 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- Checks a point if is in widget's space<br>
+-- param point<br>
+-- return true if the point is in widget's space, flase otherwise.
+-- @function [parent=#Widget] hitTest 
+-- @param self
+-- @param #vec2_table pt
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- when a widget calls this method, it will get focus immediately.
 -- @function [parent=#Widget] requestFocus 
 -- @param self
@@ -336,6 +360,12 @@
 -- @function [parent=#Widget] getSizeType 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getCallbackType 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -409,6 +439,12 @@
 -- @param #bool bright
         
 --------------------------------
+-- callbackType getter and setter.
+-- @function [parent=#Widget] setCallbackType 
+-- @param self
+-- @param #string callbackType
+        
+--------------------------------
 -- Return whether the widget is swallowing touch or not<br>
 -- since v3.3
 -- @function [parent=#Widget] isSwallowTouches 
@@ -428,11 +464,43 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- 
+-- @function [parent=#Widget] setScaleY 
+-- @param self
+-- @param #float scaleY
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] setScaleX 
+-- @param self
+-- @param #float scaleX
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getScaleY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getScaleX 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- Returns the "class name" of widget.
 -- @function [parent=#Widget] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+-- @overload self, float, float         
+-- @overload self, float         
+-- @function [parent=#Widget] setScale
+-- @param self
+-- @param #float scalex
+-- @param #float scaley
+
 --------------------------------
 -- Changes the position (x,y) of the widget in OpenGL coordinates<br>
 -- Usually we use p(x,y) to compose Vec2 object.<br>
@@ -447,6 +515,12 @@
 -- @function [parent=#Widget] setContentSize 
 -- @param self
 -- @param #size_table contentSize
+        
+--------------------------------
+-- 
+-- @function [parent=#Widget] getScale 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Default constructor

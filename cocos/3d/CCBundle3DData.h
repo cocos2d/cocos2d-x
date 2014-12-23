@@ -28,6 +28,7 @@
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
+#include "3d/CCAABB.h"
 
 #include <vector>
 #include <map>
@@ -122,6 +123,7 @@ struct MeshData
     int vertexSizeInFloat;
     std::vector<IndexArray> subMeshIndices;
     std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
+    std::vector<AABB> subMeshAABB;
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
@@ -140,6 +142,7 @@ public:
     {
         vertex.clear();
         subMeshIndices.clear();
+        subMeshAABB.clear();
         attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;

@@ -288,6 +288,49 @@ void DrawNode3D::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
 }
+
+/**
+ @since v3.3rc1
+ This class is used to check if the the value type judgement in table is correct or not.
+ eg:
+ If call `create` by passing {index1 = 111, index2 = 112, index3 = 113} from lua,
+ the type 111,112,113 would be judged as string type before 3.3rc1
+ **/
+class ValueTypeJudgeInTable:public Node
+{
+public:
+    static ValueTypeJudgeInTable* create(ValueMap valueMap);
+};
+
+ValueTypeJudgeInTable* ValueTypeJudgeInTable::create(ValueMap valueMap)
+{
+    ValueTypeJudgeInTable* ret = new (std::nothrow) ValueTypeJudgeInTable();
+    if (ret)
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    
+    int index = 0;
+    for (auto iter : valueMap)
+    {
+        Value::Type type = iter.second.getType();
+        if (type == Value::Type::STRING) {
+            CCLOG("The type of index %d is string", index);
+        }
+        
+        if (type == Value::Type::INTEGER || type == Value::Type::DOUBLE || type == Value::Type::FLOAT || type == Value::Type::BYTE) {
+            CCLOG("The type of index %d is number", index);
+        }
+        
+        ++index;
+    }
+    
+    return ret;
+}
 NS_CC_END
 
 int lua_cocos2dx_DrawNode3D_getBlendFunc(lua_State* L)
@@ -610,12 +653,61 @@ int lua_register_cocos2dx_DrawNode3D(lua_State* L)
     return 1;
 }
 
+int lua_cocos2dx_ValueTypeJudgeInTable_create(lua_State* L)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(L,1,"cc.ValueTypeJudgeInTable",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 1)
+    {
+        cocos2d::ValueMap arg0;
+        ok &= luaval_to_ccvaluemap(L, 2, &arg0, "cc.ValueTypeJudgeInTable:create");
+        if(!ok)
+            return 0;
+        cocos2d::ValueTypeJudgeInTable* ret = cocos2d::ValueTypeJudgeInTable::create(arg0);
+        object_to_luaval<cocos2d::ValueTypeJudgeInTable>(L, "cc.ValueTypeJudgeInTable",(cocos2d::ValueTypeJudgeInTable*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ValueTypeJudgeInTable:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'lua_cocos2dx_ValueTypeJudgeInTable_create'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int lua_register_cocos2dx_ValueTypeJudgeInTable(lua_State* L)
+{
+    tolua_usertype(L,"cc.ValueTypeJudgeInTable");
+    tolua_cclass(L,"ValueTypeJudgeInTable","cc.ValueTypeJudgeInTable","cc.Node",nullptr);
+    
+    tolua_beginmodule(L,"ValueTypeJudgeInTable");
+        tolua_function(L,"create", lua_cocos2dx_ValueTypeJudgeInTable_create);
+    tolua_endmodule(L);
+    std::string typeName = typeid(cocos2d::ValueTypeJudgeInTable).name();
+    g_luaType[typeName] = "cc.ValueTypeJudgeInTable";
+    g_typeCast["ValueTypeJudgeInTable"] = "cc.ValueTypeJudgeInTable";
+    return 1;
+}
+
 int register_test_binding(lua_State* L)
 {
     tolua_open(L);
     tolua_module(L, "cc", 0);
     tolua_beginmodule(L, "cc");
         lua_register_cocos2dx_DrawNode3D(L);
+        lua_register_cocos2dx_ValueTypeJudgeInTable(L);
     tolua_endmodule(L);
     return 0;
 }
