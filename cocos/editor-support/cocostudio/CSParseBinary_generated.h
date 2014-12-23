@@ -12,6 +12,7 @@ struct CSParseBinary;
 struct NodeTree;
 struct Options;
 struct WidgetOptions;
+struct LayoutComponentTable;
 struct SingleNodeOptions;
 struct SpriteOptions;
 struct ParticleSystemOptions;
@@ -176,6 +177,7 @@ struct CSParseBinary : private flatbuffers::Table {
   const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *texturePngs() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(6); }
   const NodeTree *nodeTree() const { return GetPointer<const NodeTree *>(8); }
   const NodeAction *action() const { return GetPointer<const NodeAction *>(10); }
+  const flatbuffers::String *version() const { return GetPointer<const flatbuffers::String *>(12); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* textures */) &&
@@ -188,6 +190,8 @@ struct CSParseBinary : private flatbuffers::Table {
            verifier.VerifyTable(nodeTree()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* action */) &&
            verifier.VerifyTable(action()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* version */) &&
+           verifier.Verify(version()) &&
            verifier.EndTable();
   }
 };
@@ -199,10 +203,11 @@ struct CSParseBinaryBuilder {
   void add_texturePngs(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> texturePngs) { fbb_.AddOffset(6, texturePngs); }
   void add_nodeTree(flatbuffers::Offset<NodeTree> nodeTree) { fbb_.AddOffset(8, nodeTree); }
   void add_action(flatbuffers::Offset<NodeAction> action) { fbb_.AddOffset(10, action); }
+  void add_version(flatbuffers::Offset<flatbuffers::String> version) { fbb_.AddOffset(12, version); }
   CSParseBinaryBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   CSParseBinaryBuilder &operator=(const CSParseBinaryBuilder &);
   flatbuffers::Offset<CSParseBinary> Finish() {
-    auto o = flatbuffers::Offset<CSParseBinary>(fbb_.EndTable(start_, 4));
+    auto o = flatbuffers::Offset<CSParseBinary>(fbb_.EndTable(start_, 5));
     return o;
   }
 };
@@ -211,8 +216,10 @@ inline flatbuffers::Offset<CSParseBinary> CreateCSParseBinary(flatbuffers::FlatB
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> textures = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> texturePngs = 0,
    flatbuffers::Offset<NodeTree> nodeTree = 0,
-   flatbuffers::Offset<NodeAction> action = 0) {
+   flatbuffers::Offset<NodeAction> action = 0,
+   flatbuffers::Offset<flatbuffers::String> version = 0) {
   CSParseBinaryBuilder builder_(_fbb);
+  builder_.add_version(version);
   builder_.add_action(action);
   builder_.add_nodeTree(nodeTree);
   builder_.add_texturePngs(texturePngs);
@@ -318,6 +325,7 @@ struct WidgetOptions : private flatbuffers::Table {
   const flatbuffers::String *customProperty() const { return GetPointer<const flatbuffers::String *>(38); }
   const flatbuffers::String *callBackType() const { return GetPointer<const flatbuffers::String *>(40); }
   const flatbuffers::String *callBackName() const { return GetPointer<const flatbuffers::String *>(42); }
+  const LayoutComponentTable *layoutComponent() const { return GetPointer<const LayoutComponentTable *>(44); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
@@ -345,6 +353,8 @@ struct WidgetOptions : private flatbuffers::Table {
            verifier.Verify(callBackType()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 42 /* callBackName */) &&
            verifier.Verify(callBackName()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 44 /* layoutComponent */) &&
+           verifier.VerifyTable(layoutComponent()) &&
            verifier.EndTable();
   }
 };
@@ -372,10 +382,11 @@ struct WidgetOptionsBuilder {
   void add_customProperty(flatbuffers::Offset<flatbuffers::String> customProperty) { fbb_.AddOffset(38, customProperty); }
   void add_callBackType(flatbuffers::Offset<flatbuffers::String> callBackType) { fbb_.AddOffset(40, callBackType); }
   void add_callBackName(flatbuffers::Offset<flatbuffers::String> callBackName) { fbb_.AddOffset(42, callBackName); }
+  void add_layoutComponent(flatbuffers::Offset<LayoutComponentTable> layoutComponent) { fbb_.AddOffset(44, layoutComponent); }
   WidgetOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   WidgetOptionsBuilder &operator=(const WidgetOptionsBuilder &);
   flatbuffers::Offset<WidgetOptions> Finish() {
-    auto o = flatbuffers::Offset<WidgetOptions>(fbb_.EndTable(start_, 20));
+    auto o = flatbuffers::Offset<WidgetOptions>(fbb_.EndTable(start_, 21));
     return o;
   }
 };
@@ -400,8 +411,10 @@ inline flatbuffers::Offset<WidgetOptions> CreateWidgetOptions(flatbuffers::FlatB
    flatbuffers::Offset<flatbuffers::String> frameEvent = 0,
    flatbuffers::Offset<flatbuffers::String> customProperty = 0,
    flatbuffers::Offset<flatbuffers::String> callBackType = 0,
-   flatbuffers::Offset<flatbuffers::String> callBackName = 0) {
+   flatbuffers::Offset<flatbuffers::String> callBackName = 0,
+   flatbuffers::Offset<LayoutComponentTable> layoutComponent = 0) {
   WidgetOptionsBuilder builder_(_fbb);
+  builder_.add_layoutComponent(layoutComponent);
   builder_.add_callBackName(callBackName);
   builder_.add_callBackType(callBackType);
   builder_.add_customProperty(customProperty);
@@ -422,6 +435,111 @@ inline flatbuffers::Offset<WidgetOptions> CreateWidgetOptions(flatbuffers::FlatB
   builder_.add_flipX(flipX);
   builder_.add_alpha(alpha);
   builder_.add_visible(visible);
+  return builder_.Finish();
+}
+
+struct LayoutComponentTable : private flatbuffers::Table {
+  uint8_t positionXPercentEnabled() const { return GetField<uint8_t>(4, 0); }
+  uint8_t positionYPercentEnabled() const { return GetField<uint8_t>(6, 0); }
+  float positionXPercent() const { return GetField<float>(8, 0); }
+  float positionYPercent() const { return GetField<float>(10, 0); }
+  uint8_t sizeXPercentEnable() const { return GetField<uint8_t>(12, 0); }
+  uint8_t sizeYPercentEnable() const { return GetField<uint8_t>(14, 0); }
+  float sizeXPercent() const { return GetField<float>(16, 0); }
+  float sizeYPercent() const { return GetField<float>(18, 0); }
+  uint8_t stretchHorizontalEnabled() const { return GetField<uint8_t>(20, 0); }
+  uint8_t stretchVerticalEnabled() const { return GetField<uint8_t>(22, 0); }
+  const flatbuffers::String *horizontalEdge() const { return GetPointer<const flatbuffers::String *>(24); }
+  const flatbuffers::String *verticalEdge() const { return GetPointer<const flatbuffers::String *>(26); }
+  float leftMargin() const { return GetField<float>(28, 0); }
+  float rightMargin() const { return GetField<float>(30, 0); }
+  float topMargin() const { return GetField<float>(32, 0); }
+  float bottomMargin() const { return GetField<float>(34, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<uint8_t>(verifier, 4 /* positionXPercentEnabled */) &&
+           VerifyField<uint8_t>(verifier, 6 /* positionYPercentEnabled */) &&
+           VerifyField<float>(verifier, 8 /* positionXPercent */) &&
+           VerifyField<float>(verifier, 10 /* positionYPercent */) &&
+           VerifyField<uint8_t>(verifier, 12 /* sizeXPercentEnable */) &&
+           VerifyField<uint8_t>(verifier, 14 /* sizeYPercentEnable */) &&
+           VerifyField<float>(verifier, 16 /* sizeXPercent */) &&
+           VerifyField<float>(verifier, 18 /* sizeYPercent */) &&
+           VerifyField<uint8_t>(verifier, 20 /* stretchHorizontalEnabled */) &&
+           VerifyField<uint8_t>(verifier, 22 /* stretchVerticalEnabled */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 24 /* horizontalEdge */) &&
+           verifier.Verify(horizontalEdge()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 26 /* verticalEdge */) &&
+           verifier.Verify(verticalEdge()) &&
+           VerifyField<float>(verifier, 28 /* leftMargin */) &&
+           VerifyField<float>(verifier, 30 /* rightMargin */) &&
+           VerifyField<float>(verifier, 32 /* topMargin */) &&
+           VerifyField<float>(verifier, 34 /* bottomMargin */) &&
+           verifier.EndTable();
+  }
+};
+
+struct LayoutComponentTableBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_positionXPercentEnabled(uint8_t positionXPercentEnabled) { fbb_.AddElement<uint8_t>(4, positionXPercentEnabled, 0); }
+  void add_positionYPercentEnabled(uint8_t positionYPercentEnabled) { fbb_.AddElement<uint8_t>(6, positionYPercentEnabled, 0); }
+  void add_positionXPercent(float positionXPercent) { fbb_.AddElement<float>(8, positionXPercent, 0); }
+  void add_positionYPercent(float positionYPercent) { fbb_.AddElement<float>(10, positionYPercent, 0); }
+  void add_sizeXPercentEnable(uint8_t sizeXPercentEnable) { fbb_.AddElement<uint8_t>(12, sizeXPercentEnable, 0); }
+  void add_sizeYPercentEnable(uint8_t sizeYPercentEnable) { fbb_.AddElement<uint8_t>(14, sizeYPercentEnable, 0); }
+  void add_sizeXPercent(float sizeXPercent) { fbb_.AddElement<float>(16, sizeXPercent, 0); }
+  void add_sizeYPercent(float sizeYPercent) { fbb_.AddElement<float>(18, sizeYPercent, 0); }
+  void add_stretchHorizontalEnabled(uint8_t stretchHorizontalEnabled) { fbb_.AddElement<uint8_t>(20, stretchHorizontalEnabled, 0); }
+  void add_stretchVerticalEnabled(uint8_t stretchVerticalEnabled) { fbb_.AddElement<uint8_t>(22, stretchVerticalEnabled, 0); }
+  void add_horizontalEdge(flatbuffers::Offset<flatbuffers::String> horizontalEdge) { fbb_.AddOffset(24, horizontalEdge); }
+  void add_verticalEdge(flatbuffers::Offset<flatbuffers::String> verticalEdge) { fbb_.AddOffset(26, verticalEdge); }
+  void add_leftMargin(float leftMargin) { fbb_.AddElement<float>(28, leftMargin, 0); }
+  void add_rightMargin(float rightMargin) { fbb_.AddElement<float>(30, rightMargin, 0); }
+  void add_topMargin(float topMargin) { fbb_.AddElement<float>(32, topMargin, 0); }
+  void add_bottomMargin(float bottomMargin) { fbb_.AddElement<float>(34, bottomMargin, 0); }
+  LayoutComponentTableBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  LayoutComponentTableBuilder &operator=(const LayoutComponentTableBuilder &);
+  flatbuffers::Offset<LayoutComponentTable> Finish() {
+    auto o = flatbuffers::Offset<LayoutComponentTable>(fbb_.EndTable(start_, 16));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<LayoutComponentTable> CreateLayoutComponentTable(flatbuffers::FlatBufferBuilder &_fbb,
+   uint8_t positionXPercentEnabled = 0,
+   uint8_t positionYPercentEnabled = 0,
+   float positionXPercent = 0,
+   float positionYPercent = 0,
+   uint8_t sizeXPercentEnable = 0,
+   uint8_t sizeYPercentEnable = 0,
+   float sizeXPercent = 0,
+   float sizeYPercent = 0,
+   uint8_t stretchHorizontalEnabled = 0,
+   uint8_t stretchVerticalEnabled = 0,
+   flatbuffers::Offset<flatbuffers::String> horizontalEdge = 0,
+   flatbuffers::Offset<flatbuffers::String> verticalEdge = 0,
+   float leftMargin = 0,
+   float rightMargin = 0,
+   float topMargin = 0,
+   float bottomMargin = 0) {
+  LayoutComponentTableBuilder builder_(_fbb);
+  builder_.add_bottomMargin(bottomMargin);
+  builder_.add_topMargin(topMargin);
+  builder_.add_rightMargin(rightMargin);
+  builder_.add_leftMargin(leftMargin);
+  builder_.add_verticalEdge(verticalEdge);
+  builder_.add_horizontalEdge(horizontalEdge);
+  builder_.add_sizeYPercent(sizeYPercent);
+  builder_.add_sizeXPercent(sizeXPercent);
+  builder_.add_positionYPercent(positionYPercent);
+  builder_.add_positionXPercent(positionXPercent);
+  builder_.add_stretchVerticalEnabled(stretchVerticalEnabled);
+  builder_.add_stretchHorizontalEnabled(stretchHorizontalEnabled);
+  builder_.add_sizeYPercentEnable(sizeYPercentEnable);
+  builder_.add_sizeXPercentEnable(sizeXPercentEnable);
+  builder_.add_positionYPercentEnabled(positionYPercentEnabled);
+  builder_.add_positionXPercentEnabled(positionXPercentEnabled);
   return builder_.Finish();
 }
 
@@ -1557,12 +1675,16 @@ inline flatbuffers::Offset<ListViewOptions> CreateListViewOptions(flatbuffers::F
 struct ProjectNodeOptions : private flatbuffers::Table {
   const WidgetOptions *nodeOptions() const { return GetPointer<const WidgetOptions *>(4); }
   const flatbuffers::String *fileName() const { return GetPointer<const flatbuffers::String *>(6); }
+  uint8_t isLoop() const { return GetField<uint8_t>(8, 1); }
+  uint8_t isAutoPlay() const { return GetField<uint8_t>(10, 1); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
            verifier.VerifyTable(nodeOptions()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* fileName */) &&
            verifier.Verify(fileName()) &&
+           VerifyField<uint8_t>(verifier, 8 /* isLoop */) &&
+           VerifyField<uint8_t>(verifier, 10 /* isAutoPlay */) &&
            verifier.EndTable();
   }
 };
@@ -1572,20 +1694,26 @@ struct ProjectNodeOptionsBuilder {
   flatbuffers::uoffset_t start_;
   void add_nodeOptions(flatbuffers::Offset<WidgetOptions> nodeOptions) { fbb_.AddOffset(4, nodeOptions); }
   void add_fileName(flatbuffers::Offset<flatbuffers::String> fileName) { fbb_.AddOffset(6, fileName); }
+  void add_isLoop(uint8_t isLoop) { fbb_.AddElement<uint8_t>(8, isLoop, 1); }
+  void add_isAutoPlay(uint8_t isAutoPlay) { fbb_.AddElement<uint8_t>(10, isAutoPlay, 1); }
   ProjectNodeOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ProjectNodeOptionsBuilder &operator=(const ProjectNodeOptionsBuilder &);
   flatbuffers::Offset<ProjectNodeOptions> Finish() {
-    auto o = flatbuffers::Offset<ProjectNodeOptions>(fbb_.EndTable(start_, 2));
+    auto o = flatbuffers::Offset<ProjectNodeOptions>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
 
 inline flatbuffers::Offset<ProjectNodeOptions> CreateProjectNodeOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<WidgetOptions> nodeOptions = 0,
-   flatbuffers::Offset<flatbuffers::String> fileName = 0) {
+   flatbuffers::Offset<flatbuffers::String> fileName = 0,
+   uint8_t isLoop = 1,
+   uint8_t isAutoPlay = 1) {
   ProjectNodeOptionsBuilder builder_(_fbb);
   builder_.add_fileName(fileName);
   builder_.add_nodeOptions(nodeOptions);
+  builder_.add_isAutoPlay(isAutoPlay);
+  builder_.add_isLoop(isLoop);
   return builder_.Finish();
 }
 

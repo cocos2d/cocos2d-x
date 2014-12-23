@@ -144,4 +144,16 @@ protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutTest_Layout_Relative_Location_Editor)
 };
 
+class UILayoutComponentTest_Editor : public UIScene_Editor
+{
+public:
+    UILayoutComponentTest_Editor();
+    ~UILayoutComponentTest_Editor();
+    virtual bool init();
+    void configureGUIScene();
+protected:
+    LayerColor* _baseLayer;
+    UI_SCENE_EDITOR_CREATE_FUNC(UILayoutComponentTest_Editor)
+};
+
 #endif /* defined(__TestCpp__UILayoutTest_Editor__) */
