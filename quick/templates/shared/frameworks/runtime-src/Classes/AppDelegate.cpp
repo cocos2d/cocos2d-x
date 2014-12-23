@@ -112,6 +112,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         glview = cocos2d::GLViewImpl::createWithRect(title.c_str(), Rect(0, 0, viewSize.width, viewSize.height));
         director->setOpenGLView(glview);
 #endif
+        director->startAnimation();
     }
    
     auto engine = LuaEngine::getInstance();

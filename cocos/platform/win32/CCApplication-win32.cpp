@@ -84,11 +84,6 @@ int Application::run()
     // Retain glview to avoid glview being released in the while loop
     glview->retain();
 
-	if (_animationInterval.QuadPart == 0)
-	{
-		setAnimationInterval(1.0f);
-	}
-
     while(!glview->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
