@@ -232,7 +232,7 @@ namespace cocostudio
         button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
         
 
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
         
         
         
@@ -403,9 +403,6 @@ namespace cocostudio
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
                     fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "PressedFileData")
@@ -440,10 +437,7 @@ namespace cocostudio
                 if (pressedResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             else if (name == "NormalFileData")
@@ -478,10 +472,7 @@ namespace cocostudio
                 if (normalResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             else if (name == "FontResource")
@@ -572,19 +563,6 @@ namespace cocostudio
         std::string disabledTexturePath = disabledDic->path()->c_str();
         button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
         
-        if (scale9Enabled)
-        {
-            button->setUnifySizeEnabled(false);
-            button->ignoreContentAdaptWithSize(false);
-            
-            auto f_capInsets = options->capInsets();
-            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
-            button->setCapInsets(capInsets);
-            
-            Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
-            button->setContentSize(scale9Size);
-        }
-        
         std::string titleText = options->text()->c_str();
         button->setTitleText(titleText);
         
@@ -608,20 +586,21 @@ namespace cocostudio
         bool displaystate = options->displaystate();
         button->setBright(displaystate);
         button->setEnabled(displaystate);
-        
-        Size contentSize;
-        if (!button->isScale9Enabled())
-        {
-            button->setUnifySizeEnabled(true);
-            contentSize = button->getVirtualRendererSize();
-        }
 
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-
-        if (!button->isScale9Enabled())
+        
+        if (scale9Enabled)
         {
-            button->setContentSize(contentSize);
+            button->setUnifySizeEnabled(false);
+            button->ignoreContentAdaptWithSize(false);
+            
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            button->setCapInsets(capInsets);
+            
+            Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
+            button->setContentSize(scale9Size);
         }
     }
     

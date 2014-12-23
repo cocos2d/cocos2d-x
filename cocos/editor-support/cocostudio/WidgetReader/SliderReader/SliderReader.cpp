@@ -281,9 +281,6 @@ namespace cocostudio
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
                     fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "BallNormalData")
@@ -319,9 +316,6 @@ namespace cocostudio
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
                     fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "BallPressedData")
@@ -357,9 +351,6 @@ namespace cocostudio
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
                     fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "BallDisabledData")
@@ -385,6 +376,7 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         ballDisabledPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
@@ -394,9 +386,6 @@ namespace cocostudio
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
                     fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "ProgressBarData")
@@ -422,6 +411,7 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         progressBarPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
@@ -430,10 +420,7 @@ namespace cocostudio
                 if (progressBarResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             

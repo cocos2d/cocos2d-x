@@ -484,6 +484,10 @@ void ListView::selectedItemEvent(TouchEventType event)
             if (_eventCallback) {
                 _eventCallback(this,EventType::ON_SELECTED_ITEM_START);
             }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_START));
+            }
         }
         break;
         default:
@@ -494,6 +498,10 @@ void ListView::selectedItemEvent(TouchEventType event)
             }
             if (_eventCallback) {
                 _eventCallback(this, EventType::ON_SELECTED_ITEM_END);
+            }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_END));
             }
         }
         break;

@@ -272,10 +272,7 @@ namespace cocostudio
                 if (resourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             
@@ -348,17 +345,6 @@ namespace cocostudio
         pageView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
         
         
-        if (backGroundScale9Enabled)
-        {
-            auto f_capInsets = options->capInsets();
-            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
-            pageView->setBackGroundImageCapInsets(capInsets);
-            
-            auto f_scale9Size = options->scale9Size();
-            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
-            pageView->setContentSize(scale9Size);
-        }
-        
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
         Color3B color(f_color->r(), f_color->g(), f_color->b());
@@ -371,6 +357,24 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
+        if (backGroundScale9Enabled)
+        {
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            pageView->setBackGroundImageCapInsets(capInsets);
+            
+            auto f_scale9Size = options->scale9Size();
+            Size scale9Size(f_scale9Size->width(), f_scale9Size->height());
+            pageView->setContentSize(scale9Size);
+        }
+        else
+        {
+            if (!pageView->isIgnoreContentAdaptWithSize())
+            {
+                Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+                pageView->setContentSize(contentSize);
+            }
+        }
     }
     
     Node* PageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *pageViewOptions)

@@ -98,7 +98,7 @@ std::string& replaceAll(std::string& str, const std::string& old_value, const st
 
 const char* getRuntimeVersion()
 {
-    return "1.6";
+    return "1.7";
 }
 
 int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
@@ -212,10 +212,9 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
             {
                 originPath.push_back(vecPaths[i]); // for IOS platform.
                 projPath.push_back(g_projectPath + vecPaths[i]); //for Desktop platform.
-                writePaths[i] = FileServer::getShareInstance()->getWritePath() + vecPaths[i];
+                writePaths.push_back(FileServer::getShareInstance()->getWritePath() + vecPaths[i]);
             }
         }
-        vecPaths.clear();
         
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         vecPaths.insert(vecPaths.end(), projPath.begin(), projPath.end());

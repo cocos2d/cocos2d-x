@@ -270,8 +270,8 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     //create the second texture for cylinder
     auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
     Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
-    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.magFilter = GL_NEAREST;
+    tRepeatParams.minFilter = GL_NEAREST;
     tRepeatParams.wrapS = GL_REPEAT;
     tRepeatParams.wrapT = GL_REPEAT;
     shining_texture->setTexParameters(tRepeatParams); 
