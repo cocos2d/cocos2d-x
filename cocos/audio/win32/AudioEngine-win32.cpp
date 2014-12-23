@@ -27,8 +27,13 @@
 
 #include "AudioEngine-win32.h"
 #include <condition_variable>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include "alc.h"
+#include "alext.h"
+#else
 #include "AL/alc.h"
 #include "AL/alext.h"
+#endif
 #include "audio/include/AudioEngine.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"

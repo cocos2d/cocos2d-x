@@ -245,7 +245,7 @@ namespace cocostudio
         std::string errorFilePath = "";
         auto imageFileNameDic = options->textureData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = imageFileNameDic->path()->c_str();
         switch (imageFileNameType)
         {
             case 0:
