@@ -1615,6 +1615,7 @@ void TestArmatureNode::onEnter()
 
     auto node = CSLoader::createNode("TestArmatureNode.csb");
     addChild(node);
+    node->setPositionX(Director::getInstance()->getVisibleSize().width * .25f);
 }
 
 
