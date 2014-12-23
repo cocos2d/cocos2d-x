@@ -485,6 +485,7 @@
     <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
+    <ClInclude Include="..\ui\shaders\UIShaders.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
@@ -946,6 +947,7 @@
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\ui\CocosGUI.cpp" />
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="..\ui\UIButton.cpp" />
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
@@ -1081,6 +1083,7 @@
     <None Include="..\renderer\ccShader_PositionTexture_uColor.vert" />
     <None Include="..\renderer\ccShader_Position_uColor.frag" />
     <None Include="..\renderer\ccShader_Position_uColor.vert" />
+    <None Include="..\ui\shaders\ccShader_grayscale.frag" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Box2D\proj.wp8\Box2D.vcxproj">
