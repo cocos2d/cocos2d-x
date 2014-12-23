@@ -162,6 +162,8 @@ public:
     
     float getItemsMargin()const;
     
+    virtual void forceDoLayout()override;
+
     virtual void doLayout() override;
     
     virtual void addChild(Node* child)override;
