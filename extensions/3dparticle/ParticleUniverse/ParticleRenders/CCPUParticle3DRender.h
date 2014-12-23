@@ -98,18 +98,5 @@ protected:
     float _textureCoordsColStep;
 };
 
-// particle render for Sprite3D
-class CC_DLL PUParticle3DModelRender : public Particle3DModelRender
-{
-public:
-    static PUParticle3DModelRender* create(const std::string& modelFile, const std::string &texFile);
-
-    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
-
-CC_CONSTRUCTOR_ACCESS:
-    PUParticle3DModelRender();
-    virtual ~PUParticle3DModelRender();
-};
-
 NS_CC_END
 #endif
