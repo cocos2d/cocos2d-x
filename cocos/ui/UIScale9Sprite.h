@@ -58,6 +58,13 @@ namespace ui {
          */
         virtual ~Scale9Sprite();
         
+        
+        enum class State
+        {
+            NORMAL,
+            GRAY
+        };
+        
     public:
         static Scale9Sprite* create();
         
@@ -256,6 +263,11 @@ namespace ui {
         // overrides
         virtual void setContentSize(const Size & size) override;
         virtual void setAnchorPoint(const Vec2& anchorPoint) override;
+        
+        /**
+         *@since v3.4
+         */
+        void setState(State state);
         
         Size getOriginalSize() const;
         void setPreferredSize(const Size& size);

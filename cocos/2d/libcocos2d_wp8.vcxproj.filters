@@ -242,6 +242,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\GameMapReader">
       <UniqueIdentifier>{02d389d5-8f57-4bd6-b12a-95af86c5b356}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ui\shaders">
+      <UniqueIdentifier>{0d094a09-b8c2-4fc8-a817-5840cf3ca542}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCAction.cpp">
@@ -1299,9 +1302,6 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\CSParseBinary.pb.cc">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -1310,6 +1310,9 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp">
+      <Filter>ui\shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2541,6 +2544,9 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\ui\shaders\UIShaders.h">
+      <Filter>ui\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -2629,6 +2635,9 @@
     </None>
     <None Include="..\renderer\ccShader_Position_uColor.vert">
       <Filter>renderer\shaders</Filter>
+    </None>
+    <None Include="..\ui\shaders\ccShader_grayscale.frag">
+      <Filter>ui\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

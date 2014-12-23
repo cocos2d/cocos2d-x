@@ -49,6 +49,9 @@ _barLength(0.0),
 _percent(0),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
+_zoomScale(0.1f),
+_sliderBallNormalTextureScaleX(1.0),
+_sliderBallNormalTextureScaleY(1.0),
 _textureFile(""),
 _progressBarTextureFile(""),
 _slidBallNormalTextureFile(""),
@@ -81,6 +84,22 @@ Slider* Slider::create()
     Slider* widget = new (std::nothrow) Slider();
     if (widget && widget->init())
     {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
+    
+Slider* Slider::create(const std::string& barTextureName,
+                      const std::string& normalBallTextureName,
+                      TextureResType resType)
+{
+    Slider* widget = new (std::nothrow) Slider();
+    if (widget && widget->init())
+    {
+        widget->loadBarTexture(barTextureName);
+        widget->loadSlidBallTextureNormal(normalBallTextureName);
         widget->autorelease();
         return widget;
     }
@@ -555,21 +574,57 @@ void Slider::onPressStateChangedToNormal()
     _slidBallNormalRenderer->setVisible(true);
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
+    
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
 }
 
 void Slider::onPressStateChangedToPressed()
 {
-    _slidBallNormalRenderer->setVisible(false);
-    _slidBallPressedRenderer->setVisible(true);
-    _slidBallDisabledRenderer->setVisible(false);
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+
+    
+    if (_slidBallPressedTextureFile.empty())
+    {
+        _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX + _zoomScale,
+                                          _sliderBallNormalTextureScaleY + _zoomScale);
+    }
+    else
+    {
+        _slidBallNormalRenderer->setVisible(false);
+        _slidBallPressedRenderer->setVisible(true);
+        _slidBallDisabledRenderer->setVisible(false);
+    }
 }
 
 void Slider::onPressStateChangedToDisabled()
 {
-    _slidBallNormalRenderer->setVisible(false);
+    if (_slidBallDisabledTextureFile.empty())
+    {
+        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState());
+    }
+    else
+    {
+        _slidBallNormalRenderer->setVisible(false);
+        _slidBallDisabledRenderer->setVisible(true);
+    }
+    
+    _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
+    
     _slidBallPressedRenderer->setVisible(false);
-    _slidBallDisabledRenderer->setVisible(true);
 }
+    
+    
+void Slider::setZoomScale(float scale)
+{
+    _zoomScale = scale;
+}
+
+float Slider::getZoomScale()const
+{
+    return _zoomScale;
+}
+
 
 std::string Slider::getDescription() const
 {
