@@ -214,13 +214,15 @@ void PUParticle3DEmitter::initParticleDirection( PUParticle3D* particle )
     // Use the default way of initialising the particle direction
     float angle = 0.0f;
     generateAngle(angle);
+    Mat4 rotMat;
+    Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation(), &rotMat);
     if (angle != 0.0f)
     {
-        particle->direction = PUParticle3DUtil::randomDeviant(_particleDirection, angle, _upVector);
+        particle->direction = rotMat * PUParticle3DUtil::randomDeviant(_particleDirection, angle, _upVector);
     }
     else
     {
-        particle->direction = _particleDirection;
+        particle->direction = rotMat * _particleDirection;
     }
     particle->originalDirection = particle->direction;
     particle->originalDirectionLength = particle->direction.length();

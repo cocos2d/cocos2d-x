@@ -83,9 +83,10 @@ void PUParticle3DBoxEmitter::initParticlePosition(PUParticle3D* particle)
 
     //if (sys)
     {
+        Mat4 rotMat;
+        Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation(), &rotMat);
         particle->position = getDerivedPosition() + 
-            //FIXME
-            //_particleSystem->getDerivedOrientation() *
+            rotMat *
             (/*_emitterScale **/
             Vec3(CCRANDOM_MINUS1_1() * _xRange * _emitterScale.x,
             CCRANDOM_MINUS1_1() * _yRange * _emitterScale.y,
