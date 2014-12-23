@@ -346,6 +346,8 @@
         "cocos/audio/wp8/MediaStreamer.cpp", 
         "cocos/audio/wp8/MediaStreamer.h", 
         "cocos/audio/wp8/SimpleAudioEngine.cpp", 
+        "cocos/base/CCAsyncTaskPool.cpp", 
+        "cocos/base/CCAsyncTaskPool.h", 
         "cocos/base/CCAutoreleasePool.cpp", 
         "cocos/base/CCAutoreleasePool.h", 
         "cocos/base/CCConfiguration.cpp", 
