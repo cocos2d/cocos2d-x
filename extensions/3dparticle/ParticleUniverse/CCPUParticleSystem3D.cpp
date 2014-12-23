@@ -516,7 +516,7 @@ cocos2d::Quaternion PUParticleSystem3D::getDerivedOrientation()
 
 cocos2d::Vec3 PUParticleSystem3D::getDerivedScale()
 {
-    if (_keepLocal) return Vec3::ZERO;
+    if (_keepLocal) return Vec3::ONE;
     Vec3 s;
     Mat4 mat = getNodeToWorldTransform();
     mat.decompose(&s, nullptr, nullptr);

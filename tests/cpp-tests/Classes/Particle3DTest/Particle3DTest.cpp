@@ -51,10 +51,55 @@
 #include "3dparticle/ParticleUniverse/CCPUParticleSystem3D.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
+enum
+{
+    IDC_NEXT = 100,
+    IDC_BACK,
+    IDC_RESTART
+};
+
+static int sceneIdx = -1;
+
+
+static std::function<Layer*()> createFunctions[] =
+{
+    CL(Particle3DAdvancedLodSystemDemo),
+    CL(Particle3DBlackHoleDemo),
+    CL(Particle3DHypnoDemo),
+    CL(Particle3DTimeShiftDemo),
+};
+
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+
+static Layer* nextSpriteTestAction()
+{
+    sceneIdx++;
+    sceneIdx = sceneIdx % MAX_LAYER;
+
+    auto layer = (createFunctions[sceneIdx])();
+    return layer;
+}
+
+static Layer* backSpriteTestAction()
+{
+    sceneIdx--;
+    int total = MAX_LAYER;
+    if( sceneIdx < 0 )
+        sceneIdx += total;
+
+    auto layer = (createFunctions[sceneIdx])();
+    return layer;
+}
+
+static Layer* restartSpriteTestAction()
+{
+    auto layer = (createFunctions[sceneIdx])();
+    return layer;
+}
 
 void Particle3DTestScene::runThisTest()
 {
-    auto layer = Particle3DTestDemo::create();
+    auto layer = nextSpriteTestAction();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
@@ -62,17 +107,27 @@ void Particle3DTestScene::runThisTest()
 
 void Particle3DTestDemo::restartCallback( Ref* sender )
 {
+    auto s = new (std::nothrow) Particle3DTestScene();
+    s->addChild(restartSpriteTestAction());
 
+    Director::getInstance()->replaceScene(s);
+    s->release();
 }
 
 void Particle3DTestDemo::nextCallback( Ref* sender )
 {
-
+    auto s = new (std::nothrow) Particle3DTestScene();
+    s->addChild( nextSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
 }
 
 void Particle3DTestDemo::backCallback( Ref* sender )
 {
-
+    auto s = new (std::nothrow) Particle3DTestScene();
+    s->addChild( backSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
 }
 
 std::string Particle3DTestDemo::title() const 
@@ -83,16 +138,6 @@ std::string Particle3DTestDemo::title() const
 std::string Particle3DTestDemo::subtitle() const 
 {
     return "";
-}
-
-void Particle3DTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void Particle3DTestDemo::onExit()
-{
-    BaseTest::onExit();
 }
 
 bool Particle3DTestDemo::init()
@@ -121,47 +166,6 @@ bool Particle3DTestDemo::init()
     menuItem1->setPosition(0, size.height -50);
     menuItem2->setPosition(0, size.height -100);
     this->addChild(menu);
-
-
-    auto sprite3d = Sprite3D::create("Sprite3DTest/orc.c3b");
-    sprite3d->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
-    sprite3d->setScale(1.0f);
-    sprite3d->setCameraMask((unsigned short)CameraFlag::USER1);
-
-    auto animation = Animation3D::create("Sprite3DTest/orc.c3b");
-    if (animation)
-    {
-        auto animate = Animate3D::create(animation);
-        sprite3d->runAction(RepeatForever::create(animate));
-    }
-
-    //this->addChild(sprite3d);
-
-    //PUParticleSystem3D *rootps = PUParticleSystem3D::create();
-    //{
-    //	auto ps = createParticleSystem();
-    //	//ps->setPosition(-25.0f, -25.0f);
-    //	rootps->addChild(ps);
-    //}
-
-    //{
-    //	auto ps = createParticleSystem();
-    //	//ps->setPosition(25.0f, 25.0f);
-    //	rootps->addChild(ps);
-    //}
-
-    PUParticleSystem3D *rootps = PUParticleSystem3D::create("blackHole.pu", "pu_mediapack_01.material");
-    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-
-//    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 50.0f));
-//    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-//    auto moveby2 = MoveBy::create(2.0f, Vec2(50.0f, -50.0f));
-//    auto moveby3 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-    //rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, moveby2, moveby3, nullptr)));
-    rootps->startParticle();
-
-    this->addChild(rootps);
-    //sprite3d->getAttachNode("Bip001 R Hand")->addChild(ps);
 
     return true;
 }
@@ -300,4 +304,98 @@ Particle3DTestDemo::Particle3DTestDemo( void )
     : _angle(0.0f)
 {
 
+}
+
+std::string Particle3DAdvancedLodSystemDemo::subtitle() const 
+{
+    return "AdvancedSystem";
+}
+
+bool Particle3DAdvancedLodSystemDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("advancedLodSystem.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+
+    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
+    auto rotate = RotateBy::create(1.0f, Vec3(0.0f, 0.0f, 100.0f));
+    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
+    rootps->startParticle();
+
+
+    this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DBlackHoleDemo::subtitle() const 
+{
+    return "BlackHole";
+}
+
+bool Particle3DBlackHoleDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("blackHole.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->setPosition(-25.0f, 0.0f);
+    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
+    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
+    auto rotate = RotateBy::create(1.0f, Vec3(100.0f, 100.0f, 100.0f));
+    rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
+    rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
+    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    rootps->startParticle();
+
+    this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DHypnoDemo::subtitle() const 
+{
+    return "Hypno";
+}
+
+bool Particle3DHypnoDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("hypno.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
+    auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
+    rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
+    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    rootps->startParticle();
+
+    this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DTimeShiftDemo::subtitle() const 
+{
+    return "TimeShift";
+}
+
+bool Particle3DTimeShiftDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticle();
+
+    this->addChild(rootps);
+
+    return true;
 }

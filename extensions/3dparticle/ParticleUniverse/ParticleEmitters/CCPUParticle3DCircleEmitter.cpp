@@ -138,7 +138,7 @@ void PUParticle3DCircleEmitter::initParticlePosition(PUParticle3D* particle)
     {
         // Take both orientation of the node and its own orientation, based on the normal, into account
         Mat4 rotMat;
-        Mat4::createRotation(_orientation, &rotMat);
+        Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation() * _orientation, &rotMat);
         particle->position = getDerivedPosition() + 
             /*sys->getDerivedOrientation() * */rotMat * (Vec3(_x * _radius * _emitterScale.x, 0, _z * _radius * _emitterScale.z));
     }
@@ -161,7 +161,7 @@ void PUParticle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
         {
             //particle->direction = (mOrientation * Vec3(mX, 0, mZ) ).randomDeviant(angle, mUpVector);
             Mat4 mat;
-            Mat4::createRotation(_orientation, &mat);
+            Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation() * _orientation, &mat);
             Vec3 temp = mat * Vec3(_x, 0, _z);
 
             particle->direction = PUParticle3DUtil::randomDeviant(temp, angle, _upVector);
@@ -171,7 +171,7 @@ void PUParticle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
         else
         {
             Mat4 rotMat;
-            Mat4::createRotation(_orientation, &rotMat);
+            Mat4::createRotation(static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedOrientation() * _orientation, &rotMat);
             particle->direction = Vec3(_x, 0, _z);
             particle->direction = rotMat * Vec3(_x, 0, _z);
         }
