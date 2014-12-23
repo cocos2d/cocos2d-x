@@ -259,6 +259,7 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
+, _bindAddress("")
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
@@ -345,6 +346,16 @@ bool Console::listenOnTCP(int port)
             continue;       /* error, try next one */
 
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
+
+        // bind address
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32))
+        if (_bindAddress.length() > 0)
+        {
+            struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+            sin->sin_addr.s_addr = inet_addr(_bindAddress.c_str());
+        }
+#endif
+
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
@@ -1140,6 +1151,9 @@ void Console::loop()
     _running = false;
 }
 
-
+void Console::setBindAddress(const std::string &address)
+{
+    _bindAddress = address;
+}
 
 NS_CC_END

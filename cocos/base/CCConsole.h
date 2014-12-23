@@ -101,6 +101,13 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
+
+    /**
+     * set bind address
+     *
+     * @address : 127.0.0.1
+     */
+    void setBindAddress(const std::string &address);
  
 protected:
     void loop();
@@ -144,6 +151,8 @@ protected:
     std::vector<std::string> _DebugStrings;
 
     intptr_t _touchId;
+
+    std::string _bindAddress;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };
