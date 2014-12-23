@@ -78,6 +78,19 @@ static const char* FrameType_TextureFrame       = "TextureFrame";
 static const char* FrameType_EventFrame         = "EventFrame";
 static const char* FrameType_ZOrderFrame        = "ZOrderFrame";
 
+static const char* Layout_PositionPercentXEnabled = "PositionPercentXEnable";
+static const char* Layout_PositionPercentYEnabled = "PositionPercentYEnable";
+static const char* Layout_PercentWidthEnable = "PercentWidthEnable";
+static const char* Layout_PercentHeightEnable = "PercentHeightEnable";
+static const char* Layout_StretchWidthEnable = "StretchWidthEnable";
+static const char* Layout_StretchHeightEnable = "StretchHeightEnable";
+static const char* Layout_HorizontalEdge = "HorizontalEdge";
+static const char* Layout_VerticalEdge = "VerticalEdge";
+static const char* Layout_LeftMargin = "LeftMargin";
+static const char* Layout_RightMargin = "RightMargin";
+static const char* Layout_TopMargin = "TopMargin";
+static const char* Layout_BottomMargin = "BottomMargin";
+
 static FlatBuffersSerialize* _instanceFlatBuffersSerialize = nullptr;
     
 FlatBuffersSerialize::FlatBuffersSerialize()

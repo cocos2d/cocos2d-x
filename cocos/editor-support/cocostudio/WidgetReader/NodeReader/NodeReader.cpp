@@ -36,6 +36,24 @@ using namespace flatbuffers;
 
 namespace cocostudio
 {
+    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnable";
+    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnable";
+    const char* Layout_PercentWidthEnable = "PercentWidthEnable";
+    const char* Layout_PercentHeightEnable = "PercentHeightEnable";
+    const char* Layout_StretchWidthEnable = "StretchWidthEnable";
+    const char* Layout_StretchHeightEnable = "StretchHeightEnable";
+    const char* Layout_HorizontalEdge = "HorizontalEdge";
+    const char* Layout_VerticalEdge = "VerticalEdge";
+    const char* Layout_LeftMargin = "LeftMargin";
+    const char* Layout_RightMargin = "RightMargin";
+    const char* Layout_TopMargin = "TopMargin";
+    const char* Layout_BottomMargin = "BottomMargin";
+    const char* Layout_BothEdge = "BothEdge";
+    const char* Layout_LeftEdge = "LeftEdge";
+    const char* Layout_RightEdge = "RightEdge";
+    const char* Layout_TopEdge = "TopEdge";
+    const char* Layout_BottomEdge = "BottomEdge";
+
     IMPLEMENT_CLASS_NODE_READER_INFO(NodeReader)
     
     NodeReader::NodeReader()
@@ -168,51 +186,51 @@ namespace cocostudio
             {
                 frameEvent = value;
             }
-            else if (attriname == "PositionPrecentXEnabled")
+            else if (attriname == Layout_PositionPercentXEnabled)
             {
                 positionXPercentEnabled = value == "True";
             }
-            else if (attriname == "PositionPrecentYEnabled")
+            else if (attriname == Layout_PositionPercentYEnabled)
             {
                 positionYPercentEnabled = value == "True";
             }
-            else if (attriname == "PercentWidthEnable")
+            else if (attriname == Layout_PercentWidthEnable)
             {
                 sizeXPercentEnable = value == "True";
             }
-            else if (attriname == "PercentHeightEnbale")
+            else if (attriname == Layout_PercentHeightEnable)
             {
                 sizeYPercentEnable = value == "True";
             }
-            else if (attriname == "StretchWidthEnable")
+            else if (attriname == Layout_StretchWidthEnable)
             {
                 stretchHorizontalEnabled = value == "True";
             }
-            else if (attriname == "StretchHeightEnable")
+            else if (attriname == Layout_StretchHeightEnable)
             {
                 stretchVerticalEnabled = value == "True";
             }
-            else if (attriname == "HorizontalEage")
+            else if (attriname == Layout_HorizontalEdge)
             {
                 horizontalEdge = value;
             }
-            else if (attriname == "VerticalEage")
+            else if (attriname == Layout_VerticalEdge)
             {
                 verticalEdge = value;
             }
-            else if (attriname == "LeftMargin")
+            else if (attriname == Layout_LeftMargin)
             {
                 leftMargin = atof(value.c_str());
             }
-            else if (attriname == "RightMargin")
+            else if (attriname == Layout_RightMargin)
             {
                 rightMargin = atof(value.c_str());
             }
-            else if (attriname == "TopMargin")
+            else if (attriname == Layout_TopMargin)
             {
                 topMargin = atof(value.c_str());
             }
-            else if (attriname == "ButtomMargin")
+            else if (attriname == Layout_BottomMargin)
             {
                 bottomMargin = atof(value.c_str());
             }
@@ -532,29 +550,29 @@ namespace cocostudio
         layoutComponent->setStretchWidthEnabled(stretchHorizontalEnabled);
         layoutComponent->setStretchHeightEnabled(stretchVerticalEnabled);
         ui::LayoutComponent::HorizontalEage horizontalEdgeType = ui::LayoutComponent::HorizontalEage::None;
-        if (horizontalEdge == "LeftEage")
+        if (horizontalEdge == Layout_LeftEdge)
         {
             horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Left;
         }
-        else if (horizontalEdge == "RightEage")
+        else if (horizontalEdge == Layout_RightEdge)
         {
             horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Right;
         }
-        else if (horizontalEdge == "BothEage")
+        else if (horizontalEdge == Layout_BothEdge)
         {
             horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Center;
         }
         layoutComponent->setHorizontalEage(horizontalEdgeType);
         ui::LayoutComponent::VerticalEage verticalEdgeType = ui::LayoutComponent::VerticalEage::None;
-        if (verticalEdge == "TopEage")
+        if (verticalEdge == Layout_TopEdge)
         {
             verticalEdgeType = ui::LayoutComponent::VerticalEage::Top;
         }
-        else if (verticalEdge == "ButtomEage")
+        else if (verticalEdge == Layout_BottomEdge)
         {
             verticalEdgeType = ui::LayoutComponent::VerticalEage::Bottom;
         }
-        else if (verticalEdge == "BothEage")
+        else if (verticalEdge == Layout_BothEdge)
         {
             verticalEdgeType = ui::LayoutComponent::VerticalEage::Center;
         }

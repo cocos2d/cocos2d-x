@@ -80,7 +80,7 @@ public:
                                    std::string::size_type length);
     
     /**
-     * Refresh object and it's children lay out state
+     * Refresh object and it's children layout state
      *
      *@param rootNode   object which will be changed
      *

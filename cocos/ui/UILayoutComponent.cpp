@@ -35,19 +35,19 @@ namespace ui {
         , _verticalEage(VerticalEage::None)
         , _leftMargin(0)
         , _rightMargin(0)
-        , _usingPositionPercentX(false)
-        , _positionPercentX(0)
         , _buttomMargin(0)
         , _topMargin(0)
+        , _usingPositionPercentX(false)
+        , _positionPercentX(0)
         , _usingPositionPercentY(false)
         , _positionPercentY(0)
+        , _usingStretchWidth(false)
+        , _usingStretchHeight(false)
         , _percentWidth(0)
         , _usingPercentWidth(false)
         , _percentHeight(0)
         , _usingPercentHeight(false)
         , _actived(true)
-        ,_usingStretchWidth(false)
-        , _usingStretchHeight(false)
     {
         _name = __LAYOUT_COMPONENT_NAME;
     }
@@ -195,7 +195,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPositionPercentX()const
+    bool LayoutComponent::isPositionPercentXEnabled()const
     {
         return _usingPositionPercentX;
     }
@@ -224,7 +224,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPositionPercentY()const
+    bool LayoutComponent::isPositionPercentYEnabled()const
     {
         return _usingPositionPercentY;
     }
@@ -344,9 +344,9 @@ namespace ui {
     {
         return this->getOwner()->getContentSize();
     }
-    void LayoutComponent::setSize(const Size& _size)
+    void LayoutComponent::setSize(const Size& size)
     {
-        _owner->setContentSize(_size);
+        _owner->setContentSize(size);
 
         Node* parent = this->getOwnerParent();
         if (parent != nullptr)
@@ -369,7 +369,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPercentWidth()const
+    bool LayoutComponent::isPercentWidthEnabled()const
     {
         return _usingPercentWidth;
     }
@@ -424,7 +424,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingPercentHeight()const
+    bool LayoutComponent::isPercentHeightEnabled()const
     {
         return _usingPercentHeight;
     }
@@ -479,7 +479,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingStretchWidth()const
+    bool LayoutComponent::isStretchWidthEnabled()const
     {
         return _usingStretchWidth;
     }
@@ -492,7 +492,7 @@ namespace ui {
         }
     }
 
-    bool LayoutComponent::isUsingStretchHeight()const
+    bool LayoutComponent::isStretchHeightEnabled()const
     {
         return _usingStretchHeight;
     }
@@ -600,7 +600,7 @@ namespace ui {
         ui::Helper::doLayout(_owner);
     }
 
-    void LayoutComponent::setActiveEnable(bool enable)
+    void LayoutComponent::setActiveEnabled(bool enable)
     {
         _actived = enable;
     }
