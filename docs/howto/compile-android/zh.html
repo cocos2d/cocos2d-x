@@ -464,8 +464,6 @@ Install        : libgame.so =&gt; libs/armeabi/libgame.so
 
 <p>还有一些常用的基础模块可以去除，由于可能影响常用的功能，请根据自己的情况移除。打开文件 frameworks/runtime-src/Classes/lua_module_register.h ，分别注释掉以下语句：</p>
 
-<p>```C++</p>
-
 <pre><code>register_cocosdenshion_module(L);   // 简单音效模块
 register_network_module(L);         // 网络模块，如 socket 和 websocket
 register_ui_moudle(L);              // 基础UI库，如编辑框等
@@ -473,6 +471,5 @@ register_extension_module(L);       // 基本扩展，如 TableView 等
 register_audioengine_module(L);     // audio engine 模块
 </code></pre>
 
-<p>```</p>
 </body>
 </html>
