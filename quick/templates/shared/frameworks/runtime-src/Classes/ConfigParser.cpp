@@ -34,7 +34,12 @@ void ConfigParser::readConfig()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // add writable path to search path temporarily for reading config file
     vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
-    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
+#if COCOS2D_DEBUG > 0
+    std::string writePath = FileServer::getShareInstance()->getWritePath();
+#else
+    std::string writePath = FileUtils::getInstance()->getWritablePath();
+#endif
+    searchPathArray.insert(searchPathArray.begin(), writePath);
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 #endif
     
