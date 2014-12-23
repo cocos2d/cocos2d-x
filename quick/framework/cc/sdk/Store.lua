@@ -2,8 +2,8 @@
 local Store = {}
 
 local function checkCCStore()
-    if not Store then
-        printError("framework.cc.sdk.Store - CCStore not exists.")
+    if not cc.Store then
+        printError("framework.cc.sdk.Store - cc.Store not exists.")
         return false
     end
     return true
@@ -22,7 +22,7 @@ function Store.init(listener)
         return false
     end
 
-    cc.storeProvider = Store:sharedStore() -- avoid gc
+    cc.storeProvider = cc.Store:sharedStore() -- avoid gc
     return cc.storeProvider:postInitWithTransactionListener(listener)
 end
 
@@ -35,9 +35,9 @@ function Store.setReceiptVerifyMode(mode, isSandbox)
     if not checkCCStore() then return false end
 
     if type(mode) ~= "number"
-        or (mode ~= CCStoreReceiptVerifyModeNone
-            and mode ~= CCStoreReceiptVerifyModeDevice
-            and mode ~= CCStoreReceiptVerifyModeServer) then
+        or (mode ~= cc.CCStoreReceiptVerifyModeNone
+            and mode ~= cc.CCStoreReceiptVerifyModeDevice
+            and mode ~= cc.CCStoreReceiptVerifyModeServer) then
         printError("Store.setReceiptVerifyMode() - invalid mode")
         return false
     end
