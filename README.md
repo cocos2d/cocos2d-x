@@ -4,7 +4,7 @@ quick-cocos2d-x v3
 
 quick-cocos2d-x v3 是在 cocos2dx 3.x 的最新版本基础之上，移植了原来 quick-cocos2d-x 的核心框架、强大的 player 、丰富的示例等，并增加更多新的功能。
 
-> 当前版本为RC版
+> 当前版本为 V3.3
 
 ## 使用指南
 
@@ -46,6 +46,7 @@ quick-cocos2d-x 中带有一个名为 player 的工具。
 -    [编译 Android 工程](docs/howto/compile-android/zh.md)
 -    [升级到 quick-cocos2d-x 最新版](docs/howto/upgrade/zh.md)
 -    [使用bindings-generator导出自定义C++类](docs/howto/use-bindings-generator/zh.md)
+-    [对 Lua 字节码进行加密](docs/howto/encrypt-lua-code/zh.md)
 
 ### 参考手册
 

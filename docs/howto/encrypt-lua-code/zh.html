@@ -173,9 +173,8 @@ sup {
 
 <p>windows 用户运行：</p>
 
-<p><code>sh
-set_encrypt.bat
-</code>
+<pre><p><code>set_encrypt.bat
+</code></pre>
 如果运行一切正常，luac 工具将会被更新，相关的 lua 运行时代码会被相应的进行修改。在之后使用 compile_scripts 脚本工具编译出来的字节码，将只能在当前加密环境创建和编译的工程里才能正常运行。</p>
 
 <p>成功开启加密模式后，如果再次运行 set_encrypt 脚本，将会配置一个新的加密环境。 新的加密环境下编译出来的字节码与旧的加密字节码是不能通用的。</p>
