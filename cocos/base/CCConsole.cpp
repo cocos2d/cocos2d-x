@@ -201,6 +201,26 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+void SendLogToWindow(const char *log)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    // Send data as a message
+    COPYDATASTRUCT myCDS;
+    myCDS.dwData = CCLOG_STRING;
+    myCDS.cbData = (DWORD)strlen(log) + 1;
+    myCDS.lpData = (PVOID)log;
+    if (Director::getInstance()->getOpenGLView())
+    {
+        HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
+        SendMessage(hwnd,
+            WM_COPYDATA,
+            (WPARAM)(HWND)hwnd,
+            (LPARAM)(LPVOID)&myCDS);
+    }
+#else
+    CC_UNUSED(log);
+#endif
+}
 
 //
 // Free functions to log
@@ -222,6 +242,7 @@ static void _log(const char *format, va_list args)
     OutputDebugStringW(wszBuf);
     WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), nullptr, FALSE);
     printf("%s", buf);
+    SendLogToWindow(buf);
     fflush(stdout);
 #else
     // Linux, Mac, iOS, etc
