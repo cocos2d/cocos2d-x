@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="5" height="5" tilewidth="128" tileheight="128">
+ <tileset firstgid="1" name="sandbg0" tilewidth="128" tileheight="128">
+  <image source="sandbg0.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="2" name="sandbg1" tilewidth="128" tileheight="128">
+  <image source="sandbg1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="3" name="sandbg2" tilewidth="128" tileheight="128">
+  <image source="sandbg2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="4" name="sandbg3" tilewidth="128" tileheight="128">
+  <image source="sandbg3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="5" name="sandbg4" tilewidth="128" tileheight="128">
+  <image source="sandbg4.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="6" name="egyptbackground0" tilewidth="128" tileheight="128">
+  <image source="egyptbackground0.png" width="640" height="640"/>
+ </tileset>
+ <layer name="块层 6" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJwNw8cNgDAQALB70Qm9hLb/mNiSi4goraxtbO3sTQ6OTs4urm7uHp5mL28fXz9/R3wBww==
+  </data>
+ </layer>
+ <layer name="块层 1" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYGBgYGLAD5hwsLHxsYkDAAJsAAs=
+  </data>
+ </layer>
+ <layer name="块层 2" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjZMANGHHw0cXx6QEBAAGMAAY=
+  </data>
+ </layer>
+ <layer name="块层 3" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYIAAZgbsgJmAPDF6AQNwABA=
+  </data>
+ </layer>
+ <layer name="块层 4" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAAFhxsbIAFjxp0cQAEhAAV
+  </data>
+ </layer>
+ <layer name="块层 5" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFrFBMDsCmDyQGAAQkABU=
+  </data>
+ </layer>
+</map>

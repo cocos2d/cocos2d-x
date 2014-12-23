@@ -62,7 +62,17 @@ end
 -- end --
 
 function uiloader:load(jsonFile, params)
-	local json = self:loadFile_(jsonFile)
+	local json
+	if not params or not params.bJsonStruct then
+		local pathInfo = io.pathinfo(jsonFile)
+		if ".csb" == pathInfo.extname then
+			return cc.CSLoader:getInstance():createNodeWithFlatBuffersFile(jsonFile)
+		else
+			json = self:loadFile_(jsonFile)
+		end
+	else
+		json = jsonFile
+	end
 	if not json then
 		print("uiloader - load file fail:" .. jsonFile)
 		return
