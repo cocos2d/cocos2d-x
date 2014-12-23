@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "base/CCAsyncTaskPool.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
 #include "3d/CCAttachNode.h"
@@ -49,6 +50,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
     CL(Sprite3DHitTest),
+    CL(AsyncLoadSprite3DTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
@@ -1115,6 +1117,73 @@ void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
         addNewSpriteWithCoords( location );
     }
 }
+
+AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
+{
+    _paths.push_back("Sprite3DTest/boss.obj");
+    _paths.push_back("Sprite3DTest/girl.c3b");
+    _paths.push_back("Sprite3DTest/orc.c3b");
+    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
+    _paths.push_back("Sprite3DTest/axe.c3b");
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite,this) );
+    
+    auto s = Director::getInstance()->getWinSize();
+    item1->setPosition( s.width * .5f, s.height * .8f);
+    
+    auto pMenu1 = CCMenu::create(item1, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+    auto node = Node::create();
+    node->setTag(101);
+    this->addChild(node);
+    
+    menuCallback_asyncLoadSprite(nullptr);
+}
+
+AsyncLoadSprite3DTest::~AsyncLoadSprite3DTest()
+{
+}
+
+std::string AsyncLoadSprite3DTest::title() const
+{
+    return "Testing Sprite3D::createAsync";
+}
+std::string AsyncLoadSprite3DTest::subtitle() const
+{
+    return "";
+}
+
+void AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite(Ref* sender)
+{
+    //Note that you must stop the tasks before leaving the scene.
+    AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+    
+    auto node = getChildByTag(101);
+    node->removeAllChildren(); //remove all loaded sprite
+    
+    //remove cache data
+    Sprite3DCache::getInstance()->removeAllSprite3DData();
+    long index = 0;
+    for (const auto& path : _paths) {
+        Sprite3D::createAsync(path, CC_CALLBACK_2(AsyncLoadSprite3DTest::asyncLoad_Callback, this), (void*)index++);
+    }
+}
+
+void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
+{
+    long index = (long)param;
+    auto node = getChildByTag(101);
+    auto s = Director::getInstance()->getWinSize();
+    float width = s.width / _paths.size();
+    Vec2 point(width * (0.5f + index), s.height / 2.f);
+    sprite->setPosition(point);
+    node->addChild(sprite);
+}
+
 
 Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 {
