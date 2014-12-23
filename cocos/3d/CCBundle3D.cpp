@@ -146,24 +146,15 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     }
 }
 
-Bundle3D* Bundle3D::_instance = nullptr;
-
-void Bundle3D::setBundleInstance(Bundle3D* bundleInstance)
+Bundle3D* Bundle3D::createBundle()
 {
-    CC_SAFE_DELETE(_instance);
-    _instance = bundleInstance;
+    auto bundle = new (std::nothrow) Bundle3D();
+    return bundle;
 }
 
-Bundle3D* Bundle3D::getInstance()
+void Bundle3D::destroyBundle(Bundle3D* bundle)
 {
-    if (_instance == nullptr)
-        _instance = new (std::nothrow) Bundle3D();
-    return _instance;
-}
-
-void Bundle3D::destroyInstance()
-{
-    CC_SAFE_DELETE(_instance);
+    delete bundle;
 }
 
 void Bundle3D::clear()

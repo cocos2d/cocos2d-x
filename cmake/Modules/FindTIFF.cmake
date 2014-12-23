@@ -33,24 +33,6 @@
 
 set(TIFF_NAMES ${TIFF_NAMES} tiff libtiff tiff3 libtiff3)
 
-if(USE_PREBUILT_LIBS)
-  find_path(TIFF_INCLUDE_DIR tiff.h
-    PATH_SUFFIXES include/${PLATFORM_FOLDER} include
-    PATHS ${COCOS_EXTERNAL_DIR}/tiff NO_DEFAULT_PATH
-    )
-  find_library(TIFF_LIBRARY NAMES ${TIFF_NAMES}
-    PATH_SUFFIXES
-      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      prebuilt/${PLATFORM_FOLDER}
-    PATHS ${COCOS_EXTERNAL_DIR}/tiff NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(NOT TIFF_INCLUDE_DIR OR NOT TIFF_LIBRARY)
-    unset(TIFF_INCLUDE_DIR CACHE)
-    unset(TIFF_LIBRARY CACHE)
-  endif()
-endif()
-
 find_path(TIFF_INCLUDE_DIR tiff.h
     HINTS ENV TIFF_DIR
     PATH_SUFFIXES include/libtiff include

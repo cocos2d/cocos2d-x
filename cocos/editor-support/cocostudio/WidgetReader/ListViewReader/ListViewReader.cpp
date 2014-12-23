@@ -426,10 +426,72 @@ namespace cocostudio
         listView->setBackGroundColorOpacity(bgColorOpacity);
         
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        listView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+        if (imageFileName != "")
+        {
+            switch (imageFileNameType)
+            {
+                case 0:
+                {
+                    if (FileUtils::getInstance()->isFileExist(imageFileName))
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        errorFilePath = imageFileName;
+                        fileExist = false;
+                    }
+                    break;
+                }
+                    
+                case 1:
+                {
+                    std::string plist = imageFileNameDic->plistFile()->c_str();
+                    SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName);
+                    if (spriteFrame)
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        if (FileUtils::getInstance()->isFileExist(plist))
+                        {
+                            ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                            ValueMap metadata = value["metadata"].asValueMap();
+                            std::string textureFileName = metadata["textureFileName"].asString();
+                            if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                            {
+                                errorFilePath = textureFileName;
+                            }
+                        }
+                        else
+                        {
+                            errorFilePath = plist;
+                        }
+                        fileExist = false;
+                    }
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            if (fileExist)
+            {
+                listView->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
+            }
+            else
+            {
+                auto label = Label::create();
+                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                listView->addChild(label);
+            }
+        }
         
         auto widgetOptions = options->widgetOptions();
         auto f_color = widgetOptions->color();
@@ -442,8 +504,14 @@ namespace cocostudio
         auto f_innerSize = options->innerSize();
         Size innerSize(f_innerSize->width(), f_innerSize->height());
         listView->setInnerContainerSize(innerSize);
+        //         int direction = options->direction();
+        //         listView->setDirection((ScrollView::Direction)direction);
         bool bounceEnabled = options->bounceEnabled();
         listView->setBounceEnabled(bounceEnabled);
+        
+        //         int gravityValue = options->gravity();
+        //         ListView::Gravity gravity = (ListView::Gravity)gravityValue;
+        //         listView->setGravity(gravity);
         
         std::string directionType = options->directionType()->c_str();
         if (directionType == "")
@@ -453,7 +521,7 @@ namespace cocostudio
             if (verticalType == "")
             {
                 listView->setGravity(ListView::Gravity::TOP);
-            } 
+            }
             else if (verticalType == "Align_Bottom")
             {
                 listView->setGravity(ListView::Gravity::BOTTOM);
@@ -462,7 +530,7 @@ namespace cocostudio
             {
                 listView->setGravity(ListView::Gravity::CENTER_VERTICAL);
             }
-        } 
+        }
         else if (directionType == "Vertical")
         {
             listView->setDirection(ListView::Direction::VERTICAL);
@@ -483,7 +551,7 @@ namespace cocostudio
         
         float itemMargin = options->itemMargin();
         listView->setItemsMargin(itemMargin);
-
+        
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
@@ -499,7 +567,6 @@ namespace cocostudio
         }
         else
         {
-            auto widgetOptions = options->widgetOptions();
             if (!listView->isIgnoreContentAdaptWithSize())
             {
                 Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());

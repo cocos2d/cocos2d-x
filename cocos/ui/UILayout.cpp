@@ -1696,7 +1696,7 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         return true;
     }
     
-    auto container = parent->getChildren();
+    auto& container = parent->getChildren();
     ssize_t index = container.getIndex(widget);
     if (parent->getLayoutType() == Type::HORIZONTAL)
     {
