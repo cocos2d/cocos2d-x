@@ -67,6 +67,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DBlackHoleDemo),
     CL(Particle3DHypnoDemo),
     CL(Particle3DTimeShiftDemo),
+    CL(Particle3DUVAnimDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -392,6 +393,25 @@ bool Particle3DTimeShiftDemo::init()
         return false;
 
     auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticle();
+
+    this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DUVAnimDemo::subtitle() const 
+{
+    return "UVAnim";
+}
+
+bool Particle3DUVAnimDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticle();
 

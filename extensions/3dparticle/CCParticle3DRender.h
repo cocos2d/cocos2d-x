@@ -118,7 +118,7 @@ protected:
 class CC_DLL Particle3DModelRender : public Particle3DRender
 {
 public:
-    static Particle3DModelRender* create(const std::string& modelFiles, const std::string &texFile);
+    static Particle3DModelRender* create(const std::string& modelFile, const std::string &texFile);
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
     

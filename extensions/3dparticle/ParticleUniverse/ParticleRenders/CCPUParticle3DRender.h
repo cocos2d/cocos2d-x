@@ -33,6 +33,7 @@
 NS_CC_BEGIN
 
 // particle render for quad
+struct PUParticle3D;
 class CC_DLL PUParticle3DQuadRender : public Particle3DQuadRender
 {
 public:
@@ -68,6 +69,12 @@ public:
     void setCommonUp(const Vec3 &up) { _commonUp = up; }
     const Vec3& getCommonUp() const { return _commonUp; }
 
+    unsigned short getTextureCoordsRows() const;
+    void setTextureCoordsRows(unsigned short textureCoordsRows);
+    unsigned short getTextureCoordsColumns() const;
+    void setTextureCoordsColumns(unsigned short textureCoordsColumns);
+    unsigned int getNumTextureCoords();
+
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -77,14 +84,32 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     void getOriginOffset(int &offsetX, int &offsetY);
+    void determineUVCoords(PUParticle3D *particle);
 
 protected:
     Type _type;
     Origin _origin;
     Vec3 _commonDir;
     Vec3 _commonUp;
+
+    unsigned short _textureCoordsRows;
+    unsigned short _textureCoordsColumns;
+    float _textureCoordsRowStep;
+    float _textureCoordsColStep;
+};
+
+// particle render for Sprite3D
+class CC_DLL PUParticle3DModelRender : public Particle3DModelRender
+{
+public:
+    static PUParticle3DModelRender* create(const std::string& modelFile, const std::string &texFile);
+
+    virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    PUParticle3DModelRender();
+    virtual ~PUParticle3DModelRender();
 };
 
 NS_CC_END
-
 #endif

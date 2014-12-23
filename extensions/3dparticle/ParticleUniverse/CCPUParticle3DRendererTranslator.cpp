@@ -187,6 +187,30 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                             }
                         }
                     }
+                    else if (prop->name == token[TOKEN_RENDERER_TEXCOORDS_ROWS])
+                    {
+                        // Property: texture_coords_rows
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RENDERER_TEXCOORDS_ROWS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DQuadRender *>(_renderer)->setTextureCoordsRows(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RENDERER_TEXCOORDS_COLUMNS])
+                    {
+                        // Property: texture_coords_columns
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RENDERER_TEXCOORDS_COLUMNS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DQuadRender *>(_renderer)->setTextureCoordsColumns(val);
+                            }
+                        }
+                    }
                 }
             }
         }
