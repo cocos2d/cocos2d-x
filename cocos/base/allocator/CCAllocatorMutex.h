@@ -41,7 +41,7 @@
     pthread_mutex_lock(&m);
 #define MUTEX_UNLOCK(m) \
     pthread_mutex_unlock(&m);
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "windows.h"
 #define MUTEX HANDLE
 #define MUTEX_INIT(m) \
@@ -51,7 +51,11 @@
 #define MUTEX_UNLOCK(m) \
     ReleaseMutex(m)
 #else
-#error "Unsupported platform for AllocatorMutex"
+#message "Unsupported platform for AllocatorMutex, Locking semantics will not be supported"
+#define MUTEX
+#define MUTEX_INIT(...)
+#define MUTEX_LOCK(...)
+#define MUTEX_UNLOCK(...)
 #endif
 
 NS_CC_BEGIN

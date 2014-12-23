@@ -453,6 +453,17 @@ void ListView::refreshView()
     updateInnerContainerSize();
 }
     
+void ListView::forceDoLayout()
+{
+    if (_refreshViewDirty)
+    {
+        refreshView();
+        _refreshViewDirty = false;
+    }
+
+    this->_innerContainer->forceDoLayout();
+}
+
 void ListView::doLayout()
 {
     Layout::doLayout();
