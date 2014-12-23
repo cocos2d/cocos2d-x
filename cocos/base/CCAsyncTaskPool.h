@@ -27,7 +27,8 @@ THE SOFTWARE.
 #define __CCSYNC_TASK_POOL_H_
 
 #include "platform/CCPlatformMacros.h"
-#include "base/CCRef.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 #include <vector>
 #include <queue>
 #include <memory>
@@ -63,24 +64,6 @@ public:
     static void destoryInstance();
     
     /**
-     * get max number of call back per process, -1 means unlimited (-1 is the default value)
-     */
-    static int getMaxTaskCallBackPerProcess();
-    
-    /**
-     * set max number of call back per process, -1 means unlimited
-     */
-    static void setMaxTaskCallBackPerProcess(int numTaskCallBack);
-    
-    /**
-     * process the call back after task, this should be called in the main thread
-     */
-    void processTaskCallBack()
-    {
-        _taskcallbackDispatcher.update();
-    }
-    
-    /**
      * stop tasks
      * @param type task type you want to stop
      */
@@ -102,15 +85,14 @@ CC_CONSTRUCTOR_ACCESS:
     ~AsyncTaskPool();
     
 protected:
-    struct AsyncTaskCallBack
-    {
-        TaskCallBack          callback;
-        void*                 callbackParam;
-    };
     
     // thread tasks internally used
     class ThreadTasks {
-        friend class AsyncTaskPool;
+        struct AsyncTaskCallBack
+        {
+            TaskCallBack          callback;
+            void*                 callbackParam;
+        };
     public:
         ThreadTasks()
         : _stop(false)
@@ -135,8 +117,7 @@ protected:
                                           }
                                           
                                           task();
-                                          AsyncTaskPool::getInstance()->_taskcallbackDispatcher.enqueue(callback);
-                                          //task();
+                                          Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, callback]{ callback.callback(callback.callbackParam); });
                                       }
                                   }
                                   );
@@ -155,6 +136,37 @@ protected:
             _condition.notify_all();
             _thread.join();
         }
+        void clear()
+        {
+            std::unique_lock<std::mutex> lock(_queueMutex);
+            while(_tasks.size())
+                _tasks.pop();
+            while (_taskCallBacks.size())
+                _taskCallBacks.pop();
+        }
+        template<class F>
+        void enqueue(const TaskCallBack& callback, void* callbackParam, F&& f)
+        {
+            auto task = f;//std::bind(std::forward<F>(f), std::forward<Args>(args)...);
+            
+            {
+                std::unique_lock<std::mutex> lock(_queueMutex);
+                
+                // don't allow enqueueing after stopping the pool
+                if(_stop)
+                {
+                    CC_ASSERT(0 && "already stop");
+                    return;
+                }
+                
+                AsyncTaskCallBack taskCallBack;
+                taskCallBack.callback = callback;
+                taskCallBack.callbackParam = callbackParam;
+                _tasks.emplace([task](){ task(); });
+                _taskCallBacks.emplace(taskCallBack);
+            }
+            _condition.notify_one();
+        }
     private:
         
         // need to keep track of thread so we can join them
@@ -162,7 +174,6 @@ protected:
         // the task queue
         std::queue< std::function<void()> > _tasks;
         std::queue<AsyncTaskCallBack>            _taskCallBacks;
-//        std::queue< AsyncTask > _tasks;
         
         // synchronization
         std::mutex _queueMutex;
@@ -170,106 +181,24 @@ protected:
         bool _stop;
     };
     
-    class AfterAsyncTaskDispatcher
-    {
-    public:
-        void update()
-        {
-            if (_callBacks.empty())
-                return;
-            
-            std::unique_lock<std::mutex> lock(_queueMutex);
-            int numCallBack = 0;
-            
-            for (auto& it : _callBacks) {
-                numCallBack++;
-                if (s_maxCallBackPerProcess != -1 && numCallBack > s_maxCallBackPerProcess)
-                    break;
-                
-                if (it.callback)
-                {
-                    it.callback(it.callbackParam);
-                }
-            }
-            
-            _callBacks.erase(_callBacks.begin(), _callBacks.begin() + numCallBack);
-        }
-        
-        AfterAsyncTaskDispatcher() {}
-        ~AfterAsyncTaskDispatcher() {}
-        
-        void clear()
-        {
-            std::unique_lock<std::mutex> lock(_queueMutex);
-            _callBacks.clear();
-        }
-        
-        void enqueue(const AsyncTaskCallBack& callback)
-        {
-            std::unique_lock<std::mutex> lock(_queueMutex);
-            _callBacks.push_back(callback);
-        }
-        
-    protected:
-        
-        std::vector<AsyncTaskCallBack> _callBacks;
-        std::mutex _queueMutex;
-    };
-    
     //tasks
-    //ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
-    ThreadTasks *_threadTasks;
-    //deal task call back
-    AfterAsyncTaskDispatcher _taskcallbackDispatcher;
+    ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
+    
     static AsyncTaskPool* s_asyncTaskPool;
-    static int s_maxCallBackPerProcess;
 };
 
 inline void AsyncTaskPool::stopTasks(TaskType type)
 {
     auto& threadTask = _threadTasks[(int)type];
-    auto& queue_mutex = threadTask._queueMutex;
-    auto& tasks = threadTask._tasks;
-    std::unique_lock<std::mutex> lock(queue_mutex);
-    auto& taskcallbacks = threadTask._taskCallBacks;
-    while(tasks.size())
-        tasks.pop();
-    while(taskcallbacks.size())
-        taskcallbacks.pop();
-    _taskcallbackDispatcher.clear();
+    threadTask.clear();
 }
 
 template<class F>
 inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f)
 {
     auto& threadTask = _threadTasks[(int)type];
-    //return _threadTasks[taskType].enqueue(f, args);
     
-    auto task = f;//std::bind(std::forward<F>(f), std::forward<Args>(args)...);
-    
-    auto& queue_mutex = threadTask._queueMutex;
-    auto& stop = threadTask._stop;
-    auto& tasks = threadTask._tasks;
-    auto& condition = threadTask._condition;
-    auto& taskcallbacks = threadTask._taskCallBacks;
-    
-    {
-        std::unique_lock<std::mutex> lock(queue_mutex);
-        
-        // don't allow enqueueing after stopping the pool
-        if(stop)
-        {
-            CC_ASSERT(0 && "already stop");
-            return;
-        }
-        
-        AsyncTaskCallBack taskCallBack;
-        taskCallBack.callback = callback;
-        taskCallBack.callbackParam = callbackParam;
-        tasks.emplace([task](){ task(); });
-        taskcallbacks.emplace(taskCallBack);
-    }
-    condition.notify_one();
+    threadTask.enqueue(callback, callbackParam, f);
 }
 
 NS_CC_END
