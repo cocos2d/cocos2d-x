@@ -273,6 +273,11 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
 
 string FileUtilsWin32::getWritablePath() const
 {
+    if (_writablePath.length() > 0)
+    {
+        return _writablePath;
+    }
+
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
     char full_path[CC_MAX_PATH + 1];
     ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);

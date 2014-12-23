@@ -828,6 +828,16 @@ const std::vector<std::string>& FileUtils::getSearchPaths() const
     return _searchPathArray;
 }
 
+void FileUtils::setWritablePath(const char *writablePath)
+{
+    _writablePath = writablePath ? writablePath : "";
+}
+
+void FileUtils::setSearchRootPath(const char* path)
+{
+    _defaultResRootPath = path ? path : "";
+}
+
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool existDefaultRootPath = false;
