@@ -308,14 +308,15 @@ end
 -- end --
 
 function uiloader:clone(node)
+	print("node type:" .. type(node))
+	print("node type:" .. tolua.type(node))
 
-
+	return nil
 end
 
 function uiloader:cloneNode_(node)
 	if "userdata" == type(node) then
-	else
-	if node.class then
+	elseif node.class then
 	end
 end
 
@@ -328,17 +329,17 @@ function uiloader:cloneUserData_(node)
 	local typename = tolua.type(node)
 	local newNode
 	if "cc.Node" == typename then
-		newNode == cc.Node:create()
+		newNode = cc.Node:create()
 	elseif "cc.Sprite" == typename then
-		newNode == cc.Sprite:create()
+		newNode = cc.Sprite:create()
 	elseif "cc.Scale9Sprite" == typename then
-		newNode == cc.Scale9Sprite:create()
+		newNode = cc.Scale9Sprite:create()
 	elseif "cc.Layer" == typename then
-		newNode == cc.Layer:create()
+		newNode = cc.Layer:create()
 	elseif "cc.LayerColor" == typename then
-		newNode == cc.LayerColor:create()
+		newNode = cc.LayerColor:create()
 	elseif "cc.ClippingRectangleNode" == typename then
-		newNode == cc.ClippingRectangleNode:create()
+		newNode = cc.ClippingRectangleNode:create()
 	else
 		print("ERROR! unsupport node type:" .. typename)
 	end

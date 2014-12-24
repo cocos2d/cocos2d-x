@@ -17,7 +17,8 @@ function MainScene:ctor()
         "framework.timer",
         "framework.gamestate",
         "framework.transition",
-        "framework.nvgdrawnode"
+        "framework.nvgdrawnode",
+        "framework.clone"
     }
 
     self:addChild(game.createMenu(items, handler(self, self.openTest)))

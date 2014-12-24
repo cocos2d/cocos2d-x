@@ -8,7 +8,8 @@ game = {}
 function game.startup()
     cc.FileUtils:getInstance():addSearchPath("res/")
 
-    game.enterMainScene()
+    display.replaceScene(require("tests.framework.cloneTest").new())
+    -- game.enterMainScene()
 end
 
 function game.createMenu(items, callback)
