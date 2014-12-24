@@ -320,11 +320,8 @@ void LuaTouchEventManager::onTouchesCancelled(const std::vector<Touch*>& touches
     // remove all touching nodes
     //CCLOG("TOUCH CANCELLED, REMOVE ALL TOUCH TARGETS");
     _touchingTargets.clear();
-
-    for (auto it = touches.begin(); it != touches.end(); ++it)
-    {
-        m_touchingIds.erase(((Touch*)*it)->getID());
-    }
+    // clear all touching points
+	m_touchingIds.clear();
 }
 
 void LuaTouchEventManager::cleanup(void)
