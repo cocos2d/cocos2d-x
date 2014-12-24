@@ -381,20 +381,20 @@ Vec3 Node::getRotation3D() const
 void Node::updateRotationQuat()
 {
     // convert Euler angle to quaternion
-    // when _rotationZ_X == _rotationZ_Y, _rotation_quat = RotationZ_X * RotationY * RotationX
-    // when _rotationZ_X != _rotationZ_Y, _rotation_quat = RotationY * RotationX
+    // when _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX
+    // when _rotationZ_X != _rotationZ_Y, _rotationQuat = RotationY * RotationX
     float halfRadx = CC_DEGREES_TO_RADIANS(_rotationX / 2.f), halfRady = CC_DEGREES_TO_RADIANS(_rotationY / 2.f), halfRadz = _rotationZ_X == _rotationZ_Y ? -CC_DEGREES_TO_RADIANS(_rotationZ_X / 2.f) : 0;
     float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRady), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
-    _rotation_quat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
-    _rotation_quat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
-    _rotation_quat.z = coshalfRadx * coshalfRady * sinhalfRadz - sinhalfRadx * sinhalfRady * coshalfRadz;
-    _rotation_quat.w = coshalfRadx * coshalfRady * coshalfRadz + sinhalfRadx * sinhalfRady * sinhalfRadz;
+    _rotationQuat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
+    _rotationQuat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
+    _rotationQuat.z = coshalfRadx * coshalfRady * sinhalfRadz - sinhalfRadx * sinhalfRady * coshalfRadz;
+    _rotationQuat.w = coshalfRadx * coshalfRady * coshalfRadz + sinhalfRadx * sinhalfRady * sinhalfRadz;
 }
 
 void Node::updateRotation3D()
 {
     //convert quaternion to Euler angle
-    float x = _rotation_quat.x, y = _rotation_quat.y, z = _rotation_quat.z, w = _rotation_quat.w;
+    float x = _rotationQuat.x, y = _rotationQuat.y, z = _rotationQuat.z, w = _rotationQuat.w;
     _rotationX = atan2f(2.f * (w * x + y * z), 1.f - 2.f * (x * x + y * y));
     _rotationY = asinf(2.f * (w * y - z * x));
     _rotationZ_X = atanf(2.f * (w * z + x * y) / (1.f - 2.f * (y * y + z * z)));
@@ -406,14 +406,14 @@ void Node::updateRotation3D()
 
 void Node::setRotationQuat(const Quaternion& quat)
 {
-    _rotation_quat = quat;
+    _rotationQuat = quat;
     updateRotation3D();
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 Quaternion Node::getRotationQuat() const
 {
-    return _rotation_quat;
+    return _rotationQuat;
 }
 
 void Node::setRotationSkewX(float rotationX)
@@ -1782,7 +1782,7 @@ const Mat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        Mat4::createRotation(_rotation_quat, &_transform);
+        Mat4::createRotation(_rotationQuat, &_transform);
         if (_rotationZ_X != _rotationZ_Y)
         {
             float m0 = _transform.m[0], m1 = _transform.m[1], m4 = _transform.m[4], m5 = _transform.m[5], m8 = _transform.m[8], m9 = _transform.m[9];

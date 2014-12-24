@@ -1631,7 +1631,7 @@ protected:
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
     
-    Quaternion _rotation_quat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotation_quat = RotationZ_X * RotationY * RotationX, else _rotation_quat = RotationY * RotationX
+    Quaternion _rotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis
