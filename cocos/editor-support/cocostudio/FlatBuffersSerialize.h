@@ -128,6 +128,7 @@ public:
                                                                           std::string classType);
     flatbuffers::Offset<flatbuffers::ProjectNodeOptions> createProjectNodeOptionsForSimulator(const tinyxml2::XMLElement* objectData);	
 	/**/
+    std::string getCsdVersion() { return _csdVersion; }
     
 public:
     std::vector<flatbuffers::Offset<flatbuffers::String>> _textures;
@@ -137,7 +138,7 @@ public:
 private:
     flatbuffers::FlatBufferBuilder* _builder;
     flatbuffers::Offset<flatbuffers::CSParseBinary>* _csparsebinary;
-    
+    std::string _csdVersion;
 };
 }
 

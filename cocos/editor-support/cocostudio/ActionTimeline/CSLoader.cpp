@@ -789,6 +789,9 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());        
     }
     
+    auto v = csparsebinary->version();
+    if (v) _csdVersion = v->c_str();
+       
     Node* node = nodeWithFlatBuffers(csparsebinary->nodeTree());
     
     return node;
@@ -1119,6 +1122,10 @@ Node* CSLoader::createNodeWithFlatBuffersForSimulator(const std::string& filenam
     }
     
     auto nodeTree = csparsebinary->nodeTree();
+
+    auto v = csparsebinary->version();
+    if (v) _csdVersion = v->c_str();
+
     Node* node = nodeWithFlatBuffersForSimulator(nodeTree);
     
     _rootNode = nullptr;
@@ -1231,6 +1238,7 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
                 node->addChild(child);
             }
         }
+        Helper::doLayout(node);
     }
     
 //    _loadingNodeParentHierarchy.pop_back();
