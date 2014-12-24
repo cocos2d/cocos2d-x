@@ -46,12 +46,15 @@ enum
     kUILayoutTest_Gradient_Editor,
     kUILayoutTest_BackGroundImage_Editor,
     kUILayoutTest_BackGroundImage_Scale9_Editor,
+    kUILayoutComponentTest_Editor,
+
     /*
     kUILayoutTest_Layout_Linear_Vertical_Editor,
     kUILayoutTest_Layout_Linear_Horizontal_Editor,
     kUILayoutTest_Layout_Relative_Align_Parent_Editor,
     kUILayoutTest_Layout_Relative_Location_Editor,
     */
+
     kUIListViewTest_Vertical_Editor,
     kUIListViewTest_Horizontal_Editor,
     kUIPageViewTest_Editor,
