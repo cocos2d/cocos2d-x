@@ -318,6 +318,7 @@ function uiloader:clone(node)
 end
 
 function uiloader:cloneNode_(node)
+	local clsType = tolua.type(node)
 	local cloneNode
 	if "userdata" == type(node) then
 		cloneNode = self:cloneUserData_(node)
@@ -325,7 +326,10 @@ function uiloader:cloneNode_(node)
 			return
 		end
 
-		self:cloneChildren_(cloneNode, node)
+		-- Label 下挂了一个batchnode来显示字体
+		if "cc.Label" ~= clsType then
+			self:cloneChildren_(cloneNode, node)
+		end
 	elseif node.class then
 	end
 
@@ -372,7 +376,39 @@ end
 
 function uiloader:copyProperties_(cloneNode, node, typename)
 	print("copyProperties_ type:" .. tolua.type(node))
-    cloneNode:setVisible(node:isVisible())
+
+	-- copySpecialProperties
+    self:copySpecialProperties_(cloneNode, node, typename)
+
+    -- copy common properties
+    self:copyCommonProperties_(cloneNode, node)    
+end
+
+function uiloader:copySpecialProperties_(cloneNode, node, typename)
+	if "cc.Sprite" == typename then
+    	local frame = node:getSpriteFrame()
+    	cloneNode:setSpriteFrame(frame)
+	elseif "ccui.Scale9Sprite" == typename then
+		local frame = node:getSprite():getSpriteFrame()
+    	cloneNode:setSpriteFrame(frame)
+    	cloneNode:setCapInsets(node:getCapInsets())
+
+    	self:showNodeProperty(node)
+    	self:showNodeProperty(cloneNode)
+	elseif "cc.ClippingRectangleNode" == typename then
+		cloneNode:setClippingRegion(node:getClippingRegion())
+	elseif "cc.Label" == typename then
+		-- TODO
+		-- bmfont
+		-- charmap
+		cloneNode:setTTFConfig(node:getTTFConfig())
+	else
+		print("INFO! haven't set special properties:" .. typename)
+	end
+end
+
+function uiloader:copyCommonProperties_(cloneNode, node)
+	cloneNode:setVisible(node:isVisible())
     cloneNode:setTouchEnabled(node:isTouchEnabled())
     cloneNode:setLocalZOrder(node:getLocalZOrder())
     cloneNode:setTag(node:getTag())
@@ -391,25 +427,6 @@ function uiloader:copyProperties_(cloneNode, node, typename)
 	end
     cloneNode:setColor(node:getColor())
     cloneNode:setOpacity(node:getOpacity())
-
-    -- copySpecialProperties
-    if "cc.Sprite" == typename then
-    	local frame = node:getSpriteFrame()
-    	cloneNode:setSpriteFrame(frame)
-	elseif "cc.Scale9Sprite" == typename then
-		local frame = node:getSpriteFrame()
-    	cloneNode:setSpriteFrame(frame)
-    	cloneNode:setCapInsets(node:getCapInsets())
-	elseif "cc.ClippingRectangleNode" == typename then
-		cloneNode:setClippingRegion(node:getClippingRegion())
-	elseif "cc.Label" == typename then
-		-- TODO
-		-- bmfont
-		-- charmap
-		cloneNode:setTTFConfig(node:getTTFConfig())
-	else
-		print("INFO! haven't set special properties:" .. typename)
-	end
 end
 
 function uiloader:cloneChildren_(cloneNode, node)
@@ -424,6 +441,15 @@ function uiloader:cloneChildren_(cloneNode, node)
 			cloneNode:addChild(cloneChild)
 		end
 	end
+end
+
+function uiloader:showNodeProperty(node)
+	print("--- node property --- begin")
+	local size = node:getContentSize()
+	dump(size, "content size:")
+	print("scale x:" .. node:getScaleX())
+	print("scale y:" .. node:getScaleY())
+	print("--- node property --- end")
 end
 
 -- private

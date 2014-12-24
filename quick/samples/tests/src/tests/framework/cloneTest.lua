@@ -54,7 +54,8 @@ function CloneTestScene:cloneButton()
 
     local cloneNode = cc.uiloader:clone(node)
     if cloneNode then
-        cloneNode:pos(display.left + 200, display.top - 100):addTo(self)
+        cloneNode:pos(display.left + 50, display.top - 200):addTo(self)
+            :onButtonClicked(function() print("clone button clicked") end)
     else
         print("clone fail")
     end
