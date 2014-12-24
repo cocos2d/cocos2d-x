@@ -7,8 +7,7 @@ function CCSReader1Scene:ctor()
 	app:createTitle(self, "CCS Reader1")
 	app:createNextButton(self)
 
-	ccs.GUIReader:getInstance():widgetFromJsonFile("DemoHead_UI/DemoHead_UI.ExportJson")
-		:addTo(self)
+	cc.uiloader:load("BattleScene.csb"):addTo(self)
 end
 
 return CCSReader1Scene

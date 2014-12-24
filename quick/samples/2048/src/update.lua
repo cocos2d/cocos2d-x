@@ -291,7 +291,7 @@ function UpdateScene:onResponse(event, index, dumpResponse)
             end
             self.dataRecv = request:getResponseData()
         end
-    else
+    elseif event.name ~= "progress" then
         printf("REQUEST %d - getErrorCode() = %d, getErrorMessage() = %s", index, request:getErrorCode(), request:getErrorMessage())
         self:endProcess()
     end

@@ -28,6 +28,9 @@
 		50D7C96C17EBBEDF005D0B91 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */; };
 		50D7C96E17EBBEE6005D0B91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96D17EBBEE6005D0B91 /* AppKit.framework */; };
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
+		87FD37D31A469FB700DFFB6F /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87FD37CD1A469FB700DFFB6F /* ConnectWaitLayer.cpp */; };
+		87FD37D41A469FB700DFFB6F /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87FD37CF1A469FB700DFFB6F /* ConsoleCommand.cpp */; };
+		87FD37D51A469FB700DFFB6F /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 87FD37D11A469FB700DFFB6F /* FileServer.cpp */; };
 		9F72892B1A24957700EE0234 /* HelperFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F7288311A24957700EE0234 /* HelperFunc.cpp */; };
 		9F72892C1A24957700EE0234 /* libbase64.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F7288361A24957700EE0234 /* libbase64.c */; };
 		9F72892D1A24957700EE0234 /* CCCrypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F7288381A24957700EE0234 /* CCCrypto.cpp */; };
@@ -188,6 +191,12 @@
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		87FD37CD1A469FB700DFFB6F /* ConnectWaitLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectWaitLayer.cpp; sourceTree = "<group>"; };
+		87FD37CE1A469FB700DFFB6F /* ConnectWaitLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectWaitLayer.h; sourceTree = "<group>"; };
+		87FD37CF1A469FB700DFFB6F /* ConsoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleCommand.cpp; sourceTree = "<group>"; };
+		87FD37D01A469FB700DFFB6F /* ConsoleCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleCommand.h; sourceTree = "<group>"; };
+		87FD37D11A469FB700DFFB6F /* FileServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileServer.cpp; sourceTree = "<group>"; };
+		87FD37D21A469FB700DFFB6F /* FileServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileServer.h; sourceTree = "<group>"; };
 		9F7288311A24957700EE0234 /* HelperFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperFunc.cpp; sourceTree = "<group>"; };
 		9F7288321A24957700EE0234 /* HelperFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperFunc.h; sourceTree = "<group>"; };
 		9F7288331A24957700EE0234 /* cocos2dx_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dx_extra.h; sourceTree = "<group>"; };
@@ -884,6 +893,12 @@
 		C00FD4891938512100C6382D /* runtime */ = {
 			isa = PBXGroup;
 			children = (
+				87FD37CD1A469FB700DFFB6F /* ConnectWaitLayer.cpp */,
+				87FD37CE1A469FB700DFFB6F /* ConnectWaitLayer.h */,
+				87FD37CF1A469FB700DFFB6F /* ConsoleCommand.cpp */,
+				87FD37D01A469FB700DFFB6F /* ConsoleCommand.h */,
+				87FD37D11A469FB700DFFB6F /* FileServer.cpp */,
+				87FD37D21A469FB700DFFB6F /* FileServer.h */,
 				15AA9646199B6D4600725633 /* lua_debugger.c */,
 				15AA9647199B6D4600725633 /* lua_debugger.h */,
 				3EB5152A19528284006966AA /* Protos.pb.cc */,
@@ -1151,8 +1166,10 @@
 				9FD01B1219F8C69C005E0C49 /* ConsoleWindowController.m in Sources */,
 				9F7289661A24957700EE0234 /* CCHTTPRequest.cpp in Sources */,
 				9F72892D1A24957700EE0234 /* CCCrypto.cpp in Sources */,
+				87FD37D41A469FB700DFFB6F /* ConsoleCommand.cpp in Sources */,
 				9FD01B2A19F8C6A3005E0C49 /* PlayerTaskServiceMac.mm in Sources */,
 				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				87FD37D51A469FB700DFFB6F /* FileServer.cpp in Sources */,
 				9F7289321A24957700EE0234 /* CCContrastFilter.cpp in Sources */,
 				9F7289941A24957700EE0234 /* ProjectConfig.cpp in Sources */,
 				49C655C41A35403D00603AF5 /* NVGDrawNode.cpp in Sources */,
@@ -1172,6 +1189,7 @@
 				9F7289891A24957700EE0234 /* fpconv.c in Sources */,
 				9F72898F1A24957700EE0234 /* lpack.c in Sources */,
 				4940478A1A31C0EF004CECA6 /* NVGNode.cpp in Sources */,
+				87FD37D31A469FB700DFFB6F /* ConnectWaitLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1208,7 +1226,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = ../mac;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
@@ -1243,7 +1261,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = ../mac;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (

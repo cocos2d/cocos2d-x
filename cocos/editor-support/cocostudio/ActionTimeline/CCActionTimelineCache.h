@@ -32,22 +32,18 @@ THE SOFTWARE.
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
 
-namespace protocolbuffers
+namespace flatbuffers
 {
-    class NodeAction;
-    class TimeLine;
-    class Frame;
-    class TimeLineBoolFrame;
-    class TimeLinePointFrame;
-    class TimeLineIntFrame;
-    class TimeLineColorFrame;
-    class TimeLineTextureFrame;
-    class TimeLineStringFrame;
-}
-
-namespace tinyxml2
-{
-    class XMLElement;
+    struct FlatBufferBuilder;
+    
+    struct NodeAction;
+    struct TimeLine;
+    struct TimeLineBoolFrame;
+    struct TimeLineIntFrame;
+    struct TimeLineStringFrame;
+    struct TimeLinePointFrame;
+    struct TimeLineColorFrame;
+    struct TimeLineTextureFrame;
 }
 
 NS_TIMELINE_BEGIN
@@ -80,12 +76,10 @@ public:
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
     
-    ActionTimeline* createActionFromProtocolBuffers(const std::string& fileName);
-    ActionTimeline* loadAnimationActionWithFileFromProtocolBuffers(const std::string& fileName);
+    ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
+    ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
     
-    ActionTimeline* createActionFromXML(const std::string& fileName);
-    ActionTimeline* loadAnimationActionWithFileFromXML(const std::string& fileName);
-    ActionTimeline* loadActionTimelineFromXML(const tinyxml2::XMLElement* animationElement);
+    ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
     
 protected:
 
@@ -104,29 +98,18 @@ protected:
     Frame* loadEventFrame       (const rapidjson::Value& json);
     Frame* loadZOrderFrame      (const rapidjson::Value& json);
     
-    Timeline* loadTimelineFromProtocolBuffers(const protocolbuffers::TimeLine& timelineProtobuf);
     
-    Frame* loadVisibleFrameFromProtocolBuffers     (const protocolbuffers::TimeLineBoolFrame& frameProtobuf);
-    Frame* loadPositionFrameFromProtocolBuffers    (const protocolbuffers::TimeLinePointFrame& frameProtobuf);
-    Frame* loadScaleFrameFromProtocolBuffers       (const protocolbuffers::TimeLinePointFrame& frameProtobuf);
-	Frame* loadRotationSkewFrameFromProtocolBuffers(const protocolbuffers::TimeLinePointFrame& frameProtobuf);
-    Frame* loadAnchorPointFrameFromProtocolBuffers (const protocolbuffers::TimeLinePointFrame& frameProtobuf);
-    Frame* loadColorFrameFromProtocolBuffers       (const protocolbuffers::TimeLineColorFrame& frameProtobuf);
-    Frame* loadTextureFrameFromProtocolBuffers     (const protocolbuffers::TimeLineTextureFrame& frameProtobuf);
-    Frame* loadEventFrameFromProtocolBuffers       (const protocolbuffers::TimeLineStringFrame& frameProtobuf);
-    Frame* loadZOrderFrameFromProtocolBuffers      (const protocolbuffers::TimeLineIntFrame& frameProtobuf);
+    Timeline* loadTimelineWithFlatBuffers(const flatbuffers::TimeLine* flatbuffers);
     
-    Timeline* loadTimelineFromXML(const tinyxml2::XMLElement* timelineElement);
-    
-    Frame* loadVisibleFrameFromXML     (const tinyxml2::XMLElement* frameElement);
-    Frame* loadPositionFrameFromXML    (const tinyxml2::XMLElement* frameElement);
-    Frame* loadScaleFrameFromXML       (const tinyxml2::XMLElement* frameElement);
-	Frame* loadRotationSkewFrameFromXML(const tinyxml2::XMLElement* frameElement);
-    Frame* loadAnchorPointFrameFromXML (const tinyxml2::XMLElement* frameElement);
-    Frame* loadColorFrameFromXML       (const tinyxml2::XMLElement* frameElement);
-    Frame* loadTextureFrameFromXML     (const tinyxml2::XMLElement* frameElement);
-    Frame* loadEventFrameFromXML       (const tinyxml2::XMLElement* frameElement);
-    Frame* loadZOrderFrameFromXML      (const tinyxml2::XMLElement* frameElement);
+    Frame* loadVisibleFrameWithFlatBuffers      (const flatbuffers::TimeLineBoolFrame* flatbuffers);
+    Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::TimeLineIntFrame* flatbuffers);
+    Frame* loadRotationSkewFrameWithFlatBuffers (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadEventFrameWithFlatBuffers        (const flatbuffers::TimeLineStringFrame* flatbuffers);
+    Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadPositionFrameWithFlatBuffers     (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadScaleFrameWithFlatBuffers        (const flatbuffers::TimeLinePointFrame* flatbuffers);
+    Frame* loadColorFrameWithFlatBuffers        (const flatbuffers::TimeLineColorFrame* flatbuffers);
+    Frame* loadTextureFrameWithFlatBuffers      (const flatbuffers::TimeLineTextureFrame* flatbuffers);
 
 protected:
 

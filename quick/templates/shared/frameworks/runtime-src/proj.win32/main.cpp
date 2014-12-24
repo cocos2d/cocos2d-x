@@ -35,17 +35,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     LPWSTR *szArgList=nullptr;
     int argCount=0;
 
+    bool isCodeIDEDebugger = true;
     szArgList = CommandLineToArgvW(GetCommandLine(),&argCount);
-    bool isCodeIDEDebugger = false;
     if (argCount >=2 )
     {
-        int iLen = 2*wcslen(szArgList[1]);
-        char* chRtn = new char[iLen+1];
+        int iLen = 2*wcslen(szArgList[1]);    
+        char* chRtn = new char[iLen+1];    
         wcstombs(chRtn,szArgList[1],iLen+1);
-        extern std::string g_resourcePath;
-        g_resourcePath = chRtn;
         delete [] chRtn;
-		isCodeIDEDebugger = true;
     }
     LocalFree(szArgList);
 

@@ -1,13 +1,18 @@
 
 
 #include "ButtonReader.h"
+
 #include "ui/UIButton.h"
 #include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary.pb.h"
-#include "tinyxml2.h"
+#include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include "tinyxml2/tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -33,7 +38,7 @@ namespace cocostudio
     
     static ButtonReader* instanceButtonReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(ButtonReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(ButtonReader)
     
     ButtonReader::ButtonReader()
     {
@@ -227,125 +232,42 @@ namespace cocostudio
         button->setTitleFontSize(DICTOOL->getIntValue_json(options, P_FontSize,14));
         
 
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName,"微软雅黑"));
+        button->setTitleFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
         
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
-    }
+    }    
     
-    void ButtonReader::setPropsFromProtocolBuffers(ui::Widget *widget, const protocolbuffers::NodeTree &nodeTree)
+    Offset<Table> ButtonReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData, flatbuffers::FlatBufferBuilder *builder)
     {
-        WidgetReader::setPropsFromProtocolBuffers(widget, nodeTree);
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
-        Button* button = static_cast<Button*>(widget);
-        const protocolbuffers::ButtonOptions& options = nodeTree.buttonoptions();
-        
-        std::string protocolBuffersPath = GUIReader::getInstance()->getFilePath();;
-        
-        bool scale9Enable = options.scale9enable();
-        button->setScale9Enabled(scale9Enable);
-        
-        
-		const protocolbuffers::ResourceData& normalDic = options.normaldata();
-        int normalType = normalDic.resourcetype();
-        std::string normalTexturePath = this->getResourcePath(normalDic.path(), (Widget::TextureResType)normalType);		
-        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
-        
-        
-        const protocolbuffers::ResourceData& pressedDic = options.presseddata();
-        int pressedType = pressedDic.resourcetype();
-        std::string pressedTexturePath = this->getResourcePath(pressedDic.path(), (Widget::TextureResType)pressedType);
-        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
-        
-        
-        const protocolbuffers::ResourceData& disabledDic = options.disableddata();
-        int disabledType = disabledDic.resourcetype();
-        std::string disabledTexturePath = this->getResourcePath(disabledDic.path(), (Widget::TextureResType)disabledType);
-        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
-        
-        if (scale9Enable)
-        {
-            button->setUnifySizeEnabled(false);
-            button->ignoreContentAdaptWithSize(false);
-            
-            float cx = options.capinsetsx();
-            float cy = options.capinsetsy();
-            float cw = options.capinsetswidth();
-            float ch = options.capinsetsheight();
-            
-            button->setCapInsets(Rect(cx, cy, cw, ch));
-            bool sw = options.has_scale9width();
-            bool sh = options.has_scale9height();
-            if (sw && sh)
-            {
-                float swf = options.scale9width();
-                float shf = options.scale9height();
-                button->setContentSize(Size(swf, shf));
-            }
-        }
-        bool tt = options.has_text();
-        if (tt)
-        {
-            const char* text = options.text().c_str();
-            if (text)
-            {
-                button->setTitleText(text);
-            }
-        }
-        
-        
-        int cri = options.has_textcolorr() ? options.textcolorr() : 255;
-        int cgi = options.has_textcolorg() ? options.textcolorg() : 255;
-        int cbi = options.has_textcolorb() ? options.textcolorb() : 255;
-        button->setTitleColor(Color3B(cri,cgi,cbi));
-        
-        
-        int fontSize = options.has_fontsize() ? options.fontsize() : 14;
-        button->setTitleFontSize(fontSize);
-        
-		bool displaystate = true;
-		if(options.has_displaystate())
-		{
-			displaystate = options.displaystate();
-		}
-		button->setBright(displaystate);
-
-        const char* fontName = options.has_fontname() ? options.fontname().c_str() : "微软雅黑";
-        button->setTitleFontName(fontName);
-        
-        if (options.has_fontresource())
-		{
-			const protocolbuffers::ResourceData& resourceData = options.fontresource();
-		    button->setTitleFontName(protocolBuffersPath + resourceData.path());
-		}
-        
-        const protocolbuffers::WidgetOptions& widgetOption = nodeTree.widgetoptions();
-        button->setColor(Color3B(widgetOption.colorr(), widgetOption.colorg(), widgetOption.colorb()));
-        button->setOpacity(widgetOption.has_alpha() ? widgetOption.alpha() : 255);
-        
-        
-        // other commonly protperties
-        WidgetReader::setColorPropsFromProtocolBuffers(widget, nodeTree);
-    }
-    
-    void ButtonReader::setPropsFromXML(cocos2d::ui::Widget *widget, const tinyxml2::XMLElement *objectData)
-    {
-        WidgetReader::setPropsFromXML(widget, objectData);
-        
-        Button* button = static_cast<Button*>(widget);
-        
-        std::string xmlPath = GUIReader::getInstance()->getFilePath();
-        
+        bool displaystate = true;
         bool scale9Enabled = false;
-        float cx = 0.0f, cy = 0.0f, cw = 0.0f, ch = 0.0f;
-        float swf = 0.0f, shf = 0.0f;
+        Rect capInsets;
         std::string text = "";
-        std::string fontName = "微软雅黑";
-        int fontSize = 0;
-        int title_color_red = 255, title_color_green = 255, title_color_blue = 255;
-        int cri = 255, cgi = 255, cbi = 255;
-        int opacity = 255;
+        int fontSize = 14;
+        std::string fontName = "";
+        cocos2d::Size scale9Size;
+        Color4B textColor(255, 255, 255, 255);
+        
+        std::string normalPath = "";
+        std::string normalPlistFile = "";
+        int normalResourceType = 0;
+        
+        std::string pressedPath = "";
+        std::string pressedPlistFile = "";
+        int pressedResourceType = 0;
+        
+        std::string disabledPath = "";
+        std::string disabledPlistFile = "";
+        int disabledResourceType = 0;
+        
+        std::string fontResourcePath = "";
+        std::string fontResourcePlistFile = "";
+        int fontResourceResourceType = 0;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -363,19 +285,19 @@ namespace cocostudio
             }
             else if (name == "Scale9OriginX")
             {
-                cx = atof(value.c_str());
+                capInsets.origin.x = atof(value.c_str());
             }
             else if (name == "Scale9OriginY")
             {
-                cy = atof(value.c_str());
+                capInsets.origin.y = atof(value.c_str());
             }
             else if (name == "Scale9Width")
             {
-                cw = atof(value.c_str());
+                capInsets.size.width = atof(value.c_str());
             }
             else if (name == "Scale9Height")
             {
-                ch = atof(value.c_str());
+                capInsets.size.height = atof(value.c_str());
             }
             else if (name == "ButtonText")
             {
@@ -389,13 +311,9 @@ namespace cocostudio
             {
                 fontName = value;
             }
-            else if (name == "Alpha")
-            {
-                opacity = atoi(value.c_str());
-            }
             else if (name == "DisplayState")
             {
-                button->setBright((value == "True") ? true : false);
+                displaystate = (value == "True") ? true : false;
             }
             
             attribute = attribute->Next();
@@ -418,35 +336,11 @@ namespace cocostudio
                     
                     if (name == "X")
                     {
-                        swf = atof(value.c_str());
+                        scale9Size.width = atof(value.c_str());
                     }
                     else if (name == "Y")
                     {
-                        shf = atof(value.c_str());
-                    }
-                    
-                    attribute = attribute->Next();
-                }
-            }
-            else if (name == "CColor")
-            {
-                attribute = child->FirstAttribute();
-                while (attribute)
-                {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
-                    
-                    if (name == "R")
-                    {
-                        cri = atoi(value.c_str());
-                    }
-                    else if (name == "G")
-                    {
-                        cgi = atoi(value.c_str());
-                    }
-                    else if (name == "B")
-                    {
-                        cbi = atoi(value.c_str());
+                        scale9Size.height = atof(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -462,15 +356,15 @@ namespace cocostudio
                     
                     if (name == "R")
                     {
-                        title_color_red = atoi(value.c_str());
+                        textColor.r = atoi(value.c_str());
                     }
                     else if (name == "G")
                     {
-                        title_color_green = atoi(value.c_str());
+                        textColor.g = atoi(value.c_str());
                     }
                     else if (name == "B")
                     {
-                        title_color_blue = atoi(value.c_str());
+                        textColor.b = atoi(value.c_str());
                     }
                     
                     attribute = attribute->Next();
@@ -478,9 +372,10 @@ namespace cocostudio
             }
             else if (name == "DisabledFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -489,44 +384,33 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        disabledPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                        disabledResourceType = getResourceType(value);;
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        disabledPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (disabledResourceType == 1)
                 {
-                    case 0:
-                    {
-                        button->loadTextureDisabled(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        button->loadTextureDisabled(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));
                 }
             }
             else if (name == "PressedFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -535,44 +419,33 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        pressedPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                        pressedResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        pressedPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (pressedResourceType == 1)
                 {
-                    case 0:
-                    {
-                        button->loadTexturePressed(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        button->loadTexturePressed(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             else if (name == "NormalFileData")
             {
+                std::string texture = "";
+                std::string texturePng = "";
+                
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -581,44 +454,30 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        normalPath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default" || value == "MarkedSubImage") ? 0 : 1;
+                        normalResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        normalPlistFile = value;
+                        texture = value;
                     }
                     
                     attribute = attribute->Next();
                 }
                 
-                switch (resourceType)
+                if (normalResourceType == 1)
                 {
-                    case 0:
-                    {
-                        button->loadTextureNormal(xmlPath + path, Widget::TextureResType::LOCAL);
-                        break;
-                    }
-                        
-                    case 1:
-                    {
-                        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(xmlPath + plistFile);
-                        button->loadTextureNormal(path, Widget::TextureResType::PLIST);
-                        break;
-                    }
-                        
-                    default:
-                        break;
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             else if (name == "FontResource")
             {
                 attribute = child->FirstAttribute();
-                int resourceType = 0;
-                std::string path = "", plistFile = "";
                 
                 while (attribute)
                 {
@@ -627,54 +486,149 @@ namespace cocostudio
                     
                     if (name == "Path")
                     {
-                        path = value;
+                        fontResourcePath = value;
                     }
                     else if (name == "Type")
                     {
-                        resourceType = (value == "Normal" || value == "Default") ? 0 : 1;
+                        fontResourceResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
-                        plistFile = value;
+                        fontResourcePlistFile = value;
                     }
                     
                     attribute = attribute->Next();
-                }
-                
-                switch (resourceType)
-                {
-                    case 0:
-                    {
-                        fontName = xmlPath + path;
-                        break;
-                    }
-                        
-                    default:
-                        break;
                 }
             }
             
             child = child->NextSiblingElement();
         }
         
+        Color f_textColor(255, textColor.r, textColor.g, textColor.b);
+        CapInsets f_capInsets(capInsets.origin.x, capInsets.origin.y, capInsets.size.width, capInsets.size.height);
+        FlatSize f_scale9Size(scale9Size.width, scale9Size.height);
+        
+        auto options = CreateButtonOptions(*builder,
+                                           widgetOptions,
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(normalPath),
+                                                              builder->CreateString(normalPlistFile),
+                                                              normalResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(pressedPath),
+                                                              builder->CreateString(pressedPlistFile),
+                                                              pressedResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(disabledPath),
+                                                              builder->CreateString(disabledPlistFile),
+                                                              disabledResourceType),
+                                           CreateResourceData(*builder,
+                                                              builder->CreateString(fontResourcePath),
+                                                              builder->CreateString(fontResourcePlistFile),
+                                                              fontResourceResourceType),
+                                           builder->CreateString(text),
+                                           builder->CreateString(fontName),
+                                           fontSize,
+                                           &f_textColor,
+                                           &f_capInsets,
+                                           &f_scale9Size,
+                                           scale9Enabled,
+                                           displaystate
+                                           );
+        
+        return *(Offset<Table>*)(&options);
+    }
+    
+    void ButtonReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *buttonOptions)
+    {
+        Button* button = static_cast<Button*>(node);
+        auto options = (ButtonOptions*)buttonOptions;
+        
+        bool scale9Enabled = options->scale9Enabled();
         button->setScale9Enabled(scale9Enabled);
         
+        
+        auto normalDic = options->normalData();
+        int normalType = normalDic->resourceType();
+        std::string normalTexturePath = normalDic->path()->c_str();
+        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        
+        auto pressedDic = options->pressedData();
+        int pressedType = pressedDic->resourceType();
+        std::string pressedTexturePath = pressedDic->path()->c_str();
+        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        
+        auto disabledDic = options->disabledData();
+        int disabledType = disabledDic->resourceType();
+        std::string disabledTexturePath = disabledDic->path()->c_str();
+        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        
+        std::string titleText = options->text()->c_str();
+        button->setTitleText(titleText);
+        
+        auto textColor = options->textColor();
+        Color3B titleColor(textColor->r(), textColor->g(), textColor->b());
+        button->setTitleColor(titleColor);
+        
+        int titleFontSize = options->fontSize();
+        button->setTitleFontSize(titleFontSize);
+        
+        std::string titleFontName = options->fontName()->c_str();
+        button->setTitleFontName(titleFontName);
+        
+        auto resourceData = options->fontResource();
+        std::string path = resourceData->path()->c_str();
+        if (path != "")
+        {
+            button->setTitleFontName(path);
+        }
+        
+        bool displaystate = options->displaystate();
+        button->setBright(displaystate);
+        button->setEnabled(displaystate);
+
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
         if (scale9Enabled)
         {
             button->setUnifySizeEnabled(false);
             button->ignoreContentAdaptWithSize(false);
             
-            button->setCapInsets(Rect(cx, cy, cw, ch));
-            button->setContentSize(Size(swf, shf));
+            auto f_capInsets = options->capInsets();
+            Rect capInsets(f_capInsets->x(), f_capInsets->y(), f_capInsets->width(), f_capInsets->height());
+            button->setCapInsets(capInsets);
+            
+            Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
+            button->setContentSize(scale9Size);
+        }
+    }
+    
+    Node* ButtonReader::createNodeWithFlatBuffers(const flatbuffers::Table *buttonOptions)
+    {
+        Button* button = Button::create();
+        
+        setPropsWithFlatBuffers(button, (Table*)buttonOptions);
+        
+        return button;
+    }
+    
+    int ButtonReader::getResourceType(std::string key)
+    {
+        if(key == "Normal" || key == "Default")
+        {
+            return 	0;
         }
         
-        button->setTitleText(text);
-        button->setTitleColor(Color3B(title_color_red, title_color_green, title_color_blue));
-        button->setTitleFontSize(fontSize);
-        button->setTitleFontName(fontName);
-        
-        button->setColor(Color3B(cri,cgi,cbi));
-        button->setOpacity(opacity);
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
+        {
+            if(key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
     }
+    
 }

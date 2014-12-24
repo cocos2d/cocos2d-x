@@ -62,6 +62,11 @@
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
 		521A8E7019F0C3D200D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */; };
 		521A8E7119F0C3D200D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */; };
+		87BA718B1A44A57100929C43 /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6F01A1F275E009C2562 /* FileServer.cpp */; };
+		87BA718C1A44A57100929C43 /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6F01A1F275E009C2562 /* FileServer.cpp */; };
+		87BA718F1A44A5BF00929C43 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
+		87BA71901A44A5CA00929C43 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
+		87BA71911A44A5CB00929C43 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
 		9F598A0819F5F3A6006015D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F598A0719F5F3A6006015D6 /* SystemConfiguration.framework */; };
 		9F598A0B19F5F4F4006015D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F598A0A19F5F4F4006015D6 /* StoreKit.framework */; };
 		9F9106B419F5614900AD5CAB /* libbase64.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F9105AC19F5614800AD5CAB /* libbase64.c */; };
@@ -174,6 +179,7 @@
 		9F91079719F56A6600AD5CAB /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F91079219F56A6600AD5CAB /* SimulatorConfig.cpp */; };
 		9F91079E19F5704400AD5CAB /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F91079B19F5704400AD5CAB /* ConsoleWindow.xib */; };
 		9F91079F19F5704400AD5CAB /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F91079D19F5704400AD5CAB /* ConsoleWindowController.m */; };
+		AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
 		C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48B1938512100C6382D /* PlayDisable_png.cpp */; };
@@ -515,6 +521,12 @@
 		9F91079B19F5704400AD5CAB /* ConsoleWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleWindow.xib; sourceTree = "<group>"; };
 		9F91079C19F5704400AD5CAB /* ConsoleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleWindowController.h; sourceTree = "<group>"; };
 		9F91079D19F5704400AD5CAB /* ConsoleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleWindowController.m; sourceTree = "<group>"; };
+		AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectWaitLayer.cpp; sourceTree = "<group>"; };
+		AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectWaitLayer.h; sourceTree = "<group>"; };
+		AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleCommand.cpp; sourceTree = "<group>"; };
+		AB6CB6EF1A1F275E009C2562 /* ConsoleCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleCommand.h; sourceTree = "<group>"; };
+		AB6CB6F01A1F275E009C2562 /* FileServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileServer.cpp; sourceTree = "<group>"; };
+		AB6CB6F11A1F275E009C2562 /* FileServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileServer.h; sourceTree = "<group>"; };
 		C00FD48A1938512100C6382D /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
 		C00FD48B1938512100C6382D /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
 		C00FD48C1938512100C6382D /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
@@ -1107,6 +1119,12 @@
 		C00FD4891938512100C6382D /* runtime */ = {
 			isa = PBXGroup;
 			children = (
+				AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */,
+				AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */,
+				AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */,
+				AB6CB6EF1A1F275E009C2562 /* ConsoleCommand.h */,
+				AB6CB6F01A1F275E009C2562 /* FileServer.cpp */,
+				AB6CB6F11A1F275E009C2562 /* FileServer.h */,
 				15AA9646199B6D4600725633 /* lua_debugger.c */,
 				15AA9647199B6D4600725633 /* lua_debugger.h */,
 				3EB5152A19528284006966AA /* Protos.pb.cc */,
@@ -1392,6 +1410,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BA718C1A44A57100929C43 /* FileServer.cpp in Sources */,
+				AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
 				49C656611A39A22400603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */,
@@ -1463,6 +1483,7 @@
 				9F9106CF19F5614900AD5CAB /* CCHazeFilter.cpp in Sources */,
 				9F9106CB19F5614900AD5CAB /* CCGammaFilter.cpp in Sources */,
 				9F9106DB19F5614900AD5CAB /* CCSharpenFilter.cpp in Sources */,
+				87BA71911A44A5CB00929C43 /* ConsoleCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1477,6 +1498,7 @@
 				9F91073619F5614900AD5CAB /* CCNativeIOS.mm in Sources */,
 				9F91074219F5614900AD5CAB /* SBJsonBase.m in Sources */,
 				9F9106E019F5614900AD5CAB /* ccFilterShaders.cpp in Sources */,
+				87BA718B1A44A57100929C43 /* FileServer.cpp in Sources */,
 				49C656541A39A1A200603AF5 /* NVGDrawNode.cpp in Sources */,
 				9F91078D19F5658D00AD5CAB /* lua_cocos2dx_extension_filter_auto.cpp in Sources */,
 				9F9106D819F5614900AD5CAB /* CCSepiaFilter.cpp in Sources */,
@@ -1499,6 +1521,7 @@
 				9F91076819F5614900AD5CAB /* CCStoreProduct.cpp in Sources */,
 				C00FD49A1938512100C6382D /* Runtime.cpp in Sources */,
 				9F91072619F5614900AD5CAB /* CCHTTPRequest.cpp in Sources */,
+				87BA71901A44A5CA00929C43 /* ConsoleCommand.cpp in Sources */,
 				9F9106C219F5614900AD5CAB /* CCCustomFilter.cpp in Sources */,
 				9F9106BE19F5614900AD5CAB /* CCBrightnessFilter.cpp in Sources */,
 				9F9106CE19F5614900AD5CAB /* CCHazeFilter.cpp in Sources */,
@@ -1532,6 +1555,7 @@
 				5023812417EBBCAC00990C9B /* main.m in Sources */,
 				9F91072819F5614900AD5CAB /* CCNetwork.cpp in Sources */,
 				9F91078719F561CD00AD5CAB /* HelperFunc.cpp in Sources */,
+				87BA718F1A44A5BF00929C43 /* ConnectWaitLayer.cpp in Sources */,
 				9F91073C19F5614900AD5CAB /* CCStorePaymentTransactionWrapper.mm in Sources */,
 				9F91070E19F5614900AD5CAB /* FilterShaders.cpp in Sources */,
 				9F9106C419F5614900AD5CAB /* CCDropShadowFilter.cpp in Sources */,

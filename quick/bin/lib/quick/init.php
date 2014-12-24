@@ -143,7 +143,7 @@ function findFiles($dir, array & $files)
     closedir($dh);
 }
 
-function getScriptFileBytecodes($path, $tmpfile, $usingluac = 0)
+function getScriptFileBytecodes($path, $tmpfile, $usingluajit = 0)
 {
     if (!file_exists($path))
     {
@@ -162,7 +162,7 @@ function getScriptFileBytecodes($path, $tmpfile, $usingluac = 0)
 
     @mkdir(pathinfo($tmpfile, PATHINFO_DIRNAME), 0777, true);
 
-    if ($usingluac == 0)
+    if ($usingluajit != 0)
     {
         $command = sprintf('%s -b -s "%s" "%s"', LUAJIT_BIN, $path, $tmpfile);
     }

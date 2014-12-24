@@ -714,6 +714,15 @@
     <ClCompile Include="%QUICK_V3_ROOT%\quick\lib\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.cpp">
       <Filter>Classes\quick-src\extra\luabinding</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

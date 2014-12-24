@@ -478,6 +478,15 @@
     <ClInclude Include="..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.hpp">
       <Filter>Classes\quick-src\extra\luabinding</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConnectWaitLayer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConsoleCommand.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\FileServer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -713,6 +722,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\quick-src\extra\luabinding\lua_cocos2dx_extension_nanovg_manual.cpp">
       <Filter>Classes\quick-src\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp">
+      <Filter>Classes\runtime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

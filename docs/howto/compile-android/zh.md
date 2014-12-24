@@ -133,16 +133,16 @@ Android 官方文档：http://developer.android.com/tools/device.html
 
 1.  Enable USB debugging on your device.
 
-	-   On most devices running Android 3.2 or older, you can find the option under Settings > Applications > Development.
-	-   On Android 4.0 and newer, it’s in Settings > Developer options.
+    -   On most devices running Android 3.2 or older, you can find the option under Settings > Applications > Development.
+    -   On Android 4.0 and newer, it’s in Settings > Developer options.
 
-    	Note: On Android 4.2 and newer, Developer options is hidden by default. To make it available, go to Settings > About phone and tap Build number seven times. Return to the previous screen to find Developer options.
-	
+        Note: On Android 4.2 and newer, Developer options is hidden by default. To make it available, go to Settings > About phone and tap Build number seven times. Return to the previous screen to find Developer options.
+    
     -   在系统设置中找到“开发者选项”，打开“USB调试”。Android 4.2 开始，`开发者选项`默认是隐藏的，需要打开`设置->关于`界面，然后在`Build Number`上点击七次才能打开`开发者选项`。
 
 2.  Set up your system to detect your device.
 
-	-   If you’re developing on Windows, you need to install a USB driver for adb. For an installation guide and links to OEM drivers, see the OEM USB Drivers document.
+    -   If you’re developing on Windows, you need to install a USB driver for adb. For an installation guide and links to OEM drivers, see the OEM USB Drivers document.
 
     -   根据不同的机型，也许需要安装该机型特定的 USB 驱动程序。例如 Moto 就必须安装 Moto 的 USB 驱动。
 
@@ -226,8 +226,49 @@ build_apk 支持下列参数：
 
 ### 注意事项
 
--   JDK 1.7以上的版本，在签名时需要指定时间戳，此脚本现在未做处理，因此在签名时会有警告信息，并且打包出来的apk在真机上运行时会报错。
+-   JDK 1.7以上的版本，在指定相关参数后可以打包成功，但打包出来的apk在真机可能无法安装和运行，请尽量使用 JDK 1.6版本。
 -   旧版本 ADT 的目录结构不同，有可能造成无法找到 build tools 等，造成打包失败。
+
+~
+
+## 使用模块化编译缩小 apk 体积
+
+在 quick 中可以使用模块化编译功能，按照项目需求编译出更小的可执行文件。
+
+要启用这个功能，开发者需要打开项目中的 `proj.android/jni/Application.mk` 文件，然后将不需要的模块值改为 `0`。
+
+| MACRO                  |  体积  | 功能  |
+|------------------------|--------|----------|
+|CC_USE_CURL             |  1.3M  | 使用 CURL 库提供 HTTP 网络功能。关闭后，assetsmanager等相关功能也会被去掉。quick 在 Android 下使用 Android 系统的 Java 接口提供 HTTP 网络功能，所以 CURL 关闭后仍然可以使用HttpRequest。 |
+|CC_USE_TIFF             |  514KB | 使用 TIFF 图像格式。 |
+|CC_USE_WEBP             |  208KB | 使用 WebP 图像格式。 |
+|CC_USE_JPEG             |  368KB | 使用 JPEG 图像格式。 |
+|CC_USE_PHYSICS          |  416KB | 使用物理引擎。 |
+|CC_USE_3D               |  212KB | 使用 3D 模块。 |
+|CC_USE_SQLITE           |  367KB | 使用 Lua 的 Sqlite 数据库扩展 lsqlite3。 |
+|CC_USE_CCSTUDIO         |  1.2M  | 使用 Cocos Studio 支持模块。 |
+|CC_USE_CCBUILDER        |  208KB | 使用 Cocos Builder 支持模块。 |
+|CC_USE_SPINE            |   92KB | 使用 Spine 支持模块。 |
+|CC_CODE_IDE_DEBUG_SUPPORT|       | 使用 cocos IDE 调试支持模块。在 release 版本里自动关闭，因此没有统计它在release版本下的体积。 |
+
+
+只需要在 `Applicaiton.mk` 中将相应的宏设置为 `0`，然后重新编译就可以得到更小的可执行文件。
+
+> 在proj.android_no_anysdk工程中，以上可选模块均已经关闭。因此如果直接使用no_anysdk工程来编译，生成的apk包将不支持上述模块功能，如需要请自己修改相应的开关。
+
+还有一些常用的基础模块可以去除，由于可能影响常用的功能，请根据自己的情况移除。打开文件 frameworks/runtime-src/Classes/lua_module_register.h ，分别注释掉以下语句：
+
+
+```C++
+
+    register_cocosdenshion_module(L);   // 简单音效模块
+    register_network_module(L);         // 网络模块，如 socket 和 websocket
+    register_ui_moudle(L);              // 基础UI库，如编辑框等
+    register_extension_module(L);       // 基本扩展，如 TableView 等
+    register_audioengine_module(L);     // audio engine 模块
+
+```
+
 
 
 

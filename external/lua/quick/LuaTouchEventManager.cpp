@@ -117,7 +117,6 @@ void LuaTouchEventManager::addTouchableNode(LuaEventNode *node)
 void LuaTouchEventManager::removeTouchableNode(LuaEventNode *node)
 {
 	if (_bDispatching) {
-		node->detachNode();
 		return;
 	}
 
@@ -148,16 +147,9 @@ void LuaTouchEventManager::onTouchesBegan(const std::vector<Touch*>& touches, Ev
     // check current in touching
     if (_touchingTargets.size())
     {
-        _bDispatching = true;
         dispatchingTouchEvent(touches, event, CCTOUCHADDED);
-        _bDispatching = false;
-        
-        cleanDetachNode();
-        
         return;
     }
-    
-    _bDispatching = true;
 
     // start new touching event
     // sort touchable nodes
@@ -277,24 +269,15 @@ void LuaTouchEventManager::onTouchesBegan(const std::vector<Touch*>& touches, Ev
 
         // continue dispatching, try to next
     }
-    
-    _bDispatching = false;
-    
-    cleanDetachNode();
 }
 
 void LuaTouchEventManager::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
-    _bDispatching = true;
     dispatchingTouchEvent(touches, event, CCTOUCHMOVED);
-    _bDispatching = false;
-    
-    cleanDetachNode();
 }
 
 void LuaTouchEventManager::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
-	_bDispatching = true;
     for (auto it = touches.begin(); it != touches.end(); ++it)
     {
         m_touchingIds.erase(((Touch*)*it)->getID());
@@ -311,18 +294,15 @@ void LuaTouchEventManager::onTouchesEnded(const std::vector<Touch*>& touches, Ev
         //CCLOG("TOUCH ENDED, REMOVE ALL TOUCH TARGETS");
         _touchingTargets.clear();
     }
-	_bDispatching = false;
-
-	cleanDetachNode();
 }
 
-void LuaTouchEventManager::cleanDetachNode()
+void LuaTouchEventManager::cleanDisabledNode()
 {
 	Vector<LuaEventNode*> toErase;
 
 	for (auto it : _touchableNodes)
 	{
-		if (it->isDetached())
+		if (!it->isTouchEnabled())
 		{
 			toErase.pushBack(it);
 		}
@@ -412,6 +392,14 @@ void LuaTouchEventManager::disableTouchDispatching()
 }
 
 void LuaTouchEventManager::dispatchingTouchEvent(const std::vector<Touch*>& touches, Event *pEvent, int event)
+{
+    _bDispatching = true;
+    dispatchingTouchEventReal(touches, pEvent, event);
+    _bDispatching = false;
+    cleanDisabledNode();
+}
+
+void LuaTouchEventManager::dispatchingTouchEventReal(const std::vector<Touch*>& touches, Event *pEvent, int event)
 {
     LuaEventNode *node = nullptr;
     LuaTouchTargetNode *touchTarget = nullptr;

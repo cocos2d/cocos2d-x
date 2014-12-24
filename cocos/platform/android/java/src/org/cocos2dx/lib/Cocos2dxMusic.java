@@ -47,16 +47,17 @@ public class Cocos2dxMusic {
     private MediaPlayer mBackgroundMediaPlayer;
     private float mLeftVolume;
     private float mRightVolume;
-    private boolean mPaused;// whether music is paused state.
-    private boolean mManualPaused = false;// whether music is paused manually before the program is switched to the background.
+    private boolean mPaused; // whether music is paused state.
+    private boolean mIsLoop = false;
+    private boolean mManualPaused = false; // whether music is paused manually before the program is switched to the background.
     private String mCurrentPath;
 
     // ===========================================================
     // Constructors
     // ===========================================================
 
-    public Cocos2dxMusic(final Context pContext) {
-        this.mContext = pContext;
+    public Cocos2dxMusic(final Context context) {
+        this.mContext = context;
 
         this.initData();
     }
@@ -73,8 +74,8 @@ public class Cocos2dxMusic {
     // Methods
     // ===========================================================
 
-    public void preloadBackgroundMusic(final String pPath) {
-        if ((this.mCurrentPath == null) || (!this.mCurrentPath.equals(pPath))) {
+    public void preloadBackgroundMusic(final String path) {
+        if ((this.mCurrentPath == null) || (!this.mCurrentPath.equals(path))) {
             // preload new background music
 
             // release old resource and create a new one
@@ -82,48 +83,49 @@ public class Cocos2dxMusic {
                 this.mBackgroundMediaPlayer.release();
             }
 
-            this.mBackgroundMediaPlayer = this.createMediaplayer(pPath);
+            this.mBackgroundMediaPlayer = this.createMediaplayer(path);
 
             // record the path
-            this.mCurrentPath = pPath;
+            this.mCurrentPath = path;
         }
     }
 
-    public void playBackgroundMusic(final String pPath, final boolean isLoop) {
-        if (this.mCurrentPath == null) {
+    public void playBackgroundMusic(final String path, final boolean isLoop) {
+        if (mCurrentPath == null) {
             // it is the first time to play background music or end() was called
-            this.mBackgroundMediaPlayer = this.createMediaplayer(pPath);
-            this.mCurrentPath = pPath;
+            mBackgroundMediaPlayer = createMediaplayer(path);
+            mCurrentPath = path;
         } else {
-            if (!this.mCurrentPath.equals(pPath)) {
+            if (!mCurrentPath.equals(path)) {
                 // play new background music
 
                 // release old resource and create a new one
-                if (this.mBackgroundMediaPlayer != null) {
-                    this.mBackgroundMediaPlayer.release();
+                if (mBackgroundMediaPlayer != null) {
+                    mBackgroundMediaPlayer.release();
                 }
-                this.mBackgroundMediaPlayer = this.createMediaplayer(pPath);
+                mBackgroundMediaPlayer = createMediaplayer(path);
 
                 // record the path
-                this.mCurrentPath = pPath;
+                mCurrentPath = path;
             }
         }
 
-        if (this.mBackgroundMediaPlayer == null) {
+        if (mBackgroundMediaPlayer == null) {
             Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: background media player is null");
         } else {
             try {
                 // if the music is playing or paused, stop it
                 if (mPaused) {
                     mBackgroundMediaPlayer.seekTo(0);
-                    this.mBackgroundMediaPlayer.start();
+                    mBackgroundMediaPlayer.start();
                 } else if (mBackgroundMediaPlayer.isPlaying()) {
                     mBackgroundMediaPlayer.seekTo(0);
                 } else {
-                    this.mBackgroundMediaPlayer.start();
+                    mBackgroundMediaPlayer.start();
                 }
-                this.mBackgroundMediaPlayer.setLooping(isLoop);
-                this.mPaused = false;
+                mBackgroundMediaPlayer.setLooping(isLoop);
+                mPaused = false;
+                mIsLoop = isLoop;
             } catch (final Exception e) {
                 Log.e(Cocos2dxMusic.TAG, "playBackgroundMusic: error state");
             }
@@ -132,10 +134,13 @@ public class Cocos2dxMusic {
 
     public void stopBackgroundMusic() {
         if (this.mBackgroundMediaPlayer != null) {
-            this.mBackgroundMediaPlayer.stop();
-
-            // should set the state, if not, the following sequence will be error
-            // play -> pause -> stop -> resume
+        	mBackgroundMediaPlayer.release();
+        	mBackgroundMediaPlayer = createMediaplayer(mCurrentPath);
+        	
+            /**
+             * should set the state, if not, the following sequence will be error
+             * play -> pause -> stop -> resume
+             */
             this.mPaused = false;
         }
     }
@@ -158,17 +163,7 @@ public class Cocos2dxMusic {
 
     public void rewindBackgroundMusic() {
         if (this.mBackgroundMediaPlayer != null) {
-            this.mBackgroundMediaPlayer.stop();
-
-            try {
-                this.mBackgroundMediaPlayer.prepare();
-                this.mBackgroundMediaPlayer.seekTo(0);
-                this.mBackgroundMediaPlayer.start();
-
-                this.mPaused = false;
-            } catch (final Exception e) {
-                Log.e(Cocos2dxMusic.TAG, "rewindBackgroundMusic: error state");
-            }
+        	playBackgroundMusic(mCurrentPath, mIsLoop);
         }
     }
 
@@ -200,16 +195,16 @@ public class Cocos2dxMusic {
         }
     }
 
-    public void setBackgroundVolume(float pVolume) {
-        if (pVolume < 0.0f) {
-            pVolume = 0.0f;
+    public void setBackgroundVolume(float volume) {
+        if (volume < 0.0f) {
+            volume = 0.0f;
         }
 
-        if (pVolume > 1.0f) {
-            pVolume = 1.0f;
+        if (volume > 1.0f) {
+            volume = 1.0f;
         }
 
-        this.mLeftVolume = this.mRightVolume = pVolume;
+        this.mLeftVolume = this.mRightVolume = volume;
         if (this.mBackgroundMediaPlayer != null) {
             this.mBackgroundMediaPlayer.setVolume(this.mLeftVolume, this.mRightVolume);
         }
@@ -246,16 +241,16 @@ public class Cocos2dxMusic {
      *            the pPath relative to assets
      * @return
      */
-    private MediaPlayer createMediaplayer(final String pPath) {
+    private MediaPlayer createMediaplayer(final String path) {
         MediaPlayer mediaPlayer = new MediaPlayer();
 
         try {
-            if (pPath.startsWith("/")) {
-                final FileInputStream fis = new FileInputStream(pPath);
+            if (path.startsWith("/")) {
+                final FileInputStream fis = new FileInputStream(path);
                 mediaPlayer.setDataSource(fis.getFD());
                 fis.close();
             } else {
-                final AssetFileDescriptor assetFileDescritor = this.mContext.getAssets().openFd(pPath);
+                final AssetFileDescriptor assetFileDescritor = this.mContext.getAssets().openFd(path);
                 mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());
             }
 

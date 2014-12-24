@@ -1104,11 +1104,8 @@ static int tolua_anysdk_ProtocolAds_isAdTypeSupported00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isAdTypeSupported'", NULL);
 #endif
   {
-    CCLOG("isAdTypeSupported, adsType:%d, %x\n", adsType, self);
    bool tolua_ret = (bool)  self->isAdTypeSupported(adsType);
-   CCLOG("isAdTypeSupported 111");
    tolua_pushboolean(tolua_S,(bool)tolua_ret);
-   CCLOG("isAdTypeSupported 222");
   }
  }
  return 1;
@@ -1961,19 +1958,23 @@ static int tolua_anysdk_ProtocolUser_login01(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"ProtocolUser",0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_iscppstring(tolua_S,2,0,&tolua_err)
  )
   goto tolua_lerror;
  else
  {
   ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
   std::string server_id = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+  std::string server_ip = "";
+  if ( lua_type(tolua_S, 3) == LUA_TSTRING )
+  {
+    server_ip = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+  }
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
 #endif
   {
-   self->login(server_id);
+   self->login(server_id, server_ip);
   }
  }
  return 0;

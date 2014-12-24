@@ -1,9 +1,15 @@
-quick-cocos2d-x-3.3-final ?
+quick-cocos2d-x-3.3 Dec.23 2014
     [NEW]           Moudules: added nonage module
+    [NEW]           iOS: added iOS ARM64 support
+    [NEW]           Encrypt: added Lua bytecodes encrypt support
+    [NEW]           Encrypt: build luac with portable bytecodes for mac/windows
 
     [FIX]           Player: supported to write log file on win32 platform
     [FIX]           Quick: fixed issues
+    [FIX]           Cocos2d-x: Merged cocos2d-x-3.3
+    [FIX]           Lua: Use Lua 5.1.5 instead of LuaJIT
 
+    [MORE]          See CHANGELOG of cocos2d-x-3.3
 
 quick-cocos2d-x-3.3-rc1 Dec.2 2014
     [NEW]           WP: added proj.wp8-xaml

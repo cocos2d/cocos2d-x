@@ -165,15 +165,15 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
         [self openConsoleWindow];
     }
     
-    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    
-    if (args!=nullptr && [args count]>=2) {
-        extern std::string g_resourcePath;
-        g_resourcePath = [[args objectAtIndex:1]UTF8String];
-        if (g_resourcePath.at(0) != '/') {
-            g_resourcePath="";
-        }
-    }
+//    NSArray *args = [[NSProcessInfo processInfo] arguments];
+//    
+//    if (args!=nullptr && [args count]>=2) {
+//        extern std::string g_resourcePath;
+//        g_resourcePath = [[args objectAtIndex:1]UTF8String];
+//        if (g_resourcePath.at(0) != '/') {
+//            g_resourcePath="";
+//        }
+//    }
     g_nsAppDelegate =self;
     AppDelegate app;
     if (_project.getDebuggerType()==kCCLuaDebuggerNone)

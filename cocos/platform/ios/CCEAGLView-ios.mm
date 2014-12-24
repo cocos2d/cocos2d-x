@@ -778,13 +778,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	float scaleY = glview->getScaleY();
     
     
-    if (self.contentScaleFactor == 2.0f)
-    {
-        // Convert to pixel coordinate
-        
-        begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
-        end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
-    }
+    
+    // Convert to pixel coordinate
+    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
+    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
     
     float offestY = glview->getViewPortRect().origin.y;
     CCLOG("offestY = %f", offestY);
@@ -861,10 +858,7 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
 	dis *= glview->getScaleY();
     
-    if (self.contentScaleFactor == 2.0f)
-    {
-        dis /= 2.0f;
-    }
+    dis /= self.contentScaleFactor;
     
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {

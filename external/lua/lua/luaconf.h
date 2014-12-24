@@ -10,6 +10,8 @@
 
 #include <limits.h>
 #include <stddef.h>
+#include <stdint.h>
+#include <sys/types.h>
 
 
 /*
@@ -207,7 +209,7 @@
 @* of a function in debug information.
 ** CHANGE it if you want a different size.
 */
-#define LUA_IDSIZE	60
+#define LUA_IDSIZE	240
 
 
 /*
@@ -410,21 +412,16 @@
 ** part always works, but may waste space on machines with 64-bit
 ** longs.) Probably you do not need to change this.
 */
-#if LUAI_BITSINT >= 32
-#define LUAI_UINT32	unsigned int
-#define LUAI_INT32	int
-#define LUAI_MAXINT32	INT_MAX
-#define LUAI_UMEM	size_t
-#define LUAI_MEM	ptrdiff_t
-#else
-/* 16-bit ints */
-#define LUAI_UINT32	unsigned long
-#define LUAI_INT32	long
-#define LUAI_MAXINT32	LONG_MAX
-#define LUAI_UMEM	unsigned long
-#define LUAI_MEM	long
-#endif
 
+#define LUAI_UINT32	uint32_t
+#define LUAI_INT32	int32_t
+#define LUAI_MAXINT32	0x7fffffff
+#define LUAI_UMEM	size_t
+#if defined WIN32
+#define LUAI_MEM	intptr_t
+#else
+#define LUAI_MEM	ssize_t
+#endif
 
 /*
 @@ LUAI_MAXCALLS limits the number of nested calls.

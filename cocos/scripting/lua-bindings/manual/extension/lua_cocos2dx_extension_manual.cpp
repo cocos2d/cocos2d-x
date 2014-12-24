@@ -109,7 +109,7 @@ static int tolua_cocos2dx_ScrollView_setDelegate(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'setDelegate' function of ScrollView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(tolua_S, "'setDelegate' function of ScrollView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -157,7 +157,7 @@ static int tolua_cocos2d_ScrollView_registerScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of ScrollView has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:registerScriptHandler",argc, 2);
+    luaL_error(tolua_S, "%s function of ScrollView has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -202,7 +202,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:unregisterScriptHandler", argc, 1);
+    luaL_error(tolua_S, "%s function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:unregisterScriptHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -278,7 +278,7 @@ static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of Control has wrong number of arguments: %d, was expecting %d\n", "cc.Control:registerControlEventHandler", argc, 2);
+    luaL_error(tolua_S, "%s function of Control has wrong number of arguments: %d, was expecting %d\n", "cc.Control:registerControlEventHandler", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -331,7 +331,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("%s function of Control  has wrong number of arguments: %d, was expecting %d\n", "cc.Control:unregisterControlEventHandler", argc, 1);
+    luaL_error(tolua_S, "%s function of Control  has wrong number of arguments: %d, was expecting %d\n", "cc.Control:unregisterControlEventHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -453,7 +453,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -620,7 +620,7 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -759,7 +759,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -824,7 +824,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         return 1;
     }
-    CCLOG("'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -872,7 +872,7 @@ static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -917,7 +917,7 @@ static int lua_cocos2d_TableView_unregisterScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -989,7 +989,7 @@ static int lua_cocos2dx_Extension_EventListenerAssetsManagerEx_create(lua_State*
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "create",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "create",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1

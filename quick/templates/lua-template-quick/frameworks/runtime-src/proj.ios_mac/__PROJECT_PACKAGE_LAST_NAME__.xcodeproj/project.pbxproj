@@ -46,6 +46,7 @@
 		5023813E17EBBCE400990C9B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		5023814017EBBCE400990C9B /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
 		5023814117EBBCE400990C9B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D215EB7BE500256477 /* AudioToolbox.framework */; };
+		5023814217EBBCE400990C9B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D415EB7BE500256477 /* AVFoundation.framework */; };
 		5023814417EBBCE400990C9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D815EB7BE500256477 /* Foundation.framework */; };
 		5023814517EBBCE400990C9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3DA15EB7BE500256477 /* CoreGraphics.framework */; };
 		5023817617EBBE3400990C9B /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5023817217EBBE3400990C9B /* Icon.icns */; };
@@ -62,6 +63,12 @@
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
 		521A8E7019F0C3D200D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */; };
 		521A8E7119F0C3D200D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */; };
+		AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
+		AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
+		AB6CB6F41A1F275E009C2562 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
+		AB6CB6F51A1F275E009C2562 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
+		AB6CB6F61A1F275E009C2562 /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6F01A1F275E009C2562 /* FileServer.cpp */; };
+		AB6CB6F71A1F275E009C2562 /* FileServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6F01A1F275E009C2562 /* FileServer.cpp */; };
 		9F598A0819F5F3A6006015D6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F598A0719F5F3A6006015D6 /* SystemConfiguration.framework */; };
 		9F598A0B19F5F4F4006015D6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F598A0A19F5F4F4006015D6 /* StoreKit.framework */; };
 		9F9106B419F5614900AD5CAB /* libbase64.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F9105AC19F5614800AD5CAB /* libbase64.c */; };
@@ -333,6 +340,12 @@
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
+		AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectWaitLayer.cpp; sourceTree = "<group>"; };
+		AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectWaitLayer.h; sourceTree = "<group>"; };
+		AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleCommand.cpp; sourceTree = "<group>"; };
+		AB6CB6EF1A1F275E009C2562 /* ConsoleCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleCommand.h; sourceTree = "<group>"; };
+		AB6CB6F01A1F275E009C2562 /* FileServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileServer.cpp; sourceTree = "<group>"; };
+		AB6CB6F11A1F275E009C2562 /* FileServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileServer.h; sourceTree = "<group>"; };
 		9F598A0719F5F3A6006015D6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		9F598A0A19F5F4F4006015D6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		9F9105A719F5614800AD5CAB /* HelperFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelperFunc.cpp; sourceTree = "<group>"; };
@@ -573,6 +586,7 @@
 				5023813E17EBBCE400990C9B /* QuartzCore.framework in Frameworks */,
 				5023814017EBBCE400990C9B /* OpenAL.framework in Frameworks */,
 				5023814117EBBCE400990C9B /* AudioToolbox.framework in Frameworks */,
+				5023814217EBBCE400990C9B /* AVFoundation.framework in Frameworks */,
 				5023814417EBBCE400990C9B /* Foundation.framework in Frameworks */,
 				5023814517EBBCE400990C9B /* CoreGraphics.framework in Frameworks */,
 			);
@@ -1126,6 +1140,12 @@
 		C00FD4891938512100C6382D /* runtime */ = {
 			isa = PBXGroup;
 			children = (
+				AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */,
+				AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */,
+				AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */,
+				AB6CB6EF1A1F275E009C2562 /* ConsoleCommand.h */,
+				AB6CB6F01A1F275E009C2562 /* FileServer.cpp */,
+				AB6CB6F11A1F275E009C2562 /* FileServer.h */,
 				15AA9646199B6D4600725633 /* lua_debugger.c */,
 				15AA9647199B6D4600725633 /* lua_debugger.h */,
 				3EB5152A19528284006966AA /* Protos.pb.cc */,
@@ -1411,19 +1431,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
 				C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */,
+				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
+				AB6CB6F51A1F275E009C2562 /* ConsoleCommand.cpp in Sources */,
+				C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */,
+				C00FD49D1938512100C6382D /* Shine_png.cpp in Sources */,
+				15AA9649199B6D4600725633 /* lua_debugger.c in Sources */,
+				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
+				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
+				C07828F818B4D72E00BD2287 /* main.m in Sources */,
+				C00FD49B1938512100C6382D /* Runtime.cpp in Sources */,
+				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				3EB5152D19528284006966AA /* Protos.pb.cc in Sources */,
+				AB6CB6F71A1F275E009C2562 /* FileServer.cpp in Sources */,
+				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
+				9F91079719F56A6600AD5CAB /* SimulatorConfig.cpp in Sources */,
 				9F91079F19F5704400AD5CAB /* ConsoleWindowController.m in Sources */,
 				9F91076F19F5614900AD5CAB /* lua_cjson.c in Sources */,
 				9F91070F19F5614900AD5CAB /* FilterShaders.cpp in Sources */,
-				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
-				9F91079719F56A6600AD5CAB /* SimulatorConfig.cpp in Sources */,
-				C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */,
-				C00FD49D1938512100C6382D /* Shine_png.cpp in Sources */,
 				9F91074519F5614900AD5CAB /* SBJsonParser.m in Sources */,
 				9F91074D19F5614900AD5CAB /* ReachabilityIOSMac.m in Sources */,
-				15AA9649199B6D4600725633 /* lua_debugger.c in Sources */,
 				9F9106D119F5614900AD5CAB /* CCHueFilter.cpp in Sources */,
 				9F91076D19F5614900AD5CAB /* fpconv.c in Sources */,
 				9F9106B719F5614900AD5CAB /* CCCrypto.cpp in Sources */,
@@ -1445,16 +1475,12 @@
 				9F9106DD19F5614900AD5CAB /* CCTestFilter.cpp in Sources */,
 				49C655F31A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */,
 				9F9106DF19F5614900AD5CAB /* CCFilteredSprite.cpp in Sources */,
-				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
 				9F9106C119F5614900AD5CAB /* CCContrastFilter.cpp in Sources */,
 				9F9106C719F5614900AD5CAB /* CCExposureFilter.cpp in Sources */,
 				49C655F11A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_auto.cpp in Sources */,
-				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				9F91077919F5614900AD5CAB /* lpack.c in Sources */,
-				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				9F91074B19F5614900AD5CAB /* CCNetworkIOSMac.mm in Sources */,
 				49C655E71A36F6F800603AF5 /* NVGDrawNode.cpp in Sources */,
-				C00FD49B1938512100C6382D /* Runtime.cpp in Sources */,
 				9F91072319F5614900AD5CAB /* HelperFunc_luabinding.cpp in Sources */,
 				9F91077D19F5614900AD5CAB /* sqlite3.c in Sources */,
 				9F91075119F5614900AD5CAB /* CCNative.mm in Sources */,
@@ -1467,16 +1493,13 @@
 				9F9106C319F5614900AD5CAB /* CCCustomFilter.cpp in Sources */,
 				9F91078119F5614900AD5CAB /* lua_zlib.c in Sources */,
 				9F9106CD19F5614900AD5CAB /* CCGrayFilter.cpp in Sources */,
-				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
 				9F9106D319F5614900AD5CAB /* CCMaskFilter.cpp in Sources */,
 				9F91077119F5614900AD5CAB /* strbuf.c in Sources */,
-				3EB5152D19528284006966AA /* Protos.pb.cc in Sources */,
 				9F9106BF19F5614900AD5CAB /* CCBrightnessFilter.cpp in Sources */,
 				9F91077F19F5614900AD5CAB /* lua_extensions_more.c in Sources */,
 				9F91074F19F5614900AD5CAB /* CCCryptoMac.mm in Sources */,
 				9F9106C919F5614900AD5CAB /* CCFilter.cpp in Sources */,
 				49C655EB1A36F6F800603AF5 /* nanovg.c in Sources */,
-				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
 				9F91074719F5614900AD5CAB /* SBJsonWriter.m in Sources */,
 				9F91078E19F5658D00AD5CAB /* lua_cocos2dx_extension_filter_auto.cpp in Sources */,
 				9F9106E119F5614900AD5CAB /* ccFilterShaders.cpp in Sources */,
@@ -1492,7 +1515,6 @@
 			files = (
 				9F91077219F5614900AD5CAB /* debugger.c in Sources */,
 				49C655F21A36F71600603AF5 /* lua_cocos2dx_extension_nanovg_manual.cpp in Sources */,
-				15AA9648199B6D4600725633 /* lua_debugger.c in Sources */,
 				49C655EA1A36F6F800603AF5 /* nanovg.c in Sources */,
 				9F91074819F5614900AD5CAB /* OpenUDIDIOS.m in Sources */,
 				9F9106D619F5614900AD5CAB /* CCSaturationFilter.cpp in Sources */,
@@ -1505,21 +1527,16 @@
 				9F91078D19F5658D00AD5CAB /* lua_cocos2dx_extension_filter_auto.cpp in Sources */,
 				9F9106D819F5614900AD5CAB /* CCSepiaFilter.cpp in Sources */,
 				9F9106DC19F5614900AD5CAB /* CCTestFilter.cpp in Sources */,
-				C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */,
 				9F91074A19F5614900AD5CAB /* CCNetworkIOSMac.mm in Sources */,
 				9F91071E19F5614900AD5CAB /* cocos2dx_extra_luabinding.cpp in Sources */,
 				9F9106D219F5614900AD5CAB /* CCMaskFilter.cpp in Sources */,
 				9F9106DE19F5614900AD5CAB /* CCFilteredSprite.cpp in Sources */,
 				9F9106CC19F5614900AD5CAB /* CCGrayFilter.cpp in Sources */,
 				9F91079619F56A6600AD5CAB /* SimulatorConfig.cpp in Sources */,
-				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
-				C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */,
 				9F91074019F5614900AD5CAB /* SBJSON.m in Sources */,
 				9F91073E19F5614900AD5CAB /* CCStoreReceiptVerifyRequestIOS.mm in Sources */,
 				9F91072219F5614900AD5CAB /* HelperFunc_luabinding.cpp in Sources */,
-				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
 				9F91076819F5614900AD5CAB /* CCStoreProduct.cpp in Sources */,
-				C00FD49A1938512100C6382D /* Runtime.cpp in Sources */,
 				9F91072619F5614900AD5CAB /* CCHTTPRequest.cpp in Sources */,
 				9F9106C219F5614900AD5CAB /* CCCustomFilter.cpp in Sources */,
 				9F9106BE19F5614900AD5CAB /* CCBrightnessFilter.cpp in Sources */,
@@ -1531,25 +1548,19 @@
 				9F91073419F5614900AD5CAB /* CCNative.mm in Sources */,
 				9F91077819F5614900AD5CAB /* lpack.c in Sources */,
 				9F91079419F56A6600AD5CAB /* ProjectConfig.cpp in Sources */,
-				C06C3796191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				9F9106C019F5614900AD5CAB /* CCContrastFilter.cpp in Sources */,
-				C00FD4961938512100C6382D /* PlayEnable_png.cpp in Sources */,
-				3EB5152C19528284006966AA /* Protos.pb.cc in Sources */,
 				9F9106D419F5614900AD5CAB /* CCRGBFilter.cpp in Sources */,
 				9F91077019F5614900AD5CAB /* strbuf.c in Sources */,
-				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
 				9F91077619F5614900AD5CAB /* lfs.c in Sources */,
 				9F91077C19F5614900AD5CAB /* sqlite3.c in Sources */,
 				9F91076E19F5614900AD5CAB /* lua_cjson.c in Sources */,
 				9F9106D019F5614900AD5CAB /* CCHueFilter.cpp in Sources */,
-				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
 				9F9106B619F5614900AD5CAB /* CCCrypto.cpp in Sources */,
 				9F91074619F5614900AD5CAB /* SBJsonWriter.m in Sources */,
 				9F9106BC19F5614900AD5CAB /* CCBlurFilter.cpp in Sources */,
 				9F91078019F5614900AD5CAB /* lua_zlib.c in Sources */,
 				9F91073219F5614900AD5CAB /* CCCryptoIOS.mm in Sources */,
 				9F91076619F5614900AD5CAB /* CCStorePaymentTransaction.cpp in Sources */,
-				5023812417EBBCAC00990C9B /* main.m in Sources */,
 				49C655E81A36F6F800603AF5 /* NVGNode.cpp in Sources */,
 				9F91072819F5614900AD5CAB /* CCNetwork.cpp in Sources */,
 				9F91078719F561CD00AD5CAB /* HelperFunc.cpp in Sources */,
@@ -1557,16 +1568,31 @@
 				9F91070E19F5614900AD5CAB /* FilterShaders.cpp in Sources */,
 				9F9106C419F5614900AD5CAB /* CCDropShadowFilter.cpp in Sources */,
 				9F9106B419F5614900AD5CAB /* libbase64.c in Sources */,
-				C033B51C191B337200D06937 /* VisibleRect.cpp in Sources */,
 				9F91076C19F5614900AD5CAB /* fpconv.c in Sources */,
 				9F9106C619F5614900AD5CAB /* CCExposureFilter.cpp in Sources */,
-				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
 				9F9106DA19F5614900AD5CAB /* CCSharpenFilter.cpp in Sources */,
 				9F9106CA19F5614900AD5CAB /* CCGammaFilter.cpp in Sources */,
 				9F91071A19F5614900AD5CAB /* cocos2dx_extra_ios_iap_luabinding.cpp in Sources */,
-				5023811817EBBCAC00990C9B /* AppController.mm in Sources */,
 				9F91073A19F5614900AD5CAB /* CCStoreIOS.mm in Sources */,
 				9F9106C819F5614900AD5CAB /* CCFilter.cpp in Sources */,
+				15AA9648199B6D4600725633 /* lua_debugger.c in Sources */,
+				C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */,
+				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
+				C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */,
+				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
+				C00FD49A1938512100C6382D /* Runtime.cpp in Sources */,
+				C06C3796191A1D1E00617BED /* ConfigParser.cpp in Sources */,
+				C00FD4961938512100C6382D /* PlayEnable_png.cpp in Sources */,
+				3EB5152C19528284006966AA /* Protos.pb.cc in Sources */,
+				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
+				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
+				AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
+				5023812417EBBCAC00990C9B /* main.m in Sources */,
+				C033B51C191B337200D06937 /* VisibleRect.cpp in Sources */,
+				AB6CB6F61A1F275E009C2562 /* FileServer.cpp in Sources */,
+				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				5023811817EBBCAC00990C9B /* AppController.mm in Sources */,
+				AB6CB6F41A1F275E009C2562 /* ConsoleCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

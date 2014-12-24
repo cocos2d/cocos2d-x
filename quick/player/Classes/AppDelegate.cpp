@@ -64,7 +64,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     if (_project.getDebuggerType() == kCCLuaDebuggerCodeIDE)
     {
-        initRuntime(_project.getProjectDir());
+        initRuntime();
         {
             ConfigParser::getInstance()->readConfig();
         }
@@ -79,7 +79,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-    
+	director->startAnimation();
+
     // register lua engine
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);

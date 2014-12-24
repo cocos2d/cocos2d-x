@@ -309,7 +309,7 @@ static int lua_cocos2dx_XMLHttpRequest_constructor(lua_State* L)
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "XMLHttpRequest",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "XMLHttpRequest",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -381,7 +381,7 @@ static int lua_set_XMLHttpRequest_responseType(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setResponseType' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setResponseType' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -450,7 +450,7 @@ static int lua_set_XMLHttpRequest_withCredentials(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setWithCredentials' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setWithCredentials' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -519,7 +519,7 @@ static int lua_set_XMLHttpRequest_timeout(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setTimeout' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'setTimeout' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -804,7 +804,7 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
         return 0;
     }
     
-    CCLOG("'open' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    luaL_error(L, "'open' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -944,7 +944,7 @@ static int lua_cocos2dx_XMLHttpRequest_setRequestHeader(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setRequestHeader' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    luaL_error(L, "'setRequestHeader' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -991,7 +991,7 @@ static int lua_cocos2dx_XMLHttpRequest_getAllResponseHeaders(lua_State* L)
         return 1;
     }
     
-    CCLOG("'getAllResponseHeaders' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'getAllResponseHeaders' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -1045,7 +1045,7 @@ static int lua_cocos2dx_XMLHttpRequest_getResponseHeader(lua_State* L)
         }
     }
     
-    CCLOG("'getResponseHeader' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'getResponseHeader' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -1089,7 +1089,7 @@ static int lua_cocos2dx_XMLHttpRequest_registerScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("'registerScriptHandler' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'registerScriptHandler' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -1128,7 +1128,7 @@ static int lua_cocos2dx_XMLHttpRequest_unregisterScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("'unregisterScriptHandler' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'unregisterScriptHandler' function of XMLHttpRequest wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:

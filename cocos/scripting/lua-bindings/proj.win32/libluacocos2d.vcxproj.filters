@@ -13,9 +13,6 @@
     <Filter Include="tolua">
       <UniqueIdentifier>{24fae6d6-ebb5-4da1-b0da-3f3845a9e9a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="luajit">
-      <UniqueIdentifier>{cc863463-a948-487a-aacd-dc233c3e5200}</UniqueIdentifier>
-    </Filter>
     <Filter Include="xxtea">
       <UniqueIdentifier>{1fa7ff75-c142-4928-8aef-e6a2eb2b465f}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="manual\audioengine">
       <UniqueIdentifier>{08e7d51a-6f8a-4e54-8abe-a86101be8dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{4670708f-a13a-4719-9308-e0413495effc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +285,99 @@
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lapi.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lauxlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lbaselib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lcode.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldblib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldebug.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldo.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldump.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lfunc.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lgc.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\linit.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\liolib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\llex.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lmathlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lmem.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\loadlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lobject.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lopcodes.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\loslib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lparser.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstate.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstring.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstrlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltable.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltablib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltm.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lua.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lundump.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lvm.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\lzio.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\lua\print.c">
+      <Filter>lua</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
@@ -295,18 +388,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h">
       <Filter>tolua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h">
-      <Filter>luajit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h">
-      <Filter>luajit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h">
-      <Filter>luajit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
-      <Filter>luajit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
       <Filter>xxtea</Filter>
@@ -499,6 +580,75 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
       <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lapi.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lauxlib.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lcode.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\ldebug.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\ldo.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lfunc.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lgc.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\llex.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\llimits.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lmem.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lobject.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lopcodes.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lparser.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lstate.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lstring.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\ltable.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\ltm.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lua.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\luaconf.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lualib.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lundump.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lvm.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\lua\lzio.h">
+      <Filter>lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

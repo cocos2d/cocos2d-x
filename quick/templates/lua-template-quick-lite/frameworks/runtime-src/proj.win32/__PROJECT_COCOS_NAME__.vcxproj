@@ -89,7 +89,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
       <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -298,6 +298,9 @@ copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\confi
     <ClInclude Include="%QUICK_V3_ROOT%\quick\lib\quick-src\lua_extensions\zlib\lua_zlib.h" />
     <ClInclude Include="%QUICK_V3_ROOT%\quick\lib\quick-src\ProjectConfig\ProjectConfig.h" />
     <ClInclude Include="%QUICK_V3_ROOT%\quick\lib\quick-src\ProjectConfig\SimulatorConfig.h" />
+    <ClInclude Include="..\Classes\runtime\ConnectWaitLayer.h" />
+    <ClInclude Include="..\Classes\runtime\ConsoleCommand.h" />
+    <ClInclude Include="..\Classes\runtime\FileServer.h" />
     <ClInclude Include="..\Classes\runtime\lua_debugger.h" />
     <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
@@ -418,6 +421,9 @@ copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\confi
     </ClCompile>
     <ClCompile Include="%QUICK_V3_ROOT%\quick\lib\quick-src\ProjectConfig\ProjectConfig.cpp" />
     <ClCompile Include="%QUICK_V3_ROOT%\quick\lib\quick-src\ProjectConfig\SimulatorConfig.cpp" />
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp" />
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp" />
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp" />
     <ClCompile Include="..\Classes\runtime\Landscape_png.cpp" />
     <ClCompile Include="..\Classes\runtime\lua_debugger.c" />
     <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp" />

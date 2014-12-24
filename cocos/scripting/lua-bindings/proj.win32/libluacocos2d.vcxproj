@@ -25,6 +25,37 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lapi.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lauxlib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lbaselib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lcode.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldblib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldebug.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldo.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ldump.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lfunc.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lgc.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\linit.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\liolib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\llex.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lmathlib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lmem.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\loadlib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lobject.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lopcodes.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\loslib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lparser.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstate.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstring.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lstrlib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltable.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltablib.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\ltm.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lua.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lundump.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lvm.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\lzio.c" />
+    <ClCompile Include="..\..\..\..\external\lua\lua\print.c" />
     <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp" />
     <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp" />
     <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp" />
@@ -82,10 +113,6 @@
     <ClCompile Include="..\manual\ui\lua_cocos2dx_ui_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h" />
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h" />
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h" />
-    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\auxiliar.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\buffer.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\except.h" />
@@ -101,6 +128,29 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lapi.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lauxlib.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lcode.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\ldebug.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\ldo.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lfunc.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lgc.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\llex.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\llimits.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lmem.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lobject.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lopcodes.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lparser.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lstate.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lstring.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\ltable.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\ltm.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lua.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\luaconf.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lualib.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lundump.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lvm.h" />
+    <ClInclude Include="..\..\..\..\external\lua\lua\lzio.h" />
     <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h" />
     <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h" />
     <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h" />
@@ -277,9 +327,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support\cocostudio\ActionTimeline;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\scripting\lua-bindings\manual\extension;$(EngineRoot)cocos\scripting\lua-bindings\manual\cocostudio;$(EngineRoot)cocos\scripting\lua-bindings\manual\ui;$(EngineRoot)cocos\scripting\lua-bindings\manual\cocos2d;$(EngineRoot)extensions;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\libwebsockets\win32\include;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\editor-support\cocostudio\ActionTimeline;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\scripting\lua-bindings\manual\extension;$(EngineRoot)cocos\scripting\lua-bindings\manual\cocostudio;$(EngineRoot)cocos\scripting\lua-bindings\manual\ui;$(EngineRoot)cocos\scripting\lua-bindings\manual\cocos2d;$(EngineRoot)extensions;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\libwebsockets\win32\include;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\editor-support;$(EngineRoot)external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>false</MinimalRebuild>
+      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
