@@ -497,10 +497,10 @@ const Vec2& Widget::getSizePercent()
     if (_usingLayoutComponent)
     {
         auto component = this->getOrCreateLayoutComponent();
-        return component->getPercentContentSize();
+        _sizePercent = component->getPercentContentSize();
     }
-    else
-        return _sizePercent;
+
+    return _sizePercent;
 }
 
 Vec2 Widget::getWorldPosition()const
@@ -1026,7 +1026,7 @@ void Widget::setPositionPercent(const Vec2 &percent)
     }
 }
 
-Vec2 Widget::getPositionPercent(){
+const Vec2& Widget::getPositionPercent(){
 
     if (_usingLayoutComponent)
     {
@@ -1034,10 +1034,9 @@ Vec2 Widget::getPositionPercent(){
         float percentX = component->getPositionPercentX();
         float percentY = component->getPositionPercentY();
 
-        return Vec2(percentX, percentY);
+        _positionPercent = Vec2(percentX, percentY);
     }
-    else
-        return _positionPercent;
+    return _positionPercent;
 }
 
 void Widget::setPositionType(PositionType type)
