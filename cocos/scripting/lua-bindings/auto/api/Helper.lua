@@ -65,7 +65,8 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- 
+-- Refresh object and it's children layout state<br>
+-- param rootNode   object which will be changed
 -- @function [parent=#Helper] doLayout 
 -- @param self
 -- @param #cc.Node rootNode
