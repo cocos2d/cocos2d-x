@@ -38,6 +38,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- Enable frustum culling
+-- @function [parent=#Camera] enableFrustumCulling 
+-- @param self
+-- @param #bool enalbe
+-- @param #bool clipZ
+        
+--------------------------------
 -- Creates a view matrix based on the specified input parameters.<br>
 -- param eyePosition The eye position.<br>
 -- param targetPosition The target's center position.<br>
@@ -47,6 +54,13 @@
 -- @param self
 -- @param #vec3_table target
 -- @param #vec3_table up
+        
+--------------------------------
+-- Is this aabb visible in frustum
+-- @function [parent=#Camera] isVisibleInFrustum 
+-- @param self
+-- @param #cc.AABB aabb
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

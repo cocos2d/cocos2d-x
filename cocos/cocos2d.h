@@ -283,6 +283,8 @@ THE SOFTWARE.
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCBillBoard.h"
+#include "3d/CCFrustum.h"
+#include "3d/CCPlane.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"
