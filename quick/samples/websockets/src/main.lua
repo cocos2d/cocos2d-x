@@ -6,5 +6,7 @@ function __G__TRACKBACK__(errorMessage)
     print("----------------------------------------")
 end
 
+package.path = package.path .. ";src/"
+cc.FileUtils:getInstance():setPopupNotify(false)
 require("game")
 game.startup()
