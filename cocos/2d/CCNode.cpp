@@ -336,6 +336,8 @@ void Node::setRotation(float rotation)
         updatePhysicsBodyRotation(getScene());
     }
 #endif
+    
+    updateRotationQuat();
 }
 
 float Node::getRotationSkewX() const
@@ -379,7 +381,9 @@ Vec3 Node::getRotation3D() const
 void Node::updateRotationQuat()
 {
     // convert Euler angle to quaternion
-    float halfRadx = CC_DEGREES_TO_RADIANS(_rotationX / 2.f), halfRady = CC_DEGREES_TO_RADIANS(_rotationY / 2.f), halfRadz = -CC_DEGREES_TO_RADIANS(_rotationZ_X / 2.f);
+    // when _rotationZ_X == _rotationZ_Y, _rotation_quat = RotationZ_X * RotationY * RotationX
+    // when _rotationZ_X != _rotationZ_Y, _rotation_quat = RotationY * RotationX
+    float halfRadx = CC_DEGREES_TO_RADIANS(_rotationX / 2.f), halfRady = CC_DEGREES_TO_RADIANS(_rotationY / 2.f), halfRadz = _rotationZ_X == _rotationZ_Y ? -CC_DEGREES_TO_RADIANS(_rotationZ_X / 2.f) : 0;
     float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRady), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
     _rotation_quat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
     _rotation_quat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
@@ -397,7 +401,7 @@ void Node::updateRotation3D()
     
     _rotationX = CC_RADIANS_TO_DEGREES(_rotationX);
     _rotationY = CC_RADIANS_TO_DEGREES(_rotationY);
-    _rotationZ_X = _rotationZ_Y = CC_RADIANS_TO_DEGREES(_rotationZ_X);
+    _rotationZ_X = _rotationZ_Y = -CC_RADIANS_TO_DEGREES(_rotationZ_X);
 }
 
 void Node::setRotationQuat(const Quaternion& quat)
@@ -407,7 +411,7 @@ void Node::setRotationQuat(const Quaternion& quat)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
-Quaternion Node::getRotationQuat()
+Quaternion Node::getRotationQuat() const
 {
     return _rotation_quat;
 }
@@ -426,6 +430,8 @@ void Node::setRotationSkewX(float rotationX)
     
     _rotationZ_X = rotationX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    
+    updateRotationQuat();
 }
 
 float Node::getRotationSkewY() const
@@ -447,6 +453,8 @@ void Node::setRotationSkewY(float rotationY)
     
     _rotationZ_Y = rotationY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+    
+    updateRotationQuat();
 }
 
 /// scale getter
@@ -1741,11 +1749,12 @@ const Mat4& Node::getNodeToParentTransform() const
             y += _anchorPointInPoints.y;
         }
 
+        bool needsSkewMatrix = ( _skewX || _skewY );
         // Rotation values
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
         float cx = 1, sx = 0, cy = 1, sy = 0;
-        if (_rotationZ_X || _rotationZ_Y)
+        if (_rotationZ_X != _rotationZ_Y || (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO)))
         {
             float radiansX = -CC_DEGREES_TO_RADIANS(_rotationZ_X);
             float radiansY = -CC_DEGREES_TO_RADIANS(_rotationZ_Y);
@@ -1754,8 +1763,6 @@ const Mat4& Node::getNodeToParentTransform() const
             cy = cosf(radiansY);
             sy = sinf(radiansY);
         }
-
-        bool needsSkewMatrix = ( _skewX || _skewY );
 
         Vec2 anchorPoint;
         anchorPoint.x = _anchorPointInPoints.x * _scaleX;
@@ -1772,37 +1779,57 @@ const Mat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        float mat[] = {
-                        cy * _scaleX,   sy * _scaleX,   0,          0,
-                        -sx * _scaleY,  cx * _scaleY,   0,          0,
-                        0,              0,              _scaleZ,    0,
-                        x,              y,              z,          1 };
-        
-        _transform.set(mat);
-
-        if(!_ignoreAnchorPointForPosition)
+        Mat4::createRotation(_rotation_quat, &_transform);
+        if (_rotationZ_X != _rotationZ_Y)
         {
-            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+            float m0 = _transform.m[0], m1 = _transform.m[1], m4 = _transform.m[4], m5 = _transform.m[5], m8 = _transform.m[8], m9 = _transform.m[9];
+            _transform.m[0] = cy * m0 - sx * m1, _transform.m[4] = cy * m4 - sx * m5, _transform.m[8] = cy * m8 - sx * m9;
+            _transform.m[1] = sy * m0 + cx * m1, _transform.m[5] = sy * m4 + cx * m5, _transform.m[9] = sy * m8 + cx * m9;
         }
-        
-        // FIXME:
-        // FIX ME: Expensive operation.
-        // FIX ME: It should be done together with the rotationZ
-        if(_rotationY) {
-            Mat4 rotY;
-            Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
-            _transform = _transform * rotY;
-        }
-        if(_rotationX) {
-            Mat4 rotX;
-            Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
-            _transform = _transform * rotX;
-        }
-
-        if(!_ignoreAnchorPointForPosition)
+        if (_scaleX != 1.f)
         {
-            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+            _transform.m[0] *= _scaleX, _transform.m[4] *= _scaleX, _transform.m[8] *= _scaleX;
         }
+        if (_scaleY)
+        {
+            _transform.m[1] *= _scaleY, _transform.m[5] *= _scaleY, _transform.m[9] *= _scaleY;
+        }
+        if (_scaleZ)
+        {
+            _transform.m[2] *= _scaleZ, _transform.m[6] *= _scaleZ, _transform.m[10] *= _scaleZ;
+        }
+        _transform.m[12] = x, _transform.m[13] = y, _transform.m[14] = z;
+//        float mat[] = {
+//                        cy * _scaleX,   sy * _scaleX,   0,          0,
+//                        -sx * _scaleY,  cx * _scaleY,   0,          0,
+//                        0,              0,              _scaleZ,    0,
+//                        x,              y,              z,          1 };
+//        
+//        _transform.set(mat);
+
+//        if(!_ignoreAnchorPointForPosition)
+//        {
+//            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+//        }
+//        
+//        // FIXME:
+//        // FIX ME: Expensive operation.
+//        // FIX ME: It should be done together with the rotationZ
+//        if(_rotationY) {
+//            Mat4 rotY;
+//            Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
+//            _transform = _transform * rotY;
+//        }
+//        if(_rotationX) {
+//            Mat4 rotX;
+//            Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
+//            _transform = _transform * rotX;
+//        }
+//
+//        if(!_ignoreAnchorPointForPosition)
+//        {
+//            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+//        }
         
         // FIXME:: Try to inline skew
         // If skew is needed, apply skew and then anchor point

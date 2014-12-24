@@ -548,9 +548,10 @@ public:
     virtual void setRotationQuat(const Quaternion& quat);
     
     /**
-     * return the rotation by quaternion
+     * return the rotation by quaternion, Note that when _rotationZ_X == _rotationZ_Y, the returned quaternion equals to RotationZ_X * RotationY * RotationX, 
+     * it equals to RotationY * RotationX otherwise
      */
-    virtual Quaternion getRotationQuat();
+    virtual Quaternion getRotationQuat() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -1630,7 +1631,7 @@ protected:
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
     
-    Quaternion _rotation_quat;      ///rotation using quaternion
+    Quaternion _rotation_quat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotation_quat = RotationZ_X * RotationY * RotationX, else _rotation_quat = RotationY * RotationX
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis

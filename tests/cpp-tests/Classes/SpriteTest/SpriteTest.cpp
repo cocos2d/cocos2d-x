@@ -3884,6 +3884,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
+        sprite->ignoreAnchorPointForPosition(true);
         addChild(sprite, 0);
     }
 }
