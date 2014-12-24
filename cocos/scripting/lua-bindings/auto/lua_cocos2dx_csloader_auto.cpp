@@ -598,6 +598,53 @@ int lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersForSimulator(lua_Sta
 
     return 0;
 }
+int lua_cocos2dx_csloader_CSLoader_getCsdVersion(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::CSLoader* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::CSLoader*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_csloader_CSLoader_getCsdVersion'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_getCsdVersion'", nullptr);
+            return 0;
+        }
+        std::string ret = cobj->getCsdVersion();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getCsdVersion",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_csloader_CSLoader_getCsdVersion'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_csloader_CSLoader_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
@@ -761,6 +808,7 @@ int lua_register_cocos2dx_csloader_CSLoader(lua_State* tolua_S)
         tolua_function(tolua_S,"getJsonPath",lua_cocos2dx_csloader_CSLoader_getJsonPath);
         tolua_function(tolua_S,"setRecordJsonPath",lua_cocos2dx_csloader_CSLoader_setRecordJsonPath);
         tolua_function(tolua_S,"createNodeWithFlatBuffersForSimulator",lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersForSimulator);
+        tolua_function(tolua_S,"getCsdVersion",lua_cocos2dx_csloader_CSLoader_getCsdVersion);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_csloader_CSLoader_destroyInstance);
         tolua_function(tolua_S,"createNode", lua_cocos2dx_csloader_CSLoader_createNode);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_csloader_CSLoader_getInstance);
