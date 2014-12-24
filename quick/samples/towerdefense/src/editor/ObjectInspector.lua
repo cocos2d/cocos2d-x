@@ -412,7 +412,7 @@ function ObjectInspector:setObject(object)
             align = cc.ui.TEXT_ALIGN_LEFT,
             x     = labelX,
             y     = labelY,
-        }):align(display.CENTER)
+        }):align(display.CENTER_LEFT)
         panel:addChild(label)
 
         if pair.edit and device.platform ~= "ios" and device.platform ~= "android" then
@@ -452,7 +452,7 @@ function ObjectInspector:setObject(object)
             align = cc.ui.TEXT_ALIGN_LEFT,
             x = 20,
             y = 12,
-        }):align(display.CENTER)
+        }):align(display.CENTER_LEFT)
         sprite:addChild(text)
         local label = {
             x        = labelX + EditorConstants.BEHAVIOR_LABEL_WIDTH * column,
