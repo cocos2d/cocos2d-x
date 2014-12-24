@@ -147,7 +147,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
 
 void Particle3DQuadRender::initQuadRender( const std::string& texFile )
 {
-    GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+    GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
     if (!texFile.empty())
     {
         auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);

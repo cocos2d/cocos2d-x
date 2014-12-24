@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DMaterialTranslator.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
 
@@ -114,10 +115,10 @@ void PUParticle3DMaterialTranslator::translate(PUScriptCompiler* compiler, PUAbs
     PUObjectAbstractNode* parent = obj->parent ? reinterpret_cast<PUObjectAbstractNode*>(obj->parent) : 0;
 
     _material = new PUParticle3DMaterial();
-    _material->autorelease();
-    _material->retain();
+    _material->fileName = obj->file;
     _material->name = obj->name;
-    PUParticle3DMaterialManager::Instance()->materialList.push_back(_material);
+    _material->autorelease();
+    PUParticle3DMaterialCache::Instance()->addMaterial(_material);
     obj->context = _material;
 
     for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)

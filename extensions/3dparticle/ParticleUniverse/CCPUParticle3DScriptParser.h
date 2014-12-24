@@ -60,6 +60,8 @@ struct PUConcreteNode
     PUConcreteNodeType type;
     PUConcreteNodeList children;
     PUConcreteNode *parent;
+
+    ~PUConcreteNode();
 };
 
 

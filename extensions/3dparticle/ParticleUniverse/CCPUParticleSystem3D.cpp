@@ -123,7 +123,6 @@ const float PUParticleSystem3D::DEFAULT_DEPTH = 50;
 const unsigned short PUParticleSystem3D::DEFAULT_PARTICLE_QUOTA = 500;
 const float PUParticleSystem3D::DEFAULT_MAX_VELOCITY = 9999.0f;
 
-
 PUParticleSystem3D::PUParticleSystem3D()
 : _prepared(false)
 , _particleSystemScaleVelocity(1.0f)
@@ -138,6 +137,33 @@ PUParticleSystem3D::PUParticleSystem3D()
 PUParticleSystem3D::~PUParticleSystem3D()
 {
     unPrepared();
+}
+
+PUParticleSystem3D* PUParticleSystem3D::create()
+{
+    auto pups = new PUParticleSystem3D();
+    pups->autorelease();
+    return pups;
+}
+
+PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
+{
+    PUParticleSystem3D* ps = PUParticleSystem3D::create();
+    PUParticle3DMaterialCache::Instance()->loadMaterials(materialPath);
+    if (!ps->initSystem(filePath)){
+        CC_SAFE_DELETE(ps);
+    }
+    return ps;
+}
+
+PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath )
+{
+    PUParticleSystem3D* ps = PUParticleSystem3D::create();
+    PUParticle3DMaterialCache::Instance()->loadMaterialsFromSearchPaths("*.material");
+    if (!ps->initSystem(filePath)){
+        CC_SAFE_DELETE(ps);
+    }
+    return ps;
 }
 
 void PUParticleSystem3D::startParticle()
@@ -315,7 +341,6 @@ void PUParticleSystem3D::unPrepared()
     }
 
     _particlePool.removeAllParticles(true);
-    PUParticle3DMaterialManager::Instance()->clearAllMaterials();
 }
 
 void PUParticleSystem3D::preUpdator( float elapsedTime )
@@ -495,22 +520,6 @@ bool PUParticleSystem3D::isExpired( PUParticle3D* particle, float timeElapsed )
     return expired;
 }
 
-PUParticleSystem3D* PUParticleSystem3D::create()
-{
-    auto pups = new PUParticleSystem3D();
-    pups->autorelease();
-    return pups;
-}
-
-PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
-{
-    PUParticleSystem3D* ps = PUParticleSystem3D::create();
-    if (!ps->initSystem(filePath, materialPath)){
-        CC_SAFE_DELETE(ps);
-    }
-    return ps;
-}
-
 cocos2d::Vec3 PUParticleSystem3D::getDerivedPosition()
 {
     if (_keepLocal) return Vec3::ZERO;
@@ -548,15 +557,12 @@ void PUParticleSystem3D::setMaxVelocity( float maxVelocity )
     _maxVelocitySet = true;
 }
 
-bool PUParticleSystem3D::initSystem( const std::string &filePath, const std::string &materialPath )
+bool PUParticleSystem3D::initSystem( const std::string &filePath )
 {
-    std::string data = FileUtils::getInstance()->getStringFromFile(materialPath);
     PUScriptCompiler sc;
-    sc.compile(data, materialPath);
-
     sc.setParticleSystem3D(this);
-    data = FileUtils::getInstance()->getStringFromFile(filePath);
-    if (!sc.compile(data, filePath)) return false;
-    return true;
+    std::string  data = FileUtils::getInstance()->getStringFromFile(filePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+    return sc.compile(data, fullPath);
 }
 NS_CC_END

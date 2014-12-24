@@ -183,6 +183,7 @@ public:
     static const float DEFAULT_MAX_VELOCITY;
 
     static PUParticleSystem3D* create();
+    static PUParticleSystem3D* create(const std::string &filePath);
     static PUParticleSystem3D* create(const std::string &filePath, const std::string &materialPath);
     
     virtual void update(float delta) override;
@@ -264,7 +265,7 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath, const std::string &materialPath);
+    bool initSystem(const std::string &filePath);
 
 protected:
     bool _prepared;

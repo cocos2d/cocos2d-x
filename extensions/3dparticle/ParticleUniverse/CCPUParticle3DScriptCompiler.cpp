@@ -98,6 +98,21 @@ const map<std::string,std::string> &PUObjectAbstractNode::getVariables() const
     return _env;
 }
 
+PUObjectAbstractNode::~PUObjectAbstractNode()
+{
+    for (auto iter : children){
+        delete iter;
+    }
+
+    for (auto iter : values){
+        delete iter;
+    }
+
+    for (auto iter : overrides){
+        delete iter;
+    }
+}
+
 
 
 // PropertyAbstractNode//
@@ -127,6 +142,13 @@ PUAbstractNode *PUPropertyAbstractNode::clone() const
 std::string PUPropertyAbstractNode::getValue() const
 {
     return name;
+}
+
+PUPropertyAbstractNode::~PUPropertyAbstractNode()
+{
+    for (auto iter : values){
+        delete iter;
+    }
 }
 
 
@@ -181,6 +203,9 @@ bool PUScriptCompiler::compile(const PUConcreteNodeList &nodes)
         }
     }
     
+    for (auto iter : aNodes){
+        delete iter;
+    }
     return true;
 }
 
@@ -192,7 +217,16 @@ bool PUScriptCompiler::compile(const std::string &str, const std::string &source
     PUConcreteNodeList creteNodeList;
     lexer.openLexer(str, source, tokenList);
     parser.parse(creteNodeList, tokenList);
-    return  compile(creteNodeList);
+    bool state = compile(creteNodeList);
+
+    for (auto iter : creteNodeList){
+        delete iter;
+    }
+
+    for (auto iter : tokenList){
+        delete iter;
+    }
+    return state;
 }
 
 
@@ -364,9 +398,4 @@ void PUScriptCompiler::setParticleSystem3D( PUParticleSystem3D *pu )
     _puSystem = pu;
 }
 
-
-
-
 NS_CC_END
-
-
