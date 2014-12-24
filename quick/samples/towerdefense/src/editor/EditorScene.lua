@@ -199,6 +199,9 @@ function EditorScene:playMap()
     -- 开始执行地图
     self.mapRuntime_ = require("app.map.MapRuntime").new(self.map_)
     self.mapRuntime_:preparePlay()
+    if (device.platform == "mac" or device.platform == "windows") then
+        self.mapRuntime_:startPlay()
+    end
     self:addChild(self.mapRuntime_)
 end
 

@@ -11,7 +11,7 @@ Creation: 2013-11-14
 ]]
 local ByteArrayVarint = class("BitVaiant", import(".ByteArray"))
 
-require("bit")
+import(".bit")
 
 function ByteArrayVarint:ctor(__endian)
 	self._endian = __endian

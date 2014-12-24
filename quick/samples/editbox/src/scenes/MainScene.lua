@@ -15,7 +15,7 @@ function newButton(imageName, listener, setAlpha)
             return true
         end
 
-        local touchInSprite = sprite:getCascadeBoundingBox():containsPoint(CCPoint(event.x, event.y))
+        local touchInSprite = sprite:getCascadeBoundingBox():containsPoint(cc.p(event.x, event.y))
         if event.name == "moved" then
             if touchInSprite then
                 if setAlpha then sprite:setOpacity(128) end
