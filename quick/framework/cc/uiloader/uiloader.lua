@@ -297,10 +297,134 @@ function uiloader:seekComponents(parent, nodeName, componentIdx)
 	return node
 end
 
+-- start --
 
+--------------------------------
+-- clone结点
+-- @function [parent=#uiloader] cloneNode
+-- @param node node 要克隆的结点
+-- @return node#node 
 
+-- end --
 
+function uiloader:clone(node)
+	print("node type:" .. type(node))
+	print("node type:" .. tolua.type(node))
 
+	local cloneNode
+	cloneNode = self:cloneNode_(node)
+
+	return cloneNode
+end
+
+function uiloader:cloneNode_(node)
+	local cloneNode
+	if "userdata" == type(node) then
+		cloneNode = self:cloneUserData_(node)
+		if not cloneNode then
+			return
+		end
+
+		self:cloneChildren_(cloneNode, node)
+	elseif node.class then
+	end
+
+	return cloneNode
+end
+
+function uiloader:cloneUserData_(node)
+	if "userdata" ~= type(node) then
+		print("ERROR! isn't userdata")
+		return
+	end
+
+	local typename = tolua.type(node)
+	local newNode
+	if "cc.Node" == typename then
+		newNode = cc.Node:create()
+	elseif "cc.Sprite" == typename then
+		newNode = cc.Sprite:create()
+	elseif "ccui.Scale9Sprite" == typename then
+		newNode = ccui.Scale9Sprite:create()
+	elseif "cc.Layer" == typename then
+		newNode = cc.Layer:create()
+	elseif "cc.LayerColor" == typename then
+		newNode = cc.LayerColor:create()
+	elseif "cc.ClippingRectangleNode" == typename then
+		newNode = cc.ClippingRectangleNode:create()
+	elseif "cc.Label" == typename then
+		newNode = cc.Label:create()
+	else
+		print("ERROR! unsupport node type:" .. typename)
+
+		return
+	end
+
+	self:copyProperties_(newNode, node, typename)
+
+	-- clone peer
+	local clonePeer = tolua.getpeer(node)
+	clonePeer = clone(clonePeer)
+	tolua.setpeer(newNode, clonePeer)
+
+	return newNode
+end
+
+function uiloader:copyProperties_(cloneNode, node, typename)
+	print("copyProperties_ type:" .. tolua.type(node))
+    cloneNode:setVisible(node:isVisible())
+    cloneNode:setTouchEnabled(node:isTouchEnabled())
+    cloneNode:setLocalZOrder(node:getLocalZOrder())
+    cloneNode:setTag(node:getTag())
+    cloneNode:setName(node:getName())
+    cloneNode:setContentSize(node:getContentSize())
+    cloneNode:setPosition(node:getPosition())
+    cloneNode:setAnchorPoint(node:getAnchorPoint())
+    cloneNode:setScaleX(node:getScaleX())
+    cloneNode:setScaleY(node:getScaleY())
+    cloneNode:setRotation(node:getRotation())
+    cloneNode:setRotationSkewX(node:getRotationSkewX())
+    cloneNode:setRotationSkewY(node:getRotationSkewY())
+    if node.isFlippedX then
+	    cloneNode:setFlippedX(node:isFlippedX())
+	    cloneNode:setFlippedY(node:isFlippedY())
+	end
+    cloneNode:setColor(node:getColor())
+    cloneNode:setOpacity(node:getOpacity())
+
+    -- copySpecialProperties
+    if "cc.Sprite" == typename then
+    	local frame = node:getSpriteFrame()
+    	cloneNode:setSpriteFrame(frame)
+	elseif "cc.Scale9Sprite" == typename then
+		local frame = node:getSpriteFrame()
+    	cloneNode:setSpriteFrame(frame)
+    	cloneNode:setCapInsets(node:getCapInsets())
+	elseif "cc.ClippingRectangleNode" == typename then
+		cloneNode:setClippingRegion(node:getClippingRegion())
+	elseif "cc.Label" == typename then
+		-- TODO
+		-- bmfont
+		-- charmap
+		cloneNode:setTTFConfig(node:getTTFConfig())
+	else
+		print("INFO! haven't set special properties:" .. typename)
+	end
+end
+
+function uiloader:cloneChildren_(cloneNode, node)
+	local children = node:getChildren()
+	if not children or 0 == #children then
+		return
+	end
+
+	for i, child in ipairs(children) do
+		local cloneChild = self:clone(child)
+		if cloneChild then
+			cloneNode:addChild(cloneChild)
+		end
+	end
+end
 
 -- private
 function uiloader:loadFile_(jsonFile)
