@@ -1696,74 +1696,113 @@ const Mat4& Node::getNodeToParentTransform() const
         float x = _position.x;
         float y = _position.y;
         float z = _positionZ;
-
-        if (_ignoreAnchorPointForPosition)
-        {
-            x += _anchorPointInPoints.x;
-            y += _anchorPointInPoints.y;
-        }
-
-        // Rotation values
-		// Change rotation code to handle X and Y
-		// If we skew with the exact same value for both x and y then we're simply just rotating
-        float cx = 1, sx = 0, cy = 1, sy = 0;
-        if (_rotationZ_X || _rotationZ_Y)
-        {
-            float radiansX = -CC_DEGREES_TO_RADIANS(_rotationZ_X);
-            float radiansY = -CC_DEGREES_TO_RADIANS(_rotationZ_Y);
-            cx = cosf(radiansX);
-            sx = sinf(radiansX);
-            cy = cosf(radiansY);
-            sy = sinf(radiansY);
-        }
-
+        
         bool needsSkewMatrix = ( _skewX || _skewY );
-
-        Vec2 anchorPoint;
-        anchorPoint.x = _anchorPointInPoints.x * _scaleX;
-        anchorPoint.y = _anchorPointInPoints.y * _scaleY;
-
-        // optimization:
-        // inline anchor point calculation if skew is not needed
-        // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
-        {
-            x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
-            y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
-        }
-
-        // Build Transform Matrix
-        // Adjusted transform calculation for rotational skew
-        float mat[] = {
-                        cy * _scaleX,   sy * _scaleX,   0,          0,
-                        -sx * _scaleY,  cx * _scaleY,   0,          0,
-                        0,              0,              _scaleZ,    0,
-                        x,              y,              z,          1 };
         
-        _transform.set(mat);
-
-        if(!_ignoreAnchorPointForPosition)
+        if (_rotationX || _rotationY)
         {
-            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+            if (_ignoreAnchorPointForPosition)
+            {
+                x += _anchorPointInPoints.x;
+                y += _anchorPointInPoints.y;
+            }
+            Mat4 translate, rot, mat;
+            Mat4::createTranslation(x, y, z, &translate);
+            if (_rotationZ_X || _rotationZ_Y)
+                Mat4::createRotationZ(CC_DEGREES_TO_RADIANS(_rotationZ_X), &rot);
+            
+            if (_rotationY)
+            {
+                Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &mat);
+                rot *= mat;
+            }
+            if (_rotationX)
+            {
+                Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &mat);
+                rot *= mat;
+            }
+            if(!_ignoreAnchorPointForPosition)
+            {
+                translate.translate(_anchorPoint.x, _anchorPoint.y, 0);
+                translate *= rot;
+                translate.translate(-_anchorPoint.x, -_anchorPoint.y, 0);
+            }
+            else
+                translate *= rot;
+            
+            Mat4::createScale(_scaleX, _scaleY, _scaleZ, &mat);
+            _transform = translate * mat; //translate rotation scale
         }
-        
-        // FIXME:
-        // FIX ME: Expensive operation.
-        // FIX ME: It should be done together with the rotationZ
-        if(_rotationY) {
-            Mat4 rotY;
-            Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
-            _transform = _transform * rotY;
-        }
-        if(_rotationX) {
-            Mat4 rotX;
-            Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
-            _transform = _transform * rotX;
-        }
-
-        if(!_ignoreAnchorPointForPosition)
+        else
         {
-            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+            if (_ignoreAnchorPointForPosition)
+            {
+                x += _anchorPointInPoints.x;
+                y += _anchorPointInPoints.y;
+            }
+            
+            // Rotation values
+            // Change rotation code to handle X and Y
+            // If we skew with the exact same value for both x and y then we're simply just rotating
+            float cx = 1, sx = 0, cy = 1, sy = 0;
+            if (_rotationZ_X || _rotationZ_Y)
+            {
+                float radiansX = -CC_DEGREES_TO_RADIANS(_rotationZ_X);
+                float radiansY = -CC_DEGREES_TO_RADIANS(_rotationZ_Y);
+                cx = cosf(radiansX);
+                sx = sinf(radiansX);
+                cy = cosf(radiansY);
+                sy = sinf(radiansY);
+            }
+            
+            
+            
+            Vec2 anchorPoint;
+            anchorPoint.x = _anchorPointInPoints.x * _scaleX;
+            anchorPoint.y = _anchorPointInPoints.y * _scaleY;
+            
+            // optimization:
+            // inline anchor point calculation if skew is not needed
+            // Adjusted transform calculation for rotational skew
+            if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
+            {
+                x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
+                y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
+            }
+            
+            // Build Transform Matrix
+            // Adjusted transform calculation for rotational skew
+            float mat[] = {
+                cy * _scaleX,   sy * _scaleX,   0,          0,
+                -sx * _scaleY,  cx * _scaleY,   0,          0,
+                0,              0,              _scaleZ,    0,
+                x,              y,              z,          1 };
+            
+            _transform.set(mat);
+            
+            if(!_ignoreAnchorPointForPosition)
+            {
+                _transform.translate(anchorPoint.x, anchorPoint.y, 0);
+            }
+            
+            // FIXME:
+            // FIX ME: Expensive operation.
+            // FIX ME: It should be done together with the rotationZ
+            if(_rotationY) {
+                Mat4 rotY;
+                Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
+                _transform = _transform * rotY;
+            }
+            if(_rotationX) {
+                Mat4 rotX;
+                Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
+                _transform = _transform * rotX;
+            }
+            
+            if(!_ignoreAnchorPointForPosition)
+            {
+                _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+            }
         }
         
         // FIXME:: Try to inline skew
