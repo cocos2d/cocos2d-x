@@ -148,6 +148,11 @@
 -- @param #string name
 
 --------------------------------
+-- 
+-- @function [parent=#ListView] forceDoLayout 
+-- @param self
+        
+--------------------------------
 -- Changes scroll direction of scrollview.<br>
 -- see Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll<br>
 -- param dir, set the list view's scroll direction
