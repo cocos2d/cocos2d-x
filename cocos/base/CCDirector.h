@@ -322,6 +322,9 @@ public:
 
     /** enables/disables OpenGL alpha blending */
     void setAlphaBlending(bool on);
+    
+    /** set clear values for the color buffers, value range of each element is [0.0, 1.0] */
+    void setClearColor(const Color4F& clearColor);
 
     /** enables/disables OpenGL depth test */
     void setDepthTest(bool on);
@@ -462,6 +465,9 @@ protected:
     /* How many frames were called since the director started */
     unsigned int _totalFrames;
     float _secondsPerFrame;
+    
+    /* clear color set outside be used in setGLDefaultValues() */
+    Color4F _clearColor;
     
     /* The running scene */
     Scene *_runningScene;
