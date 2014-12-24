@@ -83,9 +83,14 @@ public:
 
     static void changeLayoutSystemActiveState(bool bActive);
     
-private:
+    /**
+     *@brief  restrict capInsetSize, when the capInsets's width is larger than the textureSize, it will restrict to 0,
+     *        the height goes the same way as width.
+     *@param  capInsets A user defined capInsets.
+     *@param  textureSize  The size of a scale9enabled texture
+     *@return a restricted capInset.
+     */
     static Rect restrictCapInsetRect(const Rect& capInsets, const Size& textureSize);
-    friend class Button;
 };
 }
 

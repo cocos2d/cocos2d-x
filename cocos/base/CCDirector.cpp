@@ -57,6 +57,7 @@ THE SOFTWARE.
 #include "base/CCConsole.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
+#include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
 
@@ -982,6 +983,7 @@ void Director::purgeDirector()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
+    AsyncTaskPool::destoryInstance();
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
@@ -1112,7 +1114,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        Mat4 identity = Mat4::IDENTITY;
+        const Mat4& identity = Mat4::IDENTITY;
         _drawnVerticesLabel->visit(_renderer, identity, 0);
         _drawnBatchesLabel->visit(_renderer, identity, 0);
         _FPSLabel->visit(_renderer, identity, 0);

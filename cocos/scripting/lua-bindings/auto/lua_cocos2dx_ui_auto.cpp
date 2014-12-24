@@ -18174,6 +18174,44 @@ int lua_cocos2dx_ui_Helper_seekWidgetByTag(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_ui_Helper_restrictCapInsetRect(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccui.Helper",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        cocos2d::Rect arg0;
+        cocos2d::Size arg1;
+        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.Helper:restrictCapInsetRect");
+        ok &= luaval_to_size(tolua_S, 3, &arg1, "ccui.Helper:restrictCapInsetRect");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Helper_restrictCapInsetRect'", nullptr);
+            return 0;
+        }
+        cocos2d::Rect ret = cocos2d::ui::Helper::restrictCapInsetRect(arg0, arg1);
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:restrictCapInsetRect",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Helper_restrictCapInsetRect'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_ui_Helper_doLayout(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18226,6 +18264,7 @@ int lua_register_cocos2dx_ui_Helper(lua_State* tolua_S)
         tolua_function(tolua_S,"seekActionWidgetByActionTag", lua_cocos2dx_ui_Helper_seekActionWidgetByActionTag);
         tolua_function(tolua_S,"seekWidgetByName", lua_cocos2dx_ui_Helper_seekWidgetByName);
         tolua_function(tolua_S,"seekWidgetByTag", lua_cocos2dx_ui_Helper_seekWidgetByTag);
+        tolua_function(tolua_S,"restrictCapInsetRect", lua_cocos2dx_ui_Helper_restrictCapInsetRect);
         tolua_function(tolua_S,"doLayout", lua_cocos2dx_ui_Helper_doLayout);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::ui::Helper).name();

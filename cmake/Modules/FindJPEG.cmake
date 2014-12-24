@@ -31,26 +31,6 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
-if(USE_PREBUILT_LIBS)
-  find_path(JPEG_INCLUDE_DIR jpeglib.h
-    PATH_SUFFIXES include/${PLATFORM_FOLDER} include
-    PATHS ${COCOS_EXTERNAL_DIR}/jpeg
-    NO_DEFAULT_PATH
-    )
-  find_library(JPEG_LIBRARY NAMES jpeg
-    PATH_SUFFIXES
-      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      prebuilt/${PLATFORM_FOLDER}
-    PATHS ${COCOS_EXTERNAL_DIR}/jpeg
-    NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(NOT JPEG_INCLUDE_DIR OR NOT JPEG_LIBRARY)
-    unset(JPEG_INCLUDE_DIR CACHE)
-    unset(JPEG_LIBRARY CACHE)
-  endif()
-endif()
-
 find_path(JPEG_INCLUDE_DIR jpeglib.h)
 
 set(JPEG_NAMES ${JPEG_NAMES} jpeg)

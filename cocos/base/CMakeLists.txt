@@ -12,6 +12,7 @@ set(COCOS_BASE_SRC
   base/allocator/CCAllocatorGlobal.cpp
   base/allocator/CCAllocatorGlobalNewDelete.cpp
   base/ccFPSImages.c
+  base/CCAsyncTaskPool.cpp
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
