@@ -327,7 +327,7 @@ void ConsoleUploadFile::uploadFile()
     // terminate
     fclose (fp);
    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
         WSACleanup();
 #else
