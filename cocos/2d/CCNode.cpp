@@ -1799,37 +1799,6 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform.m[2] *= _scaleZ, _transform.m[6] *= _scaleZ, _transform.m[10] *= _scaleZ;
         }
         _transform.m[12] = x, _transform.m[13] = y, _transform.m[14] = z;
-//        float mat[] = {
-//                        cy * _scaleX,   sy * _scaleX,   0,          0,
-//                        -sx * _scaleY,  cx * _scaleY,   0,          0,
-//                        0,              0,              _scaleZ,    0,
-//                        x,              y,              z,          1 };
-//        
-//        _transform.set(mat);
-
-//        if(!_ignoreAnchorPointForPosition)
-//        {
-//            _transform.translate(anchorPoint.x, anchorPoint.y, 0);
-//        }
-//        
-//        // FIXME:
-//        // FIX ME: Expensive operation.
-//        // FIX ME: It should be done together with the rotationZ
-//        if(_rotationY) {
-//            Mat4 rotY;
-//            Mat4::createRotationY(CC_DEGREES_TO_RADIANS(_rotationY), &rotY);
-//            _transform = _transform * rotY;
-//        }
-//        if(_rotationX) {
-//            Mat4 rotX;
-//            Mat4::createRotationX(CC_DEGREES_TO_RADIANS(_rotationX), &rotX);
-//            _transform = _transform * rotX;
-//        }
-//
-//        if(!_ignoreAnchorPointForPosition)
-//        {
-//            _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
-//        }
         
         // FIXME:: Try to inline skew
         // If skew is needed, apply skew and then anchor point
