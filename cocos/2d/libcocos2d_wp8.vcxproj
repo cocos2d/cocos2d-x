@@ -239,6 +239,7 @@
     <ClInclude Include="..\audio\wp8\MediaStreamer.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
+    <ClInclude Include="..\base\CCAsyncTaskPool.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
     <ClInclude Include="..\base\ccCArray.h" />
     <ClInclude Include="..\base\ccConfig.h" />
@@ -712,6 +713,7 @@
     </ClCompile>
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
+    <ClCompile Include="..\base\CCAsyncTaskPool.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
     <ClCompile Include="..\base\ccCArray.cpp" />
     <ClCompile Include="..\base\CCConfiguration.cpp" />
