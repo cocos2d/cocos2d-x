@@ -102,10 +102,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Resources\fonts\Marker Felt.ttf">
-      <Link>Assets\Resources\fonts\Marker Felt.ttf</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
