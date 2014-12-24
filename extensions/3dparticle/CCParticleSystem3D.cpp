@@ -31,15 +31,12 @@ NS_CC_BEGIN
 
 Particle3D::Particle3D()
 : position(Vec3::ZERO)
-, positionInWorld(Vec3::ZERO)
 , color(Vec4::ONE)
 , lb_uv(Vec2::ZERO)
 , rt_uv(Vec2::ONE)
 , width(1.0f)
 , height(1.0f)
 , depth(1.0f)
-, depthInView(0.0f)
-, zRotation(0.0f)
 {
 
 }

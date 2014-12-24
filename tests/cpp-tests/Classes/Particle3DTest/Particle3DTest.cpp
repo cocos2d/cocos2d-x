@@ -68,6 +68,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DHypnoDemo),
     CL(Particle3DTimeShiftDemo),
     CL(Particle3DUVAnimDemo),
+    CL(Particle3DFirePlaceDemo),
+	CL(Particle3DLineStreakDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -350,8 +352,8 @@ bool Particle3DBlackHoleDemo::init()
     auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
     auto rotate = RotateBy::create(1.0f, Vec3(100.0f, 100.0f, 100.0f));
     rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
-    rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
-    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    //rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
+    //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticle();
 
     this->addChild(rootps);
@@ -418,4 +420,46 @@ bool Particle3DUVAnimDemo::init()
     this->addChild(rootps);
 
     return true;
+}
+
+std::string Particle3DFirePlaceDemo::subtitle() const 
+{
+	return "Fire";
+}
+
+bool Particle3DFirePlaceDemo::init()
+{
+	if (!Particle3DTestDemo::init()) 
+		return false;
+
+	auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
+	rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+	rootps->setScale(5.0f);
+	rootps->startParticle();
+
+	this->addChild(rootps);
+
+	return true;
+}
+
+std::string Particle3DLineStreakDemo::subtitle() const 
+{
+	return "LineStreak";
+}
+
+bool Particle3DLineStreakDemo::init()
+{
+	if (!Particle3DTestDemo::init()) 
+		return false;
+
+
+	auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_0.material");
+	rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+	auto rotate = RotateBy::create(1.0f, Vec3(100.0f, 100.0f, 100.0f));
+	rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+	rootps->startParticle();
+
+	this->addChild(rootps);
+
+	return true;
 }

@@ -107,7 +107,12 @@ PUParticle3D::PUParticle3D():
     textureAnimationTimeStep(0.1f),
     textureAnimationTimeStepCount(0.0f),
     textureCoordsCurrent(0),
-    textureAnimationDirectionUp(true)
+    textureAnimationDirectionUp(true),
+    depthInView(0.0f),
+    zRotation(0.0f),
+    widthInWorld(width),
+    heightInWorld(height),
+    depthInWorld(depth)
 {
 }
 //-----------------------------------------------------------------------
@@ -362,9 +367,18 @@ void PUParticleSystem3D::updator( float elapsedTime )
             // Update the position with the direction.
             particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
             particle->positionInWorld = particle->position;
+            particle->widthInWorld = particle->width;
+            particle->heightInWorld = particle->height;
+            particle->depthInWorld = particle->depth;
 
             if (_keepLocal){
-                getNodeToWorldTransform().transformPoint(particle->positionInWorld, &particle->positionInWorld);
+                Mat4 ltow = getNodeToWorldTransform();
+                ltow.transformPoint(particle->positionInWorld, &particle->positionInWorld);
+                Vec3 scl;
+                ltow.decompose(&scl, nullptr, nullptr);
+                particle->widthInWorld = scl.x * particle->width;
+                particle->heightInWorld = scl.y * particle->height;
+                particle->depthInWorld = scl.z * particle->depth;
             }
             firstActiveParticle = false;
         }

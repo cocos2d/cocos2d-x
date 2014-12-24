@@ -179,10 +179,10 @@ void PUParticle3DTechniqueTranslator::translate(PUScriptCompiler* compiler, PUAb
                     if(getString(*prop->values.front(), &val))
                     {
                         _system->setMaterialName(val);
-						PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(val);
-						if (material){
-							_system->setBlendFunc(material->blendFunc);
-						}
+                        PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(val);
+                        if (material){
+                            _system->setBlendFunc(material->blendFunc);
+                        }
                     }
                 }
             }
