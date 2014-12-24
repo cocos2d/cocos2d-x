@@ -865,6 +865,12 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
 //        _loadingNodeParentHierarchy.push_back(node);
     }
     
+    // If node is invalid, there is no necessity to process children of node.
+    if (!node)
+    {
+        return nullptr;
+    }
+    
     auto children = nodetree->children();
     int size = children->size();
     CCLOG("size = %d", size);
@@ -1184,6 +1190,12 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
             _rootNode = node;
         }
 //        _loadingNodeParentHierarchy.push_back(node);
+    }
+    
+    // If node is invalid, there is no necessity to process children of node.
+    if (!node)
+    {
+        return nullptr;
     }
     
     auto children = nodetree->children();

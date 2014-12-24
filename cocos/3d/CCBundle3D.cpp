@@ -146,24 +146,15 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     }
 }
 
-Bundle3D* Bundle3D::_instance = nullptr;
-
-void Bundle3D::setBundleInstance(Bundle3D* bundleInstance)
+Bundle3D* Bundle3D::createBundle()
 {
-    CC_SAFE_DELETE(_instance);
-    _instance = bundleInstance;
+    auto bundle = new (std::nothrow) Bundle3D();
+    return bundle;
 }
 
-Bundle3D* Bundle3D::getInstance()
+void Bundle3D::destroyBundle(Bundle3D* bundle)
 {
-    if (_instance == nullptr)
-        _instance = new (std::nothrow) Bundle3D();
-    return _instance;
-}
-
-void Bundle3D::destroyInstance()
-{
-    CC_SAFE_DELETE(_instance);
+    delete bundle;
 }
 
 void Bundle3D::clear()
@@ -280,7 +271,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         for (const auto& it : shapes.shapes)
         {
             NTextureData tex;
-            tex.filename = dir + it.material.diffuse_texname;
+            tex.filename = it.material.diffuse_texname.empty() ? it.material.diffuse_texname : dir + it.material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
             tex.wrapS = GL_CLAMP_TO_EDGE;
             tex.wrapT = GL_CLAMP_TO_EDGE;
@@ -855,7 +846,7 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
                 return false;
             }
 
-            textureData.filename = _modelPath + texturePath;
+            textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
             float  uvdata[4];
             _binaryReader.read(&uvdata,sizeof(float), 4);
             textureData.type  = parseGLTextureType(_binaryReader.readString());
@@ -882,7 +873,7 @@ bool Bundle3D::loadMaterialsBinary_0_1(MaterialDatas& materialdatas)
     }
 
     NTextureData textureData;
-    textureData.filename = _modelPath + texturePath;
+    textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
     textureData.type= NTextureData::Usage::Diffuse;
     textureData.id="";
     materialData.textures.push_back(textureData);
@@ -910,7 +901,7 @@ bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
         }
 
         NTextureData textureData;
-        textureData.filename = _modelPath + texturePath;
+        textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);
@@ -936,7 +927,7 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 NTextureData  textureData;
                 const rapidjson::Value& texture_val = testure_array[j];
                 std::string filename = texture_val[FILENAME].GetString();
-                textureData.filename = _modelPath + filename;
+                textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
                 textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
                 textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
@@ -1301,7 +1292,8 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
             const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
             NTextureData  textureData;
             // set texture
-            textureData.filename =_modelPath + material_data_base_array_0[FILENAME].GetString();
+            std::string filename = material_data_base_array_0[FILENAME].GetString();
+            textureData.filename = filename.empty() ? filename : _modelPath + filename;
             textureData.type= NTextureData::Usage::Diffuse;
             textureData.id="";
             materialData.textures.push_back(textureData);
@@ -1325,7 +1317,8 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
         const rapidjson::Value& material_val = material_array[i];
 
         // set texture
-        textureData.filename = _modelPath + material_val[TEXTURES].GetString();
+        std::string filename = material_val[TEXTURES].GetString();
+        textureData.filename = filename.empty() ? filename : _modelPath + filename;
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);

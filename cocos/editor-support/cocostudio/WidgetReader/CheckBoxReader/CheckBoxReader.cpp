@@ -433,7 +433,7 @@ namespace cocostudio
         std::string backGroundErrorFilePath = "";
         auto backGroundDic = options->backGroundBoxData();
         int backGroundType = backGroundDic->resourceType();
-        std::string backGroundTexturePath = this->getResourcePath(backGroundDic->path()->c_str(), (Widget::TextureResType)backGroundType);
+        std::string backGroundTexturePath = backGroundDic->path()->c_str();
         switch (backGroundType)
         {
             case 0:
@@ -498,7 +498,7 @@ namespace cocostudio
         std::string backGroundSelectedErrorFilePath = "";
         auto backGroundSelectedDic = options->backGroundBoxSelectedData();
         int backGroundSelectedType = backGroundSelectedDic->resourceType();
-        std::string backGroundSelectedTexturePath = this->getResourcePath(backGroundSelectedDic->path()->c_str(), (Widget::TextureResType)backGroundSelectedType);
+        std::string backGroundSelectedTexturePath = backGroundSelectedDic->path()->c_str();
         switch (backGroundSelectedType)
         {
             case 0:
@@ -563,7 +563,7 @@ namespace cocostudio
         std::string frontCrossErrorFilePath = "";
         auto frontCrossDic = options->frontCrossData();
         int frontCrossType = frontCrossDic->resourceType();
-        std::string frontCrossFileName = this->getResourcePath(frontCrossDic->path()->c_str(), (Widget::TextureResType)frontCrossType);
+        std::string frontCrossFileName = frontCrossDic->path()->c_str();
         switch (frontCrossType)
         {
             case 0:
@@ -628,7 +628,7 @@ namespace cocostudio
         std::string backGroundBoxDisabledErrorFilePath = "";
         auto backGroundDisabledDic = options->backGroundBoxDisabledData();
         int backGroundDisabledType = backGroundDisabledDic->resourceType();
-        std::string backGroundDisabledFileName = this->getResourcePath(backGroundDisabledDic->path()->c_str(), (Widget::TextureResType)backGroundDisabledType);
+        std::string backGroundDisabledFileName = backGroundDisabledDic->path()->c_str();
         switch (backGroundDisabledType)
         {
             case 0:
@@ -693,7 +693,7 @@ namespace cocostudio
         std::string frontCrossDisabledErrorFilePath = "";
         auto frontCrossDisabledDic = options->frontCrossDisabledData();
         int frontCrossDisabledType = frontCrossDisabledDic->resourceType();
-        std::string frontCrossDisabledFileName = this->getResourcePath(frontCrossDisabledDic->path()->c_str(), (Widget::TextureResType)frontCrossDisabledType);
+        std::string frontCrossDisabledFileName = frontCrossDisabledDic->path()->c_str();
         switch (frontCrossDisabledType)
         {
             case 0:
