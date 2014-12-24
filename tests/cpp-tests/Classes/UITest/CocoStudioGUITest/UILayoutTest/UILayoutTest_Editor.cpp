@@ -1235,9 +1235,9 @@ void UILayoutComponentTest_Editor::configureGUIScene()
 
     Text* back_label = Text::create("Back", "", 20);
     back_label->setTouchEnabled(true);
-    auto labelLayout = LayoutComponent::boundingLayoutForNode(back_label);
-    labelLayout->setHorizontalEage(LayoutComponent::HorizontalEage::Right);
-    labelLayout->setVerticalEage(LayoutComponent::VerticalEage::Bottom);
+    auto labelLayout = LayoutComponent::boundingLayoutComponent(back_label);
+    labelLayout->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
+    labelLayout->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
     back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
     _layout->addChild(back_label);
 

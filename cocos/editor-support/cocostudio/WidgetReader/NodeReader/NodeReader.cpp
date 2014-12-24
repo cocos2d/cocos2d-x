@@ -549,37 +549,37 @@ namespace cocostudio
         layoutComponent->setPercentHeight(sizeYPercent);
         layoutComponent->setStretchWidthEnabled(stretchHorizontalEnabled);
         layoutComponent->setStretchHeightEnabled(stretchVerticalEnabled);
-        ui::LayoutComponent::HorizontalEage horizontalEdgeType = ui::LayoutComponent::HorizontalEage::None;
+        ui::LayoutComponent::HorizontalEdge horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::None;
         if (horizontalEdge == Layout_LeftEdge)
         {
-            horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Left;
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::Left;
         }
         else if (horizontalEdge == Layout_RightEdge)
         {
-            horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Right;
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::Right;
         }
         else if (horizontalEdge == Layout_BothEdge)
         {
-            horizontalEdgeType = ui::LayoutComponent::HorizontalEage::Center;
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::Center;
         }
-        layoutComponent->setHorizontalEage(horizontalEdgeType);
-        ui::LayoutComponent::VerticalEage verticalEdgeType = ui::LayoutComponent::VerticalEage::None;
+        layoutComponent->setHorizontalEdge(horizontalEdgeType);
+        ui::LayoutComponent::VerticalEdge verticalEdgeType = ui::LayoutComponent::VerticalEdge::None;
         if (verticalEdge == Layout_TopEdge)
         {
-            verticalEdgeType = ui::LayoutComponent::VerticalEage::Top;
+            verticalEdgeType = ui::LayoutComponent::VerticalEdge::Top;
         }
         else if (verticalEdge == Layout_BottomEdge)
         {
-            verticalEdgeType = ui::LayoutComponent::VerticalEage::Bottom;
+            verticalEdgeType = ui::LayoutComponent::VerticalEdge::Bottom;
         }
         else if (verticalEdge == Layout_BothEdge)
         {
-            verticalEdgeType = ui::LayoutComponent::VerticalEage::Center;
+            verticalEdgeType = ui::LayoutComponent::VerticalEdge::Center;
         }
-        layoutComponent->setVerticalEage(verticalEdgeType);
+        layoutComponent->setVerticalEdge(verticalEdgeType);
 
         layoutComponent->setTopMargin(topMargin);
-        layoutComponent->setButtomMargin(bottomMargin);
+        layoutComponent->setBottomMargin(bottomMargin);
         layoutComponent->setLeftMargin(leftMargin);
         layoutComponent->setRightMargin(rightMargin);
     }

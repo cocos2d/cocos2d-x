@@ -38,16 +38,16 @@ namespace ui {
         virtual bool init()override;
         CREATE_FUNC(LayoutComponent);
 
-        static LayoutComponent* boundingLayoutForNode(Node* node);
+        static LayoutComponent* boundingLayoutComponent(Node* node);
 
-        enum class HorizontalEage
+        enum class HorizontalEdge
         {
             None,
             Left,
             Right,
             Center
         };
-        enum class VerticalEage
+        enum class VerticalEdge
         {
             None,
             Bottom,
@@ -81,11 +81,11 @@ namespace ui {
         float getPositionPercentY()const;
         void setPositionPercentY(float percentMargin);
 
-        HorizontalEage getHorizontalEage()const;
-        void setHorizontalEage(HorizontalEage hEage);
+        HorizontalEdge getHorizontalEdge()const;
+        void setHorizontalEdge(HorizontalEdge hEage);
 
-        VerticalEage getVerticalEage()const;
-        void setVerticalEage(VerticalEage vEage);
+        VerticalEdge getVerticalEdge()const;
+        void setVerticalEdge(VerticalEdge vEage);
 
         float getLeftMargin()const;
         void setLeftMargin(float margin);
@@ -96,8 +96,8 @@ namespace ui {
         float getTopMargin()const;
         void setTopMargin(float margin);
 
-        float getButtomMargin()const;
-        void setButtomMargin(float margin);
+        float getBottomMargin()const;
+        void setBottomMargin(float margin);
 
         // Size & Percent
         const Size& getSize()const;
@@ -135,12 +135,12 @@ namespace ui {
         void refreshHorizontalMargin();
         void refreshVerticalMargin();
     protected:
-        HorizontalEage  _horizontalEage;
-        VerticalEage    _verticalEage;
+        HorizontalEdge  _horizontalEdge;
+        VerticalEdge    _verticalEdge;
 
         float           _leftMargin;
         float           _rightMargin;
-        float           _buttomMargin;
+        float           _bottomMargin;
         float           _topMargin;
 
         bool            _usingPositionPercentX;
@@ -157,7 +157,7 @@ namespace ui {
         float           _percentHeight;
         bool            _usingPercentHeight;
 
-        bool _actived;
+        bool            _actived;
     };
 }
 
