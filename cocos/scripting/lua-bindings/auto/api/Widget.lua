@@ -5,6 +5,13 @@
 -- @parent_module ccui
 
 --------------------------------
+-- param enable Layout Component of a widget<br>
+-- return void
+-- @function [parent=#Widget] setLayoutComponentEnabled 
+-- @param self
+-- @param #bool enable
+        
+--------------------------------
 -- Changes the percent that is widget's percent size<br>
 -- param percent that is widget's percent size
 -- @function [parent=#Widget] setSizePercent 
@@ -333,6 +340,12 @@
 -- @function [parent=#Widget] hitTest 
 -- @param self
 -- @param #vec2_table pt
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- return true represent the widget use Layout Component, false represent the widget couldn't use Layout Component.
+-- @function [parent=#Widget] isLayoutComponentEnabled 
+-- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
