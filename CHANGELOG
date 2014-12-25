@@ -1,6 +1,8 @@
-cocos2d-x-3.4 ??
-    [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
+cocos2d-x-3.4beta0  ??
+    [NEW]           Action: MoveTo and MoveBy support Vec3
     [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool.
+    [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
+    [NEW]           Director: add setClearColor() to set clear values for the color buffers
 
     [FIX]           FileUtils: WebP format with alpha channel displayed wrong
     [FIX]           Label: content size of Label is incorrect if the string is set to empty string

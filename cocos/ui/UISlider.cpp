@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UISlider.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -222,12 +223,12 @@ void Slider::setCapInsets(const Rect &capInsets)
 
 void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
 {
-    _capInsetsBarRenderer = capInsets;
+    _capInsetsBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _barRenderer->getContentSize());
     if (!_scale9Enabled)
     {
         return;
     }
-    _barRenderer->setCapInsets(capInsets);
+    _barRenderer->setCapInsets(_capInsetsBarRenderer);
 }
     
 const Rect& Slider::getCapInsetsBarRenderer()const
@@ -237,12 +238,13 @@ const Rect& Slider::getCapInsetsBarRenderer()const
 
 void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
 {
-    _capInsetsProgressBarRenderer = capInsets;
+    _capInsetsProgressBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _progressBarRenderer->getContentSize());
+    
     if (!_scale9Enabled)
     {
         return;
     }
-    _progressBarRenderer->setCapInsets(capInsets);
+    _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     
 const Rect& Slider::getCapInsetsProgressBarRebderer()const

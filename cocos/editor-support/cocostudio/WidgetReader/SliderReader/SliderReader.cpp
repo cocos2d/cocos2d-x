@@ -467,7 +467,7 @@ namespace cocostudio
         std::string imageErrorFilePath = "";
         auto imageFileNameDic = options->barFileNameData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = imageFileNameDic->path()->c_str();
         switch (imageFileNameType)
         {
             case 0:
@@ -532,7 +532,7 @@ namespace cocostudio
         std::string normalErrorFilePath = "";
         auto normalDic = options->ballNormalData();
         int normalType = normalDic->resourceType();
-        std::string normalFileName = this->getResourcePath(normalDic->path()->c_str(), (Widget::TextureResType)normalType);
+        std::string normalFileName = normalDic->path()->c_str();
         switch (normalType)
         {
             case 0:
@@ -597,7 +597,7 @@ namespace cocostudio
         std::string pressedErrorFilePath = "";
         auto pressedDic = options->ballPressedData();
         int pressedType = pressedDic->resourceType();
-        std::string pressedFileName = this->getResourcePath(pressedDic->path()->c_str(), (Widget::TextureResType)pressedType);
+        std::string pressedFileName = pressedDic->path()->c_str();
         switch (pressedType)
         {
             case 0:
@@ -662,7 +662,7 @@ namespace cocostudio
         std::string disabledErrorFilePath = "";
         auto disabledDic = options->ballDisabledData();
         int disabledType = disabledDic->resourceType();
-        std::string disabledFileName = this->getResourcePath(disabledDic->path()->c_str(), (Widget::TextureResType)disabledType);
+        std::string disabledFileName = disabledDic->path()->c_str();
         switch (disabledType)
         {
             case 0:
@@ -727,7 +727,7 @@ namespace cocostudio
         std::string progressErrorFilePath = "";
         auto progressBarDic = options->progressBarData();
         int progressBarType = progressBarDic->resourceType();
-        std::string progressBarFileName = this->getResourcePath(progressBarDic->path()->c_str(), (Widget::TextureResType)progressBarType);
+        std::string progressBarFileName = progressBarDic->path()->c_str();
         switch (progressBarType)
         {
             case 0:

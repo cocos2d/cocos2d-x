@@ -295,7 +295,7 @@ namespace cocostudio
         std::string errorFilePath = "";
         auto imageFileNameDic = options->fileNameData();
         int imageFileNameType = imageFileNameDic->resourceType();
-        std::string imageFileName = this->getResourcePath(imageFileNameDic->path()->c_str(), (Widget::TextureResType)imageFileNameType);
+        std::string imageFileName = imageFileNameDic->path()->c_str();
         switch (imageFileNameType)
         {
             case 0:
@@ -375,7 +375,11 @@ namespace cocostudio
             Rect capInsets(f_capInset->x(), f_capInset->y(), f_capInset->width(), f_capInset->height());
             imageView->setCapInsets(capInsets);
         }
-        
+        else
+        {
+            Size contentSize(options->widgetOptions()->size()->width(), options->widgetOptions()->size()->height());
+            imageView->setContentSize(contentSize);
+        }
     }
     
     Node* ImageViewReader::createNodeWithFlatBuffers(const flatbuffers::Table *imageViewOptions)

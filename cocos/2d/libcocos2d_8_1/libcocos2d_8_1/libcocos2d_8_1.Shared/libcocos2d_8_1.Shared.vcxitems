@@ -87,6 +87,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\MediaStreamer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\atitc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\base64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccConfig.h" />
@@ -230,6 +231,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerObj.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
@@ -510,6 +513,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\atitc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\base64.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConfiguration.cpp" />
@@ -632,6 +636,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerObj.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />

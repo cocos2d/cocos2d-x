@@ -1041,22 +1041,46 @@ RotateBy* RotateBy::reverse() const
 
 MoveBy* MoveBy::create(float duration, const Vec2& deltaPosition)
 {
-    MoveBy *ret = new (std::nothrow) MoveBy();
-    ret->initWithDuration(duration, deltaPosition);
-    ret->autorelease();
+    return MoveBy::create(duration, Vec3(deltaPosition.x, deltaPosition.y, 0));
+}
 
+MoveBy* MoveBy::create(float duration, const Vec3 &deltaPosition)
+{
+    MoveBy *ret = new (std::nothrow) MoveBy();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, deltaPosition))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
     return ret;
 }
 
 bool MoveBy::initWithDuration(float duration, const Vec2& deltaPosition)
 {
+    return MoveBy::initWithDuration(duration, Vec3(deltaPosition.x, deltaPosition.y, 0));
+}
+
+bool MoveBy::initWithDuration(float duration, const Vec3& deltaPosition)
+{
+    bool ret = false;
+    
     if (ActionInterval::initWithDuration(duration))
     {
         _positionDelta = deltaPosition;
-        return true;
+        _is3D = true;
+        ret = true;
     }
-
-    return false;
+    
+    return ret;
 }
 
 MoveBy* MoveBy::clone() const
@@ -1071,12 +1095,12 @@ MoveBy* MoveBy::clone() const
 void MoveBy::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-    _previousPosition = _startPosition = target->getPosition();
+    _previousPosition = _startPosition = target->getPosition3D();
 }
 
 MoveBy* MoveBy::reverse() const
 {
-    return MoveBy::create(_duration, Vec2( -_positionDelta.x, -_positionDelta.y));
+    return MoveBy::create(_duration, -_positionDelta);
 }
 
 
@@ -1085,14 +1109,14 @@ void MoveBy::update(float t)
     if (_target)
     {
 #if CC_ENABLE_STACKABLE_ACTIONS
-        Vec2 currentPos = _target->getPosition();
-        Vec2 diff = currentPos - _previousPosition;
+        Vec3 currentPos = _target->getPosition3D();
+        Vec3 diff = currentPos - _previousPosition;
         _startPosition = _startPosition + diff;
-        Vec2 newPos =  _startPosition + (_positionDelta * t);
-        _target->setPosition(newPos);
+        Vec3 newPos =  _startPosition + (_positionDelta * t);
+        _target->setPosition3D(newPos);
         _previousPosition = newPos;
 #else
-        _target->setPosition(_startPosition + _positionDelta * t);
+        _target->setPosition3D(_startPosition + _positionDelta * t);
 #endif // CC_ENABLE_STACKABLE_ACTIONS
     }
 }
@@ -1103,22 +1127,45 @@ void MoveBy::update(float t)
 
 MoveTo* MoveTo::create(float duration, const Vec2& position)
 {
-    MoveTo *ret = new (std::nothrow) MoveTo();
-    ret->initWithDuration(duration, position);
-    ret->autorelease();
+    return MoveTo::create(duration, Vec3(position.x, position.y, 0));
+}
 
+MoveTo* MoveTo::create(float duration, const Vec3& position)
+{
+    MoveTo *ret = new (std::nothrow) MoveTo();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, position))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
     return ret;
 }
 
 bool MoveTo::initWithDuration(float duration, const Vec2& position)
 {
+    return initWithDuration(duration, Vec3(position.x, position.y, 0));
+}
+
+bool MoveTo::initWithDuration(float duration, const Vec3& position)
+{
+    bool ret = false;
+    
     if (ActionInterval::initWithDuration(duration))
     {
         _endPosition = position;
-        return true;
+        ret = true;
     }
-
-    return false;
+    
+    return ret;
 }
 
 MoveTo* MoveTo::clone() const
@@ -1133,7 +1180,7 @@ MoveTo* MoveTo::clone() const
 void MoveTo::startWithTarget(Node *target)
 {
     MoveBy::startWithTarget(target);
-    _positionDelta = _endPosition - target->getPosition();
+    _positionDelta = _endPosition - target->getPosition3D();
 }
 
 
@@ -2237,7 +2284,7 @@ bool Animate::initWithAnimation(Animation* animation)
         float accumUnitsOfTime = 0;
         float newUnitOfTimeValue = singleDuration / animation->getTotalDelayUnits();
 
-        auto frames = animation->getFrames();
+        auto& frames = animation->getFrames();
 
         for (auto& frame : frames)
         {
@@ -2312,7 +2359,7 @@ void Animate::update(float t)
         t = fmodf(t, 1.0f);
     }
 
-    auto frames = _animation->getFrames();
+    auto& frames = _animation->getFrames();
     auto numberOfFrames = frames.size();
     SpriteFrame *frameToDisplay = nullptr;
 
@@ -2346,7 +2393,7 @@ void Animate::update(float t)
 
 Animate* Animate::reverse() const
 {
-    auto oldArray = _animation->getFrames();
+    auto& oldArray = _animation->getFrames();
     Vector<AnimationFrame*> newArray(oldArray.size());
    
     if (oldArray.size() > 0)

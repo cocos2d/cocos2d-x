@@ -227,6 +227,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  set clear values for the color buffers, value range of each element is [0.0, 1.0] 
+-- @function [parent=#Director] setClearColor 
+-- @param self
+-- @param #color4f_table clearColor
+        
+--------------------------------
 --  Ends the execution, releases the running scene.<br>
 -- It doesn't remove the OpenGL view from its parent. You have to do it manually.<br>
 -- lua endToLua
