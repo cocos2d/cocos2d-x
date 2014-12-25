@@ -114,7 +114,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 ## Features in detail
 
-### create Sprite3D asynchronously
+### Create Sprite3D asynchronously
 
 It allows to load Sprite3D in another thread so that you can process more logic in the main thread. And it notifies you using a custom callback after creating is finished.
 
