@@ -4650,6 +4650,7 @@
         "cocos/scripting/lua-bindings/auto/api/ActionTimeline.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionTimelineCache.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionTimelineData.lua", 
+        "cocos/scripting/lua-bindings/auto/api/ActionTimelineNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionTintFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionTween.lua", 
         "cocos/scripting/lua-bindings/auto/api/AmbientLight.lua", 
