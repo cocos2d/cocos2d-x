@@ -259,7 +259,7 @@ void Camera::enableFrustumCulling(bool enalbe, bool clipZ)
     _frustum.setClipZ(clipZ);
 }
 
-bool Camera::isVisibleInFrustum(const AABB& aabb) const
+bool Camera::isVisibleInFrustum(const AABB* aabb) const
 {
     if (_enableFrustumCulling)
     {
@@ -268,7 +268,7 @@ bool Camera::isVisibleInFrustum(const AABB& aabb) const
             _frustum.initFrustum(this);
             _frustumDirty = false;
         }
-        return !_frustum.isOutOfFrustum(aabb);
+        return !_frustum.isOutOfFrustum(*aabb);
     }
     return true;
 }
