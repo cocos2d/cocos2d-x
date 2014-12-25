@@ -31,7 +31,6 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include "base/ccConfig.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformDefine.h"
-#include <new>
 
 /**
  * define a create function for a specific type, such as Layer
