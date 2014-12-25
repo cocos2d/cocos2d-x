@@ -151,6 +151,10 @@ void Sprite3D::afterAsyncLoad(void* param)
                 setTexture(asyncParam->texPath);
             }
         }
+        else
+        {
+            CCLOG("file load error: %s ", asyncParam->modlePath.c_str());
+        }
         asyncParam->afterLoadCallback(this, asyncParam->callbackParam);
     }
 }
