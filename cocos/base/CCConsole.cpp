@@ -201,12 +201,13 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+static const int CCLOG_STRING_TAG = 1;
 void SendLogToWindow(const char *log)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     // Send data as a message
     COPYDATASTRUCT myCDS;
-    myCDS.dwData = CCLOG_STRING;
+    myCDS.dwData = CCLOG_STRING_TAG;
     myCDS.cbData = (DWORD)strlen(log) + 1;
     myCDS.lpData = (PVOID)log;
     if (Director::getInstance()->getOpenGLView())
