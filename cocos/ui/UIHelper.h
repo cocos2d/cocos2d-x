@@ -79,6 +79,12 @@ public:
                                    std::string::size_type start,
                                    std::string::size_type length);
     
+    /**
+     * Refresh object and it's children layout state
+     *
+     *@param rootNode   object which will be changed
+     *
+     */
     static void doLayout(Node *rootNode);
 
     static void changeLayoutSystemActiveState(bool bActive);

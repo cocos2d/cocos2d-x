@@ -92,6 +92,8 @@ static const char* s_testArray[] =
     "UILayoutTest_Layout_Linear_Horizontal",
     "UILayoutTest_Layout_Relative_Align_Parent",
     "UILayoutTest_Layout_Relative_Location",
+    "UILayoutComponent_Berth_Test",
+    "UILayoutComponent_Berth_Stretch_Test",
    
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
@@ -333,6 +335,12 @@ Scene *UISceneManager::currentUIScene()
         case kUILayoutTest_Layout_Relative_Location:
             return UILayoutTest_Layout_Relative_Location::sceneWithTitle(s_testArray[_currentUISceneId]);
             
+        case kUILayoutComponent_Berth_Test:
+            return UILayoutComponent_Berth_Test::sceneWithTitle(s_testArray[_currentUISceneId]);
+
+        case kUILayoutComponent_Berth_Stretch_Test:
+            return UILayoutComponent_Berth_Stretch_Test::sceneWithTitle(s_testArray[_currentUISceneId]);
+
         case kUIScrollViewTest_Vertical:
             return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             

@@ -242,8 +242,8 @@
     <Filter Include="cocostudio\reader\WidgetReader\GameMapReader">
       <UniqueIdentifier>{02d389d5-8f57-4bd6-b12a-95af86c5b356}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ui\shaders">
-      <UniqueIdentifier>{0d094a09-b8c2-4fc8-a817-5840cf3ca542}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
+      <UniqueIdentifier>{939d9d3e-06b3-494e-affd-070c2c1cbe1d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1311,8 +1311,11 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\ui\shaders\UIShaders.cpp">
-      <Filter>ui\shaders</Filter>
+    <ClCompile Include="..\base\CCAsyncTaskPool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2544,8 +2547,14 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\ui\shaders\UIShaders.h">
-      <Filter>ui\shaders</Filter>
+    <ClInclude Include="..\base\CCAsyncTaskPool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2635,9 +2644,6 @@
     </None>
     <None Include="..\renderer\ccShader_Position_uColor.vert">
       <Filter>renderer\shaders</Filter>
-    </None>
-    <None Include="..\ui\shaders\ccShader_grayscale.frag">
-      <Filter>ui\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

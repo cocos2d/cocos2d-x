@@ -1258,8 +1258,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.h">
-      <Filter>ui\shaders</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2333,8 +2339,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.cpp">
-      <Filter>ui\shaders</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2566,8 +2575,8 @@
     <Filter Include="cocostudio\reader\WidgetReader\ProjectNodeReader">
       <UniqueIdentifier>{a6638f35-5c81-4835-9897-0f9efb0be02b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ui\shaders">
-      <UniqueIdentifier>{6fc0eff9-aaac-4be0-9d66-2730b072cb21}</UniqueIdentifier>
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
+      <UniqueIdentifier>{1151b6b3-739f-4cff-add0-6b772fa7d226}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2679,9 +2688,6 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters">
       <Filter>2d</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\ccShader_grayscale.frag">
-      <Filter>ui\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

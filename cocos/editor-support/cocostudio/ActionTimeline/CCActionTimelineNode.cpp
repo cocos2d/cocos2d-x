@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -22,32 +22,70 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__ProjectNodeReader__
-#define __cocos2d_libs__ProjectNodeReader__
+#include "CCActionTimelineNode.h"
+#include "CSLoader.h"
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+USING_NS_CC;
 
+NS_TIMELINE_BEGIN
 
-namespace cocostudio
+ActionTimelineNode* ActionTimelineNode::create(Node* root, ActionTimeline* action)
 {
-    class CC_STUDIO_DLL ProjectNodeReader : public cocos2d::Ref, public NodeReaderProtocol
+    ActionTimelineNode* object = new (std::nothrow) ActionTimelineNode();
+    if (object && object->init(root, action))
     {
-        
-    public:
-        ProjectNodeReader();
-        ~ProjectNodeReader();
-        
-        static ProjectNodeReader* getInstance();
-        static void purge();
-        
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-                                                                             flatbuffers::FlatBufferBuilder* builder);
-
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* projectNodeOptions);
-        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions) { return nullptr; };
-    };
+        object->autorelease();
+        return object;
+    }
+    CC_SAFE_DELETE(object);
+    return nullptr;
 }
 
-#endif /* defined(__cocos2d_libs__ProjectNodeReader__) */
+ActionTimelineNode::ActionTimelineNode()
+: _root(nullptr)
+, _action(nullptr)
+{
+}
+
+ActionTimelineNode::~ActionTimelineNode()
+{
+}
+
+bool ActionTimelineNode::init()
+{
+    return Node::init();
+}
+
+bool ActionTimelineNode::init(Node* root, ActionTimeline* action)
+{
+    _root = root;
+    _action = action;
+    
+    if(_root)
+    {
+        _root->removeFromParent();
+        addChild(_root);
+    }
+    
+    return true;
+}
+
+void ActionTimelineNode::setRoot(cocos2d::Node* root)
+{
+    _root = root;
+}
+cocos2d::Node* ActionTimelineNode::getRoot()
+{
+    return _root;
+}
+
+void ActionTimelineNode::setActionTimeline(ActionTimeline* action)
+{
+    _action = action;
+}
+ActionTimeline* ActionTimelineNode::getActionTimeline()
+{
+    return _action;
+}
+
+NS_TIMELINE_END

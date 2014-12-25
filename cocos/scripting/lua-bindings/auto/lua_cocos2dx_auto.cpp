@@ -12924,6 +12924,55 @@ int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Director_setClearColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Director* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setClearColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4F arg0;
+
+        ok &=luaval_to_color4f(tolua_S, 2, &arg0, "cc.Director:setClearColor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setClearColor'", nullptr);
+            return 0;
+        }
+        cobj->setClearColor(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setClearColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setClearColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Director_end(lua_State* tolua_S)
 {
     int argc = 0;
@@ -14349,6 +14398,7 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"popToSceneStackLevel",lua_cocos2dx_Director_popToSceneStackLevel);
         tolua_function(tolua_S,"resume",lua_cocos2dx_Director_resume);
         tolua_function(tolua_S,"isNextDeltaTimeZero",lua_cocos2dx_Director_isNextDeltaTimeZero);
+        tolua_function(tolua_S,"setClearColor",lua_cocos2dx_Director_setClearColor);
         tolua_function(tolua_S,"endToLua",lua_cocos2dx_Director_end);
         tolua_function(tolua_S,"setOpenGLView",lua_cocos2dx_Director_setOpenGLView);
         tolua_function(tolua_S,"convertToGL",lua_cocos2dx_Director_convertToGL);

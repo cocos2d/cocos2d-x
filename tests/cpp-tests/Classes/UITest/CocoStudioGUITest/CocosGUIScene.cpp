@@ -199,7 +199,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUILayoutTest);
             sceneManager->setMinUISceneId(kUILayoutTest);
-            sceneManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location);
+            sceneManager->setMaxUISceneId(kUILayoutComponent_Berth_Stretch_Test);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

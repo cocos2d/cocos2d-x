@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -22,32 +22,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__ProjectNodeReader__
-#define __cocos2d_libs__ProjectNodeReader__
+#ifndef __COCOSSTUDIO_CCACTIONTIMELINENODE_H__
+#define __COCOSSTUDIO_CCACTIONTIMELINENODE_H__
 
-#include "cocos2d.h"
+#include "CCActionTimeline.h"
+#include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 
+NS_TIMELINE_BEGIN
 
-namespace cocostudio
+class ActionTimeline;
+
+class CC_STUDIO_DLL ActionTimelineNode : public cocos2d::Node
 {
-    class CC_STUDIO_DLL ProjectNodeReader : public cocos2d::Ref, public NodeReaderProtocol
-    {
-        
-    public:
-        ProjectNodeReader();
-        ~ProjectNodeReader();
-        
-        static ProjectNodeReader* getInstance();
-        static void purge();
-        
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-                                                                             flatbuffers::FlatBufferBuilder* builder);
+public:
+    static ActionTimelineNode* create(cocos2d::Node* root, ActionTimeline* action);
+    
+    ActionTimelineNode();
+    ~ActionTimelineNode();
+    
+    bool init() override;
+    bool init(cocos2d::Node* root, ActionTimeline* action);
+    
+    virtual void setRoot(cocos2d::Node* root);
+    virtual cocos2d::Node* getRoot();
+    
+    virtual void setActionTimeline(ActionTimeline* action);
+    virtual ActionTimeline* getActionTimeline();
+    
+protected:
+    cocos2d::Node* _root;
+    ActionTimeline* _action;
+};
 
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* projectNodeOptions);
-        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions) { return nullptr; };
-    };
-}
+NS_TIMELINE_END
 
-#endif /* defined(__cocos2d_libs__ProjectNodeReader__) */
+
+#endif /*__COCOSSTUDIO_CCACTIONTIMELINENODE_H__*/
