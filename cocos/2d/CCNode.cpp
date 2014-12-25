@@ -1791,15 +1791,15 @@ const Mat4& Node::getNodeToParentTransform() const
         }
         if (_scaleX != 1.f)
         {
-            _transform.m[0] *= _scaleX, _transform.m[4] *= _scaleX, _transform.m[8] *= _scaleX;
+            _transform.m[0] *= _scaleX, _transform.m[1] *= _scaleX, _transform.m[2] *= _scaleX;
         }
         if (_scaleY != 1.f)
         {
-            _transform.m[1] *= _scaleY, _transform.m[5] *= _scaleY, _transform.m[9] *= _scaleY;
+            _transform.m[4] *= _scaleY, _transform.m[5] *= _scaleY, _transform.m[6] *= _scaleY;
         }
         if (_scaleZ != 1.f)
         {
-            _transform.m[2] *= _scaleZ, _transform.m[6] *= _scaleZ, _transform.m[10] *= _scaleZ;
+            _transform.m[8] *= _scaleZ, _transform.m[9] *= _scaleZ, _transform.m[10] *= _scaleZ;
         }
         _transform.m[12] = x, _transform.m[13] = y, _transform.m[14] = z;
         
