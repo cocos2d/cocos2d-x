@@ -261,4 +261,9 @@
 -- @field [parent=#ccs] ActionTimeline#ActionTimeline ActionTimeline preloaded module
 
 
+--------------------------------------------------------
+-- the ccs ActionTimelineNode
+-- @field [parent=#ccs] ActionTimelineNode#ActionTimelineNode ActionTimelineNode preloaded module
+
+
 return nil
