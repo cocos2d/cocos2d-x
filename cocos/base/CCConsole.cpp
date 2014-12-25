@@ -217,8 +217,6 @@ void SendLogToWindow(const char *log)
             (WPARAM)(HWND)hwnd,
             (LPARAM)(LPVOID)&myCDS);
     }
-#else
-    CC_UNUSED(log);
 #endif
 }
 
