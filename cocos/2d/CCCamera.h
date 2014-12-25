@@ -144,7 +144,7 @@ public:
     /**
      * Is this aabb visible in frustum
      */
-    bool isVisibleInFrustum(const AABB& aabb)const;
+    bool isVisibleInFrustum(const AABB* aabb)const;
     
     //override
     virtual void onEnter() override;
