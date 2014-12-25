@@ -828,14 +828,14 @@ const std::vector<std::string>& FileUtils::getSearchPaths() const
     return _searchPathArray;
 }
 
-void FileUtils::setWritablePath(const char *writablePath)
+void FileUtils::setWritablePath(const std::string& writablePath)
 {
-    _writablePath = writablePath ? writablePath : "";
+    _writablePath = writablePath;
 }
 
-void FileUtils::setSearchRootPath(const char* path)
+void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
-    _defaultResRootPath = path ? path : "";
+    _defaultResRootPath = path;
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)

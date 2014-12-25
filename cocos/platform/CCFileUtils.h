@@ -262,9 +262,9 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
-     * Set search root path.
+     * Set default resource root path.
      */
-    void setSearchRootPath(const char* path);
+    void setDefaultResourceRootPath(const std::string& path);
 
     /**
       * Add search path.
@@ -289,7 +289,7 @@ public:
     virtual std::string getWritablePath() const = 0;
     
     /**
-     *  Set writable/cache path (for debug).
+     *  Set writable/cache path.
      */
     virtual void setWritablePath(const char *writablePath);
 
@@ -506,7 +506,7 @@ protected:
     std::unordered_map<std::string, std::string> _fullPathCache;
     
     /**
-     * Writable path (for debug)
+     * Writable path
      */
     std::string _writablePath;
 
