@@ -539,6 +539,11 @@ PUScriptTokenList::const_iterator PUScriptParser::skipNewlines(PUScriptTokenList
     return i;
 }
 
-
+PUConcreteNode::~PUConcreteNode()
+{
+    for (auto iter : children){
+        delete iter;
+    }
+}
 
 NS_CC_END

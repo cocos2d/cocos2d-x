@@ -107,7 +107,12 @@ PUParticle3D::PUParticle3D():
     textureAnimationTimeStep(0.1f),
     textureAnimationTimeStepCount(0.0f),
     textureCoordsCurrent(0),
-    textureAnimationDirectionUp(true)
+    textureAnimationDirectionUp(true),
+    depthInView(0.0f),
+    zRotation(0.0f),
+    widthInWorld(width),
+    heightInWorld(height),
+    depthInWorld(depth)
 {
 }
 //-----------------------------------------------------------------------
@@ -117,7 +122,6 @@ const float PUParticleSystem3D::DEFAULT_HEIGHT = 50;
 const float PUParticleSystem3D::DEFAULT_DEPTH = 50;
 const unsigned short PUParticleSystem3D::DEFAULT_PARTICLE_QUOTA = 500;
 const float PUParticleSystem3D::DEFAULT_MAX_VELOCITY = 9999.0f;
-
 
 PUParticleSystem3D::PUParticleSystem3D()
 : _prepared(false)
@@ -133,6 +137,33 @@ PUParticleSystem3D::PUParticleSystem3D()
 PUParticleSystem3D::~PUParticleSystem3D()
 {
     unPrepared();
+}
+
+PUParticleSystem3D* PUParticleSystem3D::create()
+{
+    auto pups = new PUParticleSystem3D();
+    pups->autorelease();
+    return pups;
+}
+
+PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
+{
+    PUParticleSystem3D* ps = PUParticleSystem3D::create();
+    PUParticle3DMaterialCache::Instance()->loadMaterials(materialPath);
+    if (!ps->initSystem(filePath)){
+        CC_SAFE_DELETE(ps);
+    }
+    return ps;
+}
+
+PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath )
+{
+    PUParticleSystem3D* ps = PUParticleSystem3D::create();
+    PUParticle3DMaterialCache::Instance()->loadMaterialsFromSearchPaths("*.material");
+    if (!ps->initSystem(filePath)){
+        CC_SAFE_DELETE(ps);
+    }
+    return ps;
 }
 
 void PUParticleSystem3D::startParticle()
@@ -310,7 +341,6 @@ void PUParticleSystem3D::unPrepared()
     }
 
     _particlePool.removeAllParticles(true);
-    PUParticle3DMaterialManager::Instance()->clearAllMaterials();
 }
 
 void PUParticleSystem3D::preUpdator( float elapsedTime )
@@ -362,9 +392,18 @@ void PUParticleSystem3D::updator( float elapsedTime )
             // Update the position with the direction.
             particle->position += (particle->direction * _particleSystemScaleVelocity * elapsedTime);
             particle->positionInWorld = particle->position;
+            particle->widthInWorld = particle->width;
+            particle->heightInWorld = particle->height;
+            particle->depthInWorld = particle->depth;
 
             if (_keepLocal){
-                getNodeToWorldTransform().transformPoint(particle->positionInWorld, &particle->positionInWorld);
+                Mat4 ltow = getNodeToWorldTransform();
+                ltow.transformPoint(particle->positionInWorld, &particle->positionInWorld);
+                Vec3 scl;
+                ltow.decompose(&scl, nullptr, nullptr);
+                particle->widthInWorld = scl.x * particle->width;
+                particle->heightInWorld = scl.y * particle->height;
+                particle->depthInWorld = scl.z * particle->depth;
             }
             firstActiveParticle = false;
         }
@@ -481,22 +520,6 @@ bool PUParticleSystem3D::isExpired( PUParticle3D* particle, float timeElapsed )
     return expired;
 }
 
-PUParticleSystem3D* PUParticleSystem3D::create()
-{
-    auto pups = new PUParticleSystem3D();
-    pups->autorelease();
-    return pups;
-}
-
-PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
-{
-    PUParticleSystem3D* ps = PUParticleSystem3D::create();
-    if (!ps->initSystem(filePath, materialPath)){
-        CC_SAFE_DELETE(ps);
-    }
-    return ps;
-}
-
 cocos2d::Vec3 PUParticleSystem3D::getDerivedPosition()
 {
     if (_keepLocal) return Vec3::ZERO;
@@ -534,15 +557,12 @@ void PUParticleSystem3D::setMaxVelocity( float maxVelocity )
     _maxVelocitySet = true;
 }
 
-bool PUParticleSystem3D::initSystem( const std::string &filePath, const std::string &materialPath )
+bool PUParticleSystem3D::initSystem( const std::string &filePath )
 {
-    std::string data = FileUtils::getInstance()->getStringFromFile(materialPath);
     PUScriptCompiler sc;
-    sc.compile(data, materialPath);
-
     sc.setParticleSystem3D(this);
-    data = FileUtils::getInstance()->getStringFromFile(filePath);
-    if (!sc.compile(data, filePath)) return false;
-    return true;
+    std::string  data = FileUtils::getInstance()->getStringFromFile(filePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+    return sc.compile(data, fullPath);
 }
 NS_CC_END

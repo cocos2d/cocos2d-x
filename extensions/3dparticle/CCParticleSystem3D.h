@@ -46,7 +46,6 @@ struct CC_DLL Particle3D
     virtual ~Particle3D();
     // property of particles
     Vec3 position; // position
-    Vec3 positionInWorld;
     Quaternion orientation;//  Orientation of the particle.
     Vec4 color;  // particle color
     Vec2 lb_uv; // left bottom uv
@@ -54,8 +53,6 @@ struct CC_DLL Particle3D
     float width;//Own width
     float height;//Own height
     float depth;//Own depth
-    float depthInView;//depth in camera view
-    float zRotation; //zRotation is used to rotate the particle in 2D (around the Z-axis)   (radian)
     
     //user defined property
     std::map<std::string, void*> userDefs;

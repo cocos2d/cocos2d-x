@@ -37,7 +37,7 @@
 
 NS_CC_BEGIN
 
-static bool compareParticle3D(Particle3D* left, Particle3D* right)
+static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
 {
     return left->depthInView > right->depthInView;
 }
@@ -105,6 +105,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     for (auto iter : activeParticleList)
     {
         auto particle = static_cast<PUParticle3D *>(iter);
+        determineUVCoords(particle);
         if (_type == ORIENTED_SELF){
             Vec3 direction;
             transform.transformVector(particle->direction, &direction);
@@ -113,8 +114,8 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
             Vec3::cross(direction, backward, &right);
             right.normalize();
         }
-        Vec3 halfwidth = particle->width * 0.5f * right;
-        Vec3 halfheight = particle->height * 0.5f * up;
+        Vec3 halfwidth = particle->widthInWorld * 0.5f * right;
+        Vec3 halfheight = particle->heightInWorld * 0.5f * up;
         //transform.transformPoint(particle->position, &position);
         position = particle->positionInWorld;
         Mat4::createRotation(backward, particle->zRotation, &pRotMat);
@@ -163,6 +164,10 @@ PUParticle3DQuadRender::PUParticle3DQuadRender()
     , _origin(CENTER)
     , _commonDir(Vec3(0.0f, 0.0f, 1.0f))
     , _commonUp(Vec3(0.0f, 1.0f, 0.0f))
+    , _textureCoordsRows(1)
+    , _textureCoordsColumns(1)
+    , _textureCoordsRowStep(1.0f)
+    , _textureCoordsColStep(1.0f)
 {
 
 }
@@ -239,6 +244,108 @@ void PUParticle3DQuadRender::getOriginOffset( int &offsetX, int &offsetY )
         }
         break;
     }
+}
+
+unsigned short PUParticle3DQuadRender::getTextureCoordsRows() const
+{
+    return _textureCoordsRows;
+}
+
+void PUParticle3DQuadRender::setTextureCoordsRows( unsigned short textureCoordsRows )
+{
+    _textureCoordsRows = textureCoordsRows;
+    _textureCoordsRowStep = 1.0f / (float)_textureCoordsRows;
+}
+
+unsigned short PUParticle3DQuadRender::getTextureCoordsColumns() const
+{
+    return _textureCoordsColumns;
+}
+
+void PUParticle3DQuadRender::setTextureCoordsColumns( unsigned short textureCoordsColumns )
+{
+    _textureCoordsColumns = textureCoordsColumns;
+    _textureCoordsColStep = 1.0f / (float)_textureCoordsColumns;
+}
+
+unsigned int PUParticle3DQuadRender::getNumTextureCoords()
+{
+    return _textureCoordsColumns * _textureCoordsRows;
+}
+
+void PUParticle3DQuadRender::determineUVCoords( PUParticle3D *particle )
+{
+    if (_textureCoordsColumns == 1 && _textureCoordsRows == 1) return;
+
+    unsigned short currentRow = particle->textureCoordsCurrent / _textureCoordsColumns;
+    unsigned short currentCol = particle->textureCoordsCurrent - _textureCoordsColumns * currentRow;
+    currentRow = _textureCoordsRows - currentRow - 1;
+
+    particle->lb_uv = Vec2(_textureCoordsColStep * currentCol, _textureCoordsRowStep * currentRow);
+    particle->rt_uv = particle->lb_uv + Vec2(_textureCoordsColStep, _textureCoordsRowStep);
+}
+
+
+PUParticle3DModelRender* PUParticle3DModelRender::create( const std::string& modelFile, const std::string &texFile /*= ""*/ )
+{
+    auto ret = new PUParticle3DModelRender();
+    ret->_modelFile = modelFile;
+    ret->_texFile = texFile;
+    return ret;
+}
+
+void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem )
+{
+    if (!_isVisible)
+        return;
+
+    if (_spriteList.empty()){
+        for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
+            Sprite3D *sprite = Sprite3D::create(_modelFile);
+            sprite->setTexture(_texFile);
+            sprite->retain();
+            _spriteList.push_back(sprite);
+        }
+        if (!_spriteList.empty()){
+            const AABB &aabb = _spriteList[0]->getAABB();
+            Vec3 corners[8];
+            aabb.getCorners(corners);
+            _spriteSize = corners[3] - corners[6];
+        }
+    }
+
+
+    const ParticlePool& particlePool = particleSystem->getParticlePool();
+    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
+    Mat4 mat;
+    Mat4 rotMat;
+    Mat4 sclMat;
+    Quaternion q;
+    transform.decompose(nullptr, &q, nullptr);
+    for (unsigned int i = 0; i < activeParticleList.size(); ++i)
+    {
+        auto particle = static_cast<PUParticle3D *>(activeParticleList[i]);
+        q *= particle->orientation;
+        Mat4::createRotation(q, &rotMat);
+        sclMat.m[0] = particle->widthInWorld / _spriteSize.x;
+        sclMat.m[5]  = particle->heightInWorld / _spriteSize.y; 
+        sclMat.m[10] = particle->depthInWorld / _spriteSize.z;
+        mat = rotMat * sclMat;
+        mat.m[12] = particle->positionInWorld.x;
+        mat.m[13] = particle->positionInWorld.y;
+        mat.m[14] = particle->positionInWorld.z;
+        _spriteList[i]->draw(renderer, mat, 0);
+    }
+}
+
+PUParticle3DModelRender::PUParticle3DModelRender()
+{
+
+}
+
+PUParticle3DModelRender::~PUParticle3DModelRender()
+{
+
 }
 
 NS_CC_END

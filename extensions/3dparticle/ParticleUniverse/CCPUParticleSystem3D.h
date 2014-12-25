@@ -60,6 +60,7 @@ struct CC_DLL PUParticle3D : public Particle3D
     PUParticle3DEmitter* parentEmitter;
 
     // Values that are assigned as soon as the particle is emitted (non-transformed)
+	Vec3 positionInWorld;
     Vec3 originalPosition;
     Vec3 latestPosition;
     // Direction (and speed)
@@ -163,6 +164,12 @@ struct CC_DLL PUParticle3D : public Particle3D
     float textureAnimationTimeStepCount;
     unsigned short textureCoordsCurrent;
     bool textureAnimationDirectionUp;
+
+    float depthInView;//depth in camera view
+    float zRotation; //zRotation is used to rotate the particle in 2D (around the Z-axis)   (radian)
+    float widthInWorld;
+    float heightInWorld;
+    float depthInWorld;
 };
 
 class CC_DLL PUParticleSystem3D : public ParticleSystem3D
@@ -176,6 +183,7 @@ public:
     static const float DEFAULT_MAX_VELOCITY;
 
     static PUParticleSystem3D* create();
+    static PUParticleSystem3D* create(const std::string &filePath);
     static PUParticleSystem3D* create(const std::string &filePath, const std::string &materialPath);
     
     virtual void update(float delta) override;
@@ -257,7 +265,7 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath, const std::string &materialPath);
+    bool initSystem(const std::string &filePath);
 
 protected:
     bool _prepared;

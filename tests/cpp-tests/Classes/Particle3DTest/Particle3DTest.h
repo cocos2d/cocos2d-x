@@ -108,6 +108,46 @@ public:
     virtual bool init() override;
 };
 
+
+class Particle3DUVAnimDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DUVAnimDemo);
+    Particle3DUVAnimDemo(){};
+    virtual ~Particle3DUVAnimDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
+class Particle3DFirePlaceDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DFirePlaceDemo);
+    Particle3DFirePlaceDemo(){};
+    virtual ~Particle3DFirePlaceDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
+class Particle3DLineStreakDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DLineStreakDemo);
+    Particle3DLineStreakDemo(){};
+    virtual ~Particle3DLineStreakDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
 class Particle3DTestScene : public TestScene
 {
 public:

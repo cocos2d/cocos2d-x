@@ -63,10 +63,13 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
-    CL(Particle3DAdvancedLodSystemDemo),
+    CL(Particle3DLineStreakDemo),
     CL(Particle3DBlackHoleDemo),
     CL(Particle3DHypnoDemo),
+    CL(Particle3DAdvancedLodSystemDemo),
     CL(Particle3DTimeShiftDemo),
+    CL(Particle3DUVAnimDemo),
+    CL(Particle3DFirePlaceDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -316,7 +319,7 @@ bool Particle3DAdvancedLodSystemDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("advancedLodSystem.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("advancedLodSystem.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
 
     auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
@@ -349,8 +352,8 @@ bool Particle3DBlackHoleDemo::init()
     auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
     auto rotate = RotateBy::create(1.0f, Vec3(100.0f, 100.0f, 100.0f));
     rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
-    rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
-    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    //rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
+    //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticle();
 
     this->addChild(rootps);
@@ -373,7 +376,7 @@ bool Particle3DHypnoDemo::init()
     auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
     auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
     rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
-    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticle();
 
     this->addChild(rootps);
@@ -392,10 +395,78 @@ bool Particle3DTimeShiftDemo::init()
         return false;
 
     auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
+    rootps->setScale(2.0f);
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticle();
 
     this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DUVAnimDemo::subtitle() const 
+{
+    return "UVAnim";
+}
+
+bool Particle3DUVAnimDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticle();
+
+    this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DFirePlaceDemo::subtitle() const 
+{
+    return "Fire";
+}
+
+bool Particle3DFirePlaceDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->setScale(5.0f);
+    rootps->startParticle();
+
+    this->addChild(rootps);
+
+    return true;
+}
+
+std::string Particle3DLineStreakDemo::subtitle() const 
+{
+    return "LineStreak";
+}
+
+bool Particle3DLineStreakDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("lineStreak.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    auto rotate = RotateBy::create(5.0f, Vec3(0.0f, 0.0f, 100.0f));
+    rootps->setScale(2.0f);
+    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    rootps->startParticle();
+    this->addChild(rootps);
+
+
+    //auto sprite = Sprite::create("pump_streak_04.png");
+    //sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    //sprite->setScale(0.5f);
+    //this->addChild(sprite);
 
     return true;
 }

@@ -36,6 +36,7 @@ public:
 
     PUParticle3DMaterial();
 
+    std::string fileName;
     std::string name;
     bool isEnabledLight;
     Vec4 ambientColor;
@@ -52,20 +53,24 @@ public:
     GLuint wrapMode;
 };
 
-class PUParticle3DMaterialManager
+class PUParticle3DMaterialCache
 {
 public:
 
-    typedef std::vector<PUParticle3DMaterial *> MaterialList;
+    PUParticle3DMaterialCache();
+    ~PUParticle3DMaterialCache();
 
-    PUParticle3DMaterialManager();
-    ~PUParticle3DMaterialManager();
+    static PUParticle3DMaterialCache* Instance();
 
-    static PUParticle3DMaterialManager* Instance();
+    bool loadMaterials(const std::string &file);
+    bool loadMaterialsFromSearchPaths(const std::string &fileSpec);
     PUParticle3DMaterial* getMaterial(const std::string &name);
-    void clearAllMaterials();
+    void addMaterial(PUParticle3DMaterial *material);
 
-    MaterialList materialList;
+protected:
+
+    typedef std::map<std::string, std::vector<PUParticle3DMaterial *> > MaterialMap;
+    MaterialMap _materialMap;
 };
 
 NS_CC_END

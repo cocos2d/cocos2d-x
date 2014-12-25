@@ -27,9 +27,9 @@
 
 #include "3dparticle/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
 #include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "3dparticle/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
+class PUParticle3DMaterial;
 class  PUParticle3DMaterialTranslator : public PUScriptTranslator
 {
 public:

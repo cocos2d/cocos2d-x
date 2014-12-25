@@ -69,10 +69,13 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
     if (parent && parent->context)
     {
          PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
-         PUParticle3DMaterial *material = PUParticle3DMaterialManager::Instance()->getMaterial(system->getMaterialName());
+         PUParticle3DMaterial *material = PUParticle3DMaterialCache::Instance()->getMaterial(system->getMaterialName());
 
         if (type == "Billboard"){
-            _renderer = PUParticle3DQuadRender::create(material->textureFile);
+            if (material)
+                _renderer = PUParticle3DQuadRender::create(material->textureFile);
+            else
+                _renderer = PUParticle3DQuadRender::create();
             for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
             {
                 if((*i)->type == ANT_PROPERTY)
@@ -187,6 +190,30 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                             }
                         }
                     }
+                    else if (prop->name == token[TOKEN_RENDERER_TEXCOORDS_ROWS])
+                    {
+                        // Property: texture_coords_rows
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RENDERER_TEXCOORDS_ROWS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DQuadRender *>(_renderer)->setTextureCoordsRows(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RENDERER_TEXCOORDS_COLUMNS])
+                    {
+                        // Property: texture_coords_columns
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RENDERER_TEXCOORDS_COLUMNS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DQuadRender *>(_renderer)->setTextureCoordsColumns(val);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -205,7 +232,10 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                             std::string val;
                             if(getString(*prop->values.front(), &val))
                             {
-                                _renderer = Particle3DModelRender::create(val, material->textureFile);
+                                if (material) 
+                                    _renderer = PUParticle3DModelRender::create(val, material->textureFile);
+                                else
+                                    _renderer = PUParticle3DModelRender::create(val);
                             }
                         }
                     }
@@ -214,8 +244,10 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
         }
 
         if (_renderer){
-            _renderer->setDepthTest(material->depthTest);
-            _renderer->setDepthWrite(material->depthWrite);
+            if (material){
+                _renderer->setDepthTest(material->depthTest);
+                _renderer->setDepthWrite(material->depthWrite);
+            }
             system->setRender(_renderer);
         }
     }

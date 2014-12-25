@@ -84,6 +84,7 @@ public:
     PUAbstractNodeList overrides; // For use when processing object inheritance and overriding
 public:
     PUObjectAbstractNode(PUAbstractNode *ptr);
+    virtual ~PUObjectAbstractNode();
     PUAbstractNode *clone() const;
     std::string getValue() const;
     
@@ -103,6 +104,7 @@ public:
     PUAbstractNodeList values;
 public:
     PUPropertyAbstractNode(PUAbstractNode *ptr);
+    virtual ~PUPropertyAbstractNode();
     PUAbstractNode *clone() const;
     std::string getValue() const;
 };
@@ -136,7 +138,7 @@ public:
     PUScriptCompiler();
     virtual ~PUScriptCompiler();
 
-	void setParticleSystem3D(PUParticleSystem3D *pu);
+    void setParticleSystem3D(PUParticleSystem3D *pu);
 
     bool compile(const std::string &str, const std::string &source);
     
@@ -151,7 +153,7 @@ private:
     
     PUAbstractNode *_current;
     PUAbstractNodeList *_nodes;
-	PUParticleSystem3D *_puSystem;
+    PUParticleSystem3D *_puSystem;
 };
 
 

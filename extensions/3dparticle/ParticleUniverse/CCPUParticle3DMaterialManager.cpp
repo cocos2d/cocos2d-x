@@ -23,7 +23,19 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DMaterialManager.h"
+#include "3dparticle/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCPlatformMacros.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include <io.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+      || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+      || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+      || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include <io.h>
+#include <dir.h>
+#endif
 NS_CC_BEGIN
 
 
@@ -42,39 +54,99 @@ PUParticle3DMaterial::PUParticle3DMaterial()
     blendFunc.dst = GL_ZERO;
 }
 
-PUParticle3DMaterialManager::PUParticle3DMaterialManager()
+PUParticle3DMaterialCache::PUParticle3DMaterialCache()
 {
 }
 
 
-PUParticle3DMaterialManager::~PUParticle3DMaterialManager()
+PUParticle3DMaterialCache::~PUParticle3DMaterialCache()
 {
-    for (auto iter : materialList){
-        iter->release();
+    for (auto iter : _materialMap){
+        for (auto mt : iter.second){
+            mt->release();
+        }
     }
+    _materialMap.clear();
 }
 
-PUParticle3DMaterialManager* PUParticle3DMaterialManager::Instance()
+PUParticle3DMaterialCache* PUParticle3DMaterialCache::Instance()
 {
-    static PUParticle3DMaterialManager pmm;
+    static PUParticle3DMaterialCache pmm;
     return &pmm;
 }
 
-PUParticle3DMaterial* PUParticle3DMaterialManager::getMaterial( const std::string &name )
+PUParticle3DMaterial* PUParticle3DMaterialCache::getMaterial( const std::string &name )
 {
-    for (auto iter : materialList){
-        if (iter->name == name)
-            return iter;
+    for (auto iter : _materialMap){
+        for (auto mt : iter.second){
+            if (mt->name == name)
+                return mt;
+        }
     }
     return nullptr;
 }
 
-void PUParticle3DMaterialManager::clearAllMaterials()
+bool PUParticle3DMaterialCache::loadMaterials( const std::string &file )
 {
-    for (auto iter : materialList){
-        iter->release();
+    std::string data = FileUtils::getInstance()->getStringFromFile(file);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file);
+    auto iter = _materialMap.find(fullPath);
+    if (iter != _materialMap.end()) return true;
+
+    PUScriptCompiler sc;
+    return sc.compile(data, fullPath);
+}
+
+void PUParticle3DMaterialCache::addMaterial( PUParticle3DMaterial *material )
+{
+    auto iter = _materialMap.find(material->fileName);
+    if (iter != _materialMap.end()){
+        for (auto mt : iter->second){
+            if (mt->name == material->name){
+                CCLOG("warning: Material has existed (FilePath: %s,  MaterialName: %s)", material->fileName, material->name);
+                return;
+            }
+        }
     }
-    materialList.clear();
+    material->retain();
+    _materialMap[material->fileName].push_back(material);
+}
+
+bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileSpec )
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    bool state = false;
+    for (auto iter : FileUtils::getInstance()->getSearchPaths()){
+        std::string fullPath = iter + fileSpec;
+        _finddata_t data;
+        intptr_t handle = _findfirst(fullPath.c_str(), &data);
+        int done = 0;
+        while ((handle != -1) && (done == 0))
+        {
+            loadMaterials(data.name);
+            done = _findnext(handle, &data);
+            state = true;
+        }
+        _findclose(handle);
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+      || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+      || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+      || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+      for (auto iter : FileUtils::getInstance()->getSearchPaths()){
+          std::string fullPath = iter + fileSpec;
+          struct ffblk data;
+          int done = findfirst(fullPath.c_str(), &data, 512);
+          while (!done)
+          {
+              loadMaterials(data.name);
+              done = findnext(&data);
+          }
+      }
+
+#endif
+
+    return state;
 }
 
 NS_CC_END
