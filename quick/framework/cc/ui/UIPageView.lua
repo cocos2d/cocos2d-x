@@ -795,6 +795,11 @@ function UIPageView:getNextPageIndex(bRight)
 	return pos
 end
 
+function UIPageView:clone_()
+	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+        	return self:onTouch_(event)
+    	end)
+end
 
 
 return UIPageView

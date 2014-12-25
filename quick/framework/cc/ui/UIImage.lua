@@ -98,4 +98,8 @@ function UIImage:setLayoutSize(width, height)
     return self
 end
 
+function UIImage:clone_()
+    reAddUIComponent_(self)
+end
+
 return UIImage

@@ -995,4 +995,10 @@ function UIScrollView:fill(nodes,params)
 
 end
 
+function UIScrollView:clone_()
+	self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, function(...)
+			self:update_(...)
+		end)
+end
+
 return UIScrollView

@@ -344,6 +344,13 @@ function uiloader:cloneUserData_(node)
 
 	local typename = tolua.type(node)
 	local newNode
+
+	-- clone peer
+	local peer = tolua.getpeer(node)
+
+	-- 继承自userdata,肯定有__create()
+	-- newNode = peer.class.__create()
+
 	if "cc.Node" == typename then
 		newNode = cc.Node:create()
 	elseif "cc.Sprite" == typename then
@@ -364,14 +371,52 @@ function uiloader:cloneUserData_(node)
 		return
 	end
 
+	print(string.format("node origin(%s), clone(%s)", tostring(node), tostring(newNode)))
+
+	local clonePeer = self:clonePeer_(peer)
+	if clonePeer then
+		tolua.setpeer(newNode, clonePeer)
+	end
+
 	self:copyProperties_(newNode, node, typename)
 
-	-- clone peer
-	local clonePeer = tolua.getpeer(node)
-	clonePeer = clone(clonePeer)
-	tolua.setpeer(newNode, clonePeer)
+	if newNode.clone_ then
+		newNode:clone_()
+	end
+
+	if node.dumpAllEventListeners then
+		node:dumpAllEventListeners()
+		newNode:dumpAllEventListeners()
+	end
 
 	return newNode
+end
+
+function uiloader:clonePeer_(peer)
+	if not peer then
+		return
+	end
+
+	local clonePeer = {}
+
+	--不需要深度拷贝的备份,并赋为nil
+	local resaved = {}
+	resaved["class"] = peer["class"]
+	peer["class"] = nil
+	resaved["components_"] = peer["class"]
+	peer["components_"] = {}
+
+	clonePeer = clone(peer)
+
+	--赋值回去
+	for k,v in pairs(resaved) do
+		if k ~= "components_" then
+			peer[k] = v
+			clonePeer[k] = v
+		end
+	end
+
+	return clonePeer
 end
 
 function uiloader:copyProperties_(cloneNode, node, typename)
@@ -392,9 +437,6 @@ function uiloader:copySpecialProperties_(cloneNode, node, typename)
 		local frame = node:getSprite():getSpriteFrame()
     	cloneNode:setSpriteFrame(frame)
     	cloneNode:setCapInsets(node:getCapInsets())
-
-    	self:showNodeProperty(node)
-    	self:showNodeProperty(cloneNode)
 	elseif "cc.ClippingRectangleNode" == typename then
 		cloneNode:setClippingRegion(node:getClippingRegion())
 	elseif "cc.Label" == typename then
@@ -434,6 +476,8 @@ function uiloader:cloneChildren_(cloneNode, node)
 	if not children or 0 == #children then
 		return
 	end
+
+	print("cloneChildren_:" .. #children)
 
 	for i, child in ipairs(children) do
 		local cloneChild = self:clone(child)

@@ -588,5 +588,11 @@ function UISlider:setContentSizeAndScale_(node, s)
     node:setScaleY(scaleY)
 end
 
+function UISlider:clone_()
+    reAddUIComponent_(self)
+    self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        return self:onTouch_(event.name, event.x, event.y)
+    end)
+end
 
 return UISlider

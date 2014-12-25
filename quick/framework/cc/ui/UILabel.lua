@@ -83,6 +83,10 @@ function UILabel:setLayoutSize(width, height)
     return self
 end
 
+function UILabel:clone_()
+    reAddUIComponent_(self)
+end
+
 
 -- private
 

@@ -52,6 +52,20 @@ function makeUIControl_(control)
     end)
 end
 
+function reAddUIComponent_(control)
+    -- control:removeComponent("components.ui.LayoutProtocol")
+    -- control:removeComponent("components.behavior.EventProtocol")
+    control:removeAllNodeEventListeners()
+
+    control:addComponent("components.ui.LayoutProtocol"):exportMethods()
+    control:addComponent("components.behavior.EventProtocol"):exportMethods()
+    control:addNodeEventListener(c.NODE_EVENT, function(event)
+        if event.name == "cleanup" then
+            control:removeAllEventListeners()
+        end
+    end)
+end
+
 ui.TEXT_ALIGN_LEFT    = cc.TEXT_ALIGNMENT_LEFT
 ui.TEXT_ALIGN_CENTER  = cc.TEXT_ALIGNMENT_CENTER
 ui.TEXT_ALIGN_RIGHT   = cc.TEXT_ALIGNMENT_RIGHT

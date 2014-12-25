@@ -542,4 +542,10 @@ function UIButton:checkTouchInSprite_(x, y)
     end
 end
 
+function UIButton:clone_()
+    print("UIButton clone:" .. tostring(self))
+    reAddUIComponent_(self)
+    self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event) print("UIButton clone_") self:onTouch_(event) end)
+end
+
 return UIButton

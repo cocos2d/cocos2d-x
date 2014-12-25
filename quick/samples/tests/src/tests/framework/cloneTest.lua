@@ -41,6 +41,7 @@ function CloneTestScene:cloneButton()
             color = cc.c3b(0, 0, 0)
         }))
         :onButtonClicked(function(event)
+            dump(event, "event:")
             local button = event.target
             button:setButtonEnabled(false)
             button:setButtonLabelString("disabled", "Button Enable after 1s")
@@ -55,7 +56,7 @@ function CloneTestScene:cloneButton()
     local cloneNode = cc.uiloader:clone(node)
     if cloneNode then
         cloneNode:pos(display.left + 50, display.top - 200):addTo(self)
-            :onButtonClicked(function() print("clone button clicked") end)
+            :onButtonClicked(function(event) dump(event, "clone event:") print("clone button clicked") end)
     else
         print("clone fail")
     end

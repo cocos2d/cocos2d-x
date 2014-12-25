@@ -92,6 +92,7 @@ function UIPushButton:setButtonImage(state, image, ignoreEmpty)
 end
 
 function UIPushButton:onTouch_(event)
+    print(string.format("UIPushButton onTouch_ %s", tostring(self)))
     local name, x, y = event.name, event.x, event.y
     if name == "began" then
         self.touchBeganX = x
