@@ -84,6 +84,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#CSLoader] getCsdVersion 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
 -- @function [parent=#CSLoader] destroyInstance 
 -- @param self
         

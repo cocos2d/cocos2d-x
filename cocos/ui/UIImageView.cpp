@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIImageView.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -203,12 +204,12 @@ void ImageView::ignoreContentAdaptWithSize(bool ignore)
 
 void ImageView::setCapInsets(const Rect &capInsets)
 {
-    _capInsets = capInsets;
+    _capInsets = ui::Helper::restrictCapInsetRect(capInsets, _imageTextureSize);
     if (!_scale9Enabled)
     {
         return;
     }
-    _imageRenderer->setCapInsets(capInsets);
+    _imageRenderer->setCapInsets(_capInsets);
 }
 
 const Rect& ImageView::getCapInsets()const

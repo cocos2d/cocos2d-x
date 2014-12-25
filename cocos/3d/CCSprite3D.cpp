@@ -317,7 +317,8 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
         if (modeldata->matrialId == "" && matrialdatas.materials.size())
         {
             const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
-            mesh->setTexture(textureData->filename);
+            if (!textureData->filename.empty())
+                mesh->setTexture(textureData->filename);
         }
         else
         {
@@ -325,7 +326,7 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
             if(materialData)
             {
                 const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
-                if(textureData)
+                if(textureData && !textureData->filename.empty())
                 {
                     auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
                     if(tex)
@@ -460,7 +461,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                         if(materialData)
                         {
                             const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
-                            if(textureData)
+                            if(textureData && !textureData->filename.empty())
                             {
                                 auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
                                 if(tex)

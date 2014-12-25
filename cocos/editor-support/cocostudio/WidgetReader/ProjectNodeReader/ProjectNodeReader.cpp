@@ -69,7 +69,27 @@ namespace cocostudio
         auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string filename = "";
-        
+        bool isloop = true;
+        bool isAutoPlay = true;
+
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string attriname = attribute->Name();
+            std::string value = attribute->Value();
+
+            if (attriname == "IsLoop")
+            {
+                isloop = (value == "True") ? true : false;
+            }
+            else if (attriname == "IsAutoPlay")
+            {
+                isAutoPlay = (value == "True") ? true : false;
+            }
+
+            attribute = attribute->Next();
+        }
+
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
@@ -101,49 +121,9 @@ namespace cocostudio
         
         auto options = CreateProjectNodeOptions(*builder,
                                                 nodeOptions,
-                                                builder->CreateString(filename));
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    Offset<Table> ProjectNodeReader::createOptionsWithFlatBuffersForSimulator(const tinyxml2::XMLElement *objectData,
-                                                                              flatbuffers::FlatBufferBuilder *builder)
-    {
-        auto temp = NodeReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
-        
-        std::string filename = "";
-        
-        // FileData
-        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
-        while (child)
-        {
-            std::string name = child->Name();
-            
-            if (name == "FileData")
-            {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
-                
-                while (attribute)
-                {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
-                    
-                    if (name == "Path")
-                    {
-                        filename = value;
-                    }
-                    
-                    attribute = attribute->Next();
-                }
-            }
-            
-            child = child->NextSiblingElement();
-        }
-        
-        auto options = CreateProjectNodeOptions(*builder,
-                                                nodeOptions,
-                                                builder->CreateString(filename));
+                                                builder->CreateString(filename),
+                                                isloop,
+                                                isAutoPlay);
         
         return *(Offset<Table>*)(&options);
     }

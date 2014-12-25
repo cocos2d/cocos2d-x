@@ -44,10 +44,17 @@
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "windows.h"
 #define MUTEX HANDLE
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #define MUTEX_INIT(m) \
     m = CreateMutex(0, FALSE, 0)
 #define MUTEX_LOCK(m) \
     WaitForSingleObject(m, INFINITE)
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#define MUTEX_INIT(m) \
+    m = OpenMutex(0, FALSE, 0)
+#define MUTEX_LOCK(m) \
+    WaitForSingleObjectEx(m, INFINITE, false)
+#endif
 #define MUTEX_UNLOCK(m) \
     ReleaseMutex(m)
 #else

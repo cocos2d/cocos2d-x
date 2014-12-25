@@ -57,6 +57,7 @@ namespace cocostudio
     namespace timeline
     {
         class ActionTimeline;
+        class ActionTimelineNode;
     }
 }
 
@@ -75,6 +76,9 @@ public:
     
     static cocos2d::Node* createNode(const std::string& filename);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
+
+    static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename);
+    static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop);
     
     cocos2d::Node* createNodeFromJson(const std::string& filename);
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);

@@ -28,6 +28,7 @@
 #include "CCLuaEngine.h"
 #include "ActionTimeline/CCActionTimeline.h"
 #include "ActionTimeline/CSLoader.h"
+#include "ActionTimeline/CCActionTimelineNode.h"
 
 int lua_cocos2dx_csloader_CSLoader_createTimeline(lua_State* tolua_S)
 {
@@ -63,6 +64,65 @@ tolua_lerror:
     return 0;
 }
 
+int lua_cocos2dx_csloader_CSLoader_createActionTimelineNode(lua_State* tolua_S)
+{
+	int argc = 0;
+	bool ok = true;
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertable(tolua_S, 1, "cc.CSLoader", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+	argc = lua_gettop(tolua_S) - 1;
+
+	do
+	{
+		if (argc == 4)
+		{
+			std::string arg0;
+			ok &= luaval_to_std_string(tolua_S, 2, &arg0, "cc.CSLoader:createActionTimelineNode");
+			if (!ok) { break; }
+			int arg1;
+			ok &= luaval_to_int32(tolua_S, 3, (int *)&arg1, "cc.CSLoader:createActionTimelineNode");
+			if (!ok) { break; }
+			int arg2;
+			ok &= luaval_to_int32(tolua_S, 4, (int *)&arg2, "cc.CSLoader:createActionTimelineNode");
+			if (!ok) { break; }
+			bool arg3;
+			ok &= luaval_to_boolean(tolua_S, 5, &arg3, "cc.CSLoader:createActionTimelineNode");
+			if (!ok) { break; }
+			cocostudio::timeline::ActionTimelineNode* ret = cocos2d::CSLoader::createActionTimelineNode(arg0, arg1, arg2, arg3);
+			object_to_luaval<cocostudio::timeline::ActionTimelineNode>(tolua_S, "ccs.ActionTimelineNode", (cocostudio::timeline::ActionTimelineNode*)ret);
+			return 1;
+		}
+	} while (0);
+	ok = true;
+	do
+	{
+		if (argc == 1)
+		{
+			std::string arg0;
+			ok &= luaval_to_std_string(tolua_S, 2, &arg0, "cc.CSLoader:createActionTimelineNode");
+			if (!ok) { break; }
+			cocostudio::timeline::ActionTimelineNode* ret = cocos2d::CSLoader::createActionTimelineNode(arg0);
+			object_to_luaval<cocostudio::timeline::ActionTimelineNode>(tolua_S, "ccs.ActionTimelineNode", (cocostudio::timeline::ActionTimelineNode*)ret);
+			return 1;
+		}
+	} while (0);
+	ok = true;
+	CCLOG("%s has wrong number of arguments: %d, was expecting %d", "cc.CSLoader:createActionTimelineNode", argc, 1);
+	return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+	tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_csloader_CSLoader_createActionTimelineNode'.", &tolua_err);
+#endif
+	return 0;
+
+}
+
 int register_all_cocos2dx_csloader_manual(lua_State* L)
 {
     lua_pushstring(L, "cc.CSLoader");
@@ -70,6 +130,7 @@ int register_all_cocos2dx_csloader_manual(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "createTimeline", lua_cocos2dx_csloader_CSLoader_createTimeline);
+        tolua_function(L, "createActionTimelineNode", lua_cocos2dx_csloader_CSLoader_createActionTimelineNode);
     }
     lua_pop(L, 1);
     
