@@ -519,7 +519,7 @@ namespace cocostudio
         auto layoutComponentTable = ((WidgetOptions*)nodeOptions)->layoutComponent();
         if (!layoutComponentTable) return;
 
-        auto layoutComponent = ui::LayoutComponent::boundingLayoutComponent(node);
+        auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
 
         bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
         bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();

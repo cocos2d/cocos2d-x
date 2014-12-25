@@ -57,7 +57,7 @@ namespace ui {
 
     }
 
-    LayoutComponent* LayoutComponent::boundingLayoutComponent(Node* node)
+    LayoutComponent* LayoutComponent::bindLayoutComponent(Node* node)
     {
         LayoutComponent * layout = (LayoutComponent*)node->getComponent(__LAYOUT_COMPONENT_NAME);
         if (layout != nullptr)

@@ -38,7 +38,7 @@ namespace ui {
         virtual bool init()override;
         CREATE_FUNC(LayoutComponent);
 
-        static LayoutComponent* boundingLayoutComponent(Node* node);
+        static LayoutComponent* bindLayoutComponent(Node* node);
 
         enum class HorizontalEdge
         {

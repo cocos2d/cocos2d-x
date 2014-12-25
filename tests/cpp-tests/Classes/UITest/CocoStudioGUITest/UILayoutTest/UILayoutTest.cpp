@@ -755,25 +755,25 @@ bool UILayoutComponent_Berth_Test::init()
     if (UILayoutComponentTest::init())
     {
         Sprite* leftTopSprite = Sprite::create("cocosui/CloseSelected.png");
-        LayoutComponent* leftTop = LayoutComponent::boundingLayoutComponent(leftTopSprite);
+        LayoutComponent* leftTop = LayoutComponent::bindLayoutComponent(leftTopSprite);
         leftTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
         leftTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
         _baseLayer->addChild(leftTopSprite);
 
         Sprite* leftBottomSprite = Sprite::create("cocosui/CloseSelected.png");
-        LayoutComponent* leftBottom = LayoutComponent::boundingLayoutComponent(leftBottomSprite);
+        LayoutComponent* leftBottom = LayoutComponent::bindLayoutComponent(leftBottomSprite);
         leftBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
         leftBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
         _baseLayer->addChild(leftBottomSprite);
 
         Sprite* rightTopSprite = Sprite::create("cocosui/CloseSelected.png");
-        LayoutComponent* rightTop = LayoutComponent::boundingLayoutComponent(rightTopSprite);
+        LayoutComponent* rightTop = LayoutComponent::bindLayoutComponent(rightTopSprite);
         rightTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
         rightTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
         _baseLayer->addChild(rightTopSprite);
 
         Sprite* rightBottomSprite = Sprite::create("cocosui/CloseSelected.png");
-        LayoutComponent* rightBottom = LayoutComponent::boundingLayoutComponent(rightBottomSprite);
+        LayoutComponent* rightBottom = LayoutComponent::bindLayoutComponent(rightBottomSprite);
         rightBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
         rightBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
         _baseLayer->addChild(rightBottomSprite);
@@ -791,7 +791,7 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
     {
         ImageView* leftTopSprite = ImageView::create("cocosui/CloseSelected.png");
         leftTopSprite->ignoreContentAdaptWithSize(false);
-        LayoutComponent* leftTop = LayoutComponent::boundingLayoutComponent(leftTopSprite);
+        LayoutComponent* leftTop = LayoutComponent::bindLayoutComponent(leftTopSprite);
         leftTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
         leftTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
         leftTop->setStretchWidthEnabled(true);
@@ -803,7 +803,7 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
 
         ImageView* leftBottomSprite = ImageView::create("cocosui/CloseSelected.png");
         leftBottomSprite->ignoreContentAdaptWithSize(false);
-        LayoutComponent* leftBottom = LayoutComponent::boundingLayoutComponent(leftBottomSprite);
+        LayoutComponent* leftBottom = LayoutComponent::bindLayoutComponent(leftBottomSprite);
         leftBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
         leftBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
         leftBottom->setStretchWidthEnabled(true);
@@ -815,7 +815,7 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
 
         ImageView* rightTopSprite = ImageView::create("cocosui/CloseSelected.png");
         rightTopSprite->ignoreContentAdaptWithSize(false);
-        LayoutComponent* rightTop = LayoutComponent::boundingLayoutComponent(rightTopSprite);
+        LayoutComponent* rightTop = LayoutComponent::bindLayoutComponent(rightTopSprite);
         rightTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
         rightTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
         rightTop->setStretchWidthEnabled(true);
@@ -827,7 +827,7 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
 
         ImageView* rightBottomSprite = ImageView::create("cocosui/CloseSelected.png");
         rightBottomSprite->ignoreContentAdaptWithSize(false);
-        LayoutComponent* rightBottom = LayoutComponent::boundingLayoutComponent(rightBottomSprite);
+        LayoutComponent* rightBottom = LayoutComponent::bindLayoutComponent(rightBottomSprite);
         rightBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
         rightBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
         rightBottom->setStretchWidthEnabled(true);
