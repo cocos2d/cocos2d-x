@@ -1305,7 +1305,9 @@ std::string FileUtils::getNormalizePath(const std::string& path) const
     auto pos = path.find("../");
     if (pos == std::string::npos || pos == 0)
     {
-        return path;
+    	pos = path.find("//");
+    	if (pos == std::string::npos)
+            return path;
     }
 
     std::vector<std::string> v(5);
