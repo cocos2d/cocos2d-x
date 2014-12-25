@@ -462,6 +462,7 @@ bool Particle3DLineStreakDemo::init()
 	rootps->startParticle();
 	this->addChild(rootps);
 
+
 	//auto sprite = Sprite::create("pump_streak_04.png");
 	//sprite->setCameraMask((unsigned short)CameraFlag::USER1);
 	//sprite->setScale(0.5f);

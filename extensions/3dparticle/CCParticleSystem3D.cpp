@@ -146,7 +146,7 @@ ParticleSystem3D::~ParticleSystem3D()
     stopParticle();
     removeAllAffector();
     CC_SAFE_RELEASE(_emitter);
-    CC_SAFE_RETAIN(_render);
+    CC_SAFE_RELEASE(_render);
 }
 
 void ParticleSystem3D::startParticle()

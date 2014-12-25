@@ -48,7 +48,7 @@ Particle3DQuadRender::Particle3DQuadRender()
 Particle3DQuadRender::~Particle3DQuadRender()
 {
     CC_SAFE_DELETE(_meshCommand);
-    CC_SAFE_RELEASE(_texture);
+    //CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
