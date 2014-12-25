@@ -63,9 +63,9 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
-	CL(Particle3DLineStreakDemo),
-	CL(Particle3DBlackHoleDemo),
-	CL(Particle3DHypnoDemo),
+    CL(Particle3DLineStreakDemo),
+    CL(Particle3DBlackHoleDemo),
+    CL(Particle3DHypnoDemo),
     CL(Particle3DAdvancedLodSystemDemo),
     CL(Particle3DTimeShiftDemo),
     CL(Particle3DUVAnimDemo),
@@ -395,7 +395,7 @@ bool Particle3DTimeShiftDemo::init()
         return false;
 
     auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
-	rootps->setScale(2.0f);
+    rootps->setScale(2.0f);
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticle();
 
@@ -425,48 +425,48 @@ bool Particle3DUVAnimDemo::init()
 
 std::string Particle3DFirePlaceDemo::subtitle() const 
 {
-	return "Fire";
+    return "Fire";
 }
 
 bool Particle3DFirePlaceDemo::init()
 {
-	if (!Particle3DTestDemo::init()) 
-		return false;
+    if (!Particle3DTestDemo::init()) 
+        return false;
 
-	auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
-	rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-	rootps->setScale(5.0f);
-	rootps->startParticle();
+    auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->setScale(5.0f);
+    rootps->startParticle();
 
-	this->addChild(rootps);
+    this->addChild(rootps);
 
-	return true;
+    return true;
 }
 
 std::string Particle3DLineStreakDemo::subtitle() const 
 {
-	return "LineStreak";
+    return "LineStreak";
 }
 
 bool Particle3DLineStreakDemo::init()
 {
-	if (!Particle3DTestDemo::init()) 
-		return false;
+    if (!Particle3DTestDemo::init()) 
+        return false;
 
 
-	auto rootps = PUParticleSystem3D::create("lineStreak.pu");
-	rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-	auto rotate = RotateBy::create(5.0f, Vec3(0.0f, 0.0f, 100.0f));
-	rootps->setScale(2.0f);
-	rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
-	rootps->startParticle();
-	this->addChild(rootps);
+    auto rootps = PUParticleSystem3D::create("lineStreak.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    auto rotate = RotateBy::create(5.0f, Vec3(0.0f, 0.0f, 100.0f));
+    rootps->setScale(2.0f);
+    rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
+    rootps->startParticle();
+    this->addChild(rootps);
 
 
-	//auto sprite = Sprite::create("pump_streak_04.png");
-	//sprite->setCameraMask((unsigned short)CameraFlag::USER1);
-	//sprite->setScale(0.5f);
-	//this->addChild(sprite);
+    //auto sprite = Sprite::create("pump_streak_04.png");
+    //sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    //sprite->setScale(0.5f);
+    //this->addChild(sprite);
 
-	return true;
+    return true;
 }

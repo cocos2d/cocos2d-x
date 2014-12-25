@@ -127,6 +127,7 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
             done = _findnext(handle, &data);
             state = true;
         }
+        _findclose(handle);
     }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
       || CC_TARGET_PLATFORM == CC_PLATFORM_IOS

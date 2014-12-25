@@ -253,8 +253,10 @@ void PUScriptLexer::setToken(const std::string &lexeme, int line, const std::str
         if(lexeme.size() == 1 && isNewline(lexeme[0]))
         {
             token->type = TID_NEWLINE;
-            if(!tokens->empty() && tokens->back()->type == TID_NEWLINE)
+            if(!tokens->empty() && tokens->back()->type == TID_NEWLINE){
                 ignore = true;
+                delete token;
+            }
         }
         else if(lexeme.size() == 1 && lexeme[0] == openBracket)
             token->type = TID_LBRACKET;
