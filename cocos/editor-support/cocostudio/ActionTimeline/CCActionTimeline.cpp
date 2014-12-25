@@ -96,6 +96,7 @@ void ActionTimeline::play(std::string name, bool loop)
     if(_indexes.find(name) == _indexes.end())
     {
         CCLOG("Cann't find action indexes for %s.", name.c_str());
+		return;
     }
     
     ActionIndexes& indexes = _indexes[name];
