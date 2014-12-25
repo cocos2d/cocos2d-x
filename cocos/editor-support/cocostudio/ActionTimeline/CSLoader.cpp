@@ -29,6 +29,7 @@
 #include "../../cocos/ui/CocosGUI.h"
 #include "CCActionTimelineCache.h"
 #include "CCActionTimeline.h"
+#include "CCActionTimelineNode.h"
 #include "../CCSGUIReader.h"
 #include "cocostudio/CocoStudio.h"
 #include "cocostudio/CSParseBinary_generated.h"
@@ -282,6 +283,32 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     
     return nullptr;
 }
+
+ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename)
+{
+    Node* root = createNode(filename);
+    ActionTimeline* action = createTimeline(filename);
+    
+    if(root && action)
+    {
+        root->runAction(action);
+        action->gotoFrameAndPlay(0);
+    }
+    
+    ActionTimelineNode* node = ActionTimelineNode::create(root, action);
+    return node;
+}
+ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop)
+{
+    ActionTimelineNode* node = createActionTimelineNode(filename);
+    ActionTimeline* action = node->getActionTimeline();
+    if(action)
+        action->gotoFrameAndPlay(startIndex, endIndex, loop);
+    
+    return node;
+}
+
+
 
 Node* CSLoader::createNodeFromJson(const std::string& filename)
 {
@@ -790,8 +817,9 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         CCLOG("filePath = %s", filePath.c_str());
         if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
-            node = createNodeWithFlatBuffersFile(filePath);
-            reader->setPropsWithFlatBuffers(node, options->data());
+
+            Node* root = createNodeWithFlatBuffersFile(filePath);
+            reader->setPropsWithFlatBuffers(root, options->data());
 
             bool isloop = projectNodeOptions->isLoop();
             bool isautoplay = projectNodeOptions->isAutoPlay();
@@ -799,8 +827,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
             cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
             if (action)
             {
-                node->runAction(action);
-                action->gotoFrameAndPlay(0);
+                root->runAction(action);
                 if (isautoplay)
                 {
                     action->gotoFrameAndPlay(0, isloop);
@@ -810,6 +837,9 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
                     action->gotoFrameAndPause(0);
                 }
             }
+
+            node = ActionTimelineNode::create(root, action);
+            node->setName(root->getName());
         }
     }
     else if (classname == "SimpleAudio")
