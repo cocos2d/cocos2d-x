@@ -439,21 +439,6 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     float speed = nodeAction->speed();
     action->setTimeSpeed(speed);
     
-    auto animationList = nodeAction->animationList();
-    if(animationList)
-    {
-        auto animationLength = animationList->size();
-        for (int i = 0; i < animationLength; i++)
-        {
-            auto animationFlatBuf = animationList->Get(i);
-            ActionIndexes indexes;
-            indexes.startIndex = animationFlatBuf->startIndex();
-            indexes.endIndex = animationFlatBuf->endIndex();
-            indexes.name = animationFlatBuf->name()->c_str();
-            
-            action->addIndexes(indexes);
-        }
-    }
     
     auto timelines = nodeAction->timeLines();
     int timelineLength = timelines->size();

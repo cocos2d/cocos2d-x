@@ -1686,97 +1686,44 @@ inline flatbuffers::Offset<ComAudioOptions> CreateComAudioOptions(flatbuffers::F
   return builder_.Finish();
 }
 
-
-struct AnimationInfo : private flatbuffers::Table {
-    const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
-    int32_t startIndex() const { return GetField<int32_t>(6, 0); }
-    int32_t endIndex() const { return GetField<int32_t>(8, 0); }
-    bool Verify(flatbuffers::Verifier &verifier) const {
-        return VerifyTableStart(verifier) &&
-        VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
-        verifier.Verify(name()) &&
-        VerifyField<int32_t>(verifier, 6 /* startIndex */) &&
-        VerifyField<int32_t>(verifier, 8 /* endIndex */) &&
-        verifier.EndTable();
-    }
-};
-
-struct AnimationInfoBuilder {
-    flatbuffers::FlatBufferBuilder &fbb_;
-    flatbuffers::uoffset_t start_;
-    void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(4, name); }
-    void add_startIndex(int32_t startIndex) { fbb_.AddElement<int32_t>(6, startIndex, 0); }
-    void add_endIndex(int32_t endIndex) { fbb_.AddElement<int32_t>(8, endIndex, 0); }
-    AnimationInfoBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
-    AnimationInfoBuilder &operator=(const AnimationInfoBuilder &);
-    flatbuffers::Offset<AnimationInfo> Finish() {
-        auto o = flatbuffers::Offset<AnimationInfo>(fbb_.EndTable(start_, 3));
-        return o;
-    }
-};
-
-inline flatbuffers::Offset<AnimationInfo> CreateAnimationInfo(flatbuffers::FlatBufferBuilder &_fbb,
-                                                              flatbuffers::Offset<flatbuffers::String> name = 0,
-                                                              int32_t startIndex = 0,
-                                                              int32_t endIndex = 0) {
-    AnimationInfoBuilder builder_(_fbb);
-    builder_.add_endIndex(endIndex);
-    builder_.add_startIndex(startIndex);
-    builder_.add_name(name);
-    return builder_.Finish();
-}
-
 struct NodeAction : private flatbuffers::Table {
-    int32_t duration() const { return GetField<int32_t>(4, 0); }
-    float speed() const { return GetField<float>(6, 0); }
-    const flatbuffers::Vector<flatbuffers::Offset<TimeLine>> *timeLines() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TimeLine>> *>(8); }
-    const flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>> *animationList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>> *>(10); }
-    const flatbuffers::String *currentAnimationName() const { return GetPointer<const flatbuffers::String *>(12); }
-    bool Verify(flatbuffers::Verifier &verifier) const {
-        return VerifyTableStart(verifier) &&
-        VerifyField<int32_t>(verifier, 4 /* duration */) &&
-        VerifyField<float>(verifier, 6 /* speed */) &&
-        VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* timeLines */) &&
-        verifier.Verify(timeLines()) &&
-        verifier.VerifyVectorOfTables(timeLines()) &&
-        VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* animationList */) &&
-        verifier.Verify(animationList()) &&
-        verifier.VerifyVectorOfTables(animationList()) &&
-        VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* currentAnimationName */) &&
-        verifier.Verify(currentAnimationName()) &&
-        verifier.EndTable();
-    }
+  int32_t duration() const { return GetField<int32_t>(4, 0); }
+  float speed() const { return GetField<float>(6, 0); }
+  const flatbuffers::Vector<flatbuffers::Offset<TimeLine>> *timeLines() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<TimeLine>> *>(8); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, 4 /* duration */) &&
+           VerifyField<float>(verifier, 6 /* speed */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* timeLines */) &&
+           verifier.Verify(timeLines()) &&
+           verifier.VerifyVectorOfTables(timeLines()) &&
+           verifier.EndTable();
+  }
 };
 
 struct NodeActionBuilder {
-    flatbuffers::FlatBufferBuilder &fbb_;
-    flatbuffers::uoffset_t start_;
-    void add_duration(int32_t duration) { fbb_.AddElement<int32_t>(4, duration, 0); }
-    void add_speed(float speed) { fbb_.AddElement<float>(6, speed, 0); }
-    void add_timeLines(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TimeLine>>> timeLines) { fbb_.AddOffset(8, timeLines); }
-    void add_animationList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>>> animationList) { fbb_.AddOffset(10, animationList); }
-    void add_currentAnimationName(flatbuffers::Offset<flatbuffers::String> currentAnimationName) { fbb_.AddOffset(12, currentAnimationName); }
-    NodeActionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
-    NodeActionBuilder &operator=(const NodeActionBuilder &);
-    flatbuffers::Offset<NodeAction> Finish() {
-        auto o = flatbuffers::Offset<NodeAction>(fbb_.EndTable(start_, 5));
-        return o;
-    }
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_duration(int32_t duration) { fbb_.AddElement<int32_t>(4, duration, 0); }
+  void add_speed(float speed) { fbb_.AddElement<float>(6, speed, 0); }
+  void add_timeLines(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TimeLine>>> timeLines) { fbb_.AddOffset(8, timeLines); }
+  NodeActionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  NodeActionBuilder &operator=(const NodeActionBuilder &);
+  flatbuffers::Offset<NodeAction> Finish() {
+    auto o = flatbuffers::Offset<NodeAction>(fbb_.EndTable(start_, 3));
+    return o;
+  }
 };
 
 inline flatbuffers::Offset<NodeAction> CreateNodeAction(flatbuffers::FlatBufferBuilder &_fbb,
-                                                        int32_t duration = 0,
-                                                        float speed = 0,
-                                                        flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TimeLine>>> timeLines = 0,
-                                                        flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>>> animationList = 0,
-                                                        flatbuffers::Offset<flatbuffers::String> currentAnimationName = 0) {
-    NodeActionBuilder builder_(_fbb);
-    builder_.add_currentAnimationName(currentAnimationName);
-    builder_.add_animationList(animationList);
-    builder_.add_timeLines(timeLines);
-    builder_.add_speed(speed);
-    builder_.add_duration(duration);
-    return builder_.Finish();
+   int32_t duration = 0,
+   float speed = 0,
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<TimeLine>>> timeLines = 0) {
+  NodeActionBuilder builder_(_fbb);
+  builder_.add_timeLines(timeLines);
+  builder_.add_speed(speed);
+  builder_.add_duration(duration);
+  return builder_.Finish();
 }
 
 struct TimeLine : private flatbuffers::Table {
