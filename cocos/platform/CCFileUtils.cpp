@@ -514,6 +514,7 @@ void FileUtils::destroyInstance()
 }
 
 FileUtils::FileUtils()
+    : _writablePath("")
 {
 }
 
