@@ -114,4 +114,24 @@ Please refer to this document: [ReadMe](../README.md)
 
 ## Features in detail
 
+### Create Sprite3D asynchronously
+
+It allows to load Sprite3D in another thread so that you can process more logic in the main thread. And it notifies you using a custom callback after creating is finished.
+
+`modelPath` is the file to be loaded, `AsyncLoadSprite3DTest::asyncLoad_Callback` is the user's callback function, `userParam` is the parameter that the callback function is wanted.
+
+```c++
+Sprite3D::createAsync(modelPath, CC_CALLBACK_2(AsyncLoadSprite3DTest::asyncLoad_Callback, this), (void*)userParam);
+```
+
+The callback function is called after loading Sprite3D, the callback function can be something like this,
+
+```c++
+void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
+{
+    //sprite is the loaded sprite
+    sprite->setPosition(point);
+    addChild(sprite);
+}
+```
 
