@@ -31,6 +31,10 @@ function DecorateBehavior:bind(object)
     object:bindMethod(self, "getDecoration", getDecoration)
 
     local function updateView(object)
+        if not object:getView() then
+            return
+        end
+
         local objectZOrder = object:getView():getLocalZOrder()
         local batch        = object.batch_
         local x, y         = object.x_, object.y_

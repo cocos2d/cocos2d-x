@@ -71,10 +71,14 @@ function PathEditorBehavior:bind(object)
     object:bindMethod(self, "removeView", removeView, true)
 
     local function updateView(object)
+        if not object.debugLayer_ then
+            return
+        end
+
         if object.polygon_ then
             object.polygon_:removeSelf()
             object.polygon_ = nil
-        end
+        end        
 
         if #object.points_ < 1 then return end
 
