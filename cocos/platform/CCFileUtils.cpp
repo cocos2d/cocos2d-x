@@ -513,6 +513,14 @@ void FileUtils::destroyInstance()
     CC_SAFE_DELETE(s_sharedFileUtils);
 }
 
+void FileUtils::setDelegate(FileUtils *delegate)
+{
+    if (s_sharedFileUtils)
+        delete s_sharedFileUtils;
+        
+    s_sharedFileUtils = delegate;
+}
+
 FileUtils::FileUtils()
     : _writablePath("")
 {
@@ -521,6 +529,8 @@ FileUtils::FileUtils()
 FileUtils::~FileUtils()
 {
 }
+
+
 
 bool FileUtils::init()
 {
