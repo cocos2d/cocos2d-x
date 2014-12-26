@@ -119,6 +119,7 @@ bool Director::init(void)
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = 0;
     _lastUpdate = new struct timeval;
+    _secondsPerFrame = 10.0f;
 
     // paused ?
     _paused = false;
@@ -1130,6 +1131,10 @@ void Director::calculateMPF()
     _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
 
     _secondsPerFrame = _secondsPerFrame * MPF_FILTER + (1-MPF_FILTER) * prevSecondsPerFrame;
+    if (_secondsPerFrame > 10.0f)
+    {
+        _secondsPerFrame = 10.0f;
+    }
     prevSecondsPerFrame = _secondsPerFrame;
 }
 
