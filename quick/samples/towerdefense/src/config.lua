@@ -24,13 +24,3 @@ CONFIG_SCREEN_HEIGHT = 640
 -- auto scale mode
 CONFIG_SCREEN_AUTOSCALE = "FIXED_HEIGHT"
 
--- auto scale callback function
-CONFIG_SCREEN_AUTOSCALE_CALLBACK = function(screenWidthInPixels, screenHeightInPixels, deviceModel)
-    if (device.platform == "ios" and device.model == "iphone") or device.platform == "android" then
-        return nil, nil
-    end
-
-    CONFIG_SCREEN_WIDTH = screenWidthInPixels
-    CONFIG_SCREEN_HEIGHT = screenHeightInPixels
-    return 1, 1
-end
