@@ -350,8 +350,16 @@ bool Console::listenOnTCP(int port)
         // bind address
         if (_bindAddress.length() > 0)
         {
-            struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-            sin->sin_addr.s_addr = inet_addr(_bindAddress.c_str());
+            if (res->ai_family == AF_INET)
+            {
+                struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin_addr);
+            }
+            else if (res->ai_family == AF_INET6)
+            {
+                struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin6_addr);
+            }
         }
 
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
