@@ -56,17 +56,21 @@ UIButton.LABEL_ZORDER = 0
 -- end --
 
 function UIButton:ctor(events, initialState, options)
+    self.args_ = {events, initialState, options}
+
     self.fsm_ = {}
     cc(self.fsm_)
         :addComponent("components.behavior.StateMachine")
         :exportMethods()
-    self.fsm_:setupState({
+
+    self.fsmState_ = {
         initial = {state = initialState, event = "startup", defer = false},
         events = events,
         callbacks = {
             onchangestate = handler(self, self.onChangeState_),
         }
-    })
+    }
+    self.fsm_:setupState(self.fsmState_)
 
     makeUIControl_(self)
     self:setLayoutSizePolicy(display.FIXED_SIZE, display.FIXED_SIZE)
@@ -431,6 +435,8 @@ function UIButton:onTouch_(event)
 end
 
 function UIButton:updateButtonImage_()
+    print(string.format("updateButtonImage_:%s", tostring(self)))
+
     local state = self.fsm_:getState()
     local image = self.images_[state]
 
@@ -542,10 +548,24 @@ function UIButton:checkTouchInSprite_(x, y)
     end
 end
 
-function UIButton:clone_()
-    print("UIButton clone:" .. tostring(self))
-    reAddUIComponent_(self)
-    self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event) print("UIButton clone_") self:onTouch_(event) end)
+function UIButton:createCloneInstance_()
+    return UIButton.new(unpack(self.args_))
+end
+
+function UIButton:copyClonedWidgetChildren_(node)
+    for state, label in pairs(node.labels_) do
+        self:setButtonLabel(state, label:clone())
+    end
+
+    self:updateButtonLable_()
+    self:updateButtonImage_()
+end
+
+function UIButton:copySpecialProperties_(node)
+    self:setButtonSize(unpack(node.scale9Size_))
+    self.labelAlign_ = node.labelAlign_
+    self.labelOffset_ = clone(node.labelOffset_)
+    self.images_ = clone(node.images_)
 end
 
 return UIButton

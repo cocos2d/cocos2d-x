@@ -65,6 +65,8 @@ function UILabel:ctor(options)
     self:setLayoutSizePolicy(display.FIXED_SIZE, display.FIXED_SIZE)
 
     self:align(display.LEFT_CENTER)
+
+    self.args_ = {options}
 end
 
 -- start --
@@ -83,10 +85,13 @@ function UILabel:setLayoutSize(width, height)
     return self
 end
 
-function UILabel:clone_()
-    reAddUIComponent_(self)
+function UILabel:createCloneInstance_()
+    return UILabel.new(unpack(self.args_))
 end
 
+function UILabel:copyClonedWidgetChildren_(node)
+
+end
 
 -- private
 

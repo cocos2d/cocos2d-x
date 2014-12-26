@@ -308,8 +308,8 @@ end
 -- end --
 
 function uiloader:clone(node)
-	print("node type:" .. type(node))
-	print("node type:" .. tolua.type(node))
+	-- print("node type:" .. type(node))
+	-- print("node type:" .. tolua.type(node))
 
 	local cloneNode
 	cloneNode = self:cloneNode_(node)
@@ -384,11 +384,6 @@ function uiloader:cloneUserData_(node)
 		newNode:clone_()
 	end
 
-	if node.dumpAllEventListeners then
-		node:dumpAllEventListeners()
-		newNode:dumpAllEventListeners()
-	end
-
 	return newNode
 end
 
@@ -403,17 +398,31 @@ function uiloader:clonePeer_(peer)
 	local resaved = {}
 	resaved["class"] = peer["class"]
 	peer["class"] = nil
-	resaved["components_"] = peer["class"]
+    resaved["components_"] = peer["components_"]
 	peer["components_"] = {}
+	resaved["_scriptEventListeners_"] = peer["_scriptEventListeners_"]
+	peer["_scriptEventListeners_"] = nil
 
 	clonePeer = clone(peer)
 
 	--赋值回去
 	for k,v in pairs(resaved) do
-		if k ~= "components_" then
+		if "components_" == k then
+            peer["components_"] = v
+            --移除掉克隆的组件接口
+            for compName, comp in pairs(v) do
+                if comp.exportedMethods_ then
+                    for index, funName in ipairs(comp.exportedMethods_) do
+                    	clonePeer[funName] = nil
+                    end
+                end
+            end
+        elseif "_scriptEventListeners_" == k then
+        	peer["_scriptEventListeners_"] = v
+		else
 			peer[k] = v
 			clonePeer[k] = v
-		end
+        end
 	end
 
 	return clonePeer

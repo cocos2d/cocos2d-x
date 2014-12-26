@@ -421,3 +421,60 @@ function Node:EventDispatcher( idx, data )
 
     return rnval
 end
+
+-- clone related
+
+function Node:clone()
+    local cloneNode = self:createCloneInstance_()
+
+    cloneNode:copyProperties_(self)
+    cloneNode:copyClonedWidgetChildren_(self)
+
+    return cloneNode
+end
+
+function Node:createCloneInstance_()
+    return display.newNode()
+end
+
+function Node:copyClonedWidgetChildren_(node)
+    local children = node:getChildren()
+    if not children or 0 == #children then
+        return
+    end
+
+    for i, child in ipairs(children) do
+        local cloneChild = node:clone()
+        if cloneChild then
+            self:addChild(cloneChild)
+        end
+    end
+end
+
+function Node:copySpecialProperties_(node)
+end
+
+function Node:copyProperties_(node)
+    self:setVisible(node:isVisible())
+    self:setTouchEnabled(node:isTouchEnabled())
+    self:setLocalZOrder(node:getLocalZOrder())
+    self:setTag(node:getTag())
+    self:setName(node:getName())
+    self:setContentSize(node:getContentSize())
+    self:setPosition(node:getPosition())
+    self:setAnchorPoint(node:getAnchorPoint())
+    self:setScaleX(node:getScaleX())
+    self:setScaleY(node:getScaleY())
+    self:setRotation(node:getRotation())
+    self:setRotationSkewX(node:getRotationSkewX())
+    self:setRotationSkewY(node:getRotationSkewY())
+    if self.isFlippedX and node.isFlippedX then
+        self:setFlippedX(node:isFlippedX())
+        self:setFlippedY(node:isFlippedY())
+    end
+    self:setColor(node:getColor())
+    self:setOpacity(node:getOpacity())
+
+    self:copySpecialProperties_(node)
+end
+

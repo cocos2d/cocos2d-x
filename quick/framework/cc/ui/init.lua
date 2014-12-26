@@ -55,10 +55,13 @@ end
 function reAddUIComponent_(control)
     -- control:removeComponent("components.ui.LayoutProtocol")
     -- control:removeComponent("components.behavior.EventProtocol")
-    control:removeAllNodeEventListeners()
+    print("lua remove all node listener")
+    -- control:removeAllNodeEventListeners()
 
     control:addComponent("components.ui.LayoutProtocol"):exportMethods()
     control:addComponent("components.behavior.EventProtocol"):exportMethods()
+
+    print("lua add node listener")
     control:addNodeEventListener(c.NODE_EVENT, function(event)
         if event.name == "cleanup" then
             control:removeAllEventListeners()
