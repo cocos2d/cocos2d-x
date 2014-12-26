@@ -340,6 +340,9 @@
     <Filter Include="Classes\UITest\CocosStudioGUITest\CustomTest\CustomWidgetCallbackBindTest">
       <UniqueIdentifier>{942d4f52-f141-4d09-9466-163098b2e331}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\AllocatorTest">
+      <UniqueIdentifier>{573248d9-7443-49ad-aa92-dd9defa29a76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -899,6 +902,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp">
       <Filter>Classes\UITest\CocosStudioGUITest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\AllocatorTest\AllocatorTest.cpp">
+      <Filter>Classes\AllocatorTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1658,6 +1664,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h">
       <Filter>Classes\UITest\CocosStudioGUITest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\AllocatorTest\AllocatorTest.h">
+      <Filter>Classes\AllocatorTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

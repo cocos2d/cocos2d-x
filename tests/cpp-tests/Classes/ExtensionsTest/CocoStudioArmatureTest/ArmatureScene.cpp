@@ -78,6 +78,9 @@ Layer *CreateLayer(int index)
     case TEST_DIRECT_FROM_BINARY:
         pLayer = new (std::nothrow) TestLoadFromBinary();
         break;
+    case TEST_ARMATURE_NODE:
+        pLayer = new (std::nothrow) TestArmatureNode();
+        break;
     default:
         break;
     }
@@ -1601,3 +1604,27 @@ void TestLoadFromBinary::dataLoaded( float percent )
 		m_armatureIndex = 0;
 	}
 }
+
+
+
+//TestArmatureNode
+
+void TestArmatureNode::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    auto node = CSLoader::createNode("TestArmatureNode.csb");
+    addChild(node);
+    node->setPositionX(Director::getInstance()->getVisibleSize().width * .25f);
+}
+
+
+std::string TestArmatureNode::title() const
+{
+    return "Test Armature Node";
+}
+std::string TestArmatureNode::subtitle() const
+{
+    return "Csb file loaded";
+}
+

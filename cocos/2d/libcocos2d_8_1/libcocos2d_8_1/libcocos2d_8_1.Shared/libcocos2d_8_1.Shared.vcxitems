@@ -87,6 +87,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\MediaStreamer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\atitc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\base64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccConfig.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocosbuilder\CocosBuilder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
@@ -230,6 +232,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerObj.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
@@ -338,6 +342,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\CocosGUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\GUIExport.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIButton.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.h" />
@@ -510,6 +515,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\atitc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\base64.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAsyncTaskPool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCAutoreleasePool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConfiguration.cpp" />
@@ -591,6 +597,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocosbuilder\CCSpriteLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
@@ -632,6 +639,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\TriggerObj.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
@@ -725,6 +733,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\CocosGUI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIButton.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.cpp" />
@@ -861,6 +870,7 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.vert" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\ccShader_grayscale.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters" />

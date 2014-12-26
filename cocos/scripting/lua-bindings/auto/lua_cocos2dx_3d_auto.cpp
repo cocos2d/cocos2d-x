@@ -1102,6 +1102,77 @@ int lua_cocos2dx_3d_Sprite3D_create(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_3d_Sprite3D_createAsync(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 4)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Sprite3D:createAsync");
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.Sprite3D:createAsync");
+            if (!ok) { break; }
+            std::function<void (cocos2d::Sprite3D *, void *)> arg2;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+            if (!ok) { break; }
+            void* arg3;
+            #pragma warning NO CONVERSION TO NATIVE FOR void*
+		ok = false;
+            if (!ok) { break; }
+            cocos2d::Sprite3D::createAsync(arg0, arg1, arg2, arg3);
+            return 0;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 3)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Sprite3D:createAsync");
+            if (!ok) { break; }
+            std::function<void (cocos2d::Sprite3D *, void *)> arg1;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+            if (!ok) { break; }
+            void* arg2;
+            #pragma warning NO CONVERSION TO NATIVE FOR void*
+		ok = false;
+            if (!ok) { break; }
+            cocos2d::Sprite3D::createAsync(arg0, arg1, arg2);
+            return 0;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Sprite3D:createAsync",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_createAsync'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_3d_Sprite3D_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Sprite3D)");
@@ -1129,6 +1200,7 @@ int lua_register_cocos2dx_3d_Sprite3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getMeshByName",lua_cocos2dx_3d_Sprite3D_getMeshByName);
         tolua_function(tolua_S,"getAttachNode",lua_cocos2dx_3d_Sprite3D_getAttachNode);
         tolua_function(tolua_S,"create", lua_cocos2dx_3d_Sprite3D_create);
+        tolua_function(tolua_S,"createAsync", lua_cocos2dx_3d_Sprite3D_createAsync);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Sprite3D).name();
     g_luaType[typeName] = "cc.Sprite3D";
