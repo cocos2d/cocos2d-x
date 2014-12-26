@@ -435,8 +435,6 @@ function UIButton:onTouch_(event)
 end
 
 function UIButton:updateButtonImage_()
-    print(string.format("updateButtonImage_:%s", tostring(self)))
-
     local state = self.fsm_:getState()
     local image = self.images_[state]
 
@@ -557,15 +555,18 @@ function UIButton:copyClonedWidgetChildren_(node)
         self:setButtonLabel(state, label:clone())
     end
 
-    self:updateButtonLable_()
     self:updateButtonImage_()
+    self:updateButtonLable_()
 end
 
 function UIButton:copySpecialProperties_(node)
-    self:setButtonSize(unpack(node.scale9Size_))
+    if node.scale9Size_ then
+        self:setButtonSize(unpack(node.scale9Size_))
+    end
     self.labelAlign_ = node.labelAlign_
     self.labelOffset_ = clone(node.labelOffset_)
     self.images_ = clone(node.images_)
+    self:setButtonEnabled(node:isButtonEnabled())
 end
 
 return UIButton

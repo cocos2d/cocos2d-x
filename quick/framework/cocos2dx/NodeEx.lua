@@ -438,17 +438,17 @@ function Node:createCloneInstance_()
 end
 
 function Node:copyClonedWidgetChildren_(node)
-    local children = node:getChildren()
-    if not children or 0 == #children then
-        return
-    end
+    -- local children = node:getChildren()
+    -- if not children or 0 == #children then
+    --     return
+    -- end
 
-    for i, child in ipairs(children) do
-        local cloneChild = node:clone()
-        if cloneChild then
-            self:addChild(cloneChild)
-        end
-    end
+    -- for i, child in ipairs(children) do
+    --     local cloneChild = node:clone()
+    --     if cloneChild then
+    --         self:addChild(cloneChild)
+    --     end
+    -- end
 end
 
 function Node:copySpecialProperties_(node)

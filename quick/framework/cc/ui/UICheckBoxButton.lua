@@ -74,6 +74,8 @@ function UICheckBoxButton:ctor(images, options)
     self:setButtonImage(UICheckBoxButton.ON_PRESSED, images["on_pressed"], true)
     self:setButtonImage(UICheckBoxButton.ON_DISABLED, images["on_disabled"], true)
     self.labelAlign_ = display.LEFT_CENTER
+
+    self.args_ = {images, options}
 end
 
 -- start --
@@ -189,6 +191,10 @@ function UICheckBoxButton:getDefaultState_()
     else
         return {UICheckBoxButton.OFF, UICheckBoxButton.ON}
     end
+end
+
+function UICheckBoxButton:createCloneInstance_()
+    return UICheckBoxButton.new(unpack(self.args_))
 end
 
 return UICheckBoxButton

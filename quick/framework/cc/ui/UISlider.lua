@@ -131,6 +131,8 @@ function UISlider:ctor(direction, images, options)
     self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         return self:onTouch_(event.name, event.x, event.y)
     end)
+
+    self.args_ = {direction, images, options}
 end
 
 -- start --
@@ -588,11 +590,19 @@ function UISlider:setContentSizeAndScale_(node, s)
     node:setScaleY(scaleY)
 end
 
-function UISlider:clone_()
-    reAddUIComponent_(self)
-    self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        return self:onTouch_(event.name, event.x, event.y)
-    end)
+
+function UISlider:createCloneInstance_()
+    return UISlider.new(unpack(self.args_))
+end
+
+function UISlider:copySpecialProperties_(node)
+    if node.scale9Size_ then
+        self:setSliderSize(unpack(node.scale9Size_))
+    end
+
+    self:setSliderEnabled(node:isButtonEnabled())
+    self:setSliderValue(node:getSliderValue())
+    self:setSliderButtonRotation(node.buttonRotation_)
 end
 
 return UISlider

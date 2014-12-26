@@ -12,6 +12,9 @@ end
 
 function CloneTestScene:cloneTest()
     self:cloneButton()
+    self:cloneCheckBox()
+    self:cloneImage()
+    self:cloneSlider()
 end
 
 function CloneTestScene:cloneButton()
@@ -56,12 +59,92 @@ function CloneTestScene:cloneButton()
 
     local cloneNode = node:clone() -- cc.uiloader:clone(node)
     if cloneNode then
-        cloneNode:pos(display.left + 50, display.top - 200):addTo(self)
+        cloneNode:pos(display.left + 50, display.top - 170):addTo(self)
             :onButtonClicked(function(event)
                 print("cloneTest.lua clone button clicked")
             end)
     else
-        print("clone fail")
+        print("clone button fail")
+    end
+end
+
+function CloneTestScene:cloneCheckBox()
+    local checkboxImages = {
+        off = "RadioButtonOff.png",
+        off_pressed = "RadioButtonOffPressed.png",
+        off_disabled = "RadioButtonOffDisabled.png",
+        on = "RadioButtonOn.png",
+        on_pressed = "RadioButtonOnPressed.png",
+        on_disabled = "RadioButtonOnDisabled.png",
+    }
+
+    local group = cc.ui.UICheckBoxButtonGroup.new(display.TOP_TO_BOTTOM)
+        :addButton(cc.ui.UICheckBoxButton.new(checkboxImages)
+            :setButtonLabel(cc.ui.UILabel.new({text = "option 1", color = display.COLOR_WHITE}))
+            :setButtonLabelOffset(20, 0)
+            :align(display.LEFT_CENTER))
+        :addButton(cc.ui.UICheckBoxButton.new(checkboxImages)
+            :setButtonLabel(cc.ui.UILabel.new({text = "option 2", color = display.COLOR_WHITE}))
+            :setButtonLabelOffset(20, 0)
+            :align(display.LEFT_CENTER))
+        :addButton(cc.ui.UICheckBoxButton.new(checkboxImages)
+            :setButtonLabel(cc.ui.UILabel.new({text = "option 3", color = display.COLOR_WHITE}))
+            :setButtonLabelOffset(20, 0)
+            :align(display.LEFT_CENTER))
+        :addButton(cc.ui.UICheckBoxButton.new(checkboxImages)
+            :setButtonLabel(cc.ui.UILabel.new({text = "option 4 disabled", color = display.COLOR_WHITE}))
+            :setButtonEnabled(false)
+            :setButtonLabelOffset(20, 0)
+            :align(display.LEFT_CENTER))
+        :setButtonsLayoutMargin(10, 10, 10, 10)
+        :onButtonSelectChanged(function(event)
+            printf("Option %d selected, Option %d unselected", event.selected, event.last)
+        end)
+        :align(display.LEFT_TOP, display.left + 50, display.top - 300)
+        :addTo(self)
+    group:getButtonAtIndex(4):setButtonSelected(true)
+
+    local cloneNode = group:clone() -- cc.uiloader:clone(node)
+    if cloneNode then
+        cloneNode:align(display.LEFT_TOP, display.left + 50, display.top - 400)
+        :addTo(self):setButtonsLayoutMargin(10, 10, 10, 10)
+    else
+        print("clone button fail")
+    end
+end
+
+function CloneTestScene:cloneImage()
+    local image = cc.ui.UIImage.new("PinkScale9Block.png", {scale9 = true})
+        :setLayoutSize(100, 50)
+        :align(display.LEFT_CENTER, display.right - 300, display.top - 100)
+        :addTo(self)
+
+    local cloneNode = image:clone()
+    if cloneNode then
+        cloneNode:align(display.LEFT_CENTER, display.right - 100, display.top - 100)
+        :addTo(self)
+    else
+        print("clone button fail")
+    end
+end
+
+function CloneTestScene:cloneSlider()
+    local sliderImages = {
+        bar = "SliderBar.png",
+        button = "SliderButton.png",
+    }
+    local slider = cc.ui.UISlider.new(display.LEFT_TO_RIGHT, sliderImages, {scale9 = true})
+        :setSliderSize(200, 40)
+        :setSliderValue(75)
+        :align(display.CENTER, display.right - 100, display.top - 150)
+        :addTo(self)
+
+    local cloneNode = slider:clone()
+    if cloneNode then
+        cloneNode:align(display.CENTER, display.right - 100, display.top - 200)
+        :addTo(self)
+    else
+        print("clone button fail")
     end
 end
 
