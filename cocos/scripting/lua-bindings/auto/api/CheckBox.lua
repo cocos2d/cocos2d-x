@@ -66,6 +66,13 @@
 -- @param #int texType
         
 --------------------------------
+-- brief Return a zoom scale<br>
+-- since v3.3
+-- @function [parent=#CheckBox] getZoomScale 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- Load backGround texture for checkbox.<br>
 -- param backGround    backGround texture.<br>
 -- param texType    @see TextureResType
@@ -73,6 +80,14 @@
 -- @param self
 -- @param #string backGround
 -- @param #int type
+        
+--------------------------------
+--  When user pressed the button, the button will zoom to a scale.<br>
+-- The final scale of the button  equals (button original scale + _zoomScale)<br>
+-- since v3.3
+-- @function [parent=#CheckBox] setZoomScale 
+-- @param self
+-- @param #float scale
         
 --------------------------------
 -- Load frontCrossDisabled texture for checkbox.<br>
@@ -86,6 +101,7 @@
 --------------------------------
 -- @overload self, string, string, string, string, string, int         
 -- @overload self         
+-- @overload self, string, string, int         
 -- @function [parent=#CheckBox] create
 -- @param self
 -- @param #string backGround
