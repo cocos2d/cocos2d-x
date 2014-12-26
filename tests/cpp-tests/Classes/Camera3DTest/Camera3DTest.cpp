@@ -791,7 +791,7 @@ void CameraClippingDemo::update(float dt)
     for (const auto& iter: children)
     {
         const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
-        if (_cameraFirst->isVisibleInFrustum(aabb))
+        if (_cameraFirst->isVisibleInFrustum(&aabb))
         {
             aabb.getCorners(corners);
             _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
