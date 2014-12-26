@@ -115,3 +115,115 @@ void UISliderTest_Scale9::sliderEvent(Ref *pSender, Slider::EventType type)
         _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
     }
 }
+
+
+// UISliderNormalDefaultTest
+
+UISliderNormalDefaultTest::UISliderNormalDefaultTest()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UISliderNormalDefaultTest::~UISliderNormalDefaultTest()
+{
+}
+
+bool UISliderNormalDefaultTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the slider alert will be displayed
+        _displayValueLabel = Text::create("","Arial",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 100));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("when pressed, the slider ball should scale","fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));
+        _uiLayer->addChild(alert);
+        
+        // Create the slider
+        Slider* slider = Slider::create();
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png");
+        slider->setPosition(Vec2(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f + 50));
+        _uiLayer->addChild(slider);
+        
+        Slider* sliderScale9 = Slider::create("cocosui/sliderTrack2.png", "cocosui/sliderThumb.png");
+        sliderScale9->setScale9Enabled(true);
+        sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
+        sliderScale9->setZoomScale(1.0);
+        sliderScale9->setContentSize(Size(250.0f, 19));
+        sliderScale9->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 20));
+        _uiLayer->addChild(sliderScale9);
+        
+        
+        return true;
+    }
+    return false;
+}
+
+// UISliderDisabledDefaultTest
+
+UISliderDisabledDefaultTest::UISliderDisabledDefaultTest()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UISliderDisabledDefaultTest::~UISliderDisabledDefaultTest()
+{
+}
+
+bool UISliderDisabledDefaultTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the slider alert will be displayed
+        _displayValueLabel = Text::create("","Arial",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 100));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("slider ball should be gray.","fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));
+        _uiLayer->addChild(alert);
+        
+        // Create the slider
+        Slider* slider = Slider::create();
+        slider->loadBarTexture("cocosui/slidbar.png");
+        slider->loadSlidBallTextureNormal("cocosui/sliderballnormal.png");
+        slider->setEnabled(false);
+        slider->setBright(false);
+        slider->setPosition(Vec2(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f + 50));
+        _uiLayer->addChild(slider);
+        
+        Slider* sliderScale9 = Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
+        sliderScale9->setScale9Enabled(true);
+        sliderScale9->setEnabled(false);
+        sliderScale9->setBright(false);
+        sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
+        sliderScale9->setContentSize(Size(250.0f, 10));
+        sliderScale9->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 20));
+        _uiLayer->addChild(sliderScale9);
+        
+        
+        return true;
+    }
+    return false;
+}
+
+

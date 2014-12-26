@@ -185,6 +185,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocosbuilder\CocosBuilder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
@@ -341,6 +342,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\CocosGUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\GUIExport.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIButton.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.h" />
@@ -595,6 +597,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocosbuilder\CCSpriteLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
@@ -730,6 +733,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\CocosGUI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIButton.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UICheckBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIDeprecated.cpp" />
@@ -866,6 +870,7 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.vert" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\ccShader_grayscale.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters" />

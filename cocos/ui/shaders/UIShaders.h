@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,60 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UISliderTest__
-#define __TestCpp__UISliderTest__
+#ifndef __UISHADERS_H__
+#define __UISHADERS_H__
 
-#include "../UIScene.h"
+#include "platform/CCGL.h"
+#include "platform/CCPlatformMacros.h"
 
-class UISliderTest : public UIScene
-{
-public:
-    UISliderTest();
-    ~UISliderTest();
-    bool init();
-    void sliderEvent(Ref* pSender, Slider::EventType type);
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UISliderTest)
-    Text* _displayValueLabel;
-};
+NS_CC_BEGIN
 
-class UISliderTest_Scale9 : public UIScene
-{
-public:
-    UISliderTest_Scale9();
-    ~UISliderTest_Scale9();
-    bool init();
-    void sliderEvent(Ref* pSender, Slider::EventType type);
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UISliderTest_Scale9)
-    Text* _displayValueLabel;
-};
+extern CC_DLL const GLchar * ccUIGrayScale_frag;
 
+NS_CC_END
 
-class UISliderNormalDefaultTest : public UIScene
-{
-public:
-    UISliderNormalDefaultTest();
-    ~UISliderNormalDefaultTest();
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UISliderNormalDefaultTest)
-    Text* _displayValueLabel;
-};
-
-class UISliderDisabledDefaultTest : public UIScene
-{
-public:
-    UISliderDisabledDefaultTest();
-    ~UISliderDisabledDefaultTest();
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UISliderDisabledDefaultTest)
-    Text* _displayValueLabel;
-};
-
-#endif /* defined(__TestCpp__UISliderTest__) */
+#endif /* __UISHADERS_H__ */
