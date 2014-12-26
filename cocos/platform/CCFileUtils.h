@@ -61,8 +61,13 @@ public:
      * Fox example, your resources are encrypted, so you need to decrypt it after reading data from 
      * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
      * functions when reading data of resources.
+     *
+     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
+     * to this function.
+     *
+     * @warm It will delete previous delegate
      */
-    static void setDelefate(FileUtils *delegate);
+    static void setDelegate(FileUtils *delegate);
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
