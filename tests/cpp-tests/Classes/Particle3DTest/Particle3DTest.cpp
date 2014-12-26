@@ -349,8 +349,8 @@ bool Particle3DBlackHoleDemo::init()
     rootps->setPosition(-25.0f, 0.0f);
     auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
     auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
-    auto rotate = RotateBy::create(1.0f, Vec3(100.0f, 100.0f, 100.0f));
+//    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
+//    auto rotate = RotateBy::create(1.0f, Vec3(100.0f, 100.0f, 100.0f));
     rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
     //rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
@@ -374,7 +374,7 @@ bool Particle3DHypnoDemo::init()
     auto rootps = PUParticleSystem3D::create("hypno.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
-    auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
+//    auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
     rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticle();

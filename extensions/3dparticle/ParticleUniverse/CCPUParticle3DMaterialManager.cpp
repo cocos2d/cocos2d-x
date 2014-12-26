@@ -29,12 +29,11 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-      || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-      || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-      || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #include <io.h>
 #include <dir.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include <ftw.h>
 #endif
 NS_CC_BEGIN
 
@@ -103,7 +102,7 @@ void PUParticle3DMaterialCache::addMaterial( PUParticle3DMaterial *material )
     if (iter != _materialMap.end()){
         for (auto mt : iter->second){
             if (mt->name == material->name){
-                CCLOG("warning: Material has existed (FilePath: %s,  MaterialName: %s)", material->fileName, material->name);
+                CCLOG("warning: Material has existed (FilePath: %s,  MaterialName: %s)", material->fileName.c_str(), material->name.c_str());
                 return;
             }
         }
@@ -112,10 +111,21 @@ void PUParticle3DMaterialCache::addMaterial( PUParticle3DMaterial *material )
     _materialMap[material->fileName].push_back(material);
 }
 
+int iterPath(const char *fpath, const struct stat *sb, int typeflag)
+{
+    if(typeflag == FTW_F)
+    {
+        auto len = strlen(fpath);
+        if (len > 9 && strcmp(".material", fpath + len - 9) == 0)
+            PUParticle3DMaterialCache::Instance()->loadMaterials(fpath);
+    }
+    return 0;
+}
+
 bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileSpec )
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     bool state = false;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     for (auto iter : FileUtils::getInstance()->getSearchPaths()){
         std::string fullPath = iter + fileSpec;
         _finddata_t data;
@@ -129,21 +139,25 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
         }
         _findclose(handle);
     }
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-      || CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-      || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-      || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-      for (auto iter : FileUtils::getInstance()->getSearchPaths()){
-          std::string fullPath = iter + fileSpec;
-          struct ffblk data;
-          int done = findfirst(fullPath.c_str(), &data, 512);
-          while (!done)
-          {
-              loadMaterials(data.name);
-              done = findnext(&data);
-          }
-      }
-
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    //TODO:
+//      for (auto iter : FileUtils::getInstance()->getSearchPaths()){
+//          std::string fullPath = iter + fileSpec;
+//          struct ffblk data;
+//          int done = findfirst(fullPath.c_str(), &data, 512);
+//          while (!done)
+//          {
+//              loadMaterials(data.name);
+//              done = findnext(&data);
+//              state = true;
+//          }
+//      }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    for (auto iter : FileUtils::getInstance()->getSearchPaths())
+    {
+        std::string fullPath = iter + fileSpec;
+        ftw(fullPath.c_str(), iterPath, 500);
+    }
 #endif
 
     return state;
