@@ -45,13 +45,18 @@ static const char* s_testArray[] =
     "UIButtonIgnoreContentSizeTest",
     "UIButtonTitleEffectTest",
     "UIButtonFlipTest",
+    "UIButtonNormalDefaultTest",
+    "UIButtonDisableDefaultTest",
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     "UIEditBoxTest",
 #endif
     "UICheckBoxTest",
+    "UICheckBoxDefaultBehaviorTest",
     "UISliderTest",
     "UISliderTest_Scale9",
+    "UISliderNormalDefaultTest",
+    "UISliderDisabledDefaultTest",
   
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
@@ -87,6 +92,8 @@ static const char* s_testArray[] =
     "UILayoutTest_Layout_Linear_Horizontal",
     "UILayoutTest_Layout_Relative_Align_Parent",
     "UILayoutTest_Layout_Relative_Location",
+    "UILayoutComponent_Berth_Test",
+    "UILayoutComponent_Berth_Stretch_Test",
    
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
@@ -223,14 +230,25 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTitleEffectTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonFlipTest:
             return UIButtonFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonNormalDefaultTest:
+            return UIButtonNormalDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonDisableDefaultTest:
+            return UIButtonDisableDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUICheckBoxDefaultBehaviorTest:
+            return UICheckBoxDefaultBehaviorTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUISliderTest:
             return UISliderTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUISliderTest_Scale9:
             return UISliderTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderNormalDefaultTest:
+            return UISliderNormalDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderDisabledDefaultTest:
+            return UISliderDisabledDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIImageViewTest:
             return UIImageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -317,6 +335,12 @@ Scene *UISceneManager::currentUIScene()
         case kUILayoutTest_Layout_Relative_Location:
             return UILayoutTest_Layout_Relative_Location::sceneWithTitle(s_testArray[_currentUISceneId]);
             
+        case kUILayoutComponent_Berth_Test:
+            return UILayoutComponent_Berth_Test::sceneWithTitle(s_testArray[_currentUISceneId]);
+
+        case kUILayoutComponent_Berth_Stretch_Test:
+            return UILayoutComponent_Berth_Stretch_Test::sceneWithTitle(s_testArray[_currentUISceneId]);
+
         case kUIScrollViewTest_Vertical:
             return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             

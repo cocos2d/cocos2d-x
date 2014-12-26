@@ -81,6 +81,58 @@ protected:
     float _shining_duraion;
     GLProgramState * _state;
 };
+
+class Sprite3DFakeShadowTest : public Sprite3DTestDemo
+{
+public:
+    enum State
+    {
+        State_None = 0,
+        State_Idle = 0x01,
+        State_Move = 0x02,
+        State_Rotate = 0x04
+    };
+    CREATE_FUNC(Sprite3DFakeShadowTest);
+    Sprite3DFakeShadowTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void Move(cocos2d::Ref* sender,int value);
+    void updateCamera(float fDelta);
+    void move3D(float elapsedTime);
+    void updateState(float elapsedTime);
+    bool isState(unsigned int state,unsigned int bit) const;
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+private:
+    cocos2d::Camera * _camera;
+    Vec3           _targetPos;
+    unsigned int   _curState;
+    cocos2d::Sprite3D * _plane;
+    cocos2d::Sprite3D * _orc;
+};
+
+class Sprite3DLightMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DLightMapTest);
+    Sprite3DLightMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+private:
+    Camera * _camera;
+};
+
+class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DBasicToonShaderTest);
+    Sprite3DBasicToonShaderTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+};
 class EffectSprite3D;
 
 class Effect3D : public Ref
@@ -174,6 +226,23 @@ public:
     void addNewSpriteWithCoords(Vec2 p);
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class AsyncLoadSprite3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AsyncLoadSprite3DTest);
+    AsyncLoadSprite3DTest();
+    virtual ~AsyncLoadSprite3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_asyncLoadSprite(Ref* sender);
+    
+    void asyncLoad_Callback(Sprite3D* sprite, void* param);
+    
+protected:
+    std::vector<std::string> _paths; //model paths to be loaded
 };
 
 class Sprite3DWithSkinTest : public Sprite3DTestDemo

@@ -204,7 +204,7 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
 {
     callback(parent);
 
-    auto children = parent->getChildren();
+    auto& children = parent->getChildren();
     for (auto child : children)
     {
         foreachNodeDescendant(child, callback);

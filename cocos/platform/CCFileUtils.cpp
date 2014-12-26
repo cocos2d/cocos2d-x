@@ -514,6 +514,7 @@ void FileUtils::destroyInstance()
 }
 
 FileUtils::FileUtils()
+    : _writablePath("")
 {
 }
 
@@ -826,6 +827,16 @@ const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
 const std::vector<std::string>& FileUtils::getSearchPaths() const
 {
     return _searchPathArray;
+}
+
+void FileUtils::setWritablePath(const std::string& writablePath)
+{
+    _writablePath = writablePath;
+}
+
+void FileUtils::setDefaultResourceRootPath(const std::string& path)
+{
+    _defaultResRootPath = path;
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
