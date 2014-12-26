@@ -228,6 +228,23 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
+class AsyncLoadSprite3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AsyncLoadSprite3DTest);
+    AsyncLoadSprite3DTest();
+    virtual ~AsyncLoadSprite3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_asyncLoadSprite(Ref* sender);
+    
+    void asyncLoad_Callback(Sprite3D* sprite, void* param);
+    
+protected:
+    std::vector<std::string> _paths; //model paths to be loaded
+};
+
 class Sprite3DWithSkinTest : public Sprite3DTestDemo
 {
 public:

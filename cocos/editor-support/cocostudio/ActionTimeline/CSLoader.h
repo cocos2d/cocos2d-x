@@ -32,7 +32,7 @@
 
 namespace flatbuffers
 {
-    struct FlatBufferBuilder;
+    class FlatBufferBuilder;
     
     struct NodeTree;
     
@@ -57,6 +57,7 @@ namespace cocostudio
     namespace timeline
     {
         class ActionTimeline;
+        class ActionTimelineNode;
     }
 }
 
@@ -75,6 +76,9 @@ public:
     
     static cocos2d::Node* createNode(const std::string& filename);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
+
+    static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename);
+    static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop);
     
     cocos2d::Node* createNodeFromJson(const std::string& filename);
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);
@@ -98,6 +102,10 @@ public:
     void registReaderObject(const std::string& className,
                             ObjectFactory::Instance ins);
     
+    cocos2d::Node* createNodeWithFlatBuffersForSimulator(const std::string& filename);
+    cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
+    std::string getCsdVersion() { return _csdVersion; }
+
 protected:
     
     cocos2d::Node* loadNode(const rapidjson::Value& json);
@@ -144,6 +152,7 @@ protected:
     
     Node* _rootNode;
 //    std::vector<Node*> _loadingNodeParentHierarchy;
+    std::string _csdVersion;
 };
 
 NS_CC_END

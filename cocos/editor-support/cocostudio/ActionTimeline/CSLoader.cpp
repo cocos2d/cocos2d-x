@@ -29,6 +29,7 @@
 #include "../../cocos/ui/CocosGUI.h"
 #include "CCActionTimelineCache.h"
 #include "CCActionTimeline.h"
+#include "CCActionTimelineNode.h"
 #include "../CCSGUIReader.h"
 #include "cocostudio/CocoStudio.h"
 #include "cocostudio/CSParseBinary_generated.h"
@@ -57,9 +58,12 @@
 #include "cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
 #include "cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
 #include "cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
+#include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
 
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
+
+#include "cocostudio/FlatBuffersSerialize.h"
 
 #include "cocostudio/WidgetCallBackHandlerProtocol.h"
 
@@ -198,6 +202,8 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(PageViewReader);
     CREATE_CLASS_NODE_READER_INFO(ListViewReader);
     
+    CREATE_CLASS_NODE_READER_INFO(ArmatureNodeReader);
+    
 }
 
 void CSLoader::purge()
@@ -277,6 +283,32 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     
     return nullptr;
 }
+
+ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename)
+{
+    Node* root = createNode(filename);
+    ActionTimeline* action = createTimeline(filename);
+    
+    if(root && action)
+    {
+        root->runAction(action);
+        action->gotoFrameAndPlay(0);
+    }
+    
+    ActionTimelineNode* node = ActionTimelineNode::create(root, action);
+    return node;
+}
+ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop)
+{
+    ActionTimelineNode* node = createActionTimelineNode(filename);
+    ActionTimeline* action = node->getActionTimeline();
+    if(action)
+        action->gotoFrameAndPlay(startIndex, endIndex, loop);
+    
+    return node;
+}
+
+
 
 Node* CSLoader::createNodeFromJson(const std::string& filename)
 {
@@ -753,15 +785,16 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
     
     // decode plist
     auto textures = csparsebinary->textures();
-    auto texturePngs = csparsebinary->texturePngs();
     int textureSize = csparsebinary->textures()->size();
     CCLOG("textureSize = %d", textureSize);
     for (int i = 0; i < textureSize; ++i)
     {
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str(),
-                                                                 texturePngs->Get(i)->c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());        
     }
     
+    auto v = csparsebinary->version();
+    if (v) _csdVersion = v->c_str();
+       
     Node* node = nodeWithFlatBuffers(csparsebinary->nodeTree());
     
     return node;
@@ -782,16 +815,31 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         auto projectNodeOptions = (ProjectNodeOptions*)options->data();
         std::string filePath = projectNodeOptions->fileName()->c_str();
         CCLOG("filePath = %s", filePath.c_str());
-        if (filePath != "")
+        if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
-            node = createNodeWithFlatBuffersFile(filePath);
-            reader->setPropsWithFlatBuffers(node, options->data());
-        }
-        cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
-        if(action)
-        {
-            node->runAction(action);
-            action->gotoFrameAndPlay(0);
+
+            Node* root = createNodeWithFlatBuffersFile(filePath);
+            reader->setPropsWithFlatBuffers(root, options->data());
+
+            bool isloop = projectNodeOptions->isLoop();
+            bool isautoplay = projectNodeOptions->isAutoPlay();
+
+            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
+            if (action)
+            {
+                root->runAction(action);
+                if (isautoplay)
+                {
+                    action->gotoFrameAndPlay(0, isloop);
+                }
+                else
+                {
+                    action->gotoFrameAndPause(0);
+                }
+            }
+
+            node = ActionTimelineNode::create(root, action);
+            node->setName(root->getName());
         }
     }
     else if (classname == "SimpleAudio")
@@ -832,6 +880,12 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
             _rootNode = node;
         }
 //        _loadingNodeParentHierarchy.push_back(node);
+    }
+    
+    // If node is invalid, there is no necessity to process children of node.
+    if (!node)
+    {
+        return nullptr;
     }
     
     auto children = nodetree->children();
@@ -1058,6 +1112,162 @@ void CSLoader::registReaderObject(const std::string &className,
     t._fun = ins;
     
     ObjectFactory::getInstance()->registerType(t);
+}
+
+Node* CSLoader::createNodeWithFlatBuffersForSimulator(const std::string& filename)
+{
+    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+    fbs->_isSimulator = true;
+    FlatBufferBuilder* builder = fbs->createFlatBuffersWithXMLFileForSimulator(filename);
+    
+    auto csparsebinary = GetCSParseBinary(builder->GetBufferPointer());
+    
+    // decode plist
+    auto textures = csparsebinary->textures();
+    auto texturePngs = csparsebinary->texturePngs();
+    int textureSize = csparsebinary->textures()->size();
+    //    CCLOG("textureSize = %d", textureSize);
+    for (int i = 0; i < textureSize; ++i)
+    {
+        std::string texture = textures->Get(i)->c_str();
+        std::string texturePng = texturePngs->Get(i)->c_str();
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(texture,
+                                                                 texturePng);
+    }
+    
+    auto nodeTree = csparsebinary->nodeTree();
+
+    auto v = csparsebinary->version();
+    if (v) _csdVersion = v->c_str();
+
+    Node* node = nodeWithFlatBuffersForSimulator(nodeTree);
+    
+    _rootNode = nullptr;
+    
+    fbs->deleteFlatBufferBuilder();
+    
+    return node;
+}
+
+Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nodetree)
+{
+    Node* node = nullptr;
+    
+    std::string classname = nodetree->classname()->c_str();
+    CCLOG("classname = %s", classname.c_str());
+    
+    auto options = nodetree->options();
+    
+    if (classname == "ProjectNode")
+    {
+        auto reader = ProjectNodeReader::getInstance();
+        auto projectNodeOptions = (ProjectNodeOptions*)options->data();
+        std::string filePath = projectNodeOptions->fileName()->c_str();
+        CCLOG("filePath = %s", filePath.c_str());
+        
+        if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
+        {
+            node = createNodeWithFlatBuffersForSimulator(filePath);
+            reader->setPropsWithFlatBuffers(node, options->data());
+
+            bool isloop = projectNodeOptions->isLoop();
+            bool isautoplay = projectNodeOptions->isAutoPlay();
+            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
+            if (action)
+            {
+                node->runAction(action);
+                action->gotoFrameAndPlay(0);
+                if (isautoplay)
+                {
+                    action->gotoFrameAndPlay(0, isloop);
+                }
+                else
+                {
+                    action->gotoFrameAndPause(0);
+                }
+            }
+        }
+    }
+    else if (classname == "SimpleAudio")
+    {
+        node = Node::create();
+        auto reader = ComAudioReader::getInstance();
+        Component* component = reader->createComAudioWithFlatBuffers(options->data());
+        if (component)
+        {
+            node->addComponent(component);
+            reader->setPropsWithFlatBuffers(node, options->data());
+        }
+    }
+    else
+    {
+        std::string readername = getGUIClassName(classname);
+        readername.append("Reader");
+        
+        NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
+        node = reader->createNodeWithFlatBuffers(options->data());
+        
+        Widget* widget = dynamic_cast<Widget*>(node);
+        if (widget)
+        {
+            std::string callbackName = widget->getCallbackName();
+            std::string callbackType = widget->getCallbackType();
+            
+            bindCallback(callbackName, callbackType, widget, _rootNode);
+        }
+        
+        if (_rootNode == nullptr)
+        {
+            _rootNode = node;
+        }
+//        _loadingNodeParentHierarchy.push_back(node);
+    }
+    
+    // If node is invalid, there is no necessity to process children of node.
+    if (!node)
+    {
+        return nullptr;
+    }
+    
+    auto children = nodetree->children();
+    int size = children->size();
+    CCLOG("size = %d", size);
+    for (int i = 0; i < size; ++i)
+    {
+        auto subNodeTree = children->Get(i);
+        Node* child = nodeWithFlatBuffersForSimulator(subNodeTree);
+        CCLOG("child = %p", child);
+        if (child)
+        {
+            PageView* pageView = dynamic_cast<PageView*>(node);
+            ListView* listView = dynamic_cast<ListView*>(node);
+            if (pageView)
+            {
+                Layout* layout = dynamic_cast<Layout*>(child);
+                if (layout)
+                {
+                    pageView->addPage(layout);
+                }
+            }
+            else if (listView)
+            {
+                Widget* widget = dynamic_cast<Widget*>(child);
+                if (widget)
+                {
+                    listView->pushBackCustomItem(widget);
+                }
+            }
+            else
+            {
+                node->addChild(child);
+            }
+        }
+        Helper::doLayout(node);
+    }
+    
+//    _loadingNodeParentHierarchy.pop_back();
+    
+    return node;
 }
 
 NS_CC_END

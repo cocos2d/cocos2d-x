@@ -31,6 +31,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include "base/ccConfig.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformDefine.h"
+#include <new>
 
 /**
  * define a create function for a specific type, such as Layer
@@ -39,7 +40,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
 { \
-    __TYPE__ *pRet = new __TYPE__(); \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
         pRet->autorelease(); \
@@ -61,7 +62,7 @@ static __TYPE__* create() \
 #define NODE_FUNC(__TYPE__) \
 CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 { \
-    __TYPE__ *pRet = new __TYPE__(); \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
         pRet->autorelease(); \

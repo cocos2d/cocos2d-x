@@ -187,6 +187,12 @@ void WsThreadHelper::update(float dt)
 {
     WsMessage *msg = nullptr;
 
+    /* Avoid locking if, in most cases, the queue is empty. This could be a little faster.
+    size() is not thread-safe, it might return a strange value, but it should be OK in our scenario.
+    */
+    if (0 == _UIWsMessageQueue->size()) 
+        return;	
+
     // Returns quickly if no message
     _UIWsMessageQueueMutex.lock();
 

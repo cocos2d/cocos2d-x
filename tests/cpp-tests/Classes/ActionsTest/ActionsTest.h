@@ -80,6 +80,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ActionMove3D : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionMove3D);
+    
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionScale : public ActionsDemo
 {
 public:
