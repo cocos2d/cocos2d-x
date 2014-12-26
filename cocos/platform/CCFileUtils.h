@@ -54,6 +54,15 @@ public:
      *  Destroys the instance of FileUtils.
      */
     static void destroyInstance();
+    
+    /**
+     * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
+     * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
+     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from 
+     * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
+     * functions when reading data of resources.
+     */
+    static void setDelefate(FileUtils *delegate);
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
