@@ -51,7 +51,6 @@ typedef SSIZE_T ssize_t;
 #include "base/ccMacros.h"
 #include "platform/CCPlatformMacros.h"
 
-
 NS_CC_BEGIN
 
 /// The max length of CCLog message.
