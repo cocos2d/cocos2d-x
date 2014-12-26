@@ -772,8 +772,10 @@ namespace cocostudio
         widget->setAnchorPoint(Vec2::ZERO);
         
         widget->setUnifySizeEnabled(true);
-        std::string versionString = CSLoader::getInstance()->getCsdVersion();
+        bool ignoreSize = options->ignoreSize();
+        widget->ignoreContentAdaptWithSize(ignoreSize);
 
+        std::string versionString = CSLoader::getInstance()->getCsdVersion();
         //assume versionString is like "2.0.6.0"
         if (versionString.length() > 0)
         {
@@ -799,16 +801,11 @@ namespace cocostudio
             {
                 widget->setUnifySizeEnabled(false);
                 widget->setLayoutComponentEnabled(true);
+                widget->ignoreContentAdaptWithSize(false);
+                Size contentSize(options->size()->width(), options->size()->height());
+                widget->setContentSize(contentSize);
             }
         }
-
-        bool ignoreSize = options->ignoreSize();
-        widget->ignoreContentAdaptWithSize(ignoreSize);
-        
-        /*
-        Size contentSize(options->size()->width(), options->size()->height());
-        widget->setContentSize(contentSize);
-         */
         
         int tag = options->tag();
         widget->setTag(tag);
@@ -871,6 +868,8 @@ namespace cocostudio
         auto layoutComponentTable = ((WidgetOptions*)nodeOptions)->layoutComponent();
         if (!layoutComponentTable) return;
 
+        auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
+
         bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
         bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
         float positionXPercent = layoutComponentTable->positionXPercent();
@@ -887,9 +886,6 @@ namespace cocostudio
         float rightMargin = layoutComponentTable->rightMargin();
         float topMargin = layoutComponentTable->topMargin();
         float bottomMargin = layoutComponentTable->bottomMargin();
-
-        auto layoutComponent = ui::LayoutComponent::create();
-        node->addComponent(layoutComponent);
 
         layoutComponent->setPositionPercentXEnabled(positionXPercentEnabled);
         layoutComponent->setPositionPercentYEnabled(positionYPercentEnabled);

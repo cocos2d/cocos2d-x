@@ -519,6 +519,8 @@ namespace cocostudio
         auto layoutComponentTable = ((WidgetOptions*)nodeOptions)->layoutComponent();
         if (!layoutComponentTable) return;
 
+        auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
+
         bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
         bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
         float positionXPercent = layoutComponentTable->positionXPercent();
@@ -535,9 +537,6 @@ namespace cocostudio
         float rightMargin = layoutComponentTable->rightMargin();
         float topMargin = layoutComponentTable->topMargin();
         float bottomMargin = layoutComponentTable->bottomMargin();
-
-        auto layoutComponent = ui::LayoutComponent::create();
-        node->addComponent(layoutComponent);
 
         layoutComponent->setPositionPercentXEnabled(positionXPercentEnabled);
         layoutComponent->setPositionPercentYEnabled(positionYPercentEnabled);
