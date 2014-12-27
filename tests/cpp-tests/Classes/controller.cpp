@@ -146,7 +146,7 @@ TestController::TestController()
     _itemMenu->setPosition(s_tCurPos);
     addChild(_itemMenu);
 
-    addChild(menu, 1);
+//    addChild(menu, 1);
 
     // Register Touch Event
     auto listener = EventListenerTouchOneByOne::create();
