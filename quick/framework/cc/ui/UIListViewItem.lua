@@ -145,10 +145,22 @@ function UIListViewItem:getMargin()
 end
 
 function UIListViewItem:setBg(bg)
-	local sp = display.newScale9Sprite(bg)
-	sp:setAnchorPoint(cc.p(0.5, 0.5))
-	sp:setPosition(cc.p(self.width/2, self.height/2))
+	local sp
+	local bgType = tolua.type(bg)
+	if "string" == bgType then
+		sp = display.newScale9Sprite(bg)
+		sp:setAnchorPoint(cc.p(0.5, 0.5))
+		sp:setPosition(cc.p(self.width/2, self.height/2))
+	elseif "ccui.Scale9Sprite" == bgType or "cc.Sprite" == bgType then
+		sp = bg
+	elseif "cc.SpriteFrame" == bgType then
+		sp = ccui.Scale9Sprite:createWithSpriteFrame(bg)
+	end
 	self:addChild(sp, UIListViewItem.BG_Z_ORDER, UIListViewItem.BG_TAG)
+end
+
+function UIListViewItem:getBg()
+	return self:getChildByTag(UIListViewItem.BG_TAG)
 end
 
 function UIListViewItem:onSizeChange(listener)
@@ -160,6 +172,40 @@ end
 -- just for listview invoke
 function UIListViewItem:setDirction(dir)
 	self.lvDirection_ = dir
+end
+
+
+function UIListViewItem:createCloneInstance_()
+    return UIListViewItem.new(self:getContent())
+end
+
+function UIListViewItem:copyClonedWidgetChildren_(node)
+    -- local children = node:getChildren()
+    -- if not children or 0 == #children then
+    --     return
+    -- end
+
+    -- for i, child in ipairs(children) do
+    --     local cloneChild = node:clone()
+    --     if cloneChild then
+    --         self:addChild(cloneChild)
+    --     end
+    -- end
+end
+
+function UIListViewItem:copySpecialProperties_(node)
+	self:setMargin(node:getMargin())
+
+	local bg = node:getBg()
+	if bg then
+		if "ccui.Scale9Sprite" == tolua.type(bg) then
+			self:setBg(bg:getSprite():getSpriteFrame())
+		else
+			self:setBg(bg:getSpriteFrame())
+		end
+	end
+
+	self:setItemSize(node:getItemSize())
 end
 
 return UIListViewItem

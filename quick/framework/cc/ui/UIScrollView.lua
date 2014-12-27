@@ -106,6 +106,8 @@ function UIScrollView:ctor(params)
 			self:update_(...)
 		end)
 	self:scheduleUpdate()
+
+	self.args_ = {params}
 end
 
 function UIScrollView:addBgColorIf(params)
@@ -995,10 +997,26 @@ function UIScrollView:fill(nodes,params)
 
 end
 
-function UIScrollView:clone_()
-	self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, function(...)
-			self:update_(...)
-		end)
+function UIScrollView:createCloneInstance_()
+    return UIScrollView.new(unpack(self.args_))
+end
+
+function UIScrollView:copyClonedWidgetChildren_(node)
+	local scrollNode = node:getScrollNode()
+	local cloneScrollNode = scrollNode:clone()
+	self:addScrollNode(cloneScrollNode)
+end
+
+function UIScrollView:copySpecialProperties_(node)
+	self:setViewRect(node.viewRect_)
+	self:setDirection(node:getDirection())
+	self:setLayoutPadding(
+		node.layoutPadding.top,
+		node.layoutPadding.right,
+		node.layoutPadding.bottom,
+		node.layoutPadding.left)
+	self:setBounceable(node.bBounce)
+	self:setTouchType(node.touchOnContent)
 end
 
 return UIScrollView
