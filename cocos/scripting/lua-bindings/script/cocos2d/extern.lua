@@ -281,66 +281,100 @@ function handler(obj, method)
     end
 end
 
-local c = cc or {}
-
-c.loaded_packages = {}
-local loaded_packages = c.loaded_packages
-
-local function load_(...)
-    local names = {...}
-    assert(#names > 0, "cc.load() - invalid package names")
-
-    local packages = {}
-    for _, name in ipairs(names) do
-        if not loaded_packages[name] then
-            local packageName = string.format("packages.%s.init", name)
-            local cls = require(packageName)
-            assert(cls, string.format("cc.load() - package class \"%s\" load failed", packageName))
-            loaded_packages[name] = cls
-        end
-        packages[#packages + 1] = loaded_packages[name]
-    end
-    return unpack(packages)
+function math.round(value)
+    value = checknumber(value)
+    return math.floor(value + 0.5)
 end
-c.load = load_
 
-local function bind_(target, ...)
-    local names = {...}
-    assert(#names > 0, "cc.bind() - invalid package names")
-
-    load_(...)
-    target.components_ = target.components_ or {}
-    for _, name in ipairs(names) do
-        if not target.components_[name] then
-            local cls = loaded_packages[name]
-            for __, depend in ipairs(cls.depends or {}) do
-                if not target.components_[depend] then
-                    bind_(target, depend)
-                end
-            end
-            local component = cls:create()
-            target.components_[name] = component
-            component:bind(target)
-        end
+function table.nums(t)
+    local count = 0
+    for k, v in pairs(t) do
+        count = count + 1
     end
-
-    return target
+    return count
 end
-c.bind = bind_
 
-local function unbind_(target, ...)
-    local names = {...}
-    assert(#names > 0, "cc.unbind() - invalid package names")
-    assert(type(target.components_) == "table", "cc.unbind() - target not binding components")
-
-    for _, name in ipairs(names) do
-        local component = target.components_[name]
-        assert(component, string.format("cc.unbind() - component \"%s\" not found", tostring(name)))
-        component:unbind(target)
-        target.components_[name] = nil
+function table.keys(hashtable)
+    local keys = {}
+    for k, v in pairs(hashtable) do
+        keys[#keys + 1] = k
     end
-
-    return target
+    return keys
 end
-c.unbind = unbind_
 
+function table.values(hashtable)
+    local values = {}
+    for k, v in pairs(hashtable) do
+        values[#values + 1] = v
+    end
+    return values
+end
+
+function table.merge(dest, src)
+    for k, v in pairs(src) do
+        dest[k] = v
+    end
+end
+
+function table.indexof(array, value, begin)
+    for i = begin or 1, #array do
+        if array[i] == value then return i end
+    end
+    return false
+end
+
+function table.keyof(hashtable, value)
+    for k, v in pairs(hashtable) do
+        if v == value then return k end
+    end
+    return nil
+end
+
+function table.map(t, fn)
+    for k, v in pairs(t) do
+        t[k] = fn(v, k)
+    end
+end
+
+function table.walk(t, fn)
+    for k,v in pairs(t) do
+        fn(v, k)
+    end
+end
+
+function table.filter(t, fn)
+    for k, v in pairs(t) do
+        if not fn(v, k) then t[k] = nil end
+    end
+end
+
+function string.split(input, delimiter)
+    input = tostring(input)
+    delimiter = tostring(delimiter)
+    if (delimiter=='') then return false end
+    local pos,arr = 0, {}
+    -- for each divider found
+    for st,sp in function() return string.find(input, delimiter, pos, true) end do
+        table.insert(arr, string.sub(input, pos, st - 1))
+        pos = sp + 1
+    end
+    table.insert(arr, string.sub(input, pos))
+    return arr
+end
+
+function string.ltrim(input)
+    return string.gsub(input, "^[ \t\n\r]+", "")
+end
+
+function string.rtrim(input)
+    return string.gsub(input, "[ \t\n\r]+$", "")
+end
+
+function string.trim(input)
+    input = string.gsub(input, "^[ \t\n\r]+", "")
+    return string.gsub(input, "[ \t\n\r]+$", "")
+end
+
+function string.ucfirst(input)
+    return string.upper(string.sub(input, 1, 1)) .. string.sub(input, 2)
+end

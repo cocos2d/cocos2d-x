@@ -67,3 +67,67 @@ if CC_USE_DEPRECATED_API then
     -- cocosbuilder
     require "cocos.cocosbuilder.CCBReaderLoad"
 end
+
+
+-- Cocos2d-Lua core functions
+local c = cc or {}
+c.loaded_packages = {}
+local loaded_packages = c.loaded_packages
+
+local function load_(...)
+    local names = {...}
+    assert(#names > 0, "cc.load() - invalid package names")
+
+    local packages = {}
+    for _, name in ipairs(names) do
+        if not loaded_packages[name] then
+            local packageName = string.format("packages.%s.init", name)
+            local cls = require(packageName)
+            assert(cls, string.format("cc.load() - package class \"%s\" load failed", packageName))
+            loaded_packages[name] = cls
+        end
+        packages[#packages + 1] = loaded_packages[name]
+    end
+    return unpack(packages)
+end
+c.load = load_
+
+local function bind_(target, ...)
+    local names = {...}
+    assert(#names > 0, "cc.bind() - invalid package names")
+
+    load_(...)
+    target.components_ = target.components_ or {}
+    for _, name in ipairs(names) do
+        if not target.components_[name] then
+            local cls = loaded_packages[name]
+            for __, depend in ipairs(cls.depends or {}) do
+                if not target.components_[depend] then
+                    bind_(target, depend)
+                end
+            end
+            local component = cls:create()
+            target.components_[name] = component
+            component:bind(target)
+        end
+    end
+
+    return target
+end
+c.bind = bind_
+
+local function unbind_(target, ...)
+    local names = {...}
+    assert(#names > 0, "cc.unbind() - invalid package names")
+    assert(type(target.components_) == "table", "cc.unbind() - target not binding components")
+
+    for _, name in ipairs(names) do
+        local component = target.components_[name]
+        assert(component, string.format("cc.unbind() - component \"%s\" not found", tostring(name)))
+        component:unbind(target)
+        target.components_[name] = nil
+    end
+
+    return target
+end
+c.unbind = unbind_
