@@ -120,6 +120,7 @@ bool Director::init(void)
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = 0;
     _lastUpdate = new struct timeval;
+    _secondsPerFrame = 1.0f;
 
     // paused ?
     _paused = false;
