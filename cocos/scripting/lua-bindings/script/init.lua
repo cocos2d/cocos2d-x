@@ -2,15 +2,10 @@
 require "cocos.cocos2d.Cocos2d"
 require "cocos.cocos2d.Cocos2dConstants"
 require "cocos.cocos2d.extern"
-require "cocos.cocos2d.bitExtend"
-require "cocos.cocos2d.DrawPrimitives"
 
 -- opengl
 require "cocos.cocos2d.Opengl"
 require "cocos.cocos2d.OpenglConstants"
-
--- cocosbuilder
-require "cocos.cocosbuilder.CCBReaderLoad"
 
 -- cocosdenshion
 require "cocos.cocosdenshion.AudioEngine"
@@ -32,6 +27,12 @@ require "cocos.network.NetworkConstants"
 require "cocos.spine.SpineConstants"
 
 if CC_USE_DEPRECATED_API then
+    require "cocos.deprecated"
+    require "cocos.cocos2d.DrawPrimitives"
+
+    -- Lua extensions
+    require "cocos.cocos2d.bitExtend"
+
     -- CCLuaEngine
     require "cocos.cocos2d.DeprecatedCocos2dClass"
     require "cocos.cocos2d.DeprecatedCocos2dEnum"
@@ -62,4 +63,7 @@ if CC_USE_DEPRECATED_API then
     -- register_ui_moudle
     require "cocos.ui.DeprecatedUIEnum"
     require "cocos.ui.DeprecatedUIFunc"
+
+    -- cocosbuilder
+    require "cocos.cocosbuilder.CCBReaderLoad"
 end
