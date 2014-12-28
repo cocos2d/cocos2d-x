@@ -428,6 +428,7 @@ function Node:clone()
     local cloneNode = self:createCloneInstance_()
 
     cloneNode:copyProperties_(self)
+    cloneNode:copySpecialPeerVal_(self)
     cloneNode:copyClonedWidgetChildren_(self)
 
     return cloneNode
@@ -444,7 +445,7 @@ function Node:createCloneInstance_()
     elseif "cc.LayerColor" == nodeType then
         local clr = self:getColor()
         clr.a = self:getOpacity()
-        cloneNode = cc.LayerColor:create(clr)
+        cloneNode = display.newNode() -- cc.LayerColor:create(clr)
     else
         cloneNode = display.newNode()
         if "cc.Node" ~= nodeType then
@@ -476,6 +477,8 @@ function Node:copySpecialProperties_(node)
         self:setSpriteFrame(node:getSpriteFrame())
     elseif "ccui.Scale9Sprite" == nodeType then
         self:setSpriteFrame(node:getSprite():getSpriteFrame())
+    elseif "cc.LayerColor" == nodeType then
+        self:setTouchEnabled(false)
     end
 
     -- copy peer
@@ -490,6 +493,7 @@ end
 function Node:copyProperties_(node)
     self:setVisible(node:isVisible())
     self:setTouchEnabled(node:isTouchEnabled())
+    -- self:setTouchEnabled(false)
     self:setLocalZOrder(node:getLocalZOrder())
     self:setTag(node:getTag())
     self:setName(node:getName())
@@ -511,3 +515,9 @@ function Node:copyProperties_(node)
     self:copySpecialProperties_(node)
 end
 
+-- 拷贝特殊的peer值
+function Node:copySpecialPeerVal_(node)
+    if node.name then
+        self.name = node.name
+    end
+end

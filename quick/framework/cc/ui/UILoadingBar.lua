@@ -87,7 +87,7 @@ function UILoadingBar:ctor(params)
 	self:setPercent(params.percent or 0)
 	self:addChild(self.bar)
 
-	self.args_ = params
+	self.args_ = {params}
 end
 
 -- start --

@@ -194,6 +194,7 @@ function UIListViewItem:copyClonedWidgetChildren_(node)
 end
 
 function UIListViewItem:copySpecialProperties_(node)
+	self.listener = node.listener
 	self:setMargin(node:getMargin())
 
 	local bg = node:getBg()
