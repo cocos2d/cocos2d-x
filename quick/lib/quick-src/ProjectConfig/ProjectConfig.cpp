@@ -44,8 +44,7 @@ void ProjectConfig::resetToWelcome()
 {
     _isWelcome = true;
     auto path = SimulatorConfig::getInstance()->getQuickCocos2dxRootPath();
-    //path.append("quick/welcome");
-    path.append("quick/samples/tests");
+    path.append("quick/welcome");
     SimulatorConfig::makeNormalizePath(&path);
     setProjectDir(path);
     setWritablePath(path);
