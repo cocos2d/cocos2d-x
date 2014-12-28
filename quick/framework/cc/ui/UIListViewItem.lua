@@ -176,7 +176,7 @@ end
 
 
 function UIListViewItem:createCloneInstance_()
-    return UIListViewItem.new(self:getContent())
+    return UIListViewItem.new(self:getContent():clone())
 end
 
 function UIListViewItem:copyClonedWidgetChildren_(node)
