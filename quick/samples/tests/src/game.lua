@@ -8,8 +8,7 @@ game = {}
 function game.startup()
     cc.FileUtils:getInstance():addSearchPath("res/")
 
-    display.replaceScene(require("tests.framework.cloneTest").new())
-    -- game.enterMainScene()
+    game.enterMainScene()
 end
 
 function game.createMenu(items, callback)
@@ -66,7 +65,7 @@ function game.createSceneClass(name)
     end)
 
     function cls:prepare(args)
-        self.menuLayer = display.newNode()  -- newLayer()
+        self.menuLayer = display.newLayer()
         self.menuLayer:setTouchSwallowEnabled(false)
         self:addChild(self.menuLayer, 30000)
 
@@ -81,13 +80,13 @@ function game.createSceneClass(name)
         -- })
         -- self.menuLayer:addChild(ui.newMenu({label}))
 
-        -- cc.ui.UIPushButton.new()
-        --     :setButtonLabel(cc.ui.UILabel.new({text = "RETURN", size = 32, color = display.COLOR_BLUE}))
-        --     :onButtonClicked(function(event)
-        --         display.replaceScene(require("scenes.MainScene").new(), "random", 1)
-        --     end)
-        --     :align(display.LEFT_BOTTOM, display.right - 80, display.bottom + 30)
-        --     :addTo(self.menuLayer)
+        cc.ui.UIPushButton.new()
+            :setButtonLabel(cc.ui.UILabel.new({text = "RETURN", size = 32, color = display.COLOR_BLUE}))
+            :onButtonClicked(function(event)
+                display.replaceScene(require("scenes.MainScene").new(), "random", 1)
+            end)
+            :align(display.LEFT_BOTTOM, display.right - 80, display.bottom + 30)
+            :addTo(self.menuLayer)
 
         local label = display.newTTFLabel({
             text = "====   " .. cls.__cname .. "   ====",

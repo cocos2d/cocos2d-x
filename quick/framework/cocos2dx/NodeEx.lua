@@ -445,7 +445,7 @@ function Node:createCloneInstance_()
     elseif "cc.LayerColor" == nodeType then
         local clr = self:getColor()
         clr.a = self:getOpacity()
-        cloneNode = display.newNode() -- cc.LayerColor:create(clr)
+        cloneNode = cc.LayerColor:create(clr)
     else
         cloneNode = display.newNode()
         if "cc.Node" ~= nodeType then
@@ -493,7 +493,6 @@ end
 function Node:copyProperties_(node)
     self:setVisible(node:isVisible())
     self:setTouchEnabled(node:isTouchEnabled())
-    -- self:setTouchEnabled(false)
     self:setLocalZOrder(node:getLocalZOrder())
     self:setTag(node:getTag())
     self:setName(node:getName())
