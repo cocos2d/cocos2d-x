@@ -1648,6 +1648,7 @@ protected:
     int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 
+    bool _childrenDirty;            ///< flat for _children change
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
