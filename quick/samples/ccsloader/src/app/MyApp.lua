@@ -84,6 +84,13 @@ function MyApp:loadCCSJsonFile(scene, jsonFile)
         node:setPosition((display.width - width)/2, (display.height - height)/2)
         node:setTag(101)
         scene:addChild(node)
+
+        -- clone test code
+        -- local cloneNode = node:clone()
+        -- cloneNode:setPosition((display.width - width)/2, (display.height - height)/2)
+        -- cloneNode:setTag(101)
+        -- scene:addChild(cloneNode)
+        -- node:removeSelf()
     end
 end
 
