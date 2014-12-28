@@ -27,7 +27,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -134,17 +134,22 @@ namespace cocostudio
         auto options = (GameMapOptions*)gameMapOptions;
         auto fileNameData = options->fileNameData();
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
+        std::string path = fileNameData->path()->c_str();
         int resourceType = fileNameData->resourceType();
         switch (resourceType)
         {
             case 0:
             {
-                std::string path = fileNameData->path()->c_str();
-                const char* tmxFile = path.c_str();
-                
-                if (tmxFile && strcmp("", tmxFile) != 0)
+                if (FileUtils::getInstance()->isFileExist(path))
                 {
-                    tmx = TMXTiledMap::create(tmxFile);
+                    fileExist = true;
+                }
+                else
+                {
+                    errorFilePath = path;
+                    fileExist = false;
                 }
                 break;
             }
@@ -152,10 +157,22 @@ namespace cocostudio
             default:
                 break;
         }
-        
-        if (tmx)
+        if (fileExist)
         {
-            setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
+            tmx = TMXTiledMap::create(path);
+            if (tmx)
+            {
+                setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
+            }
+        }
+        else
+        {
+            Node* node = Node::create();
+            setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            node->addChild(label);
+            return node;
         }
         
         return tmx;

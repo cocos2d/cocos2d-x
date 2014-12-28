@@ -570,12 +570,22 @@ void EventFrame::init()
 
 EventFrame::EventFrame()
     : _event("")
+    , _action(nullptr)
 {
+}
+
+void EventFrame::setNode(cocos2d::Node* node)
+{
+    Frame::setNode(node);
+    _action = _timeline->getActionTimeline();
 }
 
 void EventFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    if(currentFrameIndex>=_frameIndex)
+    if(_frameIndex < _action->getStartFrame() || _frameIndex > _action->getEndFrame())
+        return;
+
+    if(currentFrameIndex >= _frameIndex)
         emitEvent();
 }
 

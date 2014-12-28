@@ -661,38 +661,11 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
 
 void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard::KeyCode additionalKeyCode = EventKeyboard::KeyCode::KEY_NONE;
-    
-    switch (key)
-    {
-        case GLFW_KEY_LEFT_ALT:
-        case GLFW_KEY_RIGHT_ALT:
-            additionalKeyCode = EventKeyboard::KeyCode::KEY_ALT;
-            break;
-        case GLFW_KEY_LEFT_CONTROL:
-        case GLFW_KEY_RIGHT_CONTROL:
-            additionalKeyCode = EventKeyboard::KeyCode::KEY_CTRL;
-            break;
-        case GLFW_KEY_LEFT_SHIFT:
-        case GLFW_KEY_RIGHT_SHIFT:
-            additionalKeyCode = EventKeyboard::KeyCode::KEY_SHIFT;
-            break;
-        default:
-            break;
-    }
-    
     if (GLFW_REPEAT != action)
     {
         EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
-        
-        // Keep compatibility for the old keycodes like SHIFT, CTRL, ALT.
-        if (additionalKeyCode != EventKeyboard::KeyCode::KEY_NONE)
-        {
-            EventKeyboard additionalEvent(additionalKeyCode, GLFW_PRESS == action);
-            dispatcher->dispatchEvent(&additionalEvent);
-        }
     }
     
     if (GLFW_RELEASE != action && g_keyCodeMap[key] == EventKeyboard::KeyCode::KEY_BACKSPACE)

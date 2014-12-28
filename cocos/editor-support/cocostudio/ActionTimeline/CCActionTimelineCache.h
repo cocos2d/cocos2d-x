@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 namespace flatbuffers
 {
-    struct FlatBufferBuilder;
+    class FlatBufferBuilder;
     
     struct NodeAction;
     struct TimeLine;
@@ -78,6 +78,8 @@ public:
     
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
+    
+    ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
     
 protected:
 

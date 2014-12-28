@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UISlider.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -222,12 +223,12 @@ void Slider::setCapInsets(const Rect &capInsets)
 
 void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
 {
-    _capInsetsBarRenderer = capInsets;
+    _capInsetsBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _barRenderer->getContentSize());
     if (!_scale9Enabled)
     {
         return;
     }
-    _barRenderer->setCapInsets(capInsets);
+    _barRenderer->setCapInsets(_capInsetsBarRenderer);
 }
     
 const Rect& Slider::getCapInsetsBarRenderer()const
@@ -237,12 +238,13 @@ const Rect& Slider::getCapInsetsBarRenderer()const
 
 void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
 {
-    _capInsetsProgressBarRenderer = capInsets;
+    _capInsetsProgressBarRenderer = ui::Helper::restrictCapInsetRect(capInsets, _progressBarRenderer->getContentSize());
+    
     if (!_scale9Enabled)
     {
         return;
     }
-    _progressBarRenderer->setCapInsets(capInsets);
+    _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     
 const Rect& Slider::getCapInsetsProgressBarRebderer()const
@@ -250,7 +252,10 @@ const Rect& Slider::getCapInsetsProgressBarRebderer()const
     return _capInsetsProgressBarRenderer;
 }
 
-    void Slider::loadSlidBallTextures(const std::string& normal,const std::string& pressed,const std::string& disabled,TextureResType texType)
+void Slider::loadSlidBallTextures(const std::string& normal,
+                                      const std::string& pressed,
+                                      const std::string& disabled,
+                                      TextureResType texType)
 {
     loadSlidBallTextureNormal(normal, texType);
     loadSlidBallTexturePressed(pressed,texType);
@@ -358,7 +363,8 @@ bool Slider::hitTest(const cocos2d::Vec2 &pt)
     Vec2 nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
     Size ballSize = this->_slidBallNormalRenderer->getContentSize();
     Rect ballRect = Rect(0,0, ballSize.width, ballSize.height);
-    if (ballRect.containsPoint(nsp)) {
+    if (ballRect.containsPoint(nsp))
+    {
         return true;
     }
     return false;
@@ -417,7 +423,8 @@ void Slider::percentChangedEvent()
     {
         (_sliderEventListener->*_sliderEventSelector)(this,SLIDER_PERCENTCHANGED);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
     }
     if (_ccEventCallback)
