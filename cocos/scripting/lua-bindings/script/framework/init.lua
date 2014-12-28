@@ -35,97 +35,20 @@ printInfo("")
 printInfo("# DEBUG                        = " .. DEBUG)
 printInfo("#")
 
-device  = require("cocos.framework.device")
-display = require("cocos.framework.display")
-audio   = require("cocos.framework.audio")
+device     = require("cocos.framework.device")
+display    = require("cocos.framework.display")
+audio      = require("cocos.framework.audio")
+transition = require("cocos.framework.transition")
 
 require("cocos.framework.extends.NodeEx")
+require("cocos.framework.extends.SpriteEx")
+require("cocos.framework.extends.LayerEx")
+require("cocos.framework.extends.MenuEx")
 
--- Cocos2d-Lua core functions
-cc.loaded_packages = {}
-local loaded_packages = cc.loaded_packages
+require("cocos.framework.package_support")
 
-function cc.load(...)
-    local names = {...}
-    assert(#names > 0, "cc.load() - invalid package names")
-
-    local packages = {}
-    for _, name in ipairs(names) do
-        assert(type(name) == "string", string.format("cc.load() - invalid package name \"%s\"", tostring(name)))
-        if not loaded_packages[name] then
-            local packageName = string.format("packages.%s.init", name)
-            local cls = require(packageName)
-            assert(cls, string.format("cc.load() - package class \"%s\" load failed", packageName))
-            loaded_packages[name] = cls
-
-            if DEBUG > 1 then
-                printInfo("cc.load() - load module \"packages.%s.init\"", name)
-            end
-        end
-        packages[#packages + 1] = loaded_packages[name]
-    end
-    return unpack(packages)
-end
-
-local load_ = cc.load
-local bind_
-bind_ = function(target, ...)
-    local t = type(target)
-    assert(t == "table" or t == "userdata", string.format("cc.bind() - invalid target, expected is object, actual is %s", t))
-    local names = {...}
-    assert(#names > 0, "cc.bind() - package names expected")
-
-    load_(...)
-    if not target.components_ then target.components_ = {} end
-    for _, name in ipairs(names) do
-        assert(type(name) == "string" and name ~= "", string.format("cc.bind() - invalid package name \"%s\"", name))
-        if not target.components_[name] then
-            local cls = loaded_packages[name]
-            for __, depend in ipairs(cls.depends or {}) do
-                if not target.components_[depend] then
-                    bind_(target, depend)
-                end
-            end
-            local component = cls:create()
-            target.components_[name] = component
-            component:bind(target)
-        end
-    end
-
-    return target
-end
-cc.bind = bind_
-
-function cc.unbind(target, ...)
-    if not target.components_ then return end
-
-    local names = {...}
-    assert(#names > 0, "cc.unbind() - invalid package names")
-
-    for _, name in ipairs(names) do
-        assert(type(name) == "string" and name ~= "", string.format("cc.unbind() - invalid package name \"%s\"", name))
-        local component = target.components_[name]
-        assert(component, string.format("cc.unbind() - component \"%s\" not found", tostring(name)))
-        component:unbind(target)
-        target.components_[name] = nil
-    end
-    return target
-end
-
-function cc.setmethods(target, component, methods)
-    for _, name in ipairs(methods) do
-        local method = component[name]
-        target[name] = function(__, ...)
-            return method(component, ...)
-        end
-    end
-end
-
-function cc.unsetmethods(target, methods)
-    for _, name in ipairs(methods) do
-        target[name] = nil
-    end
-end
+-- register the build-in packages
+cc.register("event", require("cocos.framework.components.event"))
 
 -- export global variable
 local __g = _G

@@ -24,14 +24,36 @@ THE SOFTWARE.
 
 local Node = cc.Node
 
-function Node:scheduleUpdate(callback)
-    self:scheduleUpdateWithPriorityLua(callback, 0)
+function Node:add(child, zorder, tag)
+    if tag then
+        self:addChild(child, zorder, tag)
+    elseif zorder then
+        self:addChild(child, zorder)
+    else
+        self:addChild(child)
+    end
+    return self
+end
+
+function Node:addTo(parent, zorder, tag)
+    if tag then
+        parent:addChild(self, zorder, tag)
+    elseif zorder then
+        parent:addChild(self, zorder)
+    else
+        parent:addChild(self)
+    end
     return self
 end
 
 function Node:removeSelf()
     self:removeFromParent()
     return self
+end
+
+function Node:align(anchorPoint, x, y)
+    self:setAnchorPoint(anchorPoint)
+    return self:move(x, y)
 end
 
 function Node:show()
@@ -42,4 +64,100 @@ end
 function Node:hide()
     self:setVisible(false)
     return self
+end
+
+function Node:move(x, y)
+    if y then
+        self:setPosition(x, y)
+    else
+        self:setPosition(x)
+    end
+    return self
+end
+
+function Node:moveTo(args)
+    transition.moveTo(self, args)
+    return self
+end
+
+function Node:moveBy(args)
+    transition.moveBy(self, args)
+    return self
+end
+
+function Node:fadeIn(args)
+    transition.fadeIn(self, args)
+    return self
+end
+
+function Node:fadeOut(args)
+    transition.fadeOut(self, args)
+    return self
+end
+
+function Node:fadeTo(args)
+    transition.fadeTo(self, args)
+    return self
+end
+
+function Node:rotate(rotation)
+    self:setRotation(rotation)
+    return self
+end
+
+function Node:rotateTo(args)
+    transition.rotateTo(self, args)
+    return self
+end
+
+function Node:rotateBy(args)
+    transition.rotateBy(self, args)
+    return self
+end
+
+function Node:scaleTo(args)
+    transition.scaleTo(self, args)
+    return self
+end
+
+function Node:scheduleUpdate(callback)
+    self:scheduleUpdateWithPriorityLua(callback, 0)
+    return self
+end
+
+function Node:enableNodeEvents()
+    self:registerScriptHandler(function(state)
+        if state == "enter" then
+            self:onEnter()
+        elseif state == "exit" then
+            self:onExit()
+        elseif state == "enterTransitionFinish" then
+            self:onEnterTransitionFinish()
+        elseif state == "exitTransitionStart" then
+            self:onExitTransitionStart()
+        elseif state == "cleanup" then
+            self:onCleanup()
+        end
+    end)
+    return self
+end
+
+function Node:disableNodeEvents()
+    self:unregisterScriptHandler()
+    return self
+end
+
+function Node:onEnter()
+end
+
+function Node:onExit()
+end
+
+function Node:onEnterTransitionFinish()
+end
+
+function Node:onExitTransitionStart()
+end
+
+function Node:onCleanup()
 end

@@ -167,27 +167,15 @@ display.RIGHT_TO_LEFT  = 1
 display.TOP_TO_BOTTOM  = 2
 display.BOTTOM_TO_TOP  = 3
 
-display.CENTER        = 1
-display.LEFT_TOP      = 2; display.TOP_LEFT      = 2
-display.LEFT_BOTTOM   = 7; display.BOTTOM_LEFT   = 7
-display.LEFT_CENTER   = 5; display.CENTER_LEFT   = 5
-display.RIGHT_TOP     = 4; display.TOP_RIGHT     = 4
-display.RIGHT_BOTTOM  = 8; display.BOTTOM_RIGHT  = 8
-display.RIGHT_CENTER  = 6; display.CENTER_RIGHT  = 6
-display.TOP_CENTER    = 3; display.CENTER_TOP    = 3
-display.BOTTOM_CENTER = 9; display.CENTER_BOTTOM = 9
-
-display.ANCHOR_POINTS = {
-    cc.p(0.5, 0.5),  -- CENTER
-    cc.p(0, 1),      -- TOP_LEFT
-    cc.p(0.5, 1),    -- TOP_CENTER
-    cc.p(1, 1),      -- TOP_RIGHT
-    cc.p(0, 0.5),    -- CENTER_LEFT
-    cc.p(1, 0.5),    -- CENTER_RIGHT
-    cc.p(0, 0),      -- BOTTOM_LEFT
-    cc.p(1, 0),      -- BOTTOM_RIGHT
-    cc.p(0.5, 0),    -- BOTTOM_CENTER
-}
+display.CENTER        = cc.p(0.5, 0.5)
+display.LEFT_TOP      = cc.p(0, 1)
+display.LEFT_BOTTOM   = cc.p(0, 0)
+display.LEFT_CENTER   = cc.p(0, 0.5)
+display.RIGHT_TOP     = cc.p(1, 1)
+display.RIGHT_BOTTOM  = cc.p(1, 0)
+display.RIGHT_CENTER  = cc.p(1, 0.5)
+display.CENTER_TOP    = cc.p(0.5, 1)
+display.CENTER_BOTTOM = cc.p(0.5, 0)
 
 display.SCENE_TRANSITIONS = {
     CROSSFADE       = cc.TransitionCrossFade,
@@ -249,9 +237,6 @@ end
 
 function display.wrapScene(scene, transition, time, more)
     local key = string.upper(tostring(transition))
-    if string.sub(key, 1, 12) == "CCTRANSITION" then
-        key = string.sub(key, 13)
-    end
 
     if key == "RANDOM" then
         local keys = table.keys(display.SCENE_TRANSITIONS)
@@ -286,6 +271,10 @@ end
 
 function display.getRunningScene()
     return director:getRunningScene()
+end
+
+function display.newNode()
+    return cc.Node:create()
 end
 
 function display.newLayer(...)
@@ -484,6 +473,12 @@ function display.loadImage(imageFilename, callback)
     else
         textureCache:addImageAsync(imageFilename, callback)
     end
+end
+
+local fileUtils = cc.FileUtils:getInstance()
+function display.getImage(imageFilename)
+    local fullpath = fileUtils:fullPathForFilename(imageFilename)
+    return textureCache:getTextureForKey(fullpath)
 end
 
 function display.removeImage(imageFilename)
