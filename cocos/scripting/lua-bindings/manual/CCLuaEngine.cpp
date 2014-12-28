@@ -256,6 +256,13 @@ int LuaEngine::sendEvent(ScriptEvent* evt)
                 return handlerControlEvent(evt->data);
             }
             break;
+        case kRestartGame:
+            {
+            // TODO: Clean up the LUA VM
+                //cleanup();
+                CCApplication::getInstance()->applicationDidFinishLaunching();
+                return 0;
+            }
         default:
             break;
     }
