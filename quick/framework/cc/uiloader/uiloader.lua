@@ -297,11 +297,6 @@ function uiloader:seekComponents(parent, nodeName, componentIdx)
 	return node
 end
 
-
-
-
-
-
 -- private
 function uiloader:loadFile_(jsonFile)
 	local fileUtil = cc.FileUtils:getInstance()

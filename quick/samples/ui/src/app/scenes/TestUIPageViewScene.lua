@@ -44,6 +44,16 @@ function TestUIPageViewScene:createPageView()
         self.pv:addItem(item)        
     end
     self.pv:reload()
+
+    -- clone Test code
+    -- local clonePV
+    -- clonePV = self.pv:clone()
+    -- if clonePV then
+    --     clonePV:reload()
+    --     clonePV:addTo(self)
+    --     self.pv:removeSelf()
+    -- end
+
 end
 
 function TestUIPageViewScene:touchListener(event)

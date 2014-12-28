@@ -86,6 +86,8 @@ function UILoadingBar:ctor(params)
 	self.bar:setPosition(0, 0)
 	self:setPercent(params.percent or 0)
 	self:addChild(self.bar)
+
+	self.args_ = {params}
 end
 
 -- start --
@@ -160,6 +162,12 @@ function UILoadingBar:setViewRect(rect)
 	self.bar:setContentSize(rect.width, rect.height)
 
 	return self
+end
+
+function UILoadingBar:createCloneInstance_()
+	self.args_.viewRect = self.viewRect_
+	self.args_.direction = self.direction_
+	return UILoadingBar.new(unpack(self.args_))
 end
 
 return UILoadingBar

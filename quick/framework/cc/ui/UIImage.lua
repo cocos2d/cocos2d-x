@@ -59,6 +59,8 @@ function UIImage:ctor(filename, options)
     if self.isScale9_ then
         self:setLayoutSizePolicy(display.AUTO_SIZE, display.AUTO_SIZE)
     end
+
+    self.args_ = {filename, options}
 end
 
 -- start --
@@ -96,6 +98,14 @@ function UIImage:setLayoutSize(width, height)
     end
 
     return self
+end
+
+function UIImage:createCloneInstance_()
+    return UIImage.new(unpack(self.args_))
+end
+
+function UIImage:copySpecialProperties_(node)
+    self:setLayoutSize(node:getLayoutSize())
 end
 
 return UIImage
