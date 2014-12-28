@@ -1,32 +1,51 @@
+--[[
+
+Copyright (c) 2011-2015 chukong-incc.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+]]
 
 require "cocos.cocos2d.Cocos2d"
 require "cocos.cocos2d.Cocos2dConstants"
-require "cocos.cocos2d.extern"
+require "cocos.cocos2d.functions"
 
--- opengl
-require "cocos.cocos2d.Opengl"
-require "cocos.cocos2d.OpenglConstants"
+if CC_USE_FRAMEWORK then
+    require "cocos.framework.init"
+else
+    -- opengl
+    require "cocos.cocos2d.Opengl"
+    require "cocos.cocos2d.OpenglConstants"
+    -- audio
+    require "cocos.cocosdenshion.AudioEngine"
+    -- cocosstudio
+    require "cocos.cocostudio.CocoStudio"
+    -- ui
+    require "cocos.ui.GuiConstants"
+    require "cocos.ui.experimentalUIConstants"
+    -- extensions
+    require "cocos.extension.ExtensionConstants"
+    -- network
+    require "cocos.network.NetworkConstants"
+    -- Spine
+    require "cocos.spine.SpineConstants"
 
--- cocosdenshion
-require "cocos.cocosdenshion.AudioEngine"
-
--- cocosstudio
-require "cocos.cocostudio.CocoStudio"
-
--- ui
-require "cocos.ui.GuiConstants"
-require "cocos.ui.experimentalUIConstants"
-
--- extensions
-require "cocos.extension.ExtensionConstants"
-
--- network
-require "cocos.network.NetworkConstants"
-
--- Spine
-require "cocos.spine.SpineConstants"
-
-if CC_USE_DEPRECATED_API then
     require "cocos.deprecated"
     require "cocos.cocos2d.DrawPrimitives"
 
@@ -67,67 +86,3 @@ if CC_USE_DEPRECATED_API then
     -- cocosbuilder
     require "cocos.cocosbuilder.CCBReaderLoad"
 end
-
-
--- Cocos2d-Lua core functions
-local c = cc or {}
-c.loaded_packages = {}
-local loaded_packages = c.loaded_packages
-
-local function load_(...)
-    local names = {...}
-    assert(#names > 0, "cc.load() - invalid package names")
-
-    local packages = {}
-    for _, name in ipairs(names) do
-        if not loaded_packages[name] then
-            local packageName = string.format("packages.%s.init", name)
-            local cls = require(packageName)
-            assert(cls, string.format("cc.load() - package class \"%s\" load failed", packageName))
-            loaded_packages[name] = cls
-        end
-        packages[#packages + 1] = loaded_packages[name]
-    end
-    return unpack(packages)
-end
-c.load = load_
-
-local function bind_(target, ...)
-    local names = {...}
-    assert(#names > 0, "cc.bind() - invalid package names")
-
-    load_(...)
-    target.components_ = target.components_ or {}
-    for _, name in ipairs(names) do
-        if not target.components_[name] then
-            local cls = loaded_packages[name]
-            for __, depend in ipairs(cls.depends or {}) do
-                if not target.components_[depend] then
-                    bind_(target, depend)
-                end
-            end
-            local component = cls:create()
-            target.components_[name] = component
-            component:bind(target)
-        end
-    end
-
-    return target
-end
-c.bind = bind_
-
-local function unbind_(target, ...)
-    local names = {...}
-    assert(#names > 0, "cc.unbind() - invalid package names")
-    assert(type(target.components_) == "table", "cc.unbind() - target not binding components")
-
-    for _, name in ipairs(names) do
-        local component = target.components_[name]
-        assert(component, string.format("cc.unbind() - component \"%s\" not found", tostring(name)))
-        component:unbind(target)
-        target.components_[name] = nil
-    end
-
-    return target
-end
-c.unbind = unbind_
