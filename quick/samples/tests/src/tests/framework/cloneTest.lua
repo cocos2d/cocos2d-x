@@ -141,10 +141,9 @@ function CloneTestScene:cloneSlider()
 
     local cloneNode = slider:clone()
     if cloneNode then
-        cloneNode:align(display.CENTER, display.right - 100, display.top - 200)
-        :addTo(self)
+        cloneNode:pos(display.right - 100, display.top - 200):addTo(self)
     else
-        print("clone button fail")
+        print("clone slider fail")
     end
 end
 

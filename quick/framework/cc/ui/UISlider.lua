@@ -605,4 +605,7 @@ function UISlider:copySpecialProperties_(node)
     self:setSliderButtonRotation(node.buttonRotation_)
 end
 
+function UISlider:copyClonedWidgetChildren_()
+end
+
 return UISlider
