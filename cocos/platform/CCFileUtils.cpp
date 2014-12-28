@@ -1302,58 +1302,80 @@ long FileUtils::getFileSize(const std::string &filepath)
 
 std::string FileUtils::getNormalizePath(const std::string& path) const
 {
-    auto pos = path.find("../");
-    if (pos == std::string::npos || pos == 0)
+    if (path.empty()) return path;
+    auto pos = path.find("./");
+    if (pos == std::string::npos)
     {
-    	pos = path.find("//");
-    	if (pos == std::string::npos)
-            return path;
-    }
-
-    std::vector<std::string> v(5);
-    v.resize(0);
-    auto change = false;
-    size_t size = path.size();
-    size_t idx = 0;
-    bool noexit = true;
-    while (noexit)
-    {
-        pos = path.find('/', idx);
-        std::string tmp;
+        pos = path.find("//");
         if (pos == std::string::npos)
         {
-            tmp = path.substr(idx, size - idx);
-            noexit = false;
-        }else
-        {
-            tmp = path.substr(idx, pos - idx + 1);
+            char c = path.at(path.size() - 1);
+            if (c != '/' && c != '.')
+                return path;
         }
-
-        auto t = v.size();
-        if (t > 0 && v[t-1] != "../" && (tmp == "../" || tmp == ".."))
-        {
-            // ../
-            v.pop_back();
-            change = true;
-        } else if (t > 0  && tmp == "/" && v[t-1].at(v[t-1].size()-1) == '/')
-        {
-            // xx// or ..//
-            change = true;
-        }else
-        {
-            v.push_back(tmp);
-        }
-        idx = pos + 1;
     }
 
-    if (!change)
+    bool change = false;
+    bool absolute = false;
+    // pos len pos len pos len ...
+    std::vector<size_t> v(10);
+    v.resize(0);
+    size_t l = path.size(), i = 0;
+    while (true)
     {
-        return path;
+        pos = path.find('/', i);
+        if (pos != std::string::npos)
+        {
+            if (pos - i != 0)
+            {
+                v.push_back(i);
+                v.push_back(pos - i);
+            } else if (i != 0)
+            {
+                change = true;
+            }
+            i = pos + 1;
+        }else
+        {
+            if (path.size() - i != 0)
+            {
+                v.push_back(i);
+                v.push_back(path.size() - i);
+            } else
+            {
+                change = true;
+            }
+            break;
+        }
     }
-    std::string newpath;
-    for (auto s : v)
+    for (i = 0; i < v.size(); i += 2)
     {
-        newpath.append(s);
+        auto l = v[i+1];
+        auto c = path[v[i]];
+        if (l == 1 && c == '.')
+        {
+            v.erase(v.cbegin() + i, v.cbegin() + i + 2);
+            i -= 2;
+            change = true;
+        } else if (l == 2 && c == '.' && path[v[i]+1] == '.')
+        {
+            if (i > 0 && (v[i-1] != 2 || (path[v[i-2]] != '.' && path[v[i-2]+1] != '.')))
+            {
+                v.erase(v.cbegin() + i - 2, v.cbegin() + i + 2);
+                i -= 4;
+                change = true;
+            }
+        }
+    }
+    if (!change) return path;
+
+    std::string newpath = absolute ? "/" : "";
+    l = v.size();
+    for (i = 0; i < l; i += 2)
+    {
+        newpath.append(path, v[i], v[i+1]);
+        if (i != l - 2)
+            newpath.append(1, '/');
     }
     return newpath;
 }
