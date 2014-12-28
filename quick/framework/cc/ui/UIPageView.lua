@@ -87,6 +87,8 @@ function UIPageView:ctor(params)
 	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
         	return self:onTouch_(event)
     	end)
+
+	self.args_ = {params}
 end
 
 -- start --
@@ -795,10 +797,26 @@ function UIPageView:getNextPageIndex(bRight)
 	return pos
 end
 
-function UIPageView:clone_()
-	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
-        	return self:onTouch_(event)
-    	end)
+function UIPageView:createCloneInstance_()
+    return UIPageView.new(unpack(self.args_))
+end
+
+function UIPageView:copyClonedWidgetChildren_(node)
+    local children = node.items_
+    if not children or 0 == #children then
+        return
+    end
+
+    for i, child in ipairs(children) do
+        local cloneChild = child:clone()
+        if cloneChild then
+            self:addItem(cloneChild)
+        end
+    end
+end
+
+function UIPageView:copySpecialProperties_(node)
+    self.bCirc = node.bCirc
 end
 
 

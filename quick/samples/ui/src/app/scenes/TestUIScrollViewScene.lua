@@ -31,12 +31,13 @@ function TestUIScrollViewScene:createScrollView1()
 
     local emptyNode = cc.Node:create()
     emptyNode:addChild(sp2)
+    sp2.testPeer = "origin"
 
     local bound = sp2:getBoundingBox()
     bound.width = 300
     bound.height = 200
 
-    cc.ui.UIScrollView.new({viewRect = bound})
+    local sv = cc.ui.UIScrollView.new({viewRect = bound})
         :addScrollNode(emptyNode)
         -- :setDirection(cc.ui.UIScrollView.DIRECTION_HORIZONTAL)
         :onScroll(handler(self, self.scrollListener))
@@ -56,10 +57,23 @@ function TestUIScrollViewScene:createScrollView1()
     sp3:pos(720, 180)
     sp3:addTo(self)
 
-
     cc(sp3):addComponent("components.ui.DraggableProtocol")
         :exportMethods()
         :setDraggableEnable(true)
+
+    -- local cloneSV = sv:clone()
+    -- if cloneSV then
+    --     cloneSV:addTo(self)
+
+    --     local cloneSN = cloneSV:getScrollNode()
+    --     local cloneSP = cloneSN:getChildren()[1]
+    --     print("origin peer:" .. sp2.testPeer)
+    --     print("clone peer:" .. cloneSP.testPeer)
+    --     cloneSP.testPeer = "clone"
+    --     print("origin peer:" .. sp2.testPeer)
+    --     print("clone peer:" .. cloneSP.testPeer)
+    -- end
+
 end
 
 function TestUIScrollViewScene:scrollListener(event)

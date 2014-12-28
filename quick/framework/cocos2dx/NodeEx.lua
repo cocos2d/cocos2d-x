@@ -434,7 +434,25 @@ function Node:clone()
 end
 
 function Node:createCloneInstance_()
-    return display.newNode()
+    local nodeType = tolua.type(self)
+    local cloneNode
+
+    if "cc.Sprite" == nodeType then
+        cloneNode = cc.Sprite:create()
+    elseif "ccui.Scale9Sprite" == nodeType then
+        cloneNode = ccui.Scale9Sprite:create()
+    elseif "cc.LayerColor" == nodeType then
+        local clr = self:getColor()
+        clr.a = self:getOpacity()
+        cloneNode = cc.LayerColor:create(clr)
+    else
+        cloneNode = display.newNode()
+        if "cc.Node" ~= nodeType then
+            print("WARING! treat " .. nodeType .. " as cc.Node")
+        end
+    end
+
+    return cloneNode
 end
 
 function Node:copyClonedWidgetChildren_(node)
@@ -444,7 +462,6 @@ function Node:copyClonedWidgetChildren_(node)
     end
 
     for i, child in ipairs(children) do
-        print("child node type:" .. tolua.type(child))
         local cloneChild = child:clone()
         if cloneChild then
             self:addChild(cloneChild)
@@ -453,6 +470,21 @@ function Node:copyClonedWidgetChildren_(node)
 end
 
 function Node:copySpecialProperties_(node)
+    local nodeType = tolua.type(self)
+
+    if "cc.Sprite" == nodeType then
+        self:setSpriteFrame(node:getSpriteFrame())
+    elseif "ccui.Scale9Sprite" == nodeType then
+        self:setSpriteFrame(node:getSprite():getSpriteFrame())
+    end
+
+    -- copy peer
+    local peer = tolua.getpeer(node)
+    if peer then
+        local clonePeer = clone(peer)
+        tolua.setpeer(self, clonePeer)
+    end
+    
 end
 
 function Node:copyProperties_(node)

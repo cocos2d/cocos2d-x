@@ -100,6 +100,14 @@ function TestUIListViewScene:createListView5()
     end
     self.lv:reload()
 
+    -- clone test code    
+    -- local clonelv = self.lv:clone()
+    -- if clonelv then
+    --     clonelv:addTo(self)
+    --     clonelv:reload()
+
+    --     self.lv:removeSelf()
+    -- end
 end
 
 function TestUIListViewScene:touchListener(event)

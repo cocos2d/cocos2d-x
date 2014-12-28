@@ -33,19 +33,3 @@ function Sprite:playAnimationForever(animation, delay)
     return transition.playAnimationForever(self, animation, delay)
 end
 
-function Sprite:createCloneInstance_()
-    return display.newSprite()
-end
-
-function Sprite:copySpecialProperties_(node)
-	self:setSpriteFrame(node:getSpriteFrame())
-end
-
-local Scale9Sprite = ccui.Scale9Sprite
-function Scale9Sprite:createCloneInstance_()
-    return display.newScale9Sprite()
-end
-
-function Scale9Sprite:copySpecialProperties_(node)
-	self:setSpriteFrame(node:getSprite():getSpriteFrame())
-end
