@@ -19,6 +19,16 @@
                 "exclude": []
             },
             {
+                "from": "templates/lua-template-default/src",
+                "to": "src",
+                "exclude": []
+            },
+            {
+                "from": "templates/lua-template-default/res",
+                "to": "res",
+                "exclude": []
+            },
+            {
                 "from": "external/win32-specific/gles/prebuilt",
                 "to": "runtime/win32",
                 "include": [
