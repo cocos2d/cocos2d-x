@@ -438,7 +438,7 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    MoveBy():_is3D(false) {}
+    MoveBy() {}
     virtual ~MoveBy() {}
 
     /** initializes the action */
@@ -446,7 +446,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, const Vec3& deltaPosition);
 
 protected:
-    bool _is3D;
     Vec3 _positionDelta;
     Vec3 _startPosition;
     Vec3 _previousPosition;

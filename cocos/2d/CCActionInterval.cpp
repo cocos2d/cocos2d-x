@@ -1076,7 +1076,6 @@ bool MoveBy::initWithDuration(float duration, const Vec3& deltaPosition)
     if (ActionInterval::initWithDuration(duration))
     {
         _positionDelta = deltaPosition;
-        _is3D = true;
         ret = true;
     }
     
