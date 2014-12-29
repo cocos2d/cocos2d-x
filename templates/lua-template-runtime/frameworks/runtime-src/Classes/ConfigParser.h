@@ -17,8 +17,9 @@ class ConfigParser
 {
 public:
     static ConfigParser *getInstance(void);
-	static void purge();
-	void readConfig(const string &filepath = "");
+    static void purge();
+
+    void readConfig(const string &filepath = "");
 
     // predefined screen size
     int getScreenSizeCount(void);

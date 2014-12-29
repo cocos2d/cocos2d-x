@@ -13,6 +13,7 @@ ConfigParser *ConfigParser::getInstance(void)
     if (!s_sharedConfigParserInstance)
     {
         s_sharedConfigParserInstance = new ConfigParser();
+        s_sharedConfigParserInstance->readConfig();
     }
     return s_sharedConfigParserInstance;
 }
@@ -36,7 +37,7 @@ void ConfigParser::readConfig(const string &filepath)
     // read config file
     if (fullPathFile.empty())
     {
-        fullPathFile = FileUtils::getInstance()->fullPathForFilename(CONFIG_FILE);    
+        fullPathFile = FileUtils::getInstance()->fullPathForFilename(CONFIG_FILE);
     }
     string fileContent = FileUtils::getInstance()->getStringFromFile(fullPathFile);
   
