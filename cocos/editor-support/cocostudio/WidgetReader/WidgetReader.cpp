@@ -779,7 +779,7 @@ namespace cocostudio
         //assume versionString is like "2.0.6.0"
         if (versionString.length() > 0)
         {
-            int p1, p2, p3, v1, v2, v3;
+            size_t p1, p2, p3, v1, v2, v3;
             p1 = p2 = p3 = v1 = v2 = v3 = 0;
             p1 = versionString.find('.');
             if (p1 > 0)
