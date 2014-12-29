@@ -1367,9 +1367,19 @@ void Node::onEnter()
 #endif
     
     _isTransitionFinished = false;
-    
-    for( const auto &child: _children)
-        child->onEnter();
+
+    _childrenDirty = false;
+    for (ssize_t i = 0; i < _children.size(); i++)
+    {
+        auto child = _children.at(i);
+        if (!child->isRunning())
+            child->onEnter();
+        if (_childrenDirty)
+        {
+            i = -1;
+            _childrenDirty = false;
+        }
+    }
     
     this->resume();
     
@@ -1450,19 +1460,18 @@ void Node::onExit()
     _running = false;
 
     _childrenDirty = false;
-    ssize_t i = 0, len = _children.size();
-    while (i < len)
+    for (ssize_t i = 0; i < _children.size(); i++)
     {
         auto child = _children.at(i);
         if (child->isRunning())
             child->onExit();
-        i++;
         if (_childrenDirty)
         {
-            i = 0;
-            len = _children.size();
+            i = -1;
+            _childrenDirty = false;
         }
     }
+    
     
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
