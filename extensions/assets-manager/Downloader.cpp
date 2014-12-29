@@ -626,8 +626,9 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             FD_ZERO(&fdread);
             FD_ZERO(&fdwrite);
             FD_ZERO(&fdexcep);
-            curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
-            rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &select_tv);
+
+            rc = curl_multi_wait(multi_handle, NULL, 0, 30 * 1000, &maxfd);
+
             
             switch(rc)
             {
