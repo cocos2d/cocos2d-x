@@ -100,9 +100,6 @@ void UISliderTest_Editor::configureGUIScene()
     
     Slider* slider = static_cast<Slider*>(Helper::seekWidgetByName(root, "Slider_738"));
     slider->addEventListener(CC_CALLBACK_2(UISliderTest_Editor::sliderEvent, this));
-    
-    Slider* scale9_slider = static_cast<Slider*>(Helper::seekWidgetByName(root, "Slider_740"));
-    scale9_slider->addEventListener(CC_CALLBACK_2(UISliderTest_Editor::sliderEvent, this));
 }
 
 bool UISliderTest_Editor::init()

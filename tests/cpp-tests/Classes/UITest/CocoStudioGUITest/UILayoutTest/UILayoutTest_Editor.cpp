@@ -1214,3 +1214,71 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
     
     return false;
 }
+
+UILayoutComponentTest_Editor::UILayoutComponentTest_Editor()
+{
+
+}
+
+UILayoutComponentTest_Editor::~UILayoutComponentTest_Editor()
+{
+
+}
+
+void UILayoutComponentTest_Editor::configureGUIScene()
+{
+    Size screenSize = CCDirector::getInstance()->getWinSize();
+
+    _sceneTitle = Text::create("UILayoutComponentTest_Editor", "", 20);
+    _sceneTitle->setPosition(Vec2(screenSize.width / 2, screenSize.height - _sceneTitle->getContentSize().height / 2));
+    _layout->addChild(_sceneTitle);
+
+    Text* back_label = Text::create("Back", "", 20);
+    back_label->setTouchEnabled(true);
+    auto labelLayout = LayoutComponent::bindLayoutComponent(back_label);
+    labelLayout->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
+    labelLayout->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
+    back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
+    _layout->addChild(back_label);
+
+    Button* left_button = Button::create();
+    left_button->loadTextures("Images/b1.png", "Images/b2.png", "");
+    left_button->setPosition(Vec2(_layout->getContentSize().width / 2 - left_button->getContentSize().width,
+        left_button->getContentSize().height * 0.625));
+    left_button->setTouchEnabled(true);
+    left_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::previousCallback, this));
+    left_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
+    _layout->addChild(left_button);
+
+    Button* right_button = Button::create();
+    right_button->loadTextures("Images/f1.png", "Images/f2.png", "");
+    right_button->setPosition(Vec2(_layout->getContentSize().width / 2 + right_button->getContentSize().width,
+        right_button->getContentSize().height * 0.625));
+    right_button->setTouchEnabled(true);
+    right_button->setLocalZOrder(_layout->getLocalZOrder() + 1);
+    right_button->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::nextCallback, this));
+    _layout->addChild(right_button);
+
+}
+
+bool UILayoutComponentTest_Editor::init()
+{
+    if (UIScene_Editor::init())
+    {
+        Size screenSize = CCDirector::getInstance()->getWinSize();
+        _layout = Layout::create();
+        _layout->setContentSize(screenSize);
+        _touchGroup->addChild(_layout);
+
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/Scene.csb");
+        node->setContentSize(screenSize);
+        _layout->addChild(node);
+        this->configureGUIScene();
+
+        ui::Helper::doLayout(_layout);
+
+        return true;
+    }
+
+    return false;
+}

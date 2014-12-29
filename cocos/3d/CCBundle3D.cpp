@@ -146,24 +146,15 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     }
 }
 
-Bundle3D* Bundle3D::_instance = nullptr;
-
-void Bundle3D::setBundleInstance(Bundle3D* bundleInstance)
+Bundle3D* Bundle3D::createBundle()
 {
-    CC_SAFE_DELETE(_instance);
-    _instance = bundleInstance;
+    auto bundle = new (std::nothrow) Bundle3D();
+    return bundle;
 }
 
-Bundle3D* Bundle3D::getInstance()
+void Bundle3D::destroyBundle(Bundle3D* bundle)
 {
-    if (_instance == nullptr)
-        _instance = new (std::nothrow) Bundle3D();
-    return _instance;
-}
-
-void Bundle3D::destroyInstance()
-{
-    CC_SAFE_DELETE(_instance);
+    delete bundle;
 }
 
 void Bundle3D::clear()
@@ -280,7 +271,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         for (const auto& it : shapes.shapes)
         {
             NTextureData tex;
-            tex.filename = dir + it.material.diffuse_texname;
+            tex.filename = it.material.diffuse_texname.empty() ? it.material.diffuse_texname : dir + it.material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
             tex.wrapS = GL_CLAMP_TO_EDGE;
             tex.wrapT = GL_CLAMP_TO_EDGE;
@@ -291,6 +282,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             materialdatas.materials.push_back(materialdata);
 
             meshdata->subMeshIndices.push_back(it.mesh.indices);
+            meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), it.mesh.indices));
             meshdata->subMeshIds.push_back(str);
             auto node = new (std::nothrow) NodeData();
             auto modelnode = new (std::nothrow) ModelData();
@@ -438,6 +430,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
+            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -545,6 +538,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         }
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
 
     meshdatas.meshDatas.push_back(meshdata);
@@ -659,6 +653,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         }
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
 
     meshdatas.meshDatas.push_back(meshdata);
@@ -714,6 +709,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
+            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -850,7 +846,7 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
                 return false;
             }
 
-            textureData.filename = _modelPath + texturePath;
+            textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
             float  uvdata[4];
             _binaryReader.read(&uvdata,sizeof(float), 4);
             textureData.type  = parseGLTextureType(_binaryReader.readString());
@@ -877,7 +873,7 @@ bool Bundle3D::loadMaterialsBinary_0_1(MaterialDatas& materialdatas)
     }
 
     NTextureData textureData;
-    textureData.filename = _modelPath + texturePath;
+    textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
     textureData.type= NTextureData::Usage::Diffuse;
     textureData.id="";
     materialData.textures.push_back(textureData);
@@ -905,7 +901,7 @@ bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
         }
 
         NTextureData textureData;
-        textureData.filename = _modelPath + texturePath;
+        textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);
@@ -931,7 +927,7 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 NTextureData  textureData;
                 const rapidjson::Value& texture_val = testure_array[j];
                 std::string filename = texture_val[FILENAME].GetString();
-                textureData.filename = _modelPath + filename;
+                textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
                 textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
                 textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
@@ -1080,6 +1076,7 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
         indices[i] = (unsigned short)indices_val_array[i].GetUint();
 
     meshdata->subMeshIndices.push_back(indices);
+    meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     meshdatas.meshDatas.push_back(meshdata);
     return true;
 }
@@ -1134,6 +1131,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
             indices[j] = (unsigned short)indices_val_array[j].GetUint();
 
         meshdata->subMeshIndices.push_back(indices);
+        meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), indices));
     }
     meshdatas.meshDatas.push_back(meshdata);
     return true;
@@ -1285,18 +1283,24 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
     NMaterialData materialData;
     const rapidjson::Value& material_data_array = _jsonReader[MATERIAL];
 
-    const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
-
-    const rapidjson::Value& material_data_base_array = material_data_array_0[BASE];
-
-    const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
-    NTextureData  textureData;
-    // set texture
-    textureData.filename =_modelPath + material_data_base_array_0[FILENAME].GetString();
-    textureData.type= NTextureData::Usage::Diffuse;
-    textureData.id="";
-    materialData.textures.push_back(textureData);
-    materialdatas.materials.push_back(materialData);
+    if (material_data_array.Size() > 0)
+    {
+        const rapidjson::Value& material_data_array_0 = material_data_array[(rapidjson::SizeType)0];
+        if (material_data_array_0.HasMember(BASE))
+        {
+            const rapidjson::Value& material_data_base_array = material_data_array_0[BASE];
+            const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
+            NTextureData  textureData;
+            // set texture
+            std::string filename = material_data_base_array_0[FILENAME].GetString();
+            textureData.filename = filename.empty() ? filename : _modelPath + filename;
+            textureData.type= NTextureData::Usage::Diffuse;
+            textureData.id="";
+            materialData.textures.push_back(textureData);
+            materialdatas.materials.push_back(materialData);
+        }
+    }
+    
     return true;
 }
 
@@ -1313,7 +1317,8 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
         const rapidjson::Value& material_val = material_array[i];
 
         // set texture
-        textureData.filename = _modelPath + material_val[TEXTURES].GetString();
+        std::string filename = material_val[TEXTURES].GetString();
+        textureData.filename = filename.empty() ? filename : _modelPath + filename;
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);
@@ -1404,8 +1409,22 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
 
 bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* animationdata)
 {
-    if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
-        return false;
+ 
+    if( _version == "0.1"|| _version == "0.2" || _version == "0.3"|| _version == "0.4")
+    {
+        if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
+            return false;
+    }
+    else
+    {
+        // if id is not a null string, we need to add a suffix of "animation" for seeding.
+        std::string id_ = id;
+        if(id != "") id_ = id + "animation";
+        
+        if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS, id_))
+            return false;
+    }
+    
     unsigned int animNum = 1;
     if( _version == "0.3"|| _version == "0.4")
     {
@@ -1459,7 +1478,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // transform flag
                 unsigned char transformFlag(0);
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.2" && _version != "0.3")
                 {
                     if (!_binaryReader.read(&transformFlag))
                     {
@@ -1470,7 +1489,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // rotation
                 bool hasRotate = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.2" && _version != "0.3")
                     hasRotate = transformFlag & 0x01;
 
                 if (hasRotate)
@@ -1486,7 +1505,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // scale
                 bool hasScale = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.2" && _version != "0.3")
                     hasScale = (transformFlag >> 1) & 0x01;
 
                 if (hasScale)
@@ -1502,7 +1521,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 // translation
                 bool hasTranslation = true;
-                if (_version == "0.4")
+                if (_version != "0.1" && _version != "0.2" && _version != "0.3")
                     hasTranslation = (transformFlag >> 2) & 0x01;
 
                 if (hasTranslation)
@@ -1938,7 +1957,7 @@ void Bundle3D::getModelRelativePath(const std::string& path)
     _modelPath = path.substr(0, index + 1);
 }
 
-Reference* Bundle3D::seekToFirstType(unsigned int type)
+Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
 {
     // for each Reference
     for (unsigned int i = 0; i < _referenceCount; ++i)
@@ -1946,6 +1965,12 @@ Reference* Bundle3D::seekToFirstType(unsigned int type)
         Reference* ref = &_references[i];
         if (ref->type == type)
         {
+            // if id is not a null string, we also need to check the Reference's id.
+            if (id != "" && id != ref->id)
+            {
+                continue;
+            }
+            
             // Found a match
             if (_binaryReader.seek(ref->offset, SEEK_SET) == false)
             {
@@ -1974,6 +1999,18 @@ Bundle3D::~Bundle3D()
 {
     clear();
 
+}
+
+cocos2d::AABB Bundle3D::calculateAABB( const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index )
+{
+    AABB aabb;
+    stride /= 4;
+    for(const auto& it : index)
+        {
+            Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
+            aabb.updateMinMax(&point, 1);
+        }
+    return aabb;
 }
 
 NS_CC_END

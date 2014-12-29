@@ -359,7 +359,8 @@ void Layout::drawFullScreenQuadClearStencil()
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
-    Vec2 vertices[] = {
+    Vec2 vertices[] =
+    {
         Vec2(-1, -1),
         Vec2(1, -1),
         Vec2(1, 1),
@@ -1128,25 +1129,30 @@ float Layout::calculateNearestDistance(Widget* baseWidget)
     
     Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
     
-    for (Node* node : _children) {
+    for (Node* node : _children)
+    {
         Layout *layout = dynamic_cast<Layout*>(node);
         int length;
-        if (layout) {
+        if (layout)
+        {
             length = layout->calculateNearestDistance(baseWidget);
         }
         else
         {
             Widget* w = dynamic_cast<Widget*>(node);
-            if (w && w->isFocusEnabled()) {
+            if (w && w->isFocusEnabled())
+            {
                 Vec2 wPosition = this->getWorldCenterPoint(w);
                 length = (wPosition - widgetPosition).length();
             }
-            else {
+            else
+            {
                 continue;
             }
         }
         
-        if (length < distance) {
+        if (length < distance)
+        {
             distance = length;
         }
         
@@ -1161,10 +1167,12 @@ float Layout::calculateFarthestDistance(cocos2d::ui::Widget *baseWidget)
     
     Vec2 widgetPosition =  this->getWorldCenterPoint(baseWidget);
     
-    for (Node* node : _children) {
+    for (Node* node : _children)
+    {
         Layout *layout = dynamic_cast<Layout*>(node);
         int length;
-        if (layout) {
+        if (layout)
+        {
             length = layout->calculateFarthestDistance(baseWidget);
         }
         else
@@ -1174,12 +1182,14 @@ float Layout::calculateFarthestDistance(cocos2d::ui::Widget *baseWidget)
                 Vec2 wPosition = this->getWorldCenterPoint(w);
                 length = (wPosition - widgetPosition).length();
             }
-            else {
+            else
+            {
                 continue;
             }
         }
         
-        if (length > distance) {
+        if (length > distance)
+        {
             distance = length;
         }
     }
@@ -1190,9 +1200,11 @@ int Layout::findFirstFocusEnabledWidgetIndex()
 {
     ssize_t index = 0;
     ssize_t count = this->getChildren().size();
-    while (index < count) {
+    while (index < count)
+    {
         Widget* w =  dynamic_cast<Widget*>(_children.at(index));
-        if (w && w->isFocusEnabled()) {
+        if (w && w->isFocusEnabled())
+        {
             return (int)index;
         }
         index++;
@@ -1321,15 +1333,19 @@ Widget *Layout::findFirstNonLayoutWidget()
     for(Node *node : _children)
     {
         Layout* layout = dynamic_cast<Layout*>(node);
-        if (layout) {
+        if (layout)
+        {
             widget = layout->findFirstNonLayoutWidget();
-            if (widget != nullptr) {
+            if (widget != nullptr)
+            {
                 return widget;
             }
         }
-        else{
+        else
+        {
             Widget *w = dynamic_cast<Widget*>(node);
-            if (w) {
+            if (w)
+            {
                 widget = w;
                 break;
             }
@@ -1342,7 +1358,8 @@ Widget *Layout::findFirstNonLayoutWidget()
     
 void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
 {
-    if (baseWidget == nullptr) {
+    if (baseWidget == nullptr)
+    {
         return;
     }
     
@@ -1350,33 +1367,52 @@ void Layout::findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget)
     
     Vec2 widgetPosition = this->getWorldCenterPoint(this->findFirstNonLayoutWidget());
     
-    if (dir == FocusDirection::LEFT) {
-        if (previousWidgetPosition.x > widgetPosition.x) {
+    if (dir == FocusDirection::LEFT)
+    {
+        if (previousWidgetPosition.x > widgetPosition.x)
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
-        else{
+        else
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
-    }else if(dir == FocusDirection::RIGHT){
-        if (previousWidgetPosition.x > widgetPosition.x) {
+    }
+    else if(dir == FocusDirection::RIGHT)
+    {
+        if (previousWidgetPosition.x > widgetPosition.x)
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
-        else{
+        else
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
         }
-    }else if(dir == FocusDirection::DOWN){
-        if (previousWidgetPosition.y > widgetPosition.y) {
+    }
+    else if(dir == FocusDirection::DOWN)
+    {
+        if (previousWidgetPosition.y > widgetPosition.y)
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
-        }else{
+        }
+        else
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
-    }else if(dir == FocusDirection::UP){
-        if (previousWidgetPosition.y < widgetPosition.y) {
+    }
+    else if(dir == FocusDirection::UP)
+    {
+        if (previousWidgetPosition.y < widgetPosition.y)
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findNearestChildWidgetIndex, this);
-        }else{
+        }
+        else
+        {
             onPassFocusToChild = CC_CALLBACK_2(Layout::findFarthestChildWidgetIndex, this);
         }
-    }else{
+    }
+    else
+    {
         CCASSERT(0, "invalid direction!");
     }
 
@@ -1476,8 +1512,6 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
         nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
         if (nextWidget->isFocusEnabled())
         {
-            
-            
             Layout* layout = dynamic_cast<Layout*>(nextWidget);
             if (layout)
             {
@@ -1492,7 +1526,8 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
             //handling the disabled widget, there is no actual focus lose or get, so we don't need any envet
             return this->getPreviousFocusedWidget(direction, nextWidget);
         }
-    }else
+    }
+    else
     {
         if (_loopFocus)
         {
@@ -1521,7 +1556,8 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
             }
             else
             {
-                if (dynamic_cast<Layout*>(current)) {
+                if (dynamic_cast<Layout*>(current))
+                {
                     return current;
                 }
                 else
@@ -1538,7 +1574,8 @@ Widget* Layout::getPreviousFocusedWidget(FocusDirection direction, Widget *curre
                 {
                     return Widget::findNextFocusedWidget(direction, this);
                 }
-                if (dynamic_cast<Layout*>(current)) {
+                if (dynamic_cast<Layout*>(current))
+                {
                     return current;
                 }
                 else
@@ -1567,7 +1604,6 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
         {
             if (nextWidget->isFocusEnabled())
             {
-                
                 Layout* layout = dynamic_cast<Layout*>(nextWidget);
                 if (layout)
                 {
@@ -1589,7 +1625,8 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
         {
             return current;
         }
-    }else
+    }
+    else
     {
         if (_loopFocus)
         {
@@ -1599,7 +1636,6 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
                 nextWidget = this->getChildWidgetByIndex(previousWidgetPos);
                 if (nextWidget->isFocusEnabled())
                 {
-                    
                     Layout* layout = dynamic_cast<Layout*>(nextWidget);
                     if (layout)
                     {
@@ -1628,7 +1664,8 @@ Widget* Layout::getNextFocusedWidget(FocusDirection direction, Widget *current)
                 }
             }
         }
-        else{
+        else
+        {
             if (isLastWidgetInContainer(current, direction))
             {
                 if (isWidgetAncestorSupportLoopFocus(this, direction))
@@ -1659,11 +1696,12 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
         return true;
     }
     
-    auto container = parent->getChildren();
+    auto& container = parent->getChildren();
     ssize_t index = container.getIndex(widget);
     if (parent->getLayoutType() == Type::HORIZONTAL)
     {
-        if (direction == FocusDirection::LEFT) {
+        if (direction == FocusDirection::LEFT)
+        {
             if (index == 0)
             {
                 return isLastWidgetInContainer(parent, direction);
@@ -1673,7 +1711,8 @@ bool  Layout::isLastWidgetInContainer(Widget* widget, FocusDirection direction)c
                 return false;
             }
         }
-        if (direction == FocusDirection::RIGHT) {
+        if (direction == FocusDirection::RIGHT)
+        {
             if (index == container.size()-1)
             {
                 return isLastWidgetInContainer(parent, direction);
@@ -1791,8 +1830,10 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
         if (_passFocusToChild)
         {
             Widget * w = this->passFocusToChild(direction, current);
-            if (dynamic_cast<Layout*>(w)) {
-                if (parent) {
+            if (dynamic_cast<Layout*>(w))
+            {
+                if (parent)
+                {
                     parent->_isFocusPassing = true;
                     return parent->findNextFocusedWidget(direction, this);
                 }
@@ -1800,7 +1841,8 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
             return w;
         }
         
-        if (nullptr == parent) {
+        if (nullptr == parent)
+        {
             return this;
         }
         parent->_isFocusPassing = true;
@@ -1832,7 +1874,8 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
                         }
                         return current;
                     }
-                    else{
+                    else
+                    {
                         return Widget::findNextFocusedWidget(direction, this);
                     }
                 }break;

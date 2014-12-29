@@ -5,8 +5,8 @@ local TimelineTestIndex =
 {
     TEST_ACTION_TIMELINE        = 1,
     TEST_CHANGE_PLAY_SECTION    = 2,
-    TEST_TIMELINE_FRAME_EVENT   = 3,
-    TEST_TIMELINE_PERFORMACE    = 4,
+    --TEST_TIMELINE_FRAME_EVENT   = 3,
+    TEST_TIMELINE_PERFORMACE    = 3,
 }
 local timelineSceneIdx   = TimelineTestIndex.TEST_ACTION_TIMELINE
 
@@ -62,8 +62,8 @@ function TimelineTestLayer.title(idx)
         return "Test ActionTimeline"
     elseif TimelineTestIndex.TEST_CHANGE_PLAY_SECTION == idx then
         return "Test Change Play Section"
-    elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
-        return "Test Frame Event"
+    --elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
+    --    return "Test Frame Event"
     elseif TimelineTestIndex.TEST_TIMELINE_PERFORMACE == idx then
         return "Test ActionTimeline performance"
     end
@@ -186,16 +186,11 @@ function TestActionTimeline.extend(target)
 end
 
 function TestActionTimeline:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
-    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
-
-    node:runAction(action)
-    action:gotoFrameAndPlay(0, 60, true)
+    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true)
 
     node:setScale(0.2)
-    node:setPosition(150, 100)
+    node:setPosition(VisibleRect:center())
 
     self:addChild(node)
 end
@@ -239,16 +234,12 @@ function TestChangePlaySection.extend(target)
 end
 
 function TestChangePlaySection:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
-    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
-
-    node:runAction(action)
-    action:gotoFrameAndPlay(70, action:getDuration(), true)
+    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
+    local action = node:getActionTimeline()
 
     node:setScale(0.2)
-    node:setPosition(150, 100)
+    node:setPosition(VisibleRect:center())
 
     local function onTouchesEnded(touches, event)
         if action:getStartFrame() == 0 then
@@ -306,16 +297,12 @@ function TestTimelineFrameEvent.extend(target)
 end
 
 function TestTimelineFrameEvent:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
-    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
-
-    node:runAction(action)
-    action:gotoFrameAndPlay(0, 60, true)
+    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
+    local action = node:getActionTimeline()
 
     node:setScale(0.2)
-    node:setPosition(150, 100)
+    node:setPosition(VisibleRect:center())
     self:addChild(node)
 
     local function onFrameEvent(frame)
@@ -374,14 +361,9 @@ function TestTimelinePerformance.extend(target)
 end
 
 function TestTimelinePerformance:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
     for i = 1,100 do
-        local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
-        local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
-
-        node:runAction(action)
-        action:gotoFrameAndPlay(70, action:getDuration(), true)
+        local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
 
         node:setScale(0.1)
         node:setPosition((i - 1) * 2, 100)
@@ -418,7 +400,7 @@ local actionlineSceneArr =
 {
     TestActionTimeline.create,
     TestChangePlaySection.create,
-    TestTimelineFrameEvent.create,
+    --TestTimelineFrameEvent.create,
     TestTimelinePerformance.create,
 }
 

@@ -533,4 +533,16 @@ public:
 
 // we don't support linebreak mode
 
+class LabelIssue9255Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue9255Test);
+
+    LabelIssue9255Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+
 #endif

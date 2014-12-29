@@ -301,5 +301,43 @@ To enable set it to a value different than 0. Disabled by default.
 #ifndef CC_CONSTRUCTOR_ACCESS
 #define CC_CONSTRUCTOR_ACCESS protected
 #endif
- 
+
+/** @def CC_ENABLE_ALLOCATOR
+ Turn on creation of global allocator and pool allocators
+ as specified by CC_ALLOCATOR_GLOBAL below.
+ */
+#ifndef CC_ENABLE_ALLOCATOR
+# define CC_ENABLE_ALLOCATOR 0
+#endif
+
+/** @def CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+ Turn on debugging of allocators. This is slower, uses
+ more memory, and should not be used for production builds.
+ */
+#ifndef CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+# define CC_ENABLE_ALLOCATOR_DIAGNOSTICS CC_ENABLE_ALLOCATOR
+#endif
+
+/** @def CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
+ Turn on override of global new and delete
+ as specified by CC_ALLOCATOR_GLOBAL_NEW_DELETE below.
+ */
+#ifndef CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
+# define CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE 0
+# endif//CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE
+
+/** @def CC_ALLOCATOR_GLOBAL
+ Specify allocator to use for global allocator
+ */
+#ifndef CC_ALLOCATOR_GLOBAL
+# define CC_ALLOCATOR_GLOBAL cocos2d::allocator::AllocatorStrategyDefault
+#endif
+
+/** @def CC_ALLOCATOR_GLOBAL_NEW_DELETE
+ Specify allocator to use when overriding of new and delete
+ */
+#ifndef CC_ALLOCATOR_GLOBAL_NEW_DELETE
+# define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
+#endif
+
 #endif // __CCCONFIG_H__

@@ -570,8 +570,13 @@ void PageView::pageTurningEvent()
     {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::TURNING);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::TURNING));
     }
     this->release();
 }
@@ -632,6 +637,7 @@ void PageView::copySpecialProperties(Widget *widget)
     {
         Layout::copySpecialProperties(widget);
         _eventCallback = pageView->_eventCallback;
+        _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
         _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;

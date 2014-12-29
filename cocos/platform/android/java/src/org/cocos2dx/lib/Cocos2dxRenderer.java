@@ -56,13 +56,13 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     // Getter & Setter
     // ===========================================================
 
-    public static void setAnimationInterval(final double pAnimationInterval) {
-        Cocos2dxRenderer.sAnimationInterval = (long) (pAnimationInterval * Cocos2dxRenderer.NANOSECONDSPERSECOND);
+    public static void setAnimationInterval(final double animationInterval) {
+        Cocos2dxRenderer.sAnimationInterval = (long) (animationInterval * Cocos2dxRenderer.NANOSECONDSPERSECOND);
     }
 
-    public void setScreenWidthAndHeight(final int pSurfaceWidth, final int pSurfaceHeight) {
-        this.mScreenWidth = pSurfaceWidth;
-        this.mScreenHeight = pSurfaceHeight;
+    public void setScreenWidthAndHeight(final int surfaceWidth, final int surfaceHeight) {
+        this.mScreenWidth = surfaceWidth;
+        this.mScreenHeight = surfaceHeight;
     }
 
     // ===========================================================
@@ -70,15 +70,15 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     // ===========================================================
 
     @Override
-    public void onSurfaceCreated(final GL10 pGL10, final EGLConfig pEGLConfig) {
+    public void onSurfaceCreated(final GL10 GL10, final EGLConfig EGLConfig) {
         Cocos2dxRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
         this.mLastTickInNanoSeconds = System.nanoTime();
         mNativeInitCompleted = true;
     }
 
     @Override
-    public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight) {
-        Cocos2dxRenderer.nativeOnSurfaceChanged(pWidth, pHeight);
+    public void onSurfaceChanged(final GL10 GL10, final int width, final int height) {
+        Cocos2dxRenderer.nativeOnSurfaceChanged(width, height);
     }
 
     @Override
@@ -111,42 +111,44 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     // Methods
     // ===========================================================
 
-    private static native void nativeTouchesBegin(final int pID, final float pX, final float pY);
-    private static native void nativeTouchesEnd(final int pID, final float pX, final float pY);
-    private static native void nativeTouchesMove(final int[] pIDs, final float[] pXs, final float[] pYs);
-    private static native void nativeTouchesCancel(final int[] pIDs, final float[] pXs, final float[] pYs);
-    private static native boolean nativeKeyDown(final int pKeyCode);
+    private static native void nativeTouchesBegin(final int id, final float x, final float y);
+    private static native void nativeTouchesEnd(final int id, final float x, final float y);
+    private static native void nativeTouchesMove(final int[] ids, final float[] xs, final float[] ys);
+    private static native void nativeTouchesCancel(final int[] ids, final float[] xs, final float[] ys);
+    private static native boolean nativeKeyDown(final int keyCode);
     private static native void nativeRender();
-    private static native void nativeInit(final int pWidth, final int pHeight);
-    private static native void nativeOnSurfaceChanged(final int pWidth, final int pHeight);
+    private static native void nativeInit(final int width, final int height);
+    private static native void nativeOnSurfaceChanged(final int width, final int height);
     private static native void nativeOnPause();
     private static native void nativeOnResume();
 
-    public void handleActionDown(final int pID, final float pX, final float pY) {
-        Cocos2dxRenderer.nativeTouchesBegin(pID, pX, pY);
+    public void handleActionDown(final int id, final float x, final float y) {
+        Cocos2dxRenderer.nativeTouchesBegin(id, x, y);
     }
 
-    public void handleActionUp(final int pID, final float pX, final float pY) {
-        Cocos2dxRenderer.nativeTouchesEnd(pID, pX, pY);
+    public void handleActionUp(final int id, final float x, final float y) {
+        Cocos2dxRenderer.nativeTouchesEnd(id, x, y);
     }
 
-    public void handleActionCancel(final int[] pIDs, final float[] pXs, final float[] pYs) {
-        Cocos2dxRenderer.nativeTouchesCancel(pIDs, pXs, pYs);
+    public void handleActionCancel(final int[] ids, final float[] xs, final float[] ys) {
+        Cocos2dxRenderer.nativeTouchesCancel(ids, xs, ys);
     }
 
-    public void handleActionMove(final int[] pIDs, final float[] pXs, final float[] pYs) {
-        Cocos2dxRenderer.nativeTouchesMove(pIDs, pXs, pYs);
+    public void handleActionMove(final int[] ids, final float[] xs, final float[] ys) {
+        Cocos2dxRenderer.nativeTouchesMove(ids, xs, ys);
     }
 
-    public void handleKeyDown(final int pKeyCode) {
-        Cocos2dxRenderer.nativeKeyDown(pKeyCode);
+    public void handleKeyDown(final int keyCode) {
+        Cocos2dxRenderer.nativeKeyDown(keyCode);
     }
 
     public void handleOnPause() {
-        // onPause may be invoked before onSurfaceCreated
-        // and engine will be initialized correctly after
-        // onSurfaceCreated is invoked, can not invoke any
-        // native methed before onSurfaceCreated is invoked
+    	/**
+    	 * onPause may be invoked before onSurfaceCreated, 
+    	 * and engine will be initialized correctly after
+    	 * onSurfaceCreated is invoked. Can not invoke any
+    	 * native method before onSurfaceCreated is invoked
+    	 */
         if (! mNativeInitCompleted)
             return;
 
@@ -159,12 +161,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
         Cocos2dxRenderer.nativeOnResume();
     }
 
-    private static native void nativeInsertText(final String pText);
+    private static native void nativeInsertText(final String text);
     private static native void nativeDeleteBackward();
     private static native String nativeGetContentText();
 
-    public void handleInsertText(final String pText) {
-        Cocos2dxRenderer.nativeInsertText(pText);
+    public void handleInsertText(final String text) {
+        Cocos2dxRenderer.nativeInsertText(text);
     }
 
     public void handleDeleteBackward() {

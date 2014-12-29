@@ -115,7 +115,7 @@ LanguageType Application::getCurrentLanguage()
     std::string languageName = getCurrentLanguageJNI();
     const char* pLanguageName = languageName.c_str();
     LanguageType ret = LanguageType::ENGLISH;
-
+    
     if (0 == strcmp("zh", pLanguageName))
     {
         ret = LanguageType::CHINESE;
@@ -175,6 +175,14 @@ LanguageType Application::getCurrentLanguage()
     else if (0 == strcmp("pl", pLanguageName))
     {
         ret = LanguageType::POLISH;
+    }
+    else if (0 == strcmp("tr", pLanguageName))
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (0 == strcmp("uk", pLanguageName))
+    {
+        ret = LanguageType::UKRAINIAN;
     }
     return ret;
 }

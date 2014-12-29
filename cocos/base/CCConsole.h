@@ -51,7 +51,6 @@ typedef SSIZE_T ssize_t;
 #include "base/ccMacros.h"
 #include "platform/CCPlatformMacros.h"
 
-
 NS_CC_BEGIN
 
 /// The max length of CCLog message.
@@ -122,6 +121,7 @@ protected:
     void commandDirector(int fd, const std::string &args);
     void commandTouch(int fd, const std::string &args);
     void commandUpload(int fd);
+    void commandAllocator(int fd, const std::string &args);
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;

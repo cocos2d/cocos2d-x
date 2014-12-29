@@ -64,7 +64,7 @@ int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L)
         cobj->setBlendFunc(blendFunc);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -105,7 +105,7 @@ int lua_cocos2dx_3d_Sprite3D_getAABB(lua_State* L)
         object_to_luaval<cocos2d::AABB>(L, "cc.AABB",(cocos2d::AABB*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:getAABB",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:getAABB",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -169,7 +169,7 @@ int lua_cocos2dx_3d_AABB_reset(lua_State* L)
         cobj->reset();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:reset",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:reset",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -218,7 +218,7 @@ int lua_cocos2dx_3d_AABB_set(lua_State* L)
         cobj->set(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:set",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:set",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -264,7 +264,7 @@ int lua_cocos2dx_3d_AABB_transform(lua_State* L)
         cobj->transform(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:transform",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:transform",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -308,7 +308,7 @@ int lua_cocos2dx_3d_AABB_getCenter(lua_State* L)
         vec3_to_luaval(L, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:getCenter",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:getCenter",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -352,7 +352,7 @@ int lua_cocos2dx_3d_AABB_isEmpty(lua_State* L)
         tolua_pushboolean(L,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:isEmpty",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:isEmpty",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -398,7 +398,7 @@ int lua_cocos2dx_3d_AABB_getCorners(lua_State* L)
         cobj->getCorners(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:getCorners",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:getCorners",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -447,7 +447,7 @@ int lua_cocos2dx_3d_AABB_updateMinMax(lua_State* L)
         cobj->updateMinMax(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:updateMinMax",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:updateMinMax",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -494,7 +494,7 @@ int lua_cocos2dx_3d_AABB_containPoint(lua_State* L)
         tolua_pushboolean(L,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:containPoint",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:containPoint",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -540,7 +540,7 @@ int lua_cocos2dx_3d_AABB_constructor(lua_State* L)
         }
     }while(0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "cc.AABB:AABB",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.AABB:AABB",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -748,7 +748,7 @@ int lua_cocos2dx_3d_OBB_reset(lua_State* L)
         cobj->reset();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:reset",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:reset",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -806,7 +806,7 @@ int lua_cocos2dx_3d_OBB_set(lua_State* L)
         cobj->set(arg0, arg1, arg2, arg3, arg4);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:set",argc, 5);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:set",argc, 5);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -852,7 +852,7 @@ int lua_cocos2dx_3d_OBB_transform(lua_State* L)
         cobj->transform(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:transform",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:transform",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -900,7 +900,7 @@ int lua_cocos2dx_3d_OBB_containPoint(lua_State* L)
         tolua_pushboolean(L,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:containPoint",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:containPoint",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -960,7 +960,7 @@ int lua_cocos2dx_3d_OBB_constructor(lua_State* L)
         }
     }while(0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "cc.OBB:OBB",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.OBB:OBB",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1001,7 +1001,7 @@ int lua_cocos2dx_3d_OBB_intersects(lua_State* L)
         tolua_pushboolean(L, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "cc.OBB:intersects",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.OBB:intersects",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -1381,7 +1381,7 @@ int lua_cocos2dx_3d_OBB_getCorners(lua_State* L)
         size_t len = lua_objlen(L, 2);
         if (len == 0 )
         {
-            CCLOG("Table's len equal 0");
+            luaL_error(L, "Table's len equal 0");
             return 0;
         }
         
@@ -1389,7 +1389,7 @@ int lua_cocos2dx_3d_OBB_getCorners(lua_State* L)
         
         if (nullptr == arg0)
         {
-            CCLOG("Allocate cocos2d::Vec3 array in the lua_cocos2dx_3d_OBB_getCorners failed!");
+            luaL_error(L, "Allocate cocos2d::Vec3 array in the lua_cocos2dx_3d_OBB_getCorners failed!");
             return 0;
         }
         
@@ -1422,7 +1422,7 @@ int lua_cocos2dx_3d_OBB_getCorners(lua_State* L)
         
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:getCorners",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:getCorners",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1504,7 +1504,7 @@ int lua_cocos2dx_3d_Ray_set(lua_State* L)
         cobj->set(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Ray:set",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Ray:set",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1550,7 +1550,7 @@ int lua_cocos2dx_3d_Ray_transform(lua_State* L)
         cobj->transform(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.Ray:transform",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Ray:transform",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1592,7 +1592,7 @@ int lua_cocos2dx_3d_Ray_intersects(lua_State* L)
         tolua_pushboolean(L, ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Ray:intersects",argc, 1);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Ray:intersects",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
@@ -1637,7 +1637,7 @@ int lua_cocos2dx_3d_Ray_constructor(lua_State* L)
         }
     }while(0);
     ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Ray:Ray",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Ray:Ray",argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
