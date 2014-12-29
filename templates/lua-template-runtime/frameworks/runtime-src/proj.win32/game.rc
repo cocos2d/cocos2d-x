@@ -47,30 +47,9 @@ END
 
 IDR_MENU_COCOS MENU
 BEGIN
-    POPUP "&File"
+    POPUP "°ïÖú(&H)"
     BEGIN
-        MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_FILE_EXIT
-    END
-    POPUP "&View"
-    BEGIN
-        MENUITEM SEPARATOR
-        MENUITEM "&Portrait",                   ID_VIEW_PORTRAIT
-        MENUITEM "&Landscape",                  ID_VIEW_LANDSCAPE
-        MENUITEM SEPARATOR
-        MENUITEM "&Actual(100%)",               ID_VIEW_ZOOMOUT100
-        MENUITEM "Zoom Out(75%)",               ID_VIEW_ZOOMOUT75
-        MENUITEM "Zoom Out(50%)",               ID_VIEW_ZOOMOUT50
-        MENUITEM "Zoom Out(25%)",               ID_VIEW_ZOOMOUT25
-    END
-    POPUP "&Control"
-    BEGIN
-        MENUITEM "Restart(F5)",                 ID_CONTROL_RELOAD
-        MENUITEM "Keep Window Top",             ID_CONTROL_TOP
-    END
-    POPUP "&Help"
-    BEGIN
-        MENUITEM "&About ...",                  ID_HELP_ABOUT
+        MENUITEM "¹ØÓÚ(&A)",                      ID_HELP_ABOUT
     END
 END
 
@@ -86,7 +65,7 @@ CAPTION "About Simulator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,173,69,63,18
-    LTEXT           "Cocos2d-x-Simulator",IDC_STATIC,29,17,169,25
+    CTEXT           "Cocos Simulator",IDC_STATIC,28,23,173,17
 END
 
 
@@ -109,6 +88,30 @@ END
 #endif    // APSTUDIO_INVOKED
 
 #endif    // Chinese (Simplified, PRC) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_COCOS MENU
+BEGIN
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About ...",                  ID_HELP_ABOUT
+    END
+END
+
+#endif    // English resources
 /////////////////////////////////////////////////////////////////////////////
 
 
