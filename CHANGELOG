@@ -1,4 +1,5 @@
 cocos2d-x-3.4beta0  ??
+    [NEW]           3D: support frustum culling
     [NEW]           Action: MoveTo and MoveBy support Vec3
     [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool
     [NEW]           Application: added Turkish and Ukrainian language support
