@@ -54,6 +54,10 @@ public:
     * create plane from normal and a point on plane.
     */
     Plane(const Vec3& normal, const Vec3& point);
+    
+    /**
+     * create a default plan whose normal is (0, 0, 1), and _dist is 0, xoy plan in fact.
+     */
     Plane();
     
     /**

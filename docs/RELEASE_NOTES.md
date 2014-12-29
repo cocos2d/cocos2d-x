@@ -135,3 +135,17 @@ void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
 }
 ```
 
+### Frustum culling
+
+Frustum culling means only the stuff that is inside the frustum is sent to the graphics hardware. It can potentially improve the performance of the application since only the vertices that are part of the visible part of the 3D world are kept on the graphics card memory.
+
+Frustum culling is a property of camera, it is enabled by default. And you can use the following to enable or disable the frustum culling,
+
+```c++
+//the first parameter is enable frustum culling or not, the second means that frustum culling using near and far plan or not.
+camera->enableFrustumCulling(true, true);
+```
+
+Note that when you can make sure that all the stuff is inside the frustum you can turn off the frustum culling.
+
+For more infomation please reffer to the cpptests/CameraTest
