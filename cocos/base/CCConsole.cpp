@@ -201,7 +201,10 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 static const int CCLOG_STRING_TAG = 1;
+#endif
+
 void SendLogToWindow(const char *log)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
