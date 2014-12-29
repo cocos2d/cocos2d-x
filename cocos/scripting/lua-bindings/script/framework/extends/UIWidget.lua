@@ -22,35 +22,22 @@ THE SOFTWARE.
 
 ]]
 
-local Layer = cc.Layer
+local Widget = ccui.Widget
 
-function Layer:onTouch(callback, isMultiTouches, swallowTouches)
-    if type(isMultiTouches) ~= "boolean" then isMultiTouches = false end
-    if type(swallowTouches) ~= "boolean" then swallowTouches = false end
-
-    self:registerScriptTouchHandler(function(state, ...)
-        local args = {...}
-        local event = {name = state}
-        if isMultiTouches then
-            args = args[1]
-            local points = {}
-            for i = 1, #args, 3 do
-                local x, y, id = args[i], args[i + 1], args[i + 2]
-                points[id] = {x = x, y = y, id = id}
-            end
-            event.points = points
+function Widget:onTouch(callback)
+    self:addTouchEventListener(function(sender, state)
+        local event = {x = 0, y = 0}
+        if state == 0 then
+            event.name = "began"
+        elseif state == 1 then
+            event.name = "moved"
+        elseif state == 2 then
+            event.name = "ended"
         else
-            event.x = args[1]
-            event.y = args[2]
+            event.name = "cancelled"
         end
+        event.target = sender
         callback(event)
-    end, isMultiTouches, 0, swallowTouches)
-    self:setTouchEnabled(true)
-    return self
-end
-
-function Layer:removeTouch()
-    self:unregisterScriptTouchHandler()
-    self:setTouchEnabled(false)
+    end)
     return self
 end
