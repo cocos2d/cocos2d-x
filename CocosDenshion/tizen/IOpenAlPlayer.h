@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
-Copyright (c) 2013 Lee, Jae-Hong
+Copyright (c) 2014 Won, KyungYoun
 
 http://www.cocos2d-x.org
 
@@ -23,34 +23,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef _OSP_PLAYER_H_
-#define _OSP_PLAYER_H_
+#include <FBase.h>
 
-#include <unique_ptr.h>
-#include "PlayerImpl.h"
+#ifndef _IOPENAL_PLAYER_H_
+#define _IOPENAL_PLAYER_H_
 
-class OspPlayer
-{
-public:
-    OspPlayer();
-    ~OspPlayer();
-
-    result Initialize();
-    void Open(const char* pFileName, unsigned int uId);
-    void Play(bool bLoop);
-    void Pause();
-    void Stop();
-    void Resume();
-    void Rewind();
-    bool IsPlaying();
-    void SetVolume(int volume);
-    int GetVolume();
-    void Close();
-    unsigned int GetSoundID();
-
-private:
-    std::unique_ptr<_PlayerImpl> __pPlayer;
-    unsigned int m_nSoundID;
+enum OpenAlPlayerState{
+	OPENAL_PLAYER_STATE_NONE,
+	OPENAL_PLAYER_STATE_INITIALIZED,
+	OPENAL_PLAYER_STATE_PLAYING,
+	OPENAL_PLAYER_STATE_PAUSED,
+	OPENAL_PLAYER_STATE_STOPPED
 };
 
-#endif // _OSP_PLAYER_H_
+/* Note presently OpenAL Player does not use EventDriven Thread and ITimerEventListner
+ * But this is necessary to keep it to test the performance in those conditions too
+ */
+class IOpenAlPlayer
+: public Tizen::Base::Object
+{
+public:
+	virtual ~IOpenAlPlayer(void){}
+	virtual result Play(void) = 0;
+	virtual result Stop(void) = 0;
+	virtual result Pause(void) = 0;
+	virtual result SetLoop(bool flag) = 0;
+	virtual result SeekTo(long msTime) = 0;
+	virtual result SetVolume(int volume) = 0;
+	virtual OpenAlPlayerState GetState(void) const = 0;
+};
+
+#endif

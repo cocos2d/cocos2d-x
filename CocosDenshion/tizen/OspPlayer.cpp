@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
-Copyright (c) 2013 Lee, Jae-Hong
+Copyright (c) 2014 Won, KyungYoun
 
 http://www.cocos2d-x.org
 
@@ -25,8 +25,6 @@ THE SOFTWARE.
 
 #include "OspPlayer.h"
 
-using namespace Tizen::Media;
-
 OspPlayer::OspPlayer()
     : __pPlayer(null)
     , m_nSoundID(0)
@@ -44,17 +42,17 @@ OspPlayer::Initialize()
 {
     result r = E_SUCCESS;
 
-    __pPlayer = new (std::nothrow) Player();
-    if (__pPlayer == null)
+    __pPlayer.reset(new (std::nothrow) _PlayerImpl());
+    if (__pPlayer.get() == null)
     {
-        AppLogException("pPlyaer = new (std::nothrow) Player() has failed");
+        AppLogException("pPlyaer = new (std::nothrow) _PlayerImpl() has failed");
         return E_FAILURE;
     }
 
-    r = __pPlayer->Construct(*this, null);
+    r = __pPlayer->Construct();
     if (IsFailed(r))
     {
-        AppLog("pPlayer->Construct has failed\n");
+    	AppLogException("pPlayer->Construct has failed\n");
         return E_FAILURE;
     }
 
@@ -71,7 +69,7 @@ OspPlayer::Open(const char* pFileName, unsigned int uId)
     r = __pPlayer->OpenFile(pFileName);
     if (IsFailed(r))
     {
-        AppLog("pPlayer->OpenFile has failed\n");
+    	AppLogException("pPlayer->OpenFile has failed\n");
     }
 
     m_nSoundID = uId;
@@ -82,18 +80,18 @@ OspPlayer::Play(bool bLoop)
 {
     result r = E_SUCCESS;
 
-    r = __pPlayer->SetLooping(bLoop);
-    if (IsFailed(r))
-    {
-        AppLog("pPlayer->SetLooping has failed\n");
-        return;
-    }
-
     r = __pPlayer->Play();
     if (IsFailed(r))
     {
-        AppLog("pPlayer->Play has failed\n");
+    	AppLogException("pPlayer->Play has failed\n");
     }
+
+	r = __pPlayer->SetLoop(bLoop);
+	if (IsFailed(r))
+	{
+		AppLogException("pPlayer->SetLooping has failed\n");
+		return;
+	}
 }
 
 void
@@ -104,7 +102,7 @@ OspPlayer::Pause()
     r = __pPlayer->Pause();
     if (IsFailed(r))
     {
-        AppLog("pPlayer->Pause has failed\n");
+    	AppLogException("pPlayer->Pause has failed\n");
     }
 }
 
@@ -116,7 +114,7 @@ OspPlayer::Stop()
     r = __pPlayer->Stop();
     if (IsFailed(r))
     {
-        AppLog("pPlayer->Stop has failed\n");
+    	AppLogException("pPlayer->Stop has failed\n");
     }
 }
 
@@ -130,7 +128,7 @@ OspPlayer::Resume()
         r = __pPlayer->Play();
         if (IsFailed(r))
         {
-            AppLog("pPlayer->Play has failed\n");
+        	AppLogException("pPlayer->Play has failed\n");
         }
     }
 }
@@ -140,12 +138,19 @@ OspPlayer::Rewind()
 {
     result r = E_SUCCESS;
 
-    r = __pPlayer->SeekTo(0);
+    r = __pPlayer->Stop();
     if (IsFailed(r))
     {
-        AppLog("pPlayer->SeekTo has failed\n");
+    	AppLogException("pPlayer->Stop has failed\n");
+    }
+	
+    r = __pPlayer->Play();
+    if (IsFailed(r))
+    {
+    	AppLogException("pPlayer->Play has failed\n");
     }
 }
+
 
 bool
 OspPlayer::IsPlaying()
@@ -165,14 +170,14 @@ OspPlayer::Close()
         r = __pPlayer->Stop();
         if (IsFailed(r))
         {
-            AppLog("pPlayer->Stop has failed\n");
+        	AppLogException("pPlayer->Stop has failed\n");
         }
     }
 
     r = __pPlayer->Close();
     if (IsFailed(r))
     {
-        AppLog("pPlayer->Close has failed\n");
+    	AppLogException("pPlayer->Close has failed\n");
     }
 }
 
@@ -195,7 +200,7 @@ OspPlayer::SetVolume(int volume)
     r = __pPlayer->SetVolume(volume);
     if (IsFailed(r))
     {
-        AppLog("pPlayer->SetVolume has failed\n");
+    	AppLogException("pPlayer->SetVolume has failed\n");
     }
 }
 
@@ -205,42 +210,3 @@ OspPlayer::GetVolume()
     return __pPlayer->GetVolume();
 }
 
-void
-OspPlayer::OnPlayerOpened(result r)
-{
-}
-
-void
-OspPlayer::OnPlayerEndOfClip(void)
-{
-}
-
-void
-OspPlayer::OnPlayerBuffering(int percent)
-{
-}
-
-void
-OspPlayer::OnPlayerErrorOccurred(Tizen::Media::PlayerErrorReason r)
-{
-}
-
-void
-OspPlayer::OnPlayerInterrupted(void)
-{
-}
-
-void
-OspPlayer::OnPlayerReleased(void)
-{
-}
-
-void
-OspPlayer::OnPlayerSeekCompleted(result r)
-{
-}
-
-void
-OspPlayer::OnPlayerAudioFocusChanged(void)
-{
-}
