@@ -35,19 +35,15 @@ THE SOFTWARE.
 #include <vector>
 
 static std::string g_projectPath;
+static std::function<void (std::string)> s_gProjectLoader = [](std::string path)
+{
+    CCLOG("Please set loader for your project");
+};
 
 void startScript(std::string strDebugArg)
 {
-    // register lua engine
-    auto engine = LuaEngine::getInstance();
-    if (!strDebugArg.empty())
-    {
-        // open debugger.lua module
-        cocos2d::log("debug args = %s", strDebugArg.c_str());
-        luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
-        engine->executeString(strDebugArg.c_str());
-    }
-    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
+    resetDesignResolution();
+    s_gProjectLoader(strDebugArg);
 }
 
 
@@ -252,20 +248,27 @@ static void register_runtime_override_function(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-void initRuntime()
+void initRuntime(const std::string& workPath)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
     
-    extern std::string getCurAppPath();
-    std::string appPath = getCurAppPath();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    appPath.append("/../../");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    appPath.append("/../../../");
-#endif
-    appPath = replaceAll(appPath, "\\", "/");
-    g_projectPath = appPath;
+    if (workPath.empty())
+    {
+        extern std::string getCurAppPath();
+        std::string appPath = getCurAppPath();
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        appPath.append("/../../");
+    #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        appPath.append("/../../../");
+    #endif
+        appPath = replaceAll(appPath, "\\", "/");
+        g_projectPath = appPath;
+    }
+    else
+    {
+        g_projectPath = workPath;
+    }
     
     // add project's root directory to search path
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
@@ -297,4 +300,34 @@ void endRuntime()
 	ConsoleCommand::purge();
 	FileServer::getShareInstance()->stop();
 	//FileServer::purge();
+}
+
+//////////////////////// Loader ////////////////////
+
+void setLoader(std::function<void (std::string)> func)
+{
+    s_gProjectLoader = func;
+}
+
+void luaScriptLoader(std::string strDebugArg)
+{
+    // register lua engine
+    auto engine = LuaEngine::getInstance();
+    if (!strDebugArg.empty())
+    {
+        // open debugger.lua module
+        cocos2d::log("debug args = %s", strDebugArg.c_str());
+        luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
+        engine->executeString(strDebugArg.c_str());
+    }
+    std::string code("require \"");
+    code.append(ConfigParser::getInstance()->getEntryFile().c_str());
+    code.append("\"");
+    engine->executeString(code.c_str());
+}
+
+void resetDesignResolution()
+{
+    cocos2d::Size size = ConfigParser::getInstance()->getInitViewSize();
+    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, ResolutionPolicy::EXACT_FIT);
 }

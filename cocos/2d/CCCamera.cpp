@@ -69,6 +69,8 @@ Camera::Camera()
 : _scene(nullptr)
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
+, _frustumDirty(true)
+, _enableFrustumCulling(true)
 {
     
 }
@@ -96,6 +98,7 @@ const Mat4& Camera::getViewMatrix() const
     if (memcmp(viewInv.m, _viewInv.m, count) != 0)
     {
         _viewProjectionDirty = true;
+        _frustumDirty = true;
         _viewInv = viewInv;
         _view = viewInv.getInversed();
     }
@@ -205,6 +208,7 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     }
 #endif
     _viewProjectionDirty = true;
+    _frustumDirty = true;
     
     return true;
 }
@@ -225,6 +229,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     }
 #endif
     _viewProjectionDirty = true;
+    _frustumDirty = true;
     
     return true;
 }
@@ -246,6 +251,26 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     }
     
     dst->set(screen.x, screen.y, screen.z);
+}
+
+void Camera::enableFrustumCulling(bool enalbe, bool clipZ)
+{
+    _enableFrustumCulling = enalbe;
+    _frustum.setClipZ(clipZ);
+}
+
+bool Camera::isVisibleInFrustum(const AABB* aabb) const
+{
+    if (_enableFrustumCulling)
+    {
+        if (_frustumDirty)
+        {
+            _frustum.initFrustum(this);
+            _frustumDirty = false;
+        }
+        return !_frustum.isOutOfFrustum(*aabb);
+    }
+    return true;
 }
 
 void Camera::onEnter()

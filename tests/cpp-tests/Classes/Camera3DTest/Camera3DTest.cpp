@@ -27,107 +27,6 @@ THE SOFTWARE.
 #include <algorithm>
 #include "../testResource.h"
 
-////////////DrawLine/////////////////////
-
-class DrawLine3D: public Node
-{
-public:
-    /** creates and initialize a node */
-    static DrawLine3D* create();
-    
-    /**
-     * Draw 3D Line
-     */
-    void drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color);
-    
-    /** Clear the geometry in the node's buffer. */
-    void clear()
-    {
-        _buffer.clear();
-    }
-    
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
-    // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    
-CC_CONSTRUCTOR_ACCESS:
-    DrawLine3D()
-    {
-        
-    }
-    virtual ~DrawLine3D()
-    {
-        
-    }
-    virtual bool init();
-    
-protected:
-    struct V3F_C4B
-    {
-        Vec3     vertices;
-        Color4B  colors;
-    };
-    
-    std::vector<V3F_C4B> _buffer;
-    
-    CustomCommand _customCommand;
-    
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(DrawLine3D);
-};
-
-DrawLine3D* DrawLine3D::create()
-{
-    auto ret = new (std::nothrow) DrawLine3D();
-    if (ret && ret->init())
-        return ret;
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-bool DrawLine3D::init()
-{
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR));
-    return true;
-}
-
-void DrawLine3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color)
-{
-    Color4B col = Color4B(color);
-    DrawLine3D::V3F_C4B vertex;
-    vertex.vertices = from;
-    vertex.colors = col;
-    _buffer.push_back(vertex);
-    vertex.vertices = to;
-    _buffer.push_back(vertex);
-}
-
-void DrawLine3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(DrawLine3D::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void DrawLine3D::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    auto glProgram = getGLProgram();
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
-    glEnable(GL_DEPTH_TEST);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), &(_buffer[0].vertices));
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), &(_buffer[0].colors));
-    glDrawArrays(GL_LINES, 0, static_cast<int>(_buffer.size()));
-    glDisable(GL_DEPTH_TEST);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 enum
 {
     IDC_NEXT = 100,
@@ -140,6 +39,7 @@ static int sceneIdx = -1;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(Camera3DTestDemo),
+    CL(CameraClippingDemo)
 };
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
@@ -354,7 +254,7 @@ void Camera3DTestDemo::onEnter()
         _layer3D->addChild(_camera);
     }
     SwitchViewCallback(this,CameraType::ThirdCamera);
-    DrawLine3D* line =DrawLine3D::create();
+    DrawNode3D* line =DrawNode3D::create();
     //draw x
     for( int j =-20; j<=20 ;j++)
     {
@@ -755,6 +655,314 @@ void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 {
     _bRotateRight = false;
 }
+
+////////////////////////////////////////////////////////////
+// CameraClippingDemo
+CameraClippingDemo::CameraClippingDemo(void)
+: BaseTest()
+, _layer3D(nullptr)
+, _cameraType(CameraType::FirstCamera)
+, _cameraFirst(nullptr)
+, _cameraThird(nullptr)
+, _moveAction(nullptr)
+, _drawAABB(nullptr)
+, _drawFrustum(nullptr)
+, _row(3)
+{
+}
+CameraClippingDemo::~CameraClippingDemo(void)
+{
+}
+
+std::string CameraClippingDemo::title() const
+{
+    return "Camera Frustum Clipping";
+}
+
+void CameraClippingDemo::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild(restartSpriteTestAction());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClippingDemo::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild( nextSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClippingDemo::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild( backSpriteTestAction() );
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraClippingDemo::onEnter()
+{
+    BaseTest::onEnter();
+    schedule(schedule_selector(CameraClippingDemo::update), 0.0f);
+    
+    auto s = Director::getInstance()->getWinSize();
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(CameraClippingDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(CameraClippingDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(CameraClippingDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto layer3D=Layer::create();
+    addChild(layer3D,0);
+    _layer3D=layer3D;
+    
+    // swich camera
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(20);
+    
+    auto menuItem1 = MenuItemFont::create("Switch Camera", CC_CALLBACK_1(CameraClippingDemo::switchViewCallback,this));
+    menuItem1->setColor(Color3B(0,200,20));
+    auto menu = Menu::create(menuItem1,NULL);
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition(VisibleRect::left().x + 80, VisibleRect::top().y -70);
+    addChild(menu, 1);
+    
+    // + -
+    MenuItemFont::setFontSize(40);
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(CameraClippingDemo::delSpriteCallback, this));
+    decrease->setColor(Color3B(0,200,20));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(CameraClippingDemo::addSpriteCallback, this));
+    increase->setColor(Color3B(0,200,20));
+    
+    menu = Menu::create(decrease, increase, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setPosition(Vec2(s.width - 60, VisibleRect::top().y -70));
+    addChild(menu, 1);
+    
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 30);
+    _labelSprite3DCount = Label::createWithTTF(ttfCount,"0 sprits");
+    _labelSprite3DCount->setColor(Color3B(0,200,20));
+    _labelSprite3DCount->setPosition(Vec2(s.width/2, VisibleRect::top().y -70));
+    addChild(_labelSprite3DCount);
+    
+    // aabb drawNode3D
+    _drawAABB = DrawNode3D::create();
+    _drawAABB->setCameraMask((unsigned short) CameraFlag::USER1);
+    addChild(_drawAABB);
+    
+    // frustum drawNode3D
+    _drawFrustum = DrawNode3D::create();
+    _drawFrustum->setCameraMask((unsigned short) CameraFlag::USER1);
+    addChild(_drawFrustum);
+    
+    // set camera
+    switchViewCallback(this);
+    
+    // add sprite
+    addSpriteCallback(nullptr);
+}
+
+void CameraClippingDemo::onExit()
+{
+    BaseTest::onExit();
+    if (_cameraFirst)
+    {
+        _cameraFirst = nullptr;
+    }
+    if (_cameraThird)
+    {
+        _cameraThird = nullptr;
+    }
+}
+
+void CameraClippingDemo::update(float dt)
+{
+    _drawAABB->clear();
+    
+    if(_cameraType == CameraType::ThirdCamera)
+        drawCameraFrustum();
+    
+    Vector<Node*>& children = _layer3D->getChildren();
+    Vec3 corners[8];
+    
+    for (const auto& iter: children)
+    {
+        const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
+        if (_cameraFirst->isVisibleInFrustum(&aabb))
+        {
+            aabb.getCorners(corners);
+            _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+        }
+    }
+}
+
+void CameraClippingDemo::reachEndCallBack()
+{
+    _cameraFirst->stopActionByTag(100);
+    auto inverse = (MoveTo*)_moveAction->reverse();
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(CameraClippingDemo::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _cameraFirst->runAction(seq);
+}
+
+void CameraClippingDemo::switchViewCallback(Ref* sender)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    if (_cameraFirst == nullptr)
+    {
+        _cameraFirst = Camera::createPerspective(30, (GLfloat)s.width/s.height, 10, 200);
+        _cameraFirst->setCameraFlag(CameraFlag::USER8);
+        _cameraFirst->setPosition3D(Vec3(-100,0,0));
+        _cameraFirst->lookAt(Vec3(1000,0,0), Vec3(0, 1, 0));
+        _moveAction = MoveTo::create(4.f, Vec2(100, 0));
+        _moveAction->retain();
+        auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraClippingDemo::reachEndCallBack, this)), nullptr);
+        seq->setTag(100);
+        _cameraFirst->runAction(seq);
+        addChild(_cameraFirst);
+    }
+    
+    if (_cameraThird == nullptr)
+    {
+        _cameraThird = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        _cameraThird->setCameraFlag(CameraFlag::USER8);
+        _cameraThird->setPosition3D(Vec3(0, 130, 130));
+        _cameraThird->lookAt(Vec3(0,0,0), Vec3(0, 1, 0));
+        addChild(_cameraThird);
+    }
+    
+    if(_cameraType == CameraType::FirstCamera)
+    {
+        _cameraType = CameraType::ThirdCamera;
+        _cameraThird->setCameraFlag(CameraFlag::USER1);
+        _cameraThird->enableFrustumCulling(false, false);
+        _cameraFirst->setCameraFlag(CameraFlag::USER8);
+    }
+    else if(_cameraType == CameraType::ThirdCamera)
+    {
+        _cameraType = CameraType::FirstCamera;
+        _cameraFirst->setCameraFlag(CameraFlag::USER1);
+        _cameraFirst->enableFrustumCulling(true, true);
+        _cameraThird->setCameraFlag(CameraFlag::USER8);
+        _drawFrustum->clear();
+    }
+}
+
+void CameraClippingDemo::addSpriteCallback(Ref* sender)
+{
+    _layer3D->removeAllChildren();
+    _objects.clear();
+    _drawAABB->clear();
+    
+    ++_row;
+    for (int x = -_row; x < _row; x++)
+    {
+        for (int z = -_row; z < _row; z++)
+        {
+            auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+            sprite->setPosition3D(Vec3(x * 30, 0, z * 30));
+            sprite->setRotation3D(Vec3(0,180,0));
+            _objects.push_back(sprite);
+            _layer3D->addChild(sprite);
+        }
+    }
+    
+    // set layer mask.
+    _layer3D->setCameraMask( (unsigned short) CameraFlag::USER1);
+    
+    // update sprite number
+    char szText[16];
+    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    _labelSprite3DCount->setString(szText);
+}
+
+void CameraClippingDemo::delSpriteCallback(Ref* sender)
+{
+    if (_row == 0) return;
+    
+    _layer3D->removeAllChildren();
+    _objects.clear();
+    
+    --_row;
+    for (int x = -_row; x < _row; x++)
+    {
+        for (int z = -_row; z < _row; z++)
+        {
+            auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+            sprite->setPosition3D(Vec3(x * 30, 0, z * 30));
+            _objects.push_back(sprite);
+            _layer3D->addChild(sprite);
+        }
+    }
+    
+    // set layer mask.
+    _layer3D->setCameraMask((unsigned short) CameraFlag::USER1);
+    
+    // update sprite number
+    char szText[16];
+    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    _labelSprite3DCount->setString(szText);
+}
+
+void CameraClippingDemo::drawCameraFrustum()
+{
+    _drawFrustum->clear();
+    auto size = Director::getInstance()->getWinSize();
+    
+    Color4F color(1.f, 1.f, 0.f, 1);
+    
+    // top-left
+    Vec3 tl_0,tl_1;
+    Vec3 src(0,0,0);
+    _cameraFirst->unproject(size, &src, &tl_0);
+    src = Vec3(0,0,1);
+    _cameraFirst->unproject(size, &src, &tl_1);
+    
+    // top-right
+    Vec3 tr_0,tr_1;
+    src = Vec3(size.width,0,0);
+    _cameraFirst->unproject(size, &src, &tr_0);
+    src = Vec3(size.width,0,1);
+    _cameraFirst->unproject(size, &src, &tr_1);
+    
+    // bottom-left
+    Vec3 bl_0,bl_1;
+    src = Vec3(0,size.height,0);
+    _cameraFirst->unproject(size, &src, &bl_0);
+    src = Vec3(0,size.height,1);
+    _cameraFirst->unproject(size, &src, &bl_1);
+    
+    // bottom-right
+    Vec3 br_0,br_1;
+    src = Vec3(size.width,size.height,0);
+    _cameraFirst->unproject(size, &src, &br_0);
+    src = Vec3(size.width,size.height,1);
+    _cameraFirst->unproject(size, &src, &br_1);
+    
+    _drawFrustum->drawLine(tl_0, tl_1, color);
+    _drawFrustum->drawLine(tr_0, tr_1, color);
+    _drawFrustum->drawLine(bl_0, bl_1, color);
+    _drawFrustum->drawLine(br_0, br_1, color);
+    
+    _drawFrustum->drawLine(tl_0, tr_0, color);
+    _drawFrustum->drawLine(tr_0, br_0, color);
+    _drawFrustum->drawLine(br_0, bl_0, color);
+    _drawFrustum->drawLine(bl_0, tl_0, color);
+    
+    _drawFrustum->drawLine(tl_1, tr_1, color);
+    _drawFrustum->drawLine(tr_1, br_1, color);
+    _drawFrustum->drawLine(br_1, bl_1, color);
+    _drawFrustum->drawLine(bl_1, tl_1, color);
+}
+
 void Camera3DTestScene::runThisTest()
 {
     auto layer = nextSpriteTestAction();

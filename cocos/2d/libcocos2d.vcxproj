@@ -228,11 +228,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCBillBoard.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
+    <ClCompile Include="..\3d\CCFrustum.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
     <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCRay.cpp" />
     <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
@@ -600,11 +602,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCBundleReader.h" />
+    <ClInclude Include="..\3d\CCFrustum.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
     <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
+    <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\3d\CCRay.h" />
     <ClInclude Include="..\3d\CCSkeleton3D.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
