@@ -44,6 +44,7 @@ require("cocos.framework.extends.NodeEx")
 require("cocos.framework.extends.SpriteEx")
 require("cocos.framework.extends.LayerEx")
 require("cocos.framework.extends.MenuEx")
+require("cocos.framework.extends.UIWidget")
 
 require("cocos.framework.package_support")
 

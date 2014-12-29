@@ -130,7 +130,7 @@ function GameView:onCreate()
 
     -- add touch layer
     display.newLayer()
-        :enableTouch(handler(self, self.onTouch))
+        :onTouch(handler(self, self.onTouch))
         :addTo(self)
 
     -- add background image
