@@ -115,11 +115,14 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
 	const flatbuffers::Table *nodeOptions)
 {
 
-	auto* custom = static_cast<CCArmature*>(node);
-	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;
-	auto reader = ArmatureNodeReader::getInstance();
+	auto* custom = static_cast<Armature*>(node);
+	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;	
 
 	std::string filepath(options->fileData()->path()->c_str());
+    
+    std::string dirpath = filepath.substr(0, filepath.find_last_of("/"));
+    FileUtils::getInstance()->addSearchPath(dirpath);
+    
 	ArmatureDataManager::getInstance()->addArmatureFileInfo(FileUtils::getInstance()->fullPathForFilename(filepath));
 	custom->init(getArmatureName(filepath));
 	if (options->isAutoPlay())
