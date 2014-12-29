@@ -7135,7 +7135,7 @@ int lua_cocos2dx_ui_Button_getTitleColor(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Button_getTitleColor'", nullptr);
             return 0;
         }
-        const cocos2d::Color3B& ret = cobj->getTitleColor();
+        cocos2d::Color3B ret = cobj->getTitleColor();
         color3b_to_luaval(tolua_S, ret);
         return 1;
     }
