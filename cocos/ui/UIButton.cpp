@@ -730,12 +730,12 @@ const std::string& Button::getTitleText() const
 
 void Button::setTitleColor(const Color3B& color)
 {
-    _titleRenderer->setColor(color);
+    _titleRenderer->setTextColor(Color4B(color));
 }
 
-const Color3B& Button::getTitleColor() const
+Color3B Button::getTitleColor() const
 {
-    return _titleRenderer->getColor();
+    return Color3B(_titleRenderer->getTextColor());
 }
 
 void Button::setTitleFontSize(float size)
