@@ -12,7 +12,8 @@ USING_NS_CC;
 static bool __G_IS_MENUBAR_ENABLED__ = true;    // WTF
 
 @implementation NNMenuItem
-
+@synthesize scriptHandler;
+@synthesize macMenuItem;
 
 +(id) createMenuItem:(const player::PlayerMenuItemMac *) macMenuItem
 {

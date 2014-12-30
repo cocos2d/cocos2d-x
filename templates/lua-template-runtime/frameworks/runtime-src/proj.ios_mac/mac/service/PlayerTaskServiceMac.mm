@@ -3,6 +3,11 @@
 
 @implementation PlayerTaskPrivate
 
+@synthesize buildTask = _buildTask;
+@synthesize isRunning = _isRunning;
+@synthesize exitCode  = _exitCode;
+@synthesize output    = _output;
+
 -(id) init
 {
     if ((self = [super init])) {

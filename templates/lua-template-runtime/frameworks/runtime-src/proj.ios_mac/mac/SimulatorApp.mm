@@ -208,7 +208,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     }
 }
 
-- (void) launch:(NSArray*)args
+- (bool) launch:(NSArray*)args
 {
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     NSMutableDictionary *configuration = [NSMutableDictionary dictionaryWithObject:args forKey:NSWorkspaceLaunchConfigurationArguments];
@@ -217,12 +217,24 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                                                   options:NSWorkspaceLaunchNewInstance
                                             configuration:configuration
                                                     error:&error];
+    
+    if (error.code != 0)
+    {
+        NSLog(@"Failed to launch app: %@", [error localizedDescription]);
+    }
+    return (error.code==0);
 }
 
 - (void) relaunch:(NSArray*)args
 {
-    [self launch:args];
-    [[NSApplication sharedApplication] terminate:self];
+    if ([self launch:args])
+    {
+        [[NSApplication sharedApplication] terminate:self];
+    }
+    else
+    {
+        NSLog(@"RELAUNCH: %@", args);
+    }
 }
 
 - (void) relaunch

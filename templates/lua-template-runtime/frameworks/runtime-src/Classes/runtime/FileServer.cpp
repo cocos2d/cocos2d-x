@@ -155,14 +155,21 @@ bool FileServer::listenOnTCP(int port)
         //setsockopt(listenfd, IPPROTO_TCP, TCP_NODELAY, (const char*)&on, sizeof(on));
         
         auto address = ConfigParser::getInstance()->getBindAddress();
+
         // bind address
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32))
         if (address.length() > 0)
         {
-            struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-            sin->sin_addr.s_addr = inet_addr(address.c_str());
+            if (res->ai_family == AF_INET)
+            {
+                struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+                inet_pton(res->ai_family, address.c_str(), (void*)&sin->sin_addr);
+            }
+            else if (res->ai_family == AF_INET6)
+            {
+                struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+                inet_pton(res->ai_family, address.c_str(), (void*)&sin->sin6_addr);
+            }
         }
-#endif
         
         if (::bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
