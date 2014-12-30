@@ -254,6 +254,16 @@ public:
     virtual void setup();
 };
 
+class ClippingRectangleNodeNestTest : public BaseClippingNodeTest
+{
+public:
+    CREATE_FUNC(ClippingRectangleNodeNestTest);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void setup();
+};
+
 
 class ClippingNodeTestScene : public TestScene
 {
