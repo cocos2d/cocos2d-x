@@ -408,6 +408,24 @@ protected:
     cocos2d::Sprite3D* _mirrorSprite;
 };
 
+class QuaternionTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(QuaternionTest);
+    QuaternionTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    virtual void update(float delta) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    float              _arcSpeed;
+    float              _radius;
+    float              _accAngle;
+};
+
 class Sprite3DTestScene : public TestScene
 {
 public:
