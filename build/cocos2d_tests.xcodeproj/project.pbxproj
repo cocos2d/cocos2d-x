@@ -143,7 +143,6 @@
 		1A221C9D191771E400FD2BE4 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
 		1A97AC001A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */; };
 		1A97AC011A1DC3E30076D9CC /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A97ABFE1A1DC3E30076D9CC /* PerformanceMathTest.cpp */; };
-		1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -1896,7 +1895,6 @@
 			files = (
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
 				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
-				1A9F808D177E98A600D9A1CB /* libcurl.dylib in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
 				15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */,

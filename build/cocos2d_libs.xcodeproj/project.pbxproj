@@ -1164,6 +1164,9 @@
 		292DB16219B461CA00A80320 /* ExtensionDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */; };
 		292F1A5D1A5151CE00E479F8 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A5B1A5151CE00E479F8 /* libcrypto.a */; };
 		292F1A5E1A5151CE00E479F8 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A5C1A5151CE00E479F8 /* libssl.a */; };
+		292F1A631A52447100E479F8 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A601A52447100E479F8 /* libcrypto.a */; };
+		292F1A641A52447100E479F8 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A611A52447100E479F8 /* libcurl.a */; };
+		292F1A6B1A5250F700E479F8 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A6A1A5250F700E479F8 /* libssl.a */; };
 		29394CF019B01DBA00D2DE1A /* UIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEC19B01DBA00D2DE1A /* UIWebView.h */; };
 		29394CF119B01DBA00D2DE1A /* UIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEC19B01DBA00D2DE1A /* UIWebView.h */; };
 		29394CF219B01DBA00D2DE1A /* UIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CED19B01DBA00D2DE1A /* UIWebView.mm */; };
@@ -2402,6 +2405,10 @@
 		292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionDeprecated.h; sourceTree = "<group>"; };
 		292F1A5B1A5151CE00E479F8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		292F1A5C1A5151CE00E479F8 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		292F1A601A52447100E479F8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/curl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
+		292F1A611A52447100E479F8 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../external/curl/prebuilt/mac/libcurl.a; sourceTree = "<group>"; };
+		292F1A661A524F2700E479F8 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		292F1A6A1A5250F700E479F8 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/curl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		29394CEC19B01DBA00D2DE1A /* UIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWebView.h; sourceTree = "<group>"; };
 		29394CED19B01DBA00D2DE1A /* UIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UIWebView.mm; sourceTree = "<group>"; };
 		29394CEE19B01DBA00D2DE1A /* UIWebViewImpl-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebViewImpl-ios.h"; sourceTree = "<group>"; };
@@ -3074,6 +3081,8 @@
 			files = (
 				29031E0719BFE8D400EFA1DF /* libchipmunk.a in Frameworks */,
 				15AE1C1A19AAE3C800C27E9E /* libwebsockets.a in Frameworks */,
+				292F1A6B1A5250F700E479F8 /* libssl.a in Frameworks */,
+				292F1A631A52447100E479F8 /* libcrypto.a in Frameworks */,
 				B217704E1977ED9F009EE11B /* libsqlite3.dylib in Frameworks */,
 				B21770491977ED4C009EE11B /* libz.dylib in Frameworks */,
 				B21770471977ED34009EE11B /* QuartzCore.framework in Frameworks */,
@@ -3081,6 +3090,7 @@
 				B21770421977ECF8009EE11B /* ApplicationServices.framework in Frameworks */,
 				B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */,
 				B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */,
+				292F1A641A52447100E479F8 /* libcurl.a in Frameworks */,
 				1A570347180BD0850088DEC7 /* libglfw3.a in Frameworks */,
 				1A570361180BD1080088DEC7 /* libpng.a in Frameworks */,
 				1A57037B180BD1C90088DEC7 /* libjpeg.a in Frameworks */,
@@ -3172,6 +3182,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				292F1A661A524F2700E479F8 /* libssl.dylib */,
 				B217704C1977ED8B009EE11B /* libsqlite3.dylib */,
 				B217704A1977ED55009EE11B /* libcurl.dylib */,
 				B21770481977ED4C009EE11B /* libz.dylib */,
@@ -3969,6 +3980,7 @@
 		1AAF5405180E3B38000584C8 /* prebuilt */ = {
 			isa = PBXGroup;
 			children = (
+				292F1A5F1A52446100E479F8 /* mac */,
 				1AAF541B180E3B6A000584C8 /* ios */,
 			);
 			name = prebuilt;
@@ -4228,6 +4240,16 @@
 				292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */,
 			);
 			path = UIEditBox;
+			sourceTree = "<group>";
+		};
+		292F1A5F1A52446100E479F8 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				292F1A6A1A5250F700E479F8 /* libssl.a */,
+				292F1A601A52447100E479F8 /* libcrypto.a */,
+				292F1A611A52447100E479F8 /* libcurl.a */,
+			);
+			name = mac;
 			sourceTree = "<group>";
 		};
 		296BF6121A4403380038EC44 /* shaders */ = {
@@ -7396,9 +7418,11 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
 				);
 				MACH_O_TYPE = staticlib;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				OTHER_LDFLAGS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/curl/include/mac";
 			};
 			name = Debug;
 		};
@@ -7430,9 +7454,11 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
 				);
 				MACH_O_TYPE = staticlib;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				OTHER_LDFLAGS = "";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/curl/include/mac";
 			};
 			name = Release;
 		};
