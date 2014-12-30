@@ -589,14 +589,12 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 
 void Renderer::fillQuads(const QuadCommand *cmd)
 {
-    memcpy(_quadVerts + _numberQuads * 4, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-    
     const Mat4& modelView = cmd->getModelView();
-    
+    const V3F_C4B_T2F* quads =  (V3F_C4B_T2F*)cmd->getQuads();
     for(ssize_t i=0; i< cmd->getQuadCount() * 4; ++i)
     {
-        Vec3 *vec1 = (Vec3*)&(_quadVerts[i + _numberQuads * 4].vertices);
-        modelView.transformPoint(vec1);
+        _quadVerts[i + _numberQuads * 4] = quads[i];
+        modelView.transformPoint(quads[i].vertices,&(_quadVerts[i + _numberQuads * 4].vertices));
     }
     
     _numberQuads += cmd->getQuadCount();
