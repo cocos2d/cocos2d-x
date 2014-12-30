@@ -713,12 +713,10 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DLightMapTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
-
 Sprite3DLightMapTest::~Sprite3DLightMapTest()
 {
     
 }
-
 std::string Sprite3DLightMapTest::title() const
 {
     return "light map test";
