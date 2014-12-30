@@ -13,6 +13,11 @@ PLAYER_NS_END
 @interface PlayerTaskPrivate : NSObject
 {
     NSFileHandle *fileHandle;
+    
+    NSTask *_buildTask;
+    BOOL _isRunning;
+    int _exitCode;
+    NSString *_output;
 }
 
 @property (assign) NSTask *buildTask;

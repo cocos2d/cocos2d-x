@@ -11,6 +11,7 @@
 
 @interface EditBoxServiceImplMac : NSObject <NSTextFieldDelegate>
 {
+    NSTextField* textField_;
     void* editBox_;
     BOOL editState_;
     NSMutableDictionary* placeholderAttributes_;
