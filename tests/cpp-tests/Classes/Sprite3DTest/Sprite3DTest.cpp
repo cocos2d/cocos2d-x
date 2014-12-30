@@ -67,7 +67,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
-    CL(Sprite3DMirrorTest)
+    CL(Sprite3DMirrorTest),
+    CL(QuaternionTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1950,4 +1951,54 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
         sprite->runAction(RepeatForever::create(animate));
     }
     _mirrorSprite = sprite;
+}
+
+QuaternionTest::QuaternionTest()
+: _arcSpeed(CC_DEGREES_TO_RADIANS(90))
+, _radius(100.f)
+, _accAngle(0.f)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords(Vec2(s.width / 2.f, s.height / 2.f));
+    scheduleUpdate();
+}
+std::string QuaternionTest::title() const
+{
+    return "Test Rotation With Quaternion";
+}
+std::string QuaternionTest::subtitle() const
+{
+    return "";
+}
+
+void QuaternionTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width / 2.f + _radius * cosf(_accAngle), s.height / 2.f + _radius * sinf(_accAngle)));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+}
+
+void QuaternionTest::update(float delta)
+{
+    _accAngle += delta * _arcSpeed;
+    const float pi = M_PI;
+    if (_accAngle >= 2 * pi)
+        _accAngle -= 2 * pi;
+    
+    auto s = Director::getInstance()->getWinSize();
+    _sprite->setPosition(Vec2(s.width / 2.f + _radius * cosf(_accAngle), s.height / 2.f + _radius * sinf(_accAngle)));
+    
+    Quaternion quat;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 0.f, 1.f), _accAngle - pi * 0.5f, &quat);
+    _sprite->setRotationQuat(quat);
 }
