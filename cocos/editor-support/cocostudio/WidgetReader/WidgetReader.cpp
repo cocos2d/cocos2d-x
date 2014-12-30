@@ -836,9 +836,9 @@ namespace cocostudio
     void WidgetReader::setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* nodeOptions)
     {
         auto layoutComponentTable = ((WidgetOptions*)nodeOptions)->layoutComponent();
+        if (!layoutComponentTable) return;
 
         auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
-        if (!layoutComponentTable) return;
 
         bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
         bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
