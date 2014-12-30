@@ -294,6 +294,27 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //the callback function update cylinder's texcoord
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/cylinder.vert", "Sprite3DTest/cylinder.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 std::string Sprite3DUVAnimationTest::title() const 
@@ -357,15 +378,15 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
     // use custom shader
     auto shader =GLProgram::createWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
-    auto state = GLProgramState::create(shader);
-    _plane->setGLProgramState(state);
+    _state = GLProgramState::create(shader);
+    _plane->setGLProgramState(_state);
 
     //pass mesh's attribute to shader
     long offset = 0; 
     auto attributeCount = _plane->getMesh()->getMeshVertexAttribCount();
     for (auto i = 0; i < attributeCount; i++) {
         auto meshattribute = _plane->getMesh()->getMeshVertexAttribute(i);
-        state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
             meshattribute.size, 
             meshattribute.type,
             GL_FALSE,
@@ -373,7 +394,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
             (GLvoid*)offset);
         offset += meshattribute.attribSizeBytes;
     } 
-    state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+    _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
 
     //create shadow texture
     auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
@@ -383,7 +404,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
     tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     shadowTexture->setTexParameters(tRepeatParams); 
-    state->setUniformTexture("u_shadowTexture",shadowTexture);
+    _state->setUniformTexture("u_shadowTexture",shadowTexture);
     layer->addChild(_plane); 
 
     //create the orc
@@ -398,6 +419,39 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     layer->setCameraMask(2);
 
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                                
+                                                                _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+                                                                
+                                                                //create shadow texture
+                                                                auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
+                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
+                                                                tRepeatParams.magFilter = GL_LINEAR;
+                                                                tRepeatParams.minFilter = GL_LINEAR;
+                                                                tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+                                                                tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+                                                                shadowTexture->setTexParameters(tRepeatParams); 
+                                                                _state->setUniformTexture("u_shadowTexture",shadowTexture);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 std::string Sprite3DFakeShadowTest::title() const 
@@ -572,8 +626,8 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
     //create and set our custom shader 
     auto shader =GLProgram::createWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
-    auto state = GLProgramState::create(shader);
-    teapot->setGLProgramState(state);
+    _state = GLProgramState::create(shader);
+    teapot->setGLProgramState(_state);
     teapot->setPosition3D(Vec3(0,-5,-20));
     teapot->setRotation3D(Vec3(-90,180,0)); 
     auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
@@ -583,7 +637,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     auto attributeCount = teapot->getMesh()->getMeshVertexAttribCount();
     for (auto i = 0; i < attributeCount; i++) {
         auto meshattribute = teapot->getMesh()->getMeshVertexAttribute(i);
-        state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
             meshattribute.size,
             meshattribute.type,
             GL_FALSE,
@@ -594,6 +648,27 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     addChild(teapot);
     addChild(_camera);
     setCameraMask(2);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 std::string Sprite3DBasicToonShaderTest::title() const 
@@ -639,7 +714,12 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-std::string Sprite3DLightMapTest::title() const 
+Sprite3DLightMapTest::~Sprite3DLightMapTest()
+{
+    
+}
+
+std::string Sprite3DLightMapTest::title() const
 {
     return "light map test";
 }
