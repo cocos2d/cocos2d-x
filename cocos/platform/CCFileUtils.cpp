@@ -1405,7 +1405,7 @@ std::string FileUtils::getNormalizePath(const std::string& path) const
         {
             if (i > 0 && (v[i-1] != 2 || (path[v[i-2]] != '.' && path[v[i-2]+1] != '.')))
             {
-                v.erase(v.cbegin() + i - 2, v.cbegin() + i + 2);
+                v.erase(v.begin() + i - 2, v.begin() + i + 2);
                 i -= 4;
                 change = true;
             }
