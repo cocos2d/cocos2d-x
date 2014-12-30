@@ -286,8 +286,7 @@ GLProgramState::GLProgramState()
         [this](EventCustom*) 
         {
             CCLOG("Dirty Uniform and Attributes of GLProgramState"); 
-            _uniformAttributeValueDirty = true; 
-            updateUniformsAndAttributes();
+            _uniformAttributeValueDirty = true;
         });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
@@ -407,6 +406,7 @@ void GLProgramState::setGLProgram(GLProgram *glprogram)
 
 UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
 {
+    updateUniformsAndAttributes();
     const auto itr = _uniforms.find(uniformLocation);
     if (itr != _uniforms.end())
         return &itr->second;
@@ -415,6 +415,7 @@ UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
 
 UniformValue* GLProgramState::getUniformValue(const std::string &name)
 {
+    updateUniformsAndAttributes();
     const auto itr = _uniformsByName.find(name);
     if (itr != _uniformsByName.end())
         return &_uniforms[itr->second];
@@ -423,6 +424,7 @@ UniformValue* GLProgramState::getUniformValue(const std::string &name)
 
 VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
 {
+    updateUniformsAndAttributes();
     const auto itr = _attributes.find(name);
     if( itr != _attributes.end())
         return &itr->second;
