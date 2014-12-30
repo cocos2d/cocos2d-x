@@ -531,17 +531,16 @@ TOLUA_API int class_gc_event (lua_State* L)
     void* u = *((void**)lua_touserdata(L,1));
     int top;
     /*fprintf(stderr, "collecting: looking at %p\n", u);*/
-    /*
+
     lua_pushstring(L,"tolua_gc");
     lua_rawget(L,LUA_REGISTRYINDEX);
-    */
-    lua_pushvalue(L, lua_upvalueindex(1));
+
     lua_pushlightuserdata(L,u);
     lua_rawget(L,-2);            /* stack: gc umt    */
     lua_getmetatable(L,1);       /* stack: gc umt mt */
     /*fprintf(stderr, "checking type\n");*/
     top = lua_gettop(L);
-    if (tolua_fast_isa(L,top,top-1, lua_upvalueindex(2))) /* make sure we collect correct type */
+    if (tolua_fast_isa(L,top,top-1, lua_upvalueindex(1))) /* make sure we collect correct type */
     {
         /*fprintf(stderr, "Found type!\n");*/
         /* get gc function */
