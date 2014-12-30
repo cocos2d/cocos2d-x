@@ -197,7 +197,8 @@ bool Sprite3D::loadFromCache(const std::string& path)
 
 bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshDatas* meshdatas,  MaterialDatas* materialdatas)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+    std::string fullPath = path;
+    //std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
     std::string ext = path.substr(path.length() - 4, 4);
     std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
