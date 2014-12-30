@@ -97,7 +97,7 @@ public:
     
     /** @brief Get the search paths list related to the Manifest.
      */
-    std::vector<std::string> getSearchPaths();
+    std::vector<std::string> getSearchPaths() const;
     
 protected:
     

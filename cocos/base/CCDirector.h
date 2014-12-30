@@ -400,6 +400,8 @@ public:
     void resetMatrixStack();
 
 protected:
+    void reset();
+    
     void purgeDirector();
     bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
     
