@@ -282,7 +282,13 @@ GLProgramState::GLProgramState()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     /** listen the event that renderer was recreated on Android/WP8 */
     CCLOG("create rendererRecreatedListener for GLProgramState");
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, 
+        [this](EventCustom*) 
+        {
+            CCLOG("Dirty Uniform and Attributes of GLProgramState"); 
+            _uniformAttributeValueDirty = true; 
+            updateUniformsAndAttributes();
+        });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
 }
@@ -335,7 +341,7 @@ void GLProgramState::apply(const Mat4& modelView)
     applyUniforms();
 }
 
-void GLProgramState::applyGLProgram(const Mat4& modelView)
+void GLProgramState::updateUniformsAndAttributes()
 {
     CCASSERT(_glprogram, "invalid glprogram");
     if(_uniformAttributeValueDirty)
@@ -356,6 +362,12 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
         _uniformAttributeValueDirty = false;
         
     }
+}
+
+void GLProgramState::applyGLProgram(const Mat4& modelView)
+{
+    CCASSERT(_glprogram, "invalid glprogram");
+    updateUniformsAndAttributes();
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
