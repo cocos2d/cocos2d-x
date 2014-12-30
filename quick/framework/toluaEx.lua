@@ -19,8 +19,36 @@ end
 
 if CCPoint then
 	tolua.default_gc_classes__ = {
+        -- "CCAtlasNode",
+        -- "ccBezierConfig",
+        -- "ccBlendFunc",
+        -- "CCBool",
+        -- "CCCamera",
+        "ccColor3B",
+        "ccColor4B",
+        "ccColor4F",
+        -- "CCDouble",
+        -- "CCFloat",
+        -- "ccFontDefinition",
+        -- "CCImage",
+        -- "CCInteger",
+        -- "CCLabelBMFont",
+        -- "CCLabelTTF",
+        -- "CCParticleSystemQuad",
 		"CCPoint",
+        "CCRect",
+        -- "CCScrollView",
 		"CCSize",
+        -- "CCTableView",
+        -- "ccTexParams",
+        -- "CCTileMapAtlas",
+        -- "CCTMXLayer",
+        -- "CCTMXLayerInfo",
+        -- "CCTMXMapInfo",
+        -- "CCTMXTilesetInfo",
+        -- "cc_timeval",
+        -- "HSV",
+        -- "RGBA",
 	}
 else
 	tolua.default_gc_classes__ = {
@@ -28,6 +56,8 @@ else
 end
 
 function tolua.fullgc(classes)
+    collectgarbage("collect")
+
 	if classes == nil then
 		classes = tolua.default_gc_classes__
 	elseif type(classes) == "string" then
