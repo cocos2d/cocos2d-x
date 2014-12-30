@@ -54,3 +54,27 @@ function Layer:removeTouch()
     self:setTouchEnabled(false)
     return self
 end
+
+function Layer:onKeypad(callback)
+    self:registerScriptKeypadHandler(callback)
+    self:setKeyboardEnabled(true)
+    return self
+end
+
+function Layer:removeKeypad()
+    self:unregisterScriptKeypadHandler()
+    self:setKeyboardEnabled(false)
+    return self
+end
+
+function Layer:onAccelerate(callback)
+    self:registerScriptAccelerateHandler(callback)
+    self:setAccelerometerEnabled(true)
+    return self
+end
+
+function Layer:removeAccelerate()
+    self:unregisterScriptAccelerateHandler()
+    self:setAccelerometerEnabled(false)
+    return self
+end
