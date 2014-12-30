@@ -605,7 +605,16 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
     if(!numberOfQuads)
         return;
-
+    
+    //Check depth write
+    GLboolean depthWirte;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWirte);
+    //Turn depth write off if necessary
+    if(depthWirte)
+    {
+        glDepthMask(false);
+    }
+    
     GL::bindTexture2D(_texture->getName());
 
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -686,6 +695,12 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
 
+    //Turn depth write on if necessary
+    if(depthWirte)
+    {
+        glDepthMask(true);
+    }
+    
     CHECK_GL_ERROR_DEBUG();
 }
 
