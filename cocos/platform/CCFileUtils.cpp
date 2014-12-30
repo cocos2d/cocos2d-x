@@ -1398,7 +1398,7 @@ std::string FileUtils::getNormalizePath(const std::string& path) const
         auto c = path[v[i]];
         if (l == 1 && c == '.')
         {
-            v.erase(v.cbegin() + i, v.cbegin() + i + 2);
+            v.erase(v.begin() + i, v.begin() + i + 2);
             i -= 2;
             change = true;
         } else if (l == 2 && c == '.' && path[v[i]+1] == '.')
