@@ -21,16 +21,21 @@ using namespace std;
 
 AppDelegate::AppDelegate()
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+    auto config = ConfigParser::getInstance();
+    _project.setScriptFile(config->getEntryFile());
+#endif
 }
 
 AppDelegate::~AppDelegate()
 {
     SimpleAudioEngine::end();
 
-#if (COCOS2D_DEBUG > 0 && CC_CODE_IDE_DEBUG_SUPPORT > 0)
-	// NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-	endRuntime();
-#endif
+    if (_project.getDebuggerType() != kCCRuntimeDebuggerNone)
+    {
+        // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+        endRuntime();
+    }
 
 	ConfigParser::purge();
 }
