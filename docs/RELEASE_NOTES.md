@@ -114,4 +114,38 @@ Please refer to this document: [ReadMe](../README.md)
 
 ## Features in detail
 
+### Create Sprite3D asynchronously
 
+It allows to load Sprite3D in another thread so that you can process more logic in the main thread. And it notifies you using a custom callback after creating is finished.
+
+`modelPath` is the file to be loaded, `AsyncLoadSprite3DTest::asyncLoad_Callback` is the user's callback function, `userParam` is the parameter that the callback function is wanted.
+
+```c++
+Sprite3D::createAsync(modelPath, CC_CALLBACK_2(AsyncLoadSprite3DTest::asyncLoad_Callback, this), (void*)userParam);
+```
+
+The callback function is called after loading Sprite3D, the callback function can be something like this,
+
+```c++
+void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
+{
+    //sprite is the loaded sprite
+    sprite->setPosition(point);
+    addChild(sprite);
+}
+```
+
+### Frustum culling
+
+Frustum culling means only the stuff that is inside the frustum is sent to the graphics hardware. It can potentially improve the performance of the application since only the vertices that are part of the visible part of the 3D world are kept on the graphics card memory.
+
+Frustum culling is a property of camera, it is enabled by default. And you can use the following to enable or disable the frustum culling,
+
+```c++
+//the first parameter is enable frustum culling or not, the second means that frustum culling using near and far plan or not.
+camera->enableFrustumCulling(true, true);
+```
+
+Note that when you can make sure that all the stuff is inside the frustum you can turn off the frustum culling.
+
+For more infomation please reffer to the cpptests/CameraTest

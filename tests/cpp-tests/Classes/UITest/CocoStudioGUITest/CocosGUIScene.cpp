@@ -91,7 +91,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIButtonTest);
             sceneManager->setMinUISceneId(kUIButtonTest);
-            sceneManager->setMaxUISceneId(kUIButtonFlipTest);
+            sceneManager->setMaxUISceneId(kUIButtonDisableDefaultTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -103,7 +103,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUICheckBoxTest);
             sceneManager->setMinUISceneId(kUICheckBoxTest);
-            sceneManager->setMaxUISceneId(kUICheckBoxTest);
+            sceneManager->setMaxUISceneId(kUICheckBoxDefaultBehaviorTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -115,7 +115,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUISliderTest);
             sceneManager->setMinUISceneId(kUISliderTest);
-            sceneManager->setMaxUISceneId(kUISliderTest_Scale9);
+            sceneManager->setMaxUISceneId(kUISliderDisabledDefaultTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

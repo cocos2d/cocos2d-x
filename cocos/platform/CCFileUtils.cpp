@@ -513,13 +513,24 @@ void FileUtils::destroyInstance()
     CC_SAFE_DELETE(s_sharedFileUtils);
 }
 
+void FileUtils::setDelegate(FileUtils *delegate)
+{
+    if (s_sharedFileUtils)
+        delete s_sharedFileUtils;
+        
+    s_sharedFileUtils = delegate;
+}
+
 FileUtils::FileUtils()
+    : _writablePath("")
 {
 }
 
 FileUtils::~FileUtils()
 {
 }
+
+
 
 bool FileUtils::init()
 {
@@ -826,6 +837,16 @@ const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
 const std::vector<std::string>& FileUtils::getSearchPaths() const
 {
     return _searchPathArray;
+}
+
+void FileUtils::setWritablePath(const std::string& writablePath)
+{
+    _writablePath = writablePath;
+}
+
+void FileUtils::setDefaultResourceRootPath(const std::string& path)
+{
+    _defaultResRootPath = path;
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)

@@ -54,6 +54,20 @@ public:
      *  Destroys the instance of FileUtils.
      */
     static void destroyInstance();
+    
+    /**
+     * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
+     * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
+     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from 
+     * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
+     * functions when reading data of resources.
+     *
+     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
+     * to this function.
+     *
+     * @warm It will delete previous delegate
+     */
+    static void setDelegate(FileUtils *delegate);
 
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
@@ -262,6 +276,11 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
     
     /**
+     * Set default resource root path.
+     */
+    void setDefaultResourceRootPath(const std::string& path);
+
+    /**
       * Add search path.
       *
       * @since v2.1
@@ -283,6 +302,11 @@ public:
      */
     virtual std::string getWritablePath() const = 0;
     
+    /**
+     *  Set writable/cache path.
+     */
+    virtual void setWritablePath(const std::string& writablePath);
+
     /**
      *  Sets/Gets whether to pop-up a message box when failed to load an image.
      */
@@ -495,6 +519,11 @@ protected:
      */
     std::unordered_map<std::string, std::string> _fullPathCache;
     
+    /**
+     * Writable path.
+     */
+    std::string _writablePath;
+
     /**
      *  The singleton pointer of FileUtils.
      */

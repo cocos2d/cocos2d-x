@@ -6,6 +6,7 @@
 #include <string>
 
 #include "cocos2d.h"
+#include "ConfigParser.h"
 using namespace std;
 
 string getIPAddress()
@@ -14,6 +15,13 @@ string getIPAddress()
     char name[155]={0};
     char *ip=nullptr;
     PHOSTENT hostinfo;
+
+    // customized by user
+    auto &bindAddress = ConfigParser::getInstance()->getBindAddress();
+    if (!bindAddress.empty())
+    {
+        return bindAddress;
+    }
 
     if ( WSAStartup( MAKEWORD(2,0), &wsaData ) == 0 )   
     {  

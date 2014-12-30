@@ -536,6 +536,7 @@ Developers:
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        added Turkish and Ukrainian language support
         
     hawkwood (Justin Hawkwood)
         Fixing a bug that EditBox doesn't show any text if it's initialized with text.

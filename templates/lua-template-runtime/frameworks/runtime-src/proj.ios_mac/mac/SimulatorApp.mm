@@ -36,15 +36,19 @@
 #include "ConfigParser.h"
 
 #include "cocos2d.h"
+#include "CCLuaEngine.h"
+#include "CodeIDESupport.h"
 
-using namespace cocos2d;
+#include "service/PlayerMac.h"
+#include "service/AppEvent.h"
+#include "service/AppLang.h"
 
-bool g_landscape = false;
-bool g_windTop = false;
-cocos2d::Size g_screenSize;
-GLViewImpl* g_eglView = nullptr;
 
-static AppController* g_nsAppDelegate=nullptr;
+#if (GLFW_VERSION_MAJOR >= 3) && (GLFW_VERSION_MINOR >= 1)
+#define PLAYER_SUPPORT_DROP 1
+#else
+#define PLAYER_SUPPORT_DROP 0
+#endif
 
 using namespace std;
 using namespace cocos2d;
@@ -68,6 +72,17 @@ std::string getCurAppName(void)
     return appName;
 }
 
+#if (PLAYER_SUPPORT_DROP > 0)
+static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
+{
+    AppEvent forwardEvent(kAppEventDropName, APP_EVENT_DROP);
+    std::string firstFile(files[0]);
+    forwardEvent.setDataString(firstFile);
+    
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&forwardEvent);
+}
+#endif
+
 -(void) dealloc
 {
     Director::getInstance()->end();
@@ -79,195 +94,24 @@ std::string getCurAppName(void)
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    auto player = player::PlayerMac::create();
+    player->setController(self);
+    
+    _debugLogFile = 0;
 
-    if (args != nullptr && [args count] >= 2) {
-    }
-    g_nsAppDelegate = self;
-    AppDelegate app;
-    Application::getInstance()->run();
-    // After run, application needs to be terminated immediately.
-    [[NSApplication sharedApplication] terminate: self];
+    [self parseCocosProjectConfig:&_project];
+    [self updateProjectFromCommandLineArgs:&_project];
+    [self createWindowAndGLView];
+    [self startup];
 }
 
 
 #pragma mark -
 #pragma mark functions
 
-- (void) createSimulator:(NSString*)viewName viewWidth:(float)width viewHeight:(float)height factor:(float)frameZoomFactor
-{
-    if (g_eglView)
-    {
-        return;
-    }
-    
-    if(!g_landscape)
-    {
-        float tmpvalue =width;
-        width = height;
-        height = tmpvalue;
-    }
-    g_windTop = ConfigParser::getInstance()->isWindowTop();
-    g_eglView = GLViewImpl::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
-    auto director = Director::getInstance();
-    director->setOpenGLView(g_eglView);
-
-    window = glfwGetCocoaWindow(g_eglView->getWindow());
-    [[NSApplication sharedApplication] setDelegate: self];
-    
-    [self createViewMenu];
-    [self updateMenu];
-    [window center];
-    
-    [window becomeFirstResponder];
-    [window makeKeyAndOrderFront:self];
-}
-
-void createSimulator(const char* viewName, float width, float height,bool isLandscape,float frameZoomFactor)
-{
-    if(g_nsAppDelegate)
-    {
-        g_landscape = isLandscape;
-        if(height > width)
-        {
-            float tmpvalue =width;
-            width = height;
-            height = tmpvalue;
-        }
-        g_screenSize.width = width;
-        g_screenSize.height = height;
-        
-        [g_nsAppDelegate createSimulator:[NSString stringWithUTF8String:viewName] viewWidth:width viewHeight:height factor:frameZoomFactor];
-    }
-    
-}
-
-- (void) createViewMenu
-{
-    
-    NSMenu *submenu = [[[window menu] itemWithTitle:@"View"] submenu];
-
-    for (int i = ConfigParser::getInstance()->getScreenSizeCount() - 1; i >= 0; --i)
-    {
-        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
-        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithCString:size.title.c_str() encoding:NSUTF8StringEncoding]
-                                                       action:@selector(onViewChangeFrameSize:)
-                                                keyEquivalent:@""] autorelease];
-        [item setTag:i];
-        [submenu insertItem:item atIndex:0];
-    }
-}
-
-
-- (void) updateMenu
-{
-
-    NSMenu *menuScreen = [[[window menu] itemWithTitle:@"View"] submenu];
-    NSMenuItem *itemPortait = [menuScreen itemWithTitle:@"Portait"];
-    NSMenuItem *itemLandscape = [menuScreen itemWithTitle:@"Landscape"];
-    if (g_landscape)
-    {
-        [itemPortait setState:NSOffState];
-        [itemLandscape setState:NSOnState];
-    }
-    else
-    {
-        [itemPortait setState:NSOnState];
-        [itemLandscape setState:NSOffState];
-    }
-    
-    NSMenu *menuControl = [[[window menu] itemWithTitle:@"Control"] submenu];
-    NSMenuItem *itemTop = [menuControl itemWithTitle:@"Keep Window Top"];
-    if (g_windTop) {
-        [window setLevel:NSFloatingWindowLevel];
-        [itemTop setState:NSOnState];
-    }
-    else
-    {
-        [window setLevel:NSNormalWindowLevel];
-        [itemTop setState:NSOffState];
-    }
-
-    int scale = g_eglView->getFrameZoomFactor()*100;
-
-    NSMenuItem *itemZoom100 = [menuScreen itemWithTitle:@"Actual (100%)"];
-    NSMenuItem *itemZoom75 = [menuScreen itemWithTitle:@"Zoom Out (75%)"];
-    NSMenuItem *itemZoom50 = [menuScreen itemWithTitle:@"Zoom Out (50%)"];
-    NSMenuItem *itemZoom25 = [menuScreen itemWithTitle:@"Zoom Out (25%)"];
-    [itemZoom100 setState:NSOffState];
-    [itemZoom75 setState:NSOffState];
-    [itemZoom50 setState:NSOffState];
-    [itemZoom25 setState:NSOffState];
-    if (scale == 100)
-    {
-        [itemZoom100 setState:NSOnState];
-    }
-    else if (scale == 75)
-    {
-        [itemZoom75 setState:NSOnState];
-    }
-    else if (scale == 50)
-    {
-        [itemZoom50 setState:NSOnState];
-    }
-    else if (scale == 25)
-    {
-        [itemZoom25 setState:NSOnState];
-    }
-
-    int width = g_screenSize.width;
-    int height = g_screenSize.height;
-    if (height > width)
-    {
-        int w = width;
-        width = height;
-        height = w;
-    }
-    
-    int count = ConfigParser::getInstance()->getScreenSizeCount();
-    for (int i = 0; i < count; ++i)
-    {
-        bool bSel = false;
-        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(i);
-        if (size.width == width && size.height == height)
-        {
-            bSel = true;
-        }
-        NSMenuItem *itemView = [menuScreen itemWithTitle:[NSString stringWithUTF8String:size.title.c_str()]];
-        [itemView setState:(bSel? NSOnState : NSOffState)];
-    }
-    
-
-}
-
-
-- (void) updateView
-{
-    auto policy = g_eglView->getResolutionPolicy();
-    auto designSize = g_eglView->getDesignResolutionSize();
-    
-    if (g_landscape)
-    {
-        g_eglView->setFrameSize(g_screenSize.width, g_screenSize.height);
-    }
-    else
-    {
-        g_eglView->setFrameSize(g_screenSize.height, g_screenSize.width);
-    }
-    
-    g_eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
-    
-    [self updateMenu];
-}
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
+- (BOOL) windowShouldClose:(id)sender
 {
     return YES;
-}
-
-- (BOOL) applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
-{
-    return NO;
 }
 
 - (void) windowWillClose:(NSNotification *)notification
@@ -275,75 +119,490 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     [[NSRunningApplication currentApplication] terminate];
 }
 
-- (IBAction) onSetTop:(id)sender
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
 {
-    g_windTop = !g_windTop;
-    [self updateMenu];
+    return YES;
 }
 
-
-- (IBAction) onFileClose:(id)sender
+- (NSMutableArray*) makeCommandLineArgsFromProjectConfig
 {
-    [[NSApplication sharedApplication] terminate:self];
+    return [self makeCommandLineArgsFromProjectConfig:kProjectConfigAll];
 }
 
-
-- (IBAction) onScreenPortait:(id)sender
+- (NSMutableArray*) makeCommandLineArgsFromProjectConfig:(unsigned int)mask
 {
-    g_landscape = false;
-    [self updateView];
-
+    _project.setWindowOffset(Vec2(_window.frame.origin.x, _window.frame.origin.y));
+    vector<string> args = _project.makeCommandLineVector();
+    NSMutableArray *commandArray = [NSMutableArray arrayWithCapacity:args.size()];
+    for (auto &path : args)
+    {
+        [commandArray addObject:[NSString stringWithUTF8String:path.c_str()]];
+    }
+    return commandArray;
 }
 
-- (IBAction) onScreenLandscape:(id)sender
+- (void) parseCocosProjectConfig:(ProjectConfig*)config
 {
-    g_landscape = true;
-    [self updateView];
+    // get project directory
+    ProjectConfig tmpConfig;
+    NSArray *nsargs = [[NSProcessInfo processInfo] arguments];
+    long n = [nsargs count];
+    if (n >= 2)
+    {
+        vector<string> args;
+        for (int i = 0; i < [nsargs count]; ++i)
+        {
+            string arg = [[nsargs objectAtIndex:i] cStringUsingEncoding:NSUTF8StringEncoding];
+            if (arg.length()) args.push_back(arg);
+        }
+        
+        if (args.size() && args.at(1).at(0) == '/')
+        {
+            // FIXME:
+            // for Code IDE before RC2
+            tmpConfig.setProjectDir(args.at(1));
+        }
+        
+        tmpConfig.parseCommandLine(args);
+    }
+    
+    // set project directory as search root path
+    FileUtils::getInstance()->setDefaultResourceRootPath(tmpConfig.getProjectDir());
+    
+    // parse config.json
+    auto parser = ConfigParser::getInstance();
+    auto configPath = tmpConfig.getProjectDir().append(CONFIG_FILE);
+    parser->readConfig(configPath);
+    
+    // set information
+    config->setConsolePort(parser->getConsolePort());
+    config->setFileUploadPort(parser->getUploadPort());
+    config->setFrameSize(parser->getInitViewSize());
+    if (parser->isLanscape())
+    {
+        config->changeFrameOrientationToLandscape();
+    }
+    config->setScriptFile(parser->getEntryFile());
 }
 
-- (void) launch:(NSArray*)args
+- (void) updateProjectFromCommandLineArgs:(ProjectConfig*)config
+{
+    NSArray *nsargs = [[NSProcessInfo processInfo] arguments];
+    long n = [nsargs count];
+    if (n >= 2)
+    {
+        vector<string> args;
+        for (int i = 0; i < [nsargs count]; ++i)
+        {
+            string arg = [[nsargs objectAtIndex:i] cStringUsingEncoding:NSUTF8StringEncoding];
+            if (arg.length()) args.push_back(arg);
+        }
+        
+        if (args.size() && args.at(1).at(0) == '/')
+        {
+            // for Code IDE before RC2
+            config->setProjectDir(args.at(1));
+            config->setDebuggerType(kCCRuntimeDebuggerCodeIDE);
+        }
+        config->parseCommandLine(args);
+    }
+}
+
+- (bool) launch:(NSArray*)args
 {
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     NSMutableDictionary *configuration = [NSMutableDictionary dictionaryWithObject:args forKey:NSWorkspaceLaunchConfigurationArguments];
     NSError *error = [[[NSError alloc] init] autorelease];
     [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url
                                                   options:NSWorkspaceLaunchNewInstance
-                                            configuration:configuration error:&error];
+                                            configuration:configuration
+                                                    error:&error];
+    
+    if (error.code != 0)
+    {
+        NSLog(@"Failed to launch app: %@", [error localizedDescription]);
+    }
+    return (error.code==0);
 }
 
 - (void) relaunch:(NSArray*)args
 {
-    [self launch:args];
-    [[NSApplication sharedApplication] terminate:self];
-}
-
-- (IBAction) onRelaunch:(id)sender
-{
-    NSArray* args=[[NSArray alloc] initWithObjects:@" ", nil];
-    [self relaunch:args];
-}
-
-
-- (IBAction) onViewChangeFrameSize:(id)sender
-{
-    NSInteger index = [sender tag];
-    if (index >= 0 && index < ConfigParser::getInstance()->getScreenSizeCount())
+    if ([self launch:args])
     {
-        SimulatorScreenSize size = ConfigParser::getInstance()->getScreenSize(index);
-        g_screenSize.width = size.width;
-        g_screenSize.height = size.height;
-        [self updateView];
+        [[NSApplication sharedApplication] terminate:self];
+    }
+    else
+    {
+        NSLog(@"RELAUNCH: %@", args);
     }
 }
 
-
-- (IBAction) onScreenZoomOut:(id)sender
+- (void) relaunch
 {
-    if ([sender state] == NSOnState) return;
-    float scale = (float)[sender tag] / 100.0f;
-    g_eglView->setFrameZoomFactor(scale);
-    [self updateView];
+    [self relaunch:[self makeCommandLineArgsFromProjectConfig]];
 }
 
+- (void) createWindowAndGLView
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    GLView::setGLContextAttrs(glContextAttrs);
+    
+    // create console window **MUST** before create opengl view
+    if (_project.isShowConsole())
+    {
+        [self openConsoleWindow];
+        CCLOG("%s\n",Configuration::getInstance()->getInfo().c_str());
+    }
+    
+    float frameScale = _project.getFrameScale();
+    
+    // create opengl view
+    cocos2d::Size frameSize = _project.getFrameSize();
+    
+    const cocos2d::Rect frameRect = cocos2d::Rect(0, 0, frameSize.width, frameSize.height);
+    std::stringstream title;
+    title << "Cocos Simulator - " << ConfigParser::getInstance()->getInitViewName();
+    GLViewImpl *eglView = GLViewImpl::createWithRect(title.str(), frameRect, frameScale);
+    
+    auto director = Director::getInstance();
+    director->setOpenGLView(eglView);
+    
+    _window = eglView->getCocoaWindow();
+    [[NSApplication sharedApplication] setDelegate: self];
+    [_window center];
+    
+    if (_project.getProjectDir().length())
+    {
+        [self setZoom:_project.getFrameScale()];
+        Vec2 pos = _project.getWindowOffset();
+        if (pos.x != 0 && pos.y != 0)
+        {
+            [_window setFrameOrigin:NSMakePoint(pos.x, pos.y)];
+        }
+    }
 
+#if (PLAYER_SUPPORT_DROP > 0)
+    glfwSetDropCallback(eglView->getWindow(), glfwDropFunc);
+#endif
+}
+
+- (void) adjustEditMenuIndex
+{
+    NSApplication *thisApp = [NSApplication sharedApplication];
+    NSMenu *mainMenu = [thisApp mainMenu];
+    
+    NSMenuItem *editMenuItem = [mainMenu itemWithTitle:@"Edit"];
+    if (editMenuItem)
+    {
+        NSUInteger index = 2;
+        if (index > [mainMenu itemArray].count)
+            index = [mainMenu itemArray].count;
+        [[editMenuItem menu] removeItem:editMenuItem];
+        [mainMenu insertItem:editMenuItem atIndex:index];
+    }
+}
+- (void) startup
+{
+    FileUtils::getInstance()->setPopupNotify(false);
+    
+    _project.dump();
+    
+    const string projectDir = _project.getProjectDir();
+    if (projectDir.length())
+    {
+        FileUtils::getInstance()->setDefaultResourceRootPath(projectDir);
+        if (_project.isWriteDebugLogToFile())
+        {
+            [self writeDebugLogToFile:_project.getDebugLogFilePath()];
+        }
+    }
+    
+    const string writablePath = _project.getWritableRealPath();
+    if (writablePath.length())
+    {
+        FileUtils::getInstance()->setWritablePath(writablePath.c_str());
+    }
+    
+    // path for looking Lang file, Studio Default images
+    NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+    FileUtils::getInstance()->addSearchPath(resourcePath.UTF8String);
+    
+    // app
+    _app = new AppDelegate();
+    
+    [self setupUI];
+    [self adjustEditMenuIndex];
+    
+    _app->setProjectConfig(_project);
+    Application::getInstance()->run();
+    // After run, application needs to be terminated immediately.
+    [NSApp terminate: self];
+}
+
+- (void) setupUI
+{
+    auto menuBar = player::PlayerProtocol::getInstance()->getMenuService();
+    
+    // VIEW
+    menuBar->addItem("VIEW_MENU", tr("View"));
+    SimulatorConfig *config = SimulatorConfig::getInstance();
+    int current = config->checkScreenSize(_project.getFrameSize());
+    for (int i = 0; i < config->getScreenSizeCount(); i++)
+    {
+        SimulatorScreenSize size = config->getScreenSize(i);
+        std::stringstream menuId;
+        menuId << "VIEWSIZE_ITEM_MENU_" << i;
+        auto menuItem = menuBar->addItem(menuId.str(), size.title.c_str(), "VIEW_MENU");
+        
+        if (i == current)
+        {
+            menuItem->setChecked(true);
+        }
+    }
+    
+    menuBar->addItem("DIRECTION_MENU_SEP", "-", "VIEW_MENU");
+    menuBar->addItem("DIRECTION_PORTRAIT_MENU", tr("Portrait"), "VIEW_MENU")
+        ->setChecked(_project.isPortraitFrame());
+    menuBar->addItem("DIRECTION_LANDSCAPE_MENU", tr("Landscape"), "VIEW_MENU")
+        ->setChecked(_project.isLandscapeFrame());
+    
+    menuBar->addItem("VIEW_SCALE_MENU_SEP", "-", "VIEW_MENU");
+
+    std::vector<player::PlayerMenuItem*> scaleMenuVector;
+    auto scale100Menu = menuBar->addItem("VIEW_SCALE_MENU_100", tr("Zoom Out").append(" (100%)"), "VIEW_MENU");
+    scale100Menu->setShortcut("super+0");
+    
+    auto scale75Menu = menuBar->addItem("VIEW_SCALE_MENU_75", tr("Zoom Out").append(" (75%)"), "VIEW_MENU");
+    scale75Menu->setShortcut("super+7");
+    
+    auto scale50Menu = menuBar->addItem("VIEW_SCALE_MENU_50", tr("Zoom Out").append(" (50%)"), "VIEW_MENU");
+    scale50Menu->setShortcut("super+6");
+    
+    auto scale25Menu = menuBar->addItem("VIEW_SCALE_MENU_25", tr("Zoom Out").append(" (25%)"), "VIEW_MENU");
+    scale25Menu->setShortcut("super+5");
+    
+    int frameScale = int(_project.getFrameScale() * 100);
+    if (frameScale == 100)
+    {
+        scale100Menu->setChecked(true);
+    }
+    else if (frameScale == 75)
+    {
+        scale75Menu->setChecked(true);
+    }
+    else if (frameScale == 50)
+    {
+        scale50Menu->setChecked(true);
+    }
+    else if (frameScale == 25)
+    {
+        scale25Menu->setChecked(true);
+    }
+    else
+    {
+        scale100Menu->setChecked(true);
+    }
+    
+    scaleMenuVector.push_back(scale100Menu);
+    scaleMenuVector.push_back(scale75Menu);
+    scaleMenuVector.push_back(scale50Menu);
+    scaleMenuVector.push_back(scale25Menu);
+    
+    menuBar->addItem("REFRESH_MENU_SEP", "-", "VIEW_MENU");
+    menuBar->addItem("REFRESH_MENU", tr("Refresh"), "VIEW_MENU")->setShortcut("super+r");
+    
+    ProjectConfig &project = _project;
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create(kAppEventName, [&project, scaleMenuVector](EventCustom* event){
+        auto menuEvent = dynamic_cast<AppEvent*>(event);
+        if (menuEvent)
+        {
+            rapidjson::Document dArgParse;
+            dArgParse.Parse<0>(menuEvent->getDataString().c_str());
+            if (dArgParse.HasMember("name"))
+            {
+                string strcmd = dArgParse["name"].GetString();
+                
+                if (strcmd == "menuClicked")
+                {
+                    player::PlayerMenuItem *menuItem = static_cast<player::PlayerMenuItem*>(menuEvent->getUserData());
+                    if (menuItem)
+                    {
+                        if (menuItem->isChecked())
+                        {
+                            return ;
+                        }
+                        
+                        string data = dArgParse["data"].GetString();
+                        auto player = player::PlayerProtocol::getInstance();
+                        
+                        if ((data == "CLOSE_MENU") || (data == "EXIT_MENU"))
+                        {
+                            player->quit();
+                        }
+                        else if (data == "REFRESH_MENU")
+                        {
+                            player->relaunch();
+                        }
+                        else if (data.find("VIEW_SCALE_MENU_") == 0) // begin with VIEW_SCALE_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("VIEW_SCALE_MENU_"));
+                            float scale = atof(tmp.c_str()) / 100.0f;
+                            project.setFrameScale(scale);
+                            
+                            auto glview = static_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView());
+                            glview->setFrameZoomFactor(scale);
+
+                            
+                            // update scale menu state
+                            for (auto &it : scaleMenuVector)
+                            {
+                                it->setChecked(false);
+                            }
+                            menuItem->setChecked(true);
+                        }
+                        else if (data.find("VIEWSIZE_ITEM_MENU_") == 0) // begin with VIEWSIZE_ITEM_MENU_
+                        {
+                            string tmp = data.erase(0, strlen("VIEWSIZE_ITEM_MENU_"));
+                            int index = atoi(tmp.c_str());
+                            SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize(index);
+                            
+                            if (project.isLandscapeFrame())
+                            {
+                                std::swap(size.width, size.height);
+                            }
+    
+                            project.setFrameSize(cocos2d::Size(size.width, size.height));
+                            project.setWindowOffset(cocos2d::Vec2(player->getPositionX(), player->getPositionY()));
+                            player->openProjectWithProjectConfig(project);
+                        }
+                        else if (data == "DIRECTION_PORTRAIT_MENU")
+                        {
+                            project.changeFrameOrientationToPortait();
+                            player->openProjectWithProjectConfig(project);
+                        }
+                        else if (data == "DIRECTION_LANDSCAPE_MENU")
+                        {
+                            project.changeFrameOrientationToLandscape();
+                            player->openProjectWithProjectConfig(project);
+                        }
+                    }
+                }
+            }
+        }
+    }), 1);
+    
+    // drop
+    AppDelegate *app = _app;
+    auto listener = EventListenerCustom::create(kAppEventDropName, [&project, app](EventCustom* event)
+    {
+        AppEvent *dropEvent = dynamic_cast<AppEvent*>(event);
+        if (dropEvent)
+        {
+            string dirPath = dropEvent->getDataString() + "/";
+            string configFilePath = dirPath + CONFIG_FILE;
+            
+            if (FileUtils::getInstance()->isDirectoryExist(dirPath) &&
+                FileUtils::getInstance()->isFileExist(configFilePath))
+            {
+                // parse config.json
+                ConfigParser::getInstance()->readConfig(configFilePath);
+                
+                project.setProjectDir(dirPath);
+                project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
+                project.setWritablePath(dirPath);
+
+                app->setProjectConfig(project);
+                app->reopenProject();
+            }
+        }
+    });
+    dispatcher->addEventListenerWithFixedPriority(listener, 1);
+}
+
+- (void) openConsoleWindow
+{
+    if (!_consoleController)
+    {
+        _consoleController = [[ConsoleWindowController alloc] initWithWindowNibName:@"ConsoleWindow"];
+    }
+    [_consoleController.window orderFrontRegardless];
+    
+    //set console pipe
+    _pipe = [NSPipe pipe] ;
+    _pipeReadHandle = [_pipe fileHandleForReading] ;
+    
+    int outfd = [[_pipe fileHandleForWriting] fileDescriptor];
+    if (dup2(outfd, fileno(stderr)) != fileno(stderr) || dup2(outfd, fileno(stdout)) != fileno(stdout))
+    {
+        perror("Unable to redirect output");
+        //        [self showAlert:@"Unable to redirect output to console!" withTitle:@"player error"];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleNotification:) name: NSFileHandleReadCompletionNotification object: _pipeReadHandle] ;
+        [_pipeReadHandle readInBackgroundAndNotify] ;
+    }
+}
+
+- (bool) writeDebugLogToFile:(const string)path
+{
+    if (_debugLogFile) return true;
+    //log to file
+    if(_fileHandle) return true;
+    NSString *fPath = [NSString stringWithCString:path.c_str() encoding:[NSString defaultCStringEncoding]];
+    [[NSFileManager defaultManager] createFileAtPath:fPath contents:nil attributes:nil] ;
+    _fileHandle = [NSFileHandle fileHandleForWritingAtPath:fPath];
+    [_fileHandle retain];
+    return true;
+}
+
+- (void)handleNotification:(NSNotification *)note
+{
+    //NSLog(@"Received notification: %@", note);
+    [_pipeReadHandle readInBackgroundAndNotify] ;
+    NSData *data = [[note userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    NSString *str = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    
+    //show log to console
+    [_consoleController trace:str];
+    if(_fileHandle!=nil){
+        [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+}
+
+- (void) setZoom:(float)scale
+{
+    Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
+    _project.setFrameScale(scale);
+}
+
+- (BOOL) applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+    return NO;
+}
+
+#pragma mark - 
+
+-(IBAction)onFileClose:(id)sender
+{
+    [[NSApplication sharedApplication] terminate:self];
+}
+
+-(IBAction)onWindowAlwaysOnTop:(id)sender
+{
+    NSInteger state = [sender state];
+    
+    if (state == NSOffState)
+    {
+        [_window setLevel:NSFloatingWindowLevel];
+        [sender setState:NSOnState];
+    }
+    else
+    {
+        [_window setLevel:NSNormalWindowLevel];
+        [sender setState:NSOffState];
+    }
+}
 @end

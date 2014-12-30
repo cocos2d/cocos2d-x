@@ -234,6 +234,21 @@ void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
     }
 }
 
+std::vector<std::string> Manifest::getSearchPaths() const
+{
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back(_manifestRoot);
+    
+    for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
+    {
+        std::string path = _searchPaths[i];
+        if (path.size() > 0 && path[path.size() - 1] != '/')
+            path.append("/");
+        path = _manifestRoot + path;
+        searchPaths.push_back(path);
+    }
+    return searchPaths;
+}
 
 void Manifest::prependSearchPaths()
 {

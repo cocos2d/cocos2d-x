@@ -2328,6 +2328,49 @@ tolua_lerror:
     return 0;
 }
 
+int lua_cocos2dx_Node_setRotationQuat(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setRotationQuat'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            cocos2d::Quaternion arg0;
+            ok &= luaval_to_quaternion(tolua_S, 2, &arg0, "cc.Node:setRotationQuat");
+            
+            if (!ok) { break; }
+            cobj->setRotationQuat(arg0);
+            return 0;
+        }
+    }while(0);
+    
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Node:setRotationQuat",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setRotationQuat'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
 static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -4402,6 +4445,9 @@ static void extendNode(lua_State* tolua_S)
         lua_rawset(tolua_S, -3);
         lua_pushstring(tolua_S, "setAdditionalTransform");
         lua_pushcfunction(tolua_S, lua_cocos2dx_Node_setAdditionalTransform);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setRotationQuat");
+        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_setRotationQuat);
         lua_rawset(tolua_S, -3);
     }
     lua_pop(tolua_S, 1);

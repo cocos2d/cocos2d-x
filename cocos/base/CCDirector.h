@@ -287,6 +287,10 @@ public:
      The "delta time" will be 0 (as if the game wasn't paused)
      */
     void resume();
+    
+    /** Restart the director
+     */
+    void restart();
 
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
      If you don't want to pause your animation call [pause] instead.
@@ -396,8 +400,13 @@ public:
     void resetMatrixStack();
 
 protected:
+    void reset();
+    
     void purgeDirector();
     bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
+    
+    void restartDirector();
+    bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
     
     void setNextScene();
     

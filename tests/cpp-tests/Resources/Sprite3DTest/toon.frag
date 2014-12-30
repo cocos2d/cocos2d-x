@@ -7,7 +7,7 @@ uniform vec4 u_color;
 varying vec3 v_normal;
 void main(void)
 {
-	vec3 light_direction = vec3(1,-1,0);
+	vec3 light_direction = vec3(1,-1,-1);
 	light_direction = normalize(light_direction);
 	vec3 light_color = vec3(1,1,1);
 	vec3 normal  = normalize(v_normal);

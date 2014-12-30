@@ -289,6 +289,55 @@ function cc.c4f( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
 end
 
+local function isFloatColor(c)
+    return (c.r <= 1 and c.g <= 1 and c.b <= 1) and (math.ceil(c.r) ~= c.r or math.ceil(c.g) ~= c.g or math.ceil(c.b) ~= c.b)
+end
+
+function cc.convertColor(input, typ)
+    assert(type(input) == "table" and input.r and input.g and input.b, "cc.convertColor() - invalid input color")
+    local ret
+    if typ == "3b" then
+        if isFloatColor(input) then
+            ret = {r = math.ceil(input.r * 255), g = math.ceil(input.g * 255), b = math.ceil(input.b * 255)}
+        else
+            ret = {r = input.r, g = input.g, b = input.b}
+        end
+    elseif typ == "4b" then
+        if isFloatColor(input) then
+            ret = {r = math.ceil(input.r * 255), g = math.ceil(input.g * 255), b = math.ceil(input.b * 255)}
+        else
+            ret = {r = input.r, g = input.g, b = input.b}
+        end
+        if input.a then
+            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+                ret.a = input.a * 255
+            else
+                ret.a = input.a
+            end
+        else
+            ret.a = 255
+        end
+    elseif typ == "4f" then
+        if isFloatColor(input) then
+            ret = {r = input.r, g = input.g, b = input.b}
+        else
+            ret = {r = input.r / 255, g = input.g / 255, b = input.b / 255}
+        end
+        if input.a then
+            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+                ret.a = input.a
+            else
+                ret.a = input.a / 255
+            end
+        else
+            ret.a = 255
+        end
+    else
+        error(string.format("cc.convertColor() - invalid type %s", typ), 0)
+    end
+    return ret
+end
+
 --Vertex2F
 function cc.vertex2F(_x,_y)
     return { x = _x, y = _y }

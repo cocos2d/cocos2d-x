@@ -34,6 +34,18 @@
 -- @param self
         
 --------------------------------
+-- @overload self, int, bool         
+-- @overload self, int         
+-- @overload self, int, int, bool         
+-- @overload self, int, int, int, bool         
+-- @function [parent=#ActionTimeline] gotoFrameAndPlay
+-- @param self
+-- @param #int startIndex
+-- @param #int endIndex
+-- @param #int currentFrameIndex
+-- @param #bool loop
+
+--------------------------------
 -- 
 -- @function [parent=#ActionTimeline] init 
 -- @param self
@@ -56,6 +68,13 @@
 -- @function [parent=#ActionTimeline] getTimelines 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] play 
+-- @param self
+-- @param #string name
+-- @param #bool loop
         
 --------------------------------
 --  Resume the animation. 
@@ -88,17 +107,11 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @overload self, int, bool         
--- @overload self, int         
--- @overload self, int, int, bool         
--- @overload self, int, int, int, bool         
--- @function [parent=#ActionTimeline] gotoFrameAndPlay
+-- 
+-- @function [parent=#ActionTimeline] removeIndexes 
 -- @param self
--- @param #int startIndex
--- @param #int endIndex
--- @param #int currentFrameIndex
--- @param #bool loop
-
+-- @param #string name
+        
 --------------------------------
 -- 
 -- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
@@ -111,6 +124,12 @@
 -- @function [parent=#ActionTimeline] getEndFrame 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Set current frame index, this will cause action plays to this frame. 
+-- @function [parent=#ActionTimeline] setCurrentFrame 
+-- @param self
+-- @param #int frameIndex
         
 --------------------------------
 --  Set the animation speed, this will speed up or slow down the speed. 
@@ -130,10 +149,10 @@
 -- @param #int duration
         
 --------------------------------
---  Set current frame index, this will cause action plays to this frame. 
--- @function [parent=#ActionTimeline] setCurrentFrame 
+--  add ActionIndexes 
+-- @function [parent=#ActionTimeline] addIndexes 
 -- @param self
--- @param #int frameIndex
+-- @param #ccs.ActionIndexes indexes
         
 --------------------------------
 -- 

@@ -31,6 +31,10 @@ THE SOFTWARE.
 #include "base/CCEventFocus.h"
 #include "base/CCEventDispatcher.h"
 #include "ui/UILayoutComponent.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/ccShaders.h"
+#include "ui/shaders/UIShaders.h"
 
 NS_CC_BEGIN
 
@@ -1159,6 +1163,21 @@ void Widget::copyClonedWidgetChildren(Widget* model)
             addChild(child->clone());
         }
     }
+}
+    
+GLProgramState* Widget::getNormalGLProgramState()const
+{
+    GLProgramState *glState = nullptr;
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+    return glState;
+}
+
+GLProgramState* Widget::getGrayGLProgramState()const
+{
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert,
+                                                           ccUIGrayScale_frag);
+    GLProgramState *glState  = GLProgramState::getOrCreateWithGLProgram(program);
+    return glState;
 }
 
 void Widget::copySpecialProperties(Widget* model)

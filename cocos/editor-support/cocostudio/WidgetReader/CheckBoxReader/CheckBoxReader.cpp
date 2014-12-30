@@ -776,12 +776,20 @@ namespace cocostudio
     }
 
     int CheckBoxReader::getResourceType(std::string key)
-	{
-		if(key == "Normal" || key == "Default" || key == "MarkedSubImage")
-		{
-			return 	0;	
-		}
-	
-		return 1;
-	}
+    {
+        if(key == "Normal" || key == "Default")
+        {
+            return 	0;
+        }
+        
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
+        {
+            if(key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
 }
