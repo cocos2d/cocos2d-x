@@ -595,8 +595,7 @@ void Renderer::fillQuads(const QuadCommand *cmd)
     
     for(ssize_t i=0; i< cmd->getQuadCount() * 4; ++i)
     {
-        V3F_C4B_T2F *q = &_quadVerts[i + _numberQuads * 4];
-        Vec3 *vec1 = (Vec3*)&q->vertices;
+        Vec3 *vec1 = (Vec3*)&(_quadVerts[i + _numberQuads * 4].vertices);
         modelView.transformPoint(vec1);
     }
     

@@ -151,9 +151,9 @@ cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers:
 std::string ArmatureNodeReader::getArmatureName(const std::string& exporJsonPath)
 {
 	//FileUtils.getFileData(exporJsonPath, "r", size)   // need read armature name in exportJsonPath
-	int end = exporJsonPath.find_last_of(".");
-	int start = exporJsonPath.find_last_of("\\") + 1;
-	int start1 = exporJsonPath.find_last_of("/") + 1;
+	size_t end = exporJsonPath.find_last_of(".");
+	size_t start = exporJsonPath.find_last_of("\\") + 1;
+	size_t start1 = exporJsonPath.find_last_of("/") + 1;
 	if (start < start1)
 		start = start1;
 
