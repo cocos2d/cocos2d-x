@@ -71,6 +71,7 @@ class Sprite3DUVAnimationTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DUVAnimationTest);
     Sprite3DUVAnimationTest();
+    virtual ~Sprite3DUVAnimationTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
@@ -80,6 +81,10 @@ protected:
     float _cylinder_texture_offset;
     float _shining_duraion;
     GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class Sprite3DFakeShadowTest : public Sprite3DTestDemo
@@ -94,6 +99,7 @@ public:
     };
     CREATE_FUNC(Sprite3DFakeShadowTest);
     Sprite3DFakeShadowTest();
+    virtual ~Sprite3DFakeShadowTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void Move(cocos2d::Ref* sender,int value);
@@ -110,6 +116,11 @@ private:
     unsigned int   _curState;
     cocos2d::Sprite3D * _plane;
     cocos2d::Sprite3D * _orc;
+    GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class Sprite3DLightMapTest : public Sprite3DTestDemo
@@ -117,6 +128,7 @@ class Sprite3DLightMapTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DLightMapTest);
     Sprite3DLightMapTest();
+    virtual ~Sprite3DLightMapTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
@@ -129,8 +141,16 @@ class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DBasicToonShaderTest);
     Sprite3DBasicToonShaderTest();
+    virtual ~Sprite3DBasicToonShaderTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+protected:
+    GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 
 };
 class EffectSprite3D;
@@ -406,6 +426,24 @@ protected:
     bool _hasWeapon;
     cocos2d::Sprite3D* _sprite;
     cocos2d::Sprite3D* _mirrorSprite;
+};
+
+class QuaternionTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(QuaternionTest);
+    QuaternionTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    virtual void update(float delta) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    float              _arcSpeed;
+    float              _radius;
+    float              _accAngle;
 };
 
 class Sprite3DTestScene : public TestScene

@@ -173,6 +173,13 @@
 -- @param #cc.Scheduler scheduler
         
 --------------------------------
+-- 
+-- @function [parent=#Director] getMatrix 
+-- @param self
+-- @param #int type
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
 --  The main loop is triggered again.<br>
 -- Call this function only if [stopAnimation] was called earlier<br>
 -- warning Don't call this function to start the main loop. To run the main loop call runWithScene
@@ -288,11 +295,9 @@
 -- @param self
         
 --------------------------------
--- 
--- @function [parent=#Director] getMatrix 
+--  Restart the director
+-- @function [parent=#Director] restart 
 -- @param self
--- @param #int type
--- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 --  Pops out a scene from the stack.<br>

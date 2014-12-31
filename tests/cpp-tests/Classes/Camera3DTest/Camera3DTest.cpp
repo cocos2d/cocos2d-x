@@ -667,7 +667,7 @@ CameraClippingDemo::CameraClippingDemo(void)
 , _moveAction(nullptr)
 , _drawAABB(nullptr)
 , _drawFrustum(nullptr)
-, _row(0)
+, _row(3)
 {
 }
 CameraClippingDemo::~CameraClippingDemo(void)
@@ -791,7 +791,7 @@ void CameraClippingDemo::update(float dt)
     for (const auto& iter: children)
     {
         const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
-        if (_cameraFirst->visibleInFrustum(aabb))
+        if (_cameraFirst->isVisibleInFrustum(&aabb))
         {
             aabb.getCorners(corners);
             _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
@@ -843,14 +843,14 @@ void CameraClippingDemo::switchViewCallback(Ref* sender)
     {
         _cameraType = CameraType::ThirdCamera;
         _cameraThird->setCameraFlag(CameraFlag::USER1);
-        _cameraThird->enableFrustumCull(false, false);
+        _cameraThird->enableFrustumCulling(false, false);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
     }
     else if(_cameraType == CameraType::ThirdCamera)
     {
         _cameraType = CameraType::FirstCamera;
         _cameraFirst->setCameraFlag(CameraFlag::USER1);
-        _cameraFirst->enableFrustumCull(true, true);
+        _cameraFirst->enableFrustumCulling(true, true);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
         _drawFrustum->clear();
     }

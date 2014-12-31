@@ -70,7 +70,7 @@ Camera::Camera()
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
 , _frustumDirty(true)
-, _enableFrustumCull(true)
+, _enableFrustumCulling(true)
 {
     
 }
@@ -253,22 +253,22 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::enableFrustumCull(bool bEnalbe, bool bClipZ)
+void Camera::enableFrustumCulling(bool enalbe, bool clipZ)
 {
-    _enableFrustumCull = bEnalbe;
-    _frustum.setClipZ(bClipZ);
+    _enableFrustumCulling = enalbe;
+    _frustum.setClipZ(clipZ);
 }
 
-bool Camera::visibleInFrustum(const AABB& aabb) const
+bool Camera::isVisibleInFrustum(const AABB* aabb) const
 {
-    if (_enableFrustumCull)
+    if (_enableFrustumCulling)
     {
         if (_frustumDirty)
         {
             _frustum.initFrustum(this);
             _frustumDirty = false;
         }
-        return !_frustum.isOutFrustum(aabb);
+        return !_frustum.isOutOfFrustum(*aabb);
     }
     return true;
 }

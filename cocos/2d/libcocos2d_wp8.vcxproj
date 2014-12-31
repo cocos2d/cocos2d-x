@@ -224,15 +224,18 @@
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCBundleReader.h" />
+    <ClInclude Include="..\3d\CCFrustum.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
     <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
+    <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\3d\CCRay.h" />
     <ClInclude Include="..\3d\CCSkeleton3D.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\Export.h" />
     <ClInclude Include="..\audio\include\SimpleAudioEngine.h" />
     <ClInclude Include="..\audio\wp8\Audio.h" />
@@ -332,6 +335,7 @@
     <ClInclude Include="..\editor-support\cocosbuilder\CocosBuilder.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
@@ -457,6 +461,7 @@
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
     <ClInclude Include="..\platform\winrt\DirectXHelper.h" />
     <ClInclude Include="..\platform\winrt\inet_ntop_winrt.h" />
+    <ClInclude Include="..\platform\winrt\inet_pton_winrt.h" />
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\pch.h" />
@@ -488,6 +493,7 @@
     <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
+    <ClInclude Include="..\ui\shaders\UIShaders.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
@@ -662,11 +668,13 @@
     <ClCompile Include="..\3d\CCBillBoard.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
+    <ClCompile Include="..\3d\CCFrustum.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
     <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCRay.cpp" />
     <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
@@ -814,6 +822,7 @@
     <ClCompile Include="..\editor-support\cocosbuilder\CCSpriteLoader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
@@ -917,6 +926,7 @@
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
+    <ClCompile Include="..\platform\winrt\inet_pton_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -951,6 +961,7 @@
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\ui\CocosGUI.cpp" />
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="..\ui\UIButton.cpp" />
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
@@ -1057,6 +1068,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\3d\CCAnimationCurve.inl" />
     <None Include="..\math\Mat4.inl" />
     <None Include="..\math\MathUtil.inl" />
     <None Include="..\math\MathUtilNeon.inl" />
@@ -1086,6 +1098,7 @@
     <None Include="..\renderer\ccShader_PositionTexture_uColor.vert" />
     <None Include="..\renderer\ccShader_Position_uColor.frag" />
     <None Include="..\renderer\ccShader_Position_uColor.vert" />
+    <None Include="..\ui\shaders\ccShader_grayscale.frag" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Box2D\proj.wp8\Box2D.vcxproj">

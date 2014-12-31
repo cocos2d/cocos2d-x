@@ -61,6 +61,10 @@ THE SOFTWARE.
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
 
+#if CC_ENABLE_SCRIPT_BINDING
+#include "CCScriptSupport.h"
+#endif
+
 /**
  Position of the FPS
  
@@ -120,12 +124,16 @@ bool Director::init(void)
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = 0;
     _lastUpdate = new struct timeval;
+    _secondsPerFrame = 1.0f;
 
     // paused ?
     _paused = false;
 
     // purge ?
     _purgeDirectorInNextLoop = false;
+    
+    // restart ?
+    _restartDirectorInNextLoop = false;
 
     _winSizeInPoints = Size::ZERO;
 
@@ -940,17 +948,22 @@ void Director::end()
     _purgeDirectorInNextLoop = true;
 }
 
-void Director::purgeDirector()
+void Director::restart()
+{
+    _restartDirectorInNextLoop = true;
+}
+
+void Director::reset()
 {
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
-    // Disable event dispatching
+    // Remove all events
     if (_eventDispatcher)
     {
-        _eventDispatcher->setEnabled(false);
+        _eventDispatcher->removeAllEventListeners();
     }
-
+    
     if (_runningScene)
     {
         _runningScene->onExit();
@@ -960,22 +973,22 @@ void Director::purgeDirector()
     
     _runningScene = nullptr;
     _nextScene = nullptr;
-
+    
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
     _scenesStack.clear();
-
+    
     stopAnimation();
-
+    
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
-
+    
     // purge bitmap cache
     FontFNT::purgeCachedData();
-
+    
     FontFreeType::shutdownFreeType();
-
+    
     // purge all managed caches
     
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -996,13 +1009,18 @@ void Director::purgeDirector()
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     AsyncTaskPool::destoryInstance();
-
+    
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     
     GL::invalidateStateCache();
     
     destroyTextureCache();
+}
+
+void Director::purgeDirector()
+{
+    reset();
 
     CHECK_GL_ERROR_DEBUG();
     
@@ -1015,6 +1033,23 @@ void Director::purgeDirector()
 
     // delete Director
     release();
+}
+
+void Director::restartDirector()
+{
+    reset();
+    
+    // Texture cache need to be reinitialized
+    initTextureCache();
+    
+    // release the objects
+    PoolManager::getInstance()->getCurrentPool()->clear();
+    
+    // Real restart in script level
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEvent scriptEvent(kRestartGame, NULL);
+    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+#endif
 }
 
 void Director::setNextScene()
@@ -1303,6 +1338,11 @@ void DisplayLinkDirector::mainLoop()
     {
         _purgeDirectorInNextLoop = false;
         purgeDirector();
+    }
+    else if (_restartDirectorInNextLoop)
+    {
+        _restartDirectorInNextLoop = false;
+        restartDirector();
     }
     else if (! _invalid)
     {

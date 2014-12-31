@@ -42,6 +42,7 @@
 #define bzero(a, b) memset(a, 0, b);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "inet_ntop_winrt.h"
+#include "inet_pton_winrt.h"
 #include "CCWinRTUtils.h"
 #endif
 #else
@@ -201,6 +202,25 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+static const int CCLOG_STRING_TAG = 1;
+void SendLogToWindow(const char *log)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    // Send data as a message
+    COPYDATASTRUCT myCDS;
+    myCDS.dwData = CCLOG_STRING_TAG;
+    myCDS.cbData = (DWORD)strlen(log) + 1;
+    myCDS.lpData = (PVOID)log;
+    if (Director::getInstance()->getOpenGLView())
+    {
+        HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
+        SendMessage(hwnd,
+            WM_COPYDATA,
+            (WPARAM)(HWND)hwnd,
+            (LPARAM)(LPVOID)&myCDS);
+    }
+#endif
+}
 
 //
 // Free functions to log
@@ -222,6 +242,7 @@ static void _log(const char *format, va_list args)
     OutputDebugStringW(wszBuf);
     WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), nullptr, FALSE);
     printf("%s", buf);
+    SendLogToWindow(buf);
     fflush(stdout);
 #else
     // Linux, Mac, iOS, etc
@@ -259,6 +280,7 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
+, _bindAddress("")
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
@@ -345,6 +367,22 @@ bool Console::listenOnTCP(int port)
             continue;       /* error, try next one */
 
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
+
+        // bind address
+        if (_bindAddress.length() > 0)
+        {
+            if (res->ai_family == AF_INET)
+            {
+                struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin_addr);
+            }
+            else if (res->ai_family == AF_INET6)
+            {
+                struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin6_addr);
+            }
+        }
+
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
@@ -1140,6 +1178,9 @@ void Console::loop()
     _running = false;
 }
 
-
+void Console::setBindAddress(const std::string &address)
+{
+    _bindAddress = address;
+}
 
 NS_CC_END

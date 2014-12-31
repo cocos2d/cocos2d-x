@@ -1267,6 +1267,21 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.h">
+      <Filter>ui\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_pton_winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -2345,6 +2360,21 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\UIShaders.cpp">
+      <Filter>ui\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_pton_winrt.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -2578,6 +2608,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
       <UniqueIdentifier>{1151b6b3-739f-4cff-add0-6b772fa7d226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ui\shaders">
+      <UniqueIdentifier>{10d3def7-52ba-4939-8de7-d9960a752f1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />
@@ -2688,6 +2721,12 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters">
       <Filter>2d</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\ccShader_grayscale.frag">
+      <Filter>ui\shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
     </None>
   </ItemGroup>
 </Project>

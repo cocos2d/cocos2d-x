@@ -151,6 +151,10 @@ void Sprite3D::afterAsyncLoad(void* param)
                 setTexture(asyncParam->texPath);
             }
         }
+        else
+        {
+            CCLOG("file load failed: %s ", asyncParam->modlePath.c_str());
+        }
         asyncParam->afterLoadCallback(this, asyncParam->callbackParam);
     }
 }
@@ -598,7 +602,7 @@ static Texture2D * getDummyTexture()
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // camera clipping
-    if(!Camera::getVisitingCamera()->visibleInFrustum(this->getAABB()))
+    if(!Camera::getVisitingCamera()->isVisibleInFrustum(&this->getAABB()))
         return;
     
     if (_skeleton)

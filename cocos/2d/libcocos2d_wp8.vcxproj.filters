@@ -245,6 +245,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
       <UniqueIdentifier>{939d9d3e-06b3-494e-affd-070c2c1cbe1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ui\shaders">
+      <UniqueIdentifier>{f6df0f43-3b03-4746-b786-4323895be3b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCAction.cpp">
@@ -1316,6 +1319,21 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp">
+      <Filter>ui\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\inet_pton_winrt.cpp">
+      <Filter>platform\winrt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2556,6 +2574,24 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\ui\shaders\UIShaders.h">
+      <Filter>ui\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\cocos3d.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\inet_pton_winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -2644,6 +2680,12 @@
     </None>
     <None Include="..\renderer\ccShader_Position_uColor.vert">
       <Filter>renderer\shaders</Filter>
+    </None>
+    <None Include="..\ui\shaders\ccShader_grayscale.frag">
+      <Filter>ui\shaders</Filter>
+    </None>
+    <None Include="..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
     </None>
   </ItemGroup>
 </Project>

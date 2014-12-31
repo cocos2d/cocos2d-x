@@ -30,16 +30,15 @@
 
 NS_CC_BEGIN
 
+enum class PointSide
+{
+    IN_PLANE,
+    FRONT_PLANE,
+    BEHIND_PLANE,
+};
+
 class CC_DLL Plane
 {
-public:
-    enum POINT_SIDE
-    {
-       ON_PLANE,
-       FRONT_PLANE,
-       BEHIND_PLANE,
-    };
-
 public:
     /**
     * create plane from tree point.
@@ -55,6 +54,10 @@ public:
     * create plane from normal and a point on plane.
     */
     Plane(const Vec3& normal, const Vec3& point);
+    
+    /**
+     * create a default plan whose normal is (0, 0, 1), and _dist is 0, xoy plan in fact.
+     */
     Plane();
     
     /**
@@ -90,7 +93,7 @@ public:
     /**
     * Return the side where the point is.
     */
-    POINT_SIDE getSide(const Vec3& point) const;
+    PointSide getSide(const Vec3& point) const;
 
 protected:
     Vec3 _normal;

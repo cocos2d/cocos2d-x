@@ -27,46 +27,44 @@
 
 NS_CC_BEGIN
 
-bool Frustum::initFrustum(const Camera* pCamera)
+bool Frustum::initFrustum(const Camera* camera)
 {
-    _bInit = true;
-    createPlane(pCamera);
+    _initialized = true;
+    createPlane(camera);
     return true;
 }
-bool Frustum::isOutFrustum(const AABB& aabb) const
+bool Frustum::isOutOfFrustum(const AABB& aabb) const
 {
-    if (_bInit)
+    if (_initialized)
     {
         Vec3 point;
 
-        int nplane = _bClipZ ? 6 : 4;
-        for (int i = 0; i < nplane; i++)
+        int plane = _clipZ ? 6 : 4;
+        for (int i = 0; i < plane; i++)
         {
             const Vec3& normal = _plane[i].getNormal();
             point.x = normal.x < 0 ? aabb._max.x : aabb._min.x;
             point.y = normal.y < 0 ? aabb._max.y : aabb._min.y;
             point.z = normal.z < 0 ? aabb._max.z : aabb._min.z;
             
-            if (_plane[i].getSide(point) == Plane::FRONT_PLANE )
+            if (_plane[i].getSide(point) == PointSide::FRONT_PLANE )
                 return true;
         }
     }
     return false;
 }
 
-bool Frustum::isOutFrustum(const OBB& obb) const
+bool Frustum::isOutOfFrustum(const OBB& obb) const
 {
-    if (_bInit)
+    if (_initialized)
     {
         Vec3 point;
-
-        int nplane = _bClipZ ? 6 : 4;
-
+        int plane = _clipZ ? 6 : 4;
         Vec3 obbExtentX = obb._xAxis * obb._extents.x;
         Vec3 obbExtentY = obb._yAxis * obb._extents.y;
         Vec3 obbExtentZ = obb._zAxis * obb._extents.z;
         
-        for (int i = 0; i < nplane; i++)
+        for (int i = 0; i < plane; i++)
         {
             const Vec3& normal = _plane[i].getNormal();
             point = obb._center;
@@ -74,16 +72,16 @@ bool Frustum::isOutFrustum(const OBB& obb) const
             point = normal.dot(obb._yAxis) > 0 ? point - obbExtentY : point + obbExtentY;
             point = normal.dot(obb._zAxis) > 0 ? point - obbExtentZ : point + obbExtentZ;
 
-            if (_plane[i].getSide(point) == Plane::FRONT_PLANE)
+            if (_plane[i].getSide(point) == PointSide::FRONT_PLANE)
                 return true;
         }
     }
     return  false;
 }
 
-void Frustum::createPlane(const Camera* pcamera)
+void Frustum::createPlane(const Camera* camera)
 {
-    const Mat4& mat = pcamera->getViewProjectionMatrix();
+    const Mat4& mat = camera->getViewProjectionMatrix();
     //ref http://www.lighthouse3d.com/tutorials/view-frustum-culling/clip-space-approach-extracting-the-planes/
     //extract frustum plane
     _plane[0].initPlane(-Vec3(mat.m[3] + mat.m[0], mat.m[7] + mat.m[4], mat.m[11] + mat.m[8]), (mat.m[15] + mat.m[12]));//left
