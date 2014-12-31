@@ -119,16 +119,21 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
 	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;	
 
 	std::string filepath(options->fileData()->path()->c_str());
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filepath);
     
-    std::string dirpath = filepath.substr(0, filepath.find_last_of("/"));
+    std::string dirpath = fullpath.substr(0, fullpath.find_last_of("/"));
     FileUtils::getInstance()->addSearchPath(dirpath);
     
-	ArmatureDataManager::getInstance()->addArmatureFileInfo(FileUtils::getInstance()->fullPathForFilename(filepath));
+	ArmatureDataManager::getInstance()->addArmatureFileInfo(fullpath);
 	custom->init(getArmatureName(filepath));
+    std::string currentname = options->currentAnimationName()->c_str();
 	if (options->isAutoPlay())
-		custom->getAnimation()->play(options->currentAnimationName()->c_str(), -1, options->isLoop());
+		custom->getAnimation()->play(currentname, -1, options->isLoop());
 	else
-		custom->getAnimation()->setIsPlaying(false);
+    {
+        custom->getAnimation()->play(currentname);
+        custom->getAnimation()->gotoAndPause(0);
+    }
 }
 
 cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
