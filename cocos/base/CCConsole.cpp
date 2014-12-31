@@ -42,6 +42,7 @@
 #define bzero(a, b) memset(a, 0, b);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "inet_ntop_winrt.h"
+#include "inet_pton_winrt.h"
 #include "CCWinRTUtils.h"
 #endif
 #else
