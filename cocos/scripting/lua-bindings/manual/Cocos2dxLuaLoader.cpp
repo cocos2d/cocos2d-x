@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2011-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,22 +35,13 @@ extern "C"
 {
     int cocos2dx_lua_loader(lua_State *L)
     {
-        static const std::string BYTECODE_FILE_EXT    = ".luac";
         static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
         
         std::string filename(luaL_checkstring(L, 1));
-        size_t pos = filename.rfind(BYTECODE_FILE_EXT);
-        if (pos != std::string::npos)
+        size_t pos = filename.rfind(NOT_BYTECODE_FILE_EXT);
+        if (pos == filename.length() - NOT_BYTECODE_FILE_EXT.length())
         {
             filename = filename.substr(0, pos);
-        }
-        else
-        {
-            pos = filename.rfind(NOT_BYTECODE_FILE_EXT);
-            if (pos == filename.length() - NOT_BYTECODE_FILE_EXT.length())
-            {
-                filename = filename.substr(0, pos);
-            }
         }
         
         pos = filename.find_first_of(".");
@@ -84,20 +75,11 @@ extern "C"
             }
             
             pos = prefix.find("?.lua");
-            chunkName = prefix.substr(0, pos) + filename + BYTECODE_FILE_EXT;
+            chunkName = prefix.substr(0, pos) + filename + NOT_BYTECODE_FILE_EXT;
             if (utils->isFileExist(chunkName))
             {
                 chunk = utils->getFileData(chunkName.c_str(), "rb", &chunkSize);
                 break;
-            }
-            else
-            {
-                chunkName = prefix.substr(0, pos) + filename + NOT_BYTECODE_FILE_EXT;
-                if (utils->isFileExist(chunkName))
-                {
-                    chunk = utils->getFileData(chunkName.c_str(), "rb", &chunkSize);
-                    break;
-                }
             }
             
             begin = next + 1;
