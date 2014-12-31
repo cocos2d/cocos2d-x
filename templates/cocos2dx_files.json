@@ -1010,7 +1010,6 @@
         "cocos/platform/winrt/CCPThreadWinRT.cpp", 
         "cocos/platform/winrt/CCPThreadWinRT.h", 
         "cocos/platform/winrt/CCPlatformDefine-winrt.h", 
-        "cocos/platform/winrt/CCPlatformDefine.h", 
         "cocos/platform/winrt/CCPrecompiledShaders.cpp", 
         "cocos/platform/winrt/CCPrecompiledShaders.h", 
         "cocos/platform/winrt/CCStdC.cpp", 
