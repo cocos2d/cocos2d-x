@@ -1273,6 +1273,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_pton_winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -2357,6 +2366,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\inet_pton_winrt.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -2706,6 +2724,9 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\ccShader_grayscale.frag">
       <Filter>ui\shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
     </None>
   </ItemGroup>
 </Project>
