@@ -60,7 +60,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\unzip.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\xxhash\xxhash.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\3dExport.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimate3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimation3D.h" />
