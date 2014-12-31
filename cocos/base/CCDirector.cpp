@@ -1042,6 +1042,9 @@ void Director::restartDirector()
     // Texture cache need to be reinitialized
     initTextureCache();
     
+    // Reschedule for action manager
+    getScheduler()->scheduleUpdate(getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+    
     // release the objects
     PoolManager::getInstance()->getCurrentPool()->clear();
     
