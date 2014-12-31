@@ -1,5 +1,6 @@
-
-ccs = ccs or {}
+if nil == ccs then
+    return
+end
 
 ccs.MovementEventType = {
     start = 0,
