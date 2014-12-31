@@ -47,6 +47,7 @@ public class QuickHTTPInterface {
         try {
             if ("POST".equalsIgnoreCase(strMedthod)) {
                 http.setDoOutput(true);
+                http.setRequestProperty("Content-Type", "multipart/form-data");
             }
             http.setRequestMethod(strMedthod);
         } catch (ProtocolException e) {
