@@ -37,6 +37,9 @@ elseif target == cc.PLATFORM_OS_ANDROID then
     device.platform = "android"
 elseif target == cc.PLATFORM_OS_IPHONE or target == cc.PLATFORM_OS_IPAD then
     device.platform = "ios"
+    local director = cc.Director:getInstance()
+    local view = director:getOpenGLView()
+    local framesize = view:getFrameSize()
     local w, h = framesize.width, framesize.height
     if w == 640 and h == 960 then
         device.model = "iphone 4"
