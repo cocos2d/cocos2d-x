@@ -43,8 +43,7 @@ typedef enum {
 	SP_VERTEX_X1 = 0, SP_VERTEX_Y1, SP_VERTEX_X2, SP_VERTEX_Y2, SP_VERTEX_X3, SP_VERTEX_Y3, SP_VERTEX_X4, SP_VERTEX_Y4
 } spVertexIndex;
 
-typedef struct spRegionAttachment spRegionAttachment;
-struct spRegionAttachment {
+typedef struct spRegionAttachment {
 	spAttachment super;
 	const char* path;
 	float x, y, scaleX, scaleY, rotation, width, height;
@@ -57,7 +56,7 @@ struct spRegionAttachment {
 
 	float offset[8];
 	float uvs[8];
-};
+} spRegionAttachment;
 
 spRegionAttachment* spRegionAttachment_create (const char* name);
 void spRegionAttachment_setUVs (spRegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate);

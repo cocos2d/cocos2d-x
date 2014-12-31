@@ -47,11 +47,13 @@ struct spBone {
 	float x, y;
 	float rotation, rotationIK;
 	float scaleX, scaleY;
+	int/*bool*/flipX, flipY;
 
 	float const m00, m01, worldX; /* a b x */
 	float const m10, m11, worldY; /* c d y */
 	float const worldRotation;
 	float const worldScaleX, worldScaleY;
+	int/*bool*/const worldFlipX, worldFlipY;
 };
 
 void spBone_setYDown (int/*bool*/yDown);

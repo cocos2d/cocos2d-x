@@ -38,8 +38,7 @@
 extern "C" {
 #endif
 
-typedef struct spAttachmentLoader spAttachmentLoader;
-struct spAttachmentLoader {
+typedef struct spAttachmentLoader {
 	const char* error1;
 	const char* error2;
 
@@ -51,7 +50,7 @@ struct spAttachmentLoader {
 					vtable(0) {
 	}
 #endif
-};
+} spAttachmentLoader;
 
 void spAttachmentLoader_dispose (spAttachmentLoader* self);
 

@@ -40,8 +40,7 @@ extern "C" {
 
 struct spSkeleton;
 
-typedef struct spIkConstraint spIkConstraint;
-struct spIkConstraint {
+typedef struct spIkConstraint {
 	spIkConstraintData* const data;
 	
 	int bonesCount;
@@ -50,7 +49,7 @@ struct spIkConstraint {
 	spBone* target;
 	int bendDirection;
 	float mix;
-};
+} spIkConstraint;
 
 spIkConstraint* spIkConstraint_create (spIkConstraintData* data, const struct spSkeleton* skeleton);
 void spIkConstraint_dispose (spIkConstraint* self);
