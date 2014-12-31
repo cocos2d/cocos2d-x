@@ -775,37 +775,11 @@ namespace cocostudio
         bool ignoreSize = options->ignoreSize();
         widget->ignoreContentAdaptWithSize(ignoreSize);
 
-        std::string versionString = CSLoader::getInstance()->getCsdVersion();
-        //assume versionString is like "2.0.6.0"
-        if (versionString.length() > 0)
-        {
-            size_t p1, p2, p3, v1, v2, v3;
-            p1 = p2 = p3 = v1 = v2 = v3 = 0;
-            p1 = versionString.find('.');
-            if (p1 > 0)
-            {
-                p2 = versionString.find('.', p1 + 1);
-                v1 = atoi(versionString.substr(0, p1).c_str());
-            }
-            if (p2 > p1)
-            {
-                p3 = versionString.find('.', p2 + 1);
-                v2 = atoi(versionString.substr(p1 + 1, p2 - p1 - 1).c_str());
-            }
-            if (p3 > p2)
-            {
-                v3 = atoi(versionString.substr(p2 + 1, p3 - p2 - 1).c_str());
-            }
-
-            if (!(v1 <= 2 && v2 == 0 && v3 <= 6))
-            {
-                widget->setUnifySizeEnabled(false);
-                widget->setLayoutComponentEnabled(true);
-                widget->ignoreContentAdaptWithSize(false);
-                Size contentSize(options->size()->width(), options->size()->height());
-                widget->setContentSize(contentSize);
-            }
-        }
+        widget->setUnifySizeEnabled(false);
+        widget->setLayoutComponentEnabled(true);
+        widget->ignoreContentAdaptWithSize(false);
+        Size contentSize(options->size()->width(), options->size()->height());
+        widget->setContentSize(contentSize);
         
         int tag = options->tag();
         widget->setTag(tag);

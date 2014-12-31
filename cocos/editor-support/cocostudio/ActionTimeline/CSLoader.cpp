@@ -181,6 +181,7 @@ CSLoader::CSLoader()
 , _jsonPath("")
 , _monoCocos2dxVersion("")
 , _rootNode(nullptr)
+, _csBuildID("2.0.8.0")
 {
     CREATE_CLASS_NODE_READER_INFO(NodeReader);
     CREATE_CLASS_NODE_READER_INFO(SingleNodeReader);
@@ -783,6 +784,22 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
     
     auto csparsebinary = GetCSParseBinary(buf.getBytes());
     
+    
+    auto csBuildId = csparsebinary->version();
+    if (csBuildId)
+    {
+        CCASSERT(strcmp(_csBuildID.c_str(), csBuildId->c_str()) == 0,
+            String::createWithFormat("%s%s%s%s%s%s%s%s",
+            "The reader build id of your CocosStudio exported file(",
+            csBuildId->c_str(),
+            ") and the reader build id of your Cocos2d-x(",
+            _csBuildID.c_str(),
+            ") are not match.\n",
+            "Please get the correct Cocos2d-x from ",
+            "https://github.com/chukong/cocos-reader",
+            " and replace your Cocos2d-x")->getCString());
+    }
+
     // decode plist
     auto textures = csparsebinary->textures();
     int textureSize = csparsebinary->textures()->size();
@@ -791,9 +808,6 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
     {
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());        
     }
-    
-    auto v = csparsebinary->version();
-    if (v) _csdVersion = v->c_str();
        
     Node* node = nodeWithFlatBuffers(csparsebinary->nodeTree());
     
@@ -1136,9 +1150,6 @@ Node* CSLoader::createNodeWithFlatBuffersForSimulator(const std::string& filenam
     }
     
     auto nodeTree = csparsebinary->nodeTree();
-
-    auto v = csparsebinary->version();
-    if (v) _csdVersion = v->c_str();
 
     Node* node = nodeWithFlatBuffersForSimulator(nodeTree);
     
