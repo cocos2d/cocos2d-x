@@ -104,6 +104,7 @@ public:
     
     cocos2d::Node* createNodeWithFlatBuffersForSimulator(const std::string& filename);
     cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
+    std::string getCsdVersion() { return _csdVersion; }
 
 protected:
     
@@ -150,7 +151,8 @@ protected:
     std::string _monoCocos2dxVersion;
     
     Node* _rootNode;
-    std::string _csBuildID;
+//    std::vector<Node*> _loadingNodeParentHierarchy;
+    std::string _csdVersion;
 };
 
 NS_CC_END
