@@ -439,6 +439,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     float speed = nodeAction->speed();
     action->setTimeSpeed(speed);
     
+    
     auto timelines = nodeAction->timeLines();
     int timelineLength = timelines->size();
     for (int i = 0; i < timelineLength; i++)

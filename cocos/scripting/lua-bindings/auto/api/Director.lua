@@ -173,6 +173,13 @@
 -- @param #cc.Scheduler scheduler
         
 --------------------------------
+-- 
+-- @function [parent=#Director] getMatrix 
+-- @param self
+-- @param #int type
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
 --  The main loop is triggered again.<br>
 -- Call this function only if [stopAnimation] was called earlier<br>
 -- warning Don't call this function to start the main loop. To run the main loop call runWithScene
@@ -225,6 +232,12 @@
 -- @function [parent=#Director] isNextDeltaTimeZero 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  set clear values for the color buffers, value range of each element is [0.0, 1.0] 
+-- @function [parent=#Director] setClearColor 
+-- @param self
+-- @param #color4f_table clearColor
         
 --------------------------------
 --  Ends the execution, releases the running scene.<br>
@@ -282,11 +295,9 @@
 -- @param self
         
 --------------------------------
--- 
--- @function [parent=#Director] getMatrix 
+--  Restart the director
+-- @function [parent=#Director] restart 
 -- @param self
--- @param #int type
--- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 --  Pops out a scene from the stack.<br>

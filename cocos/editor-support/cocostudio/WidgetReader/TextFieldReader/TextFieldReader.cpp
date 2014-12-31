@@ -106,8 +106,13 @@ namespace cocostudio
        
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     
-       
-        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
+        std::string fontFilePath = jsonPath.append(fontName);
+        if (FileUtils::getInstance()->isFileExist(fontFilePath))
+            textField->setFontName(fontFilePath);
+        else
+            textField->setFontName(fontName);
         
         bool tsw = DICTOOL->checkObjectExist_json(options, P_TouchSizeWidth);
         bool tsh = DICTOOL->checkObjectExist_json(options, P_TouchSizeHeight);

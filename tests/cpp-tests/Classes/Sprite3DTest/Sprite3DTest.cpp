@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
+#include "base/CCAsyncTaskPool.h"
 #include "3d/CCAnimation3D.h"
 #include "3d/CCAnimate3D.h"
 #include "3d/CCAttachNode.h"
@@ -49,10 +50,14 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(Sprite3DBasicTest),
     CL(Sprite3DHitTest),
+    CL(AsyncLoadSprite3DTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
     CL(Sprite3DUVAnimationTest),
+    CL(Sprite3DFakeShadowTest),
+    CL(Sprite3DBasicToonShaderTest),
+    CL(Sprite3DLightMapTest),
 #endif
     CL(Sprite3DWithSkinTest),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -62,7 +67,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
-    CL(Sprite3DMirrorTest)
+    CL(Sprite3DMirrorTest),
+    CL(QuaternionTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -289,6 +295,27 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //the callback function update cylinder's texcoord
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/cylinder.vert", "Sprite3DTest/cylinder.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 std::string Sprite3DUVAnimationTest::title() const 
@@ -321,6 +348,409 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
     //pass the result to shader
     _state->setUniformFloat("offset",_cylinder_texture_offset);
     _state->setUniformFloat("duration",_shining_duraion);
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DFakeShadowTest
+//
+//------------------------------------------------------------------
+Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto layer = Layer::create();
+    addChild(layer,0);
+    //create Camera
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(0,20,25));
+    _camera->setRotation3D(Vec3(-60,0,0));
+
+    //create a plane
+    _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
+    _plane->setRotation3D(Vec3(90,0,0));
+
+    // use custom shader
+    auto shader =GLProgram::createWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
+    _state = GLProgramState::create(shader);
+    _plane->setGLProgramState(_state);
+
+    //pass mesh's attribute to shader
+    long offset = 0; 
+    auto attributeCount = _plane->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++) {
+        auto meshattribute = _plane->getMesh()->getMeshVertexAttribute(i);
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size, 
+            meshattribute.type,
+            GL_FALSE,
+            _plane->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    } 
+    _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+
+    //create shadow texture
+    auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
+    Texture2D::TexParams tRepeatParams;//set texture parameters
+    tRepeatParams.magFilter = GL_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+    shadowTexture->setTexParameters(tRepeatParams); 
+    _state->setUniformTexture("u_shadowTexture",shadowTexture);
+    layer->addChild(_plane); 
+
+    //create the orc
+    _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    _orc->setScale(0.2);
+    _orc->setRotation3D(Vec3(0,180,0));
+    _orc->setPosition3D(Vec3(0,0,10));
+    _targetPos = _orc->getPosition3D();
+    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+    layer->addChild(_orc);
+    layer->addChild(_camera);
+    layer->setCameraMask(2);
+
+    schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                                
+                                                                _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+                                                                
+                                                                //create shadow texture
+                                                                auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
+                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
+                                                                tRepeatParams.magFilter = GL_LINEAR;
+                                                                tRepeatParams.minFilter = GL_LINEAR;
+                                                                tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+                                                                tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+                                                                shadowTexture->setTexParameters(tRepeatParams); 
+                                                                _state->setUniformTexture("u_shadowTexture",shadowTexture);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DFakeShadowTest::title() const 
+{
+    return "fake shadow effect";
+}
+
+std::string Sprite3DFakeShadowTest::subtitle() const 
+{
+    return "touch the screen to move around";
+}
+
+void Sprite3DFakeShadowTest::Move(cocos2d::Ref* sender,int value)
+{
+    _orc->setPositionX(_orc->getPositionX()+value);
+
+}
+
+void Sprite3DFakeShadowTest::updateCamera(float fDelta)
+{
+    updateState(fDelta);
+    if(isState(_curState,State_Move))
+    {
+        move3D(fDelta);
+        if(isState(_curState,State_Rotate))
+        {
+            Vec3 curPos = _orc->getPosition3D();
+
+            Vec3 newFaceDir = _targetPos - curPos;
+            newFaceDir.y = 0;
+            newFaceDir.normalize();
+            Vec3 up;
+            _orc->getNodeToWorldTransform().getUpVector(&up);
+            up.normalize();
+            Vec3 right;
+            Vec3::cross(-newFaceDir,up,&right);
+            right.normalize();
+            Vec3 pos = Vec3(0,0,0);
+            Mat4 mat;
+            mat.m[0] = right.x;
+            mat.m[1] = right.y;
+            mat.m[2] = right.z;
+            mat.m[3] = 0.0f;
+
+            mat.m[4] = up.x;
+            mat.m[5] = up.y;
+            mat.m[6] = up.z;
+            mat.m[7] = 0.0f;
+
+            mat.m[8]  = newFaceDir.x;
+            mat.m[9]  = newFaceDir.y;
+            mat.m[10] = newFaceDir.z;
+            mat.m[11] = 0.0f;
+
+            mat.m[12] = pos.x;
+            mat.m[13] = pos.y;
+            mat.m[14] = pos.z;
+            mat.m[15] = 1.0f;
+            _orc->setAdditionalTransform(&mat);
+        }
+    }
+}
+
+
+void Sprite3DFakeShadowTest::move3D(float elapsedTime)
+{
+    Vec3 curPos=  _orc->getPosition3D();
+    Vec3 newFaceDir = _targetPos - curPos;
+    newFaceDir.y = 0.0f;
+    newFaceDir.normalize();
+    Vec3 offset = newFaceDir * 25.0f * elapsedTime;
+    curPos+=offset;
+    _orc->setPosition3D(curPos);
+    offset.x=offset.x;
+    offset.z=offset.z;
+    //pass the newest orc position
+    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+}
+
+void Sprite3DFakeShadowTest::updateState(float elapsedTime)
+{
+    Vec3 curPos=  _orc->getPosition3D();
+    Vec3 curFaceDir;
+    _orc->getNodeToWorldTransform().getForwardVector(&curFaceDir);
+    curFaceDir=-curFaceDir;
+    curFaceDir.normalize();
+    Vec3 newFaceDir = _targetPos - curPos;
+    newFaceDir.y = 0.0f;
+    newFaceDir.normalize();
+    float cosAngle = std::fabs(Vec3::dot(curFaceDir,newFaceDir) - 1.0f);
+    float dist = curPos.distanceSquared(_targetPos);
+    if(dist<=4.0f)
+    {
+        if(cosAngle<=0.01f)
+            _curState = State_Idle;
+        else
+            _curState = State_Rotate;
+    }
+    else
+    {
+        if(cosAngle>0.01f)
+            _curState = State_Rotate | State_Move;
+        else
+            _curState = State_Move;
+    }
+}
+
+bool Sprite3DFakeShadowTest::isState(unsigned int state,unsigned int bit) const
+{
+    return (state & bit) == bit;
+}
+
+void Sprite3DFakeShadowTest::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+
+}
+
+void Sprite3DFakeShadowTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+}
+
+void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+    for ( auto &item: touches )
+    {
+        auto touch = item;
+        auto location = touch->getLocationInView();
+        if(_camera)
+        {
+            if(_orc )
+            {
+                Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
+
+                auto size = Director::getInstance()->getWinSize();
+                _camera->unproject(size, &nearP, &nearP);
+                _camera->unproject(size, &farP, &farP);
+                Vec3 dir(farP - nearP);
+                float dist=0.0f;
+                float ndd = Vec3::dot(Vec3(0,1,0),dir);
+                if(ndd == 0)
+                    dist=0.0f;
+                float ndo = Vec3::dot(Vec3(0,1,0),nearP);
+                dist= (0 - ndo) / ndd;
+                Vec3 p =   nearP + dist *  dir;
+
+                if( p.x > 100)
+                    p.x = 100;
+                if( p.x < -100)
+                    p.x = -100;
+                if( p.z > 100)
+                    p.z = 100;
+                if( p.z < -100)
+                    p.z = -100;
+
+                _targetPos=p;
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DBasicToonShaderTest
+//
+//------------------------------------------------------------------
+Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    // create a teapot
+    auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
+    //create and set our custom shader 
+    auto shader =GLProgram::createWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
+    _state = GLProgramState::create(shader);
+    teapot->setGLProgramState(_state);
+    teapot->setPosition3D(Vec3(0,-5,-20));
+    teapot->setRotation3D(Vec3(-90,180,0)); 
+    auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
+    teapot->runAction(RepeatForever::create(rotate_action)); 
+    //pass mesh's attribute to shader
+    long offset = 0;
+    auto attributeCount = teapot->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++) {
+        auto meshattribute = teapot->getMesh()->getMeshVertexAttribute(i);
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            teapot->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+    addChild(teapot);
+    addChild(_camera);
+    setCameraMask(2);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DBasicToonShaderTest::title() const 
+{
+    return "basic toon shader test";
+}
+
+std::string Sprite3DBasicToonShaderTest::subtitle() const 
+{
+    return " ";
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DLightMapTest 
+//
+//------------------------------------------------------------------
+Sprite3DLightMapTest::Sprite3DLightMapTest()
+{
+    //the assets are from the OpenVR demo
+    //get the visible size.
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(0,25,15));
+    _camera->setRotation3D(Vec3(-35,0,0));
+    auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
+    LightMapScene->setScale(0.1); 
+    addChild(LightMapScene);
+    addChild(_camera); 
+    setCameraMask(2); 
+
+    //add a point light
+    auto light = PointLight::create(Vec3(35,75,-20.5),Color3B(255,255,255),150);
+    addChild(light);
+    //set the ambient light 
+    auto ambient = AmbientLight::create(Color3B(55,55,55));
+    addChild(ambient);
+
+    //create a listener
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DLightMapTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+Sprite3DLightMapTest::~Sprite3DLightMapTest()
+{
+    
+}
+std::string Sprite3DLightMapTest::title() const
+{
+    return "light map test";
+}
+
+std::string Sprite3DLightMapTest::subtitle() const 
+{
+    return "drag the screen to move around";
+}
+
+void Sprite3DLightMapTest::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    if(touches.size()==1)
+    {
+        float delta = Director::getInstance()->getDeltaTime();
+        auto touch = touches[0];
+        auto location = touch->getLocation();
+        auto PreviousLocation = touch->getPreviousLocation();
+        Point newPos = PreviousLocation - location;
+
+        Vec3 cameraDir;
+        Vec3 cameraRightDir;
+        _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+        cameraDir.normalize();
+        cameraDir.y=0;
+        _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+        cameraRightDir.normalize();
+        cameraRightDir.y=0;
+        Vec3 cameraPos=  _camera->getPosition3D();
+        cameraPos+=cameraDir*newPos.y*delta;  
+        cameraPos+=cameraRightDir*newPos.x*delta;
+        _camera->setPosition3D(cameraPos);      
+    }
 }
 
 //------------------------------------------------------------------
@@ -766,6 +1196,73 @@ void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
         addNewSpriteWithCoords( location );
     }
 }
+
+AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
+{
+    _paths.push_back("Sprite3DTest/boss.obj");
+    _paths.push_back("Sprite3DTest/girl.c3b");
+    _paths.push_back("Sprite3DTest/orc.c3b");
+    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
+    _paths.push_back("Sprite3DTest/axe.c3b");
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite,this) );
+    
+    auto s = Director::getInstance()->getWinSize();
+    item1->setPosition( s.width * .5f, s.height * .8f);
+    
+    auto pMenu1 = CCMenu::create(item1, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+    auto node = Node::create();
+    node->setTag(101);
+    this->addChild(node);
+    
+    menuCallback_asyncLoadSprite(nullptr);
+}
+
+AsyncLoadSprite3DTest::~AsyncLoadSprite3DTest()
+{
+}
+
+std::string AsyncLoadSprite3DTest::title() const
+{
+    return "Testing Sprite3D::createAsync";
+}
+std::string AsyncLoadSprite3DTest::subtitle() const
+{
+    return "";
+}
+
+void AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite(Ref* sender)
+{
+    //Note that you must stop the tasks before leaving the scene.
+    AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+    
+    auto node = getChildByTag(101);
+    node->removeAllChildren(); //remove all loaded sprite
+    
+    //remove cache data
+    Sprite3DCache::getInstance()->removeAllSprite3DData();
+    long index = 0;
+    for (const auto& path : _paths) {
+        Sprite3D::createAsync(path, CC_CALLBACK_2(AsyncLoadSprite3DTest::asyncLoad_Callback, this), (void*)index++);
+    }
+}
+
+void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
+{
+    long index = (long)param;
+    auto node = getChildByTag(101);
+    auto s = Director::getInstance()->getWinSize();
+    float width = s.width / _paths.size();
+    Vec2 point(width * (0.5f + index), s.height / 2.f);
+    sprite->setPosition(point);
+    node->addChild(sprite);
+}
+
 
 Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 {
@@ -1532,4 +2029,54 @@ void Sprite3DMirrorTest::addNewSpriteWithCoords(Vec2 p)
         sprite->runAction(RepeatForever::create(animate));
     }
     _mirrorSprite = sprite;
+}
+
+QuaternionTest::QuaternionTest()
+: _arcSpeed(CC_DEGREES_TO_RADIANS(90))
+, _radius(100.f)
+, _accAngle(0.f)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords(Vec2(s.width / 2.f, s.height / 2.f));
+    scheduleUpdate();
+}
+std::string QuaternionTest::title() const
+{
+    return "Test Rotation With Quaternion";
+}
+std::string QuaternionTest::subtitle() const
+{
+    return "";
+}
+
+void QuaternionTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width / 2.f + _radius * cosf(_accAngle), s.height / 2.f + _radius * sinf(_accAngle)));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+}
+
+void QuaternionTest::update(float delta)
+{
+    _accAngle += delta * _arcSpeed;
+    const float pi = M_PI;
+    if (_accAngle >= 2 * pi)
+        _accAngle -= 2 * pi;
+    
+    auto s = Director::getInstance()->getWinSize();
+    _sprite->setPosition(Vec2(s.width / 2.f + _radius * cosf(_accAngle), s.height / 2.f + _radius * sinf(_accAngle)));
+    
+    Quaternion quat;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 0.f, 1.f), _accAngle - pi * 0.5f, &quat);
+    _sprite->setRotationQuat(quat);
 }

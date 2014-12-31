@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "FileServer.h"
 #include "Runtime.h"
 #include "zlib.h"
+#include "ConfigParser.h"
 
 // header files for directory operation
 #ifdef _WIN32
@@ -152,6 +153,24 @@ bool FileServer::listenOnTCP(int port)
         
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
         //setsockopt(listenfd, IPPROTO_TCP, TCP_NODELAY, (const char*)&on, sizeof(on));
+        
+        auto address = ConfigParser::getInstance()->getBindAddress();
+
+        // bind address
+        if (address.length() > 0)
+        {
+            if (res->ai_family == AF_INET)
+            {
+                struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+                inet_pton(res->ai_family, address.c_str(), (void*)&sin->sin_addr);
+            }
+            else if (res->ai_family == AF_INET6)
+            {
+                struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+                inet_pton(res->ai_family, address.c_str(), (void*)&sin->sin6_addr);
+            }
+        }
+        
         if (::bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
    

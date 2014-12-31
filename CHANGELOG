@@ -1,6 +1,12 @@
-cocos2d-x-3.4 ??
+cocos2d-x-3.4beta0  ??
+    [NEW]           3D: support frustum culling
+    [NEW]           Action: MoveTo and MoveBy support Vec3
+    [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool
+    [NEW]           Application: added Turkish and Ukrainian language support
     [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
+    [NEW]           Director: add setClearColor() to set clear values for the color buffers
 
+    [FIX]           ui::Button: fix setTitleColor calls method setColor instead of setTextColor of title label.
     [FIX]           FileUtils: WebP format with alpha channel displayed wrong
     [FIX]           Label: content size of Label is incorrect if the string is set to empty string
 
