@@ -19,7 +19,7 @@
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4beta0/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
