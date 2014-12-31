@@ -150,15 +150,9 @@ Note that when you can make sure that all the stuff is inside the frustum you ca
 
 For more infomation please reffer to the cpptests/CameraTest
 
-### Use less resource to create ui::Button, ui::CheckBox and ui::Slider
+### Use less resources to create  ui::CheckBox and ui::Slider 
 
-Now we could use less resources to create ui::Button, ui::CheckBox and ui::Slider.
-
-To create an ui::Button, we could use only one normal state texture:
-
-```cpp
-Button* button = Button::create("cocosui/animationbuttonnormal.png");
-```
+Now we could use less resources to create  ui::CheckBox and ui::Slider.
 
 To create an ui::CheckBox, we could simply pass the normal state box and active texture.
 
@@ -173,9 +167,8 @@ To create an ui::Slider, we could only pass the slider bar texture and normal ba
 Slider* sliderScale9 = Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
 ```
 
-In summary, we could omit the selected state texture and disable state texture for these widget now.
-
 If the selected state texture is missing, when user press the widget, the normal texture will scale.
 
 If the disable state texture is missing, when the widget is in disable state, we use gray shader to turn the normal state texture to gray.
 
+The original ui::Button also support the gray shader enhancement.
