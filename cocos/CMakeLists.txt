@@ -96,6 +96,7 @@ elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMODEX FONTCONFIG THREADS)
     cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
+  list(APPEND PLATFORM_SPECIFIC_LIBS ssl crypto)
 elseif(MACOSX OR APPLE)
   cocos_use_pkg(cocos2d GLFW3)
 
