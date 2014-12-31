@@ -46,7 +46,7 @@ else
     -- Spine
     require "cocos.spine.SpineConstants"
 
-    require "cocos.deprecated"
+    require "cocos.cocos2d.deprecated"
     require "cocos.cocos2d.DrawPrimitives"
 
     -- Lua extensions
