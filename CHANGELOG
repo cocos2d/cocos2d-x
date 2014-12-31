@@ -5,8 +5,13 @@ cocos2d-x-3.4beta0  ??
     [NEW]           Application: added Turkish and Ukrainian language support
     [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
     [NEW]           Director: add setClearColor() to set clear values for the color buffers
+    [NEW]           UI: Added new layout functionality for Cocos Studio, keeps widget margins a fixed set and adjusts the widget size according to the margins.
+    [NEW]           UI: Add gray shader to ui::Button, ui::CheckBox and ui::Slider when the disable state resources are not provided
+    [NEW]           UI: Modify the default behavior when ui::Button, ui::CheckBox and ui::Slider's selected state resources are not provided, the new behavior is scale the normal state texture when the selected state texture are missing.
+    [NEW]           3rd party libraries: Add prebuilt version of libcurl to Mac and upgrade iOS,Android,Mac and Win32 libcurl to 7.39.0.
 
     [FIX]           ui::Button: fix setTitleColor calls method setColor instead of setTextColor of title label.
+    [FIX]           AssetsManagerEx: Fix assetManager can't download file on Win32
     [FIX]           FileUtils: WebP format with alpha channel displayed wrong
     [FIX]           Label: content size of Label is incorrect if the string is set to empty string
     [FIX]           GLProgramState: fix assert error caused by outdated uniform and attribute cache
