@@ -27,10 +27,12 @@
 
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
-
+#include <unordered_map>
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 
+struct cpShape;
+struct cpBody;
 NS_CC_BEGIN
 
 class PhysicsShapeInfo;
@@ -147,25 +149,17 @@ public:
      */
     void setGroup(int group);
     inline int getGroup() { return _group; }
-    
+
 protected:
-    bool init(Type type);
-    
-    /**
-     * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
-     */
-    PhysicsBodyInfo* bodyInfo() const;
+    void add(cpShape* shape);
     
     void setBody(PhysicsBody* body);
     
     /** calculate the area of this shape */
     virtual float calculateArea() { return 0.0f; }
     
-    virtual void setScale(float scale);
     virtual void setScale(float scaleX, float scaleY);
-    virtual void setScaleX(float scaleX);
-    virtual void setScaleY(float scaleY);
-    virtual void update(float delta);
+    virtual void updateScale();
     
 protected:
     PhysicsShape();
@@ -173,7 +167,9 @@ protected:
     
 protected:
     PhysicsBody* _body;
-    PhysicsShapeInfo* _info;
+    std::vector<cpShape*> _cpShapes;
+    cpBody* _cpBody;
+
     Type _type;
     float _area;
     float _mass;
@@ -182,7 +178,7 @@ protected:
     float _scaleY;
     float _newScaleX;
     float _newScaleY;
-    bool _dirty;
+
     PhysicsMaterial _material;
     int _tag;
     int    _categoryBitmask;
@@ -212,11 +208,8 @@ public:
 protected:
     bool init(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     virtual float calculateArea() override;
-    virtual void setScale(float scale) override;
     virtual void setScale(float scaleX, float scaleY) override;
-    virtual void setScaleX(float scale) override;
-    virtual void setScaleY(float scale) override;
-    virtual void update(float delta) override;
+    virtual void updateScale() override;
     
 protected:
     PhysicsShapeCircle();
@@ -240,7 +233,7 @@ public:
 protected:
     bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     float calculateArea() override;
-    virtual void update(float delta) override;
+    virtual void updateScale() override;
     
 protected:
     PhysicsShapePolygon();
@@ -276,7 +269,7 @@ public:
     
 protected:
     bool init(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
-    virtual void update(float delta) override;
+    virtual void updateScale() override;
     
 protected:
     PhysicsShapeEdgeSegment();
@@ -296,7 +289,7 @@ public:
     
 protected:
     bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
-    virtual void update(float delta) override;
+    virtual void updateScale() override;
     
 protected:
     PhysicsShapeEdgePolygon();
@@ -333,7 +326,7 @@ public:
     
 protected:
     bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1);
-    virtual void update(float delta) override;
+    virtual void updateScale() override;
     
 protected:
     PhysicsShapeEdgeChain();

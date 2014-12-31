@@ -65,6 +65,9 @@ THE SOFTWARE.
 #include "CCScriptSupport.h"
 #endif
 
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsWorld.h"
+#endif
 /**
  Position of the FPS
  
@@ -264,12 +267,6 @@ void Director::drawScene()
 {
     // calculate "global" dt
     calculateDeltaTime();
-    
-    // skip one flame when _deltaTime equal to zero.
-    if(_deltaTime < FLT_EPSILON)
-    {
-        return;
-    }
 
     if (_openGLView)
     {
@@ -297,6 +294,13 @@ void Director::drawScene()
     
     if (_runningScene)
     {
+#if CC_USE_PHYSICS
+        auto physicsWorld = _runningScene->getPhysicsWorld();
+        if (physicsWorld && physicsWorld->isAutoStep())
+        {
+            physicsWorld->update(_deltaTime, false);
+        }
+#endif
         //clear draw stats
         _renderer->clearDrawStats();
         
@@ -1124,8 +1128,8 @@ void Director::showStats()
 {
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
-    static float prevDeltaTime  = 0.016; // 60FPS
-    static const float FPS_FILTER = 0.10;
+    static float prevDeltaTime  = 0.016f; // 60FPS
+    static const float FPS_FILTER = 0.10f;
 
     _accumDt += _deltaTime;
     
@@ -1171,7 +1175,7 @@ void Director::showStats()
 void Director::calculateMPF()
 {
     static float prevSecondsPerFrame = 0;
-    static const float MPF_FILTER = 0.10;
+    static const float MPF_FILTER = 0.10f;
 
     struct timeval now;
     gettimeofday(&now, nullptr);

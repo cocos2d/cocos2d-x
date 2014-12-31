@@ -35,9 +35,8 @@ THE SOFTWARE.
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"
+#include "physics/CCPhysicsBody.h"
 #endif
-
-int g_physicsSceneCount = 0;
 
 NS_CC_BEGIN
 
@@ -60,10 +59,6 @@ Scene::Scene()
 Scene::~Scene()
 {
 #if CC_USE_PHYSICS
-    if (_physicsWorld)
-    {
-        g_physicsSceneCount--;
-    }
     CC_SAFE_DELETE(_physicsWorld);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
@@ -177,15 +172,6 @@ void Scene::addChild(Node* child, int zOrder, const std::string &name)
     addChildToPhysicsWorld(child);
 }
 
-void Scene::update(float delta)
-{
-    Node::update(delta);
-    if (nullptr != _physicsWorld && _physicsWorld->isAutoStep())
-    {
-        _physicsWorld->update(delta);
-    }
-}
-
 Scene* Scene::createWithPhysics()
 {
     Scene *ret = new (std::nothrow) Scene();
@@ -211,13 +197,16 @@ bool Scene::initWithPhysics()
         
         this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
-        
-        this->scheduleUpdate();
         // success
-        g_physicsSceneCount += 1;
         ret = true;
     } while (0);
     return ret;
+}
+
+void Scene::updatePhysicsBodyTransform()
+{
+    const auto& transform = getNodeToParentTransform();
+    Node::updatePhysicsBodyTransform(this, transform, 0, 1.0, 1.0, 0);
 }
 
 void Scene::addChildToPhysicsWorld(Node* child)
@@ -227,9 +216,10 @@ void Scene::addChildToPhysicsWorld(Node* child)
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
         addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
         {
-            if (node->getPhysicsBody())
+            auto physicsBody = node->getPhysicsBody();
+            if (physicsBody)
             {
-                _physicsWorld->addBody(node->getPhysicsBody());
+                _physicsWorld->addBody(physicsBody);
             }
             
             auto& children = node->getChildren();
