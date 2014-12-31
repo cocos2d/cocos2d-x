@@ -1020,6 +1020,8 @@
         "cocos/platform/winrt/Keyboard-winrt.h", 
         "cocos/platform/winrt/inet_ntop_winrt.cpp", 
         "cocos/platform/winrt/inet_ntop_winrt.h", 
+        "cocos/platform/winrt/inet_pton_winrt.cpp", 
+        "cocos/platform/winrt/inet_pton_winrt.h", 
         "cocos/platform/winrt/pch.cpp", 
         "cocos/platform/winrt/pch.h", 
         "cocos/platform/winrt/sha1.cpp", 
