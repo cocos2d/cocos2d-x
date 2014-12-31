@@ -53,12 +53,12 @@ static std::mutex       s_requestQueueMutex;
 static std::mutex       s_responseQueueMutex;
 static std::mutex       s_cookieFileMutex;
 
-static std::condition_variable_any s_SleepCondition;
+static std::condition_variable_any s_sleepCondition;
 
 static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
 
-static HttpClient *s_pHttpClient = nullptr; // pointer to singleton
+static HttpClient *s_httpClient = nullptr; // pointer to singleton
 
 static std::string s_responseMessage = "";
 
@@ -754,7 +754,7 @@ void HttpClient::networkThread()
         {
             std::lock_guard<std::mutex> lock(s_requestQueueMutex);
             while (s_requestQueue->empty()) {
-                s_SleepCondition.wait(s_requestQueueMutex);
+                s_sleepCondition.wait(s_requestQueueMutex);
             }
             request = s_requestQueue->at(0);
             s_requestQueue->erase(0);
@@ -773,7 +773,7 @@ void HttpClient::networkThread()
         s_responseQueue->pushBack(response);
         s_responseQueueMutex.unlock();
         
-        if (nullptr != s_pHttpClient) {
+        if (nullptr != s_httpClient) {
             scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
         }
     }
@@ -809,11 +809,11 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 
         if (callback != nullptr)
         {
-            callback(s_pHttpClient, response);
+            callback(s_httpClient, response);
         }
         else if (pTarget && pSelector)
         {
-            (pTarget->*pSelector)(s_pHttpClient, response);
+            (pTarget->*pSelector)(s_httpClient, response);
         }
         response->release();
         // do not release in other thread
@@ -824,16 +824,16 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 // HttpClient implementation
 HttpClient* HttpClient::getInstance()
 {
-    if (s_pHttpClient == nullptr) {
-        s_pHttpClient = new (std::nothrow) HttpClient();
+    if (s_httpClient == nullptr) {
+        s_httpClient = new (std::nothrow) HttpClient();
     }
     
-    return s_pHttpClient;
+    return s_httpClient;
 }
 
 void HttpClient::destroyInstance()
 {
-    CC_SAFE_DELETE(s_pHttpClient);
+    CC_SAFE_DELETE(s_httpClient);
 }
 
 void HttpClient::enableCookies(const char* cookieFile) {
@@ -863,10 +863,10 @@ HttpClient::~HttpClient()
             std::lock_guard<std::mutex> lock(s_requestQueueMutex);
             s_requestQueue->pushBack(s_requestSentinel);
         }
-        s_SleepCondition.notify_one();
+        s_sleepCondition.notify_one();
     }
 
-    s_pHttpClient = nullptr;
+    s_httpClient = nullptr;
 }
 
 //Lazy create semaphore & mutex & thread
@@ -907,7 +907,7 @@ void HttpClient::send(HttpRequest* request)
         s_requestQueueMutex.unlock();
         
         // Notify thread start to work
-        s_SleepCondition.notify_one();
+        s_sleepCondition.notify_one();
     }
 }
 
