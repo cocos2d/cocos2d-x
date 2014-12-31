@@ -1750,7 +1750,7 @@
 		52B47A1E1A53489B004E4C60 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A1D1A53489B004E4C60 /* HttpClient.cpp */; };
 		52B47A2E1A5349A3004E4C60 /* HttpAsynConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */; };
 		52B47A2F1A5349A3004E4C60 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
-		52B47A301A5349A3004E4C60 /* HttpClientIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClientIOS.mm */; };
+		52B47A301A5349A3004E4C60 /* HttpClient-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */; };
 		52B47A311A5349A3004E4C60 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
 		52B47A321A5349A3004E4C60 /* HttpCookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A2D1A5349A3004E4C60 /* HttpCookie.h */; };
 		5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */; };
@@ -2935,7 +2935,7 @@
 		52B47A1D1A53489B004E4C60 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
 		52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpAsynConnection.h; sourceTree = "<group>"; };
 		52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpAsynConnection.m; sourceTree = "<group>"; };
-		52B47A2B1A5349A3004E4C60 /* HttpClientIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HttpClientIOS.mm; sourceTree = "<group>"; };
+		52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "HttpClient-ios.mm"; sourceTree = "<group>"; };
 		52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpCookie.cpp; sourceTree = "<group>"; };
 		52B47A2D1A5349A3004E4C60 /* HttpCookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpCookie.h; sourceTree = "<group>"; };
 		5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrustum.cpp; sourceTree = "<group>"; };
@@ -3915,7 +3915,7 @@
 			children = (
 				52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */,
 				52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */,
-				52B47A2B1A5349A3004E4C60 /* HttpClientIOS.mm */,
+				52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */,
 				52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */,
 				52B47A2D1A5349A3004E4C60 /* HttpCookie.h */,
 				52B47A1D1A53489B004E4C60 /* HttpClient.cpp */,
@@ -6907,7 +6907,7 @@
 				1A570072180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
 				15AE1ABC19AAD40300C27E9E /* b2PolygonAndCircleContact.cpp in Sources */,
 				15AE1ADA19AAD41000C27E9E /* b2Rope.cpp in Sources */,
-				52B47A301A5349A3004E4C60 /* HttpClientIOS.mm in Sources */,
+				52B47A301A5349A3004E4C60 /* HttpClient-ios.mm in Sources */,
 				B29A7E1619EE1B7700872B35 /* BoundingBoxAttachment.c in Sources */,
 				382384081A25900F002C4610 /* FlatBuffersSerialize.cpp in Sources */,
 				DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,

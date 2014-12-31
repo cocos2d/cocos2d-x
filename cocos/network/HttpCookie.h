@@ -44,8 +44,8 @@ public:
     void writeFile();
     void setCookieFileName(const std::string fileName);
     
-    std::vector<CookiesInfo>* getCookies();
-    CookiesInfo* getMatchCookie(const std::string& url);
+    const std::vector<CookiesInfo>* getCookies()const;
+    const CookiesInfo* getMatchCookie(const std::string& url) const;
     void updateOrAddCookie(CookiesInfo* cookie);
     
 private:

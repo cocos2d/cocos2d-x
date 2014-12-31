@@ -95,8 +95,6 @@ void HttpClient::networkThread()
         if (request == s_requestSentinel) {
             break;
         }
-
-        // step 2: libcurl sync access
         
         // Create a HttpResponse object, the default setting is http access failed
         HttpResponse *response = new (std::nothrow) HttpResponse(request);
@@ -198,7 +196,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     //read cookie propertities from file and set cookie
     if(!s_cookieFilename.empty())
     {
-        CookiesInfo* cookieInfo = s_cookie->getMatchCookie(request->getUrl());
+        const CookiesInfo* cookieInfo = s_cookie->getMatchCookie(request->getUrl());
         if(cookieInfo != nullptr)
         {
             NSString *domain = [NSString stringWithCString:cookieInfo->domain.c_str() encoding:[NSString defaultCStringEncoding]];

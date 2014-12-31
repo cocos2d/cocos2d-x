@@ -794,6 +794,7 @@
 		527B1F4419EFAE13000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F4219EFAE13000A1F82 /* Default-667h@2x.png */; };
 		527B1F4519EFAE13000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F4319EFAE13000A1F82 /* Default-736h@3x.png */; };
 		52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
+		52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		59620E8F1921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		59620E901921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
@@ -1875,6 +1876,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */,
 				15AE17DC19A725A000C27E9E /* libcurl.a in Frameworks */,
 				15EFA66F198B356E000C57D3 /* libluacocos2d iOS.a in Frameworks */,
 				15EFA666198B34D7000C57D3 /* libcocos2d iOS.a in Frameworks */,

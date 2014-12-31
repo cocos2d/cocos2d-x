@@ -88,12 +88,12 @@ void HttpCookie::readFile()
     }
 }
 
-std::vector<CookiesInfo>* HttpCookie::getCookies()
+const std::vector<CookiesInfo>* HttpCookie::getCookies() const
 {
     return &_cookies;
 }
 
-CookiesInfo* HttpCookie::getMatchCookie(const std::string& url)
+const CookiesInfo* HttpCookie::getMatchCookie(const std::string& url) const
 {
     for(auto iter = _cookies.begin(); iter != _cookies.end(); iter++)
     {
