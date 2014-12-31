@@ -321,10 +321,8 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    if (command->isTransparent())
-        _transparentRenderGroups.push_back(command);
-    else
-        _renderGroups[renderQueue].push_back(command);
+    
+    _renderGroups[renderQueue].push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)
@@ -823,10 +821,23 @@ void Renderer::flush()
 
 void Renderer::flush2D()
 {
+    //Check depth write
+    GLboolean depthWirte;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWirte);
+    //Turn depth write off if necessary
+    if(depthWirte)
+    {
+        glDepthMask(false);
+    }
     drawBatchedQuads();
     _lastMaterialID = 0;
     drawBatchedTriangles();
     _lastMaterialID = 0;
+    //Turn depth write on if necessary
+    if(depthWirte)
+    {
+        glDepthMask(true);
+    }
 }
 
 void Renderer::flush3D()
