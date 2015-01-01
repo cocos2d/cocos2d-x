@@ -178,11 +178,13 @@ function EditorScene:playMap()
 
     -- 隐藏编辑器界面
     self.toolbar_:getView():setVisible(false)
+    self.toolbar_.tools_["PathTool"]:removePointLabel()
 
     -- 保存地图当前状态
     self.mapState_ = self.map_:vardump()
     self.playToolbar_:setVisible(true)
     self.mapNameLabel_:setVisible(false)
+    self.objectInspector_:getView():setVisible(false)
 
     self.map_:setDebugViewEnabled(false)
     self.map_:getBackgroundLayer():setVisible(true)

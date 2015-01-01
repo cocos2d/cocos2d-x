@@ -144,4 +144,8 @@ function UIGroup:setBackgroundImage(filename, args)
     return self
 end
 
+function UIGroup:clone_()
+    reAddUIComponent_(self)
+end
+
 return UIGroup

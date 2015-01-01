@@ -54,6 +54,8 @@ function UICheckBoxButtonGroup:ctor(direction)
     self:setLayout(UIBoxLayout.new(direction or display.LEFT_TO_RIGHT))
     self.buttons_ = {}
     self.currentSelectedIndex_ = 0
+
+    self.args_ = {direction}
 end
 
 -- start --
@@ -199,6 +201,28 @@ function UICheckBoxButtonGroup:updateButtonState_(clickedButton)
         self.currentSelectedIndex_ = currentSelectedIndex
         self:dispatchEvent({name = UICheckBoxButtonGroup.BUTTON_SELECT_CHANGED, selected = currentSelectedIndex, last = last})
     end
+end
+
+function UICheckBoxButtonGroup:createCloneInstance_()
+    return UICheckBoxButtonGroup.new(unpack(self.args_))
+end
+
+function UICheckBoxButtonGroup:copyClonedWidgetChildren_(node)
+    local count = node:getButtonsCount()
+    local btn
+    local cloneBtn
+
+    for i=1, count do
+        btn = node:getButtonAtIndex(i)
+        cloneBtn = btn:clone()
+        if cloneBtn then
+            self:addButton(cloneBtn)
+        end
+    end
+end
+
+function UICheckBoxButtonGroup:copySpecialProperties_(node)
+    self:setButtonsLayoutMargin(node:getLayoutMargin())
 end
 
 return UICheckBoxButtonGroup

@@ -30,6 +30,17 @@ function UILoaderUtilitys.isNil(str)
 end
 
 function UILoaderUtilitys.addSearchPathIf(dir, fileUtil)
+	if not fileUtil then
+        fileUtil = cc.FileUtils:getInstance()
+    end
+    -- 判断是不是已经存在的默认路径
+    local paths = fileUtil:getSearchPaths()
+    for i=1, #(paths) do
+        if paths[i] == dir then
+            return
+        end
+    end
+
 	if not UILoaderUtilitys.searchDirs then
 		UILoaderUtilitys.searchDirs = {}
 	end

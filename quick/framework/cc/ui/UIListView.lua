@@ -109,6 +109,8 @@ function UIListView:ctor(params)
 	self.itemsFree_ = {}
 	self.delegate_ = {}
 	self.redundancyViewVal = 0 --异步的视图两个方向上的冗余大小,横向代表宽,竖向代表高
+
+	self.args_ = {params}
 end
 
 function UIListView:onCleanup()
@@ -180,6 +182,8 @@ function UIListView:setViewRect(viewRect)
 	end
 
 	UIListView.super.setViewRect(self, viewRect)
+
+	return self
 end
 
 function UIListView:itemSizeChangeListener(listItem, newSize, oldSize)
@@ -1080,6 +1084,24 @@ function UIListView:releaseAllFreeItems_()
 	self.itemsFree_ = {}
 end
 
+function UIListView:createCloneInstance_()
+    return UIListView.new(unpack(self.args_))
+end
 
+function UIListView:copyClonedWidgetChildren_(node)
+    local children = node.items_
+    if not children or 0 == #children then
+        return
+    end
+
+    for i, child in ipairs(children) do
+        local cloneItem = self:newItem()
+        local content = child:getContent()
+        local cloneContent = content:clone()
+        cloneItem:addContent(cloneContent)
+        cloneItem:copySpecialProperties_(child)
+        self:addItem(cloneItem)
+    end
+end
 
 return UIListView

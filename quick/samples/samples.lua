@@ -2,6 +2,20 @@
 local data =
 {
     {
+        title       = "towerdefense",
+        description = "一个塔防演示",
+        path        = "samples/towerdefense",
+        image       = "td_ss.png"
+    },
+
+    {
+        title       = "bytearray",
+        description = "一个byte操作演示",
+        path        = "samples/bytearray",
+        image       = "bytearray_ss.png"
+    },
+
+    {
         title       = "Drag Test",
         description = "一个拖拽演示",
         path        = "samples/drag",

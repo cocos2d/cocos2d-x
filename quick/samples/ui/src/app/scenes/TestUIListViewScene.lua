@@ -100,6 +100,24 @@ function TestUIListViewScene:createListView5()
     end
     self.lv:reload()
 
+    -- clone listviewitem test code
+    -- local oneItem = self.lv.items_[1]
+    -- self.lv:removeAllItems()
+    -- local cloneItem
+    -- for i=1,10 do
+    --     cloneItem = oneItem:clone()
+    --     self.lv:addItem(cloneItem)
+    -- end
+    -- self.lv:reload()
+
+    -- clone listview test code
+    -- local clonelv = self.lv:clone()
+    -- if clonelv then
+    --     clonelv:addTo(self)
+    --     clonelv:reload()
+
+    --     self.lv:removeSelf()
+    -- end
 end
 
 function TestUIListViewScene:touchListener(event)

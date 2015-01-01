@@ -101,7 +101,7 @@ public class AppActivity extends Cocos2dxActivity{
 	        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
 	        if (cm != null) {  
 	            NetworkInfo networkInfo = cm.getActiveNetworkInfo();  
-			ArrayList networkTypes = new ArrayList();
+			ArrayList<Integer> networkTypes = new ArrayList<Integer>();
 			networkTypes.add(ConnectivityManager.TYPE_WIFI);
 			try {
 				networkTypes.add(ConnectivityManager.class.getDeclaredField("TYPE_ETHERNET").getInt(null));

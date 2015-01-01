@@ -47,6 +47,7 @@ public class QuickHTTPInterface {
         try {
             if ("POST".equalsIgnoreCase(strMedthod)) {
                 http.setDoOutput(true);
+                http.setRequestProperty("Content-Type", "multipart/form-data");
             }
             http.setRequestMethod(strMedthod);
         } catch (ProtocolException e) {
@@ -84,13 +85,14 @@ public class QuickHTTPInterface {
             DataOutputStream out = new DataOutputStream(http.getOutputStream());
             String content = null;
             if (null == name || 0 == name.length()) {
-                content = value;
+                content = java.net.URLEncoder.encode(value, "utf-8");
             } else {
-                content = name + "=" + value;
+                content = name + "=" + java.net.URLEncoder.encode(value, "utf-8");
             }
             if (bNeedConnectSym) {
                 content = "&" + content;
             }
+
             out.write(content.getBytes());
             out.flush();
         } catch (IOException e) {

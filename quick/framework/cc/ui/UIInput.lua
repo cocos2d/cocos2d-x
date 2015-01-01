@@ -75,6 +75,8 @@ function UIInput:ctor(options)
     if 2 == options.UIInputType then
         self.getText = self.getStringValue
     end
+
+    self.args_ = options
 end
 
 
@@ -268,6 +270,10 @@ function UIInput.newTextField_(params)
     end
 
     return editbox
+end
+
+function UIInput:createcloneInstance_()
+    return UIInput.new(unpack(self.args_))
 end
 
 return UIInput

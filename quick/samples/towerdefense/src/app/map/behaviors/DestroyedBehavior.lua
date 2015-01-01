@@ -88,6 +88,9 @@ function DestroyedBehavior:bind(object)
     local function updateView(object)
         object.hp__ = object.hp_
         if object.hp_ > 0 then
+            if not object.hpSprite_ then
+                return
+            end
             local x, y = object.x_, object.y_
             local radiusOffsetX, radiusOffsetY = object.radiusOffsetX_, object.radiusOffsetY_
             local x2 = x + radiusOffsetX - object.hpSprite_:getContentSize().width / 2
