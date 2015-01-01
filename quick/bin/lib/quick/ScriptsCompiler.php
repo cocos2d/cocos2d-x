@@ -8,6 +8,7 @@ class ScriptsCompiler
     const COMPILE_ZIP = 'zip';
     const COMPILE_FILES = 'files';
     const COMPILE_C = 'c';
+    const COMPILE_CSRC = 'csrc';
     const ENCRYPT_XXTEA_ZIP = 'xxtea_zip';
     const ENCRYPT_XXTEA_CHUNK = 'xxtea_chunk';
     const ENCRYPT_XXTEA_DEFAULT_SIGN = 'XXTEA';
@@ -62,7 +63,8 @@ class ScriptsCompiler
 
         if ($this->config['compile'] != self::COMPILE_ZIP
             && $this->config['compile'] != self::COMPILE_FILES
-            && $this->config['compile'] != self::COMPILE_C)
+            && $this->config['compile'] != self::COMPILE_C
+            && $this->config['compile'] != self::COMPILE_CSRC)
         {
             printf("ERR: invalid compile mode %s\n", $this->config['compile']);
             return false;
@@ -163,9 +165,13 @@ class ScriptsCompiler
         {
             $bytes = $this->compileModules($modules, $this->config['key'], $this->config['sign']);
         }
-        else
+        elseif ($this->config['compile'] != self::COMPILE_CSRC)
         {
             $bytes = $this->compileModules($modules);
+        }
+        else
+        {
+            $bytes = $this->readModulesSource($modules);
         }
         if (!is_array($bytes))
         {
@@ -244,6 +250,26 @@ class ScriptsCompiler
                 unlink($module['tempFilePath']);
             }
         }
+    }
+
+    protected function readModulesSource(array $modules)
+    {
+        $modulesBytes = array();
+        foreach ($modules as $path => $module)
+        {
+            $bytes = file_get_contents($path);
+            if (!$bytes)
+            {
+                print("\n");
+                return false;
+            }
+            $modulesBytes[$path] = $bytes;
+            if (!$this->config['quiet'])
+            {
+                printf("  > get bytes [% 3d KB] %s\n", ceil(strlen($bytes) / 1024), $module['moduleName']);
+            }
+        }
+        return $modulesBytes;
     }
 
     protected function compileModules(array $modules, $key = null, $sign = null)
@@ -479,7 +505,7 @@ EOT;
         {
             return $this->createOutputZIP($modules, $bytes);
         }
-        else if ($this->config['compile'] == self::COMPILE_C)
+        else if ($this->config['compile'] == self::COMPILE_C || $this->config['compile'] == self::COMPILE_CSRC)
         {
             return $this->createOutputC($modules, $bytes);
         }

@@ -46,6 +46,7 @@ EOT;
 compile mode:
     -m zip (default)    package all scripts bytecodes to a ZIP archive file.
     -m c                package all scripts bytecodes to a C source file.
+    -m csrc             package all scripte source code to a C source file.
     -m files            save bytecodes to separate files. -o specifies output dir.
 
 encrypt mode:
