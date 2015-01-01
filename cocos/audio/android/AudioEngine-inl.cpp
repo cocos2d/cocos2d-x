@@ -229,7 +229,7 @@ bool AudioEngineImpl::init()
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
-    auto audioId = AudioEngine::INVAILD_AUDIO_ID;
+    auto audioId = AudioEngine::INVALID_AUDIO_ID;
 
     do 
     {
