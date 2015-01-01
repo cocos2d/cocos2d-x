@@ -85,14 +85,14 @@ public class QuickHTTPInterface {
             DataOutputStream out = new DataOutputStream(http.getOutputStream());
             String content = null;
             if (null == name || 0 == name.length()) {
-                content = value;
+                content = java.net.URLEncoder.encode(value, "utf-8");
             } else {
-                content = name + "=" + value;
+                content = name + "=" + java.net.URLEncoder.encode(value, "utf-8");
             }
             if (bNeedConnectSym) {
                 content = "&" + content;
             }
-            content = java.net.URLEncoder.encode(content, "utf-8");
+
             out.write(content.getBytes());
             out.flush();
         } catch (IOException e) {
