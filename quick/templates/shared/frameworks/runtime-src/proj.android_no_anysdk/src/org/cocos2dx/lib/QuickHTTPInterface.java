@@ -116,9 +116,7 @@ public class QuickHTTPInterface {
         try {
             OutputStream out = http.getOutputStream();
 
-            String content = getBoundaryContentHeader(key, val);
-            content = java.net.URLEncoder.encode(content, "utf-8");
-            out.write(content.getBytes());
+            out.write(getBoundaryContentHeader(key, val).getBytes());
 
             out.flush();
         } catch (IOException e) {
