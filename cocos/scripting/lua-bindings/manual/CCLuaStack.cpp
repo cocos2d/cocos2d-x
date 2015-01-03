@@ -493,9 +493,17 @@ bool LuaStack::handleAssert(const char *msg)
 {
     if (_callFromLua == 0) return false;
     
-    lua_pushfstring(_state, "ASSERT FAILED ON LUA EXECUTE: %s", msg ? msg : "unknown");
+    lua_pushfstring(_state, "ASSERT FAILED ON LUA EXECUTE: %s -- %s", msg ? msg : "unknown", _callMsg.c_str());
     lua_error(_state);
     return true;
+}
+
+void LuaStack::setCallMsg(const char *msg)
+{
+    if (msg)
+    {
+        _callMsg = msg;
+    }
 }
 
 int LuaStack::reallocateScriptHandler(int nHandler)

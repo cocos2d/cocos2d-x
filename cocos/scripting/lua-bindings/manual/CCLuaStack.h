@@ -130,6 +130,7 @@ public:
     virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
 
     virtual bool handleAssert(const char *msg);
+    virtual void setCallMsg(const char *msg);
     
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
     virtual void cleanupXXTEAKeyAndSign();
@@ -163,6 +164,7 @@ protected:
     int   _xxteaKeyLen;
     char* _xxteaSign;
     int   _xxteaSignLen;
+    std::string _callMsg;
 };
 
 NS_CC_END

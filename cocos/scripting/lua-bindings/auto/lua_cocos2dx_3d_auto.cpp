@@ -30,6 +30,7 @@ int lua_cocos2dx_3d_Skeleton3D_getBoneByName(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_getBoneByName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -80,6 +81,7 @@ int lua_cocos2dx_3d_Skeleton3D_getRootBone(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_getRootBone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -130,6 +132,7 @@ int lua_cocos2dx_3d_Skeleton3D_updateBoneMatrix(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_updateBoneMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -176,6 +179,7 @@ int lua_cocos2dx_3d_Skeleton3D_getBoneByIndex(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_getBoneByIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -226,6 +230,7 @@ int lua_cocos2dx_3d_Skeleton3D_getRootCount(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_getRootCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -273,6 +278,7 @@ int lua_cocos2dx_3d_Skeleton3D_getBoneIndex(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_getBoneIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -323,6 +329,7 @@ int lua_cocos2dx_3d_Skeleton3D_getBoneCount(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Skeleton3D_getBoneCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -396,6 +403,7 @@ int lua_cocos2dx_3d_Sprite3D_setCullFaceEnabled(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_setCullFaceEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -440,6 +448,7 @@ int lua_cocos2dx_3d_Sprite3D_setTexture(lua_State* tolua_S)
         return 0;
     }
 #endif
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -498,6 +507,7 @@ int lua_cocos2dx_3d_Sprite3D_getLightMask(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getLightMask'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -545,6 +555,7 @@ int lua_cocos2dx_3d_Sprite3D_removeAllAttachNode(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_removeAllAttachNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -591,6 +602,7 @@ int lua_cocos2dx_3d_Sprite3D_getMesh(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getMesh'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -638,6 +650,7 @@ int lua_cocos2dx_3d_Sprite3D_setCullFace(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_setCullFace'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -687,6 +700,7 @@ int lua_cocos2dx_3d_Sprite3D_setLightMask(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_setLightMask'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -736,6 +750,7 @@ int lua_cocos2dx_3d_Sprite3D_getBlendFunc(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getBlendFunc'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -783,6 +798,7 @@ int lua_cocos2dx_3d_Sprite3D_getMeshCount(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getMeshCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -830,6 +846,7 @@ int lua_cocos2dx_3d_Sprite3D_removeAttachNode(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_removeAttachNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -879,6 +896,7 @@ int lua_cocos2dx_3d_Sprite3D_getSkeleton(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getSkeleton'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -926,6 +944,7 @@ int lua_cocos2dx_3d_Sprite3D_getMeshByIndex(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getMeshByIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -976,6 +995,7 @@ int lua_cocos2dx_3d_Sprite3D_getMeshByName(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getMeshByName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1026,6 +1046,7 @@ int lua_cocos2dx_3d_Sprite3D_getAttachNode(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_getAttachNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1063,6 +1084,7 @@ int lua_cocos2dx_3d_Sprite3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Sprite3D_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -1156,6 +1178,7 @@ int lua_cocos2dx_3d_Mesh_setTexture(lua_State* tolua_S)
         return 0;
     }
 #endif
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -1214,6 +1237,7 @@ int lua_cocos2dx_3d_Mesh_getTexture(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1261,6 +1285,7 @@ int lua_cocos2dx_3d_Mesh_getName(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_getName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1308,6 +1333,7 @@ int lua_cocos2dx_3d_Mesh_setBlendFunc(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_setBlendFunc'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1358,6 +1384,7 @@ int lua_cocos2dx_3d_Mesh_getBlendFunc(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_getBlendFunc'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1405,6 +1432,7 @@ int lua_cocos2dx_3d_Mesh_isVisible(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_isVisible'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1452,6 +1480,7 @@ int lua_cocos2dx_3d_Mesh_setVisible(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Mesh_setVisible'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1527,6 +1556,7 @@ int lua_cocos2dx_3d_Animation3D_getDuration(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animation3D_getDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1562,6 +1592,7 @@ int lua_cocos2dx_3d_Animation3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animation3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animation3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -1646,6 +1677,7 @@ int lua_cocos2dx_3d_Animate3D_setSpeed(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_setSpeed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1695,6 +1727,7 @@ int lua_cocos2dx_3d_Animate3D_setWeight(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_setWeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1744,6 +1777,7 @@ int lua_cocos2dx_3d_Animate3D_getSpeed(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_getSpeed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1791,6 +1825,7 @@ int lua_cocos2dx_3d_Animate3D_getWeight(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_getWeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1825,6 +1860,7 @@ int lua_cocos2dx_3d_Animate3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -1880,6 +1916,7 @@ int lua_cocos2dx_3d_Animate3D_getTransitionTime(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_getTransitionTime'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -1914,6 +1951,7 @@ int lua_cocos2dx_3d_Animate3D_createWithFrames(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_Animate3D_createWithFrames'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -1999,6 +2037,7 @@ int lua_cocos2dx_3d_AttachNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AttachNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_AttachNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -2067,6 +2106,7 @@ int lua_cocos2dx_3d_BillBoard_getMode(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_BillBoard_getMode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2114,6 +2154,7 @@ int lua_cocos2dx_3d_BillBoard_setMode(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_BillBoard_setMode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2150,6 +2191,7 @@ int lua_cocos2dx_3d_BillBoard_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.BillBoard",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_BillBoard_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -2260,6 +2302,7 @@ int lua_cocos2dx_3d_BillBoard_createWithTexture(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.BillBoard",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_3d_BillBoard_createWithTexture'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)

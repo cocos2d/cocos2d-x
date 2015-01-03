@@ -30,6 +30,7 @@ int lua_cocos2dx_csloader_CSLoader_setJsonPath(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -79,6 +80,7 @@ int lua_cocos2dx_csloader_CSLoader_createNodeFromJson(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_createNodeFromJson'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -129,6 +131,7 @@ int lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersFile(lua_State* tolu
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -179,6 +182,7 @@ int lua_cocos2dx_csloader_CSLoader_loadNodeWithFile(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_loadNodeWithFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -229,6 +233,7 @@ int lua_cocos2dx_csloader_CSLoader_bindCallback(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_bindCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -288,6 +293,7 @@ int lua_cocos2dx_csloader_CSLoader_purge(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_purge'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -334,6 +340,7 @@ int lua_cocos2dx_csloader_CSLoader_init(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -380,6 +387,7 @@ int lua_cocos2dx_csloader_CSLoader_loadNodeWithContent(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_loadNodeWithContent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -430,6 +438,7 @@ int lua_cocos2dx_csloader_CSLoader_isRecordJsonPath(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_isRecordJsonPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -477,6 +486,7 @@ int lua_cocos2dx_csloader_CSLoader_getJsonPath(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_getJsonPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -524,6 +534,7 @@ int lua_cocos2dx_csloader_CSLoader_setRecordJsonPath(lua_State* tolua_S)
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_setRecordJsonPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -573,6 +584,7 @@ int lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersForSimulator(lua_Sta
     }
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersForSimulator'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -611,6 +623,7 @@ int lua_cocos2dx_csloader_CSLoader_destroyInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_destroyInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -644,6 +657,7 @@ int lua_cocos2dx_csloader_CSLoader_createNode(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_createNode'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -680,6 +694,7 @@ int lua_cocos2dx_csloader_CSLoader_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
 #endif
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -713,6 +728,7 @@ int lua_cocos2dx_csloader_CSLoader_constructor(lua_State* tolua_S)
 
 
 
+    toluafix_set_call_msg("Call from function 'lua_cocos2dx_csloader_CSLoader_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
