@@ -1,3 +1,6 @@
+cocos2d-x-3.4rc0  Jan.9 2015
+    [FIX]           WP8: compiling error on ARM architecture
+
 cocos2d-x-3.4beta0  Dec.31 2014
     [NEW]           3D: support frustum culling
     [NEW]           Action: MoveTo and MoveBy support Vec3
