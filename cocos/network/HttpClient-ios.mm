@@ -188,9 +188,13 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
             }
         }
         
-        NSString* requestData = [NSString stringWithUTF8String:request->getRequestData()];
-        NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
-        [nsrequest setHTTPBody:postData];
+        char* requestDataBuffer = request->getRequestData();
+        if (nullptr !=  requestDataBuffer && 0 != strlen(requestDataBuffer))
+        {
+            NSString* requestData  = [NSString stringWithUTF8String:requestDataBuffer];
+            NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
+            [nsrequest setHTTPBody:postData];
+        }
     }
 
     //read cookie propertities from file and set cookie
