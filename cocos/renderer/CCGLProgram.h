@@ -47,9 +47,8 @@ NS_CC_BEGIN
 
 class GLProgram;
 class Director;
-typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
-typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
-
+CC_DEPRECATED_ATTRIBUTE typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
+CC_DEPRECATED_ATTRIBUTE typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
 struct VertexAttrib
 {
@@ -333,8 +332,7 @@ protected:
     void parseUniforms();
 
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
-
+    
     GLuint            _program;
     GLuint            _vertShader;
     GLuint            _fragShader;
