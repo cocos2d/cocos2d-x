@@ -627,6 +627,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             FD_ZERO(&fdread);
             FD_ZERO(&fdwrite);
             FD_ZERO(&fdexcep);
+// FIXME: when jenkins migrate to ubuntu, we should remove this hack code
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
             curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
             rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &select_tv);
