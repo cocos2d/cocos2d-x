@@ -256,7 +256,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
             NSString *domain = cookie.domain;
             //BOOL session = cookie.sessionOnly;
             NSString *path = cookie.path;
-            BOOL secure = cookie.secure;
+            BOOL secure = cookie.isSecure;
             NSDate *date = cookie.expiresDate;
             NSString *name = cookie.name;
             NSString *value = cookie.value;
