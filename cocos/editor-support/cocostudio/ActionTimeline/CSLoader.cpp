@@ -789,15 +789,17 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
     if (csBuildId)
     {
         CCASSERT(strcmp(_csBuildID.c_str(), csBuildId->c_str()) == 0,
-            String::createWithFormat("%s%s%s%s%s%s%s%s",
-            "The reader build id of your CocosStudio exported file(",
+            String::createWithFormat("%s%s%s%s%s%s%s%s%s%s",
+            "The reader build id of your Cocos exported file(",
             csBuildId->c_str(),
-            ") and the reader build id of your Cocos2d-x(",
+            ") and the reader build id in your Cocos2d-x(",
             _csBuildID.c_str(),
             ") are not match.\n",
-            "Please get the correct Cocos2d-x from ",
+            "Please get the correct reader(build id ",
+            csBuildId->c_str(), 
+            ")from ",
             "https://github.com/chukong/cocos-reader",
-            " and replace your Cocos2d-x")->getCString());
+            " and replace it in your Cocos2d-x")->getCString());
     }
 
     // decode plist
