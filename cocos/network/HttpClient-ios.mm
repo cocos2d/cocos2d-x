@@ -43,8 +43,6 @@
 
 NS_CC_BEGIN
 
-#define ERROR_SIZE 256
-
 namespace network {
 
 static std::mutex       s_requestQueueMutex;
@@ -55,10 +53,11 @@ static std::condition_variable_any s_SleepCondition;
 static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
 
-static HttpClient *s_pHttpClient = nullptr; // pointer to singleton
+static HttpClient *s_HttpClient = nullptr; // pointer to singleton
     
-static HttpAsynConnection *httpAsynConn = nullptr;
 static HttpCookie *s_cookie = nullptr;
+    
+static const int ERROR_SIZE = 256;
 
 static char s_errorBuffer[ERROR_SIZE] = {0};
 
@@ -106,7 +105,7 @@ void HttpClient::networkThread()
         s_responseQueue->pushBack(response);
         s_responseQueueMutex.unlock();
         
-        if (nullptr != s_pHttpClient) {
+        if (nullptr != s_HttpClient) {
             scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
         }
     }
@@ -142,11 +141,11 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 
         if (callback != nullptr)
         {
-            callback(s_pHttpClient, response);
+            callback(s_HttpClient, response);
         }
         else if (pTarget && pSelector)
         {
-            (pTarget->*pSelector)(s_pHttpClient, response);
+            (pTarget->*pSelector)(s_HttpClient, response);
         }
         response->release();
         // do not release in other thread
@@ -218,7 +217,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
         }
     }
     
-    httpAsynConn = [HttpAsynConnection new];
+    HttpAsynConnection *httpAsynConn = [HttpAsynConnection new];
     httpAsynConn.srcURL = urlstring;
     httpAsynConn.sslFile = nil;
     NSString *sslFile = nil;
@@ -356,16 +355,16 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
 // HttpClient implementation
 HttpClient* HttpClient::getInstance()
 {
-    if (s_pHttpClient == nullptr) {
-        s_pHttpClient = new (std::nothrow) HttpClient();
+    if (s_HttpClient == nullptr) {
+        s_HttpClient = new (std::nothrow) HttpClient();
     }
     
-    return s_pHttpClient;
+    return s_HttpClient;
 }
 
 void HttpClient::destroyInstance()
 {
-    CC_SAFE_DELETE(s_pHttpClient);
+    CC_SAFE_DELETE(s_HttpClient);
 }
 
 void HttpClient::enableCookies(const char* cookieFile) {
@@ -403,7 +402,7 @@ HttpClient::~HttpClient()
         s_SleepCondition.notify_one();
     }
 
-    s_pHttpClient = nullptr;
+    s_HttpClient = nullptr;
     
     if(!s_cookieFilename.empty())
     {
