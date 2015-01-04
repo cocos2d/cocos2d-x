@@ -47,7 +47,7 @@
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-const int AudioEngine::INVAILD_AUDIO_ID = -1;
+const int AudioEngine::INVALID_AUDIO_ID = -1;
 const float AudioEngine::TIME_UNKNOWN = -1.0f;
 
 //audio file path,audio IDs
@@ -85,7 +85,7 @@ bool AudioEngine::lazyInit()
 
 int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, const AudioProfile *profile)
 {
-    int ret = AudioEngine::INVAILD_AUDIO_ID;
+    int ret = AudioEngine::INVALID_AUDIO_ID;
 
     do {
         if ( !lazyInit() ){
@@ -130,7 +130,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
         }
         
         ret = _audioEngineImpl->play2d(filePath, loop, volume);
-        if (ret != INVAILD_AUDIO_ID)
+        if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
             auto it = _audioPathIDMap.find(filePath);

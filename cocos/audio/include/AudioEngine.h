@@ -81,7 +81,7 @@ public:
         PAUSED
     };
     
-    static const int INVAILD_AUDIO_ID;
+    static const int INVALID_AUDIO_ID;
 
     static const float TIME_UNKNOWN;
 
