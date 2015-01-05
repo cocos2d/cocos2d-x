@@ -55,12 +55,18 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
     CURLcode res;
     char buffer[10];
 
+    struct MemoryStruct chunk;
+    
+    chunk.memory = (char*)malloc(1);  /* will be grown as needed by the realloc above */
+    chunk.size = 0;    /* no data at this point */
 
     curl = curl_easy_init();
     if (curl) 
     {
-        curl_easy_setopt(curl, CURLOPT_URL, "http://www.baidu.com");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://webtest.cocos2d-x.org/curltest");
 		//code from http://curl.haxx.se/libcurl/c/getinmemory.html
+        /* we pass our 'chunk' struct to the callback function */
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 		//If we don't provide a write function for curl, it will recieve error code 23 on windows.
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
@@ -69,7 +75,7 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
         curl_easy_cleanup(curl);
         if (res == 0)
         {
-            _label->setString("Connect successfully!");
+            _label->setString(StringUtils::format("Connect successfully!\n%s", chunk.memory));
         }
         else
         {
