@@ -301,8 +301,10 @@ function UIButton:setButtonSize(width, height)
             v:setContentSize(cc.size(self.scale9Size_[1], self.scale9Size_[2]))
         else
             local size = v:getContentSize()
-            local scaleX = v:getScaleX()
-            local scaleY = v:getScaleY()
+            local scaleX = 1
+            local scaleY = 1
+            -- scaleX = v:getScaleX()
+            -- scaleY = v:getScaleY()
             scaleX = scaleX * self.scale9Size_[1]/size.width
             scaleY = scaleY * self.scale9Size_[2]/size.height
             v:setScaleX(scaleX)
