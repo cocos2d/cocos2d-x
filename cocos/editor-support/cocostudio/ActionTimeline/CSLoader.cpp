@@ -798,7 +798,7 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
             "Please get the correct reader(build id ",
             csBuildId->c_str(), 
             ")from ",
-            "https://github.com/chukong/cocos-reader",
+            "http://www.cocos2d-x.org/filedown/cocos-reader",
             " and replace it in your Cocos2d-x")->getCString());
     }
 
