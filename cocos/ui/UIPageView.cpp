@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIPageView.h"
+#include "base/CCTouch.h"
 
 NS_CC_BEGIN
 

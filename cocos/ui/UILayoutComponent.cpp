@@ -140,6 +140,7 @@ namespace ui {
         this->setPercentWidth(percent.x);
         this->setPercentHeight(percent.y);
     }
+    
     Vec2 LayoutComponent::getPercentContentSize()const
     {
         Vec2 vec2=Vec2(_percentWidth,_percentHeight);
@@ -151,6 +152,7 @@ namespace ui {
     {
         return _owner->getAnchorPoint();
     }
+    
     void LayoutComponent::setAnchorPosition(const Point& point)
     {
         Rect oldRect = _owner->getBoundingBox();

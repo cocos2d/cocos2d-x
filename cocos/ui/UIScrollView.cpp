@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIScrollView.h"
+#include "base/CCTouch.h"
 
 NS_CC_BEGIN
 

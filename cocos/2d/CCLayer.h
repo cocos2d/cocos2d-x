@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCCustomCommand.h"
-
+#include "base/CCTouch.h"
 
 NS_CC_BEGIN
 

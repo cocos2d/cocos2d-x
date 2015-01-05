@@ -29,6 +29,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class Size;
+class Vec2;
+typedef Vec2 Point;
+
 namespace ui {
     class CC_GUI_DLL LayoutComponent : public Component
     {
