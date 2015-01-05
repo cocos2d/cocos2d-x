@@ -513,6 +513,7 @@ void ParticleSystemQuad::setupVBO()
 
 void ParticleSystemQuad::listenRendererRecreated(EventCustom* event)
 {
+    memset(_buffersVBO, 0, sizeof(_buffersVBO));
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         setupVBOandVAO();
