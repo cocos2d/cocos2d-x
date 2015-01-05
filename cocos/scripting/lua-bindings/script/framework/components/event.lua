@@ -29,7 +29,7 @@ function Event:unbind(target)
     self:init_()
 end
 
-function Event:onEventListener(eventName, listener, tag)
+function Event:on(eventName, listener, tag)
     assert(type(eventName) == "string" and eventName ~= "",
         "Event:addEventListener() - invalid eventName")
     eventName = string.upper(eventName)
@@ -50,7 +50,7 @@ function Event:onEventListener(eventName, listener, tag)
     return self.target_, handle
 end
 
-Event.addEventListener = Event.onEventListener
+Event.addEventListener = Event.on
 
 function Event:dispatchEvent(event)
     event.name = string.upper(tostring(event.name))
