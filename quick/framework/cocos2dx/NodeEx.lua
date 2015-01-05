@@ -165,9 +165,37 @@ function Node:setTouchEnabled(enable)
         return
     end
     
-    if enable then
-        self:setBaseNodeEventListener()
+    self:setBaseNodeEventListener()
+end
+
+function Node:setTouchMode(mode)
+    local func = tolua.getcfunction(self, "setTouchMode")
+    func(self, mode)
+    if not flagNodeTouchInCocos then
+        return
     end
+    
+    self:setBaseNodeEventListener()
+end
+
+function Node:setTouchSwallowEnabled(enable)
+    local func = tolua.getcfunction(self, "setTouchSwallowEnabled")
+    func(self, enable)
+    if not flagNodeTouchInCocos then
+        return
+    end
+    
+    self:setBaseNodeEventListener()
+end
+
+function Node:setTouchCaptureEnabled(enable)
+    local func = tolua.getcfunction(self, "setTouchCaptureEnabled")
+    func(self, enable)
+    if not flagNodeTouchInCocos then
+        return
+    end
+    
+    self:setBaseNodeEventListener()
 end
 
 function Node:setKeypadEnabled(enable)
