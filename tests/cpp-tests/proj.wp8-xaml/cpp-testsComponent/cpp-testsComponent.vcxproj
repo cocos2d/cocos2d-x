@@ -193,6 +193,7 @@
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\Direct3DInterop.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.cpp" />
     <ClCompile Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.cpp" />
+    <ClCompile Include="..\..\Classes\AllocatorTest\AllocatorTest.cpp" />
     <ClCompile Include="..\..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\..\Classes\BillBoardTest\BillBoardTest.cpp" />
     <ClCompile Include="..\..\Classes\BugsTest\Bug-Child.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\DirectXHelper.h" />
     <ClInclude Include="..\..\..\..\cocos\platform\wp8-xaml\cpp\EditBoxEvent.h" />
+    <ClInclude Include="..\..\Classes\AllocatorTest\AllocatorTest.h" />
     <ClInclude Include="..\..\Classes\BaseTest.h" />
     <ClInclude Include="..\..\Classes\BillBoardTest\BillBoardTest.h" />
     <ClInclude Include="..\..\Classes\Box2DTestBed\Tests\ConvexHull.h" />

@@ -126,14 +126,16 @@ void ListView::remedyLayoutParameter(Widget *item)
     {
         return;
     }
-    switch (_direction) {
+    switch (_direction)
+    {
         case Direction::VERTICAL:
         {
             LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
-                switch (_gravity) {
+                switch (_gravity)
+                {
                     case Gravity::LEFT:
                         defaultLp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
                         break;
@@ -166,7 +168,8 @@ void ListView::remedyLayoutParameter(Widget *item)
                 {
                     llp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
                 }
-                switch (_gravity) {
+                switch (_gravity)
+                {
                     case Gravity::LEFT:
                         llp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
                         break;
@@ -188,7 +191,8 @@ void ListView::remedyLayoutParameter(Widget *item)
             if (!llp)
             {
                 LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
-                switch (_gravity) {
+                switch (_gravity)
+                {
                     case Gravity::TOP:
                         defaultLp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
                         break;
@@ -221,7 +225,8 @@ void ListView::remedyLayoutParameter(Widget *item)
                 {
                     llp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
                 }
-                switch (_gravity) {
+                switch (_gravity)
+                {
                     case Gravity::TOP:
                         llp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
                         break;
@@ -314,7 +319,8 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
 void ListView::removeChild(cocos2d::Node *child, bool cleaup)
 {
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget) {
+    if (widget)
+    {
         _items.eraseObject(widget);
     }
    
@@ -447,6 +453,17 @@ void ListView::refreshView()
     updateInnerContainerSize();
 }
     
+void ListView::forceDoLayout()
+{
+    if (_refreshViewDirty)
+    {
+        refreshView();
+        _refreshViewDirty = false;
+    }
+
+    this->_innerContainer->forceDoLayout();
+}
+
 void ListView::doLayout()
 {
     Layout::doLayout();

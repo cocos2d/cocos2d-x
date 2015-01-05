@@ -5,13 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
--- @function [parent=#MoveBy] create 
+-- @overload self, float, vec3_table         
+-- @overload self, float, vec2_table         
+-- @function [parent=#MoveBy] create
 -- @param self
 -- @param #float duration
 -- @param #vec2_table deltaPosition
 -- @return MoveBy#MoveBy ret (return value: cc.MoveBy)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#MoveBy] startWithTarget 

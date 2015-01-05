@@ -54,7 +54,7 @@
 #include "WidgetReader/PageViewReader/PageViewReader.h"
 #include "WidgetReader/ListViewReader/ListViewReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
@@ -167,7 +167,15 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     while (element)
     {
 //        CCLOG("entity name = %s", element->Name());
-        
+        if (strcmp("PropertyGroup", element->Name()) == 0)
+        {
+            const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+            while (attribute && strcmp("Version", attribute->Name()) != 0)
+                attribute = attribute->Next();
+            if (attribute)
+                _csdVersion = attribute->Value();
+        }
+
         if (strcmp("Content", element->Name()) == 0)
         {
             const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
@@ -248,10 +256,11 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
         
         auto csparsebinary = CreateCSParseBinary(*_builder,
                                                  _builder->CreateVector(_textures),
-												 _builder->CreateVector(_texturePngs),
+                                                 _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 aciton);
-		_builder->Finish(csparsebinary);
+                                                 aciton,
+                                                 _builder->CreateString(_csdVersion));
+        _builder->Finish(csparsebinary);
         
         _textures.clear();
         _texturePngs.clear();
@@ -988,7 +997,15 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     while (element)
     {
 //        CCLOG("entity name = %s", element->Name());
-        
+        if (strcmp("PropertyGroup", element->Name()) == 0)
+        {
+            const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+            while (attribute && strcmp("Version", attribute->Name()) != 0)
+                attribute = attribute->Next();
+            if (attribute)
+                _csdVersion = attribute->Value();
+        }
+
         if (strcmp("Content", element->Name()) == 0)
         {
             const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
@@ -1046,10 +1063,11 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
         }
         
 		auto csparsebinary = CreateCSParseBinary(*_builder,
-			_builder->CreateVector(_textures),
-			_builder->CreateVector(_texturePngs),
+                                                 _builder->CreateVector(_textures),
+                                                 _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 aciton);        
+                                                 aciton,
+                                                 _builder->CreateString(_csdVersion));
 		_builder->Finish(csparsebinary);
         
         _textures.clear();
@@ -1169,9 +1187,29 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
 {
     auto temp = NodeReader::getInstance()->createOptionsWithFlatBuffers(objectData, _builder);
     auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
-    
+
     std::string filename = "";
-    
+
+
+    bool isloop = true;
+    bool isAutoPlay = true;
+    const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+    while (attribute)
+    {
+        std::string attriname = attribute->Name();
+        std::string value = attribute->Value();
+        if (attriname == "IsLoop")
+        {
+            isloop = (value == "True") ? true : false;
+
+        }
+        else if (attriname == "IsAutoPlay")
+        {
+            isAutoPlay = (value == "True") ? true : false;
+        }
+        attribute = attribute->Next();
+    }
+
     // FileData
     const tinyxml2::XMLElement* child = objectData->FirstChildElement();
     while (child)
@@ -1180,19 +1218,19 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
         
         if (name == "FileData")
         {
-            const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+            const tinyxml2::XMLAttribute* attributeFileData = child->FirstAttribute();
             
-            while (attribute)
+            while (attributeFileData)
             {
-                name = attribute->Name();
-                std::string value = attribute->Value();
+                name = attributeFileData->Name();
+                std::string value = attributeFileData->Value();
                 
                 if (name == "Path")
                 {
                     filename = value;
                 }
                 
-                attribute = attribute->Next();
+                attributeFileData = attributeFileData->Next();
             }
         }
         
@@ -1201,7 +1239,9 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
     
     return CreateProjectNodeOptions(*_builder,
                                     nodeOptions,
-                                    _builder->CreateString(filename));
+                                    _builder->CreateString(filename),
+                                    isloop,
+                                    isAutoPlay);
 }
     
 }

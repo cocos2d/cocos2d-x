@@ -272,6 +272,12 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- Set writable/cache path.
+-- @function [parent=#FileUtils] setWritablePath 
+-- @param self
+-- @param #string writablePath
+        
+--------------------------------
 -- Sets/Gets whether to pop-up a message box when failed to load an image.
 -- @function [parent=#FileUtils] setPopupNotify 
 -- @param self
@@ -285,6 +291,12 @@
 -- @param self
 -- @param #string dirPath
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Set default resource root path.
+-- @function [parent=#FileUtils] setDefaultResourceRootPath 
+-- @param self
+-- @param #string path
         
 --------------------------------
 -- Gets the array that contains the search order of the resources.<br>

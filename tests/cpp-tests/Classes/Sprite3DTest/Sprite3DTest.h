@@ -71,6 +71,7 @@ class Sprite3DUVAnimationTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DUVAnimationTest);
     Sprite3DUVAnimationTest();
+    virtual ~Sprite3DUVAnimationTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
@@ -80,6 +81,77 @@ protected:
     float _cylinder_texture_offset;
     float _shining_duraion;
     GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
+class Sprite3DFakeShadowTest : public Sprite3DTestDemo
+{
+public:
+    enum State
+    {
+        State_None = 0,
+        State_Idle = 0x01,
+        State_Move = 0x02,
+        State_Rotate = 0x04
+    };
+    CREATE_FUNC(Sprite3DFakeShadowTest);
+    Sprite3DFakeShadowTest();
+    virtual ~Sprite3DFakeShadowTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void Move(cocos2d::Ref* sender,int value);
+    void updateCamera(float fDelta);
+    void move3D(float elapsedTime);
+    void updateState(float elapsedTime);
+    bool isState(unsigned int state,unsigned int bit) const;
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+private:
+    cocos2d::Camera * _camera;
+    Vec3           _targetPos;
+    unsigned int   _curState;
+    cocos2d::Sprite3D * _plane;
+    cocos2d::Sprite3D * _orc;
+    GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
+class Sprite3DLightMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DLightMapTest);
+    Sprite3DLightMapTest();
+    virtual ~Sprite3DLightMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+private:
+    Camera * _camera;
+};
+
+class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DBasicToonShaderTest);
+    Sprite3DBasicToonShaderTest();
+    virtual ~Sprite3DBasicToonShaderTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
+
 };
 class EffectSprite3D;
 
@@ -174,6 +246,23 @@ public:
     void addNewSpriteWithCoords(Vec2 p);
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
+class AsyncLoadSprite3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AsyncLoadSprite3DTest);
+    AsyncLoadSprite3DTest();
+    virtual ~AsyncLoadSprite3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_asyncLoadSprite(Ref* sender);
+    
+    void asyncLoad_Callback(Sprite3D* sprite, void* param);
+    
+protected:
+    std::vector<std::string> _paths; //model paths to be loaded
 };
 
 class Sprite3DWithSkinTest : public Sprite3DTestDemo
@@ -337,6 +426,24 @@ protected:
     bool _hasWeapon;
     cocos2d::Sprite3D* _sprite;
     cocos2d::Sprite3D* _mirrorSprite;
+};
+
+class QuaternionTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(QuaternionTest);
+    QuaternionTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+    virtual void update(float delta) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    float              _arcSpeed;
+    float              _radius;
+    float              _accAngle;
 };
 
 class Sprite3DTestScene : public TestScene

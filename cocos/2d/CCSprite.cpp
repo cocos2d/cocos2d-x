@@ -264,6 +264,7 @@ Sprite::Sprite(void)
 : _batchNode(nullptr)
 , _shouldBeHidden(false)
 , _texture(nullptr)
+, _spriteFrame(nullptr)
 , _insideBounds(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
@@ -274,6 +275,7 @@ Sprite::Sprite(void)
 
 Sprite::~Sprite(void)
 {
+    CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
 }
 
@@ -936,6 +938,14 @@ void Sprite::setSpriteFrame(const std::string &spriteFrameName)
 
 void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 {
+    // retain the sprite frame
+    // do not removed by SpriteFrameCache::removeUnusedSpriteFrames
+    if (_spriteFrame != spriteFrame)
+    {
+        CC_SAFE_RELEASE(_spriteFrame);
+        _spriteFrame = spriteFrame;
+        spriteFrame->retain();
+    }
     _unflippedOffsetPositionFromCenter = spriteFrame->getOffset();
 
     Texture2D *texture = spriteFrame->getTexture();

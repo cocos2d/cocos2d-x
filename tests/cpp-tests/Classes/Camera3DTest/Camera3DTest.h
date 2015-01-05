@@ -27,11 +27,14 @@ THE SOFTWARE.
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "../Sprite3DTest/DrawNode3D.h"
 #include <string>
+
 namespace cocos2d {
     class Sprite3D;
     class Delay;
 }
+
 enum State
 {
     State_None = 0,
@@ -106,6 +109,45 @@ protected:
     Label* _ZoomInlabel;
     Label* _ZoomOutlabel;
 };
+
+class CameraClippingDemo : public BaseTest
+{
+public:
+    CREATE_FUNC(CameraClippingDemo);
+    CameraClippingDemo(void);
+    virtual ~CameraClippingDemo(void);
+    
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual void update(float dt) override;
+    
+    // overrides
+    virtual std::string title() const override;
+    void reachEndCallBack();
+    void switchViewCallback(Ref* sender);
+    void addSpriteCallback(Ref* sender);
+    void delSpriteCallback(Ref* sender);
+
+    void drawCameraFrustum();
+    
+protected:
+    Label*                  _labelSprite3DCount;
+    Layer*                  _layer3D;
+    std::vector<Sprite3D*>  _objects;
+    CameraType              _cameraType;
+    Camera*                 _cameraFirst;
+    Camera*                 _cameraThird;
+    MoveBy*                 _moveAction;
+    DrawNode3D*             _drawAABB;
+    DrawNode3D*             _drawFrustum;
+    int                     _row;
+};
+
 class Camera3DTestScene : public TestScene
 {
 public:

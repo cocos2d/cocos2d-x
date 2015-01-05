@@ -5,6 +5,9 @@
 
 #include <string>
 #include <vector>
+
+#include "ConfigParser.h"
+
 using namespace std;
 
 string getIPAddress()
@@ -13,6 +16,13 @@ string getIPAddress()
     struct ifaddrs * addrs;
     const struct ifaddrs * cursor;
     
+    // customized by user
+    auto &bindAddress = ConfigParser::getInstance()->getBindAddress();
+    if (bindAddress.length() > 0)
+    {
+        return bindAddress;
+    }
+        
     success = getifaddrs(&addrs) == 0;
     if (success) {
         cursor = addrs;

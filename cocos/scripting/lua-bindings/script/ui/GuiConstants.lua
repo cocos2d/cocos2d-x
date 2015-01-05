@@ -1,5 +1,6 @@
-
-ccui = ccui or {}
+if nil == ccui then
+    return
+end
 
 ccui.BrightStyle =
 {

@@ -76,7 +76,7 @@
 -- Returns whether or not a SpriteFrame is being displayed
 -- @function [parent=#Sprite] isFrameDisplayed 
 -- @param self
--- @param #cc.SpriteFrame pFrame
+-- @param #cc.SpriteFrame frame
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -111,7 +111,7 @@
 -- Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
 -- @function [parent=#Sprite] setTextureAtlas 
 -- @param self
--- @param #cc.TextureAtlas pobTextureAtlas
+-- @param #cc.TextureAtlas textureAtlas
         
 --------------------------------
 -- Returns the current displayed frame.

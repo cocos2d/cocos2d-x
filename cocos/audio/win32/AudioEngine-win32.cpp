@@ -27,8 +27,13 @@
 
 #include "AudioEngine-win32.h"
 #include <condition_variable>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include "alc.h"
+#include "alext.h"
+#else
 #include "AL/alc.h"
 #include "AL/alext.h"
+#endif
 #include "audio/include/AudioEngine.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -200,7 +205,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         }
     }
     if(!availableSourceExist){
-        return AudioEngine::INVAILD_AUDIO_ID;
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     AudioCache* audioCache = nullptr;
@@ -239,7 +244,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         
         if (eraseCache){
             _audioCaches.erase(filePath);
-            return AudioEngine::INVAILD_AUDIO_ID;
+            return AudioEngine::INVALID_AUDIO_ID;
         }
 
         audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);

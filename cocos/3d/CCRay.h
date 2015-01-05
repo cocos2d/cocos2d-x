@@ -28,6 +28,7 @@
 #include "math/CCMath.h"
 #include "3d/CCAABB.h"
 #include "3d/CCOBB.h"
+#include "3d/CCPlane.h"
 
 NS_CC_BEGIN
 
@@ -67,6 +68,9 @@ public:
      */
     bool intersects(const OBB& obb) const;
 
+    float dist(const Plane& plane) const;
+    Vec3 intersects(const Plane& plane) const;
+    
     /**
      * Sets this ray to the specified values.
      *

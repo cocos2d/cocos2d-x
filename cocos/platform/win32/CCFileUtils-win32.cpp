@@ -168,8 +168,12 @@ static Data getData(const std::string& filename, bool forString)
 
         if (!successed)
         {
-            free(buffer);
-            buffer = nullptr;
+            // should determine buffer value, or it will cause memory leak
+            if (buffer)
+            {
+                free(buffer);
+                buffer = nullptr;
+            }    
         }
     } while (0);
     

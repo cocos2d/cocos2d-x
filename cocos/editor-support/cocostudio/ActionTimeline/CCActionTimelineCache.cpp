@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CSParseBinary_generated.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
@@ -438,6 +438,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     action->setDuration(duration);
     float speed = nodeAction->speed();
     action->setTimeSpeed(speed);
+    
     
     auto timelines = nodeAction->timeLines();
     int timelineLength = timelines->size();

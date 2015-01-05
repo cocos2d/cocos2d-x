@@ -35,19 +35,15 @@ THE SOFTWARE.
 #include <vector>
 
 static std::string g_projectPath;
+static std::function<void (std::string)> s_gProjectLoader = [](std::string path)
+{
+    CCLOG("Please set loader for your project");
+};
 
 void startScript(std::string strDebugArg)
 {
-    // register lua engine
-    auto engine = LuaEngine::getInstance();
-    if (!strDebugArg.empty())
-    {
-        // open debugger.lua module
-        cocos2d::log("debug args = %s", strDebugArg.c_str());
-        luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
-        engine->executeString(strDebugArg.c_str());
-    }
-    engine->executeScriptFile(ConfigParser::getInstance()->getEntryFile().c_str());
+    resetDesignResolution();
+    s_gProjectLoader(strDebugArg);
 }
 
 
@@ -98,7 +94,7 @@ std::string& replaceAll(std::string& str, const std::string& old_value, const st
 
 const char* getRuntimeVersion()
 {
-    return "1.7";
+    return "1.8";
 }
 
 int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
@@ -119,7 +115,7 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
     cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
 
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchPath'", nullptr);
         return 0;
@@ -127,7 +123,7 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1 || argc == 2) 
+    if (argc == 1 || argc == 2)
     {
         std::string arg0;
         bool arg1 = false;
@@ -152,7 +148,7 @@ int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
             {
                 cobj->addSearchPath(arg0, arg1);
             }
-            
+
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
             // add project path to search path
             cobj->addSearchPath(g_projectPath + arg0, arg1);
@@ -189,7 +185,7 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
     cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
 
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_runtime_setSearchPaths'", nullptr);
         return 0;
@@ -197,7 +193,7 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 1)
     {
         std::vector<std::string> vecPaths, writePaths;
 
@@ -215,7 +211,7 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
                 writePaths.push_back(FileServer::getShareInstance()->getWritePath() + vecPaths[i]);
             }
         }
-        
+
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         vecPaths.insert(vecPaths.end(), projPath.begin(), projPath.end());
 #endif
@@ -226,7 +222,7 @@ int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
         {
             vecPaths.insert(vecPaths.end(), originPath.begin(), originPath.end());
         }
-        
+
         cobj->setSearchPaths(vecPaths);
         return 0;
     }
@@ -252,24 +248,31 @@ static void register_runtime_override_function(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-void initRuntime()
+void initRuntime(const std::string& workPath)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
-    
-    extern std::string getCurAppPath();
-    std::string appPath = getCurAppPath();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    appPath.append("/../../");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    appPath.append("/../../../");
-#endif
-    appPath = replaceAll(appPath, "\\", "/");
-    g_projectPath = appPath;
-    
+
+    if (workPath.empty())
+    {
+        extern std::string getCurAppPath();
+        std::string appPath = getCurAppPath();
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        appPath.append("/../../");
+    #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        appPath.append("/../../../");
+    #endif
+        appPath = replaceAll(appPath, "\\", "/");
+        g_projectPath = appPath;
+    }
+    else
+    {
+        g_projectPath = workPath;
+    }
+
     // add project's root directory to search path
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
-    
+
     // add writable path to search path
     searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
@@ -297,4 +300,34 @@ void endRuntime()
 	ConsoleCommand::purge();
 	FileServer::getShareInstance()->stop();
 	//FileServer::purge();
+}
+
+//////////////////////// Loader ////////////////////
+
+void setLoader(std::function<void (std::string)> func)
+{
+    s_gProjectLoader = func;
+}
+
+void luaScriptLoader(std::string strDebugArg)
+{
+    // register lua engine
+    auto engine = LuaEngine::getInstance();
+    if (!strDebugArg.empty())
+    {
+        // open debugger.lua module
+        cocos2d::log("debug args = %s", strDebugArg.c_str());
+        luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
+        engine->executeString(strDebugArg.c_str());
+    }
+    std::string code("require \"");
+    code.append(ConfigParser::getInstance()->getEntryFile().c_str());
+    code.append("\"");
+    engine->executeString(code.c_str());
+}
+
+void resetDesignResolution()
+{
+    cocos2d::Size size = ConfigParser::getInstance()->getInitViewSize();
+    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, ResolutionPolicy::EXACT_FIT);
 }
