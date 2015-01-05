@@ -120,32 +120,57 @@ function Node:scaleTo(args)
     return self
 end
 
-function Node:scheduleUpdate(callback)
+function Node:onUpdate(callback)
     self:scheduleUpdateWithPriorityLua(callback, 0)
     return self
 end
 
+Node.scheduleUpdate = Node.onUpdate
+
+function Node:onNodeEvent(eventName, callback)
+    if "enter" == eventName then
+        self.onEnterCallback_ = callback
+    elseif "exit" == eventName then
+        self.onExitCallback_ = callback
+    elseif "enterTransitionFinish" == eventName then
+        self.onEnterTransitionFinishCallback_ = callback
+    elseif "exitTransitionStart" == eventName then
+        self.onExitTransitionStartCallback_ = callback
+    elseif "cleanup" == eventName then
+        self.onCleanupCallback_ = callback
+    end
+    self:enableNodeEvents()
+end
+
 function Node:enableNodeEvents()
+    if self.isNodeEventEnabled_ then
+        return self
+    end
+
     self:registerScriptHandler(function(state)
         if state == "enter" then
-            self:onEnter()
+            self:onEnter_()
         elseif state == "exit" then
-            self:onExit()
+            self:onExit_()
         elseif state == "enterTransitionFinish" then
-            self:onEnterTransitionFinish()
+            self:onEnterTransitionFinish_()
         elseif state == "exitTransitionStart" then
-            self:onExitTransitionStart()
+            self:onExitTransitionStart_()
         elseif state == "cleanup" then
-            self:onCleanup()
+            self:onCleanup_()
         end
     end)
+    self.isNodeEventEnabled_ = true
+
     return self
 end
 
 function Node:disableNodeEvents()
     self:unregisterScriptHandler()
+    self.isNodeEventEnabled_ = false
     return self
 end
+
 
 function Node:onEnter()
 end
@@ -160,4 +185,44 @@ function Node:onExitTransitionStart()
 end
 
 function Node:onCleanup()
+end
+
+function Node:onEnter_()
+    self:onEnter()
+    if not self.onEnterCallback_ then
+        return
+    end
+    self:onEnterCallback_()
+end
+
+function Node:onExit_()
+    self:onExit()
+    if not self.onExitCallback_ then
+        return
+    end
+    self:onExitCallback_()
+end
+
+function Node:onEnterTransitionFinish_()
+    self:onEnterTransitionFinish()
+    if not self.onEnterTransitionFinishCallback_ then
+        return
+    end
+    self:onEnterTransitionFinishCallback_()
+end
+
+function Node:onExitTransitionStart_()
+    self:onExitTransitionStart()
+    if not self.onExitTransitionStartCallback_ then
+        return
+    end
+    self:onExitTransitionStartCallback_()
+end
+
+function Node:onCleanup_()
+    self:onCleanup()
+    if not self.onCleanupCallback_ then
+        return
+    end
+    self:onCleanupCallback_()
 end
