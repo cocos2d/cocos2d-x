@@ -312,7 +312,6 @@ protected:
     
     void removeJoint(PhysicsJoint* joint);
     inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
-    void updateMass(float oldMass, float newMass);
     
 protected:
     PhysicsBody();
