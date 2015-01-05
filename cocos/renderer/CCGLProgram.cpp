@@ -604,8 +604,9 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength);
+    char *logBytes = (char*)malloc(logLength+1);
     logFunc(object, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
 
     ret = logBytes;
 
@@ -615,16 +616,61 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
 
 std::string GLProgram::getVertexShaderLog() const
 {
+    std::string ret;
+    GLint logLength = 0, charsWritten = 0;
+
+    glGetShaderiv(_vertShader, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength < 1)
+        return "";
+
+    char *logBytes = (char*)malloc(logLength+1);
+    glGetShaderInfoLog(_vertShader, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
+
+    ret = logBytes;
+
+    free(logBytes);
+    return ret;
     return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
 std::string GLProgram::getFragmentShaderLog() const
 {
+    std::string ret;
+    GLint logLength = 0, charsWritten = 0;
+
+    glGetShaderiv(_fragShader, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength < 1)
+        return "";
+
+    char *logBytes = (char*)malloc(logLength+1);
+    glGetShaderInfoLog(_fragShader, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
+
+    ret = logBytes;
+
+    free(logBytes);
+    return ret;
     return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
 std::string GLProgram::getProgramLog() const
 {
+    std::string ret;
+    GLint logLength = 0, charsWritten = 0;
+
+    glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength < 1)
+        return "";
+
+    char *logBytes = (char*)malloc(logLength+1);
+    glGetProgramInfoLog(_fragShader, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
+
+    ret = logBytes;
+
+    free(logBytes);
+    return ret;
     return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
 
