@@ -47,8 +47,9 @@ NS_CC_BEGIN
 
 class GLProgram;
 class Director;
-CC_DEPRECATED_ATTRIBUTE typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
-CC_DEPRECATED_ATTRIBUTE typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+//FIXME: these two typedefs would be deprecated or removed in version 4.0
+typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
+typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
 struct VertexAttrib
 {
