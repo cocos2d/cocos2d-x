@@ -33,6 +33,8 @@
 #include "physics/CCPhysicsShape.h"
 #include "base/CCVector.h"
 
+struct cpBody;
+
 NS_CC_BEGIN
 
 class Node;
@@ -195,11 +197,11 @@ public:
     /** set body position offset, it's the position witch relative to node */
     void setPositionOffset(const Vec2& position);
     /** get body position offset. */
-    Vec2 getPositionOffset() const;
+    Vec2 getPositionOffset() const { return _positionOffset; }
     /** set body rotation offset, it's the rotation witch relative to node */
     void setRotationOffset(float rotation);
     /** set the body rotation offset */
-    float getRotationOffset() const;
+    float getRotationOffset() const { return _rotationOffset; }
     
     /**
      * @brief test the body is dynamic or not.
@@ -297,22 +299,18 @@ public:
     /** convert the local point to world */
     Vec2 local2World(const Vec2& point);
     
-protected:
-    
+    inline cpBody* getBody() const { return _body; }
+protected:  
     bool init();
     
     virtual void setPosition(const Vec2& position);
     virtual void setRotation(float rotation);
-    virtual void setScale(float scale);
     virtual void setScale(float scaleX, float scaleY);
-    virtual void setScaleX(float scaleX);
-    virtual void setScaleY(float scaleY);
     
     void update(float delta);
     
     void removeJoint(PhysicsJoint* joint);
     inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
-    void updateMass(float oldMass, float newMass);
     
 protected:
     PhysicsBody();
@@ -323,7 +321,8 @@ protected:
     std::vector<PhysicsJoint*> _joints;
     Vector<PhysicsShape*> _shapes;
     PhysicsWorld* _world;
-    PhysicsBodyInfo* _info;
+    cpBody* _body;
+
     bool _dynamic;
     bool _enabled;
     bool _rotationEnabled;
@@ -338,11 +337,14 @@ protected:
     float _linearDamping;
     float _angularDamping;
     int _tag;
+    float _scaleX;
+    float _scaleY;
     
-    bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
-    bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
+    Vec2 _recordPosition;
     Vec2 _positionOffset;
+    
     float _rotationOffset;
+    float _rotation;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

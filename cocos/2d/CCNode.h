@@ -1532,12 +1532,14 @@ public:
     /**
      *   get the PhysicsBody the sprite have
      */
-    PhysicsBody* getPhysicsBody() const;
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
     
     /**
      *   remove this node from physics world. it will remove all the physics bodies in it's children too.
      */
     void removeFromPhysicsWorld();
+
+    void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
 #endif
     
@@ -1593,7 +1595,7 @@ protected:
     Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
 
     Mat4 transform(const Mat4 &parentTransform);
-    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags);
+    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags, bool updateTransformFromPhysics = true);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1613,10 +1615,7 @@ protected:
     void updateRotation3D();
     
 #if CC_USE_PHYSICS
-    void updatePhysicsBodyTransform(Scene* layer);
-    virtual void updatePhysicsBodyPosition(Scene* layer);
-    virtual void updatePhysicsBodyRotation(Scene* layer);
-    virtual void updatePhysicsBodyScale(Scene* scene);
+    virtual void updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY, float parentRotation);
 #endif // CC_USE_PHYSICS
     
 private:
@@ -1706,6 +1705,7 @@ protected:
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
 #if CC_USE_PHYSICS
+    bool _physicsTransformDirty;
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
     float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
     float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
