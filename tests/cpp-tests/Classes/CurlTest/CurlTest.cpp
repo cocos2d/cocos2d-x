@@ -68,7 +68,7 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
         /* we pass our 'chunk' struct to the callback function */
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 		//If we don't provide a write function for curl, it will recieve error code 23 on windows.
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
         res = curl_easy_perform(curl);
         /* always cleanup */
