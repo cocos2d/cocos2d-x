@@ -1,4 +1,5 @@
 cocos2d-x-3.4rc0  Jan.9 2015
+    [FIX]           FileUtils: getData() will cause memory leak if file size is 0 on windows
     [FIX]           GLProgram: when there is a shader compile error in shader, it will crash on windows
     [FIX]           HttpClient: http requests will be lost in immediately mode on iOS
     [FIX]           WP8: compiling error on ARM architecture
