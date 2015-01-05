@@ -38,12 +38,13 @@ namespace flatbuffers
     
     struct NodeAction;
     struct TimeLine;
-    struct TimeLineBoolFrame;
-    struct TimeLineIntFrame;
-    struct TimeLineStringFrame;
-    struct TimeLinePointFrame;
-    struct TimeLineColorFrame;
-    struct TimeLineTextureFrame;
+    struct PointFrame;
+    struct ScaleFrame;
+    struct ColorFrame;
+    struct TextureFrame;
+    struct EventFrame;
+    struct IntFrame;
+    struct BoolFrame;
 }
 
 NS_TIMELINE_BEGIN
@@ -54,7 +55,8 @@ class Frame;
 
 class CC_STUDIO_DLL ActionTimelineCache
 {
-public:
+public:    
+    
     /** Gets the singleton */
     static ActionTimelineCache* getInstance();
 
@@ -101,15 +103,14 @@ protected:
     
     Timeline* loadTimelineWithFlatBuffers(const flatbuffers::TimeLine* flatbuffers);
     
-    Frame* loadVisibleFrameWithFlatBuffers      (const flatbuffers::TimeLineBoolFrame* flatbuffers);
-    Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::TimeLineIntFrame* flatbuffers);
-    Frame* loadRotationSkewFrameWithFlatBuffers (const flatbuffers::TimeLinePointFrame* flatbuffers);
-    Frame* loadEventFrameWithFlatBuffers        (const flatbuffers::TimeLineStringFrame* flatbuffers);
-    Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::TimeLinePointFrame* flatbuffers);
-    Frame* loadPositionFrameWithFlatBuffers     (const flatbuffers::TimeLinePointFrame* flatbuffers);
-    Frame* loadScaleFrameWithFlatBuffers        (const flatbuffers::TimeLinePointFrame* flatbuffers);
-    Frame* loadColorFrameWithFlatBuffers        (const flatbuffers::TimeLineColorFrame* flatbuffers);
-    Frame* loadTextureFrameWithFlatBuffers      (const flatbuffers::TimeLineTextureFrame* flatbuffers);
+    Frame* loadPositionFrameWithFlatBuffers     (const flatbuffers::PointFrame* flatbuffers);
+    Frame* loadScaleFrameWithFlatBuffers        (const flatbuffers::ScaleFrame* flatbuffers);
+    Frame* loadRotationSkewFrameWithFlatBuffers (const flatbuffers::ScaleFrame* flatbuffers);
+    Frame* loadColorFrameWithFlatBuffers        (const flatbuffers::ColorFrame* flatbuffers);
+    Frame* loadTextureFrameWithFlatBuffers      (const flatbuffers::TextureFrame* flatbuffers);
+    Frame* loadEventFrameWithFlatBuffers        (const flatbuffers::EventFrame* flatbuffers);
+    Frame* loadIntFrameWithFlatBuffers          (const flatbuffers::IntFrame* flatbuffers);
+    Frame* loadBoolFrameWithFlatBuffers         (const flatbuffers::BoolFrame* flatbuffers);
 
 protected:
 
