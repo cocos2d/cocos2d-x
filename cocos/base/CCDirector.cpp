@@ -971,6 +971,7 @@ void Director::purgeDirector()
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
+//it will crash clang static analyzer so hide it if __clang_analyzer__ defined
 #ifndef __clang_analyzer__
     DrawPrimitives::free();
 #endif

@@ -87,6 +87,7 @@ void ccDrawInit()
 
 void ccDrawFree()
 {
+//it will crash clang static analyzer so hide it if __clang_analyzer__ defined
 #ifndef __clang_analyzer__
     DrawPrimitives::free();
 #endif
