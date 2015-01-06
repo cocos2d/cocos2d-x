@@ -101,9 +101,10 @@ end
 -- end --
 
 function UILoadingBar:setPercent(percent)
+	self.percent_ = percent
 	local rect = cc.rect(self.viewRect_.x, self.viewRect_.y,
 		self.viewRect_.width, self.viewRect_.height)
-	local newWidth = rect.width*percent/100
+	local newWidth = rect.width*self.percent_/100
 
 	rect.x = 0
 	rect.y = 0
@@ -124,6 +125,19 @@ function UILoadingBar:setPercent(percent)
 	end
 
 	return self
+end
+
+-- start --
+
+--------------------------------
+-- 得到进度控件的进度
+-- @function [parent=#UILoadingBar] getPercent
+-- @return number 进度值
+
+-- end --
+
+function UILoadingBar:getPercent()
+	return self.percent_
 end
 
 -- start --
