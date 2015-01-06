@@ -42,6 +42,11 @@
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
+static inline void cpBodyUpdateVelocityWithoutGravity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
+{
+    cpBodyUpdateVelocity(body, cpvzero, damping, dt);
+}
+
 NS_CC_BEGIN
 extern const float PHYSICS_INFINITY;
 
@@ -189,7 +194,7 @@ PhysicsBody* PhysicsBody::createEdgeSegment(const Vec2& a, const Vec2& b, const 
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgeSegment::create(a, b, material, border));
-        body->_dynamic = false;
+        body->setDynamic(false);
         body->autorelease();
         return body;
     }
@@ -204,7 +209,7 @@ PhysicsBody* PhysicsBody::createEdgeBox(const Size& size, const PhysicsMaterial&
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgeBox::create(size, material, border, offset));
-        body->_dynamic = false;
+        body->setDynamic(false);
         body->autorelease();
         return body;
     }
@@ -220,7 +225,7 @@ PhysicsBody* PhysicsBody::createEdgePolygon(const Vec2* points, int count, const
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgePolygon::create(points, count, material, border));
-        body->_dynamic = false;
+        body->setDynamic(false);
         body->autorelease();
         return body;
     }
@@ -236,7 +241,7 @@ PhysicsBody* PhysicsBody::createEdgeChain(const Vec2* points, int count, const P
     if (body && body->init())
     {
         body->addShape(PhysicsShapeEdgeChain::create(points, count, material, border));
-        body->_dynamic = false;
+        body->setDynamic(false);
         body->autorelease();
         return body;
     }
@@ -278,38 +283,35 @@ void PhysicsBody::setDynamic(bool dynamic)
     if (dynamic != _dynamic)
     {
         _dynamic = dynamic;
+        auto body = _info->getBody();
         if (dynamic)
         {
-            cpBodySetMass(_info->getBody(), _mass);
-            cpBodySetMoment(_info->getBody(), _moment);
-            
-            if (_world != nullptr)
+            if (_world && body->CP_PRIVATE(space))
             {
-                // reset the gravity enable
-                if (isGravityEnabled())
-                {
-                    _gravityEnabled = false;
-                    setGravityEnable(true);
-                }
-                
-                cpSpaceAddBody(_world->_info->getSpace(), _info->getBody());
+                cpSpaceConvertBodyToDynamic(_world->_info->getSpace(), body, _mass, _moment);
+                cpSpaceAddBody(_world->_info->getSpace(), body);
+            }
+            else
+            {
+                cpBodySetMass(body, _mass);
+                cpBodySetMoment(body, _moment);
+                body->CP_PRIVATE(node).idleTime = 0.0f;
             }
         }
         else
         {
-            if (_world != nullptr)
+            if (_world && body->CP_PRIVATE(space))
             {
-                cpSpaceRemoveBody(_world->_info->getSpace(), _info->getBody());
+                cpSpaceRemoveBody(_world->_info->getSpace(), body);
+                cpSpaceConvertBodyToStatic(_world->_info->getSpace(), body);
             }
-            
-            // avoid incorrect collion simulation.
-            cpBodySetMass(_info->getBody(), PHYSICS_INFINITY);
-            cpBodySetMoment(_info->getBody(), PHYSICS_INFINITY);
-            cpBodySetVel(_info->getBody(), cpvzero);
-            cpBodySetAngVel(_info->getBody(), 0.0f);
-            resetForces();
+            else
+            {
+                cpBodySetMass(body, PHYSICS_INFINITY);
+                cpBodySetMoment(body, PHYSICS_INFINITY);
+                body->CP_PRIVATE(node).idleTime = (cpFloat)INFINITY;
+            }
         }
-        
     }
 }
 
@@ -324,20 +326,15 @@ void PhysicsBody::setRotationEnable(bool enable)
 
 void PhysicsBody::setGravityEnable(bool enable)
 {
-    if (_gravityEnabled != enable)
+    _gravityEnabled = enable;
+
+    if (enable)
     {
-        _gravityEnabled = enable;
-        
-        if (_world != nullptr)
-        {
-            if (enable)
-            {
-                applyForce(_world->getGravity() * _mass);
-            }else
-            {
-                applyForce(-_world->getGravity() * _mass);
-            }
-        }
+        _info->getBody()->velocity_func = cpBodyUpdateVelocity;
+    }
+    else
+    {
+        _info->getBody()->velocity_func = cpBodyUpdateVelocityWithoutGravity;
     }
 }
 
@@ -439,12 +436,6 @@ void PhysicsBody::applyForce(const Vect& force, const Vec2& offset)
 void PhysicsBody::resetForces()
 {
     cpBodyResetForces(_info->getBody());
-    
-    // if _gravityEnabled is false, add a reverse of gravity force to body
-    if (_world != nullptr && _dynamic && !_gravityEnabled && _mass != PHYSICS_INFINITY)
-    {
-        applyForce(-_world->getGravity() * _mass);
-    }
 }
 
 void PhysicsBody::applyImpulse(const Vect& impulse)
@@ -468,8 +459,6 @@ void PhysicsBody::setMass(float mass)
     {
         return;
     }
-
-    int oldMass = _mass;
     _mass = mass;
     _massDefault = false;
     
@@ -492,14 +481,12 @@ void PhysicsBody::setMass(float mass)
     // the static body's mass and moment is always infinity
     if (_dynamic)
     {
-        updateMass(oldMass, _mass);
+        cpBodySetMass(_info->getBody(), _mass);
     }
 }
 
 void PhysicsBody::addMass(float mass)
 {
-    float oldMass = _mass;
-    
     if (mass == PHYSICS_INFINITY)
     {
         _mass = PHYSICS_INFINITY;
@@ -540,7 +527,7 @@ void PhysicsBody::addMass(float mass)
     // the static body's mass and moment is always infinity
     if (_dynamic)
     {
-        updateMass(oldMass, _mass);
+        cpBodySetMass(_info->getBody(), _mass);
     }
 }
 
@@ -936,21 +923,6 @@ Vec2 PhysicsBody::world2Local(const Vec2& point)
 Vec2 PhysicsBody::local2World(const Vec2& point)
 {
     return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->getBody(), PhysicsHelper::point2cpv(point)));
-}
-
-void PhysicsBody::updateMass(float oldMass, float newMass)
-{
-    if (_dynamic && !_gravityEnabled && _world != nullptr && oldMass != PHYSICS_INFINITY)
-    {
-        applyForce(_world->getGravity() * oldMass);
-    }
-    
-    cpBodySetMass(_info->getBody(), newMass);
-    
-    if (_dynamic && !_gravityEnabled && _world != nullptr && newMass != PHYSICS_INFINITY)
-    {
-        applyForce(-_world->getGravity() * newMass);
-    }
 }
 
 NS_CC_END

@@ -475,12 +475,6 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
 {
     if (body->isEnabled())
     {
-        //is gravity enable
-        if (!body->isGravityEnabled())
-        {
-            body->applyForce(-_gravity * body->getMass());
-        }
-        
         // add body to space
         if (body->isDynamic())
         {
@@ -801,12 +795,6 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
-    // reset the gravity
-    if (!body->isGravityEnabled())
-    {
-        body->applyForce(_gravity * body->getMass());
-    }
-    
     // remove shaps
     for (auto& shape : body->getShapes())
     {
@@ -863,18 +851,6 @@ PhysicsBody* PhysicsWorld::getBody(int tag) const
 
 void PhysicsWorld::setGravity(const Vect& gravity)
 {
-    if (!_bodies.empty())
-    {
-        for (auto& body : _bodies)
-        {
-            // reset gravity for body
-            if (!body->isGravityEnabled())
-            {
-                body->applyForce((_gravity - gravity) * body->getMass());
-            }
-        }
-    }
-    
     _gravity = gravity;
     _info->setGravity(gravity);
 }
