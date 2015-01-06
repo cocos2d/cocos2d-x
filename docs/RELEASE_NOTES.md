@@ -5,17 +5,17 @@
 - [cocos2d-x v3.4 Release Notes](#)
 - [Misc Information](#)
 - [Requirements](#)
-- [Runtime Requirements](#)
-- [Compiler Requirements](#)
-- [How to run tests](#)
-- [Mac OSX & iOS](#)
-- [Android](#)
-- [Windows](#)
-- [Linux](#)
-- [How to start a new game](#)
+	- [Runtime Requirements](#)
+	- [Compiler Requirements](#)
+	- [How to run tests](#)
+		- [Mac OSX & iOS](#)
+		- [Android](#)
+		- [Windows](#)
+		- [Linux](#)
+	- [How to start a new game](#)
 - [v3.4beta0](#)
-- [Highlights of v3.4beta0](#)
-- [Features in detail](#)
+	- [Highlights of v3.4beta0](#)
+	- [Features in detail](#)
 
 # Misc Information
 
@@ -55,21 +55,21 @@ You can run the samples...
 
 **Using command line:**
 
-$ cd cocos2d-x
-$ ./setup.py
-$ cd build
-$ ./android-build.py cpp-empty-test -p 10
-$ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-
+    $ cd cocos2d-x
+    $ ./setup.py
+    $ cd build
+    $ ./android-build.py cpp-empty-test -p 10
+    $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
+    
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
 
-$ cd cocos2d-x
-$ ./setup.py
-$ cd build
-$ ./android-build.py cpp-empty-test -p 10
-
+    $ cd cocos2d-x
+    $ ./setup.py
+    $ cd build
+    $ ./android-build.py cpp-empty-test -p 10
+    
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
@@ -85,22 +85,22 @@ Then
 
 ### Linux
 
-$ cd cocos2d-x/build
-$ ./install-deps-linux.sh
-$ cd ../..
-
+    $ cd cocos2d-x/build
+    $ ./install-deps-linux.sh
+    $ cd ../..
+    
 Then
 
-$ mkdir build
-$ cd build
-$ cmake ../cocos2d-x
-$ make -j4
-
+    $ mkdir build
+    $ cd build
+    $ cmake ../cocos2d-x
+    $ make -j4
+    
 Run
 
-$ cd bin/cpp-empty-test
-$ ./cpp-empty-test
-
+    $ cd bin/cpp-empty-test
+    $ ./cpp-empty-test
+    
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
@@ -129,9 +129,9 @@ The callback function is called after loading Sprite3D, the callback function ca
 ```c++
 void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
 {
-//sprite is the loaded sprite
-sprite->setPosition(point);
-addChild(sprite);
+    //sprite is the loaded sprite
+    sprite->setPosition(point);
+    addChild(sprite);
 }
 ```
 
@@ -158,7 +158,7 @@ To create an ui::CheckBox, we could simply pass the normal state box and active 
 
 ```cpp
 CheckBox* checkBox2 = CheckBox::create("cocosui/check_box_normal.png",
-"cocosui/check_box_active.png");
+                                              "cocosui/check_box_active.png");
 ```
 
 To create an ui::Slider, we could only pass the slider bar texture and normal ball texture.
@@ -218,13 +218,13 @@ Implements a custom fixed block allocator for a specific type. You can override 
 Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class. 
 
 ```c++
-class SomeClass
-{
-public:
-
-cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
-CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
-};
+    class SomeClass
+    {
+    public:
+        
+        cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
+        CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
+    };
 ```
 
 ### Console (allocator command, tags, counts etc)
