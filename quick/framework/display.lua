@@ -1427,7 +1427,7 @@ function display.addSpriteFrames(plistFilename, image, handler)
         else
             sharedSpriteFrameCache:addSpriteFrames(plistFilename, image)
         end
-        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2D_PIXEL_FORMAT_RGBA8888)
+        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_BGR_A8888)
     else
         if async then
             sharedTextureCache:addImageAsync(image, asyncHandler)
@@ -1468,7 +1468,7 @@ end
 
 设置材质格式。
 
-为了节约内存，我们会使用一些颜色品质较低的材质格式，例如针对背景图使用 cc.TEXTURE2D_PIXEL_FORMAT_RGB565 格式。
+为了节约内存，我们会使用一些颜色品质较低的材质格式，例如针对背景图使用 cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565 格式。
 
 display.setTexturePixelFormat() 可以指定材质文件的材质格式，这样在加载材质文件时就会使用指定的格式。
 
