@@ -1,6 +1,10 @@
 cocos2d-x-3.4rc0  Jan.9 2015
+    [NEW]           3rd: update libcurl to v7.39
+
+    [FIX]           FileUtils: getData() can't get data from file when file was using by other application on windows
     [FIX]           FileUtils: getData() will cause memory leak if file size is 0 on windows
     [FIX]           GLProgram: when there is a shader compile error in shader, it will crash on windows
+    [FIX]           Physics integration: physics body is not still after disabling gravitational force by PhysicsBody::setGravityEnable()
     [FIX]           Sprite3DTest: Sprite3DUVAnimationTest, Sprite3DFakeShadowTest, Sprite3DLightMapTest, Sprite3DBasicToonShaderTest will crash on android when switch to foreground from background
     [FIX]           HttpClient: http requests will be lost in immediately mode on iOS
     [FIX]           WP8: compiling error on ARM architecture
