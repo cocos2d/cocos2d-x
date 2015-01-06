@@ -299,6 +299,23 @@ protected:
     int _betweenBlue;
 };
 
+class CC_STUDIO_DLL AlphaFrame : public Frame
+{
+public:
+    static AlphaFrame* create();
+    AlphaFrame();
+    
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
+    virtual Frame* clone() override;
+    
+    inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
+    inline GLubyte getAlpha() const { return _alpha; }
+    
+protected:
+    GLubyte _alpha;
+    int _betweenAlpha;
+};
 
 class CC_STUDIO_DLL EventFrame : public Frame
 {

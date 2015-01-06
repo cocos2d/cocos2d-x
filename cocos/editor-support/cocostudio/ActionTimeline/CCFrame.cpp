@@ -548,6 +548,51 @@ Frame* ColorFrame::clone()
     return frame;
 }
 
+// AlphaFrame
+AlphaFrame* AlphaFrame::create()
+{
+    AlphaFrame* frame = new (std::nothrow) AlphaFrame();
+    if (frame)
+    {
+        frame->autorelease();
+        return frame;
+    }
+    CC_SAFE_DELETE(frame);
+    return nullptr;
+}
+
+AlphaFrame::AlphaFrame()
+: _alpha(255)
+{
+}
+
+void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
+{
+    _node->setOpacity(_alpha);
+    
+    if (_tween)
+    {
+        _betweenAlpha = static_cast<AlphaFrame*>(nextFrame)->_alpha - _alpha;
+    }
+}
+
+void AlphaFrame::apply(float percent)
+{
+    if (_tween)
+    {
+        GLubyte alpha = _alpha + _betweenAlpha * percent;
+        _node->setOpacity(alpha);
+    }
+}
+
+Frame* AlphaFrame::clone()
+{
+    AlphaFrame* frame = AlphaFrame::create();
+    frame->setAlpha(_alpha);
+    frame->cloneProperty(this);
+    
+    return frame;
+}
 
 // EventFrame
 EventFrame* EventFrame::create()
