@@ -5,17 +5,17 @@
 - [cocos2d-x v3.4 Release Notes](#)
 - [Misc Information](#)
 - [Requirements](#)
-	- [Runtime Requirements](#)
-	- [Compiler Requirements](#)
-	- [How to run tests](#)
-		- [Mac OSX & iOS](#)
-		- [Android](#)
-		- [Windows](#)
-		- [Linux](#)
-	- [How to start a new game](#)
+- [Runtime Requirements](#)
+- [Compiler Requirements](#)
+- [How to run tests](#)
+- [Mac OSX & iOS](#)
+- [Android](#)
+- [Windows](#)
+- [Linux](#)
+- [How to start a new game](#)
 - [v3.4beta0](#)
-	- [Highlights of v3.4beta0](#)
-	- [Features in detail](#)
+- [Highlights of v3.4beta0](#)
+- [Features in detail](#)
 
 # Misc Information
 
@@ -55,21 +55,21 @@ You can run the samples...
 
 **Using command line:**
 
-    $ cd cocos2d-x
-    $ ./setup.py
-    $ cd build
-    $ ./android-build.py cpp-empty-test -p 10
-    $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-    
+$ cd cocos2d-x
+$ ./setup.py
+$ cd build
+$ ./android-build.py cpp-empty-test -p 10
+$ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
+
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
 
-    $ cd cocos2d-x
-    $ ./setup.py
-    $ cd build
-    $ ./android-build.py cpp-empty-test -p 10
-    
+$ cd cocos2d-x
+$ ./setup.py
+$ cd build
+$ ./android-build.py cpp-empty-test -p 10
+
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
@@ -85,22 +85,22 @@ Then
 
 ### Linux
 
-    $ cd cocos2d-x/build
-    $ ./install-deps-linux.sh
-    $ cd ../..
-    
+$ cd cocos2d-x/build
+$ ./install-deps-linux.sh
+$ cd ../..
+
 Then
 
-    $ mkdir build
-    $ cd build
-    $ cmake ../cocos2d-x
-    $ make -j4
-    
+$ mkdir build
+$ cd build
+$ cmake ../cocos2d-x
+$ make -j4
+
 Run
 
-    $ cd bin/cpp-empty-test
-    $ ./cpp-empty-test
-    
+$ cd bin/cpp-empty-test
+$ ./cpp-empty-test
+
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
@@ -129,9 +129,9 @@ The callback function is called after loading Sprite3D, the callback function ca
 ```c++
 void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
 {
-    //sprite is the loaded sprite
-    sprite->setPosition(point);
-    addChild(sprite);
+//sprite is the loaded sprite
+sprite->setPosition(point);
+addChild(sprite);
 }
 ```
 
@@ -158,7 +158,7 @@ To create an ui::CheckBox, we could simply pass the normal state box and active 
 
 ```cpp
 CheckBox* checkBox2 = CheckBox::create("cocosui/check_box_normal.png",
-                                              "cocosui/check_box_active.png");
+"cocosui/check_box_active.png");
 ```
 
 To create an ui::Slider, we could only pass the slider bar texture and normal ball texture.
@@ -172,3 +172,61 @@ If the selected state texture is missing, when user press the widget, the normal
 If the disable state texture is missing, when the widget is in disable state, we use gray shader to turn the normal state texture to gray.
 
 The original ui::Button also support the gray shader enhancement.
+
+### Custom Allocators
+
+in ccConfig.h you can control the custom allocator system with the following defines.
+
+```c++
+#define CC_ENABLE_ALLOCATOR 1
+#define CC_ENABLE_ALLOCATOR_DIAGNOSTICS CC_ENABLE_ALLOCATOR
+#define CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE 0
+
+#define CC_ALLOCATOR_GLOBAL cocos2d::allocator::AllocatorStrategyDefault
+#define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
+```
+
+__CC_ENABLE_ALLOCATOR__ turns everything on or off. When set to 0, everything should still build, but all custom allocator code is disabled or removed. This is handled mainly through macros, but if you implement new allocator strategies, you should be aware of, and respect this preprocessor directive.
+
+__CC_ENABLE_ALLOCATOR_DIAGNOSTICS__ defaults to the same value as __CC_ENABLE_ALLOCATOR__, but setting this to 0 will disable allocator diagnostics via the control panel. Diagnostics have significant overhead, so you definitely want to disable them for production builds.
+
+__CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE__ enables overriding of the global __new__ and __delete__ operators. The allocator strategy used can be selected by setting the __CC_ALLOCATOR_GLOBAL_NEW_DELETE__ define.
+
+__CC_ALLOCATOR_GLOBAL__ defines the allocator strategy to use for global allocations. All memory needed by other allocators will use this global allocator, as well as the macros __CC_MALLOC__, __CC_FREE__ etc.
+
+Third party libraries that use malloc/free will continue to use the original malloc/free so their memory usage will not be tracked.
+
+Calls to new/delete from shared libraries should work ok provided the library is loaded after the allocator has initialized, which should be the case, unless you load a shared library from a static variable initialization.
+
+#### Default Allocator
+
+The default allocator wraps malloc and free and provides an allocator interface that anyone can use to allocate blocks of memory. Tracking is not currently enabled here, but can be added in the future.
+
+#### General Allocator
+
+The general allocator provides a series of fixed sized allocators from the smallest allocation size of 4 bytes up to some threshold which currently defaults to 8 Kbytes. Anything larger than this threshold will fallback to the default allocator. See fixed allocators for more details.
+
+#### Fixed Block Allocator
+
+Fixed block allocators provide a memory pool of blocks of fixed size. They are extremely fast since no searching for best fit is required, they can simply pop the first block off a list and return that. Similarly, freeing memory is also extremely fast since they just push the block on the front of the list. Memory is not actually freed, it is kept allocated and track on a free list. It will be possible to reduce the allocated memory by freeing up unused pages of memory from the list.
+
+#### Pool Allocator
+
+Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size. 
+
+### Implementing Custom Allocators for Objects
+Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class. 
+
+```c++
+class SomeClass
+{
+public:
+
+cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
+CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
+};
+```
+
+### Console (allocator command, tags, counts etc)
+
+You can connect to the running app using the console. I.e. __telnet localhost 5678__ and issue the __allocator__ command to dump out all allocator diagnostic information. One of the useful pieces of information is the highest count for pool allocators. You can plug this value back into the initial size for the allocator to preallocate this number of objects when starting, improving startup speed significantly.
