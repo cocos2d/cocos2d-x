@@ -2042,6 +2042,9 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _width    = config.input.width;
         _height   = config.input.height;
         
+        //webp doesn't have premultipliedAlpha
+        _hasPremultipliedAlpha = false;
+        
         _dataLen = _width * _height * 4;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         

@@ -57,8 +57,13 @@ THE SOFTWARE.
 #include "base/CCConsole.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
+#include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
+
+#if CC_ENABLE_SCRIPT_BINDING
+#include "CCScriptSupport.h"
+#endif
 
 /**
  Position of the FPS
@@ -119,12 +124,16 @@ bool Director::init(void)
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = 0;
     _lastUpdate = new struct timeval;
+    _secondsPerFrame = 1.0f;
 
     // paused ?
     _paused = false;
 
     // purge ?
     _purgeDirectorInNextLoop = false;
+    
+    // restart ?
+    _restartDirectorInNextLoop = false;
 
     _winSizeInPoints = Size::ZERO;
 
@@ -156,6 +165,12 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
 
     _console = new (std::nothrow) Console;
+    
+    // default clear color
+    _clearColor.r = 0;
+    _clearColor.g = 0;
+    _clearColor.b = 0;
+    _clearColor.a = 1.0;
 
     return true;
 }
@@ -241,7 +256,7 @@ void Director::setGLDefaultValues()
     setProjection(_projection);
 
     // set other opengl default values
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
 }
 
 // Draw the Scene
@@ -704,6 +719,12 @@ void Director::setDepthTest(bool on)
     CHECK_GL_ERROR_DEBUG();
 }
 
+void Director::setClearColor(const Color4F& clearColor)
+{
+    _clearColor = clearColor;
+    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+}
+
 static void GLToClipTransform(Mat4 *transformOut)
 {
     if(nullptr == transformOut) return;
@@ -927,17 +948,22 @@ void Director::end()
     _purgeDirectorInNextLoop = true;
 }
 
-void Director::purgeDirector()
+void Director::restart()
+{
+    _restartDirectorInNextLoop = true;
+}
+
+void Director::reset()
 {
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
-    // Disable event dispatching
+    // Remove all events
     if (_eventDispatcher)
     {
-        _eventDispatcher->setEnabled(false);
+        _eventDispatcher->removeAllEventListeners();
     }
-
+    
     if (_runningScene)
     {
         _runningScene->onExit();
@@ -947,22 +973,22 @@ void Director::purgeDirector()
     
     _runningScene = nullptr;
     _nextScene = nullptr;
-
+    
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
     _scenesStack.clear();
-
+    
     stopAnimation();
-
+    
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
-
+    
     // purge bitmap cache
     FontFNT::purgeCachedData();
-
+    
     FontFreeType::shutdownFreeType();
-
+    
     // purge all managed caches
     
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -982,13 +1008,19 @@ void Director::purgeDirector()
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
-
+    AsyncTaskPool::destoryInstance();
+    
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     
     GL::invalidateStateCache();
     
     destroyTextureCache();
+}
+
+void Director::purgeDirector()
+{
+    reset();
 
     CHECK_GL_ERROR_DEBUG();
     
@@ -1001,6 +1033,26 @@ void Director::purgeDirector()
 
     // delete Director
     release();
+}
+
+void Director::restartDirector()
+{
+    reset();
+    
+    // Texture cache need to be reinitialized
+    initTextureCache();
+    
+    // Reschedule for action manager
+    getScheduler()->scheduleUpdate(getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+    
+    // release the objects
+    PoolManager::getInstance()->getCurrentPool()->clear();
+    
+    // Real restart in script level
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEvent scriptEvent(kRestartGame, NULL);
+    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+#endif
 }
 
 void Director::setNextScene()
@@ -1112,7 +1164,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        Mat4 identity = Mat4::IDENTITY;
+        const Mat4& identity = Mat4::IDENTITY;
         _drawnVerticesLabel->visit(_renderer, identity, 0);
         _drawnBatchesLabel->visit(_renderer, identity, 0);
         _FPSLabel->visit(_renderer, identity, 0);
@@ -1289,6 +1341,11 @@ void DisplayLinkDirector::mainLoop()
     {
         _purgeDirectorInNextLoop = false;
         purgeDirector();
+    }
+    else if (_restartDirectorInNextLoop)
+    {
+        _restartDirectorInNextLoop = false;
+        restartDirector();
     }
     else if (! _invalid)
     {

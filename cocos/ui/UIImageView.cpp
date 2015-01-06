@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIImageView.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -55,7 +56,8 @@ ImageView::~ImageView()
 ImageView* ImageView::create(const std::string &imageFileName, TextureResType texType)
 {
     ImageView *widget = new (std::nothrow) ImageView;
-    if (widget && widget->init(imageFileName, texType)) {
+    if (widget && widget->init(imageFileName, texType))
+    {
         widget->autorelease();
         return widget;
     }
@@ -78,8 +80,10 @@ ImageView* ImageView::create()
 bool ImageView::init()
 {
     bool ret = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             ret = false;
             break;
         }
@@ -91,8 +95,10 @@ bool ImageView::init()
 bool ImageView::init(const std::string &imageFileName, TextureResType texType)
 {
     bool bRet = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             bRet = false;
             break;
         }
@@ -198,12 +204,12 @@ void ImageView::ignoreContentAdaptWithSize(bool ignore)
 
 void ImageView::setCapInsets(const Rect &capInsets)
 {
-    _capInsets = capInsets;
+    _capInsets = ui::Helper::restrictCapInsetRect(capInsets, _imageTextureSize);
     if (!_scale9Enabled)
     {
         return;
     }
-    _imageRenderer->setCapInsets(capInsets);
+    _imageRenderer->setCapInsets(_capInsets);
 }
 
 const Rect& ImageView::getCapInsets()const

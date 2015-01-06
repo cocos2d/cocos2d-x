@@ -7,7 +7,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -403,9 +403,6 @@ namespace cocostudio
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
                     fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
                 }
             }
             else if (name == "PressedFileData")
@@ -440,10 +437,7 @@ namespace cocostudio
                 if (pressedResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             else if (name == "NormalFileData")
@@ -478,10 +472,7 @@ namespace cocostudio
                 if (normalResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
-                    
-                    texturePng = texture.substr(0, texture.find_last_of('.')).append(".png");
-                    fbs->_texturePngs.push_back(builder->CreateString(texturePng));
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
             else if (name == "FontResource")
@@ -556,21 +547,195 @@ namespace cocostudio
         bool scale9Enabled = options->scale9Enabled();
         button->setScale9Enabled(scale9Enabled);
         
-        
+        bool normalFileExist = false;
+        std::string normalErrorFilePath = "";
         auto normalDic = options->normalData();
         int normalType = normalDic->resourceType();
         std::string normalTexturePath = normalDic->path()->c_str();
-        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        switch (normalType)
+        {
+            case 0:
+                if (FileUtils::getInstance()->isFileExist(normalTexturePath))
+                {
+                    normalFileExist = true;
+                }
+                else
+                {
+                    normalErrorFilePath = normalTexturePath;
+                    normalFileExist = false;
+                }
+                break;
+                
+            case 1:
+            {
+                std::string plist = normalDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(normalTexturePath);
+                if (spriteFrame)
+                {
+                    normalFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            normalErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        normalErrorFilePath = plist;
+                    }
+                    normalFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (normalFileExist)
+        {
+            button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", normalErrorFilePath.c_str())->getCString());
+            button->addChild(label);
+        }
         
+        bool pressedFileExist = false;
+        std::string pressedErrorFilePath = "";
         auto pressedDic = options->pressedData();
         int pressedType = pressedDic->resourceType();
         std::string pressedTexturePath = pressedDic->path()->c_str();
-        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        switch (pressedType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(pressedTexturePath))
+                {
+                    pressedFileExist = true;
+                }
+                else
+                {
+                    pressedErrorFilePath = pressedTexturePath;
+                    pressedFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = pressedDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pressedTexturePath);
+                if (spriteFrame)
+                {
+                    pressedFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            pressedErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        pressedErrorFilePath = plist;
+                    }
+                    pressedFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (pressedFileExist)
+        {
+            button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", pressedErrorFilePath.c_str())->getCString());
+            button->addChild(label);
+        }
         
+        bool disabledFileExist = false;
+        std::string disabledErrorFilePath = "";
         auto disabledDic = options->disabledData();
         int disabledType = disabledDic->resourceType();
         std::string disabledTexturePath = disabledDic->path()->c_str();
-        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        switch (disabledType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(disabledTexturePath))
+                {
+                    disabledFileExist = true;
+                }
+                else
+                {
+                    disabledErrorFilePath = disabledTexturePath;
+                    disabledFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = disabledDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(disabledTexturePath);
+                if (spriteFrame)
+                {
+                    disabledFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            disabledErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        disabledErrorFilePath = plist;
+                    }
+                    disabledFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (disabledFileExist)
+        {
+            button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", disabledErrorFilePath.c_str())->getCString());
+            button->addChild(label);
+        }
         
         std::string titleText = options->text()->c_str();
         button->setTitleText(titleText);
@@ -586,16 +751,36 @@ namespace cocostudio
         button->setTitleFontName(titleFontName);
         
         auto resourceData = options->fontResource();
+        bool fileExist = false;
+        std::string errorFilePath = "";
         std::string path = resourceData->path()->c_str();
         if (path != "")
         {
-            button->setTitleFontName(path);
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                fileExist = true;
+            }
+            else
+            {
+                errorFilePath = path;
+                fileExist = false;
+            }
+            if (fileExist)
+            {
+                button->setTitleFontName(path);
+            }
+            else
+            {
+                auto label = Label::create();
+                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                button->addChild(label);
+            }
         }
         
         bool displaystate = options->displaystate();
         button->setBright(displaystate);
         button->setEnabled(displaystate);
-
+        
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
@@ -610,6 +795,11 @@ namespace cocostudio
             
             Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
             button->setContentSize(scale9Size);
+        }
+        else
+        {
+            Size contentSize(options->widgetOptions()->size()->width(), options->widgetOptions()->size()->height());
+            button->setContentSize(contentSize);
         }
     }
     

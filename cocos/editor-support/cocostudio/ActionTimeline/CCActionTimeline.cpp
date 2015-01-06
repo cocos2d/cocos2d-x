@@ -91,6 +91,18 @@ bool ActionTimeline::init()
     return true;
 }
 
+void ActionTimeline::play(std::string name, bool loop)
+{
+    if(_indexes.find(name) == _indexes.end())
+    {
+        CCLOG("Cann't find action indexes for %s.", name.c_str());
+		return;
+    }
+    
+    ActionIndexes& indexes = _indexes[name];
+    gotoFrameAndPlay(indexes.startIndex, indexes.endIndex, loop);
+}
+
 void ActionTimeline::gotoFrameAndPlay(int startIndex)
 {
     gotoFrameAndPlay(startIndex, true);
@@ -204,7 +216,7 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
 {
     callback(parent);
 
-    auto children = parent->getChildren();
+    auto& children = parent->getChildren();
     for (auto child : children)
     {
         foreachNodeDescendant(child, callback);
@@ -264,6 +276,28 @@ void ActionTimeline::removeTimeline(Timeline* timeline)
             timeline->setActionTimeline(nullptr);
         }
     }
+}
+
+void ActionTimeline::addIndexes(const ActionIndexes& indexes)
+{
+    if(_indexes.find(indexes.name) != _indexes.end())
+    {
+        CCLOG("ActionIndexes (%s)  already exsists.", indexes.name.c_str());
+        return;
+    }
+    
+    _indexes[indexes.name] = indexes;
+}
+
+void ActionTimeline::removeIndexes(std::string name)
+{
+    if(_indexes.find(name) == _indexes.end())
+    {
+        CCLOG("ActionIndexes %s don't exsists.", name.c_str());
+        return;
+    }
+    
+    _indexes.erase(name);
 }
 
 void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)

@@ -1,3 +1,7 @@
+if nil == ccs then
+    return
+end
+
 --tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")

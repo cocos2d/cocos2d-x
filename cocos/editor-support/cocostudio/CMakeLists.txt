@@ -65,10 +65,12 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimeline.cpp
+  editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.cpp
   editor-support/cocostudio/ActionTimeline/CCFrame.cpp
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
   editor-support/cocostudio/ActionTimeline/CSLoader.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
+  editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
 )
 
 include_directories( editor-support )

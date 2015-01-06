@@ -53,7 +53,20 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- brief  restrict capInsetSize, when the capInsets's width is larger than the textureSize, it will restrict to 0,<br>
+-- the height goes the same way as width.<br>
+-- param  capInsets A user defined capInsets.<br>
+-- param  textureSize  The size of a scale9enabled texture<br>
+-- return a restricted capInset.
+-- @function [parent=#Helper] restrictCapInsetRect 
+-- @param self
+-- @param #rect_table capInsets
+-- @param #size_table textureSize
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- Refresh object and it's children layout state<br>
+-- param rootNode   object which will be changed
 -- @function [parent=#Helper] doLayout 
 -- @param self
 -- @param #cc.Node rootNode

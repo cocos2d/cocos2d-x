@@ -6,7 +6,7 @@
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -106,8 +106,13 @@ namespace cocostudio
        
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     
-       
-        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
+        std::string fontFilePath = jsonPath.append(fontName);
+        if (FileUtils::getInstance()->isFileExist(fontFilePath))
+            textField->setFontName(fontFilePath);
+        else
+            textField->setFontName(fontName);
         
         bool tsw = DICTOOL->checkObjectExist_json(options, P_TouchSizeWidth);
         bool tsh = DICTOOL->checkObjectExist_json(options, P_TouchSizeHeight);
@@ -303,11 +308,31 @@ namespace cocostudio
         }
         
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
         auto resourceData = options->fontResource();
         std::string path = resourceData->path()->c_str();
         if (path != "")
         {
-            textField->setFontName(path);
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                fileExist = true;
+            }
+            else
+            {
+                errorFilePath = path;
+                fileExist = false;
+            }
+            if (fileExist)
+            {
+                textField->setFontName(path);
+            }
+            else
+            {
+                auto label = Label::create();
+                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                textField->addChild(label);
+            }
         }
         
         auto widgetReader = WidgetReader::getInstance();
@@ -323,6 +348,8 @@ namespace cocostudio
             Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
             textField->setContentSize(contentSize);
         }
+        
+        
     }
     
     Node* TextFieldReader::createNodeWithFlatBuffers(const flatbuffers::Table *textFieldOptions)

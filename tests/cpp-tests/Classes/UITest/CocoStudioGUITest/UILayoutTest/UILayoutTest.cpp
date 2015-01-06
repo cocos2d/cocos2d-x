@@ -694,3 +694,153 @@ bool UILayoutTest_Layout_Relative_Location::init()
     return false;
 }
 
+bool UILayoutComponentTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        _baseLayer = LayerColor::create();
+        _baseLayer->setColor(Color3B(50, 100, 0));
+        _baseLayer->setOpacity(100);
+        _baseLayer->setContentSize(Size(200, 200));
+        _uiLayer->addChild(_baseLayer);
+
+        Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
+            button->getContentSize().height);
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->addTouchEventListener(CC_CALLBACK_2(UILayoutComponentTest::touchEvent, this));
+        button->setZoomScale(0.4f);
+        button->setPressedActionEnabled(true);
+        _uiLayer->addChild(button);
+
+        return true;
+    }
+    return false;
+}
+
+void UILayoutComponentTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    switch (type)
+    {
+    case Widget::TouchEventType::BEGAN:
+        break;
+
+    case Widget::TouchEventType::MOVED:
+        break;
+
+    case Widget::TouchEventType::ENDED:
+        {
+            Size widgetSize = _widget->getContentSize();
+            Size layerSize = _baseLayer->getContentSize();
+            if (layerSize.width == widgetSize.width && layerSize.height == widgetSize.height)
+                _baseLayer->setContentSize(Size(200, 200));
+            else
+                _baseLayer->setContentSize(widgetSize);
+            ui:Helper::doLayout(_baseLayer);
+         }
+        break;
+
+    case Widget::TouchEventType::CANCELED:
+        break;
+
+    default:
+        break;
+    }
+}
+
+bool UILayoutComponent_Berth_Test::init()
+{
+    if (UILayoutComponentTest::init())
+    {
+        Sprite* leftTopSprite = Sprite::create("cocosui/CloseSelected.png");
+        LayoutComponent* leftTop = LayoutComponent::bindLayoutComponent(leftTopSprite);
+        leftTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
+        leftTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
+        _baseLayer->addChild(leftTopSprite);
+
+        Sprite* leftBottomSprite = Sprite::create("cocosui/CloseSelected.png");
+        LayoutComponent* leftBottom = LayoutComponent::bindLayoutComponent(leftBottomSprite);
+        leftBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
+        leftBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
+        _baseLayer->addChild(leftBottomSprite);
+
+        Sprite* rightTopSprite = Sprite::create("cocosui/CloseSelected.png");
+        LayoutComponent* rightTop = LayoutComponent::bindLayoutComponent(rightTopSprite);
+        rightTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
+        rightTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
+        _baseLayer->addChild(rightTopSprite);
+
+        Sprite* rightBottomSprite = Sprite::create("cocosui/CloseSelected.png");
+        LayoutComponent* rightBottom = LayoutComponent::bindLayoutComponent(rightBottomSprite);
+        rightBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
+        rightBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
+        _baseLayer->addChild(rightBottomSprite);
+
+        ui::Helper::doLayout(_baseLayer);
+
+        return true;
+    }
+    return false;
+}
+
+bool UILayoutComponent_Berth_Stretch_Test::init()
+{
+    if (UILayoutComponentTest::init())
+    {
+        ImageView* leftTopSprite = ImageView::create("cocosui/CloseSelected.png");
+        leftTopSprite->ignoreContentAdaptWithSize(false);
+        LayoutComponent* leftTop = LayoutComponent::bindLayoutComponent(leftTopSprite);
+        leftTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
+        leftTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
+        leftTop->setStretchWidthEnabled(true);
+        leftTop->setStretchHeightEnabled(true);
+        _baseLayer->addChild(leftTopSprite);
+        leftTop->setSize(leftTopSprite->getContentSize());
+        leftTop->setLeftMargin(0);
+        leftTop->setTopMargin(0);
+
+        ImageView* leftBottomSprite = ImageView::create("cocosui/CloseSelected.png");
+        leftBottomSprite->ignoreContentAdaptWithSize(false);
+        LayoutComponent* leftBottom = LayoutComponent::bindLayoutComponent(leftBottomSprite);
+        leftBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Left);
+        leftBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
+        leftBottom->setStretchWidthEnabled(true);
+        leftBottom->setStretchHeightEnabled(true);
+        _baseLayer->addChild(leftBottomSprite);
+        leftBottom->setSize(leftBottomSprite->getContentSize());
+        leftBottom->setLeftMargin(0);
+        leftBottom->setBottomMargin(0);
+
+        ImageView* rightTopSprite = ImageView::create("cocosui/CloseSelected.png");
+        rightTopSprite->ignoreContentAdaptWithSize(false);
+        LayoutComponent* rightTop = LayoutComponent::bindLayoutComponent(rightTopSprite);
+        rightTop->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
+        rightTop->setVerticalEdge(LayoutComponent::VerticalEdge::Top);
+        rightTop->setStretchWidthEnabled(true);
+        rightTop->setStretchHeightEnabled(true);
+        _baseLayer->addChild(rightTopSprite);
+        rightTop->setSize(rightTopSprite->getContentSize());
+        rightTop->setTopMargin(0);
+        rightTop->setRightMargin(0);
+
+        ImageView* rightBottomSprite = ImageView::create("cocosui/CloseSelected.png");
+        rightBottomSprite->ignoreContentAdaptWithSize(false);
+        LayoutComponent* rightBottom = LayoutComponent::bindLayoutComponent(rightBottomSprite);
+        rightBottom->setHorizontalEdge(LayoutComponent::HorizontalEdge::Right);
+        rightBottom->setVerticalEdge(LayoutComponent::VerticalEdge::Bottom);
+        rightBottom->setStretchWidthEnabled(true);
+        rightBottom->setStretchHeightEnabled(true);
+        _baseLayer->addChild(rightBottomSprite);
+        rightBottom->setSize(rightBottomSprite->getContentSize());
+        rightBottom->setBottomMargin(0);
+        rightBottom->setRightMargin(0);
+
+        ui::Helper::doLayout(_baseLayer);
+
+        return true;
+    }
+    return false;
+}
+

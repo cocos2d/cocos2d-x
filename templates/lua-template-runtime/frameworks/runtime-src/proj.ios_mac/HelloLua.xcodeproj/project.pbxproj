@@ -75,8 +75,35 @@
 		50D7C96C17EBBEDF005D0B91 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */; };
 		50D7C96E17EBBEE6005D0B91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96D17EBBEE6005D0B91 /* AppKit.framework */; };
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
+		5200BECA1A53D9A500AC45E4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5200BEC91A53D9A500AC45E4 /* Security.framework */; };
 		521A8E7019F0C3D200D177D7 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */; };
 		521A8E7119F0C3D200D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */; };
+		9FFC06F91A4A733B00AED399 /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFC06EA1A4A733B00AED399 /* ConsoleWindow.xib */; };
+		9FFC06FA1A4A733B00AED399 /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06EC1A4A733B00AED399 /* ConsoleWindowController.m */; };
+		9FFC06FB1A4A733B00AED399 /* PlayerEditBoxServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06EE1A4A733B00AED399 /* PlayerEditBoxServiceMac.mm */; };
+		9FFC06FC1A4A733B00AED399 /* PlayerFileDialogServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06F01A4A733B00AED399 /* PlayerFileDialogServiceMac.mm */; };
+		9FFC06FD1A4A733B00AED399 /* PlayerMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06F21A4A733B00AED399 /* PlayerMac.mm */; };
+		9FFC06FE1A4A733B00AED399 /* PlayerMenuServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06F41A4A733B00AED399 /* PlayerMenuServiceMac.mm */; };
+		9FFC06FF1A4A733B00AED399 /* PlayerMessageBoxServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06F61A4A733B00AED399 /* PlayerMessageBoxServiceMac.mm */; };
+		9FFC07001A4A733B00AED399 /* PlayerTaskServiceMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC06F81A4A733B00AED399 /* PlayerTaskServiceMac.mm */; };
+		9FFC07041A4A737300AED399 /* OpenUDIDMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07031A4A737300AED399 /* OpenUDIDMac.m */; };
+		9FFC07261A4A739200AED399 /* lang in Resources */ = {isa = PBXBuildFile; fileRef = 9FFC07061A4A739200AED399 /* lang */; };
+		9FFC07271A4A739200AED399 /* CCHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07081A4A739200AED399 /* CCHTTPRequest.cpp */; };
+		9FFC07281A4A739200AED399 /* ProjectConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC070C1A4A739200AED399 /* ProjectConfig.cpp */; };
+		9FFC07291A4A739200AED399 /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC070E1A4A739200AED399 /* SimulatorConfig.cpp */; };
+		9FFC072A1A4A739200AED399 /* AppEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07111A4A739200AED399 /* AppEvent.cpp */; };
+		9FFC072B1A4A739200AED399 /* AppLang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07131A4A739200AED399 /* AppLang.cpp */; };
+		9FFC072C1A4A739200AED399 /* PlayerMenuServiceProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07191A4A739200AED399 /* PlayerMenuServiceProtocol.cpp */; };
+		9FFC072D1A4A739200AED399 /* PlayerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC071C1A4A739200AED399 /* PlayerProtocol.cpp */; };
+		9FFC072E1A4A739200AED399 /* PlayerServiceProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC071E1A4A739200AED399 /* PlayerServiceProtocol.cpp */; };
+		9FFC072F1A4A739200AED399 /* PlayerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07201A4A739200AED399 /* PlayerSettings.cpp */; };
+		9FFC07301A4A739200AED399 /* PlayerTaskServiceProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07221A4A739200AED399 /* PlayerTaskServiceProtocol.cpp */; };
+		9FFC07311A4A739200AED399 /* PlayerUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07241A4A739200AED399 /* PlayerUtils.cpp */; };
+		9FFC07331A4A73F700AED399 /* DeviceEx-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07321A4A73F700AED399 /* DeviceEx-mac.mm */; };
+		9FFC07361A4A764100AED399 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFC07341A4A764100AED399 /* MainMenu.xib */; };
+		9FFC073F1A4AA91100AED399 /* ProjectConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC070C1A4A739200AED399 /* ProjectConfig.cpp */; };
+		9FFC07401A4AA91B00AED399 /* CCHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC07081A4A739200AED399 /* CCHTTPRequest.cpp */; };
+		9FFC07411A4AAB2F00AED399 /* SimulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC070E1A4A739200AED399 /* SimulatorConfig.cpp */; };
 		AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
 		AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
 		AB6CB6F41A1F275E009C2562 /* ConsoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */; };
@@ -117,7 +144,6 @@
 		F293B3D915EB7BE500256477 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D815EB7BE500256477 /* Foundation.framework */; };
 		F293B3DB15EB7BE500256477 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3DA15EB7BE500256477 /* CoreGraphics.framework */; };
 		F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F293BB7E15EB831F00256477 /* AppDelegate.cpp */; };
-		F405C6C919ED14AA005AD31C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F405C6CB19ED14AA005AD31C /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,8 +286,60 @@
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		5200BEC91A53D9A500AC45E4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
+		9FFC06EA1A4A733B00AED399 /* ConsoleWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleWindow.xib; sourceTree = "<group>"; };
+		9FFC06EB1A4A733B00AED399 /* ConsoleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleWindowController.h; sourceTree = "<group>"; };
+		9FFC06EC1A4A733B00AED399 /* ConsoleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleWindowController.m; sourceTree = "<group>"; };
+		9FFC06ED1A4A733B00AED399 /* PlayerEditBoxServiceMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerEditBoxServiceMac.h; sourceTree = "<group>"; };
+		9FFC06EE1A4A733B00AED399 /* PlayerEditBoxServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerEditBoxServiceMac.mm; sourceTree = "<group>"; };
+		9FFC06EF1A4A733B00AED399 /* PlayerFileDialogServiceMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerFileDialogServiceMac.h; sourceTree = "<group>"; };
+		9FFC06F01A4A733B00AED399 /* PlayerFileDialogServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerFileDialogServiceMac.mm; sourceTree = "<group>"; };
+		9FFC06F11A4A733B00AED399 /* PlayerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMac.h; sourceTree = "<group>"; };
+		9FFC06F21A4A733B00AED399 /* PlayerMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerMac.mm; sourceTree = "<group>"; };
+		9FFC06F31A4A733B00AED399 /* PlayerMenuServiceMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMenuServiceMac.h; sourceTree = "<group>"; };
+		9FFC06F41A4A733B00AED399 /* PlayerMenuServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerMenuServiceMac.mm; sourceTree = "<group>"; };
+		9FFC06F51A4A733B00AED399 /* PlayerMessageBoxServiceMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMessageBoxServiceMac.h; sourceTree = "<group>"; };
+		9FFC06F61A4A733B00AED399 /* PlayerMessageBoxServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerMessageBoxServiceMac.mm; sourceTree = "<group>"; };
+		9FFC06F71A4A733B00AED399 /* PlayerTaskServiceMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTaskServiceMac.h; sourceTree = "<group>"; };
+		9FFC06F81A4A733B00AED399 /* PlayerTaskServiceMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlayerTaskServiceMac.mm; sourceTree = "<group>"; };
+		9FFC07021A4A737300AED399 /* OpenUDIDMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDIDMac.h; sourceTree = "<group>"; };
+		9FFC07031A4A737300AED399 /* OpenUDIDMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDIDMac.m; sourceTree = "<group>"; };
+		9FFC07051A4A739200AED399 /* cocos2dx_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocos2dx_extra.h; path = ../Classes/cocos2dx_extra.h; sourceTree = "<group>"; };
+		9FFC07061A4A739200AED399 /* lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lang; path = ../Classes/lang; sourceTree = "<group>"; };
+		9FFC07081A4A739200AED399 /* CCHTTPRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCHTTPRequest.cpp; sourceTree = "<group>"; };
+		9FFC07091A4A739200AED399 /* CCHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCHTTPRequest.h; sourceTree = "<group>"; };
+		9FFC070A1A4A739200AED399 /* CCHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		9FFC070C1A4A739200AED399 /* ProjectConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProjectConfig.cpp; sourceTree = "<group>"; };
+		9FFC070D1A4A739200AED399 /* ProjectConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectConfig.h; sourceTree = "<group>"; };
+		9FFC070E1A4A739200AED399 /* SimulatorConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatorConfig.cpp; sourceTree = "<group>"; };
+		9FFC070F1A4A739200AED399 /* SimulatorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorConfig.h; sourceTree = "<group>"; };
+		9FFC07111A4A739200AED399 /* AppEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppEvent.cpp; sourceTree = "<group>"; };
+		9FFC07121A4A739200AED399 /* AppEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEvent.h; sourceTree = "<group>"; };
+		9FFC07131A4A739200AED399 /* AppLang.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppLang.cpp; sourceTree = "<group>"; };
+		9FFC07141A4A739200AED399 /* AppLang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppLang.h; sourceTree = "<group>"; };
+		9FFC07151A4A739200AED399 /* DeviceEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceEx.h; sourceTree = "<group>"; };
+		9FFC07161A4A739200AED399 /* PlayerEditBoxServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerEditBoxServiceProtocol.h; sourceTree = "<group>"; };
+		9FFC07171A4A739200AED399 /* PlayerFileDialogServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerFileDialogServiceProtocol.h; sourceTree = "<group>"; };
+		9FFC07181A4A739200AED399 /* PlayerMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMacros.h; sourceTree = "<group>"; };
+		9FFC07191A4A739200AED399 /* PlayerMenuServiceProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerMenuServiceProtocol.cpp; sourceTree = "<group>"; };
+		9FFC071A1A4A739200AED399 /* PlayerMenuServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMenuServiceProtocol.h; sourceTree = "<group>"; };
+		9FFC071B1A4A739200AED399 /* PlayerMessageBoxServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerMessageBoxServiceProtocol.h; sourceTree = "<group>"; };
+		9FFC071C1A4A739200AED399 /* PlayerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerProtocol.cpp; sourceTree = "<group>"; };
+		9FFC071D1A4A739200AED399 /* PlayerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerProtocol.h; sourceTree = "<group>"; };
+		9FFC071E1A4A739200AED399 /* PlayerServiceProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerServiceProtocol.cpp; sourceTree = "<group>"; };
+		9FFC071F1A4A739200AED399 /* PlayerServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerServiceProtocol.h; sourceTree = "<group>"; };
+		9FFC07201A4A739200AED399 /* PlayerSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerSettings.cpp; sourceTree = "<group>"; };
+		9FFC07211A4A739200AED399 /* PlayerSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerSettings.h; sourceTree = "<group>"; };
+		9FFC07221A4A739200AED399 /* PlayerTaskServiceProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerTaskServiceProtocol.cpp; sourceTree = "<group>"; };
+		9FFC07231A4A739200AED399 /* PlayerTaskServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTaskServiceProtocol.h; sourceTree = "<group>"; };
+		9FFC07241A4A739200AED399 /* PlayerUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerUtils.cpp; sourceTree = "<group>"; };
+		9FFC07251A4A739200AED399 /* PlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerUtils.h; sourceTree = "<group>"; };
+		9FFC07321A4A73F700AED399 /* DeviceEx-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "DeviceEx-mac.mm"; sourceTree = "<group>"; };
+		9FFC07351A4A764100AED399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9FFC07371A4A765100AED399 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
+		9FFC07381A4A902500AED399 /* CodeIDESupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodeIDESupport.h; path = ../Classes/CodeIDESupport.h; sourceTree = "<group>"; };
 		AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectWaitLayer.cpp; sourceTree = "<group>"; };
 		AB6CB6ED1A1F275E009C2562 /* ConnectWaitLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectWaitLayer.h; sourceTree = "<group>"; };
 		AB6CB6EE1A1F275E009C2562 /* ConsoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleCommand.cpp; sourceTree = "<group>"; };
@@ -300,7 +378,6 @@
 		F293B3DA15EB7BE500256477 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F293BB7E15EB831F00256477 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		F293BB7F15EB831F00256477 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		F405C6CA19ED14AA005AD31C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +405,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5200BECA1A53D9A500AC45E4 /* Security.framework in Frameworks */,
 				15427CD5198F222200DC375D /* libluacocos2d iOS.a in Frameworks */,
 				15427CD3198F221400DC375D /* libcocos2d iOS.a in Frameworks */,
 				3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */,
@@ -456,9 +534,10 @@
 		5023817117EBBE3400990C9B /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				9FFC06E91A4A733B00AED399 /* service */,
 				5023817217EBBE3400990C9B /* Icon.icns */,
+				9FFC07341A4A764100AED399 /* MainMenu.xib */,
 				C07828F418B4D72E00BD2287 /* main.m */,
-				F405C6CB19ED14AA005AD31C /* MainMenu.xib */,
 				C07828F618B4D72E00BD2287 /* SimulatorApp.h */,
 				C07828F718B4D72E00BD2287 /* SimulatorApp.mm */,
 				5023817317EBBE3400990C9B /* Info.plist */,
@@ -485,6 +564,91 @@
 				5023811217EBBCAC00990C9B /* Icon-76.png */,
 			);
 			name = Icons;
+			sourceTree = "<group>";
+		};
+		9FFC06E91A4A733B00AED399 /* service */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC07011A4A737300AED399 /* openudid */,
+				9FFC06EA1A4A733B00AED399 /* ConsoleWindow.xib */,
+				9FFC06EB1A4A733B00AED399 /* ConsoleWindowController.h */,
+				9FFC06EC1A4A733B00AED399 /* ConsoleWindowController.m */,
+				9FFC07321A4A73F700AED399 /* DeviceEx-mac.mm */,
+				9FFC06ED1A4A733B00AED399 /* PlayerEditBoxServiceMac.h */,
+				9FFC06EE1A4A733B00AED399 /* PlayerEditBoxServiceMac.mm */,
+				9FFC06EF1A4A733B00AED399 /* PlayerFileDialogServiceMac.h */,
+				9FFC06F01A4A733B00AED399 /* PlayerFileDialogServiceMac.mm */,
+				9FFC06F11A4A733B00AED399 /* PlayerMac.h */,
+				9FFC06F21A4A733B00AED399 /* PlayerMac.mm */,
+				9FFC06F31A4A733B00AED399 /* PlayerMenuServiceMac.h */,
+				9FFC06F41A4A733B00AED399 /* PlayerMenuServiceMac.mm */,
+				9FFC06F51A4A733B00AED399 /* PlayerMessageBoxServiceMac.h */,
+				9FFC06F61A4A733B00AED399 /* PlayerMessageBoxServiceMac.mm */,
+				9FFC06F71A4A733B00AED399 /* PlayerTaskServiceMac.h */,
+				9FFC06F81A4A733B00AED399 /* PlayerTaskServiceMac.mm */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
+		9FFC07011A4A737300AED399 /* openudid */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC07021A4A737300AED399 /* OpenUDIDMac.h */,
+				9FFC07031A4A737300AED399 /* OpenUDIDMac.m */,
+			);
+			path = openudid;
+			sourceTree = "<group>";
+		};
+		9FFC07071A4A739200AED399 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC07081A4A739200AED399 /* CCHTTPRequest.cpp */,
+				9FFC07091A4A739200AED399 /* CCHTTPRequest.h */,
+				9FFC070A1A4A739200AED399 /* CCHTTPRequestDelegate.h */,
+			);
+			name = network;
+			path = ../Classes/network;
+			sourceTree = "<group>";
+		};
+		9FFC070B1A4A739200AED399 /* ProjectConfig */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC070C1A4A739200AED399 /* ProjectConfig.cpp */,
+				9FFC070D1A4A739200AED399 /* ProjectConfig.h */,
+				9FFC070E1A4A739200AED399 /* SimulatorConfig.cpp */,
+				9FFC070F1A4A739200AED399 /* SimulatorConfig.h */,
+			);
+			name = ProjectConfig;
+			path = ../Classes/ProjectConfig;
+			sourceTree = "<group>";
+		};
+		9FFC07101A4A739200AED399 /* service */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC07111A4A739200AED399 /* AppEvent.cpp */,
+				9FFC07121A4A739200AED399 /* AppEvent.h */,
+				9FFC07131A4A739200AED399 /* AppLang.cpp */,
+				9FFC07141A4A739200AED399 /* AppLang.h */,
+				9FFC07151A4A739200AED399 /* DeviceEx.h */,
+				9FFC07161A4A739200AED399 /* PlayerEditBoxServiceProtocol.h */,
+				9FFC07171A4A739200AED399 /* PlayerFileDialogServiceProtocol.h */,
+				9FFC07181A4A739200AED399 /* PlayerMacros.h */,
+				9FFC07191A4A739200AED399 /* PlayerMenuServiceProtocol.cpp */,
+				9FFC071A1A4A739200AED399 /* PlayerMenuServiceProtocol.h */,
+				9FFC071B1A4A739200AED399 /* PlayerMessageBoxServiceProtocol.h */,
+				9FFC071C1A4A739200AED399 /* PlayerProtocol.cpp */,
+				9FFC071D1A4A739200AED399 /* PlayerProtocol.h */,
+				9FFC071E1A4A739200AED399 /* PlayerServiceProtocol.cpp */,
+				9FFC071F1A4A739200AED399 /* PlayerServiceProtocol.h */,
+				9FFC07201A4A739200AED399 /* PlayerSettings.cpp */,
+				9FFC07211A4A739200AED399 /* PlayerSettings.h */,
+				9FFC07221A4A739200AED399 /* PlayerTaskServiceProtocol.cpp */,
+				9FFC07231A4A739200AED399 /* PlayerTaskServiceProtocol.h */,
+				9FFC07241A4A739200AED399 /* PlayerUtils.cpp */,
+				9FFC07251A4A739200AED399 /* PlayerUtils.h */,
+			);
+			name = service;
+			path = ../Classes/service;
 			sourceTree = "<group>";
 		};
 		C00FD4891938512100C6382D /* runtime */ = {
@@ -549,6 +713,7 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5200BEC91A53D9A500AC45E4 /* Security.framework */,
 				3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */,
 				3EB51526195187AF006966AA /* CFNetwork.framework */,
 				15A8A4871834C90E00142BE0 /* libcurl.dylib */,
@@ -575,6 +740,12 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9FFC07381A4A902500AED399 /* CodeIDESupport.h */,
+				9FFC07051A4A739200AED399 /* cocos2dx_extra.h */,
+				9FFC07061A4A739200AED399 /* lang */,
+				9FFC07071A4A739200AED399 /* network */,
+				9FFC070B1A4A739200AED399 /* ProjectConfig */,
+				9FFC07101A4A739200AED399 /* service */,
 				15427CE2198F237300DC375D /* lua_module_register.h */,
 				C00FD4891938512100C6382D /* runtime */,
 				C033B51A191B337200D06937 /* VisibleRect.cpp */,
@@ -660,6 +831,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
+				"zh-Hans",
 			);
 			mainGroup = F293B3BD15EB7BE500256477;
 			productRefGroup = F293B3C915EB7BE500256477 /* Products */;
@@ -719,9 +892,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C03781BA18BF655400FE4F13 /* res in Resources */,
+				9FFC06F91A4A733B00AED399 /* ConsoleWindow.xib in Resources */,
 				C03781BC18BF655400FE4F13 /* src in Resources */,
-				F405C6C919ED14AA005AD31C /* MainMenu.xib in Resources */,
+				9FFC07261A4A739200AED399 /* lang in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
+				9FFC07361A4A764100AED399 /* MainMenu.xib in Resources */,
 				C05D1C131923449100B808A4 /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -779,19 +954,34 @@
 			files = (
 				AB6CB6F31A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
+				9FFC07291A4A739200AED399 /* SimulatorConfig.cpp in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
+				9FFC06FE1A4A733B00AED399 /* PlayerMenuServiceMac.mm in Sources */,
+				9FFC06FA1A4A733B00AED399 /* ConsoleWindowController.m in Sources */,
+				9FFC06FC1A4A733B00AED399 /* PlayerFileDialogServiceMac.mm in Sources */,
 				C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */,
 				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
+				9FFC072F1A4A739200AED399 /* PlayerSettings.cpp in Sources */,
 				AB6CB6F51A1F275E009C2562 /* ConsoleCommand.cpp in Sources */,
 				C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */,
+				9FFC06FF1A4A733B00AED399 /* PlayerMessageBoxServiceMac.mm in Sources */,
+				9FFC06FB1A4A733B00AED399 /* PlayerEditBoxServiceMac.mm in Sources */,
+				9FFC07311A4A739200AED399 /* PlayerUtils.cpp in Sources */,
 				C00FD49D1938512100C6382D /* Shine_png.cpp in Sources */,
 				3EB515691952865D006966AA /* common.cc in Sources */,
 				15AA9649199B6D4600725633 /* lua_debugger.c in Sources */,
+				9FFC072A1A4A739200AED399 /* AppEvent.cpp in Sources */,
+				9FFC07041A4A737300AED399 /* OpenUDIDMac.m in Sources */,
 				3EB515651952865D006966AA /* repeated_field.cc in Sources */,
+				9FFC072B1A4A739200AED399 /* AppLang.cpp in Sources */,
 				3EB5156B1952865D006966AA /* once.cc in Sources */,
+				9FFC07301A4A739200AED399 /* PlayerTaskServiceProtocol.cpp in Sources */,
 				3EB5155D1952865D006966AA /* coded_stream.cc in Sources */,
 				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
 				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
+				9FFC07271A4A739200AED399 /* CCHTTPRequest.cpp in Sources */,
+				9FFC072E1A4A739200AED399 /* PlayerServiceProtocol.cpp in Sources */,
+				9FFC07281A4A739200AED399 /* ProjectConfig.cpp in Sources */,
 				3EB5156D1952865D006966AA /* stringprintf.cc in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				3EB515611952865D006966AA /* zero_copy_stream_impl_lite.cc in Sources */,
@@ -800,8 +990,13 @@
 				C00FD49B1938512100C6382D /* Runtime.cpp in Sources */,
 				3EB515591952865D006966AA /* extension_set.cc in Sources */,
 				3EB5155B1952865D006966AA /* generated_message_util.cc in Sources */,
+				9FFC072D1A4A739200AED399 /* PlayerProtocol.cpp in Sources */,
 				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				9FFC072C1A4A739200AED399 /* PlayerMenuServiceProtocol.cpp in Sources */,
+				9FFC07001A4A733B00AED399 /* PlayerTaskServiceMac.mm in Sources */,
+				9FFC06FD1A4A733B00AED399 /* PlayerMac.mm in Sources */,
 				3EB5152D19528284006966AA /* Protos.pb.cc in Sources */,
+				9FFC07331A4A73F700AED399 /* DeviceEx-mac.mm in Sources */,
 				AB6CB6F71A1F275E009C2562 /* FileServer.cpp in Sources */,
 				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
 				3EB5155F1952865D006966AA /* zero_copy_stream.cc in Sources */,
@@ -817,6 +1012,7 @@
 				3EB5156A1952865D006966AA /* once.cc in Sources */,
 				C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
+				9FFC073F1A4AA91100AED399 /* ProjectConfig.cpp in Sources */,
 				C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
 				C00FD49A1938512100C6382D /* Runtime.cpp in Sources */,
@@ -829,6 +1025,7 @@
 				3EB515641952865D006966AA /* repeated_field.cc in Sources */,
 				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
 				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
+				9FFC07401A4AA91B00AED399 /* CCHTTPRequest.cpp in Sources */,
 				3EB5156E1952865D006966AA /* wire_format_lite.cc in Sources */,
 				AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				3EB515581952865D006966AA /* extension_set.cc in Sources */,
@@ -841,6 +1038,7 @@
 				3EB5155E1952865D006966AA /* zero_copy_stream.cc in Sources */,
 				3EB5155C1952865D006966AA /* coded_stream.cc in Sources */,
 				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				9FFC07411A4AAB2F00AED399 /* SimulatorConfig.cpp in Sources */,
 				5023811817EBBCAC00990C9B /* AppController.mm in Sources */,
 				AB6CB6F41A1F275E009C2562 /* ConsoleCommand.cpp in Sources */,
 			);
@@ -872,10 +1070,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F405C6CB19ED14AA005AD31C /* MainMenu.xib */ = {
+		9FFC07341A4A764100AED399 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F405C6CA19ED14AA005AD31C /* en */,
+				9FFC07351A4A764100AED399 /* Base */,
+				9FFC07371A4A765100AED399 /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -899,7 +1098,11 @@
 					CC_TARGET_OS_MAC,
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../Classes/protobuf-lite";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../Classes/protobuf-lite",
+					"$(SRCROOT)/../Classes/service",
+					"$(SRCROOT)/../Classes",
+				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -928,7 +1131,11 @@
 					CC_TARGET_OS_MAC,
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../Classes/protobuf-lite";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../Classes/protobuf-lite",
+					"$(SRCROOT)/../Classes/service",
+					"$(SRCROOT)/../Classes",
+				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -1004,13 +1211,17 @@
 					CC_TARGET_OS_IPHONE,
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../Classes/protobuf-lite";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../Classes/protobuf-lite",
+					"$(SRCROOT)/../Classes/service",
+					"$(SRCROOT)/../Classes",
+				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios $(SRCROOT)/../../cocos2d-x/external/curl/include/ios";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -1027,13 +1238,17 @@
 					CC_TARGET_OS_IPHONE,
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../Classes/protobuf-lite";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../Classes/protobuf-lite",
+					"$(SRCROOT)/../Classes/service",
+					"$(SRCROOT)/../Classes",
+				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios $(SRCROOT)/../../cocos2d-x/external/curl/include/ios";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;

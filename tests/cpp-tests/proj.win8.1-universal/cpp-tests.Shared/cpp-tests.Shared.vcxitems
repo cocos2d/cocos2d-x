@@ -29,6 +29,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsEaseTest\ActionsEaseTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsProgressTest\ActionsProgressTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsTest\ActionsTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AllocatorTest\AllocatorTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BaseTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BillBoardTest\BillBoardTest.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsEaseTest\ActionsEaseTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsProgressTest\ActionsProgressTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsTest\ActionsTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AllocatorTest\AllocatorTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BaseTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BillBoardTest\BillBoardTest.h" />
