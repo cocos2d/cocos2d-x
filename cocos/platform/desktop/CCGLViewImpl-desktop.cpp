@@ -371,6 +371,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
+    _viewPortRect.setRect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
