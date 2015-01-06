@@ -419,7 +419,7 @@ function Node:EventDispatcher( idx, data )
                 end
 
                 if v.enable_ then
-                    listenerRet = v.listener_(event)
+                    local listenerRet = v.listener_(event)
                     if not listenerRet then
                         if idx==cc.NODE_TOUCH_CAPTURE_EVENT then
                             local evtname  = event.name
