@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCPHYSICS_HELPER_CHIPMUNK_H__
-#define __CCPHYSICS_HELPER_CHIPMUNK_H__
+#ifndef __CCPHYSICS_HELPER_H__
+#define __CCPHYSICS_HELPER_H__
 
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
@@ -70,4 +70,4 @@ public:
 NS_CC_END
 
 #endif // CC_USE_PHYSICS
-#endif // __CCPHYSICS_HELPER_CHIPMUNK_H__
+#endif // __CCPHYSICS_HELPER_H__
