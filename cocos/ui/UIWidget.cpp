@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccShaders.h"
 #include "ui/shaders/UIShaders.h"
+#include "base/CCTouch.h"
+
 
 NS_CC_BEGIN
 

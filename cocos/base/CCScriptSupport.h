@@ -28,7 +28,6 @@
 
 #include "base/ccConfig.h"
 #include "platform/CCCommon.h"
-#include "base/CCTouch.h"
 #include "base/CCEventTouch.h"
 #include "base/CCEventKeyboard.h"
 #include <map>
@@ -41,6 +40,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
+class Touch;
 class TimerScriptHandler;
 class Layer;
 class MenuItem;
