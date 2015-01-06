@@ -63,14 +63,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxVideoHelper mVideoHelper = null;
     private Cocos2dxWebViewHelper mWebViewHelper = null;
 
-    public class cocos2dEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
+    public class Cocos2dxEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
     {
         protected int[] configAttribs;
-        public cocos2dEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
+        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
         {
             configAttribs = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
         }
-        public cocos2dEGLConfigChooser(int[] attribs)
+        public Cocos2dxEGLConfigChooser(int[] attribs)
         {
             configAttribs = attribs;
         }
@@ -345,7 +345,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         //this line is need on some device if we specify an alpha bits
         if(this.mGLContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
-        cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser(this.mGLContextAttrs);
+        Cocos2dxEGLConfigChooser chooser = new Cocos2dxEGLConfigChooser(this.mGLContextAttrs);
         glSurfaceView.setEGLConfigChooser(chooser);
 
         return glSurfaceView;
