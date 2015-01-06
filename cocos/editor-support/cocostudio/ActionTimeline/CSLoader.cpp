@@ -285,6 +285,7 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     return nullptr;
 }
 
+/*
 ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename)
 {
     Node* root = createNode(filename);
@@ -308,6 +309,7 @@ ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filena
     
     return node;
 }
+ */
 
 
 
@@ -831,19 +833,19 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         auto projectNodeOptions = (ProjectNodeOptions*)options->data();
         std::string filePath = projectNodeOptions->fileName()->c_str();
         CCLOG("filePath = %s", filePath.c_str());
+        
         if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
-
-            Node* root = createNodeWithFlatBuffersFile(filePath);
-            reader->setPropsWithFlatBuffers(root, options->data());
-
+            node = createNodeWithFlatBuffersFile(filePath);
+            reader->setPropsWithFlatBuffers(node, options->data());
+            
             bool isloop = projectNodeOptions->isLoop();
             bool isautoplay = projectNodeOptions->isAutoPlay();
-
             cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
             if (action)
             {
-                root->runAction(action);
+                node->runAction(action);
+                action->gotoFrameAndPlay(0);
                 if (isautoplay)
                 {
                     action->gotoFrameAndPlay(0, isloop);
@@ -853,9 +855,6 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
                     action->gotoFrameAndPause(0);
                 }
             }
-
-            node = ActionTimelineNode::create(root, action);
-            node->setName(root->getName());
         }
     }
     else if (classname == "SimpleAudio")
