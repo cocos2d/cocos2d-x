@@ -40,8 +40,6 @@ class PhysicsShape;
 class PhysicsBody;
 class PhysicsWorld;
 
-class PhysicsContactInfo;
-
 typedef Vec2 Vect;
 
 typedef struct CC_DLL PhysicsContactData
@@ -112,7 +110,6 @@ private:
     PhysicsShape* _shapeA;
     PhysicsShape* _shapeB;
     EventCode _eventCode;
-    PhysicsContactInfo* _info;
     bool _notificationEnable;
     bool _result;
     
