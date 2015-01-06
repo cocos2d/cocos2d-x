@@ -724,6 +724,7 @@ function UIListView:increaseOrReduceItem_()
 	local count = self.delegate_[UIListView.DELEGATE](self, UIListView.COUNT_TAG)
 	local nNeedAdjust = 2 --作为是否还需要再增加或减少item的标志,2表示上下两个方向或左右都需要调整
 	local cascadeBound = getContainerCascadeBoundingBox()
+	local localPos = self:convertToNodeSpace(cc.p(cascadeBound.x, cascadeBound.y))
 	local item
 	local itemW, itemH
 
@@ -734,7 +735,7 @@ function UIListView:increaseOrReduceItem_()
 	if UIScrollView.DIRECTION_VERTICAL == self.direction then
 
 		--ahead part of view
-		local disH = cascadeBound.y + cascadeBound.height - self.viewRect_.y - self.viewRect_.height
+		local disH = localPos.y + cascadeBound.height - self.viewRect_.y - self.viewRect_.height
 		local tempIdx
 		item = self.items_[1]
 		if not item then
@@ -764,7 +765,7 @@ function UIListView:increaseOrReduceItem_()
 		end
 
 		--part after view
-		disH = self.viewRect_.y - cascadeBound.y
+		disH = self.viewRect_.y - localPos.y
 		item = self.items_[#self.items_]
 		if not item then
 			return
@@ -792,7 +793,7 @@ function UIListView:increaseOrReduceItem_()
 		end
 	else
 		--left part of view
-		local disW = self.viewRect_.x - cascadeBound.x
+		local disW = self.viewRect_.x - localPos.x
 		item = self.items_[1]
 		local tempIdx = item.idx_
 		if disW > self.redundancyViewVal then
@@ -816,7 +817,7 @@ function UIListView:increaseOrReduceItem_()
 		end
 
 		--right part of view
-		disW = cascadeBound.x + cascadeBound.width - self.viewRect_.x - self.viewRect_.width
+		disW = localPos.x + cascadeBound.width - self.viewRect_.x - self.viewRect_.width
 		item = self.items_[#self.items_]
 		tempIdx = item.idx_
 		if disW > self.redundancyViewVal then
