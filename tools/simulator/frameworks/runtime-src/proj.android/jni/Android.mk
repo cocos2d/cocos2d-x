@@ -33,9 +33,6 @@ LOCAL_SRC_FILES := \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
-../../Classes/ProjectConfig/ProjectConfig.cpp \
-../../Classes/ProjectConfig/SimulatorConfig.cpp \
-../../Classes/network/CCHTTPRequest.cpp \
 hellolua/Runtime_android.cpp \
 hellolua/main.cpp
 
@@ -43,10 +40,13 @@ LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \
 $(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
-$(LOCAL_PATH)/../../../cocos2d-x/external
+$(LOCAL_PATH)/../../../../../../external \
+$(LOCAL_PATH)/../../../../../../tools/simulator/libsimulator/lib
 
-LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static 
+LOCAL_STATIC_LIBRARIES += cocos2d_simulator_static
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/lua-bindings/proj.android)
+$(call import-module,tools/simulator/libsimulator/proj.android)
