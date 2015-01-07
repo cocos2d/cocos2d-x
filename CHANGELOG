@@ -1,6 +1,12 @@
 cocos2d-x-3.4rc0  Jan.9 2015
+    [NEW]           3rd: update libcurl to v7.39
+
+    [FIX]           FileUtils: getData() can't get data from file when file was using by other application on windows
     [FIX]           FileUtils: getData() will cause memory leak if file size is 0 on windows
     [FIX]           GLProgram: when there is a shader compile error in shader, it will crash on windows
+    [FIX]           JumpTo: can not be applied more than once
+    [FIX]           Physics integration: physics body is not still after disabling gravitational force by PhysicsBody::setGravityEnable()
+    [FIX]           Sprite3DTest: Sprite3DUVAnimationTest, Sprite3DFakeShadowTest, Sprite3DLightMapTest, Sprite3DBasicToonShaderTest will crash on android when switch to foreground from background
     [FIX]           HttpClient: http requests will be lost in immediately mode on iOS
     [FIX]           WP8: compiling error on ARM architecture
 
@@ -11,6 +17,7 @@ cocos2d-x-3.4beta0  Dec.31 2014
     [NEW]           Application: added Turkish and Ukrainian language support
     [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
     [NEW]           Director: add setClearColor() to set clear values for the color buffers
+    [NEW]           Node: rotation representation using quaternion
     [NEW]           UI: Added new layout functionality for Cocos Studio, keeps widget margins a fixed set and adjusts the widget size according to the margins.
     [NEW]           UI: Add gray shader to ui::Button, ui::CheckBox and ui::Slider when the disable state resources are not provided
     [NEW]           UI: Modify the default behavior when ui::Button, ui::CheckBox and ui::Slider's selected state resources are not provided, the new behavior is scale the normal state texture when the selected state texture are missing.
