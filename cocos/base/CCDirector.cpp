@@ -65,6 +65,10 @@ THE SOFTWARE.
 #include "CCScriptSupport.h"
 #endif
 
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsWorld.h"
+#endif
+
 /**
  Position of the FPS
  
@@ -265,12 +269,6 @@ void Director::drawScene()
     // calculate "global" dt
     calculateDeltaTime();
     
-    // skip one flame when _deltaTime equal to zero.
-    if(_deltaTime < FLT_EPSILON)
-    {
-        return;
-    }
-
     if (_openGLView)
     {
         _openGLView->pollEvents();
@@ -297,6 +295,13 @@ void Director::drawScene()
     
     if (_runningScene)
     {
+#if CC_USE_PHYSICS
+        auto physicsWorld = _runningScene->getPhysicsWorld();
+        if (physicsWorld && physicsWorld->isAutoStep())
+        {
+            physicsWorld->update(_deltaTime, false);
+        }
+#endif
         //clear draw stats
         _renderer->clearDrawStats();
         

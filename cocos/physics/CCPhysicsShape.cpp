@@ -50,7 +50,6 @@ PhysicsShape::PhysicsShape()
 , _scaleY(1.0f)
 , _newScaleX(1.0f)
 , _newScaleY(1.0f)
-, _dirty(false)
 , _tag(0)
 , _categoryBitmask(UINT_MAX)
 , _collisionBitmask(UINT_MAX)
@@ -112,50 +111,25 @@ void PhysicsShape::setMaterial(const PhysicsMaterial& material)
     setFriction(material.friction);
 }
 
-void PhysicsShape::setScale(float scale)
-{
-    setScaleX(scale);
-    setScaleY(scale);
-}
-
 void PhysicsShape::setScale(float scaleX, float scaleY)
 {
-    setScaleX(scaleX);
-    setScaleY(scaleY);
+    if (_scaleX != scaleX || _scaleY != scaleY)
+    {
+        if (_type == Type::CIRCLE && scaleX != scaleY)
+        {
+            CCLOG("PhysicsShapeCircle WARNING: CANNOT support setScale with different x and y");
+            return;
+        }
+        _newScaleX = scaleX;
+        _newScaleY = scaleY;
+        updateScale();
+    }
 }
 
-void PhysicsShape::setScaleX(float scaleX)
+void PhysicsShape::updateScale()
 {
-    if (_scaleX == scaleX)
-    {
-        return;
-    }
-    
-    _newScaleX = scaleX;
-    _dirty = true;
-}
-
-void PhysicsShape::setScaleY(float scaleY)
-{
-    if (_scaleY == scaleY)
-    {
-        return;
-    }
-    
-    _newScaleY = scaleY;
-    _dirty = true;
-}
-
-void PhysicsShape::update(float delta)
-{
-    CC_UNUSED_PARAM(delta);
-    
-    if (_dirty)
-    {
-        _scaleX = _newScaleX;
-        _scaleY = _newScaleY;
-        _dirty = false;
-    }
+    _scaleX = _newScaleX;
+    _scaleY = _newScaleY;
 }
 
 void PhysicsShape::addShape(cpShape* shape)
@@ -399,63 +373,18 @@ Vec2 PhysicsShapeCircle::getOffset()
     return PhysicsHelper::cpv2point(cpCircleShapeGetOffset(_cpShapes.front()));
 }
 
-void PhysicsShapeCircle::setScale(float scale)
+void PhysicsShapeCircle::updateScale()
 {
-    if (_scaleX == scale)
-    {
-        return;
-    }
-    
-    _newScaleX = _newScaleY = scale;
-    _dirty = true;
-}
+    cpFloat factor = std::abs(PhysicsHelper::float2cpfloat(_newScaleX / _scaleX));
 
-void PhysicsShapeCircle::setScale(float scaleX, float scaleY)
-{
-    if (scaleX != scaleY)
-    {
-        CCLOG("PhysicsShapeCircle WARNING: CANNOT support setScale with different x and y");
-    }
-    
-    if (_scaleX == scaleX)
-    {
-        return;
-    }
-    
-    _newScaleX = _newScaleY = scaleX;
-    _dirty = true;
-}
+    cpShape* shape = _cpShapes.front();
+    cpVect v = cpCircleShapeGetOffset(shape);
+    v = cpvmult(v, PhysicsHelper::float2cpfloat(factor));
+    ((cpCircleShape*)shape)->c = v;
 
-void PhysicsShapeCircle::setScaleX(float scale)
-{
-    CCLOG("PhysicsShapeCircle WARNING: CANNOT support setScaleX");
-    
-    setScale(scale);
-}
+    cpCircleShapeSetRadius(shape, cpCircleShapeGetRadius(shape) * factor);
 
-void PhysicsShapeCircle::setScaleY(float scale)
-{
-    CCLOG("PhysicsShapeCircle WARNING: CANNOT support setScaleY");
-    
-    setScale(scale);
-}
-
-void PhysicsShapeCircle::update(float delta)
-{
-    if (_dirty)
-    {
-        cpFloat factor = std::abs(PhysicsHelper::float2cpfloat( _newScaleX / _scaleX ));
-        
-        auto shape = _cpShapes.front();
-        auto v = cpCircleShapeGetOffset(shape);
-        v = cpvmult(v, PhysicsHelper::float2cpfloat(factor));
-        ((cpCircleShape*)shape)->c = v;
-        
-        cpCircleShapeSetRadius(shape, cpCircleShapeGetRadius(shape) * factor);
-    }
-    
-    PhysicsShape::update(delta);
-    
+    PhysicsShape::updateScale();
 }
 
 // PhysicsShapeEdgeSegment
@@ -515,24 +444,21 @@ Vec2 PhysicsShapeEdgeSegment::getCenter()
     return ( a + b ) / 2;
 }
 
-void PhysicsShapeEdgeSegment::update(float delta)
+void PhysicsShapeEdgeSegment::updateScale()
 {
-    if (_dirty)
-    {
-        auto factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
-        auto factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
-        
-        auto shape = _cpShapes.front();
-        auto a = cpSegmentShapeGetA(shape);
-        a.x *= factorX;
-        a.y *= factorY;
-        auto b = cpSegmentShapeGetB(shape);
-        b.x *= factorX;
-        b.y *= factorY;
-        cpSegmentShapeSetEndpoints(shape, a, b);
-    }
-    
-    PhysicsShape::update(delta);
+    cpFloat factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
+    cpFloat factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
+
+    cpShape* shape = _cpShapes.front();
+    cpVect a = cpSegmentShapeGetA(shape);
+    a.x *= factorX;
+    a.y *= factorY;
+    cpVect b = cpSegmentShapeGetB(shape);
+    b.x *= factorX;
+    b.y *= factorY;
+    cpSegmentShapeSetEndpoints(shape, a, b);
+
+    PhysicsShape::updateScale();
 }
 
 // PhysicsShapeBox
@@ -682,45 +608,42 @@ Vec2 PhysicsShapePolygon::getCenter()
     return PhysicsHelper::cpv2point(cpCentroidForPoly(((cpPolyShape*)_cpShapes.front())->numVerts, ((cpPolyShape*)_cpShapes.front())->verts));
 }
 
-void PhysicsShapePolygon::update(float delta)
+void PhysicsShapePolygon::updateScale()
 {
-    if (_dirty)
-    {
-        cpFloat factorX = PhysicsHelper::float2cpfloat( _newScaleX / _scaleX );
-        cpFloat factorY = PhysicsHelper::float2cpfloat( _newScaleY / _scaleY );
-        
-        auto shape = _cpShapes.front();
-        int count = cpPolyShapeGetNumVerts(shape);
-        cpVect* vects = ((cpPolyShape*)shape)->verts;
-        cpSplittingPlane* planes = ((cpPolyShape*)shape)->planes;
+    cpFloat factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
+    cpFloat factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
 
-        for (int i = 0; i < count ; ++i)
+    auto shape = _cpShapes.front();
+    int count = cpPolyShapeGetNumVerts(shape);
+    cpVect* vects = ((cpPolyShape*)shape)->verts;
+    cpSplittingPlane* planes = ((cpPolyShape*)shape)->planes;
+
+    for (int i = 0; i < count; ++i)
+    {
+        vects[i].x *= factorX;
+        vects[i].y *= factorY;
+    }
+
+    // convert hole to clockwise
+    if (factorX * factorY < 0)
+    {
+        for (int i = 0; i < count / 2; ++i)
         {
-            vects[i].x *= factorX;
-            vects[i].y *= factorY;
-        }
-        
-        // convert hole to clockwise
-        if ( factorX * factorY < 0 )
-        {
-            for (int i = 0; i < count / 2; ++i)
-            {
-                cpVect v = vects[i];
-                vects[i] = vects[count - i - 1];
-                vects[count - i - 1] = v;
-            }
-        }
-        
-        for (int i = 0; i < count; ++i)
-        {
-            cpVect n = cpvnormalize(cpvperp(cpvsub(vects[i], vects[(i + 1) % count])));
-            
-            planes[i].n = n;
-            planes[i].d = cpvdot(n, vects[i]);
+            cpVect v = vects[i];
+            vects[i] = vects[count - i - 1];
+            vects[count - i - 1] = v;
         }
     }
+
+    for (int i = 0; i < count; ++i)
+    {
+        cpVect n = cpvnormalize(cpvperp(cpvsub(vects[i], vects[(i + 1) % count])));
+
+        planes[i].n = n;
+        planes[i].d = cpvdot(n, vects[i]);
+    }
     
-    PhysicsShape::update(delta);
+    PhysicsShape::updateScale();
 }
 
 // PhysicsShapeEdgeBox
@@ -865,26 +788,23 @@ PhysicsShapeEdgeChain* PhysicsShapeEdgeChain::create(const Vec2* points, int cou
     return nullptr;
 }
 
-void PhysicsShapeEdgePolygon::update(float delta)
+void PhysicsShapeEdgePolygon::updateScale()
 {
-    if (_dirty)
+    cpFloat factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
+    cpFloat factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
+
+    for (auto shape : _cpShapes)
     {
-        cpFloat factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
-        cpFloat factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
-        
-        for(auto shape : _cpShapes)
-        {
-            cpVect a = cpSegmentShapeGetA(shape);
-            a.x *= factorX;
-            a.y *= factorY;
-            cpVect b = cpSegmentShapeGetB(shape);
-            b.x *= factorX;
-            b.y *= factorY;
-            cpSegmentShapeSetEndpoints(shape, a, b);
-        }
+        cpVect a = cpSegmentShapeGetA(shape);
+        a.x *= factorX;
+        a.y *= factorY;
+        cpVect b = cpSegmentShapeGetB(shape);
+        b.x *= factorX;
+        b.y *= factorY;
+        cpSegmentShapeSetEndpoints(shape, a, b);
     }
     
-    PhysicsShape::update(delta);
+    PhysicsShape::updateScale();
 }
 
 bool PhysicsShapeEdgeChain::init(const Vec2* points, int count, const PhysicsMaterial& material/* = MaterialDefault*/, float border/* = 1*/)
@@ -957,26 +877,23 @@ int PhysicsShapeEdgeChain::getPointsCount() const
     return static_cast<int>(_cpShapes.size() + 1);
 }
 
-void PhysicsShapeEdgeChain::update(float delta)
+void PhysicsShapeEdgeChain::updateScale()
 {
-    if (_dirty)
+    cpFloat factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
+    cpFloat factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
+
+    for (auto shape : _cpShapes)
     {
-        cpFloat factorX = PhysicsHelper::float2cpfloat(_newScaleX / _scaleX);
-        cpFloat factorY = PhysicsHelper::float2cpfloat(_newScaleY / _scaleY);
-        
-        for(auto shape : _cpShapes)
-        {
-            cpVect a = cpSegmentShapeGetA(shape);
-            a.x *= factorX;
-            a.y *= factorY;
-            cpVect b = cpSegmentShapeGetB(shape);
-            b.x *= factorX;
-            b.y *= factorY;
-            cpSegmentShapeSetEndpoints(shape, a, b);
-        }
+        cpVect a = cpSegmentShapeGetA(shape);
+        a.x *= factorX;
+        a.y *= factorY;
+        cpVect b = cpSegmentShapeGetB(shape);
+        b.x *= factorX;
+        b.y *= factorY;
+        cpSegmentShapeSetEndpoints(shape, a, b);
     }
     
-    PhysicsShape::update(delta);
+    PhysicsShape::updateScale();
 }
 
 void PhysicsShape::setGroup(int group)
