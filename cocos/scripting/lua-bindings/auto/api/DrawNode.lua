@@ -17,10 +17,10 @@
 -- @overload self, vec2_table, vec2_table, color4f_table         
 -- @function [parent=#DrawNode] drawRect
 -- @param self
--- @param #vec2_table lb
--- @param #vec2_table lt
--- @param #vec2_table rt
--- @param #vec2_table rb
+-- @param #vec2_table p1
+-- @param #vec2_table p2
+-- @param #vec2_table p3
+-- @param #vec2_table p4
 -- @param #color4f_table color
 
 --------------------------------
