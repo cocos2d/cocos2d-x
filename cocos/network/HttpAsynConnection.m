@@ -32,6 +32,7 @@
 @synthesize responseData;
 @synthesize getDataTime;
 @synthesize responseCode;
+@synthesize statusString;
 @synthesize responseError;
 @synthesize conn;
 @synthesize finish;
@@ -73,7 +74,10 @@
     responseHeader = [[httpResponse allHeaderFields] copy];
 
     responseCode = httpResponse.statusCode;
-    if (responseCode != 200)
+    statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
+    if(responseCode == 200)
+        statusString = @"OK";
+    if (responseCode/100 != 2)
     {// something went wrong, abort the whole thing
         
         [connection cancel];
