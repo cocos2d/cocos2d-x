@@ -63,7 +63,9 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
 extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 extern bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char* funcName = "");
 extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char* funcName = "");
+#if CC_USE_PHYSICS
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue, const char* funcName = "");
+#endif //#if CC_USE_PHYSICS
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue, const char* funcName = "");
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , const char* funcName = "");
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
@@ -247,9 +249,11 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
 extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
 extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
 extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
+#if CC_USE_PHYSICS
 extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
 extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info);
 extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data);
+#endif //#if CC_USE_PHYSICS
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
 extern void array_to_luaval(lua_State* L, __Array* inValue);
