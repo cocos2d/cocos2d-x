@@ -188,25 +188,18 @@ void StartupCall::startup()
     }
     
     updateConfigParser(project);
-    if (FileUtils::getInstance()->isFileExist(path))
+    updatePreviewFuncForPath(path);
+    
+    // launch
+    if (project.getDebuggerType() == kCCRuntimeDebuggerNone)
     {
-        updatePreviewFuncForPath(path);
-        
-        // launch
-        if (project.getDebuggerType() == kCCRuntimeDebuggerNone)
-        {
-            _previewFunc(path);
-        }
-        else
-        {
-            // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-            initRuntime(project.getProjectDir());
-            startRuntime();
-        }
+        _previewFunc(path);
     }
     else
     {
-        CCLOG("[ERROR]: %s is not exist.", path.c_str());
+        // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+        initRuntime(project.getProjectDir());
+        startRuntime();
     }
 
     // track start event
@@ -356,13 +349,7 @@ void StartupCall::updateConfigParser(const ProjectConfig& project)
 void StartupCall::updatePreviewFuncForPath(const std::string &path)
 {
     // set loader
-    _previewFunc = [](const std::string &path) { CCLOG("[WARNING]: unsupport %s", path.c_str()); };
-    
-    if (!FileUtils::getInstance()->isFileExist(path))
-    {
-        CCLOG("[ERROR]: %s is not exist.", path.c_str());
-        return ;
-    }
+    _previewFunc = [](const std::string &path) { };
     
     if (endWithString(path, ".lua") || endWithString(path, ".luac"))
     {
@@ -382,7 +369,7 @@ void StartupCall::updatePreviewFuncForPath(const std::string &path)
         _previewFunc = std::bind(&StartupCall::onPreviewCocosCSB, this, std::placeholders::_1);
         setLoader(std::bind(&StartupCall::onPreviewCocosCSB, this, std::placeholders::_1));
     }
-    else if (endWithString(path, ".js") || endWithString(path, "."))
+    else if (endWithString(path, ".js") || endWithString(path, ".jsc"))
     {
         _launchEvent = "js";
         _previewFunc = std::bind(&StartupCall::onPreviewJs, this, std::placeholders::_1);
