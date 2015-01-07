@@ -187,7 +187,7 @@ bool AudioEngineImpl::init()
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
     if (s_ALDevice == nullptr) {
-        return AudioEngine::INVAILD_AUDIO_ID;
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     bool sourceFlag = false;
@@ -201,7 +201,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         }
     }
     if(!sourceFlag){
-        return AudioEngine::INVAILD_AUDIO_ID;
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     AudioCache* audioCache = nullptr;

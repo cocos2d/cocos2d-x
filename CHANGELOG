@@ -1,23 +1,37 @@
-cocos2d-x-3.4beta0  ??
+cocos2d-x-3.4rc0  Jan.9 2015
+    [NEW]           Node: rotation representation using quaternion
+    [FIX]           FileUtils: getData() will cause memory leak if file size is 0 on windows
+    [FIX]           GLProgram: when there is a shader compile error in shader, it will crash on windows
+    [FIX]           Sprite3DTest: Sprite3DUVAnimationTest, Sprite3DFakeShadowTest, Sprite3DLightMapTest, Sprite3DBasicToonShaderTest will crash on android when switch to foreground from background
+    [FIX]           HttpClient: http requests will be lost in immediately mode on iOS
+    [FIX]           WP8: compiling error on ARM architecture
+
+cocos2d-x-3.4beta0  Dec.31 2014
     [NEW]           3D: support frustum culling
     [NEW]           Action: MoveTo and MoveBy support Vec3
     [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool
     [NEW]           Application: added Turkish and Ukrainian language support
     [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
     [NEW]           Director: add setClearColor() to set clear values for the color buffers
+    [NEW]           UI: Added new layout functionality for Cocos Studio, keeps widget margins a fixed set and adjusts the widget size according to the margins.
+    [NEW]           UI: Add gray shader to ui::Button, ui::CheckBox and ui::Slider when the disable state resources are not provided
+    [NEW]           UI: Modify the default behavior when ui::Button, ui::CheckBox and ui::Slider's selected state resources are not provided, the new behavior is scale the normal state texture when the selected state texture are missing.
+    [NEW]           3rd party libraries: Add prebuilt version of libcurl to Mac and upgrade iOS,Android,Mac and Win32 libcurl to 7.39.0.
+    [NEW]           Replace network module implementation from libcurl to system network API on IOS and Android
 
     [FIX]           ui::Button: fix setTitleColor calls method setColor instead of setTextColor of title label.
+    [FIX]           AssetsManagerEx: Fix assetManager can't download file on Win32
     [FIX]           FileUtils: WebP format with alpha channel displayed wrong
     [FIX]           Label: content size of Label is incorrect if the string is set to empty string
     [FIX]           GLProgramState: fix assert error caused by outdated uniform and attribute cache
 
-cocos2d-x-3.3 Dec.12
+cocos2d-x-3.3 Dec.12 2014
     [FIX]           Billboard: allow billboard rotate along z axis
     [FIX]           Bundle3D: create aabb for mesh whose aabb does not exist (user custom mesh)
     [FIX]           EditBox: text position and move animation error on iPhone6 Plus
     [FIX]           FileUtils: createDirectory(): doesn't invoke closedir() after opendir on platforms other than WP8/WinRT/Windows
 
-cocos2d-x-3.3-rc2  Dec.5
+cocos2d-x-3.3-rc2  Dec.5 2014
     [FIX]           C++: use 100% of one core on Windows
     [FIX]           Label: when a label is added to a invisible parent node, app will crash if switching from background
     [FIX]           Label: label will not be shown when using system font on Mac

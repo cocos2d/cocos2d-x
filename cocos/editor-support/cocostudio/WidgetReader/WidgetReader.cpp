@@ -771,6 +771,10 @@ namespace cocostudio
         widget->setCascadeOpacityEnabled(true);
         widget->setAnchorPoint(Vec2::ZERO);
         
+        widget->setUnifySizeEnabled(true);
+        bool ignoreSize = options->ignoreSize();
+        widget->ignoreContentAdaptWithSize(ignoreSize);
+
         widget->setUnifySizeEnabled(false);
         widget->setLayoutComponentEnabled(true);
         widget->ignoreContentAdaptWithSize(false);

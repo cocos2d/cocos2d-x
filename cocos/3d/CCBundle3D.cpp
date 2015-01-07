@@ -1227,6 +1227,10 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         return false;
     }
     
+    // Fix bug: check if the bone number is 0.
+    if (boneNum == 0)
+        return false;
+    
     // bone names and bind pos
     float bindpos[16];
     for (unsigned int i = 0; i < boneNum; i++)

@@ -54,6 +54,7 @@ public:
         _succeed = false;
         _responseData.clear();
         _errorBuffer.clear();
+        _responseDataString = "";
     }
     
     /** Destructor, it will be called in HttpClient internal,
@@ -166,6 +167,17 @@ public:
         _errorBuffer.assign(value);
     };
     
+    inline void setResponseDataString(const char* value, size_t n)
+    {
+        _responseDataString.clear();
+        _responseDataString.assign(value, n);
+    }
+    
+    inline const char* getResponseDataString()
+    {
+        return _responseDataString.c_str();
+    }
+    
 protected:
     bool initWithRequest(HttpRequest* request);
     
@@ -175,7 +187,8 @@ protected:
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
-    std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
+    std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason
+    std::string         _responseDataString; // the returned raw data. You can also dump it as a string
     
 };
 
