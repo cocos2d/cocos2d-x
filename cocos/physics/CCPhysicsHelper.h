@@ -22,64 +22,52 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsJointInfo_chipmunk.h"
+#ifndef __CCPHYSICS_HELPER_H__
+#define __CCPHYSICS_HELPER_H__
+
+#include "base/ccConfig.h"
 #if CC_USE_PHYSICS
-#include <algorithm>
-#include <unordered_map>
+
 #include "chipmunk.h"
+#include "platform/CCPlatformMacros.h"
+#include "math/CCGeometry.h"
 
 NS_CC_BEGIN
 
-std::unordered_map<cpConstraint*, PhysicsJointInfo*> PhysicsJointInfo::_map;
-
-PhysicsJointInfo::PhysicsJointInfo(PhysicsJoint* joint)
-: _joint(joint)
+class PhysicsHelper
 {
-}
-
-PhysicsJointInfo::~PhysicsJointInfo()
-{
-    for (cpConstraint* joint : _joints)
-    {
-        cpConstraintFree(joint);
-    }
-}
-
-void PhysicsJointInfo::add(cpConstraint* joint)
-{
-    if (joint == nullptr) return;
-
-    _joints.push_back(joint);
-    _map.insert(std::pair<cpConstraint*, PhysicsJointInfo*>(joint, this));
-}
-
-void PhysicsJointInfo::remove(cpConstraint* joint)
-{
-    if (joint == nullptr) return;
+public:
+    static Vec2 cpv2point(const cpVect& vec) { return Vec2(vec.x, vec.y); }
+    static cpVect point2cpv(const Vec2& point) { return cpv(point.x, point.y); }
+    static Size cpv2size(const cpVect& vec) { return Size(vec.x, vec.y); }
+    static cpVect size2cpv(const Size& size) { return cpv(size.width, size.height); }
+    static float cpfloat2float(cpFloat f) { return f; }
+    static cpFloat float2cpfloat(float f) { return f; }
+    static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
+    static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r -  bb.l, bb.t - bb.b); }
     
-    auto it = std::find(_joints.begin(), _joints.end(), joint);
-    if (it != _joints.end())
+    static Vec2* cpvs2points(const cpVect* cpvs, Vec2* out, int count)
     {
-        _joints.erase(it);
+        for (int i = 0; i < count; ++i)
+        {
+            out[i] = cpv2point(cpvs[i]);
+        }
         
-        auto mit = _map.find(joint);
-        if (mit != _map.end()) _map.erase(mit);
-        
-        cpConstraintFree(joint);
-    }
-}
-
-void PhysicsJointInfo::removeAll()
-{
-    for (cpConstraint* joint : _joints)
-    {
-        auto mit = _map.find(joint);
-        if (mit != _map.end()) _map.erase(mit);
-        cpConstraintFree(joint);
+        return out;
     }
     
-    _joints.clear();
-}
+    static cpVect* points2cpvs(const Vec2* points, cpVect* out, int count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            out[i] = point2cpv(points[i]);
+        }
+        
+        return out;
+    }
+};
 
 NS_CC_END
+
 #endif // CC_USE_PHYSICS
+#endif // __CCPHYSICS_HELPER_H__

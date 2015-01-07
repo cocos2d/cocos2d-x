@@ -31,12 +31,11 @@
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 
+struct cpShape;
+
 NS_CC_BEGIN
 
-class PhysicsShapeInfo;
 class PhysicsBody;
-class PhysicsBodyInfo;
-
 
 typedef struct CC_DLL PhysicsMaterial
 {
@@ -149,13 +148,6 @@ public:
     inline int getGroup() { return _group; }
     
 protected:
-    bool init(Type type);
-    
-    /**
-     * @brief PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
-     */
-    PhysicsBodyInfo* bodyInfo() const;
-    
     void setBody(PhysicsBody* body);
     
     /** calculate the area of this shape */
@@ -166,6 +158,7 @@ protected:
     virtual void setScaleX(float scaleX);
     virtual void setScaleY(float scaleY);
     virtual void update(float delta);
+    void addShape(cpShape* shape);
     
 protected:
     PhysicsShape();
@@ -173,7 +166,8 @@ protected:
     
 protected:
     PhysicsBody* _body;
-    PhysicsShapeInfo* _info;
+    std::vector<cpShape*> _cpShapes;
+
     Type _type;
     float _area;
     float _mass;
