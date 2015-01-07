@@ -1,6 +1,6 @@
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
-varying float fogFactor;              //雾的权重
+varying float fogFactor;              //weight for fog
 varying vec2 v_texture_coord;
 
 uniform float fogDensity;// For exp and exp2 equation
@@ -13,17 +13,17 @@ void main(void)
     gl_Position = CC_MVPMatrix * a_position;
     v_texture_coord = a_texCoord; 
 
-    float FogFragCoord = abs(gl_Position.z);                                     //这样获得距离效率较高
+    float FogFragCoord = abs(gl_Position.z);                                     //get fog distance
 
 
     if(iEquation == 0)
-       fogFactor = (fEnd-FogFragCoord )/(fEnd-fStart);
+            fogFactor = (fEnd-FogFragCoord )/(fEnd-fStart);                      //linear fog
     else if(iEquation == 1)
-            fogFactor = exp(-fogDensity*FogFragCoord  );
+            fogFactor = exp(-fogDensity*FogFragCoord  );                         //exp fog
     else if(iEquation == 2)
-	    fogFactor = exp(-pow(fogDensity*FogFragCoord , 2.0));
+	    fogFactor = exp(-pow(fogDensity*FogFragCoord , 2.0));                //exp2 fog
 
 
-    fogFactor = clamp(fogFactor, 0.0, 1.0);                                     //越界处理
+    fogFactor = clamp(fogFactor, 0.0, 1.0);                                     //clamp 0 to 1
     
 }
