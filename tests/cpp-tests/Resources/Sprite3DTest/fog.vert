@@ -13,15 +13,15 @@ void main(void)
     gl_Position = CC_MVPMatrix * a_position;
     v_texture_coord = a_texCoord; 
 
-    gl_FogFragCoord = abs(gl_Position.z);                                     //这样获得距离效率较高
+    float FogFragCoord = abs(gl_Position.z);                                     //这样获得距离效率较高
 
 
     if(iEquation == 0)
-       fogFactor = (fEnd-gl_FogFragCoord )/(fEnd-fStart);
+       fogFactor = (fEnd-FogFragCoord )/(fEnd-fStart);
     else if(iEquation == 1)
-            fogFactor = exp(-fogDensity*gl_FogFragCoord );
+            fogFactor = exp(-fogDensity*FogFragCoord  );
     else if(iEquation == 2)
-	    fogFactor = exp(-pow(fogDensity*gl_FogFragCoord , 2.0));
+	    fogFactor = exp(-pow(fogDensity*FogFragCoord , 2.0));
 
 
     fogFactor = clamp(fogFactor, 0.0, 1.0);                                     //越界处理
