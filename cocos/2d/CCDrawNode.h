@@ -56,6 +56,7 @@ public:
     void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
     
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color);
+    void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color);
     
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
