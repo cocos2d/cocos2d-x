@@ -194,7 +194,7 @@ echo(str) -- [null,null,2,null,3]
 
 <p>将 JSON 字符串解码为表格对象</p>
 
-<pre><code class="lua"><br />local json = require("framework.shared.json")
+<pre><code class="lua"><br />local json = require("framework.json")
 local tb = json.decode('{"a":1,"b":"ss","c":{"c1":1,"c2":2},"d":[10,11],"1":100}')
 dump(tb) --[ [
 - "&lt;var&gt;" = {
