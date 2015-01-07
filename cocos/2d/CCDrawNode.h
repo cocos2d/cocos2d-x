@@ -80,7 +80,7 @@ public:
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const Vec2 &pos, float radius, const Color4F &color);
     
-    void drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Vec2& rb, const Color4F &color);
+    void drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color);
     
     void drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     

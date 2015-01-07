@@ -663,9 +663,12 @@ void DrawNode::drawDot(const Vec2 &pos, float radius, const Color4F &color)
 	_dirty = true;
 }
 
-void DrawNode::drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Vec2& rb, const Color4F &color)
+void DrawNode::drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color)
 {
-    drawRect(lb, rt, color);
+    drawLine(Vec2(p1.x, p1.y), Vec2(p2.x, p2.y), color);
+    drawLine(Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), color);
+    drawLine(Vec2(p3.x, p3.y), Vec2(p4.x, p4.y), color);
+    drawLine(Vec2(p4.x, p4.y), Vec2(p1.x, p1.y), color);
 }
 
 void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color)
