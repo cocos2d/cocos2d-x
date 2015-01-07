@@ -105,7 +105,7 @@ end
 
 ~~~ lua
 
-local json = require("framework.shared.json")
+local json = require("framework.json")
 local tb = json.decode('{"a":1,"b":"ss","c":{"c1":1,"c2":2},"d":[10,11],"1":100}')
 dump(tb) --[ [
 - "<var>" = {
