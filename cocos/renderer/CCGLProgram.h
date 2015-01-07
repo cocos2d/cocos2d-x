@@ -47,9 +47,9 @@ NS_CC_BEGIN
 
 class GLProgram;
 class Director;
+//FIXME: these two typedefs would be deprecated or removed in version 4.0
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
-
 
 struct VertexAttrib
 {
@@ -333,8 +333,7 @@ protected:
     void parseUniforms();
 
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
-
+    
     GLuint            _program;
     GLuint            _vertShader;
     GLuint            _fragShader;

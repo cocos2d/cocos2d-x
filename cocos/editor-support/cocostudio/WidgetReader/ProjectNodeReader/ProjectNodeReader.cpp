@@ -98,12 +98,12 @@ namespace cocostudio
             
             if (name == "FileData")
             {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                const tinyxml2::XMLAttribute* attributeFileData = child->FirstAttribute();
                 
-                while (attribute)
+                while (attributeFileData)
                 {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
+                    name = attributeFileData->Name();
+                    std::string value = attributeFileData->Value();
                     
                     if (name == "Path")
                     {
@@ -112,7 +112,7 @@ namespace cocostudio
                         filename = convert;
                     }
                     
-                    attribute = attribute->Next();
+                    attributeFileData = attributeFileData->Next();
                 }
             }
             

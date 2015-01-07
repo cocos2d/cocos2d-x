@@ -1,5 +1,6 @@
-
-cc = cc or {}
+if nil == cc.Control then
+	return
+end
 
 cc.CONTROL_STATE_NORMAL  = 1
 cc.CONTROL_STATE_HIGH_LIGHTED = 2

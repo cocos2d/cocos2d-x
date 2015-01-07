@@ -4839,6 +4839,53 @@ int lua_cocos2dx_physics_PhysicsBody_isRotationEnabled(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsBody_getCPBody(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsBody* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsBody",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsBody*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getCPBody'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_getCPBody'", nullptr);
+            return 0;
+        }
+        cpBody* ret = cobj->getCPBody();
+        #pragma warning NO CONVERSION FROM NATIVE FOR cpBody*;
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:getCPBody",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsBody_getCPBody'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsBody_getAngularDamping(lua_State* tolua_S)
 {
     int argc = 0;
@@ -5790,6 +5837,7 @@ int lua_register_cocos2dx_physics_PhysicsBody(lua_State* tolua_S)
         tolua_function(tolua_S,"setPositionOffset",lua_cocos2dx_physics_PhysicsBody_setPositionOffset);
         tolua_function(tolua_S,"setRotationEnable",lua_cocos2dx_physics_PhysicsBody_setRotationEnable);
         tolua_function(tolua_S,"isRotationEnabled",lua_cocos2dx_physics_PhysicsBody_isRotationEnabled);
+        tolua_function(tolua_S,"getCPBody",lua_cocos2dx_physics_PhysicsBody_getCPBody);
         tolua_function(tolua_S,"getAngularDamping",lua_cocos2dx_physics_PhysicsBody_getAngularDamping);
         tolua_function(tolua_S,"getVelocityAtLocalPoint",lua_cocos2dx_physics_PhysicsBody_getVelocityAtLocalPoint);
         tolua_function(tolua_S,"isResting",lua_cocos2dx_physics_PhysicsBody_isResting);

@@ -95,6 +95,10 @@ public:
      */
     const std::string& getVersion() const;
     
+    /** @brief Get the search paths list related to the Manifest.
+     */
+    std::vector<std::string> getSearchPaths() const;
+    
 protected:
     
     /** @brief Constructor for Manifest class

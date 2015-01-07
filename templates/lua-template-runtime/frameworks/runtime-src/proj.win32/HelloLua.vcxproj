@@ -68,7 +68,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\service;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -119,12 +119,13 @@
       </Command>
     </PreLinkEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"
+xcopy /Y /Q "$(ProjectDir)..\Classes\lang" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\service;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot)external\curl\include\win32;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -164,24 +165,25 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>if exist "$(LocalDebuggerWorkingDirectory)" rd /s /q "$(LocalDebuggerWorkingDirectory)"
-mkdir "$(LocalDebuggerWorkingDirectory)"
-mkdir "$(LocalDebuggerWorkingDirectory)\src"
-mkdir "$(LocalDebuggerWorkingDirectory)\res"
-xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /e /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /e /Y
-copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\config.json" /Y
-</Command>
+     <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
       <Command>
       </Command>
     </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"
+xcopy /Y /Q "$(ProjectDir)..\Classes\lang" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\ConfigParser.h" />
+    <ClInclude Include="..\Classes\network\CCHTTPRequest.h" />
+    <ClInclude Include="..\Classes\network\CCHTTPRequestDelegate.h" />
+    <ClInclude Include="..\Classes\ProjectConfig\ProjectConfig.h" />
+    <ClInclude Include="..\Classes\ProjectConfig\SimulatorConfig.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h" />
@@ -210,14 +212,37 @@ copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\confi
     <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
     <ClInclude Include="..\Classes\runtime\Runtime.h" />
+    <ClInclude Include="..\Classes\service\AppEvent.h" />
+    <ClInclude Include="..\Classes\service\AppLang.h" />
+    <ClInclude Include="..\Classes\service\DeviceEx.h" />
+    <ClInclude Include="..\Classes\service\PlayerEditBoxServiceProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerFileDialogServiceProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerMacros.h" />
+    <ClInclude Include="..\Classes\service\PlayerMenuServiceProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerMessageBoxServiceProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerServiceProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerSettings.h" />
+    <ClInclude Include="..\Classes\service\PlayerTaskServiceProtocol.h" />
+    <ClInclude Include="..\Classes\service\PlayerUtils.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SimulatorWindow.h" />
+    <ClInclude Include="service\PlayerEditBoxServiceWin.h" />
+    <ClInclude Include="service\PlayerFileDialogServiceWin.h" />
+    <ClInclude Include="service\PlayerMenuServiceWin.h" />
+    <ClInclude Include="service\PlayerMessageBoxServiceWin.h" />
+    <ClInclude Include="service\PlayerTaskServiceWin.h" />
+    <ClInclude Include="service\PlayerWin.h" />
+    <ClInclude Include="service\stdafx.h" />
+    <ClInclude Include="service\targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
+    <ClCompile Include="..\Classes\network\CCHTTPRequest.cpp" />
+    <ClCompile Include="..\Classes\ProjectConfig\ProjectConfig.cpp" />
+    <ClCompile Include="..\Classes\ProjectConfig\SimulatorConfig.cpp" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc" />
@@ -241,10 +266,25 @@ copy "$(ProjectDir)..\..\..\config.json" "$(LocalDebuggerWorkingDirectory)\confi
     <ClCompile Include="..\Classes\runtime\Protos.pb.cc" />
     <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
     <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
+    <ClCompile Include="..\Classes\service\AppEvent.cpp" />
+    <ClCompile Include="..\Classes\service\AppLang.cpp" />
+    <ClCompile Include="..\Classes\service\PlayerMenuServiceProtocol.cpp" />
+    <ClCompile Include="..\Classes\service\PlayerProtocol.cpp" />
+    <ClCompile Include="..\Classes\service\PlayerServiceProtocol.cpp" />
+    <ClCompile Include="..\Classes\service\PlayerSettings.cpp" />
+    <ClCompile Include="..\Classes\service\PlayerTaskServiceProtocol.cpp" />
+    <ClCompile Include="..\Classes\service\PlayerUtils.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Runtime_win32.cpp" />
-    <ClCompile Include="SimulatorWindow.cpp" />
+    <ClCompile Include="service\DeviceEx-win32.cpp" />
+    <ClCompile Include="service\PlayerEditBoxServiceWin.cpp" />
+    <ClCompile Include="service\PlayerFileDialogServiceWin.cpp" />
+    <ClCompile Include="service\PlayerMenuServiceWin.cpp" />
+    <ClCompile Include="service\PlayerMessageBoxServiceWin.cpp" />
+    <ClCompile Include="service\PlayerTaskServiceWin.cpp" />
+    <ClCompile Include="service\PlayerWin.cpp" />
+    <ClCompile Include="service\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

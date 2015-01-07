@@ -526,6 +526,15 @@
 -- @return Action#Action ret (return value: cc.Action)
         
 --------------------------------
+-- @overload self         
+-- @overload self, cc.Renderer, mat4_table, unsigned int         
+-- @function [parent=#Node] visit
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
+
+--------------------------------
 -- 
 -- @function [parent=#Node] isOpacityModifyRGB 
 -- @param self
@@ -548,15 +557,6 @@
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
---------------------------------
--- @overload self         
--- @overload self, cc.Renderer, mat4_table, unsigned int         
--- @function [parent=#Node] visit
--- @param self
--- @param #cc.Renderer renderer
--- @param #mat4_table parentTransform
--- @param #unsigned int parentFlags
-
 --------------------------------
 -- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter<br>
 -- param name       A string that identifies a child node<br>

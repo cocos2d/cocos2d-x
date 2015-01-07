@@ -87,6 +87,7 @@ static const char* TRANSLATION =  "translation";
 static const char* ROTATION =  "rotation";
 static const char* SCALE =  "scale";
 static const char* KEYTIME =  "keytime";
+static const char* AABBS = "aabb";
 
 NS_CC_BEGIN
 
@@ -260,7 +261,6 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         }
         meshdatas.meshDatas.push_back(meshdata);
 
-        NMaterialData materialdata;
         int i = 0;
         char str[20];
         std::string dir = "";
@@ -270,6 +270,8 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
         for (const auto& it : shapes.shapes)
         {
+            NMaterialData materialdata;
+            
             NTextureData tex;
             tex.filename = it.material.diffuse_texname.empty() ? it.material.diffuse_texname : dir + it.material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
@@ -430,7 +432,22 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
-            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            if (_version != "0.3" && _version != "0.4" && _version != "0.5")
+            {
+                //read mesh aabb
+                float aabb[6];		
+                if (_binaryReader.read(aabb, 4, 6) != 6)
+                {
+                    CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
+                    return false;
+                }
+                meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
+            }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -709,7 +726,19 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
-            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+
+            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
+            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+            {
+                Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                meshData->subMeshAABB.push_back(AABB(min, max));
+            }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
         }
         meshdatas.meshDatas.push_back(meshData);
     }

@@ -1,5 +1,6 @@
-
-sp = sp or {}
+if nil == sp then
+    return
+end
 
 sp.EventType =
 {

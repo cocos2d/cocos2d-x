@@ -595,18 +595,36 @@ void GLProgram::use()
     GL::useProgram(_program);
 }
 
-std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
+static std::string logForOpenGLShader(GLuint shader)
 {
     std::string ret;
     GLint logLength = 0, charsWritten = 0;
 
-    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength);
-    logFunc(object, logLength, &charsWritten, logBytes);
+    char *logBytes = (char*)malloc(logLength + 1);
+    glGetShaderInfoLog(shader, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
+    ret = logBytes;
 
+    free(logBytes);
+    return ret;
+}
+
+static std::string logForOpenGLProgram(GLuint program)
+{
+    std::string ret;
+    GLint logLength = 0, charsWritten = 0;
+
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength < 1)
+        return "";
+
+    char *logBytes = (char*)malloc(logLength + 1);
+    glGetProgramInfoLog(program, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
     ret = logBytes;
 
     free(logBytes);
@@ -615,17 +633,17 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
 
 std::string GLProgram::getVertexShaderLog() const
 {
-    return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return cocos2d::logForOpenGLShader(_vertShader);
 }
 
 std::string GLProgram::getFragmentShaderLog() const
 {
-    return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return cocos2d::logForOpenGLShader(_fragShader);
 }
 
 std::string GLProgram::getProgramLog() const
 {
-    return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    return logForOpenGLProgram(_program);
 }
 
 // Uniform cache

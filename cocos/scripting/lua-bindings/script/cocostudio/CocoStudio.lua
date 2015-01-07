@@ -1,9 +1,10 @@
+if nil == ccs then
+    return
+end
 
 if not json then
     require "cocos.cocos2d.json"
 end
-
-ccs = ccs or {}
 
 require "cocos.cocostudio.StudioConstants"
 

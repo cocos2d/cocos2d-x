@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define  _RUNTIME__H_
 
 #include <string>
+#include <functional>
 
 void recvBuf(int fd, char *pbuf, unsigned long bufsize);
 
@@ -39,11 +40,17 @@ const char* getRuntimeVersion();
 
 void startScript(std::string strDebugArg);
 
-void initRuntime();
+void initRuntime(const std::string& workPath);
 
 void startRuntime();
 
 void endRuntime();
+
+//
+void resetDesignResolution();
+const char* getRuntimeVersion();
+void luaScriptLoader(std::string strDebugArg);
+void setLoader(std::function<void (std::string)> func);
 
 #endif // _RUNTIME__H_
 

@@ -604,6 +604,12 @@ CC_CONSTRUCTOR_ACCESS:
     JumpTo() {}
     virtual ~JumpTo() {}
 
+    /** initializes the action */
+    bool initWithDuration(float duration, const Vec2& position, float height, int jumps);
+
+protected:
+    Vec2 _endPosition;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };

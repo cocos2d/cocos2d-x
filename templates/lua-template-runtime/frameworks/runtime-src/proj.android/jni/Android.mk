@@ -33,6 +33,9 @@ LOCAL_SRC_FILES := \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
+../../Classes/ProjectConfig/ProjectConfig.cpp \
+../../Classes/ProjectConfig/SimulatorConfig.cpp \
+../../Classes/network/CCHTTPRequest.cpp \
 hellolua/Runtime_android.cpp \
 hellolua/main.cpp
 

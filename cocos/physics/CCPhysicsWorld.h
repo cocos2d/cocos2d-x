@@ -34,11 +34,12 @@
 #include "physics/CCPhysicsBody.h"
 #include <list>
 
+struct cpSpace;
+
 NS_CC_BEGIN
 
 class PhysicsBody;
 class PhysicsJoint;
-class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
 
@@ -203,7 +204,7 @@ protected:
     int _updateRateCount;
     float _updateTime;
     int _substeps;
-    PhysicsWorldInfo* _info;
+    cpSpace* _cpSpace;
     
     Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;

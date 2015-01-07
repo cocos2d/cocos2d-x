@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define _CCCAMERA_H__
 
 #include "2d/CCNode.h"
+#include "3d/CCFrustum.h"
 
 NS_CC_BEGIN
 
@@ -135,6 +136,16 @@ public:
     */
     void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
     
+    /**
+     * Enable frustum culling
+     */
+    void enableFrustumCulling(bool enalbe, bool clipZ);
+    
+    /**
+     * Is this aabb visible in frustum
+     */
+    bool isVisibleInFrustum(const AABB* aabb)const;
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -171,7 +182,9 @@ protected:
     float _farPlane;
     mutable bool  _viewProjectionDirty;
     unsigned short _cameraFlag; // camera flag
-    
+    mutable Frustum _frustum;   // camera frustum
+    mutable bool _frustumDirty;
+    bool _enableFrustumCulling;
     static Camera* _visitingCamera;
     
     friend class Director;

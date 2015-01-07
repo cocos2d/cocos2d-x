@@ -92,22 +92,23 @@ namespace AllocatorTestNS
             test1Container.push_back(new Test1);
         alloc1End = std::chrono::high_resolution_clock::now();
         
-        alloc2Start = std::chrono::high_resolution_clock::now();
-        for (int i = 0; i < kNumberOfInstances; ++i)
-            test2Container.push_back(new Test2);
-        alloc2End = std::chrono::high_resolution_clock::now();
-        
         free1Start = std::chrono::high_resolution_clock::now();
         for (int i = 0; i < kNumberOfInstances; ++i)
             delete test1Container[i];
         free1End = std::chrono::high_resolution_clock::now();
-        
+        test1Container.clear();
+
+        alloc2Start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < kNumberOfInstances; ++i)
+            test2Container.push_back(new Test2);
+        alloc2End = std::chrono::high_resolution_clock::now();
+
+
         free2Start = std::chrono::high_resolution_clock::now();
         for (int i = 0; i < kNumberOfInstances; ++i)
             delete test2Container[i];
         free2End = std::chrono::high_resolution_clock::now();
         
-        test1Container.clear();
         test2Container.clear();
         
         std::chrono::duration<double> elapsed_seconds_alloc1 = alloc1End - alloc1Start;

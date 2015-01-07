@@ -19,7 +19,7 @@
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.3/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4beta0/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -135,3 +135,98 @@ void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
 }
 ```
 
+### Frustum culling
+
+Frustum culling means only the stuff that is inside the frustum is sent to the graphics hardware. It can potentially improve the performance of the application since only the vertices that are part of the visible part of the 3D world are kept on the graphics card memory.
+
+Frustum culling is a property of camera, it is enabled by default. And you can use the following to enable or disable the frustum culling,
+
+```c++
+//the first parameter is enable frustum culling or not, the second means that frustum culling using near and far plan or not.
+camera->enableFrustumCulling(true, true);
+```
+
+Note that when you can make sure that all the stuff is inside the frustum you can turn off the frustum culling.
+
+For more infomation please reffer to the cpptests/CameraTest
+
+### Use less resources to create  ui::CheckBox and ui::Slider 
+
+Now we could use less resources to create  ui::CheckBox and ui::Slider.
+
+To create an ui::CheckBox, we could simply pass the normal state box and active texture.
+
+```cpp
+CheckBox* checkBox2 = CheckBox::create("cocosui/check_box_normal.png",
+                                              "cocosui/check_box_active.png");
+```
+
+To create an ui::Slider, we could only pass the slider bar texture and normal ball texture.
+
+```cpp
+Slider* sliderScale9 = Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
+```
+
+If the selected state texture is missing, when user press the widget, the normal texture will scale.
+
+If the disable state texture is missing, when the widget is in disable state, we use gray shader to turn the normal state texture to gray.
+
+The original ui::Button also support the gray shader enhancement.
+
+### Custom Allocators
+
+in ccConfig.h you can control the custom allocator system with the following defines.
+
+```c++
+#define CC_ENABLE_ALLOCATOR 1
+#define CC_ENABLE_ALLOCATOR_DIAGNOSTICS CC_ENABLE_ALLOCATOR
+#define CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE 0
+
+#define CC_ALLOCATOR_GLOBAL cocos2d::allocator::AllocatorStrategyDefault
+#define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
+```
+
+__CC_ENABLE_ALLOCATOR__ turns everything on or off. When set to 0, everything should still build, but all custom allocator code is disabled or removed. This is handled mainly through macros, but if you implement new allocator strategies, you should be aware of, and respect this preprocessor directive.
+
+__CC_ENABLE_ALLOCATOR_DIAGNOSTICS__ defaults to the same value as __CC_ENABLE_ALLOCATOR__, but setting this to 0 will disable allocator diagnostics via the control panel. Diagnostics have significant overhead, so you definitely want to disable them for production builds.
+
+__CC_ENABLE_ALLOCATOR_GLOBAL_NEW_DELETE__ enables overriding of the global __new__ and __delete__ operators. The allocator strategy used can be selected by setting the __CC_ALLOCATOR_GLOBAL_NEW_DELETE__ define.
+
+__CC_ALLOCATOR_GLOBAL__ defines the allocator strategy to use for global allocations. All memory needed by other allocators will use this global allocator, as well as the macros __CC_MALLOC__, __CC_FREE__ etc.
+
+Third party libraries that use malloc/free will continue to use the original malloc/free so their memory usage will not be tracked.
+
+Calls to new/delete from shared libraries should work ok provided the library is loaded after the allocator has initialized, which should be the case, unless you load a shared library from a static variable initialization.
+
+#### Default Allocator
+
+The default allocator wraps malloc and free and provides an allocator interface that anyone can use to allocate blocks of memory. Tracking is not currently enabled here, but can be added in the future.
+
+#### General Allocator
+
+The general allocator provides a series of fixed sized allocators from the smallest allocation size of 4 bytes up to some threshold which currently defaults to 8 Kbytes. Anything larger than this threshold will fallback to the default allocator. See fixed allocators for more details.
+
+#### Fixed Block Allocator
+
+Fixed block allocators provide a memory pool of blocks of fixed size. They are extremely fast since no searching for best fit is required, they can simply pop the first block off a list and return that. Similarly, freeing memory is also extremely fast since they just push the block on the front of the list. Memory is not actually freed, it is kept allocated and track on a free list. It will be possible to reduce the allocated memory by freeing up unused pages of memory from the list.
+
+#### Pool Allocator
+
+Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size. 
+
+### Implementing Custom Allocators for Objects
+Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class. 
+
+```c++
+    class SomeClass
+    {
+    public:
+        
+        cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
+        CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
+    };
+```
+
+### Console (allocator command, tags, counts etc)
+
+You can connect to the running app using the console. I.e. __telnet localhost 5678__ and issue the __allocator__ command to dump out all allocator diagnostic information. One of the useful pieces of information is the highest count for pool allocators. You can plug this value back into the initial size for the allocator to preallocate this number of objects when starting, improving startup speed significantly.

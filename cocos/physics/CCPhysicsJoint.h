@@ -31,13 +31,13 @@
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 
+struct cpConstraint;
+
 NS_CC_BEGIN
 
 class Node;
 class PhysicsBody;
 class PhysicsWorld;
-class PhysicsJointInfo;
-class PhysicsBodyInfo;
 
 /*
  * @brief An PhysicsJoint object connects two physics bodies together.
@@ -72,18 +72,13 @@ public:
     
 protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
-    
-    /**
-     * PhysicsShape is PhysicsBody's friend class, but all the subclasses isn't. so this method is use for subclasses to catch the bodyInfo from PhysicsBody.
-     */
-    PhysicsBodyInfo* getBodyInfo(PhysicsBody* body) const;
     Node* getBodyNode(PhysicsBody* body) const;
     
 protected:
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
     PhysicsWorld* _world;
-    PhysicsJointInfo* _info;
+    std::vector<cpConstraint*> _cpConstraints;
     bool _enable;
     bool _collisionEnable;
     bool _destoryMark;

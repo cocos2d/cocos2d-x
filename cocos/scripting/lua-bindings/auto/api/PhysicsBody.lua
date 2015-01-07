@@ -333,6 +333,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#PhysicsBody] getCPBody 
+-- @param self
+-- @return cpBody#cpBody ret (return value: cpBody)
+        
+--------------------------------
 --  get angular damping. 
 -- @function [parent=#PhysicsBody] getAngularDamping 
 -- @param self
