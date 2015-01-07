@@ -188,7 +188,6 @@ protected:
     DrawNode3D*             _drawGrid;
     Quaternion              _rotationQuat;
     float                   _fRadius;
-    float                   _distanceX;
     float                   _distanceZ;
     OperateCamType          _operate;
     Vec3                    _center;

@@ -975,7 +975,6 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 ,_sprite3D1(nullptr)
 ,_sprite3D2(nullptr)
 ,_fRadius(1.0f)
-,_distanceX(0.0f)
 ,_distanceZ(50.0f)
 ,_operate(OperateCamType::RotateCamera)
 ,_center(Vec3(0,0,0))
@@ -1123,7 +1122,6 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
         {
             Point newPos = touchs[0]->getPreviousLocation() - touchs[0]->getLocation();
             _distanceZ -= newPos.y*0.1f;
-            _distanceZ += newPos.x*0.1f;
 
             updateCameraTransform();
         }
@@ -1171,7 +1169,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 void CameraArcBallDemo::updateCameraTransform()
 {
     Mat4 trans, rot, center;
-    Mat4::createTranslation(Vec3(_distanceX, 0.0f, _distanceZ), &trans);
+    Mat4::createTranslation(Vec3(0.0f, 0.0f, _distanceZ), &trans);
     Mat4::createRotation(_rotationQuat, &rot);
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
@@ -1329,10 +1327,10 @@ void FogTestDemo::onEnter()
         offset1 += meshattribute.attribSizeBytes;
     }
 
-    _state->setUniformVec4("fogColor", Vec4(0.5,0.5,0.5,1.0));
-    _state->setUniformFloat("fStart",10);
-    _state->setUniformFloat("fEnd",60);
-    _state->setUniformInt("iEquation" ,0);
+    _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
+    _state->setUniformFloat("u_fogStart",10);
+    _state->setUniformFloat("u_fogEnd",60);
+    _state->setUniformInt("u_fogEquation" ,0);
 
     _layer3D->addChild(_sprite3D1);
     _sprite3D1->setPosition3D( Vec3( 0, 0,0 ) );
@@ -1361,28 +1359,28 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
 {
     if(type == 0)
     {
-        _state->setUniformVec4("fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("fStart",10);
-        _state->setUniformFloat("fEnd",60);
-        _state->setUniformInt("iEquation" ,0);
+        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
+        _state->setUniformFloat("u_fogStart",10);
+        _state->setUniformFloat("u_fogEnd",60);
+        _state->setUniformInt("u_fogEquation" ,0);
 
         _sprite3D1->setGLProgramState(_state);
         _sprite3D2->setGLProgramState(_state);
     }
     else if(type == 1)
     {
-        _state->setUniformVec4("fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("fogDensity",0.03);
-        _state->setUniformInt("iEquation" ,1);
+        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
+        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformInt("u_fogEquation" ,1);
 
         _sprite3D1->setGLProgramState(_state);
         _sprite3D2->setGLProgramState(_state);
     }
     else if(type == 2)
     {
-        _state->setUniformVec4("fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("fogDensity",0.03);
-        _state->setUniformInt("iEquation" ,2);
+        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
+        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformInt("u_fogEquation" ,2);
 
         _sprite3D1->setGLProgramState(_state);
         _sprite3D2->setGLProgramState(_state);
