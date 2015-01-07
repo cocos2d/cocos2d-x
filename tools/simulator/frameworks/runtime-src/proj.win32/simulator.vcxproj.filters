@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{fc5cb953-2953-4968-83b3-39e3ff951754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32">
+      <UniqueIdentifier>{037a9a02-b906-4cc5-ad98-304acd4e25ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{2d1d0979-58cd-4ab6-b91c-13650158f1fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\runtime">
+      <UniqueIdentifier>{44c0d166-6d84-43b5-8be7-a440c1c0f1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\runtime\protobuf-lite">
+      <UniqueIdentifier>{28edb895-7c19-408b-abd6-130196087d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\service">
+      <UniqueIdentifier>{b0ffeea4-e5fa-483a-8be4-c26a9ed47c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\network">
+      <UniqueIdentifier>{e2010b29-c067-4846-8f28-667d95056987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ProjectConfig">
+      <UniqueIdentifier>{6a6237c1-312d-4c66-82b3-b0de869920c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32\service">
+      <UniqueIdentifier>{9d6fbab4-6525-4c43-9438-9d3923429d52}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\Classes\ConfigParser.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\VisibleRect.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ResData.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\Runtime.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\Protos.pb.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream_inl.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\message_lite.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\hash.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\map-util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\platform_macros.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stl_util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\template_util.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\stubs\type_traits.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\lua_debugger.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConnectWaitLayer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\ConsoleCommand.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\FileServer.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\AppEvent.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\AppLang.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\DeviceEx.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerEditBoxServiceProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerFileDialogServiceProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerMacros.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerMenuServiceProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerMessageBoxServiceProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerServiceProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerSettings.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerTaskServiceProtocol.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\service\PlayerUtils.h">
+      <Filter>Classes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\network\CCHTTPRequest.h">
+      <Filter>Classes\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\network\CCHTTPRequestDelegate.h">
+      <Filter>Classes\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ProjectConfig\ProjectConfig.h">
+      <Filter>Classes\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ProjectConfig\SimulatorConfig.h">
+      <Filter>Classes\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="service\PlayerEditBoxServiceWin.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\PlayerFileDialogServiceWin.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\PlayerMenuServiceWin.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\PlayerMessageBoxServiceWin.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\PlayerTaskServiceWin.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\PlayerWin.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\stdafx.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\targetver.h">
+      <Filter>win32\service</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Runtime_win32.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConfigParser.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\VisibleRect.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Landscape_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\PlayDisable_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\PlayEnable_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Portrait_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Runtime.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Shine_png.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\Protos.pb.cc">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\message_lite.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\repeated_field.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\common.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\once.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\stubs\stringprintf.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc">
+      <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\lua_debugger.c">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConnectWaitLayer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\ConsoleCommand.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\FileServer.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\AppEvent.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\AppLang.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\PlayerMenuServiceProtocol.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\PlayerProtocol.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\PlayerServiceProtocol.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\PlayerSettings.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\PlayerTaskServiceProtocol.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\service\PlayerUtils.cpp">
+      <Filter>Classes\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\network\CCHTTPRequest.cpp">
+      <Filter>Classes\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ProjectConfig\ProjectConfig.cpp">
+      <Filter>Classes\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ProjectConfig\SimulatorConfig.cpp">
+      <Filter>Classes\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="service\DeviceEx-win32.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\PlayerEditBoxServiceWin.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\PlayerFileDialogServiceWin.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\PlayerMenuServiceWin.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\PlayerMessageBoxServiceWin.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\PlayerTaskServiceWin.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\PlayerWin.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+    <ClCompile Include="service\stdafx.cpp">
+      <Filter>win32\service</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico" />
+  </ItemGroup>
+</Project>
