@@ -1061,6 +1061,9 @@ Developers:
     shrimpz
         Fix two typos in luaval_to_quaternion
         Fix label crashed on android
+        
+    ton1517
+        Fix the issue that JumpTo can not be applied more than once
     
 Retired Core Developers:
     WenSheng Yang

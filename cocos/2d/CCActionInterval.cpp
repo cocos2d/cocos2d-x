@@ -1450,6 +1450,22 @@ JumpTo* JumpTo::create(float duration, const Vec2& position, float height, int j
     return jumpTo;
 }
 
+bool JumpTo::initWithDuration(float duration, const Vec2& position, float height, int jumps)
+{
+    CCASSERT(jumps>=0, "Number of jumps must be >= 0");
+
+    if (ActionInterval::initWithDuration(duration) && jumps>=0)
+    {
+        _endPosition = position;
+        _height = height;
+        _jumps = jumps;
+
+        return true;
+    }
+
+    return false;
+}
+
 JumpTo* JumpTo::clone() const
 {
 	// no copy constructor
@@ -1468,7 +1484,7 @@ JumpTo* JumpTo::reverse() const
 void JumpTo::startWithTarget(Node *target)
 {
     JumpBy::startWithTarget(target);
-    _delta = Vec2(_delta.x - _startPosition.x, _delta.y - _startPosition.y);
+    _delta = Vec2(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y);
 }
 
 // Bezier cubic formula:

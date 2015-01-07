@@ -33,13 +33,14 @@
 #include "physics/CCPhysicsShape.h"
 #include "base/CCVector.h"
 
+struct cpBody;
+
 NS_CC_BEGIN
 
 class Node;
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-class PhysicsBodyInfo;
 
 typedef Vec2 Vect;
 
@@ -296,6 +297,8 @@ public:
     Vec2 world2Local(const Vec2& point);
     /** convert the local point to world */
     Vec2 local2World(const Vec2& point);
+
+    cpBody* getCPBody() { return _cpBody; }
     
 protected:
     
@@ -312,7 +315,6 @@ protected:
     
     void removeJoint(PhysicsJoint* joint);
     inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
-    void updateMass(float oldMass, float newMass);
     
 protected:
     PhysicsBody();
@@ -323,7 +325,7 @@ protected:
     std::vector<PhysicsJoint*> _joints;
     Vector<PhysicsShape*> _shapes;
     PhysicsWorld* _world;
-    PhysicsBodyInfo* _info;
+    cpBody* _cpBody;
     bool _dynamic;
     bool _enabled;
     bool _rotationEnabled;
