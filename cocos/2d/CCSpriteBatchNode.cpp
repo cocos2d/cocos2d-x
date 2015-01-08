@@ -366,8 +366,17 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         return;
     }
 
-    for(const auto &child: _children)
+    for (const auto &child : _children)
+    {
+#if CC_USE_PHYSICS
+        auto physicsBody = child->getPhysicsBody();
+        if (physicsBody)
+        {
+            child->updateTransformFromPhysics(transform, flags);
+        }
+#endif
         child->updateTransform();
+    }
 
     _batchCommand.init(
                        _globalZOrder,

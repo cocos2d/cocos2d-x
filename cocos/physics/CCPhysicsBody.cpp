@@ -68,9 +68,8 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
-, _positionResetTag(false)
-, _rotationResetTag(false)
 , _rotationOffset(0)
+, _recordPosition(Vec2::ZERO)
 {
 }
 
@@ -333,6 +332,7 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(const Vec2& position)
 {
+    _recordPosition = position;
     cpBodySetPos(_cpBody, PhysicsHelper::point2cpv(position + _positionOffset));
 }
 
@@ -341,35 +341,11 @@ void PhysicsBody::setRotation(float rotation)
     cpBodySetAngle(_cpBody, -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
 }
 
-void PhysicsBody::setScale(float scale)
-{
-    for (auto shape : _shapes)
-    {
-        shape->setScale(scale);
-    }
-}
-
 void PhysicsBody::setScale(float scaleX, float scaleY)
 {
     for (auto shape : _shapes)
     {
         shape->setScale(scaleX, scaleY);
-    }
-}
-
-void PhysicsBody::setScaleX(float scaleX)
-{
-    for (auto shape : _shapes)
-    {
-        shape->setScaleX(scaleX);
-    }
-}
-
-void PhysicsBody::setScaleY(float scaleY)
-{
-    for (auto shape : _shapes)
-    {
-        shape->setScaleY(scaleY);
     }
 }
 
@@ -402,7 +378,7 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
             addMoment(shape->getMoment());
         }
         
-        if (_world != nullptr)
+        if (_world && _cpBody->CP_PRIVATE(space))
         {
             _world->addShape(shape);
         }
@@ -764,30 +740,8 @@ void PhysicsBody::setResting(bool rest) const
 
 void PhysicsBody::update(float delta)
 {
-    if (_node != nullptr)
+    if (_node)
     {
-        for (auto shape : _shapes)
-        {
-            shape->update(delta);
-        }
-        
-        Node* parent = _node->getParent();
-        Node* scene = &_world->getScene();
-        
-        Vec2 position = parent != scene ? parent->convertToNodeSpace(scene->convertToWorldSpace(getPosition())) : getPosition();
-        float rotation = getRotation();
-        for (; parent != scene; parent = parent->getParent())
-        {
-            rotation -= parent->getRotation();
-        }
-        
-        _positionResetTag = true;
-        _rotationResetTag = true;
-        _node->setPosition(position);
-        _node->setRotation(rotation);
-        _positionResetTag = false;
-        _rotationResetTag = false;
-        
         // damping compute
         if (_isDamping && _dynamic && !isResting())
         {
