@@ -53,6 +53,7 @@
 using namespace std;
 using namespace cocos2d;
 
+static id SIMULATOR = nullptr;
 @implementation AppController
 
 @synthesize menu;
@@ -86,6 +87,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 -(void) dealloc
 {
     Director::getInstance()->end();
+    player::PlayerProtocol::getInstance()->purgeInstance();
     [super dealloc];
 }
 
@@ -94,8 +96,8 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 
 - (void) applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    auto player = player::PlayerMac::create();
-    player->setController(self);
+    SIMULATOR = self;
+    player::PlayerMac::create();
     
     _debugLogFile = 0;
 
@@ -271,14 +273,11 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     [[NSApplication sharedApplication] setDelegate: self];
     [_window center];
     
-    if (_project.getProjectDir().length())
+    [self setZoom:_project.getFrameScale()];
+    Vec2 pos = _project.getWindowOffset();
+    if (pos.x != 0 && pos.y != 0)
     {
-        [self setZoom:_project.getFrameScale()];
-        Vec2 pos = _project.getWindowOffset();
-        if (pos.x != 0 && pos.y != 0)
-        {
-            [_window setFrameOrigin:NSMakePoint(pos.x, pos.y)];
-        }
+        [_window setFrameOrigin:NSMakePoint(pos.x, pos.y)];
     }
 
 #if (PLAYER_SUPPORT_DROP > 0)
@@ -434,15 +433,13 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                         }
                         
                         string data = dArgParse["data"].GetString();
-                        auto player = player::PlayerProtocol::getInstance();
-                        
                         if ((data == "CLOSE_MENU") || (data == "EXIT_MENU"))
                         {
-                            player->quit();
+                            Director::getInstance()->end();
                         }
                         else if (data == "REFRESH_MENU")
                         {
-                            player->relaunch();
+                            [SIMULATOR relaunch];
                         }
                         else if (data.find("VIEW_SCALE_MENU_") == 0) // begin with VIEW_SCALE_MENU_
                         {
@@ -452,7 +449,6 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                             
                             auto glview = static_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView());
                             glview->setFrameZoomFactor(scale);
-
                             
                             // update scale menu state
                             for (auto &it : scaleMenuVector)
@@ -473,18 +469,17 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                             }
     
                             project.setFrameSize(cocos2d::Size(size.width, size.height));
-                            project.setWindowOffset(cocos2d::Vec2(player->getPositionX(), player->getPositionY()));
-                            player->openProjectWithProjectConfig(project);
+                            [SIMULATOR relaunch];
                         }
                         else if (data == "DIRECTION_PORTRAIT_MENU")
                         {
                             project.changeFrameOrientationToPortait();
-                            player->openProjectWithProjectConfig(project);
+                            [SIMULATOR relaunch];
                         }
                         else if (data == "DIRECTION_LANDSCAPE_MENU")
                         {
                             project.changeFrameOrientationToLandscape();
-                            player->openProjectWithProjectConfig(project);
+                            [SIMULATOR relaunch];
                         }
                     }
                 }

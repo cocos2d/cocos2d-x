@@ -27,15 +27,6 @@ public:
     virtual PlayerEditBoxServiceProtocol *getEditBoxService();
     virtual PlayerTaskServiceProtocol *getTaskService();
 
-    void quit();
-    void relaunch();
-    void openNewPlayer();
-    void openNewPlayerWithProjectConfig(const ProjectConfig& config);
-    void openProjectWithProjectConfig(const ProjectConfig& config);
-    
-    void setController(id controller);
-    int getPositionX();
-    int getPositionY();
 protected:
     PlayerMac();
 

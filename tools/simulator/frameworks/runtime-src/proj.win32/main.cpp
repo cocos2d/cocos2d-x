@@ -1,5 +1,5 @@
 #include "main.h"
-#include "service/PlayerWin.h"
+#include "SimulatorWin.h"
 #include <shellapi.h>
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -9,6 +9,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-	auto player = player::PlayerWin::getInstance();
-	return player->run();
+    auto simulator = SimulatorWin::getInstance();
+    return simulator->run();
 }

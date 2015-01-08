@@ -31,18 +31,6 @@ public:
     virtual PlayerMenuServiceProtocol *getMenuService() = 0;
     virtual PlayerEditBoxServiceProtocol *getEditBoxService() = 0;
     virtual PlayerTaskServiceProtocol *getTaskService() = 0;
-
-    // player function
-
-    virtual void quit() = 0;
-    virtual void relaunch() = 0;
-    virtual void openNewPlayer() = 0;
-    virtual void openNewPlayerWithProjectConfig(const ProjectConfig &config) = 0;
-    virtual void openProjectWithProjectConfig(const ProjectConfig &config) = 0;
-    
-    // window info
-    virtual int getPositionX() = 0;
-    virtual int getPositionY() = 0;
     
 protected:
     PlayerProtocol(); // avoid create instance from outside
