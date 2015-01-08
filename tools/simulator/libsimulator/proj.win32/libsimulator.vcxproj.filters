@@ -34,43 +34,43 @@
     <ClInclude Include="..\lib\ProjectConfig\SimulatorConfig.h">
       <Filter>ProjectConfig</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\AppEvent.h">
+    <ClInclude Include="..\lib\AppEvent.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\AppLang.h">
+    <ClInclude Include="..\lib\AppLang.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\DeviceEx.h">
+    <ClInclude Include="..\lib\DeviceEx.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerEditBoxServiceProtocol.h">
+    <ClInclude Include="..\lib\PlayerEditBoxServiceProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerFileDialogServiceProtocol.h">
+    <ClInclude Include="..\lib\PlayerFileDialogServiceProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerMacros.h">
+    <ClInclude Include="..\lib\PlayerMacros.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerMenuServiceProtocol.h">
+    <ClInclude Include="..\lib\PlayerMenuServiceProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerMessageBoxServiceProtocol.h">
+    <ClInclude Include="..\lib\PlayerMessageBoxServiceProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerProtocol.h">
+    <ClInclude Include="..\lib\PlayerProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerServiceProtocol.h">
+    <ClInclude Include="..\lib\PlayerServiceProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerSettings.h">
+    <ClInclude Include="..\lib\PlayerSettings.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerTaskServiceProtocol.h">
+    <ClInclude Include="..\lib\PlayerTaskServiceProtocol.h">
       <Filter>service</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib\service\PlayerUtils.h">
+    <ClInclude Include="..\lib\PlayerUtils.h">
       <Filter>service</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\platform\win32\PlayerEditBoxServiceWin.h">
@@ -105,28 +105,28 @@
     <ClCompile Include="..\lib\ProjectConfig\SimulatorConfig.cpp">
       <Filter>ProjectConfig</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\AppEvent.cpp">
+    <ClCompile Include="..\lib\AppEvent.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\AppLang.cpp">
+    <ClCompile Include="..\lib\AppLang.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\PlayerMenuServiceProtocol.cpp">
+    <ClCompile Include="..\lib\PlayerMenuServiceProtocol.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\PlayerProtocol.cpp">
+    <ClCompile Include="..\lib\PlayerProtocol.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\PlayerServiceProtocol.cpp">
+    <ClCompile Include="..\lib\PlayerServiceProtocol.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\PlayerSettings.cpp">
+    <ClCompile Include="..\lib\PlayerSettings.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\PlayerTaskServiceProtocol.cpp">
+    <ClCompile Include="..\lib\PlayerTaskServiceProtocol.cpp">
       <Filter>service</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\service\PlayerUtils.cpp">
+    <ClCompile Include="..\lib\PlayerUtils.cpp">
       <Filter>service</Filter>
     </ClCompile>
     <ClCompile Include="..\lib\platform\win32\DeviceEx-win32.cpp">

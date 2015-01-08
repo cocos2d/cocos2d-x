@@ -40,8 +40,8 @@
 #include "CodeIDESupport.h"
 
 #include "platform/mac/PlayerMac.h"
-#include "service/AppEvent.h"
-#include "service/AppLang.h"
+#include "AppEvent.h"
+#include "AppLang.h"
 
 
 #if (GLFW_VERSION_MAJOR >= 3) && (GLFW_VERSION_MINOR >= 1)

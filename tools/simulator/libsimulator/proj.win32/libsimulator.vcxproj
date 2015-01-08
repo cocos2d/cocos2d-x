@@ -53,7 +53,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\lib;$(ProjectDir)..\lib\service;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)tools\simulator\libsimulator\lib;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\lib;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)tools\simulator\libsimulator\lib;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -94,19 +94,19 @@
     <ClInclude Include="..\lib\platform\win32\PlayerWin.h" />
     <ClInclude Include="..\lib\ProjectConfig\ProjectConfig.h" />
     <ClInclude Include="..\lib\ProjectConfig\SimulatorConfig.h" />
-    <ClInclude Include="..\lib\service\AppEvent.h" />
-    <ClInclude Include="..\lib\service\AppLang.h" />
-    <ClInclude Include="..\lib\service\DeviceEx.h" />
-    <ClInclude Include="..\lib\service\PlayerEditBoxServiceProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerFileDialogServiceProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerMacros.h" />
-    <ClInclude Include="..\lib\service\PlayerMenuServiceProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerMessageBoxServiceProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerServiceProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerSettings.h" />
-    <ClInclude Include="..\lib\service\PlayerTaskServiceProtocol.h" />
-    <ClInclude Include="..\lib\service\PlayerUtils.h" />
+    <ClInclude Include="..\lib\AppEvent.h" />
+    <ClInclude Include="..\lib\AppLang.h" />
+    <ClInclude Include="..\lib\DeviceEx.h" />
+    <ClInclude Include="..\lib\PlayerEditBoxServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerFileDialogServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerMacros.h" />
+    <ClInclude Include="..\lib\PlayerMenuServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerMessageBoxServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerProtocol.h" />
+    <ClInclude Include="..\lib\PlayerServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerSettings.h" />
+    <ClInclude Include="..\lib\PlayerTaskServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerUtils.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -121,14 +121,14 @@
     <ClCompile Include="..\lib\platform\win32\PlayerWin.cpp" />
     <ClCompile Include="..\lib\ProjectConfig\ProjectConfig.cpp" />
     <ClCompile Include="..\lib\ProjectConfig\SimulatorConfig.cpp" />
-    <ClCompile Include="..\lib\service\AppEvent.cpp" />
-    <ClCompile Include="..\lib\service\AppLang.cpp" />
-    <ClCompile Include="..\lib\service\PlayerMenuServiceProtocol.cpp" />
-    <ClCompile Include="..\lib\service\PlayerProtocol.cpp" />
-    <ClCompile Include="..\lib\service\PlayerServiceProtocol.cpp" />
-    <ClCompile Include="..\lib\service\PlayerSettings.cpp" />
-    <ClCompile Include="..\lib\service\PlayerTaskServiceProtocol.cpp" />
-    <ClCompile Include="..\lib\service\PlayerUtils.cpp" />
+    <ClCompile Include="..\lib\AppEvent.cpp" />
+    <ClCompile Include="..\lib\AppLang.cpp" />
+    <ClCompile Include="..\lib\PlayerMenuServiceProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerServiceProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerSettings.cpp" />
+    <ClCompile Include="..\lib\PlayerTaskServiceProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerUtils.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

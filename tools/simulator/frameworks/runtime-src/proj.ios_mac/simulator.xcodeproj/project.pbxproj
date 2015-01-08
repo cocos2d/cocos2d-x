@@ -77,7 +77,7 @@
 		521A8E7119F0C3D200D177D7 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */; };
 		9F7214271A5C1E4C00DAED06 /* libluacocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7213E01A5C19ED00DAED06 /* libluacocos2d Mac.a */; };
 		9F7214281A5C1E5B00DAED06 /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7213E21A5C19ED00DAED06 /* libluacocos2d iOS.a */; };
-		9FD6FC0B1A5D27870028EDC6 /* liblibsimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD6FC081A5D26580028EDC6 /* liblibsimulator.a */; };
+		9FD6FC0B1A5D27870028EDC6 /* liblibsimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD6FC081A5D26580028EDC6 /* liblibsimulator.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		9FD6FC0C1A5D278E0028EDC6 /* liblibsimulator_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD6FC0A1A5D26580028EDC6 /* liblibsimulator_iOS.a */; };
 		9FD6FC721A5D2A820028EDC6 /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD6FC6F1A5D2A820028EDC6 /* ConsoleWindow.xib */; };
 		9FD6FC731A5D2A820028EDC6 /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD6FC711A5D2A820028EDC6 /* ConsoleWindowController.m */; };
@@ -184,6 +184,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9F7214851A5C28BA00DAED06;
 			remoteInfo = libsimulator_iOS;
+		};
+		9FF504CB1A5EB19500AFDA55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FD6FC021A5D26580028EDC6 /* libsimulator.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F7214841A5C28BA00DAED06;
+			remoteInfo = libsimulator_iOS;
+		};
+		9FF504CF1A5EB19900AFDA55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FD6FC021A5D26580028EDC6 /* libsimulator.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F7214341A5C271F00DAED06;
+			remoteInfo = libsimulator;
 		};
 		C0A2F04018975FF80072A7AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -650,6 +664,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9FF504D01A5EB19900AFDA55 /* PBXTargetDependency */,
 				9F7214221A5C1D3A00DAED06 /* PBXTargetDependency */,
 				C0A2F04118975FF80072A7AB /* PBXTargetDependency */,
 			);
@@ -669,6 +684,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9FF504CC1A5EB19500AFDA55 /* PBXTargetDependency */,
 				9F7214261A5C1D4200DAED06 /* PBXTargetDependency */,
 				15D1F3091994BBCA00302043 /* PBXTargetDependency */,
 			);
@@ -903,6 +919,16 @@
 			name = "libluacocos2d iOS";
 			targetProxy = 9F7214251A5C1D4200DAED06 /* PBXContainerItemProxy */;
 		};
+		9FF504CC1A5EB19500AFDA55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libsimulator_iOS;
+			targetProxy = 9FF504CB1A5EB19500AFDA55 /* PBXContainerItemProxy */;
+		};
+		9FF504D01A5EB19900AFDA55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libsimulator;
+			targetProxy = 9FF504CF1A5EB19900AFDA55 /* PBXContainerItemProxy */;
+		};
 		C0A2F04118975FF80072A7AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "cocos2dx Mac";
@@ -943,7 +969,6 @@
 					"$(SRCROOT)/../Classes/protobuf-lite",
 					"$(SRCROOT)/../Classes",
 					"$(SRCROOT)/../../../libsimulator/lib",
-					"$(SRCROOT)/../../../libsimulator/lib/service",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -978,7 +1003,6 @@
 					"$(SRCROOT)/../Classes/protobuf-lite",
 					"$(SRCROOT)/../Classes",
 					"$(SRCROOT)/../../../libsimulator/lib",
-					"$(SRCROOT)/../../../libsimulator/lib/service",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";

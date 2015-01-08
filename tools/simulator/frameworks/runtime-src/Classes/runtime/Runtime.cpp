@@ -329,5 +329,9 @@ void luaScriptLoader(std::string strDebugArg)
 void resetDesignResolution()
 {
     cocos2d::Size size = ConfigParser::getInstance()->getInitViewSize();
+    if (!ConfigParser::getInstance()->isLanscape())
+    {
+        std::swap(size.width, size.height);
+    }
     Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, ResolutionPolicy::EXACT_FIT);
 }

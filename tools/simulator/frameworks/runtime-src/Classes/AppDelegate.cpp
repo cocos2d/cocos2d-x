@@ -10,7 +10,7 @@
 #include "cocostudio/CocoStudio.h"
 
 #if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
-#include "service/DeviceEx.h"
+#include "DeviceEx.h"
 #include "network/CCHTTPRequest.h"
 #endif
 
