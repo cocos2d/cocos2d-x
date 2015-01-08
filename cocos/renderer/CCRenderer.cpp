@@ -819,23 +819,10 @@ void Renderer::flush()
 
 void Renderer::flush2D()
 {
-    //Check depth write
-    GLboolean depthWirte;
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWirte);
-    //Turn depth write off if necessary
-    if(depthWirte)
-    {
-        glDepthMask(false);
-    }
     drawBatchedQuads();
     _lastMaterialID = 0;
     drawBatchedTriangles();
     _lastMaterialID = 0;
-    //Turn depth write on if necessary
-    if(depthWirte)
-    {
-        glDepthMask(true);
-    }
 }
 
 void Renderer::flush3D()

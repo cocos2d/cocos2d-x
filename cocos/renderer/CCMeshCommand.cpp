@@ -151,6 +151,12 @@ void MeshCommand::setDisplayColor(const Vec4& color)
     _displayColor = color;
 }
 
+void MeshCommand::setTransparent(bool value)
+{
+     _isTransparent = value;
+    setDepthWriteEnabled(!_isTransparent);
+}
+
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
