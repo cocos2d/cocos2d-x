@@ -1180,4 +1180,3 @@ void ParticleSystem::setScaleY(float newScaleY)
 
 
 NS_CC_END
-

@@ -85,17 +85,17 @@ typedef struct _BMFontPadding {
 
 typedef struct _FontDefHashElement
 {
-	unsigned int	key;		// key. Font Unicode value
-	BMFontDef		fontDef;	// font definition
-	UT_hash_handle	hh;
+    unsigned int    key;        // key. Font Unicode value
+    BMFontDef       fontDef;    // font definition
+    UT_hash_handle  hh;
 } tFontDefHashElement;
 
 // Equal function for targetSet.
 typedef struct _KerningHashElement
 {
-	int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
-	int				amount;
-	UT_hash_handle	hh;
+    int				key;        // key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+    int				amount;
+    UT_hash_handle	hh;
 } tKerningHashElement;
 
 /** @brief BMFontConfiguration has parsed configuration of the the .fnt file
@@ -147,7 +147,7 @@ public:
     std::set<unsigned int>* getCharacterSet() const;
 private:
     std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
-	std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
+    std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
     void parseCharacterDefinition(std::string line, BMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
@@ -274,7 +274,7 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
 {    
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
 
-	Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
+    Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
     CCASSERT((!data.isNull() && data.getSize() > 0), "BMFontConfiguration::parseConfigFile | Open file error.");
 
     if (memcmp("BMF", data.getBytes(), 3) == 0) {
@@ -369,28 +369,28 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
     pData += 4; remains -= 4;
 
     while (remains > 0)
-	{
+    {
         unsigned char blockId = pData[0]; pData += 1; remains -= 1;
         uint32_t blockSize = 0; memcpy(&blockSize, pData, 4);
 
         pData += 4; remains -= 4;
 
         if (blockId == 1)
-		{
+        {
             /*
-             fontSize 	2 	int 	0
-             bitField 	1 	bits 	2 	bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeigth, bits 5-7: reserved
-             charSet 	1 	uint 	3
-             stretchH 	2 	uint 	4
-             aa 	1 	uint 	6
-             paddingUp 	1 	uint 	7
-             paddingRight	1 	uint 	8
-             paddingDown 	1 	uint 	9
-             paddingLeft 	1 	uint 	10
-             spacingHoriz	1 	uint 	11
-             spacingVert 	1 	uint 	12
-             outline 	1 	uint 	13	added with version 2
-             fontName 	n+1	string 	14	null terminated string with length n
+             fontSize       2   int      0
+             bitField       1   bits     2  bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeigth, bits 5-7: reserved
+             charSet        1   uint     3
+             stretchH       2   uint     4
+             aa             1   uint     6
+             paddingUp      1   uint     7
+             paddingRight   1   uint     8
+             paddingDown    1   uint     9
+             paddingLeft    1   uint     10
+             spacingHoriz   1   uint     11
+             spacingVert    1   uint     12
+             outline        1   uint     13 added with version 2
+             fontName       n+1 string   14 null terminated string with length n
              */
 
             _padding.top = (unsigned char)pData[7];
@@ -401,16 +401,16 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 		else if (blockId == 2)
 		{
             /*
-             lineHeight 	2 	uint 	0
-             base 	2 	uint 	2
-             scaleW 	2 	uint 	4
-             scaleH 	2 	uint 	6
-             pages 	2 	uint 	8
-             bitField 	1 	bits 	10 	bits 0-6: reserved, bit 7: packed
-             alphaChnl 	1 	uint 	11
-             redChnl 	1 	uint 	12
-             greenChnl 	1 	uint 	13
-             blueChnl 	1 	uint 	14
+             lineHeight 2   uint    0
+             base       2   uint    2
+             scaleW     2   uint    4
+             scaleH     2   uint    6
+             pages      2   uint    8
+             bitField   1   bits    10  bits 0-6: reserved, bit 7: packed
+             alphaChnl  1   uint    11
+             redChnl    1   uint    12
+             greenChnl  1   uint    13
+             blueChnl   1   uint    14
              */
 
             uint16_t lineHeight = 0; memcpy(&lineHeight, pData, 2);
@@ -424,8 +424,8 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
             uint16_t pages = 0; memcpy(&pages, pData + 8, 2);
             CCASSERT(pages == 1, "CCBitfontAtlas: only supports 1 page");
         }
-		else if (blockId == 3)
-		{
+        else if (blockId == 3)
+        {
             /*
              pageNames 	p*(n+1) 	strings 	0 	p null terminated strings, each with length n
              */
@@ -438,22 +438,22 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 		else if (blockId == 4)
 		{
             /*
-             id 	4 	uint 	0+c*20 	These fields are repeated until all characters have been described
-             x 	2 	uint 	4+c*20
-             y 	2 	uint 	6+c*20
-             width 	2 	uint 	8+c*20
-             height 	2 	uint 	10+c*20
-             xoffset 	2 	int 	12+c*20
-             yoffset 	2 	int 	14+c*20
-             xadvance 	2 	int 	16+c*20
-             page 	1 	uint 	18+c*20
-             chnl 	1 	uint 	19+c*20
+             id         4   uint    0+c*20  These fields are repeated until all characters have been described
+             x          2   uint    4+c*20
+             y          2   uint    6+c*20
+             width      2   uint    8+c*20
+             height     2   uint    10+c*20
+             xoffset    2   int     12+c*20
+             yoffset    2   int     14+c*20
+             xadvance   2   int     16+c*20
+             page       1   uint    18+c*20
+             chnl       1   uint    19+c*20
              */
 
             unsigned long count = blockSize / 20;
 
             for (unsigned long i = 0; i < count; i++)
-			{
+            {
                 tFontDefHashElement* element = (tFontDefHashElement*)malloc( sizeof(*element) );
 
                 uint32_t charId = 0; memcpy(&charId, pData + (i * 20), 4);
@@ -486,18 +486,17 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
                 validCharsString->insert(element->fontDef.charID);
             }
         }
-		else if (blockId == 5) {
+        else if (blockId == 5) {
             /*
-			 first 	4 	uint 	0+c*10 	These fields are repeated until all kerning pairs have been described
-			 second 	4 	uint 	4+c*10
-			 amount 	2 	int 	8+c*10
+             first  4   uint    0+c*10 	These fields are repeated until all kerning pairs have been described
+             second 4   uint    4+c*10
+             amount 2   int     8+c*10
              */
 
             unsigned long count = blockSize / 20;
 
             for (unsigned long i = 0; i < count; i++)
-			{
-
+            {
                 uint32_t first = 0; memcpy(&first, pData + (i * 10), 4);
                 uint32_t second = 0; memcpy(&second, pData + (i * 10) + 4, 4);
                 int16_t amount = 0; memcpy(&amount, pData + (i * 10) + 8, 2);
@@ -693,12 +692,12 @@ FontFNT::FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset /* = V
 :_configuration(theContfig)
 ,_imageOffset(CC_POINT_PIXELS_TO_POINTS(imageOffset))
 {
-	_configuration->retain();
+    _configuration->retain();
 }
 
 FontFNT::~FontFNT()
 {
-	_configuration->release();
+    _configuration->release();
 }
 
 void FontFNT::purgeCachedData()
