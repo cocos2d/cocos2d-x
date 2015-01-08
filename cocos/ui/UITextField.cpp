@@ -329,9 +329,9 @@ TextField* TextField::create(const std::string &placeholder, const std::string &
     TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
-        widget->setPlaceHolder(placeholder);
         widget->setFontName(fontName);
         widget->setFontSize(fontSize);
+        widget->setPlaceHolder(placeholder);
         widget->autorelease();
         return widget;
     }
