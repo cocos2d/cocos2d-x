@@ -184,6 +184,10 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     {
         config->changeFrameOrientationToLandscape();
     }
+    else
+    {
+        config->changeFrameOrientationToPortait();
+    }
     config->setScriptFile(parser->getEntryFile());
 }
 
