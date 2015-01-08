@@ -189,18 +189,18 @@ public:
     int getGroup() const;
     
     /** get the body position. */
-    Vec2 getPosition() const;
+    const Vec2& getPosition();
     /** get the body rotation. */
-    float getRotation() const;
+    float getRotation();
     
     /** set body position offset, it's the position witch relative to node */
     void setPositionOffset(const Vec2& position);
     /** get body position offset. */
-    Vec2 getPositionOffset() const;
+    const Vec2& getPositionOffset() const { return _positionOffset; }
     /** set body rotation offset, it's the rotation witch relative to node */
     void setRotationOffset(float rotation);
     /** set the body rotation offset */
-    float getRotationOffset() const;
+    float getRotationOffset() const { return _rotationOffset; }
     
     /**
      * @brief test the body is dynamic or not.
@@ -338,9 +338,12 @@ protected:
     float _angularDamping;
     int _tag;
     
-    Vec2 _recordPosition;
+    Vec2 _recordedPosition;
+    Vec2 _latestPosition;
     Vec2 _positionOffset;
     float _rotationOffset;
+    float _recordedRotation;
+    double _recordedAngle;
     
     friend class PhysicsWorld;
     friend class PhysicsShape;

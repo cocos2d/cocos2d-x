@@ -2049,12 +2049,12 @@ void Node::updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform,
 
 void Node::updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags)
 {
-    auto newPos = _physicsBody->getPosition();
-    auto& recordPos = _physicsBody->_recordPosition;
-    if (parentFlags || recordPos.x != newPos.x || recordPos.y != newPos.y)
+    auto& newPosition = _physicsBody->getPosition();
+    auto& recordedPosition = _physicsBody->_recordedPosition;
+    if (parentFlags || recordedPosition.x != newPosition.x || recordedPosition.y != newPosition.y)
     {
-        recordPos = newPos;
-        Vec3 vec3(newPos.x, newPos.y, 0);
+        recordedPosition = newPosition;
+        Vec3 vec3(newPosition.x, newPosition.y, 0);
         Vec3 ret;
         parentTransform.getInversed().transformPoint(vec3, &ret);
         setPosition(ret.x, ret.y);
