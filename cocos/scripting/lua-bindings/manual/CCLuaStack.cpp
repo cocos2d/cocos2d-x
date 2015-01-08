@@ -279,23 +279,26 @@ int LuaStack::executeScriptFile(const char* filename)
     static const std::string BYTECODE_FILE_EXT    = ".luac";
     static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
 
-     FileUtils *utils = FileUtils::getInstance();
-    //
+    FileUtils *utils = FileUtils::getInstance();
+    // 
     // 1. check .lua suffix
     // 2. check .luac suffix
     //
     std::string buf(filename);
-    std::string tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
-    if (utils->isFileExist(tmpfilename))
+    if (!utils->isFileExist(buf))
     {
-        buf = tmpfilename;
-    }
-    else
-    {
-        tmpfilename = buf + BYTECODE_FILE_EXT;
-        if (utils->isFileExist(tmpfilename))
+        std::string notBytecodeFilename = buf + NOT_BYTECODE_FILE_EXT;
+        if (utils->isFileExist(notBytecodeFilename))
         {
-            buf = tmpfilename;
+            buf = notBytecodeFilename;
+        }
+        else
+        {
+            std::string bytecodeFilename = buf + BYTECODE_FILE_EXT;
+            if (utils->isFileExist(bytecodeFilename))
+            {
+                buf = bytecodeFilename;
+            }
         }
     }
 
