@@ -3488,7 +3488,7 @@ int lua_cocos2dx_physics_PhysicsBody_getPositionOffset(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_getPositionOffset'", nullptr);
             return 0;
         }
-        cocos2d::Vec2 ret = cobj->getPositionOffset();
+        const cocos2d::Vec2& ret = cobj->getPositionOffset();
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -3678,7 +3678,7 @@ int lua_cocos2dx_physics_PhysicsBody_getPosition(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_getPosition'", nullptr);
             return 0;
         }
-        cocos2d::Vec2 ret = cobj->getPosition();
+        const cocos2d::Vec2& ret = cobj->getPosition();
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }
