@@ -493,8 +493,12 @@ function display.newColorLayer(color)
         node:setTouchEnabled(true)
         node:setTouchSwallowEnabled(true)
 
-        node.setContentSize = layer.setContentSize
-        node.getContentSize = layer.getContentSize
+        node.setContentSize = function(_, ...)
+            layer:setContentSize(...)
+        end
+        node.getContentSize = function()
+            return layer:getContentSize()
+        end
     else
         node = cc.LayerColor:create(color)
     end
