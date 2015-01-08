@@ -306,10 +306,7 @@ protected:
     
     virtual void setPosition(const Vec2& position);
     virtual void setRotation(float rotation);
-    virtual void setScale(float scale);
     virtual void setScale(float scaleX, float scaleY);
-    virtual void setScaleX(float scaleX);
-    virtual void setScaleY(float scaleY);
     
     void update(float delta);
     
@@ -341,8 +338,7 @@ protected:
     float _angularDamping;
     int _tag;
     
-    bool _positionResetTag;     /// To avoid reset the body position when body invoke Node::setPosition().
-    bool _rotationResetTag;     /// To avoid reset the body rotation when body invoke Node::setRotation().
+    Vec2 _recordPosition;
     Vec2 _positionOffset;
     float _rotationOffset;
     
