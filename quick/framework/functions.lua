@@ -554,7 +554,7 @@ function math.newrandomseed()
 
     if ok then
         -- 如果集成了 socket 模块，则使用 socket.gettime() 获取随机数种子
-        math.randomseed(socket.gettime() * 1000)
+        math.randomseed(socket.gettime())
     else
         math.randomseed(os.time())
     end
