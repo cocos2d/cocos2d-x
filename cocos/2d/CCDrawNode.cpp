@@ -391,12 +391,9 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
 
 void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
 {
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
-    
-    glProgram->setUniformLocationWith4fv(glProgram->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
-    glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_pointSize"), _pointSize);
     
     if (_dirtyGLPoint)
     {
@@ -457,6 +454,12 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     
     _bufferCountGLPoint += numberOfPoints;
     _dirtyGLPoint = true;
+}
+
+void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color)
+{
+    _pointSize = pointSize;
+    drawPoints(position, numberOfPoints, color);
 }
 
 void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
@@ -660,25 +663,12 @@ void DrawNode::drawDot(const Vec2 &pos, float radius, const Color4F &color)
 	_dirty = true;
 }
 
-void DrawNode::drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Vec2& rb, const Color4F &color)
+void DrawNode::drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color)
 {
-    unsigned int vertex_count = 2*3;
-    ensureCapacity(vertex_count);
-	
-    V2F_C4B_T2F a = {lb, Color4B(color), Tex2F(-1.0, -1.0) };
-    V2F_C4B_T2F b = {lt, Color4B(color), Tex2F(-1.0,  1.0) };
-    V2F_C4B_T2F c = {rt, Color4B(color), Tex2F( 1.0,  1.0) };
-    V2F_C4B_T2F d = {rb, Color4B(color), Tex2F( 1.0, -1.0) };
-
-    V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
-    V2F_C4B_T2F_Triangle triangle0 = {a, b, c};
-    V2F_C4B_T2F_Triangle triangle1 = {a, c, d};
-    triangles[0] = triangle0;
-    triangles[1] = triangle1;
-	
-    _bufferCount += vertex_count;
-
-    _dirty = true;
+    drawLine(Vec2(p1.x, p1.y), Vec2(p2.x, p2.y), color);
+    drawLine(Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), color);
+    drawLine(Vec2(p3.x, p3.y), Vec2(p4.x, p4.y), color);
+    drawLine(Vec2(p4.x, p4.y), Vec2(p1.x, p1.y), color);
 }
 
 void DrawNode::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color)
