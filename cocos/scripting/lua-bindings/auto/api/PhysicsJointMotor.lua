@@ -18,6 +18,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointMotor] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointMotor] construct 
 -- @param self
 -- @param #cc.PhysicsBody a

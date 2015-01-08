@@ -42,6 +42,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointGroove] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointGroove] construct 
 -- @param self
 -- @param #cc.PhysicsBody a
