@@ -54,6 +54,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointSpring] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointSpring] setRestLength 
 -- @param self
 -- @param #float restLength
