@@ -156,7 +156,7 @@ function dump(value, desciption, nesting)
 
     local function _dump(value, desciption, indent, nest, keylen)
         desciption = desciption or "<var>"
-        spc = ""
+        local spc = ""
         if type(keylen) == "number" then
             spc = string.rep(" ", keylen - string.len(_v(desciption)))
         end
