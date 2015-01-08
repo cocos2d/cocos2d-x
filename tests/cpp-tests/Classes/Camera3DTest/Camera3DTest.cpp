@@ -974,7 +974,7 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 ,_drawGrid(nullptr)
 ,_sprite3D1(nullptr)
 ,_sprite3D2(nullptr)
-,_fRadius(1.0f)
+,_radius(1.0f)
 ,_distanceZ(50.0f)
 ,_operate(OperateCamType::RotateCamera)
 ,_center(Vec3(0,0,0))
@@ -1100,7 +1100,7 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
 {
     if (!touchs.empty())
     {
-        if(_operate == OperateCamType::RotateCamera)
+        if(_operate == OperateCamType::RotateCamera)           //arc ball rotate
         {
             Size visibleSize = Director::getInstance()->getVisibleSize();
             Vec2 prelocation = touchs[0]->getPreviousLocationInView();
@@ -1112,13 +1112,13 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
 
             Vec3 axes;
             float angle;
-            calculateArcBall(axes, angle, prelocation.x, prelocation.y, location.x, location.y);
-            Quaternion quat(axes, angle);
+            calculateArcBall(axes, angle, prelocation.x, prelocation.y, location.x, location.y);    //calculate  rotation quaternion parameters
+            Quaternion quat(axes, angle);                                                           //get rotation quaternion
             _rotationQuat = quat * _rotationQuat;
 
-            updateCameraTransform();
+            updateCameraTransform();                                                                //update camera Transform
         }
-        else if(_operate == OperateCamType::MoveCamera)
+        else if(_operate == OperateCamType::MoveCamera)         //camera zoom 
         {
             Point newPos = touchs[0]->getPreviousLocation() - touchs[0]->getLocation();
             _distanceZ -= newPos.y*0.1f;
@@ -1137,13 +1137,13 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     Vec3 sv = rotation_matrix * Vec3(1.0f,0.0f,0.0f);
     Vec3 lv = rotation_matrix * Vec3(0.0f,0.0f,-1.0f);
 
-    Vec3 p1 = sv * p1x + uv * p1y - lv * projectToSphere(_fRadius, p1x, p1y);
-    Vec3 p2 = sv * p2x + uv * p2y - lv * projectToSphere(_fRadius, p2x, p2y);
+    Vec3 p1 = sv * p1x + uv * p1y - lv * projectToSphere(_radius, p1x, p1y);
+    Vec3 p2 = sv * p2x + uv * p2y - lv * projectToSphere(_radius, p2x, p2y);
 
     Vec3::cross(p2, p1, &axis);
     axis.normalize();
 
-    float t = (p2 - p1).length() / (2.0 * _fRadius);
+    float t = (p2 - p1).length() / (2.0 * _radius);
 
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
@@ -1262,9 +1262,7 @@ void FogTestDemo::onEnter()
     
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = CC_CALLBACK_2(FogTestDemo::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(FogTestDemo::onTouchesMoved, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(FogTestDemo::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     // swich fog type
@@ -1401,15 +1399,6 @@ void FogTestDemo::update(float dt)
 {
 }
 
-void FogTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
-{
-    for ( auto &item: touches )
-    {
-        auto touch = item;
-        auto location = touch->getLocation();
-    }
-}
-
 void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     if(touches.size()==1)
@@ -1432,15 +1421,6 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
             cameraPos+=cameraRightDir*newPos.x*0.1f;
             _camera->setPosition3D(cameraPos);
         }
-    }
-}
-
-void FogTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
-{
-    for ( auto &item: touches )
-    {
-        auto touch = item;
-        auto location = touch->getLocationInView();
     }
 }
 
