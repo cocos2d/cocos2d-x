@@ -107,6 +107,7 @@
 		C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0619CD61896894800872C26 /* Runtime_ios-mac.mm */; };
 		C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06C3794191A1D1E00617BED /* ConfigParser.cpp */; };
 		C07828F818B4D72E00BD2287 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C07828F418B4D72E00BD2287 /* main.m */; };
+		DA1225F71A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = DA1225F61A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm */; };
 		F405C6C919ED14AA005AD31C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F405C6CB19ED14AA005AD31C /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
@@ -404,6 +405,8 @@
 		C06C3795191A1D1E00617BED /* ConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigParser.h; path = ../Classes/ConfigParser.h; sourceTree = "<group>"; };
 		C07828F418B4D72E00BD2287 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		DA1225F31A5E6DBC00DA0183 /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
+		DA1225F61A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UncaughtExceptionHandler.mm; sourceTree = "<group>"; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F293B3CE15EB7BE500256477 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		F293B3D015EB7BE500256477 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -513,6 +516,8 @@
 				F405C6CB19ED14AA005AD31C /* MainMenu.xib */,
 				5023817317EBBE3400990C9B /* Info.plist */,
 				5023817517EBBE3400990C9B /* Prefix.pch */,
+				DA1225F31A5E6DBC00DA0183 /* UncaughtExceptionHandler.h */,
+				DA1225F61A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm */,
 			);
 			path = mac;
 			sourceTree = "<group>";
@@ -1154,6 +1159,7 @@
 				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
 				9F72893E1A24957700EE0234 /* CCSepiaFilter.cpp in Sources */,
 				9F7289391A24957700EE0234 /* CCHazeFilter.cpp in Sources */,
+				DA1225F71A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				9FD01B2419F8C6A3005E0C49 /* NumberFormater.m in Sources */,
 				9FD0193519F8C4D4005E0C49 /* PlayerUtils.cpp in Sources */,

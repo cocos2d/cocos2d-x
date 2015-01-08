@@ -1,5 +1,6 @@
 
 #import "AppController.h"
+#import "UncaughtExceptionHandler.h"
 
 #include "AppDelegate.h"
 #include "glfw3.h"
@@ -45,8 +46,15 @@ void createSimulator(const char* viewName, float width, float height,bool isLand
     [super dealloc];
 }
 
+- (void)installUncaughtExceptionHandler
+{
+    InstallUncaughtExceptionHandler();
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self installUncaughtExceptionHandler];
+    
     auto player = player::PlayerMac::create();
     player->setController(self);
 
