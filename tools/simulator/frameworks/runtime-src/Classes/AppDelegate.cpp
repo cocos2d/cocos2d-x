@@ -34,7 +34,7 @@ AppDelegate::~AppDelegate()
     if (_project.getDebuggerType() != kCCRuntimeDebuggerNone)
     {
         // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-        endRuntime();
+        RuntimeEngine::getInstance()->end();
     }
 
 	ConfigParser::purge();
@@ -54,7 +54,8 @@ void AppDelegate::initGLContextAttrs()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     //
-#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_CODE_IDE_DEBUG_SUPPORT > 0))
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) \
+    && (CC_CODE_IDE_DEBUG_SUPPORT > 0) && (COCOS2D_DEBUG > 0))
     _project.setDebuggerType(kCCRuntimeDebuggerCodeIDE);
 #endif
 
@@ -198,8 +199,9 @@ void StartupCall::startup()
     else
     {
         // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-        initRuntime(project.getProjectDir());
-        startRuntime();
+        auto runtimeEngine = RuntimeEngine::getInstance();
+        runtimeEngine->setProjectPath(project.getProjectDir());
+        runtimeEngine->startNetwork();
     }
 
     // track start event
@@ -342,7 +344,7 @@ void StartupCall::updateConfigParser(const ProjectConfig& project)
     }
     entryFile = replaceAll(entryFile, "\\", "/");
     parser->setEntryFile(entryFile);
-    
+
     parser->setBindAddress(project.getBindAddress());
 }
 
@@ -355,23 +357,19 @@ void StartupCall::updatePreviewFuncForPath(const std::string &path)
     {
         _launchEvent = "lua";
         _previewFunc = std::bind(&StartupCall::onPreviewLua, this, std::placeholders::_1);
-        setLoader(std::bind(&luaScriptLoader, std::placeholders::_1));
     }
     else if (endWithString(path, ".csd"))
     {
         _launchEvent = "ccs";
         _previewFunc = std::bind(&StartupCall::onPreviewCocosCSD, this, std::placeholders::_1);
-        setLoader(std::bind(&StartupCall::onPreviewCocosCSD, this, std::placeholders::_1));
     }
     else if (endWithString(path, ".csb"))
     {
         _launchEvent = "ccs";
         _previewFunc = std::bind(&StartupCall::onPreviewCocosCSB, this, std::placeholders::_1);
-        setLoader(std::bind(&StartupCall::onPreviewCocosCSB, this, std::placeholders::_1));
     }
     else if (endWithString(path, ".js") || endWithString(path, ".jsc"))
     {
         _launchEvent = "js";
-        _previewFunc = std::bind(&StartupCall::onPreviewJs, this, std::placeholders::_1);
     }
 }

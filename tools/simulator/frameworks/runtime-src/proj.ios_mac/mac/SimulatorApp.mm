@@ -264,6 +264,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     // create opengl view
     cocos2d::Size frameSize = _project.getFrameSize();
+    ConfigParser::getInstance()->setInitViewSize(frameSize);
     
     const cocos2d::Rect frameRect = cocos2d::Rect(0, 0, frameSize.width, frameSize.height);
     std::stringstream title;

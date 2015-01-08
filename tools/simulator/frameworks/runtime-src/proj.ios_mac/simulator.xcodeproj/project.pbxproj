@@ -81,6 +81,12 @@
 		9FD6FC0C1A5D278E0028EDC6 /* liblibsimulator_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD6FC0A1A5D26580028EDC6 /* liblibsimulator_iOS.a */; };
 		9FD6FC721A5D2A820028EDC6 /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD6FC6F1A5D2A820028EDC6 /* ConsoleWindow.xib */; };
 		9FD6FC731A5D2A820028EDC6 /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD6FC711A5D2A820028EDC6 /* ConsoleWindowController.m */; };
+		9FF5057C1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF5057A1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp */; };
+		9FF5057D1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF5057A1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp */; };
+		9FF505801A5ED0C600AFDA55 /* RuntimeProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF5057E1A5ED0C600AFDA55 /* RuntimeProtocol.cpp */; };
+		9FF505811A5ED0C600AFDA55 /* RuntimeProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF5057E1A5ED0C600AFDA55 /* RuntimeProtocol.cpp */; };
+		9FF505841A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF505821A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp */; };
+		9FF505851A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FF505821A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp */; };
 		9FFC07261A4A739200AED399 /* lang in Resources */ = {isa = PBXBuildFile; fileRef = 9FFC07061A4A739200AED399 /* lang */; };
 		9FFC07361A4A764100AED399 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFC07341A4A764100AED399 /* MainMenu.xib */; };
 		AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6CB6EC1A1F275E009C2562 /* ConnectWaitLayer.cpp */; };
@@ -296,6 +302,12 @@
 		9FD6FC6F1A5D2A820028EDC6 /* ConsoleWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleWindow.xib; sourceTree = "<group>"; };
 		9FD6FC701A5D2A820028EDC6 /* ConsoleWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleWindowController.h; sourceTree = "<group>"; };
 		9FD6FC711A5D2A820028EDC6 /* ConsoleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleWindowController.m; sourceTree = "<group>"; };
+		9FF5057A1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeLuaImpl.cpp; sourceTree = "<group>"; };
+		9FF5057B1A5ED0AB00AFDA55 /* RuntimeLuaImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeLuaImpl.h; sourceTree = "<group>"; };
+		9FF5057E1A5ED0C600AFDA55 /* RuntimeProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeProtocol.cpp; sourceTree = "<group>"; };
+		9FF5057F1A5ED0C600AFDA55 /* RuntimeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeProtocol.h; sourceTree = "<group>"; };
+		9FF505821A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeCCSImpl.cpp; sourceTree = "<group>"; };
+		9FF505831A5EDE6500AFDA55 /* RuntimeCCSImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeCCSImpl.h; sourceTree = "<group>"; };
 		9FFC07061A4A739200AED399 /* lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = lang; path = ../Classes/lang; sourceTree = "<group>"; };
 		9FFC07351A4A764100AED399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9FFC07371A4A765100AED399 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
@@ -566,6 +578,12 @@
 				C00FD48E1938512100C6382D /* ResData.h */,
 				C00FD48F1938512100C6382D /* Runtime.cpp */,
 				C00FD4901938512100C6382D /* Runtime.h */,
+				9FF5057A1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp */,
+				9FF5057B1A5ED0AB00AFDA55 /* RuntimeLuaImpl.h */,
+				9FF505821A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp */,
+				9FF505831A5EDE6500AFDA55 /* RuntimeCCSImpl.h */,
+				9FF5057E1A5ED0C600AFDA55 /* RuntimeProtocol.cpp */,
+				9FF5057F1A5ED0C600AFDA55 /* RuntimeProtocol.h */,
 				C00FD4911938512100C6382D /* Shine_png.cpp */,
 			);
 			name = runtime;
@@ -844,9 +862,11 @@
 				15AA9649199B6D4600725633 /* lua_debugger.c in Sources */,
 				3EB515651952865D006966AA /* repeated_field.cc in Sources */,
 				3EB5156B1952865D006966AA /* once.cc in Sources */,
+				9FF5057D1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp in Sources */,
 				3EB5155D1952865D006966AA /* coded_stream.cc in Sources */,
 				C00FD4991938512100C6382D /* Portrait_png.cpp in Sources */,
 				C06C3797191A1D1E00617BED /* ConfigParser.cpp in Sources */,
+				9FF505851A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp in Sources */,
 				3EB5156D1952865D006966AA /* stringprintf.cc in Sources */,
 				C07828F818B4D72E00BD2287 /* main.m in Sources */,
 				3EB515611952865D006966AA /* zero_copy_stream_impl_lite.cc in Sources */,
@@ -856,6 +876,7 @@
 				3EB515591952865D006966AA /* extension_set.cc in Sources */,
 				3EB5155B1952865D006966AA /* generated_message_util.cc in Sources */,
 				C0619CD81896894800872C26 /* Runtime_ios-mac.mm in Sources */,
+				9FF505811A5ED0C600AFDA55 /* RuntimeProtocol.cpp in Sources */,
 				3EB5152D19528284006966AA /* Protos.pb.cc in Sources */,
 				AB6CB6F71A1F275E009C2562 /* FileServer.cpp in Sources */,
 				C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */,
@@ -881,9 +902,11 @@
 				C00FD4961938512100C6382D /* PlayEnable_png.cpp in Sources */,
 				3EB5152C19528284006966AA /* Protos.pb.cc in Sources */,
 				3EB515661952865D006966AA /* atomicops_internals_x86_msvc.cc in Sources */,
+				9FF5057C1A5ED0AB00AFDA55 /* RuntimeLuaImpl.cpp in Sources */,
 				3EB515641952865D006966AA /* repeated_field.cc in Sources */,
 				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
 				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
+				9FF505841A5EDE6500AFDA55 /* RuntimeCCSImpl.cpp in Sources */,
 				3EB5156E1952865D006966AA /* wire_format_lite.cc in Sources */,
 				AB6CB6F21A1F275E009C2562 /* ConnectWaitLayer.cpp in Sources */,
 				3EB515581952865D006966AA /* extension_set.cc in Sources */,
@@ -893,6 +916,7 @@
 				C033B51C191B337200D06937 /* VisibleRect.cpp in Sources */,
 				3EB5155A1952865D006966AA /* generated_message_util.cc in Sources */,
 				AB6CB6F61A1F275E009C2562 /* FileServer.cpp in Sources */,
+				9FF505801A5ED0C600AFDA55 /* RuntimeProtocol.cpp in Sources */,
 				3EB5155E1952865D006966AA /* zero_copy_stream.cc in Sources */,
 				3EB5155C1952865D006966AA /* coded_stream.cc in Sources */,
 				C0619CD71896894800872C26 /* Runtime_ios-mac.mm in Sources */,

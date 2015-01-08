@@ -38,19 +38,33 @@ std::string getIPAddress();
 
 const char* getRuntimeVersion();
 
-void startScript(std::string strDebugArg);
-
-void initRuntime(const std::string& workPath);
-
-void startRuntime();
-
-void endRuntime();
-
 //
 void resetDesignResolution();
 const char* getRuntimeVersion();
-void luaScriptLoader(std::string strDebugArg);
-void setLoader(std::function<void (std::string)> func);
+
+//
+// RuntimeEngine
+//
+class RuntimeProtocol;
+class RuntimeEngine
+{
+public:
+    static RuntimeEngine* getInstance();
+    
+    //
+    void setupRuntime();
+    void setProjectPath(const std::string &path);
+    bool startNetwork();
+    void startScript(const std::string &args);
+    void end();
+    
+    RuntimeProtocol *getRuntime();
+private:
+    RuntimeEngine();
+    void showUI();
+    
+    RuntimeProtocol *_runtime;
+};
 
 #endif // _RUNTIME__H_
 

@@ -312,6 +312,7 @@ int SimulatorWin::run()
     }
 
     const Rect frameRect = Rect(0, 0, frameSize.width, frameSize.height);
+    ConfigParser::getInstance()->setInitViewSize(frameSize);
     const bool isResize = _project.isResizeWindow();
     std::stringstream title;
     title << "Cocos Simulator - " << ConfigParser::getInstance()->getInitViewName();

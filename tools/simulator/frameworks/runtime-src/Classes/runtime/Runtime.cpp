@@ -32,20 +32,12 @@ THE SOFTWARE.
 #include "CCLuaEngine.h"
 #include "LuaBasicConversions.h"
 
+#include "RuntimeLuaImpl.h"
+#include "RuntimeCCSImpl.h"
+
 #include <vector>
 
-static std::string g_projectPath;
-static std::function<void (std::string)> s_gProjectLoader = [](std::string path)
-{
-    CCLOG("Please set loader for your project");
-};
-
-void startScript(std::string strDebugArg)
-{
-    resetDesignResolution();
-    s_gProjectLoader(strDebugArg);
-}
-
+std::string g_projectPath;
 
 void recvBuf(int fd, char *pbuf, unsigned long bufsize)
 {
@@ -97,234 +89,7 @@ const char* getRuntimeVersion()
     return "1.8";
 }
 
-int lua_cocos2dx_runtime_addSearchPath(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::FileUtils* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_FileUtils_addSearchPath'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1 || argc == 2)
-    {
-        std::string arg0;
-        bool arg1 = false;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0);
-
-        if (argc == 2)
-        {
-            ok &= luaval_to_boolean(tolua_S, 3, &arg1);
-        }
-
-        if(!ok)
-            return 0;
-
-        if (! FileUtils::getInstance()->isAbsolutePath(arg0))
-        {
-            // add write path to search path
-            if (FileServer::getShareInstance()->getIsUsingWritePath())
-            {
-                cobj->addSearchPath(FileServer::getShareInstance()->getWritePath() + arg0, arg1);
-            } else
-            {
-                cobj->addSearchPath(arg0, arg1);
-            }
-
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-            // add project path to search path
-            cobj->addSearchPath(g_projectPath + arg0, arg1);
-#endif
-        }
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "addSearchPath",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_FileUtils_addSearchPath'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-int lua_cocos2dx_runtime_setSearchPaths(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::FileUtils* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::FileUtils*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_runtime_setSearchPaths'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    {
-        std::vector<std::string> vecPaths, writePaths;
-
-        ok &= luaval_to_std_vector_string(tolua_S, 2, &vecPaths);
-        if(!ok)
-            return 0;
-        std::vector<std::string> originPath; // for IOS platform.
-        std::vector<std::string> projPath; // for Desktop platform.
-        for (size_t i = 0; i < vecPaths.size(); i++)
-        {
-            if (!FileUtils::getInstance()->isAbsolutePath(vecPaths[i]))
-            {
-                originPath.push_back(vecPaths[i]); // for IOS platform.
-                projPath.push_back(g_projectPath + vecPaths[i]); //for Desktop platform.
-                writePaths.push_back(FileServer::getShareInstance()->getWritePath() + vecPaths[i]);
-            }
-        }
-
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        vecPaths.insert(vecPaths.end(), projPath.begin(), projPath.end());
-#endif
-        if (FileServer::getShareInstance()->getIsUsingWritePath())
-        {
-            vecPaths.insert(vecPaths.end(), writePaths.begin(), writePaths.end());
-        } else
-        {
-            vecPaths.insert(vecPaths.end(), originPath.begin(), originPath.end());
-        }
-
-        cobj->setSearchPaths(vecPaths);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setSearchPaths",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_runtime_setSearchPaths'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static void register_runtime_override_function(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "cc.FileUtils");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1)){
-        tolua_function(tolua_S,"addSearchPath",lua_cocos2dx_runtime_addSearchPath);
-        tolua_function(tolua_S,"setSearchPaths",lua_cocos2dx_runtime_setSearchPaths);
-    }
-    lua_pop(tolua_S, 1);
-}
-
-void initRuntime(const std::string& workPath)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
-
-    if (workPath.empty())
-    {
-        extern std::string getCurAppPath();
-        std::string appPath = getCurAppPath();
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        appPath.append("/../../");
-    #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        appPath.append("/../../../");
-    #endif
-        appPath = replaceAll(appPath, "\\", "/");
-        g_projectPath = appPath;
-    }
-    else
-    {
-        g_projectPath = workPath;
-    }
-
-    // add project's root directory to search path
-    searchPathArray.insert(searchPathArray.begin(), g_projectPath);
-
-    // add writable path to search path
-    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
-    FileUtils::getInstance()->setSearchPaths(searchPathArray);
-#endif
-
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    register_runtime_override_function(engine->getLuaStack()->getLuaState());
-
-    ConsoleCommand::getShareInstance()->init();
-}
-
-void startRuntime()
-{
-    auto scene = Scene::create();
-    auto connectLayer = new ConnectWaitLayer();
-    connectLayer->autorelease();
-    auto director = Director::getInstance();
-    scene->addChild(connectLayer);
-    director->runWithScene(scene);
-}
-
-void endRuntime()
-{
-	ConsoleCommand::purge();
-	FileServer::getShareInstance()->stop();
-	//FileServer::purge();
-}
-
 //////////////////////// Loader ////////////////////
-
-void setLoader(std::function<void (std::string)> func)
-{
-    s_gProjectLoader = func;
-}
-
-void luaScriptLoader(std::string strDebugArg)
-{
-    // register lua engine
-    auto engine = LuaEngine::getInstance();
-    if (!strDebugArg.empty())
-    {
-        // open debugger.lua module
-        cocos2d::log("debug args = %s", strDebugArg.c_str());
-        luaopen_lua_debugger(engine->getLuaStack()->getLuaState());
-        engine->executeString(strDebugArg.c_str());
-    }
-    std::string code("require \"");
-    code.append(ConfigParser::getInstance()->getEntryFile().c_str());
-    code.append("\"");
-    engine->executeString(code.c_str());
-}
 
 void resetDesignResolution()
 {
@@ -334,4 +99,138 @@ void resetDesignResolution()
         std::swap(size.width, size.height);
     }
     Director::getInstance()->getOpenGLView()->setDesignResolutionSize(size.width, size.height, ResolutionPolicy::EXACT_FIT);
+}
+
+//
+// RuntimeEngine
+//
+
+RuntimeEngine::RuntimeEngine()
+: _runtime(nullptr)
+{
+    
+}
+
+RuntimeEngine* RuntimeEngine::getInstance()
+{
+    static RuntimeEngine *instance = nullptr;
+    if (!instance)
+    {
+        instance = new RuntimeEngine();
+    }
+    return instance;
+}
+
+void RuntimeEngine::setupRuntime()
+{
+    CC_SAFE_DELETE(_runtime);
+    //
+    // 1. get project type fron config.json
+    // 2. init Lua / Js runtime
+    //
+    
+    auto entryFile = ConfigParser::getInstance()->getEntryFile();
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+    ConfigParser::getInstance()->readConfig();
+    entryFile = ConfigParser::getInstance()->getEntryFile();
+#endif
+    
+    // Lua
+    if ((entryFile.rfind(".lua") != std::string::npos) ||
+        (entryFile.rfind(".luac") != std::string::npos))
+    {
+        _runtime = RuntimeLuaImpl::create();
+    }
+    // Js
+    else if ((entryFile.rfind(".js") != std::string::npos) ||
+             (entryFile.rfind(".jsc") != std::string::npos))
+    {
+    }
+    // csb
+    else if ((entryFile.rfind(".csb") != std::string::npos))
+    {
+        _runtime = RuntimeCCSImpl::create();
+    }
+    // csd
+    else if ((entryFile.rfind(".csd") != std::string::npos))
+    {
+        _runtime = RuntimeCCSImpl::create();
+    }
+}
+void RuntimeEngine::setProjectPath(const std::string &workPath)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    
+    if (workPath.empty())
+    {
+        extern std::string getCurAppPath();
+        std::string appPath = getCurAppPath();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        appPath.append("/../../");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        appPath.append("/../../../");
+#endif
+        appPath = replaceAll(appPath, "\\", "/");
+        g_projectPath = appPath;
+    }
+    else
+    {
+        g_projectPath = workPath;
+    }
+    
+    // add project's root directory to search path
+    searchPathArray.insert(searchPathArray.begin(), g_projectPath);
+    
+    // add writable path to search path
+    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
+}
+
+bool RuntimeEngine::startNetwork()
+{
+    ConsoleCommand::getShareInstance()->init();
+    showUI();
+    
+    return true;
+}
+
+void RuntimeEngine::startScript(const std::string &args)
+{
+    resetDesignResolution();
+    if (_runtime)
+    {
+        _runtime->startScript(args);
+    }
+}
+
+void RuntimeEngine::end()
+{
+    if (_runtime)
+    {
+        _runtime->end();
+    }
+    ConsoleCommand::purge();
+    FileServer::getShareInstance()->stop();
+    //FileServer::purge();
+}
+
+RuntimeProtocol* RuntimeEngine::getRuntime()
+{
+    return _runtime;
+}
+
+//
+// private
+//
+
+void RuntimeEngine::showUI()
+{
+    auto scene = Scene::create();
+    auto connectLayer = new ConnectWaitLayer();
+    connectLayer->autorelease();
+    auto director = Director::getInstance();
+    scene->addChild(connectLayer);
+    director->runWithScene(scene);
 }

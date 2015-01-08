@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "json/stringbuffer.h"
 #include "CCLuaEngine.h"
 
+#include "RuntimeProtocol.h"
 #include "cocos2d.h"
 using namespace cocos2d;
 
@@ -69,33 +70,6 @@ static void resetLuaModule(const string& fileName)
         lua_pop(stack, 1);
     }
     lua_pop(stack, 2);
-}
-
-bool reloadScript(const string& file)
-{
-    auto director = Director::getInstance();
-    FontFNT::purgeCachedData();
-    if (director->getOpenGLView())
-    {
-        SpriteFrameCache::getInstance()->removeSpriteFrames();
-        director->getTextureCache()->removeAllTextures();
-    }
-    FileUtils::getInstance()->purgeCachedEntries();
-    string modulefile = file;
-    
-    if (! modulefile.empty())
-    {
-        resetLuaModule(modulefile);
-    }
-    else
-    {
-        modulefile = ConfigParser::getInstance()->getEntryFile().c_str();
-    }
-    
-    auto engine = LuaEngine::getInstance();
-    LuaStack* luaStack = engine->getLuaStack();
-    std::string require = "require \'" + modulefile + "\'";
-    return luaStack->executeString(require.c_str());
 }
 
 ConsoleCommand* ConsoleCommand::s_sharedConsoleCommand = nullptr;
@@ -162,33 +136,20 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                 dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
             }
             
+            auto runtime = RuntimeEngine::getInstance()->getRuntime();
             if(strcmp(strcmd.c_str(), "start-logic") == 0)
             {
-                char szDebugArg[1024] = {0};
-                snprintf(szDebugArg, sizeof(szDebugArg), "require('debugger')(%s,'%s')",dArgParse["debugcfg"].GetString(), "");
-                startScript(szDebugArg);
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
-
+                RuntimeEngine::getInstance()->setupRuntime();
+                RuntimeEngine::getInstance()->getRuntime()->onStartDebuger(dArgParse, dReplyParse);
+            } else if (strcmp(strcmd.c_str(),"clearcompile")==0)
+            {
+                runtime->onClearCompile(dArgParse, dReplyParse);
+            } else if(strcmp(strcmd.c_str(),"precompile")==0)
+            {
+                runtime->onPrecompile(dArgParse, dReplyParse);
             } else if(strcmp(strcmd.c_str(), "reload") == 0)
             {
-                if (dArgParse.HasMember("modulefiles"))
-                {
-                    rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    const rapidjson::Value& objectfiles = dArgParse["modulefiles"];
-                    for (rapidjson::SizeType i = 0; i < objectfiles.Size(); i++)
-                    {
-                        if (!reloadScript(objectfiles[i].GetString()))
-                        {
-                            bodyvalue.AddMember(objectfiles[i].GetString(), 1, dReplyParse.GetAllocator());
-                        }
-                    }
-                    if (0 == objectfiles.Size())
-                    {
-                        reloadScript("");
-                    }
-                    dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
-                }
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                runtime->onReload(dArgParse, dReplyParse);
             } else if(strcmp(strcmd.c_str(), "getversion") == 0)
             {
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);

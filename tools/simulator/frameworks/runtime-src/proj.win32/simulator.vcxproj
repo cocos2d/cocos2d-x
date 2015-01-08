@@ -207,6 +207,9 @@ xcopy /Y /Q "$(ProjectDir)..\Classes\lang" "$(ProjectDir)..\..\..\runtime\win32\
     <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
     <ClInclude Include="..\Classes\runtime\Runtime.h" />
+    <ClInclude Include="..\Classes\runtime\RuntimeCCSImpl.h" />
+    <ClInclude Include="..\Classes\runtime\RuntimeLuaImpl.h" />
+    <ClInclude Include="..\Classes\runtime\RuntimeProtocol.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
@@ -239,6 +242,9 @@ xcopy /Y /Q "$(ProjectDir)..\Classes\lang" "$(ProjectDir)..\..\..\runtime\win32\
     <ClCompile Include="..\Classes\runtime\Portrait_png.cpp" />
     <ClCompile Include="..\Classes\runtime\Protos.pb.cc" />
     <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
+    <ClCompile Include="..\Classes\runtime\RuntimeCCSImpl.cpp" />
+    <ClCompile Include="..\Classes\runtime\RuntimeLuaImpl.cpp" />
+    <ClCompile Include="..\Classes\runtime\RuntimeProtocol.cpp" />
     <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />

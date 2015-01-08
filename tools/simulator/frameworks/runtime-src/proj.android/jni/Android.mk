@@ -29,6 +29,9 @@ LOCAL_SRC_FILES := \
 ../../Classes/runtime/Portrait_png.cpp \
 ../../Classes/runtime/Protos.pb.cc \
 ../../Classes/runtime/Runtime.cpp \
+../../Classes/runtime/RuntimeProtocol.cpp \
+../../Classes/runtime/RuntimeLuaImpl.cpp \
+../../Classes/runtime/RuntimeCCSImpl.cpp \
 ../../Classes/runtime/Shine_png.cpp \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \

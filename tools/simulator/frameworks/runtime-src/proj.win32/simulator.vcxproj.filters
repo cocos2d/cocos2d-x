@@ -122,6 +122,15 @@
     <ClInclude Include="targetver.h">
       <Filter>win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\runtime\RuntimeCCSImpl.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\RuntimeLuaImpl.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\runtime\RuntimeProtocol.h">
+      <Filter>Classes\runtime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -211,6 +220,15 @@
     <ClCompile Include="SimulatorWin.cpp" />
     <ClCompile Include="stdafx.cpp">
       <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\RuntimeCCSImpl.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\RuntimeLuaImpl.cpp">
+      <Filter>Classes\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\runtime\RuntimeProtocol.cpp">
+      <Filter>Classes\runtime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
