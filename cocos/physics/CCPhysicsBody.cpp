@@ -69,7 +69,9 @@ PhysicsBody::PhysicsBody()
 , _angularDamping(0.0f)
 , _tag(0)
 , _rotationOffset(0)
-, _recordPosition(Vec2::ZERO)
+, _recordedPosition(Vec2::ZERO)
+, _recordedRotation(0.0f)
+, _recordedAngle(0.0)
 {
 }
 
@@ -332,13 +334,15 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(const Vec2& position)
 {
-    _recordPosition = position;
+    _recordedPosition = position;
     cpBodySetPos(_cpBody, PhysicsHelper::point2cpv(position + _positionOffset));
 }
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_cpBody, -PhysicsHelper::float2cpfloat((rotation + _rotationOffset) * (M_PI / 180.0f)));
+    _recordedRotation = rotation;
+    _recordedAngle = - (rotation + _rotationOffset) * (M_PI / 180.0);
+    cpBodySetAngle(_cpBody, _recordedAngle);
 }
 
 void PhysicsBody::setScale(float scaleX, float scaleY)
@@ -349,15 +353,21 @@ void PhysicsBody::setScale(float scaleX, float scaleY)
     }
 }
 
-Vec2 PhysicsBody::getPosition() const
+const Vec2& PhysicsBody::getPosition()
 {
-    cpVect vec = cpBodyGetPos(_cpBody);
-    return PhysicsHelper::cpv2point(vec) - _positionOffset;
+    _latestPosition.x = _cpBody->p.x - _positionOffset.x;
+    _latestPosition.y = _cpBody->p.y - _positionOffset.y;
+    
+    return _latestPosition;
 }
 
-float PhysicsBody::getRotation() const
+float PhysicsBody::getRotation()
 {
-    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_cpBody) * (180.0f / M_PI)) - _rotationOffset;
+    if (_recordedAngle != cpBodyGetAngle(_cpBody)) {
+        _recordedAngle = cpBodyGetAngle(_cpBody);
+        _recordedRotation = - _recordedAngle * 180.0 / M_PI - _rotationOffset;
+    }
+    return _recordedRotation;
 }
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
@@ -842,11 +852,6 @@ void PhysicsBody::setPositionOffset(const Vec2& position)
     }
 }
 
-Vec2 PhysicsBody::getPositionOffset() const
-{
-    return _positionOffset;
-}
-
 void PhysicsBody::setRotationOffset(float rotation)
 {
     if (std::abs(_rotationOffset - rotation) > 0.5f)
@@ -855,11 +860,6 @@ void PhysicsBody::setRotationOffset(float rotation)
         _rotationOffset = rotation;
         setRotation(rot);
     }
-}
-
-float PhysicsBody::getRotationOffset() const
-{
-    return _rotationOffset;
 }
 
 Vec2 PhysicsBody::world2Local(const Vec2& point)
