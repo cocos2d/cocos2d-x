@@ -77,7 +77,17 @@
     statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
     if(responseCode == 200)
         statusString = @"OK";
-    if (responseCode/100 != 2)
+ 
+    /*The individual values of the numeric status codes defined for HTTP/1.1
+    | “200”  ; OK
+    | “201”  ; Created
+    | “202”  ; Accepted
+    | “203”  ; Non-Authoritative Information
+    | “204”  ; No Content
+    | “205”  ; Reset Content
+    | “206”  ; Partial Content
+    */
+    if (responseCode >= 200 && responseCode < 300)
     {// something went wrong, abort the whole thing
         
         [connection cancel];
