@@ -162,46 +162,50 @@ function Node:setTouchEnabled(enable)
     local func = tolua.getcfunction(self, "setTouchEnabled")
     func(self, enable)
     if not flagNodeTouchInCocos then
-        return
+        return self
     end
     
     self:setBaseNodeEventListener()
+    return self
 end
 
 function Node:setTouchMode(mode)
     local func = tolua.getcfunction(self, "setTouchMode")
     func(self, mode)
     if not flagNodeTouchInCocos then
-        return
+        return self
     end
     
     self:setBaseNodeEventListener()
+    return self
 end
 
 function Node:setTouchSwallowEnabled(enable)
     local func = tolua.getcfunction(self, "setTouchSwallowEnabled")
     func(self, enable)
     if not flagNodeTouchInCocos then
-        return
+        return self
     end
     
     self:setBaseNodeEventListener()
+    return self
 end
 
 function Node:setTouchCaptureEnabled(enable)
     local func = tolua.getcfunction(self, "setTouchCaptureEnabled")
     func(self, enable)
     if not flagNodeTouchInCocos then
-        return
+        return self
     end
     
     self:setBaseNodeEventListener()
+    return self
 end
 
 function Node:setKeypadEnabled(enable)
     if not flagNodeTouchInCocos then
         self:setKeyboardEnabled(enable)
-        return
+        return self
     end
     
     _enable = self._keyboardEnabled or false
@@ -248,7 +252,7 @@ end
 function Node:scheduleUpdate()
     if not flagNodeTouchInCocos then
         tolua.getcfunction(self, "scheduleUpdate")(self)
-        return
+        return self
     end
 
     local listener = function (dt)
@@ -256,6 +260,7 @@ function Node:scheduleUpdate()
     end
 
     self:scheduleUpdateWithPriorityLua(listener, 0) 
+    return self
 end
 
 function Node:setBaseNodeEventListener()
@@ -268,8 +273,7 @@ end
 
 function Node:addNodeEventListener( evt, hdl, tag, priority )
     if not flagNodeTouchInCocos then
-        tolua.getcfunction(self, "addNodeEventListener")(self, evt, hdl, tag, priority)
-        return
+        return tolua.getcfunction(self, "addNodeEventListener")(self, evt, hdl, tag, priority)
     end
 
     priority = priority or 0

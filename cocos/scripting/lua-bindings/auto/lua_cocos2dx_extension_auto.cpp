@@ -43,7 +43,8 @@ int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:setEnabled",argc, 1);
     return 0;
@@ -96,7 +97,8 @@ int lua_cocos2dx_extension_Control_onTouchMoved(lua_State* tolua_S)
             return 0;
         }
         cobj->onTouchMoved(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:onTouchMoved",argc, 2);
     return 0;
@@ -197,7 +199,8 @@ int lua_cocos2dx_extension_Control_onTouchEnded(lua_State* tolua_S)
             return 0;
         }
         cobj->onTouchEnded(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:onTouchEnded",argc, 2);
     return 0;
@@ -247,7 +250,8 @@ int lua_cocos2dx_extension_Control_sendActionsForControlEvents(lua_State* tolua_
             return 0;
         }
         cobj->sendActionsForControlEvents(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:sendActionsForControlEvents",argc, 1);
     return 0;
@@ -297,7 +301,8 @@ int lua_cocos2dx_extension_Control_setSelected(lua_State* tolua_S)
             return 0;
         }
         cobj->setSelected(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:setSelected",argc, 1);
     return 0;
@@ -398,7 +403,8 @@ int lua_cocos2dx_extension_Control_onTouchCancelled(lua_State* tolua_S)
             return 0;
         }
         cobj->onTouchCancelled(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:onTouchCancelled",argc, 2);
     return 0;
@@ -445,7 +451,8 @@ int lua_cocos2dx_extension_Control_needsLayout(lua_State* tolua_S)
             return 0;
         }
         cobj->needsLayout();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:needsLayout",argc, 0);
     return 0;
@@ -696,7 +703,8 @@ int lua_cocos2dx_extension_Control_setHighlighted(lua_State* tolua_S)
             return 0;
         }
         cobj->setHighlighted(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Control:setHighlighted",argc, 1);
     return 0;
@@ -964,7 +972,8 @@ int lua_cocos2dx_extension_ControlButton_setSelected(lua_State* tolua_S)
             return 0;
         }
         cobj->setSelected(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setSelected",argc, 1);
     return 0;
@@ -1017,7 +1026,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleLabelForState(lua_State* tolua_
             return 0;
         }
         cobj->setTitleLabelForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleLabelForState",argc, 2);
     return 0;
@@ -1067,7 +1077,8 @@ int lua_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(lua_State* tol
             return 0;
         }
         cobj->setAdjustBackgroundImage(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setAdjustBackgroundImage",argc, 1);
     return 0;
@@ -1117,7 +1128,8 @@ int lua_cocos2dx_extension_ControlButton_setHighlighted(lua_State* tolua_S)
             return 0;
         }
         cobj->setHighlighted(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setHighlighted",argc, 1);
     return 0;
@@ -1167,7 +1179,8 @@ int lua_cocos2dx_extension_ControlButton_setZoomOnTouchDown(lua_State* tolua_S)
             return 0;
         }
         cobj->setZoomOnTouchDown(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setZoomOnTouchDown",argc, 1);
     return 0;
@@ -1220,7 +1233,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolua_S)
             return 0;
         }
         cobj->setTitleForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleForState",argc, 2);
     return 0;
@@ -1270,7 +1284,8 @@ int lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint(lua_State* tolua_S)
             return 0;
         }
         cobj->setLabelAnchorPoint(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setLabelAnchorPoint",argc, 1);
     return 0;
@@ -1422,7 +1437,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleTTFForState(lua_State* tolua_S)
             return 0;
         }
         cobj->setTitleTTFForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleTTFForState",argc, 2);
     return 0;
@@ -1475,7 +1491,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleTTFSizeForState(lua_State* tolu
             return 0;
         }
         cobj->setTitleTTFSizeForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleTTFSizeForState",argc, 2);
     return 0;
@@ -1525,7 +1542,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleLabel(lua_State* tolua_S)
             return 0;
         }
         cobj->setTitleLabel(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleLabel",argc, 1);
     return 0;
@@ -1575,7 +1593,8 @@ int lua_cocos2dx_extension_ControlButton_setPreferredSize(lua_State* tolua_S)
             return 0;
         }
         cobj->setPreferredSize(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setPreferredSize",argc, 1);
     return 0;
@@ -1673,7 +1692,8 @@ int lua_cocos2dx_extension_ControlButton_setEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setEnabled",argc, 1);
     return 0;
@@ -1819,7 +1839,8 @@ int lua_cocos2dx_extension_ControlButton_needsLayout(lua_State* tolua_S)
             return 0;
         }
         cobj->needsLayout();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:needsLayout",argc, 0);
     return 0;
@@ -2118,7 +2139,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleColorForState(lua_State* tolua_
             return 0;
         }
         cobj->setTitleColorForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleColorForState",argc, 2);
     return 0;
@@ -2219,7 +2241,8 @@ int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState(lua_St
             return 0;
         }
         cobj->setBackgroundSpriteFrameForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setBackgroundSpriteFrameForState",argc, 2);
     return 0;
@@ -2272,7 +2295,8 @@ int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(lua_State* 
             return 0;
         }
         cobj->setBackgroundSpriteForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setBackgroundSpriteForState",argc, 2);
     return 0;
@@ -2322,7 +2346,8 @@ int lua_cocos2dx_extension_ControlButton_setScaleRatio(lua_State* tolua_S)
             return 0;
         }
         cobj->setScaleRatio(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setScaleRatio",argc, 1);
     return 0;
@@ -2372,7 +2397,8 @@ int lua_cocos2dx_extension_ControlButton_setBackgroundSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setBackgroundSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setBackgroundSprite",argc, 1);
     return 0;
@@ -2620,7 +2646,8 @@ int lua_cocos2dx_extension_ControlButton_setMargins(lua_State* tolua_S)
             return 0;
         }
         cobj->setMargins(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setMargins",argc, 2);
     return 0;
@@ -2673,7 +2700,8 @@ int lua_cocos2dx_extension_ControlButton_setTitleBMFontForState(lua_State* tolua
             return 0;
         }
         cobj->setTitleBMFontForState(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlButton:setTitleBMFontForState",argc, 2);
     return 0;
@@ -3013,7 +3041,8 @@ int lua_cocos2dx_extension_ControlHuePicker_setEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlHuePicker:setEnabled",argc, 1);
     return 0;
@@ -3117,7 +3146,8 @@ int lua_cocos2dx_extension_ControlHuePicker_setHue(lua_State* tolua_S)
             return 0;
         }
         cobj->setHue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlHuePicker:setHue",argc, 1);
     return 0;
@@ -3311,7 +3341,8 @@ int lua_cocos2dx_extension_ControlHuePicker_setBackground(lua_State* tolua_S)
             return 0;
         }
         cobj->setBackground(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlHuePicker:setBackground",argc, 1);
     return 0;
@@ -3361,7 +3392,8 @@ int lua_cocos2dx_extension_ControlHuePicker_setHuePercentage(lua_State* tolua_S)
             return 0;
         }
         cobj->setHuePercentage(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlHuePicker:setHuePercentage",argc, 1);
     return 0;
@@ -3507,7 +3539,8 @@ int lua_cocos2dx_extension_ControlHuePicker_setSlider(lua_State* tolua_S)
             return 0;
         }
         cobj->setSlider(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlHuePicker:setSlider",argc, 1);
     return 0;
@@ -3864,7 +3897,8 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(lua_Stat
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSaturationBrightnessPicker:setEnabled",argc, 1);
     return 0;
@@ -4213,7 +4247,8 @@ int lua_cocos2dx_extension_ControlColourPicker_setEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:setEnabled",argc, 1);
     return 0;
@@ -4311,7 +4346,8 @@ int lua_cocos2dx_extension_ControlColourPicker_setColor(lua_State* tolua_S)
             return 0;
         }
         cobj->setColor(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:setColor",argc, 1);
     return 0;
@@ -4364,7 +4400,8 @@ int lua_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged(lua_State* 
             return 0;
         }
         cobj->hueSliderValueChanged(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:hueSliderValueChanged",argc, 2);
     return 0;
@@ -4462,7 +4499,8 @@ int lua_cocos2dx_extension_ControlColourPicker_setBackground(lua_State* tolua_S)
             return 0;
         }
         cobj->setBackground(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:setBackground",argc, 1);
     return 0;
@@ -4560,7 +4598,8 @@ int lua_cocos2dx_extension_ControlColourPicker_setcolourPicker(lua_State* tolua_
             return 0;
         }
         cobj->setcolourPicker(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:setcolourPicker",argc, 1);
     return 0;
@@ -4613,7 +4652,8 @@ int lua_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged(lua_Stat
             return 0;
         }
         cobj->colourSliderValueChanged(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:colourSliderValueChanged",argc, 2);
     return 0;
@@ -4663,7 +4703,8 @@ int lua_cocos2dx_extension_ControlColourPicker_setHuePicker(lua_State* tolua_S)
             return 0;
         }
         cobj->setHuePicker(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlColourPicker:setHuePicker",argc, 1);
     return 0;
@@ -4866,7 +4907,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(lua_State* t
             return 0;
         }
         cobj->setPreviousLocation(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:setPreviousLocation",argc, 1);
     return 0;
@@ -4916,7 +4958,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_setValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:setValue",argc, 1);
     return 0;
@@ -5122,7 +5165,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(lua_State* to
             return 0;
         }
         cobj->potentiometerBegan(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:potentiometerBegan",argc, 1);
     return 0;
@@ -5172,7 +5216,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_setMaximumValue(lua_State* tolua
             return 0;
         }
         cobj->setMaximumValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:setMaximumValue",argc, 1);
     return 0;
@@ -5270,7 +5315,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_setThumbSprite(lua_State* tolua_
             return 0;
         }
         cobj->setThumbSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:setThumbSprite",argc, 1);
     return 0;
@@ -5470,7 +5516,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(lua_State* to
             return 0;
         }
         cobj->potentiometerEnded(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:potentiometerEnded",argc, 1);
     return 0;
@@ -5520,7 +5567,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_setProgressTimer(lua_State* tolu
             return 0;
         }
         cobj->setProgressTimer(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:setProgressTimer",argc, 1);
     return 0;
@@ -5570,7 +5618,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_setMinimumValue(lua_State* tolua
             return 0;
         }
         cobj->setMinimumValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:setMinimumValue",argc, 1);
     return 0;
@@ -5725,7 +5774,8 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(lua_State* to
             return 0;
         }
         cobj->potentiometerMoved(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlPotentiometer:potentiometerMoved",argc, 1);
     return 0;
@@ -5992,7 +6042,8 @@ int lua_cocos2dx_extension_ControlSlider_setSelectedThumbSprite(lua_State* tolua
             return 0;
         }
         cobj->setSelectedThumbSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setSelectedThumbSprite",argc, 1);
     return 0;
@@ -6042,7 +6093,8 @@ int lua_cocos2dx_extension_ControlSlider_setProgressSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setProgressSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setProgressSprite",argc, 1);
     return 0;
@@ -6236,7 +6288,8 @@ int lua_cocos2dx_extension_ControlSlider_setThumbSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setThumbSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setThumbSprite",argc, 1);
     return 0;
@@ -6286,7 +6339,8 @@ int lua_cocos2dx_extension_ControlSlider_setMinimumValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setMinimumValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setMinimumValue",argc, 1);
     return 0;
@@ -6336,7 +6390,8 @@ int lua_cocos2dx_extension_ControlSlider_setMinimumAllowedValue(lua_State* tolua
             return 0;
         }
         cobj->setMinimumAllowedValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setMinimumAllowedValue",argc, 1);
     return 0;
@@ -6386,7 +6441,8 @@ int lua_cocos2dx_extension_ControlSlider_setEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setEnabled",argc, 1);
     return 0;
@@ -6436,7 +6492,8 @@ int lua_cocos2dx_extension_ControlSlider_setValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setValue",argc, 1);
     return 0;
@@ -6486,7 +6543,8 @@ int lua_cocos2dx_extension_ControlSlider_setMaximumValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setMaximumValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setMaximumValue",argc, 1);
     return 0;
@@ -6533,7 +6591,8 @@ int lua_cocos2dx_extension_ControlSlider_needsLayout(lua_State* tolua_S)
             return 0;
         }
         cobj->needsLayout();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:needsLayout",argc, 0);
     return 0;
@@ -6950,7 +7009,8 @@ int lua_cocos2dx_extension_ControlSlider_setBackgroundSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setBackgroundSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setBackgroundSprite",argc, 1);
     return 0;
@@ -7000,7 +7060,8 @@ int lua_cocos2dx_extension_ControlSlider_setMaximumAllowedValue(lua_State* tolua
             return 0;
         }
         cobj->setMaximumAllowedValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSlider:setMaximumAllowedValue",argc, 1);
     return 0;
@@ -7237,7 +7298,8 @@ int lua_cocos2dx_extension_ControlStepper_setMinusSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setMinusSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setMinusSprite",argc, 1);
     return 0;
@@ -7335,7 +7397,8 @@ int lua_cocos2dx_extension_ControlStepper_setWraps(lua_State* tolua_S)
             return 0;
         }
         cobj->setWraps(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setWraps",argc, 1);
     return 0;
@@ -7481,7 +7544,8 @@ int lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(lua_Sta
             return 0;
         }
         cobj->updateLayoutUsingTouchLocation(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:updateLayoutUsingTouchLocation",argc, 1);
     return 0;
@@ -7534,7 +7598,8 @@ int lua_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(lua_State* to
             return 0;
         }
         cobj->setValueWithSendingEvent(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setValueWithSendingEvent",argc, 2);
     return 0;
@@ -7629,7 +7694,8 @@ int lua_cocos2dx_extension_ControlStepper_stopAutorepeat(lua_State* tolua_S)
             return 0;
         }
         cobj->stopAutorepeat();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:stopAutorepeat",argc, 0);
     return 0;
@@ -7679,7 +7745,8 @@ int lua_cocos2dx_extension_ControlStepper_setMinimumValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setMinimumValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setMinimumValue",argc, 1);
     return 0;
@@ -7777,7 +7844,8 @@ int lua_cocos2dx_extension_ControlStepper_setPlusSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setPlusSprite(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setPlusSprite",argc, 1);
     return 0;
@@ -7827,7 +7895,8 @@ int lua_cocos2dx_extension_ControlStepper_setMinusLabel(lua_State* tolua_S)
             return 0;
         }
         cobj->setMinusLabel(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setMinusLabel",argc, 1);
     return 0;
@@ -7877,7 +7946,8 @@ int lua_cocos2dx_extension_ControlStepper_setValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setValue",argc, 1);
     return 0;
@@ -7927,7 +7997,8 @@ int lua_cocos2dx_extension_ControlStepper_setStepValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setStepValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setStepValue",argc, 1);
     return 0;
@@ -7977,7 +8048,8 @@ int lua_cocos2dx_extension_ControlStepper_setMaximumValue(lua_State* tolua_S)
             return 0;
         }
         cobj->setMaximumValue(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setMaximumValue",argc, 1);
     return 0;
@@ -8027,7 +8099,8 @@ int lua_cocos2dx_extension_ControlStepper_update(lua_State* tolua_S)
             return 0;
         }
         cobj->update(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:update",argc, 1);
     return 0;
@@ -8074,7 +8147,8 @@ int lua_cocos2dx_extension_ControlStepper_startAutorepeat(lua_State* tolua_S)
             return 0;
         }
         cobj->startAutorepeat();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:startAutorepeat",argc, 0);
     return 0;
@@ -8226,7 +8300,8 @@ int lua_cocos2dx_extension_ControlStepper_setPlusLabel(lua_State* tolua_S)
             return 0;
         }
         cobj->setPlusLabel(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlStepper:setPlusLabel",argc, 1);
     return 0;
@@ -8395,7 +8470,8 @@ int lua_cocos2dx_extension_ControlSwitch_setEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ControlSwitch:setEnabled",argc, 1);
     return 0;
@@ -8436,7 +8512,8 @@ int lua_cocos2dx_extension_ControlSwitch_setOn(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setOn(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -8451,7 +8528,8 @@ int lua_cocos2dx_extension_ControlSwitch_setOn(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setOn(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -8924,7 +9002,8 @@ int lua_cocos2dx_extension_ScrollView_setContainer(lua_State* tolua_S)
             return 0;
         }
         cobj->setContainer(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setContainer",argc, 1);
     return 0;
@@ -8977,7 +9056,8 @@ int lua_cocos2dx_extension_ScrollView_onTouchEnded(lua_State* tolua_S)
             return 0;
         }
         cobj->onTouchEnded(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:onTouchEnded",argc, 2);
     return 0;
@@ -9030,7 +9110,8 @@ int lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration(lua_State* tolu
             return 0;
         }
         cobj->setContentOffsetInDuration(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setContentOffsetInDuration",argc, 2);
     return 0;
@@ -9083,7 +9164,8 @@ int lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration(lua_State* tolua_S)
             return 0;
         }
         cobj->setZoomScaleInDuration(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setZoomScaleInDuration",argc, 2);
     return 0;
@@ -9136,7 +9218,8 @@ int lua_cocos2dx_extension_ScrollView_updateTweenAction(lua_State* tolua_S)
             return 0;
         }
         cobj->updateTweenAction(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:updateTweenAction",argc, 2);
     return 0;
@@ -9186,7 +9269,8 @@ int lua_cocos2dx_extension_ScrollView_setMaxScale(lua_State* tolua_S)
             return 0;
         }
         cobj->setMaxScale(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setMaxScale",argc, 1);
     return 0;
@@ -9380,7 +9464,8 @@ int lua_cocos2dx_extension_ScrollView_setMinScale(lua_State* tolua_S)
             return 0;
         }
         cobj->setMinScale(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setMinScale",argc, 1);
     return 0;
@@ -9475,7 +9560,8 @@ int lua_cocos2dx_extension_ScrollView_updateInset(lua_State* tolua_S)
             return 0;
         }
         cobj->updateInset();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:updateInset",argc, 0);
     return 0;
@@ -9593,7 +9679,8 @@ int lua_cocos2dx_extension_ScrollView_pause(lua_State* tolua_S)
             return 0;
         }
         cobj->pause(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:pause",argc, 1);
     return 0;
@@ -9643,7 +9730,8 @@ int lua_cocos2dx_extension_ScrollView_setDirection(lua_State* tolua_S)
             return 0;
         }
         cobj->setDirection(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setDirection",argc, 1);
     return 0;
@@ -9741,7 +9829,8 @@ int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
             return 0;
         }
         cobj->setContentOffset(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     if (argc == 2) 
     {
@@ -9757,7 +9846,8 @@ int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
             return 0;
         }
         cobj->setContentOffset(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setContentOffset",argc, 1);
     return 0;
@@ -9951,7 +10041,8 @@ int lua_cocos2dx_extension_ScrollView_setTouchEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setTouchEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setTouchEnabled",argc, 1);
     return 0;
@@ -10004,7 +10095,8 @@ int lua_cocos2dx_extension_ScrollView_onTouchMoved(lua_State* tolua_S)
             return 0;
         }
         cobj->onTouchMoved(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:onTouchMoved",argc, 2);
     return 0;
@@ -10102,7 +10194,8 @@ int lua_cocos2dx_extension_ScrollView_resume(lua_State* tolua_S)
             return 0;
         }
         cobj->resume(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:resume",argc, 1);
     return 0;
@@ -10152,7 +10245,8 @@ int lua_cocos2dx_extension_ScrollView_setClippingToBounds(lua_State* tolua_S)
             return 0;
         }
         cobj->setClippingToBounds(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setClippingToBounds",argc, 1);
     return 0;
@@ -10202,7 +10296,8 @@ int lua_cocos2dx_extension_ScrollView_setViewSize(lua_State* tolua_S)
             return 0;
         }
         cobj->setViewSize(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setViewSize",argc, 1);
     return 0;
@@ -10255,7 +10350,8 @@ int lua_cocos2dx_extension_ScrollView_onTouchCancelled(lua_State* tolua_S)
             return 0;
         }
         cobj->onTouchCancelled(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:onTouchCancelled",argc, 2);
     return 0;
@@ -10401,7 +10497,8 @@ int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
             return 0;
         }
         cobj->setBounceable(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setBounceable",argc, 1);
     return 0;
@@ -10647,7 +10744,8 @@ int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setZoomScale(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -10658,7 +10756,8 @@ int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setZoomScale(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -10864,7 +10963,8 @@ int lua_cocos2dx_extension_TableViewCell_reset(lua_State* tolua_S)
             return 0;
         }
         cobj->reset();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableViewCell:reset",argc, 0);
     return 0;
@@ -10962,7 +11062,8 @@ int lua_cocos2dx_extension_TableViewCell_setIdx(lua_State* tolua_S)
             return 0;
         }
         cobj->setIdx(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableViewCell:setIdx",argc, 1);
     return 0;
@@ -11109,7 +11210,8 @@ int lua_cocos2dx_extension_TableView_updateCellAtIndex(lua_State* tolua_S)
             return 0;
         }
         cobj->updateCellAtIndex(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:updateCellAtIndex",argc, 1);
     return 0;
@@ -11159,7 +11261,8 @@ int lua_cocos2dx_extension_TableView_setVerticalFillOrder(lua_State* tolua_S)
             return 0;
         }
         cobj->setVerticalFillOrder(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:setVerticalFillOrder",argc, 1);
     return 0;
@@ -11209,7 +11312,8 @@ int lua_cocos2dx_extension_TableView_scrollViewDidZoom(lua_State* tolua_S)
             return 0;
         }
         cobj->scrollViewDidZoom(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:scrollViewDidZoom",argc, 1);
     return 0;
@@ -11256,7 +11360,8 @@ int lua_cocos2dx_extension_TableView__updateContentSize(lua_State* tolua_S)
             return 0;
         }
         cobj->_updateContentSize();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:_updateContentSize",argc, 0);
     return 0;
@@ -11354,7 +11459,8 @@ int lua_cocos2dx_extension_TableView_removeCellAtIndex(lua_State* tolua_S)
             return 0;
         }
         cobj->removeCellAtIndex(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:removeCellAtIndex",argc, 1);
     return 0;
@@ -11472,7 +11578,8 @@ int lua_cocos2dx_extension_TableView_scrollViewDidScroll(lua_State* tolua_S)
             return 0;
         }
         cobj->scrollViewDidScroll(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:scrollViewDidScroll",argc, 1);
     return 0;
@@ -11519,7 +11626,8 @@ int lua_cocos2dx_extension_TableView_reloadData(lua_State* tolua_S)
             return 0;
         }
         cobj->reloadData();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:reloadData",argc, 0);
     return 0;
@@ -11569,7 +11677,8 @@ int lua_cocos2dx_extension_TableView_insertCellAtIndex(lua_State* tolua_S)
             return 0;
         }
         cobj->insertCellAtIndex(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TableView:insertCellAtIndex",argc, 1);
     return 0;

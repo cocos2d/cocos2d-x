@@ -180,7 +180,8 @@ int lua_cocos2dx_physics_PhysicsWorld_rayCast(lua_State* tolua_S)
             return 0;
         cobj->rayCast(arg0, arg1, arg2, nullptr);
         toluafix_remove_function_by_refid(tolua_S, handler);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "rayCast",argc, 4);
     return 0;
@@ -236,7 +237,8 @@ int lua_cocos2dx_physics_PhysicsWorld_queryRect(lua_State* tolua_S)
             return 0;
         cobj->queryRect(arg0, arg1, nullptr);
         toluafix_remove_function_by_refid(tolua_S, handler);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "queryRect",argc, 3);
     return 0;
@@ -295,7 +297,8 @@ int lua_cocos2dx_physics_PhysicsWorld_queryPoint(lua_State* tolua_S)
             return 0;
         cobj->queryPoint(arg0, arg1, nullptr);
         toluafix_remove_function_by_refid(tolua_S, handler);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "queryPoint",argc, 3);
     return 0;

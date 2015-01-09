@@ -301,14 +301,16 @@ static int tolua_Cocos2d_Node_removeTouchEvent(lua_State* tolua_S)
             auto mng = LuaNodeManager::getInstance();
             auto lnode = mng->getLuaNodeByNode(node, false);
             if (!lnode) {
-                return 0;
+                lua_settop(tolua_S, 1);
+                return 1;
             }
             lnode->setLuaTouchEnabled(false);
             lnode->detachNode();  //this LuaEventNode will be removed in TouchTargetNode
             mng->removeLuaNode(lnode);
         }
     }
-    return 0;
+    lua_settop(tolua_S, 1);
+    return 1;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'removeTouchEvent'.",&tolua_err);

@@ -95,7 +95,8 @@ int lua_cocos2dx_experimental_TMXLayer_setLayerOrientation(lua_State* tolua_S)
             return 0;
         }
         cobj->setLayerOrientation(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setLayerOrientation",argc, 1);
     return 0;
@@ -193,7 +194,8 @@ int lua_cocos2dx_experimental_TMXLayer_setMapTileSize(lua_State* tolua_S)
             return 0;
         }
         cobj->setMapTileSize(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setMapTileSize",argc, 1);
     return 0;
@@ -291,7 +293,8 @@ int lua_cocos2dx_experimental_TMXLayer_setProperties(lua_State* tolua_S)
             return 0;
         }
         cobj->setProperties(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setProperties",argc, 1);
     return 0;
@@ -341,7 +344,8 @@ int lua_cocos2dx_experimental_TMXLayer_setLayerName(lua_State* tolua_S)
             return 0;
         }
         cobj->setLayerName(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setLayerName",argc, 1);
     return 0;
@@ -391,7 +395,8 @@ int lua_cocos2dx_experimental_TMXLayer_removeTileAt(lua_State* tolua_S)
             return 0;
         }
         cobj->removeTileAt(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:removeTileAt",argc, 1);
     return 0;
@@ -486,7 +491,8 @@ int lua_cocos2dx_experimental_TMXLayer_setupTiles(lua_State* tolua_S)
             return 0;
         }
         cobj->setupTiles();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setupTiles",argc, 0);
     return 0;
@@ -542,7 +548,8 @@ int lua_cocos2dx_experimental_TMXLayer_setupTileSprite(lua_State* tolua_S)
             return 0;
         }
         cobj->setupTileSprite(arg0, arg1, arg2);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setupTileSprite",argc, 3);
     return 0;
@@ -591,7 +598,8 @@ int lua_cocos2dx_experimental_TMXLayer_setTileGID(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setTileGID(arg0, arg1, arg2);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -606,7 +614,8 @@ int lua_cocos2dx_experimental_TMXLayer_setTileGID(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setTileGID(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -757,7 +766,8 @@ int lua_cocos2dx_experimental_TMXLayer_setLayerSize(lua_State* tolua_S)
             return 0;
         }
         cobj->setLayerSize(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setLayerSize",argc, 1);
     return 0;
@@ -855,7 +865,8 @@ int lua_cocos2dx_experimental_TMXLayer_setTileSet(lua_State* tolua_S)
             return 0;
         }
         cobj->setTileSet(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:setTileSet",argc, 1);
     return 0;
@@ -1123,7 +1134,8 @@ int lua_cocos2dx_experimental_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
             return 0;
         }
         cobj->setObjectGroups(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXTiledMap:setObjectGroups",argc, 1);
     return 0;
@@ -1224,7 +1236,8 @@ int lua_cocos2dx_experimental_TMXTiledMap_setMapSize(lua_State* tolua_S)
             return 0;
         }
         cobj->setMapSize(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXTiledMap:setMapSize",argc, 1);
     return 0;
@@ -1568,7 +1581,8 @@ int lua_cocos2dx_experimental_TMXTiledMap_setTileSize(lua_State* tolua_S)
             return 0;
         }
         cobj->setTileSize(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXTiledMap:setTileSize",argc, 1);
     return 0;
@@ -1618,7 +1632,8 @@ int lua_cocos2dx_experimental_TMXTiledMap_setProperties(lua_State* tolua_S)
             return 0;
         }
         cobj->setProperties(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXTiledMap:setProperties",argc, 1);
     return 0;
@@ -1767,7 +1782,8 @@ int lua_cocos2dx_experimental_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
             return 0;
         }
         cobj->setMapOrientation(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXTiledMap:setMapOrientation",argc, 1);
     return 0;

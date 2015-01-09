@@ -7,7 +7,7 @@ local random = math.random
 
 function BenchmarkScene:ctor()
     self.layer = display.newNode()
-    self.layer:setContentSize(cc.size(display.width, display.height))
+    :setContentSize(cc.size(display.width, display.height))
     self:addChild(self.layer)
 
     local button = display.newSprite("#AddCoinButton.png", display.right - 100, display.bottom + 270)
@@ -109,7 +109,7 @@ function BenchmarkScene:onEnter()
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, function(dt) self:onEnterFrame(dt) end)
     self:scheduleUpdate()
     self.layer:setTouchEnabled(true)
-    self.layer:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+    :addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         return self:onTouch(event.name, event.x, event.y)
     end)
 end
