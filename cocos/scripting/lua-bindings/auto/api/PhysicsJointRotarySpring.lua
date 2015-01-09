@@ -24,6 +24,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointRotarySpring] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointRotarySpring] setStiffness 
 -- @param self
 -- @param #float stiffness

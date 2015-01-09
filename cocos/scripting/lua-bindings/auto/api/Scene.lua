@@ -38,10 +38,4 @@
 -- @param self
 -- @return string#string ret (return value: string)
         
---------------------------------
--- 
--- @function [parent=#Scene] update 
--- @param self
--- @param #float delta
-        
 return nil

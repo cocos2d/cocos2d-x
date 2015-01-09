@@ -1838,7 +1838,7 @@ std::string LabelIssue8492Test::subtitle() const
 
 LabelMultilineWithOutline::LabelMultilineWithOutline()
 {
-    auto label =  Label::createWithTTF("Multiline txet\nwith\noutline feature", "fonts/arial.ttf", 24);
+    auto label =  Label::createWithTTF("Multi-line text\nwith\noutline feature", "fonts/arial.ttf", 24);
     label->enableOutline(Color4B::ORANGE,1);
     label->setPosition(VisibleRect::center());
     addChild(label);

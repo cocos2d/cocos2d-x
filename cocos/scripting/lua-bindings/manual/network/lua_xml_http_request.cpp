@@ -116,7 +116,7 @@ void LuaMinXmlHttpRequest::_gotHeader(string header)
                 pch = strtok (NULL, " ");
                 mystream << pch;
                 
-                pch = strtok (NULL, " ");
+                pch = strtok (NULL, "\n");
                 mystream << " " << pch;
                 
                 _statusText = mystream.str();

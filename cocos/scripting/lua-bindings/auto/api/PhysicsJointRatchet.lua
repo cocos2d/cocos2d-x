@@ -18,6 +18,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointRatchet] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointRatchet] setPhase 
 -- @param self
 -- @param #float phase

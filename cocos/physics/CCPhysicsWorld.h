@@ -45,6 +45,7 @@ class PhysicsContact;
 
 typedef Vec2 Vect;
 
+class Director;
 class Node;
 class Sprite;
 class Scene;
@@ -188,12 +189,9 @@ protected:
     
     virtual void doAddBody(PhysicsBody* body);
     virtual void doRemoveBody(PhysicsBody* body);
-    virtual void doAddJoint(PhysicsJoint* joint);
     virtual void doRemoveJoint(PhysicsJoint* joint);
     virtual void addBodyOrDelay(PhysicsBody* body);
     virtual void removeBodyOrDelay(PhysicsBody* body);
-    virtual void addJointOrDelay(PhysicsJoint* joint);
-    virtual void removeJointOrDelay(PhysicsJoint* joint);
     virtual void updateBodies();
     virtual void updateJoints();
     
@@ -228,6 +226,7 @@ protected:
     friend class Node;
     friend class Sprite;
     friend class Scene;
+    friend class Director;
     friend class PhysicsBody;
     friend class PhysicsShape;
     friend class PhysicsJoint;
