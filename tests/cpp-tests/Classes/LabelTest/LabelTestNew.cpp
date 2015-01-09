@@ -83,7 +83,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelAdditionalKerningTest),
     CL(LabelIssue8492Test),
     CL(LabelMultilineWithOutline),
-    CL(LabelIssue9255Test)
+    CL(LabelIssue9255Test),
+    CL(LabelSmallDimensionsTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1876,4 +1877,21 @@ std::string LabelIssue9255Test::title() const
 std::string LabelIssue9255Test::subtitle() const
 {
     return "switch to desktop and switch back. Crashed!!!";
+}
+
+LabelSmallDimensionsTest::LabelSmallDimensionsTest()
+{
+    auto label = Label::createWithSystemFont("Hello World!", "fonts/arial.ttf", 24, Size(30,100));
+    label->setPosition(VisibleRect::center());
+    addChild(label);
+}
+
+std::string LabelSmallDimensionsTest::title() const
+{
+    return "Test create Label[system font] with small dimensions";
+}
+
+std::string LabelSmallDimensionsTest::subtitle() const
+{
+    return "Program should not dead loop";
 }
