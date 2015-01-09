@@ -27,6 +27,7 @@ std::function<Layer*()> createFunctions[] =
     CL(PauseResumeTargetTest),
     CL(Issue4129),
     CL(Issue4160),
+    CL(DispatchCustomEventCrashTest),
     CL(DanglingNodePointersTest),
     CL(RegisterAndUnregisterWhileEventHanldingTest)
 };
@@ -1288,6 +1289,84 @@ std::string Issue4160::subtitle() const
 {
     return "Touch the red block twice \n should not crash and the red one couldn't be touched";
 }
+
+//Issue9898:DispatchCustomEventCrashUnit
+DispatchCustomEventCrashUnit::~DispatchCustomEventCrashUnit()
+{
+    if (_listener != nullptr)
+    {
+        cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(_listener);
+        CC_SAFE_RELEASE_NULL(_listener);
+    }
+}
+
+bool DispatchCustomEventCrashUnit::init()
+{
+    do
+    {
+        
+        _listener = cocos2d::EventListenerCustom::create("remove_child", CC_CALLBACK_1(DispatchCustomEventCrashUnit::eventCallback, this));
+        CC_BREAK_IF(_listener == nullptr);
+        _listener->retain();
+        
+        cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, 1);
+        
+        return true;
+    }while (0);
+    
+    return false;
+}
+
+void DispatchCustomEventCrashUnit::eventCallback(cocos2d::EventCustom *event)
+{
+    if (event->getEventName() == "remove_child")
+    {
+        if (_listener != nullptr)
+        {
+            cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(_listener);
+            CC_SAFE_RELEASE_NULL(_listener);
+        }
+        
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("remove_child");
+    }
+}
+
+// Issue9898:DispatchCustomEventCrashTest
+DispatchCustomEventCrashTest::DispatchCustomEventCrashTest()
+{
+    auto menuLabel = MenuItemFont::create("Touch Me", [](Ref*){
+        
+        auto s1 = DispatchCustomEventCrashUnit::create();
+        auto s2 = DispatchCustomEventCrashUnit::create();
+        s1->retain();
+        s2->retain();
+
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("remove_child");
+        ;});
+    menuLabel->setFontSizeObj(16);
+    menuLabel->setPosition(VisibleRect::right() + Vec2(-100, 0));
+    
+    auto menu = Menu::create(menuLabel, nullptr);
+    menu->setPosition(Vec2(0, 0));
+    menu->setAnchorPoint(Vec2(0, 0));
+    addChild(menu);
+    
+}
+
+DispatchCustomEventCrashTest::~DispatchCustomEventCrashTest()
+{
+}
+
+std::string DispatchCustomEventCrashTest::title() const
+{
+    return "Issue 9898: DispatchCustomEvent crash";
+}
+
+std::string DispatchCustomEventCrashTest::subtitle() const
+{
+    return "Touch the label twice, the program will crash";
+}
+
 
 // DanglingNodePointersTest
 class DanglingNodePointersTestSprite : public Sprite
