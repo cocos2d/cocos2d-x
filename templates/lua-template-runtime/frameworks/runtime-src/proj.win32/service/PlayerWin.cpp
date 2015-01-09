@@ -673,6 +673,10 @@ void PlayerWin::parseCocosProjectConfig(ProjectConfig &config)
     {
         config.changeFrameOrientationToLandscape();
     }
+    else
+    {
+        config.changeFrameOrientationToPortait();
+    }
     config.setScriptFile(parser->getEntryFile());
 }
 
