@@ -617,9 +617,11 @@
 					100000000,
 					"-pagezero_size",
 					10000,
+					"$(_COCOS_LIB_MAC_BEGIN)",
+					"$(_COCOS_LIB_MAC_END)",
 				);
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac $(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
 			name = Debug;
 		};
@@ -643,9 +645,11 @@
 					100000000,
 					"-pagezero_size",
 					10000,
+					"$(_COCOS_LIB_MAC_BEGIN)",
+					"$(_COCOS_LIB_MAC_END)",
 				);
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/mac $(SRCROOT)/../../cocos2d-x/external/glfw3/include/mac $(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
 			name = Release;
 		};
@@ -714,9 +718,13 @@
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					"$(_COCOS_LIB_IOS_BEGIN)",
+					"$(_COCOS_LIB_IOS_END)",
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios $(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -737,9 +745,13 @@
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					"$(_COCOS_LIB_IOS_BEGIN)",
+					"$(_COCOS_LIB_IOS_END)",
+				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../cocos2d-x/cocos/platform/ios $(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
