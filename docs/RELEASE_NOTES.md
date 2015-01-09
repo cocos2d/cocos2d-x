@@ -5,21 +5,23 @@
 - [cocos2d-x v3.4 Release Notes](#)
 - [Misc Information](#)
 - [Requirements](#)
-	- [Runtime Requirements](#)
-	- [Compiler Requirements](#)
-	- [How to run tests](#)
-		- [Mac OSX & iOS](#)
-		- [Android](#)
-		- [Windows](#)
-		- [Linux](#)
-	- [How to start a new game](#)
+    - [Runtime Requirements](#)
+    - [Compiler Requirements](#)
+    - [How to run tests](#)
+        - [Mac OSX & iOS](#)
+        - [Android](#)
+        - [Windows](#)
+        - [Linux](#)
+    - [How to start a new game](#)
+- [v3.4rc0](#)
+    - [Bugs fixed in v3.4rc0](#)
 - [v3.4beta0](#)
-	- [Highlights of v3.4beta0](#)
-	- [Features in detail](#)
+    - [Highlights of v3.4beta0](#)
+    - [Features in detail](#)
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4beta0/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4rc0/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -105,6 +107,16 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# v3.4rc0
+##Bugs fixed in v3.4rc0
+* FileUtils::GetData() can not get data on windows
+* FileUtils::GetData() memory leaks when file size is 0 on windows
+* it will crash if GLProgram log compile or link error info on windows
+* Assert error exist because of outdated uniforms and attributes in GLProgramState when app come to foreground on android
+* GL_INVALID_CALL error because VAO and VBO is not reset when app come to foreground on android
+* Update Luajit to v2.0.3, it fix some crash problems on windows
+* Update libcurl to new version v7.39.0
+* More bugs fixed
 
 # v3.4beta0
 
