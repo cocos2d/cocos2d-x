@@ -118,7 +118,7 @@ Component* Component::create(void)
     {
         CC_SAFE_DELETE(ret);
     }
-	return ret;
+    return ret;
 }
 
 const std::string& Component::getName() const

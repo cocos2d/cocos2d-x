@@ -724,9 +724,9 @@ void Node::ignoreAnchorPointForPosition(bool newValue)
 {
     if (newValue != _ignoreAnchorPointForPosition) 
     {
-		_ignoreAnchorPointForPosition = newValue;
+        _ignoreAnchorPointForPosition = newValue;
         _transformUpdated = _transformDirty = _inverseDirty = true;
-	}
+    }
 }
 
 /// tag getter
@@ -1705,8 +1705,8 @@ const Mat4& Node::getNodeToParentTransform() const
 
         bool needsSkewMatrix = ( _skewX || _skewY );
         // Rotation values
-		// Change rotation code to handle X and Y
-		// If we skew with the exact same value for both x and y then we're simply just rotating
+        // Change rotation code to handle X and Y
+        // If we skew with the exact same value for both x and y then we're simply just rotating
         float cx = 1, sx = 0, cy = 1, sy = 0;
         if (_rotationZ_X != _rotationZ_Y || (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO)))
         {
@@ -2069,12 +2069,12 @@ void Node::updateTransformFromPhysics(const Mat4& parentTransform, uint32_t pare
 
 GLubyte Node::getOpacity(void) const
 {
-	return _realOpacity;
+    return _realOpacity;
 }
 
 GLubyte Node::getDisplayedOpacity() const
 {
-	return _displayedOpacity;
+    return _displayedOpacity;
 }
 
 void Node::setOpacity(GLubyte opacity)
@@ -2086,7 +2086,7 @@ void Node::setOpacity(GLubyte opacity)
 
 void Node::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+    _displayedOpacity = _realOpacity * parentOpacity/255.0;
     updateColor();
     
     if (_cascadeOpacityEnabled)
@@ -2146,26 +2146,26 @@ void Node::disableCascadeOpacity()
 
 const Color3B& Node::getColor(void) const
 {
-	return _realColor;
+    return _realColor;
 }
 
 const Color3B& Node::getDisplayedColor() const
 {
-	return _displayedColor;
+    return _displayedColor;
 }
 
 void Node::setColor(const Color3B& color)
 {
-	_displayedColor = _realColor = color;
-	
-	updateCascadeColor();
+    _displayedColor = _realColor = color;
+    
+    updateCascadeColor();
 }
 
 void Node::updateDisplayedColor(const Color3B& parentColor)
 {
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    _displayedColor.r = _realColor.r * parentColor.r/255.0;
+    _displayedColor.g = _realColor.g * parentColor.g/255.0;
+    _displayedColor.b = _realColor.b * parentColor.b/255.0;
     updateColor();
     
     if (_cascadeColorEnabled)
@@ -2203,7 +2203,7 @@ void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
 
 void Node::updateCascadeColor()
 {
-	Color3B parentColor = Color3B::WHITE;
+    Color3B parentColor = Color3B::WHITE;
     if (_parent && _parent->isCascadeColorEnabled())
     {
         parentColor = _parent->getDisplayedColor();
