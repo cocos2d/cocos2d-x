@@ -1,6 +1,5 @@
 local visibleRect = cc.Director:getInstance():getOpenGLView():getVisibleRect()
 local centerPos   = cc.p(visibleRect.x + visibleRect.width / 2,visibleRect.y + visibleRect.height /2)
-local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 
 local function VideoPlayerTest()
     local layer = cc.Layer:create() --createTestLayer("VideoPlayerTest", "")
@@ -94,11 +93,8 @@ local function VideoPlayerTest()
     ------------------------------------------------------------
     local function menuResourceVideoCallback(tag, sender)
         if nil ~= videoPlayer then
-            if cc.PLATFORM_OS_IPHONE == targetPlatform then
-                videoPlayer:setFileName("cocosvideo.mp4")
-            else
-                videoPlayer:setFileName("res/cocosvideo.mp4")
-            end    
+            local videoFullPath = cc.FileUtils:getInstance():fullPathForFilename("cocosvideo.mp4")
+            videoPlayer:setFileName(videoFullPath)   
             videoPlayer:play()
         end
     end
