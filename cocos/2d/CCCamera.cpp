@@ -30,7 +30,19 @@ NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
 
-Camera* Camera::create()
+
+Camera* Camera::getDefaultCamera()
+{
+    auto scene = Director::getInstance()->getRunningScene();
+    if(scene)
+    {
+        return scene->getDefaultCamera();
+    }
+
+    return nullptr;
+}
+
+    Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
@@ -253,9 +265,9 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::enableFrustumCulling(bool enalbe, bool clipZ)
+void Camera::enableFrustumCulling(bool value, bool clipZ)
 {
-    _enableFrustumCulling = enalbe;
+    _enableFrustumCulling = value;
     _frustum.setClipZ(clipZ);
 }
 

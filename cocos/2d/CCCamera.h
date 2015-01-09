@@ -35,8 +35,9 @@ class Scene;
  * Note: 
  * Scene creates a default camera. And the default camera mask of Node is 1, therefore it can be seen by the default camera.
  * During rendering the scene, it draws the objects seen by each camera in the added order except default camera. The default camera is the last one being drawn with.
- * If 3D objects exist, you'd better create a seperate camera for them. And set the 3d camera flag to CameraFlag::USER1 or anything else except DEFAULT. The DEFAULT camera is for UI, because it is rendered at last.
- * You can change the camera added order to get different result when depth test is not enabled.
+ * It's usually a good idea to render 3D objects in a separate camera.
+ * And set the 3d camera flag to CameraFlag::USER1 or anything else except DEFAULT. Dedicate The DEFAULT camera for UI, because it is rendered at last.
+ * You can change the camera order to get different result when depth test is not enabled.
  * For each camera, transparent 3d sprite is rendered after opaque 3d sprite and other 2d objects.
  */
 enum class CameraFlag
@@ -96,7 +97,7 @@ public:
     *
     * @return The camera type.
     */
-    Camera::Type  getType() const { return _type; }
+    Camera::Type getType() const { return _type; }
 
     /**get & set Camera flag*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
@@ -105,15 +106,14 @@ public:
     * Sets the position (X, Y, and Z) in its parent's coordinate system
     */
     virtual void setPosition3D(const Vec3& position) override;
+
     /**
-    * Creates a view matrix based on the specified input parameters.
+    * Make Camera looks at target
     *
-    * @param eyePosition The eye position.
-    * @param targetPosition The target's center position.
-    * @param up The up vector.
-    * @param dst A matrix to store the result in.
+    * @param target The target camera is point at
+    * @param up The up vector, usually it's Y axis
     */
-    virtual void lookAt(const Vec3& target, const Vec3& up);
+    virtual void lookAt(const Vec3& target, const Vec3& up = Vec3::UNIT_Y);
 
     /**
     * Gets the camera's projection matrix.
@@ -139,7 +139,7 @@ public:
     /**
      * Enable frustum culling
      */
-    void enableFrustumCulling(bool enalbe, bool clipZ);
+    void enableFrustumCulling(bool value, bool clipZ);
     
     /**
      * Is this aabb visible in frustum
@@ -151,6 +151,7 @@ public:
     virtual void onExit() override;
     
     static const Camera* getVisitingCamera() { return _visitingCamera; }
+    static Camera* getDefaultCamera();
 
 CC_CONSTRUCTOR_ACCESS:
     Camera();

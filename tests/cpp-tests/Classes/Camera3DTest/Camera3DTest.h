@@ -48,25 +48,58 @@ enum State
 };
 enum class CameraType
 {
-    FreeCamera=0,
-    FirstCamera=1,
-    ThirdCamera=2,
+    Free = 0,
+    FirstPerson = 1,
+    ThirdPerson = 2,
 };
-class Camera3DTestDemo : public BaseTest
+
+class Camera3DTestScene : public TestScene
+{
+public:
+    virtual void runThisTest();
+};
+
+class CameraBaseTest : public BaseTest
+{
+public:
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+};
+
+class CameraRotationTest : public CameraBaseTest {
+
+public:
+    CREATE_FUNC(CameraRotationTest);
+    CameraRotationTest(void);
+    virtual ~CameraRotationTest(void);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+    virtual void update(float dt) override;
+
+    // overrides
+    virtual std::string title() const override;
+
+protected:
+
+    Node* _camControlNode;
+    Node* _camNode;
+    EventListenerTouchOneByOne* _lis;
+};
+
+class Camera3DTestDemo : public CameraBaseTest
 {
 public:
     CREATE_FUNC(Camera3DTestDemo);
     Camera3DTestDemo(void);
     virtual ~Camera3DTestDemo(void);
-    
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+
     virtual void onEnter() override;
     virtual void onExit() override;
     // overrides
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     void addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation=false,float scale=1.0f,bool bindCamera=false);
     void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
@@ -110,16 +143,12 @@ protected:
     Label* _ZoomOutlabel;
 };
 
-class CameraClippingDemo : public BaseTest
+class CameraCullingDemo : public CameraBaseTest
 {
 public:
-    CREATE_FUNC(CameraClippingDemo);
-    CameraClippingDemo(void);
-    virtual ~CameraClippingDemo(void);
-    
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    CREATE_FUNC(CameraCullingDemo);
+    CameraCullingDemo(void);
+    virtual ~CameraCullingDemo(void);
     
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -148,9 +177,4 @@ protected:
     int                     _row;
 };
 
-class Camera3DTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
 #endif
