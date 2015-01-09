@@ -412,4 +412,3 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
 }
 
 NS_CC_END
-

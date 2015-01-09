@@ -77,9 +77,9 @@ function BillBoardTest:init()
             cameraDir = cc.vec3normalize(cameraDir)
             cameraDir.y = 0
             transformMat = self._camera:getNodeToWorldTransform()
-            cameraRightDir.x = -transformMat[1]
-            cameraRightDir.y = -transformMat[2]
-            cameraRightDir.z = -transformMat[3]
+            cameraRightDir.x = transformMat[1]
+            cameraRightDir.y = transformMat[2]
+            cameraRightDir.z = transformMat[3]
             cameraRightDir = cc.vec3normalize(cameraRightDir)
             cameraRightDir.y=0
 
