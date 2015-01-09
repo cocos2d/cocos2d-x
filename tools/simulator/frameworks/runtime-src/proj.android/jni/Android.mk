@@ -43,10 +43,10 @@ LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \
 $(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
-$(LOCAL_PATH)/../../../cocos2d-x/external \
-$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib
+$(LOCAL_PATH)/../../../../../../external \
+$(LOCAL_PATH)/../../../../../../tools/simulator/libsimulator/lib
 
-LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cocos2d_lua_static 
 LOCAL_STATIC_LIBRARIES += cocos2d_simulator_static
 
 include $(BUILD_SHARED_LIBRARY)
