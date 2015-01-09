@@ -289,7 +289,6 @@ void PhysicsBody::setDynamic(bool dynamic)
             {
                 cpBodySetMass(_cpBody, _mass);
                 cpBodySetMoment(_cpBody, _moment);
-                _cpBody->CP_PRIVATE(node).idleTime = 0.0f;
             }
         }
         else
@@ -303,7 +302,8 @@ void PhysicsBody::setDynamic(bool dynamic)
             {
                 cpBodySetMass(_cpBody, PHYSICS_INFINITY);
                 cpBodySetMoment(_cpBody, PHYSICS_INFINITY);
-                _cpBody->CP_PRIVATE(node).idleTime = (cpFloat)INFINITY;
+                cpBodySetVel(_cpBody, cpvzero);
+                cpBodySetAngVel(_cpBody, 0.0);
             }
         }
     }
