@@ -1,5 +1,6 @@
 cocos2d-x-3.4rc0  Jan.9 2015
     [NEW]           3rd: update libcurl to v7.39, update luajit to 2.0.3
+    [NEW]           3rd: update luajit to v2.0.3
 
     [FIX]           FileUtils: getData() can't get data from file when file was using by other application on windows
     [FIX]           FileUtils: getData() will cause memory leak if file size is 0 on windows
