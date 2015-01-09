@@ -40,8 +40,12 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(Camera3DTestDemo),
     CL(CameraClippingDemo),
-    CL(CameraArcBallDemo),
-    CL(FogTestDemo)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
+    CL(FogTestDemo),
+#endif
+    CL(CameraArcBallDemo)
+
 };
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
@@ -1133,32 +1137,34 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     Mat4 rotation_matrix;
     Mat4::createRotation(_rotationQuat, &rotation_matrix);
 
-    Vec3 uv = rotation_matrix * Vec3(0.0f,1.0f,0.0f);
-    Vec3 sv = rotation_matrix * Vec3(1.0f,0.0f,0.0f);
-    Vec3 lv = rotation_matrix * Vec3(0.0f,0.0f,-1.0f);
+    Vec3 uv = rotation_matrix * Vec3(0.0f,1.0f,0.0f); //rotation y
+    Vec3 sv = rotation_matrix * Vec3(1.0f,0.0f,0.0f); //rotation x
+    Vec3 lv = rotation_matrix * Vec3(0.0f,0.0f,-1.0f);//rotation z
 
-    Vec3 p1 = sv * p1x + uv * p1y - lv * projectToSphere(_radius, p1x, p1y);
-    Vec3 p2 = sv * p2x + uv * p2y - lv * projectToSphere(_radius, p2x, p2y);
+    Vec3 p1 = sv * p1x + uv * p1y - lv * projectToSphere(_radius, p1x, p1y); //start point screen transform to 3d
+    Vec3 p2 = sv * p2x + uv * p2y - lv * projectToSphere(_radius, p2x, p2y); //end point screen transform to 3d
 
-    Vec3::cross(p2, p1, &axis);
+    Vec3::cross(p2, p1, &axis);  //calculate rotation axis
     axis.normalize();
 
     float t = (p2 - p1).length() / (2.0 * _radius);
-
+    //clamp -1 to 1
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
-    angle = asin(t);
+    angle = asin(t);           //rotation angle
 }
 
+/* project an x,y pair onto a sphere of radius r or a
+hyperbolic sheet if we are away from the center of the sphere. */
 float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 {
     float d, t, z;
     d = sqrt(x*x + y*y);
-    if (d < r * 0.70710678118654752440)
+    if (d < r * 0.70710678118654752440)//inside sphere
     {
         z = sqrt(r*r - d*d);
     }                         
-    else
+    else                               //on hyperbola
     {
         t = r / 1.41421356237309504880;
         z = t*t / d;
@@ -1259,7 +1265,8 @@ void FogTestDemo::onEnter()
 {
     BaseTest::onEnter();
     schedule(schedule_selector(FogTestDemo::update), 0.0f);
-    
+    Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
+
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(FogTestDemo::onTouchesMoved, this);
@@ -1288,8 +1295,6 @@ void FogTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
 
-
-    glClearColor(0.5,0.5,0.5,1.0);
     _shader =GLProgram::createWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
     _state = GLProgramState::create(_shader);
 
@@ -1351,6 +1356,27 @@ void FogTestDemo::onEnter()
     }
     _layer3D->setCameraMask(2);
 
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
+                                                                auto glProgram = _state->getGLProgram();
+                                                                glProgram->reset();
+                                                                glProgram->initWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
+                                                                glProgram->link();
+                                                                glProgram->updateUniforms();
+                                                                
+                                                                _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
+                                                                _state->setUniformFloat("u_fogStart",10);
+                                                                _state->setUniformFloat("u_fogEnd",60);
+                                                                _state->setUniformInt("u_fogEquation" ,0);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+
 }
 
 void FogTestDemo::switchTypeCallback(Ref* sender,int type)
@@ -1388,11 +1414,15 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
 void FogTestDemo::onExit()
 {
     BaseTest::onExit();
-    glClearColor(0.0,0.0,0.0,1.0);
+    Director::getInstance()->setClearColor(Color4F(0,0,0,1));
     if (_camera)
     {
         _camera = nullptr;
     }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void FogTestDemo::update(float dt)
@@ -1403,9 +1433,9 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
 {
     if(touches.size()==1)
     {
-        auto touch = touches[0];
-        auto location = touch->getLocation();
-        Point newPos = touch->getPreviousLocation()-location;
+        Vec2 prelocation = touches[0]->getPreviousLocationInView();
+        Vec2 location = touches[0]->getLocationInView();
+        Vec2 newPos = prelocation - location;
         if(_cameraType==CameraType::FreeCamera)
         {
             Vec3 cameraDir;
@@ -1417,7 +1447,7 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
             cameraRightDir.normalize();
             cameraRightDir.y=0;
             Vec3 cameraPos=  _camera->getPosition3D();
-            cameraPos+=cameraDir*newPos.y*0.1f;
+            cameraPos-=cameraDir*newPos.y*0.1f;
             cameraPos+=cameraRightDir*newPos.x*0.1f;
             _camera->setPosition3D(cameraPos);
         }
