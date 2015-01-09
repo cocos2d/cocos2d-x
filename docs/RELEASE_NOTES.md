@@ -111,9 +111,9 @@ Please refer to this document: [ReadMe](../README.md)
 ##Bugs fixed in v3.4rc0
 * FileUtils::GetData() can not get data on windows
 * FileUtils::GetData() memory leaks when file size is 0 on windows
-* it will crash if GLProgram log compile or link error info on windows
+* Crash if GLProgram log compile or link error info on windows
 * Assert error exist because of outdated uniforms and attributes in GLProgramState when app come to foreground on android
-* GL_INVALID_CALL error because VAO and VBO is not reset when app come to foreground on android
+* GL_INVALID_OPERATION error because VAO and VBO is not reset when app come to foreground on android
 * Update Luajit to v2.0.3, it fix some crash problems on windows
 * Update libcurl to new version v7.39.0
 * More bugs fixed
