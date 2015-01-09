@@ -1,5 +1,5 @@
 cocos2d-x-3.4rc0  Jan.9 2015
-    [NEW]           3rd: update libcurl to v7.39, update luajit to 2.0.3
+    [NEW]           3rd: update libcurl to v7.39
     [NEW]           3rd: update luajit to v2.0.3
     
     [FIX]           DrawNode: can not set color when DrawPoints, wrong behavior of drawRect
