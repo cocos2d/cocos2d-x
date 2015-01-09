@@ -1065,6 +1065,9 @@ Developers:
     ton1517
         Fix the issue that JumpTo can not be applied more than once
     
+    takaokato
+        Fix wrong result in Node:getParenttoNodeTransform() if node is transformed
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
