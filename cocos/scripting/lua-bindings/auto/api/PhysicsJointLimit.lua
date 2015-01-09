@@ -36,6 +36,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointLimit] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointLimit] getMin 
 -- @param self
 -- @return float#float ret (return value: float)

@@ -24,6 +24,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointGear] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointGear] getRatio 
 -- @param self
 -- @return float#float ret (return value: float)
