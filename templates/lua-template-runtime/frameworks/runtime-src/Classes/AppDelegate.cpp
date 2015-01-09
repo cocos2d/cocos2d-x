@@ -54,7 +54,7 @@ void AppDelegate::initGLContextAttrs()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     //
-#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_CODE_IDE_DEBUG_SUPPORT > 0))
+#if ((CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_CODE_IDE_DEBUG_SUPPORT > 0) && (COCOS2D_DEBUG > 0))
     _project.setDebuggerType(kCCRuntimeDebuggerCodeIDE);
 #endif
 
@@ -188,25 +188,18 @@ void StartupCall::startup()
     }
     
     updateConfigParser(project);
-    if (FileUtils::getInstance()->isFileExist(path))
+    updatePreviewFuncForPath(path);
+    
+    // launch
+    if (project.getDebuggerType() == kCCRuntimeDebuggerNone)
     {
-        updatePreviewFuncForPath(path);
-        
-        // launch
-        if (project.getDebuggerType() == kCCRuntimeDebuggerNone)
-        {
-            _previewFunc(path);
-        }
-        else
-        {
-            // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-            initRuntime(project.getProjectDir());
-            startRuntime();
-        }
+        _previewFunc(path);
     }
     else
     {
-        CCLOG("[ERROR]: %s is not exist.", path.c_str());
+        // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+        initRuntime(project.getProjectDir());
+        startRuntime();
     }
 
     // track start event
@@ -357,12 +350,6 @@ void StartupCall::updatePreviewFuncForPath(const std::string &path)
 {
     // set loader
     _previewFunc = [](const std::string &path) { CCLOG("[WARNING]: unsupport %s", path.c_str()); };
-    
-    if (!FileUtils::getInstance()->isFileExist(path))
-    {
-        CCLOG("[ERROR]: %s is not exist.", path.c_str());
-        return ;
-    }
     
     if (endWithString(path, ".lua"))
     {
