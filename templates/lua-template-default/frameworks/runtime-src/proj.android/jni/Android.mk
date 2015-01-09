@@ -11,9 +11,18 @@ LOCAL_SRC_FILES := hellolua/main.cpp \
 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
-					
+
+# _COCOS_HEADER_ANDROID_BEGIN
+# _COCOS_HEADER_ANDROID_END
+
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+
+# _COCOS_LIB_ANDROID_BEGIN
+# _COCOS_LIB_ANDROID_END
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/lua-bindings/proj.android)
+
+# _COCOS_LIB_IMPORT_ANDROID_BEGIN
+# _COCOS_LIB_IMPORT_ANDROID_END
