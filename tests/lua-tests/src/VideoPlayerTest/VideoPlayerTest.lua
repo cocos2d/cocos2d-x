@@ -93,7 +93,8 @@ local function VideoPlayerTest()
     ------------------------------------------------------------
     local function menuResourceVideoCallback(tag, sender)
         if nil ~= videoPlayer then
-            videoPlayer:setFileName("res/cocosvideo.mp4")
+            local videoFullPath = cc.FileUtils:getInstance():fullPathForFilename("cocosvideo.mp4")
+            videoPlayer:setFileName(videoFullPath)   
             videoPlayer:play()
         end
     end

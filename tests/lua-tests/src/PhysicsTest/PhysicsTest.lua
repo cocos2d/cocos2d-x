@@ -1246,7 +1246,7 @@ local function PhysicsPositionRotationTest()
       local leftBall = cc.Sprite:create("Images/ball.png");
       leftBall:setPosition(-30, 0);
       leftBall:setScale(2);
-      leftBall:setPhysicsBody(cc.PhysicsBody:createCircle(leftBall:getContentSize().width/4));
+      leftBall:setPhysicsBody(cc.PhysicsBody:createCircle(leftBall:getContentSize().width));
       leftBall:getPhysicsBody():setTag(DRAG_BODYS_TAG);
       parent:addChild(leftBall);
       
