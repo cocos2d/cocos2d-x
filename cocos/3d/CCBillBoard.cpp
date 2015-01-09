@@ -161,6 +161,7 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _billboardTransform);
         _quadCommand.setTransparent(true);
+        _quadCommand.setSkipBatching(true);
         renderer->addCommand(&_quadCommand);
     }
 }

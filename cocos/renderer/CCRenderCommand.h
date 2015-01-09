@@ -65,6 +65,10 @@ public:
     /** set transparent flag */
     inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
 
+    inline bool isSkipBatching() const { return _skipBatching; }
+
+    inline void setSkipBatching(bool value) { _skipBatching = value; }
+
 protected:
     RenderCommand();
     virtual ~RenderCommand();
@@ -79,6 +83,10 @@ protected:
     
     // transparent flag
     bool  _isTransparent;
+
+    // skip auto batching
+    //TODO move this to BatchCommands
+    bool _skipBatching;
 };
 
 NS_CC_END

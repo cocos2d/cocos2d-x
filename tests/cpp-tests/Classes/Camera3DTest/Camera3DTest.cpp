@@ -125,24 +125,28 @@ CameraRotationTest::CameraRotationTest()
 
     //Sprites
     auto sp1 = Sprite::create("Images/grossini.png");
-    sp1->setNormalizedPosition(Vec2(.5, .5));
     addChild(sp1);
+    sp1->setPosition(s.width/2, s.height/2);
 
     auto sp2 = Sprite::create("Images/grossinis_sister1.png");
-    sp2->setPosition(10, 10);
+//    sp2->setPosition(40, 40);
     sp1->addChild(sp2);
 
     //Billboards
     auto bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(s.width/2 + 20, s.height/2 + 10, -10));
+    bill1->setPosition3D(Vec3(s.width/2 + 30, s.height/2 + 10, -10));
     bill1->setColor(Color3B::RED);
     bill1->setScale(0.6);
-    addChild(bill1);
+//    addChild(bill1);
+
+    auto sp3 = Sprite::create("Images/grossinis_sister2.png");
+    sp3->setPosition(10, 10);
+    bill1->addChild(sp3);
 
     auto bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(s.width/2 - 20, s.height/2 - 10, -10));
+    bill2->setPosition3D(Vec3(s.width/2 - 30, s.height/2 - 10, -10));
     bill2->setScale(0.6);
-    addChild(bill2);
+//    addChild(bill2);
 
     //3D models
     auto model = Sprite3D::create("Sprite3DTest/boss1.obj");

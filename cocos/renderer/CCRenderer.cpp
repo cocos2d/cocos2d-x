@@ -56,7 +56,9 @@ static bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 void RenderQueue::push_back(RenderCommand* command)
 {
     float z = command->getGlobalOrder();
-    if(z < 0)
+    if(!command->isTransparent())
+        _queueOpaque.push_back(command);
+    else if(z < 0)
         _queueNegZ.push_back(command);
     else if(z > 0)
         _queuePosZ.push_back(command);
@@ -66,7 +68,7 @@ void RenderQueue::push_back(RenderCommand* command)
 
 ssize_t RenderQueue::size() const
 {
-    return _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
+    return _queueOpaque.size() + _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
 }
 
 void RenderQueue::sort()
@@ -78,6 +80,11 @@ void RenderQueue::sort()
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
+    if(index < static_cast<ssize_t>(_queueOpaque.size()))
+        return _queueOpaque[index];
+
+    index -= _queueOpaque.size();
+
     if(index < static_cast<ssize_t>(_queueNegZ.size()))
         return _queueNegZ[index];
 
@@ -97,6 +104,7 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
+    _queueOpaque.clear();
     _queueNegZ.clear();
     _queue0.clear();
     _queuePosZ.clear();
@@ -155,6 +163,9 @@ Renderer::Renderer()
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
     _batchedCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
+
+    // default clear color
+    _clearColor = Color4F::BLACK;
 }
 
 Renderer::~Renderer()
@@ -322,9 +333,9 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
     
-    if(command->isTransparent())
-        _transparentRenderGroups.push_back(command);
-    else
+//    if(command->isTransparent())
+//        _transparentRenderGroups.push_back(command);
+//    else
         _renderGroups[renderQueue].push_back(command);
 }
 
@@ -357,49 +368,84 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         auto commandType = command->getType();
         if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
         {
+            //Draw if we have batched other commands which are not triangle command
             flush3D();
-            if(_numberQuads > 0)
-            {
-                drawBatchedQuads();
-                _lastMaterialID = 0;
-            }
-            
+            flushQuads();
+
+            //Process triangle command
             auto cmd = static_cast<TrianglesCommand*>(command);
-            //Batch Triangles
-            if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+
+            //Draw batched Triangles if necessary
+            if(cmd->isSkipBatching() || _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
             {
                 CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
                 CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
                 //Draw batched Triangles if VBO is full
                 drawBatchedTriangles();
             }
-            
+
+            //Batch Triangles
             _batchedCommands.push_back(cmd);
             
             fillVerticesAndIndices(cmd);
 
+            if(cmd->isSkipBatching())
+            {
+                drawBatchedTriangles();
+            }
+
         }
         else if ( RenderCommand::Type::QUAD_COMMAND == commandType )
         {
+            //Draw if we have batched other commands which are not quad command
             flush3D();
-            if(_filledIndex > 0)
-            {
-                drawBatchedTriangles();
-                _lastMaterialID = 0;
-            }
+            flushTriangles();
+
+            //Process quad command
             auto cmd = static_cast<QuadCommand*>(command);
-            //Batch quads
-            if( (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
+
+            //Draw batched quads if necessary
+            if(cmd->isSkipBatching()|| (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
             {
                 CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
                 //Draw batched quads if VBO is full
                 drawBatchedQuads();
             }
-            
+
+            //Batch Quads
             _batchQuadCommands.push_back(cmd);
             
             fillQuads(cmd);
 
+            if(cmd->isSkipBatching())
+            {
+                drawBatchedQuads();
+            }
+        }
+        else if (RenderCommand::Type::MESH_COMMAND == commandType)
+        {
+            flush2D();
+            auto cmd = static_cast<MeshCommand*>(command);
+
+            if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            {
+                flush3D();
+
+                if(cmd->isSkipBatching())
+                {
+                    cmd->execute();
+                }
+                else
+                {
+                    cmd->preBatchDraw();
+                    cmd->batchDraw();
+                    _lastBatchedMeshCommand = cmd;
+                }
+            }
+            else
+            {
+                cmd->batchDraw();
+            }
         }
         else if(RenderCommand::Type::GROUP_COMMAND == commandType)
         {
@@ -424,22 +470,6 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
             flush();
             auto cmd = static_cast<PrimitiveCommand*>(command);
             cmd->execute();
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            flush2D();
-            auto cmd = static_cast<MeshCommand*>(command);
-            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
-            {
-                flush3D();
-                cmd->preBatchDraw();
-                cmd->batchDraw();
-                _lastBatchedMeshCommand = cmd;
-            }
-            else
-            {
-                cmd->batchDraw();
-            }
         }
         else
         {
@@ -565,7 +595,14 @@ void Renderer::clean()
     _transparentRenderGroups.clear();
 }
 
-void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
+void Renderer::clear()
+{
+    glDepthMask(true);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDepthMask(false);
+}
+
+    void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
     memcpy(_verts + _filledVertex, cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
     const Mat4& modelView = cmd->getModelView();
@@ -822,10 +859,12 @@ void Renderer::flush()
 
 void Renderer::flush2D()
 {
+    glEnable(GL_DEPTH_TEST);
     drawBatchedQuads();
     _lastMaterialID = 0;
     drawBatchedTriangles();
     _lastMaterialID = 0;
+    glDisable(GL_DEPTH_TEST);
 }
 
 void Renderer::flush3D()
@@ -837,8 +876,25 @@ void Renderer::flush3D()
     }
 }
 
-// helpers
+void Renderer::flushQuads()
+{
+    if(_numberQuads > 0)
+    {
+        drawBatchedQuads();
+        _lastMaterialID = 0;
+    }
+}
 
+void Renderer::flushTriangles()
+{
+    if(_filledIndex > 0)
+    {
+        drawBatchedTriangles();
+        _lastMaterialID = 0;
+    }
+}
+
+// helpers
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     auto scene = Director::getInstance()->getRunningScene();
@@ -872,6 +928,13 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     bool ret = (tmpx < screen_half.width && tmpy < screen_half.height);
 
     return ret;
+}
+
+
+void Renderer::setClearColor(const Color4F &clearColor)
+{
+    _clearColor = clearColor;
+    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 }
 
 NS_CC_END

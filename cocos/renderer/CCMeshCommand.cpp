@@ -153,7 +153,9 @@ void MeshCommand::setDisplayColor(const Vec4& color)
 
 void MeshCommand::setTransparent(bool value)
 {
-     _isTransparent = value;
+    _isTransparent = value;
+    //Skip batching for transparent mesh
+    _skipBatching = value;
     setDepthWriteEnabled(!_isTransparent);
 }
 
