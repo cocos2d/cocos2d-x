@@ -1532,13 +1532,16 @@ public:
     /**
      *   get the PhysicsBody the sprite have
      */
-    PhysicsBody* getPhysicsBody() const;
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
     
     /**
      *   remove this node from physics world. it will remove all the physics bodies in it's children too.
      */
     void removeFromPhysicsWorld();
+    
+    void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
+    virtual void updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
 #endif
     
     // overrides
@@ -1611,13 +1614,6 @@ protected:
     void updateRotationQuat();
     // update Rotation3D from quaternion
     void updateRotation3D();
-    
-#if CC_USE_PHYSICS
-    void updatePhysicsBodyTransform(Scene* layer);
-    virtual void updatePhysicsBodyPosition(Scene* layer);
-    virtual void updatePhysicsBodyRotation(Scene* layer);
-    virtual void updatePhysicsBodyScale(Scene* scene);
-#endif // CC_USE_PHYSICS
     
 private:
     void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
@@ -1709,6 +1705,9 @@ protected:
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
     float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
     float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
+    float _physicsRotation;
+    bool _physicsTransformDirty;
+    bool _updateTransformFromPhysics;
 #endif
     
     // opacity controls
