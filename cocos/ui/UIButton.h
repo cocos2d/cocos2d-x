@@ -204,6 +204,9 @@ public:
      * @since v3.3
      */
     float getZoomScale()const;
+
+    void clearPressedTexture();
+    void clearDisabledTexture();
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
