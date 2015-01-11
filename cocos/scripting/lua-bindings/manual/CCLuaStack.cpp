@@ -846,7 +846,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                     std::size_t found = filename.rfind(".lua");
                     if (found != std::string::npos)
                     {
-                        filename.erase(found)
+                        filename.erase(found);
                     }
                     // replace path seperator '/' '\' to '.'
                     for (int i=0; i<filename.size(); i++) {
