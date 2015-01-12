@@ -815,6 +815,7 @@ Developers:
         Precompiled headers improvements
         Added Application::openUrl for all supported platforms ecept WP8 and WinRT
         Scale9Sprite capInsets set fix
+        Clang static analyzer crash fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -1065,6 +1066,9 @@ Developers:
     ton1517
         Fix the issue that JumpTo can not be applied more than once
     
+    takaokato
+        Fix wrong result in Node:getParenttoNodeTransform() if node is transformed
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

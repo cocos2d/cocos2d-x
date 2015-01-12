@@ -275,16 +275,33 @@ int LuaStack::executeString(const char *codes)
 int LuaStack::executeScriptFile(const char* filename)
 {
     CCAssert(filename, "CCLuaStack::executeScriptFile() - invalid filename");
-
+    
     static const std::string BYTECODE_FILE_EXT    = ".luac";
     static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
-
-     FileUtils *utils = FileUtils::getInstance();
+    
+    std::string buf(filename);
+    //
+    // remove .lua or .luac
+    //
+    size_t pos = buf.rfind(BYTECODE_FILE_EXT);
+    if (pos != std::string::npos)
+    {
+        buf = buf.substr(0, pos);
+    }
+    else
+    {
+        pos = buf.rfind(NOT_BYTECODE_FILE_EXT);
+        if (pos == buf.length() - NOT_BYTECODE_FILE_EXT.length())
+        {
+            buf = buf.substr(0, pos);
+        }
+    }
+    
+    FileUtils *utils = FileUtils::getInstance();
     //
     // 1. check .lua suffix
     // 2. check .luac suffix
     //
-    std::string buf(filename);
     std::string tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
     if (utils->isFileExist(tmpfilename))
     {
@@ -298,7 +315,7 @@ int LuaStack::executeScriptFile(const char* filename)
             buf = tmpfilename;
         }
     }
-
+    
     std::string fullPath = utils->fullPathForFilename(buf);
     Data data = utils->getDataFromFile(fullPath);
     int rn = 0;

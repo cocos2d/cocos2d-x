@@ -28,16 +28,21 @@ LOCAL_SRC_FILES := \
 ../lib/runtime/Portrait_png.cpp \
 ../lib/runtime/Protos.pb.cc \
 ../lib/runtime/Runtime.cpp \
+../lib/runtime/RuntimeProtocol.cpp \
+../lib/runtime/RuntimeLuaImpl.cpp \
+../lib/runtime/RuntimeCCSImpl.cpp \
 ../lib/runtime/Shine_png.cpp \
 ../lib/runtime/ConfigParser.cpp \
-../lib/VisibleRect.cpp \
+../lib/runtime/VisibleRect.cpp \
 ../lib/ProjectConfig/ProjectConfig.cpp \
-../lib/ProjectConfig/SimulatorConfig.cpp
+../lib/ProjectConfig/SimulatorConfig.cpp \
+hellolua/Runtime_android.cpp \
 
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../lib $(LOCAL_PATH)/../lib/protobuf-lite
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../lib
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../lib
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../lib $(LOCAL_PATH)/../lib/protobuf-lite
 
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 

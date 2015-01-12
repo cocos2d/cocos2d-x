@@ -60,7 +60,6 @@ THE SOFTWARE.
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-extern int g_physicsSceneCount;
 
 NS_CC_BEGIN
 
@@ -125,6 +124,8 @@ Node::Node(void)
 , _physicsBody(nullptr)
 , _physicsScaleStartX(1.0f)
 , _physicsScaleStartY(1.0f)
+, _physicsRotation(0.0f)
+, _physicsTransformDirty(true)
 #endif
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -329,13 +330,6 @@ void Node::setRotation(float rotation)
     
     _rotationZ_X = _rotationZ_Y = rotation;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-
-#if CC_USE_PHYSICS
-    if (!_physicsBody || !_physicsBody->_rotationResetTag)
-    {
-        updatePhysicsBodyRotation(getScene());
-    }
-#endif
     
     updateRotationQuat();
 }
@@ -472,16 +466,6 @@ void Node::setScale(float scale)
     
     _scaleX = _scaleY = _scaleZ = scale;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
-#if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
-        return;
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
-    {
-        updatePhysicsBodyTransform(scene);
-    }
-#endif
 }
 
 /// scaleX getter
@@ -499,17 +483,6 @@ void Node::setScale(float scaleX,float scaleY)
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
-#if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
-        return;
-    
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
-    {
-        updatePhysicsBodyTransform(scene);
-    }
-#endif
 }
 
 /// scaleX setter
@@ -520,17 +493,6 @@ void Node::setScaleX(float scaleX)
     
     _scaleX = scaleX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
-#if CC_USE_PHYSICS
-    if(g_physicsSceneCount == 0)
-        return;
-    
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
-    {
-        updatePhysicsBodyTransform(scene);
-    }
-#endif
 }
 
 /// scaleY getter
@@ -570,17 +532,6 @@ void Node::setScaleY(float scaleY)
     
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
-#if CC_USE_PHYSICS
-    if (g_physicsSceneCount == 0)
-        return;
-    
-    auto scene = getScene();
-    if (!scene || scene->getPhysicsWorld())
-    {
-        updatePhysicsBodyTransform(scene);
-    }
-#endif
 }
 
 
@@ -612,13 +563,6 @@ void Node::setPosition(float x, float y)
     
     _transformUpdated = _transformDirty = _inverseDirty = true;
     _usingNormalizedPosition = false;
-    
-#if CC_USE_PHYSICS
-    if (!_physicsBody || !_physicsBody->_positionResetTag)
-    {
-        updatePhysicsBodyPosition(getScene());
-    }
-#endif
 }
 
 void Node::setPosition3D(const Vec3& position)
@@ -780,9 +724,9 @@ void Node::ignoreAnchorPointForPosition(bool newValue)
 {
     if (newValue != _ignoreAnchorPointForPosition) 
     {
-		_ignoreAnchorPointForPosition = newValue;
+        _ignoreAnchorPointForPosition = newValue;
         _transformUpdated = _transformDirty = _inverseDirty = true;
-	}
+    }
 }
 
 /// tag getter
@@ -1076,7 +1020,6 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
     auto scene = this->getScene();
     if (scene && scene->getPhysicsWorld())
     {
-        child->updatePhysicsBodyTransform(scene);
         scene->addChildToPhysicsWorld(child);
     }
 #endif
@@ -1301,6 +1244,12 @@ void Node::visit()
 
 uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
 {
+#if CC_USE_PHYSICS
+    if (_physicsBody && _updateTransformFromPhysics)
+    {
+        updateTransformFromPhysics(parentTransform, parentFlags);
+    }
+#endif
     if(_usingNormalizedPosition)
     {
         CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
@@ -1756,8 +1705,8 @@ const Mat4& Node::getNodeToParentTransform() const
 
         bool needsSkewMatrix = ( _skewX || _skewY );
         // Rotation values
-		// Change rotation code to handle X and Y
-		// If we skew with the exact same value for both x and y then we're simply just rotating
+        // Change rotation code to handle X and Y
+        // If we skew with the exact same value for both x and y then we're simply just rotating
         float cx = 1, sx = 0, cy = 1, sy = 0;
         if (_rotationZ_X != _rotationZ_Y || (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO)))
         {
@@ -1880,7 +1829,7 @@ const Mat4& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty )
     {
-        _inverse = _transform.getInversed();
+        _inverse = getNodeToParentTransform().getInversed();
         _inverseDirty = false;
     }
 
@@ -2023,87 +1972,6 @@ void Node::removeAllComponents()
 
 // MARK: Physics
 
-void Node::updatePhysicsBodyTransform(Scene* scene)
-{
-    updatePhysicsBodyScale(scene);
-    updatePhysicsBodyPosition(scene);
-    updatePhysicsBodyRotation(scene);
-}
-
-void Node::updatePhysicsBodyPosition(Scene* scene)
-{
-    if (_physicsBody != nullptr)
-    {
-        if (scene && scene->getPhysicsWorld())
-        {
-            Vec2 pos = _parent == scene ? _position : scene->convertToNodeSpace(_parent->convertToWorldSpace(_position));
-            _physicsBody->setPosition(pos);
-        }
-        else
-        {
-            _physicsBody->setPosition(_position);
-        }
-    }
-    
-    for (Node* child : _children)
-    {
-        child->updatePhysicsBodyPosition(scene);
-    }
-}
-
-void Node::updatePhysicsBodyRotation(Scene* scene)
-{
-    if (_physicsBody != nullptr)
-    {
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
-        {
-            float rotation = _rotationZ_X;
-            for (Node* parent = _parent; parent != scene; parent = parent->_parent)
-            {
-                rotation += parent->getRotation();
-            }
-            _physicsBody->setRotation(rotation);
-        }
-        else
-        {
-            _physicsBody->setRotation(_rotationZ_X);
-        }
-    }
-    
-    for (auto child : _children)
-    {
-        child->updatePhysicsBodyRotation(scene);
-        child->updatePhysicsBodyPosition(scene);
-    }
-}
-
-void Node::updatePhysicsBodyScale(Scene* scene)
-{
-    if (_physicsBody != nullptr)
-    {
-        if (scene != nullptr && scene->getPhysicsWorld() != nullptr)
-        {
-            float scaleX = _scaleX / _physicsScaleStartX;
-            float scaleY = _scaleY / _physicsScaleStartY;
-            for (Node* parent = _parent; parent != scene; parent = parent->_parent)
-            {
-                scaleX *= parent->_scaleX;
-                scaleY *= parent->_scaleY;
-            }
-            _physicsBody->setScale(scaleX, scaleY);
-        }
-        else
-        {
-            _physicsBody->setScale(_scaleX / _physicsScaleStartX, _scaleY / _physicsScaleStartY);
-        }
-    }
-    
-    for (const auto& child : _children)
-    {
-        child->updatePhysicsBodyScale(scene);
-    }
-}
-
 void Node::setPhysicsBody(PhysicsBody* body)
 {
     if (_physicsBody == body)
@@ -2111,9 +1979,17 @@ void Node::setPhysicsBody(PhysicsBody* body)
         return;
     }
     
-    if (body != nullptr)
+    if (_physicsBody)
     {
-        if (body->getNode() != nullptr)
+        _physicsBody->removeFromWorld();
+        _physicsBody->_node = nullptr;
+        _physicsBody->release();
+        _physicsBody = nullptr;
+    }
+
+    if (body)
+    {
+        if (body->getNode())
         {
             body->getNode()->setPhysicsBody(nullptr);
         }
@@ -2128,64 +2004,77 @@ void Node::setPhysicsBody(PhysicsBody* body)
             CCLOG("Node warning: setPhysicsBody sets anchor point to Vec2::ANCHOR_MIDDLE.");
             setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         }
-    }
-    
-    if (_physicsBody != nullptr)
-    {
-        PhysicsWorld* world = _physicsBody->getWorld();
-        _physicsBody->removeFromWorld();
-        _physicsBody->_node = nullptr;
-        _physicsBody->release();
-        
-        if (world != nullptr && body != nullptr)
+
+        _physicsBody = body;
+        _physicsScaleStartX = _scaleX;
+        _physicsScaleStartY = _scaleY;
+
+        auto scene = getScene();
+        if (scene && scene->getPhysicsWorld())
         {
-            world->addBody(body);
-        }
-    }
-    
-    _physicsBody = body;
-    _physicsScaleStartX = _scaleX;
-    _physicsScaleStartY = _scaleY;
-    
-    if (body != nullptr)
-    {
-        Node* node;
-        Scene* scene = nullptr;
-        for (node = this->getParent(); node != nullptr; node = node->getParent())
-        {
-            Scene* tmpScene = dynamic_cast<Scene*>(node);
-            if (tmpScene != nullptr && tmpScene->getPhysicsWorld() != nullptr)
-            {
-                scene = tmpScene;
-                break;
-            }
-        }
-        
-        if (scene != nullptr)
-        {
+            _physicsTransformDirty = true;
             scene->getPhysicsWorld()->addBody(body);
         }
-        
-        updatePhysicsBodyTransform(scene);
     }
 }
 
-PhysicsBody* Node::getPhysicsBody() const
+void Node::updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY)
 {
-    return _physicsBody;
+    _updateTransformFromPhysics = false;
+    auto flags = processParentFlags(parentTransform, parentFlags);
+    _updateTransformFromPhysics = true;
+    auto scaleX = parentScaleX * _scaleX;
+    auto scaleY = parentScaleY * _scaleY;
+    
+    if (_parent)
+    {
+        _physicsRotation = _parent->_physicsRotation + _rotationZ_X;
+    }
+    if (_physicsBody && ((flags & FLAGS_DIRTY_MASK) || _physicsTransformDirty))
+    {
+        _physicsTransformDirty = false;
+        Vec3 vec3(_position.x, _position.y, 0);
+        Vec3 ret;
+        parentTransform.transformPoint(vec3, &ret);
+        _physicsBody->setPosition(Vec2(ret.x, ret.y));
+        _physicsBody->setScale(scaleX / _physicsScaleStartX, scaleY / _physicsScaleStartY);
+        _physicsBody->setRotation(_physicsRotation);
+    }
+
+    for (auto node : _children)
+    {
+        node->updatePhysicsBodyTransform(scene, _modelViewTransform, flags, scaleX, scaleY);
+    }
 }
+
+void Node::updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags)
+{
+    auto& newPosition = _physicsBody->getPosition();
+    auto& recordedPosition = _physicsBody->_recordedPosition;
+    if (parentFlags || recordedPosition.x != newPosition.x || recordedPosition.y != newPosition.y)
+    {
+        recordedPosition = newPosition;
+        Vec3 vec3(newPosition.x, newPosition.y, 0);
+        Vec3 ret;
+        parentTransform.getInversed().transformPoint(vec3, &ret);
+        setPosition(ret.x, ret.y);
+    }
+    _physicsRotation = _physicsBody->getRotation();
+    setRotation(_physicsRotation - _parent->_physicsRotation);
+}
+
 #endif //CC_USE_PHYSICS
 
 // MARK: Opacity and Color
 
 GLubyte Node::getOpacity(void) const
 {
-	return _realOpacity;
+    return _realOpacity;
 }
 
 GLubyte Node::getDisplayedOpacity() const
 {
-	return _displayedOpacity;
+    return _displayedOpacity;
 }
 
 void Node::setOpacity(GLubyte opacity)
@@ -2197,7 +2086,7 @@ void Node::setOpacity(GLubyte opacity)
 
 void Node::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+    _displayedOpacity = _realOpacity * parentOpacity/255.0;
     updateColor();
     
     if (_cascadeOpacityEnabled)
@@ -2257,26 +2146,26 @@ void Node::disableCascadeOpacity()
 
 const Color3B& Node::getColor(void) const
 {
-	return _realColor;
+    return _realColor;
 }
 
 const Color3B& Node::getDisplayedColor() const
 {
-	return _displayedColor;
+    return _displayedColor;
 }
 
 void Node::setColor(const Color3B& color)
 {
-	_displayedColor = _realColor = color;
-	
-	updateCascadeColor();
+    _displayedColor = _realColor = color;
+    
+    updateCascadeColor();
 }
 
 void Node::updateDisplayedColor(const Color3B& parentColor)
 {
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    _displayedColor.r = _realColor.r * parentColor.r/255.0;
+    _displayedColor.g = _realColor.g * parentColor.g/255.0;
+    _displayedColor.b = _realColor.b * parentColor.b/255.0;
     updateColor();
     
     if (_cascadeColorEnabled)
@@ -2314,7 +2203,7 @@ void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
 
 void Node::updateCascadeColor()
 {
-	Color3B parentColor = Color3B::WHITE;
+    Color3B parentColor = Color3B::WHITE;
     if (_parent && _parent->isCascadeColorEnabled())
     {
         parentColor = _parent->getDisplayedColor();

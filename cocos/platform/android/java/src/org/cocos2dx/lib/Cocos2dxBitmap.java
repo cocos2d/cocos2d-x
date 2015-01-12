@@ -384,7 +384,7 @@ public class Cocos2dxBitmap {
                     i = lastIndexOfSpace + 1; // skip space
                 } else {
                     // Should not exceed the width.
-                    if (tempWidth > maxWidth) {
+                    if (tempWidth > maxWidth && i != start + 1) {
                         strList.add(string.substring(start, i - 1));
                         // Compute from previous char.
                         --i;
