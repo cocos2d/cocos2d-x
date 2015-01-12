@@ -62,7 +62,8 @@ int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L)
         
         BlendFunc blendFunc = {src, dst};
         cobj->setBlendFunc(blendFunc);
-        return 0;
+        lua_settop(L, 1);
+        return 1;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 2);
     return 0;
@@ -167,7 +168,8 @@ int lua_cocos2dx_3d_AABB_reset(lua_State* L)
         if(!ok)
             return 0;
         cobj->reset();
-        return 0;
+        lua_settop(L, 1);
+        return 1;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:reset",argc, 0);
     return 0;
@@ -746,7 +748,8 @@ int lua_cocos2dx_3d_OBB_reset(lua_State* L)
         if(!ok)
             return 0;
         cobj->reset();
-        return 0;
+        lua_settop(L, 1);
+        return 1;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:reset",argc, 0);
     return 0;
