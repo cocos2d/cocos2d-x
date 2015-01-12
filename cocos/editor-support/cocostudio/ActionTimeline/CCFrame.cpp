@@ -554,6 +554,7 @@ Frame* InnerActionFrame::clone()
 {
     InnerActionFrame* frame = InnerActionFrame::create();
     frame->setInnerActionType(_innerActionType);
+    frame->setSingleFrameIndex(_singleFrameIndex);
     if(_enterWithName)
     {
         frame->setEnterWithName(true);
