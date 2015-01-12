@@ -107,6 +107,7 @@ void resetDesignResolution()
 
 RuntimeEngine::RuntimeEngine()
 : _runtime(nullptr)
+, _call(nullptr)
 {
     
 }
@@ -129,6 +130,7 @@ void RuntimeEngine::setupRuntime()
     // 2. init Lua / Js runtime
     //
     
+    updateConfigParser();
     auto entryFile = ConfigParser::getInstance()->getEntryFile();
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     ConfigParser::getInstance()->readConfig();
@@ -157,6 +159,17 @@ void RuntimeEngine::setupRuntime()
         _runtime = RuntimeCCSImpl::create();
     }
 }
+
+void RuntimeEngine::setProjectConfig(const ProjectConfig &config)
+{
+    _project = config;
+}
+
+const ProjectConfig &RuntimeEngine::getProjectConfig()
+{
+    return _project;
+}
+
 void RuntimeEngine::setProjectPath(const std::string &workPath)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -188,20 +201,49 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
 #endif
 }
 
-bool RuntimeEngine::startNetwork()
-{
-    ConsoleCommand::getShareInstance()->init();
-    showUI();
-    
-    return true;
-}
-
 void RuntimeEngine::startScript(const std::string &args)
 {
     resetDesignResolution();
     if (_runtime)
     {
         _runtime->startScript(args);
+    }
+}
+
+void RuntimeEngine::start()
+{
+    // set search path
+    string path = FileUtils::getInstance()->fullPathForFilename(_project.getScriptFileRealPath().c_str());
+    size_t pos;
+    while ((pos = path.find_first_of("\\")) != std::string::npos)
+    {
+        path.replace(pos, 1, "/");
+    }
+    size_t p = path.find_last_of("/");
+    string workdir;
+    if (p != path.npos)
+    {
+        workdir = path.substr(0, p);
+        FileUtils::getInstance()->addSearchPath(workdir);
+    }
+    
+    // update search pathes
+    FileUtils::getInstance()->addSearchPath(_project.getProjectDir());
+    auto &customizedPathes = _project.getSearchPath();
+    for (auto &path : customizedPathes)
+    {
+        FileUtils::getInstance()->addSearchPath(path);
+    }
+    
+    //
+    if (_project.getDebuggerType() == kCCRuntimeDebuggerNone)
+    {
+        _call = StartupCall::create();
+        _call->startup();
+    }
+    else
+    {
+        startNetwork();
     }
 }
 
@@ -213,7 +255,8 @@ void RuntimeEngine::end()
     }
     ConsoleCommand::purge();
     FileServer::getShareInstance()->stop();
-    //FileServer::purge();
+    ConfigParser::purge();
+//    FileServer::purge();
 }
 
 RuntimeProtocol* RuntimeEngine::getRuntime()
@@ -233,4 +276,27 @@ void RuntimeEngine::showUI()
     auto director = Director::getInstance();
     scene->addChild(connectLayer);
     director->runWithScene(scene);
+}
+
+bool RuntimeEngine::startNetwork()
+{
+    ConsoleCommand::getShareInstance()->init();
+    showUI();
+    
+    return true;
+}
+
+void RuntimeEngine::updateConfigParser()
+{
+    // set entry file
+    auto parser = ConfigParser::getInstance();
+    string entryFile(_project.getScriptFileRealPath());
+    if (entryFile.find(_project.getProjectDir()) != string::npos)
+    {
+        entryFile.erase(0, _project.getProjectDir().length());
+    }
+    std::replace(entryFile.begin(), entryFile.end(), '\\', '/');
+
+    parser->setEntryFile(entryFile);
+    parser->setBindAddress(_project.getBindAddress());
 }

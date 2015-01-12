@@ -45,6 +45,7 @@ const char* getRuntimeVersion();
 //
 // RuntimeEngine
 //
+#include "StartCall.h"
 class RuntimeProtocol;
 class RuntimeEngine
 {
@@ -53,17 +54,23 @@ public:
     
     //
     void setupRuntime();
+    void setProjectConfig(const ProjectConfig &config);
     void setProjectPath(const std::string &path);
-    bool startNetwork();
+    const ProjectConfig &getProjectConfig();
     void startScript(const std::string &args);
+    void start();
     void end();
     
     RuntimeProtocol *getRuntime();
 private:
     RuntimeEngine();
+    bool startNetwork();
     void showUI();
+    void updateConfigParser();
     
     RuntimeProtocol *_runtime;
+    StartupCall *_call;
+    ProjectConfig _project;
 };
 
 #endif // _RUNTIME__H_

@@ -287,8 +287,28 @@ void RuntimeLuaImpl::onReload(const rapidjson::Document &dArgParse, rapidjson::D
 
 void RuntimeLuaImpl::startScript(const std::string& strDebugArg)
 {
-    // register lua engine
     auto engine = LuaEngine::getInstance();
+    auto stack = engine->getLuaStack();
+    
+    const ProjectConfig &project = RuntimeEngine::getInstance()->getProjectConfig();
+    
+    // set search path
+    string path = FileUtils::getInstance()->fullPathForFilename(project.getScriptFileRealPath().c_str());
+    size_t pos;
+    while ((pos = path.find_first_of("\\")) != std::string::npos)
+    {
+        path.replace(pos, 1, "/");
+    }
+    size_t p = path.find_last_of("/");
+    string workdir;
+    if (p != path.npos)
+    {
+        workdir = path.substr(0, p);
+        stack->addSearchPath(workdir.c_str());
+        FileUtils::getInstance()->addSearchPath(workdir);
+    }
+    
+    // register lua engine
     if (!strDebugArg.empty())
     {
         // open debugger.lua module
