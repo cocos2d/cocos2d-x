@@ -6,7 +6,7 @@
 #include <string>
 
 #include "cocos2d.h"
-#include "ConfigParser.h"
+#include "runtime/ConfigParser.h"
 using namespace std;
 
 string getIPAddress()

@@ -25,7 +25,8 @@
 #include "CCLuaEngine.h"
 #include "AppEvent.h"
 #include "AppLang.h"
-#include "ConfigParser.h"
+#include "runtime/ConfigParser.h"
+#include "runtime/Runtime.h"
 
 #include "platform/win32/PlayerWin.h"
 #include "platform/win32/PlayerMenuServiceWin.h"
@@ -231,7 +232,7 @@ int SimulatorWin::run()
 
     // create the application instance
     _app = new AppDelegate();
-    _app->setProjectConfig(_project);
+    RuntimeEngine::getInstance()->setProjectConfig(_project);
 
     // create console window
     if (_project.isShowConsole())
@@ -541,8 +542,7 @@ void SimulatorWin::setupUI()
                 project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
                 project.setWritablePath(dirPath);
 
-                app->setProjectConfig(project);
-                app->reopenProject();
+                RuntimeEngine::getInstance()->setProjectConfig(project);
             }
         }
     });
