@@ -45,10 +45,10 @@ public:
 
     virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
     virtual int getActionTag() const { return _actionTag; }
-protected:
+CC_CONSTRUCTOR_ACCESS:
     ActionTimelineData();
     virtual bool init(int actionTag);
-
+protected:
     int _actionTag;
 };
 
