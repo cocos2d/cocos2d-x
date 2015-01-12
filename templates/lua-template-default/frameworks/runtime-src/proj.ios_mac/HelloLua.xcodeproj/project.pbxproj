@@ -181,6 +181,13 @@
 			remoteGlobalIDString = A07A4C241783777C0073F6A7;
 			remoteInfo = "libcocos2d iOS";
 		};
+		9FEE0E431A5FC95000FEA1B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FF504781A5E86D600AFDA55 /* libsimulator.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F7214341A5C271F00DAED06;
+			remoteInfo = libsimulator;
+		};
 		9FF5047D1A5E86D600AFDA55 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9FF504781A5E86D600AFDA55 /* libsimulator.xcodeproj */;
@@ -201,13 +208,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9F7214841A5C28BA00DAED06;
 			remoteInfo = libsimulator_iOS;
-		};
-		9FF505A81A5F073C00AFDA55 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FF504781A5E86D600AFDA55 /* libsimulator.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 9F7214341A5C271F00DAED06;
-			remoteInfo = libsimulator;
 		};
 		C0A2F04018975FF80072A7AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -690,6 +690,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9FEE0E441A5FC95000FEA1B0 /* PBXTargetDependency */,
 				9FF505C11A5F0F0900AFDA55 /* PBXTargetDependency */,
 				152A34B9199CE758004B68DC /* PBXTargetDependency */,
 				C0A2F04118975FF80072A7AB /* PBXTargetDependency */,
@@ -972,6 +973,11 @@
 			name = "libcocos2d iOS";
 			targetProxy = 15D1F3081994BBCA00302043 /* PBXContainerItemProxy */;
 		};
+		9FEE0E441A5FC95000FEA1B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libsimulator;
+			targetProxy = 9FEE0E431A5FC95000FEA1B0 /* PBXContainerItemProxy */;
+		};
 		9FF504891A5E8B4C00AFDA55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = libsimulator_iOS;
@@ -980,7 +986,6 @@
 		9FF505C11A5F0F0900AFDA55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = libsimulator;
-			targetProxy = 9FF505C01A5F0F0900AFDA55 /* PBXContainerItemProxy */;
 		};
 		C0A2F04118975FF80072A7AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
