@@ -34,18 +34,6 @@
 -- @param self
         
 --------------------------------
--- @overload self, int, bool         
--- @overload self, int         
--- @overload self, int, int, bool         
--- @overload self, int, int, int, bool         
--- @function [parent=#ActionTimeline] gotoFrameAndPlay
--- @param self
--- @param #int startIndex
--- @param #int endIndex
--- @param #int currentFrameIndex
--- @param #bool loop
-
---------------------------------
 -- 
 -- @function [parent=#ActionTimeline] init 
 -- @param self
@@ -56,6 +44,11 @@
 -- @function [parent=#ActionTimeline] removeTimeline 
 -- @param self
 -- @param #ccs.Timeline timeline
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
+-- @param self
         
 --------------------------------
 --  Last frame callback will call when arriving last frame 
@@ -73,8 +66,15 @@
 -- 
 -- @function [parent=#ActionTimeline] play 
 -- @param self
--- @param #string name
+-- @param #string animationName
 -- @param #bool loop
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] getAnimationInfo 
+-- @param self
+-- @param #string animationName
+-- @return AnimationInfo#AnimationInfo ret (return value: ccs.AnimationInfo)
         
 --------------------------------
 --  Resume the animation. 
@@ -82,10 +82,22 @@
 -- @param self
         
 --------------------------------
+-- 
+-- @function [parent=#ActionTimeline] removeAnimationInfo 
+-- @param self
+-- @param #string animationName
+        
+--------------------------------
 --  Get current animation speed. 
 -- @function [parent=#ActionTimeline] getTimeSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+--  AnimationInfo
+-- @function [parent=#ActionTimeline] addAnimationInfo 
+-- @param self
+-- @param #ccs.AnimationInfo animationInfo
         
 --------------------------------
 -- 
@@ -107,15 +119,23 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#ActionTimeline] removeIndexes 
+-- @overload self, int, bool         
+-- @overload self, int         
+-- @overload self, int, int, bool         
+-- @overload self, int, int, int, bool         
+-- @function [parent=#ActionTimeline] gotoFrameAndPlay
 -- @param self
--- @param #string name
-        
+-- @param #int startIndex
+-- @param #int endIndex
+-- @param #int currentFrameIndex
+-- @param #bool loop
+
 --------------------------------
 -- 
--- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
+-- @function [parent=#ActionTimeline] IsAnimationInfoExists 
 -- @param self
+-- @param #string animationName
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  End frame of this action.<br>
@@ -124,12 +144,6 @@
 -- @function [parent=#ActionTimeline] getEndFrame 
 -- @param self
 -- @return int#int ret (return value: int)
-        
---------------------------------
---  Set current frame index, this will cause action plays to this frame. 
--- @function [parent=#ActionTimeline] setCurrentFrame 
--- @param self
--- @param #int frameIndex
         
 --------------------------------
 --  Set the animation speed, this will speed up or slow down the speed. 
@@ -149,10 +163,10 @@
 -- @param #int duration
         
 --------------------------------
---  add ActionIndexes 
--- @function [parent=#ActionTimeline] addIndexes 
+--  Set current frame index, this will cause action plays to this frame. 
+-- @function [parent=#ActionTimeline] setCurrentFrame 
 -- @param self
--- @param #ccs.ActionIndexes indexes
+-- @param #int frameIndex
         
 --------------------------------
 -- 
