@@ -226,9 +226,10 @@ void RuntimeEngine::startScript(const std::string &args)
 
 void RuntimeEngine::start()
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     _project.setDebuggerType(kCCRuntimeDebuggerCodeIDE);
 #endif
+    
     // set search path
     string path = FileUtils::getInstance()->fullPathForFilename(_project.getScriptFileRealPath().c_str());
     size_t pos;
