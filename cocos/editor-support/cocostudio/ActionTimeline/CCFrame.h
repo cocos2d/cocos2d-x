@@ -263,13 +263,27 @@ public:
 
     inline void setInnerActionType(InnerActionType type) { _innerActionType = type; }
     inline InnerActionType getInnerActionType() const { return _innerActionType; }
-
-    inline void setStartFrameIndex(int frameIndex) { _startFrameIndex = frameIndex; }
+    
+    inline void setEnterWithName(bool isEnterWithName) { _enterWithName = isEnterWithName;}
+    
+    void setStartFrameIndex(int frameIndex)  throw();
     inline int  getStartFrameIndex() const { return _startFrameIndex; }
+
+    void setEndFrameIndex(int frameIndex)  throw();
+    inline int  getEndFrameIndex() const { return _endFrameIndex; }
+    
+    void setAnimationName(const std::string& animationNamed)  throw();
+    
+    inline void setSingleFrameIndex(int frameIndex) { _singleFrameIndex = frameIndex;}
+    inline int  getSingleFrameIndex() const { return _singleFrameIndex;}
 
 protected:
     InnerActionType _innerActionType;
     int _startFrameIndex;
+    int _endFrameIndex;
+    int _singleFrameIndex;
+    std::string _animationName;
+    bool _enterWithName;
 };
 
 
@@ -299,6 +313,23 @@ protected:
     int _betweenBlue;
 };
 
+class CC_STUDIO_DLL AlphaFrame : public Frame
+{
+public:
+    static AlphaFrame* create();
+    AlphaFrame();
+
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
+    virtual Frame* clone() override;
+
+    inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
+    inline GLubyte getAlpha() const { return _alpha; }
+
+protected:
+    GLubyte _alpha;
+    int _betweenAlpha;
+};
 
 class CC_STUDIO_DLL EventFrame : public Frame
 {
