@@ -549,8 +549,16 @@ Frame* InnerActionFrame::clone()
 {
     InnerActionFrame* frame = InnerActionFrame::create();
     frame->setInnerActionType(_innerActionType);
-    frame->setStartFrameIndex(_startFrameIndex);
-    frame->setEndFrameIndex(_endFrameIndex);
+    if(_enterWithName)
+    {
+        frame->setEnterWithName(true);
+        frame->setAnimationName(_animationName);
+    }
+    else
+    {
+        frame->setStartFrameIndex(_startFrameIndex);
+        frame->setEndFrameIndex(_endFrameIndex);
+    }
     frame->cloneProperty(this);
 
     return frame;

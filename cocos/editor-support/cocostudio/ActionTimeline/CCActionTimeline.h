@@ -134,7 +134,7 @@ public:
 
     virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
     
-    /** add ActionIndexes*/
+    /** AnimationInfo*/
     virtual void addAnimationInfo(const AnimationInfo& animationInfo);
     virtual void removeAnimationInfo(std::string animationName);
     virtual bool IsAnimationInfoExists(const std::string& animationName);
