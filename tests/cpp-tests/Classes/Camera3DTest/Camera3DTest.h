@@ -52,6 +52,13 @@ enum class CameraType
     FirstCamera=1,
     ThirdCamera=2,
 };
+
+enum class OperateCamType
+{
+    MoveCamera=0,
+    RotateCamera=1,
+};
+
 class Camera3DTestDemo : public BaseTest
 {
 public:
@@ -146,6 +153,84 @@ protected:
     DrawNode3D*             _drawAABB;
     DrawNode3D*             _drawFrustum;
     int                     _row;
+};
+
+class CameraArcBallDemo : public BaseTest
+{
+public:
+    CREATE_FUNC(CameraArcBallDemo);
+    CameraArcBallDemo(void);
+    virtual ~CameraArcBallDemo(void);
+    
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual void update(float dt) override;
+    
+    // overrides
+    virtual std::string title() const override;
+
+    void switchOperateCallback(Ref* sender);
+    void switchTargetCallback(Ref* sender);
+    void onTouchsMoved(const std::vector<cocos2d::Touch*> &touchs, cocos2d::Event *event);
+    void updateCameraTransform();
+    void calculateArcBall( cocos2d::Vec3 & axis, float & angle, float p1x, float p1y, float p2x, float p2y );//calculate  rotation quaternion parameters
+    float projectToSphere( float r, float x, float y );//points on the screen project to arc ball
+
+protected:
+    Layer*                  _layer3D;
+    CameraType              _cameraType;
+    Camera*                 _camera;
+    DrawNode3D*             _drawGrid;
+    Quaternion              _rotationQuat;      //rotation Quaternion
+    float                   _radius;            //arc ball radius
+    float                   _distanceZ;
+    OperateCamType          _operate;           //switch rotate or zoom
+    Vec3                    _center;            //camera look target
+    int                     _target;            //switch camera look target
+    Sprite3D*               _sprite3D1;
+    Sprite3D*               _sprite3D2;
+};
+
+class FogTestDemo : public BaseTest
+{
+public:
+    CREATE_FUNC(FogTestDemo);
+    FogTestDemo(void);
+    virtual ~FogTestDemo(void);
+    
+    void restartCallback(Ref* sender);
+    void nextCallback(Ref* sender);
+    void backCallback(Ref* sender);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual void update(float dt) override;
+    
+    // overrides
+    virtual std::string title() const override;
+
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+
+    void switchTypeCallback(Ref* sender,int type);
+    
+protected:
+    Layer*                  _layer3D;
+    CameraType              _cameraType;
+    Camera*                 _camera;
+    Sprite3D*               _sprite3D1;
+    Sprite3D*               _sprite3D2;
+    GLProgram*              _shader;
+    GLProgramState*         _state;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class Camera3DTestScene : public TestScene
