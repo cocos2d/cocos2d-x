@@ -2363,7 +2363,8 @@ int lua_cocos2dx_Node_setRotationQuat(lua_State* tolua_S)
             
             if (!ok) { break; }
             cobj->setRotationQuat(arg0);
-            return 0;
+            lua_settop(L, 1);
+            return 1;
         }
     }while(0);
     
