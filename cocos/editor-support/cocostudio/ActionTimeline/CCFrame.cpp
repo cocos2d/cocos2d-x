@@ -453,6 +453,8 @@ Frame* AnchorPointFrame::clone()
 
 
 // InnerActionFrame
+const std::string InnerActionFrame::AnimationAllName = "-- ALL --";
+
 InnerActionFrame* InnerActionFrame::create()
 {
     InnerActionFrame* frame = new (std::nothrow) InnerActionFrame();
@@ -466,9 +468,12 @@ InnerActionFrame* InnerActionFrame::create()
 }
 
 InnerActionFrame::InnerActionFrame()
-    : _innerActionType(LoopAction)
-    , _startFrameIndex(0)
-    , _endFrameIndex(0)
+: _innerActionType(InnerActionType::SingleFrame)
+, _startFrameIndex(0)
+, _endFrameIndex(0)
+, _singleFrameIndex(0)
+, _enterWithName(false)
+, _animationName("")
 {
 
 }
@@ -486,7 +491,7 @@ void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     
     if (_enterWithName)
     {
-        if (_animationName == "-- ALL --")
+        if (_animationName == AnimationAllName)
         {
             start = 0;
             end = actiontimeline->getDuration();
