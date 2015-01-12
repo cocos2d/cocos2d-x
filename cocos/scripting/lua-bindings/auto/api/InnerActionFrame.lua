@@ -6,9 +6,39 @@
 
 --------------------------------
 -- 
+-- @function [parent=#InnerActionFrame] getEndFrameIndex 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#InnerActionFrame] getStartFrameIndex 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
 -- @function [parent=#InnerActionFrame] getInnerActionType 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#InnerActionFrame] setEndFrameIndex 
+-- @param self
+-- @param #int frameIndex
+        
+--------------------------------
+-- 
+-- @function [parent=#InnerActionFrame] setEnterWithName 
+-- @param self
+-- @param #bool isEnterWithName
+        
+--------------------------------
+-- 
+-- @function [parent=#InnerActionFrame] setSingleFrameIndex 
+-- @param self
+-- @param #int frameIndex
         
 --------------------------------
 -- 
@@ -18,15 +48,21 @@
         
 --------------------------------
 -- 
+-- @function [parent=#InnerActionFrame] getSingleFrameIndex 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
 -- @function [parent=#InnerActionFrame] setInnerActionType 
 -- @param self
 -- @param #int type
         
 --------------------------------
 -- 
--- @function [parent=#InnerActionFrame] getStartFrameIndex 
+-- @function [parent=#InnerActionFrame] setAnimationName 
 -- @param self
--- @return int#int ret (return value: int)
+-- @param #string animationNamed
         
 --------------------------------
 -- 
