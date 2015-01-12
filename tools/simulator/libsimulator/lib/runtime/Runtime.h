@@ -45,7 +45,7 @@ const char* getRuntimeVersion();
 //
 // RuntimeEngine
 //
-#include "StartCall.h"
+#include "ProjectConfig/ProjectConfig.h"
 class RuntimeProtocol;
 class RuntimeEngine
 {
@@ -60,6 +60,7 @@ public:
     void startScript(const std::string &args);
     void start();
     void end();
+    void setEventTrackingEnable(bool enable);
     
     RuntimeProtocol *getRuntime();
 private:
@@ -68,9 +69,14 @@ private:
     void showUI();
     void updateConfigParser();
     
+    // 
+    void trackEvent(const std::string &eventName);
+    void trackLaunchEvent();
+    
     RuntimeProtocol *_runtime;
-    StartupCall *_call;
     ProjectConfig _project;
+    bool _eventTrackingEnable;  // false default
+    std::string _launchEvent;
 };
 
 #endif // _RUNTIME__H_

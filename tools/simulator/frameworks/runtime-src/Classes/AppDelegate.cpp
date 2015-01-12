@@ -58,6 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register_custom_function(stack->getLuaState());
     
     // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
+    RuntimeEngine::getInstance()->setEventTrackingEnable(true);
     RuntimeEngine::getInstance()->start();
     
 	cocos2d::log("iShow!");
@@ -79,4 +80,3 @@ void AppDelegate::applicationWillEnterForeground()
 
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
-

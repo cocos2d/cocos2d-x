@@ -18,9 +18,6 @@
 		9F2F21C51A635F1C006B8BF1 /* RuntimeProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2F21BC1A635F1C006B8BF1 /* RuntimeProtocol.h */; };
 		9F2F21C71A635FFF006B8BF1 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21C61A635FFF006B8BF1 /* Runtime_ios-mac.mm */; };
 		9F2F21C81A635FFF006B8BF1 /* Runtime_ios-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21C61A635FFF006B8BF1 /* Runtime_ios-mac.mm */; };
-		9F2F21CF1A63640B006B8BF1 /* StartCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21CD1A63640B006B8BF1 /* StartCall.cpp */; };
-		9F2F21D01A63640B006B8BF1 /* StartCall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21CD1A63640B006B8BF1 /* StartCall.cpp */; };
-		9F2F21D11A63640B006B8BF1 /* StartCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2F21CE1A63640B006B8BF1 /* StartCall.h */; };
 		9FB638641A635BA300AAEC43 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FB638201A635BA300AAEC43 /* config.h */; };
 		9FB638651A635BA300AAEC43 /* extension_set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638231A635BA300AAEC43 /* extension_set.cc */; };
 		9FB638661A635BA300AAEC43 /* extension_set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638231A635BA300AAEC43 /* extension_set.cc */; };
@@ -178,8 +175,6 @@
 		9F2F21BB1A635F1C006B8BF1 /* RuntimeProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeProtocol.cpp; sourceTree = "<group>"; };
 		9F2F21BC1A635F1C006B8BF1 /* RuntimeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeProtocol.h; sourceTree = "<group>"; };
 		9F2F21C61A635FFF006B8BF1 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = "<group>"; };
-		9F2F21CD1A63640B006B8BF1 /* StartCall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartCall.cpp; sourceTree = "<group>"; };
-		9F2F21CE1A63640B006B8BF1 /* StartCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCall.h; sourceTree = "<group>"; };
 		9F7214351A5C271F00DAED06 /* liblibsimulator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibsimulator.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F7214851A5C28BA00DAED06 /* liblibsimulator_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibsimulator_iOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB638201A635BA300AAEC43 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -428,8 +423,6 @@
 				9FB6385E1A635BA300AAEC43 /* ResData.h */,
 				9FB6385F1A635BA300AAEC43 /* Runtime.cpp */,
 				9FB638601A635BA300AAEC43 /* Runtime.h */,
-				9F2F21CD1A63640B006B8BF1 /* StartCall.cpp */,
-				9F2F21CE1A63640B006B8BF1 /* StartCall.h */,
 				9F2F21B71A635F1C006B8BF1 /* RuntimeCCSImpl.cpp */,
 				9F2F21B81A635F1C006B8BF1 /* RuntimeCCSImpl.h */,
 				9F2F21B91A635F1C006B8BF1 /* RuntimeLuaImpl.cpp */,
@@ -576,7 +569,6 @@
 				9FB638B71A635BA300AAEC43 /* Runtime.h in Headers */,
 				9FF504BD1A5EA75D00AFDA55 /* PlayerSettings.h in Headers */,
 				9FF504B61A5EA75D00AFDA55 /* PlayerMenuServiceProtocol.h in Headers */,
-				9F2F21D11A63640B006B8BF1 /* StartCall.h in Headers */,
 				9FD6FC361A5D281D0028EDC6 /* ProjectConfig.h in Headers */,
 				9FB6386A1A635BA300AAEC43 /* generated_message_util.h in Headers */,
 				9FD6FC651A5D2A380028EDC6 /* PlayerFileDialogServiceMac.h in Headers */,
@@ -719,7 +711,6 @@
 				9F2F21C71A635FFF006B8BF1 /* Runtime_ios-mac.mm in Sources */,
 				9FB6386B1A635BA300AAEC43 /* coded_stream.cc in Sources */,
 				9FF504B51A5EA75D00AFDA55 /* PlayerMenuServiceProtocol.cpp in Sources */,
-				9F2F21CF1A63640B006B8BF1 /* StartCall.cpp in Sources */,
 				9FF504AD1A5EA75D00AFDA55 /* AppEvent.cpp in Sources */,
 				9FB638A61A635BA300AAEC43 /* Landscape_png.cpp in Sources */,
 				9FD6FC601A5D2A380028EDC6 /* DeviceEx-mac.mm in Sources */,
@@ -778,7 +769,6 @@
 				9F2F21BE1A635F1C006B8BF1 /* RuntimeCCSImpl.cpp in Sources */,
 				9FB638A71A635BA300AAEC43 /* Landscape_png.cpp in Sources */,
 				9FB638921A635BA300AAEC43 /* stringprintf.cc in Sources */,
-				9F2F21D01A63640B006B8BF1 /* StartCall.cpp in Sources */,
 				9FB638971A635BA300AAEC43 /* wire_format_lite.cc in Sources */,
 				9F2F21C11A635F1C006B8BF1 /* RuntimeLuaImpl.cpp in Sources */,
 			);
