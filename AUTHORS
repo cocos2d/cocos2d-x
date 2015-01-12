@@ -1068,6 +1068,9 @@ Developers:
     
     takaokato
         Fix wrong result in Node:getParenttoNodeTransform() if node is transformed
+    
+    AknEp
+        Fix FileUtils::fullPathForFilename return empty string if file not found
 
 Retired Core Developers:
     WenSheng Yang
