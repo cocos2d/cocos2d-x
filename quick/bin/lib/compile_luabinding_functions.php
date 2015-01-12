@@ -105,6 +105,66 @@ EOT;
     $replace = '';
     $rules[$find] = $replace;
 
+    // fix Vec2
+    $find = <<<EOT
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((Vec2)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"Vec2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Vec2));
+     tolua_pushusertype(tolua_S,tolua_obj,"Vec2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+EOT;
+    $replace = '      vec2_to_luaval(tolua_S, tolua_ret);';
+    $rules[$find] = $replace;
+
+    $find = <<<EOT
+static int tolua_collect_Vec2 (lua_State* tolua_S)
+{
+ Vec2* self = (Vec2*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+EOT;
+    $replace = '';
+    $rules[$find] = $replace;
+
+    $find = 'tolua_usertype(tolua_S,"Vec2");';
+    $replace = '';
+    $rules[$find] = $replace;
+
+    // fix Rect
+    $find = <<<EOT
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((Rect)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"Rect");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Rect));
+     tolua_pushusertype(tolua_S,tolua_obj,"Rect");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+EOT;
+    $replace = '      rect_to_luaval(tolua_S, tolua_ret);';
+    $rules[$find] = $replace;
+
+    $find = <<<EOT
+static int tolua_collect_Rect (lua_State* tolua_S)
+{
+ Rect* self = (Rect*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+EOT;
+    $replace = '';
+    $rules[$find] = $replace;
+
+    $find = 'tolua_usertype(tolua_S,"Rect");';
+    $replace = '';
+    $rules[$find] = $replace;
+
     $find = <<<EOT
 {
 #ifdef __cplusplus
