@@ -102,5 +102,3 @@ const char * Font::getCurrentGlyphCollection() const
 
 
 NS_CC_END
-
-

@@ -712,4 +712,3 @@ void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
 }
 
 NS_CC_END
-

@@ -383,12 +383,12 @@ void RenderTexture::clearStencil(int stencilValue)
 void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // override visit.
-	// Don't call visit on its children
+    // Don't call visit on its children
     if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }
-	
+    
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     Director* director = Director::getInstance();
