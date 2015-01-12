@@ -65,6 +65,12 @@ public:
     void restartCallback(Ref* sender);
     void nextCallback(Ref* sender);
     void backCallback(Ref* sender);
+    
+protected:
+    BillBoard* bill1;
+    BillBoard* bill2;
+    Label* l1;
+    Label* l2;
 };
 
 class CameraRotationTest : public CameraBaseTest {

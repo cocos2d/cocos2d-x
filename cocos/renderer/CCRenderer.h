@@ -54,9 +54,12 @@ public:
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
+    ssize_t getOpaqueQueueSize() const { return _queue3DOpaque.size(); }
+    const std::vector<RenderCommand*>& getOpaqueCommands() const { return _queue3DOpaque; }
 
 protected:
-    std::vector<RenderCommand*> _queueOpaque;
+    std::vector<RenderCommand*> _queue3DOpaque;
+    std::vector<RenderCommand*> _queue3DTransparent;
     std::vector<RenderCommand*> _queueNegZ;
     std::vector<RenderCommand*> _queue0;
     std::vector<RenderCommand*> _queuePosZ;
@@ -167,6 +170,7 @@ protected:
     void flushQuads();
     void flushTriangles();
 
+    void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(const RenderQueue& queue);
     
     void visitTransparentRenderQueue(const TransparentRenderQueue& queue);

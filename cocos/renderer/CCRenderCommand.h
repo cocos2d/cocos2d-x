@@ -68,6 +68,10 @@ public:
     inline bool isSkipBatching() const { return _skipBatching; }
 
     inline void setSkipBatching(bool value) { _skipBatching = value; }
+    
+    inline bool is3D() { return _is3D; }
+    
+    inline void set3D(bool value) { _is3D = value; }
 
 protected:
     RenderCommand();
@@ -85,8 +89,10 @@ protected:
     bool  _isTransparent;
 
     // skip auto batching
-    //TODO move this to BatchCommands
     bool _skipBatching;
+    
+    // is the command been rendered on 3D pass
+    bool _is3D;
 };
 
 NS_CC_END

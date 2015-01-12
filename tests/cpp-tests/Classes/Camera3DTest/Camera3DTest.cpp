@@ -124,29 +124,58 @@ CameraRotationTest::CameraRotationTest()
     _camControlNode->addChild(_camNode);
 
     //Sprites
-    auto sp1 = Sprite::create("Images/grossini.png");
-    addChild(sp1);
-    sp1->setPosition(s.width/2, s.height/2);
+//    auto sp1 = Sprite::create("Images/grossini.png");
+//    addChild(sp1);
+//    sp1->setPosition(s.width/2, s.height/2);
 
-    auto sp2 = Sprite::create("Images/grossinis_sister1.png");
-//    sp2->setPosition(40, 40);
-    sp1->addChild(sp2);
+//    auto sp2 = Sprite::create("Images/grossini.png");
+//    sp1->addChild(sp2);
+//
+//    //Yellow is at the back
+//    auto sp4 = Sprite::create("Images/grossinis_sister1.png");
+//    sp4->setColor(Color3B::YELLOW);
+//    sp4->setPosition(10, -10);
+//    sp4->setGlobalZOrder(-2);
+//    sp1->addChild(sp4);
+//    
+//    auto sp3 = Sprite::create("Images/grossinis_sister2.png");
+//    sp3->setPosition(-10, -5);
+//    sp3->setGlobalZOrder(2);
+//    sp1->addChild(sp3);
 
+    
     //Billboards
-    auto bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(s.width/2 + 30, s.height/2 + 10, -10));
-    bill1->setColor(Color3B::RED);
+    //Yellow is at the back
+    bill1 = BillBoard::create("Images/Icon.png");
+    bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
+    bill1->setColor(Color3B::YELLOW);
     bill1->setScale(0.6);
-//    addChild(bill1);
+    addChild(bill1);
+    
+    l1 = Label::create();
+    l1->setName("depth");
+    l1->setPosition(Vec2(0,-10));
+    l1->setString("Depth");
+    l1->setColor(Color3B::WHITE);
+    l1->setScale(3);
+    bill1->addChild(l1);
 
-    auto sp3 = Sprite::create("Images/grossinis_sister2.png");
-    sp3->setPosition(10, 10);
-    bill1->addChild(sp3);
+//    auto sp3Child = Sprite::create("Images/grossinis_sister2.png");
+//    sp3Child->setPosition(10, 10);
+//    bill1->addChild(sp3Child);
 
-    auto bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(s.width/2 - 30, s.height/2 - 10, -10));
+    bill2 = BillBoard::create("Images/Icon.png");
+    bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
     bill2->setScale(0.6);
-//    addChild(bill2);
+    addChild(bill2);
+    
+    l2 = Label::create();
+    l2->setName("depth");
+    l2->setString("Depth");
+    l2->setPosition(Vec2(0,-10));
+    l2->setColor(Color3B::WHITE);
+    l2->setScale(3);
+    bill2->addChild(l2);
 
     //3D models
     auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
@@ -175,6 +204,8 @@ CameraRotationTest::CameraRotationTest()
     };
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_lis, this);
+    
+    schedule(schedule_selector(CameraRotationTest::update));
 }
 
 CameraRotationTest::~CameraRotationTest()
@@ -199,6 +230,8 @@ void CameraRotationTest::onExit()
 
 void CameraRotationTest::update(float dt)
 {
+    l1->setString(std::to_string(bill1->getZDepth()));
+    l2->setString(std::to_string(bill2->getZDepth()));
 }
 
 //------------------------------------------------------------------

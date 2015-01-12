@@ -75,9 +75,11 @@ static Layer* restartSpriteTestAction()
 BillBoardTest::BillBoardTest()
 :  _camera(nullptr)
 {
+    //Create touch listener
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(BillBoardTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto layer3D=Layer::create();
     addChild(layer3D,0);
     _layerBillBorad=layer3D;
@@ -89,6 +91,7 @@ BillBoardTest::BillBoardTest()
         _layerBillBorad->addChild(_camera);
     }
 
+    //Create rotating billboards
     std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
     for (unsigned int i = 0; i < 4; ++i)
     {
@@ -101,7 +104,7 @@ BillBoardTest::BillBoardTest()
         _billboards.push_back(billboard);
         layer->addChild(billboard);
         _layerBillBorad->addChild(layer);
-        layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1(), Vec3(0.0f, 45.0f, 0.0f) ) ) );
+        layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1() * 10, Vec3(0.0f, 45.0f, 0.0f) ) ) );
     }
 
     {
@@ -127,11 +130,13 @@ BillBoardTest::BillBoardTest()
     addNewBillBoradWithCoords(Vec3(100,5,0));
     addNewBillBoradWithCoords(Vec3(140,5,0));
     addNewBillBoradWithCoords(Vec3(180,5,0));
+    
     addNewAniBillBoradWithCoords(Vec3(-20,0,0));
     addNewAniBillBoradWithCoords(Vec3(-60,0,0));
     addNewAniBillBoradWithCoords(Vec3(-100,0,0));
     addNewAniBillBoradWithCoords(Vec3(-140,0,0));
     addNewAniBillBoradWithCoords(Vec3(-180,0,0));
+    
     _camera->setPosition3D(Vec3(0, 100, 230));
     _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
 
@@ -158,6 +163,8 @@ BillBoardTest::BillBoardTest()
     menu->setPosition(Vec2(0,0));
     this->addChild(menu, 10);
     menuCallback_orientedPoint(nullptr);
+    
+    schedule(schedule_selector(BillBoardTest::update));
 }
 
 void BillBoardTest::menuCallback_orientedPoint(Ref* sender)
@@ -183,7 +190,7 @@ BillBoardTest::~BillBoardTest()
 }
 std::string BillBoardTest::title() const
 {
-    return "Testing BillBoard";
+    return "BillBoard Test";
 }
 std::string BillBoardTest::subtitle() const
 {
@@ -199,6 +206,7 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
         billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
         billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        
         _layerBillBorad->addChild(billborad);
         _billboards.push_back(billborad);
     }
@@ -232,7 +240,6 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 }
 void BillBoardTest::update(float dt)
 {
-
 }
 void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {

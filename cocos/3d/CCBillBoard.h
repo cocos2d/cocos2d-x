@@ -90,6 +90,9 @@ public:
     //override
     /** draw BillBoard object */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    
+    //TODO: Delete this later
+    float getZDepth() { return _zDepthInView; }
 
 
 CC_CONSTRUCTOR_ACCESS:

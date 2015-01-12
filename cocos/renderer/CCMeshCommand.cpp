@@ -123,7 +123,7 @@ void MeshCommand::init(float globalOrder,
     _indexFormat = indexFormat;
     _indexCount = indexCount;
     _mv.set(mv);
-
+    _is3D = true;
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)

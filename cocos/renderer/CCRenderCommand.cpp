@@ -32,6 +32,7 @@ RenderCommand::RenderCommand()
 , _globalOrder(0)
 , _isTransparent(true)
 , _skipBatching(false)
+, _is3D(false)
 {
 }
 

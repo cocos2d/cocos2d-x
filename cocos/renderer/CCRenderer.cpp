@@ -51,13 +51,27 @@ static bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
     return a->getGlobalOrder() < b->getGlobalOrder();
 }
 
+static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
+{
+    return a->getGlobalOrder() > b->getGlobalOrder();
+}
+
 // queue
 
 void RenderQueue::push_back(RenderCommand* command)
 {
     float z = command->getGlobalOrder();
-    if(!command->isTransparent())
-        _queueOpaque.push_back(command);
+    if(command->is3D())
+    {
+        if(command->isTransparent())
+        {
+            _queue3DTransparent.push_back(command);
+        }
+        else
+        {
+            _queue3DOpaque.push_back(command);
+        }
+    }
     else if(z < 0)
         _queueNegZ.push_back(command);
     else if(z > 0)
@@ -68,23 +82,29 @@ void RenderQueue::push_back(RenderCommand* command)
 
 ssize_t RenderQueue::size() const
 {
-    return _queueOpaque.size() + _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
+    return _queue3DOpaque.size() + _queue3DTransparent.size() + _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
 }
 
 void RenderQueue::sort()
 {
     // Don't sort _queue0, it already comes sorted
+    std::sort(std::begin(_queue3DTransparent), std::end(_queue3DTransparent), compare3DCommand);
     std::sort(std::begin(_queueNegZ), std::end(_queueNegZ), compareRenderCommand);
     std::sort(std::begin(_queuePosZ), std::end(_queuePosZ), compareRenderCommand);
 }
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    if(index < static_cast<ssize_t>(_queueOpaque.size()))
-        return _queueOpaque[index];
+    if(index < static_cast<ssize_t>(_queue3DOpaque.size()))
+        return _queue3DOpaque[index];
 
-    index -= _queueOpaque.size();
+    index -= _queue3DOpaque.size();
 
+    if(index < static_cast<ssize_t>(_queue3DTransparent.size()))
+        return _queue3DTransparent[index];
+    
+    index -= _queue3DTransparent.size();
+    
     if(index < static_cast<ssize_t>(_queueNegZ.size()))
         return _queueNegZ[index];
 
@@ -104,7 +124,8 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
-    _queueOpaque.clear();
+    _queue3DOpaque.clear();
+    _queue3DTransparent.clear();
     _queueNegZ.clear();
     _queue0.clear();
     _queuePosZ.clear();
@@ -358,124 +379,156 @@ int Renderer::createRenderQueue()
     return (int)_renderGroups.size() - 1;
 }
 
+void Renderer::processRenderCommand(RenderCommand* command)
+{
+    auto commandType = command->getType();
+    if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+    {
+        //Draw if we have batched other commands which are not triangle command
+        flush3D();
+        flushQuads();
+        
+        //Process triangle command
+        auto cmd = static_cast<TrianglesCommand*>(command);
+        
+        //Draw batched Triangles if necessary
+        if(cmd->isSkipBatching() || _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+        {
+            CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+            CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
+            //Draw batched Triangles if VBO is full
+            drawBatchedTriangles();
+        }
+        
+        //Batch Triangles
+        _batchedCommands.push_back(cmd);
+        
+        fillVerticesAndIndices(cmd);
+        
+        if(cmd->isSkipBatching())
+        {
+            drawBatchedTriangles();
+        }
+        
+    }
+    else if ( RenderCommand::Type::QUAD_COMMAND == commandType )
+    {
+        //Draw if we have batched other commands which are not quad command
+        flush3D();
+        flushTriangles();
+        
+        //Process quad command
+        auto cmd = static_cast<QuadCommand*>(command);
+        
+        //Draw batched quads if necessary
+        if(cmd->isSkipBatching()|| (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
+        {
+            CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+            //Draw batched quads if VBO is full
+            drawBatchedQuads();
+        }
+        
+        //Batch Quads
+        _batchQuadCommands.push_back(cmd);
+        
+        fillQuads(cmd);
+        
+        if(cmd->isSkipBatching())
+        {
+            drawBatchedQuads();
+        }
+    }
+    else if (RenderCommand::Type::MESH_COMMAND == commandType)
+    {
+        flush2D();
+        auto cmd = static_cast<MeshCommand*>(command);
+        
+        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+        {
+            flush3D();
+            
+            if(cmd->isSkipBatching())
+            {
+                cmd->execute();
+            }
+            else
+            {
+                cmd->preBatchDraw();
+                cmd->batchDraw();
+                _lastBatchedMeshCommand = cmd;
+            }
+        }
+        else
+        {
+            cmd->batchDraw();
+        }
+    }
+    else if(RenderCommand::Type::GROUP_COMMAND == commandType)
+    {
+        flush();
+        int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+        visitRenderQueue(_renderGroups[renderQueueID]);
+    }
+    else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
+    {
+        flush();
+        auto cmd = static_cast<CustomCommand*>(command);
+        cmd->execute();
+    }
+    else if(RenderCommand::Type::BATCH_COMMAND == commandType)
+    {
+        flush();
+        auto cmd = static_cast<BatchCommand*>(command);
+        cmd->execute();
+    }
+    else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
+    {
+        flush();
+        auto cmd = static_cast<PrimitiveCommand*>(command);
+        cmd->execute();
+    }
+    else
+    {
+        CCLOGERROR("Unknown commands in renderQueue");
+    }
+}
+
 void Renderer::visitRenderQueue(const RenderQueue& queue)
 {
     ssize_t size = queue.size();
     
-    for (ssize_t index = 0; index < size; ++index)
+    //Process Opaque Object
+    const std::vector<RenderCommand*>& opaqueQueue = queue.getOpaqueCommands();
+    if (opaqueQueue.size() > 0)
     {
-        auto command = queue[index];
-        auto commandType = command->getType();
-        if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
-        {
-            //Draw if we have batched other commands which are not triangle command
-            flush3D();
-            flushQuads();
-
-            //Process triangle command
-            auto cmd = static_cast<TrianglesCommand*>(command);
-
-            //Draw batched Triangles if necessary
-            if(cmd->isSkipBatching() || _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
-            {
-                CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-                CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
-                //Draw batched Triangles if VBO is full
-                drawBatchedTriangles();
-            }
-
-            //Batch Triangles
-            _batchedCommands.push_back(cmd);
-            
-            fillVerticesAndIndices(cmd);
-
-            if(cmd->isSkipBatching())
-            {
-                drawBatchedTriangles();
-            }
-
+        glDepthMask(true);
+        glEnable(GL_DEPTH_TEST);
+        
+        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it) {
+            processRenderCommand(*it);
         }
-        else if ( RenderCommand::Type::QUAD_COMMAND == commandType )
-        {
-            //Draw if we have batched other commands which are not quad command
-            flush3D();
-            flushTriangles();
-
-            //Process quad command
-            auto cmd = static_cast<QuadCommand*>(command);
-
-            //Draw batched quads if necessary
-            if(cmd->isSkipBatching()|| (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
-            {
-                CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-                //Draw batched quads if VBO is full
-                drawBatchedQuads();
-            }
-
-            //Batch Quads
-            _batchQuadCommands.push_back(cmd);
-            
-            fillQuads(cmd);
-
-            if(cmd->isSkipBatching())
-            {
-                drawBatchedQuads();
-            }
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            flush2D();
-            auto cmd = static_cast<MeshCommand*>(command);
-
-            if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
-            {
-                flush3D();
-
-                if(cmd->isSkipBatching())
-                {
-                    cmd->execute();
-                }
-                else
-                {
-                    cmd->preBatchDraw();
-                    cmd->batchDraw();
-                    _lastBatchedMeshCommand = cmd;
-                }
-            }
-            else
-            {
-                cmd->batchDraw();
-            }
-        }
-        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-        {
-            flush();
-            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-        }
-        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<CustomCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<BatchCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            cmd->execute();
-        }
-        else
-        {
-            CCLOGERROR("Unknown commands in renderQueue");
-        }
+        
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(false);
     }
+    flush();
+    
+    //Setup Transparent rendering
+    if (opaqueQueue.size() > 0)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    //Process Transparent Object
+    for (ssize_t index = queue.getOpaqueQueueSize(); index < size; ++index)
+    {
+        processRenderCommand(queue[index]);
+    }
+    flush();
 }
 
 void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
@@ -554,7 +607,6 @@ void Renderer::render()
             renderqueue.sort();
         }
         visitRenderQueue(_renderGroups[0]);
-        flush();
         
         //Process render commands
         //draw transparent objects here, do not batch for transparent objects
@@ -597,12 +649,13 @@ void Renderer::clean()
 
 void Renderer::clear()
 {
+    //Enable Depth mask to make sure glClear clear the depth buffer correctly
     glDepthMask(true);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDepthMask(false);
 }
 
-    void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
+void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
     memcpy(_verts + _filledVertex, cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
     const Mat4& modelView = cmd->getModelView();
@@ -859,12 +912,8 @@ void Renderer::flush()
 
 void Renderer::flush2D()
 {
-    glEnable(GL_DEPTH_TEST);
-    drawBatchedQuads();
-    _lastMaterialID = 0;
-    drawBatchedTriangles();
-    _lastMaterialID = 0;
-    glDisable(GL_DEPTH_TEST);
+    flushQuads();
+    flushTriangles();
 }
 
 void Renderer::flush3D()
