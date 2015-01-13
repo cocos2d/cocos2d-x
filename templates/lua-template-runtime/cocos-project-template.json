@@ -110,7 +110,7 @@
     },
     "do_add_native_support": {
         "append_from_template": {
-            "from": "frameworks/runtime-src",
+            "from": "../lua-template-default/frameworks/runtime-src",
             "to": "frameworks/runtime-src",
             "exclude": [
                 "proj.android/bin",
