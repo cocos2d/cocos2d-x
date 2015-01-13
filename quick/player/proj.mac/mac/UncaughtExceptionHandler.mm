@@ -7,6 +7,8 @@
 //
 
 #include <execinfo.h>
+#include "base/CCDirector.h"
+
 
 #import "UncaughtExceptionHandler.h"
 
@@ -17,6 +19,8 @@ NSString * const UncaughtExceptionHandlerSignalKey = @"UncaughtExceptionHandlerS
 NSString * const UncaughtExceptionHandlerAddressesKey = @"UncaughtExceptionHandlerAddressesKey";
 
 volatile int32_t UncaughtExceptionCount = 0;
+
+volatile int32_t ProcessedCount = 0;
 
 const int32_t UncaughtExceptionMaximum = 10;
 
@@ -62,7 +66,7 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
     
 }
 
-//- (void)alertView:(NSAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)anIndex
+//- (void)alertView:(NSAlert *)anAlertView clickedButtonAtIndex:(NSInteger)anIndex
 //
 //{
 //    
@@ -76,56 +80,96 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
 //    
 //}
 
+- (void)alertDidEnd:(NSAlert *)alert
+
+         returnCode:(NSInteger)returnCode
+
+        contextInfo:(void *)contextInfo
+
+{
+    dismissed = YES;
+    
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+    }
+}
+
 - (void)handleException:(NSException *)exception
 
 {
+    int32_t processCount = OSAtomicIncrement32(&ProcessedCount);
+    if (processCount > 1)
+    {
+        return;
+    }
     printf("-----------------my exception process\n");
     
-//    NSAlertView *alert =
-//    
-//    [[[NSAlertView alloc]
-//      
-//      initWithTitle:NSLocalizedString(@"Unhandled exception", nil)
-//      
-//      message:[NSString stringWithFormat:NSLocalizedString(
-//                                                           
-//                                                           @"You can try to continue but the application may be unstable.\n"
-//                                                           
-//                                                           @"%@\n%@", nil),
-//               
-//               [exception reason],
-//               
-//               [[exception userInfo] objectForKey:UncaughtExceptionHandlerAddressesKey]]
-//      
-//      delegate:self
-//      
-//      cancelButtonTitle:NSLocalizedString(@"Quit", nil)
-//      
-//      otherButtonTitles:NSLocalizedString(@"Continue", nil), nil]
-//     
-//     autorelease];
-//    
-//    [alert show];
+//    NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+//    [alert addButtonWithTitle:@"OK"];
+//    [alert setMessageText:message];
+//    [alert setInformativeText:title];
+//    [alert setAlertStyle:NSWarningAlertStyle];
+//    [alert runModal];
+    NSAlert *alert = [[NSAlert alloc] init];
     
-//    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+    [alert addButtonWithTitle:NSLocalizedString(@"Quit", nil)];
+    
+    [alert addButtonWithTitle:NSLocalizedString(@"Continue", nil)];
+    
+    [alert setMessageText:[NSString stringWithFormat:NSLocalizedString(
+                                                                       
+                                                                       @"You can try to continue but the application may be unstable.\n"
+                                                                       
+                                                                       @"%@\n%@", nil),
+                           
+                           [exception reason],
+                           
+                           [[exception userInfo] objectForKey:UncaughtExceptionHandlerAddressesKey]]];
+
+//    [alert setDelegate:self];
+//
+        [alert setAlertStyle:NSWarningAlertStyle];
+//        [alert runModal];
+//    [alert autorelease];
+//
+    auto direct = cocos2d::Director::getInstance();
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    id window = glview->getCocoaWindow();
+    [alert beginSheetModalForWindow:window modalDelegate:[window delegate] didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    
+//    direct->mainLoop();
+
+    CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+    
+    CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
+    
+    while (!dismissed)
+        
+    {
+        
+        for (NSString *mode in (NSArray *)allModes)
+            
+        {
+            
+            CFRunLoopRunInMode((CFStringRef)mode, 0.001, false);
+            
+        }
+        
+    }	
+    
+    CFRelease(allModes);
+    
+//    NSString *msg = [NSString stringWithFormat:NSLocalizedString(
+//                                                                
+//                                                                @"You can try to continue but the application may be unstable.\n"
+//                                                                
+//                                                                @"%@\n%@", nil),
+//                    
+//                    [exception reason],
+//                    
+//                    [[exception userInfo] objectForKey:UncaughtExceptionHandlerAddressesKey]];
 //    
-//    CFArrayRef allModes = CFRunLoopCopyAllModes(runLoop);
-//    
-//    while (!dismissed)
-//        
-//    {
-//        
-//        for (NSString *mode in (NSArray *)allModes)
-//            
-//        {
-//            
-//            CFRunLoopRunInMode((CFStringRef)mode, 0.001, false);
-//            
-//        }
-//        
-//    }	
-//    
-//    CFRelease(allModes);
+//    cocos2d::MessageBox("--------", "error");
     
     NSSetUncaughtExceptionHandler(NULL);
     
@@ -141,24 +185,24 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
     
     signal(SIGPIPE, SIG_DFL);	
     
-//    if ([[exception name] isEqual:UncaughtExceptionHandlerSignalExceptionName])
+    if ([[exception name] isEqual:UncaughtExceptionHandlerSignalExceptionName])
     
-//    {
-//        
-//        kill(getpid(), [[[exception userInfo] objectForKey:UncaughtExceptionHandlerSignalKey] intValue]);
-//        
-//    }
-//    
-    exit(999);
+    {
+        
+        kill(getpid(), [[[exception userInfo] objectForKey:UncaughtExceptionHandlerSignalKey] intValue]);
+        
+    }
     
-//    else
-//        
-//    {
-//        
-//        [exception raise];
-//        
-//    }
     
+    else
+        
+    {
+        
+        [exception raise];
+        
+    }
+    
+//    exit(999);
 }
 
 @end
@@ -227,19 +271,11 @@ void MySignalHandler(int signal)
 }
 
 void InstallUncaughtExceptionHandler()
-
 {
-    
     signal(SIGABRT, MySignalHandler);
-    
     signal(SIGILL, MySignalHandler);
-    
     signal(SIGSEGV, MySignalHandler);
-    
     signal(SIGFPE, MySignalHandler);
-    
     signal(SIGBUS, MySignalHandler);
-    
     signal(SIGPIPE, MySignalHandler);
-    
 }
