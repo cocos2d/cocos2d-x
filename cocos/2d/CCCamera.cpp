@@ -285,6 +285,14 @@ bool Camera::isVisibleInFrustum(const AABB* aabb) const
     return true;
 }
 
+float Camera::getDepthInView(const Mat4& transform) const
+{
+    Mat4 camWorldMat = getNodeToWorldTransform();
+    const Mat4 &viewMat = camWorldMat.getInversed();
+    float depth = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
+    return depth;
+}
+
 void Camera::onEnter()
 {
     if (_scene == nullptr)

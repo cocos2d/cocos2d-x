@@ -77,7 +77,7 @@ public:
     * @param nearPlane The near plane distance.
     * @param farPlane The far plane distance.
     */
-    static Camera*    createPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
+    static Camera* createPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     /**
     * Creates an orthographic camera.
     *
@@ -87,7 +87,7 @@ public:
     * @param nearPlane The near plane distance.
     * @param farPlane The far plane distance.
     */
-    static Camera*  createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
+    static Camera* createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
 
     /** create default camera, the camera type depends on Director::getProjection */
     static Camera* create();
@@ -144,7 +144,12 @@ public:
     /**
      * Is this aabb visible in frustum
      */
-    bool isVisibleInFrustum(const AABB* aabb)const;
+    bool isVisibleInFrustum(const AABB* aabb) const;
+    
+    /**
+     * Get object depth towards camera
+     */
+    float getDepthInView(const Mat4& transform) const;
     
     //override
     virtual void onEnter() override;

@@ -29,7 +29,7 @@
  */
 
 #include "2d/CCParticleBatchNode.h"
-
+#include "2d/CCCamera.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
 #include "renderer/CCTextureCache.h"
@@ -403,12 +403,25 @@ void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t
         return;
     }
 
-    _batchCommand.init(
+    if (flags & FLAGS_RENDER_AS_3D)
+    {
+        float depth = Camera::getVisitingCamera()->getDepthInView(transform);
+        _batchCommand.init(
+                           depth,
+                           getGLProgram(),
+                           _blendFunc,
+                           _textureAtlas,
+                           _modelViewTransform);
+    }
+    else
+    {
+        _batchCommand.init(
                        _globalZOrder,
                        getGLProgram(),
                        _blendFunc,
                        _textureAtlas,
                        _modelViewTransform);
+    }
     renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }

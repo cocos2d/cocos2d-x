@@ -148,6 +148,12 @@ CC_CONSTRUCTOR_ACCESS:
     /** load file and set it to meshedatas, nodedatas and materialdatas, obj file .mtl file should be at the same directory if exist */
     bool loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshDatas* meshdatas,  MaterialDatas* materialdatas);
 
+    /**
+     * Visits this Sprite3D's children and draw them recursively.
+     * Note: all its children will rendered as 3D objects
+     */
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
+    
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     

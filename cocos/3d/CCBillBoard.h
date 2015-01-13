@@ -105,10 +105,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    void calculateBillbaordTransform();
+    bool calculateBillbaordTransform();
     
     Mat4 _camWorldMat;
-    Mat4 _billboardTransform;
     
     float _zDepthInView;
 
