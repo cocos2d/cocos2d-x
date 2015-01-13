@@ -69,7 +69,9 @@ public:
     
     VertexBuffer* getStreamBuffer(int semantic) const;
     
+    // @brief setup attributes for all vertex streams
     void use();
+    
 protected:
     VertexData();
     virtual ~VertexData();

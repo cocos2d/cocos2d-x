@@ -38,6 +38,8 @@
 
 NS_CC_BEGIN
 
+class VertexBuffer;
+
 /** DrawNode
  Node that draws dots, segments and polygons.
  Faster than the "drawing primitives" since they draws everything in one single batch.
@@ -140,25 +142,25 @@ protected:
     void ensureCapacityGLPoint(int count);
     void ensureCapacityGLLine(int count);
 
-    GLuint      _vao;
-    GLuint      _vbo;
-    GLuint      _vaoGLPoint;
-    GLuint      _vboGLPoint;
-    GLuint      _vaoGLLine;
-    GLuint      _vboGLLine;
+//    GLuint      _vao;
+//    GLuint      _vbo;
+//    GLuint      _vaoGLPoint;
+//    GLuint      _vboGLPoint;
+//    GLuint      _vaoGLLine;
+//    GLuint      _vboGLLine;
 
     int         _bufferCapacity;
-    GLsizei     _bufferCount;
+    int         _bufferCount;
     V2F_C4B_T2F *_buffer;
     
     int         _bufferCapacityGLPoint;
-    GLsizei     _bufferCountGLPoint;
+    int         _bufferCountGLPoint;
     V2F_C4B_T2F *_bufferGLPoint;
     Color4F     _pointColor;
     int         _pointSize;
     
     int         _bufferCapacityGLLine;
-    GLsizei     _bufferCountGLLine;
+    int         _bufferCountGLLine;
     V2F_C4B_T2F *_bufferGLLine;
 
     BlendFunc   _blendFunc;
