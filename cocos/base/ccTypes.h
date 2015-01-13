@@ -231,6 +231,17 @@ struct V2F_C4B_T2F
     Tex2F          texCoords;
 };
 
+
+struct V2F_C4B_PF
+{
+    //! vertices (2F)
+    Vec2       vertices;
+    //! colors (4B)
+    Color4B        colors;
+    //! pointsize
+    float      pointSize;
+};
+
 //! a Vec2 with a vertex point, a tex coord point and a color 4F
 struct CC_DLL V2F_C4F_T2F
 {

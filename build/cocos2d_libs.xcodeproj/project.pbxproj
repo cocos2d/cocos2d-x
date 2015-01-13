@@ -2923,6 +2923,7 @@
 		50FCEB9018C72017004AD434 /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		50FCEB9118C72017004AD434 /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
+		5224EE741A64FEC900D447D8 /* ccShader_PositionColorPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorPointsize.vert; sourceTree = "<group>"; };
 		52B47A1D1A53489B004E4C60 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
 		52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpAsynConnection.h; sourceTree = "<group>"; };
 		52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpAsynConnection.m; sourceTree = "<group>"; };
@@ -4877,6 +4878,7 @@
 		5034CA5D191D591900CE6051 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				5224EE741A64FEC900D447D8 /* ccShader_PositionColorPointsize.vert */,
 				B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */,
 				B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */,
 				B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */,
