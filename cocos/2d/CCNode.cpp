@@ -136,12 +136,12 @@ Node::Node(void)
 , _cameraMask(1)
 {
     // set default scheduler and actionManager
-    Director *director = Director::getInstance();
-    _actionManager = director->getActionManager();
+    _director = Director::getInstance();
+    _actionManager = _director->getActionManager();
     _actionManager->retain();
-    _scheduler = director->getScheduler();
+    _scheduler = _director->getScheduler();
     _scheduler->retain();
-    _eventDispatcher = director->getEventDispatcher();
+    _eventDispatcher = _director->getEventDispatcher();
     _eventDispatcher->retain();
     
 #if CC_ENABLE_SCRIPT_BINDING
@@ -1227,7 +1227,7 @@ void Node::sortAllChildren()
 
 void Node::draw()
 {
-    auto renderer = Director::getInstance()->getRenderer();
+    auto renderer = _director->getRenderer();
     draw(renderer, _modelViewTransform, true);
 }
 
@@ -1237,8 +1237,8 @@ void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 
 void Node::visit()
 {
-    auto renderer = Director::getInstance()->getRenderer();
-    auto& parentTransform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    auto renderer = _director->getRenderer();
+    auto& parentTransform = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     visit(renderer, parentTransform, true);
 }
 
@@ -1297,9 +1297,8 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
-    Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
     bool visibleByCamera = isVisitableByVisitingCamera();
 
@@ -1330,7 +1329,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         this->draw(renderer, _modelViewTransform, flags);
     }
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
@@ -1903,7 +1902,7 @@ Vec2 Node::convertToWorldSpaceAR(const Vec2& nodePoint) const
 Vec2 Node::convertToWindowSpace(const Vec2& nodePoint) const
 {
     Vec2 worldPoint(this->convertToWorldSpace(nodePoint));
-    return Director::getInstance()->convertToUI(worldPoint);
+    return _director->convertToUI(worldPoint);
 }
 
 // convenience methods which take a Touch instead of Vec2

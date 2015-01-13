@@ -49,6 +49,7 @@ class ComponentContainer;
 class EventDispatcher;
 class Scene;
 class Renderer;
+class Director;
 class GLProgram;
 class GLProgramState;
 #if CC_USE_PHYSICS
@@ -1664,7 +1665,7 @@ protected:
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
-
+    Director* _director;            //cached director pointer to improve rendering performance
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
