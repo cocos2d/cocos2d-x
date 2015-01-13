@@ -252,9 +252,6 @@ void Director::setGLDefaultValues()
     // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
-
-    // set other opengl default values
-    setClearColor(Color4F::BLACK);
 }
 
 // Draw the Scene

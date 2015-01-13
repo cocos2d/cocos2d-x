@@ -69,7 +69,7 @@ public:
 
     inline void setSkipBatching(bool value) { _skipBatching = value; }
     
-    inline bool is3D() { return _is3D; }
+    inline bool is3D() const { return _is3D; }
     
     inline void set3D(bool value) { _is3D = value; }
 
