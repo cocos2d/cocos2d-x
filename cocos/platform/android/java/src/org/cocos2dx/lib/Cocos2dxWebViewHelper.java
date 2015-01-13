@@ -10,6 +10,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 
 public class Cocos2dxWebViewHelper {
     private static final String TAG = Cocos2dxWebViewHelper.class.getSimpleName();
@@ -164,6 +166,10 @@ public class Cocos2dxWebViewHelper {
 
     @SuppressWarnings("unused")
     public static void loadFile(final int index, final String filePath) {
+        if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
+            CocosPlayClient.updateAssets(filePath);
+        }
+        CocosPlayClient.notifyFileLoaded(filePath);
         sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

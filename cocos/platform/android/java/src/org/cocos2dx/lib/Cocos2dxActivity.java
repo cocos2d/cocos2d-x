@@ -28,6 +28,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
+import com.chukong.cocosplay.client.CocosPlayClient;
 
 import android.app.Activity;
 import android.content.Context;
@@ -216,6 +217,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CocosPlayClient.init(this, false);
 
         onLoadNativeLibraries();
 
