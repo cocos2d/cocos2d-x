@@ -192,6 +192,11 @@ std::string CameraRotationTest::title() const
     return "Camera Rotation Test";
 }
 
+std::string CameraRotationTest::subtitle() const
+{
+    return "Slide to rotate";
+}
+
 void CameraRotationTest::onEnter()
 {
     BaseTest::onEnter();

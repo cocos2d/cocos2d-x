@@ -32,8 +32,7 @@
 NS_CC_BEGIN
 
 BillBoard::BillBoard()
-: _zDepthInView(0.0f)
-, _mode(Mode::VIEW_POINT_ORIENTED)
+: _mode(Mode::VIEW_POINT_ORIENTED)
 , _modeDirty(false)
 {
     Node::setAnchorPoint(Vec2(0.5f,0.5f));
@@ -231,10 +230,10 @@ bool BillBoard::calculateBillbaordTransform()
 void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //Get depth
-    _zDepthInView = Camera::getVisitingCamera()->getDepthInView(transform);
+    float depth = Camera::getVisitingCamera()->getDepthInView(transform);
 
     //FIXME: frustum culling here
-    _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform);
+    _quadCommand.init(depth, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform);
     _quadCommand.setTransparent(true);
     _quadCommand.setSkipBatching(true);
     _quadCommand.set3D(true);

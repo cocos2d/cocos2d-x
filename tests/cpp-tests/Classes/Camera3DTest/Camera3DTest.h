@@ -87,6 +87,7 @@ public:
 
     // overrides
     virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
 
