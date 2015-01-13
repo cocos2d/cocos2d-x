@@ -40,7 +40,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(Camera3DTestDemo),
     CL(CameraClippingDemo),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(FogTestDemo),
 #endif
