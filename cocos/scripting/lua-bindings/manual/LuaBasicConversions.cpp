@@ -121,7 +121,7 @@ bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName)
     
     if (ok)
     {
-        *outValue = (int)tolua_tonumber(L, lo, 0);
+        *outValue = (int)(unsigned int)lua_tonumber(L, lo);
     }
     
     return ok;

@@ -237,6 +237,11 @@
 
 
 --------------------------------------------------------
+-- the ccs AlphaFrame
+-- @field [parent=#ccs] AlphaFrame#AlphaFrame AlphaFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs EventFrame
 -- @field [parent=#ccs] EventFrame#EventFrame EventFrame preloaded module
 
