@@ -227,4 +227,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Issue9898 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(Issue9898);
+    Issue9898();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    EventListenerCustom* _listener;
+};
+
 #endif /* defined(__samples__NewEventDispatcherTest__) */
