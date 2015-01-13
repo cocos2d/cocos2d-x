@@ -2077,7 +2077,8 @@ int tolua_cocos2d_Node_setContentSize(lua_State* tolua_S)
             return 0;
         
         cobj->setContentSize(size);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     else if(2 == argc)
     {
@@ -2094,7 +2095,8 @@ int tolua_cocos2d_Node_setContentSize(lua_State* tolua_S)
             return 0;
         
         cobj->setContentSize(Size(width, height));
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setContentSize",argc, 1);
@@ -2135,7 +2137,8 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
             return 0;
         
         cobj->setAnchorPoint(pt);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     else if(2 == argc)
     {
@@ -2152,7 +2155,8 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
             return 0;
         
         cobj->setAnchorPoint(cocos2d::Vec2(x,y));
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setAnchorPoint",argc, 1);
@@ -2261,7 +2265,8 @@ static int lua_cocos2dx_Node_enumerateChildren(lua_State* tolua_S)
             return ret;
         });
         
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "enumerateChildren",argc, 2);
     return 0;
@@ -2302,7 +2307,8 @@ int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
             
             if (!ok) { break; }
             cobj->setAdditionalTransform(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -2313,7 +2319,8 @@ int lua_cocos2dx_Node_setAdditionalTransform(lua_State* tolua_S)
             
             if (!ok) { break; }
             cobj->setAdditionalTransform(&arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -2356,7 +2363,8 @@ int lua_cocos2dx_Node_setRotationQuat(lua_State* tolua_S)
             
             if (!ok) { break; }
             cobj->setRotationQuat(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     
@@ -2410,7 +2418,8 @@ int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
             return 0;
         }
         cobj->setPhysicsBody(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setPhysicsBody",argc, 1);
     return 0;
@@ -2457,7 +2466,8 @@ int lua_cocos2dx_Node_removeFromPhysicsWorld(lua_State* tolua_S)
             return 0;
         }
         cobj->removeFromPhysicsWorld();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:removeFromPhysicsWorld",argc, 0);
     return 0;
@@ -3872,7 +3882,8 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix2fv(lua_State* tolua_S)
         
         cobj->setUniformLocationWithMatrix2fv(arg0, arg1, arg2);
         CC_SAFE_DELETE_ARRAY(arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:setUniformLocationWithMatrix2fv",argc, 3);
     return 0;
@@ -3946,7 +3957,8 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix3fv(lua_State* tolua_S)
         cobj->setUniformLocationWithMatrix3fv(arg0, arg1, arg2);
         CC_SAFE_DELETE_ARRAY(arg1);
         
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:setUniformLocationWithMatrix3fv",argc, 3);
     return 0;
@@ -4020,7 +4032,8 @@ int lua_cocos2dx_GLProgram_setUniformLocationWithMatrix4fv(lua_State* tolua_S)
         cobj->setUniformLocationWithMatrix4fv(arg0, arg1, arg2);
         
         CC_SAFE_DELETE_ARRAY(arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:setUniformLocationWithMatrix4fv",argc, 3);
     return 0;
@@ -4092,7 +4105,8 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith3iv(lua_State* tolua_S)
         cobj->setUniformLocationWith3iv(arg0, arg1, arg2);
         
         CC_SAFE_DELETE_ARRAY(arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:setUniformLocationWith3iv",argc, 3);
     return 0;
@@ -4164,7 +4178,8 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith4iv(lua_State* tolua_S)
         }
         cobj->setUniformLocationWith4iv(arg0, arg1, arg2);
         CC_SAFE_DELETE_ARRAY(arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:setUniformLocationWith4iv",argc, 3);
     return 0;
@@ -4233,7 +4248,8 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith2iv(lua_State* tolua_S)
         cobj->setUniformLocationWith2iv(arg0, arg1, arg2);
         
         CC_SAFE_DELETE_ARRAY(arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:setUniformLocationWith2iv",argc, 3);
     return 0;
@@ -6578,7 +6594,8 @@ static int lua_cocos2dx_Console_addCommand(lua_State* tolua_S)
             };
             cobj->addCommand(outValue);
         }
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Console:addCommand",argc, 2);
     return 0;
@@ -6653,7 +6670,8 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         if(!ok)
             return 0;
         cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)&arg5);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     else if (argc == 7)
     {
@@ -6713,7 +6731,8 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         
         CC_SAFE_DELETE(arg5);
         
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgramState:setVertexAttribPointer",argc, 6);
     return 0;
@@ -6927,7 +6946,8 @@ int lua_cocos2dx_TMXLayer_setTiles(lua_State* tolua_S)
         cobj->setTiles(arg0);
         
         CC_SAFE_DELETE_ARRAY(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXLayer:setTiles",argc, 1);
     return 0;
