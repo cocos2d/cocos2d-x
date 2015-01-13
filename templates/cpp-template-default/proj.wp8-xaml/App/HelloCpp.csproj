@@ -112,15 +112,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Resources\CloseNormal.png">
-      <Link>Assets\Resources\CloseNormal.png</Link>
-    </Content>
-    <Content Include="..\..\Resources\CloseSelected.png">
-      <Link>Assets\Resources\CloseSelected.png</Link>
-    </Content>
-    <Content Include="..\..\Resources\HelloWorld.png">
-      <Link>Assets\Resources\HelloWorld.png</Link>
-    </Content>
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -141,6 +132,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Resources\**\*">
+      <Link>Assets\Resources\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppComponent\HelloCppComponent.vcxproj">
