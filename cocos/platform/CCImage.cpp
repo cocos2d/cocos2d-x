@@ -71,11 +71,9 @@ extern "C"
 #include "base/pvr.h"
 #include "base/TGAlib.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #if CC_USE_WEBP
 #include "decode.h"
 #endif // CC_USE_WEBP
-#endif
 
 #include "base/ccMacros.h"
 #include "CCCommon.h"
