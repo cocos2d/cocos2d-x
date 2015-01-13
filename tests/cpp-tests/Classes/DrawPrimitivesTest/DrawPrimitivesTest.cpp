@@ -278,6 +278,8 @@ DrawNodeTest::DrawNodeTest()
     // draw a rectangle
     draw->drawRect(Vec2(23,23), Vec2(7,7), Color4F(1,1,0,1));
     
+    draw->drawRect(Vec2(15,30), Vec2(30,15), Vec2(15,0), Vec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    
     // draw a circle
     draw->drawCircle(VisibleRect::center() + Vec2(140,0), 100, CC_DEGREES_TO_RADIANS(90), 50, true, 1.0f, 2.0f, Color4F(1.0, 0.0, 0.0, 0.5));
     

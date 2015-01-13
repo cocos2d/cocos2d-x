@@ -544,5 +544,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelSmallDimensionsTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelSmallDimensionsTest);
+
+    LabelSmallDimensionsTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 
 #endif

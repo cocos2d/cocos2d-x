@@ -3488,7 +3488,7 @@ int lua_cocos2dx_physics_PhysicsBody_getPositionOffset(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_getPositionOffset'", nullptr);
             return 0;
         }
-        cocos2d::Vec2 ret = cobj->getPositionOffset();
+        const cocos2d::Vec2& ret = cobj->getPositionOffset();
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -3678,7 +3678,7 @@ int lua_cocos2dx_physics_PhysicsBody_getPosition(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_getPosition'", nullptr);
             return 0;
         }
-        cocos2d::Vec2 ret = cobj->getPosition();
+        const cocos2d::Vec2& ret = cobj->getPosition();
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -4839,6 +4839,53 @@ int lua_cocos2dx_physics_PhysicsBody_isRotationEnabled(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsBody_getCPBody(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsBody* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsBody",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsBody*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsBody_getCPBody'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_getCPBody'", nullptr);
+            return 0;
+        }
+        cpBody* ret = cobj->getCPBody();
+        #pragma warning NO CONVERSION FROM NATIVE FOR cpBody*;
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:getCPBody",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsBody_getCPBody'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsBody_getAngularDamping(lua_State* tolua_S)
 {
     int argc = 0;
@@ -5790,6 +5837,7 @@ int lua_register_cocos2dx_physics_PhysicsBody(lua_State* tolua_S)
         tolua_function(tolua_S,"setPositionOffset",lua_cocos2dx_physics_PhysicsBody_setPositionOffset);
         tolua_function(tolua_S,"setRotationEnable",lua_cocos2dx_physics_PhysicsBody_setRotationEnable);
         tolua_function(tolua_S,"isRotationEnabled",lua_cocos2dx_physics_PhysicsBody_isRotationEnabled);
+        tolua_function(tolua_S,"getCPBody",lua_cocos2dx_physics_PhysicsBody_getCPBody);
         tolua_function(tolua_S,"getAngularDamping",lua_cocos2dx_physics_PhysicsBody_getAngularDamping);
         tolua_function(tolua_S,"getVelocityAtLocalPoint",lua_cocos2dx_physics_PhysicsBody_getVelocityAtLocalPoint);
         tolua_function(tolua_S,"isResting",lua_cocos2dx_physics_PhysicsBody_isResting);
@@ -7554,41 +7602,6 @@ int lua_cocos2dx_physics_PhysicsJoint_getTag(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_physics_PhysicsJoint_destroy(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.PhysicsJoint",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 1)
-    {
-        cocos2d::PhysicsJoint* arg0;
-        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0);
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJoint_destroy'", nullptr);
-            return 0;
-        }
-        cocos2d::PhysicsJoint::destroy(arg0);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.PhysicsJoint:destroy",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJoint_destroy'.",&tolua_err);
-#endif
-    return 0;
-}
 static int lua_cocos2dx_physics_PhysicsJoint_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (PhysicsJoint)");
@@ -7613,7 +7626,6 @@ int lua_register_cocos2dx_physics_PhysicsJoint(lua_State* tolua_S)
         tolua_function(tolua_S,"removeFormWorld",lua_cocos2dx_physics_PhysicsJoint_removeFormWorld);
         tolua_function(tolua_S,"isCollisionEnabled",lua_cocos2dx_physics_PhysicsJoint_isCollisionEnabled);
         tolua_function(tolua_S,"getTag",lua_cocos2dx_physics_PhysicsJoint_getTag);
-        tolua_function(tolua_S,"destroy", lua_cocos2dx_physics_PhysicsJoint_destroy);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PhysicsJoint).name();
     g_luaType[typeName] = "cc.PhysicsJoint";
@@ -7621,6 +7633,53 @@ int lua_register_cocos2dx_physics_PhysicsJoint(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_physics_PhysicsJointFixed_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointFixed* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointFixed",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointFixed*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointFixed_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointFixed_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointFixed:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointFixed_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointFixed_construct(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7673,6 +7732,7 @@ int lua_register_cocos2dx_physics_PhysicsJointFixed(lua_State* tolua_S)
     tolua_cclass(tolua_S,"PhysicsJointFixed","cc.PhysicsJointFixed","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointFixed");
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointFixed_createConstraints);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointFixed_construct);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PhysicsJointFixed).name();
@@ -7922,6 +7982,53 @@ int lua_cocos2dx_physics_PhysicsJointLimit_getAnchr1(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsJointLimit_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointLimit* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointLimit",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointLimit*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointLimit_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointLimit_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointLimit:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointLimit_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointLimit_getMin(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8154,6 +8261,7 @@ int lua_register_cocos2dx_physics_PhysicsJointLimit(lua_State* tolua_S)
         tolua_function(tolua_S,"setMax",lua_cocos2dx_physics_PhysicsJointLimit_setMax);
         tolua_function(tolua_S,"getAnchr2",lua_cocos2dx_physics_PhysicsJointLimit_getAnchr2);
         tolua_function(tolua_S,"getAnchr1",lua_cocos2dx_physics_PhysicsJointLimit_getAnchr1);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointLimit_createConstraints);
         tolua_function(tolua_S,"getMin",lua_cocos2dx_physics_PhysicsJointLimit_getMin);
         tolua_function(tolua_S,"getMax",lua_cocos2dx_physics_PhysicsJointLimit_getMax);
         tolua_function(tolua_S,"setMin",lua_cocos2dx_physics_PhysicsJointLimit_setMin);
@@ -8165,11 +8273,57 @@ int lua_register_cocos2dx_physics_PhysicsJointLimit(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_physics_PhysicsJointPin_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointPin* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointPin",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointPin*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointPin_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointPin_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointPin:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointPin_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointPin_construct(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
@@ -8178,26 +8332,50 @@ int lua_cocos2dx_physics_PhysicsJointPin_construct(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.PhysicsJointPin",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    argc = lua_gettop(tolua_S) - 1;
+    argc = lua_gettop(tolua_S)-1;
 
-    if (argc == 3)
+    do 
     {
-        cocos2d::PhysicsBody* arg0;
-        cocos2d::PhysicsBody* arg1;
-        cocos2d::Vec2 arg2;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
-        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointPin:construct");
-        if(!ok)
+        if (argc == 4)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointPin_construct'", nullptr);
-            return 0;
+            cocos2d::PhysicsBody* arg0;
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            if (!ok) { break; }
+            cocos2d::PhysicsBody* arg1;
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            if (!ok) { break; }
+            cocos2d::Vec2 arg2;
+            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointPin:construct");
+            if (!ok) { break; }
+            cocos2d::Vec2 arg3;
+            ok &= luaval_to_vec2(tolua_S, 5, &arg3, "cc.PhysicsJointPin:construct");
+            if (!ok) { break; }
+            cocos2d::PhysicsJointPin* ret = cocos2d::PhysicsJointPin::construct(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::PhysicsJointPin>(tolua_S, "cc.PhysicsJointPin",(cocos2d::PhysicsJointPin*)ret);
+            return 1;
         }
-        cocos2d::PhysicsJointPin* ret = cocos2d::PhysicsJointPin::construct(arg0, arg1, arg2);
-        object_to_luaval<cocos2d::PhysicsJointPin>(tolua_S, "cc.PhysicsJointPin",(cocos2d::PhysicsJointPin*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.PhysicsJointPin:construct",argc, 3);
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 3)
+        {
+            cocos2d::PhysicsBody* arg0;
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            if (!ok) { break; }
+            cocos2d::PhysicsBody* arg1;
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            if (!ok) { break; }
+            cocos2d::Vec2 arg2;
+            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointPin:construct");
+            if (!ok) { break; }
+            cocos2d::PhysicsJointPin* ret = cocos2d::PhysicsJointPin::construct(arg0, arg1, arg2);
+            object_to_luaval<cocos2d::PhysicsJointPin>(tolua_S, "cc.PhysicsJointPin",(cocos2d::PhysicsJointPin*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.PhysicsJointPin:construct",argc, 3);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -8217,6 +8395,7 @@ int lua_register_cocos2dx_physics_PhysicsJointPin(lua_State* tolua_S)
     tolua_cclass(tolua_S,"PhysicsJointPin","cc.PhysicsJointPin","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointPin");
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointPin_createConstraints);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointPin_construct);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PhysicsJointPin).name();
@@ -8225,6 +8404,53 @@ int lua_register_cocos2dx_physics_PhysicsJointPin(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_physics_PhysicsJointDistance_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointDistance* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointDistance",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointDistance*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointDistance_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointDistance_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointDistance:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointDistance_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointDistance_setDistance(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8375,6 +8601,7 @@ int lua_register_cocos2dx_physics_PhysicsJointDistance(lua_State* tolua_S)
     tolua_cclass(tolua_S,"PhysicsJointDistance","cc.PhysicsJointDistance","cc.PhysicsJoint",nullptr);
 
     tolua_beginmodule(tolua_S,"PhysicsJointDistance");
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointDistance_createConstraints);
         tolua_function(tolua_S,"setDistance",lua_cocos2dx_physics_PhysicsJointDistance_setDistance);
         tolua_function(tolua_S,"getDistance",lua_cocos2dx_physics_PhysicsJointDistance_getDistance);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointDistance_construct);
@@ -8767,6 +8994,53 @@ int lua_cocos2dx_physics_PhysicsJointSpring_getStiffness(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsJointSpring_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointSpring* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointSpring",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointSpring*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointSpring_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointSpring_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointSpring:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointSpring_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointSpring_setRestLength(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8931,6 +9205,7 @@ int lua_register_cocos2dx_physics_PhysicsJointSpring(lua_State* tolua_S)
         tolua_function(tolua_S,"getAnchr2",lua_cocos2dx_physics_PhysicsJointSpring_getAnchr2);
         tolua_function(tolua_S,"getAnchr1",lua_cocos2dx_physics_PhysicsJointSpring_getAnchr1);
         tolua_function(tolua_S,"getStiffness",lua_cocos2dx_physics_PhysicsJointSpring_getStiffness);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointSpring_createConstraints);
         tolua_function(tolua_S,"setRestLength",lua_cocos2dx_physics_PhysicsJointSpring_setRestLength);
         tolua_function(tolua_S,"setDamping",lua_cocos2dx_physics_PhysicsJointSpring_setDamping);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointSpring_construct);
@@ -9229,6 +9504,53 @@ int lua_cocos2dx_physics_PhysicsJointGroove_getAnchr2(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsJointGroove_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointGroove* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointGroove",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointGroove*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGroove_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointGroove_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGroove:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointGroove_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointGroove_construct(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9291,6 +9613,7 @@ int lua_register_cocos2dx_physics_PhysicsJointGroove(lua_State* tolua_S)
         tolua_function(tolua_S,"getGrooveA",lua_cocos2dx_physics_PhysicsJointGroove_getGrooveA);
         tolua_function(tolua_S,"getGrooveB",lua_cocos2dx_physics_PhysicsJointGroove_getGrooveB);
         tolua_function(tolua_S,"getAnchr2",lua_cocos2dx_physics_PhysicsJointGroove_getAnchr2);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointGroove_createConstraints);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointGroove_construct);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PhysicsJointGroove).name();
@@ -9438,6 +9761,53 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_getStiffness(lua_State* tolua_
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_getStiffness'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics_PhysicsJointRotarySpring_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointRotarySpring* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointRotarySpring",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointRotarySpring*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotarySpring:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointRotarySpring_createConstraints'.",&tolua_err);
 #endif
 
     return 0;
@@ -9644,6 +10014,7 @@ int lua_register_cocos2dx_physics_PhysicsJointRotarySpring(lua_State* tolua_S)
         tolua_function(tolua_S,"getDamping",lua_cocos2dx_physics_PhysicsJointRotarySpring_getDamping);
         tolua_function(tolua_S,"setRestAngle",lua_cocos2dx_physics_PhysicsJointRotarySpring_setRestAngle);
         tolua_function(tolua_S,"getStiffness",lua_cocos2dx_physics_PhysicsJointRotarySpring_getStiffness);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointRotarySpring_createConstraints);
         tolua_function(tolua_S,"setStiffness",lua_cocos2dx_physics_PhysicsJointRotarySpring_setStiffness);
         tolua_function(tolua_S,"setDamping",lua_cocos2dx_physics_PhysicsJointRotarySpring_setDamping);
         tolua_function(tolua_S,"getRestAngle",lua_cocos2dx_physics_PhysicsJointRotarySpring_getRestAngle);
@@ -9698,6 +10069,53 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics_PhysicsJointRotaryLimit_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointRotaryLimit* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointRotaryLimit",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointRotaryLimit*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotaryLimit:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointRotaryLimit_createConstraints'.",&tolua_err);
 #endif
 
     return 0;
@@ -9920,6 +10338,7 @@ int lua_register_cocos2dx_physics_PhysicsJointRotaryLimit(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"PhysicsJointRotaryLimit");
         tolua_function(tolua_S,"getMax",lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMax);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointRotaryLimit_createConstraints);
         tolua_function(tolua_S,"setMin",lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMin);
         tolua_function(tolua_S,"setMax",lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMax);
         tolua_function(tolua_S,"getMin",lua_cocos2dx_physics_PhysicsJointRotaryLimit_getMin);
@@ -10023,6 +10442,53 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setAngle(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointRatchet_setAngle'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics_PhysicsJointRatchet_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointRatchet* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointRatchet",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointRatchet*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointRatchet_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointRatchet_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRatchet:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointRatchet_createConstraints'.",&tolua_err);
 #endif
 
     return 0;
@@ -10275,6 +10741,7 @@ int lua_register_cocos2dx_physics_PhysicsJointRatchet(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"PhysicsJointRatchet");
         tolua_function(tolua_S,"getAngle",lua_cocos2dx_physics_PhysicsJointRatchet_getAngle);
         tolua_function(tolua_S,"setAngle",lua_cocos2dx_physics_PhysicsJointRatchet_setAngle);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointRatchet_createConstraints);
         tolua_function(tolua_S,"setPhase",lua_cocos2dx_physics_PhysicsJointRatchet_setPhase);
         tolua_function(tolua_S,"getPhase",lua_cocos2dx_physics_PhysicsJointRatchet_getPhase);
         tolua_function(tolua_S,"setRatchet",lua_cocos2dx_physics_PhysicsJointRatchet_setRatchet);
@@ -10432,6 +10899,53 @@ int lua_cocos2dx_physics_PhysicsJointGear_setPhase(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsJointGear_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointGear* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointGear",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointGear*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointGear_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointGear_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGear:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointGear_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointGear_getRatio(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10536,6 +11050,7 @@ int lua_register_cocos2dx_physics_PhysicsJointGear(lua_State* tolua_S)
         tolua_function(tolua_S,"setRatio",lua_cocos2dx_physics_PhysicsJointGear_setRatio);
         tolua_function(tolua_S,"getPhase",lua_cocos2dx_physics_PhysicsJointGear_getPhase);
         tolua_function(tolua_S,"setPhase",lua_cocos2dx_physics_PhysicsJointGear_setPhase);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointGear_createConstraints);
         tolua_function(tolua_S,"getRatio",lua_cocos2dx_physics_PhysicsJointGear_getRatio);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointGear_construct);
     tolua_endmodule(tolua_S);
@@ -10641,6 +11156,53 @@ int lua_cocos2dx_physics_PhysicsJointMotor_getRate(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsJointMotor_createConstraints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsJointMotor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsJointMotor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsJointMotor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsJointMotor_createConstraints'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsJointMotor_createConstraints'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->createConstraints();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointMotor:createConstraints",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsJointMotor_createConstraints'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsJointMotor_construct(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10695,6 +11257,7 @@ int lua_register_cocos2dx_physics_PhysicsJointMotor(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"PhysicsJointMotor");
         tolua_function(tolua_S,"setRate",lua_cocos2dx_physics_PhysicsJointMotor_setRate);
         tolua_function(tolua_S,"getRate",lua_cocos2dx_physics_PhysicsJointMotor_getRate);
+        tolua_function(tolua_S,"createConstraints",lua_cocos2dx_physics_PhysicsJointMotor_createConstraints);
         tolua_function(tolua_S,"construct", lua_cocos2dx_physics_PhysicsJointMotor_construct);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PhysicsJointMotor).name();

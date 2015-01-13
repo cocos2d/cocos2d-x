@@ -87,7 +87,7 @@ void GridAction::cacheTargetAsGridNode()
 GridAction* GridAction::reverse() const
 {
     // FIXME: This conversion isn't safe.
-	return (GridAction*)ReverseTime::create( this->clone() );
+    return (GridAction*)ReverseTime::create( this->clone() );
 }
 
 GridBase* GridAction::getGrid()
@@ -184,11 +184,11 @@ bool AccelDeccelAmplitude::initWithAction(Action *action, float duration)
 
 AccelDeccelAmplitude* AccelDeccelAmplitude::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) AccelDeccelAmplitude();
-	a->initWithAction(_other->clone(), _rate);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) AccelDeccelAmplitude();
+    a->initWithAction(_other->clone(), _rate);
+    a->autorelease();
+    return a;
 }
 
 AccelDeccelAmplitude::~AccelDeccelAmplitude()
@@ -256,11 +256,11 @@ bool AccelAmplitude::initWithAction(Action *action, float duration)
 
 AccelAmplitude* AccelAmplitude::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) AccelAmplitude();
-	a->initWithAction(_other->clone(), _duration);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) AccelAmplitude();
+    a->initWithAction(_other->clone(), _duration);
+    a->autorelease();
+    return a;
 }
 
 AccelAmplitude::~AccelAmplitude()
@@ -338,11 +338,11 @@ void DeccelAmplitude::update(float time)
 
 DeccelAmplitude* DeccelAmplitude::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) DeccelAmplitude();
-	a->initWithAction(_other->clone(), _duration);
-	a->autorelease();
-	return a;
+    // no copy constructor    
+    auto a = new (std::nothrow) DeccelAmplitude();
+    a->initWithAction(_other->clone(), _duration);
+    a->autorelease();
+    return a;
 }
 
 DeccelAmplitude* DeccelAmplitude::reverse() const
@@ -379,13 +379,13 @@ StopGrid* StopGrid::create()
 
 StopGrid* StopGrid::clone() const
 {
-	return StopGrid::create();
+    return StopGrid::create();
 }
 
 StopGrid* StopGrid::reverse() const
 {
-	// no reverse, just clone it
-	return this->clone();
+    // no reverse, just clone it
+    return this->clone();
 }
 
 // implementation of ReuseGrid
@@ -434,13 +434,13 @@ void ReuseGrid::cacheTargetAsGridNode()
 
 ReuseGrid* ReuseGrid::clone() const
 {
-	return ReuseGrid::create(_times);
+    return ReuseGrid::create(_times);
 }
 
 ReuseGrid* ReuseGrid::reverse() const
 {
-	// no reverse, just clone it
-	return this->clone();
+    // no reverse, just clone it
+    return this->clone();
 }
 
 NS_CC_END

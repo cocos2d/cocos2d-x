@@ -523,8 +523,12 @@ void ParticleSystemQuad::setupVBO()
 
 void ParticleSystemQuad::listenRendererRecreated(EventCustom* event)
 {
+    //when comes to foreground in android, _buffersVBO and _VAOname is a wild handle
+    //before recreating, we need to reset them to 0
+    memset(_buffersVBO, 0, sizeof(_buffersVBO));
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        _VAOname = 0;
         setupVBOandVAO();
     }
     else

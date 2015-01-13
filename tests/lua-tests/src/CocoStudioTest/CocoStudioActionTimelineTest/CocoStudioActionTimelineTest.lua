@@ -243,9 +243,9 @@ function TestChangePlaySection:onEnter()
 
     local function onTouchesEnded(touches, event)
         if action:getStartFrame() == 0 then
-            action:gotoFrameAndPlay(70, action:getDuration(), true)
+            action:gotoFrameAndPlay(41, 81, true)
         else
-            action:gotoFrameAndPlay(0, 60, true)
+            action:gotoFrameAndPlay(0, 40, true)
         end
     end
 

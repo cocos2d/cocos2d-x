@@ -60,21 +60,21 @@ AtlasNode::~AtlasNode()
 
 AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-	AtlasNode * ret = new (std::nothrow) AtlasNode();
-	if (ret->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
-	{
-		ret->autorelease();
-		return ret;
-	}
-	CC_SAFE_DELETE(ret);
-	return nullptr;
+    AtlasNode * ret = new (std::nothrow) AtlasNode();
+    if (ret->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool AtlasNode::initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
     CCASSERT(tile.size() > 0, "file size should not be empty");
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(tile);
-	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
+    return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
 
 bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender)
