@@ -88,6 +88,10 @@ public:
     Mode getMode() const;
 
     //override
+    
+    /** update billboard's transform and turn it towards camera */
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
+    
     /** draw BillBoard object */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
@@ -101,8 +105,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
+    void calculateBillbaordTransform();
+    
     Mat4 _camWorldMat;
-    Mat4 _mvTransform;
     Mat4 _billboardTransform;
     
     float _zDepthInView;

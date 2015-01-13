@@ -131,32 +131,6 @@ void RenderQueue::clear()
     _queuePosZ.clear();
 }
 
-// helper
-static bool compareTransparentRenderCommand(RenderCommand* a, RenderCommand* b)
-{
-    return a->getGlobalOrder() > b->getGlobalOrder();
-}
-
-void TransparentRenderQueue::push_back(RenderCommand* command)
-{
-    _queueCmd.push_back(command);
-}
-
-void TransparentRenderQueue::sort()
-{
-    std::sort(std::begin(_queueCmd), std::end(_queueCmd), compareTransparentRenderCommand);
-}
-
-RenderCommand* TransparentRenderQueue::operator[](ssize_t index) const
-{
-    return _queueCmd[index];
-}
-
-void TransparentRenderQueue::clear()
-{
-    _queueCmd.clear();
-}
-
 //
 //
 //
@@ -531,65 +505,6 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     flush();
 }
 
-void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
-{
-    // do not batch for transparent objects
-    ssize_t size = queue.size();
-    
-    _batchedCommands.clear();
-    _filledVertex = 0;
-    _filledIndex = 0;
-    
-    for (ssize_t index = 0; index < size; ++index)
-    {
-        auto command = queue[index];
-        auto commandType = command->getType();
-        if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
-        {
-            auto cmd = static_cast<TrianglesCommand*>(command);
-            _batchedCommands.push_back(cmd);
-            fillVerticesAndIndices(cmd);
-            drawBatchedTriangles();
-        }
-        else if(RenderCommand::Type::QUAD_COMMAND == commandType)
-        {
-            auto cmd = static_cast<QuadCommand*>(command);
-            _batchQuadCommands.push_back(cmd);
-            fillQuads(cmd);
-            drawBatchedQuads();
-        }
-        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-        {
-            int renderQueueID = (static_cast<GroupCommand*>(command))->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-        }
-        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-        {
-            auto cmd = static_cast<CustomCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-        {
-            auto cmd = static_cast<BatchCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-        {
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            cmd->execute();
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            auto cmd = static_cast<MeshCommand*>(command);
-            cmd->execute();
-        }
-        else
-        {
-            CCLOGERROR("Unknown commands in renderQueue");
-        }
-    }
-}
-
 void Renderer::render()
 {
     //Uncomment this once everything is rendered by new renderer
@@ -607,16 +522,6 @@ void Renderer::render()
             renderqueue.sort();
         }
         visitRenderQueue(_renderGroups[0]);
-        
-        //Process render commands
-        //draw transparent objects here, do not batch for transparent objects
-        if (0 < _transparentRenderGroups.size())
-        {
-            _transparentRenderGroups.sort();
-            glEnable(GL_DEPTH_TEST);
-            visitTransparentRenderQueue(_transparentRenderGroups);
-            glDisable(GL_DEPTH_TEST);
-        }
     }
     clean();
     _isRendering = false;
@@ -643,8 +548,6 @@ void Renderer::clean()
     _numberQuads = 0;
     _lastMaterialID = 0;
     _lastBatchedMeshCommand = nullptr;
-    
-    _transparentRenderGroups.clear();
 }
 
 void Renderer::clear()

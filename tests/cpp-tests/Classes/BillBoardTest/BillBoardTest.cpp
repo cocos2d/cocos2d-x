@@ -99,7 +99,6 @@ BillBoardTest::BillBoardTest()
         auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billboard->setScale(0.5f);
         billboard->setPosition3D(Vec3(0.0f, 0.0f,  CCRANDOM_MINUS1_1() * 150.0f));
-        billboard->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
         _billboards.push_back(billboard);
         layer->addChild(billboard);
@@ -204,7 +203,6 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
         auto billborad = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billborad->setScale(0.5f);
         billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
-        billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
         
         _layerBillBorad->addChild(billborad);
@@ -233,7 +231,6 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 
         auto action = Animate::create(animation);
         billboardAni->runAction(RepeatForever::create(action));
-        billboardAni->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billboardAni->setOpacity(CCRANDOM_0_1() * 128 + 128);
         _billboards.push_back(billboardAni);
     }

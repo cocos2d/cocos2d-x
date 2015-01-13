@@ -65,22 +65,6 @@ protected:
     std::vector<RenderCommand*> _queuePosZ;
 };
 
-//render queue for transparency object, NOTE that the _globalOrder of RenderCommand is the distance to the camera when added to the transparent queue
-class TransparentRenderQueue {
-public:
-    void push_back(RenderCommand* command);
-    ssize_t size() const
-    {
-        return _queueCmd.size();
-    }
-    void sort();
-    RenderCommand* operator[](ssize_t index) const;
-    void clear();
-    
-protected:
-    std::vector<RenderCommand*> _queueCmd;
-};
-
 struct RenderStackElement
 {
     int renderQueueID;
@@ -172,8 +156,6 @@ protected:
 
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(const RenderQueue& queue);
-    
-    void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void fillQuads(const QuadCommand* cmd);
@@ -184,7 +166,6 @@ protected:
     std::stack<int> _commandGroupStack;
     
     std::vector<RenderQueue> _renderGroups;
-    TransparentRenderQueue   _transparentRenderGroups; //transparency objects
 
     uint32_t _lastMaterialID;
 
