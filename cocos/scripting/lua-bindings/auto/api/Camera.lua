@@ -38,11 +38,11 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- Enable frustum culling
--- @function [parent=#Camera] enableFrustumCulling 
+-- Get object depth towards camera
+-- @function [parent=#Camera] getDepthInView 
 -- @param self
--- @param #bool value
--- @param #bool clipZ
+-- @param #mat4_table transform
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Make Camera looks at target<br>
@@ -65,13 +65,6 @@
 -- @function [parent=#Camera] setCameraFlag 
 -- @param self
 -- @param #int flag
-        
---------------------------------
--- Get object depth towards camera
--- @function [parent=#Camera] getDepthInView 
--- @param self
--- @param #mat4_table transform
--- @return float#float ret (return value: float)
         
 --------------------------------
 --  create default camera, the camera type depends on Director::getProjection 
