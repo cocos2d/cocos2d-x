@@ -671,9 +671,11 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+#if CC_USE_CULLING
     // camera clipping
     if(!Camera::getVisitingCamera()->isVisibleInFrustum(&this->getAABB()))
         return;
+#endif
     
     if (_skeleton)
         _skeleton->updateBoneMatrix();
