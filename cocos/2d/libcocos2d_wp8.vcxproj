@@ -1087,6 +1087,7 @@
     <None Include="..\renderer\ccShader_PositionColor.vert" />
     <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag" />
     <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert" />
+    <None Include="..\renderer\ccShader_PositionColorPointsize.vert" />
     <None Include="..\renderer\ccShader_PositionTexture.frag" />
     <None Include="..\renderer\ccShader_PositionTexture.vert" />
     <None Include="..\renderer\ccShader_PositionTextureA8Color.frag" />
