@@ -12,6 +12,9 @@ fi
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 
+#try to remove glfw2
+sudo apt-get remove libglfw2
+
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
