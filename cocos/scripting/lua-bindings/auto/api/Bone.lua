@@ -12,6 +12,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Bone] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+        
+--------------------------------
+-- 
 -- @function [parent=#Bone] isIgnoreMovementBoneData 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -114,6 +120,12 @@
 -- @param #ccs.DisplayData displayData
 -- @param #int index
 
+--------------------------------
+-- 
+-- @function [parent=#Bone] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
 --------------------------------
 -- Remove itself from its parent.<br>
 -- param recursion    whether or not to remove childBone's display

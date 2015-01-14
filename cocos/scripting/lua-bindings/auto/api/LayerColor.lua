@@ -13,10 +13,28 @@
 -- @param #float h
         
 --------------------------------
+--  BlendFunction. Conforms to BlendProtocol protocol <br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#LayerColor] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
 --  change height in Points
 -- @function [parent=#LayerColor] changeHeight 
 -- @param self
 -- @param #float h
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- In lua: local setBlendFunc(local src, local dst)<br>
+-- endcode
+-- @function [parent=#LayerColor] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 --  change width in Points

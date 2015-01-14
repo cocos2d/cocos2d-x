@@ -40,6 +40,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#SkeletonRenderer] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+-- 
 -- @function [parent=#SkeletonRenderer] setSkin 
 -- @param self
 -- @param #string skinName
@@ -73,6 +79,12 @@
 -- @function [parent=#SkeletonRenderer] getDebugBonesEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonRenderer] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 -- 
