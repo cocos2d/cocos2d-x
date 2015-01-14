@@ -41,15 +41,13 @@
 -- Enable frustum culling
 -- @function [parent=#Camera] enableFrustumCulling 
 -- @param self
--- @param #bool enalbe
+-- @param #bool value
 -- @param #bool clipZ
         
 --------------------------------
--- Creates a view matrix based on the specified input parameters.<br>
--- param eyePosition The eye position.<br>
--- param targetPosition The target's center position.<br>
--- param up The up vector.<br>
--- param dst A matrix to store the result in.
+-- Make Camera looks at target<br>
+-- param target The target camera is point at<br>
+-- param up The up vector, usually it's Y axis
 -- @function [parent=#Camera] lookAt 
 -- @param self
 -- @param #vec3_table target
@@ -67,6 +65,13 @@
 -- @function [parent=#Camera] setCameraFlag 
 -- @param self
 -- @param #int flag
+        
+--------------------------------
+-- Get object depth towards camera
+-- @function [parent=#Camera] getDepthInView 
+-- @param self
+-- @param #mat4_table transform
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  create default camera, the camera type depends on Director::getProjection 
@@ -101,6 +106,12 @@
 -- @param #float zoomY
 -- @param #float nearPlane
 -- @param #float farPlane
+-- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] getDefaultCamera 
+-- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------

@@ -92,8 +92,9 @@
 -- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
         
 --------------------------------
--- @overload self, string, string         
 -- @overload self, string         
+-- @overload self         
+-- @overload self, string, string         
 -- @function [parent=#Sprite3D] create
 -- @param self
 -- @param #string modelPath
