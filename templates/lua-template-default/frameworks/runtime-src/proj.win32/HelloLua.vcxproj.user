@@ -9,5 +9,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>$(OutDir)../../../../runtime/win32</LocalDebuggerWorkingDirectory>
     <LocalDebuggerCommand>$(OutDir)../../../../runtime/win32/$(TargetFileName)</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>-workdir $(ProjectDir)../../../</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
