@@ -28,7 +28,7 @@
 
 extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
 
-int lua_cocos2dx_3d_Sprite3D_setBlendFunc01(lua_State* L)
+CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_3d_Sprite3D_setBlendFunc01(lua_State* L)
 {
     int argc = 0;
     cocos2d::Sprite3D* cobj = nullptr;

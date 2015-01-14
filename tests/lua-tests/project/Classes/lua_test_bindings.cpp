@@ -417,20 +417,6 @@ int lua_cocos2dx_DrawNode3D_setBlendFunc(lua_State* L)
         cobj->setBlendFunc(arg0);
         return 0;
     }
-    else if (argc == 2)
-    {
-        CCLOG("setBlendFunc of cc.DrawNode3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
-        GLenum src, dst;
-        if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.DrawNode3D:setBlendFunc"))
-            return 0;
-        
-        if (!luaval_to_int32(L, 3, (int32_t*)&dst, "cc.DrawNode3D:setBlendFunc"))
-            return 0;
-        
-        BlendFunc blendFunc = {src, dst};
-        cobj->setBlendFunc(blendFunc);
-        return 0;
-    }
     
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode3D:setBlendFunc",argc, 1);
     return 0;
@@ -441,6 +427,50 @@ tolua_lerror:
 #endif
     
     return 0;
+}
+
+CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_DrawNode3D_setBlendFunc01(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::DrawNode3D* cobj = nullptr;
+    tolua_Error tolua_err;
+    
+    if (!tolua_isusertype(L,1,"cc.DrawNode3D",0,&tolua_err)) goto tolua_lerror;
+    
+    cobj = (cocos2d::DrawNode3D*)tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode3D_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L)-1;
+    if (argc != 2)
+    {
+        goto tolua_lerror;
+    }
+    else
+    {
+        CCLOG("setBlendFunc of cc.DrawNode3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
+        
+        GLenum src, dst;
+        if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.DrawNode3D:setBlendFunc"))
+            return 0;
+        
+        if (!luaval_to_int32(L, 3, (int32_t*)&dst, "cc.DrawNode3D:setBlendFunc"))
+            return 0;
+        
+        BlendFunc blendFunc = {src, dst};
+        cobj->setBlendFunc(blendFunc);
+        lua_settop(L, 1);
+        return 1;
+    }
+    
+tolua_lerror:
+    return lua_cocos2dx_DrawNode3D_setBlendFunc(L);
 }
 
 int lua_cocos2dx_DrawNode3D_drawLine(lua_State* L)
@@ -657,7 +687,7 @@ int lua_register_cocos2dx_DrawNode3D(lua_State* L)
     
     tolua_beginmodule(L,"DrawNode3D");
     tolua_function(L,"getBlendFunc",lua_cocos2dx_DrawNode3D_getBlendFunc);
-    tolua_function(L,"setBlendFunc",lua_cocos2dx_DrawNode3D_setBlendFunc);
+    tolua_function(L,"setBlendFunc",lua_cocos2dx_DrawNode3D_setBlendFunc01);
     tolua_function(L,"drawLine",lua_cocos2dx_DrawNode3D_drawLine);
     tolua_function(L,"clear",lua_cocos2dx_DrawNode3D_clear);
     tolua_function(L,"drawCube",lua_cocos2dx_DrawNode3D_drawCube);
