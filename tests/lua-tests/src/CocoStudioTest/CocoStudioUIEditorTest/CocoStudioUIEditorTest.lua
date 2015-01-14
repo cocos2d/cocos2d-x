@@ -649,6 +649,66 @@ local function runLayoutEditorTestScene()
     LayoutEditorTest.create()
 end
 
+local LayoutComponentTest = class("LayoutComponentTest",UIScene)
+LayoutComponentTest._displayValueLabel = nil
+
+function LayoutComponentTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, LayoutComponentTest)
+    return target
+end
+
+function LayoutComponentTest:configureGUIScene()
+    local screenSize = cc.Director:getInstance():getWinSize()
+
+    self._displayValueLabel = ccui.Text:create("UILayoutComponentTest_Editor", "", 20)
+    self._displayValueLabel:setPosition(cc.p(screenSize.width / 2, screenSize.height - self._displayValueLabel:getContentSize().height / 2))
+    self._uiLayer:addChild(self._displayValueLabel)
+
+    local back_label = ccui.Text:create("Back", "", 20)
+    back_label:setTouchEnabled(true)
+    local labelLayout = ccui.LayoutComponent:bindLayoutComponent(back_label)
+    labelLayout:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Right)
+    labelLayout:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Bottom)
+    back_label:addTouchEventListener(function(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self:unscheduleUpdate()
+            runCocoStudioUIEditorTestScene()
+        end
+    end)
+    self._layout:addChild(back_label)
+end
+
+function LayoutComponentTest:initExtend()
+    self:init()
+    local screenSize = cc.Director:getInstance():getWinSize()
+    self._layout = ccui.Layout:create()
+    self._uiLayer:addChild(self._layout)
+    self._layout:setContentSize(screenSize)
+
+    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/Scene.csb")
+    node:setContentSize(screenSize)
+    self._layout:addChild(node)
+    self:configureGUIScene()
+    ccui.Helper:doLayout(self._layout)
+end
+
+function LayoutComponentTest.create()
+    local scene = cc.Scene:create()
+    local layer = LayoutComponentTest.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    cc.Director:getInstance():replaceScene(scene) 
+end
+
+local function runLayoutComponentTestScene()
+    LayoutComponentTest.create()
+end
+
 local ScrollViewEditorTest = class("ScrollViewEditorTest",UIScene)
 ScrollViewEditorTest._displayValueLabel = nil
 
@@ -924,6 +984,13 @@ local UIEditorTestItemNames =
         itemTitle = "gui Editor LayoutTest",
         testScene = function () 
             runLayoutEditorTestScene()
+        end
+    },
+
+    {
+        itemTitle = "gui Editor UILayoutComponentTest",
+        testScene = function () 
+            runLayoutComponentTestScene()
         end
     },
 
