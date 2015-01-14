@@ -2018,6 +2018,11 @@ TintTo* TintTo::create(float duration, GLubyte red, GLubyte green, GLubyte blue)
     return tintTo;
 }
 
+TintTo* TintTo::create(float duration, const Color3B& color)
+{
+    return create(duration, color.r, color.g, color.b);
+}
+
 bool TintTo::initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue)
 {
     if (ActionInterval::initWithDuration(duration))

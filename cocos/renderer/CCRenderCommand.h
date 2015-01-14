@@ -65,6 +65,14 @@ public:
     /** set transparent flag */
     inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
 
+    inline bool isSkipBatching() const { return _skipBatching; }
+
+    inline void setSkipBatching(bool value) { _skipBatching = value; }
+    
+    inline bool is3D() const { return _is3D; }
+    
+    inline void set3D(bool value) { _is3D = value; }
+
 protected:
     RenderCommand();
     virtual ~RenderCommand();
@@ -79,6 +87,12 @@ protected:
     
     // transparent flag
     bool  _isTransparent;
+
+    // skip auto batching
+    bool _skipBatching;
+    
+    // is the command been rendered on 3D pass
+    bool _is3D;
 };
 
 NS_CC_END

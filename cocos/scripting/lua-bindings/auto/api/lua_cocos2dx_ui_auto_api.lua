@@ -141,4 +141,9 @@
 -- @field [parent=#ccui] EditBox#EditBox EditBox preloaded module
 
 
+--------------------------------------------------------
+-- the ccui LayoutComponent
+-- @field [parent=#ccui] LayoutComponent#LayoutComponent LayoutComponent preloaded module
+
+
 return nil

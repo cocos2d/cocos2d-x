@@ -2693,5 +2693,8 @@
     <None Include="..\3d\CCAnimationCurve.inl">
       <Filter>3d</Filter>
     </None>
+    <None Include="..\renderer\ccShader_PositionColorPointsize.vert">
+      <Filter>renderer\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

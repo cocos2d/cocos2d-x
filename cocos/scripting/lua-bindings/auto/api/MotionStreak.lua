@@ -28,10 +28,24 @@
 -- @param #color3b_table colors
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#MotionStreak] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+        
+--------------------------------
 -- 
 -- @function [parent=#MotionStreak] setStartingPositionInitialized 
 -- @param self
 -- @param #bool bStartingPositionInitialized
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#MotionStreak] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- 

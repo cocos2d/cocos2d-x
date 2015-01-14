@@ -25,6 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "2d/CCCamera.h"
 #include "CCAtlasNode.h"
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCDirector.h"
@@ -132,15 +133,32 @@ void AtlasNode::updateAtlasValues()
 // AtlasNode - draw
 void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _quadCommand.init(
-              _globalZOrder,
-              _textureAtlas->getTexture()->getName(),
-              getGLProgramState(),
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _quadsToDraw,
-              transform);
-
+    //Render as 3D object
+    if (flags & FLAGS_RENDER_AS_3D)
+    {
+        float depth = Camera::getVisitingCamera()->getDepthInView(transform);
+        _quadCommand.init(
+                          depth,
+                          _textureAtlas->getTexture()->getName(),
+                          getGLProgramState(),
+                          _blendFunc,
+                          _textureAtlas->getQuads(),
+                          _quadsToDraw,
+                          transform);
+        _quadCommand.set3D(true);
+    }
+    else
+    {
+        _quadCommand.init(
+                          _globalZOrder,
+                          _textureAtlas->getTexture()->getName(),
+                          getGLProgramState(),
+                          _blendFunc,
+                          _textureAtlas->getQuads(),
+                          _quadsToDraw,
+                          transform);
+    }
+    
     renderer->addCommand(&_quadCommand);
 
 }

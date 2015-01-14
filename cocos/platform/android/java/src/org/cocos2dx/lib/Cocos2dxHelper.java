@@ -30,6 +30,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.lang.Runnable;
 
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -83,7 +85,13 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.sCocos2dxHelperListener = (Cocos2dxHelperListener)activity;
                     
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
-            Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
+            if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
+                Cocos2dxHelper.sFileDirectory = CocosPlayClient.getGameRoot();
+            }
+            else {
+                Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
+            }
+            
             Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
     
             Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
