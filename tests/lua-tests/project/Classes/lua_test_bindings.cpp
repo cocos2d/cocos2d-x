@@ -382,6 +382,7 @@ int lua_cocos2dx_DrawNode3D_setBlendFunc(lua_State* L)
 {
     int argc = 0;
     cocos2d::DrawNode3D* cobj = nullptr;
+    bool ok = true;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -403,8 +404,22 @@ int lua_cocos2dx_DrawNode3D_setBlendFunc(lua_State* L)
 #endif
     
     argc = lua_gettop(L)-1;
-    if (argc == 2)
+    if (argc == 1)
     {
+        cocos2d::BlendFunc arg0;
+        
+        ok &= luaval_to_blendfunc(L, 2, &arg0, "cc.Sprite3D:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(L,"invalid arguments in function 'lua_cocos2dx_DrawNode3D_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        return 0;
+    }
+    else if (argc == 2)
+    {
+        CCLOG("setBlendFunc of cc.DrawNode3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
         GLenum src, dst;
         if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.DrawNode3D:setBlendFunc"))
             return 0;
@@ -416,6 +431,7 @@ int lua_cocos2dx_DrawNode3D_setBlendFunc(lua_State* L)
         cobj->setBlendFunc(blendFunc);
         return 0;
     }
+    
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode3D:setBlendFunc",argc, 1);
     return 0;
     
