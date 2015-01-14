@@ -48,10 +48,23 @@ NS_CC_BEGIN
 
 std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::ATTRIBUTE_NAME_TEX_COORD2,GLProgram::ATTRIBUTE_NAME_TEX_COORD3,GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::ATTRIBUTE_NAME_BLEND_INDEX};
 
+Sprite3D* Sprite3D::create()
+{
+    //
+    auto sprite = new (std::nothrow) Sprite3D();
+    if (sprite && sprite->init())
+    {
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
     if (modelPath.length() < 4)
-        CCASSERT(false, "improper name specified when creating Sprite3D");
+        CCASSERT(false, "invalid filename for Sprite3D");
     
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite && sprite->initWithFile(modelPath))
@@ -239,6 +252,15 @@ Sprite3D::~Sprite3D()
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
+}
+
+bool Sprite3D::init()
+{
+    if(Node::init())
+    {
+        return true;
+    }
+    return false;
 }
 
 bool Sprite3D::initWithFile(const std::string &path)

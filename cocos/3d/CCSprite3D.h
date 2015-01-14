@@ -50,6 +50,13 @@ struct NodeData;
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
+    /**
+     * Creates an empty sprite3D without 3D model and texture.
+     *
+     * @return An autoreleased sprite3D object.
+     */
+    static Sprite3D* create();
+    
     /** creates a Sprite3D*/
     static Sprite3D* create(const std::string &modelPath);
   
@@ -138,6 +145,9 @@ CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();
     virtual ~Sprite3D();
+    
+    bool init();
+    
     bool initWithFile(const std::string &path);
     
     bool initFrom(const NodeDatas& nodedatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas);

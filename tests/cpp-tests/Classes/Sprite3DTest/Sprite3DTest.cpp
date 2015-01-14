@@ -68,7 +68,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DReskinTest),
     CL(Sprite3DWithOBBPerfromanceTest),
     CL(Sprite3DMirrorTest),
-    CL(QuaternionTest)
+    CL(QuaternionTest),
+    CL(Sprite3DEmptyTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -154,6 +155,30 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
     s->release();
 }
 
+//------------------------------------------------------------------
+//
+// Sprite3DEmptyTest
+//
+//------------------------------------------------------------------
+Sprite3DEmptyTest::Sprite3DEmptyTest()
+{
+    auto s = Sprite3D::create();
+    s->setNormalizedPosition(Vec2(.5,.5));
+    auto l = Label::create();
+    l->setString("Test");
+    s->addChild(l);
+    addChild(s);
+}
+
+std::string Sprite3DEmptyTest::title() const
+{
+    return "Testing Sprite3D Container";
+}
+
+std::string Sprite3DEmptyTest::subtitle() const
+{
+    return "Sprite3D can act as containers for 2D objects";
+}
 
 //------------------------------------------------------------------
 //
