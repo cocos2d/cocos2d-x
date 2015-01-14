@@ -48,10 +48,23 @@ NS_CC_BEGIN
 
 std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::ATTRIBUTE_NAME_TEX_COORD2,GLProgram::ATTRIBUTE_NAME_TEX_COORD3,GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::ATTRIBUTE_NAME_BLEND_INDEX};
 
+Sprite3D* Sprite3D::create()
+{
+    //
+    auto sprite = new (std::nothrow) Sprite3D();
+    if (sprite && sprite->init())
+    {
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
     if (modelPath.length() < 4)
-        CCASSERT(false, "improper name specified when creating Sprite3D");
+        CCASSERT(false, "invalid filename for Sprite3D");
     
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite && sprite->initWithFile(modelPath))
@@ -239,6 +252,15 @@ Sprite3D::~Sprite3D()
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
     removeAllAttachNode();
+}
+
+bool Sprite3D::init()
+{
+    if(Node::init())
+    {
+        return true;
+    }
+    return false;
 }
 
 bool Sprite3D::initWithFile(const std::string &path)
@@ -599,11 +621,61 @@ static Texture2D * getDummyTexture()
 }
 #endif
 
+void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, uint32_t parentFlags)
+{
+    // quick return if not visible. children won't be drawn.
+    if (!_visible)
+    {
+        return;
+    }
+    
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
+    flags &= FLAGS_RENDER_AS_3D;
+    
+    //
+    Director* director = Director::getInstance();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    bool visibleByCamera = isVisitableByVisitingCamera();
+    
+    int i = 0;
+    
+    if(!_children.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for( ; i < _children.size(); i++ )
+        {
+            auto node = _children.at(i);
+            
+            if (node && node->getLocalZOrder() < 0)
+                node->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        // self draw
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit(renderer, _modelViewTransform, flags);
+    }
+    else if (visibleByCamera)
+    {
+        this->draw(renderer, _modelViewTransform, flags);
+    }
+    
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+}
+
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+#if CC_USE_CULLING
     // camera clipping
     if(!Camera::getVisitingCamera()->isVisibleInFrustum(&this->getAABB()))
         return;
+#endif
     
     if (_skeleton)
         _skeleton->updateBoneMatrix();
@@ -651,9 +723,11 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         float globalZ = _globalZOrder;
         bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
         if (isTransparent && Camera::getVisitingCamera())
-        {   // use the view matrix for Applying to recalculating transparent mesh's Z-Order
+        {
+            // use the view matrix for Applying to recalculating transparent mesh's Z-Order
             const auto& viewMat = Camera::getVisitingCamera()->getViewMatrix();
-            globalZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);//fetch the Z from the result matrix
+            //fetch the Z from the result matrix
+            globalZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
         }
         meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
         

@@ -169,12 +169,6 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
 
     _console = new (std::nothrow) Console;
-    
-    // default clear color
-    _clearColor.r = 0;
-    _clearColor.g = 0;
-    _clearColor.b = 0;
-    _clearColor.a = 1.0;
 
     return true;
 }
@@ -258,9 +252,6 @@ void Director::setGLDefaultValues()
     // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
-
-    // set other opengl default values
-    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
 }
 
 // Draw the Scene
@@ -281,7 +272,7 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    _renderer->clear();
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
@@ -726,8 +717,7 @@ void Director::setDepthTest(bool on)
 
 void Director::setClearColor(const Color4F& clearColor)
 {
-    _clearColor = clearColor;
-    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+    _renderer->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)

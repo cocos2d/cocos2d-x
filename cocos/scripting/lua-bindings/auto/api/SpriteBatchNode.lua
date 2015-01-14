@@ -32,6 +32,13 @@
 -- @param #bool cleanup
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#SpriteBatchNode] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
 -- 
 -- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
 -- @param self
@@ -112,6 +119,16 @@
 -- @function [parent=#SpriteBatchNode] removeSpriteFromAtlas 
 -- @param self
 -- @param #cc.Sprite sprite
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- endcode<br>
+-- lua NA 
+-- @function [parent=#SpriteBatchNode] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 --  creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.<br>

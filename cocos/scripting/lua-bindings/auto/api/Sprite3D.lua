@@ -29,6 +29,12 @@
 -- @param self
         
 --------------------------------
+-- 
+-- @function [parent=#Sprite3D] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+        
+--------------------------------
 -- get mesh
 -- @function [parent=#Sprite3D] getMesh 
 -- @param self
@@ -92,8 +98,9 @@
 -- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
         
 --------------------------------
--- @overload self, string, string         
 -- @overload self, string         
+-- @overload self         
+-- @overload self, string, string         
 -- @function [parent=#Sprite3D] create
 -- @param self
 -- @param #string modelPath

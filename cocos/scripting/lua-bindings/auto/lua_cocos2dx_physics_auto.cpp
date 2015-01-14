@@ -90,7 +90,8 @@ int lua_cocos2dx_physics_PhysicsShape_setGroup(lua_State* tolua_S)
             return 0;
         }
         cobj->setGroup(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setGroup",argc, 1);
     return 0;
@@ -139,7 +140,8 @@ int lua_cocos2dx_physics_PhysicsShape_setDensity(lua_State* tolua_S)
             return 0;
         }
         cobj->setDensity(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setDensity",argc, 1);
     return 0;
@@ -376,7 +378,8 @@ int lua_cocos2dx_physics_PhysicsShape_setCategoryBitmask(lua_State* tolua_S)
             return 0;
         }
         cobj->setCategoryBitmask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setCategoryBitmask",argc, 1);
     return 0;
@@ -472,7 +475,8 @@ int lua_cocos2dx_physics_PhysicsShape_setMoment(lua_State* tolua_S)
             return 0;
         }
         cobj->setMoment(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setMoment",argc, 1);
     return 0;
@@ -806,7 +810,8 @@ int lua_cocos2dx_physics_PhysicsShape_setMass(lua_State* tolua_S)
             return 0;
         }
         cobj->setMass(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setMass",argc, 1);
     return 0;
@@ -949,7 +954,8 @@ int lua_cocos2dx_physics_PhysicsShape_setCollisionBitmask(lua_State* tolua_S)
             return 0;
         }
         cobj->setCollisionBitmask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setCollisionBitmask",argc, 1);
     return 0;
@@ -1139,7 +1145,8 @@ int lua_cocos2dx_physics_PhysicsShape_setFriction(lua_State* tolua_S)
             return 0;
         }
         cobj->setFriction(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setFriction",argc, 1);
     return 0;
@@ -1188,7 +1195,8 @@ int lua_cocos2dx_physics_PhysicsShape_setMaterial(lua_State* tolua_S)
             return 0;
         }
         cobj->setMaterial(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setMaterial",argc, 1);
     return 0;
@@ -1237,7 +1245,8 @@ int lua_cocos2dx_physics_PhysicsShape_setTag(lua_State* tolua_S)
             return 0;
         }
         cobj->setTag(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setTag",argc, 1);
     return 0;
@@ -1286,7 +1295,8 @@ int lua_cocos2dx_physics_PhysicsShape_setContactTestBitmask(lua_State* tolua_S)
             return 0;
         }
         cobj->setContactTestBitmask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setContactTestBitmask",argc, 1);
     return 0;
@@ -1335,7 +1345,8 @@ int lua_cocos2dx_physics_PhysicsShape_setRestitution(lua_State* tolua_S)
             return 0;
         }
         cobj->setRestitution(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setRestitution",argc, 1);
     return 0;
@@ -2437,7 +2448,8 @@ int lua_cocos2dx_physics_PhysicsBody_resetForces(lua_State* tolua_S)
             return 0;
         }
         cobj->resetForces();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:resetForces",argc, 0);
     return 0;
@@ -2533,7 +2545,8 @@ int lua_cocos2dx_physics_PhysicsBody_setGroup(lua_State* tolua_S)
             return 0;
         }
         cobj->setGroup(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setGroup",argc, 1);
     return 0;
@@ -2812,7 +2825,8 @@ int lua_cocos2dx_physics_PhysicsBody_applyImpulse(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->applyImpulse(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -2823,7 +2837,8 @@ int lua_cocos2dx_physics_PhysicsBody_applyImpulse(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->applyImpulse(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -2874,7 +2889,8 @@ int lua_cocos2dx_physics_PhysicsBody_setRotationOffset(lua_State* tolua_S)
             return 0;
         }
         cobj->setRotationOffset(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setRotationOffset",argc, 1);
     return 0;
@@ -2918,7 +2934,8 @@ int lua_cocos2dx_physics_PhysicsBody_applyForce(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->applyForce(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -2929,7 +2946,8 @@ int lua_cocos2dx_physics_PhysicsBody_applyForce(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->applyForce(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -3047,7 +3065,8 @@ int lua_cocos2dx_physics_PhysicsBody_applyTorque(lua_State* tolua_S)
             return 0;
         }
         cobj->applyTorque(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:applyTorque",argc, 1);
     return 0;
@@ -3143,7 +3162,8 @@ int lua_cocos2dx_physics_PhysicsBody_setAngularVelocityLimit(lua_State* tolua_S)
             return 0;
         }
         cobj->setAngularVelocityLimit(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setAngularVelocityLimit",argc, 1);
     return 0;
@@ -3283,7 +3303,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeAllShapes(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAllShapes();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     if (argc == 1) 
     {
@@ -3296,7 +3317,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeAllShapes(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAllShapes(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:removeAllShapes",argc, 0);
     return 0;
@@ -3345,7 +3367,8 @@ int lua_cocos2dx_physics_PhysicsBody_setAngularDamping(lua_State* tolua_S)
             return 0;
         }
         cobj->setAngularDamping(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setAngularDamping",argc, 1);
     return 0;
@@ -3394,7 +3417,8 @@ int lua_cocos2dx_physics_PhysicsBody_setVelocityLimit(lua_State* tolua_S)
             return 0;
         }
         cobj->setVelocityLimit(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setVelocityLimit",argc, 1);
     return 0;
@@ -3443,7 +3467,8 @@ int lua_cocos2dx_physics_PhysicsBody_setResting(lua_State* tolua_S)
             return 0;
         }
         cobj->setResting(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setResting",argc, 1);
     return 0;
@@ -3539,7 +3564,8 @@ int lua_cocos2dx_physics_PhysicsBody_setCategoryBitmask(lua_State* tolua_S)
             return 0;
         }
         cobj->setCategoryBitmask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setCategoryBitmask",argc, 1);
     return 0;
@@ -3729,7 +3755,8 @@ int lua_cocos2dx_physics_PhysicsBody_setEnable(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnable(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setEnable",argc, 1);
     return 0;
@@ -3778,7 +3805,8 @@ int lua_cocos2dx_physics_PhysicsBody_setGravityEnable(lua_State* tolua_S)
             return 0;
         }
         cobj->setGravityEnable(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setGravityEnable",argc, 1);
     return 0;
@@ -3874,7 +3902,8 @@ int lua_cocos2dx_physics_PhysicsBody_setMoment(lua_State* tolua_S)
             return 0;
         }
         cobj->setMoment(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setMoment",argc, 1);
     return 0;
@@ -4067,7 +4096,8 @@ int lua_cocos2dx_physics_PhysicsBody_setDynamic(lua_State* tolua_S)
             return 0;
         }
         cobj->setDynamic(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setDynamic",argc, 1);
     return 0;
@@ -4257,7 +4287,8 @@ int lua_cocos2dx_physics_PhysicsBody_setAngularVelocity(lua_State* tolua_S)
             return 0;
         }
         cobj->setAngularVelocity(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setAngularVelocity",argc, 1);
     return 0;
@@ -4394,7 +4425,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->removeShape(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -4409,7 +4441,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->removeShape(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -4420,7 +4453,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->removeShape(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -4435,7 +4469,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->removeShape(arg0, arg1);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -4486,7 +4521,8 @@ int lua_cocos2dx_physics_PhysicsBody_setMass(lua_State* tolua_S)
             return 0;
         }
         cobj->setMass(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setMass",argc, 1);
     return 0;
@@ -4535,7 +4571,8 @@ int lua_cocos2dx_physics_PhysicsBody_addMoment(lua_State* tolua_S)
             return 0;
         }
         cobj->addMoment(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:addMoment",argc, 1);
     return 0;
@@ -4584,7 +4621,8 @@ int lua_cocos2dx_physics_PhysicsBody_setVelocity(lua_State* tolua_S)
             return 0;
         }
         cobj->setVelocity(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setVelocity",argc, 1);
     return 0;
@@ -4633,7 +4671,8 @@ int lua_cocos2dx_physics_PhysicsBody_setLinearDamping(lua_State* tolua_S)
             return 0;
         }
         cobj->setLinearDamping(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setLinearDamping",argc, 1);
     return 0;
@@ -4682,7 +4721,8 @@ int lua_cocos2dx_physics_PhysicsBody_setCollisionBitmask(lua_State* tolua_S)
             return 0;
         }
         cobj->setCollisionBitmask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setCollisionBitmask",argc, 1);
     return 0;
@@ -4731,7 +4771,8 @@ int lua_cocos2dx_physics_PhysicsBody_setPositionOffset(lua_State* tolua_S)
             return 0;
         }
         cobj->setPositionOffset(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setPositionOffset",argc, 1);
     return 0;
@@ -4780,7 +4821,8 @@ int lua_cocos2dx_physics_PhysicsBody_setRotationEnable(lua_State* tolua_S)
             return 0;
         }
         cobj->setRotationEnable(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setRotationEnable",argc, 1);
     return 0;
@@ -5067,7 +5109,8 @@ int lua_cocos2dx_physics_PhysicsBody_addMass(lua_State* tolua_S)
             return 0;
         }
         cobj->addMass(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:addMass",argc, 1);
     return 0;
@@ -5166,7 +5209,8 @@ int lua_cocos2dx_physics_PhysicsBody_setTag(lua_State* tolua_S)
             return 0;
         }
         cobj->setTag(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setTag",argc, 1);
     return 0;
@@ -5265,7 +5309,8 @@ int lua_cocos2dx_physics_PhysicsBody_setContactTestBitmask(lua_State* tolua_S)
             return 0;
         }
         cobj->setContactTestBitmask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:setContactTestBitmask",argc, 1);
     return 0;
@@ -5311,7 +5356,8 @@ int lua_cocos2dx_physics_PhysicsBody_removeFromWorld(lua_State* tolua_S)
             return 0;
         }
         cobj->removeFromWorld();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsBody:removeFromWorld",argc, 0);
     return 0;
@@ -6251,7 +6297,8 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setFriction(lua_State* tolua_S)
             return 0;
         }
         cobj->setFriction(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsContactPreSolve:setFriction",argc, 1);
     return 0;
@@ -6297,7 +6344,8 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_ignore(lua_State* tolua_S)
             return 0;
         }
         cobj->ignore();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsContactPreSolve:ignore",argc, 0);
     return 0;
@@ -6393,7 +6441,8 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setSurfaceVelocity(lua_State* to
             return 0;
         }
         cobj->setSurfaceVelocity(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsContactPreSolve:setSurfaceVelocity",argc, 1);
     return 0;
@@ -6442,7 +6491,8 @@ int lua_cocos2dx_physics_PhysicsContactPreSolve_setRestitution(lua_State* tolua_
             return 0;
         }
         cobj->setRestitution(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsContactPreSolve:setRestitution",argc, 1);
     return 0;
@@ -7209,7 +7259,8 @@ int lua_cocos2dx_physics_PhysicsJoint_setMaxForce(lua_State* tolua_S)
             return 0;
         }
         cobj->setMaxForce(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJoint:setMaxForce",argc, 1);
     return 0;
@@ -7305,7 +7356,8 @@ int lua_cocos2dx_physics_PhysicsJoint_setEnable(lua_State* tolua_S)
             return 0;
         }
         cobj->setEnable(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJoint:setEnable",argc, 1);
     return 0;
@@ -7354,7 +7406,8 @@ int lua_cocos2dx_physics_PhysicsJoint_setCollisionEnable(lua_State* tolua_S)
             return 0;
         }
         cobj->setCollisionEnable(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJoint:setCollisionEnable",argc, 1);
     return 0;
@@ -7450,7 +7503,8 @@ int lua_cocos2dx_physics_PhysicsJoint_setTag(lua_State* tolua_S)
             return 0;
         }
         cobj->setTag(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJoint:setTag",argc, 1);
     return 0;
@@ -7496,7 +7550,8 @@ int lua_cocos2dx_physics_PhysicsJoint_removeFormWorld(lua_State* tolua_S)
             return 0;
         }
         cobj->removeFormWorld();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJoint:removeFormWorld",argc, 0);
     return 0;
@@ -7778,7 +7833,8 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setAnchr2(lua_State* tolua_S)
             return 0;
         }
         cobj->setAnchr2(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointLimit:setAnchr2",argc, 1);
     return 0;
@@ -7827,7 +7883,8 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setAnchr1(lua_State* tolua_S)
             return 0;
         }
         cobj->setAnchr1(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointLimit:setAnchr1",argc, 1);
     return 0;
@@ -7876,7 +7933,8 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setMax(lua_State* tolua_S)
             return 0;
         }
         cobj->setMax(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointLimit:setMax",argc, 1);
     return 0;
@@ -8160,7 +8218,8 @@ int lua_cocos2dx_physics_PhysicsJointLimit_setMin(lua_State* tolua_S)
             return 0;
         }
         cobj->setMin(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointLimit:setMin",argc, 1);
     return 0;
@@ -8488,7 +8547,8 @@ int lua_cocos2dx_physics_PhysicsJointDistance_setDistance(lua_State* tolua_S)
             return 0;
         }
         cobj->setDistance(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointDistance:setDistance",argc, 1);
     return 0;
@@ -8649,7 +8709,8 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setAnchr2(lua_State* tolua_S)
             return 0;
         }
         cobj->setAnchr2(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointSpring:setAnchr2",argc, 1);
     return 0;
@@ -8698,7 +8759,8 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setAnchr1(lua_State* tolua_S)
             return 0;
         }
         cobj->setAnchr1(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointSpring:setAnchr1",argc, 1);
     return 0;
@@ -8794,7 +8856,8 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setStiffness(lua_State* tolua_S)
             return 0;
         }
         cobj->setStiffness(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointSpring:setStiffness",argc, 1);
     return 0;
@@ -9078,7 +9141,8 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setRestLength(lua_State* tolua_S)
             return 0;
         }
         cobj->setRestLength(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointSpring:setRestLength",argc, 1);
     return 0;
@@ -9127,7 +9191,8 @@ int lua_cocos2dx_physics_PhysicsJointSpring_setDamping(lua_State* tolua_S)
             return 0;
         }
         cobj->setDamping(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointSpring:setDamping",argc, 1);
     return 0;
@@ -9253,7 +9318,8 @@ int lua_cocos2dx_physics_PhysicsJointGroove_setAnchr2(lua_State* tolua_S)
             return 0;
         }
         cobj->setAnchr2(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGroove:setAnchr2",argc, 1);
     return 0;
@@ -9302,7 +9368,8 @@ int lua_cocos2dx_physics_PhysicsJointGroove_setGrooveA(lua_State* tolua_S)
             return 0;
         }
         cobj->setGrooveA(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGroove:setGrooveA",argc, 1);
     return 0;
@@ -9351,7 +9418,8 @@ int lua_cocos2dx_physics_PhysicsJointGroove_setGrooveB(lua_State* tolua_S)
             return 0;
         }
         cobj->setGrooveB(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGroove:setGrooveB",argc, 1);
     return 0;
@@ -9706,7 +9774,8 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_setRestAngle(lua_State* tolua_
             return 0;
         }
         cobj->setRestAngle(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotarySpring:setRestAngle",argc, 1);
     return 0;
@@ -9849,7 +9918,8 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_setStiffness(lua_State* tolua_
             return 0;
         }
         cobj->setStiffness(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotarySpring:setStiffness",argc, 1);
     return 0;
@@ -9898,7 +9968,8 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_setDamping(lua_State* tolua_S)
             return 0;
         }
         cobj->setDamping(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotarySpring:setDamping",argc, 1);
     return 0;
@@ -10157,7 +10228,8 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMin(lua_State* tolua_S)
             return 0;
         }
         cobj->setMin(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotaryLimit:setMin",argc, 1);
     return 0;
@@ -10206,7 +10278,8 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_setMax(lua_State* tolua_S)
             return 0;
         }
         cobj->setMax(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRotaryLimit:setMax",argc, 1);
     return 0;
@@ -10434,7 +10507,8 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setAngle(lua_State* tolua_S)
             return 0;
         }
         cobj->setAngle(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRatchet:setAngle",argc, 1);
     return 0;
@@ -10530,7 +10604,8 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setPhase(lua_State* tolua_S)
             return 0;
         }
         cobj->setPhase(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRatchet:setPhase",argc, 1);
     return 0;
@@ -10626,7 +10701,8 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_setRatchet(lua_State* tolua_S)
             return 0;
         }
         cobj->setRatchet(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointRatchet:setRatchet",argc, 1);
     return 0;
@@ -10791,7 +10867,8 @@ int lua_cocos2dx_physics_PhysicsJointGear_setRatio(lua_State* tolua_S)
             return 0;
         }
         cobj->setRatio(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGear:setRatio",argc, 1);
     return 0;
@@ -10887,7 +10964,8 @@ int lua_cocos2dx_physics_PhysicsJointGear_setPhase(lua_State* tolua_S)
             return 0;
         }
         cobj->setPhase(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointGear:setPhase",argc, 1);
     return 0;
@@ -11097,7 +11175,8 @@ int lua_cocos2dx_physics_PhysicsJointMotor_setRate(lua_State* tolua_S)
             return 0;
         }
         cobj->setRate(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsJointMotor:setRate",argc, 1);
     return 0;
@@ -11303,7 +11382,8 @@ int lua_cocos2dx_physics_PhysicsWorld_setGravity(lua_State* tolua_S)
             return 0;
         }
         cobj->setGravity(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:setGravity",argc, 1);
     return 0;
@@ -11446,7 +11526,8 @@ int lua_cocos2dx_physics_PhysicsWorld_setSubsteps(lua_State* tolua_S)
             return 0;
         }
         cobj->setSubsteps(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:setSubsteps",argc, 1);
     return 0;
@@ -11495,7 +11576,8 @@ int lua_cocos2dx_physics_PhysicsWorld_setAutoStep(lua_State* tolua_S)
             return 0;
         }
         cobj->setAutoStep(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:setAutoStep",argc, 1);
     return 0;
@@ -11544,7 +11626,8 @@ int lua_cocos2dx_physics_PhysicsWorld_addJoint(lua_State* tolua_S)
             return 0;
         }
         cobj->addJoint(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:addJoint",argc, 1);
     return 0;
@@ -11590,7 +11673,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeAllJoints(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAllJoints();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     if (argc == 1) 
     {
@@ -11603,7 +11687,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeAllJoints(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAllJoints(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:removeAllJoints",argc, 0);
     return 0;
@@ -11690,7 +11775,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeBody(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->removeBody(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -11701,7 +11787,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeBody(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->removeBody(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -11752,7 +11839,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeJoint(lua_State* tolua_S)
             return 0;
         }
         cobj->removeJoint(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     if (argc == 2) 
     {
@@ -11768,7 +11856,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeJoint(lua_State* tolua_S)
             return 0;
         }
         cobj->removeJoint(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:removeJoint",argc, 1);
     return 0;
@@ -11867,7 +11956,8 @@ int lua_cocos2dx_physics_PhysicsWorld_step(lua_State* tolua_S)
             return 0;
         }
         cobj->step(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:step",argc, 1);
     return 0;
@@ -11916,7 +12006,8 @@ int lua_cocos2dx_physics_PhysicsWorld_setDebugDrawMask(lua_State* tolua_S)
             return 0;
         }
         cobj->setDebugDrawMask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:setDebugDrawMask",argc, 1);
     return 0;
@@ -12012,7 +12103,8 @@ int lua_cocos2dx_physics_PhysicsWorld_setUpdateRate(lua_State* tolua_S)
             return 0;
         }
         cobj->setUpdateRate(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:setUpdateRate",argc, 1);
     return 0;
@@ -12199,7 +12291,8 @@ int lua_cocos2dx_physics_PhysicsWorld_removeAllBodies(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAllBodies();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:removeAllBodies",argc, 0);
     return 0;
@@ -12248,7 +12341,8 @@ int lua_cocos2dx_physics_PhysicsWorld_setSpeed(lua_State* tolua_S)
             return 0;
         }
         cobj->setSpeed(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsWorld:setSpeed",argc, 1);
     return 0;

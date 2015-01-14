@@ -46,7 +46,8 @@ int lua_cocos2dx_controller_Controller_receiveExternalKeyEvent(lua_State* tolua_
             return 0;
         }
         cobj->receiveExternalKeyEvent(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Controller:receiveExternalKeyEvent",argc, 2);
     return 0;
@@ -236,7 +237,8 @@ int lua_cocos2dx_controller_Controller_setTag(lua_State* tolua_S)
             return 0;
         }
         cobj->setTag(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Controller:setTag",argc, 1);
     return 0;
@@ -318,7 +320,8 @@ int lua_cocos2dx_controller_Controller_startDiscoveryController(lua_State* tolua
             return 0;
         }
         cocos2d::Controller::startDiscoveryController();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Controller:startDiscoveryController",argc, 0);
     return 0;
@@ -351,7 +354,8 @@ int lua_cocos2dx_controller_Controller_stopDiscoveryController(lua_State* tolua_
             return 0;
         }
         cocos2d::Controller::stopDiscoveryController();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Controller:stopDiscoveryController",argc, 0);
     return 0;
@@ -509,7 +513,8 @@ int lua_cocos2dx_controller_EventController_setConnectStatus(lua_State* tolua_S)
             return 0;
         }
         cobj->setConnectStatus(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventController:setConnectStatus",argc, 1);
     return 0;
@@ -605,7 +610,8 @@ int lua_cocos2dx_controller_EventController_setKeyCode(lua_State* tolua_S)
             return 0;
         }
         cobj->setKeyCode(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventController:setKeyCode",argc, 1);
     return 0;

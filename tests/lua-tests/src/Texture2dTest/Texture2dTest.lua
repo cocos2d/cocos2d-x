@@ -927,21 +927,21 @@ local function TextureBlend()
         local cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 100+i)
         cloud:setPosition(cc.p(50+25*i, 80))
-        cloud:setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        cloud:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
 
         -- CENTER sprites have also alpha pre-multiplied
         -- they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(cc.p(50+25*i, 160))
-        cloud:setBlendFunc(gl.ONE_MINUS_DST_COLOR , gl.ZERO)
+        cloud:setBlendFunc(cc.blendFunc(gl.ONE_MINUS_DST_COLOR , gl.ZERO))
 
         -- UPPER sprites are using custom blending function
         -- You can set any blend function to your sprites
         cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(cc.p(50+25*i, 320-80))
-        cloud:setBlendFunc(gl.SRC_ALPHA, gl.ONE)  -- additive blending
+        cloud:setBlendFunc(cc.blendFunc(gl.SRC_ALPHA, gl.ONE))  -- additive blending
     end
     return ret
 end

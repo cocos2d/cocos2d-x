@@ -139,7 +139,8 @@ int lua_cocos2dx_3d_Skeleton3D_updateBoneMatrix(lua_State* tolua_S)
             return 0;
         }
         cobj->updateBoneMatrix();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skeleton3D:updateBoneMatrix",argc, 0);
     return 0;
@@ -408,7 +409,8 @@ int lua_cocos2dx_3d_Sprite3D_setCullFaceEnabled(lua_State* tolua_S)
             return 0;
         }
         cobj->setCullFaceEnabled(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setCullFaceEnabled",argc, 1);
     return 0;
@@ -448,7 +450,8 @@ int lua_cocos2dx_3d_Sprite3D_setTexture(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -459,7 +462,8 @@ int lua_cocos2dx_3d_Sprite3D_setTexture(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -554,7 +558,8 @@ int lua_cocos2dx_3d_Sprite3D_removeAllAttachNode(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAllAttachNode();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:removeAllAttachNode",argc, 0);
     return 0;
@@ -562,6 +567,56 @@ int lua_cocos2dx_3d_Sprite3D_removeAllAttachNode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_removeAllAttachNode'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "cc.Sprite3D:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc'.",&tolua_err);
 #endif
 
     return 0;
@@ -650,7 +705,8 @@ int lua_cocos2dx_3d_Sprite3D_setCullFace(lua_State* tolua_S)
             return 0;
         }
         cobj->setCullFace(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setCullFace",argc, 1);
     return 0;
@@ -699,7 +755,8 @@ int lua_cocos2dx_3d_Sprite3D_setLightMask(lua_State* tolua_S)
             return 0;
         }
         cobj->setLightMask(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setLightMask",argc, 1);
     return 0;
@@ -842,7 +899,8 @@ int lua_cocos2dx_3d_Sprite3D_removeAttachNode(lua_State* tolua_S)
             return 0;
         }
         cobj->removeAttachNode(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:removeAttachNode",argc, 1);
     return 0;
@@ -1067,6 +1125,29 @@ int lua_cocos2dx_3d_Sprite3D_create(lua_State* tolua_S)
 
     do 
     {
+        if (argc == 1)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Sprite3D:create");
+            if (!ok) { break; }
+            cocos2d::Sprite3D* ret = cocos2d::Sprite3D::create(arg0);
+            object_to_luaval<cocos2d::Sprite3D>(tolua_S, "cc.Sprite3D",(cocos2d::Sprite3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 0)
+        {
+            cocos2d::Sprite3D* ret = cocos2d::Sprite3D::create();
+            object_to_luaval<cocos2d::Sprite3D>(tolua_S, "cc.Sprite3D",(cocos2d::Sprite3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
         if (argc == 2)
         {
             std::string arg0;
@@ -1081,20 +1162,7 @@ int lua_cocos2dx_3d_Sprite3D_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
-    do 
-    {
-        if (argc == 1)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Sprite3D:create");
-            if (!ok) { break; }
-            cocos2d::Sprite3D* ret = cocos2d::Sprite3D::create(arg0);
-            object_to_luaval<cocos2d::Sprite3D>(tolua_S, "cc.Sprite3D",(cocos2d::Sprite3D*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Sprite3D:create",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Sprite3D:create",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -1138,7 +1206,8 @@ int lua_cocos2dx_3d_Sprite3D_createAsync(lua_State* tolua_S)
 		ok = false;
             if (!ok) { break; }
             cocos2d::Sprite3D::createAsync(arg0, arg1, arg2, arg3);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     } while (0);
     ok  = true;
@@ -1161,7 +1230,8 @@ int lua_cocos2dx_3d_Sprite3D_createAsync(lua_State* tolua_S)
 		ok = false;
             if (!ok) { break; }
             cocos2d::Sprite3D::createAsync(arg0, arg1, arg2);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     } while (0);
     ok  = true;
@@ -1189,6 +1259,7 @@ int lua_register_cocos2dx_3d_Sprite3D(lua_State* tolua_S)
         tolua_function(tolua_S,"setTexture",lua_cocos2dx_3d_Sprite3D_setTexture);
         tolua_function(tolua_S,"getLightMask",lua_cocos2dx_3d_Sprite3D_getLightMask);
         tolua_function(tolua_S,"removeAllAttachNode",lua_cocos2dx_3d_Sprite3D_removeAllAttachNode);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_3d_Sprite3D_setBlendFunc);
         tolua_function(tolua_S,"getMesh",lua_cocos2dx_3d_Sprite3D_getMesh);
         tolua_function(tolua_S,"setCullFace",lua_cocos2dx_3d_Sprite3D_setCullFace);
         tolua_function(tolua_S,"setLightMask",lua_cocos2dx_3d_Sprite3D_setLightMask);
@@ -1236,7 +1307,8 @@ int lua_cocos2dx_3d_Mesh_setTexture(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -1247,7 +1319,8 @@ int lua_cocos2dx_3d_Mesh_setTexture(lua_State* tolua_S)
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
-            return 0;
+            lua_settop(tolua_S, 1);
+            return 1;
         }
     }while(0);
     ok  = true;
@@ -1385,15 +1458,15 @@ int lua_cocos2dx_3d_Mesh_setBlendFunc(lua_State* tolua_S)
     {
         cocos2d::BlendFunc arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc
-		ok = false;
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "cc.Mesh:setBlendFunc");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setBlendFunc'", nullptr);
             return 0;
         }
         cobj->setBlendFunc(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:setBlendFunc",argc, 1);
     return 0;
@@ -1536,7 +1609,8 @@ int lua_cocos2dx_3d_Mesh_setVisible(lua_State* tolua_S)
             return 0;
         }
         cobj->setVisible(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:setVisible",argc, 1);
     return 0;
@@ -1730,7 +1804,8 @@ int lua_cocos2dx_3d_Animate3D_setSpeed(lua_State* tolua_S)
             return 0;
         }
         cobj->setSpeed(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate3D:setSpeed",argc, 1);
     return 0;
@@ -1779,7 +1854,8 @@ int lua_cocos2dx_3d_Animate3D_setWeight(lua_State* tolua_S)
             return 0;
         }
         cobj->setWeight(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate3D:setWeight",argc, 1);
     return 0;
@@ -2161,6 +2237,62 @@ int lua_cocos2dx_3d_BillBoard_getMode(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_BillBoard_visit(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::BillBoard* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.BillBoard",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::BillBoard*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_BillBoard_visit'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Renderer* arg0;
+        cocos2d::Mat4 arg1;
+        unsigned int arg2;
+
+        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+
+        ok &= luaval_to_mat4(tolua_S, 3, &arg1, "cc.BillBoard:visit");
+
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "cc.BillBoard:visit");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_BillBoard_visit'", nullptr);
+            return 0;
+        }
+        cobj->visit(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.BillBoard:visit",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_BillBoard_visit'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_BillBoard_setMode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2198,7 +2330,8 @@ int lua_cocos2dx_3d_BillBoard_setMode(lua_State* tolua_S)
             return 0;
         }
         cobj->setMode(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.BillBoard:setMode",argc, 1);
     return 0;
@@ -2383,6 +2516,7 @@ int lua_register_cocos2dx_3d_BillBoard(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"BillBoard");
         tolua_function(tolua_S,"getMode",lua_cocos2dx_3d_BillBoard_getMode);
+        tolua_function(tolua_S,"visit",lua_cocos2dx_3d_BillBoard_visit);
         tolua_function(tolua_S,"setMode",lua_cocos2dx_3d_BillBoard_setMode);
         tolua_function(tolua_S,"create", lua_cocos2dx_3d_BillBoard_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_3d_BillBoard_createWithTexture);

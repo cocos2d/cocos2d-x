@@ -61,6 +61,13 @@
 -- @param #color4f_table color
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#DrawNode] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
 -- 
 -- @function [parent=#DrawNode] onDraw 
 -- @param self
@@ -106,6 +113,16 @@
 -- @param #vec2_table p2
 -- @param #vec2_table p3
 -- @param #color4f_table color
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- endcode<br>
+-- lua NA
+-- @function [parent=#DrawNode] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 --  Clear the geometry in the node's buffer. 

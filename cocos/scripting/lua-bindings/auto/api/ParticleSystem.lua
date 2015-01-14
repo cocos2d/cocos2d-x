@@ -544,6 +544,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ParticleSystem] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
 -- 
 -- @function [parent=#ParticleSystem] setStartColorVar 
 -- @param self
@@ -578,6 +585,16 @@
 -- @function [parent=#ParticleSystem] setStartRadiusVar 
 -- @param self
 -- @param #float startRadiusVar
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- In lua: local setBlendFunc(local src, local dst)<br>
+-- endcode
+-- @function [parent=#ParticleSystem] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 -- 
