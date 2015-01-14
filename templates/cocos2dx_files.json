@@ -5087,6 +5087,7 @@
         "cocos/scripting/lua-bindings/auto/api/LayerGradient.lua", 
         "cocos/scripting/lua-bindings/auto/api/LayerMultiplex.lua", 
         "cocos/scripting/lua-bindings/auto/api/Layout.lua", 
+        "cocos/scripting/lua-bindings/auto/api/LayoutComponent.lua", 
         "cocos/scripting/lua-bindings/auto/api/LayoutParameter.lua", 
         "cocos/scripting/lua-bindings/auto/api/Lens3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/LinearLayoutParameter.lua", 
