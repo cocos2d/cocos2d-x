@@ -62,7 +62,7 @@ You can run the samples...
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
     $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-    
+
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
@@ -71,7 +71,7 @@ Then click item on Android device to run tests. Available value of `-p` is the A
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
-    
+
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
@@ -90,24 +90,36 @@ Then
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
-    
+
 Then
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
-    
+
 Run
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
-    
+
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
 
 # v3.4rc0
+
+##Highlights of v3.4rc0
+###Adding 3D rendering support for 2D objects
+This feature enables Sprite, Label, Particle to be rendered in 3D space by adding them as children of Sprite3D or Billboard. You can achieve effects like blob shadow, 3D particle, Visual damage number popups
+```c++
+auto billboard = Billboard::create();
+auto label = Label::create();
+label->setString("+100");
+billboard->addChild(label);
+```
+
+
 ##Bugs fixed in v3.4rc0
 * FileUtils::GetData() can not get data on windows
 * FileUtils::GetData() memory leaks when file size is 0 on windows
@@ -162,7 +174,7 @@ Note that when you can make sure that all the stuff is inside the frustum you ca
 
 For more infomation please reffer to the cpptests/CameraTest
 
-### Use less resources to create  ui::CheckBox and ui::Slider 
+### Use less resources to create  ui::CheckBox and ui::Slider
 
 Now we could use less resources to create  ui::CheckBox and ui::Slider.
 
@@ -224,16 +236,16 @@ Fixed block allocators provide a memory pool of blocks of fixed size. They are e
 
 #### Pool Allocator
 
-Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size. 
+Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size.
 
 ### Implementing Custom Allocators for Objects
-Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class. 
+Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class.
 
 ```c++
     class SomeClass
     {
     public:
-        
+
         cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
         CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
     };
