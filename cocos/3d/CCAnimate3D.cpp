@@ -160,11 +160,13 @@ void Animate3D::stop()
 //! called every frame with it's delta time. DON'T override unless you know what you are doing.
 void Animate3D::step(float dt)
 {
-    ActionInterval::step(dt * _absSpeed);
+    ActionInterval::step(dt);
 }
 
 void Animate3D::update(float t)
 {
+    t *= _absSpeed;
+    
     if (_target)
     {
         if (_state == Animate3D::Animate3DState::FadeIn && _lastTime > 0.f)
