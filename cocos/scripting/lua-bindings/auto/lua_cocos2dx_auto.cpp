@@ -24693,7 +24693,6 @@ int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
@@ -24702,28 +24701,47 @@ int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TintTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    argc = lua_gettop(tolua_S) - 1;
+    argc = lua_gettop(tolua_S)-1;
 
-    if (argc == 4)
+    do 
     {
-        double arg0;
-        uint16_t arg1;
-        uint16_t arg2;
-        uint16_t arg3;
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TintTo:create");
-        ok &= luaval_to_uint16(tolua_S, 3,&arg1, "cc.TintTo:create");
-        ok &= luaval_to_uint16(tolua_S, 4,&arg2, "cc.TintTo:create");
-        ok &= luaval_to_uint16(tolua_S, 5,&arg3, "cc.TintTo:create");
-        if(!ok)
+        if (argc == 2)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TintTo_create'", nullptr);
-            return 0;
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TintTo:create");
+            if (!ok) { break; }
+            cocos2d::Color3B arg1;
+            ok &= luaval_to_color3b(tolua_S, 3, &arg1, "cc.TintTo:create");
+            if (!ok) { break; }
+            cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1);
+            object_to_luaval<cocos2d::TintTo>(tolua_S, "cc.TintTo",(cocos2d::TintTo*)ret);
+            return 1;
         }
-        cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1, arg2, arg3);
-        object_to_luaval<cocos2d::TintTo>(tolua_S, "cc.TintTo",(cocos2d::TintTo*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.TintTo:create",argc, 4);
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 4)
+        {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TintTo:create");
+            if (!ok) { break; }
+            uint16_t arg1;
+            ok &= luaval_to_uint16(tolua_S, 3,&arg1, "cc.TintTo:create");
+            if (!ok) { break; }
+            uint16_t arg2;
+            ok &= luaval_to_uint16(tolua_S, 4,&arg2, "cc.TintTo:create");
+            if (!ok) { break; }
+            uint16_t arg3;
+            ok &= luaval_to_uint16(tolua_S, 5,&arg3, "cc.TintTo:create");
+            if (!ok) { break; }
+            cocos2d::TintTo* ret = cocos2d::TintTo::create(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::TintTo>(tolua_S, "cc.TintTo",(cocos2d::TintTo*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.TintTo:create",argc, 4);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
