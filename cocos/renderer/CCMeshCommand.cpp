@@ -123,7 +123,7 @@ void MeshCommand::init(float globalOrder,
     _indexFormat = indexFormat;
     _indexCount = indexCount;
     _mv.set(mv);
-
+    _is3D = true;
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
@@ -149,6 +149,14 @@ void MeshCommand::setDepthWriteEnabled(bool enable)
 void MeshCommand::setDisplayColor(const Vec4& color)
 {
     _displayColor = color;
+}
+
+void MeshCommand::setTransparent(bool value)
+{
+    _isTransparent = value;
+    //Skip batching for transparent mesh
+    _skipBatching = value;
+    setDepthWriteEnabled(!_isTransparent);
 }
 
 MeshCommand::~MeshCommand()

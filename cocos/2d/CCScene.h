@@ -73,6 +73,8 @@ public:
     /** get all cameras */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
+    Camera* getDefaultCamera() const { return _defaultCamera; }
+
     const std::vector<BaseLight*>& getLights() const { return _lights; }
     
     /** render the scene */

@@ -28,7 +28,8 @@ std::function<Layer*()> createFunctions[] =
     CL(Issue4129),
     CL(Issue4160),
     CL(DanglingNodePointersTest),
-    CL(RegisterAndUnregisterWhileEventHanldingTest)
+    CL(RegisterAndUnregisterWhileEventHanldingTest),
+    CL(Issue9898)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -1453,4 +1454,37 @@ std::string RegisterAndUnregisterWhileEventHanldingTest::title() const
 std::string RegisterAndUnregisterWhileEventHanldingTest::subtitle() const
 {
     return  "Tap the square multiple times - should not crash!";
+}
+
+Issue9898::Issue9898()
+{
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    auto size = Director::getInstance()->getVisibleSize();
+
+    auto nodeA = Node::create();
+    addChild(nodeA);
+
+    _listener = cocos2d::EventListenerCustom::create("Issue9898", [&](cocos2d::EventCustom *event){
+        _eventDispatcher->removeEventListener(_listener);
+        _eventDispatcher->dispatchCustomEvent("Issue9898");
+    });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_listener, nodeA);
+
+    auto menuItem = MenuItemFont::create("Dispatch Custom Event", [&](Ref *sender) {
+        _eventDispatcher->dispatchCustomEvent("Issue9898");
+    });
+    menuItem->setPosition(origin.x + size.width/2, origin.y + size.height/2);
+    auto menu = Menu::create(menuItem, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu);
+}
+
+std::string Issue9898::title() const
+{
+    return "";
+}
+
+std::string Issue9898::subtitle() const
+{
+    return  "Should not crash if dispatch event after remove\n event listener in callback";
 }

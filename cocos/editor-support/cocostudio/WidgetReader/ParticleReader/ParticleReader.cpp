@@ -163,6 +163,7 @@ namespace cocostudio
             if (particle)
             {
                 setPropsWithFlatBuffers(particle, (Table*)particleOptions);
+                particle->setPositionType(ParticleSystem::PositionType::GROUPED);
             }
         }
         else
