@@ -137,11 +137,6 @@ public:
     void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
     
     /**
-     * Enable frustum culling
-     */
-    void enableFrustumCulling(bool value, bool clipZ);
-    
-    /**
      * Is this aabb visible in frustum
      */
     bool isVisibleInFrustum(const AABB* aabb) const;
@@ -190,7 +185,6 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
-    bool _enableFrustumCulling;
     static Camera* _visitingCamera;
     
     friend class Director;

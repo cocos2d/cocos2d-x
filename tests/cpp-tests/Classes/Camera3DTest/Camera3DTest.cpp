@@ -936,14 +936,12 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
     {
         _cameraType = CameraType::ThirdPerson;
         _cameraThird->setCameraFlag(CameraFlag::USER1);
-        _cameraThird->enableFrustumCulling(false, false);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
     }
     else if(_cameraType == CameraType::ThirdPerson)
     {
         _cameraType = CameraType::FirstPerson;
         _cameraFirst->setCameraFlag(CameraFlag::USER1);
-        _cameraFirst->enableFrustumCulling(true, true);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
         _drawFrustum->clear();
     }
