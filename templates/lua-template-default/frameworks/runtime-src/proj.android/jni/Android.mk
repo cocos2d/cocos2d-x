@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libcocos2dlua
 
 LOCAL_SRC_FILES := \
 ../../Classes/AppDelegate.cpp \
-../../Classes/SimpleConfigParser.cpp \
+../../Classes/ide-support/SimpleConfigParser.cpp \
 hellolua/Runtime_android.cpp \
 hellolua/main.cpp
 
