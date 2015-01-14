@@ -338,6 +338,7 @@ protected:
     float _angularDamping;
     int _tag;
     
+    bool _positionInitDirty;
     Vec2 _recordedPosition;
     Vec2 _latestPosition;
     Vec2 _positionOffset;
