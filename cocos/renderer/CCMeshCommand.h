@@ -64,6 +64,8 @@ public:
 
     void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
     
+    void setTransparent(bool value);
+    
     void execute();
     
     //used for bath

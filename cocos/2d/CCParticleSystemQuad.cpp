@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include <algorithm>
 
+#include "2d/CCCamera.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
@@ -372,8 +373,17 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
-        renderer->addCommand(&_quadCommand);
+        if (flags & FLAGS_RENDER_AS_3D)
+        {
+            float depth = Camera::getVisitingCamera()->getDepthInView(transform);
+            _quadCommand.init(depth, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
+            renderer->addCommand(&_quadCommand);
+        }
+        else
+        {
+            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
+            renderer->addCommand(&_quadCommand);
+        }
     }
 }
 

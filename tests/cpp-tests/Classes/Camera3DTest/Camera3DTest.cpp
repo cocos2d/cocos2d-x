@@ -24,8 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Camera3DTest.h"
-#include <algorithm>
-#include "../testResource.h"
 
 enum
 {
@@ -38,18 +36,18 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(CameraRotationTest),
     CL(Camera3DTestDemo),
-    CL(CameraClippingDemo),
+    CL(CameraCullingDemo),
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(FogTestDemo),
 #endif
     CL(CameraArcBallDemo)
-
 };
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-static Layer* nextSpriteTestAction()
+static Layer*nextTest()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
@@ -57,7 +55,7 @@ static Layer* nextSpriteTestAction()
     return layer;
 }
 
-static Layer* backSpriteTestAction()
+static Layer*backTest()
 {
     sceneIdx--;
     int total = MAX_LAYER;
@@ -68,21 +66,163 @@ static Layer* backSpriteTestAction()
     return layer;
 }
 
-static Layer* restartSpriteTestAction()
+static Layer* restartTest()
 {
     auto layer = (createFunctions[sceneIdx])();
     return layer;
 }
 
+void Camera3DTestScene::runThisTest()
+{
+    auto layer = nextTest();
+    addChild(layer);
+    Director::getInstance()->replaceScene(this);
+}
+
 //------------------------------------------------------------------
 //
-// SpriteTestDemo
+// CameraBaseTest
 //
 //------------------------------------------------------------------
 
+void CameraBaseTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild(restartTest());
+
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraBaseTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void CameraBaseTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) Camera3DTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+//------------------------------------------------------------------
+//
+// Camera Rotation Test
+//
+//------------------------------------------------------------------
+CameraRotationTest::CameraRotationTest()
+{
+
+    auto s = Director::getInstance()->getWinSize();
+    
+    _camControlNode = Node::create();
+    _camControlNode->setNormalizedPosition(Vec2(.5,.5));
+    addChild(_camControlNode);
+
+    _camNode = Node::create();
+    _camNode->setPositionZ(Camera::getDefaultCamera()->getPosition3D().z);
+    _camControlNode->addChild(_camNode);
+
+    
+    //Billboards
+    //Yellow is at the back
+    bill1 = BillBoard::create("Images/Icon.png");
+    bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
+    bill1->setColor(Color3B::YELLOW);
+    bill1->setScale(0.6);
+    addChild(bill1);
+    
+    l1 = Label::create();
+    l1->setPosition(Vec2(0,-10));
+    l1->setString("Billboard1");
+    l1->setColor(Color3B::WHITE);
+    l1->setScale(3);
+    bill1->addChild(l1);
+
+    bill2 = BillBoard::create("Images/Icon.png");
+    bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
+    bill2->setScale(0.6);
+    addChild(bill2);
+    
+    l2 = Label::create();
+    l2->setString("Billboard2");
+    l2->setPosition(Vec2(0,-10));
+    l2->setColor(Color3B::WHITE);
+    l2->setScale(3);
+    bill2->addChild(l2);
+
+    //3D models
+    auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
+    model->setScale(4);
+    model->setTexture("Sprite3DTest/boss.png");
+    model->setPosition3D(Vec3(s.width/2, s.height/2, 0));
+    addChild(model);
+
+    //Listener
+    _lis = EventListenerTouchOneByOne::create();
+    _lis->onTouchBegan = [this](Touch* t, Event* e) {
+        return true;
+    };
+
+    _lis->onTouchMoved = [this](Touch* t, Event* e) {
+        float dx = t->getDelta().x;
+        Vec3 rot = _camControlNode->getRotation3D();
+        rot.y += dx;
+        _camControlNode->setRotation3D(rot);
+
+        Vec3 worldPos;
+        _camNode->getNodeToWorldTransform().getTranslation(&worldPos);
+
+        Camera::getDefaultCamera()->setPosition3D(worldPos);
+        Camera::getDefaultCamera()->lookAt(_camControlNode->getPosition3D());
+    };
+
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_lis, this);
+    
+    schedule(schedule_selector(CameraRotationTest::update));
+}
+
+CameraRotationTest::~CameraRotationTest()
+{
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_lis);
+}
+
+std::string CameraRotationTest::title() const
+{
+    return "Camera Rotation Test";
+}
+
+std::string CameraRotationTest::subtitle() const
+{
+    return "Slide to rotate";
+}
+
+void CameraRotationTest::onEnter()
+{
+    BaseTest::onEnter();
+}
+
+void CameraRotationTest::onExit()
+{
+    BaseTest::onExit();
+}
+
+void CameraRotationTest::update(float dt)
+{
+}
+
+//------------------------------------------------------------------
+//
+// Camera3DTestDemo
+//
+//------------------------------------------------------------------
 Camera3DTestDemo::Camera3DTestDemo(void)
-: BaseTest()
-, _incRot(nullptr)
+: _incRot(nullptr)
 , _camera(nullptr)
 , _decRot(nullptr)
 , _bZoomOut(false)
@@ -102,13 +242,9 @@ std::string Camera3DTestDemo::title() const
     return "Testing Camera";
 }
 
-std::string Camera3DTestDemo::subtitle() const
-{
-    return "";
-}
 void Camera3DTestDemo::scaleCameraCallback(Ref* sender,float value)
 {
-    if(_camera&& _cameraType!=CameraType::FirstCamera)
+    if(_camera&& _cameraType!=CameraType::FirstPerson)
     {
         Vec3 cameraPos=  _camera->getPosition3D();
         cameraPos+= cameraPos.getNormalized()*value;
@@ -117,7 +253,7 @@ void Camera3DTestDemo::scaleCameraCallback(Ref* sender,float value)
 }
 void Camera3DTestDemo::rotateCameraCallback(Ref* sender,float value)
 {
-    if(_cameraType==CameraType::FreeCamera || _cameraType==CameraType::FirstCamera)
+    if(_cameraType==CameraType::Free || _cameraType==CameraType::FirstPerson)
     {
         Vec3  rotation3D= _camera->getRotation3D();
         rotation3D.y+= value;
@@ -131,33 +267,33 @@ void Camera3DTestDemo::SwitchViewCallback(Ref* sender, CameraType cameraType)
         return ;
     }
     _cameraType = cameraType;
-    if(_cameraType==CameraType::FreeCamera)
+    if(_cameraType==CameraType::Free)
     {
         _camera->setPosition3D(Vec3(0, 130, 130) + _sprite3D->getPosition3D());
-        _camera->lookAt(_sprite3D->getPosition3D(), Vec3(0,1,0));
+        _camera->lookAt(_sprite3D->getPosition3D());
         
         _RotateRightlabel->setColor(Color3B::WHITE);
         _RotateLeftlabel->setColor(Color3B::WHITE);
         _ZoomInlabel->setColor(Color3B::WHITE);
         _ZoomOutlabel->setColor(Color3B::WHITE);
     }
-    else if(_cameraType==CameraType::FirstCamera)
+    else if(_cameraType==CameraType::FirstPerson)
     {
         Vec3 newFaceDir;
         _sprite3D->getWorldToNodeTransform().getForwardVector(&newFaceDir);
         newFaceDir.normalize();
         _camera->setPosition3D(Vec3(0,35,0) + _sprite3D->getPosition3D());
-        _camera->lookAt(_sprite3D->getPosition3D() + newFaceDir*50, Vec3(0, 1, 0));
+        _camera->lookAt(_sprite3D->getPosition3D() + newFaceDir*50);
         
         _RotateRightlabel->setColor(Color3B::WHITE);
         _RotateLeftlabel->setColor(Color3B::WHITE);
         _ZoomInlabel->setColor(Color3B::GRAY);
         _ZoomOutlabel->setColor(Color3B::GRAY);
     }
-    else if(_cameraType==CameraType::ThirdCamera)
+    else if(_cameraType==CameraType::ThirdPerson)
     {
         _camera->setPosition3D(Vec3(0, 130, 130) + _sprite3D->getPosition3D());
-        _camera->lookAt(_sprite3D->getPosition3D(), Vec3(0,1,0));
+        _camera->lookAt(_sprite3D->getPosition3D());
         
         _RotateRightlabel->setColor(Color3B::GRAY);
         _RotateLeftlabel->setColor(Color3B::GRAY);
@@ -239,11 +375,11 @@ void Camera3DTestDemo::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener4, _RotateRightlabel);
     
     auto label1 = Label::createWithTTF(ttfConfig,"free ");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::FreeCamera));
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::Free));
     auto label2 = Label::createWithTTF(ttfConfig,"third person");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::ThirdCamera));
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::ThirdPerson));
     auto label3 = Label::createWithTTF(ttfConfig,"first person");
-    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::FirstCamera));
+    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Camera3DTestDemo::SwitchViewCallback,this,CameraType::FirstPerson));
     auto menu = Menu::create(menuItem1, menuItem2, menuItem3, nullptr);
     
     menu->setPosition(Vec2::ZERO);
@@ -259,7 +395,7 @@ void Camera3DTestDemo::onEnter()
         _camera->setCameraFlag(CameraFlag::USER1);
         _layer3D->addChild(_camera);
     }
-    SwitchViewCallback(this,CameraType::ThirdCamera);
+    SwitchViewCallback(this,CameraType::ThirdPerson);
     DrawNode3D* line =DrawNode3D::create();
     //draw x
     for( int j =-20; j<=20 ;j++)
@@ -285,30 +421,6 @@ void Camera3DTestDemo::onExit()
     {
         _camera = nullptr;
     }
-}
-
-void Camera3DTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Camera3DTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-void Camera3DTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation,float scale,bool bindCamera)
@@ -348,7 +460,7 @@ void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2
         auto touch = touches[0];
         auto location = touch->getLocation();
         Point newPos = touch->getPreviousLocation()-location;
-        if(_cameraType==CameraType::FreeCamera || _cameraType==CameraType::FirstCamera)
+        if(_cameraType==CameraType::Free || _cameraType==CameraType::FirstPerson)
         {
             Vec3 cameraDir;
             Vec3 cameraRightDir;
@@ -362,7 +474,7 @@ void Camera3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2
             cameraPos+=cameraDir*newPos.y*0.1f;
             cameraPos+=cameraRightDir*newPos.x*0.1f;
             _camera->setPosition3D(cameraPos);
-            if(_sprite3D &&  _cameraType==CameraType::FirstCamera)
+            if(_sprite3D &&  _cameraType==CameraType::FirstPerson)
             {
                 _sprite3D->setPosition3D(Vec3(_camera->getPositionX(),0,_camera->getPositionZ()));
                 _targetPos=_sprite3D->getPosition3D();
@@ -383,7 +495,7 @@ void Camera3DTestDemo::move3D(float elapsedTime)
         _sprite3D->setPosition3D(curPos);
         offset.x=offset.x;
         offset.z=offset.z;
-        if(_cameraType==CameraType::ThirdCamera)
+        if(_cameraType==CameraType::ThirdPerson)
         {
             Vec3 cameraPos= _camera->getPosition3D();
             cameraPos.x+=offset.x;
@@ -430,7 +542,7 @@ void Camera3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2
         auto location = touch->getLocationInView();
         if(_camera)
         {
-            if(_sprite3D && _cameraType==CameraType::ThirdCamera && _bZoomOut == false && _bZoomIn == false && _bRotateLeft == false && _bRotateRight == false)
+            if(_sprite3D && _cameraType==CameraType::ThirdPerson && _bZoomOut == false && _bZoomIn == false && _bRotateLeft == false && _bRotateRight == false)
             {
                 Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
                 
@@ -467,7 +579,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
 {
     if(_sprite3D)
     {
-        if( _cameraType==CameraType::ThirdCamera)
+        if( _cameraType==CameraType::ThirdPerson)
         {
             updateState(fDelta);
             if(isState(_curState,State_Move))
@@ -515,7 +627,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         {
             if(_camera)
             {
-                if(_cameraType == CameraType::ThirdCamera)
+                if(_cameraType == CameraType::ThirdPerson)
                 {
                     Vec3 lookDir = _camera->getPosition3D() - _sprite3D->getPosition3D();
                     Vec3 cameraPos = _camera->getPosition3D();
@@ -525,7 +637,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
                         _camera->setPosition3D(cameraPos);
                     }
                 }
-                else if(_cameraType == CameraType::FreeCamera)
+                else if(_cameraType == CameraType::Free)
                 {
                     Vec3 cameraPos = _camera->getPosition3D();
                     if(cameraPos.length() <= 300)
@@ -540,7 +652,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         {
             if(_camera)
             {
-                if(_cameraType == CameraType::ThirdCamera)
+                if(_cameraType == CameraType::ThirdPerson)
                 {
                     Vec3 lookDir = _camera->getPosition3D() - _sprite3D->getPosition3D();
                     Vec3 cameraPos = _camera->getPosition3D();
@@ -550,7 +662,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
                         _camera->setPosition3D(cameraPos);
                     }
                 }
-                else if(_cameraType == CameraType::FreeCamera)
+                else if(_cameraType == CameraType::Free)
                 {
                     Vec3 cameraPos = _camera->getPosition3D();
                     if(cameraPos.length() >= 50)
@@ -563,7 +675,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         }
         if(_bRotateLeft == true)
         {
-            if(_cameraType==CameraType::FreeCamera || _cameraType==CameraType::FirstCamera)
+            if(_cameraType==CameraType::Free || _cameraType==CameraType::FirstPerson)
             {
                 Vec3  rotation3D= _camera->getRotation3D();
                 rotation3D.y+= 1;
@@ -572,7 +684,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         }
         if(_bRotateRight == true)
         {
-            if(_cameraType==CameraType::FreeCamera || _cameraType==CameraType::FirstCamera)
+            if(_cameraType==CameraType::Free || _cameraType==CameraType::FirstPerson)
             {
                 Vec3  rotation3D= _camera->getRotation3D();
                 rotation3D.y-= 1;
@@ -663,11 +775,10 @@ void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 }
 
 ////////////////////////////////////////////////////////////
-// CameraClippingDemo
-CameraClippingDemo::CameraClippingDemo(void)
-: BaseTest()
-, _layer3D(nullptr)
-, _cameraType(CameraType::FirstCamera)
+// CameraCullingDemo
+CameraCullingDemo::CameraCullingDemo(void)
+: _layer3D(nullptr)
+, _cameraType(CameraType::FirstPerson)
 , _cameraFirst(nullptr)
 , _cameraThird(nullptr)
 , _moveAction(nullptr)
@@ -676,49 +787,26 @@ CameraClippingDemo::CameraClippingDemo(void)
 , _row(3)
 {
 }
-CameraClippingDemo::~CameraClippingDemo(void)
+CameraCullingDemo::~CameraCullingDemo(void)
 {
 }
 
-std::string CameraClippingDemo::title() const
+std::string CameraCullingDemo::title() const
 {
     return "Camera Frustum Clipping";
 }
 
-void CameraClippingDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraClippingDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraClippingDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraClippingDemo::onEnter()
+void CameraCullingDemo::onEnter()
 {
     BaseTest::onEnter();
-    schedule(schedule_selector(CameraClippingDemo::update), 0.0f);
+
+    schedule(schedule_selector(CameraCullingDemo::update), 0.0f);
+    
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = CC_CALLBACK_2(CameraClippingDemo::onTouchesBegan, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(CameraClippingDemo::onTouchesMoved, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(CameraClippingDemo::onTouchesEnded, this);
+    listener->onTouchesBegan = CC_CALLBACK_2(CameraCullingDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(CameraCullingDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(CameraCullingDemo::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     auto layer3D=Layer::create();
     addChild(layer3D,0);
@@ -728,7 +816,7 @@ void CameraClippingDemo::onEnter()
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(20);
     
-    auto menuItem1 = MenuItemFont::create("Switch Camera", CC_CALLBACK_1(CameraClippingDemo::switchViewCallback,this));
+    auto menuItem1 = MenuItemFont::create("Switch Camera", CC_CALLBACK_1(CameraCullingDemo::switchViewCallback,this));
     menuItem1->setColor(Color3B(0,200,20));
     auto menu = Menu::create(menuItem1,NULL);
     menu->setPosition(Vec2::ZERO);
@@ -737,9 +825,9 @@ void CameraClippingDemo::onEnter()
     
     // + -
     MenuItemFont::setFontSize(40);
-    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(CameraClippingDemo::delSpriteCallback, this));
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(CameraCullingDemo::delSpriteCallback, this));
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(CameraClippingDemo::addSpriteCallback, this));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(CameraCullingDemo::addSpriteCallback, this));
     increase->setColor(Color3B(0,200,20));
     
     menu = Menu::create(decrease, increase, nullptr);
@@ -770,7 +858,7 @@ void CameraClippingDemo::onEnter()
     addSpriteCallback(nullptr);
 }
 
-void CameraClippingDemo::onExit()
+void CameraCullingDemo::onExit()
 {
     BaseTest::onExit();
     if (_cameraFirst)
@@ -783,11 +871,11 @@ void CameraClippingDemo::onExit()
     }
 }
 
-void CameraClippingDemo::update(float dt)
+void CameraCullingDemo::update(float dt)
 {
     _drawAABB->clear();
     
-    if(_cameraType == CameraType::ThirdCamera)
+    if(_cameraType == CameraType::ThirdPerson)
         drawCameraFrustum();
     
     Vector<Node*>& children = _layer3D->getChildren();
@@ -804,7 +892,7 @@ void CameraClippingDemo::update(float dt)
     }
 }
 
-void CameraClippingDemo::reachEndCallBack()
+void CameraCullingDemo::reachEndCallBack()
 {
     _cameraFirst->stopActionByTag(100);
     auto inverse = (MoveTo*)_moveAction->reverse();
@@ -812,12 +900,12 @@ void CameraClippingDemo::reachEndCallBack()
     _moveAction->release();
     _moveAction = inverse;
     auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
-    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(CameraClippingDemo::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(CameraCullingDemo::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
     _cameraFirst->runAction(seq);
 }
 
-void CameraClippingDemo::switchViewCallback(Ref* sender)
+void CameraCullingDemo::switchViewCallback(Ref* sender)
 {
     auto s = Director::getInstance()->getWinSize();
     
@@ -826,10 +914,10 @@ void CameraClippingDemo::switchViewCallback(Ref* sender)
         _cameraFirst = Camera::createPerspective(30, (GLfloat)s.width/s.height, 10, 200);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
         _cameraFirst->setPosition3D(Vec3(-100,0,0));
-        _cameraFirst->lookAt(Vec3(1000,0,0), Vec3(0, 1, 0));
+        _cameraFirst->lookAt(Vec3(1000,0,0));
         _moveAction = MoveTo::create(4.f, Vec2(100, 0));
         _moveAction->retain();
-        auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraClippingDemo::reachEndCallBack, this)), nullptr);
+        auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraCullingDemo::reachEndCallBack, this)), nullptr);
         seq->setTag(100);
         _cameraFirst->runAction(seq);
         addChild(_cameraFirst);
@@ -840,20 +928,20 @@ void CameraClippingDemo::switchViewCallback(Ref* sender)
         _cameraThird = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
         _cameraThird->setPosition3D(Vec3(0, 130, 130));
-        _cameraThird->lookAt(Vec3(0,0,0), Vec3(0, 1, 0));
+        _cameraThird->lookAt(Vec3(0,0,0));
         addChild(_cameraThird);
     }
     
-    if(_cameraType == CameraType::FirstCamera)
+    if(_cameraType == CameraType::FirstPerson)
     {
-        _cameraType = CameraType::ThirdCamera;
+        _cameraType = CameraType::ThirdPerson;
         _cameraThird->setCameraFlag(CameraFlag::USER1);
         _cameraThird->enableFrustumCulling(false, false);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
     }
-    else if(_cameraType == CameraType::ThirdCamera)
+    else if(_cameraType == CameraType::ThirdPerson)
     {
-        _cameraType = CameraType::FirstCamera;
+        _cameraType = CameraType::FirstPerson;
         _cameraFirst->setCameraFlag(CameraFlag::USER1);
         _cameraFirst->enableFrustumCulling(true, true);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
@@ -861,7 +949,7 @@ void CameraClippingDemo::switchViewCallback(Ref* sender)
     }
 }
 
-void CameraClippingDemo::addSpriteCallback(Ref* sender)
+void CameraCullingDemo::addSpriteCallback(Ref* sender)
 {
     _layer3D->removeAllChildren();
     _objects.clear();
@@ -889,7 +977,7 @@ void CameraClippingDemo::addSpriteCallback(Ref* sender)
     _labelSprite3DCount->setString(szText);
 }
 
-void CameraClippingDemo::delSpriteCallback(Ref* sender)
+void CameraCullingDemo::delSpriteCallback(Ref* sender)
 {
     if (_row == 0) return;
     
@@ -917,7 +1005,7 @@ void CameraClippingDemo::delSpriteCallback(Ref* sender)
     _labelSprite3DCount->setString(szText);
 }
 
-void CameraClippingDemo::drawCameraFrustum()
+void CameraCullingDemo::drawCameraFrustum()
 {
     _drawFrustum->clear();
     auto size = Director::getInstance()->getWinSize();
@@ -971,9 +1059,9 @@ void CameraClippingDemo::drawCameraFrustum()
 ////////////////////////////////////////////////////////////
 // CameraArcBallDemo
 CameraArcBallDemo::CameraArcBallDemo(void)
-: BaseTest()
+: CameraBaseTest()
 , _layer3D(nullptr)
-, _cameraType(CameraType::FreeCamera)
+, _cameraType(CameraType::Free)
 , _camera(nullptr)
 ,_drawGrid(nullptr)
 ,_sprite3D1(nullptr)
@@ -992,31 +1080,6 @@ CameraArcBallDemo::~CameraArcBallDemo(void)
 std::string CameraArcBallDemo::title() const
 {
     return "Camera ArcBall Moving";
-}
-
-void CameraArcBallDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraArcBallDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraArcBallDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void CameraArcBallDemo::onEnter()
@@ -1219,9 +1282,9 @@ void CameraArcBallDemo::update(float dt)
 ////////////////////////////////////////////////////////////
 // FogTestDemo
 FogTestDemo::FogTestDemo(void)
-: BaseTest()
+: CameraBaseTest()
 , _layer3D(nullptr)
-, _cameraType(CameraType::FreeCamera)
+, _cameraType(CameraType::Free)
 , _camera(nullptr)
 , _shader(nullptr)
 , _state(nullptr)
@@ -1234,31 +1297,6 @@ FogTestDemo::~FogTestDemo(void)
 std::string FogTestDemo::title() const
 {
     return "Fog Test Demo";
-}
-
-void FogTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void FogTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void FogTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void FogTestDemo::onEnter()
@@ -1436,7 +1474,7 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
         Vec2 prelocation = touches[0]->getPreviousLocationInView();
         Vec2 location = touches[0]->getLocationInView();
         Vec2 newPos = prelocation - location;
-        if(_cameraType==CameraType::FreeCamera)
+        if(_cameraType==CameraType::Free)
         {
             Vec3 cameraDir;
             Vec3 cameraRightDir;
@@ -1452,11 +1490,4 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
             _camera->setPosition3D(cameraPos);
         }
     }
-}
-
-void Camera3DTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
 }

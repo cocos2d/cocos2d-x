@@ -30,7 +30,9 @@ NS_CC_BEGIN
 RenderCommand::RenderCommand()
 : _type(RenderCommand::Type::UNKNOWN_COMMAND)
 , _globalOrder(0)
-, _isTransparent(false)
+, _isTransparent(true)
+, _skipBatching(false)
+, _is3D(false)
 {
 }
 
