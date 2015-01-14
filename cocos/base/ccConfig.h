@@ -270,11 +270,10 @@ To enable set it to a value different than 0. Disabled by default.
 #endif
 
 /** Use culling or not */
-#ifndef CC_DISABLE_CULLING
+#ifndef CC_USE_CULLING
 #define CC_USE_CULLING 1
-#else
-#define CC_USE_CULLING 0
 #endif
+
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_JPEG
