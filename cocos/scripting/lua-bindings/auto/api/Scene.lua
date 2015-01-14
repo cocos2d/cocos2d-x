@@ -11,6 +11,12 @@
 -- @param #cc.Renderer renderer
         
 --------------------------------
+-- 
+-- @function [parent=#Scene] getDefaultCamera 
+-- @param self
+-- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
 --  creates a new Scene object with a predefined Size 
 -- @function [parent=#Scene] createWithSize 
 -- @param self
