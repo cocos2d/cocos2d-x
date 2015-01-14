@@ -475,9 +475,6 @@ protected:
     unsigned int _totalFrames;
     float _secondsPerFrame;
     
-    /* clear color set outside be used in setGLDefaultValues() */
-    Color4F _clearColor;
-    
     /* The running scene */
     Scene *_runningScene;
     

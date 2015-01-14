@@ -374,7 +374,8 @@ static int lua_cocos2dx_spine_SkeletonAnimation_addAnimation(lua_State* tolua_S)
             return 0;
         cobj->addAnimation(arg0, arg1, arg2);
         
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     if (argc == 4)
     {
@@ -395,7 +396,8 @@ static int lua_cocos2dx_spine_SkeletonAnimation_addAnimation(lua_State* tolua_S)
         
         cobj->addAnimation(arg0, arg1, arg2, arg3);
 
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "addAnimation",argc, 3);
     return 0;
@@ -450,7 +452,8 @@ static int lua_cocos2dx_spine_SkeletonAnimation_setAnimation(lua_State* tolua_S)
         
         cobj->setAnimation(arg0, arg1, arg2);
         
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "setAnimation",argc, 3);
     return 0;

@@ -126,6 +126,9 @@ void Scene::render(Renderer* renderer)
     const auto& transform = getNodeToParentTransform();
     for (const auto& camera : _cameras)
     {
+        if (!camera->isVisible())
+            continue;
+        
         Camera::_visitingCamera = camera;
         if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
         {

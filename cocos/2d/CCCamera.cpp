@@ -30,7 +30,19 @@ NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
 
-Camera* Camera::create()
+
+Camera* Camera::getDefaultCamera()
+{
+    auto scene = Director::getInstance()->getRunningScene();
+    if(scene)
+    {
+        return scene->getDefaultCamera();
+    }
+
+    return nullptr;
+}
+
+    Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
@@ -253,9 +265,9 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::enableFrustumCulling(bool enalbe, bool clipZ)
+void Camera::enableFrustumCulling(bool value, bool clipZ)
 {
-    _enableFrustumCulling = enalbe;
+    _enableFrustumCulling = value;
     _frustum.setClipZ(clipZ);
 }
 
@@ -271,6 +283,14 @@ bool Camera::isVisibleInFrustum(const AABB* aabb) const
         return !_frustum.isOutOfFrustum(*aabb);
     }
     return true;
+}
+
+float Camera::getDepthInView(const Mat4& transform) const
+{
+    Mat4 camWorldMat = getNodeToWorldTransform();
+    const Mat4 &viewMat = camWorldMat.getInversed();
+    float depth = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
+    return depth;
 }
 
 void Camera::onEnter()

@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include <algorithm>
 
+#include "2d/CCCamera.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCAnimationCache.h"
 #include "2d/CCSpriteFrame.h"
@@ -587,13 +588,26 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+#if CC_USE_CULLING
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds)
+#endif
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+        //Render as 3D object
+        if (flags & FLAGS_RENDER_AS_3D)
+        {
+            float depth = Camera::getVisitingCamera()->getDepthInView(transform);
+            _quadCommand.init(depth, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+            _quadCommand.set3D(true);
+        }
+        else
+        {
+            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+        }
         renderer->addCommand(&_quadCommand);
+        
 #if CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
         Vec2 vertices[4] = {
