@@ -90,12 +90,6 @@ bool FileUtilsAndroid::init()
     return FileUtils::init();
 }
 
-void FileUtilsAndroid::purgeCachedEntries()
-{
-    FileUtils::purgeCachedEntries();
-    cocosplay::purgeCachedEntries();
-}
-
 std::string FileUtilsAndroid::getNewFilename(const std::string &filename) const
 {
     std::string newFileName = FileUtils::getNewFilename(filename);

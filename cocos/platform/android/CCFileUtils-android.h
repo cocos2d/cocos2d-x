@@ -61,8 +61,6 @@ public:
     /* override funtions */
     bool init();
 
-    virtual void purgeCachedEntries() override;
-
     virtual std::string getNewFilename(const std::string &filename) const override;
 
     /** @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead. */
