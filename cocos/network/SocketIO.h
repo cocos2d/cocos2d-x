@@ -40,6 +40,12 @@ emitting an event to be handled by the server, argument json formatting is up to
 
     client->emit("eventname", "[{\"arg\":\"value\"}]");
 
+emitting an event with direct callback to be handled by the server, argument json formatting is up to you
+
+    client->emit("eventname", "[{\"arg\":\"value\"}]",  [](network::SIOClient* c, const std::string& data) {
+        
+    });
+
 registering an event callback, target should be a member function in a subclass of SIODelegate
 CC_CALLBACK_2 is used to wrap the callback with std::bind and store as an SIOEvent
 
@@ -127,6 +133,7 @@ private:
 typedef std::function<void(SIOClient*, const std::string&)> SIOEvent;
 //c++11 map to callbacks
 typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
+typedef std::unordered_map<int, SIOEvent> CallbackRegistry;
 
 /**
      *  @brief A single connection to a socket.io endpoint
@@ -135,7 +142,7 @@ class CC_DLL SIOClient
     : public cocos2d::Ref
 {
 private:
-    int _port;
+    int _port, _callbackNumber;
     std::string _host, _path, _tag;
     bool _connected;
     SIOClientImpl* _socket;
@@ -143,8 +150,10 @@ private:
     SocketIO::SIODelegate* _delegate;
 
     EventRegistry _eventRegistry;
+    CallbackRegistry _callbackRegistry;
 
     void fireEvent(const std::string& eventName, const std::string& data);
+    void fireCallback(const int callbackNumber, const std::string& data);
 
     void onOpen();
     void onConnect();
@@ -170,11 +179,15 @@ public:
      */
     void send(std::string s);
     /**
-     *  @brief The delegate class to process socket.io events
+     *  @brief Emits an event to the socket.io server
      */
     void emit(std::string eventname, std::string args);
     /**
-     *  @brief Used to register a socket.io event callback
+     *  @brief Emits an event to the socket.io server with a callback method
+     */
+    void emit(std::string eventname, std::string args, SIOEvent e);
+    /**
+     *  @brief Used to register a socket.io event
      *         Event argument should be passed using CC_CALLBACK2(&Base::function, this)
      */
     void on(const std::string& eventName, SIOEvent e);
