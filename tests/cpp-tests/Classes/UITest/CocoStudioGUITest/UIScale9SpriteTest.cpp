@@ -657,7 +657,7 @@ bool UIS9Flip::init()
         this->addChild(normalSprite);
         
         
-        auto normalLabel = Label::createWithSystemFont("Normal Sprite","Airal",10);
+        auto normalLabel = Label::createWithSystemFont("Normal Sprite","Arial",10);
         normalLabel->setPosition(normalSprite->getPosition() + Vec2(0, normalSprite->getContentSize().height/2 + 10));
         this->addChild(normalLabel);
         
@@ -670,7 +670,7 @@ bool UIS9Flip::init()
         this->addChild(flipXSprite);
         flipXSprite->setFlippedX(false);
         
-        auto flipXLabel = Label::createWithSystemFont("sprite is not flipped!","Airal",10);
+        auto flipXLabel = Label::createWithSystemFont("sprite is not flipped!","Arial",10);
         flipXLabel->setPosition(flipXSprite->getPosition() + Vec2(0, flipXSprite->getContentSize().height/2 + 10));
         this->addChild(flipXLabel);
         
@@ -683,7 +683,7 @@ bool UIS9Flip::init()
         flipYSprite->setScale(0.8);
         flipYSprite->setFlippedY(true);
         
-        auto flipYLabel = Label::createWithSystemFont("sprite is flipped!","Airal",10);
+        auto flipYLabel = Label::createWithSystemFont("sprite is flipped!","Arial",10);
         flipYLabel->setPosition(flipYSprite->getPosition() + Vec2(0, flipYSprite->getContentSize().height/2 + 10));
         this->addChild(flipYLabel);
         

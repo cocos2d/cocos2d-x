@@ -158,7 +158,7 @@ bool UIFocusTestHorizontal::init()
             _horizontalLayout->addChild(w);
         }
         
-        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText = Text::create("loop enabled", "Arial", 20);
         _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
@@ -231,7 +231,7 @@ bool UIFocusTestVertical::init()
             }
         }
         
-        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText = Text::create("loop enabled", "Arial", 20);
         _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
@@ -333,7 +333,7 @@ bool UIFocusTestNestedLayout1::init()
             innerVBox->addChild(w);
         }
 
-        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText = Text::create("loop enabled", "Arial", 20);
         _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
@@ -435,7 +435,7 @@ bool UIFocusTestNestedLayout2::init()
             innerHBox->addChild(w);
         }
         
-        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText = Text::create("loop enabled", "Arial", 20);
         _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
@@ -545,7 +545,7 @@ bool UIFocusTestNestedLayout3::init()
         
      
         
-        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText = Text::create("loop enabled", "Arial", 20);
         _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
@@ -631,7 +631,7 @@ bool UIFocusTestListView::init()
         
         
         
-        _loopText = Text::create("loop enabled", "Airal", 20);
+        _loopText = Text::create("loop enabled", "Arial", 20);
         _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
