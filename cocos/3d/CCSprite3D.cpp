@@ -630,7 +630,7 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
     }
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
-    flags &= FLAGS_RENDER_AS_3D;
+    flags |= FLAGS_RENDER_AS_3D;
     
     //
     Director* director = Director::getInstance();
