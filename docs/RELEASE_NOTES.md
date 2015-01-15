@@ -1,23 +1,39 @@
 # cocos2d-x v3.4 Release Notes #
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+- [cocos2d-x v3.4 Release Notes](#cocos2d-x-v34-release-notes)
+- [Misc Information](#misc-information)
+- [Requirements](#requirements)
+  - [Runtime Requirements](#runtime-requirements)
+  - [Compiler Requirements](#compiler-requirements)
+  - [How to run tests](#how-to-run-tests)
+    - [Mac OSX & iOS](#mac-osx-&-ios)
+    - [Android](#android)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [How to start a new game](#how-to-start-a-new-game)
+- [v3.4rc1](#v34rc1)
+  - [Highlights of v3.4rc1](#highlights-of-v34rc1)
+    - [Adding 3D rendering support for 2D objects](#adding-3d-rendering-support-for-2d-objects)
+- [v3.4rc0](#v34rc0)
+  - [Bugs fixed in v3.4rc0](#bugs-fixed-in-v34rc0)
+- [v3.4beta0](#v34beta0)
+  - [Highlights of v3.4beta0](#highlights-of-v34beta0)
+  - [Features in detail](#features-in-detail)
+    - [Create Sprite3D asynchronously](#create-sprite3d-asynchronously)
+    - [Frustum culling](#frustum-culling)
+    - [Use less resources to create  ui::CheckBox and ui::Slider](#use-less-resources-to-create--uicheckbox-and-uislider)
+    - [Custom Allocators](#custom-allocators)
+      - [Default Allocator](#default-allocator)
+      - [General Allocator](#general-allocator)
+      - [Fixed Block Allocator](#fixed-block-allocator)
+      - [Pool Allocator](#pool-allocator)
+    - [Implementing Custom Allocators for Objects](#implementing-custom-allocators-for-objects)
+    - [Console (allocator command, tags, counts etc)](#console-allocator-command-tags-counts-etc)
 
-- [cocos2d-x v3.4 Release Notes](#)
-- [Misc Information](#)
-- [Requirements](#)
-    - [Runtime Requirements](#)
-    - [Compiler Requirements](#)
-    - [How to run tests](#)
-        - [Mac OSX & iOS](#)
-        - [Android](#)
-        - [Windows](#)
-        - [Linux](#)
-    - [How to start a new game](#)
-- [v3.4rc0](#)
-    - [Bugs fixed in v3.4rc0](#)
-- [v3.4beta0](#)
-    - [Highlights of v3.4beta0](#)
-    - [Features in detail](#)
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Misc Information
 
@@ -62,7 +78,7 @@ You can run the samples...
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
     $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-    
+
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
@@ -71,7 +87,7 @@ Then click item on Android device to run tests. Available value of `-p` is the A
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
-    
+
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
@@ -90,22 +106,35 @@ Then
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
-    
+
 Then
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
-    
+
 Run
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
-    
+
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
+
+# v3.4rc1
+
+##Highlights of v3.4rc1
+
+###3D rendering support for 2D objects
+This feature enables Sprite, Label, Particle to be rendered in 3D space by adding them as children of Sprite3D or Billboard. You can achieve effects like blob shadow, 3D particle, Visual damage number popups
+```c++
+auto billboard = Billboard::create();
+auto label = Label::create();
+label->setString("+100");
+billboard->addChild(label);
+```
 
 # v3.4rc0
 ##Bugs fixed in v3.4rc0
@@ -162,7 +191,7 @@ Note that when you can make sure that all the stuff is inside the frustum you ca
 
 For more infomation please reffer to the cpptests/CameraTest
 
-### Use less resources to create  ui::CheckBox and ui::Slider 
+### Use less resources to create  ui::CheckBox and ui::Slider
 
 Now we could use less resources to create  ui::CheckBox and ui::Slider.
 
@@ -224,16 +253,16 @@ Fixed block allocators provide a memory pool of blocks of fixed size. They are e
 
 #### Pool Allocator
 
-Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size. 
+Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size.
 
 ### Implementing Custom Allocators for Objects
-Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class. 
+Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class.
 
 ```c++
     class SomeClass
     {
     public:
-        
+
         cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
         CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
     };
