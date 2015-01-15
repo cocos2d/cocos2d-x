@@ -56,6 +56,7 @@ TextureAtlas::TextureAtlas()
     ,_dirty(false)
     ,_texture(nullptr)
     ,_quads(nullptr)
+    ,_enableDepthWrite(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     ,_rendererRecreatedListener(nullptr)
 #endif
@@ -606,6 +607,14 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     if(!numberOfQuads)
         return;
     
+    GLboolean depthWritemask;
+    GLboolean depthTest;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWritemask);
+    glGetBooleanv(GL_DEPTH_TEST, &depthTest);
+    glDepthMask(_enableDepthWrite);
+    if(_enableDepthWrite)
+        glEnable(GL_DEPTH_TEST);
+    
     GL::bindTexture2D(_texture->getName());
 
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -683,7 +692,9 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
-
+    
+    glDepthMask(depthWritemask);
+    if(!depthTest && _enableDepthWrite) glDisable(GL_DEPTH_TEST);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
     
     CHECK_GL_ERROR_DEBUG();

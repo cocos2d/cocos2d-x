@@ -200,6 +200,7 @@ void TMXLayer::parseInternalProperties()
         if (vertexZStr == "automatic")
         {
             _useAutomaticVertexZ = true;
+            _textureAtlas->setDepthWriteMask(true);
             auto alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = alphaFuncVal.asFloat();
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
