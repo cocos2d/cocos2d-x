@@ -2614,6 +2614,7 @@
         "external/websockets/include/linux/libwebsockets.h", 
         "external/websockets/include/mac/libwebsockets.h", 
         "external/websockets/include/win32/libwebsockets.h", 
+        "external/websockets/include/win32/win32helpers/getopt.h", 
         "external/websockets/include/win32/win32helpers/gettimeofday.h", 
         "external/websockets/include/win32/win32helpers/websock-w32.h", 
         "external/websockets/include/winrt_8.1/libwebsockets.h", 
