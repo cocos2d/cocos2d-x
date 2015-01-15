@@ -15,6 +15,7 @@
 #include "tolua++.h"
 #include "tolua_event.h"
 #include "lauxlib.h"
+#include "tolua_fix.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -330,7 +331,13 @@ static int tolua_bnd_getcfunction(lua_State* L) {
     return 0;
 }
 
+extern void toluafix_test_call_msg();
 static int tolua_bnd_getRegValue(lua_State* L) {
+    int a = 0;
+    printf("a = %d", 4/a);
+//    lua_pushstring(L, "Wrong for test!!!!");
+//    lua_error(L);
+//    toluafix_test_call_msg();
     if (lua_gettop(L)!=1) {
         lua_pushstring(L, "Wrong number of arguments to getregval(): 1 expected.");
         lua_error(L);
