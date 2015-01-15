@@ -4,6 +4,8 @@
 #include "PlayerDumper.h"
 #include <shellapi.h>
 
+#pragma comment( lib, "dbghelp.lib" )
+
 struct _EXCEPTION_POINTERS;
 
 static HMODULE GetDebugHelperDll(FARPROC* ppfnMiniDumpWriteDump);
@@ -58,10 +60,73 @@ HMODULE GetDebugHelperDll(FARPROC* ppfnMiniDumpWriteDump)
 	return hDll;
 }
 
+void dump_callstack(CONTEXT *context)
+{
+	STACKFRAME sf;
+	memset(&sf, 0, sizeof(STACKFRAME));
+
+	sf.AddrPC.Offset = context->Eip;
+	sf.AddrPC.Mode = AddrModeFlat;
+	sf.AddrStack.Offset = context->Esp;
+	sf.AddrStack.Mode = AddrModeFlat;
+	sf.AddrFrame.Offset = context->Ebp;
+	sf.AddrFrame.Mode = AddrModeFlat;
+
+	DWORD machineType = IMAGE_FILE_MACHINE_I386;
+
+	HANDLE hProcess = GetCurrentProcess();
+	HANDLE hThread = GetCurrentThread();
+
+	for (;;)
+	{
+		if (!StackWalk(machineType, hProcess, hThread, &sf, context, 0, SymFunctionTableAccess, SymGetModuleBase, 0))
+		{
+			break;
+		}
+
+		if (sf.AddrFrame.Offset == 0)
+		{
+			break;
+		}
+		BYTE symbolBuffer[sizeof(SYMBOL_INFO) + 1024];
+		PSYMBOL_INFO pSymbol = (PSYMBOL_INFO)symbolBuffer;
+
+		pSymbol->SizeOfStruct = sizeof(symbolBuffer);
+		pSymbol->MaxNameLen = 1024;
+
+		DWORD64 symDisplacement = 0;
+		if (SymFromAddr(hProcess, sf.AddrPC.Offset, 0, pSymbol))
+		{
+			printf("Function : %s\n", pSymbol->Name);
+		}
+		else
+		{
+			printf("SymFromAdd failed!\n");
+		}
+
+		IMAGEHLP_LINE lineInfo = { sizeof(IMAGEHLP_LINE) };
+		DWORD dwLineDisplacement;
+
+		if (SymGetLineFromAddr(hProcess, sf.AddrPC.Offset, &dwLineDisplacement, &lineInfo))
+		{
+			printf("[Source File : %s]\n", lineInfo.FileName);
+			printf("[Source Line : %u]\n", lineInfo.LineNumber);
+		}
+		else
+		{
+			printf("SymGetLineFromAddr failed!\n");
+		}
+	}
+}
+
 extern "C" void toluafix_test_call_msg();
+
 
 LONG WINAPI handleException(struct _EXCEPTION_POINTERS* pExceptionInfo)
 {
+	//StackWalker sw;
+	//sw.ShowCallstack(GetCurrentThread(), pExceptionInfo->ContextRecord);
+	dump_callstack(pExceptionInfo->ContextRecord);
 	toluafix_test_call_msg();
 	LONG lRetValue = EXCEPTION_CONTINUE_SEARCH;
 	TCHAR szResult[_MAX_PATH + 1024] = {0};

@@ -493,8 +493,9 @@ bool LuaStack::handleAssert(const char *msg)
 {
     if (_callFromLua == 0) return false;
     
-    lua_pushfstring(_state, "ASSERT FAILED ON LUA EXECUTE: %s -- %s", msg ? msg : "unknown", _callMsg.c_str());
-    lua_error(_state);
+//    lua_pushfstring(_state, "ASSERT FAILED ON LUA EXECUTE: %s -- %s", msg ? msg : "unknown", _callMsg.c_str());
+//    lua_error(_state);
+    executeString("__G__TRACKBACK__('test exception')");
     return true;
 }
 

@@ -269,5 +269,6 @@ extern "C" void toluafix_test_call_msg()
 {
     auto engine = LuaEngine::getInstance();
     auto stack = engine->getLuaStack();
-    stack->handleAssert("test error msg!!!");
+	stack->executeString("__G__TRACKBACK__('test exception')");
+    //stack->handleAssert("test error msg!!!");
 }
