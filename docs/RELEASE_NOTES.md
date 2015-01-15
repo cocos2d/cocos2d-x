@@ -13,7 +13,7 @@
         - [Windows](#)
         - [Linux](#)
     - [How to start a new game](#)
-- [v3.4rc1](#)
+- [v3.4rc1](#v3.4rc1)
     - [Highlights of v3.4rc1](#)
 - [v3.4rc0](#)
     - [Bugs fixed in v3.4rc0](#)
