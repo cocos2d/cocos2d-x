@@ -43,6 +43,7 @@ Animate3D* Animate3D::create(Animation3D* animation)
     
     animate->autorelease();
     animate->setDuration(animation->getDuration());
+    animate->setOriginInterval(animation->getDuration());
     
     return animate;
 }
@@ -58,6 +59,7 @@ Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float durat
     animate->_start = fromTime / fullDuration;
     animate->_last = duration / fullDuration;
     animate->setDuration(duration);
+    animate->setOriginInterval(duration);
     
     return  animate;
 }
@@ -85,7 +87,7 @@ Animate3D* Animate3D::clone() const
     copy->_last = _last;
     copy->_playReverse = _playReverse;
     copy->setDuration(animate->getDuration());
-
+    copy->setOriginInterval(animate->getOriginInterval());
     return copy;
 }
 
@@ -165,8 +167,6 @@ void Animate3D::step(float dt)
 
 void Animate3D::update(float t)
 {
-    t *= _absSpeed;
-    
     if (_target)
     {
         if (_state == Animate3D::Animate3DState::FadeIn && _lastTime > 0.f)
@@ -240,12 +240,18 @@ void Animate3D::setSpeed(float speed)
 {
     _absSpeed = fabsf(speed);
     _playReverse = speed < 0;
+    _duration = _originInterval / _absSpeed;
 }
 
 void Animate3D::setWeight(float weight)
 {
     CCASSERT(weight >= 0.0f, "invalid weight");
     _weight = fabsf(weight);
+}
+
+void Animate3D::setOriginInterval(float interval)
+{
+    _originInterval = interval;
 }
 
 Animate3D::Animate3D()
@@ -258,6 +264,7 @@ Animate3D::Animate3D()
 , _playReverse(false)
 , _accTransTime(0.0f)
 , _lastTime(0.0f)
+, _originInterval(0.0f)
 {
     
 }
