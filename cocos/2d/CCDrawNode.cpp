@@ -253,7 +253,7 @@ bool DrawNode::init()
     }
     glGenBuffers(1, &_vboGLPoint);
     glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_PF)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
     // vertex
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_PF), (GLvoid *)offsetof(V2F_C4B_PF, vertices));
