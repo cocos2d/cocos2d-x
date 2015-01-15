@@ -457,6 +457,7 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
     <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
+    <ClCompile Include="PlayerDumperWin.cpp" />
     <ClCompile Include="PlayerEditBoxServiceWin.cpp" />
     <ClCompile Include="PlayerFileDialogServiceWin.cpp" />
     <ClCompile Include="PlayerMenuServiceWin.cpp" />
