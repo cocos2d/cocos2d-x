@@ -142,7 +142,7 @@ CameraRotationTest::CameraRotationTest()
     bill1 = BillBoard::create("Images/Icon.png");
     bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
     bill1->setColor(Color3B::YELLOW);
-    bill1->setScale(0.6);
+    bill1->setScale(0.6f);
     addChild(bill1);
     
     l1 = Label::create();
@@ -154,7 +154,7 @@ CameraRotationTest::CameraRotationTest()
 
     bill2 = BillBoard::create("Images/Icon.png");
     bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
-    bill2->setScale(0.6);
+    bill2->setScale(0.6f);
     addChild(bill2);
     
     l2 = Label::create();
@@ -1133,7 +1133,7 @@ void CameraArcBallDemo::onEnter()
     _layer3D->addChild(_sprite3D1);
 
     _sprite3D2 = Sprite3D::create("Sprite3DTest/boss.c3b");
-    _sprite3D2->setScale(0.6);
+    _sprite3D2->setScale(0.6f);
     _sprite3D2->setRotation3D(Vec3(-90,0,0));
     _sprite3D2->setPosition3D(Vec3(20,0,0));
     _layer3D->addChild(_sprite3D2);
@@ -1438,7 +1438,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
     else if(type == 1)
     {
         _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformFloat("u_fogDensity",0.03f);
         _state->setUniformInt("u_fogEquation" ,1);
 
         _sprite3D1->setGLProgramState(_state);
@@ -1447,7 +1447,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
     else if(type == 2)
     {
         _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformFloat("u_fogDensity",0.03f);
         _state->setUniformInt("u_fogEquation" ,2);
 
         _sprite3D1->setGLProgramState(_state);

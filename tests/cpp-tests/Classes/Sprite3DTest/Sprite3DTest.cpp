@@ -271,7 +271,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
-    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    auto camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     camera->setCameraFlag(CameraFlag::USER1);
 
     //create cylinder
@@ -393,7 +393,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     auto layer = Layer::create();
     addChild(layer,0);
     //create Camera
-    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
     _camera->setPosition3D(Vec3(0,20,25));
     _camera->setRotation3D(Vec3(-60,0,0));
@@ -435,7 +435,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
     //create the orc
     _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
-    _orc->setScale(0.2);
+    _orc->setScale(0.2f);
     _orc->setRotation3D(Vec3(0,180,0));
     _orc->setPosition3D(Vec3(0,0,10));
     _targetPos = _orc->getPosition3D();
@@ -646,7 +646,7 @@ void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, 
 Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    auto _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    auto _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
     // create a teapot
     auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
@@ -717,12 +717,12 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     //the assets are from the OpenVR demo
     //get the visible size.
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
     _camera->setPosition3D(Vec3(0,25,15));
     _camera->setRotation3D(Vec3(-35,0,0));
     auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
-    LightMapScene->setScale(0.1); 
+    LightMapScene->setScale(0.1f); 
     addChild(LightMapScene);
     addChild(_camera); 
     setCameraMask(2); 

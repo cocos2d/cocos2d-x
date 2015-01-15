@@ -541,7 +541,7 @@ VBOFullTest::VBOFullTest()
     for (int i=0; i< Renderer::VBO_SIZE / 3.9; ++i)
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
-        sprite->setScale(0.1, 0.1);
+        sprite->setScale(0.1f, 0.1f);
         float x = ((float)std::rand()) /RAND_MAX;
         float y = ((float)std::rand()) /RAND_MAX;
         sprite->setPosition(Vec2(x * s.width, y * s.height));
