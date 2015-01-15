@@ -1,4 +1,41 @@
 # cocos2d-x v3.4 Release Notes #
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [cocos2d-x v3.4 Release Notes](#cocos2d-x-v34-release-notes)
+- [Misc Information](#misc-information)
+- [Requirements](#requirements)
+  - [Runtime Requirements](#runtime-requirements)
+  - [Compiler Requirements](#compiler-requirements)
+  - [How to run tests](#how-to-run-tests)
+    - [Mac OSX & iOS](#mac-osx-&-ios)
+    - [Android](#android)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [How to start a new game](#how-to-start-a-new-game)
+- [v3.4rc1](#v34rc1)
+  - [Highlights of v3.4rc1](#highlights-of-v34rc1)
+    - [Adding 3D rendering support for 2D objects](#adding-3d-rendering-support-for-2d-objects)
+- [v3.4rc0](#v34rc0)
+  - [Bugs fixed in v3.4rc0](#bugs-fixed-in-v34rc0)
+- [v3.4beta0](#v34beta0)
+  - [Highlights of v3.4beta0](#highlights-of-v34beta0)
+  - [Features in detail](#features-in-detail)
+    - [Create Sprite3D asynchronously](#create-sprite3d-asynchronously)
+    - [Frustum culling](#frustum-culling)
+    - [Use less resources to create  ui::CheckBox and ui::Slider](#use-less-resources-to-create--uicheckbox-and-uislider)
+    - [Custom Allocators](#custom-allocators)
+      - [Default Allocator](#default-allocator)
+      - [General Allocator](#general-allocator)
+      - [Fixed Block Allocator](#fixed-block-allocator)
+      - [Pool Allocator](#pool-allocator)
+    - [Implementing Custom Allocators for Objects](#implementing-custom-allocators-for-objects)
+    - [Console (allocator command, tags, counts etc)](#console-allocator-command-tags-counts-etc)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
