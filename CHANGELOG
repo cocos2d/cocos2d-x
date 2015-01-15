@@ -1,3 +1,13 @@
+cocos2d-x-3.4rc1 Jan.15 2015
+    [NEW]           C++: added CC_USE_CULLING macro to control if enable auto culling or not 
+    [NEW]           FileUtils::fullPathForFilename will return empty string when file can not be found
+    [NEW]           VertexBuffer&IndexBuffer: allow setting usage(GL_STATIC_DRAW or GL_DYNAMIC_DRAW) in create method
+    
+    [FIX]           DrawNode: drawPoints() can not set ponit size
+    [FIX]           EventDispatcher: crash if adding/removing event listeners and dispatching event in event callback function
+    [FIX]           GLProgramState: may cause GL_INVALID_VALUE error at start up on Android
+    [FIX]           PhysicsBody: can't get correct position in the same frame of adding PhysicsBody to PhysicsWorld
+
 cocos2d-x-3.4rc0  Jan.9 2015
     [NEW]           3rd: update libcurl to v7.39
     [NEW]           3rd: update luajit to v2.0.3
@@ -11,7 +21,7 @@ cocos2d-x-3.4rc0  Jan.9 2015
     [FIX]           HttpClient: http requests will be lost in immediately mode on iOS
     [FIX]           JumpTo: can not be applied more than once
     [FIX]           Label: may cause infinite loop if using system font on Android
-    [FIX]           Particle: GL_INVALID_CALL error because VAO and VBOs is not reset when come to foreground on android
+    [FIX]           Particle: GL_INVALID_OPERATION error because VAO and VBOs is not reset when come to foreground on android
     [FIX]           Physics integration: physics body is not still after disabling gravitational force by PhysicsBody::setGravityEnable()
     [FIX]           Sprite3DTest: Sprite3DUVAnimationTest, Sprite3DFakeShadowTest, Sprite3DLightMapTest, Sprite3DBasicToonShaderTest will crash on android when switch to foreground from background
     [FIX]           Template: multiple dex files define error on Android if using Eclipse to build new generated application

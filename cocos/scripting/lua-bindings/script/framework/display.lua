@@ -65,13 +65,16 @@ local function setDesignResolution(r, framesize)
         if r.autoscale == "FIXED_WIDTH" then
             width = framesize.width / scaleX
             height = framesize.height / scaleX
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
         elseif r.autoscale == "FIXED_HEIGHT" then
             width = framesize.width / scaleY
             height = framesize.height / scaleY
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
+        elseif r.autoscale == "SHOW_ALL" then
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL)
         else
             printError(string.format("display - invalid r.autoscale \"%s\"", r.autoscale))
         end
-        view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
     end
 end
 
