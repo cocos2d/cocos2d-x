@@ -35,29 +35,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
-
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
-
-- [cocos2d-x v3.4 Release Notes](#)
-- [Misc Information](#)
-- [Requirements](#)
-    - [Runtime Requirements](#)
-    - [Compiler Requirements](#)
-    - [How to run tests](#)
-        - [Mac OSX & iOS](#)
-        - [Android](#)
-        - [Windows](#)
-        - [Linux](#)
-    - [How to start a new game](#)
-- [v3.4rc1](#v3.4rc1)
-    - [Highlights of v3.4rc1](#)
-- [v3.4rc0](#)
-    - [Bugs fixed in v3.4rc0](#)
-- [v3.4beta0](#)
-    - [Highlights of v3.4beta0](#)
-    - [Features in detail](#)
-
 # Misc Information
 
 * Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4rc0/CHANGELOG
@@ -150,7 +127,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 ##Highlights of v3.4rc1
 
-###Adding 3D rendering support for 2D objects
+###3D rendering support for 2D objects
 This feature enables Sprite, Label, Particle to be rendered in 3D space by adding them as children of Sprite3D or Billboard. You can achieve effects like blob shadow, 3D particle, Visual damage number popups
 ```c++
 auto billboard = Billboard::create();
