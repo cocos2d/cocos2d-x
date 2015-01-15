@@ -3295,7 +3295,7 @@ function UIFocusTestHorizontal:initExtend()
         self._horizontalLayout:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3445,7 +3445,7 @@ function UIFocusTestVertical:initExtend()
         self._verticalLayout:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3627,7 +3627,7 @@ function UIFocusTestNestedLayout1:initExtend()
         innerVBox:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3809,7 +3809,7 @@ function UIFocusTestNestedLayout2:initExtend()
         innerVBox:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -4000,7 +4000,7 @@ function UIFocusTestNestedLayout3:initExtend()
 
     self._verticalLayout:addChild(bottomHBox)
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
