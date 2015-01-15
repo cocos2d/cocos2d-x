@@ -13,6 +13,8 @@
         - [Windows](#)
         - [Linux](#)
     - [How to start a new game](#)
+- [v3.4rc1](#)
+    - [Highlights of v3.4rc1](#)
 - [v3.4rc0](#)
     - [Bugs fixed in v3.4rc0](#)
 - [v3.4beta0](#)
@@ -107,9 +109,10 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# v3.4rc0
+# v3.4rc1
 
-##Highlights of v3.4rc0
+##Highlights of v3.4rc1
+
 ###Adding 3D rendering support for 2D objects
 This feature enables Sprite, Label, Particle to be rendered in 3D space by adding them as children of Sprite3D or Billboard. You can achieve effects like blob shadow, 3D particle, Visual damage number popups
 ```c++
@@ -119,7 +122,7 @@ label->setString("+100");
 billboard->addChild(label);
 ```
 
-
+# v3.4rc0
 ##Bugs fixed in v3.4rc0
 * FileUtils::GetData() can not get data on windows
 * FileUtils::GetData() memory leaks when file size is 0 on windows
