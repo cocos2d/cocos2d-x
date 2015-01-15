@@ -61,7 +61,7 @@ void main()\
 }";
 Terrain * cocos2d::Terrain::create(TerrainData &parameter)
 {
-    Terrain * obj = new (std::nothrow) Terrain();
+    Terrain * obj = new (std::nothrow)Terrain();
     obj->_terrainData = parameter;
     //chunksize
     obj->_chunkSize = parameter.chunkSize;
@@ -69,9 +69,9 @@ Terrain * cocos2d::Terrain::create(TerrainData &parameter)
     obj->initHeightMap(parameter.heightMapSrc.c_str());
     if(!parameter.alphaMapSrc)
     {
-        auto textImage = new Image();
+        auto textImage = new (std::nothrow)Image();
         textImage->initWithImageFile(parameter.detailMaps[0].detailMapSrc);
-        auto texture = new Texture2D();
+        auto texture = new (std::nothrow)Texture2D();
         texture->initWithImage(textImage);
         obj->textures.push_back(texture);
         obj->init();
@@ -79,15 +79,15 @@ Terrain * cocos2d::Terrain::create(TerrainData &parameter)
     }else
     {
         //alpha map
-        auto textImage = new Image(); 
+        auto textImage = new (std::nothrow)Image(); 
         textImage->initWithImageFile(parameter.alphaMapSrc);
-        obj->_alphaMap = new Texture2D();
+        obj->_alphaMap = new (std::nothrow)Texture2D();
         obj->_alphaMap->initWithImage(textImage);
         for(int i =0;i<4;i++)
         {
-            auto textImage = new Image();
+            auto textImage = new (std::nothrow)Image();
             textImage->initWithImageFile(parameter.detailMaps[i].detailMapSrc);
-            auto texture = new Texture2D();
+            auto texture = new (std::nothrow)Texture2D();
             texture->initWithImage(textImage);
             obj->textures.push_back(texture);
             obj->detailSize[i] = parameter.detailMaps[i].detailMapSize;
@@ -370,6 +370,14 @@ void cocos2d::Terrain::Chunk::finish()
     glBindBuffer(GL_ARRAY_BUFFER,0);
 
     calculateSlope();
+
+    for(int i =0;i<4;i++)
+    {
+        int step = int(powf(2.0f, float(_currentLod)));
+        int indicesAmount =(_terrain->_chunkSize.width/step+1)*(_terrain->_chunkSize.height/step+1)*6+(_terrain->_chunkSize.height/step)*3*2
+            +(_terrain->_chunkSize.width/step)*3*2;
+        _lod[i].indices.reserve(indicesAmount);
+    }
 }
 
 void cocos2d::Terrain::Chunk::bindAndDraw()
@@ -428,10 +436,10 @@ void cocos2d::Terrain::Chunk::generate(int imageWidth,int imageHeight,int m,int 
 cocos2d::Terrain::Chunk::Chunk()
 {
     _currentLod = 0;
-    left =NULL;
-    right =NULL;
-    back = NULL;
-    front =NULL;
+    left = nullptr;
+    right = nullptr;
+    back = nullptr;
+    front = nullptr;
 }
 
 void cocos2d::Terrain::Chunk::updateIndices()
@@ -681,11 +689,11 @@ glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*vertices_tmp.size(), &ve
 cocos2d::Terrain::QuadTree::QuadTree(int x,int y,int width,int height,Terrain * terrain)
 {
     _needDraw = true;
-    parent = NULL;
-    tl =NULL;
-    tr =NULL;
-    bl =NULL;
-    br =NULL;
+    parent = nullptr;
+    tl =nullptr;
+    tr =nullptr;
+    bl =nullptr;
+    br =nullptr;
     pos_x = x;
     pos_y = y;
     this->height = height;
@@ -764,7 +772,7 @@ cocos2d::Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char
 { 
     this->heightMapSrc = heightMapsrc;
     this->detailMaps[0].detailMapSrc = textureSrc;
-    this->alphaMapSrc = NULL;
+    this->alphaMapSrc = nullptr;
     this->chunkSize = chunksize;
     this->mapHeight = mapHeight;
     this->mapScale = mapScale; 
