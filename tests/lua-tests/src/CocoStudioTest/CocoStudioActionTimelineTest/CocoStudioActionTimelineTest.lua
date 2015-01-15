@@ -187,7 +187,10 @@ end
 
 function TestActionTimeline:onEnter()
 
-    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true)
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
@@ -235,8 +238,11 @@ end
 
 function TestChangePlaySection:onEnter()
 
-    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
-    local action = node:getActionTimeline()
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(41)
+
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
@@ -298,8 +304,10 @@ end
 
 function TestTimelineFrameEvent:onEnter()
 
-    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
-    local action = node:getActionTimeline()
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
@@ -363,7 +371,10 @@ end
 function TestTimelinePerformance:onEnter()
 
     for i = 1,100 do
-        local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
+        local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+        local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+        node:runAction(action)
+        action:gotoFrameAndPlay(41)
 
         node:setScale(0.1)
         node:setPosition((i - 1) * 2, 100)
