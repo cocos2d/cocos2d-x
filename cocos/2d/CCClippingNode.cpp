@@ -246,12 +246,12 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
 
     //Add group command
         
-    _groupCommand.init(_globalZOrder, _modelViewTransform, flags);
+    _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
 
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    _beforeVisitCmd.init(_globalZOrder, _modelViewTransform, flags);
+    _beforeVisitCmd.init(_globalZOrder);
     _beforeVisitCmd.func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
     renderer->addCommand(&_beforeVisitCmd);
     if (_alphaThreshold < 1)
@@ -274,7 +274,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
 
-    _afterDrawStencilCmd.init(_globalZOrder, _modelViewTransform, flags);
+    _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
 
@@ -306,7 +306,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         this->draw(renderer, _modelViewTransform, flags);
     }
 
-    _afterVisitCmd.init(_globalZOrder, _modelViewTransform, flags);
+    _afterVisitCmd.init(_globalZOrder);
     _afterVisitCmd.func = CC_CALLBACK_0(ClippingNode::onAfterVisit, this);
     renderer->addCommand(&_afterVisitCmd);
 

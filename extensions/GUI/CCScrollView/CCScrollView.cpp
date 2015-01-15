@@ -516,7 +516,7 @@ void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
 void ScrollView::beforeDraw()
 {
     //ScrollView don't support drawing in 3D space
-    _beforeDrawCommand.init(_globalZOrder, _modelViewTransform, 0);
+    _beforeDrawCommand.init(_globalZOrder);
     _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
 }
@@ -553,8 +553,7 @@ void ScrollView::onBeforeDraw()
 
 void ScrollView::afterDraw()
 {
-    //ScrollView don't support drawing in 3D space
-    _afterDrawCommand.init(_globalZOrder, _modelViewTransform, 0);
+    _afterDrawCommand.init(_globalZOrder);
     _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
 }

@@ -91,7 +91,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         _modelViewTransform = this->transform(parentTransform);
     _transformUpdated = false;
     
-    _groupCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
+    _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
@@ -111,7 +111,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         _nodeGrid->set2DProjection();
     }
 
-    _gridBeginCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
+    _gridBeginCommand.init(_globalZOrder);
     _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(&_gridBeginCommand);
 
@@ -160,7 +160,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         director->setProjection(beforeProjectionType);
     }
 
-    _gridEndCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
+    _gridEndCommand.init(_globalZOrder);
     _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
     renderer->addCommand(&_gridEndCommand);
 
