@@ -128,6 +128,14 @@ CameraRotationTest::CameraRotationTest()
     _camNode->setPositionZ(Camera::getDefaultCamera()->getPosition3D().z);
     _camControlNode->addChild(_camNode);
 
+    auto sp3d = Sprite3D::create();
+    sp3d->setPosition(s.width/2, s.height/2);
+    addChild(sp3d);
+    
+    auto lship = Label::create();
+    lship->setString("Ship");
+    lship->setPosition(0, 20);
+    sp3d->addChild(lship);
     
     //Billboards
     //Yellow is at the back
