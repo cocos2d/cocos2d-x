@@ -85,15 +85,15 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     {
         return;
     }
-    
-    _groupCommand.init(_globalZOrder);
-    renderer->addCommand(&_groupCommand);
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     bool dirty = (parentFlags & FLAGS_TRANSFORM_DIRTY) || _transformUpdated;
     if(dirty)
         _modelViewTransform = this->transform(parentTransform);
     _transformUpdated = false;
+    
+    _groupCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
@@ -111,7 +111,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         _nodeGrid->set2DProjection();
     }
 
-    _gridBeginCommand.init(_globalZOrder);
+    _gridBeginCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
     _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(&_gridBeginCommand);
 
@@ -160,7 +160,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         director->setProjection(beforeProjectionType);
     }
 
-    _gridEndCommand.init(_globalZOrder);
+    _gridEndCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
     _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
     renderer->addCommand(&_gridEndCommand);
 

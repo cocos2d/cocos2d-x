@@ -251,18 +251,18 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     //Add group command
 
-    _groupCommand.init(_globalZOrder);
+    _groupCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
     renderer->addCommand(&_groupCommand);
     
     renderer->pushGroup(_groupCommand.getRenderQueueID());
     
-    _beforeVisitCmdStencil.init(_globalZOrder);
+    _beforeVisitCmdStencil.init(_globalZOrder, _modelViewTransform, parentFlags);
     _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
     _clippingStencil->visit(renderer, _modelViewTransform, flags);
     
-    _afterDrawStencilCmd.init(_globalZOrder);
+    _afterDrawStencilCmd.init(_globalZOrder, _modelViewTransform, parentFlags);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
     
@@ -310,7 +310,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
         (*it)->visit(renderer, _modelViewTransform, flags);
 
     
-    _afterVisitCmdStencil.init(_globalZOrder);
+    _afterVisitCmdStencil.init(_globalZOrder, _modelViewTransform, parentFlags);
     _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
     renderer->addCommand(&_afterVisitCmdStencil);
     
@@ -424,13 +424,13 @@ void Layout::onAfterVisitScissor()
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
-    _beforeVisitCmdScissor.init(_globalZOrder);
+    _beforeVisitCmdScissor.init(_globalZOrder, _modelViewTransform, parentFlags);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
     ProtectedNode::visit(renderer, parentTransform, parentFlags);
     
-    _afterVisitCmdScissor.init(_globalZOrder);
+    _afterVisitCmdScissor.init(_globalZOrder, _modelViewTransform, parentFlags);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
     renderer->addCommand(&_afterVisitCmdScissor);
 }

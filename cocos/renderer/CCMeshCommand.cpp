@@ -99,6 +99,35 @@ MeshCommand::MeshCommand()
 #endif
 }
 
+void MeshCommand::init(float globalZOrder,
+                       GLuint textureID,
+                       cocos2d::GLProgramState *glProgramState,
+                       cocos2d::BlendFunc blendType,
+                       GLuint vertexBuffer,
+                       GLuint indexBuffer,
+                       GLenum primitive,
+                       GLenum indexFormat,
+                       ssize_t indexCount,
+                       const cocos2d::Mat4 &mv,
+                       uint32_t flags)
+{
+    CCASSERT(glProgramState, "GLProgramState cannot be nill");
+    
+    _globalOrder = globalZOrder;
+    _textureID = textureID;
+    _blendType = blendType;
+    _glProgramState = glProgramState;
+    
+    _vertexBuffer = vertexBuffer;
+    _indexBuffer = indexBuffer;
+    _primitive = primitive;
+    _indexFormat = indexFormat;
+    _indexCount = indexCount;
+    _mv.set(mv);
+    
+    _is3D = true;
+}
+
 void MeshCommand::init(float globalOrder,
                        GLuint textureID,
                        GLProgramState* glProgramState,
@@ -110,20 +139,7 @@ void MeshCommand::init(float globalOrder,
                        ssize_t indexCount,
                        const Mat4 &mv)
 {
-    CCASSERT(glProgramState, "GLProgramState cannot be nill");
-    
-    _globalOrder = globalOrder;
-    _textureID = textureID;
-    _blendType = blendType;
-    _glProgramState = glProgramState;
-
-    _vertexBuffer = vertexBuffer;
-    _indexBuffer = indexBuffer;
-    _primitive = primitive;
-    _indexFormat = indexFormat;
-    _indexCount = indexCount;
-    _mv.set(mv);
-    _is3D = true;
+    init(globalOrder, textureID, glProgramState, blendType, vertexBuffer, indexBuffer, primitive, indexFormat, indexCount, mv, 0);
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)

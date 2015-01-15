@@ -77,6 +77,14 @@ GroupCommand::GroupCommand()
     _renderQueueID = Director::getInstance()->getRenderer()->getGroupCommandManager()->getGroupID();
 }
 
+void GroupCommand::init(float globalZOrder, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
+{
+    RenderCommand::init(globalZOrder, modelViewTransform, flags);
+    auto manager = Director::getInstance()->getRenderer()->getGroupCommandManager();
+    manager->releaseGroupID(_renderQueueID);
+    _renderQueueID = manager->getGroupID();
+}
+
 void GroupCommand::init(float globalOrder)
 {
     _globalOrder = globalOrder;

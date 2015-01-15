@@ -53,6 +53,7 @@ public:
     GroupCommand();
     ~GroupCommand();
     
+    void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
     void init(float depth);
 
     inline int getRenderQueueID() const {return _renderQueueID;}
