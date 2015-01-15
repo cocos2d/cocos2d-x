@@ -1125,8 +1125,8 @@ void Director::showStats()
 {
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
-    static float prevDeltaTime  = 0.016; // 60FPS
-    static const float FPS_FILTER = 0.10;
+    static float prevDeltaTime  = 0.016f; // 60FPS
+    static const float FPS_FILTER = 0.10f;
 
     _accumDt += _deltaTime;
     
@@ -1172,7 +1172,7 @@ void Director::showStats()
 void Director::calculateMPF()
 {
     static float prevSecondsPerFrame = 0;
-    static const float MPF_FILTER = 0.10;
+    static const float MPF_FILTER = 0.10f;
 
     struct timeval now;
     gettimeofday(&now, nullptr);

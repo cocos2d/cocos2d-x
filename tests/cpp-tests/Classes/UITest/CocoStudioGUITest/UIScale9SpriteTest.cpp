@@ -666,7 +666,7 @@ bool UIS9Flip::init()
         auto flipXSprite = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
         
         flipXSprite->setPosition(Vec2(x - 120, y ));
-        flipXSprite->setScale(1.2);
+        flipXSprite->setScale(1.2f);
         this->addChild(flipXSprite);
         flipXSprite->setFlippedX(false);
         
@@ -680,7 +680,7 @@ bool UIS9Flip::init()
         flipYSprite->setPosition(Vec2(x + 120, y));
         this->addChild(flipYSprite);
         
-        flipYSprite->setScale(0.8);
+        flipYSprite->setScale(0.8f);
         flipYSprite->setFlippedY(true);
         
         auto flipYLabel = Label::createWithSystemFont("sprite is flipped!","Airal",10);
