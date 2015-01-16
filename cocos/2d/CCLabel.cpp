@@ -23,7 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "2d/CCCamera.h"
 #include "2d/CCLabel.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCSprite.h"
@@ -900,17 +899,8 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        if (flags & FLAGS_RENDER_AS_3D)
-        {
-            float depth = Camera::getVisitingCamera()->getDepthInView(transform);
-            _customCommand.init(depth);
-            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-        }
-        else
-        {
-            _customCommand.init(_globalZOrder);
-            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-        }
+        _customCommand.init(_globalZOrder, transform, flags);
+        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
 
         renderer->addCommand(&_customCommand);
     }

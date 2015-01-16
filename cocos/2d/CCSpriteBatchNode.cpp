@@ -26,7 +26,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/CCCamera.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
@@ -379,26 +378,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         child->updateTransform();
     }
 
-    //Render as 3D object
-    if (flags & FLAGS_RENDER_AS_3D)
-    {
-        float depth = Camera::getVisitingCamera()->getDepthInView(transform);
-        _batchCommand.init(
-                           depth,
-                           getGLProgram(),
-                           _blendFunc,
-                           _textureAtlas,
-                           transform);
-    }
-    else
-    {
-        _batchCommand.init(
-                       _globalZOrder,
-                       getGLProgram(),
-                       _blendFunc,
-                       _textureAtlas,
-                       transform);
-    }
+    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
     renderer->addCommand(&_batchCommand);
 }
 
