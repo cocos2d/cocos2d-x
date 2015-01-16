@@ -837,10 +837,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
 {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    {
-        statusBarOrientation = UIInterfaceOrientationPortrait;
-    }
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+//    {
+//        statusBarOrientation = UIInterfaceOrientationPortrait;
+//    }
     return statusBarOrientation;
 }
 
