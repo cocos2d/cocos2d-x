@@ -93,14 +93,14 @@ bool ActionTimeline::init()
 
 void ActionTimeline::play(std::string name, bool loop)
 {
-    if(_indexes.find(name) == _indexes.end())
+    if (_animationInfos.find(name) == _animationInfos.end())
     {
-        CCLOG("Cann't find action indexes for %s.", name.c_str());
-		return;
+        CCLOG("Can't find animation info for %s", name.c_str());
+        return;
     }
-    
-    ActionIndexes& indexes = _indexes[name];
-    gotoFrameAndPlay(indexes.startIndex, indexes.endIndex, loop);
+
+    AnimationInfo& index = _animationInfos[name];
+    gotoFrameAndPlay(index.startIndex, index.endIndex, loop);
 }
 
 void ActionTimeline::gotoFrameAndPlay(int startIndex)
@@ -278,26 +278,37 @@ void ActionTimeline::removeTimeline(Timeline* timeline)
     }
 }
 
-void ActionTimeline::addIndexes(const ActionIndexes& indexes)
+
+void ActionTimeline::addAnimationInfo(const AnimationInfo& animationInfo)
 {
-    if(_indexes.find(indexes.name) != _indexes.end())
+    if (_animationInfos.find(animationInfo.name) != _animationInfos.end())
     {
-        CCLOG("ActionIndexes (%s)  already exsists.", indexes.name.c_str());
+        CCLOG("Animation (%s) already exists.", animationInfo.name.c_str());
         return;
     }
-    
-    _indexes[indexes.name] = indexes;
+
+    _animationInfos[animationInfo.name] = animationInfo;
 }
 
-void ActionTimeline::removeIndexes(std::string name)
+void ActionTimeline::removeAnimationInfo(std::string animationName)
 {
-    if(_indexes.find(name) == _indexes.end())
+    if (_animationInfos.find(animationName) == _animationInfos.end())
     {
-        CCLOG("ActionIndexes %s don't exsists.", name.c_str());
+        CCLOG("AnimationInfo (%s) not exists.", animationName.c_str());
         return;
     }
-    
-    _indexes.erase(name);
+
+    _animationInfos.erase(animationName);
+}
+
+bool ActionTimeline::IsAnimationInfoExists(const std::string& animationName)
+{
+    return _animationInfos.find(animationName) != _animationInfos.end();
+}
+
+AnimationInfo ActionTimeline::getAnimationInfo(const std::string &animationName)
+{
+    return _animationInfos.find(animationName)->second;
 }
 
 void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)
@@ -348,5 +359,4 @@ void ActionTimeline::stepToFrame(int frameIndex)
         _timelineList.at(i)->stepToFrame(frameIndex);
     }
 }
-
 NS_TIMELINE_END

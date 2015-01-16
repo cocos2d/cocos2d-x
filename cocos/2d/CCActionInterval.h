@@ -908,6 +908,7 @@ class CC_DLL TintTo : public ActionInterval
 public:
     /** creates an action with duration and color */
     static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
+    static TintTo* create(float duration, const Color3B& color);
 
     //
     // Overrides

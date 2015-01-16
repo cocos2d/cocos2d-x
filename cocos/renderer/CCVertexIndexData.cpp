@@ -28,6 +28,11 @@
 
 NS_CC_BEGIN
 
+VertexData::VertexData()
+    : _interleaved(false)
+    , _dirty(false)
+{}
+
 bool VertexData::setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream)
 {
     if (nullptr == buffer)
@@ -128,6 +133,39 @@ bool VertexData::empty() const
     return true;
 }
 
+void VertexData::clear()
+{
+    _dirty = false;
+    for (auto& e : _vertexStreams)
+    {
+        auto& bufferAttribute = e.second;
+        bufferAttribute._buffer->clear();
+    }
+}
+
+bool VertexData::isDirty() const
+{
+    if (_dirty)
+        return true;
+    for (auto& e : _vertexStreams)
+    {
+        auto& bufferAttribute = e.second;
+        if (bufferAttribute._buffer->isDirty())
+            return true;
+    }
+    return false;
+}
+
+void VertexData::setDirty(bool dirty)
+{
+    _dirty = dirty;
+    for (auto& e : _vertexStreams)
+    {
+        auto& bufferAttribute = e.second;
+        bufferAttribute._buffer->setDirty(dirty);
+    }
+}
+
 // @brief If all streams use the same buffer, then the data is interleaved.
 bool VertexData::determineInterleave() const
 {
@@ -151,8 +189,9 @@ bool VertexData::determineInterleave() const
     return true;
 }
 
-inline void VertexData::append(GLArrayBuffer* buffer, void* source, size_t size, size_t count)
+void VertexData::append(GLArrayBuffer* buffer, void* source, size_t size, size_t count)
 {
+    _dirty = true;
     buffer->append(source, size, count);
 }
 

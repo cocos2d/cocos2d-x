@@ -158,8 +158,15 @@ size_t GLArrayBuffer::append(void* source, size_t size, size_t elements)
     memcpy((void*)p, source, size * elements);
     
     _elementCount += elements;
+    _dirty = true;
     
     return getSize();
+}
+
+void GLArrayBuffer::clear()
+{
+    _elementCount = 0;
+    _dirty = false;
 }
 
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED

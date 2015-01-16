@@ -43,6 +43,7 @@
 @property (readonly) NSInteger getDataTime;
 
 @property (readonly) NSInteger responseCode;
+@property (readonly) NSString *statusString;
 
 @property (strong) NSError *responseError;
 

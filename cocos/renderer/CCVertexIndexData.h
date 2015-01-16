@@ -57,6 +57,8 @@ struct CC_DLL VertexStreamAttribute
 class CC_DLL VertexData
     : public Ref
 {
+    VertexData();
+    
 public:
     
     template <typename T = VertexData>
@@ -93,6 +95,15 @@ public:
     // @brief true/false if all vertex buffers are empty
     bool empty() const;
     
+    // @brief clears the vertex buffers associated with this vertex data
+    void clear();
+    
+    // @brief returns the dirty status of the data or vertex streams
+    bool isDirty() const;
+    
+    // @brief sets the dirty state of all vertex data
+    void setDirty(bool dirty);
+    
     template <typename T>
     void append(const T& vertex)
     {
@@ -100,7 +111,7 @@ public:
         {
             for (auto& e : _vertexStreams)
             {
-                append(e.second._buffer, &vertex, sizeof(vertex));
+                append(e.second._buffer, (void*)&vertex, sizeof(vertex));
                 return;
             }
         }
@@ -118,7 +129,7 @@ protected:
     
     bool determineInterleave() const;
     
-    inline void append(GLArrayBuffer* buffer, void* source, size_t size, size_t count = 1);
+    void append(GLArrayBuffer* buffer, void* source, size_t size, size_t count = 1);
 
 protected:
     
@@ -131,6 +142,7 @@ protected:
     std::map<int, BufferAttribute> _vertexStreams;
     
     bool _interleaved;
+    bool _dirty;
 };
 
 NS_CC_END

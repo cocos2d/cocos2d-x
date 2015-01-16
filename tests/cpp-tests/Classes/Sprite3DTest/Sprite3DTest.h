@@ -54,6 +54,15 @@ public:
     virtual void onEnter() override;
 };
 
+class Sprite3DEmptyTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DEmptyTest);
+    Sprite3DEmptyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Sprite3DBasicTest : public Sprite3DTestDemo
 {
 public:
@@ -378,11 +387,11 @@ protected:
     int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
 };
-class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo
+class Sprite3DWithOBBPerformanceTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(Sprite3DWithOBBPerfromanceTest);
-    Sprite3DWithOBBPerfromanceTest();
+    CREATE_FUNC(Sprite3DWithOBBPerformanceTest);
+    Sprite3DWithOBBPerformanceTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void update(float dt) override;

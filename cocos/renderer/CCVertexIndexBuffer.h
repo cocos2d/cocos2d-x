@@ -52,8 +52,6 @@ class EventListenerCustom;
 class CC_DLL GLArrayBuffer
     : public Ref
 {
-    GLArrayBuffer();
-
 public:
     
     enum ArrayType
@@ -136,11 +134,15 @@ public:
     {
         _dirty = dirty;
     }
+    
+    void clear();
 
     // @brief append
     size_t append(void* source, size_t size, size_t elements = 1);
 
 protected:
+
+    GLArrayBuffer();
 
     bool init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode);
     void ensureCapacity(size_t capacity);
@@ -170,8 +172,6 @@ protected:
 class CC_DLL VertexBuffer
     : public GLArrayBuffer
 {
-    VertexBuffer();
-    
 public:
     
     template <class T = VertexBuffer>
@@ -196,12 +196,11 @@ public:
 class CC_DLL IndexBuffer
     : public GLArrayBuffer
 {
-    IndexBuffer();
-
 public:
     
     enum class IndexType
     {
+        INDEX_TYPE_NONE = -1,
         INDEX_TYPE_SHORT_16,
         INDEX_TYPE_UINT_32
     };
@@ -230,6 +229,10 @@ public:
 
 protected:
     
+    IndexBuffer()
+        : _type(IndexType::INDEX_TYPE_NONE)
+    {}
+
     bool init(IndexType type, int number, ArrayType arrayType, ArrayMode arrayMode)
     {
         if (!GLArrayBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == _type ? 2 : 4, number, arrayType, arrayMode))

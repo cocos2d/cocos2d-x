@@ -33,21 +33,21 @@
 NS_CC_BEGIN
 
 BatchCommand::BatchCommand()
-: _textureID(0)
-, _blendType(BlendFunc::DISABLE)
-, _textureAtlas(nullptr)
-, _batch(nullptr)
+    : _textureID(0)
+    , _blendType(BlendFunc::DISABLE)
+    , _textureAtlas(nullptr)
+    , _batch(nullptr)
 {
     _type = RenderCommand::Type::BATCH_COMMAND;
     _shader = nullptr;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
 {
     CCASSERT(shader, "shader cannot be nill");
     CCASSERT(textureAtlas, "textureAtlas cannot be nill");
     
-    _globalOrder = globalOrder;
+    RenderCommand::init(globalOrder, modelViewTransform, flags);
     _textureID = textureAtlas->getTexture()->getName();
     _blendType = blendType;
     _shader = shader;
@@ -59,12 +59,13 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _mv = modelViewTransform;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, Batch* batch, const Mat4& modelViewTransform)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, Batch* batch, const Mat4& modelViewTransform, uint32_t flags)
 {
     CCASSERT(shader,  "shader cannot be nill");
     CCASSERT(texture, "texture cannot be nill");
     CCASSERT(batch,   "vertexData cannot be nil");
     
+    RenderCommand::init(globalOrder, modelViewTransform, flags);
     _globalOrder = globalOrder;
     _textureID = texture->getName();
     _blendType = blendType;
@@ -73,7 +74,7 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     CC_SAFE_RELEASE(_textureAtlas);
     CC_SAFE_RELEASE(_batch);
     _batch = batch;
-    
+
     _mv = modelViewTransform;
 }
 

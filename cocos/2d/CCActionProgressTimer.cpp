@@ -55,17 +55,17 @@ bool ProgressTo::initWithDuration(float duration, float percent)
 
 ProgressTo* ProgressTo::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) ProgressTo();
+    // no copy constructor    
+    auto a = new (std::nothrow) ProgressTo();
     a->initWithDuration(_duration, _to);
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 ProgressTo* ProgressTo::reverse() const
 {
-	CCASSERT(false, "reverse() not supported in ProgressTo");
-	return nullptr;
+    CCASSERT(false, "reverse() not supported in ProgressTo");
+    return nullptr;
 }
 
 void ProgressTo::startWithTarget(Node *target)
@@ -105,11 +105,11 @@ bool ProgressFromTo::initWithDuration(float duration, float fromPercentage, floa
 
 ProgressFromTo* ProgressFromTo::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) ProgressFromTo();
-	a->initWithDuration(_duration, _from, _to);
-	a->autorelease();
-	return a;
+    // no copy constructor    
+    auto a = new (std::nothrow) ProgressFromTo();
+    a->initWithDuration(_duration, _from, _to);
+    a->autorelease();
+    return a;
 }
 
 
@@ -129,4 +129,3 @@ void ProgressFromTo::update(float time)
 }
 
 NS_CC_END
-

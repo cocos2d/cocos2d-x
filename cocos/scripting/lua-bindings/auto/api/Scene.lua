@@ -5,16 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
--- 
--- @function [parent=#Scene] getPhysicsWorld 
--- @param self
--- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
-        
---------------------------------
 --  render the scene 
 -- @function [parent=#Scene] render 
 -- @param self
 -- @param #cc.Renderer renderer
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] getDefaultCamera 
+-- @param self
+-- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
 --  creates a new Scene object with a predefined Size 
@@ -26,12 +26,6 @@
 --------------------------------
 --  creates a new Scene object 
 -- @function [parent=#Scene] create 
--- @param self
--- @return Scene#Scene ret (return value: cc.Scene)
-        
---------------------------------
--- 
--- @function [parent=#Scene] createWithPhysics 
 -- @param self
 -- @return Scene#Scene ret (return value: cc.Scene)
         
@@ -49,11 +43,5 @@
 -- @function [parent=#Scene] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#Scene] update 
--- @param self
--- @param #float delta
         
 return nil

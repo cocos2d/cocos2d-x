@@ -95,9 +95,9 @@ bool Text::init(const std::string &textContent, const std::string &fontName, int
             ret = false;
             break;
         }
-        this->setString(textContent);
         this->setFontName(fontName);
         this->setFontSize(fontSize);
+        this->setString(textContent);
     } while (0);
     return ret;
 }
