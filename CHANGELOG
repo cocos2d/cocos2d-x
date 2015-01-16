@@ -2,11 +2,15 @@ cocos2d-x-3.4rc1 Jan.15 2015
     [NEW]           C++: added CC_USE_CULLING macro to control if enable auto culling or not 
     [NEW]           FileUtils::fullPathForFilename will return empty string when file can not be found
     [NEW]           VertexBuffer&IndexBuffer: allow setting usage(GL_STATIC_DRAW or GL_DYNAMIC_DRAW) in create method
+    [NEW]           Renderer: 3D rendering support for 2d objects
     
+    [FIX]           DrawNode: fix random crash because of init opengl buffer wrongly 
     [FIX]           DrawNode: drawPoints() can not set ponit size
     [FIX]           EventDispatcher: crash if adding/removing event listeners and dispatching event in event callback function
     [FIX]           GLProgramState: may cause GL_INVALID_VALUE error at start up on Android
+    [FIX]           LUA: 0x80000000 can not be converted by lua_tonumber correctly on some devices
     [FIX]           PhysicsBody: can't get correct position in the same frame of adding PhysicsBody to PhysicsWorld
+    [FIX]           UI: fix crash when navigation controller is null
 
 cocos2d-x-3.4rc0  Jan.9 2015
     [NEW]           3rd: update libcurl to v7.39
