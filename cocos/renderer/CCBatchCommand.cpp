@@ -24,6 +24,7 @@
 
 
 #include "renderer/CCBatchCommand.h"
+#include "renderer/CCBatch.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
@@ -35,6 +36,7 @@ BatchCommand::BatchCommand()
 : _textureID(0)
 , _blendType(BlendFunc::DISABLE)
 , _textureAtlas(nullptr)
+, _batch(nullptr)
 {
     _type = RenderCommand::Type::BATCH_COMMAND;
     _shader = nullptr;
@@ -50,8 +52,28 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _blendType = blendType;
     _shader = shader;
 
+    CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_batch);
     _textureAtlas = textureAtlas;
+    
+    _mv = modelViewTransform;
+}
 
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, Batch* batch, const Mat4& modelViewTransform)
+{
+    CCASSERT(shader,  "shader cannot be nill");
+    CCASSERT(texture, "texture cannot be nill");
+    CCASSERT(batch,   "vertexData cannot be nil");
+    
+    _globalOrder = globalOrder;
+    _textureID = texture->getName();
+    _blendType = blendType;
+    _shader = shader;
+    
+    CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_batch);
+    _batch = batch;
+    
     _mv = modelViewTransform;
 }
 
@@ -68,7 +90,14 @@ void BatchCommand::execute()
     GL::blendFunc(_blendType.src, _blendType.dst);
 
     // Draw
-    _textureAtlas->drawQuads();
+    if (_textureAtlas)
+        _textureAtlas->drawQuads();
+    else if (_batch)
+        _batch->draw();
+    else
+    {
+        CCASSERT(false, "BatchCommand::execute - nothing to draw");
+    }
 }
 
 NS_CC_END

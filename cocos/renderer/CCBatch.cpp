@@ -22,84 +22,73 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "renderer/CCPrimitive.h"
+#include "renderer/CCBatch.h"
 #include "renderer/CCVertexIndexBuffer.h"
 
 NS_CC_BEGIN
 
-Primitive* Primitive::create(VertexData* verts, IndexBuffer* indices, int type)
-{
-    auto result = new (std::nothrow) Primitive();
-    if( result && result->init(verts, indices, type))
-    {
-        result->autorelease();
-        return result;
-    }
-    
-    CC_SAFE_DELETE(result);
-    return  nullptr;
-}
-
-const VertexData* Primitive::getVertexData() const
+const VertexData* Batch::getVertexData() const
 {
     return _verts;
 }
 
-const IndexBuffer* Primitive::getIndexData() const
+const IndexBuffer* Batch::getIndexData() const
 {
     return _indices;
 }
 
-Primitive::Primitive()
+Batch::Batch()
 : _verts(nullptr)
 , _indices(nullptr)
-, _type(GL_POINTS)
+, _drawingPrimitive(-1)
 {
 }
 
-Primitive::~Primitive()
+Batch::~Batch()
 {
     CC_SAFE_RELEASE_NULL(_verts);
     CC_SAFE_RELEASE_NULL(_indices);
 }
 
-bool Primitive::init(VertexData* verts, IndexBuffer* indices, int type)
+bool Batch::init(VertexData* verts, IndexBuffer* indices, int drawingPrimitive)
 {
-    if( nullptr == verts ) return false;
-    if(verts != _verts)
+    if (nullptr == verts)
+        return false;
+    
+    if (verts != _verts)
     {
         CC_SAFE_RELEASE(_verts);
         CC_SAFE_RETAIN(verts);
         _verts = verts;
     }
     
-    if(indices != _indices)
+    if (indices != _indices)
     {
         CC_SAFE_RETAIN(indices);
         CC_SAFE_RELEASE(_indices);
         _indices = indices;
     }
     
-    _type = type;
+    _drawingPrimitive = drawingPrimitive;
     
     return true;
 }
 
-void Primitive::draw()
+void Batch::draw()
 {
     if(_verts)
     {
         _verts->use();
-        if(_indices!= nullptr)
+        if (_indices != nullptr)
         {
             GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
             size_t offet = _start * _indices->getSizePerIndex();
-            glDrawElements((GLenum)_type, _count, type, (GLvoid*)offet);
+            glDrawElements((GLenum)_drawingPrimitive, _count, type, (GLvoid*)offet);
         }
         else
         {
-            glDrawArrays((GLenum)_type, _start, _count);
+            glDrawArrays((GLenum)_drawingPrimitive, _start, _count);
         }
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

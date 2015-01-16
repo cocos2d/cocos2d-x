@@ -25,6 +25,8 @@
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexIndexData.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
@@ -32,7 +34,7 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "2d/CCActionCatmullRom.h"
-#include "platform/CCGL.h"
+//#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
@@ -104,54 +106,59 @@ static inline Tex2F __t(const Vec2 &v)
 // implementation of DrawNode
 
 DrawNode::DrawNode()
-: _vao(0)
-, _vbo(0)
-, _vaoGLPoint(0)
-, _vboGLPoint(0)
-, _vaoGLLine(0)
-, _vboGLLine(0)
-, _bufferCapacity(0)
-, _bufferCount(0)
-, _buffer(nullptr)
-, _bufferCapacityGLPoint(0)
-, _bufferCountGLPoint(0)
-, _bufferGLPoint(nullptr)
-, _pointColor(1,1,1,1)
+//: _vao(0)
+//, _vbo(0)
+//, _vaoGLPoint(0)
+//, _vboGLPoint(0)
+//, _vaoGLLine(0)
+//, _vboGLLine(0)
+//, _bufferCapacity(0)
+//, _bufferCount(0)
+//, _buffer(nullptr)
+//, _bufferCapacityGLPoint(0)
+//, _bufferCountGLPoint(0)
+//, _bufferGLPoint(nullptr)
+: _pointColor(1,1,1,1)
 , _pointSize(1)
-, _bufferCapacityGLLine(0)
-, _bufferCountGLLine(0)
-, _bufferGLLine(nullptr)
-, _dirty(false)
-, _dirtyGLPoint(false)
-, _dirtyGLLine(false)
+, _vbTriangles(nullptr)
+, _vdTriangles(nullptr)
+//, _bufferCapacityGLLine(0)
+//, _bufferCountGLLine(0)
+//, _bufferGLLine(nullptr)
+//, _dirty(false)
+//, _dirtyGLPoint(false)
+//, _dirtyGLLine(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
 
 DrawNode::~DrawNode()
 {
-    free(_buffer);
-    _buffer = nullptr;
-    free(_bufferGLPoint);
-    _bufferGLPoint = nullptr;
-    free(_bufferGLLine);
-    _bufferGLLine = nullptr;
+    CC_SAFE_RELEASE(_vdTriangles);
+    CC_SAFE_RELEASE(_vbTriangles);
     
-    glDeleteBuffers(1, &_vbo);
-    glDeleteBuffers(1, &_vboGLLine);
-    glDeleteBuffers(1, &_vboGLPoint);
-    _vbo = 0;
-    _vboGLPoint = 0;
-    _vboGLLine = 0;
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glDeleteVertexArrays(1, &_vao);
-        glDeleteVertexArrays(1, &_vaoGLLine);
-        glDeleteVertexArrays(1, &_vaoGLPoint);
-        GL::bindVAO(0);
-        _vao = 0;
-    }
+//    free(_buffer);
+//    _buffer = nullptr;
+//    free(_bufferGLPoint);
+//    _bufferGLPoint = nullptr;
+//    free(_bufferGLLine);
+//    _bufferGLLine = nullptr;
+//    
+//    glDeleteBuffers(1, &_vbo);
+//    glDeleteBuffers(1, &_vboGLLine);
+//    glDeleteBuffers(1, &_vboGLPoint);
+//    _vbo = 0;
+//    _vboGLPoint = 0;
+//    _vboGLLine = 0;
+//    
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glDeleteVertexArrays(1, &_vao);
+//        glDeleteVertexArrays(1, &_vaoGLLine);
+//        glDeleteVertexArrays(1, &_vaoGLPoint);
+//        GL::bindVAO(0);
+//        _vao = 0;
+//    }
 }
 
 DrawNode* DrawNode::create()
@@ -169,310 +176,324 @@ DrawNode* DrawNode::create()
     return ret;
 }
 
-void DrawNode::ensureCapacity(int count)
-{
-    CCASSERT(count>=0, "capacity must be >= 0");
-    
-    if(_bufferCount + count > _bufferCapacity)
-    {
-		_bufferCapacity += MAX(_bufferCapacity, count);
-		_buffer = (V2F_C4B_T2F*)realloc(_buffer, _bufferCapacity*sizeof(V2F_C4B_T2F));
-	}
-}
-
-void DrawNode::ensureCapacityGLPoint(int count)
-{
-    CCASSERT(count>=0, "capacity must be >= 0");
-    
-    if(_bufferCountGLPoint + count > _bufferCapacityGLPoint)
-    {
-        _bufferCapacityGLPoint += MAX(_bufferCapacityGLPoint, count);
-        _bufferGLPoint = (V2F_C4B_T2F*)realloc(_bufferGLPoint, _bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
-    }
-}
-
-void DrawNode::ensureCapacityGLLine(int count)
-{
-    CCASSERT(count>=0, "capacity must be >= 0");
-    
-    if(_bufferCountGLLine + count > _bufferCapacityGLLine)
-    {
-        _bufferCapacityGLLine += MAX(_bufferCapacityGLLine, count);
-        _bufferGLLine = (V2F_C4B_T2F*)realloc(_bufferGLLine, _bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
-    }
-}
+//void DrawNode::ensureCapacity(int count)
+//{
+//    CCASSERT(count>=0, "capacity must be >= 0");
+//    
+//    if(_bufferCount + count > _bufferCapacity)
+//    {
+//		_bufferCapacity += MAX(_bufferCapacity, count);
+//		_buffer = (V2F_C4B_T2F*)realloc(_buffer, _bufferCapacity*sizeof(V2F_C4B_T2F));
+//	}
+//}
+//
+//void DrawNode::ensureCapacityGLPoint(int count)
+//{
+//    CCASSERT(count>=0, "capacity must be >= 0");
+//    
+//    if(_bufferCountGLPoint + count > _bufferCapacityGLPoint)
+//    {
+//        _bufferCapacityGLPoint += MAX(_bufferCapacityGLPoint, count);
+//        _bufferGLPoint = (V2F_C4B_T2F*)realloc(_bufferGLPoint, _bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
+//    }
+//}
+//
+//void DrawNode::ensureCapacityGLLine(int count)
+//{
+//    CCASSERT(count>=0, "capacity must be >= 0");
+//    
+//    if(_bufferCountGLLine + count > _bufferCapacityGLLine)
+//    {
+//        _bufferCapacityGLLine += MAX(_bufferCapacityGLLine, count);
+//        _bufferGLLine = (V2F_C4B_T2F*)realloc(_bufferGLLine, _bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
+//    }
+//}
 
 bool DrawNode::init()
 {
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
-    
-    ensureCapacity(512);
-    ensureCapacityGLPoint(64);
-    ensureCapacityGLLine(256);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vao);
-        GL::bindVAO(_vao);
-    }
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
-    // vertex
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-    // color
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-    // texcood
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vaoGLLine);
-        GL::bindVAO(_vaoGLLine);
-    }
-    glGenBuffers(1, &_vboGLLine);
-    glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
-    // vertex
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-    // color
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-    // texcood
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vaoGLPoint);
-        GL::bindVAO(_vaoGLPoint);
-    }
-    glGenBuffers(1, &_vboGLPoint);
-    glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
-    // vertex
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-    // color
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-    // texcood
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        GL::bindVAO(0);
-    }
+    _vbTriangles = VertexBuffer::create(sizeof(V2F_C4B_T2F), 512, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _vdTriangles = VertexData::create();
+    _vdTriangles->setStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    _vdTriangles->setStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    _vdTriangles->setStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    CC_SAFE_RETAIN(_vdTriangles);
+    CC_SAFE_RETAIN(_vbTriangles);
     
-    CHECK_GL_ERROR_DEBUG();
-    
-    _dirty = true;
-    _dirtyGLLine = true;
-    _dirtyGLPoint = true;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-   /** listen the event that renderer was recreated on Android/WP8 */
-        this->init();
-    });
+    _vbLines = VertexBuffer::create(sizeof(V2F_C4B_T2F), 512, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _vdLines = VertexData::create();
+    _vdLines->setStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    _vdLines->setStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    _vdLines->setStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    CC_SAFE_RETAIN(_vdLines);
+    CC_SAFE_RETAIN(_vbLines);
 
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
+    _vbPoints = VertexBuffer::create(sizeof(V2F_C4B_T2F), 512, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _vdPoints = VertexData::create();
+    _vdPoints->setStream(_vbPoints, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    _vdPoints->setStream(_vbPoints, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    _vdPoints->setStream(_vbPoints, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    CC_SAFE_RETAIN(_vdPoints);
+    CC_SAFE_RETAIN(_vbPoints);
+
+//    ensureCapacity(512);
+//    ensureCapacityGLPoint(64);
+//    ensureCapacityGLLine(256);
+//    
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glGenVertexArrays(1, &_vao);
+//        GL::bindVAO(_vao);
+//    }
+//    glGenBuffers(1, &_vbo);
+//    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
+//    // vertex
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+//    // color
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+//    // texcood
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+//    
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glGenVertexArrays(1, &_vaoGLLine);
+//        GL::bindVAO(_vaoGLLine);
+//    }
+//    glGenBuffers(1, &_vboGLLine);
+//    glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
+//    // vertex
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+//    // color
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+//    // texcood
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+//    
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glGenVertexArrays(1, &_vaoGLPoint);
+//        GL::bindVAO(_vaoGLPoint);
+//    }
+//    glGenBuffers(1, &_vboGLPoint);
+//    glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
+//    // vertex
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+//    // color
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+//    // texcood
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        GL::bindVAO(0);
+//    }
+//    
+//    CHECK_GL_ERROR_DEBUG();
+//    
+//    _dirty = true;
+//    _dirtyGLLine = true;
+//    _dirtyGLPoint = true;
+//    
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    // Need to listen the event only when not use batchnode, because it will use VBO
+//    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+//   /** listen the event that renderer was recreated on Android/WP8 */
+//        this->init();
+//    });
+//
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+//#endif
     
     return true;
 }
 
 void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if(_bufferCount)
+    if (!_vdTriangles->empty())
     {
-        _customCommand.init(_globalZOrder);
-        _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, flags);
-        renderer->addCommand(&_customCommand);
+        _batchTriangles.init(_vdTriangles, nullptr, GL_TRIANGLES);
+        _batchCommandTriangles.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, &_batchTriangles, _transform);
+        renderer->addCommand(&_batchCommandTriangles);
     }
     
-    if(_bufferCountGLPoint)
+    if (!_vdLines->empty())
     {
-        _customCommandGLPoint.init(_globalZOrder);
-        _customCommandGLPoint.func = CC_CALLBACK_0(DrawNode::onDrawGLPoint, this, transform, flags);
-        renderer->addCommand(&_customCommandGLPoint);
+        _batchLines.init(_vdLines, nullptr, GL_LINES);
+        _batchCommandLines.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, &_batchLines, _transform);
+        renderer->addCommand(&_batchCommandLines);
     }
     
-    if(_bufferCountGLLine)
+    if (!_vdPoints->empty())
     {
-        _customCommandGLLine.init(_globalZOrder);
-        _customCommandGLLine.func = CC_CALLBACK_0(DrawNode::onDrawGLLine, this, transform, flags);
-        renderer->addCommand(&_customCommandGLLine);
+        _batchPoints.init(_vdPoints, nullptr, GL_POINTS);
+        _batchCommandPoints.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, &_batchPoints, _transform);
+        renderer->addCommand(&_batchCommandPoints);
     }
+    
+//    if(_bufferCount)
+//    {
+//        _customCommand.init(_globalZOrder);
+//        _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this, transform, flags);
+//        renderer->addCommand(&_customCommand);
+//    }
+//    
+//    if(_bufferCountGLPoint)
+//    {
+//        _customCommandGLPoint.init(_globalZOrder);
+//        _customCommandGLPoint.func = CC_CALLBACK_0(DrawNode::onDrawGLPoint, this, transform, flags);
+//        renderer->addCommand(&_customCommandGLPoint);
+//    }
+//    
+//    if(_bufferCountGLLine)
+//    {
+//        _customCommandGLLine.init(_globalZOrder);
+//        _customCommandGLLine.func = CC_CALLBACK_0(DrawNode::onDrawGLLine, this, transform, flags);
+//        renderer->addCommand(&_customCommandGLLine);
+//    }
 }
 
-void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    auto glProgram = getGLProgram();
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
-    
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-
-    if (_dirty)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
-        
-        _dirty = false;
-    }
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        GL::bindVAO(_vao);
-    }
-    else
-    {
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        // vertex
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-        // color
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-        // texcood
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-    }
-
-    glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferCount);
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
-{
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
-    
-    if (_dirtyGLLine)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
-        _dirtyGLLine = false;
-    }
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        GL::bindVAO(_vaoGLLine);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-        // vertex
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-        // color
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-        // texcood
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-    }
-    glLineWidth(2);
-    glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
-{
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
-    
-    glProgram->setUniformLocationWith4fv(glProgram->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
-    glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_pointSize"), _pointSize);
-    
-    if (_dirtyGLPoint)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
-        
-        _dirtyGLPoint = false;
-    }
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        GL::bindVAO(_vaoGLPoint);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
-        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
-    }
-    
-    glDrawArrays(GL_POINTS, 0, _bufferCountGLPoint);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLPoint);
-    CHECK_GL_ERROR_DEBUG();
-}
+//void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
+//{
+//    auto glProgram = getGLProgram();
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins(transform);
+//    
+//    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+//
+//    if (_dirty)
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+//        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+//        
+//        _dirty = false;
+//    }
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        GL::bindVAO(_vao);
+//    }
+//    else
+//    {
+//        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+//        // vertex
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+//        // color
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+//        // texcood
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+//    }
+//
+//    glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferCount);
+//    CHECK_GL_ERROR_DEBUG();
+//}
+//
+//void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
+//{
+//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins(transform);
+//    
+//    if (_dirtyGLLine)
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
+//        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
+//        _dirtyGLLine = false;
+//    }
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        GL::bindVAO(_vaoGLLine);
+//    }
+//    else
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
+//        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+//        // vertex
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+//        // color
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+//        // texcood
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
+//    }
+//    glLineWidth(2);
+//    glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLLine);
+//    CHECK_GL_ERROR_DEBUG();
+//}
+//
+//void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
+//{
+//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins(transform);
+//    
+//    glProgram->setUniformLocationWith4fv(glProgram->getUniformLocation("u_color"), (GLfloat*) &_pointColor.r, 1);
+//    glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_pointSize"), _pointSize);
+//    
+//    if (_dirtyGLPoint)
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+//        glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
+//        
+//        _dirtyGLPoint = false;
+//    }
+//    
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        GL::bindVAO(_vaoGLPoint);
+//    }
+//    else
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+//        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, vertices));
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, colors));
+//        glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
+//    }
+//    
+//    glDrawArrays(GL_POINTS, 0, _bufferCountGLPoint);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCountGLPoint);
+//    CHECK_GL_ERROR_DEBUG();
+//}
 
 void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Color4F &color)
 {
-    ensureCapacityGLPoint(1);
-    
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
-    V2F_C4B_T2F a = {position, Color4B(color), Tex2F(0.0, 0.0) };
-    *point = a;
-    
+    _vdPoints->append<V2F_C4B_T2F>({position, Color4B(color), Tex2F(0.0, 0.0) });
     _pointSize = pointSize;
     _pointColor = color;
-    
-    _bufferCountGLPoint += 1;
-    _dirtyGLPoint = true;
 }
 
 void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
 {
-    ensureCapacityGLPoint(numberOfPoints);
-    
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
-    
-    for(unsigned int i=0; i < numberOfPoints; i++,point++)
-    {
-        V2F_C4B_T2F a = {position[i], Color4B(color), Tex2F(0.0, 0.0) };
-        *point = a;
-    }
-    
+    for (auto i = 0; i < numberOfPoints; ++i)
+        _vdPoints->append<V2F_C4B_T2F>({position[i], Color4B(color), Tex2F(0.0, 0.0)});
     _pointColor = color;
-    
-    _bufferCountGLPoint += numberOfPoints;
-    _dirtyGLPoint = true;
 }
 
 void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
 {
-    ensureCapacityGLLine(2);
-    
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
-    
-    V2F_C4B_T2F a = {origin, Color4B(color), Tex2F(0.0, 0.0)};
-    V2F_C4B_T2F b = {destination, Color4B(color), Tex2F(0.0, 0.0)};
-    
-    *point = a;
-    *(point+1) = b;
-    
-    _bufferCountGLLine += 2;
-    _dirtyGLLine = true;
+    _vdLines->append<V2F_C4B_T2F>({origin,      Color4B(color), Tex2F(0.0, 0.0)});
+    _vdLines->append<V2F_C4B_T2F>({destination, Color4B(color), Tex2F(0.0, 0.0)});
 }
 
 void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
@@ -483,41 +504,20 @@ void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color
     drawLine(Vec2(origin.x, destination.y), Vec2(origin.x, origin.y), color);
 }
 
-void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
+void DrawNode::drawPoly(const Vec2* poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
 {
-    unsigned int vertext_count;
-    if(closePolygon)
+    int i = 0;
+    for(; i < numberOfPoints - 1; ++i)
     {
-        vertext_count = 2 * numberOfPoints;
-        ensureCapacityGLLine(vertext_count);
+        _vdLines->append<V2F_C4B_T2F>({poli[i],   Color4B(color), Tex2F(0.0, 0.0)});
+        _vdLines->append<V2F_C4B_T2F>({poli[i+1], Color4B(color), Tex2F(0.0, 0.0)});
     }
-    else
+
+    if (closePolygon)
     {
-        vertext_count = 2 * (numberOfPoints - 1);
-        ensureCapacityGLLine(vertext_count);
+        _vdLines->append<V2F_C4B_T2F>({poli[i], Color4B(color), Tex2F(0.0, 0.0)});
+        _vdLines->append<V2F_C4B_T2F>({poli[0], Color4B(color), Tex2F(0.0, 0.0)});
     }
-    
-    V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
- 
-    unsigned int i = 0;
-    for(; i<numberOfPoints-1; i++)
-    {
-        V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
-        V2F_C4B_T2F b = {poli[i+1], Color4B(color), Tex2F(0.0, 0.0)};
-        
-        *point = a;
-        *(point+1) = b;
-        point += 2;
-    }
-    if(closePolygon)
-    {
-        V2F_C4B_T2F a = {poli[i], Color4B(color), Tex2F(0.0, 0.0)};
-        V2F_C4B_T2F b = {poli[0], Color4B(color), Tex2F(0.0, 0.0)};
-        *point = a;
-        *(point+1) = b;
-    }
-    
-    _bufferCountGLLine += vertext_count;
 }
 
 void DrawNode::drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color)

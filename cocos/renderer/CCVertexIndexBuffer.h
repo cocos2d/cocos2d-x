@@ -28,30 +28,66 @@
 
 #include "base/CCRef.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    #define SUPPORT_EVENT_RENDERER_RECREATED
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    #define SUPPORT_NO_CLIENT_SIDE_ARRAYS
+#endif
+
 NS_CC_BEGIN
 
 class EventListenerCustom;
 
-// @brief Generic renderer buffer for vertices or indices or anything that you can get
-//        from the graphics API that is in array format.
-//
-//        Supports copying of the data to a client memory buffer which can be retrieved
-//        or used to rebuild the graphics API buffer is cases where they are transient.
-class RendererBuffer
+// @brief OpenGL buffer for vertices or indices or anything that you can get
+//        from the GL API that is in array format.
+//        - copying of the data to a client memory buffer which can be retrieved
+//          or used to rebuild the GL buffer is cases where they are transient.
+//        - optional use of vao with vbo if supported.
+//        - handles cases where client buffers are not supported, i.e. Emscripten.
+//        - copies to GL buffer from client memory on demand.
+//        - can transform into another GLArrayBuffer on demand.
+//        - knows how to draw itself.
+class CC_DLL GLArrayBuffer
     : public Ref
 {
-    RendererBuffer();
+    GLArrayBuffer();
 
 public:
     
-    virtual ~RendererBuffer();
+    enum ArrayType
+    {
+        Client  = (1<<0), // Maintains a Client memory buffer to store elements.
+        Native  = (1<<2), // Maintains a Native buffer to store elements.
+        VAO     = (1<<3), // Use a GL Vertex Array Object if possible.
+        Default = Native | VAO,
+        All     = Client | Native | VAO
+    };
     
-    int getElementSize() const;
-    int getElementCount() const;
+    enum class ArrayMode
+    {
+        Immutable, // GL_STATIC_DRAW
+        LongLived, // GL_DYNAMIC_DRAW
+        Dynamic    // GL_STREAMED_DRAW
+    };
     
-    bool updateElements(const void* elements, int count, int begin, bool copy = true);
+    enum Primitive
+    {
+        Points,
+        Lines,
+        LineLoop,
+        LineStrip,
+        Triangles,
+        TriangleStrip,
+        TriangleFan
+    };
     
-    unsigned getSize() const
+    virtual ~GLArrayBuffer();
+    
+    bool updateElements(const void* elements, int count, int begin);
+    
+    size_t getSize() const
     {
         return getElementCount() * getElementSize();
     }
@@ -61,38 +97,88 @@ public:
         return _vbo;
     }
 
-    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
-    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
-
-protected:
-
-    bool init(int elementSize, int elementCount, bool copy);
-    void recreateVBO() const;
-
-protected:
+    CC_DEPRECATED_ATTRIBUTE uint32_t getVAO() const
+    {
+        return _vao;
+    }
     
-    EventListenerCustom* _recreateVBOEventListener;
+    int getElementCount() const
+    {
+        return _elementCount;
+    }
+    
+    int getElementSize() const
+    {
+        return _elementSize;
+    }
+    
+    bool hasClient() const
+    {
+        return _arrayType & ArrayType::Client;
+    }
+    
+    bool hasNative() const
+    {
+        return _arrayType & ArrayType::Native;
+    }
+    
+    bool hasVAO() const
+    {
+        return _arrayType & ArrayType::VAO;
+    }
+    
+    bool isDirty() const
+    {
+        return _dirty;
+    }
+    
+    void setDirty(bool dirty)
+    {
+        _dirty = dirty;
+    }
+
+    // @brief append
+    size_t append(void* source, size_t size, size_t elements = 1);
+
+protected:
+
+    bool init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode);
+    void ensureCapacity(size_t capacity);
+
+#ifdef SUPPORT_EVENT_RENDERER_RECREATED
+    void recreate() const;
+    EventListenerCustom* _recreateEventListener;
+#endif
+    
+protected:
+
     uint32_t _vbo;
+    uint32_t _vao;
     
     unsigned _elementSize;
     unsigned _elementCount;
     
     void* _elements;
-
-    static bool _enableShadowCopy;
+    ArrayType _arrayType;
+    ArrayMode _arrayMode;
+    
+    int _opaqueDrawMode;
+    bool _dirty;
 };
 
 
 class CC_DLL VertexBuffer
-    : public RendererBuffer
+    : public GLArrayBuffer
 {
+    VertexBuffer();
+    
 public:
     
     template <class T = VertexBuffer>
-    static T* create(int size, int count, bool copy = false)
+    static T* create(int size, int count, ArrayType arrayType = ArrayType::Default, ArrayMode arrayMode = ArrayMode::LongLived)
     {
         auto result = new (std::nothrow) T;
-        if (result && result->init(size, count, copy))
+        if (result && result->init(size, count, arrayType, arrayMode))
         {
             result->autorelease();
             return result;
@@ -107,7 +193,8 @@ public:
 };
 
 
-class CC_DLL IndexBuffer : public RendererBuffer
+class CC_DLL IndexBuffer
+    : public GLArrayBuffer
 {
     IndexBuffer();
 
@@ -120,10 +207,10 @@ public:
     };
     
     template <class T = IndexBuffer>
-    static IndexBuffer* create(IndexType type, int count, bool copy = false)
+    static IndexBuffer* create(IndexType type, int count, ArrayType arrayType = ArrayType::Default, ArrayMode arrayMode = ArrayMode::LongLived)
     {
         auto result = new (std::nothrow) T;
-        if (result && result->init(type, count, copy))
+        if (result && result->init(type, count, arrayType, arrayMode))
         {
             result->autorelease();
             return result;
@@ -143,9 +230,9 @@ public:
 
 protected:
     
-    bool init(IndexType type, int number, bool copy)
+    bool init(IndexType type, int number, ArrayType arrayType, ArrayMode arrayMode)
     {
-        if (!RendererBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == _type ? 2 : 4, number, copy))
+        if (!GLArrayBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == _type ? 2 : 4, number, arrayType, arrayMode))
             return false;
         _type = type;
         return true;

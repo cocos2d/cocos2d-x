@@ -33,11 +33,13 @@
 
 #include "2d/CCNode.h"
 #include "base/ccTypes.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCBatchCommand.h"
+#include "renderer/CCBatch.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
 
+class VertexData;
 class VertexBuffer;
 
 /** DrawNode
@@ -138,9 +140,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init();
 
 protected:
-    void ensureCapacity(int count);
-    void ensureCapacityGLPoint(int count);
-    void ensureCapacityGLLine(int count);
+    
+//    void ensureCapacity(int count);
+//    void ensureCapacityGLPoint(int count);
+//    void ensureCapacityGLLine(int count);
 
 //    GLuint      _vao;
 //    GLuint      _vbo;
@@ -149,28 +152,44 @@ protected:
 //    GLuint      _vaoGLLine;
 //    GLuint      _vboGLLine;
 
-    int         _bufferCapacity;
-    int         _bufferCount;
-    V2F_C4B_T2F *_buffer;
+//    int         _bufferCapacity;
+//    int         _bufferCount;
+//    V2F_C4B_T2F *_buffer;
     
-    int         _bufferCapacityGLPoint;
-    int         _bufferCountGLPoint;
-    V2F_C4B_T2F *_bufferGLPoint;
+//    int         _bufferCapacityGLPoint;
+//    int         _bufferCountGLPoint;
+//    V2F_C4B_T2F *_bufferGLPoint;
+    
     Color4F     _pointColor;
     int         _pointSize;
     
-    int         _bufferCapacityGLLine;
-    int         _bufferCountGLLine;
-    V2F_C4B_T2F *_bufferGLLine;
+//    int         _bufferCapacityGLLine;
+//    int         _bufferCountGLLine;
+//    V2F_C4B_T2F *_bufferGLLine;
 
     BlendFunc   _blendFunc;
-    CustomCommand _customCommand;
-    CustomCommand _customCommandGLPoint;
-    CustomCommand _customCommandGLLine;
+    
+//    CustomCommand _customCommand;
+//    CustomCommand _customCommandGLPoint;
+//    CustomCommand _customCommandGLLine;
+    Batch _batchTriangles;
+    BatchCommand _batchCommandTriangles;
+    VertexData*   _vdTriangles;
+    VertexBuffer* _vbTriangles;
 
-    bool        _dirty;
-    bool        _dirtyGLPoint;
-    bool        _dirtyGLLine;
+    Batch _batchPoints;
+    BatchCommand _batchCommandPoints;
+    VertexData*   _vdPoints;
+    VertexBuffer* _vbPoints;
+
+    Batch _batchLines;
+    BatchCommand _batchCommandLines;
+    VertexData*   _vdLines;
+    VertexBuffer* _vbLines;
+
+//    bool        _dirty;
+//    bool        _dirtyGLPoint;
+//    bool        _dirtyGLLine;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);

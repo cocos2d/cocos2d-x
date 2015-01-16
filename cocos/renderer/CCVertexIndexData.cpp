@@ -28,29 +28,13 @@
 
 NS_CC_BEGIN
 
-VertexData* VertexData::create()
+bool VertexData::setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream)
 {
-    VertexData* result = new (std::nothrow) VertexData();
-    if(result)
-    {
-        result->autorelease();
-        return result;
-    }
-
-    CC_SAFE_DELETE(result);
-    return nullptr;
-}
-
-size_t VertexData::getVertexStreamCount() const
-{
-    return _vertexStreams.size();
-}
-
-bool VertexData::setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream)
-{
-    if( buffer == nullptr ) return false;
+    if (nullptr == buffer)
+        return false;
+    
     auto iter = _vertexStreams.find(stream._semantic);
-    if(iter == _vertexStreams.end())
+    if (iter == _vertexStreams.end())
     {
         buffer->retain();
         auto& bufferAttribute = _vertexStreams[stream._semantic];
@@ -65,6 +49,8 @@ bool VertexData::setStream(VertexBuffer* buffer, const VertexStreamAttribute& st
         iter->second._buffer = buffer;
     }
     
+    _interleaved = determineInterleave();
+    
     return true;
 }
 
@@ -76,6 +62,8 @@ void VertexData::removeStream(int semantic)
         iter->second._buffer->release();
         _vertexStreams.erase(iter);
     }
+
+    _interleaved = determineInterleave();
 }
 
 const VertexStreamAttribute* VertexData::getStreamAttribute(int semantic) const
@@ -92,16 +80,11 @@ VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
     else return &iter->second._stream;
 }
 
-VertexBuffer* VertexData::getStreamBuffer(int semantic) const
+GLArrayBuffer* VertexData::getStreamBuffer(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return iter->second._buffer;
-}
-
-VertexData::VertexData()
-{
-    
 }
 
 VertexData::~VertexData()
@@ -116,21 +99,61 @@ VertexData::~VertexData()
 void VertexData::use()
 {
     uint32_t flags(0);
-    for(auto& element : _vertexStreams)
+    for (auto& element : _vertexStreams)
     {
         flags = flags | (1 << element.second._stream._semantic);
     }
     
     GL::enableVertexAttribs(flags);
     
-    for(auto& element : _vertexStreams)
+    for (auto& element : _vertexStreams)
     {
-        //glEnableVertexAttribArray((GLint)element.second._stream._semantic);
-        glBindBuffer(GL_ARRAY_BUFFER, element.second._buffer->getVBO());
-        size_t offet = element.second._stream._offset;
-        glVertexAttribPointer(GLint(element.second._stream._semantic),element.second._stream._size,
-                              element.second._stream._type,element.second._stream._normalize, element.second._buffer->getSizePerVertex(), (GLvoid*)offet);
+        auto& attrib = element.second;
+        auto& stream = attrib._stream;
+        
+        glBindBuffer(GL_ARRAY_BUFFER, attrib._buffer->getVBO());
+        size_t offet = attrib._stream._offset;
+        glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, attrib._buffer->getElementSize(), (GLvoid*)offet);
     }
+}
+
+bool VertexData::empty() const
+{
+    for (auto& e : _vertexStreams)
+    {
+        auto& bufferAttribute = e.second;
+        if (0 != bufferAttribute._buffer->getElementCount())
+            return false;
+    }
+    return true;
+}
+
+// @brief If all streams use the same buffer, then the data is interleaved.
+bool VertexData::determineInterleave() const
+{
+    size_t count = _vertexStreams.size();
+    if (0 == count)
+        return false;
+    void* p = nullptr;
+    for (auto& e : _vertexStreams)
+    {
+        if (nullptr == p)
+        {
+            p = e.second._buffer;
+            continue;
+        }
+        else
+        {
+            if (p != e.second._buffer)
+                return false;
+        }
+    }
+    return true;
+}
+
+inline void VertexData::append(GLArrayBuffer* buffer, void* source, size_t size, size_t count)
+{
+    buffer->append(source, size, count);
 }
 
 NS_CC_END

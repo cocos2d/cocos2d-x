@@ -1,3 +1,4 @@
+
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
 
@@ -22,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PRIMITIVE_H__
-#define __CC_PRIMITIVE_H__
+#ifndef __CC_BATCH_H__
+#define __CC_BATCH_H__
 
 #include "renderer/CCVertexIndexData.h"
 
@@ -31,18 +32,34 @@ NS_CC_BEGIN
 
 class IndexBuffer;
 
-class CC_DLL Primitive : public Ref
+class CC_DLL Batch : public Ref
 {
 public:
-    static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
-    
+ 
+    template <class T>
+    T* create(VertexData* verts, IndexBuffer* indices, int drawingPrimitive)
+    {
+        auto result = new (std::nothrow) T;
+        if (result && result->init(verts, indices, drawingPrimitive))
+        {
+            result->autorelease();
+            return result;
+        }
+        delete result;
+        return  nullptr;
+    }
+ 
+    Batch();
+    virtual ~Batch();
+
+    bool init(VertexData* verts, IndexBuffer* indices, int drawingPrimitive);
+
     const VertexData* getVertexData() const;
-    
     const IndexBuffer* getIndexData() const;
     
-    int getType() const { return _type; }
+    CC_DEPRECATED_ATTRIBUTE int getType() const { return _drawingPrimitive; }
+    int getDrawingPrimitive() const { return _drawingPrimitive; }
     
-    //called by rendering framework
     void draw();
     
     int getStart() const { return _start; }
@@ -51,17 +68,12 @@ public:
     void setCount(int count) { _count = count; }
     
 protected:
-    Primitive();
-    virtual ~Primitive();
-    
-    bool init(VertexData* verts, IndexBuffer* indices, int type);
-    
-protected:
+
     VertexData* _verts;
     IndexBuffer* _indices;
     int _start;
     int _count;
-    int _type;
+    int _drawingPrimitive;
 };
 
 NS_CC_END

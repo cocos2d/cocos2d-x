@@ -30,22 +30,20 @@
 
 NS_CC_BEGIN
 
-class VertexBuffer;
+class GLArrayBuffer;
 
 struct CC_DLL VertexStreamAttribute
 {
     VertexStreamAttribute()
-    : _normalize(false),_offset(0),_semantic(0),_type(0),_size(0)
-    {
-    }
+        : _normalize(false), _offset(0), _semantic(0), _type(0), _size(0)
+    {}
 
     VertexStreamAttribute(int offset, int semantic, int type, int size)
-    : _normalize(false),_offset(offset),_semantic(semantic),_type(type),_size(size)
-    {
-    }
+        : _normalize(false), _offset(offset), _semantic(semantic), _type(type), _size(size)
+    {}
     
     VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
-    : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type),_size(size)
+        : _normalize(normalize), _offset(offset), _semantic(semantic), _type(type), _size(size)
     {
     }
     
@@ -56,33 +54,83 @@ struct CC_DLL VertexStreamAttribute
     int _size;
 };
 
-class CC_DLL VertexData : public Ref
+class CC_DLL VertexData
+    : public Ref
 {
 public:
-    static VertexData* create();
     
+    template <typename T = VertexData>
+    static T* create()
+    {
+        auto result = new (std::nothrow) T;
+        if (result)
+        {
+            result->autorelease();
+            return result;
+        }
+        return nullptr;
+    }
+
+    virtual ~VertexData();
+
+    // @brief Return the number of vertex streams
     size_t getVertexStreamCount() const;
-    bool setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream);
+    
+    bool setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream);
     void removeStream(int semantic);
+    
     const VertexStreamAttribute* getStreamAttribute(int semantic) const;
     VertexStreamAttribute* getStreamAttribute(int semantic);
     
-    VertexBuffer* getStreamBuffer(int semantic) const;
+    GLArrayBuffer* getStreamBuffer(int semantic) const;
     
     // @brief setup attributes for all vertex streams
     void use();
     
+    // @brief draw this geometry
+    void draw();
+    
+    // @brief true/false if all vertex buffers are empty
+    bool empty() const;
+    
+    template <typename T>
+    void append(const T& vertex)
+    {
+        if (_interleaved)
+        {
+            for (auto& e : _vertexStreams)
+            {
+                append(e.second._buffer, &vertex, sizeof(vertex));
+                return;
+            }
+        }
+        else
+        {
+            for (auto& e : _vertexStreams)
+            {
+                intptr_t p = (intptr_t)&vertex + e.second._stream._offset;
+                append(e.second._buffer, (void*)p, e.second._stream._size);
+            }
+        }
+    }
+    
 protected:
-    VertexData();
-    virtual ~VertexData();
+    
+    bool determineInterleave() const;
+    
+    inline void append(GLArrayBuffer* buffer, void* source, size_t size, size_t count = 1);
+
 protected:
+    
     struct BufferAttribute
     {
-        VertexBuffer* _buffer;
+        GLArrayBuffer* _buffer;
         VertexStreamAttribute _stream;
     };
     
     std::map<int, BufferAttribute> _vertexStreams;
+    
+    bool _interleaved;
 };
 
 NS_CC_END

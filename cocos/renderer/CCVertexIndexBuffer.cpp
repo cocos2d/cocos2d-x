@@ -24,7 +24,9 @@
  ****************************************************************************/
 
 #include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
+#include "base/CCConfiguration.h"
 #include "platform/CCGL.h"
 
 NS_CC_BEGIN
@@ -33,71 +35,89 @@ NS_CC_BEGIN
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
-bool RendererBuffer::_enableShadowCopy = true;
-#else
-bool RendererBuffer::_enableShadowCopy = false;
+#define SUPPORT_EVENT_RENDERER_RECREATED
 #endif
 
-RendererBuffer::RendererBuffer()
-    : _recreateVBOEventListener(nullptr)
-    , _vbo(0)
+GLArrayBuffer::GLArrayBuffer()
+    : _vbo(0)
+    , _vao(0)
     , _elementSize(0)
     , _elementCount(0)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _recreateVBOEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreateVBO();};);
+#ifdef SUPPORT_EVENT_RENDERER_RECREATED
+    _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
 #endif
 }
 
-RendererBuffer::~RendererBuffer()
+GLArrayBuffer::~GLArrayBuffer()
 {
-    // GAPI delete buffer
     if (glIsBuffer(_vbo))
     {
         glDeleteBuffers(1, &_vbo);
         _vbo = 0;
     }
-    
-    if (nullptr != _elements)
+
+    if (glIsBuffer(_vao))
     {
-        free(_elements);
-        _elements = nullptr;
+        glDeleteVertexArrays(1, &_vao);
+        _vao = 0;
     }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    CC_SAFE_FREE(_elements);
+    
+#ifdef SUPPORT_EVENT_RENDERER_RECREATED
     Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
 #endif
 }
 
-bool RendererBuffer::init(int elementSize, int elementCount, bool copy)
+bool GLArrayBuffer::init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode)
 {
     if(0 == elementSize || 0 == elementCount)
         return false;
     
+    _arrayType = arrayType;
+    _arrayMode = arrayMode;
+    
+    switch (_arrayMode)
+    {
+    case ArrayMode::Immutable:
+        _opaqueDrawMode = GL_STATIC_DRAW;
+        break;
+    case ArrayMode::LongLived:
+        _opaqueDrawMode = GL_DYNAMIC_DRAW;
+        break;
+    case ArrayMode::Dynamic:
+        _opaqueDrawMode = GL_STREAM_DRAW;
+        break;
+    default:
+        CCASSERT(false, "invalid ArrayMode");
+        return false;
+    }
+        
     _elementSize  = elementSize;
     _elementCount = elementCount;
     
-//    if (isShadowCopyEnabled())
-//        ensureCopyCapacity(getSize());
+    if (hasClient())
+        ensureCapacity(getSize());
     
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, getSize(), nullptr, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    if (hasNative())
+    {
+        if (hasVAO() && Configuration::getInstance()->supportsShareableVAO())
+        {
+            glGenVertexArrays(1, &_vao);
+            GL::bindVAO(_vao);
+        }
+
+        glGenBuffers(1, &_vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, getSize(), nullptr, _opaqueDrawMode);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+    
     return true;
 }
 
-int RendererBuffer::getElementCount() const
-{
-    return _elementCount;
-}
-
-int RendererBuffer::getElementSize() const
-{
-    return _elementSize;
-}
-
-bool RendererBuffer::updateElements(const void* elements, int count, int begin, bool copy)
+bool GLArrayBuffer::updateElements(const void* elements, int count, int begin)
 {
     if (count <= 0 || nullptr == elements)
         return false;
@@ -114,7 +134,7 @@ bool RendererBuffer::updateElements(const void* elements, int count, int begin, 
         count = _elementCount - begin;
     }
     
-    if ((copy || isShadowCopyEnabled()) && _elements)
+    if (_elements && hasClient())
     {
         intptr_t p = (intptr_t)_elements + begin * _elementSize;
         memcpy((void*)p, elements, count * _elementSize);
@@ -127,7 +147,23 @@ bool RendererBuffer::updateElements(const void* elements, int count, int begin, 
     return true;
 }
 
-void RendererBuffer::recreateVBO() const
+size_t GLArrayBuffer::append(void* source, size_t size, size_t elements)
+{
+    CCASSERT(hasClient(), "Can only append data to arrays that have client buffers");
+    
+    auto currentSize = getSize();
+    ensureCapacity(currentSize + size);
+    
+    intptr_t p = (intptr_t)_elements + currentSize;
+    memcpy((void*)p, source, size * elements);
+    
+    _elementCount += elements;
+    
+    return getSize();
+}
+
+#ifdef SUPPORT_EVENT_RENDERER_RECREATED
+void GLArrayBuffer::recreate() const
 {
     glGenBuffers(1, (GLuint*)&_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -137,8 +173,17 @@ void RendererBuffer::recreateVBO() const
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         if(!glIsBuffer(_vbo))
         {
-            CCLOGERROR("Renderer::recreateVBO() : recreate VertexBuffer Error");
+            CCLOGERROR("Renderer::recreate() : recreate VertexBuffer Error");
         }
+    }
+}
+#endif
+
+void GLArrayBuffer::ensureCapacity(size_t capacity)
+{
+    if (hasClient())
+    {
+        _elements = realloc(_elements, capacity);
     }
 }
 

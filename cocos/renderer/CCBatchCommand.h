@@ -30,7 +30,9 @@
 NS_CC_BEGIN
 
 class TextureAtlas;
+class Texture2D;
 class GLProgram;
+class Batch;
 
 class CC_DLL BatchCommand : public RenderCommand
 {
@@ -40,6 +42,7 @@ public:
     ~BatchCommand();
 
     void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
+    void init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, Batch* batch, const Mat4& modelViewTransform);
 
     void execute();
 
@@ -51,6 +54,7 @@ protected:
     BlendFunc _blendType;
 
     TextureAtlas *_textureAtlas;
+    Batch* _batch;
 
     // ModelView transform
     Mat4 _mv;
