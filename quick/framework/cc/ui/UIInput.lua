@@ -238,7 +238,9 @@ function UIInput.newTextField_(params)
     end
     local editbox = textfieldCls:create()
     editbox:setPlaceHolder(params.placeHolder)
-    editbox:setPosition(params.x, params.y)
+    if params.x and params.y then
+        editbox:setPosition(params.x, params.y)
+    end
     if params.listener then
         editbox:addEventListener(params.listener)
     end
