@@ -102,6 +102,10 @@ BillBoardRotationTest::BillBoardRotationTest()
     lbl->setString("+100");
     bill->addChild(lbl);
     
+    auto r = RotateBy::create(10, Vec3(0,360,0));
+    auto rp = RepeatForever::create(r);
+    root->runAction(rp);
+    
     auto jump = JumpBy::create(1, Vec2(0, 0), 30, 1);
     auto scale = ScaleBy::create(2, 2, 2, 0.1);
     auto seq = Sequence::create(jump,scale, NULL);
