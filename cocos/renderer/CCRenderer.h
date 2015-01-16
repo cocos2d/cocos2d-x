@@ -134,7 +134,7 @@ public:
      * For 3D object depth test is enabled by default and can not be changed
      * For 2D object depth test is disabled by default
      */
-    void setDepthTest(bool value) { _isDepthTestFor2D = value; }
+    void setDepthTest(bool enable);
     
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 

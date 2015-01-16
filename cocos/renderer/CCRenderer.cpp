@@ -562,6 +562,24 @@ void Renderer::clear()
     glDepthMask(false);
 }
 
+void Renderer::setDepthTest(bool enable)
+{
+    if (enable)
+    {
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    _isDepthTestFor2D = enable;
+    CHECK_GL_ERROR_DEBUG();
+}
+
 void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
     memcpy(_verts + _filledVertex, cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());

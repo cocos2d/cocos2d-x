@@ -701,19 +701,7 @@ void Director::setAlphaBlending(bool on)
 
 void Director::setDepthTest(bool on)
 {
-    if (on)
-    {
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
     _renderer->setDepthTest(on);
-    CHECK_GL_ERROR_DEBUG();
 }
 
 void Director::setClearColor(const Color4F& clearColor)
