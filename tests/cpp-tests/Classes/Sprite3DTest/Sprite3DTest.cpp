@@ -66,7 +66,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Animate3DTest),
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
-    CL(Sprite3DWithOBBPerfromanceTest),
+    CL(Sprite3DWithOBBPerformanceTest),
     CL(Sprite3DMirrorTest),
     CL(QuaternionTest)
 };
@@ -1712,12 +1712,12 @@ void Sprite3DReskinTest::applyCurSkin()
     }
 }
 
-Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
+Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesBegan, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesEnded, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesMoved, this);
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesEnded, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     auto s = Director::getInstance()->getWinSize();
     initDrawBox();
@@ -1725,9 +1725,9 @@ Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
     addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::delOBBCallback, this));
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::delOBBCallback, this));
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::addOBBCallback, this));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::addOBBCallback, this));
     increase->setColor(Color3B(0,200,20));
     
     auto menu = Menu::create(decrease, increase, nullptr);
@@ -1744,15 +1744,15 @@ Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
     addOBBCallback(nullptr);
     scheduleUpdate();
 }
-std::string Sprite3DWithOBBPerfromanceTest::title() const
+std::string Sprite3DWithOBBPerformanceTest::title() const
 {
-    return "OBB Collison Perfromance Test";
+    return "OBB Collison Performance Test";
 }
-std::string Sprite3DWithOBBPerfromanceTest::subtitle() const
+std::string Sprite3DWithOBBPerformanceTest::subtitle() const
 {
     return "";
 }
-void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
+void Sprite3DWithOBBPerformanceTest::addNewOBBWithCoords(Vec2 p)
 {
     Vec3 extents = Vec3(10, 10, 10);
     AABB aabb(-extents, extents);
@@ -1761,7 +1761,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
     _obb.push_back(obb);
 }
 
-void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DWithOBBPerformanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
     for (const auto& touch: touches)
     {
@@ -1784,12 +1784,12 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& t
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DWithOBBPerformanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     
 }
 
-void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
     for (const auto& touch: touches)
     {
@@ -1804,7 +1804,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& t
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::update(float dt)
+void Sprite3DWithOBBPerformanceTest::update(float dt)
 {
     char szText[16];
     sprintf(szText,"%lu cubes",_obb.size());
@@ -1843,13 +1843,13 @@ void Sprite3DWithOBBPerfromanceTest::update(float dt)
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::initDrawBox()
+void Sprite3DWithOBBPerformanceTest::initDrawBox()
 {
     _drawOBB = DrawNode3D::create();
     addChild(_drawOBB);
 }
 
-void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
+void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
 {
     std::string fileName = "Sprite3DTest/tortoise.c3b";
     auto sprite = Sprite3D::create(fileName);
@@ -1867,7 +1867,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
     
     _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
     _moveAction->retain();
-    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
     sprite->runAction(seq);
     
@@ -1878,7 +1878,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
     addChild(_drawDebug);
 }
 
-void Sprite3DWithOBBPerfromanceTest::reachEndCallBack()
+void Sprite3DWithOBBPerformanceTest::reachEndCallBack()
 {
     _sprite->stopActionByTag(100);
     auto inverse = (MoveTo*)_moveAction->reverse();
@@ -1886,17 +1886,17 @@ void Sprite3DWithOBBPerfromanceTest::reachEndCallBack()
     _moveAction->release();
     _moveAction = inverse;
     auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
-    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
     _sprite->runAction(seq);
 }
 
-void Sprite3DWithOBBPerfromanceTest::addOBBCallback(Ref* sender)
+void Sprite3DWithOBBPerformanceTest::addOBBCallback(Ref* sender)
 {
     addOBBWithCount(10);
 }
 
-void Sprite3DWithOBBPerfromanceTest::addOBBWithCount(float value)
+void Sprite3DWithOBBPerformanceTest::addOBBWithCount(float value)
 {
     for(int i = 0; i < value; i++)
     {
@@ -1909,12 +1909,12 @@ void Sprite3DWithOBBPerfromanceTest::addOBBWithCount(float value)
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::delOBBCallback(Ref* sender)
+void Sprite3DWithOBBPerformanceTest::delOBBCallback(Ref* sender)
 {
     delOBBWithCount(10);
 }
 
-void Sprite3DWithOBBPerfromanceTest::delOBBWithCount(float value)
+void Sprite3DWithOBBPerformanceTest::delOBBWithCount(float value)
 {
     if(_obb.size() >= 10)
     {
@@ -1924,7 +1924,7 @@ void Sprite3DWithOBBPerfromanceTest::delOBBWithCount(float value)
     else
         return;
 }
-void Sprite3DWithOBBPerfromanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
+void Sprite3DWithOBBPerformanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
 {
     assert(dst);
     
@@ -1947,7 +1947,7 @@ void Sprite3DWithOBBPerfromanceTest::unproject(const Mat4& viewProjection, const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
+void Sprite3DWithOBBPerformanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
