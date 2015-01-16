@@ -285,7 +285,7 @@ namespace ui {
         
         Rect originalRect;
         if(_spriteFrameRotated)
-            originalRect = Rect(_spriteRect.origin.x - offsetPosition.y, _spriteRect.origin.y - offsetPosition.x, _originalSize.width, _originalSize.height);
+            originalRect = Rect(_spriteRect.origin.x + _spriteRect.size.height - _originalSize.height + offsetPosition.y , _spriteRect.origin.y - offsetPosition.x, _originalSize.width, _originalSize.height);
         else
             originalRect = Rect(_spriteRect.origin.x - offsetPosition.x, _spriteRect.origin.y - offsetPosition.y, _originalSize.width, _originalSize.height);
         
@@ -444,7 +444,6 @@ namespace ui {
             rotatedCenterBottomBounds.origin = centerBottomBounds.origin;
             rotatedCenterTopBounds.origin = centerTopBounds.origin;
             
-            
         }
         
         _topLeftSize = rotatedLeftTopBoundsOriginal.size;
@@ -456,14 +455,14 @@ namespace ui {
             float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.height/2) - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.height/2);
             float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.width/2)- (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.width/2);
             _centerOffset.x = -offsetY;
-            _centerOffset.y = offsetX;
+            _centerOffset.y = -offsetX;
         }
         else
         {
             float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.width/2) - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.width/2);
             float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.height/2)- (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.height/2);
             _centerOffset.x = offsetX;
-            _centerOffset.y = offsetY;
+            _centerOffset.y = -offsetY;
         }
         
         // Centre
