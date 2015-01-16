@@ -712,6 +712,7 @@ void Director::setDepthTest(bool on)
     {
         glDisable(GL_DEPTH_TEST);
     }
+    _renderer->setDepthTest(on);
     CHECK_GL_ERROR_DEBUG();
 }
 
