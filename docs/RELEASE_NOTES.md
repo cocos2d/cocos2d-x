@@ -17,7 +17,7 @@
   - [Highlights of v3.4rc1](#highlights-of-v34rc1)
   - [Features in detail](#features-in-detail)
     - [3D rendering support for 2D objects](#3d-rendering-support-for-2d-objects)
-    - [culling is now an options by CC_USE_CULLING macro](#culling-is-now-an-options-by-cc_use_culling-macro)
+    - [Culling is now an options by CC_USE_CULLING macro](#culling-is-now-an-options-by-cc_use_culling-macro)
   - [Bugs fixed in v3.4rc1](#bugs-fixed-in-v34rc1)
 - [v3.4rc0](#v34rc0)
   - [Bugs fixed in v3.4rc0](#bugs-fixed-in-v34rc0)
@@ -142,7 +142,7 @@ auto label = Label::create();
 label->setString("+100");
 billboard->addChild(label);
 ```
-###culling is now an options by CC_USE_CULLING macro
+###Culling is now an options by CC_USE_CULLING macro
 Culling is an important features in cocos2d-x v3.x, but some developer may not want to use culling when all of the scene exist in one screen. A macro `CC_USE_CULLING` in `CCConfig.h` can be used to enable or disable culling.
 
 ##Bugs fixed in v3.4rc1
