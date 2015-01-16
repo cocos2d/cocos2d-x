@@ -60,6 +60,67 @@ HMODULE GetDebugHelperDll(FARPROC* ppfnMiniDumpWriteDump)
 	return hDll;
 }
 
+PBYTE   GetFuncCallStack(int nLevel/*=0*/, char* pBuf/*=NULL*/, PEXCEPTION_POINTERS pException/*=NULL*/)
+{
+	typedef struct STACK
+	{
+		STACK *	Ebp;
+		PBYTE	Ret_Addr;
+		DWORD	Param[0];
+	} STACK, *PSTACK;
+
+	STACK	Stack = { 0, 0 };
+	PSTACK	Ebp;
+	int nPos = 0;
+
+	if (pException)	//fake frame for exception address
+	{
+		Stack.Ebp = (PSTACK)pException->ContextRecord->Ebp;
+		Stack.Ret_Addr = (PBYTE)pException->ExceptionRecord->ExceptionAddress;
+		Ebp = &Stack;
+	}
+	else
+		Ebp = (PSTACK)&nLevel - 1;	//frame addr of DumpFuncAddress()
+	if (pBuf)
+		*pBuf = 0;
+
+	bool bData = false;
+	// Break trace on wrong stack frame.
+	for (int Ret_Addr_I = 0; Ret_Addr_I <= nLevel;)
+	{
+		if (!IsBadReadPtr(Ebp, sizeof(PSTACK)) && !IsBadCodePtr(FARPROC(Ebp->Ret_Addr)))
+		{
+			if (pBuf)
+			{
+				sprintf(pBuf + nPos, "%p:%i ", Ebp->Ret_Addr, Ret_Addr_I);
+				//nPos += 9;
+				nPos += 11;
+				bData = true;
+			}
+			if (Ret_Addr_I == nLevel)
+				return pBuf ? (PBYTE)pBuf : Ebp->Ret_Addr;
+
+			Ret_Addr_I++;
+			Ebp = Ebp->Ebp;
+		}
+		else
+			break;
+
+	}
+	if (bData)
+		return pBuf ? (PBYTE)pBuf : Ebp->Ret_Addr;
+	return 0;
+}
+//void trans_func(unsigned int u, EXCEPTION_POINTERS* pExp)
+//{
+//	throw *pExp;
+//}
+//
+//void initialize_seh_trans_to_ce()
+//{
+//	_set_se_translator(trans_func);
+//}
+
 void dump_callstack(CONTEXT *context)
 {
 	STACKFRAME sf;
@@ -88,14 +149,14 @@ void dump_callstack(CONTEXT *context)
 		{
 			break;
 		}
-		BYTE symbolBuffer[sizeof(SYMBOL_INFO) + 1024];
-		PSYMBOL_INFO pSymbol = (PSYMBOL_INFO)symbolBuffer;
+		BYTE symbolBuffer[sizeof(SYMBOL_INFOW) + 1024];
+		PSYMBOL_INFOW pSymbol = (PSYMBOL_INFOW)symbolBuffer;
 
 		pSymbol->SizeOfStruct = sizeof(symbolBuffer);
 		pSymbol->MaxNameLen = 1024;
 
 		DWORD64 symDisplacement = 0;
-		if (SymFromAddr(hProcess, sf.AddrPC.Offset, 0, pSymbol))
+		if (SymFromAddrW(hProcess, sf.AddrPC.Offset, 0, pSymbol))
 		{
 			printf("Function : %s\n", pSymbol->Name);
 		}
@@ -126,7 +187,10 @@ LONG WINAPI handleException(struct _EXCEPTION_POINTERS* pExceptionInfo)
 {
 	//StackWalker sw;
 	//sw.ShowCallstack(GetCurrentThread(), pExceptionInfo->ContextRecord);
-	dump_callstack(pExceptionInfo->ContextRecord);
+	//dump_callstack(pExceptionInfo->ContextRecord);
+	char *buf = new char[1024*16];
+	GetFuncCallStack(2, buf, pExceptionInfo);
+	printf("%s", buf);
 	toluafix_test_call_msg();
 	LONG lRetValue = EXCEPTION_CONTINUE_SEARCH;
 	TCHAR szResult[_MAX_PATH + 1024] = {0};
