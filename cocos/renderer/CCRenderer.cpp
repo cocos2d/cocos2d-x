@@ -147,6 +147,7 @@ Renderer::Renderer()
 ,_numberQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
+,_isDepthTestFor2D(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
@@ -492,6 +493,12 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     else
     {
         glDisable(GL_DEPTH_TEST);
+    }
+    
+    if(_isDepthTestFor2D)
+    {
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(true);
     }
     
     //Process Transparent Object
