@@ -126,7 +126,12 @@ Please refer to this document: [ReadMe](../README.md)
 # v3.4rc1
 
 ##Highlights of v3.4rc1
+* C++: added CC_USE_CULLING macro to control if enable auto culling or not
+* FileUtils::fullPathForFilename will return empty string when file can not be found
+* VertexBuffer&IndexBuffer: allow setting usage(GL_STATIC_DRAW or GL_DYNAMIC_DRAW) in create method
+* Renderer: 3D rendering support for 2d objects
 
+##Features in detail
 ###3D rendering support for 2D objects
 This feature enables Sprite, Label, Particle to be rendered in 3D space by adding them as children of Sprite3D or Billboard. You can achieve effects like blob shadow, 3D particle, Visual damage number popups
 ```c++
@@ -135,6 +140,17 @@ auto label = Label::create();
 label->setString("+100");
 billboard->addChild(label);
 ```
+###culling is now an options by CC_USE_CULLING macro
+Culling is an important features in cocos2d-x v3.x, but some developer may not want to use culling when all of the scene exist in one screen. A macro `CC_USE_CULLING` in `CCConfig.h` can be used to enable or disable culling.
+
+##Bugs fixed in v3.4rc1
+* DrawNode: fix random crash because of init opengl buffer wrongly
+* DrawNode: drawPoints() can not set ponit size
+* EventDispatcher: crash if adding/removing event listeners and dispatching event in event callback function
+* GLProgramState: may cause GL_INVALID_VALUE error at start up on Android
+* LUA: 0x80000000 can not be converted by lua_tonumber correctly on some devices
+* PhysicsBody: can't get correct position in the same frame of adding PhysicsBody to PhysicsWorld
+* UI: fix crash when navigation controller is null
 
 # v3.4rc0
 ##Bugs fixed in v3.4rc0
@@ -150,9 +166,6 @@ billboard->addChild(label);
 # v3.4beta0
 
 ## Highlights of v3.4beta0
-
-
-
 ## Features in detail
 
 ### Create Sprite3D asynchronously
