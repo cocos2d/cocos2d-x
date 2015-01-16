@@ -206,6 +206,33 @@ public:
 private:
 };
 
+class DispatchCustomEventCrashUnit : public cocos2d::Ref
+{
+public:
+    virtual ~DispatchCustomEventCrashUnit();
+    
+    CREATE_FUNC(DispatchCustomEventCrashUnit);
+    virtual bool init();
+    
+protected:
+    cocos2d::EventListenerCustom* _listener;
+    
+    void eventCallback(cocos2d::EventCustom *event);
+};
+
+class DispatchCustomEventCrashTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(DispatchCustomEventCrashTest);
+    DispatchCustomEventCrashTest();
+    virtual ~DispatchCustomEventCrashTest();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+};
+
 class DanglingNodePointersTest : public EventDispatcherTestDemo
 {
 public:
