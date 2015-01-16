@@ -130,7 +130,7 @@ bool DrawNode3D::init()
 
 void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(DrawNode3D::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }

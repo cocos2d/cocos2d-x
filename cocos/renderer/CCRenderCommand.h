@@ -53,6 +53,11 @@ public:
         TRIANGLES_COMMAND
     };
 
+    /**
+     * init function, will be called by all the render commands
+     */
+    void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    
     /** Get Render Command Id */
     inline float getGlobalOrder() const { return _globalOrder; }
 
