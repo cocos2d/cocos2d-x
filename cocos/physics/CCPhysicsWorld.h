@@ -208,7 +208,6 @@ protected:
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     
-    bool _delayDirty;
     bool _autoStep;
     PhysicsDebugDraw* _debugDraw;
     int _debugDrawMask;
