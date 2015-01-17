@@ -313,15 +313,7 @@ function handler(obj, method)
 end
 
 function math.newrandomseed()
-    local ok, socket = pcall(function()
-        return require("socket")
-    end)
-
-    if ok then
-        math.randomseed(socket.gettime() * 1000)
-    else
-        math.randomseed(os.time())
-    end
+    math.randomseed(os.time())
     math.random()
     math.random()
     math.random()
@@ -333,14 +325,14 @@ function math.round(value)
     return math.floor(value + 0.5)
 end
 
-local pi_div_180 = math.pi / 180
-function math.angle2radian(angle)
-    return angle * pi_div_180
+local pi1 = math.pi / 180
+function math.angle(degrees)
+    return degrees * pi1
 end
 
-local pi_mul_180 = math.pi * 180
-function math.radian2angle(radian)
-    return radian / pi_mul_180
+local pi2 = 180 / math.pi
+function math.degrees(angle)
+    return angle * pi2
 end
 
 function io.exists(path)

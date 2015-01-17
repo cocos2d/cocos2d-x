@@ -73,6 +73,12 @@ function cc.pToAngleSelf(self)
     return math.atan2(self.y, self.x)
 end
 
+function cc.pOnCircle(angle, radius, origin)
+    local x, y = 0, 0
+    if origin then x, y = origin.x, origin.y end
+    return {x = x + math.cos(angle) * radius, y = y - math.sin(angle) * radius}
+end
+
 function cc.pGetAngle(self,other)
     local a2 = cc.pNormalize(self)
     local b2 = cc.pNormalize(other)
