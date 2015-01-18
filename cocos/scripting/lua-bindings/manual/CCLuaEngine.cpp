@@ -171,7 +171,7 @@ int LuaEngine::executeEvent(int nHandler, const char* pEventName, Ref* pEventSou
 
 bool LuaEngine::handleAssert(const char *msg, const char *cond, const char *file, int line)
 {
-    bool ret = _stack->handleAssert(msg);
+    bool ret = _stack->handleAssert(msg, cond, file, line);
     _stack->clean();
     return ret;
 }
