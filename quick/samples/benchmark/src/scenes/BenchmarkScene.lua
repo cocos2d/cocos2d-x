@@ -1,4 +1,4 @@
-require("framework.toluaEx")
+
 local BenchmarkScene = class("BenchmarkScene", function()
     return display.newScene("BenchmarkScene")
 end)
@@ -53,7 +53,6 @@ function BenchmarkScene:onTouch(event, x, y)
         local p = cc.p(x, y)
         if cc.rectContainsPoint(self.addCoinButtonBoundingBox, p) then
             self.state = "ADD"
-            tolua.fullgc()
         elseif cc.rectContainsPoint(self.removeCoinButtonBoundingBox, p) then
             self.state = "REMOVE"
         else
