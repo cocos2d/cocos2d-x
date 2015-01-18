@@ -264,11 +264,3 @@ TOLUA_API void toluafix_set_call_msg(const char* msg)
     auto stack = engine->getLuaStack();
     stack->setCallMsg(msg);
 }
-
-extern "C" void toluafix_test_call_msg()
-{
-    auto engine = LuaEngine::getInstance();
-    auto stack = engine->getLuaStack();
-	stack->executeString("__G__TRACKBACK__('test exception')");
-    //stack->handleAssert("test error msg!!!");
-}
