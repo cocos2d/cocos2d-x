@@ -731,9 +731,6 @@
     <ClCompile Include="..\Classes\runtime\FileServer.cpp">
       <Filter>Classes\runtime</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerDumperWin.cpp">
-      <Filter>win32</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="player3.ico">
