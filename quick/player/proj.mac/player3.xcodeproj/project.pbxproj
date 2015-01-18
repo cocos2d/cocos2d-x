@@ -192,6 +192,7 @@
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		8704AEC11A6C1B6000B9F882 /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UncaughtExceptionHandler.h; path = ../Classes/UncaughtExceptionHandler.h; sourceTree = "<group>"; };
 		87FD37CD1A469FB700DFFB6F /* ConnectWaitLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectWaitLayer.cpp; sourceTree = "<group>"; };
 		87FD37CE1A469FB700DFFB6F /* ConnectWaitLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectWaitLayer.h; sourceTree = "<group>"; };
 		87FD37CF1A469FB700DFFB6F /* ConsoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleCommand.cpp; sourceTree = "<group>"; };
@@ -405,7 +406,6 @@
 		C06C3795191A1D1E00617BED /* ConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigParser.h; path = ../Classes/ConfigParser.h; sourceTree = "<group>"; };
 		C07828F418B4D72E00BD2287 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
-		DA1225F31A5E6DBC00DA0183 /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
 		DA1225F61A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UncaughtExceptionHandler.mm; sourceTree = "<group>"; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F293B3CE15EB7BE500256477 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -516,7 +516,6 @@
 				F405C6CB19ED14AA005AD31C /* MainMenu.xib */,
 				5023817317EBBE3400990C9B /* Info.plist */,
 				5023817517EBBE3400990C9B /* Prefix.pch */,
-				DA1225F31A5E6DBC00DA0183 /* UncaughtExceptionHandler.h */,
 				DA1225F61A5E6EDF00DA0183 /* UncaughtExceptionHandler.mm */,
 			);
 			path = mac;
@@ -981,6 +980,7 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8704AEC11A6C1B6000B9F882 /* UncaughtExceptionHandler.h */,
 				9F7287FE1A24957700EE0234 /* quick-src */,
 				F293BB7E15EB831F00256477 /* AppDelegate.cpp */,
 				F293BB7F15EB831F00256477 /* AppDelegate.h */,
@@ -1320,7 +1320,7 @@
 				HEADER_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/network $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../../../cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../cocos/scripting/lua-bindings/auto $(SRCROOT)/../../lib/quick-src/ $(SRCROOT)/../../lib/quick-src/extra";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/network $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../../../cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../cocos/scripting/lua-bindings/auto $(SRCROOT)/../../lib/quick-src/ $(SRCROOT)/../../lib/quick-src/extra $(SRCROOT)/../Classes";
 			};
 			name = Debug;
 		};
@@ -1346,7 +1346,7 @@
 				HEADER_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/network $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../../../cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../cocos/scripting/lua-bindings/auto $(SRCROOT)/../../lib/quick-src/ $(SRCROOT)/../../lib/quick-src/extra";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../.. $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/ui $(SRCROOT)/../../../cocos/network $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../extensions $(SRCROOT)/../../../external $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua $(SRCROOT)/../../../cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../cocos/scripting/lua-bindings/auto $(SRCROOT)/../../lib/quick-src/ $(SRCROOT)/../../lib/quick-src/extra $(SRCROOT)/../Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
