@@ -123,7 +123,7 @@ public:
     virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
     virtual int executeEvent(int nHandler, const char* pEventName, Ref* pEventSource = NULL, const char* pEventSourceClassName = NULL);
 
-    virtual bool handleAssert(const char *msg);
+	virtual bool handleAssert(const char *msg, const char *cond, const char *file, int line);
     
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
     virtual int sendEvent(ScriptEvent* message) override;

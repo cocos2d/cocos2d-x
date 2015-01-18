@@ -436,7 +436,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual bool handleAssert(const char *msg) = 0;
+	virtual bool handleAssert(const char *msg, const char *cond, const char *file, int line) = 0;
     
     virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
     virtual bool isCalledFromScript() { return false; };
