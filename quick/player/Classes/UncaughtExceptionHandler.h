@@ -9,8 +9,6 @@
 #ifndef player3_UncaughtExceptionHandler_h
 #define player3_UncaughtExceptionHandler_h
 
-//#import <UIKit/UIKit.h>
-
 void InstallUncaughtExceptionHandler();
 
 #endif

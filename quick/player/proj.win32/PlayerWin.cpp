@@ -35,7 +35,7 @@
 #include "network/CCHTTPRequest.h"
 #include "native/CCNative.h"
 
-#include "PlayerDumper.h"
+#include "UncaughtExceptionHandler.h"
 
 static WNDPROC g_oldWindowProc = NULL;
 void shutDownApp()
@@ -76,7 +76,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
     auto player = player::PlayerWin::getInstance();
-	activePlayerDumper();
+	InstallUncaughtExceptionHandler();
     return player->run();
 }
 

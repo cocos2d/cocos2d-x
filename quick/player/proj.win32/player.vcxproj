@@ -287,6 +287,7 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClInclude Include="..\Classes\runtime\Protos.pb.h" />
     <ClInclude Include="..\Classes\runtime\ResData.h" />
     <ClInclude Include="..\Classes\runtime\Runtime.h" />
+    <ClInclude Include="..\Classes\UncaughtExceptionHandler.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="PlayerEditBoxServiceWin.h" />
     <ClInclude Include="PlayerFileDialogServiceWin.h" />
@@ -457,7 +458,6 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClCompile Include="..\Classes\runtime\Runtime.cpp" />
     <ClCompile Include="..\Classes\runtime\Shine_png.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
-    <ClCompile Include="PlayerDumperWin.cpp" />
     <ClCompile Include="PlayerEditBoxServiceWin.cpp" />
     <ClCompile Include="PlayerFileDialogServiceWin.cpp" />
     <ClCompile Include="PlayerMenuServiceWin.cpp" />
@@ -466,6 +466,7 @@ xcopy /Y /Q "$(TargetPath)" "$(ProjectDir)..\win32\"</Command>
     <ClCompile Include="PlayerWin.cpp" />
     <ClCompile Include="Runtime_win32.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="UncaughtExceptionHandler_win32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj">

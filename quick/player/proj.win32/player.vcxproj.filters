@@ -447,6 +447,9 @@
     <ClInclude Include="..\Classes\runtime\FileServer.h">
       <Filter>Classes\runtime</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\UncaughtExceptionHandler.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">

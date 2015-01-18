@@ -1,6 +1,6 @@
 
 #include "stdafx.h"
-#include "PlayerDumper.h"
+#include "UncaughtExceptionHandler.h"
 #include "base/CCDirector.h"
 
 LONG WINAPI handleException(struct _EXCEPTION_POINTERS* pExceptionInfo)
@@ -13,7 +13,7 @@ LONG WINAPI handleException(struct _EXCEPTION_POINTERS* pExceptionInfo)
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
-void activePlayerDumper()
+void InstallUncaughtExceptionHandler()
 {
 	SetUnhandledExceptionFilter(handleException);
 }
