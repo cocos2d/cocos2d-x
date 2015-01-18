@@ -129,7 +129,7 @@ public:
     virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray);
     virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
 
-    virtual bool handleAssert(const char *msg);
+	virtual bool handleAssert(const char *msg, const char *cond, const char *file, int line);
     virtual void setCallMsg(const char *msg);
     
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
