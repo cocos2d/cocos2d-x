@@ -492,12 +492,19 @@ int LuaStack::executeFunctionByHandler(int nHandler, int numArgs)
 bool LuaStack::handleAssert(const char *msg, const char *cond, const char *file, int line)
 {
     if (_callFromLua == 0) return false;
-    
+    const char *msgErr = msg ? msg : "unknown";
 	lua_pushstring(_state, "__G__TRACKBACK__");
 	lua_rawget(_state, LUA_GLOBALSINDEX);
-	lua_pushstring(_state, msg ? msg : "unknown");
+	lua_pushstring(_state, msgErr);
 	lua_call(_state, 1, 0);
-	lua_pushfstring(_state, "\n==============\nASSERT FAILED ON LUA EXECUTE:\n    File: %s\n    Line: %d\n\n    Expression: %s\n==============", file, line, cond);
+    if (cond && file)
+    {
+        lua_pushfstring(_state, "\n==============\nASSERT FAILED ON LUA EXECUTE:\n    File: %s\n    Line: %d\n\n    Expression: %s\n==============", file, line, cond);
+    }
+    else
+    {
+        lua_pushfstring(_state, "\n==============\nASSERT FAILED ON LUA EXECUTE: %s\n==============", msgErr);
+    }
 	lua_error(_state);
     return true;
 }
