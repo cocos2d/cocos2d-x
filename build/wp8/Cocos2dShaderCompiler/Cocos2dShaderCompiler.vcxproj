@@ -431,6 +431,7 @@
     <ClInclude Include="..\..\..\cocos\renderer\CCTrianglesCommand.h" />
     <ClInclude Include="..\..\..\cocos\renderer\CCVertexIndexBuffer.h" />
     <ClInclude Include="..\..\..\cocos\renderer\CCVertexIndexData.h" />
+    <ClInclude Include="..\..\..\cocos\ui\shaders\UIShaders.h" />
     <ClInclude Include="..\..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\..\external\tinyxml2\tinyxml2.h" />
@@ -640,6 +641,7 @@
     <ClCompile Include="..\..\..\cocos\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\..\..\cocos\renderer\CCVertexIndexBuffer.cpp" />
     <ClCompile Include="..\..\..\cocos\renderer\CCVertexIndexData.cpp" />
+    <ClCompile Include="..\..\..\cocos\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="..\..\..\external\ConvertUTF\ConvertUTF.c">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
