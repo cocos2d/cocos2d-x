@@ -1111,6 +1111,7 @@
         "cocos/renderer/ccShader_PositionColor.vert", 
         "cocos/renderer/ccShader_PositionColorLengthTexture.frag", 
         "cocos/renderer/ccShader_PositionColorLengthTexture.vert", 
+        "cocos/renderer/ccShader_PositionColorPointsize-no-gl_PointSize.vert", 
         "cocos/renderer/ccShader_PositionColorPointsize.vert", 
         "cocos/renderer/ccShader_PositionTexture.frag", 
         "cocos/renderer/ccShader_PositionTexture.vert", 
