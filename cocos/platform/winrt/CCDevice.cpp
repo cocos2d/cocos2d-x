@@ -120,7 +120,7 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 
             case DisplayOrientations::LandscapeFlipped:
  				acc.x = reading->AccelerationY;
-				acc.y = reading->AccelerationX;
+				acc.y = -reading->AccelerationX;
                     break;
               
             default:
@@ -148,8 +148,8 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 break;
 
             case DisplayOrientations::LandscapeFlipped:
-                acc.x = -reading->AccelerationY;
-                acc.y = reading->AccelerationX;
+                acc.x = -reading->AccelerationX;
+                acc.y = -reading->AccelerationY;
                 break;
 
             default:

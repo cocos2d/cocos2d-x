@@ -68,8 +68,11 @@ namespace cocos2d
         void OnPointerMoved(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerReleased(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
 
+        void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
+
         float m_dpi;
         bool m_deviceLost;
+        Windows::Graphics::Display::DisplayOrientations m_orientation;
 
     };
 }
