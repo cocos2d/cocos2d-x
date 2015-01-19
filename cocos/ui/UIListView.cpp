@@ -119,6 +119,60 @@ void ListView::updateInnerContainerSize()
             break;
     }
 }
+    
+void ListView::remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex)
+{
+   switch (_gravity)
+    {
+        case Gravity::LEFT:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
+            break;
+        case Gravity::RIGHT:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
+            break;
+        case Gravity::CENTER_HORIZONTAL:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+            break;
+        default:
+            break;
+    }
+    
+    if (itemIndex == 0)
+    {
+        layoutParameter->setMargin(Margin::ZERO);
+    }
+    else
+    {
+        layoutParameter->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
+    }
+}
+    
+void ListView::remedyHorizontalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex)
+{
+    
+    switch (_gravity)
+    {
+        case Gravity::TOP:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::TOP);
+            break;
+        case Gravity::BOTTOM:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
+            break;
+        case Gravity::CENTER_VERTICAL:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
+            break;
+        default:
+            break;
+    }
+    if (itemIndex == 0)
+    {
+        layoutParameter->setMargin(Margin::ZERO);
+    }
+    else
+    {
+        layoutParameter->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
+    }
+}
 
 void ListView::remedyLayoutParameter(Widget *item)
 {
@@ -126,126 +180,35 @@ void ListView::remedyLayoutParameter(Widget *item)
     {
         return;
     }
+    
+    LinearLayoutParameter* linearLayoutParameter = (LinearLayoutParameter*)(item->getLayoutParameter());
+    bool isLayoutParameterExists = true;
+    if (!linearLayoutParameter)
+    {
+        linearLayoutParameter = LinearLayoutParameter::create();
+        isLayoutParameterExists = false;
+    }
+    ssize_t itemIndex = getIndex(item);
+    
     switch (_direction)
     {
         case Direction::VERTICAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
-            if (!llp)
-            {
-                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
-                switch (_gravity)
-                {
-                    case Gravity::LEFT:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
-                        break;
-                    case Gravity::RIGHT:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
-                        break;
-                    case Gravity::CENTER_HORIZONTAL:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
-                        break;
-                    default:
-                        break;
-                }
-                if (getIndex(item) == 0)
-                {
-                    defaultLp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    defaultLp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
-                }
-                item->setLayoutParameter(defaultLp);
-            }
-            else
-            {
-                if (getIndex(item) == 0)
-                {
-                    llp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    llp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
-                }
-                switch (_gravity)
-                {
-                    case Gravity::LEFT:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
-                        break;
-                    case Gravity::RIGHT:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
-                        break;
-                    case Gravity::CENTER_HORIZONTAL:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            this->remedyVerticalLayoutParameter(linearLayoutParameter, itemIndex);
             break;
         }
         case Direction::HORIZONTAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
-            if (!llp)
-            {
-                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
-                switch (_gravity)
-                {
-                    case Gravity::TOP:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
-                        break;
-                    case Gravity::BOTTOM:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
-                        break;
-                    case Gravity::CENTER_VERTICAL:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
-                        break;
-                    default:
-                        break;
-                }
-                if (getIndex(item) == 0)
-                {
-                    defaultLp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    defaultLp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
-                }
-                item->setLayoutParameter(defaultLp);
-            }
-            else
-            {
-                if (getIndex(item) == 0)
-                {
-                    llp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    llp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
-                }
-                switch (_gravity)
-                {
-                    case Gravity::TOP:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
-                        break;
-                    case Gravity::BOTTOM:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
-                        break;
-                    case Gravity::CENTER_VERTICAL:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            this->remedyHorizontalLayoutParameter(linearLayoutParameter, itemIndex);
             break;
         }
         default:
             break;
     }
-    
+    if (!isLayoutParameterExists)
+    {
+        item->setLayoutParameter(linearLayoutParameter);
+    }
 }
 
 void ListView::pushBackDefaultItem()
