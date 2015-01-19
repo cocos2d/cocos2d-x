@@ -76,8 +76,9 @@ bool ListView::init()
 
 void ListView::setItemModel(Widget *model)
 {
-    if (!model)
+    if (nullptr == model)
     {
+        CCLOG("Can't set a nullptr to item model!");
         return;
     }
     CC_SAFE_RELEASE_NULL(_model);
@@ -122,7 +123,9 @@ void ListView::updateInnerContainerSize()
     
 void ListView::remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex)
 {
-   switch (_gravity)
+    CCASSERT(nullptr != layoutParameter, "Layout parameter can't be nullptr!");
+    
+    switch (_gravity)
     {
         case Gravity::LEFT:
             layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
@@ -137,7 +140,7 @@ void ListView::remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParame
             break;
     }
     
-    if (itemIndex == 0)
+    if (0 == itemIndex)
     {
         layoutParameter->setMargin(Margin::ZERO);
     }
@@ -149,6 +152,7 @@ void ListView::remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParame
     
 void ListView::remedyHorizontalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex)
 {
+    CCASSERT(nullptr != layoutParameter, "Layout parameter can't be nullptr!");
     
     switch (_gravity)
     {
@@ -164,7 +168,7 @@ void ListView::remedyHorizontalLayoutParameter(LinearLayoutParameter* layoutPara
         default:
             break;
     }
-    if (itemIndex == 0)
+    if (0 == itemIndex)
     {
         layoutParameter->setMargin(Margin::ZERO);
     }
@@ -176,10 +180,7 @@ void ListView::remedyHorizontalLayoutParameter(LinearLayoutParameter* layoutPara
 
 void ListView::remedyLayoutParameter(Widget *item)
 {
-    if (!item)
-    {
-        return;
-    }
+    CCASSERT(nullptr != item, "ListView Item can't be nullptr!");
     
     LinearLayoutParameter* linearLayoutParameter = (LinearLayoutParameter*)(item->getLayoutParameter());
     bool isLayoutParameterExists = true;
@@ -213,7 +214,7 @@ void ListView::remedyLayoutParameter(Widget *item)
 
 void ListView::pushBackDefaultItem()
 {
-    if (!_model)
+    if (nullptr == _model)
     {
         return;
     }
@@ -225,7 +226,7 @@ void ListView::pushBackDefaultItem()
 
 void ListView::insertDefaultItem(ssize_t index)
 {
-    if (!_model)
+    if (nullptr == _model)
     {
         return;
     }
@@ -252,7 +253,7 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     ScrollView::addChild(child, zOrder, tag);
 
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget)
+    if (nullptr != widget)
     {
         _items.pushBack(widget);
     }
@@ -273,7 +274,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     ScrollView::addChild(child, zOrder, name);
     
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget)
+    if (nullptr != widget)
     {
         _items.pushBack(widget);
     }
@@ -282,7 +283,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
 void ListView::removeChild(cocos2d::Node *child, bool cleaup)
 {
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget)
+    if (nullptr != widget)
     {
         _items.eraseObject(widget);
     }
@@ -313,7 +314,7 @@ void ListView::insertCustomItem(Widget* item, ssize_t index)
 void ListView::removeItem(ssize_t index)
 {
     Widget* item = getItem(index);
-    if (!item)
+    if (nullptr == item)
     {
         return;
     }
@@ -348,7 +349,7 @@ Vector<Widget*>& ListView::getItems()
 
 ssize_t ListView::getIndex(Widget *item) const
 {
-    if (!item)
+    if (nullptr == item)
     {
         return -1;
     }
