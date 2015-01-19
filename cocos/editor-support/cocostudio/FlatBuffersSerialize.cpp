@@ -151,7 +151,6 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
     }
     
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
-    FileUtils::getInstance()->purgeCachedEntries();
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
@@ -1125,7 +1124,6 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
     }
     
     std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
-    FileUtils::getInstance()->purgeCachedEntries();
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
