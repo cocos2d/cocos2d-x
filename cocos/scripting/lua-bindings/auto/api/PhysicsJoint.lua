@@ -74,10 +74,4 @@
 -- @param self
 -- @return int#int ret (return value: int)
         
---------------------------------
---  Distory the joint
--- @function [parent=#PhysicsJoint] destroy 
--- @param self
--- @param #cc.PhysicsJoint joint
-        
 return nil

@@ -39,7 +39,8 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
+    void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
+    CC_DEPRECATED_ATTRIBUTE void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
     void execute();
 

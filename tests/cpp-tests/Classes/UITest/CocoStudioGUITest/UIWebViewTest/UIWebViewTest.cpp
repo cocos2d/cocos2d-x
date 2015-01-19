@@ -71,7 +71,10 @@ bool WebViewTest::init()
         resetBtn->setPosition(Vec2(winSize/2) + Vec2(50, _webView->getContentSize().height/2 +
                                             resetBtn->getContentSize().height/2 + 10));
         resetBtn->addClickEventListener([=](Ref*){
-            _webView->loadURL(std::string("http://") + urlTextField->getString());
+            if (urlTextField->getString().size() != 0)
+            {
+                _webView->loadURL(std::string("http://") + urlTextField->getString());
+            }
         });
         this->addChild(resetBtn);
         

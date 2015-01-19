@@ -12,6 +12,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointRotaryLimit] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointRotaryLimit] setMin 
 -- @param self
 -- @param #float min

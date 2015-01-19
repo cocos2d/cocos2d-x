@@ -24,13 +24,6 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- set the PhysicsBody that let the sprite effect with physics<br>
--- note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
--- @function [parent=#Node] setPhysicsBody 
--- @param self
--- @param #cc.PhysicsBody body
-        
---------------------------------
 -- Gets the description string. It makes debugging easier.<br>
 -- return A string<br>
 -- js NA<br>
@@ -173,11 +166,6 @@
 -- @function [parent=#Node] setonEnterTransitionDidFinishCallback 
 -- @param self
 -- @param #function callback
-        
---------------------------------
--- remove this node from physics world. it will remove all the physics bodies in it's children too.
--- @function [parent=#Node] removeFromPhysicsWorld 
--- @param self
         
 --------------------------------
 -- removes all components
@@ -372,12 +360,6 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- get the PhysicsBody the sprite have
--- @function [parent=#Node] getPhysicsBody 
--- @param self
--- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
 -- @overload self, float, float         

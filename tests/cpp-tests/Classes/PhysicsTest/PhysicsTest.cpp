@@ -434,7 +434,6 @@ void PhysicsDemo::onTouchEnded(Touch* touch, Event* event)
         this->removeChild(it->second);
         _mouses.erase(it);
     }
-    
 }
 
 void PhysicsDemoLogoSmash::onEnter()
@@ -716,8 +715,6 @@ void PhysicsDemoJoints::onEnter()
     listener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    //_scene->getPhysicsWorld()->setGravity(Point::ZERO);
-    
     float width = (VisibleRect::getVisibleRect().size.width - 10) / 4;
     float height = (VisibleRect::getVisibleRect().size.height - 50) / 4;
     
@@ -734,7 +731,7 @@ void PhysicsDemoJoints::onEnter()
         {
             Vec2 offset(VisibleRect::leftBottom().x + 5 + j * width + width/2, VisibleRect::leftBottom().y + 50 + i * height + height/2);
             box->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, offset));
-            
+
             switch (i*4 + j)
             {
                 case 0:
@@ -768,7 +765,6 @@ void PhysicsDemoJoints::onEnter()
                 }
                 case 2:
                 {
-                    
                     auto sp1 = makeBall(offset - Vec2(30, 0), 10);
                     sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
                     auto sp2 = makeBox(offset + Vec2(30, 0), Size(30, 10));
@@ -988,6 +984,9 @@ void PhysicsDemoPump::onEnter()
     body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Vec2(150, -80), VisibleRect::rightTop() + Vec2(-100, -150), staticMaterial, 2.0f));
     
     body->setCategoryBitmask(0x01);
+    node->setPhysicsBody(body);
+    node->setPosition(Vec2::ZERO);
+    this->addChild(node);
     
     // balls
     for (int i = 0; i < 6; ++i)
@@ -997,9 +996,8 @@ void PhysicsDemoPump::onEnter()
         addChild(ball);
     }
     
-    node->setPhysicsBody(body);
-    this->addChild(node);
-    
+    auto _world = _scene->getPhysicsWorld();
+
     Vec2 vec[4] =
     {
         VisibleRect::leftTop() + Vec2(102, -148),
@@ -1007,30 +1005,6 @@ void PhysicsDemoPump::onEnter()
         VisibleRect::leftBottom() + Vec2(148, 20),
         VisibleRect::leftBottom() + Vec2(102, 20)
     };
-    
-    auto _world = _scene->getPhysicsWorld();
-    
-    // small gear
-    auto sgear = Node::create();
-    auto sgearB = PhysicsBody::createCircle(44);
-    sgear->setPhysicsBody(sgearB);
-    sgear->setPosition(VisibleRect::leftBottom() + Vec2(125, 0));
-    this->addChild(sgear);
-    sgearB->setCategoryBitmask(0x04);
-    sgearB->setCollisionBitmask(0x04);
-    sgearB->setTag(1);
-    _world->addJoint(PhysicsJointPin::construct(body, sgearB, sgearB->getPosition()));
-    
-    
-    // big gear
-    auto bgear = Node::create();
-    auto bgearB = PhysicsBody::createCircle(100);
-    bgear->setPhysicsBody(bgearB);
-    bgear->setPosition(VisibleRect::leftBottom() + Vec2(275, 0));
-    this->addChild(bgear);
-    bgearB->setCategoryBitmask(0x04);
-    _world->addJoint(PhysicsJointPin::construct(body, bgearB, bgearB->getPosition()));
-    
     
     // pump
     auto pump = Node::create();
@@ -1041,8 +1015,31 @@ void PhysicsDemoPump::onEnter()
     this->addChild(pump);
     pumpB->setCategoryBitmask(0x02);
     pumpB->setGravityEnable(false);
+    
+    // small gear
+    auto sgear = Node::create();
+    auto sgearB = PhysicsBody::createCircle(44);
+    sgear->setPhysicsBody(sgearB);
+    sgear->setPosition(VisibleRect::leftBottom() + Vec2(125, 0));
+    this->addChild(sgear);
+    sgearB->setCategoryBitmask(0x04);
+    sgearB->setCollisionBitmask(0x04);
+    sgearB->setTag(1);
+
+    _world->addJoint(PhysicsJointPin::construct(body, sgearB, sgear->getPosition()));
     _world->addJoint(PhysicsJointDistance::construct(pumpB, sgearB, Vec2(0, 0), Vec2(0, -44)));
     
+    // big gear
+    auto bgear = Node::create();
+    auto bgearB = PhysicsBody::createCircle(100);
+    bgear->setPhysicsBody(bgearB);
+    bgear->setPosition(VisibleRect::leftBottom() + Vec2(275, 0));
+    this->addChild(bgear);
+    bgearB->setCategoryBitmask(0x04);
+
+    _world->addJoint(PhysicsJointPin::construct(bgearB, body, bgear->getPosition()));
+    _world->addJoint(PhysicsJointGear::construct(sgearB, bgearB, -M_PI_2, -2.0f));
+
     // plugger
     Vec2 seg[] = {VisibleRect::leftTop() + Vec2(75, -120), VisibleRect::leftBottom() + Vec2(75, -100)};
     Vec2 segCenter = (seg[1] + seg[0])/2;
@@ -1059,7 +1056,7 @@ void PhysicsDemoPump::onEnter()
     pluggerB->setCategoryBitmask(0x02);
     sgearB->setCollisionBitmask(0x04 | 0x01);
     _world->addJoint(PhysicsJointPin::construct(body, pluggerB, VisibleRect::leftBottom() + Vec2(75, -90)));
-    _world->addJoint(PhysicsJointDistance::construct(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Vec2(75, 0)), Vec2(44, 0)));
+    _world->addJoint(PhysicsJointDistance::construct(pluggerB, sgearB, Vec2::ZERO, Vec2(44, 0)));
 }
 
 void PhysicsDemoPump::update(float delta)

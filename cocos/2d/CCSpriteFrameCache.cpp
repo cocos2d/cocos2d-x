@@ -428,4 +428,3 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
 }
 
 NS_CC_END
-

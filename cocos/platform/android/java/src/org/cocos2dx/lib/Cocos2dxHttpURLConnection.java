@@ -184,14 +184,14 @@ public class Cocos2dxHttpURLConnection
             return null;
         }
 
-        String header = null;
+        String header = "";
 
         for (Entry<String, List<String>> entry: headers.entrySet()) {
             String key = entry.getKey();
             if (null == key) {
-                header += listToString(entry.getValue(), ",");
+                header += listToString(entry.getValue(), ",") + "\n";
             } else {
-                header += key + ":" + listToString(entry.getValue(), ",");
+                header += key + ":" + listToString(entry.getValue(), ",") + "\n";
             }
         }
 

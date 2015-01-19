@@ -761,7 +761,7 @@ bool UIButtonFlipTest::init()
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("Button X Flipped", "fonts/Marker Felt.ttf",20);
-        _displayValueLabel->setNormalizedPosition(Vec2(0.3, 0.7));
+        _displayValueLabel->setNormalizedPosition(Vec2(0.3f, 0.7f));
         _uiLayer->addChild(_displayValueLabel);
         
         
@@ -788,7 +788,7 @@ bool UIButtonFlipTest::init()
         _uiLayer->addChild(button2);
         
         auto titleLabel = Text::create("Button Y flipped", "Arial", 20);
-        titleLabel->setNormalizedPosition(Vec2(0.8, 0.7));
+        titleLabel->setNormalizedPosition(Vec2(0.8f, 0.7f));
         this->addChild(titleLabel);
         
         return true;

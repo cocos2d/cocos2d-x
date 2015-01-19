@@ -1,25 +1,45 @@
 # cocos2d-x v3.4 Release Notes #
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+- [Misc Information](#misc-information)
+- [Requirements](#requirements)
+  - [Runtime Requirements](#runtime-requirements)
+  - [Compiler Requirements](#compiler-requirements)
+  - [How to run tests](#how-to-run-tests)
+    - [Mac OSX & iOS](#mac-osx-&-ios)
+    - [Android](#android)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [How to start a new game](#how-to-start-a-new-game)
+- [v3.4rc1](#v34rc1)
+  - [Highlights of v3.4rc1](#highlights-of-v34rc1)
+  - [Features in detail](#features-in-detail)
+    - [3D rendering support for 2D objects](#3d-rendering-support-for-2d-objects)
+    - [Culling is now an options by CC_USE_CULLING macro](#culling-is-now-an-options-by-cc_use_culling-macro)
+  - [Bugs fixed in v3.4rc1](#bugs-fixed-in-v34rc1)
+- [v3.4rc0](#v34rc0)
+  - [Bugs fixed in v3.4rc0](#bugs-fixed-in-v34rc0)
+- [v3.4beta0](#v34beta0)
+  - [Highlights of v3.4beta0](#highlights-of-v34beta0)
+  - [Features in detail](#features-in-detail-1)
+    - [Create Sprite3D asynchronously](#create-sprite3d-asynchronously)
+    - [Frustum culling](#frustum-culling)
+    - [Use less resources to create  ui::CheckBox and ui::Slider](#use-less-resources-to-create--uicheckbox-and-uislider)
+    - [Custom Allocators](#custom-allocators)
+      - [Default Allocator](#default-allocator)
+      - [General Allocator](#general-allocator)
+      - [Fixed Block Allocator](#fixed-block-allocator)
+      - [Pool Allocator](#pool-allocator)
+    - [Implementing Custom Allocators for Objects](#implementing-custom-allocators-for-objects)
+    - [Console (allocator command, tags, counts etc)](#console-allocator-command-tags-counts-etc)
 
-- [cocos2d-x v3.4 Release Notes](#)
-- [Misc Information](#)
-- [Requirements](#)
-	- [Runtime Requirements](#)
-	- [Compiler Requirements](#)
-	- [How to run tests](#)
-		- [Mac OSX & iOS](#)
-		- [Android](#)
-		- [Windows](#)
-		- [Linux](#)
-	- [How to start a new game](#)
-- [v3.4beta0](#)
-	- [Highlights of v3.4beta0](#)
-	- [Features in detail](#)
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4beta0/CHANGELOG
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4rc0/CHANGELOG
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -60,7 +80,7 @@ You can run the samples...
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
     $ adb install cocos2d-x/tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-    
+
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
 **Using Eclipse:**
@@ -69,7 +89,7 @@ Then click item on Android device to run tests. Available value of `-p` is the A
     $ ./setup.py
     $ cd build
     $ ./android-build.py cpp-empty-test -p 10
-    
+
 Then
 
 * Import cocos2d-x Android project into Eclipse, the path used to import is `cocos/2d/platform/android`
@@ -88,30 +108,66 @@ Then
     $ cd cocos2d-x/build
     $ ./install-deps-linux.sh
     $ cd ../..
-    
+
 Then
 
     $ mkdir build
     $ cd build
     $ cmake ../cocos2d-x
     $ make -j4
-    
+
 Run
 
     $ cd bin/cpp-empty-test
     $ ./cpp-empty-test
-    
+
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
 
+# v3.4rc1
+
+##Highlights of v3.4rc1
+* C++: added CC_USE_CULLING macro to control if enable auto culling or not
+* FileUtils::fullPathForFilename will return empty string when file can not be found
+* VertexBuffer&IndexBuffer: allow setting usage(GL_STATIC_DRAW or GL_DYNAMIC_DRAW) in create method
+* Renderer: 3D rendering support for 2d objects
+
+##Features in detail
+###3D rendering support for 2D objects
+This feature enables Sprite, Label, Particle to be rendered in 3D space by adding them as children of Sprite3D or Billboard. You can achieve effects like blob shadow, 3D particle, Visual damage number popups
+```c++
+auto billboard = Billboard::create();
+auto label = Label::create();
+label->setString("+100");
+billboard->addChild(label);
+```
+###Culling is now an options by CC_USE_CULLING macro
+Culling is an important features in cocos2d-x v3.x, but some developer may not want to use culling when all of the scene exist in one screen. A macro `CC_USE_CULLING` in `CCConfig.h` can be used to enable or disable culling.
+
+##Bugs fixed in v3.4rc1
+* DrawNode: fix random crash because of init opengl buffer wrongly
+* DrawNode: drawPoints() can not set ponit size
+* EventDispatcher: crash if adding/removing event listeners and dispatching event in event callback function
+* GLProgramState: may cause GL_INVALID_VALUE error at start up on Android
+* LUA: 0x80000000 can not be converted by lua_tonumber correctly on some devices
+* PhysicsBody: can't get correct position in the same frame of adding PhysicsBody to PhysicsWorld
+* UI: fix crash when navigation controller is null
+
+# v3.4rc0
+##Bugs fixed in v3.4rc0
+* FileUtils::GetData() can not get data on windows
+* FileUtils::GetData() memory leaks when file size is 0 on windows
+* Crash if GLProgram log compile or link error info on windows
+* Assert error exist because of outdated uniforms and attributes in GLProgramState when app come to foreground on android
+* GL_INVALID_OPERATION error because VAO and VBO is not reset when app come to foreground on android
+* Update Luajit to v2.0.3, it fix some crash problems on windows
+* Update libcurl to new version v7.39.0
+* More bugs fixed
 
 # v3.4beta0
 
 ## Highlights of v3.4beta0
-
-
-
 ## Features in detail
 
 ### Create Sprite3D asynchronously
@@ -150,7 +206,7 @@ Note that when you can make sure that all the stuff is inside the frustum you ca
 
 For more infomation please reffer to the cpptests/CameraTest
 
-### Use less resources to create  ui::CheckBox and ui::Slider 
+### Use less resources to create  ui::CheckBox and ui::Slider
 
 Now we could use less resources to create  ui::CheckBox and ui::Slider.
 
@@ -212,16 +268,16 @@ Fixed block allocators provide a memory pool of blocks of fixed size. They are e
 
 #### Pool Allocator
 
-Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size. 
+Implements a custom fixed block allocator for a specific type. You can override local new/delete for types that are classes or structs using __CC_USE_ALLOCATOR_POOL(pool)__. Additionally, these allocators are configurable in terms of the initial size.
 
 ### Implementing Custom Allocators for Objects
-Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class. 
+Simply add a static instance of the pool allocator to your class, and use the __CC_USE_ALLOCATOR_POOL__ macro to implement operators __new__ and __delete__ for your class.
 
 ```c++
     class SomeClass
     {
     public:
-        
+
         cocos2d::allocator::AllocatorStrategyPool<SomeClass> _allocator;
         CC_USE_ALLOCATOR_POOL(SomeClass, _allocator);
     };
