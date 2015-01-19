@@ -1311,7 +1311,7 @@ function display.newTTFLabel(params)
     end
 
     if label then
-        label:setColor(color)
+        label:setTextColor(color)
         if x and y then label:setPosition(x, y) end
     end
 
