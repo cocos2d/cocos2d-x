@@ -92,7 +92,7 @@ std::string& replaceAll(std::string& str, const std::string& old_value, const st
 
 const char* getRuntimeVersion()
 {
-    return "1.8";
+    return "1.9";
 }
 
 //////////////////////// Loader ////////////////////
@@ -116,7 +116,7 @@ RuntimeEngine::RuntimeEngine()
 , _eventTrackingEnable(false)
 , _launchEvent("empty")
 {
-    
+
 }
 
 RuntimeEngine* RuntimeEngine::getInstance()
@@ -136,14 +136,14 @@ void RuntimeEngine::setupRuntime()
     // 1. get project type fron config.json
     // 2. init Lua / Js runtime
     //
-    
+
     updateConfigParser();
     auto entryFile = ConfigParser::getInstance()->getEntryFile();
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     ConfigParser::getInstance()->readConfig();
     entryFile = ConfigParser::getInstance()->getEntryFile();
 #endif
-    
+
     // Lua
     if ((entryFile.rfind(".lua") != std::string::npos) ||
         (entryFile.rfind(".luac") != std::string::npos))
@@ -185,7 +185,7 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
-    
+
     if (workPath.empty())
     {
         extern std::string getCurAppPath();
@@ -202,10 +202,10 @@ void RuntimeEngine::setProjectPath(const std::string &workPath)
     {
         g_projectPath = workPath;
     }
-    
+
     // add project's root directory to search path
     searchPathArray.insert(searchPathArray.begin(), g_projectPath);
-    
+
     // add writable path to search path
     searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
@@ -220,7 +220,7 @@ void RuntimeEngine::startScript(const std::string &args)
     {
         _runtime->startScript(args);
     }
-    
+
     trackLaunchEvent();
 }
 
@@ -229,7 +229,7 @@ void RuntimeEngine::start()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     _project.setDebuggerType(kCCRuntimeDebuggerCodeIDE);
 #endif
-    
+
     // set search path
     string path = FileUtils::getInstance()->fullPathForFilename(_project.getScriptFileRealPath().c_str());
     size_t pos;
@@ -244,7 +244,7 @@ void RuntimeEngine::start()
         workdir = path.substr(0, p);
         FileUtils::getInstance()->addSearchPath(workdir);
     }
-    
+
     // update search pathes
     FileUtils::getInstance()->addSearchPath(_project.getProjectDir());
     auto &customizedPathes = _project.getSearchPath();
@@ -252,7 +252,7 @@ void RuntimeEngine::start()
     {
         FileUtils::getInstance()->addSearchPath(path);
     }
-    
+
     //
     if (_project.getDebuggerType() == kCCRuntimeDebuggerNone)
     {
@@ -305,7 +305,7 @@ bool RuntimeEngine::startNetwork()
 {
     ConsoleCommand::getShareInstance()->init();
     showUI();
-    
+
     return true;
 }
 
@@ -333,9 +333,9 @@ void RuntimeEngine::trackEvent(const std::string &eventName)
     {
         return ;
     }
-    
+
 #if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
-    
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     const char *platform = "win";
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -343,7 +343,7 @@ void RuntimeEngine::trackEvent(const std::string &eventName)
 #else
     const char *platform = "UNKNOWN";
 #endif
-    
+
     char cidBuf[64] = {0};
     auto guid = player::DeviceEx::getInstance()->getUserGUID();
     snprintf(cidBuf, sizeof(cidBuf), "%x", XXH32(guid.c_str(), (int)guid.length(), 0));
@@ -354,15 +354,15 @@ void RuntimeEngine::trackEvent(const std::string &eventName)
     request->addPOSTValue("tid", "UA-58200293-1");
     request->addPOSTValue("cid", cidBuf);
     request->addPOSTValue("t", "event");
-    
+
     request->addPOSTValue("an", "simulator");
     request->addPOSTValue("av", cocos2dVersion());
-    
+
     request->addPOSTValue("ec", platform);
     request->addPOSTValue("ea", eventName.c_str());
-    
+
     request->start();
-    
+
 #endif // ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
 }
 

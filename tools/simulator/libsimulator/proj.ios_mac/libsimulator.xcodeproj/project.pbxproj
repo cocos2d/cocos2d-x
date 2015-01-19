@@ -175,8 +175,8 @@
 		9F2F21BB1A635F1C006B8BF1 /* RuntimeProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeProtocol.cpp; sourceTree = "<group>"; };
 		9F2F21BC1A635F1C006B8BF1 /* RuntimeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeProtocol.h; sourceTree = "<group>"; };
 		9F2F21C61A635FFF006B8BF1 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = "<group>"; };
-		9F7214351A5C271F00DAED06 /* liblibsimulator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibsimulator.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F7214851A5C28BA00DAED06 /* liblibsimulator_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibsimulator_iOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F7214351A5C271F00DAED06 /* libsimulator Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libsimulator Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F7214851A5C28BA00DAED06 /* libsimulator iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libsimulator iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB638201A635BA300AAEC43 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		9FB638231A635BA300AAEC43 /* extension_set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extension_set.cc; sourceTree = "<group>"; };
 		9FB638241A635BA300AAEC43 /* extension_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extension_set.h; sourceTree = "<group>"; };
@@ -315,8 +315,8 @@
 		9F7214361A5C271F00DAED06 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9F7214351A5C271F00DAED06 /* liblibsimulator.a */,
-				9F7214851A5C28BA00DAED06 /* liblibsimulator_iOS.a */,
+				9F7214351A5C271F00DAED06 /* libsimulator Mac.a */,
+				9F7214851A5C28BA00DAED06 /* libsimulator iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -609,9 +609,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9F7214341A5C271F00DAED06 /* libsimulator */ = {
+		9F7214341A5C271F00DAED06 /* libsimulator Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9F7214401A5C271F00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator" */;
+			buildConfigurationList = 9F7214401A5C271F00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator Mac" */;
 			buildPhases = (
 				9F7214311A5C271F00DAED06 /* Sources */,
 				9F7214321A5C271F00DAED06 /* Frameworks */,
@@ -621,14 +621,14 @@
 			);
 			dependencies = (
 			);
-			name = libsimulator;
-			productName = libsimulator;
-			productReference = 9F7214351A5C271F00DAED06 /* liblibsimulator.a */;
+			name = "libsimulator Mac";
+			productName = "libsimulator Mac";
+			productReference = 9F7214351A5C271F00DAED06 /* libsimulator Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		9F7214841A5C28BA00DAED06 /* libsimulator_iOS */ = {
+		9F7214841A5C28BA00DAED06 /* libsimulator iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9F7214961A5C28BA00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator_iOS" */;
+			buildConfigurationList = 9F7214961A5C28BA00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator iOS" */;
 			buildPhases = (
 				9F7214811A5C28BA00DAED06 /* Sources */,
 				9F7214821A5C28BA00DAED06 /* Frameworks */,
@@ -638,9 +638,9 @@
 			);
 			dependencies = (
 			);
-			name = libsimulator_iOS;
-			productName = libsimulator_iOS;
-			productReference = 9F7214851A5C28BA00DAED06 /* liblibsimulator_iOS.a */;
+			name = "libsimulator iOS";
+			productName = "libsimulator iOS";
+			productReference = 9F7214851A5C28BA00DAED06 /* libsimulator iOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -672,8 +672,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9F7214341A5C271F00DAED06 /* libsimulator */,
-				9F7214841A5C28BA00DAED06 /* libsimulator_iOS */,
+				9F7214341A5C271F00DAED06 /* libsimulator Mac */,
+				9F7214841A5C28BA00DAED06 /* libsimulator iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -868,7 +868,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -896,7 +896,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -923,6 +923,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -947,6 +948,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -980,7 +982,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9F7214401A5C271F00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator" */ = {
+		9F7214401A5C271F00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F7214411A5C271F00DAED06 /* Debug */,
@@ -989,7 +991,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9F7214961A5C28BA00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator_iOS" */ = {
+		9F7214961A5C28BA00DAED06 /* Build configuration list for PBXNativeTarget "libsimulator iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F7214971A5C28BA00DAED06 /* Debug */,

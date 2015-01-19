@@ -65,6 +65,12 @@
     <Filter Include="libcoco2d\base\allocator">
       <UniqueIdentifier>{50bc6348-a253-45c5-a2f2-160932464451}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libcoco2d\ui">
+      <UniqueIdentifier>{1db52ff3-68ce-4833-9dcc-2b9397b439e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libcoco2d\ui\shaders">
+      <UniqueIdentifier>{62560478-8dbb-41e1-be0b-fdfed8d1b0c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -654,6 +660,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\CCAsyncTaskPool.cpp">
       <Filter>libcoco2d\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\ui\shaders\UIShaders.cpp">
+      <Filter>libcoco2d\ui\shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1319,6 +1328,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\CCAsyncTaskPool.h">
       <Filter>libcoco2d\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\ui\shaders\UIShaders.h">
+      <Filter>libcoco2d\ui\shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
