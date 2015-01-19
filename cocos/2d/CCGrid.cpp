@@ -318,7 +318,10 @@ void Grid3D::beforeBlit()
     if(_needDepthTestForBlit)
     {
         _oldDepthTestValue = glIsEnabled(GL_DEPTH_TEST);
-        _oldDepthWriteValue = glIsEnabled(GL_DEPTH_WRITEMASK);
+        GLboolean depthWriteMask;
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriteMask);
+        _oldDepthWriteValue = depthWriteMask;
+        CHECK_GL_ERROR_DEBUG();
         glEnable(GL_DEPTH_TEST);
         glDepthMask(true);
     }

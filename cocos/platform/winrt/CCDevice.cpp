@@ -169,9 +169,15 @@ void Device::setAccelerometerInterval(float interval)
 {
     if (sAccelerometer)
     {
-        int minInterval = sAccelerometer->MinimumReportInterval;
-	    int reqInterval = (int) interval;
-        sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        try {
+            int minInterval = sAccelerometer->MinimumReportInterval;
+            int reqInterval = (int) interval;
+            sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        }
+        catch (Platform::COMException^)
+        {
+            CCLOG("Device::setAccelerometerInterval not supported on this device");
+        }
     }
     else
     {
