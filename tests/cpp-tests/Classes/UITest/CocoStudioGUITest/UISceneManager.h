@@ -33,6 +33,7 @@ enum
 {
     kUIButtonTest = 0,
     kUIButtonTest_Scale9,
+    kUIButtonTest_Scale9_State_Change,
     kUIButtonTest_PressedAction,
     kUIButtonTest_Title,
     kUIButtonTest_RemoveSelf,
@@ -51,6 +52,7 @@ enum
     kUICheckBoxDefaultBehaviorTest,
     kUISliderTest,
     kUISliderTest_Scale9,
+    kUISliderTest_Scale9_State_Change,
     kUISliderNormalDefaultTest,
     kUISliderDisabledDefaultTest,
     kUIImageViewTest,
@@ -61,6 +63,7 @@ enum
     
     kUILoadingBarTest_Left,
     kUILoadingBarTest_Right,
+    kUILoadingBarTest_Scale9_State_Change,
     kUILoadingBarTest_Left_Scale9,
     kUILoadingBarTest_Right_Scale9,
     kUITextAtlasTest,

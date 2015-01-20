@@ -40,6 +40,7 @@ IMPLEMENT_CLASS_GUI_INFO(Slider)
 Slider::Slider():
 _barRenderer(nullptr),
 _progressBarRenderer(nullptr),
+_barTextureSize(Size::ZERO),
 _progressBarTextureSize(Size::ZERO),
 _slidBallNormalRenderer(nullptr),
 _slidBallPressedRenderer(nullptr),
@@ -168,6 +169,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
     updateContentSizeWithTextureSize(_barRenderer->getContentSize());
+    _barTextureSize = _barRenderer->getContentSize();
 }
 
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
@@ -219,6 +221,7 @@ void Slider::setScale9Enabled(bool able)
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
     setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
     _barRendererAdaptDirty = true;
+    _progressBarRendererDirty = true;
 }
     
 bool Slider::isScale9Enabled()const
@@ -509,10 +512,11 @@ void Slider::barRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             _barRenderer->setPreferredSize(_contentSize);
+            _barRenderer->setScale(1.0f);
         }
         else
         {
-            Size btextureSize = _barRenderer->getContentSize();
+            Size btextureSize = _barTextureSize;
             if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
             {
                 _barRenderer->setScale(1.0f);

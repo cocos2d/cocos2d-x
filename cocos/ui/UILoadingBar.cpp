@@ -335,6 +335,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             setScale9Scale();
+            _barRenderer->setScale(1.0f);
         }
         else
         {
