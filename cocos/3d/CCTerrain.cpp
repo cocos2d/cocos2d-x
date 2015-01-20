@@ -59,7 +59,8 @@ void main()\
     gl_FragColor = color*lightFactor;\
     }\
 }";
-Terrain * cocos2d::Terrain::create(TerrainData &parameter)
+NS_CC_BEGIN
+Terrain * Terrain::create(TerrainData &parameter)
 {
     Terrain * obj = new (std::nothrow)Terrain();
     obj->_terrainData = parameter;
@@ -98,7 +99,7 @@ Terrain * cocos2d::Terrain::create(TerrainData &parameter)
     return obj;
 }
 
-bool cocos2d::Terrain::init()
+bool Terrain::init()
 {
     _lodDistance[0]=96;
     _lodDistance[1]=288;
@@ -111,7 +112,7 @@ bool cocos2d::Terrain::init()
     return true;
 }
 
-void cocos2d::Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
+void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(getGlobalZOrder());
     _customCommand.func = CC_CALLBACK_0(Terrain::onDraw, this, transform, flags);
@@ -119,7 +120,7 @@ void cocos2d::Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tr
     renderer->addCommand(&_customCommand);
 }
 
-void cocos2d::Terrain::onDraw(const Mat4 &transform, uint32_t flags)
+void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 {
     auto glProgram = getGLProgram();
     glProgram->use();
@@ -128,12 +129,12 @@ void cocos2d::Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     glDisable(GL_BLEND);
     if(!_alphaMap)
     {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,textures[0]->getName());
-    auto texture_location = glGetUniformLocation(glProgram->getProgram(),"u_texture0");
-    glUniform1i(texture_location,0);
-    auto alpha_location = glGetUniformLocation(glProgram->getProgram(),"u_has_alpha");
-    glUniform1i(alpha_location,0);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D,textures[0]->getName());
+        auto texture_location = glGetUniformLocation(glProgram->getProgram(),"u_texture0");
+        glUniform1i(texture_location,0);
+        auto alpha_location = glGetUniformLocation(glProgram->getProgram(),"u_has_alpha");
+        glUniform1i(alpha_location,0);
     }else
     {
         for(int i =0;i<4;i++)
@@ -171,9 +172,10 @@ void cocos2d::Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     quad->draw();
     quad->resetNeedDraw(true);//reset it 
     glActiveTexture(GL_TEXTURE0);
+    glEnable(GL_BLEND);
 }
 
-void cocos2d::Terrain::initHeightMap(const char * heightMap)
+void Terrain::initHeightMap(const char * heightMap)
 {
     auto image = new Image();
     image->initWithImageFile(heightMap);
@@ -211,12 +213,12 @@ void cocos2d::Terrain::initHeightMap(const char * heightMap)
     quad = new QuadTree(0,0,imageWidth,imageHeight,this);
 }
 
-cocos2d::Terrain::Terrain()
+Terrain::Terrain()
 {
     _alphaMap = nullptr;
 }
 
-void cocos2d::Terrain::setChunksLOD(Vec3 cameraPos)
+void Terrain::setChunksLOD(Vec3 cameraPos)
 {
     int chunk_amount_y = imageHeight/_chunkSize.height;
     int chunk_amount_x = imageWidth/_chunkSize.width;
@@ -239,7 +241,7 @@ void cocos2d::Terrain::setChunksLOD(Vec3 cameraPos)
         }
 }
 
-float cocos2d::Terrain::getHeight(float x, float y ,float z)
+float Terrain::getHeight(float x, float y ,float z)
 {
     Vec2 pos = Vec2(x,z);
 
@@ -274,17 +276,17 @@ float cocos2d::Terrain::getHeight(float x, float y ,float z)
     }
 }
 
-float cocos2d::Terrain::getHeight(Vec3 pos)
+float Terrain::getHeight(Vec3 pos)
 {
     return getHeight(pos.x,pos.y,pos.z);
 }
 
-float cocos2d::Terrain::getImageHeight(int pixel_x,int pixel_y)
+float Terrain::getImageHeight(int pixel_x,int pixel_y)
 {
     return _data[(pixel_y*imageWidth+pixel_x)*3]*1.0/255*_terrainData.mapHeight -0.5*_terrainData.mapHeight;
 }
 
-void cocos2d::Terrain::loadVertices()
+void Terrain::loadVertices()
 {
     for(int i =0;i<imageHeight;i++)
     {
@@ -300,7 +302,7 @@ void cocos2d::Terrain::loadVertices()
     }
 }
 
-void cocos2d::Terrain::calculateNormal()
+void Terrain::calculateNormal()
 {
     indices.clear();
     //we generate whole terrain indices(global indices) for correct normal calculate
@@ -340,24 +342,24 @@ void cocos2d::Terrain::calculateNormal()
     indices.clear();
 }
 
-void cocos2d::Terrain::setDrawWire(bool bool_value)
+void Terrain::setDrawWire(bool bool_value)
 {
     _isDrawWire = bool_value;
 }
 
-void cocos2d::Terrain::setLODDistance(float lod_1,float lod_2,float lod_3)
+void Terrain::setLODDistance(float lod_1,float lod_2,float lod_3)
 {
     _lodDistance[0] = lod_1;
     _lodDistance[1] = lod_2;
     _lodDistance[2] = lod_3;
 }
 
-void cocos2d::Terrain::setIsEnableFrustumCull(bool bool_value)
+void Terrain::setIsEnableFrustumCull(bool bool_value)
 {
     _isEnableFrustumCull = bool_value;
 }
 
-void cocos2d::Terrain::Chunk::finish()
+void Terrain::Chunk::finish()
 {
     //genearate two VBO ,the first for vertices, we just setup datas once ,won't changed at all
     //the second vbo for the indices, because we use level of detail technique to each chunk, so we will modified frequently 
@@ -380,15 +382,15 @@ void cocos2d::Terrain::Chunk::finish()
     }
 }
 
-void cocos2d::Terrain::Chunk::bindAndDraw()
+void Terrain::Chunk::bindAndDraw()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     if(_terrain->_isDrawWire)
     {
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     }else
     {
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
 #endif
 
@@ -415,7 +417,7 @@ void cocos2d::Terrain::Chunk::bindAndDraw()
 #endif
 }
 
-void cocos2d::Terrain::Chunk::generate(int imageWidth,int imageHeight,int m,int n,const unsigned char * data)
+void Terrain::Chunk::generate(int imageWidth,int imageHeight,int m,int n,const unsigned char * data)
 {
     pos_y = m;
     pos_x = n;
@@ -433,7 +435,7 @@ void cocos2d::Terrain::Chunk::generate(int imageWidth,int imageHeight,int m,int 
     finish();
 }
 
-cocos2d::Terrain::Chunk::Chunk()
+Terrain::Chunk::Chunk()
 {
     _currentLod = 0;
     left = nullptr;
@@ -442,7 +444,7 @@ cocos2d::Terrain::Chunk::Chunk()
     front = nullptr;
 }
 
-void cocos2d::Terrain::Chunk::updateIndices()
+void Terrain::Chunk::updateIndices()
 {
     int gridY = _size.height;
     int gridX = _size.width;
@@ -620,7 +622,7 @@ FINISH_INNER_INDICES_SET:
         }
 }
 
-void cocos2d::Terrain::Chunk::calculateAABB()
+void Terrain::Chunk::calculateAABB()
 {
     std::vector<Vec3>pos;
     for(int i =0;i<vertices.size();i++)
@@ -630,7 +632,7 @@ void cocos2d::Terrain::Chunk::calculateAABB()
     _aabb.updateMinMax(&pos[0],pos.size());
 }
 
-void cocos2d::Terrain::Chunk::calculateSlope()
+void Terrain::Chunk::calculateSlope()
 {
     //find max slope
     auto lowest = vertices[0].position;
@@ -655,7 +657,7 @@ float dist = a.distance(b);
 slope = (highest.y - lowest.y)/dist;
 }
 
-void cocos2d::Terrain::Chunk::updateVerticesForLOD()
+void Terrain::Chunk::updateVerticesForLOD()
 {
 vertices_tmp = vertices;
 int gridY = _size.height;
@@ -686,45 +688,45 @@ glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*vertices_tmp.size(), &ve
 
 }
 
-cocos2d::Terrain::QuadTree::QuadTree(int x,int y,int width,int height,Terrain * terrain)
+Terrain::QuadTree::QuadTree(int x,int y,int width,int height,Terrain * terrain)
 {
-    _needDraw = true;
-    parent = nullptr;
-    tl =nullptr;
-    tr =nullptr;
-    bl =nullptr;
-    br =nullptr;
-    pos_x = x;
-    pos_y = y;
-    this->height = height;
-    this->width = width;
+        _needDraw = true;
+        parent = nullptr;
+        tl =nullptr;
+        tr =nullptr;
+        bl =nullptr;
+        br =nullptr;
+        pos_x = x;
+        pos_y = y;
+        this->height = height;
+        this->width = width;
     if(width> terrain->_chunkSize.width &&height >terrain->_chunkSize.height) //subdivision
      {
-    _isTerminal = false;
-    this->tl = new QuadTree(x,y,width/2,height/2,terrain);
-    this->tl->parent = this;
-    this->tr = new QuadTree(x+width/2,y,width/2,height/2,terrain);
-    this->tr->parent = this;
-    this->bl = new QuadTree(x,y+height/2,width/2,height/2,terrain);
-    this->bl->parent = this;
-    this->br = new QuadTree(x+width/2,y+height/2,width/2,height/2,terrain);
-    this->br->parent = this;
+        _isTerminal = false;
+        this->tl = new QuadTree(x,y,width/2,height/2,terrain);
+        this->tl->parent = this;
+        this->tr = new QuadTree(x+width/2,y,width/2,height/2,terrain);
+        this->tr->parent = this;
+        this->bl = new QuadTree(x,y+height/2,width/2,height/2,terrain);
+        this->bl->parent = this;
+        this->br = new QuadTree(x+width/2,y+height/2,width/2,height/2,terrain);
+        this->br->parent = this;
 
-    _aabb.merge(tl->_aabb);
-    _aabb.merge(tr->_aabb);
-    _aabb.merge(bl->_aabb);
-    _aabb.merge(br->_aabb);
+        _aabb.merge(tl->_aabb);
+        _aabb.merge(tr->_aabb);
+        _aabb.merge(bl->_aabb);
+        _aabb.merge(br->_aabb);
     }else // is terminal Node
     {
-    int m = pos_y/terrain->_chunkSize.height;
-    int n = pos_x/terrain->_chunkSize.width;
-    _chunk = terrain->_chunkesArray[m][n];
-    _isTerminal = true;
-    _aabb = _chunk->_aabb;
+        int m = pos_y/terrain->_chunkSize.height;
+        int n = pos_x/terrain->_chunkSize.width;
+        _chunk = terrain->_chunkesArray[m][n];
+        _isTerminal = true;
+        _aabb = _chunk->_aabb;
     }
 }
 
-void cocos2d::Terrain::QuadTree::draw()
+void Terrain::QuadTree::draw()
 {
     if(!_needDraw)return;
     if(_isTerminal){
@@ -738,7 +740,7 @@ void cocos2d::Terrain::QuadTree::draw()
     }
 }
 
-void cocos2d::Terrain::QuadTree::resetNeedDraw(bool value)
+void Terrain::QuadTree::resetNeedDraw(bool value)
 {
     this->_needDraw = value;
     if(!_isTerminal)
@@ -750,7 +752,7 @@ void cocos2d::Terrain::QuadTree::resetNeedDraw(bool value)
     }
 }
 
-void cocos2d::Terrain::QuadTree::cullByCamera(const Camera * camera,const Mat4 & worldTransform)
+void Terrain::QuadTree::cullByCamera(const Camera * camera,const Mat4 & worldTransform)
 {
     auto aabb = _aabb;
     aabb.transform(worldTransform);
@@ -768,7 +770,7 @@ void cocos2d::Terrain::QuadTree::cullByCamera(const Camera * camera,const Mat4 &
     }
 }
 
-cocos2d::Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * textureSrc,const Size & chunksize,float mapHeight,float mapScale)
+Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * textureSrc,const Size & chunksize,float mapHeight,float mapScale)
 { 
     this->heightMapSrc = heightMapsrc;
     this->detailMaps[0].detailMapSrc = textureSrc;
@@ -778,7 +780,7 @@ cocos2d::Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char
     this->mapScale = mapScale; 
 }
 
-cocos2d::Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * alphamap,const DetailMap& detail1,const DetailMap& detail2,const DetailMap& detail3,const DetailMap& detail4,const Size & chunksize,float mapHeight,float mapScale)
+Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * alphamap,const DetailMap& detail1,const DetailMap& detail2,const DetailMap& detail3,const DetailMap& detail4,const Size & chunksize,float mapHeight,float mapScale)
 {
     this->heightMapSrc = heightMapsrc;
     this->alphaMapSrc = const_cast<char *>(alphamap);
@@ -791,19 +793,20 @@ cocos2d::Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char
     this->mapScale = mapScale;
 }
 
-cocos2d::Terrain::TerrainData::TerrainData()
+Terrain::TerrainData::TerrainData()
 {
 
 }
 
-cocos2d::Terrain::DetailMap::DetailMap(const char * detailMapSrc , float size /*= 35*/)
+Terrain::DetailMap::DetailMap(const char * detailMapSrc , float size /*= 35*/)
 {
     this->detailMapSrc = detailMapSrc;
     this->detailMapSize = size;
 }
 
-cocos2d::Terrain::DetailMap::DetailMap()
+Terrain::DetailMap::DetailMap()
 {
    detailMapSrc = ""; 
    detailMapSize = 35;
 }
+NS_CC_END

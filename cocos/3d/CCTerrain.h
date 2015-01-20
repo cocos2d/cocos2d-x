@@ -182,7 +182,6 @@ private:
         bool _needDraw;
     };
 
-
     friend QuadTree;
     friend Chunk;
 public:
@@ -192,7 +191,7 @@ public:
     /*create entry*/
     static Terrain * create(TerrainData &parameter);
     /*get specified position's height mapping to the terrain*/
-    float getHeight(float x,float y, float z);
+    float getHeight(float x, float y, float z);
     float getHeight(Vec3 pos);  
 
     /*get height from the raw height map*/
