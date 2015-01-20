@@ -121,6 +121,9 @@ public:
     static const char* SHADER_NAME_POSITION_COLOR;
     static const char* SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE;
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+    static const char* SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYSCALE;
+#endif
     static const char* SHADER_NAME_POSITION_TEXTURE;
     static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
     static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;

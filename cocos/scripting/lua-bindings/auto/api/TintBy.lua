@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates an action with duration and color 
+-- creates an action with duration and color<br>
+-- param duration in seconds
 -- @function [parent=#TintBy] create 
 -- @param self
 -- @param #float duration
@@ -33,7 +34,7 @@
 -- @return TintBy#TintBy ret (return value: cc.TintBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#TintBy] update 
 -- @param self
 -- @param #float time

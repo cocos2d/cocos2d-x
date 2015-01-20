@@ -147,6 +147,7 @@ Renderer::Renderer()
 ,_numberQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
+,_isDepthTestFor2D(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
@@ -494,6 +495,12 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         glDisable(GL_DEPTH_TEST);
     }
     
+    if(_isDepthTestFor2D)
+    {
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(true);
+    }
+    
     //Process Transparent Object
     for (ssize_t index = queue.getOpaqueQueueSize(); index < size; ++index)
     {
@@ -553,6 +560,24 @@ void Renderer::clear()
     glDepthMask(true);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDepthMask(false);
+}
+
+void Renderer::setDepthTest(bool enable)
+{
+    if (enable)
+    {
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    _isDepthTestFor2D = enable;
+    CHECK_GL_ERROR_DEBUG();
 }
 
 void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)

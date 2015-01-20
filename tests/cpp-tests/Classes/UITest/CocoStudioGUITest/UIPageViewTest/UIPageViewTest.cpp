@@ -584,9 +584,9 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         
         //add buttons
         auto button = Button::create();
-        button->setNormalizedPosition(Vec2(0.12,0.7));
+        button->setNormalizedPosition(Vec2(0.12f,0.7f));
         button->setTitleText("Add A Page");
-        button->setZoomScale(0.3);
+        button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
         button->setTitleColor(Color3B::RED);
         button->addClickEventListener([=](Ref* sender)
@@ -622,9 +622,9 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         _uiLayer->addChild(button);
         
         auto button2 = Button::create();
-        button2->setNormalizedPosition(Vec2(0.12,0.5));
+        button2->setNormalizedPosition(Vec2(0.12f,0.5f));
         button2->setTitleText("Remove A Page");
-        button2->setZoomScale(0.3);
+        button2->setZoomScale(0.3f);
         button2->setPressedActionEnabled(true);
         button2->setTitleColor(Color3B::RED);
         button2->addClickEventListener([=](Ref* sender)
@@ -643,9 +643,9 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         _uiLayer->addChild(button2);
         
         auto button3 = Button::create();
-        button3->setNormalizedPosition(Vec2(0.12,0.3));
+        button3->setNormalizedPosition(Vec2(0.12f,0.3f));
         button3->setTitleText("Remove All Pages");
-        button3->setZoomScale(0.3);
+        button3->setZoomScale(0.3f);
         button3->setPressedActionEnabled(true);
         button3->setTitleColor(Color3B::RED);
         button3->addClickEventListener([=](Ref* sender)

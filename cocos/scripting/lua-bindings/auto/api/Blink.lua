@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action <br>
+-- param duration in seconds
 -- @function [parent=#Blink] create 
 -- @param self
 -- @param #float duration
@@ -36,7 +37,7 @@
 -- @return Blink#Blink ret (return value: cc.Blink)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Blink] update 
 -- @param self
 -- @param #float time

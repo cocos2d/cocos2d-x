@@ -39,8 +39,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(CameraRotationTest),
     CL(Camera3DTestDemo),
     CL(CameraCullingDemo),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+    // 3DEffect use custom shader which is not supported on WP8 yet. 
     CL(FogTestDemo),
 #endif
     CL(CameraArcBallDemo)
@@ -128,13 +128,21 @@ CameraRotationTest::CameraRotationTest()
     _camNode->setPositionZ(Camera::getDefaultCamera()->getPosition3D().z);
     _camControlNode->addChild(_camNode);
 
+    auto sp3d = Sprite3D::create();
+    sp3d->setPosition(s.width/2, s.height/2);
+    addChild(sp3d);
+    
+    auto lship = Label::create();
+    lship->setString("Ship");
+    lship->setPosition(0, 20);
+    sp3d->addChild(lship);
     
     //Billboards
     //Yellow is at the back
     bill1 = BillBoard::create("Images/Icon.png");
     bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
     bill1->setColor(Color3B::YELLOW);
-    bill1->setScale(0.6);
+    bill1->setScale(0.6f);
     addChild(bill1);
     
     l1 = Label::create();
@@ -144,9 +152,13 @@ CameraRotationTest::CameraRotationTest()
     l1->setScale(3);
     bill1->addChild(l1);
 
+    auto p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    p1->setPosition(30,80);
+    bill1->addChild(p1);
+    
     bill2 = BillBoard::create("Images/Icon.png");
     bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
-    bill2->setScale(0.6);
+    bill2->setScale(0.6f);
     addChild(bill2);
     
     l2 = Label::create();
@@ -155,6 +167,10 @@ CameraRotationTest::CameraRotationTest()
     l2->setColor(Color3B::WHITE);
     l2->setScale(3);
     bill2->addChild(l2);
+    
+    auto p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    p2->setPosition(30,80);
+    bill2->addChild(p2);
 
     //3D models
     auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
@@ -936,14 +952,12 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
     {
         _cameraType = CameraType::ThirdPerson;
         _cameraThird->setCameraFlag(CameraFlag::USER1);
-        _cameraThird->enableFrustumCulling(false, false);
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
     }
     else if(_cameraType == CameraType::ThirdPerson)
     {
         _cameraType = CameraType::FirstPerson;
         _cameraFirst->setCameraFlag(CameraFlag::USER1);
-        _cameraFirst->enableFrustumCulling(true, true);
         _cameraThird->setCameraFlag(CameraFlag::USER8);
         _drawFrustum->clear();
     }
@@ -1127,7 +1141,7 @@ void CameraArcBallDemo::onEnter()
     _layer3D->addChild(_sprite3D1);
 
     _sprite3D2 = Sprite3D::create("Sprite3DTest/boss.c3b");
-    _sprite3D2->setScale(0.6);
+    _sprite3D2->setScale(0.6f);
     _sprite3D2->setRotation3D(Vec3(-90,0,0));
     _sprite3D2->setPosition3D(Vec3(20,0,0));
     _layer3D->addChild(_sprite3D2);
@@ -1432,7 +1446,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
     else if(type == 1)
     {
         _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformFloat("u_fogDensity",0.03f);
         _state->setUniformInt("u_fogEquation" ,1);
 
         _sprite3D1->setGLProgramState(_state);
@@ -1441,7 +1455,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
     else if(type == 2)
     {
         _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformFloat("u_fogDensity",0.03f);
         _state->setUniformInt("u_fogEquation" ,2);
 
         _sprite3D1->setGLProgramState(_state);

@@ -60,7 +60,7 @@
 -- @param self
         
 --------------------------------
--- 
+-- param dt in seconds.
 -- @function [parent=#Speed] step 
 -- @param self
 -- @param #float dt

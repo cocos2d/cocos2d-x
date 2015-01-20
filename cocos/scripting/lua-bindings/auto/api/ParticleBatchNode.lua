@@ -29,6 +29,16 @@
 -- @param #cc.TextureAtlas atlas
         
 --------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- endcode<br>
+-- lua NA
+-- @function [parent=#ParticleBatchNode] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+        
+--------------------------------
 -- 
 -- @function [parent=#ParticleBatchNode] removeAllChildrenWithCleanup 
 -- @param self
@@ -39,6 +49,13 @@
 -- @function [parent=#ParticleBatchNode] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ParticleBatchNode] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 --  Inserts a child into the ParticleBatchNode 

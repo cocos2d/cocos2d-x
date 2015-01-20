@@ -28,7 +28,7 @@
 -- @return CallFunc#CallFunc ret (return value: cc.CallFunc)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#CallFunc] update 
 -- @param self
 -- @param #float time

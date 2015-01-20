@@ -12,7 +12,8 @@
 -- @param #float distance
         
 --------------------------------
---  creates the action with the grid size and the duration 
+-- creates the action with the grid size and the duration <br>
+-- param duration in seconds
 -- @function [parent=#FadeOutUpTiles] create 
 -- @param self
 -- @param #float duration

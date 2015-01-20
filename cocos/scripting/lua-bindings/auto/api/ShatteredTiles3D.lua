@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with a range, whether of not to shatter Z vertices, a grid size and duration 
+-- creates the action with a range, whether of not to shatter Z vertices, a grid size and duration <br>
+-- param duration in seconds
 -- @function [parent=#ShatteredTiles3D] create 
 -- @param self
 -- @param #float duration
@@ -21,7 +22,7 @@
 -- @return ShatteredTiles3D#ShatteredTiles3D ret (return value: cc.ShatteredTiles3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ShatteredTiles3D] update 
 -- @param self
 -- @param #float time

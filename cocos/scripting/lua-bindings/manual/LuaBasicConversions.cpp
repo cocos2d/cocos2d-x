@@ -121,7 +121,22 @@ bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName)
     
     if (ok)
     {
-        *outValue = (int)(unsigned int)lua_tonumber(L, lo);
+        /**
+         When we want to convert the number value from the Lua to int, we would call lua_tonumber to implement.It would
+         experience two phase conversion: int -> double, double->int.But,for the 0x80000000 which the min value of int, the
+         int cast may return an undefined result,like 0x7fffffff.So we must use the (int)(unsigned int)lua_tonumber() to get
+         predictable results for 0x80000000.In this place,we didn't use lua_tointeger, because it may produce differen results
+         depending on the compiler,e.g:for iPhone4s,it also get wrong value for 0x80000000.
+         */
+        unsigned int estimateValue = (unsigned int)lua_tonumber(L, lo);
+        if (estimateValue == std::numeric_limits<int>::min())
+        {
+            *outValue = (int)estimateValue;
+        }
+        else
+        {
+            *outValue = (int)lua_tonumber(L, lo);
+        }
     }
     
     return ok;

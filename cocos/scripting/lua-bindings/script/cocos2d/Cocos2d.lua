@@ -441,6 +441,10 @@ function cc.quaternion(_x, _y ,_z,_w)
     return { x = _x, y = _y, z = _z, w = _w }
 end
 
+function cc.blendFunc(_src, _dst)
+    return {src = _src, dst = _dst}
+end
+
 cc.mat4 = cc.mat4 or {}
 
 function cc.mat4.new(...)

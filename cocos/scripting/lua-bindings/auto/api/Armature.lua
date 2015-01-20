@@ -96,6 +96,13 @@
 -- @param #ccs.BatchNode batchNode
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Armature] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
 -- 
 -- @function [parent=#Armature] setArmatureData 
 -- @param self
@@ -133,6 +140,13 @@
 -- @function [parent=#Armature] getOffsetPoints 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Armature] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
         
 --------------------------------
 -- Get Armature's bone dictionary<br>

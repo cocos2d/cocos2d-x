@@ -29,7 +29,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  creates the action with the number of jumps, the sin amplitude, the grid size and the duration 
+-- creates the action with the number of jumps, the sin amplitude, the grid size and the duration <br>
+-- param duration in seconds
 -- @function [parent=#JumpTiles3D] create 
 -- @param self
 -- @param #float duration
@@ -45,7 +46,7 @@
 -- @return JumpTiles3D#JumpTiles3D ret (return value: cc.JumpTiles3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#JumpTiles3D] update 
 -- @param self
 -- @param #float time
