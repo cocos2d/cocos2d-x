@@ -132,9 +132,9 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
                         lastBreakLocation = i + insertCount;
                     }
                     textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
-                    if(info->height > 0 && textSize.height > info->height)
+                    if(info->height > 0 && (int)textSize.height > info->height)
                         break;
-					if (textSize.width > info->width) {
+                    if ((int)textSize.width > info->width) {
                         if(lastBreakLocation > 0) {
                             [lineBreak insertString:@"\r" atIndex:lastBreakLocation];
                             lastBreakLocation = 0;
