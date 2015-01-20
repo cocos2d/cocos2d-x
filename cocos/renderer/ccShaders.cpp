@@ -43,7 +43,7 @@ NS_CC_BEGIN
 #include "ccShader_PositionColor.vert"
 
 //
-#include "ccShader_PositionColorPointsize.vert"
+#include "ccShader_PositionColorTextureAsPointsize.vert"
 
 //
 #include "ccShader_PositionTexture.frag"

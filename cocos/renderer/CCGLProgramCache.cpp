@@ -40,7 +40,7 @@ enum {
     kShaderType_PositionTextureColorAlphaTest,
     kShaderType_PositionTextureColorAlphaTestNoMV,
     kShaderType_PositionColor,
-    kShaderType_PositionColorPointsize,
+    kShaderType_PositionColorTextureAsPointsize,
     kShaderType_PositionColor_noMVP,
     kShaderType_PositionTexture,
     kShaderType_PositionTexture_uColor,
@@ -142,8 +142,8 @@ void GLProgramCache::loadDefaultGLPrograms()
     
     // Position, Color, PointSize shader
     p = new (std::nothrow) GLProgram();
-    loadDefaultGLProgram(p, kShaderType_PositionColorPointsize);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_POINTSIZE, p) );
+    loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE, p) );
     
     //
     // Position, Color shader no MVP
@@ -261,9 +261,9 @@ void GLProgramCache::reloadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_PositionColor);
     
     // Position, Color, PointSize shader
-    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_POINTSIZE);
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     p->reset();
-    loadDefaultGLProgram(p, kShaderType_PositionColorPointsize);
+    loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
 
     //
     // Position, Color shader no MVP
@@ -368,8 +368,8 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionColor:  
             p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
             break;
-        case kShaderType_PositionColorPointsize:
-            p->initWithByteArrays(ccPositionColorPointsize_vert ,ccPositionColor_frag);
+        case kShaderType_PositionColorTextureAsPointsize:
+            p->initWithByteArrays(ccPositionColorTextureAsPointsize_vert ,ccPositionColor_frag);
             break;
         case kShaderType_PositionColor_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
