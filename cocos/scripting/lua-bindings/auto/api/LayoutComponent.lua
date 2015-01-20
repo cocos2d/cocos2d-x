@@ -197,6 +197,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#LayoutComponent] setPercentOnlyEnabled 
+-- @param self
+-- @param #bool enable
+        
+--------------------------------
+-- 
 -- @function [parent=#LayoutComponent] setHorizontalEdge 
 -- @param self
 -- @param #int hEage
