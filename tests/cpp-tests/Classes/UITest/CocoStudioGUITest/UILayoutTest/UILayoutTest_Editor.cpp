@@ -1455,7 +1455,6 @@ void UILayoutComponentTest_Editor::onChangeLayoutComponent(Ref* sender)
 void UILayoutComponentTest_Editor::onResizeContainer(Ref* sender)
 {
     auto layoutController = Helper::seekWidgetByName(_root, "Panel_Controller");
-    auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(_widget);
     Size size = _container->getContentSize();
     auto switchButton = Helper::seekWidgetByName(_root, "Button_Switch");
     switchButton->setEnabled(false);
