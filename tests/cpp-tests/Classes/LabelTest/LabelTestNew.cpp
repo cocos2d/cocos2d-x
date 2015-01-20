@@ -84,7 +84,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelIssue8492Test),
     CL(LabelMultilineWithOutline),
     CL(LabelIssue9255Test),
-    CL(LabelSmallDimensionsTest)
+    CL(LabelSmallDimensionsTest),
+    CL(LabelIssue10089Test)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1894,4 +1895,31 @@ std::string LabelSmallDimensionsTest::title() const
 std::string LabelSmallDimensionsTest::subtitle() const
 {
     return "Program should not dead loop";
+}
+
+LabelIssue10089Test::LabelIssue10089Test()
+{
+    auto center = VisibleRect::center();
+
+    auto labelA = Label::createWithSystemFont("create label with system font", "fonts/arial.ttf", 24);
+    auto size = labelA->getContentSize();
+    labelA->setDimensions(size.width, size.height);
+    labelA->setPosition(center.x, center.y + 50);
+    addChild(labelA);
+
+    auto labelB = Label::createWithTTF("create label with TTF", "fonts/arial.ttf", 24);
+    size = labelB->getContentSize();
+    labelB->setDimensions(size.width, size.height);
+    labelB->setPosition(center.x, center.y - 50);
+    addChild(labelB);
+}
+
+std::string LabelIssue10089Test::title() const
+{
+    return "Test for Issue #10089";
+}
+
+std::string LabelIssue10089Test::subtitle() const
+{
+    return "Should be able to see two single-line text";
 }
