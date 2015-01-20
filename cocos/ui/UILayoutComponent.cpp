@@ -48,6 +48,7 @@ namespace ui {
         , _percentHeight(0)
         , _usingPercentHeight(false)
         , _actived(true)
+        , _isPercentOnly(false)
     {
         _name = __LAYOUT_COMPONENT_NAME;
     }
@@ -549,6 +550,9 @@ namespace ui {
 
     void LayoutComponent::refreshLayout()
     {
+        if (!_actived)
+            return;
+        
         Node* parent = this->getOwnerParent();
         if (parent == nullptr)
             return;
@@ -561,7 +565,7 @@ namespace ui {
         switch (this->_horizontalEdge)
         {
         case HorizontalEdge::None:
-            if (_usingStretchWidth)
+            if (_usingStretchWidth && !_isPercentOnly)
             {
                 ownerSize.width = parentSize.width * _percentWidth;
                 ownerPosition.x = _leftMargin + ownerAnchor.x * ownerSize.width;
@@ -575,17 +579,23 @@ namespace ui {
             }
             break;
         case HorizontalEdge::Left:
+            if (_isPercentOnly)
+                break;
             if (_usingPercentWidth || _usingStretchWidth)
                 ownerSize.width = parentSize.width * _percentWidth;
             ownerPosition.x = _leftMargin + ownerAnchor.x * ownerSize.width;
             break;
         case HorizontalEdge::Right:
+            if (_isPercentOnly)
+                break;
             if (_usingPercentWidth || _usingStretchWidth)
                 ownerSize.width = parentSize.width * _percentWidth;
             ownerPosition.x = parentSize.width - (_rightMargin + (1 - ownerAnchor.x) * ownerSize.width);
             break;
         case HorizontalEdge::Center:
-            if (_usingPercentWidth || _usingStretchWidth)
+            if (_isPercentOnly)
+                break;
+            if (_usingStretchWidth)
             {
                 ownerSize.width = parentSize.width - _leftMargin - _rightMargin;
                 if (ownerSize.width < 0)
@@ -593,7 +603,11 @@ namespace ui {
                 ownerPosition.x = _leftMargin + ownerAnchor.x * ownerSize.width;
             }
             else
+            {
+                if (_usingPercentWidth)
+                    ownerSize.width = parentSize.width * _percentWidth;
                 ownerPosition.x = parentSize.width * _positionPercentX;
+            }
             break;
         default:
             break;
@@ -602,7 +616,7 @@ namespace ui {
         switch (this->_verticalEdge)
         {
         case VerticalEdge::None:
-            if (_usingStretchHeight)
+            if (_usingStretchHeight && !_isPercentOnly)
             {
                 ownerSize.height = parentSize.height * _percentHeight;
                 ownerPosition.y = _bottomMargin + ownerAnchor.y * ownerSize.height;
@@ -616,17 +630,23 @@ namespace ui {
             }
             break;
         case VerticalEdge::Bottom:
+            if (_isPercentOnly)
+                break;
             if (_usingPercentHeight || _usingStretchHeight)
                 ownerSize.height = parentSize.height * _percentHeight;
             ownerPosition.y = _bottomMargin + ownerAnchor.y * ownerSize.height;
             break;
         case VerticalEdge::Top:
+            if (_isPercentOnly)
+                break;
             if (_usingPercentHeight || _usingStretchHeight)
                 ownerSize.height = parentSize.height * _percentHeight;
             ownerPosition.y = parentSize.height - (_topMargin + (1 - ownerAnchor.y) * ownerSize.height);
             break;
         case VerticalEdge::Center:
-            if (_usingPercentHeight || _usingStretchHeight)
+            if (_isPercentOnly)
+                break;
+            if (_usingStretchHeight)
             {
                 ownerSize.height = parentSize.height - _topMargin - _bottomMargin;
                 if (ownerSize.height < 0)
@@ -634,7 +654,11 @@ namespace ui {
                 ownerPosition.y = _bottomMargin + ownerAnchor.y * ownerSize.height;
             }
             else
+            {
+                if (_usingPercentHeight)
+                    ownerSize.height = parentSize.height * _percentHeight;
                 ownerPosition.y = parentSize.height* _positionPercentY;
+            }
             break;
         default:
             break;
@@ -649,6 +673,11 @@ namespace ui {
     void LayoutComponent::setActiveEnabled(bool enable)
     {
         _actived = enable;
+    }
+
+    void LayoutComponent::setPercentOnlyEnabled(bool enable)
+    {
+        _isPercentOnly = enable;
     }
 }
 

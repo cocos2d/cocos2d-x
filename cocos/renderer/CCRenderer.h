@@ -129,6 +129,13 @@ public:
     /* clear draw stats */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
+    /**
+     * Enable/Disable depth test
+     * For 3D object depth test is enabled by default and can not be changed
+     * For 2D object depth test is disabled by default
+     */
+    void setDepthTest(bool enable);
+    
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** returns whether or not a rectangle is visible or not */
@@ -196,6 +203,8 @@ protected:
     ssize_t _drawnVertices;
     //the flag for checking whether renderer is rendering
     bool _isRendering;
+    
+    bool _isDepthTestFor2D;
     
     GroupCommandManager* _groupCommandManager;
     

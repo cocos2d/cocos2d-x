@@ -18,7 +18,7 @@
 -- @return Place#Place ret (return value: cc.Place)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Place] update 
 -- @param self
 -- @param #float time

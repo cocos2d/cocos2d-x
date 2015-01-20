@@ -35,7 +35,7 @@
 -- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ScaleTo] update 
 -- @param self
 -- @param #float time

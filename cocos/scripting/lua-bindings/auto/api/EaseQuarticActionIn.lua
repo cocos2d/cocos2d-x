@@ -18,7 +18,7 @@
 -- @return EaseQuarticActionIn#EaseQuarticActionIn ret (return value: cc.EaseQuarticActionIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseQuarticActionIn] update 
 -- @param self
 -- @param #float time

@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param t in seconds
 -- @function [parent=#SkewBy] create 
 -- @param self
 -- @param #float t

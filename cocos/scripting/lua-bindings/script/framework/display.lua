@@ -57,7 +57,7 @@ local function checkResolution(r)
 end
 
 local function setDesignResolution(r, framesize)
-   if r.autoscale == "FILL_ALL" then
+    if r.autoscale == "FILL_ALL" then
         view:setDesignResolutionSize(framesize.width, framesize.height, cc.ResolutionPolicy.FILL_ALL)
     else
         local scaleX, scaleY = framesize.width / r.width, framesize.height / r.height
@@ -70,8 +70,12 @@ local function setDesignResolution(r, framesize)
             width = framesize.width / scaleY
             height = framesize.height / scaleY
             view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
+        elseif r.autoscale == "EXACT_FIT" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.EXACT_FIT)
+        elseif r.autoscale == "NO_BORDER" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.NO_BORDER)
         elseif r.autoscale == "SHOW_ALL" then
-            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL)
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.SHOW_ALL)
         else
             printError(string.format("display - invalid r.autoscale \"%s\"", r.autoscale))
         end

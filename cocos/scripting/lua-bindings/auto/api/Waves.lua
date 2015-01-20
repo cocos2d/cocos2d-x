@@ -47,7 +47,7 @@
 -- @return Waves#Waves ret (return value: cc.Waves)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Waves] update 
 -- @param self
 -- @param #float time

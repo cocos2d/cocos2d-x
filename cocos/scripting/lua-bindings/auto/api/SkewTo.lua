@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param t in seconds
 -- @function [parent=#SkewTo] create 
 -- @param self
 -- @param #float t
@@ -32,7 +33,7 @@
 -- @return SkewTo#SkewTo ret (return value: cc.SkewTo)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#SkewTo] update 
 -- @param self
 -- @param #float time

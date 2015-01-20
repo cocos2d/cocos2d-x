@@ -11,7 +11,8 @@
 -- @param #cc.FadeTo ac
         
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param d in seconds
 -- @function [parent=#FadeIn] create 
 -- @param self
 -- @param #float d

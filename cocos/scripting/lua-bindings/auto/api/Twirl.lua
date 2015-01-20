@@ -58,7 +58,7 @@
 -- @return Twirl#Twirl ret (return value: cc.Twirl)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Twirl] update 
 -- @param self
 -- @param #float time

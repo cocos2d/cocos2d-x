@@ -17,7 +17,8 @@
 -- @param #vec2_table newPos
         
 --------------------------------
---  initializes the action with a duration and an array of points 
+-- initializes the action with a duration and an array of points<br>
+-- param duration in seconds
 -- @function [parent=#CardinalSplineTo] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -44,7 +45,7 @@
 -- @return CardinalSplineTo#CardinalSplineTo ret (return value: cc.CardinalSplineTo)
         
 --------------------------------
--- 
+-- param time in seconds.
 -- @function [parent=#CardinalSplineTo] update 
 -- @param self
 -- @param #float time

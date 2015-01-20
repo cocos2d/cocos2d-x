@@ -256,10 +256,11 @@ void ImageView::imageTextureScaleChangedWithSize()
         if (_scale9Enabled)
         {
             _imageRenderer->setPreferredSize(_contentSize);
+            _imageRenderer->setScale(1.0f);
         }
         else
         {
-            Size textureSize = _imageRenderer->getContentSize();
+            Size textureSize = _imageTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _imageRenderer->setScale(1.0f);

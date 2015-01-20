@@ -28,7 +28,7 @@
 -- @return Follow#Follow ret (return value: cc.Follow)
         
 --------------------------------
--- 
+-- param dt in seconds.
 -- @function [parent=#Follow] step 
 -- @param self
 -- @param #float dt

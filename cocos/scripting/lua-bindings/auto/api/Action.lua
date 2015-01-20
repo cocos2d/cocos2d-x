@@ -54,7 +54,7 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
---  called every frame with it's delta time. DON'T override unless you know what you are doing.
+--  called every frame with it's delta time, dt in seconds. DON'T override unless you know what you are doing.
 -- @function [parent=#Action] step 
 -- @param self
 -- @param #float dt
