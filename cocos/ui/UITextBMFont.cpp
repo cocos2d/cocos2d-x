@@ -100,11 +100,11 @@ void TextBMFont::setString(const std::string& value)
         return;
     }
     _stringValue = value;
+    _labelBMFontRenderer->setString(value);
     if (!_fntFileHasInit)
     {
         return;
     }
-    _labelBMFontRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
     _labelBMFontRendererAdaptDirty = true;
 }
