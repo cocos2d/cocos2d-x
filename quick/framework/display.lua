@@ -1306,12 +1306,17 @@ function display.newTTFLabel(params)
     local label
     if cc.FileUtils:getInstance():isFileExist(font) then
         label = cc.Label:createWithTTF(text, font, size, dimensions, textAlign, textValign)
+        if label then
+            label:setColor(color)
+        end
     else
         label = cc.Label:createWithSystemFont(text, font, size, dimensions, textAlign, textValign)
+        if label then
+            label:setTextColor(color)
+        end
     end
 
     if label then
-        label:setTextColor(color)
         if x and y then label:setPosition(x, y) end
     end
 
