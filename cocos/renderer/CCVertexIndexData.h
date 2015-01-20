@@ -85,10 +85,7 @@ public:
     VertexStreamAttribute* getStreamAttribute(int semantic);
     
     GLArrayBuffer* getStreamBuffer(int semantic) const;
-    
-    // @brief setup attributes for all vertex streams
-    void use();
-    
+        
     // @brief draw this geometry
     void draw();
     
@@ -103,6 +100,9 @@ public:
     
     // @brief sets the dirty state of all vertex data
     void setDirty(bool dirty);
+    
+    // @brief returns the count of vertices added
+    size_t count() const;
     
     template <typename T>
     void append(const T& vertex)
@@ -139,8 +139,12 @@ protected:
         VertexStreamAttribute _stream;
     };
     
+    typedef std::vector<GLArrayBuffer*> tBufferArray;
+    tBufferArray _bufferArray;
+    
     std::map<int, BufferAttribute> _vertexStreams;
     
+    size_t _count;
     bool _interleaved;
     bool _dirty;
 };

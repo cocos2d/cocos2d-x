@@ -50,5 +50,62 @@ const IndexBuffer* Primitive::getIndexData() const
     return _indices;
 }
 
+Primitive::Primitive()
+: _verts(nullptr)
+, _indices(nullptr)
+, _type(GL_POINTS)
+{
+}
+
+Primitive::~Primitive()
+{
+    CC_SAFE_RELEASE_NULL(_verts);
+    CC_SAFE_RELEASE_NULL(_indices);
+}
+
+bool Primitive::init(VertexData* verts, IndexBuffer* indices, int type)
+{
+    if( nullptr == verts ) return false;
+    if(verts != _verts)
+    {
+        CC_SAFE_RELEASE(_verts);
+        CC_SAFE_RETAIN(verts);
+        _verts = verts;
+    }
+
+    if(indices != _indices)
+    {
+        CC_SAFE_RETAIN(indices);
+        CC_SAFE_RELEASE(_indices);
+        _indices = indices;
+    }
+
+    _type = type;
+
+    return true;
+}
+
+void Primitive::draw()
+{
+    if(_verts)
+    {
+        _verts->use();
+        if(_indices!= nullptr)
+        {
+            GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
+            size_t offet = _start * _indices->getSizePerIndex();
+            glDrawElements((GLenum)_type, _count, type, (GLvoid*)offet);
+        }
+        else
+        {
+            glDrawArrays((GLenum)_type, _start, _count);
+        }
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+}
+
 NS_CC_END
 

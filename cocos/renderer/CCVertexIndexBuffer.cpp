@@ -43,6 +43,7 @@ GLArrayBuffer::GLArrayBuffer()
     , _vao(0)
     , _elementSize(0)
     , _elementCount(0)
+    , _elements(nullptr)
 {
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
     _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
@@ -117,7 +118,7 @@ bool GLArrayBuffer::init(int elementSize, int elementCount, ArrayType arrayType,
     return true;
 }
 
-bool GLArrayBuffer::updateElements(const void* elements, int count, int begin)
+bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, bool defer)
 {
     if (count <= 0 || nullptr == elements)
         return false;
@@ -128,7 +129,7 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin)
         begin = 0;
     }
     
-    if (count + begin >= _elementCount)
+    if (count + begin > _elementCount)
     {
         CCLOGERROR("updated vertices exceed the max size of vertex buffer, will set count to _vertexNumber-begin");
         count = _elementCount - begin;
@@ -140,9 +141,43 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin)
         memcpy((void*)p, elements, count * _elementSize);
     }
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferSubData(GL_ARRAY_BUFFER, begin * _elementSize, count * _elementSize, elements);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    if (false == defer)
+    {
+        update(count, begin);
+    }
+    
+    return true;
+}
+
+bool GLArrayBuffer::update(int count, int begin)
+{
+    if (count < 0)
+        return false;
+    
+    if (count == 0)
+        count = _elementCount;
+    
+    if (begin < 0)
+    {
+        CCLOGERROR("Update vertices with begin = %d, will set begin to 0", begin);
+        begin = 0;
+    }
+    
+    if (count + begin > _elementCount)
+    {
+        CCLOGERROR("updated vertices exceed the max size of vertex buffer, will set count to _vertexNumber-begin");
+        count = _elementCount - begin;
+    }
+
+    if (hasClient())
+    {
+        intptr_t p = (intptr_t)_elements + begin * _elementSize;
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferSubData(GL_ARRAY_BUFFER, begin * _elementSize, count * _elementSize, (void*)p);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        CHECK_GL_ERROR_DEBUG();
+    }
     
     return true;
 }

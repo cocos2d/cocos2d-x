@@ -55,31 +55,34 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     CC_SAFE_RELEASE(_textureAtlas);
     CC_SAFE_RELEASE(_batch);
     _textureAtlas = textureAtlas;
+    _textureAtlas->retain();
     
     _mv = modelViewTransform;
 }
 
 void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, Batch* batch, const Mat4& modelViewTransform, uint32_t flags)
 {
-    CCASSERT(shader,  "shader cannot be nill");
-    CCASSERT(texture, "texture cannot be nill");
-    CCASSERT(batch,   "vertexData cannot be nil");
+    CCASSERT(shader,  "shader cannot be nullptr");
+    CCASSERT(batch,   "vertexData cannot be nullptr");
     
     RenderCommand::init(globalOrder, modelViewTransform, flags);
     _globalOrder = globalOrder;
-    _textureID = texture->getName();
+    _textureID = texture ? texture->getName() : 0;
     _blendType = blendType;
     _shader = shader;
     
     CC_SAFE_RELEASE(_textureAtlas);
     CC_SAFE_RELEASE(_batch);
     _batch = batch;
+    _batch->retain();
 
     _mv = modelViewTransform;
 }
 
 BatchCommand::~BatchCommand()
 {
+    CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_batch);
 }
 
 void BatchCommand::execute()
@@ -87,14 +90,23 @@ void BatchCommand::execute()
     // Set material
     _shader->use();
     _shader->setUniformsForBuiltins(_mv);
-    GL::bindTexture2D(_textureID);
-    GL::blendFunc(_blendType.src, _blendType.dst);
 
     // Draw
     if (_textureAtlas)
+    {
+        GL::bindTexture2D(_textureID);
+        GL::blendFunc(_blendType.src, _blendType.dst);
         _textureAtlas->drawQuads();
+    }
     else if (_batch)
+    {
+        if (_textureID)
+        {
+            GL::bindTexture2D(_textureID);
+            GL::blendFunc(_blendType.src, _blendType.dst);
+        }
         _batch->draw();
+    }
     else
     {
         CCASSERT(false, "BatchCommand::execute - nothing to draw");

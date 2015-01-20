@@ -77,23 +77,7 @@ bool Batch::init(VertexData* verts, IndexBuffer* indices, int drawingPrimitive)
 void Batch::draw()
 {
     if(_verts)
-    {
-        _verts->use();
-        if (_indices != nullptr)
-        {
-            GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
-            size_t offet = _start * _indices->getSizePerIndex();
-            glDrawElements((GLenum)_drawingPrimitive, _count, type, (GLvoid*)offet);
-        }
-        else
-        {
-            glDrawArrays((GLenum)_drawingPrimitive, _start, _count);
-        }
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+        _verts->draw();
 }
 
 NS_CC_END

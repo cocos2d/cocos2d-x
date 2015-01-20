@@ -31,6 +31,7 @@ NS_CC_BEGIN
 VertexData::VertexData()
     : _interleaved(false)
     , _dirty(false)
+    , _count(0)
 {}
 
 bool VertexData::setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream)
@@ -101,8 +102,18 @@ VertexData::~VertexData()
     _vertexStreams.clear();
 }
 
-void VertexData::use()
+void VertexData::draw()
 {
+    if (isDirty())
+    {
+        for (auto& e : _vertexStreams)
+        {
+            auto& bufferAttribute = e.second;
+            bufferAttribute._buffer->update();
+        }
+        setDirty(false);
+    }
+    
     uint32_t flags(0);
     for (auto& element : _vertexStreams)
     {
@@ -120,6 +131,22 @@ void VertexData::use()
         size_t offet = attrib._stream._offset;
         glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, attrib._buffer->getElementSize(), (GLvoid*)offet);
     }
+
+    
+    if (_indices != nullptr)
+    {
+        GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
+        size_t offet = _start * _indices->getSizePerIndex();
+        glDrawElements((GLenum)_drawingPrimitive, _count, type, (GLvoid*)offet);
+    }
+    else
+    {
+        glDrawArrays((GLenum)_drawingPrimitive, 0, _verts->count());
+    }
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 bool VertexData::empty() const
@@ -135,6 +162,7 @@ bool VertexData::empty() const
 
 void VertexData::clear()
 {
+    _count = 0;
     _dirty = false;
     for (auto& e : _vertexStreams)
     {
@@ -164,6 +192,11 @@ void VertexData::setDirty(bool dirty)
         auto& bufferAttribute = e.second;
         bufferAttribute._buffer->setDirty(dirty);
     }
+}
+
+size_t VertexData::count() const
+{
+    return _count;
 }
 
 // @brief If all streams use the same buffer, then the data is interleaved.

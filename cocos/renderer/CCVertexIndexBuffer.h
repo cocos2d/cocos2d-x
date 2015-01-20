@@ -83,7 +83,12 @@ public:
     
     virtual ~GLArrayBuffer();
     
-    bool updateElements(const void* elements, int count, int begin);
+    // @brief updates a region of the client and native buffer
+    //        if defer is true, then the native buffer will not be updated.
+    bool updateElements(const void* elements, int count, int begin = 0, bool defer = true);
+    
+    // @brief if dirty, submits the client buffer to the native buffer
+    bool update(int count = 0, int begin = 0);
     
     size_t getSize() const
     {
