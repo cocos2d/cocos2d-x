@@ -991,6 +991,7 @@ void Label::updateContent()
             _fontDefinition._fontFillColor.r = _textColor.r;
             _fontDefinition._fontFillColor.g = _textColor.g;
             _fontDefinition._fontFillColor.b = _textColor.b;
+            _fontDefinition._fontAlpha = _textColor.a;
 
             _fontDefinition._shadow._shadowEnabled = false;
 
@@ -1001,6 +1002,7 @@ void Label::updateContent()
                 _fontDefinition._stroke._strokeColor.r = _effectColor.r;
                 _fontDefinition._stroke._strokeColor.g = _effectColor.g;
                 _fontDefinition._stroke._strokeColor.b = _effectColor.b;
+                _fontDefinition._stroke._strokeAlpha = _effectColor.a;
             }
             else
             {
