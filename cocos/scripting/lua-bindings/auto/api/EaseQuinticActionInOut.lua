@@ -18,7 +18,7 @@
 -- @return EaseQuinticActionInOut#EaseQuinticActionInOut ret (return value: cc.EaseQuinticActionInOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseQuinticActionInOut] update 
 -- @param self
 -- @param #float time

@@ -51,7 +51,7 @@
 -- @return Lens3D#Lens3D ret (return value: cc.Lens3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Lens3D] update 
 -- @param self
 -- @param #float time

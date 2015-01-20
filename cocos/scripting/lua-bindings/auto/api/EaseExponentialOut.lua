@@ -18,7 +18,7 @@
 -- @return EaseExponentialOut#EaseExponentialOut ret (return value: cc.EaseExponentialOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseExponentialOut] update 
 -- @param self
 -- @param #float time

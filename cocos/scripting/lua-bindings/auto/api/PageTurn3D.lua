@@ -25,7 +25,7 @@
 -- @return PageTurn3D#PageTurn3D ret (return value: cc.PageTurn3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#PageTurn3D] update 
 -- @param self
 -- @param #float time

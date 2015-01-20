@@ -45,7 +45,7 @@
 -- @return Waves3D#Waves3D ret (return value: cc.Waves3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Waves3D] update 
 -- @param self
 -- @param #float time

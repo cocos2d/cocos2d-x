@@ -45,7 +45,7 @@
 -- @return Liquid#Liquid ret (return value: cc.Liquid)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Liquid] update 
 -- @param self
 -- @param #float time

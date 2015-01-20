@@ -32,7 +32,7 @@
 -- @return MoveBy#MoveBy ret (return value: cc.MoveBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#MoveBy] update 
 -- @param self
 -- @param #float time

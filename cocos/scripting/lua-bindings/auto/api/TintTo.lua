@@ -34,7 +34,7 @@
 -- @return TintTo#TintTo ret (return value: cc.TintTo)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#TintTo] update 
 -- @param self
 -- @param #float time
