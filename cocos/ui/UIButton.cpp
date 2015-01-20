@@ -854,6 +854,25 @@ Size Button::getNormalSize() const
     return Size(width,height);
 }
 
+void Button::clearPressedTexture()
+{
+    CCLOG("[Button::clearPressedTexture] disable pressed texture");
+    this->removeProtectedChild(_buttonClickedRenderer);
+    _buttonClickedRenderer = Scale9Sprite::create();
+    _buttonClickedRenderer->setScale9Enabled(_scale9Enabled);
+    addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    _pressedTextureLoaded = false;
+}
+
+void Button::clearDisabledTexture()
+{
+    this->removeProtectedChild(_buttonDisableRenderer);
+    _buttonDisableRenderer = Scale9Sprite::create();
+    _buttonDisableRenderer->setScale9Enabled(_scale9Enabled);
+    addProtectedChild(_buttonDisableRenderer, PRESSED_RENDERER_Z, -1);
+    _disabledTextureLoaded = false;
+}
+
 }
 
 NS_CC_END
