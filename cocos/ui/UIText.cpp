@@ -284,6 +284,11 @@ void Text::adaptRenderers()
 
 Size Text::getVirtualRendererSize() const
 {
+    return _labelRenderer->getContentSize();
+}
+
+Size Text::getAutoRenderSize()
+{
     Size virtualSize = _labelRenderer->getContentSize();
     if (!_ignoreSize)
     {
