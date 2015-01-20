@@ -218,6 +218,7 @@ void Slider::setScale9Enabled(bool able)
     }
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
     setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
+    _barRendererAdaptDirty = true;
 }
     
 bool Slider::isScale9Enabled()const

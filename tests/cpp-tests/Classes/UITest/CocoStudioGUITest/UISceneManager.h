@@ -55,6 +55,7 @@ enum
     kUISliderDisabledDefaultTest,
     kUIImageViewTest,
     kUIImageViewTest_Scale9,
+    kUIImageViewTest_Scale9_State_Change,
     kUIImageViewTest_ContentSize,
     kUIImageViewFlipTest,
     

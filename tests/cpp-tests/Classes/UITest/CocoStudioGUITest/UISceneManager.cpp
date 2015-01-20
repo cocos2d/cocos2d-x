@@ -60,6 +60,7 @@ static const char* s_testArray[] =
   
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
+    "UIImageViewTest_Scale9_State_Change",
     "UIImageViewTest_ContentSize",
     "UIImageViewFlipTest",
     
@@ -255,6 +256,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIImageViewTest_Scale9:
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIImageViewTest_Scale9_State_Change:
+            return UIImageViewTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewTest_ContentSize:
             return UIImageViewTest_ContentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewFlipTest:
