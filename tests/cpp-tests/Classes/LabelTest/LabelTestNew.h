@@ -566,5 +566,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelSystemFontColor : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelSystemFontColor);
+
+    LabelSystemFontColor();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 #endif
