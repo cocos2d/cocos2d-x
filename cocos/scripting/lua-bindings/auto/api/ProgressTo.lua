@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  Creates and initializes with a duration and a percent 
+-- Creates and initializes with a duration and a percent <br>
+-- param duration in seconds
 -- @function [parent=#ProgressTo] create 
 -- @param self
 -- @param #float duration
@@ -31,7 +32,7 @@
 -- @return ProgressTo#ProgressTo ret (return value: cc.ProgressTo)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ProgressTo] update 
 -- @param self
 -- @param #float time

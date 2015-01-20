@@ -49,7 +49,7 @@
 -- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#TargetedAction] update 
 -- @param self
 -- @param #float time

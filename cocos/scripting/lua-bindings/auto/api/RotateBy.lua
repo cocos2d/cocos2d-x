@@ -34,7 +34,7 @@
 -- @return RotateBy#RotateBy ret (return value: cc.RotateBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#RotateBy] update 
 -- @param self
 -- @param #float time

@@ -48,7 +48,7 @@
 -- @param self
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#Repeat] update 
 -- @param self
 -- @param #float dt

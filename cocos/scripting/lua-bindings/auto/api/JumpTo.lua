@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param duration in seconds
 -- @function [parent=#JumpTo] create 
 -- @param self
 -- @param #float duration

@@ -29,7 +29,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  creates the action with a number of waves, the waves amplitude, the grid size and the duration 
+-- creates the action with a number of waves, the waves amplitude, the grid size and the duration <br>
+-- param duration in seconds
 -- @function [parent=#WavesTiles3D] create 
 -- @param self
 -- @param #float duration
@@ -45,7 +46,7 @@
 -- @return WavesTiles3D#WavesTiles3D ret (return value: cc.WavesTiles3D)
         
 --------------------------------
--- 
+-- param duration in seconds
 -- @function [parent=#WavesTiles3D] update 
 -- @param self
 -- @param #float time

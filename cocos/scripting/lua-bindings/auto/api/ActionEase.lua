@@ -34,7 +34,7 @@
 -- @return ActionEase#ActionEase ret (return value: cc.ActionEase)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ActionEase] update 
 -- @param self
 -- @param #float time
