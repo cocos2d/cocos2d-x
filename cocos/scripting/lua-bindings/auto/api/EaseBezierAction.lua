@@ -27,7 +27,7 @@
 -- @return EaseBezierAction#EaseBezierAction ret (return value: cc.EaseBezierAction)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseBezierAction] update 
 -- @param self
 -- @param #float time

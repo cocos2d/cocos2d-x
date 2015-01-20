@@ -18,7 +18,7 @@
 -- @return EaseBounceOut#EaseBounceOut ret (return value: cc.EaseBounceOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseBounceOut] update 
 -- @param self
 -- @param #float time

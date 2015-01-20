@@ -17,7 +17,7 @@
 -- @return Hide#Hide ret (return value: cc.Hide)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Hide] update 
 -- @param self
 -- @param #float time

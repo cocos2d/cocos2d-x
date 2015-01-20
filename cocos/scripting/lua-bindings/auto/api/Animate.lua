@@ -48,7 +48,7 @@
 -- @return Animate#Animate ret (return value: cc.Animate)
         
 --------------------------------
--- 
+-- param t in seconds
 -- @function [parent=#Animate] update 
 -- @param self
 -- @param #float t

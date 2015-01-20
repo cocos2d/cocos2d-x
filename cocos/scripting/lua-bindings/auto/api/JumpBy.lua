@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param duration in seconds
 -- @function [parent=#JumpBy] create 
 -- @param self
 -- @param #float duration
@@ -33,7 +34,7 @@
 -- @return JumpBy#JumpBy ret (return value: cc.JumpBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#JumpBy] update 
 -- @param self
 -- @param #float time

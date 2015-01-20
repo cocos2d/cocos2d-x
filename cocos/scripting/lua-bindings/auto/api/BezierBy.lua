@@ -23,7 +23,7 @@
 -- @return BezierBy#BezierBy ret (return value: cc.BezierBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#BezierBy] update 
 -- @param self
 -- @param #float time

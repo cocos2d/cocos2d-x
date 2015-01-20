@@ -18,7 +18,7 @@
 -- @return EaseCircleActionOut#EaseCircleActionOut ret (return value: cc.EaseCircleActionOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseCircleActionOut] update 
 -- @param self
 -- @param #float time

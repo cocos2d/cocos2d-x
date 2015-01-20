@@ -17,7 +17,7 @@
 -- @return Show#Show ret (return value: cc.Show)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Show] update 
 -- @param self
 -- @param #float time

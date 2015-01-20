@@ -29,7 +29,7 @@
 -- @param #cc.Node target
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#ActionInterval] step 
 -- @param self
 -- @param #float dt

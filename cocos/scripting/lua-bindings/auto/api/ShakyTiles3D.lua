@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with a range, whether or not to shake Z vertices, a grid size, and duration 
+-- creates the action with a range, whether or not to shake Z vertices, a grid size, and duration <br>
+-- param duration in seconds
 -- @function [parent=#ShakyTiles3D] create 
 -- @param self
 -- @param #float duration
@@ -21,7 +22,7 @@
 -- @return ShakyTiles3D#ShakyTiles3D ret (return value: cc.ShakyTiles3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ShakyTiles3D] update 
 -- @param self
 -- @param #float time

@@ -59,7 +59,7 @@
 -- @return Ripple3D#Ripple3D ret (return value: cc.Ripple3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Ripple3D] update 
 -- @param self
 -- @param #float time
