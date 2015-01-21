@@ -1,5 +1,6 @@
 cocos2d-x-3.4 Jan.23 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
+    [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions
     [FIX]           GLProgram: will cause crash on some devices that don't support more than 8 atrributes
     [FIX]           ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
     [FIX]           Label: alpha channel of text color of system font has not effect
