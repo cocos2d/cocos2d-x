@@ -220,7 +220,7 @@ void SendLogToWindow(const char *log)
             (LPARAM)(LPVOID)&myCDS);
     }
 }
-#elseif
+#else
 void SendLogToWindow(const char *log)
 {
 }
