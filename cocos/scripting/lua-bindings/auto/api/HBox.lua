@@ -16,5 +16,6 @@
 -- Default constructor
 -- @function [parent=#HBox] HBox 
 -- @param self
+-- @return HBox#HBox self (return value: ccui.HBox)
         
 return nil

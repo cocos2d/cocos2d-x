@@ -12,6 +12,7 @@
 -- @param self
 -- @param #string fileName
 -- @param #int texType
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- Sets if imageview is using scale9 renderer.<br>
@@ -19,6 +20,7 @@
 -- @function [parent=#ImageView] setScale9Enabled 
 -- @param self
 -- @param #bool able
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- Updates the texture rect of the ImageView in points.<br>
@@ -26,6 +28,7 @@
 -- @function [parent=#ImageView] setTextureRect 
 -- @param self
 -- @param #rect_table rect
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- Sets capinsets for imageview, if imageview is using scale9 renderer.<br>
@@ -33,6 +36,7 @@
 -- @function [parent=#ImageView] setCapInsets 
 -- @param self
 -- @param #rect_table capInsets
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- 
@@ -84,10 +88,12 @@
 -- @function [parent=#ImageView] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool ignore
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- Default constructor
 -- @function [parent=#ImageView] ImageView 
 -- @param self
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 return nil

@@ -14,5 +14,6 @@
 -- js ctor
 -- @function [parent=#ArmatureDisplayData] ArmatureDisplayData 
 -- @param self
+-- @return ArmatureDisplayData#ArmatureDisplayData self (return value: ccs.ArmatureDisplayData)
         
 return nil

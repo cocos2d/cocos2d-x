@@ -10,6 +10,7 @@
 -- @function [parent=#LoadingBar] setPercent 
 -- @param self
 -- @param #float percent
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
 -- Load texture for loadingbar.<br>
@@ -19,6 +20,7 @@
 -- @param self
 -- @param #string texture
 -- @param #int texType
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
 -- Changes the progress direction of loadingbar.<br>
@@ -27,6 +29,7 @@
 -- @function [parent=#LoadingBar] setDirection 
 -- @param self
 -- @param #int direction
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
 -- Sets if loadingbar is using scale9 renderer.<br>
@@ -34,6 +37,7 @@
 -- @function [parent=#LoadingBar] setScale9Enabled 
 -- @param self
 -- @param #bool enabled
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
 -- Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.<br>
@@ -41,6 +45,7 @@
 -- @function [parent=#LoadingBar] setCapInsets 
 -- @param self
 -- @param #rect_table capInsets
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
 -- Gets the progress direction of loadingbar.<br>
@@ -109,10 +114,12 @@
 -- @function [parent=#LoadingBar] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool ignore
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
 -- Default constructor
 -- @function [parent=#LoadingBar] LoadingBar 
 -- @param self
+-- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 return nil

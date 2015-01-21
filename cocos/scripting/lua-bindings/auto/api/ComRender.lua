@@ -9,6 +9,7 @@
 -- @function [parent=#ComRender] setNode 
 -- @param self
 -- @param #cc.Node node
+-- @return ComRender#ComRender self (return value: ccs.ComRender)
         
 --------------------------------
 -- 

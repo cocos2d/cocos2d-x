@@ -14,6 +14,7 @@
 --  reset all the force applied to body. 
 -- @function [parent=#PhysicsBody] resetForces 
 -- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the max of velocity 
@@ -28,6 +29,7 @@
 -- @function [parent=#PhysicsBody] setGroup 
 -- @param self
 -- @param #int group
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the body mass. 
@@ -66,12 +68,14 @@
 -- @param self
 -- @param #vec2_table impulse
 -- @param #vec2_table offset
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
 
 --------------------------------
 --  set body rotation offset, it's the rotation witch relative to node 
 -- @function [parent=#PhysicsBody] setRotationOffset 
 -- @param self
 -- @param #float rotation
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- @overload self, vec2_table, vec2_table         
@@ -80,6 +84,7 @@
 -- @param self
 -- @param #vec2_table force
 -- @param #vec2_table offset
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
 
 --------------------------------
 -- 
@@ -94,6 +99,7 @@
 -- @function [parent=#PhysicsBody] applyTorque 
 -- @param self
 -- @param #float torque
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the max of angular velocity 
@@ -106,6 +112,7 @@
 -- @function [parent=#PhysicsBody] setAngularVelocityLimit 
 -- @param self
 -- @param #float limit
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the velocity of a body 
@@ -123,6 +130,7 @@
 -- 
 -- @function [parent=#PhysicsBody] removeAllShapes 
 -- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- set angular damping.<br>
@@ -131,18 +139,21 @@
 -- @function [parent=#PhysicsBody] setAngularDamping 
 -- @param self
 -- @param #float damping
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  set the max of velocity 
 -- @function [parent=#PhysicsBody] setVelocityLimit 
 -- @param self
 -- @param #float limit
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  set body to rest 
 -- @function [parent=#PhysicsBody] setResting 
 -- @param self
 -- @param #bool rest
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get body position offset. 
@@ -157,6 +168,7 @@
 -- @function [parent=#PhysicsBody] setCategoryBitmask 
 -- @param self
 -- @param #int bitmask
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the world body added to. 
@@ -182,12 +194,14 @@
 -- @function [parent=#PhysicsBody] setEnable 
 -- @param self
 -- @param #bool enable
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  set the body is affected by the physics world's gravitational force or not. 
 -- @function [parent=#PhysicsBody] setGravityEnable 
 -- @param self
 -- @param #bool enable
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  Return group of first shape, if there is no shape in body, return default value.(0) 
@@ -201,6 +215,7 @@
 -- @function [parent=#PhysicsBody] setMoment 
 -- @param self
 -- @param #float moment
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the body's tag 
@@ -227,6 +242,7 @@
 -- @function [parent=#PhysicsBody] setDynamic 
 -- @param self
 -- @param #bool dynamic
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- 
@@ -251,6 +267,7 @@
 -- @function [parent=#PhysicsBody] setAngularVelocity 
 -- @param self
 -- @param #float velocity
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  convert the world point to local 
@@ -273,6 +290,7 @@
 -- @param self
 -- @param #cc.PhysicsShape shape
 -- @param #bool reduceMassAndMoment
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
 
 --------------------------------
 -- brief set the body mass.<br>
@@ -280,6 +298,7 @@
 -- @function [parent=#PhysicsBody] setMass 
 -- @param self
 -- @param #float mass
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- brief add moment of inertia to body.<br>
@@ -291,12 +310,14 @@
 -- @function [parent=#PhysicsBody] addMoment 
 -- @param self
 -- @param #float moment
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  set the velocity of a body 
 -- @function [parent=#PhysicsBody] setVelocity 
 -- @param self
 -- @param #vec2_table velocity
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- set linear damping.<br>
@@ -305,6 +326,7 @@
 -- @function [parent=#PhysicsBody] setLinearDamping 
 -- @param self
 -- @param #float damping
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- A mask that defines which categories of physics bodies can collide with this physics body.<br>
@@ -313,18 +335,21 @@
 -- @function [parent=#PhysicsBody] setCollisionBitmask 
 -- @param self
 -- @param #int bitmask
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  set body position offset, it's the position witch relative to node 
 -- @function [parent=#PhysicsBody] setPositionOffset 
 -- @param self
 -- @param #vec2_table position
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  set the body is allow rotation or not 
 -- @function [parent=#PhysicsBody] setRotationEnable 
 -- @param self
 -- @param #bool enable
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  whether the body can rotation 
@@ -367,6 +392,7 @@
 -- @function [parent=#PhysicsBody] addMass 
 -- @param self
 -- @param #float mass
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- 
@@ -380,6 +406,7 @@
 -- @function [parent=#PhysicsBody] setTag 
 -- @param self
 -- @param #int tag
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  get the angular velocity of a body at a world point 
@@ -395,11 +422,13 @@
 -- @function [parent=#PhysicsBody] setContactTestBitmask 
 -- @param self
 -- @param #int bitmask
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 --  remove the body from the world it added to 
 -- @function [parent=#PhysicsBody] removeFromWorld 
 -- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
 -- brief test the body is dynamic or not.<br>

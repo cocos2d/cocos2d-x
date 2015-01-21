@@ -18,6 +18,7 @@
 -- @function [parent=#SplitCols] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SplitCols#SplitCols self (return value: cc.SplitCols)
         
 --------------------------------
 -- 
@@ -30,5 +31,6 @@
 -- @function [parent=#SplitCols] update 
 -- @param self
 -- @param #float time
+-- @return SplitCols#SplitCols self (return value: cc.SplitCols)
         
 return nil
