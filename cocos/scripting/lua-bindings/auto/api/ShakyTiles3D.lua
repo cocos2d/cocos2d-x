@@ -26,5 +26,6 @@
 -- @function [parent=#ShakyTiles3D] update 
 -- @param self
 -- @param #float time
+-- @return ShakyTiles3D#ShakyTiles3D self (return value: cc.ShakyTiles3D)
         
 return nil

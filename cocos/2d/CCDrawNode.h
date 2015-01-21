@@ -34,7 +34,6 @@
 #include "2d/CCNode.h"
 #include "base/ccTypes.h"
 #include "renderer/CCBatchCommand.h"
-#include "renderer/CCBatch.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,60 +21,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#ifndef __COCOS_SCRIPTING_LUA_BINDING_MANUAL_COCOSTUDIO_LUA_STUDIO_CONVERSIONS_H__
+#define __COCOS_SCRIPTING_LUA_BINDING_MANUAL_COCOSTUDIO_LUA_STUDIO_CONVERSIONS_H__
 
-#ifndef __CC_FRUSTUM_H_
-#define __CC_FRUSTUM_H_
+extern "C" {
+#include "lua.h"
+#include "tolua++.h"
+}
 
-#include "base/ccMacros.h"
-#include "math/CCMath.h"
-#include "3d/CCAABB.h"
-#include "3d/CCOBB.h"
-#include "3d/CCPlane.h"
+#include "tolua_fix.h"
 
-NS_CC_BEGIN
-
-class Camera;
-class CC_DLL Frustum
+namespace cocostudio
 {
-    friend class Camera;
-public:
-    /**
-     * Constructor & Destructor.
-     */
-    Frustum(): _clipZ(true), _initialized(false) {}
-    ~Frustum(){}
+    namespace timeline
+    {
+        struct AnimationInfo;
+    }
+}
 
-    /**
-     * init frustum from camera.
-     */
-    bool initFrustum(const Camera* camera);
+extern bool luaval_to_animationInfo(lua_State* L, int lo, cocostudio::timeline::AnimationInfo* outValue , const char* funcName = "");
 
-    /**
-     * is aabb out of frustum.
-     */
-    bool isOutOfFrustum(const AABB& aabb) const;
-    /**
-     * is obb out of frustum
-     */
-    bool isOutOfFrustum(const OBB& obb) const;
+extern void animationInfo_to_luaval(lua_State* L,const cocostudio::timeline::AnimationInfo& inValue);
 
-    /**
-     * get & set z clip. if bclipZ == true use near and far plane
-     */
-    void setClipZ(bool clipZ) { _clipZ = clipZ; }
-    bool isClipZ() { return _clipZ; }
-    
-protected:
-    /**
-     * create clip plane
-     */
-    void createPlane(const Camera* camera);
 
-    Plane _plane[6];             // clip plane, left, right, top, bottom, near, far
-    bool _clipZ;                // use near and far clip plane
-    bool _initialized;
-};
-
-NS_CC_END
-
-#endif//__CC_FRUSTUM_H_
+#endif //__COCOS_SCRIPTING_LUA_BINDING_MANUAL_COCOSTUDIO_LUA_STUDIO_CONVERSIONS_H__

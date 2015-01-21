@@ -36,16 +36,19 @@
 -- @function [parent=#AudioEngine] uncache 
 -- @param self
 -- @param #string filePath
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Resume all suspended audio instances 
 -- @function [parent=#AudioEngine] resumeAll 
 -- @param self
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Stop all audio instances 
 -- @function [parent=#AudioEngine] stopAll 
 -- @param self
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Pause an audio instance.<br>
@@ -53,12 +56,14 @@
 -- @function [parent=#AudioEngine] pause 
 -- @param self
 -- @param #int audioID
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 -- Release related objects<br>
 -- warning It must be called before the application exit
 -- @function [parent=#AudioEngine] end 
 -- @param self
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 -- 
@@ -95,6 +100,7 @@
 --  Pause all playing audio instances 
 -- @function [parent=#AudioEngine] pauseAll 
 -- @param self
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Uncache all audio data from internal buffer.<br>
@@ -102,6 +108,7 @@
 -- param
 -- @function [parent=#AudioEngine] uncacheAll 
 -- @param self
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Sets volume for an audio instance.<br>
@@ -111,6 +118,7 @@
 -- @param self
 -- @param #int audioID
 -- @param #float volume
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Play 2d sound<br>
@@ -142,6 +150,7 @@
 -- @function [parent=#AudioEngine] resume 
 -- @param self
 -- @param #int audioID
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Stop an audio instance.<br>
@@ -149,6 +158,7 @@
 -- @function [parent=#AudioEngine] stop 
 -- @param self
 -- @param #int audioID
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --  Gets the duration of an audio instance.<br>
@@ -167,6 +177,7 @@
 -- @param self
 -- @param #int audioID
 -- @param #bool loop
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
 --   Gets the default profile of audio instances<br>

@@ -33,6 +33,7 @@
 -- 
 -- @function [parent=#Skin] updateArmatureTransform 
 -- @param self
+-- @return Skin#Skin self (return value: ccs.Skin)
         
 --------------------------------
 -- 
@@ -46,6 +47,7 @@
 -- @function [parent=#Skin] setBone 
 -- @param self
 -- @param #ccs.Bone bone
+-- @return Skin#Skin self (return value: ccs.Skin)
         
 --------------------------------
 -- @overload self, string         
@@ -66,6 +68,7 @@
 -- 
 -- @function [parent=#Skin] updateTransform 
 -- @param self
+-- @return Skin#Skin self (return value: ccs.Skin)
         
 --------------------------------
 -- 
@@ -80,10 +83,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return Skin#Skin self (return value: ccs.Skin)
         
 --------------------------------
 -- js ctor
 -- @function [parent=#Skin] Skin 
 -- @param self
+-- @return Skin#Skin self (return value: ccs.Skin)
         
 return nil

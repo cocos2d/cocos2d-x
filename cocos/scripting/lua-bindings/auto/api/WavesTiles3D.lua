@@ -15,12 +15,14 @@
 -- @function [parent=#WavesTiles3D] setAmplitude 
 -- @param self
 -- @param #float amplitude
+-- @return WavesTiles3D#WavesTiles3D self (return value: cc.WavesTiles3D)
         
 --------------------------------
 -- 
 -- @function [parent=#WavesTiles3D] setAmplitudeRate 
 -- @param self
 -- @param #float amplitudeRate
+-- @return WavesTiles3D#WavesTiles3D self (return value: cc.WavesTiles3D)
         
 --------------------------------
 --  waves amplitude 
@@ -50,5 +52,6 @@
 -- @function [parent=#WavesTiles3D] update 
 -- @param self
 -- @param #float time
+-- @return WavesTiles3D#WavesTiles3D self (return value: cc.WavesTiles3D)
         
 return nil

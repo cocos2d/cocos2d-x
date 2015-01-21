@@ -21,6 +21,7 @@
 -- @function [parent=#Hide] update 
 -- @param self
 -- @param #float time
+-- @return Hide#Hide self (return value: cc.Hide)
         
 --------------------------------
 -- 

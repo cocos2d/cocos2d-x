@@ -9,12 +9,14 @@
 -- @function [parent=#PhysicsJointSpring] setAnchr2 
 -- @param self
 -- @param #vec2_table anchr2
+-- @return PhysicsJointSpring#PhysicsJointSpring self (return value: cc.PhysicsJointSpring)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointSpring] setAnchr1 
 -- @param self
 -- @param #vec2_table anchr1
+-- @return PhysicsJointSpring#PhysicsJointSpring self (return value: cc.PhysicsJointSpring)
         
 --------------------------------
 -- 
@@ -27,6 +29,7 @@
 -- @function [parent=#PhysicsJointSpring] setStiffness 
 -- @param self
 -- @param #float stiffness
+-- @return PhysicsJointSpring#PhysicsJointSpring self (return value: cc.PhysicsJointSpring)
         
 --------------------------------
 -- 
@@ -63,12 +66,14 @@
 -- @function [parent=#PhysicsJointSpring] setRestLength 
 -- @param self
 -- @param #float restLength
+-- @return PhysicsJointSpring#PhysicsJointSpring self (return value: cc.PhysicsJointSpring)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointSpring] setDamping 
 -- @param self
 -- @param #float damping
+-- @return PhysicsJointSpring#PhysicsJointSpring self (return value: cc.PhysicsJointSpring)
         
 --------------------------------
 -- 

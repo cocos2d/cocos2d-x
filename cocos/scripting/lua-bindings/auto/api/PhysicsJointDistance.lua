@@ -15,6 +15,7 @@
 -- @function [parent=#PhysicsJointDistance] setDistance 
 -- @param self
 -- @param #float distance
+-- @return PhysicsJointDistance#PhysicsJointDistance self (return value: cc.PhysicsJointDistance)
         
 --------------------------------
 -- 

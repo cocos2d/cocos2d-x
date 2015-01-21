@@ -265,12 +265,12 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
 
         
         auto csparsebinary = CreateCSParseBinary(*_builder,
+                                                 _builder->CreateString(_csdVersion),
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
                                                  aciton,
-                                                 _builder->CreateVector(animationInfos),
-                                                 _builder->CreateString(_csdVersion));
+                                                 _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
         _textures.clear();
@@ -1216,12 +1216,12 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
         }
         
 		auto csparsebinary = CreateCSParseBinary(*_builder,
+                                                 _builder->CreateString(_csdVersion),
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
                                                  aciton,
-                                                 _builder->CreateVector(animationInfos),
-                                                 _builder->CreateString(_csdVersion));
+                                                 _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
         _textures.clear();

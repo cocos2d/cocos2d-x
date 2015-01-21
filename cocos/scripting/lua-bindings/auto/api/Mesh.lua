@@ -10,6 +10,7 @@
 -- @function [parent=#Mesh] setTexture
 -- @param self
 -- @param #string texPath
+-- @return Mesh#Mesh self (return value: cc.Mesh)
 
 --------------------------------
 -- 
@@ -28,6 +29,7 @@
 -- @function [parent=#Mesh] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendFunc
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
 -- 
@@ -46,5 +48,6 @@
 -- @function [parent=#Mesh] setVisible 
 -- @param self
 -- @param #bool visible
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 return nil

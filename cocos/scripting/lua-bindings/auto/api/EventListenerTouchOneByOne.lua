@@ -15,6 +15,7 @@
 -- @function [parent=#EventListenerTouchOneByOne] setSwallowTouches 
 -- @param self
 -- @param #bool needSwallow
+-- @return EventListenerTouchOneByOne#EventListenerTouchOneByOne self (return value: cc.EventListenerTouchOneByOne)
         
 --------------------------------
 -- / Overrides

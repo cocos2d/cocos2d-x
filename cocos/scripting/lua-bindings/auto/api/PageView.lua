@@ -27,6 +27,7 @@
 -- @param #ccui.Widget widget
 -- @param #long pageIdx
 -- @param #bool forceCreate
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- brief Query whether we are using user defined scroll page threshold or not
@@ -47,12 +48,14 @@
 -- @function [parent=#PageView] removePage 
 -- @param self
 -- @param #ccui.Layout page
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- 
 -- @function [parent=#PageView] addEventListener 
 -- @param self
 -- @param #function callback
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- brief Set using user defined scroll page threshold or not<br>
@@ -60,12 +63,14 @@
 -- @function [parent=#PageView] setUsingCustomScrollThreshold 
 -- @param self
 -- @param #bool flag
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- brief If you don't specify the value, the pageView will scroll when half pageview width reached
 -- @function [parent=#PageView] setCustomScrollThreshold 
 -- @param self
 -- @param #float threshold
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- Insert a page to pageview.<br>
@@ -74,6 +79,7 @@
 -- @param self
 -- @param #ccui.Layout page
 -- @param #int idx
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- scroll pageview to index.<br>
@@ -81,6 +87,7 @@
 -- @function [parent=#PageView] scrollToPage 
 -- @param self
 -- @param #long idx
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- Remove a page at index of pageview.<br>
@@ -88,6 +95,7 @@
 -- @function [parent=#PageView] removePageAtIndex 
 -- @param self
 -- @param #long index
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- 
@@ -99,6 +107,7 @@
 -- 
 -- @function [parent=#PageView] removeAllPages 
 -- @param self
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- Push back a page to pageview.<br>
@@ -106,6 +115,7 @@
 -- @function [parent=#PageView] addPage 
 -- @param self
 -- @param #ccui.Layout page
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- Allocates and initializes.
@@ -138,6 +148,7 @@
 -- @function [parent=#PageView] update 
 -- @param self
 -- @param #float dt
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- Sets LayoutType.<br>
@@ -146,10 +157,12 @@
 -- @function [parent=#PageView] setLayoutType 
 -- @param self
 -- @param #int type
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
 -- Default constructor
 -- @function [parent=#PageView] PageView 
 -- @param self
+-- @return PageView#PageView self (return value: ccui.PageView)
         
 return nil

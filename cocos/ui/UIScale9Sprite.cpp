@@ -39,15 +39,15 @@ namespace ui {
     , _spriteFrameRotated(false)
     , _positionsAreDirty(true)
     , _scale9Image(nullptr)
-    , _topLeft(nullptr)
-    , _top(nullptr)
-    , _topRight(nullptr)
-    , _left(nullptr)
-    , _centre(nullptr)
-    , _right(nullptr)
-    , _bottomLeft(nullptr)
-    , _bottom(nullptr)
-    , _bottomRight(nullptr)
+    , _topLeftSprite(nullptr)
+    , _topSprite(nullptr)
+    , _topRightSprite(nullptr)
+    , _leftSprite(nullptr)
+    , _centerSprite(nullptr)
+    , _rightSprite(nullptr)
+    , _bottomLeftSprite(nullptr)
+    , _bottomSprite(nullptr)
+    , _bottomRightSprite(nullptr)
     , _scale9Enabled(true)
     , _insetLeft(0)
     , _insetTop(0)
@@ -68,58 +68,58 @@ namespace ui {
     
     void Scale9Sprite::cleanupSlicedSprites()
     {
-        if (_topLeft && _topLeft->isRunning())
+        if (_topLeftSprite && _topLeftSprite->isRunning())
         {
-            _topLeft->onExit();
+            _topLeftSprite->onExit();
         }
-        if (_top && _top->isRunning())
+        if (_topSprite && _topSprite->isRunning())
         {
-            _top->onExit();
+            _topSprite->onExit();
         }
-        if (_topRight && _topRight->isRunning())
+        if (_topRightSprite && _topRightSprite->isRunning())
         {
-            _topRight->onExit();
-        }
-        
-        if (_left && _left->isRunning())
-        {
-            _left->onExit();
+            _topRightSprite->onExit();
         }
         
-        if (_centre && _centre->isRunning())
+        if (_leftSprite && _leftSprite->isRunning())
         {
-            _centre->onExit();
+            _leftSprite->onExit();
         }
         
-        if (_right && _right->isRunning())
+        if (_centerSprite && _centerSprite->isRunning())
         {
-            _right->onExit();
+            _centerSprite->onExit();
         }
         
-        if (_bottomLeft && _bottomLeft->isRunning())
+        if (_rightSprite && _rightSprite->isRunning())
         {
-            _bottomLeft->onExit();
+            _rightSprite->onExit();
         }
         
-        if (_bottomRight && _bottomRight->isRunning())
+        if (_bottomLeftSprite && _bottomLeftSprite->isRunning())
         {
-            _bottomRight->onExit();
+            _bottomLeftSprite->onExit();
         }
         
-        if (_bottom && _bottom->isRunning())
+        if (_bottomRightSprite && _bottomRightSprite->isRunning())
         {
-            _bottom->onExit();
+            _bottomRightSprite->onExit();
         }
         
-        CC_SAFE_RELEASE_NULL(_topLeft);
-        CC_SAFE_RELEASE_NULL(_top);
-        CC_SAFE_RELEASE_NULL(_topRight);
-        CC_SAFE_RELEASE_NULL(_left);
-        CC_SAFE_RELEASE_NULL(_centre);
-        CC_SAFE_RELEASE_NULL(_right);
-        CC_SAFE_RELEASE_NULL(_bottomLeft);
-        CC_SAFE_RELEASE_NULL(_bottom);
-        CC_SAFE_RELEASE_NULL(_bottomRight);
+        if (_bottomSprite && _bottomSprite->isRunning())
+        {
+            _bottomSprite->onExit();
+        }
+        
+        CC_SAFE_RELEASE_NULL(_topLeftSprite);
+        CC_SAFE_RELEASE_NULL(_topSprite);
+        CC_SAFE_RELEASE_NULL(_topRightSprite);
+        CC_SAFE_RELEASE_NULL(_leftSprite);
+        CC_SAFE_RELEASE_NULL(_centerSprite);
+        CC_SAFE_RELEASE_NULL(_rightSprite);
+        CC_SAFE_RELEASE_NULL(_bottomLeftSprite);
+        CC_SAFE_RELEASE_NULL(_bottomSprite);
+        CC_SAFE_RELEASE_NULL(_bottomRightSprite);
     }
     
     bool Scale9Sprite::init()
@@ -158,12 +158,6 @@ namespace ui {
         auto sprite = Sprite::createWithTexture(batchnode->getTexture());
         return init(sprite, rect, false, capInsets);
     }
-    
-#define    TRANSLATE_X(x, y, xtranslate) \
-x+=xtranslate;                       \
-
-#define    TRANSLATE_Y(x, y, ytranslate) \
-y+=ytranslate;         \
 
     bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &originalRect, bool rotated, const cocos2d::Rect &capInsets)
     {
@@ -265,16 +259,17 @@ y+=ytranslate;         \
     
     void Scale9Sprite::createSlicedSprites()
     {
-        float w = _originalSize.width;
-        float h = _originalSize.height;
+        float width = _originalSize.width;
+        float height = _originalSize.height;
         
-        Vec2 offsetPosition(ceil(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2), ceil(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
+        Vec2 offsetPosition(ceilf(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
+                ceilf(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
         
         // If there is no specified center region
         if ( _capInsetsInternal.equals(Rect::ZERO) )
         {
             // log("... cap insets not specified : using default cap insets ...");
-            _capInsetsInternal = Rect(w/3, h/3, w/3, h/3);
+            _capInsetsInternal = Rect(width /3, height /3, width /3, height /3);
         }
         
         Rect originalRect;
@@ -283,13 +278,13 @@ y+=ytranslate;         \
         else
             originalRect = Rect(_spriteRect.origin.x - offsetPosition.x, _spriteRect.origin.y - offsetPosition.y, _originalSize.width, _originalSize.height);
         
-        float left_w = _capInsetsInternal.origin.x;
-        float center_w = _capInsetsInternal.size.width;
-        float right_w = originalRect.size.width - (left_w + center_w);
+        float leftWidth = _capInsetsInternal.origin.x;
+        float centerWidth = _capInsetsInternal.size.width;
+        float rightWidth = originalRect.size.width - (leftWidth + centerWidth);
         
-        float top_h = _capInsetsInternal.origin.y;
-        float center_h = _capInsetsInternal.size.height;
-        float bottom_h = originalRect.size.height - (top_h + center_h);
+        float topHeight = _capInsetsInternal.origin.y;
+        float centerHeight = _capInsetsInternal.size.height;
+        float bottomHeight = originalRect.size.height - (topHeight + centerHeight);
         
         // calculate rects
         
@@ -300,83 +295,83 @@ y+=ytranslate;         \
         Rect pixelRect = Rect(offsetPosition.x, offsetPosition.y, _spriteRect.size.width, _spriteRect.size.height);
         
         // top left
-        Rect lefttopboundsorig = Rect(x, y, left_w, top_h);
-        Rect lefttopbounds = lefttopboundsorig;
+        Rect leftTopBoundsOriginal = Rect(x, y, leftWidth, topHeight);
+        Rect leftTopBounds = leftTopBoundsOriginal;
         
         // top center
-        TRANSLATE_X(x, y, left_w);
-        Rect centertopbounds = Rect(x, y, center_w, top_h);
+        x += leftWidth;
+        Rect centerTopBounds = Rect(x, y, centerWidth, topHeight);
         
         // top right
-        TRANSLATE_X(x, y, center_w);
-        Rect righttopbounds = Rect(x, y, right_w, top_h);
+        x += centerWidth;
+        Rect rightTopBounds = Rect(x, y, rightWidth, topHeight);
         
         // ... center row
         x = 0.0;
         y = 0.0;
-        TRANSLATE_Y(x, y, top_h);
-        
+        y += topHeight;
+
         // center left
-        Rect leftcenterbounds = Rect(x, y, left_w, center_h);
+        Rect leftCenterBounds = Rect(x, y, leftWidth, centerHeight);
         
         // center center
-        TRANSLATE_X(x, y, left_w);
-        Rect centerboundsorig = Rect(x, y, center_w, center_h);
-        Rect centerbounds = centerboundsorig;
+        x += leftWidth;
+        Rect centerBoundsOriginal = Rect(x, y, centerWidth, centerHeight);
+        Rect centerBounds = centerBoundsOriginal;
         
         // center right
-        TRANSLATE_X(x, y, center_w);
-        Rect rightcenterbounds = Rect(x, y, right_w, center_h);
+        x += centerWidth;
+        Rect rightCenterBounds = Rect(x, y, rightWidth, centerHeight);
         
         // ... bottom row
         x = 0.0;
         y = 0.0;
-        TRANSLATE_Y(x, y, top_h);
-        TRANSLATE_Y(x, y, center_h);
-        
+        y += topHeight;
+        y += centerHeight;
+
         // bottom left
-        Rect leftbottombounds = Rect(x, y, left_w, bottom_h);
+        Rect leftBottomBounds = Rect(x, y, leftWidth, bottomHeight);
         
         // bottom center
-        TRANSLATE_X(x, y, left_w);
-        Rect centerbottombounds = Rect(x, y, center_w, bottom_h);
+        x += leftWidth;
+        Rect centerBottomBounds = Rect(x, y, centerWidth, bottomHeight);
         
         // bottom right
-        TRANSLATE_X(x, y, center_w);
-        Rect rightbottomboundsorig = Rect(x, y, right_w, bottom_h);
-        Rect rightbottombounds = rightbottomboundsorig;
+        x += centerWidth;
+        Rect rightBottomBoundsOriginal = Rect(x, y, rightWidth, bottomHeight);
+        Rect rightBottomBounds = rightBottomBoundsOriginal;
         
         if((_capInsetsInternal.origin.x + _capInsetsInternal.size.width) <= _originalSize.width
            || (_capInsetsInternal.origin.y + _capInsetsInternal.size.height) <= _originalSize.height)
         //in general case it is error but for legacy support we will check it
         {
-            lefttopbounds = intersectRect(lefttopbounds, pixelRect);
-            centertopbounds = intersectRect(centertopbounds, pixelRect);
-            righttopbounds = intersectRect(righttopbounds, pixelRect);
-            leftcenterbounds = intersectRect(leftcenterbounds, pixelRect);
-            centerbounds = intersectRect(centerbounds, pixelRect);
-            rightcenterbounds = intersectRect(rightcenterbounds, pixelRect);
-            leftbottombounds = intersectRect(leftbottombounds, pixelRect);
-            centerbottombounds = intersectRect(centerbottombounds, pixelRect);
-            rightbottombounds = intersectRect(rightbottombounds, pixelRect);
+            leftTopBounds = intersectRect(leftTopBounds, pixelRect);
+            centerTopBounds = intersectRect(centerTopBounds, pixelRect);
+            rightTopBounds = intersectRect(rightTopBounds, pixelRect);
+            leftCenterBounds = intersectRect(leftCenterBounds, pixelRect);
+            centerBounds = intersectRect(centerBounds, pixelRect);
+            rightCenterBounds = intersectRect(rightCenterBounds, pixelRect);
+            leftBottomBounds = intersectRect(leftBottomBounds, pixelRect);
+            centerBottomBounds = intersectRect(centerBottomBounds, pixelRect);
+            rightBottomBounds = intersectRect(rightBottomBounds, pixelRect);
         }
         else
             //it is error but for legacy turn off clip system
             CCLOG("Scale9Sprite capInsetsInternal > originalSize");
         
-        Rect rotatedlefttopboundsorig = lefttopboundsorig;
-        Rect rotatedcenterboundsorig = centerboundsorig;
-        Rect rotatedrightbottomboundsorig = rightbottomboundsorig;
+        Rect rotatedLeftTopBoundsOriginal = leftTopBoundsOriginal;
+        Rect rotatedCenterBoundsOriginal = centerBoundsOriginal;
+        Rect rotatedRightBottomBoundsOriginal = rightBottomBoundsOriginal;
         
-        Rect rotatedcenterbounds = centerbounds;
-        Rect rotatedrightbottombounds = rightbottombounds;
-        Rect rotatedleftbottombounds = leftbottombounds;
-        Rect rotatedrighttopbounds = righttopbounds;
-        Rect rotatedlefttopbounds = lefttopbounds;
-        Rect rotatedrightcenterbounds = rightcenterbounds;
-        Rect rotatedleftcenterbounds = leftcenterbounds;
-        Rect rotatedcenterbottombounds = centerbottombounds;
-        Rect rotatedcentertopbounds = centertopbounds;
+        Rect rotatedCenterBounds = centerBounds;
+        Rect rotatedRightBottomBounds = rightBottomBounds;
+        Rect rotatedLeftBottomBounds = leftBottomBounds;
+        Rect rotatedRightTopBounds = rightTopBounds;
+        Rect rotatedLeftTopBounds = leftTopBounds;
+        Rect rotatedRightCenterBounds = rightCenterBounds;
+        Rect rotatedLeftCenterBounds = leftCenterBounds;
+        Rect rotatedCenterBottomBounds = centerBottomBounds;
+        Rect rotatedCenterTopBounds = centerTopBounds;
         
         if (!_spriteFrameRotated)
         {
@@ -384,19 +379,19 @@ y+=ytranslate;         \
             AffineTransform t = AffineTransform::IDENTITY;
             t = AffineTransformTranslate(t, originalRect.origin.x, originalRect.origin.y);
             
-            rotatedlefttopboundsorig = RectApplyAffineTransform(rotatedlefttopboundsorig, t);
-            rotatedcenterboundsorig = RectApplyAffineTransform(rotatedcenterboundsorig, t);
-            rotatedrightbottomboundsorig = RectApplyAffineTransform(rotatedrightbottomboundsorig, t);
+            rotatedLeftTopBoundsOriginal = RectApplyAffineTransform(rotatedLeftTopBoundsOriginal, t);
+            rotatedCenterBoundsOriginal = RectApplyAffineTransform(rotatedCenterBoundsOriginal, t);
+            rotatedRightBottomBoundsOriginal = RectApplyAffineTransform(rotatedRightBottomBoundsOriginal, t);
             
-            rotatedcenterbounds = RectApplyAffineTransform(rotatedcenterbounds, t);
-            rotatedrightbottombounds = RectApplyAffineTransform(rotatedrightbottombounds, t);
-            rotatedleftbottombounds = RectApplyAffineTransform(rotatedleftbottombounds, t);
-            rotatedrighttopbounds = RectApplyAffineTransform(rotatedrighttopbounds, t);
-            rotatedlefttopbounds = RectApplyAffineTransform(rotatedlefttopbounds, t);
-            rotatedrightcenterbounds = RectApplyAffineTransform(rotatedrightcenterbounds, t);
-            rotatedleftcenterbounds = RectApplyAffineTransform(rotatedleftcenterbounds, t);
-            rotatedcenterbottombounds = RectApplyAffineTransform(rotatedcenterbottombounds, t);
-            rotatedcentertopbounds = RectApplyAffineTransform(rotatedcentertopbounds, t);
+            rotatedCenterBounds = RectApplyAffineTransform(rotatedCenterBounds, t);
+            rotatedRightBottomBounds = RectApplyAffineTransform(rotatedRightBottomBounds, t);
+            rotatedLeftBottomBounds = RectApplyAffineTransform(rotatedLeftBottomBounds, t);
+            rotatedRightTopBounds = RectApplyAffineTransform(rotatedRightTopBounds, t);
+            rotatedLeftTopBounds = RectApplyAffineTransform(rotatedLeftTopBounds, t);
+            rotatedRightCenterBounds = RectApplyAffineTransform(rotatedRightCenterBounds, t);
+            rotatedLeftCenterBounds = RectApplyAffineTransform(rotatedLeftCenterBounds, t);
+            rotatedCenterBottomBounds = RectApplyAffineTransform(rotatedCenterBottomBounds, t);
+            rotatedCenterTopBounds = RectApplyAffineTransform(rotatedCenterTopBounds, t);
             
             
         } else {
@@ -410,126 +405,126 @@ y+=ytranslate;         \
             t = AffineTransformTranslate(t, originalRect.size.height+originalRect.origin.x, originalRect.origin.y);
             t = AffineTransformRotate(t, 1.57079633f);
             
-            lefttopboundsorig = RectApplyAffineTransform(lefttopboundsorig, t);
-            centerboundsorig = RectApplyAffineTransform(centerboundsorig, t);
-            rightbottomboundsorig = RectApplyAffineTransform(rightbottomboundsorig, t);
+            leftTopBoundsOriginal = RectApplyAffineTransform(leftTopBoundsOriginal, t);
+            centerBoundsOriginal = RectApplyAffineTransform(centerBoundsOriginal, t);
+            rightBottomBoundsOriginal = RectApplyAffineTransform(rightBottomBoundsOriginal, t);
             
-            centerbounds = RectApplyAffineTransform(centerbounds, t);
-            rightbottombounds = RectApplyAffineTransform(rightbottombounds, t);
-            leftbottombounds = RectApplyAffineTransform(leftbottombounds, t);
-            righttopbounds = RectApplyAffineTransform(righttopbounds, t);
-            lefttopbounds = RectApplyAffineTransform(lefttopbounds, t);
-            rightcenterbounds = RectApplyAffineTransform(rightcenterbounds, t);
-            leftcenterbounds = RectApplyAffineTransform(leftcenterbounds, t);
-            centerbottombounds = RectApplyAffineTransform(centerbottombounds, t);
-            centertopbounds = RectApplyAffineTransform(centertopbounds, t);
+            centerBounds = RectApplyAffineTransform(centerBounds, t);
+            rightBottomBounds = RectApplyAffineTransform(rightBottomBounds, t);
+            leftBottomBounds = RectApplyAffineTransform(leftBottomBounds, t);
+            rightTopBounds = RectApplyAffineTransform(rightTopBounds, t);
+            leftTopBounds = RectApplyAffineTransform(leftTopBounds, t);
+            rightCenterBounds = RectApplyAffineTransform(rightCenterBounds, t);
+            leftCenterBounds = RectApplyAffineTransform(leftCenterBounds, t);
+            centerBottomBounds = RectApplyAffineTransform(centerBottomBounds, t);
+            centerTopBounds = RectApplyAffineTransform(centerTopBounds, t);
             
-            rotatedlefttopboundsorig.origin = lefttopboundsorig.origin;
-            rotatedcenterboundsorig.origin = centerboundsorig.origin;
-            rotatedrightbottomboundsorig.origin = rightbottomboundsorig.origin;
+            rotatedLeftTopBoundsOriginal.origin = leftTopBoundsOriginal.origin;
+            rotatedCenterBoundsOriginal.origin = centerBoundsOriginal.origin;
+            rotatedRightBottomBoundsOriginal.origin = rightBottomBoundsOriginal.origin;
             
-            rotatedcenterbounds.origin = centerbounds.origin;
-            rotatedrightbottombounds.origin = rightbottombounds.origin;
-            rotatedleftbottombounds.origin = leftbottombounds.origin;
-            rotatedrighttopbounds.origin = righttopbounds.origin;
-            rotatedlefttopbounds.origin = lefttopbounds.origin;
-            rotatedrightcenterbounds.origin = rightcenterbounds.origin;
-            rotatedleftcenterbounds.origin = leftcenterbounds.origin;
-            rotatedcenterbottombounds.origin = centerbottombounds.origin;
-            rotatedcentertopbounds.origin = centertopbounds.origin;
+            rotatedCenterBounds.origin = centerBounds.origin;
+            rotatedRightBottomBounds.origin = rightBottomBounds.origin;
+            rotatedLeftBottomBounds.origin = leftBottomBounds.origin;
+            rotatedRightTopBounds.origin = rightTopBounds.origin;
+            rotatedLeftTopBounds.origin = leftTopBounds.origin;
+            rotatedRightCenterBounds.origin = rightCenterBounds.origin;
+            rotatedLeftCenterBounds.origin = leftCenterBounds.origin;
+            rotatedCenterBottomBounds.origin = centerBottomBounds.origin;
+            rotatedCenterTopBounds.origin = centerTopBounds.origin;
             
             
         }
         
-        _topLeftSize = rotatedlefttopboundsorig.size;
-        _centerSize = rotatedcenterboundsorig.size;
-        _bottomRightSize = rotatedrightbottomboundsorig.size;
+        _topLeftSize = rotatedLeftTopBoundsOriginal.size;
+        _centerSize = rotatedCenterBoundsOriginal.size;
+        _bottomRightSize = rotatedRightBottomBoundsOriginal.size;
         
         if(_spriteFrameRotated)
         {
-            float offsetx = (rotatedcenterbounds.origin.x + rotatedcenterbounds.size.height/2) - (rotatedcenterboundsorig.origin.x + rotatedcenterboundsorig.size.height/2);
-            float offsety = (rotatedcenterboundsorig.origin.y + rotatedcenterboundsorig.size.width/2)- (rotatedcenterbounds.origin.y + rotatedcenterbounds.size.width/2);
-            _centerOffset.x = -offsety;
-            _centerOffset.y = offsetx;
+            float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.height/2) - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.height/2);
+            float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.width/2)- (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.width/2);
+            _centerOffset.x = -offsetY;
+            _centerOffset.y = offsetX;
         }
         else
         {
-            float offsetx = (rotatedcenterbounds.origin.x + rotatedcenterbounds.size.width/2) - (rotatedcenterboundsorig.origin.x + rotatedcenterboundsorig.size.width/2);
-            float offsety = (rotatedcenterboundsorig.origin.y + rotatedcenterboundsorig.size.height/2)- (rotatedcenterbounds.origin.y + rotatedcenterbounds.size.height/2);
-            _centerOffset.x = offsetx;
-            _centerOffset.y = offsety;
+            float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.width/2) - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.width/2);
+            float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.height/2)- (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.height/2);
+            _centerOffset.x = offsetX;
+            _centerOffset.y = offsetY;
         }
         
         // Centre
-        if(rotatedcenterbounds.size.width > 0 && rotatedcenterbounds.size.height > 0 )
+        if(rotatedCenterBounds.size.width > 0 && rotatedCenterBounds.size.height > 0 )
         {
-            _centre = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbounds, _spriteFrameRotated);
-            _centre->retain();
-            this->addProtectedChild(_centre);
+            _centerSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedCenterBounds, _spriteFrameRotated);
+            _centerSprite->retain();
+            this->addProtectedChild(_centerSprite);
         }
         
         // Top
-        if(rotatedcentertopbounds.size.width > 0 && rotatedcentertopbounds.size.height > 0 )
+        if(rotatedCenterTopBounds.size.width > 0 && rotatedCenterTopBounds.size.height > 0 )
         {
-            _top = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcentertopbounds, _spriteFrameRotated);
-            _top->retain();
-            this->addProtectedChild(_top);
+            _topSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedCenterTopBounds, _spriteFrameRotated);
+            _topSprite->retain();
+            this->addProtectedChild(_topSprite);
         }
         
         // Bottom
-        if(rotatedcenterbottombounds.size.width > 0 && rotatedcenterbottombounds.size.height > 0 )
+        if(rotatedCenterBottomBounds.size.width > 0 && rotatedCenterBottomBounds.size.height > 0 )
         {
-            _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, _spriteFrameRotated);
-            _bottom->retain();
-            this->addProtectedChild(_bottom);
+            _bottomSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedCenterBottomBounds, _spriteFrameRotated);
+            _bottomSprite->retain();
+            this->addProtectedChild(_bottomSprite);
         }
         
         // Left
-        if(rotatedleftcenterbounds.size.width > 0 && rotatedleftcenterbounds.size.height > 0 )
+        if(rotatedLeftCenterBounds.size.width > 0 && rotatedLeftCenterBounds.size.height > 0 )
         {
-            _left = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftcenterbounds, _spriteFrameRotated);
-            _left->retain();
-            this->addProtectedChild(_left);
+            _leftSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedLeftCenterBounds, _spriteFrameRotated);
+            _leftSprite->retain();
+            this->addProtectedChild(_leftSprite);
         }
         
         // Right
-        if(rotatedrightcenterbounds.size.width > 0 && rotatedrightcenterbounds.size.height > 0 )
+        if(rotatedRightCenterBounds.size.width > 0 && rotatedRightCenterBounds.size.height > 0 )
         {
-            _right = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightcenterbounds, _spriteFrameRotated);
-            _right->retain();
-            this->addProtectedChild(_right);
+            _rightSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedRightCenterBounds, _spriteFrameRotated);
+            _rightSprite->retain();
+            this->addProtectedChild(_rightSprite);
         }
         
         // Top left
-        if(rotatedlefttopbounds.size.width > 0 && rotatedlefttopbounds.size.height > 0 )
+        if(rotatedLeftTopBounds.size.width > 0 && rotatedLeftTopBounds.size.height > 0 )
         {
-            _topLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedlefttopbounds, _spriteFrameRotated);
-            _topLeft->retain();
-            this->addProtectedChild(_topLeft);
+            _topLeftSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedLeftTopBounds, _spriteFrameRotated);
+            _topLeftSprite->retain();
+            this->addProtectedChild(_topLeftSprite);
         }
         
         // Top right
-        if(rotatedrighttopbounds.size.width > 0 && rotatedrighttopbounds.size.height > 0 )
+        if(rotatedRightTopBounds.size.width > 0 && rotatedRightTopBounds.size.height > 0 )
         {
-            _topRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrighttopbounds, _spriteFrameRotated);
-            _topRight->retain();
-            this->addProtectedChild(_topRight);
+            _topRightSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedRightTopBounds, _spriteFrameRotated);
+            _topRightSprite->retain();
+            this->addProtectedChild(_topRightSprite);
         }
         
         // Bottom left
-        if(rotatedleftbottombounds.size.width > 0 && rotatedleftbottombounds.size.height > 0 )
+        if(rotatedLeftBottomBounds.size.width > 0 && rotatedLeftBottomBounds.size.height > 0 )
         {
-            _bottomLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftbottombounds, _spriteFrameRotated);
-            _bottomLeft->retain();
-            this->addProtectedChild(_bottomLeft);
+            _bottomLeftSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedLeftBottomBounds, _spriteFrameRotated);
+            _bottomLeftSprite->retain();
+            this->addProtectedChild(_bottomLeftSprite);
         }
         
         // Bottom right
-        if(rotatedrightbottombounds.size.width > 0 && rotatedrightbottombounds.size.height > 0 )
+        if(rotatedRightBottomBounds.size.width > 0 && rotatedRightBottomBounds.size.height > 0 )
         {
-            _bottomRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, _spriteFrameRotated);
-            _bottomRight->retain();
-            this->addProtectedChild(_bottomRight);
+            _bottomRightSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedRightBottomBounds, _spriteFrameRotated);
+            _bottomRightSprite->retain();
+            this->addProtectedChild(_bottomRightSprite);
         }
     }
     
@@ -549,10 +544,10 @@ y+=ytranslate;         \
         float horizontalScale = sizableWidth/_centerSize.width;
         float verticalScale = sizableHeight/_centerSize.height;
         
-        if(_centre)
+        if(_centerSprite)
         {
-            _centre->setScaleX(horizontalScale);
-            _centre->setScaleY(verticalScale);
+            _centerSprite->setScaleX(horizontalScale);
+            _centerSprite->setScaleY(verticalScale);
         }
         
         float rescaledWidth = _centerSize.width * horizontalScale;
@@ -564,59 +559,59 @@ y+=ytranslate;         \
         Vec2 centerOffset(_centerOffset.x * horizontalScale, _centerOffset.y * verticalScale);
         
         // Position corners
-        if(_bottomLeft)
+        if(_bottomLeftSprite)
         {
-            _bottomLeft->setAnchorPoint(Vec2(1,1));
-            _bottomLeft->setPosition(leftWidth,bottomHeight);
+            _bottomLeftSprite->setAnchorPoint(Vec2(1,1));
+            _bottomLeftSprite->setPosition(leftWidth,bottomHeight);
         }
-        if(_bottomRight)
+        if(_bottomRightSprite)
         {
-            _bottomRight->setAnchorPoint(Vec2(0,1));
-            _bottomRight->setPosition(leftWidth+rescaledWidth,bottomHeight);
+            _bottomRightSprite->setAnchorPoint(Vec2(0,1));
+            _bottomRightSprite->setPosition(leftWidth+rescaledWidth,bottomHeight);
         }
-        if(_topLeft)
+        if(_topLeftSprite)
         {
-            _topLeft->setAnchorPoint(Vec2(1,0));
-            _topLeft->setPosition(leftWidth, bottomHeight+rescaledHeight);
+            _topLeftSprite->setAnchorPoint(Vec2(1,0));
+            _topLeftSprite->setPosition(leftWidth, bottomHeight+rescaledHeight);
         }
-        if(_topRight)
+        if(_topRightSprite)
         {
-            _topRight->setAnchorPoint(Vec2(0,0));
-            _topRight->setPosition(leftWidth+rescaledWidth, bottomHeight+rescaledHeight);
+            _topRightSprite->setAnchorPoint(Vec2(0,0));
+            _topRightSprite->setPosition(leftWidth+rescaledWidth, bottomHeight+rescaledHeight);
         }
         
         // Scale and position borders
-        if(_left)
+        if(_leftSprite)
         {
-            _left->setAnchorPoint(Vec2(1,0.5));
-            _left->setPosition(leftWidth, bottomHeight+rescaledHeight/2 + centerOffset.y);
-            _left->setScaleY(verticalScale);
+            _leftSprite->setAnchorPoint(Vec2(1,0.5));
+            _leftSprite->setPosition(leftWidth, bottomHeight+rescaledHeight/2 + centerOffset.y);
+            _leftSprite->setScaleY(verticalScale);
         }
-        if(_right)
+        if(_rightSprite)
         {
-            _right->setAnchorPoint(Vec2(0,0.5));
-            _right->setPosition(leftWidth+rescaledWidth,bottomHeight+rescaledHeight/2 + centerOffset.y);
-            _right->setScaleY(verticalScale);
+            _rightSprite->setAnchorPoint(Vec2(0,0.5));
+            _rightSprite->setPosition(leftWidth+rescaledWidth,bottomHeight+rescaledHeight/2 + centerOffset.y);
+            _rightSprite->setScaleY(verticalScale);
         }
-        if(_top)
+        if(_topSprite)
         {
-            _top->setAnchorPoint(Vec2(0.5,0));
-            _top->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,bottomHeight+rescaledHeight);
-            _top->setScaleX(horizontalScale);
+            _topSprite->setAnchorPoint(Vec2(0.5,0));
+            _topSprite->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,bottomHeight+rescaledHeight);
+            _topSprite->setScaleX(horizontalScale);
         }
-        if(_bottom)
+        if(_bottomSprite)
         {
-            _bottom->setAnchorPoint(Vec2(0.5,1));
-            _bottom->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,bottomHeight);
-            _bottom->setScaleX(horizontalScale);
+            _bottomSprite->setAnchorPoint(Vec2(0.5,1));
+            _bottomSprite->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,bottomHeight);
+            _bottomSprite->setScaleX(horizontalScale);
         }
         // Position centre
-        if(_centre)
+        if(_centerSprite)
         {
-            _centre->setAnchorPoint(Vec2(0.5,0.5));
-            _centre->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x, bottomHeight+rescaledHeight/2 + centerOffset.y);
-            _centre->setScaleX(horizontalScale);
-            _centre->setScaleY(verticalScale);
+            _centerSprite->setAnchorPoint(Vec2(0.5,0.5));
+            _centerSprite->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x, bottomHeight+rescaledHeight/2 + centerOffset.y);
+            _centerSprite->setScaleX(horizontalScale);
+            _centerSprite->setScaleY(verticalScale);
         }
     }
     

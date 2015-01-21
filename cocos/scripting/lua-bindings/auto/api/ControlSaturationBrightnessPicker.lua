@@ -35,6 +35,7 @@
 -- @function [parent=#ControlSaturationBrightnessPicker] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return ControlSaturationBrightnessPicker#ControlSaturationBrightnessPicker self (return value: cc.ControlSaturationBrightnessPicker)
         
 --------------------------------
 -- 
@@ -72,5 +73,6 @@
 -- js ctor
 -- @function [parent=#ControlSaturationBrightnessPicker] ControlSaturationBrightnessPicker 
 -- @param self
+-- @return ControlSaturationBrightnessPicker#ControlSaturationBrightnessPicker self (return value: cc.ControlSaturationBrightnessPicker)
         
 return nil

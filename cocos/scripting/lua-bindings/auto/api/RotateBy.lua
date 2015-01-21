@@ -20,6 +20,7 @@
 -- @function [parent=#RotateBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return RotateBy#RotateBy self (return value: cc.RotateBy)
         
 --------------------------------
 -- 
@@ -38,5 +39,6 @@
 -- @function [parent=#RotateBy] update 
 -- @param self
 -- @param #float time
+-- @return RotateBy#RotateBy self (return value: cc.RotateBy)
         
 return nil

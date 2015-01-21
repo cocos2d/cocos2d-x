@@ -17,5 +17,6 @@
 -- 
 -- @function [parent=#RichElement] RichElement 
 -- @param self
+-- @return RichElement#RichElement self (return value: ccui.RichElement)
         
 return nil

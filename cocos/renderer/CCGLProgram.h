@@ -89,7 +89,6 @@ public:
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
-        VERTEX_ATTRIB_POINTSIZE,
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -120,7 +119,7 @@ public:
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV;
     static const char* SHADER_NAME_POSITION_COLOR;
-    static const char* SHADER_NAME_POSITION_COLOR_POINTSIZE;
+    static const char* SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE;
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYSCALE;
@@ -164,7 +163,6 @@ public:
     // Attribute names
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
-    static const char* ATTRIBUTE_NAME_POINTSIZE;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
     static const char* ATTRIBUTE_NAME_TEX_COORD1;
     static const char* ATTRIBUTE_NAME_TEX_COORD2;
