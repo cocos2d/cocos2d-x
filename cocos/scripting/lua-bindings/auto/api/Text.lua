@@ -96,6 +96,12 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
+-- 
+-- @function [parent=#Text] getAutoRenderSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- Enable outline for the label<br>
 -- It only works on IOS and Android when you use System fonts
 -- @function [parent=#Text] enableOutline 
