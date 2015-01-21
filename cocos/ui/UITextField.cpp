@@ -768,6 +768,19 @@ void TextField::textfieldRendererScaleChangedWithSize()
     _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
+Size TextField::getAutoRenderSize()
+{
+    Size virtualSize = _textFieldRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _textFieldRenderer->setDimensions(0, 0);
+        virtualSize = _textFieldRenderer->getContentSize();
+        _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+
+    return virtualSize;
+}
+
 Size TextField::getVirtualRendererSize() const
 {
     return _textFieldRenderer->getContentSize();
