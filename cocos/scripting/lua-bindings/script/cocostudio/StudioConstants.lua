@@ -7,3 +7,9 @@ ccs.MovementEventType = {
     complete = 1,
     loopComplete = 2,
 }
+
+ccs.InnerActionType = {
+    LoopAction = 0,
+    NoLoopAction = 1,
+    SingleFrame = 2,
+}
