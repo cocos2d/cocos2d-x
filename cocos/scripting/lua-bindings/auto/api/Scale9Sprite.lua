@@ -28,7 +28,7 @@
 -- Also, flipping the texture doesn't alter the anchorPoint.<br>
 -- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
 -- widget->setScaleX(sprite->getScaleX() * -1);<br>
--- return true if the widget is flipped horizaontally, false otherwise.
+-- return true if the widget is flipped horizontally, false otherwise.
 -- @function [parent=#Scale9Sprite] isFlippedX 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -41,14 +41,14 @@
         
 --------------------------------
 -- Sets whether the widget should be flipped vertically or not.<br>
--- param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+-- param bFlippedY true if the widget should be flipped vertically, false otherwise.
 -- @function [parent=#Scale9Sprite] setFlippedY 
 -- @param self
 -- @param #bool flippedY
         
 --------------------------------
 -- Sets whether the widget should be flipped horizontally or not.<br>
--- param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+-- param bFlippedX true if the widget should be flipped horizontally, false otherwise.
 -- @function [parent=#Scale9Sprite] setFlippedX 
 -- @param self
 -- @param #bool flippedX
@@ -305,8 +305,8 @@
 -- @overload self, float         
 -- @function [parent=#Scale9Sprite] setScale
 -- @param self
--- @param #float scalex
--- @param #float scaley
+-- @param #float scaleX
+-- @param #float scaleY
 
 --------------------------------
 -- 
