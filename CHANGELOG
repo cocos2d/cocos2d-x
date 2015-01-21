@@ -1,5 +1,6 @@
 cocos2d-x-3.4 Jan.23 2015
     [FIX]           ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
+    [FIX]           Node: anchor point does not work using quaternion
 
 cocos2d-x-3.4rc1 Jan.15 2015
     [NEW]           C++: added CC_USE_CULLING macro to control if enable auto culling or not 
