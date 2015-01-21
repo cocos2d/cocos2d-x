@@ -745,6 +745,15 @@ RotateTo* RotateTo::create(float duration, float dstAngleX, float dstAngleY)
     return rotateTo;
 }
 
+RotateTo* RotateTo::create(float duration, float dstAngleX, float dstAngleY, float dstAngleZ)
+{
+    RotateTo* rotateTo = new (std::nothrow) RotateTo();
+    rotateTo->initWithDuration(duration, dstAngleX, dstAngleY, dstAngleZ);
+    rotateTo->autorelease();
+    
+    return rotateTo;
+}
+
 RotateTo* RotateTo::create(float duration, const Vec3& dstAngle3D)
 {
     RotateTo* rotateTo = new (std::nothrow) RotateTo();
@@ -765,6 +774,21 @@ bool RotateTo::initWithDuration(float duration, float dstAngleX, float dstAngleY
     {
         _dstAngle.x = dstAngleX;
         _dstAngle.y = dstAngleY;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool RotateTo::initWithDuration(float duration, float dstAngleX, float dstAngleY, float dstAngleZ)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _dstAngle.x = dstAngleX;
+        _dstAngle.y = dstAngleY;
+        _dstAngle.z = dstAngleZ;
+        _is3D = true;
         
         return true;
     }
@@ -898,6 +922,15 @@ RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY)
     return rotateBy;
 }
 
+RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY, float deltaAngleZ)
+{
+    RotateBy *rotateBy = new (std::nothrow) RotateBy();
+    rotateBy->initWithDuration(duration, deltaAngleX, deltaAngleY, deltaAngleZ);
+    rotateBy->autorelease();
+    
+    return rotateBy;
+}
+
 RotateBy* RotateBy::create(float duration, const Vec3& deltaAngle3D)
 {
     RotateBy *rotateBy = new (std::nothrow) RotateBy();
@@ -932,6 +965,20 @@ bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAn
         return true;
     }
     
+    return false;
+}
+
+bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAngleY, float deltaAngleZ)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _deltaAngle.x = deltaAngleX;
+        _deltaAngle.y = deltaAngleY;
+        _deltaAngle.z = deltaAngleZ;
+        _is3D = true;
+        return true;
+    }
+
     return false;
 }
 
