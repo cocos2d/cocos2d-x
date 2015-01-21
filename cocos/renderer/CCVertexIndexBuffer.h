@@ -28,10 +28,6 @@
 
 #include "base/CCRef.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    #define SUPPORT_EVENT_RENDERER_RECREATED
-#endif
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
     #define SUPPORT_NO_CLIENT_SIDE_ARRAYS
 #endif
@@ -58,9 +54,8 @@ public:
     {
         Client  = (1<<0), // Maintains a Client memory buffer to store elements.
         Native  = (1<<2), // Maintains a Native buffer to store elements.
-        VAO     = (1<<3), // Use a GL Vertex Array Object if possible.
-        Default = Native | VAO,
-        All     = Client | Native | VAO
+        Default = Native,
+        All     = Client | Native
     };
     
     enum class ArrayMode
@@ -100,11 +95,6 @@ public:
         return _vbo;
     }
 
-    CC_DEPRECATED_ATTRIBUTE uint32_t getVAO() const
-    {
-        return _vao;
-    }
-    
     int getElementCount() const
     {
         return _elementCount;
@@ -123,11 +113,6 @@ public:
     bool hasNative() const
     {
         return _arrayType & ArrayType::Native;
-    }
-    
-    bool hasVAO() const
-    {
-        return _arrayType & ArrayType::VAO;
     }
     
     bool isDirty() const
@@ -152,15 +137,11 @@ protected:
     bool init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode);
     void ensureCapacity(size_t capacity);
 
-#ifdef SUPPORT_EVENT_RENDERER_RECREATED
     void recreate() const;
-    EventListenerCustom* _recreateEventListener;
-#endif
     
 protected:
 
     uint32_t _vbo;
-    uint32_t _vao;
     
     unsigned _elementSize;
     unsigned _elementCount;

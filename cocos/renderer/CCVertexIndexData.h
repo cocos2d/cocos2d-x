@@ -44,9 +44,9 @@ struct CC_DLL VertexStreamAttribute
     
     VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
         : _normalize(normalize), _offset(offset), _semantic(semantic), _type(type), _size(size)
-    {
-    }
+    {}
     
+    bool _indexed;
     bool _normalize;
     int _offset;
     int _semantic;
@@ -78,15 +78,17 @@ public:
     // @brief Return the number of vertex streams
     size_t getVertexStreamCount() const;
     
-    bool setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream);
+    // @brief add vertex stream descriptors to a buffer 
+    CC_DEPRECATED_ATTRIBUTE bool setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream) { return addStream(buffer, stream); }
+    bool addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream);
     void removeStream(int semantic);
-    
+
     const VertexStreamAttribute* getStreamAttribute(int semantic) const;
     VertexStreamAttribute* getStreamAttribute(int semantic);
     
     GLArrayBuffer* getStreamBuffer(int semantic) const;
-        
-    // @brief draw this geometry
+    
+    // @brief update and draw the buffer.
     void draw();
     
     // @brief true/false if all vertex buffers are empty
@@ -124,29 +126,29 @@ public:
             }
         }
     }
-    
+
 protected:
-    
+
+    void recreate() const;
     bool determineInterleave() const;
-    
     void append(GLArrayBuffer* buffer, void* source, size_t size, size_t count = 1);
 
 protected:
     
     struct BufferAttribute
     {
-        GLArrayBuffer* _buffer;
+        GLArrayBuffer* _vertices;
+        GLArrayBuffer* _indices;
         VertexStreamAttribute _stream;
     };
-    
-    typedef std::vector<GLArrayBuffer*> tBufferArray;
-    tBufferArray _bufferArray;
-    
     std::map<int, BufferAttribute> _vertexStreams;
-    
+
     size_t _count;
     bool _interleaved;
     bool _dirty;
+    int _vao;
+
+    EventListenerCustom* _recreateEventListener;
 };
 
 NS_CC_END

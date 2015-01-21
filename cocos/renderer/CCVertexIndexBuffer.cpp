@@ -31,24 +31,12 @@
 
 NS_CC_BEGIN
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "base/CCEventType.h"
-#include "base/CCEventListenerCustom.h"
-#include "base/CCEventDispatcher.h"
-#define SUPPORT_EVENT_RENDERER_RECREATED
-#endif
-
 GLArrayBuffer::GLArrayBuffer()
     : _vbo(0)
-    , _vao(0)
     , _elementSize(0)
     , _elementCount(0)
     , _elements(nullptr)
-{
-#ifdef SUPPORT_EVENT_RENDERER_RECREATED
-    _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
-#endif
-}
+{}
 
 GLArrayBuffer::~GLArrayBuffer()
 {
@@ -57,18 +45,8 @@ GLArrayBuffer::~GLArrayBuffer()
         glDeleteBuffers(1, &_vbo);
         _vbo = 0;
     }
-
-    if (glIsBuffer(_vao))
-    {
-        glDeleteVertexArrays(1, &_vao);
-        _vao = 0;
-    }
     
     CC_SAFE_FREE(_elements);
-    
-#ifdef SUPPORT_EVENT_RENDERER_RECREATED
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
-#endif
 }
 
 bool GLArrayBuffer::init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode)
@@ -103,12 +81,6 @@ bool GLArrayBuffer::init(int elementSize, int elementCount, ArrayType arrayType,
     
     if (hasNative())
     {
-        if (hasVAO() && Configuration::getInstance()->supportsShareableVAO())
-        {
-            glGenVertexArrays(1, &_vao);
-            GL::bindVAO(_vao);
-        }
-
         glGenBuffers(1, &_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         glBufferData(GL_ARRAY_BUFFER, getSize(), nullptr, _opaqueDrawMode);
@@ -204,7 +176,6 @@ void GLArrayBuffer::clear()
     _dirty = false;
 }
 
-#ifdef SUPPORT_EVENT_RENDERER_RECREATED
 void GLArrayBuffer::recreate() const
 {
     glGenBuffers(1, (GLuint*)&_vbo);
@@ -219,7 +190,6 @@ void GLArrayBuffer::recreate() const
         }
     }
 }
-#endif
 
 void GLArrayBuffer::ensureCapacity(size_t capacity)
 {
