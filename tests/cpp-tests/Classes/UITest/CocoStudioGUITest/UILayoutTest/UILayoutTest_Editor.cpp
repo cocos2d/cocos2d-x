@@ -203,7 +203,7 @@ void UILayoutTest_Color_Editor::switchLoadMethod(cocos2d::Ref *pSender)
         {
             _layout->removeFromParentAndCleanup(true);
             
-            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_Color.csb");
+            Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_UILayout_Color_Editor_1.csb");
             Node* child = node->getChildByTag(5);
             child->removeFromParent();
             _layout = static_cast<Layout*>(child);
@@ -256,7 +256,7 @@ bool UILayoutTest_Color_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_Color.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_UILayout_Color_Editor_1.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
