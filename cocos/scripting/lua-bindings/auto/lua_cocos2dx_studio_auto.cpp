@@ -1,6 +1,6 @@
 #include "lua_cocos2dx_studio_auto.hpp"
 #include "CocoStudio.h"
-#include "lua-coco-studio-conversions.h"
+#include "lua-cocos-studio-conversions.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 

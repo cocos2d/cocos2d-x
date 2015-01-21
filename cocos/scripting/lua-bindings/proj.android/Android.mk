@@ -98,7 +98,7 @@ LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
                    ../manual/cocostudio/lua_cocos2dx_csloader_manual.cpp \
                    ../auto/lua_cocos2dx_csloader_auto.cpp \
                    ../auto/lua_cocos2dx_studio_auto.cpp \
-                   ../manual/cocostudio/lua-coco-studio-conversions.cpp
+                   ../manual/cocostudio/lua-cocos-studio-conversions.cpp
 
 #spine
 LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
