@@ -6,6 +6,12 @@ LOCAL_MODULE := cocos2dx_internal_static
 
 LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+MATHNEONFILE := math/MathUtil.cpp.neon
+else
+MATHNEONFILE := math/MathUtil.cpp
+endif
+
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
 2d/CCAction.cpp \
@@ -87,8 +93,8 @@ platform/CCImage.cpp \
 math/CCAffineTransform.cpp \
 math/CCGeometry.cpp \
 math/CCVertex.cpp \
+$(MATHNEONFILE) \
 math/Mat4.cpp \
-math/MathUtil.cpp \
 math/Quaternion.cpp \
 math/TransformUtils.cpp \
 math/Vec2.cpp \
@@ -232,10 +238,6 @@ LOCAL_CFLAGS   :=  -DUSE_FILE32API
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
-
-ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-LOCAL_ARM_NEON  := true
-endif
 
 include $(BUILD_STATIC_LIBRARY)
 
