@@ -184,6 +184,88 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
     }
 }
 
+// UIButtonTest_Scale9_State_Change
+UIButtonTest_Scale9_State_Change::UIButtonTest_Scale9_State_Change()
+    : _displayValueLabel(nullptr)
+{
+
+}
+
+UIButtonTest_Scale9_State_Change::~UIButtonTest_Scale9_State_Change()
+{
+
+}
+
+bool UIButtonTest_Scale9_State_Change::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("Button scale9 render", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        _uiLayer->addChild(alert);
+
+        // Create the button
+        Button* button = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+        // open scale9 render
+        button->ignoreContentAdaptWithSize(false);
+        button->setScale9Enabled(true);
+        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        button->setContentSize(Size(200, 60));
+        button->setCapInsets(Rect(30,10,40,20));
+        button->setPressedActionEnabled(false);
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
+        _uiLayer->addChild(button);
+
+        return true;
+    }
+    return false;
+}
+
+void UIButtonTest_Scale9_State_Change::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    switch (type)
+    {
+    case Widget::TouchEventType::BEGAN:
+        _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+        break;
+
+    case Widget::TouchEventType::MOVED:
+        _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+        break;
+
+    case Widget::TouchEventType::ENDED:
+    {
+        _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+        Button *btn = (Button*)pSender;
+        if (btn->isScale9Enabled())
+        {
+            btn->setScale9Enabled(false);
+        }
+        else
+            btn->setScale9Enabled(true);
+    }
+        break;
+
+    case Widget::TouchEventType::CANCELED:
+        _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+        break;
+
+    default:
+        break;
+    }
+}
+
 // UIButtonTest_PressAction
 UIButtonTest_PressedAction::UIButtonTest_PressedAction()
 : _displayValueLabel(nullptr)

@@ -339,3 +339,61 @@ void UILoadingBarTest_Right_Scale9::nextCallback(Ref* sender, Widget::TouchEvent
         UIScene::nextCallback(sender, type);
     }
 }
+
+
+// UILoadingBarTest_Scale9_State_Change
+
+UILoadingBarTest_Scale9_State_Change::UILoadingBarTest_Scale9_State_Change()
+    : _count(0)
+{
+
+}
+
+UILoadingBarTest_Scale9_State_Change::~UILoadingBarTest_Scale9_State_Change()
+{
+
+}
+
+bool UILoadingBarTest_Scale9_State_Change::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add the alert
+        Text *alert = Text::create("LoadingBar right scale9 render", "fonts/Marker Felt.ttf", 20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 2.7f));
+        _uiLayer->addChild(alert);
+
+        // Create the loading bar
+        LoadingBar* loadingBar = LoadingBar::create("cocosui/sliderThumb.png");
+        loadingBar->setTag(0);
+        loadingBar->ignoreContentAdaptWithSize(false);
+        //loadingBar->setScale9Enabled(true);
+        loadingBar->setCapInsets(Rect(0, 0, 0, 0));
+        loadingBar->setContentSize(Size(200, 80));
+        loadingBar->setDirection(LoadingBar::Direction::LEFT);
+        loadingBar->setPercent(100);
+
+        loadingBar->setTouchEnabled(true);
+        loadingBar->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::ENDED) {
+                if (loadingBar->isScale9Enabled())
+                {
+                    loadingBar->setScale9Enabled(false);
+                }
+                else
+                    loadingBar->setScale9Enabled(true);
+            }
+        });
+
+        loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
+
+        _uiLayer->addChild(loadingBar);
+
+        return true;
+    }
+    return false;
+}

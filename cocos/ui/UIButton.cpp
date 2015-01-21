@@ -187,6 +187,10 @@ void Button::setScale9Enabled(bool able)
     
     _brightStyle = BrightStyle::NONE;
     setBright(_bright);
+
+    _normalTextureAdaptDirty = true;
+    _pressedTextureAdaptDirty = true;
+    _disabledTextureAdaptDirty = true;
 }
 
 bool Button::isScale9Enabled()const

@@ -95,4 +95,16 @@ protected:
     int _count;
 };
 
+class UILoadingBarTest_Scale9_State_Change : public UIScene
+{
+public:
+    UILoadingBarTest_Scale9_State_Change();
+    ~UILoadingBarTest_Scale9_State_Change();
+    bool init();
+
+protected:
+    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Scale9_State_Change)
+        int _count;
+};
+
 #endif /* defined(__TestCpp__UILoadingBarTest__) */
