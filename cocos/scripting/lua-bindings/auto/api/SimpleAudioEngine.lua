@@ -11,6 +11,7 @@
 -- @function [parent=#SimpleAudioEngine] preloadBackgroundMusic 
 -- @param self
 -- @param #char pszFilePath
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Stop playing background music<br>
@@ -19,11 +20,13 @@
 -- lua stopMusic
 -- @function [parent=#SimpleAudioEngine] stopBackgroundMusic 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Stop all playing sound effects
 -- @function [parent=#SimpleAudioEngine] stopAllEffects 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.<br>
@@ -39,6 +42,7 @@
 -- lua resumeMusic
 -- @function [parent=#SimpleAudioEngine] resumeBackgroundMusic 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Set the volume of background music<br>
@@ -48,6 +52,7 @@
 -- @function [parent=#SimpleAudioEngine] setBackgroundMusicVolume 
 -- @param self
 -- @param #float volume
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief          preload a compressed audio file<br>
@@ -56,6 +61,7 @@
 -- @function [parent=#SimpleAudioEngine] preloadEffect 
 -- @param self
 -- @param #char pszFilePath
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Indicates whether the background music is playing<br>
@@ -87,6 +93,7 @@
 -- @function [parent=#SimpleAudioEngine] pauseEffect 
 -- @param self
 -- @param #unsigned int nSoundId
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Play sound effect with a file path, pitch, pan and gain<br>
@@ -114,6 +121,7 @@
 -- lua rewindMusic
 -- @function [parent=#SimpleAudioEngine] rewindBackgroundMusic 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Play background music<br>
@@ -125,11 +133,13 @@
 -- @param self
 -- @param #char pszFilePath
 -- @param #bool bLoop
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Resume all playing sound effect
 -- @function [parent=#SimpleAudioEngine] resumeAllEffects 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Set the volume of sound effects<br>
@@ -137,6 +147,7 @@
 -- @function [parent=#SimpleAudioEngine] setEffectsVolume 
 -- @param self
 -- @param #float volume
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Stop playing sound effect<br>
@@ -144,6 +155,7 @@
 -- @function [parent=#SimpleAudioEngine] stopEffect 
 -- @param self
 -- @param #unsigned int nSoundId
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Pause playing background music<br>
@@ -151,11 +163,13 @@
 -- lua pauseMusic
 -- @function [parent=#SimpleAudioEngine] pauseBackgroundMusic 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Pause all playing sound effect
 -- @function [parent=#SimpleAudioEngine] pauseAllEffects 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief          unload the preloaded effect from internal buffer<br>
@@ -163,6 +177,7 @@
 -- @function [parent=#SimpleAudioEngine] unloadEffect 
 -- @param self
 -- @param #char pszFilePath
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Resume playing sound effect<br>
@@ -170,12 +185,14 @@
 -- @function [parent=#SimpleAudioEngine] resumeEffect 
 -- @param self
 -- @param #unsigned int nSoundId
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Release the shared Engine object<br>
 -- warning It must be called before the application exit, or a memory leak will be casued.
 -- @function [parent=#SimpleAudioEngine] end 
 -- @param self
+-- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
 -- brief Get the shared Engine object,it will new one when first time be called

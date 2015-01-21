@@ -843,6 +843,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
             if (action)
             {
                 node->runAction(action);
+                action->gotoFrameAndPause(0);
             }
             
         }
@@ -1172,6 +1173,7 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
             if (action)
             {
                 node->runAction(action);
+                action->gotoFrameAndPause(0);
             }
         }
     }

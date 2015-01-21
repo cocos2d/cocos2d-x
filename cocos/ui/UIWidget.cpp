@@ -465,6 +465,10 @@ void Widget::ignoreContentAdaptWithSize(bool ignore)
         this->setContentSize(_customSize);
         return;
     }
+    if (_ignoreSize == ignore)
+    {
+        return;
+    }
     _ignoreSize = ignore;
     if (_ignoreSize)
     {

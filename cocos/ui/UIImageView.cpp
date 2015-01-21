@@ -186,6 +186,7 @@ void ImageView::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
+    _imageRendererAdaptDirty = true;
 }
     
 bool ImageView::isScale9Enabled()const

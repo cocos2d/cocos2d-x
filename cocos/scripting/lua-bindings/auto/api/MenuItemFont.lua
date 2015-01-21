@@ -26,6 +26,7 @@
 -- @function [parent=#MenuItemFont] setFontSizeObj 
 -- @param self
 -- @param #int size
+-- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
         
 --------------------------------
 --  set the font name <br>
@@ -35,12 +36,14 @@
 -- @function [parent=#MenuItemFont] setFontNameObj 
 -- @param self
 -- @param #string name
+-- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
         
 --------------------------------
 --  set the default font name 
 -- @function [parent=#MenuItemFont] setFontName 
 -- @param self
 -- @param #string name
+-- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
         
 --------------------------------
 --  get default font size 
@@ -59,5 +62,6 @@
 -- @function [parent=#MenuItemFont] setFontSize 
 -- @param self
 -- @param #int size
+-- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
         
 return nil

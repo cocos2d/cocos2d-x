@@ -9,12 +9,14 @@
 -- @function [parent=#TurnOffTiles] turnOnTile 
 -- @param self
 -- @param #vec2_table pos
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 --------------------------------
 -- 
 -- @function [parent=#TurnOffTiles] turnOffTile 
 -- @param self
 -- @param #vec2_table pos
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 --------------------------------
 -- @overload self, float, size_table, unsigned int         
@@ -31,6 +33,7 @@
 -- @function [parent=#TurnOffTiles] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 --------------------------------
 -- 
@@ -43,5 +46,6 @@
 -- @function [parent=#TurnOffTiles] update 
 -- @param self
 -- @param #float time
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 return nil

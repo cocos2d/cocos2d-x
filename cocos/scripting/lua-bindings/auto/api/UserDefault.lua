@@ -10,6 +10,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #int value
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- @overload self, char, float         
@@ -36,6 +37,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #double value
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- brief Set float value by key.<br>
@@ -44,6 +46,7 @@
 -- @param self
 -- @param #char pKey
 -- @param #float value
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- @overload self, char, string         
@@ -61,12 +64,14 @@
 -- @param self
 -- @param #char pKey
 -- @param #string value
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- brief Save content to xml file<br>
 -- js NA
 -- @function [parent=#UserDefault] flush 
 -- @param self
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- @overload self, char, int         
@@ -93,11 +98,13 @@
 -- @param self
 -- @param #char pKey
 -- @param #bool value
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- js NA
 -- @function [parent=#UserDefault] destroyInstance 
 -- @param self
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
 -- js NA

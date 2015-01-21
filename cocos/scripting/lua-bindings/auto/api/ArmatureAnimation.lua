@@ -14,6 +14,7 @@
 -- Pause the Process
 -- @function [parent=#ArmatureAnimation] pause 
 -- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Scale animation play speed.<br>
@@ -21,6 +22,7 @@
 -- @function [parent=#ArmatureAnimation] setSpeedScale 
 -- @param self
 -- @param #float speedScale
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Init with a Armature<br>
@@ -37,6 +39,7 @@
 -- @param #array_table movementIndexes
 -- @param #int durationTo
 -- @param #bool loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Play animation by animation name.<br>
@@ -53,28 +56,33 @@
 -- @param #string animationName
 -- @param #int durationTo
 -- @param #int loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Go to specified frame and pause current movement.
 -- @function [parent=#ArmatureAnimation] gotoAndPause 
 -- @param self
 -- @param #int frameIndex
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Resume the Process
 -- @function [parent=#ArmatureAnimation] resume 
 -- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Stop the Process
 -- @function [parent=#ArmatureAnimation] stop 
 -- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- 
 -- @function [parent=#ArmatureAnimation] update 
 -- @param self
 -- @param #float dt
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- 
@@ -89,6 +97,7 @@
 -- @param #int animationIndex
 -- @param #int durationTo
 -- @param #int loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Get current movementID<br>
@@ -102,6 +111,7 @@
 -- @function [parent=#ArmatureAnimation] setAnimationData 
 -- @param self
 -- @param #ccs.AnimationData data
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Go to specified frame and play current movement.<br>
@@ -114,6 +124,7 @@
 -- @function [parent=#ArmatureAnimation] gotoAndPlay 
 -- @param self
 -- @param #int frameIndex
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- 
@@ -122,6 +133,7 @@
 -- @param #array_table movementNames
 -- @param #int durationTo
 -- @param #bool loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Get movement count
@@ -141,5 +153,6 @@
 -- js ctor
 -- @function [parent=#ArmatureAnimation] ArmatureAnimation 
 -- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 return nil

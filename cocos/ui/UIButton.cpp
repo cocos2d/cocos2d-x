@@ -24,11 +24,11 @@ THE SOFTWARE.
 
 #include "ui/UIButton.h"
 #include "ui/UIScale9Sprite.h"
-#include "ui/UIHelper.h"
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
+#include "ui/UIHelper.h"
 
 NS_CC_BEGIN
 
@@ -187,6 +187,10 @@ void Button::setScale9Enabled(bool able)
     
     _brightStyle = BrightStyle::NONE;
     setBright(_bright);
+
+    _normalTextureAdaptDirty = true;
+    _pressedTextureAdaptDirty = true;
+    _disabledTextureAdaptDirty = true;
 }
 
 bool Button::isScale9Enabled()const
@@ -391,19 +395,21 @@ void Button::onPressStateChangedToNormal()
             _buttonNormalRenderer->stopAllActions();
             _buttonClickedRenderer->stopAllActions();
             
-            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
-            _buttonNormalRenderer->runAction(zoomAction);
+//            Action *zoomAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            //fixme: the zoomAction will run in the next frame which will cause the _buttonNormalRenderer to a wrong scale
+            _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
             _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
             
             _titleRenderer->stopAllActions();
             if (_unifySize)
             {
-                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1, 1);
+                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0f, 1.0f);
                 _titleRenderer->runAction(zoomTitleAction);
             }
             else
             {
-                _titleRenderer->runAction(zoomAction->clone());
+                _titleRenderer->setScaleX(1.0f);
+                _titleRenderer->setScaleY(1.0f);
             }
         }
     }
@@ -413,16 +419,10 @@ void Button::onPressStateChangedToNormal()
         _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
         
         _titleRenderer->stopAllActions();
-        if (_unifySize)
-        {
-            _titleRenderer->setScaleX(1.0f);
-            _titleRenderer->setScaleY(1.0f);
-        }
-        else
-        {
-            _titleRenderer->setScaleX(_normalTextureScaleXInSize);
-            _titleRenderer->setScaleY(_normalTextureScaleYInSize);
-        }
+        
+        _titleRenderer->setScaleX(1.0f);
+        _titleRenderer->setScaleY(1.0f);
+     
     }
 }
 
@@ -449,14 +449,14 @@ void Button::onPressStateChangedToPressed()
             _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
             
             _titleRenderer->stopAllActions();
+            Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0f + _zoomScale, 1.0f + _zoomScale);
             if (_unifySize)
             {
-                Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1 + _zoomScale, 1 + _zoomScale);
                 _titleRenderer->runAction(zoomTitleAction);
             }
             else
             {
-                _titleRenderer->runAction(zoomAction->clone());
+                _titleRenderer->runAction(zoomTitleAction->clone());
             }
         }
     }
@@ -470,16 +470,9 @@ void Button::onPressStateChangedToPressed()
         _buttonNormalRenderer->setScale(_normalTextureScaleXInSize +_zoomScale, _normalTextureScaleYInSize + _zoomScale);
         
         _titleRenderer->stopAllActions();
-        if (_unifySize)
-        {
-            _titleRenderer->setScaleX(1.0f + _zoomScale);
-            _titleRenderer->setScaleY(1.0f + _zoomScale);
-        }
-        else
-        {
-            _titleRenderer->setScaleX(_normalTextureScaleXInSize + _zoomScale);
-            _titleRenderer->setScaleY(_normalTextureScaleYInSize + _zoomScale);
-        }
+        
+        _titleRenderer->setScaleX(1.0f + _zoomScale);
+        _titleRenderer->setScaleY(1.0f + _zoomScale);
     }
 }
 
@@ -842,7 +835,6 @@ Size Button::getNormalSize() const
     {
         titleSize = _titleRenderer->getContentSize();
     }
-    
     Size imageSize;
     if (_buttonNormalRenderer != nullptr)
     {
@@ -854,6 +846,10 @@ Size Button::getNormalSize() const
     return Size(width,height);
 }
 
+Size Button::getNormalTextureSize() const
+{
+    return _normalTextureSize;
+}
 }
 
 NS_CC_END

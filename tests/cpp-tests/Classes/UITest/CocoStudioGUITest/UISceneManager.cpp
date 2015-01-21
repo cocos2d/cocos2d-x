@@ -36,6 +36,7 @@ static const char* s_testArray[] =
 {
     "UIButtonTest",
     "UIButtonTest_Scale9",
+    "UIButtonTest_Scale9_State_Change",
     "UIButtonTest_PressedAction",
     "UIButtonTest_Title",
     "UIButtonTest_RemoveSelf",
@@ -55,16 +56,19 @@ static const char* s_testArray[] =
     "UICheckBoxDefaultBehaviorTest",
     "UISliderTest",
     "UISliderTest_Scale9",
+    "UISliderTest_Scale9_Stata_Change",
     "UISliderNormalDefaultTest",
     "UISliderDisabledDefaultTest",
   
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
+    "UIImageViewTest_Scale9_State_Change",
     "UIImageViewTest_ContentSize",
     "UIImageViewFlipTest",
     
     "UILoadingBarTest_Left",
     "UILoadingBarTest_Right",
+    "UILoadingBarTest_Scale9_State_Change",
     "UILoadingBarTest_Left_Scale9",
     "UILoadingBarTest_Right_Scale9",
   
@@ -210,6 +214,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIButtonTest_Scale9:
             return UIButtonTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTest_Scale9_State_Change:
+            return UIButtonTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIButtonTest_PressedAction:
             return UIButtonTest_PressedAction::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -245,6 +251,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUISliderTest_Scale9:
             return UISliderTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderTest_Scale9_State_Change:
+            return UISliderTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUISliderNormalDefaultTest:
             return UISliderNormalDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUISliderDisabledDefaultTest:
@@ -255,6 +263,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIImageViewTest_Scale9:
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIImageViewTest_Scale9_State_Change:
+            return UIImageViewTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewTest_ContentSize:
             return UIImageViewTest_ContentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewFlipTest:
@@ -266,6 +276,9 @@ Scene *UISceneManager::currentUIScene()
         case kUILoadingBarTest_Right:
             return UILoadingBarTest_Right::sceneWithTitle(s_testArray[_currentUISceneId]);
             
+        case kUILoadingBarTest_Scale9_State_Change:
+            return UILoadingBarTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
+
         case kUILoadingBarTest_Left_Scale9:
             return UILoadingBarTest_Left_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
             

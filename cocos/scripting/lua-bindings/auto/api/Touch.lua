@@ -48,6 +48,7 @@
 -- @param #int id
 -- @param #float x
 -- @param #float y
+-- @return Touch#Touch self (return value: cc.Touch)
         
 --------------------------------
 --  returns the current touch location in screen coordinates 
@@ -65,5 +66,6 @@
 -- 
 -- @function [parent=#Touch] Touch 
 -- @param self
+-- @return Touch#Touch self (return value: cc.Touch)
         
 return nil

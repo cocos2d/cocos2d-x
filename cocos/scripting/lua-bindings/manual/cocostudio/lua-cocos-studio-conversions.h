@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,55 +21,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#ifndef __COCOS_SCRIPTING_LUA_BINDING_MANUAL_COCOSTUDIO_LUA_STUDIO_CONVERSIONS_H__
+#define __COCOS_SCRIPTING_LUA_BINDING_MANUAL_COCOSTUDIO_LUA_STUDIO_CONVERSIONS_H__
 
-#ifndef __TestCpp__UIImageViewTest__
-#define __TestCpp__UIImageViewTest__
+extern "C" {
+#include "lua.h"
+#include "tolua++.h"
+}
 
-#include "../UIScene.h"
+#include "tolua_fix.h"
 
-class UIImageViewTest : public UIScene
+namespace cocostudio
 {
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIImageViewTest)
-};
+    namespace timeline
+    {
+        struct AnimationInfo;
+    }
+}
 
-class UIImageViewTest_Scale9 : public UIScene
-{
-public:    
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIImageViewTest_Scale9)
-};
+extern bool luaval_to_animationInfo(lua_State* L, int lo, cocostudio::timeline::AnimationInfo* outValue , const char* funcName = "");
 
-class UIImageViewTest_Scale9_State_Change : public UIScene
-{
-public:
-    bool init();
+extern void animationInfo_to_luaval(lua_State* L,const cocostudio::timeline::AnimationInfo& inValue);
 
-protected:
-    UI_SCENE_CREATE_FUNC(UIImageViewTest_Scale9_State_Change)
-};
 
-class UIImageViewTest_ContentSize : public UIScene
-{
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIImageViewTest_ContentSize)
-};
-
-class UIImageViewFlipTest : public UIScene
-{
-public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIImageViewFlipTest)
-};
-
-#endif /* defined(__TestCpp__UIImageViewTest__) */
+#endif //__COCOS_SCRIPTING_LUA_BINDING_MANUAL_COCOSTUDIO_LUA_STUDIO_CONVERSIONS_H__

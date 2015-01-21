@@ -9,6 +9,7 @@
 -- todo support blur for shadow effect
 -- @function [parent=#Text] enableShadow 
 -- @param self
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- 
@@ -26,6 +27,7 @@
 --  disable shadow/outline/glow rendering 
 -- @function [parent=#Text] disableEffect 
 -- @param self
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- 
@@ -38,6 +40,7 @@
 -- @function [parent=#Text] setTextVerticalAlignment 
 -- @param self
 -- @param #int alignment
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- Sets the font name of label.<br>
@@ -50,6 +53,7 @@
 -- @function [parent=#Text] setFontName 
 -- @param self
 -- @param #string name
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- Sets the touch scale enabled of label.<br>
@@ -57,12 +61,14 @@
 -- @function [parent=#Text] setTouchScaleChangeEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- 
 -- @function [parent=#Text] setString 
 -- @param self
 -- @param #string text
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- Gets the touch scale enabled of label.<br>
@@ -85,6 +91,7 @@
 -- @function [parent=#Text] setTextAreaSize 
 -- @param self
 -- @param #size_table size
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- Gets the string length of the label.<br>
@@ -96,12 +103,19 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
+-- 
+-- @function [parent=#Text] getAutoRenderSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- Enable outline for the label<br>
 -- It only works on IOS and Android when you use System fonts
 -- @function [parent=#Text] enableOutline 
 -- @param self
 -- @param #color4b_table outlineColor
 -- @param #int outlineSize
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- 
@@ -121,18 +135,21 @@
 -- @function [parent=#Text] setFontSize 
 -- @param self
 -- @param #int size
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- 
 -- @function [parent=#Text] setTextColor 
 -- @param self
 -- @param #color4b_table color
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 --  only support for TTF 
 -- @function [parent=#Text] enableGlow 
 -- @param self
 -- @param #color4b_table glowColor
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- 
@@ -151,6 +168,7 @@
 -- @function [parent=#Text] setTextHorizontalAlignment 
 -- @param self
 -- @param #int alignment
+-- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
 -- @overload self, string, string, int         
@@ -190,5 +208,6 @@
 -- Default constructor
 -- @function [parent=#Text] Text 
 -- @param self
+-- @return Text#Text self (return value: ccui.Text)
         
 return nil

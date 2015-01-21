@@ -15,12 +15,14 @@
 -- @function [parent=#JumpTiles3D] setAmplitude 
 -- @param self
 -- @param #float amplitude
+-- @return JumpTiles3D#JumpTiles3D self (return value: cc.JumpTiles3D)
         
 --------------------------------
 -- 
 -- @function [parent=#JumpTiles3D] setAmplitudeRate 
 -- @param self
 -- @param #float amplitudeRate
+-- @return JumpTiles3D#JumpTiles3D self (return value: cc.JumpTiles3D)
         
 --------------------------------
 --  amplitude of the sin
@@ -50,5 +52,6 @@
 -- @function [parent=#JumpTiles3D] update 
 -- @param self
 -- @param #float time
+-- @return JumpTiles3D#JumpTiles3D self (return value: cc.JumpTiles3D)
         
 return nil

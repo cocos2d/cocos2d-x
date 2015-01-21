@@ -21,6 +21,7 @@
 -- @function [parent=#ScaleBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ScaleBy#ScaleBy self (return value: cc.ScaleBy)
         
 --------------------------------
 -- 

@@ -40,5 +40,6 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return TransitionPageTurn#TransitionPageTurn self (return value: cc.TransitionPageTurn)
         
 return nil

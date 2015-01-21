@@ -187,6 +187,7 @@ public:
      */
     virtual std::string getDescription() const override;
 
+    virtual Size getAutoRenderSize();
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     void attachWithIME();

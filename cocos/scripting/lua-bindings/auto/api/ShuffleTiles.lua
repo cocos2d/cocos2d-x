@@ -26,6 +26,7 @@
 -- @function [parent=#ShuffleTiles] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ShuffleTiles#ShuffleTiles self (return value: cc.ShuffleTiles)
         
 --------------------------------
 -- 
@@ -38,5 +39,6 @@
 -- @function [parent=#ShuffleTiles] update 
 -- @param self
 -- @param #float time
+-- @return ShuffleTiles#ShuffleTiles self (return value: cc.ShuffleTiles)
         
 return nil
