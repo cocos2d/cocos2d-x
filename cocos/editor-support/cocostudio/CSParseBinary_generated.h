@@ -176,29 +176,29 @@ MANUALLY_ALIGNED_STRUCT(4) CapInsets {
 STRUCT_END(CapInsets, 16);
 
 struct CSParseBinary : private flatbuffers::Table {
-  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *textures() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(4); }
-  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *texturePngs() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(6); }
-  const NodeTree *nodeTree() const { return GetPointer<const NodeTree *>(8); }
-  const NodeAction *action() const { return GetPointer<const NodeAction *>(10); }
-  const flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>> *animationList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>> *>(12); }
-  const flatbuffers::String *version() const { return GetPointer<const flatbuffers::String *>(14); }
+  const flatbuffers::String *version() const { return GetPointer<const flatbuffers::String *>(4); }
+  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *textures() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(6); }
+  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *texturePngs() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(8); }
+  const NodeTree *nodeTree() const { return GetPointer<const NodeTree *>(10); }
+  const NodeAction *action() const { return GetPointer<const NodeAction *>(12); }
+  const flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>> *animationList() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>> *>(14); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* textures */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* version */) &&
+           verifier.Verify(version()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* textures */) &&
            verifier.Verify(textures()) &&
            verifier.VerifyVectorOfStrings(textures()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* texturePngs */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* texturePngs */) &&
            verifier.Verify(texturePngs()) &&
            verifier.VerifyVectorOfStrings(texturePngs()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* nodeTree */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* nodeTree */) &&
            verifier.VerifyTable(nodeTree()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* action */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* action */) &&
            verifier.VerifyTable(action()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* animationList */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* animationList */) &&
            verifier.Verify(animationList()) &&
            verifier.VerifyVectorOfTables(animationList()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* version */) &&
-           verifier.Verify(version()) &&
            verifier.EndTable();
   }
 };
@@ -206,12 +206,12 @@ struct CSParseBinary : private flatbuffers::Table {
 struct CSParseBinaryBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_textures(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> textures) { fbb_.AddOffset(4, textures); }
-  void add_texturePngs(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> texturePngs) { fbb_.AddOffset(6, texturePngs); }
-  void add_nodeTree(flatbuffers::Offset<NodeTree> nodeTree) { fbb_.AddOffset(8, nodeTree); }
-  void add_action(flatbuffers::Offset<NodeAction> action) { fbb_.AddOffset(10, action); }
-  void add_animationList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>>> animationList) { fbb_.AddOffset(12, animationList); }
-  void add_version(flatbuffers::Offset<flatbuffers::String> version) { fbb_.AddOffset(14, version); }
+  void add_version(flatbuffers::Offset<flatbuffers::String> version) { fbb_.AddOffset(4, version); }
+  void add_textures(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> textures) { fbb_.AddOffset(6, textures); }
+  void add_texturePngs(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> texturePngs) { fbb_.AddOffset(8, texturePngs); }
+  void add_nodeTree(flatbuffers::Offset<NodeTree> nodeTree) { fbb_.AddOffset(10, nodeTree); }
+  void add_action(flatbuffers::Offset<NodeAction> action) { fbb_.AddOffset(12, action); }
+  void add_animationList(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>>> animationList) { fbb_.AddOffset(14, animationList); }
   CSParseBinaryBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   CSParseBinaryBuilder &operator=(const CSParseBinaryBuilder &);
   flatbuffers::Offset<CSParseBinary> Finish() {
@@ -221,19 +221,19 @@ struct CSParseBinaryBuilder {
 };
 
 inline flatbuffers::Offset<CSParseBinary> CreateCSParseBinary(flatbuffers::FlatBufferBuilder &_fbb,
+   flatbuffers::Offset<flatbuffers::String> version = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> textures = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> texturePngs = 0,
    flatbuffers::Offset<NodeTree> nodeTree = 0,
    flatbuffers::Offset<NodeAction> action = 0,
-   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>>> animationList = 0,
-   flatbuffers::Offset<flatbuffers::String> version = 0) {
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<AnimationInfo>>> animationList = 0) {
   CSParseBinaryBuilder builder_(_fbb);
-  builder_.add_version(version);
   builder_.add_animationList(animationList);
   builder_.add_action(action);
   builder_.add_nodeTree(nodeTree);
   builder_.add_texturePngs(texturePngs);
   builder_.add_textures(textures);
+  builder_.add_version(version);
   return builder_.Finish();
 }
 
