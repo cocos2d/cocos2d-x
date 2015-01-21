@@ -171,17 +171,14 @@ protected:
 //    CustomCommand _customCommand;
 //    CustomCommand _customCommandGLPoint;
 //    CustomCommand _customCommandGLLine;
-    Batch _batchTriangles;
     BatchCommand _batchCommandTriangles;
     VertexData*   _vdTriangles;
     VertexBuffer* _vbTriangles;
 
-    Batch _batchPoints;
     BatchCommand _batchCommandPoints;
     VertexData*   _vdPoints;
     VertexBuffer* _vbPoints;
 
-    Batch _batchLines;
     BatchCommand _batchCommandLines;
     VertexData*   _vdLines;
     VertexBuffer* _vbLines;

@@ -38,11 +38,13 @@
 
 NS_CC_BEGIN
 
-VertexData::VertexData()
+VertexData::VertexData(Primitive primitive)
     : _interleaved(false)
     , _dirty(false)
     , _count(0)
     , _vao(0)
+    , _indices(nullptr)
+    , _drawingPrimitive(primitive)
 {
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -128,29 +130,21 @@ VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
     else return &iter->second._stream;
 }
 
-GLArrayBuffer* VertexData::getStreamBuffer(int semantic) const
-{
-    auto iter = _vertexStreams.find(semantic);
-    if(iter == _vertexStreams.end()) return nullptr;
-    else return iter->second._buffer;
-}
-
 void VertexData::draw()
 {
     if (isDirty())
     {
         for (auto& e : _vertexStreams)
         {
-            auto& bufferAttribute = e.second;
-            bufferAttribute._buffer->update();
+            auto& ba = e.second;
+            ba._buffer->update();
         }
         setDirty(false);
     }
     
     if (_vao)
     {
-        auto vb = _vertexStreams.begin()->second._buffer;
-        GL::bindVAO(vb->getVAO());
+        GL::bindVAO(_vao);
     }
     else
     {
@@ -164,7 +158,7 @@ void VertexData::draw()
         
         for (auto& element : _vertexStreams)
         {
-            auto vb = element._buffer;
+            auto vb = element.second._buffer;
             glBindBuffer(GL_ARRAY_BUFFER, vb->getVBO());
             auto& attrib = element.second;
             auto& stream = attrib._stream;
@@ -174,6 +168,8 @@ void VertexData::draw()
         
         CHECK_GL_ERROR_DEBUG();
     }
+
+auto _start = 0;
     
     if (_indices!= nullptr)
     {
@@ -191,12 +187,6 @@ void VertexData::draw()
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void VertexData::use()
-{
-    
-
 }
 
 bool VertexData::empty() const

@@ -65,17 +65,6 @@ public:
         Dynamic    // GL_STREAMED_DRAW
     };
     
-    enum Primitive
-    {
-        Points,
-        Lines,
-        LineLoop,
-        LineStrip,
-        Triangles,
-        TriangleStrip,
-        TriangleFan
-    };
-    
     virtual ~GLArrayBuffer();
     
     // @brief updates a region of the client and native buffer

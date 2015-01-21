@@ -24,11 +24,11 @@
 
 
 #include "renderer/CCBatchCommand.h"
-#include "renderer/CCBatch.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCVertexIndexData.h"
 
 NS_CC_BEGIN
 
@@ -60,7 +60,7 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _mv = modelViewTransform;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, Batch* batch, const Mat4& modelViewTransform, uint32_t flags)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, Texture2D* texture, VertexData* batch, const Mat4& modelViewTransform, uint32_t flags)
 {
     CCASSERT(shader,  "shader cannot be nullptr");
     CCASSERT(batch,   "vertexData cannot be nullptr");

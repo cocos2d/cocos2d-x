@@ -31,6 +31,8 @@
 NS_CC_BEGIN
 
 class GLArrayBuffer;
+class IndexBuffer;
+class EventListenerCustom;
 
 struct CC_DLL VertexStreamAttribute
 {
@@ -57,15 +59,24 @@ struct CC_DLL VertexStreamAttribute
 class CC_DLL VertexData
     : public Ref
 {
-    VertexData();
-    
 public:
     
+    enum Primitive
+    {
+        Points,
+        Lines,
+        LineLoop,
+        LineStrip,
+        Triangles,
+        TriangleStrip,
+        TriangleFan
+    };
+    
     template <typename T = VertexData>
-    static T* create()
+    static T* create(Primitive primitive)
     {
         auto result = new (std::nothrow) T;
-        if (result)
+        if (result && result->init(primitive))
         {
             result->autorelease();
             return result;
@@ -74,20 +85,20 @@ public:
     }
 
     virtual ~VertexData();
+    
+    bool init(Primitive primitive);
 
     // @brief Return the number of vertex streams
     size_t getVertexStreamCount() const;
     
     // @brief add vertex stream descriptors to a buffer 
     CC_DEPRECATED_ATTRIBUTE bool setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream) { return addStream(buffer, stream); }
-    bool addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream);
+    bool addStream(GLArrayBuffer* vertices, const VertexStreamAttribute& stream);
     void removeStream(int semantic);
 
     const VertexStreamAttribute* getStreamAttribute(int semantic) const;
     VertexStreamAttribute* getStreamAttribute(int semantic);
-    
-    GLArrayBuffer* getStreamBuffer(int semantic) const;
-    
+        
     // @brief update and draw the buffer.
     void draw();
     
@@ -113,7 +124,8 @@ public:
         {
             for (auto& e : _vertexStreams)
             {
-                append(e.second._buffer, (void*)&vertex, sizeof(vertex));
+                auto const verts = e.second._buffer;
+                append(verts, (void*)&vertex, sizeof(vertex));
                 return;
             }
         }
@@ -121,13 +133,16 @@ public:
         {
             for (auto& e : _vertexStreams)
             {
+                auto const verts = e.second._buffer;
                 intptr_t p = (intptr_t)&vertex + e.second._stream._offset;
-                append(e.second._buffer, (void*)p, e.second._stream._size);
+                append(verts, (void*)p, e.second._stream._size);
             }
         }
     }
 
 protected:
+
+    VertexData(Primitive primitive);
 
     void recreate() const;
     bool determineInterleave() const;
@@ -137,16 +152,19 @@ protected:
     
     struct BufferAttribute
     {
-        GLArrayBuffer* _vertices;
-        GLArrayBuffer* _indices;
+        GLArrayBuffer* _buffer;
         VertexStreamAttribute _stream;
     };
     std::map<int, BufferAttribute> _vertexStreams;
+
+    IndexBuffer* _indices;
 
     size_t _count;
     bool _interleaved;
     bool _dirty;
     int _vao;
+    
+    Primitive _drawingPrimitive;
 
     EventListenerCustom* _recreateEventListener;
 };
