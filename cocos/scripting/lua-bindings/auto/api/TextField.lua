@@ -118,6 +118,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TextField] getAutoRenderSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- 
 -- @function [parent=#TextField] setPasswordEnabled 
 -- @param self
 -- @param #bool enable
