@@ -245,10 +245,10 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
 , _horizontalKernings(nullptr)
-, _maxLineWidth(0)
+, _maxLineWidth(0.0f)
 , _labelDimensions(Size::ZERO)
-, _labelWidth(0)
-, _labelHeight(0)
+, _labelWidth(0.0f)
+, _labelHeight(0.0f)
 , _hAlignment(hAlignment)
 , _vAlignment(vAlignment)
 , _currNumLines(-1)
@@ -496,7 +496,7 @@ void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
     }
 }
 
-void Label::setMaxLineWidth(unsigned int maxLineWidth)
+void Label::setMaxLineWidth(float maxLineWidth)
 {
     if (_labelWidth == 0 && _maxLineWidth != maxLineWidth)
     {
@@ -505,7 +505,7 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
     }
 }
 
-void Label::setDimensions(unsigned int width, unsigned int height)
+void Label::setDimensions(float width, float height)
 {
     if (height != _labelHeight || width != _labelWidth)
     {
