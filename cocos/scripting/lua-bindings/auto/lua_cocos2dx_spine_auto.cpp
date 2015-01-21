@@ -30,7 +30,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setTimeScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setTimeScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -81,7 +80,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_isOpacityModifyRGB(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_isOpacityModifyRGB'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -129,7 +127,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setDebugSlotsEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setDebugSlotsEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -180,7 +177,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_getDebugSlotsEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_getDebugSlotsEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -228,7 +224,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setBonesToSetupPose(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setBonesToSetupPose'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -276,7 +271,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setSlotsToSetupPose(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setSlotsToSetupPose'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -324,7 +318,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setSkin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setSkin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -375,7 +368,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setToSetupPose(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setToSetupPose'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -423,7 +415,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -474,7 +465,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_setDebugBonesEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_setDebugBonesEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -525,7 +515,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_getSkeleton(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_getSkeleton'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -573,7 +562,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_getDebugBonesEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_getDebugBonesEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -621,7 +609,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_getTimeScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_getTimeScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -656,7 +643,6 @@ int lua_cocos2dx_spine_SkeletonRenderer_createWithFile(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"sp.SkeletonRenderer",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonRenderer_createWithFile'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -797,7 +783,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setStartListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setStartListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -852,7 +837,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setTrackEventListener(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setTrackEventListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -911,7 +895,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -970,7 +953,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setTrackStartListener(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setTrackStartListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1029,7 +1011,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setCompleteListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setCompleteListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1084,7 +1065,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setTrackEndListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setTrackEndListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1143,7 +1123,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setEventListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setEventListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1198,7 +1177,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setMix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setMix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -1255,7 +1233,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_setEndListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_setEndListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1310,7 +1287,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTracks(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_clearTracks'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1358,7 +1334,6 @@ int lua_cocos2dx_spine_SkeletonAnimation_clearTrack(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_spine_SkeletonAnimation_clearTrack'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {

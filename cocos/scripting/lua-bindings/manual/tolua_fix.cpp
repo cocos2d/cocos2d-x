@@ -3,7 +3,6 @@
 #include "base/CCRef.h"
 #include "LuaBasicConversions.h"
 #include <stdlib.h>
-#include "CCLuaEngine.h"
 
 using namespace cocos2d;
 
@@ -256,11 +255,4 @@ TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label)
         }
     }
     printf("\n");
-}
-
-TOLUA_API void toluafix_set_call_msg(const char* msg)
-{
-    auto engine = LuaEngine::getInstance();
-    auto stack = engine->getLuaStack();
-    stack->setCallMsg(msg);
 }

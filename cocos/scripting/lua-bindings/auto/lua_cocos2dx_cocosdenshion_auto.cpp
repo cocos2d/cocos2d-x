@@ -30,7 +30,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadBackgroundMusic(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -81,7 +80,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopBackgroundMusic(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -143,7 +141,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopAllEffects(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopAllEffects'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -191,7 +188,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getBackgroundMusicVolume(lua_St
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getBackgroundMusicVolume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -239,7 +235,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeBackgroundMusic(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -287,7 +282,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setBackgroundMusicVolume(lua_St
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setBackgroundMusicVolume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -338,7 +332,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadEffect(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -389,7 +382,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_isBackgroundMusicPlaying(lua_St
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_isBackgroundMusicPlaying'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -437,7 +429,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getEffectsVolume(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getEffectsVolume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -485,7 +476,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_willPlayBackgroundMusic(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_willPlayBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -533,7 +523,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseEffect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -584,7 +573,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -721,7 +709,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_rewindBackgroundMusic(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_rewindBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -769,7 +756,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playBackgroundMusic(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_playBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -837,7 +823,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeAllEffects(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeAllEffects'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -885,7 +870,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setEffectsVolume(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_setEffectsVolume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -936,7 +920,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopEffect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_stopEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -987,7 +970,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseBackgroundMusic(lua_State*
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseBackgroundMusic'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1035,7 +1017,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseAllEffects(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_pauseAllEffects'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1083,7 +1064,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_unloadEffect(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_unloadEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1134,7 +1114,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeEffect(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_resumeEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1173,7 +1152,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_end(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_end'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -1208,7 +1186,6 @@ int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SimpleAudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosdenshion_SimpleAudioEngine_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)

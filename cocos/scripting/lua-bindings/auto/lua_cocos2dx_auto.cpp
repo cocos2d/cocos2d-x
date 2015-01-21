@@ -31,7 +31,6 @@ int lua_cocos2dx_Ref_release(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ref_release'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -79,7 +78,6 @@ int lua_cocos2dx_Ref_retain(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ref_retain'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -127,7 +125,6 @@ int lua_cocos2dx_Ref_getReferenceCount(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ref_getReferenceCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -197,7 +194,6 @@ int lua_cocos2dx_Console_stop(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Console_stop'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -245,7 +241,6 @@ int lua_cocos2dx_Console_listenOnTCP(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Console_listenOnTCP'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -296,7 +291,6 @@ int lua_cocos2dx_Console_listenOnFileDescriptor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Console_listenOnFileDescriptor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -347,7 +341,6 @@ int lua_cocos2dx_Console_log(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Console_log'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -421,7 +414,6 @@ int lua_cocos2dx_Texture2D_getMaxT(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getMaxT'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -469,7 +461,6 @@ int lua_cocos2dx_Texture2D_getStringForFormat(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getStringForFormat'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -512,7 +503,6 @@ int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_initWithImage'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -577,7 +567,6 @@ int lua_cocos2dx_Texture2D_getMaxS(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getMaxS'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -625,7 +614,6 @@ int lua_cocos2dx_Texture2D_releaseGLTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_releaseGLTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -673,7 +661,6 @@ int lua_cocos2dx_Texture2D_hasPremultipliedAlpha(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_hasPremultipliedAlpha'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -721,7 +708,6 @@ int lua_cocos2dx_Texture2D_getPixelsHigh(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getPixelsHigh'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -764,7 +750,6 @@ int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getBitsPerPixelForFormat'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -821,7 +806,6 @@ int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -864,7 +848,6 @@ int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_initWithString'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -1021,7 +1004,6 @@ int lua_cocos2dx_Texture2D_setMaxT(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_setMaxT'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1072,7 +1054,6 @@ int lua_cocos2dx_Texture2D_drawInRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_drawInRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1123,7 +1104,6 @@ int lua_cocos2dx_Texture2D_getContentSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getContentSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1171,7 +1151,6 @@ int lua_cocos2dx_Texture2D_setAliasTexParameters(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_setAliasTexParameters'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1219,7 +1198,6 @@ int lua_cocos2dx_Texture2D_setAntiAliasTexParameters(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_setAntiAliasTexParameters'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1267,7 +1245,6 @@ int lua_cocos2dx_Texture2D_generateMipmap(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_generateMipmap'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1315,7 +1292,6 @@ int lua_cocos2dx_Texture2D_getDescription(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getDescription'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1363,7 +1339,6 @@ int lua_cocos2dx_Texture2D_getPixelFormat(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getPixelFormat'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1411,7 +1386,6 @@ int lua_cocos2dx_Texture2D_setGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_setGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1462,7 +1436,6 @@ int lua_cocos2dx_Texture2D_getContentSizeInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getContentSizeInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1510,7 +1483,6 @@ int lua_cocos2dx_Texture2D_getPixelsWide(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getPixelsWide'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1558,7 +1530,6 @@ int lua_cocos2dx_Texture2D_drawAtPoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_drawAtPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1609,7 +1580,6 @@ int lua_cocos2dx_Texture2D_getGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1657,7 +1627,6 @@ int lua_cocos2dx_Texture2D_hasMipmaps(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_hasMipmaps'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1705,7 +1674,6 @@ int lua_cocos2dx_Texture2D_setMaxS(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_setMaxS'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1744,7 +1712,6 @@ int lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Texture2D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -1781,7 +1748,6 @@ int lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Texture2D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_getDefaultAlphaPixelFormat'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -1815,7 +1781,6 @@ int lua_cocos2dx_Texture2D_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Texture2D_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1913,7 +1878,6 @@ int lua_cocos2dx_Touch_getPreviousLocationInView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getPreviousLocationInView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1961,7 +1925,6 @@ int lua_cocos2dx_Touch_getLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2009,7 +1972,6 @@ int lua_cocos2dx_Touch_getDelta(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getDelta'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2057,7 +2019,6 @@ int lua_cocos2dx_Touch_getStartLocationInView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getStartLocationInView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2105,7 +2066,6 @@ int lua_cocos2dx_Touch_getStartLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getStartLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2153,7 +2113,6 @@ int lua_cocos2dx_Touch_getID(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getID'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2201,7 +2160,6 @@ int lua_cocos2dx_Touch_setTouchInfo(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_setTouchInfo'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -2258,7 +2216,6 @@ int lua_cocos2dx_Touch_getLocationInView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getLocationInView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2306,7 +2263,6 @@ int lua_cocos2dx_Touch_getPreviousLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_getPreviousLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2341,7 +2297,6 @@ int lua_cocos2dx_Touch_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Touch_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2421,7 +2376,6 @@ int lua_cocos2dx_Event_getCurrentTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Event_getCurrentTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2469,7 +2423,6 @@ int lua_cocos2dx_Event_getType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Event_getType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2517,7 +2470,6 @@ int lua_cocos2dx_Event_getResult(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Event_getResult'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2565,7 +2517,6 @@ int lua_cocos2dx_Event_isStopped(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Event_isStopped'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2613,7 +2564,6 @@ int lua_cocos2dx_Event_setResult(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Event_setResult'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2664,7 +2614,6 @@ int lua_cocos2dx_Event_stopPropagation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Event_stopPropagation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2737,7 +2686,6 @@ int lua_cocos2dx_EventTouch_getEventCode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventTouch_getEventCode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2785,7 +2733,6 @@ int lua_cocos2dx_EventTouch_setEventCode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventTouch_setEventCode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2823,7 +2770,6 @@ int lua_cocos2dx_EventTouch_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventTouch_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2883,7 +2829,6 @@ int lua_cocos2dx_EventKeyboard_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventKeyboard_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -2955,7 +2900,6 @@ int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_addChild'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -3055,7 +2999,6 @@ int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeComponent'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -3116,7 +3059,6 @@ int lua_cocos2dx_Node_getDescription(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getDescription'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3164,7 +3106,6 @@ int lua_cocos2dx_Node_setRotationSkewY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setRotationSkewY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3215,7 +3156,6 @@ int lua_cocos2dx_Node_setOpacityModifyRGB(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setOpacityModifyRGB'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3266,7 +3206,6 @@ int lua_cocos2dx_Node_setCascadeOpacityEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setCascadeOpacityEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3312,7 +3251,6 @@ int lua_cocos2dx_Node_getChildren(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getChildren'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -3365,7 +3303,6 @@ int lua_cocos2dx_Node_setOnExitCallback(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setOnExitCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3420,7 +3357,6 @@ int lua_cocos2dx_Node_pause(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_pause'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3468,7 +3404,6 @@ int lua_cocos2dx_Node_convertToWorldSpaceAR(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_convertToWorldSpaceAR'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3519,7 +3454,6 @@ int lua_cocos2dx_Node_isIgnoreAnchorPointForPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isIgnoreAnchorPointForPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3567,7 +3501,6 @@ int lua_cocos2dx_Node_getChildByName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getChildByName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3618,7 +3551,6 @@ int lua_cocos2dx_Node_updateDisplayedOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_updateDisplayedOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3669,7 +3601,6 @@ int lua_cocos2dx_Node_getCameraMask(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getCameraMask'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3717,7 +3648,6 @@ int lua_cocos2dx_Node_setRotation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setRotation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3768,7 +3698,6 @@ int lua_cocos2dx_Node_setScaleZ(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setScaleZ'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3819,7 +3748,6 @@ int lua_cocos2dx_Node_setScaleY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setScaleY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3870,7 +3798,6 @@ int lua_cocos2dx_Node_setScaleX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setScaleX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3921,7 +3848,6 @@ int lua_cocos2dx_Node_setRotationSkewX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setRotationSkewX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3972,7 +3898,6 @@ int lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4027,7 +3952,6 @@ int lua_cocos2dx_Node_removeAllComponents(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeAllComponents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4075,7 +3999,6 @@ int lua_cocos2dx_Node_getOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4123,7 +4046,6 @@ int lua_cocos2dx_Node_setCameraMask(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setCameraMask'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4191,7 +4113,6 @@ int lua_cocos2dx_Node_getTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4239,7 +4160,6 @@ int lua_cocos2dx_Node_getGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4287,7 +4207,6 @@ int lua_cocos2dx_Node_getNodeToWorldTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getNodeToWorldTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4335,7 +4254,6 @@ int lua_cocos2dx_Node_getPosition3D(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getPosition3D'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4383,7 +4301,6 @@ int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4451,7 +4368,6 @@ int lua_cocos2dx_Node_convertToWorldSpace(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_convertToWorldSpace'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4502,7 +4418,6 @@ int lua_cocos2dx_Node_getScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4550,7 +4465,6 @@ int lua_cocos2dx_Node_getEventDispatcher(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getEventDispatcher'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4598,7 +4512,6 @@ int lua_cocos2dx_Node_setSkewX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setSkewX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4649,7 +4562,6 @@ int lua_cocos2dx_Node_setGLProgramState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setGLProgramState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4700,7 +4612,6 @@ int lua_cocos2dx_Node_setOnEnterCallback(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setOnEnterCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4755,7 +4666,6 @@ int lua_cocos2dx_Node_setNormalizedPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setNormalizedPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4806,7 +4716,6 @@ int lua_cocos2dx_Node_setonExitTransitionDidStartCallback(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setonExitTransitionDidStartCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4861,7 +4770,6 @@ int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_convertTouchToNodeSpace'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4907,7 +4815,6 @@ int lua_cocos2dx_Node_removeAllChildrenWithCleanup(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeAllChildrenWithCleanup'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -4964,7 +4871,6 @@ int lua_cocos2dx_Node_getNodeToParentAffineTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getNodeToParentAffineTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5012,7 +4918,6 @@ int lua_cocos2dx_Node_isCascadeOpacityEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isCascadeOpacityEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5060,7 +4965,6 @@ int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setParent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5111,7 +5015,6 @@ int lua_cocos2dx_Node_getName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5159,7 +5062,6 @@ int lua_cocos2dx_Node_resume(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_resume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5207,7 +5109,6 @@ int lua_cocos2dx_Node_getRotation3D(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getRotation3D'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5255,7 +5156,6 @@ int lua_cocos2dx_Node_getNodeToParentTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getNodeToParentTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5303,7 +5203,6 @@ int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_convertTouchToNodeSpaceAR'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5354,7 +5253,6 @@ int lua_cocos2dx_Node_convertToNodeSpace(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_convertToNodeSpace'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5400,7 +5298,6 @@ int lua_cocos2dx_Node_setPosition(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setPosition'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -5465,7 +5362,6 @@ int lua_cocos2dx_Node_stopActionByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_stopActionByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5516,7 +5412,6 @@ int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_reorderChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -5570,7 +5465,6 @@ int lua_cocos2dx_Node_ignoreAnchorPointForPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_ignoreAnchorPointForPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5621,7 +5515,6 @@ int lua_cocos2dx_Node_setSkewY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setSkewY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5672,7 +5565,6 @@ int lua_cocos2dx_Node_setPositionZ(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setPositionZ'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5723,7 +5615,6 @@ int lua_cocos2dx_Node_setRotation3D(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setRotation3D'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5774,7 +5665,6 @@ int lua_cocos2dx_Node_setPositionX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setPositionX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5825,7 +5715,6 @@ int lua_cocos2dx_Node_setNodeToParentTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setNodeToParentTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5876,7 +5765,6 @@ int lua_cocos2dx_Node_getAnchorPoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getAnchorPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5924,7 +5812,6 @@ int lua_cocos2dx_Node_getNumberOfRunningActions(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getNumberOfRunningActions'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5972,7 +5859,6 @@ int lua_cocos2dx_Node_updateTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_updateTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6020,7 +5906,6 @@ int lua_cocos2dx_Node_isVisible(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isVisible'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6068,7 +5953,6 @@ int lua_cocos2dx_Node_getChildrenCount(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getChildrenCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6116,7 +6000,6 @@ int lua_cocos2dx_Node_convertToNodeSpaceAR(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_convertToNodeSpaceAR'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6167,7 +6050,6 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_addComponent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6218,7 +6100,6 @@ int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_runAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6269,7 +6150,6 @@ int lua_cocos2dx_Node_isOpacityModifyRGB(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isOpacityModifyRGB'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6317,7 +6197,6 @@ int lua_cocos2dx_Node_getRotation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getRotation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6365,7 +6244,6 @@ int lua_cocos2dx_Node_getAnchorPointInPoints(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getAnchorPointInPoints'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6408,7 +6286,6 @@ int lua_cocos2dx_Node_visit(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_visit'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -6473,7 +6350,6 @@ int lua_cocos2dx_Node_removeChildByName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeChildByName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6541,7 +6417,6 @@ int lua_cocos2dx_Node_getGLProgramState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getGLProgramState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6589,7 +6464,6 @@ int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setScheduler'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6640,7 +6514,6 @@ int lua_cocos2dx_Node_stopAllActions(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_stopAllActions'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6688,7 +6561,6 @@ int lua_cocos2dx_Node_getSkewX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getSkewX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6736,7 +6608,6 @@ int lua_cocos2dx_Node_getSkewY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getSkewY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6784,7 +6655,6 @@ int lua_cocos2dx_Node_getDisplayedColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getDisplayedColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6832,7 +6702,6 @@ int lua_cocos2dx_Node_getActionByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getActionByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6883,7 +6752,6 @@ int lua_cocos2dx_Node_setName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6934,7 +6802,6 @@ int lua_cocos2dx_Node_getDisplayedOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getDisplayedOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6982,7 +6849,6 @@ int lua_cocos2dx_Node_getLocalZOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getLocalZOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7025,7 +6891,6 @@ int lua_cocos2dx_Node_getScheduler(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getScheduler'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -7078,7 +6943,6 @@ int lua_cocos2dx_Node_getParentToNodeAffineTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getParentToNodeAffineTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7126,7 +6990,6 @@ int lua_cocos2dx_Node_getOrderOfArrival(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getOrderOfArrival'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7174,7 +7037,6 @@ int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setActionManager'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7225,7 +7087,6 @@ int lua_cocos2dx_Node_setColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7276,7 +7137,6 @@ int lua_cocos2dx_Node_isRunning(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isRunning'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7319,7 +7179,6 @@ int lua_cocos2dx_Node_getParent(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getParent'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -7372,7 +7231,6 @@ int lua_cocos2dx_Node_getPositionZ(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getPositionZ'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7420,7 +7278,6 @@ int lua_cocos2dx_Node_getPositionY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getPositionY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7468,7 +7325,6 @@ int lua_cocos2dx_Node_getPositionX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getPositionX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7516,7 +7372,6 @@ int lua_cocos2dx_Node_removeChildByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeChildByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7584,7 +7439,6 @@ int lua_cocos2dx_Node_setPositionY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setPositionY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7635,7 +7489,6 @@ int lua_cocos2dx_Node_getNodeToWorldAffineTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getNodeToWorldAffineTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7683,7 +7536,6 @@ int lua_cocos2dx_Node_updateDisplayedColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_updateDisplayedColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7734,7 +7586,6 @@ int lua_cocos2dx_Node_setVisible(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setVisible'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7785,7 +7636,6 @@ int lua_cocos2dx_Node_getParentToNodeTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getParentToNodeTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7833,7 +7683,6 @@ int lua_cocos2dx_Node_isScheduled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isScheduled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7884,7 +7733,6 @@ int lua_cocos2dx_Node_setGlobalZOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setGlobalZOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7930,7 +7778,6 @@ int lua_cocos2dx_Node_setScale(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setScale'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -7995,7 +7842,6 @@ int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getChildByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8046,7 +7892,6 @@ int lua_cocos2dx_Node_setOrderOfArrival(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setOrderOfArrival'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8097,7 +7942,6 @@ int lua_cocos2dx_Node_getScaleZ(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getScaleZ'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8145,7 +7989,6 @@ int lua_cocos2dx_Node_getScaleY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getScaleY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8193,7 +8036,6 @@ int lua_cocos2dx_Node_getScaleX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getScaleX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8241,7 +8083,6 @@ int lua_cocos2dx_Node_setLocalZOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setLocalZOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8292,7 +8133,6 @@ int lua_cocos2dx_Node_getWorldToNodeAffineTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getWorldToNodeAffineTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8340,7 +8180,6 @@ int lua_cocos2dx_Node_setCascadeColorEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setCascadeColorEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8391,7 +8230,6 @@ int lua_cocos2dx_Node_setOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8442,7 +8280,6 @@ int lua_cocos2dx_Node_cleanup(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_cleanup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8490,7 +8327,6 @@ int lua_cocos2dx_Node_getComponent(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getComponent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8541,7 +8377,6 @@ int lua_cocos2dx_Node_getContentSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getContentSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8589,7 +8424,6 @@ int lua_cocos2dx_Node_stopAllActionsByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_stopAllActionsByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8640,7 +8474,6 @@ int lua_cocos2dx_Node_getColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8688,7 +8521,6 @@ int lua_cocos2dx_Node_getBoundingBox(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getBoundingBox'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8736,7 +8568,6 @@ int lua_cocos2dx_Node_setEventDispatcher(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setEventDispatcher'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8787,7 +8618,6 @@ int lua_cocos2dx_Node_getGlobalZOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getGlobalZOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8830,7 +8660,6 @@ int lua_cocos2dx_Node_draw(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_draw'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -8895,7 +8724,6 @@ int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setUserObject'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8941,7 +8769,6 @@ int lua_cocos2dx_Node_removeFromParentAndCleanup(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_removeFromParentAndCleanup'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -8998,7 +8825,6 @@ int lua_cocos2dx_Node_setPosition3D(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setPosition3D'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9049,7 +8875,6 @@ int lua_cocos2dx_Node_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9100,7 +8925,6 @@ int lua_cocos2dx_Node_sortAllChildren(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_sortAllChildren'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9148,7 +8972,6 @@ int lua_cocos2dx_Node_getWorldToNodeTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getWorldToNodeTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9196,7 +9019,6 @@ int lua_cocos2dx_Node_setGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9247,7 +9069,6 @@ int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9295,7 +9116,6 @@ int lua_cocos2dx_Node_getNormalizedPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getNormalizedPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9343,7 +9163,6 @@ int lua_cocos2dx_Node_getRotationSkewX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getRotationSkewX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9391,7 +9210,6 @@ int lua_cocos2dx_Node_getRotationSkewY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getRotationSkewY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9439,7 +9257,6 @@ int lua_cocos2dx_Node_setTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_setTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9490,7 +9307,6 @@ int lua_cocos2dx_Node_isCascadeColorEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_isCascadeColorEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9538,7 +9354,6 @@ int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_stopAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9584,7 +9399,6 @@ int lua_cocos2dx_Node_getActionManager(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_getActionManager'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -9625,7 +9439,6 @@ int lua_cocos2dx_Node_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Node_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -9823,7 +9636,6 @@ int lua_cocos2dx_Scene_render(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Scene_render'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9862,7 +9674,6 @@ int lua_cocos2dx_Scene_createWithSize(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Scene_createWithSize'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -9899,7 +9710,6 @@ int lua_cocos2dx_Scene_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Scene_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -9968,7 +9778,6 @@ int lua_cocos2dx_GLView_setFrameSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setFrameSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -10022,7 +9831,6 @@ int lua_cocos2dx_GLView_getViewPortRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getViewPortRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10070,7 +9878,6 @@ int lua_cocos2dx_GLView_setContentScaleFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setContentScaleFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10121,7 +9928,6 @@ int lua_cocos2dx_GLView_getContentScaleFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getContentScaleFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10169,7 +9975,6 @@ int lua_cocos2dx_GLView_setIMEKeyboardState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setIMEKeyboardState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10220,7 +10025,6 @@ int lua_cocos2dx_GLView_setScissorInPoints(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setScissorInPoints'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -10280,7 +10084,6 @@ int lua_cocos2dx_GLView_getViewName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getViewName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10328,7 +10131,6 @@ int lua_cocos2dx_GLView_isOpenGLReady(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_isOpenGLReady'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10376,7 +10178,6 @@ int lua_cocos2dx_GLView_end(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_end'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10424,7 +10225,6 @@ int lua_cocos2dx_GLView_getScaleY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getScaleY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10472,7 +10272,6 @@ int lua_cocos2dx_GLView_getScaleX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getScaleX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10520,7 +10319,6 @@ int lua_cocos2dx_GLView_getVisibleOrigin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getVisibleOrigin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10568,7 +10366,6 @@ int lua_cocos2dx_GLView_getFrameSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getFrameSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10616,7 +10413,6 @@ int lua_cocos2dx_GLView_setFrameZoomFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setFrameZoomFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10667,7 +10463,6 @@ int lua_cocos2dx_GLView_getFrameZoomFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getFrameZoomFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10715,7 +10510,6 @@ int lua_cocos2dx_GLView_getDesignResolutionSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getDesignResolutionSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10763,7 +10557,6 @@ int lua_cocos2dx_GLView_windowShouldClose(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_windowShouldClose'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10811,7 +10604,6 @@ int lua_cocos2dx_GLView_swapBuffers(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_swapBuffers'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10859,7 +10651,6 @@ int lua_cocos2dx_GLView_setDesignResolutionSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setDesignResolutionSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -10916,7 +10707,6 @@ int lua_cocos2dx_GLView_getResolutionPolicy(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getResolutionPolicy'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10964,7 +10754,6 @@ int lua_cocos2dx_GLView_isRetinaDisplay(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_isRetinaDisplay'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11012,7 +10801,6 @@ int lua_cocos2dx_GLView_setViewPortInPoints(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setViewPortInPoints'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -11072,7 +10860,6 @@ int lua_cocos2dx_GLView_getScissorRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getScissorRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11120,7 +10907,6 @@ int lua_cocos2dx_GLView_getRetinaFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getRetinaFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11168,7 +10954,6 @@ int lua_cocos2dx_GLView_setViewName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setViewName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11219,7 +11004,6 @@ int lua_cocos2dx_GLView_getVisibleRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getVisibleRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11267,7 +11051,6 @@ int lua_cocos2dx_GLView_getVisibleSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getVisibleSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11315,7 +11098,6 @@ int lua_cocos2dx_GLView_isScissorEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_isScissorEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11363,7 +11145,6 @@ int lua_cocos2dx_GLView_pollEvents(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_pollEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11399,7 +11180,6 @@ int lua_cocos2dx_GLView_setGLContextAttrs(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_setGLContextAttrs'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -11437,7 +11217,6 @@ int lua_cocos2dx_GLView_getGLContextAttrs(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLView",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLView_getGLContextAttrs'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -11534,7 +11313,6 @@ int lua_cocos2dx_Director_pause(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_pause'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11582,7 +11360,6 @@ int lua_cocos2dx_Director_setEventDispatcher(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setEventDispatcher'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11633,7 +11410,6 @@ int lua_cocos2dx_Director_setContentScaleFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setContentScaleFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11684,7 +11460,6 @@ int lua_cocos2dx_Director_getContentScaleFactor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getContentScaleFactor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11732,7 +11507,6 @@ int lua_cocos2dx_Director_getWinSizeInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getWinSizeInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11780,7 +11554,6 @@ int lua_cocos2dx_Director_getDeltaTime(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getDeltaTime'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11828,7 +11601,6 @@ int lua_cocos2dx_Director_setGLDefaultValues(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setGLDefaultValues'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11876,7 +11648,6 @@ int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setActionManager'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11927,7 +11698,6 @@ int lua_cocos2dx_Director_setAlphaBlending(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setAlphaBlending'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11978,7 +11748,6 @@ int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_popToRootScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12026,7 +11795,6 @@ int lua_cocos2dx_Director_loadMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_loadMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -12080,7 +11848,6 @@ int lua_cocos2dx_Director_getNotificationNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getNotificationNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12128,7 +11895,6 @@ int lua_cocos2dx_Director_getWinSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getWinSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12176,7 +11942,6 @@ int lua_cocos2dx_Director_getTextureCache(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getTextureCache'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12224,7 +11989,6 @@ int lua_cocos2dx_Director_isSendCleanupToScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_isSendCleanupToScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12272,7 +12036,6 @@ int lua_cocos2dx_Director_getVisibleOrigin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getVisibleOrigin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12320,7 +12083,6 @@ int lua_cocos2dx_Director_mainLoop(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_mainLoop'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12368,7 +12130,6 @@ int lua_cocos2dx_Director_setDepthTest(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setDepthTest'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -12419,7 +12180,6 @@ int lua_cocos2dx_Director_getFrameRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getFrameRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12467,7 +12227,6 @@ int lua_cocos2dx_Director_getSecondsPerFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getSecondsPerFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12515,7 +12274,6 @@ int lua_cocos2dx_Director_resetMatrixStack(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_resetMatrixStack'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12563,7 +12321,6 @@ int lua_cocos2dx_Director_convertToUI(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_convertToUI'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -12614,7 +12371,6 @@ int lua_cocos2dx_Director_pushMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_pushMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -12665,7 +12421,6 @@ int lua_cocos2dx_Director_setDefaultValues(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setDefaultValues'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12713,7 +12468,6 @@ int lua_cocos2dx_Director_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12761,7 +12515,6 @@ int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setScheduler'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -12812,7 +12565,6 @@ int lua_cocos2dx_Director_startAnimation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_startAnimation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12860,7 +12612,6 @@ int lua_cocos2dx_Director_getOpenGLView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getOpenGLView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12908,7 +12659,6 @@ int lua_cocos2dx_Director_getRunningScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getRunningScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -12956,7 +12706,6 @@ int lua_cocos2dx_Director_setViewport(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setViewport'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13004,7 +12753,6 @@ int lua_cocos2dx_Director_stopAnimation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_stopAnimation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13052,7 +12800,6 @@ int lua_cocos2dx_Director_popToSceneStackLevel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_popToSceneStackLevel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13103,7 +12850,6 @@ int lua_cocos2dx_Director_resume(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_resume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13151,7 +12897,6 @@ int lua_cocos2dx_Director_isNextDeltaTimeZero(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_isNextDeltaTimeZero'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13199,7 +12944,6 @@ int lua_cocos2dx_Director_end(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_end'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13247,7 +12991,6 @@ int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setOpenGLView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13298,7 +13041,6 @@ int lua_cocos2dx_Director_convertToGL(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_convertToGL'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13349,7 +13091,6 @@ int lua_cocos2dx_Director_purgeCachedData(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_purgeCachedData'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13397,7 +13138,6 @@ int lua_cocos2dx_Director_getTotalFrames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getTotalFrames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13445,7 +13185,6 @@ int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_runWithScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13496,7 +13235,6 @@ int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setNotificationNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13547,7 +13285,6 @@ int lua_cocos2dx_Director_drawScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_drawScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13595,7 +13332,6 @@ int lua_cocos2dx_Director_getMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13646,7 +13382,6 @@ int lua_cocos2dx_Director_popScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_popScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13694,7 +13429,6 @@ int lua_cocos2dx_Director_loadIdentityMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_loadIdentityMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13745,7 +13479,6 @@ int lua_cocos2dx_Director_isDisplayStats(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_isDisplayStats'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13793,7 +13526,6 @@ int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setProjection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -13844,7 +13576,6 @@ int lua_cocos2dx_Director_getConsole(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getConsole'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13892,7 +13623,6 @@ int lua_cocos2dx_Director_multiplyMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_multiplyMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -13946,7 +13676,6 @@ int lua_cocos2dx_Director_getZEye(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getZEye'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -13994,7 +13723,6 @@ int lua_cocos2dx_Director_setNextDeltaTimeZero(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setNextDeltaTimeZero'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14045,7 +13773,6 @@ int lua_cocos2dx_Director_popMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_popMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14096,7 +13823,6 @@ int lua_cocos2dx_Director_getVisibleSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getVisibleSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14144,7 +13870,6 @@ int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getScheduler'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14192,7 +13917,6 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_pushScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14243,7 +13967,6 @@ int lua_cocos2dx_Director_getAnimationInterval(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getAnimationInterval'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14291,7 +14014,6 @@ int lua_cocos2dx_Director_isPaused(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_isPaused'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14339,7 +14061,6 @@ int lua_cocos2dx_Director_setDisplayStats(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setDisplayStats'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14390,7 +14111,6 @@ int lua_cocos2dx_Director_getEventDispatcher(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getEventDispatcher'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14438,7 +14158,6 @@ int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_replaceScene'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14489,7 +14208,6 @@ int lua_cocos2dx_Director_setAnimationInterval(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_setAnimationInterval'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14540,7 +14258,6 @@ int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getActionManager'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14576,7 +14293,6 @@ int lua_cocos2dx_Director_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Director_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -14705,7 +14421,6 @@ int lua_cocos2dx_Timer_getInterval(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Timer_getInterval'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14753,7 +14468,6 @@ int lua_cocos2dx_Timer_setupTimerWithInterval(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Timer_setupTimerWithInterval'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -14810,7 +14524,6 @@ int lua_cocos2dx_Timer_setInterval(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Timer_setInterval'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14861,7 +14574,6 @@ int lua_cocos2dx_Timer_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Timer_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -14912,7 +14624,6 @@ int lua_cocos2dx_Timer_trigger(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Timer_trigger'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -14960,7 +14671,6 @@ int lua_cocos2dx_Timer_cancel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Timer_cancel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -15033,7 +14743,6 @@ int lua_cocos2dx_Scheduler_setTimeScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Scheduler_setTimeScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15084,7 +14793,6 @@ int lua_cocos2dx_Scheduler_getTimeScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Scheduler_getTimeScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -15119,7 +14827,6 @@ int lua_cocos2dx_Scheduler_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Scheduler_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -15192,7 +14899,6 @@ int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_fullPathForFilename'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15243,7 +14949,6 @@ int lua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getStringFromFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15294,7 +14999,6 @@ int lua_cocos2dx_FileUtils_setFilenameLookupDictionary(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_setFilenameLookupDictionary'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15345,7 +15049,6 @@ int lua_cocos2dx_FileUtils_removeFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_removeFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15396,7 +15099,6 @@ int lua_cocos2dx_FileUtils_isAbsolutePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_isAbsolutePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15447,7 +15149,6 @@ int lua_cocos2dx_FileUtils_renameFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_renameFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -15504,7 +15205,6 @@ int lua_cocos2dx_FileUtils_setSearchRootPath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_setSearchRootPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15555,7 +15255,6 @@ int lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_loadFilenameLookupDictionaryFromFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15606,7 +15305,6 @@ int lua_cocos2dx_FileUtils_isPopupNotify(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_isPopupNotify'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -15654,7 +15352,6 @@ int lua_cocos2dx_FileUtils_getValueVectorFromFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getValueVectorFromFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15705,7 +15402,6 @@ int lua_cocos2dx_FileUtils_getSearchPaths(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getSearchPaths'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -15753,7 +15449,6 @@ int lua_cocos2dx_FileUtils_writeToFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_writeToFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -15807,7 +15502,6 @@ int lua_cocos2dx_FileUtils_getValueMapFromFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getValueMapFromFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15858,7 +15552,6 @@ int lua_cocos2dx_FileUtils_getValueMapFromData(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getValueMapFromData'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -15912,7 +15605,6 @@ int lua_cocos2dx_FileUtils_removeDirectory(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_removeDirectory'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -15963,7 +15655,6 @@ int lua_cocos2dx_FileUtils_setSearchPaths(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_setSearchPaths'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16014,7 +15705,6 @@ int lua_cocos2dx_FileUtils_getFileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getFileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16065,7 +15755,6 @@ int lua_cocos2dx_FileUtils_setSearchResolutionsOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_setSearchResolutionsOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16116,7 +15805,6 @@ int lua_cocos2dx_FileUtils_addSearchResolutionsOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_addSearchResolutionsOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16184,7 +15872,6 @@ int lua_cocos2dx_FileUtils_addSearchPath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_addSearchPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16252,7 +15939,6 @@ int lua_cocos2dx_FileUtils_isFileExist(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_isFileExist'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16303,7 +15989,6 @@ int lua_cocos2dx_FileUtils_purgeCachedEntries(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_purgeCachedEntries'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -16351,7 +16036,6 @@ int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_fullPathFromRelativeFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -16405,7 +16089,6 @@ int lua_cocos2dx_FileUtils_setWritablePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_setWritablePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16456,7 +16139,6 @@ int lua_cocos2dx_FileUtils_setPopupNotify(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_setPopupNotify'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16507,7 +16189,6 @@ int lua_cocos2dx_FileUtils_isDirectoryExist(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_isDirectoryExist'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16558,7 +16239,6 @@ int lua_cocos2dx_FileUtils_getSearchResolutionsOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getSearchResolutionsOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -16606,7 +16286,6 @@ int lua_cocos2dx_FileUtils_createDirectory(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_createDirectory'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -16657,7 +16336,6 @@ int lua_cocos2dx_FileUtils_getWritablePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getWritablePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -16693,7 +16371,6 @@ int lua_cocos2dx_FileUtils_destroyInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_destroyInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -16728,7 +16405,6 @@ int lua_cocos2dx_FileUtils_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FileUtils_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -16825,7 +16501,6 @@ int lua_cocos2dx_UserDefault_setIntegerForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_setIntegerForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -16874,7 +16549,6 @@ int lua_cocos2dx_UserDefault_getFloatForKey(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_getFloatForKey'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -16934,7 +16608,6 @@ int lua_cocos2dx_UserDefault_getBoolForKey(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_getBoolForKey'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -16999,7 +16672,6 @@ int lua_cocos2dx_UserDefault_setDoubleForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_setDoubleForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -17053,7 +16725,6 @@ int lua_cocos2dx_UserDefault_setFloatForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_setFloatForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -17102,7 +16773,6 @@ int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_getStringForKey'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -17167,7 +16837,6 @@ int lua_cocos2dx_UserDefault_setStringForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_setStringForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -17221,7 +16890,6 @@ int lua_cocos2dx_UserDefault_flush(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_flush'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -17264,7 +16932,6 @@ int lua_cocos2dx_UserDefault_getIntegerForKey(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_getIntegerForKey'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -17324,7 +16991,6 @@ int lua_cocos2dx_UserDefault_getDoubleForKey(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_getDoubleForKey'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -17389,7 +17055,6 @@ int lua_cocos2dx_UserDefault_setBoolForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_setBoolForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -17431,7 +17096,6 @@ int lua_cocos2dx_UserDefault_destroyInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_destroyInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -17466,7 +17130,6 @@ int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_getXMLFilePath'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -17501,7 +17164,6 @@ int lua_cocos2dx_UserDefault_isXMLFileExist(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.UserDefault",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_UserDefault_isXMLFileExist'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -17581,7 +17243,6 @@ int lua_cocos2dx_EventListener_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventListener_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -17632,7 +17293,6 @@ int lua_cocos2dx_EventListener_clone(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventListener_clone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -17680,7 +17340,6 @@ int lua_cocos2dx_EventListener_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventListener_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -17728,7 +17387,6 @@ int lua_cocos2dx_EventListener_checkAvailable(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventListener_checkAvailable'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -17799,7 +17457,6 @@ int lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -17867,7 +17524,6 @@ int lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -17921,7 +17577,6 @@ int lua_cocos2dx_EventDispatcher_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -17972,7 +17627,6 @@ int lua_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -18026,7 +17680,6 @@ int lua_cocos2dx_EventDispatcher_removeEventListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_removeEventListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18077,7 +17730,6 @@ int lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18145,7 +17797,6 @@ int lua_cocos2dx_EventDispatcher_removeEventListenersForTarget(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_removeEventListenersForTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18213,7 +17864,6 @@ int lua_cocos2dx_EventDispatcher_setPriority(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_setPriority'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -18267,7 +17917,6 @@ int lua_cocos2dx_EventDispatcher_addCustomEventListener(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_addCustomEventListener'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -18325,7 +17974,6 @@ int lua_cocos2dx_EventDispatcher_dispatchEvent(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_dispatchEvent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18376,7 +18024,6 @@ int lua_cocos2dx_EventDispatcher_removeAllEventListeners(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_removeAllEventListeners'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18424,7 +18071,6 @@ int lua_cocos2dx_EventDispatcher_removeCustomEventListeners(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_removeCustomEventListeners'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18475,7 +18121,6 @@ int lua_cocos2dx_EventDispatcher_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18523,7 +18168,6 @@ int lua_cocos2dx_EventDispatcher_removeEventListenersForType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_removeEventListenersForType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18561,7 +18205,6 @@ int lua_cocos2dx_EventDispatcher_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventDispatcher_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18646,7 +18289,6 @@ int lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventListenerTouchOneByOne_isSwallowTouches'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18694,7 +18336,6 @@ int lua_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventListenerTouchOneByOne_setSwallowTouches'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -18804,7 +18445,6 @@ int lua_cocos2dx_EventMouse_getPreviousLocationInView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getPreviousLocationInView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18852,7 +18492,6 @@ int lua_cocos2dx_EventMouse_getLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18900,7 +18539,6 @@ int lua_cocos2dx_EventMouse_getMouseButton(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getMouseButton'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18948,7 +18586,6 @@ int lua_cocos2dx_EventMouse_getPreviousLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getPreviousLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -18996,7 +18633,6 @@ int lua_cocos2dx_EventMouse_getDelta(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getDelta'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19044,7 +18680,6 @@ int lua_cocos2dx_EventMouse_setScrollData(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_setScrollData'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -19098,7 +18733,6 @@ int lua_cocos2dx_EventMouse_getStartLocationInView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getStartLocationInView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19146,7 +18780,6 @@ int lua_cocos2dx_EventMouse_getStartLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getStartLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19194,7 +18827,6 @@ int lua_cocos2dx_EventMouse_setMouseButton(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_setMouseButton'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -19245,7 +18877,6 @@ int lua_cocos2dx_EventMouse_getLocationInView(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getLocationInView'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19293,7 +18924,6 @@ int lua_cocos2dx_EventMouse_getScrollY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getScrollY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19341,7 +18971,6 @@ int lua_cocos2dx_EventMouse_getScrollX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getScrollX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19389,7 +19018,6 @@ int lua_cocos2dx_EventMouse_getCursorX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getCursorX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19437,7 +19065,6 @@ int lua_cocos2dx_EventMouse_getCursorY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_getCursorY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19485,7 +19112,6 @@ int lua_cocos2dx_EventMouse_setCursorPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_setCursorPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -19526,7 +19152,6 @@ int lua_cocos2dx_EventMouse_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventMouse_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -19672,7 +19297,6 @@ int lua_cocos2dx_EventCustom_getDataString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventCustom_getDataString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19720,7 +19344,6 @@ int lua_cocos2dx_EventCustom_setDataString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventCustom_setDataString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -19771,7 +19394,6 @@ int lua_cocos2dx_EventCustom_getEventName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventCustom_getEventName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -19806,7 +19428,6 @@ int lua_cocos2dx_EventCustom_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventCustom_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -19889,7 +19510,6 @@ int lua_cocos2dx_EventFocus_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EventFocus_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -19985,7 +19605,6 @@ int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_startWithTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20036,7 +19655,6 @@ int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_setOriginalTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20087,7 +19705,6 @@ int lua_cocos2dx_Action_clone(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_clone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20135,7 +19752,6 @@ int lua_cocos2dx_Action_getOriginalTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_getOriginalTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20183,7 +19799,6 @@ int lua_cocos2dx_Action_stop(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_stop'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20231,7 +19846,6 @@ int lua_cocos2dx_Action_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20282,7 +19896,6 @@ int lua_cocos2dx_Action_getTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_getTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20330,7 +19943,6 @@ int lua_cocos2dx_Action_step(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_step'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20381,7 +19993,6 @@ int lua_cocos2dx_Action_setTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_setTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20432,7 +20043,6 @@ int lua_cocos2dx_Action_getTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_getTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20480,7 +20090,6 @@ int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_setTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20531,7 +20140,6 @@ int lua_cocos2dx_Action_isDone(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_isDone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20579,7 +20187,6 @@ int lua_cocos2dx_Action_reverse(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Action_reverse'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20659,7 +20266,6 @@ int lua_cocos2dx_FiniteTimeAction_setDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FiniteTimeAction_setDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20710,7 +20316,6 @@ int lua_cocos2dx_FiniteTimeAction_getDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FiniteTimeAction_getDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20779,7 +20384,6 @@ int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Speed_setInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20830,7 +20434,6 @@ int lua_cocos2dx_Speed_setSpeed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Speed_setSpeed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -20881,7 +20484,6 @@ int lua_cocos2dx_Speed_getInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Speed_getInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20929,7 +20531,6 @@ int lua_cocos2dx_Speed_getSpeed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Speed_getSpeed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -20965,7 +20566,6 @@ int lua_cocos2dx_Speed_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Speed",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Speed_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -21040,7 +20640,6 @@ int lua_cocos2dx_Follow_setBoundarySet(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Follow_setBoundarySet'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21091,7 +20690,6 @@ int lua_cocos2dx_Follow_isBoundarySet(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Follow_isBoundarySet'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21127,7 +20725,6 @@ int lua_cocos2dx_Follow_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Follow",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Follow_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -21213,7 +20810,6 @@ int lua_cocos2dx_SpriteFrame_clone(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_clone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21261,7 +20857,6 @@ int lua_cocos2dx_SpriteFrame_setRotated(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setRotated'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21312,7 +20907,6 @@ int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21363,7 +20957,6 @@ int lua_cocos2dx_SpriteFrame_getOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21411,7 +21004,6 @@ int lua_cocos2dx_SpriteFrame_setRectInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setRectInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21462,7 +21054,6 @@ int lua_cocos2dx_SpriteFrame_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21510,7 +21101,6 @@ int lua_cocos2dx_SpriteFrame_getRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21558,7 +21148,6 @@ int lua_cocos2dx_SpriteFrame_setOffsetInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setOffsetInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21609,7 +21198,6 @@ int lua_cocos2dx_SpriteFrame_getRectInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getRectInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21657,7 +21245,6 @@ int lua_cocos2dx_SpriteFrame_setOriginalSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setOriginalSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21708,7 +21295,6 @@ int lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getOriginalSizeInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21756,7 +21342,6 @@ int lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setOriginalSizeInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21807,7 +21392,6 @@ int lua_cocos2dx_SpriteFrame_setOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21858,7 +21442,6 @@ int lua_cocos2dx_SpriteFrame_isRotated(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_isRotated'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -21906,7 +21489,6 @@ int lua_cocos2dx_SpriteFrame_setRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_setRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -21957,7 +21539,6 @@ int lua_cocos2dx_SpriteFrame_getOffsetInPixels(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getOffsetInPixels'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22005,7 +21586,6 @@ int lua_cocos2dx_SpriteFrame_getOriginalSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_getOriginalSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22040,7 +21620,6 @@ int lua_cocos2dx_SpriteFrame_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -22104,7 +21683,6 @@ int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpriteFrame",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrame_createWithTexture'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -22219,7 +21797,6 @@ int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_setSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -22265,7 +21842,6 @@ int lua_cocos2dx_AnimationFrame_getUserInfo(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_getUserInfo'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -22318,7 +21894,6 @@ int lua_cocos2dx_AnimationFrame_setDelayUnits(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_setDelayUnits'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -22369,7 +21944,6 @@ int lua_cocos2dx_AnimationFrame_clone(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_clone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22417,7 +21991,6 @@ int lua_cocos2dx_AnimationFrame_getSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_getSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22465,7 +22038,6 @@ int lua_cocos2dx_AnimationFrame_getDelayUnits(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_getDelayUnits'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22513,7 +22085,6 @@ int lua_cocos2dx_AnimationFrame_setUserInfo(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_setUserInfo'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -22552,7 +22123,6 @@ int lua_cocos2dx_AnimationFrame_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AnimationFrame",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationFrame_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -22632,7 +22202,6 @@ int lua_cocos2dx_Animation_getLoops(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_getLoops'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22680,7 +22249,6 @@ int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_addSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -22731,7 +22299,6 @@ int lua_cocos2dx_Animation_setRestoreOriginalFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_setRestoreOriginalFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -22782,7 +22349,6 @@ int lua_cocos2dx_Animation_clone(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_clone'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22830,7 +22396,6 @@ int lua_cocos2dx_Animation_getDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_getDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22878,7 +22443,6 @@ int lua_cocos2dx_Animation_setFrames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_setFrames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -22929,7 +22493,6 @@ int lua_cocos2dx_Animation_getFrames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_getFrames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -22977,7 +22540,6 @@ int lua_cocos2dx_Animation_setLoops(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_setLoops'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -23028,7 +22590,6 @@ int lua_cocos2dx_Animation_setDelayPerUnit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_setDelayPerUnit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -23079,7 +22640,6 @@ int lua_cocos2dx_Animation_addSpriteFrameWithFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_addSpriteFrameWithFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -23130,7 +22690,6 @@ int lua_cocos2dx_Animation_getTotalDelayUnits(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_getTotalDelayUnits'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23178,7 +22737,6 @@ int lua_cocos2dx_Animation_getDelayPerUnit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_getDelayPerUnit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23226,7 +22784,6 @@ int lua_cocos2dx_Animation_getRestoreOriginalFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_getRestoreOriginalFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23274,7 +22831,6 @@ int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_addSpriteFrameWithTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -23315,7 +22871,6 @@ int lua_cocos2dx_Animation_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animation",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -23384,7 +22939,6 @@ int lua_cocos2dx_Animation_createWithSpriteFrames(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animation",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animation_createWithSpriteFrames'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -23500,7 +23054,6 @@ int lua_cocos2dx_ActionInterval_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionInterval_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23548,7 +23101,6 @@ int lua_cocos2dx_ActionInterval_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionInterval_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -23599,7 +23151,6 @@ int lua_cocos2dx_ActionInterval_getElapsed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionInterval_getElapsed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23688,7 +23239,6 @@ int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Repeat_setInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -23739,7 +23289,6 @@ int lua_cocos2dx_Repeat_getInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Repeat_getInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23775,7 +23324,6 @@ int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Repeat",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Repeat_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -23848,7 +23396,6 @@ int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RepeatForever_setInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -23899,7 +23446,6 @@ int lua_cocos2dx_RepeatForever_getInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RepeatForever_getInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -23935,7 +23481,6 @@ int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.RepeatForever",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RepeatForever_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -24012,7 +23557,6 @@ int lua_cocos2dx_RotateTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.RotateTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RotateTo_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -24106,7 +23650,6 @@ int lua_cocos2dx_RotateBy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.RotateBy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RotateBy_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -24201,7 +23744,6 @@ int lua_cocos2dx_MoveBy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MoveBy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MoveBy_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -24260,7 +23802,6 @@ int lua_cocos2dx_MoveTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MoveTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MoveTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -24319,7 +23860,6 @@ int lua_cocos2dx_SkewTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SkewTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SkewTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -24380,7 +23920,6 @@ int lua_cocos2dx_SkewBy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SkewBy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SkewBy_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -24441,7 +23980,6 @@ int lua_cocos2dx_JumpBy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.JumpBy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpBy_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -24504,7 +24042,6 @@ int lua_cocos2dx_JumpTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.JumpTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -24604,7 +24141,6 @@ int lua_cocos2dx_ScaleTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ScaleTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ScaleTo_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -24704,7 +24240,6 @@ int lua_cocos2dx_ScaleBy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ScaleBy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ScaleBy_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -24805,7 +24340,6 @@ int lua_cocos2dx_Blink_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Blink",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Blink_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -24864,7 +24398,6 @@ int lua_cocos2dx_FadeTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -24935,7 +24468,6 @@ int lua_cocos2dx_FadeIn_setReverseAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeIn_setReverseAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -24974,7 +24506,6 @@ int lua_cocos2dx_FadeIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -25044,7 +24575,6 @@ int lua_cocos2dx_FadeOut_setReverseAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOut_setReverseAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -25083,7 +24613,6 @@ int lua_cocos2dx_FadeOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -25141,7 +24670,6 @@ int lua_cocos2dx_TintTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TintTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TintTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -25204,7 +24732,6 @@ int lua_cocos2dx_TintBy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TintBy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TintBy_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -25267,7 +24794,6 @@ int lua_cocos2dx_DelayTime_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.DelayTime",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DelayTime_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -25331,7 +24857,6 @@ int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animate_getAnimation'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -25384,7 +24909,6 @@ int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animate_setAnimation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -25423,7 +24947,6 @@ int lua_cocos2dx_Animate_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Animate",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Animate_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -25489,7 +25012,6 @@ int lua_cocos2dx_TargetedAction_getForcedTarget(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TargetedAction_getForcedTarget'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -25542,7 +25064,6 @@ int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TargetedAction_setForcedTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -25581,7 +25102,6 @@ int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TargetedAction",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TargetedAction_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -25649,7 +25169,6 @@ int lua_cocos2dx_ActionCamera_setEye(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_setEye'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 3) {
@@ -25718,7 +25237,6 @@ int lua_cocos2dx_ActionCamera_getEye(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_getEye'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -25766,7 +25284,6 @@ int lua_cocos2dx_ActionCamera_setUp(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_setUp'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -25817,7 +25334,6 @@ int lua_cocos2dx_ActionCamera_getCenter(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_getCenter'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -25865,7 +25381,6 @@ int lua_cocos2dx_ActionCamera_setCenter(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_setCenter'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -25916,7 +25431,6 @@ int lua_cocos2dx_ActionCamera_getUp(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_getUp'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -25951,7 +25465,6 @@ int lua_cocos2dx_ActionCamera_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionCamera_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -26016,7 +25529,6 @@ int lua_cocos2dx_OrbitCamera_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.OrbitCamera",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_OrbitCamera_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 7)
@@ -26097,7 +25609,6 @@ int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_getActionByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -26151,7 +25662,6 @@ int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_removeActionByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -26205,7 +25715,6 @@ int lua_cocos2dx_ActionManager_removeAllActions(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_removeAllActions'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -26253,7 +25762,6 @@ int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_addAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -26310,7 +25818,6 @@ int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_resumeTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26361,7 +25868,6 @@ int lua_cocos2dx_ActionManager_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26412,7 +25918,6 @@ int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_pauseTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26463,7 +25968,6 @@ int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26514,7 +26018,6 @@ int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_removeAllActionsFromTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26565,7 +26068,6 @@ int lua_cocos2dx_ActionManager_resumeTargets(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_resumeTargets'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26616,7 +26118,6 @@ int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_removeAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26667,7 +26168,6 @@ int lua_cocos2dx_ActionManager_removeAllActionsByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_removeAllActionsByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -26721,7 +26221,6 @@ int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_pauseAllRunningActions'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -26756,7 +26255,6 @@ int lua_cocos2dx_ActionManager_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionManager_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -26840,7 +26338,6 @@ int lua_cocos2dx_ActionEase_getInnerAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionEase_getInnerAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -26908,7 +26405,6 @@ int lua_cocos2dx_EaseRateAction_setRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseRateAction_setRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -26959,7 +26455,6 @@ int lua_cocos2dx_EaseRateAction_getRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseRateAction_getRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -27016,7 +26511,6 @@ int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -27075,7 +26569,6 @@ int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -27134,7 +26627,6 @@ int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -27193,7 +26685,6 @@ int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseExponentialIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseExponentialIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27250,7 +26741,6 @@ int lua_cocos2dx_EaseExponentialOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseExponentialOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseExponentialOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27307,7 +26797,6 @@ int lua_cocos2dx_EaseExponentialInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseExponentialInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseExponentialInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27364,7 +26853,6 @@ int lua_cocos2dx_EaseSineIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseSineIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseSineIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27421,7 +26909,6 @@ int lua_cocos2dx_EaseSineOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseSineOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseSineOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27478,7 +26965,6 @@ int lua_cocos2dx_EaseSineInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseSineInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseSineInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27547,7 +27033,6 @@ int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseElastic_setPeriod'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -27598,7 +27083,6 @@ int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseElastic_getPeriod'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -27654,7 +27138,6 @@ int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseElasticIn_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -27726,7 +27209,6 @@ int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseElasticOut_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -27798,7 +27280,6 @@ int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseElasticInOut_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -27890,7 +27371,6 @@ int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBounceIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBounceIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -27947,7 +27427,6 @@ int lua_cocos2dx_EaseBounceOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBounceOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBounceOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28004,7 +27483,6 @@ int lua_cocos2dx_EaseBounceInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBounceInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBounceInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28061,7 +27539,6 @@ int lua_cocos2dx_EaseBackIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBackIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBackIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28118,7 +27595,6 @@ int lua_cocos2dx_EaseBackOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBackOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBackOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28175,7 +27651,6 @@ int lua_cocos2dx_EaseBackInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBackInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBackInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28244,7 +27719,6 @@ int lua_cocos2dx_EaseBezierAction_setBezierParamer(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -28292,7 +27766,6 @@ int lua_cocos2dx_EaseBezierAction_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseBezierAction",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseBezierAction_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28350,7 +27823,6 @@ int lua_cocos2dx_EaseQuadraticActionIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuadraticActionIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuadraticActionIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28407,7 +27879,6 @@ int lua_cocos2dx_EaseQuadraticActionOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuadraticActionOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuadraticActionOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28464,7 +27935,6 @@ int lua_cocos2dx_EaseQuadraticActionInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuadraticActionInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuadraticActionInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28521,7 +27991,6 @@ int lua_cocos2dx_EaseQuarticActionIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuarticActionIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuarticActionIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28578,7 +28047,6 @@ int lua_cocos2dx_EaseQuarticActionOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuarticActionOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuarticActionOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28635,7 +28103,6 @@ int lua_cocos2dx_EaseQuarticActionInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuarticActionInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuarticActionInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28692,7 +28159,6 @@ int lua_cocos2dx_EaseQuinticActionIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuinticActionIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuinticActionIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28749,7 +28215,6 @@ int lua_cocos2dx_EaseQuinticActionOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuinticActionOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuinticActionOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28806,7 +28271,6 @@ int lua_cocos2dx_EaseQuinticActionInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseQuinticActionInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseQuinticActionInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28863,7 +28327,6 @@ int lua_cocos2dx_EaseCircleActionIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseCircleActionIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseCircleActionIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28920,7 +28383,6 @@ int lua_cocos2dx_EaseCircleActionOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseCircleActionOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseCircleActionOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -28977,7 +28439,6 @@ int lua_cocos2dx_EaseCircleActionInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseCircleActionInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseCircleActionInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29034,7 +28495,6 @@ int lua_cocos2dx_EaseCubicActionIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseCubicActionIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseCubicActionIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29091,7 +28551,6 @@ int lua_cocos2dx_EaseCubicActionOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseCubicActionOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseCubicActionOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29148,7 +28607,6 @@ int lua_cocos2dx_EaseCubicActionInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.EaseCubicActionInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_EaseCubicActionInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29224,7 +28682,6 @@ int lua_cocos2dx_Show_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Show",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Show_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -29279,7 +28736,6 @@ int lua_cocos2dx_Hide_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Hide",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Hide_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -29334,7 +28790,6 @@ int lua_cocos2dx_ToggleVisibility_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ToggleVisibility",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ToggleVisibility_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -29389,7 +28844,6 @@ int lua_cocos2dx_RemoveSelf_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.RemoveSelf",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RemoveSelf_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -29457,7 +28911,6 @@ int lua_cocos2dx_FlipX_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FlipX",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FlipX_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29514,7 +28967,6 @@ int lua_cocos2dx_FlipY_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FlipY",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FlipY_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29571,7 +29023,6 @@ int lua_cocos2dx_Place_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Place",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Place_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -29640,7 +29091,6 @@ int lua_cocos2dx_CallFunc_execute(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CallFunc_execute'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -29688,7 +29138,6 @@ int lua_cocos2dx_CallFunc_getTargetCallback(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CallFunc_getTargetCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -29736,7 +29185,6 @@ int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CallFunc_setTargetCallback'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -29809,7 +29257,6 @@ int lua_cocos2dx_GridAction_getGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridAction_getGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -29877,7 +29324,6 @@ int lua_cocos2dx_Grid3DAction_getGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Grid3DAction_getGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -29945,7 +29391,6 @@ int lua_cocos2dx_TiledGrid3DAction_getGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TiledGrid3DAction_getGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -30001,7 +29446,6 @@ int lua_cocos2dx_StopGrid_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.StopGrid",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_StopGrid_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -30056,7 +29500,6 @@ int lua_cocos2dx_ReuseGrid_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ReuseGrid",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ReuseGrid_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -30125,7 +29568,6 @@ int lua_cocos2dx_Waves3D_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves3D_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -30173,7 +29615,6 @@ int lua_cocos2dx_Waves3D_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves3D_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30224,7 +29665,6 @@ int lua_cocos2dx_Waves3D_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves3D_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30275,7 +29715,6 @@ int lua_cocos2dx_Waves3D_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves3D_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -30311,7 +29750,6 @@ int lua_cocos2dx_Waves3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Waves3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -30378,7 +29816,6 @@ int lua_cocos2dx_FlipX3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FlipX3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FlipX3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -30435,7 +29872,6 @@ int lua_cocos2dx_FlipY3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FlipY3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FlipY3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -30504,7 +29940,6 @@ int lua_cocos2dx_Lens3D_setPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Lens3D_setPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30555,7 +29990,6 @@ int lua_cocos2dx_Lens3D_setConcave(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Lens3D_setConcave'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30606,7 +30040,6 @@ int lua_cocos2dx_Lens3D_setLensEffect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Lens3D_setLensEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30657,7 +30090,6 @@ int lua_cocos2dx_Lens3D_getPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Lens3D_getPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -30705,7 +30137,6 @@ int lua_cocos2dx_Lens3D_getLensEffect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Lens3D_getLensEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -30741,7 +30172,6 @@ int lua_cocos2dx_Lens3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Lens3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Lens3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -30821,7 +30251,6 @@ int lua_cocos2dx_Ripple3D_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30872,7 +30301,6 @@ int lua_cocos2dx_Ripple3D_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -30920,7 +30348,6 @@ int lua_cocos2dx_Ripple3D_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -30971,7 +30398,6 @@ int lua_cocos2dx_Ripple3D_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31019,7 +30445,6 @@ int lua_cocos2dx_Ripple3D_setPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_setPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31070,7 +30495,6 @@ int lua_cocos2dx_Ripple3D_getPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_getPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31106,7 +30530,6 @@ int lua_cocos2dx_Ripple3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Ripple3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Ripple3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 6)
@@ -31179,7 +30602,6 @@ int lua_cocos2dx_Shaky3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Shaky3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Shaky3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -31254,7 +30676,6 @@ int lua_cocos2dx_Liquid_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Liquid_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31302,7 +30723,6 @@ int lua_cocos2dx_Liquid_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Liquid_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31353,7 +30773,6 @@ int lua_cocos2dx_Liquid_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Liquid_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31404,7 +30823,6 @@ int lua_cocos2dx_Liquid_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Liquid_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31440,7 +30858,6 @@ int lua_cocos2dx_Liquid_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Liquid",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Liquid_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -31519,7 +30936,6 @@ int lua_cocos2dx_Waves_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31567,7 +30983,6 @@ int lua_cocos2dx_Waves_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31618,7 +31033,6 @@ int lua_cocos2dx_Waves_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31669,7 +31083,6 @@ int lua_cocos2dx_Waves_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31705,7 +31118,6 @@ int lua_cocos2dx_Waves_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Waves",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Waves_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 6)
@@ -31788,7 +31200,6 @@ int lua_cocos2dx_Twirl_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31839,7 +31250,6 @@ int lua_cocos2dx_Twirl_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31887,7 +31297,6 @@ int lua_cocos2dx_Twirl_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -31938,7 +31347,6 @@ int lua_cocos2dx_Twirl_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -31986,7 +31394,6 @@ int lua_cocos2dx_Twirl_setPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_setPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -32037,7 +31444,6 @@ int lua_cocos2dx_Twirl_getPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_getPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -32073,7 +31479,6 @@ int lua_cocos2dx_Twirl_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Twirl",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Twirl_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 5)
@@ -32156,7 +31561,6 @@ int lua_cocos2dx_PageTurn3D_getGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_PageTurn3D_getGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -32192,7 +31596,6 @@ int lua_cocos2dx_PageTurn3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.PageTurn3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_PageTurn3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -32252,7 +31655,6 @@ int lua_cocos2dx_ProgressTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ProgressTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -32311,7 +31713,6 @@ int lua_cocos2dx_ProgressFromTo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ProgressFromTo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressFromTo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -32372,7 +31773,6 @@ int lua_cocos2dx_ShakyTiles3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ShakyTiles3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ShakyTiles3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -32435,7 +31835,6 @@ int lua_cocos2dx_ShatteredTiles3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ShatteredTiles3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ShatteredTiles3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -32510,7 +31909,6 @@ int lua_cocos2dx_ShuffleTiles_getDelta(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ShuffleTiles_getDelta'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -32549,7 +31947,6 @@ int lua_cocos2dx_ShuffleTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ShuffleTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ShuffleTiles_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -32623,7 +32020,6 @@ int lua_cocos2dx_FadeOutTRTiles_turnOnTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutTRTiles_turnOnTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -32674,7 +32070,6 @@ int lua_cocos2dx_FadeOutTRTiles_turnOffTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutTRTiles_turnOffTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -32725,7 +32120,6 @@ int lua_cocos2dx_FadeOutTRTiles_transformTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutTRTiles_transformTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -32779,7 +32173,6 @@ int lua_cocos2dx_FadeOutTRTiles_testFunc(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutTRTiles_testFunc'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -32821,7 +32214,6 @@ int lua_cocos2dx_FadeOutTRTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeOutTRTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutTRTiles_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -32884,7 +32276,6 @@ int lua_cocos2dx_FadeOutBLTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeOutBLTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutBLTiles_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -32955,7 +32346,6 @@ int lua_cocos2dx_FadeOutUpTiles_transformTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutUpTiles_transformTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -32997,7 +32387,6 @@ int lua_cocos2dx_FadeOutUpTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeOutUpTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutUpTiles_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -33057,7 +32446,6 @@ int lua_cocos2dx_FadeOutDownTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.FadeOutDownTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_FadeOutDownTiles_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -33128,7 +32516,6 @@ int lua_cocos2dx_TurnOffTiles_turnOnTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TurnOffTiles_turnOnTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -33179,7 +32566,6 @@ int lua_cocos2dx_TurnOffTiles_turnOffTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TurnOffTiles_turnOffTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -33217,7 +32603,6 @@ int lua_cocos2dx_TurnOffTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TurnOffTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TurnOffTiles_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -33310,7 +32695,6 @@ int lua_cocos2dx_WavesTiles3D_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_WavesTiles3D_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -33358,7 +32742,6 @@ int lua_cocos2dx_WavesTiles3D_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_WavesTiles3D_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -33409,7 +32792,6 @@ int lua_cocos2dx_WavesTiles3D_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_WavesTiles3D_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -33460,7 +32842,6 @@ int lua_cocos2dx_WavesTiles3D_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_WavesTiles3D_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -33496,7 +32877,6 @@ int lua_cocos2dx_WavesTiles3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.WavesTiles3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_WavesTiles3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -33575,7 +32955,6 @@ int lua_cocos2dx_JumpTiles3D_getAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpTiles3D_getAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -33623,7 +33002,6 @@ int lua_cocos2dx_JumpTiles3D_setAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpTiles3D_setAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -33674,7 +33052,6 @@ int lua_cocos2dx_JumpTiles3D_setAmplitudeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpTiles3D_setAmplitudeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -33725,7 +33102,6 @@ int lua_cocos2dx_JumpTiles3D_getAmplitude(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpTiles3D_getAmplitude'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -33761,7 +33137,6 @@ int lua_cocos2dx_JumpTiles3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.JumpTiles3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_JumpTiles3D_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -33828,7 +33203,6 @@ int lua_cocos2dx_SplitRows_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SplitRows",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SplitRows_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -33887,7 +33261,6 @@ int lua_cocos2dx_SplitCols_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SplitCols",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SplitCols_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -33946,7 +33319,6 @@ int lua_cocos2dx_ActionTween_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ActionTween",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ActionTween_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -34021,7 +33393,6 @@ int lua_cocos2dx_CardinalSplineTo_getPoints(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CardinalSplineTo_getPoints'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34069,7 +33440,6 @@ int lua_cocos2dx_CardinalSplineTo_updatePosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CardinalSplineTo_updatePosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -34120,7 +33490,6 @@ int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CardinalSplineTo_initWithDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -34164,7 +33533,6 @@ int lua_cocos2dx_CardinalSplineTo_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CardinalSplineTo_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34225,7 +33593,6 @@ int lua_cocos2dx_CardinalSplineBy_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CardinalSplineBy_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34296,7 +33663,6 @@ int lua_cocos2dx_CatmullRomTo_initWithDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CatmullRomTo_initWithDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -34370,7 +33736,6 @@ int lua_cocos2dx_CatmullRomBy_initWithDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_CatmullRomBy_initWithDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -34439,7 +33804,6 @@ int lua_cocos2dx_ProtectedNode_addProtectedChild(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_addProtectedChild'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -34524,7 +33888,6 @@ int lua_cocos2dx_ProtectedNode_disableCascadeColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_disableCascadeColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34572,7 +33935,6 @@ int lua_cocos2dx_ProtectedNode_removeProtectedChildByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_removeProtectedChildByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -34640,7 +34002,6 @@ int lua_cocos2dx_ProtectedNode_reorderProtectedChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_reorderProtectedChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -34694,7 +34055,6 @@ int lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_removeAllProtectedChildrenWithCleanup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -34745,7 +34105,6 @@ int lua_cocos2dx_ProtectedNode_disableCascadeOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_disableCascadeOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34793,7 +34152,6 @@ int lua_cocos2dx_ProtectedNode_sortAllProtectedChildren(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_sortAllProtectedChildren'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34841,7 +34199,6 @@ int lua_cocos2dx_ProtectedNode_getProtectedChildByTag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_getProtectedChildByTag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -34892,7 +34249,6 @@ int lua_cocos2dx_ProtectedNode_removeProtectedChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_removeProtectedChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -34960,7 +34316,6 @@ int lua_cocos2dx_ProtectedNode_removeAllProtectedChildren(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_removeAllProtectedChildren'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -34996,7 +34351,6 @@ int lua_cocos2dx_ProtectedNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ProtectedNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProtectedNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -35068,7 +34422,6 @@ int lua_cocos2dx_GLProgramState_setUniformTexture(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformTexture'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35164,7 +34517,6 @@ int lua_cocos2dx_GLProgramState_setUniformMat4(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformMat4'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35233,7 +34585,6 @@ int lua_cocos2dx_GLProgramState_applyUniforms(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_applyUniforms'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -35281,7 +34632,6 @@ int lua_cocos2dx_GLProgramState_applyGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_applyGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -35332,7 +34682,6 @@ int lua_cocos2dx_GLProgramState_getUniformCount(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_getUniformCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -35380,7 +34729,6 @@ int lua_cocos2dx_GLProgramState_applyAttributes(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_applyAttributes'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -35437,7 +34785,6 @@ int lua_cocos2dx_GLProgramState_setUniformFloat(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformFloat'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35501,7 +34848,6 @@ int lua_cocos2dx_GLProgramState_setUniformVec3(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformVec3'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35565,7 +34911,6 @@ int lua_cocos2dx_GLProgramState_setUniformInt(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformInt'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35634,7 +34979,6 @@ int lua_cocos2dx_GLProgramState_getVertexAttribCount(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_getVertexAttribCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -35677,7 +35021,6 @@ int lua_cocos2dx_GLProgramState_setUniformVec4(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformVec4'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35746,7 +35089,6 @@ int lua_cocos2dx_GLProgramState_setGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -35792,7 +35134,6 @@ int lua_cocos2dx_GLProgramState_setUniformVec2(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_setUniformVec2'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -35861,7 +35202,6 @@ int lua_cocos2dx_GLProgramState_getVertexAttribsFlags(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_getVertexAttribsFlags'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -35909,7 +35249,6 @@ int lua_cocos2dx_GLProgramState_apply(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_apply'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -35960,7 +35299,6 @@ int lua_cocos2dx_GLProgramState_getGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_getGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -35996,7 +35334,6 @@ int lua_cocos2dx_GLProgramState_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgramState",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -36033,7 +35370,6 @@ int lua_cocos2dx_GLProgramState_getOrCreateWithGLProgramName(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgramState",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_getOrCreateWithGLProgramName'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -36070,7 +35406,6 @@ int lua_cocos2dx_GLProgramState_getOrCreateWithGLProgram(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgramState",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramState_getOrCreateWithGLProgram'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -36157,7 +35492,6 @@ int lua_cocos2dx_AtlasNode_updateAtlasValues(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_updateAtlasValues'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -36205,7 +35539,6 @@ int lua_cocos2dx_AtlasNode_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -36253,7 +35586,6 @@ int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_setTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -36304,7 +35636,6 @@ int lua_cocos2dx_AtlasNode_getTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_getTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -36352,7 +35683,6 @@ int lua_cocos2dx_AtlasNode_getQuadsToDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_getQuadsToDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -36400,7 +35730,6 @@ int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -36451,7 +35780,6 @@ int lua_cocos2dx_AtlasNode_setQuadsToDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_setQuadsToDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -36490,7 +35818,6 @@ int lua_cocos2dx_AtlasNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AtlasNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AtlasNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -36572,7 +35899,6 @@ int lua_cocos2dx_DrawNode_drawLine(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawLine'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -36624,7 +35950,6 @@ int lua_cocos2dx_DrawNode_drawRect(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawRect'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 5) {
@@ -36704,7 +36029,6 @@ int lua_cocos2dx_DrawNode_drawSolidCircle(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawSolidCircle'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 5) {
@@ -36805,7 +36129,6 @@ int lua_cocos2dx_DrawNode_onDrawGLPoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_onDrawGLPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -36859,7 +36182,6 @@ int lua_cocos2dx_DrawNode_drawDot(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawDot'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -36916,7 +36238,6 @@ int lua_cocos2dx_DrawNode_drawSegment(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawSegment'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -36976,7 +36297,6 @@ int lua_cocos2dx_DrawNode_onDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_onDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -37025,7 +36345,6 @@ int lua_cocos2dx_DrawNode_drawCircle(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawCircle'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 6) {
@@ -37134,7 +36453,6 @@ int lua_cocos2dx_DrawNode_drawQuadBezier(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawQuadBezier'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 5) 
     {
@@ -37197,7 +36515,6 @@ int lua_cocos2dx_DrawNode_onDrawGLLine(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_onDrawGLLine'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -37251,7 +36568,6 @@ int lua_cocos2dx_DrawNode_drawTriangle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawTriangle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -37311,7 +36627,6 @@ int lua_cocos2dx_DrawNode_clear(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_clear'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -37359,7 +36674,6 @@ int lua_cocos2dx_DrawNode_drawSolidRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawSolidRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -37416,7 +36730,6 @@ int lua_cocos2dx_DrawNode_drawPoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -37473,7 +36786,6 @@ int lua_cocos2dx_DrawNode_drawCubicBezier(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_drawCubicBezier'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 6) 
     {
@@ -37527,7 +36839,6 @@ int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DrawNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -37609,7 +36920,6 @@ int lua_cocos2dx_LabelAtlas_setString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LabelAtlas_setString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -37655,7 +36965,6 @@ int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LabelAtlas_initWithString'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -37764,7 +37073,6 @@ int lua_cocos2dx_LabelAtlas_updateAtlasValues(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LabelAtlas_updateAtlasValues'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -37812,7 +37120,6 @@ int lua_cocos2dx_LabelAtlas_getString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LabelAtlas_getString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -37847,7 +37154,6 @@ int lua_cocos2dx_LabelAtlas_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.LabelAtlas",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LabelAtlas_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -37958,7 +37264,6 @@ int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_appendChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38009,7 +37314,6 @@ int lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -38066,7 +37370,6 @@ int lua_cocos2dx_SpriteBatchNode_reorderBatch(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_reorderBatch'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38117,7 +37420,6 @@ int lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_removeAllChildrenWithCleanup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38168,7 +37470,6 @@ int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38219,7 +37520,6 @@ int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_atlasIndexForChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -38273,7 +37573,6 @@ int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38324,7 +37623,6 @@ int lua_cocos2dx_SpriteBatchNode_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -38372,7 +37670,6 @@ int lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_increaseAtlasCapacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -38420,7 +37717,6 @@ int lua_cocos2dx_SpriteBatchNode_getTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_getTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -38468,7 +37764,6 @@ int lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -38522,7 +37817,6 @@ int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38573,7 +37867,6 @@ int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -38627,7 +37920,6 @@ int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38678,7 +37970,6 @@ int lua_cocos2dx_SpriteBatchNode_removeChildAtIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_removeChildAtIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -38732,7 +38023,6 @@ int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -38771,7 +38061,6 @@ int lua_cocos2dx_SpriteBatchNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -38823,7 +38112,6 @@ int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpriteBatchNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteBatchNode_createWithTexture'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -38924,7 +38212,6 @@ int lua_cocos2dx_Label_isClipMarginEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_isClipMarginEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -38972,7 +38259,6 @@ int lua_cocos2dx_Label_enableShadow(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_enableShadow'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39071,7 +38357,6 @@ int lua_cocos2dx_Label_setDimensions(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setDimensions'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -39125,7 +38410,6 @@ int lua_cocos2dx_Label_getString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39173,7 +38457,6 @@ int lua_cocos2dx_Label_getHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39221,7 +38504,6 @@ int lua_cocos2dx_Label_disableEffect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_disableEffect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39269,7 +38551,6 @@ int lua_cocos2dx_Label_setTTFConfig(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setTTFConfig'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39320,7 +38601,6 @@ int lua_cocos2dx_Label_getTextColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getTextColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39368,7 +38648,6 @@ int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setWidth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39419,7 +38698,6 @@ int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getMaxLineWidth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39467,7 +38745,6 @@ int lua_cocos2dx_Label_getHorizontalAlignment(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getHorizontalAlignment'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39515,7 +38792,6 @@ int lua_cocos2dx_Label_setClipMarginEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setClipMarginEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39566,7 +38842,6 @@ int lua_cocos2dx_Label_setString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39617,7 +38892,6 @@ int lua_cocos2dx_Label_setSystemFontName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setSystemFontName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39668,7 +38942,6 @@ int lua_cocos2dx_Label_setBMFontFilePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setBMFontFilePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39736,7 +39009,6 @@ int lua_cocos2dx_Label_getFontAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getFontAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39784,7 +39056,6 @@ int lua_cocos2dx_Label_setLineHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setLineHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39835,7 +39106,6 @@ int lua_cocos2dx_Label_setSystemFontSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setSystemFontSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -39886,7 +39156,6 @@ int lua_cocos2dx_Label_updateContent(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_updateContent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39934,7 +39203,6 @@ int lua_cocos2dx_Label_getStringLength(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getStringLength'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -39982,7 +39250,6 @@ int lua_cocos2dx_Label_setLineBreakWithoutSpace(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setLineBreakWithoutSpace'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40033,7 +39300,6 @@ int lua_cocos2dx_Label_getStringNumLines(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getStringNumLines'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40081,7 +39347,6 @@ int lua_cocos2dx_Label_enableOutline(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_enableOutline'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40149,7 +39414,6 @@ int lua_cocos2dx_Label_getAdditionalKerning(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getAdditionalKerning'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40192,7 +39456,6 @@ int lua_cocos2dx_Label_setCharMap(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setCharMap'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 4) {
@@ -40289,7 +39552,6 @@ int lua_cocos2dx_Label_getDimensions(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getDimensions'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40337,7 +39599,6 @@ int lua_cocos2dx_Label_setMaxLineWidth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setMaxLineWidth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40388,7 +39649,6 @@ int lua_cocos2dx_Label_getSystemFontName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getSystemFontName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40436,7 +39696,6 @@ int lua_cocos2dx_Label_setVerticalAlignment(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setVerticalAlignment'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40487,7 +39746,6 @@ int lua_cocos2dx_Label_getLineHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getLineHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40535,7 +39793,6 @@ int lua_cocos2dx_Label_getTTFConfig(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getTTFConfig'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40583,7 +39840,6 @@ int lua_cocos2dx_Label_getVerticalAlignment(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getVerticalAlignment'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40631,7 +39887,6 @@ int lua_cocos2dx_Label_setTextColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setTextColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40682,7 +39937,6 @@ int lua_cocos2dx_Label_setHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40733,7 +39987,6 @@ int lua_cocos2dx_Label_getWidth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getWidth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40781,7 +40034,6 @@ int lua_cocos2dx_Label_enableGlow(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_enableGlow'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40832,7 +40084,6 @@ int lua_cocos2dx_Label_getLetter(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getLetter'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40883,7 +40134,6 @@ int lua_cocos2dx_Label_setAdditionalKerning(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setAdditionalKerning'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -40934,7 +40184,6 @@ int lua_cocos2dx_Label_getSystemFontSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getSystemFontSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -40982,7 +40231,6 @@ int lua_cocos2dx_Label_getTextAlignment(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getTextAlignment'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -41030,7 +40278,6 @@ int lua_cocos2dx_Label_getBMFontFilePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_getBMFontFilePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -41078,7 +40325,6 @@ int lua_cocos2dx_Label_setHorizontalAlignment(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setHorizontalAlignment'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -41124,7 +40370,6 @@ int lua_cocos2dx_Label_setAlignment(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_setAlignment'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -41189,7 +40434,6 @@ int lua_cocos2dx_Label_requestSystemFontRefresh(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_requestSystemFontRefresh'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -41225,7 +40469,6 @@ int lua_cocos2dx_Label_createWithBMFont(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_createWithBMFont'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -41321,7 +40564,6 @@ int lua_cocos2dx_Label_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -41355,7 +40597,6 @@ int lua_cocos2dx_Label_createWithCharMap(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_createWithCharMap'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -41436,7 +40677,6 @@ int lua_cocos2dx_Label_createWithSystemFont(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Label_createWithSystemFont'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -41607,7 +40847,6 @@ int lua_cocos2dx_Layer_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Layer",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Layer_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -41674,7 +40913,6 @@ int lua_cocos2dx_LayerColor_changeWidthAndHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerColor_changeWidthAndHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -41728,7 +40966,6 @@ int lua_cocos2dx_LayerColor_changeHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerColor_changeHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -41779,7 +41016,6 @@ int lua_cocos2dx_LayerColor_changeWidth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerColor_changeWidth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -41817,7 +41053,6 @@ int lua_cocos2dx_LayerColor_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.LayerColor",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerColor_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -41918,7 +41153,6 @@ int lua_cocos2dx_LayerGradient_getStartColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_getStartColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -41966,7 +41200,6 @@ int lua_cocos2dx_LayerGradient_isCompressedInterpolation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_isCompressedInterpolation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42014,7 +41247,6 @@ int lua_cocos2dx_LayerGradient_getStartOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_getStartOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42062,7 +41294,6 @@ int lua_cocos2dx_LayerGradient_setVector(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_setVector'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42113,7 +41344,6 @@ int lua_cocos2dx_LayerGradient_setStartOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_setStartOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42164,7 +41394,6 @@ int lua_cocos2dx_LayerGradient_setCompressedInterpolation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_setCompressedInterpolation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42215,7 +41444,6 @@ int lua_cocos2dx_LayerGradient_setEndOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_setEndOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42266,7 +41494,6 @@ int lua_cocos2dx_LayerGradient_getVector(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_getVector'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42314,7 +41541,6 @@ int lua_cocos2dx_LayerGradient_setEndColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_setEndColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42365,7 +41591,6 @@ int lua_cocos2dx_LayerGradient_getEndColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_getEndColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42413,7 +41638,6 @@ int lua_cocos2dx_LayerGradient_getEndOpacity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_getEndOpacity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42461,7 +41685,6 @@ int lua_cocos2dx_LayerGradient_setStartColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_setStartColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42499,7 +41722,6 @@ int lua_cocos2dx_LayerGradient_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.LayerGradient",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerGradient_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -42612,7 +41834,6 @@ int lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerMultiplex_switchToAndReleaseMe'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42663,7 +41884,6 @@ int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerMultiplex_addLayer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42714,7 +41934,6 @@ int lua_cocos2dx_LayerMultiplex_switchTo(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_LayerMultiplex_switchTo'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42787,7 +42006,6 @@ int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionEaseScene_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -42858,7 +42076,6 @@ int lua_cocos2dx_TransitionScene_finish(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionScene_finish'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42906,7 +42123,6 @@ int lua_cocos2dx_TransitionScene_hideOutShowIn(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionScene_hideOutShowIn'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -42942,7 +42158,6 @@ int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionScene",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionScene_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43003,7 +42218,6 @@ int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSceneOriented",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSceneOriented_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -43064,7 +42278,6 @@ int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionRotoZoom",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionRotoZoom_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43123,7 +42336,6 @@ int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionJumpZoom",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionJumpZoom_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43194,7 +42406,6 @@ int lua_cocos2dx_TransitionMoveInL_action(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionMoveInL_action'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -43242,7 +42453,6 @@ int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionMoveInL_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -43281,7 +42491,6 @@ int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionMoveInL",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionMoveInL_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43342,7 +42551,6 @@ int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionMoveInR",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionMoveInR_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43401,7 +42609,6 @@ int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionMoveInT",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionMoveInT_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43460,7 +42667,6 @@ int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionMoveInB",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionMoveInB_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43531,7 +42737,6 @@ int lua_cocos2dx_TransitionSlideInL_action(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInL_action'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -43579,7 +42784,6 @@ int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInL_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -43618,7 +42822,6 @@ int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSlideInL",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInL_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43691,7 +42894,6 @@ int lua_cocos2dx_TransitionSlideInR_action(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInR_action'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -43727,7 +42929,6 @@ int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSlideInR",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInR_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43799,7 +43000,6 @@ int lua_cocos2dx_TransitionSlideInB_action(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInB_action'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -43835,7 +43035,6 @@ int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSlideInB",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInB_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -43907,7 +43106,6 @@ int lua_cocos2dx_TransitionSlideInT_action(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInT_action'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -43943,7 +43141,6 @@ int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSlideInT",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSlideInT_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -44015,7 +43212,6 @@ int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -44054,7 +43250,6 @@ int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionShrinkGrow",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionShrinkGrow_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -44113,7 +43308,6 @@ int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFlipX",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFlipX_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44191,7 +43385,6 @@ int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFlipY",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFlipY_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44269,7 +43462,6 @@ int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFlipAngular",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFlipAngular_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44347,7 +43539,6 @@ int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionZoomFlipX",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionZoomFlipX_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44425,7 +43616,6 @@ int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionZoomFlipY",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionZoomFlipY_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44503,7 +43693,6 @@ int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionZoomFlipAngular",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionZoomFlipAngular_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44581,7 +43770,6 @@ int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFade",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFade_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -44660,7 +43848,6 @@ int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionCrossFade",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionCrossFade_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -44731,7 +43918,6 @@ int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -44770,7 +43956,6 @@ int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionTurnOffTiles",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionTurnOffTiles_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -44842,7 +44027,6 @@ int lua_cocos2dx_TransitionSplitCols_action(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSplitCols_action'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -44890,7 +44074,6 @@ int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSplitCols_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -44929,7 +44112,6 @@ int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSplitCols",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSplitCols_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -44990,7 +44172,6 @@ int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionSplitRows",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionSplitRows_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45061,7 +44242,6 @@ int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFadeTR_easeActionWithAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -45112,7 +44292,6 @@ int lua_cocos2dx_TransitionFadeTR_actionWithSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFadeTR_actionWithSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -45151,7 +44330,6 @@ int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFadeTR",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFadeTR_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45212,7 +44390,6 @@ int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFadeBL",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFadeBL_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45271,7 +44448,6 @@ int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFadeUp",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFadeUp_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45330,7 +44506,6 @@ int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionFadeDown",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionFadeDown_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45401,7 +44576,6 @@ int lua_cocos2dx_TransitionPageTurn_actionWithSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionPageTurn_actionWithSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -45452,7 +44626,6 @@ int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionPageTurn_initWithDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -45497,7 +44670,6 @@ int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionPageTurn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionPageTurn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -45560,7 +44732,6 @@ int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgress",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgress_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45619,7 +44790,6 @@ int lua_cocos2dx_TransitionProgressRadialCCW_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgressRadialCCW",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgressRadialCCW_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45678,7 +44848,6 @@ int lua_cocos2dx_TransitionProgressRadialCW_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgressRadialCW",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgressRadialCW_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45737,7 +44906,6 @@ int lua_cocos2dx_TransitionProgressHorizontal_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgressHorizontal",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgressHorizontal_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45796,7 +44964,6 @@ int lua_cocos2dx_TransitionProgressVertical_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgressVertical",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgressVertical_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45855,7 +45022,6 @@ int lua_cocos2dx_TransitionProgressInOut_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgressInOut",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgressInOut_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45914,7 +45080,6 @@ int lua_cocos2dx_TransitionProgressOutIn_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TransitionProgressOutIn",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TransitionProgressOutIn_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -45985,7 +45150,6 @@ int lua_cocos2dx_MenuItem_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -46036,7 +45200,6 @@ int lua_cocos2dx_MenuItem_activate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_activate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46084,7 +45247,6 @@ int lua_cocos2dx_MenuItem_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46132,7 +45294,6 @@ int lua_cocos2dx_MenuItem_selected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_selected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46180,7 +45341,6 @@ int lua_cocos2dx_MenuItem_isSelected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_isSelected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46228,7 +45388,6 @@ int lua_cocos2dx_MenuItem_unselected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_unselected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46276,7 +45435,6 @@ int lua_cocos2dx_MenuItem_rect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItem_rect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46350,7 +45508,6 @@ int lua_cocos2dx_MenuItemLabel_getDisabledColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemLabel_getDisabledColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46398,7 +45555,6 @@ int lua_cocos2dx_MenuItemLabel_setString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemLabel_setString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -46449,7 +45605,6 @@ int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemLabel_setLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -46500,7 +45655,6 @@ int lua_cocos2dx_MenuItemLabel_setDisabledColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemLabel_setDisabledColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -46551,7 +45705,6 @@ int lua_cocos2dx_MenuItemLabel_getLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemLabel_getLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46642,7 +45795,6 @@ int lua_cocos2dx_MenuItemFont_getFontSizeObj(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_getFontSizeObj'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46690,7 +45842,6 @@ int lua_cocos2dx_MenuItemFont_getFontNameObj(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_getFontNameObj'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -46738,7 +45889,6 @@ int lua_cocos2dx_MenuItemFont_setFontSizeObj(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_setFontSizeObj'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -46789,7 +45939,6 @@ int lua_cocos2dx_MenuItemFont_setFontNameObj(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_setFontNameObj'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -46828,7 +45977,6 @@ int lua_cocos2dx_MenuItemFont_setFontName(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MenuItemFont",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_setFontName'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -46865,7 +46013,6 @@ int lua_cocos2dx_MenuItemFont_getFontSize(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MenuItemFont",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_getFontSize'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -46900,7 +46047,6 @@ int lua_cocos2dx_MenuItemFont_getFontName(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MenuItemFont",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_getFontName'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -46935,7 +46081,6 @@ int lua_cocos2dx_MenuItemFont_setFontSize(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MenuItemFont",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemFont_setFontSize'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -47011,7 +46156,6 @@ int lua_cocos2dx_MenuItemSprite_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47062,7 +46206,6 @@ int lua_cocos2dx_MenuItemSprite_selected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_selected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47110,7 +46253,6 @@ int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_setNormalImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47161,7 +46303,6 @@ int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_setDisabledImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47212,7 +46353,6 @@ int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_setSelectedImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47263,7 +46403,6 @@ int lua_cocos2dx_MenuItemSprite_getDisabledImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_getDisabledImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47311,7 +46450,6 @@ int lua_cocos2dx_MenuItemSprite_getSelectedImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_getSelectedImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47359,7 +46497,6 @@ int lua_cocos2dx_MenuItemSprite_getNormalImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_getNormalImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47407,7 +46544,6 @@ int lua_cocos2dx_MenuItemSprite_unselected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemSprite_unselected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47483,7 +46619,6 @@ int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47534,7 +46669,6 @@ int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47585,7 +46719,6 @@ int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemImage_setNormalSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47658,7 +46791,6 @@ int lua_cocos2dx_MenuItemToggle_setSubItems(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemToggle_setSubItems'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47709,7 +46841,6 @@ int lua_cocos2dx_MenuItemToggle_getSelectedIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemToggle_getSelectedIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47757,7 +46888,6 @@ int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemToggle_addSubItem'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47808,7 +46938,6 @@ int lua_cocos2dx_MenuItemToggle_getSelectedItem(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemToggle_getSelectedItem'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -47856,7 +46985,6 @@ int lua_cocos2dx_MenuItemToggle_setSelectedIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MenuItemToggle_setSelectedIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47931,7 +47059,6 @@ int lua_cocos2dx_Menu_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Menu_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -47982,7 +47109,6 @@ int lua_cocos2dx_Menu_alignItemsVertically(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Menu_alignItemsVertically'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48030,7 +47156,6 @@ int lua_cocos2dx_Menu_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Menu_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48078,7 +47203,6 @@ int lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Menu_alignItemsHorizontallyWithPadding'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48129,7 +47253,6 @@ int lua_cocos2dx_Menu_alignItemsVerticallyWithPadding(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Menu_alignItemsVerticallyWithPadding'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48180,7 +47303,6 @@ int lua_cocos2dx_Menu_alignItemsHorizontally(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Menu_alignItemsHorizontally'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48253,7 +47375,6 @@ int lua_cocos2dx_ClippingNode_hasContent(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_hasContent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48301,7 +47422,6 @@ int lua_cocos2dx_ClippingNode_setInverted(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_setInverted'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48352,7 +47472,6 @@ int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_setStencil'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48403,7 +47522,6 @@ int lua_cocos2dx_ClippingNode_getAlphaThreshold(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_getAlphaThreshold'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48451,7 +47569,6 @@ int lua_cocos2dx_ClippingNode_getStencil(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_getStencil'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48499,7 +47616,6 @@ int lua_cocos2dx_ClippingNode_setAlphaThreshold(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_setAlphaThreshold'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48550,7 +47666,6 @@ int lua_cocos2dx_ClippingNode_isInverted(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_isInverted'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48585,7 +47700,6 @@ int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ClippingNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingNode_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -48671,7 +47785,6 @@ int lua_cocos2dx_ClippingRectangleNode_isClippingEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingRectangleNode_isClippingEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48719,7 +47832,6 @@ int lua_cocos2dx_ClippingRectangleNode_setClippingEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingRectangleNode_setClippingEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48770,7 +47882,6 @@ int lua_cocos2dx_ClippingRectangleNode_getClippingRegion(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingRectangleNode_getClippingRegion'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48818,7 +47929,6 @@ int lua_cocos2dx_ClippingRectangleNode_setClippingRegion(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingRectangleNode_setClippingRegion'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -48856,7 +47966,6 @@ int lua_cocos2dx_ClippingRectangleNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ClippingRectangleNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ClippingRectangleNode_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -48939,7 +48048,6 @@ int lua_cocos2dx_MotionStreak_reset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_reset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -48987,7 +48095,6 @@ int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49038,7 +48145,6 @@ int lua_cocos2dx_MotionStreak_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49086,7 +48192,6 @@ int lua_cocos2dx_MotionStreak_tintWithColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_tintWithColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49137,7 +48242,6 @@ int lua_cocos2dx_MotionStreak_setStartingPositionInitialized(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_setStartingPositionInitialized'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49188,7 +48292,6 @@ int lua_cocos2dx_MotionStreak_isStartingPositionInitialized(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_isStartingPositionInitialized'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49236,7 +48339,6 @@ int lua_cocos2dx_MotionStreak_isFastMode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_isFastMode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49284,7 +48386,6 @@ int lua_cocos2dx_MotionStreak_setFastMode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_setFastMode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49322,7 +48423,6 @@ int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.MotionStreak",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_MotionStreak_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -49436,7 +48536,6 @@ int lua_cocos2dx_ProgressTimer_isReverseDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_isReverseDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49484,7 +48583,6 @@ int lua_cocos2dx_ProgressTimer_setBarChangeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_setBarChangeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49535,7 +48633,6 @@ int lua_cocos2dx_ProgressTimer_getPercentage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_getPercentage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49583,7 +48680,6 @@ int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_setSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49634,7 +48730,6 @@ int lua_cocos2dx_ProgressTimer_getType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_getType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49682,7 +48777,6 @@ int lua_cocos2dx_ProgressTimer_getSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_getSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49730,7 +48824,6 @@ int lua_cocos2dx_ProgressTimer_setMidpoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_setMidpoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49781,7 +48874,6 @@ int lua_cocos2dx_ProgressTimer_getBarChangeRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_getBarChangeRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49824,7 +48916,6 @@ int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_setReverseDirection'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -49885,7 +48976,6 @@ int lua_cocos2dx_ProgressTimer_getMidpoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_getMidpoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -49933,7 +49023,6 @@ int lua_cocos2dx_ProgressTimer_setPercentage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_setPercentage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -49984,7 +49073,6 @@ int lua_cocos2dx_ProgressTimer_setType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_setType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50023,7 +49111,6 @@ int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ProgressTimer",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ProgressTimer_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -50099,7 +49186,6 @@ int lua_cocos2dx_Sprite_setSpriteFrame(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -50155,7 +49241,6 @@ int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -50216,7 +49301,6 @@ int lua_cocos2dx_Sprite_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50264,7 +49348,6 @@ int lua_cocos2dx_Sprite_setFlippedY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setFlippedY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50315,7 +49398,6 @@ int lua_cocos2dx_Sprite_setFlippedX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setFlippedX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50366,7 +49448,6 @@ int lua_cocos2dx_Sprite_getBatchNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getBatchNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50414,7 +49495,6 @@ int lua_cocos2dx_Sprite_getOffsetPosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getOffsetPosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50462,7 +49542,6 @@ int lua_cocos2dx_Sprite_removeAllChildrenWithCleanup(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_removeAllChildrenWithCleanup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50513,7 +49592,6 @@ int lua_cocos2dx_Sprite_updateTransform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_updateTransform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50556,7 +49634,6 @@ int lua_cocos2dx_Sprite_setTextureRect(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setTextureRect'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 3) {
@@ -50625,7 +49702,6 @@ int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_isFrameDisplayed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50676,7 +49752,6 @@ int lua_cocos2dx_Sprite_getAtlasIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getAtlasIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50724,7 +49799,6 @@ int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setBatchNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50775,7 +49849,6 @@ int lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setDisplayFrameWithAnimationName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -50829,7 +49902,6 @@ int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -50880,7 +49952,6 @@ int lua_cocos2dx_Sprite_getSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50928,7 +49999,6 @@ int lua_cocos2dx_Sprite_isDirty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_isDirty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -50976,7 +50046,6 @@ int lua_cocos2dx_Sprite_setAtlasIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setAtlasIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -51027,7 +50096,6 @@ int lua_cocos2dx_Sprite_setDirty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setDirty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -51078,7 +50146,6 @@ int lua_cocos2dx_Sprite_isTextureRectRotated(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_isTextureRectRotated'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51126,7 +50193,6 @@ int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getTextureRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51174,7 +50240,6 @@ int lua_cocos2dx_Sprite_getTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_getTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51222,7 +50287,6 @@ int lua_cocos2dx_Sprite_isFlippedX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_isFlippedX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51270,7 +50334,6 @@ int lua_cocos2dx_Sprite_isFlippedY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_isFlippedY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51318,7 +50381,6 @@ int lua_cocos2dx_Sprite_setVertexRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_setVertexRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -51356,7 +50418,6 @@ int lua_cocos2dx_Sprite_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Sprite",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -51418,7 +50479,6 @@ int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Sprite",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_createWithTexture'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -51490,7 +50550,6 @@ int lua_cocos2dx_Sprite_createWithSpriteFrameName(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Sprite",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_createWithSpriteFrameName'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -51527,7 +50586,6 @@ int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Sprite",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Sprite_createWithSpriteFrame'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -51624,7 +50682,6 @@ int lua_cocos2dx_Image_hasPremultipliedAlpha(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_hasPremultipliedAlpha'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51672,7 +50729,6 @@ int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_saveToFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -51740,7 +50796,6 @@ int lua_cocos2dx_Image_hasAlpha(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_hasAlpha'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51788,7 +50843,6 @@ int lua_cocos2dx_Image_isCompressed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_isCompressed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51836,7 +50890,6 @@ int lua_cocos2dx_Image_getHeight(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_getHeight'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51884,7 +50937,6 @@ int lua_cocos2dx_Image_initWithImageFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_initWithImageFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -51935,7 +50987,6 @@ int lua_cocos2dx_Image_getWidth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_getWidth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -51983,7 +51034,6 @@ int lua_cocos2dx_Image_getBitPerPixel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_getBitPerPixel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52031,7 +51081,6 @@ int lua_cocos2dx_Image_getFileType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_getFileType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52079,7 +51128,6 @@ int lua_cocos2dx_Image_getNumberOfMipmaps(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_getNumberOfMipmaps'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52127,7 +51175,6 @@ int lua_cocos2dx_Image_getRenderFormat(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_getRenderFormat'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52163,7 +51210,6 @@ int lua_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Image",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -52199,7 +51245,6 @@ int lua_cocos2dx_Image_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Image_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52282,7 +51327,6 @@ int lua_cocos2dx_RenderTexture_setVirtualViewport(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setVirtualViewport'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -52339,7 +51383,6 @@ int lua_cocos2dx_RenderTexture_clearStencil(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_clearStencil'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -52390,7 +51433,6 @@ int lua_cocos2dx_RenderTexture_getClearDepth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_getClearDepth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52438,7 +51480,6 @@ int lua_cocos2dx_RenderTexture_getClearStencil(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_getClearStencil'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52486,7 +51527,6 @@ int lua_cocos2dx_RenderTexture_end(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_end'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52534,7 +51574,6 @@ int lua_cocos2dx_RenderTexture_setClearStencil(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setClearStencil'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -52585,7 +51624,6 @@ int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -52636,7 +51674,6 @@ int lua_cocos2dx_RenderTexture_getSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_getSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52684,7 +51721,6 @@ int lua_cocos2dx_RenderTexture_isAutoDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_isAutoDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52732,7 +51768,6 @@ int lua_cocos2dx_RenderTexture_setKeepMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setKeepMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -52783,7 +51818,6 @@ int lua_cocos2dx_RenderTexture_setClearFlags(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setClearFlags'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -52834,7 +51868,6 @@ int lua_cocos2dx_RenderTexture_begin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_begin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -52877,7 +51910,6 @@ int lua_cocos2dx_RenderTexture_saveToFile(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_saveToFile'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -53030,7 +52062,6 @@ int lua_cocos2dx_RenderTexture_setAutoDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setAutoDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -53081,7 +52112,6 @@ int lua_cocos2dx_RenderTexture_setClearColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setClearColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -53132,7 +52162,6 @@ int lua_cocos2dx_RenderTexture_endToLua(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_endToLua'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -53175,7 +52204,6 @@ int lua_cocos2dx_RenderTexture_beginWithClear(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_beginWithClear'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 5) {
@@ -53296,7 +52324,6 @@ int lua_cocos2dx_RenderTexture_clearDepth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_clearDepth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -53347,7 +52374,6 @@ int lua_cocos2dx_RenderTexture_getClearColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_getClearColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -53395,7 +52421,6 @@ int lua_cocos2dx_RenderTexture_clear(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_clear'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -53455,7 +52480,6 @@ int lua_cocos2dx_RenderTexture_getClearFlags(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_getClearFlags'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -53503,7 +52527,6 @@ int lua_cocos2dx_RenderTexture_newImage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_newImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -53565,7 +52588,6 @@ int lua_cocos2dx_RenderTexture_setClearDepth(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_setClearDepth'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -53611,7 +52633,6 @@ int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_initWithWidthAndHeight'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 4) {
@@ -53679,7 +52700,6 @@ int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.RenderTexture",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -53759,7 +52779,6 @@ int lua_cocos2dx_RenderTexture_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_RenderTexture_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -53855,7 +52874,6 @@ int lua_cocos2dx_NodeGrid_setTarget(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_NodeGrid_setTarget'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -53901,7 +52919,6 @@ int lua_cocos2dx_NodeGrid_getGrid(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_NodeGrid_getGrid'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -53954,7 +52971,6 @@ int lua_cocos2dx_NodeGrid_setGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_NodeGrid_setGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -53993,7 +53009,6 @@ int lua_cocos2dx_NodeGrid_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.NodeGrid",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_NodeGrid_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -54063,7 +53078,6 @@ int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -54114,7 +53128,6 @@ int lua_cocos2dx_ParticleBatchNode_disableParticle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_disableParticle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -54165,7 +53178,6 @@ int lua_cocos2dx_ParticleBatchNode_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54213,7 +53225,6 @@ int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_setTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -54264,7 +53275,6 @@ int lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_removeAllChildrenWithCleanup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -54315,7 +53325,6 @@ int lua_cocos2dx_ParticleBatchNode_getTextureAtlas(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_getTextureAtlas'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54363,7 +53372,6 @@ int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_insertChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -54417,7 +53425,6 @@ int lua_cocos2dx_ParticleBatchNode_removeChildAtIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_removeChildAtIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -54459,7 +53466,6 @@ int lua_cocos2dx_ParticleBatchNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleBatchNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -54511,7 +53517,6 @@ int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleBatchNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleBatchNode_createWithTexture'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -54604,7 +53609,6 @@ int lua_cocos2dx_ParticleSystem_getStartSizeVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartSizeVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54652,7 +53656,6 @@ int lua_cocos2dx_ParticleSystem_getTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54700,7 +53703,6 @@ int lua_cocos2dx_ParticleSystem_isFull(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_isFull'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54748,7 +53750,6 @@ int lua_cocos2dx_ParticleSystem_getBatchNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getBatchNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54796,7 +53797,6 @@ int lua_cocos2dx_ParticleSystem_getStartColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54844,7 +53844,6 @@ int lua_cocos2dx_ParticleSystem_getPositionType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getPositionType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54892,7 +53891,6 @@ int lua_cocos2dx_ParticleSystem_setPosVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setPosVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -54943,7 +53941,6 @@ int lua_cocos2dx_ParticleSystem_getEndSpin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndSpin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -54991,7 +53988,6 @@ int lua_cocos2dx_ParticleSystem_setRotatePerSecondVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setRotatePerSecondVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55042,7 +54038,6 @@ int lua_cocos2dx_ParticleSystem_getStartSpinVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartSpinVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55090,7 +54085,6 @@ int lua_cocos2dx_ParticleSystem_getRadialAccelVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getRadialAccelVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55138,7 +54132,6 @@ int lua_cocos2dx_ParticleSystem_getEndSizeVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndSizeVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55186,7 +54179,6 @@ int lua_cocos2dx_ParticleSystem_setRotation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setRotation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55237,7 +54229,6 @@ int lua_cocos2dx_ParticleSystem_setTangentialAccel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setTangentialAccel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55288,7 +54279,6 @@ int lua_cocos2dx_ParticleSystem_setScaleY(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setScaleY'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55339,7 +54329,6 @@ int lua_cocos2dx_ParticleSystem_setScaleX(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setScaleX'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55390,7 +54379,6 @@ int lua_cocos2dx_ParticleSystem_getRadialAccel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getRadialAccel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55438,7 +54426,6 @@ int lua_cocos2dx_ParticleSystem_setStartRadius(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartRadius'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55489,7 +54476,6 @@ int lua_cocos2dx_ParticleSystem_setRotatePerSecond(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setRotatePerSecond'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55540,7 +54526,6 @@ int lua_cocos2dx_ParticleSystem_setEndSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55591,7 +54576,6 @@ int lua_cocos2dx_ParticleSystem_getGravity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getGravity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55639,7 +54623,6 @@ int lua_cocos2dx_ParticleSystem_getTangentialAccel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getTangentialAccel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55687,7 +54670,6 @@ int lua_cocos2dx_ParticleSystem_setEndRadius(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndRadius'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55738,7 +54720,6 @@ int lua_cocos2dx_ParticleSystem_getSpeed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getSpeed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55786,7 +54767,6 @@ int lua_cocos2dx_ParticleSystem_getAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -55834,7 +54814,6 @@ int lua_cocos2dx_ParticleSystem_setEndColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55885,7 +54864,6 @@ int lua_cocos2dx_ParticleSystem_setStartSpin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartSpin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55936,7 +54914,6 @@ int lua_cocos2dx_ParticleSystem_setDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -55987,7 +54964,6 @@ int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56038,7 +55014,6 @@ int lua_cocos2dx_ParticleSystem_getPosVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getPosVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56086,7 +55061,6 @@ int lua_cocos2dx_ParticleSystem_updateWithNoTime(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_updateWithNoTime'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56134,7 +55108,6 @@ int lua_cocos2dx_ParticleSystem_isBlendAdditive(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_isBlendAdditive'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56182,7 +55155,6 @@ int lua_cocos2dx_ParticleSystem_getSpeedVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getSpeedVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56230,7 +55202,6 @@ int lua_cocos2dx_ParticleSystem_setPositionType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setPositionType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56281,7 +55252,6 @@ int lua_cocos2dx_ParticleSystem_stopSystem(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_stopSystem'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56329,7 +55299,6 @@ int lua_cocos2dx_ParticleSystem_getSourcePosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getSourcePosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56377,7 +55346,6 @@ int lua_cocos2dx_ParticleSystem_setLifeVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setLifeVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56428,7 +55396,6 @@ int lua_cocos2dx_ParticleSystem_setTotalParticles(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setTotalParticles'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56479,7 +55446,6 @@ int lua_cocos2dx_ParticleSystem_setEndColorVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndColorVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56530,7 +55496,6 @@ int lua_cocos2dx_ParticleSystem_getAtlasIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getAtlasIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56578,7 +55543,6 @@ int lua_cocos2dx_ParticleSystem_getStartSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56626,7 +55590,6 @@ int lua_cocos2dx_ParticleSystem_setStartSpinVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartSpinVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56677,7 +55640,6 @@ int lua_cocos2dx_ParticleSystem_resetSystem(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_resetSystem'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56725,7 +55687,6 @@ int lua_cocos2dx_ParticleSystem_setAtlasIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setAtlasIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56776,7 +55737,6 @@ int lua_cocos2dx_ParticleSystem_setTangentialAccelVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setTangentialAccelVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56827,7 +55787,6 @@ int lua_cocos2dx_ParticleSystem_setEndRadiusVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndRadiusVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -56878,7 +55837,6 @@ int lua_cocos2dx_ParticleSystem_getEndRadius(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndRadius'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56926,7 +55884,6 @@ int lua_cocos2dx_ParticleSystem_isOpacityModifyRGB(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_isOpacityModifyRGB'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -56974,7 +55931,6 @@ int lua_cocos2dx_ParticleSystem_isActive(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_isActive'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57022,7 +55978,6 @@ int lua_cocos2dx_ParticleSystem_setRadialAccelVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setRadialAccelVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57073,7 +56028,6 @@ int lua_cocos2dx_ParticleSystem_setStartSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57124,7 +56078,6 @@ int lua_cocos2dx_ParticleSystem_setSpeed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setSpeed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57175,7 +56128,6 @@ int lua_cocos2dx_ParticleSystem_getStartSpin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartSpin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57223,7 +56175,6 @@ int lua_cocos2dx_ParticleSystem_getRotatePerSecond(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getRotatePerSecond'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57271,7 +56222,6 @@ int lua_cocos2dx_ParticleSystem_setEmitterMode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEmitterMode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57322,7 +56272,6 @@ int lua_cocos2dx_ParticleSystem_getDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57370,7 +56319,6 @@ int lua_cocos2dx_ParticleSystem_setSourcePosition(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setSourcePosition'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57421,7 +56369,6 @@ int lua_cocos2dx_ParticleSystem_getEndSpinVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndSpinVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57469,7 +56416,6 @@ int lua_cocos2dx_ParticleSystem_setBlendAdditive(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setBlendAdditive'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57520,7 +56466,6 @@ int lua_cocos2dx_ParticleSystem_setLife(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setLife'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57571,7 +56516,6 @@ int lua_cocos2dx_ParticleSystem_setAngleVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setAngleVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57622,7 +56566,6 @@ int lua_cocos2dx_ParticleSystem_setRotationIsDir(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setRotationIsDir'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57673,7 +56616,6 @@ int lua_cocos2dx_ParticleSystem_setEndSizeVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndSizeVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57724,7 +56666,6 @@ int lua_cocos2dx_ParticleSystem_setAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57775,7 +56716,6 @@ int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setBatchNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57826,7 +56766,6 @@ int lua_cocos2dx_ParticleSystem_getTangentialAccelVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getTangentialAccelVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57874,7 +56813,6 @@ int lua_cocos2dx_ParticleSystem_getEmitterMode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEmitterMode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -57922,7 +56860,6 @@ int lua_cocos2dx_ParticleSystem_setEndSpinVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndSpinVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -57973,7 +56910,6 @@ int lua_cocos2dx_ParticleSystem_getAngleVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getAngleVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58021,7 +56957,6 @@ int lua_cocos2dx_ParticleSystem_setStartColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58072,7 +57007,6 @@ int lua_cocos2dx_ParticleSystem_getRotatePerSecondVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getRotatePerSecondVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58120,7 +57054,6 @@ int lua_cocos2dx_ParticleSystem_getEndSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58168,7 +57101,6 @@ int lua_cocos2dx_ParticleSystem_getLife(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getLife'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58216,7 +57148,6 @@ int lua_cocos2dx_ParticleSystem_setSpeedVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setSpeedVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58267,7 +57198,6 @@ int lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setAutoRemoveOnFinish'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58318,7 +57248,6 @@ int lua_cocos2dx_ParticleSystem_setGravity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setGravity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58369,7 +57298,6 @@ int lua_cocos2dx_ParticleSystem_postStep(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_postStep'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58417,7 +57345,6 @@ int lua_cocos2dx_ParticleSystem_setEmissionRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEmissionRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58468,7 +57395,6 @@ int lua_cocos2dx_ParticleSystem_getEndColorVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndColorVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58516,7 +57442,6 @@ int lua_cocos2dx_ParticleSystem_getRotationIsDir(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getRotationIsDir'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58564,7 +57489,6 @@ int lua_cocos2dx_ParticleSystem_setScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58615,7 +57539,6 @@ int lua_cocos2dx_ParticleSystem_getEmissionRate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEmissionRate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58663,7 +57586,6 @@ int lua_cocos2dx_ParticleSystem_getEndColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58711,7 +57633,6 @@ int lua_cocos2dx_ParticleSystem_getLifeVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getLifeVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58759,7 +57680,6 @@ int lua_cocos2dx_ParticleSystem_setStartSizeVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartSizeVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58810,7 +57730,6 @@ int lua_cocos2dx_ParticleSystem_setOpacityModifyRGB(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setOpacityModifyRGB'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -58861,7 +57780,6 @@ int lua_cocos2dx_ParticleSystem_addParticle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_addParticle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58909,7 +57827,6 @@ int lua_cocos2dx_ParticleSystem_getStartRadius(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartRadius'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -58957,7 +57874,6 @@ int lua_cocos2dx_ParticleSystem_getParticleCount(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getParticleCount'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -59005,7 +57921,6 @@ int lua_cocos2dx_ParticleSystem_getStartRadiusVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartRadiusVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -59053,7 +57968,6 @@ int lua_cocos2dx_ParticleSystem_setStartColorVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartColorVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -59104,7 +58018,6 @@ int lua_cocos2dx_ParticleSystem_setEndSpin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setEndSpin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -59155,7 +58068,6 @@ int lua_cocos2dx_ParticleSystem_setRadialAccel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setRadialAccel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -59206,7 +58118,6 @@ int lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_isAutoRemoveOnFinish'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -59254,7 +58165,6 @@ int lua_cocos2dx_ParticleSystem_getTotalParticles(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getTotalParticles'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -59302,7 +58212,6 @@ int lua_cocos2dx_ParticleSystem_setStartRadiusVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_setStartRadiusVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -59353,7 +58262,6 @@ int lua_cocos2dx_ParticleSystem_getEndRadiusVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getEndRadiusVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -59401,7 +58309,6 @@ int lua_cocos2dx_ParticleSystem_getStartColorVar(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_getStartColorVar'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -59437,7 +58344,6 @@ int lua_cocos2dx_ParticleSystem_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSystem",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -59474,7 +58380,6 @@ int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSystem",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystem_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -59642,7 +58547,6 @@ int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystemQuad_setDisplayFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -59693,7 +58597,6 @@ int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystemQuad_setTextureWithRect'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -59747,7 +58650,6 @@ int lua_cocos2dx_ParticleSystemQuad_listenRendererRecreated(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystemQuad_listenRendererRecreated'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -59785,7 +58687,6 @@ int lua_cocos2dx_ParticleSystemQuad_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSystemQuad",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystemQuad_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -59845,7 +58746,6 @@ int lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSystemQuad",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSystemQuad_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -59906,7 +58806,6 @@ int lua_cocos2dx_ParticleFire_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleFire",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleFire_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -59941,7 +58840,6 @@ int lua_cocos2dx_ParticleFire_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleFire",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleFire_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -59999,7 +58897,6 @@ int lua_cocos2dx_ParticleFireworks_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleFireworks",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleFireworks_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60034,7 +58931,6 @@ int lua_cocos2dx_ParticleFireworks_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleFireworks",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleFireworks_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60092,7 +58988,6 @@ int lua_cocos2dx_ParticleSun_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSun",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSun_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60127,7 +59022,6 @@ int lua_cocos2dx_ParticleSun_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSun",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSun_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60185,7 +59079,6 @@ int lua_cocos2dx_ParticleGalaxy_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleGalaxy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleGalaxy_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60220,7 +59113,6 @@ int lua_cocos2dx_ParticleGalaxy_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleGalaxy",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleGalaxy_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60278,7 +59170,6 @@ int lua_cocos2dx_ParticleFlower_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleFlower",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleFlower_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60313,7 +59204,6 @@ int lua_cocos2dx_ParticleFlower_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleFlower",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleFlower_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60371,7 +59261,6 @@ int lua_cocos2dx_ParticleMeteor_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleMeteor",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleMeteor_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60406,7 +59295,6 @@ int lua_cocos2dx_ParticleMeteor_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleMeteor",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleMeteor_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60464,7 +59352,6 @@ int lua_cocos2dx_ParticleSpiral_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSpiral",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSpiral_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60499,7 +59386,6 @@ int lua_cocos2dx_ParticleSpiral_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSpiral",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSpiral_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60557,7 +59443,6 @@ int lua_cocos2dx_ParticleExplosion_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleExplosion",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleExplosion_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60592,7 +59477,6 @@ int lua_cocos2dx_ParticleExplosion_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleExplosion",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleExplosion_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60650,7 +59534,6 @@ int lua_cocos2dx_ParticleSmoke_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSmoke",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSmoke_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60685,7 +59568,6 @@ int lua_cocos2dx_ParticleSmoke_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSmoke",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSmoke_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60743,7 +59625,6 @@ int lua_cocos2dx_ParticleSnow_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSnow",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSnow_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60778,7 +59659,6 @@ int lua_cocos2dx_ParticleSnow_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleSnow",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleSnow_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60836,7 +59716,6 @@ int lua_cocos2dx_ParticleRain_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleRain",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleRain_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -60871,7 +59750,6 @@ int lua_cocos2dx_ParticleRain_createWithTotalParticles(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParticleRain",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParticleRain_createWithTotalParticles'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -60941,7 +59819,6 @@ int lua_cocos2dx_GridBase_setGridSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_setGridSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -60992,7 +59869,6 @@ int lua_cocos2dx_GridBase_afterBlit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_afterBlit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61040,7 +59916,6 @@ int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_afterDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -61091,7 +59966,6 @@ int lua_cocos2dx_GridBase_beforeDraw(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_beforeDraw'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61139,7 +60013,6 @@ int lua_cocos2dx_GridBase_calculateVertexPoints(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_calculateVertexPoints'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61187,7 +60060,6 @@ int lua_cocos2dx_GridBase_isTextureFlipped(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_isTextureFlipped'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61235,7 +60107,6 @@ int lua_cocos2dx_GridBase_getGridSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_getGridSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61283,7 +60154,6 @@ int lua_cocos2dx_GridBase_getStep(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_getStep'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61331,7 +60201,6 @@ int lua_cocos2dx_GridBase_set2DProjection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_set2DProjection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61379,7 +60248,6 @@ int lua_cocos2dx_GridBase_setStep(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_setStep'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -61430,7 +60298,6 @@ int lua_cocos2dx_GridBase_setTextureFlipped(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_setTextureFlipped'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -61481,7 +60348,6 @@ int lua_cocos2dx_GridBase_blit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_blit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61529,7 +60395,6 @@ int lua_cocos2dx_GridBase_setActive(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_setActive'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -61580,7 +60445,6 @@ int lua_cocos2dx_GridBase_getReuseGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_getReuseGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61623,7 +60487,6 @@ int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_initWithSize'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -61692,7 +60555,6 @@ int lua_cocos2dx_GridBase_beforeBlit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_beforeBlit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61740,7 +60602,6 @@ int lua_cocos2dx_GridBase_setReuseGrid(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_setReuseGrid'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -61791,7 +60652,6 @@ int lua_cocos2dx_GridBase_isActive(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_isActive'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61839,7 +60699,6 @@ int lua_cocos2dx_GridBase_reuse(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_reuse'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -61874,7 +60733,6 @@ int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GridBase",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GridBase_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -61981,7 +60839,6 @@ int lua_cocos2dx_Grid3D_getNeedDepthTestForBlit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Grid3D_getNeedDepthTestForBlit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62029,7 +60886,6 @@ int lua_cocos2dx_Grid3D_setNeedDepthTestForBlit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Grid3D_setNeedDepthTestForBlit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -62067,7 +60923,6 @@ int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Grid3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Grid3D_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -62122,7 +60977,6 @@ int lua_cocos2dx_Grid3D_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Grid3D_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62183,7 +61037,6 @@ int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TiledGrid3D",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TiledGrid3D_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -62238,7 +61091,6 @@ int lua_cocos2dx_TiledGrid3D_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TiledGrid3D_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62310,7 +61162,6 @@ int lua_cocos2dx_Camera_getProjectionMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_getProjectionMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62358,7 +61209,6 @@ int lua_cocos2dx_Camera_getViewProjectionMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_getViewProjectionMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62406,7 +61256,6 @@ int lua_cocos2dx_Camera_getViewMatrix(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_getViewMatrix'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62454,7 +61303,6 @@ int lua_cocos2dx_Camera_getCameraFlag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_getCameraFlag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62502,7 +61350,6 @@ int lua_cocos2dx_Camera_getType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_getType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62550,7 +61397,6 @@ int lua_cocos2dx_Camera_lookAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_lookAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -62604,7 +61450,6 @@ int lua_cocos2dx_Camera_setCameraFlag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_setCameraFlag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -62643,7 +61488,6 @@ int lua_cocos2dx_Camera_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Camera",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -62678,7 +61522,6 @@ int lua_cocos2dx_Camera_createPerspective(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Camera",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_createPerspective'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -62721,7 +61564,6 @@ int lua_cocos2dx_Camera_createOrthographic(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Camera",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_createOrthographic'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -62764,7 +61606,6 @@ int lua_cocos2dx_Camera_getVisitingCamera(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Camera",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Camera_getVisitingCamera'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -62841,7 +61682,6 @@ int lua_cocos2dx_BaseLight_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -62892,7 +61732,6 @@ int lua_cocos2dx_BaseLight_getIntensity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_getIntensity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62940,7 +61779,6 @@ int lua_cocos2dx_BaseLight_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -62988,7 +61826,6 @@ int lua_cocos2dx_BaseLight_getLightType(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_getLightType'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63036,7 +61873,6 @@ int lua_cocos2dx_BaseLight_setLightFlag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_setLightFlag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -63087,7 +61923,6 @@ int lua_cocos2dx_BaseLight_setIntensity(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_setIntensity'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -63138,7 +61973,6 @@ int lua_cocos2dx_BaseLight_getLightFlag(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_BaseLight_getLightFlag'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63212,7 +62046,6 @@ int lua_cocos2dx_DirectionLight_getDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DirectionLight_getDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63260,7 +62093,6 @@ int lua_cocos2dx_DirectionLight_getDirectionInWorld(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DirectionLight_getDirectionInWorld'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63308,7 +62140,6 @@ int lua_cocos2dx_DirectionLight_setDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DirectionLight_setDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -63347,7 +62178,6 @@ int lua_cocos2dx_DirectionLight_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.DirectionLight",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_DirectionLight_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -63421,7 +62251,6 @@ int lua_cocos2dx_PointLight_getRange(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_PointLight_getRange'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63469,7 +62298,6 @@ int lua_cocos2dx_PointLight_setRange(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_PointLight_setRange'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -63508,7 +62336,6 @@ int lua_cocos2dx_PointLight_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.PointLight",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_PointLight_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -63583,7 +62410,6 @@ int lua_cocos2dx_SpotLight_getRange(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getRange'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63631,7 +62457,6 @@ int lua_cocos2dx_SpotLight_setDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_setDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -63682,7 +62507,6 @@ int lua_cocos2dx_SpotLight_getCosInnerAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getCosInnerAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63730,7 +62554,6 @@ int lua_cocos2dx_SpotLight_getOuterAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getOuterAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63778,7 +62601,6 @@ int lua_cocos2dx_SpotLight_getInnerAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getInnerAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63826,7 +62648,6 @@ int lua_cocos2dx_SpotLight_getDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63874,7 +62695,6 @@ int lua_cocos2dx_SpotLight_getCosOuterAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getCosOuterAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -63922,7 +62742,6 @@ int lua_cocos2dx_SpotLight_setOuterAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_setOuterAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -63973,7 +62792,6 @@ int lua_cocos2dx_SpotLight_setInnerAngle(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_setInnerAngle'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -64024,7 +62842,6 @@ int lua_cocos2dx_SpotLight_getDirectionInWorld(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_getDirectionInWorld'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64072,7 +62889,6 @@ int lua_cocos2dx_SpotLight_setRange(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_setRange'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -64111,7 +62927,6 @@ int lua_cocos2dx_SpotLight_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpotLight",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpotLight_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 6)
@@ -64189,7 +63004,6 @@ int lua_cocos2dx_AmbientLight_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AmbientLight",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AmbientLight_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -64258,7 +63072,6 @@ int lua_cocos2dx_GLProgram_getFragmentShaderLog(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_getFragmentShaderLog'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64306,7 +63119,6 @@ int lua_cocos2dx_GLProgram_initWithByteArrays(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_initWithByteArrays'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -64360,7 +63172,6 @@ int lua_cocos2dx_GLProgram_initWithFilenames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_initWithFilenames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -64414,7 +63225,6 @@ int lua_cocos2dx_GLProgram_use(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_use'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64462,7 +63272,6 @@ int lua_cocos2dx_GLProgram_getVertexShaderLog(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_getVertexShaderLog'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64505,7 +63314,6 @@ int lua_cocos2dx_GLProgram_setUniformsForBuiltins(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_setUniformsForBuiltins'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -64562,7 +63370,6 @@ int lua_cocos2dx_GLProgram_updateUniforms(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_updateUniforms'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64610,7 +63417,6 @@ int lua_cocos2dx_GLProgram_setUniformLocationWith1i(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_setUniformLocationWith1i'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -64664,7 +63470,6 @@ int lua_cocos2dx_GLProgram_reset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_reset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64712,7 +63517,6 @@ int lua_cocos2dx_GLProgram_bindAttribLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_bindAttribLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -64766,7 +63570,6 @@ int lua_cocos2dx_GLProgram_getAttribLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_getAttribLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -64817,7 +63620,6 @@ int lua_cocos2dx_GLProgram_link(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_link'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -64853,7 +63655,6 @@ int lua_cocos2dx_GLProgram_createWithByteArrays(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgram",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_createWithByteArrays'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -64892,7 +63693,6 @@ int lua_cocos2dx_GLProgram_createWithFilenames(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgram",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_createWithFilenames'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -64930,7 +63730,6 @@ int lua_cocos2dx_GLProgram_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgram_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65015,7 +63814,6 @@ int lua_cocos2dx_GLProgramCache_addGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_addGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -65069,7 +63867,6 @@ int lua_cocos2dx_GLProgramCache_getGLProgram(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_getGLProgram'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -65120,7 +63917,6 @@ int lua_cocos2dx_GLProgramCache_reloadDefaultGLPrograms(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_reloadDefaultGLPrograms'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65168,7 +63964,6 @@ int lua_cocos2dx_GLProgramCache_loadDefaultGLPrograms(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_loadDefaultGLPrograms'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65204,7 +63999,6 @@ int lua_cocos2dx_GLProgramCache_destroyInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgramCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_destroyInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -65239,7 +64033,6 @@ int lua_cocos2dx_GLProgramCache_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLProgramCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -65273,7 +64066,6 @@ int lua_cocos2dx_GLProgramCache_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLProgramCache_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65350,7 +64142,6 @@ int lua_cocos2dx_TextureCache_reloadTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_reloadTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -65401,7 +64192,6 @@ int lua_cocos2dx_TextureCache_unbindAllImageAsync(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_unbindAllImageAsync'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65449,7 +64239,6 @@ int lua_cocos2dx_TextureCache_removeTextureForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_removeTextureForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -65500,7 +64289,6 @@ int lua_cocos2dx_TextureCache_removeAllTextures(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_removeAllTextures'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65548,7 +64336,6 @@ int lua_cocos2dx_TextureCache_getDescription(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_getDescription'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65596,7 +64383,6 @@ int lua_cocos2dx_TextureCache_getCachedTextureInfo(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_getCachedTextureInfo'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65639,7 +64425,6 @@ int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_addImage'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -65704,7 +64489,6 @@ int lua_cocos2dx_TextureCache_unbindImageAsync(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_unbindImageAsync'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -65755,7 +64539,6 @@ int lua_cocos2dx_TextureCache_getTextureForKey(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_getTextureForKey'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -65806,7 +64589,6 @@ int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_removeUnusedTextures'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65854,7 +64636,6 @@ int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_removeTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -65905,7 +64686,6 @@ int lua_cocos2dx_TextureCache_waitForQuit(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_waitForQuit'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -65940,7 +64720,6 @@ int lua_cocos2dx_TextureCache_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TextureCache_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -66011,7 +64790,6 @@ int lua_cocos2dx_Device_setAccelerometerEnabled(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Device",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Device_setAccelerometerEnabled'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -66048,7 +64826,6 @@ int lua_cocos2dx_Device_setKeepScreenOn(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Device",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Device_setKeepScreenOn'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -66085,7 +64862,6 @@ int lua_cocos2dx_Device_setAccelerometerInterval(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Device",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Device_setAccelerometerInterval'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -66122,7 +64898,6 @@ int lua_cocos2dx_Device_getDPI(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Device",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Device_getDPI'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -66192,7 +64967,6 @@ int lua_cocos2dx_Application_openURL(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Application_openURL'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -66243,7 +65017,6 @@ int lua_cocos2dx_Application_getTargetPlatform(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Application_getTargetPlatform'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -66291,7 +65064,6 @@ int lua_cocos2dx_Application_getCurrentLanguage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Application_getCurrentLanguage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -66339,7 +65111,6 @@ int lua_cocos2dx_Application_getCurrentLanguageCode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Application_getCurrentLanguageCode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -66387,7 +65158,6 @@ int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Application_setAnimationInterval'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -66426,7 +65196,6 @@ int lua_cocos2dx_Application_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Application_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -66486,7 +65255,6 @@ int lua_cocos2dx_GLViewImpl_createWithRect(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLViewImpl",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLViewImpl_createWithRect'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -66542,7 +65310,6 @@ int lua_cocos2dx_GLViewImpl_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLViewImpl",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLViewImpl_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -66579,7 +65346,6 @@ int lua_cocos2dx_GLViewImpl_createWithFullScreen(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.GLViewImpl",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_GLViewImpl_createWithFullScreen'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -66650,7 +65416,6 @@ int lua_cocos2dx_AnimationCache_getAnimation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_getAnimation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -66701,7 +65466,6 @@ int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_addAnimation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -66755,7 +65519,6 @@ int lua_cocos2dx_AnimationCache_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -66803,7 +65566,6 @@ int lua_cocos2dx_AnimationCache_addAnimationsWithDictionary(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_addAnimationsWithDictionary'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -66857,7 +65619,6 @@ int lua_cocos2dx_AnimationCache_removeAnimation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_removeAnimation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -66908,7 +65669,6 @@ int lua_cocos2dx_AnimationCache_addAnimationsWithFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_addAnimationsWithFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -66947,7 +65707,6 @@ int lua_cocos2dx_AnimationCache_destroyInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AnimationCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_destroyInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -66982,7 +65741,6 @@ int lua_cocos2dx_AnimationCache_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AnimationCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -67016,7 +65774,6 @@ int lua_cocos2dx_AnimationCache_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_AnimationCache_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -67095,7 +65852,6 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFileContent(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFileContent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -67144,7 +65900,6 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -67225,7 +65980,6 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_addSpriteFrame'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -67279,7 +66033,6 @@ int lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_removeUnusedSpriteFrames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -67327,7 +66080,6 @@ int lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_getSpriteFrameByName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67378,7 +66130,6 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67429,7 +66180,6 @@ int lua_cocos2dx_SpriteFrameCache_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -67477,7 +66227,6 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFrames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFrames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -67525,7 +66274,6 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67576,7 +66324,6 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFileContent(lua_State* t
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromFileContent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67627,7 +66374,6 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFrameByName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67666,7 +66412,6 @@ int lua_cocos2dx_SpriteFrameCache_destroyInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpriteFrameCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_destroyInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -67701,7 +66446,6 @@ int lua_cocos2dx_SpriteFrameCache_getInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.SpriteFrameCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_SpriteFrameCache_getInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -67780,7 +66524,6 @@ int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParallaxNode_addChild'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -67840,7 +66583,6 @@ int lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67879,7 +66621,6 @@ int lua_cocos2dx_ParallaxNode_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ParallaxNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_ParallaxNode_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -67948,7 +66689,6 @@ int lua_cocos2dx_TMXObjectGroup_setPositionOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_setPositionOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -67999,7 +66739,6 @@ int lua_cocos2dx_TMXObjectGroup_getProperty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_getProperty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68050,7 +66789,6 @@ int lua_cocos2dx_TMXObjectGroup_getPositionOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_getPositionOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68098,7 +66836,6 @@ int lua_cocos2dx_TMXObjectGroup_getObject(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_getObject'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68144,7 +66881,6 @@ int lua_cocos2dx_TMXObjectGroup_getObjects(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_getObjects'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -68197,7 +66933,6 @@ int lua_cocos2dx_TMXObjectGroup_setGroupName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_setGroupName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68243,7 +66978,6 @@ int lua_cocos2dx_TMXObjectGroup_getProperties(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -68296,7 +67030,6 @@ int lua_cocos2dx_TMXObjectGroup_getGroupName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_getGroupName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68344,7 +67077,6 @@ int lua_cocos2dx_TMXObjectGroup_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68395,7 +67127,6 @@ int lua_cocos2dx_TMXObjectGroup_setObjects(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_setObjects'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68433,7 +67164,6 @@ int lua_cocos2dx_TMXObjectGroup_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXObjectGroup_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68514,7 +67244,6 @@ int lua_cocos2dx_TMXLayerInfo_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayerInfo_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68565,7 +67294,6 @@ int lua_cocos2dx_TMXLayerInfo_getProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayerInfo_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68600,7 +67328,6 @@ int lua_cocos2dx_TMXLayerInfo_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayerInfo_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68673,7 +67400,6 @@ int lua_cocos2dx_TMXTilesetInfo_getRectForGID(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTilesetInfo_getRectForGID'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68711,7 +67437,6 @@ int lua_cocos2dx_TMXTilesetInfo_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTilesetInfo_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68783,7 +67508,6 @@ int lua_cocos2dx_TMXMapInfo_setObjectGroups(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setObjectGroups'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68834,7 +67558,6 @@ int lua_cocos2dx_TMXMapInfo_setTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68885,7 +67608,6 @@ int lua_cocos2dx_TMXMapInfo_initWithTMXFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_initWithTMXFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -68936,7 +67658,6 @@ int lua_cocos2dx_TMXMapInfo_getOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -68984,7 +67705,6 @@ int lua_cocos2dx_TMXMapInfo_isStoringCharacters(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_isStoringCharacters'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69032,7 +67752,6 @@ int lua_cocos2dx_TMXMapInfo_setLayers(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setLayers'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69083,7 +67802,6 @@ int lua_cocos2dx_TMXMapInfo_parseXMLFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_parseXMLFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69134,7 +67852,6 @@ int lua_cocos2dx_TMXMapInfo_getParentElement(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getParentElement'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69182,7 +67899,6 @@ int lua_cocos2dx_TMXMapInfo_setTMXFileName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setTMXFileName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69233,7 +67949,6 @@ int lua_cocos2dx_TMXMapInfo_parseXMLString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_parseXMLString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69279,7 +67994,6 @@ int lua_cocos2dx_TMXMapInfo_getLayers(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getLayers'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -69327,7 +68041,6 @@ int lua_cocos2dx_TMXMapInfo_getTilesets(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getTilesets'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -69380,7 +68093,6 @@ int lua_cocos2dx_TMXMapInfo_getParentGID(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getParentGID'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69428,7 +68140,6 @@ int lua_cocos2dx_TMXMapInfo_setParentElement(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setParentElement'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69479,7 +68190,6 @@ int lua_cocos2dx_TMXMapInfo_initWithXML(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_initWithXML'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -69533,7 +68243,6 @@ int lua_cocos2dx_TMXMapInfo_setParentGID(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setParentGID'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69584,7 +68293,6 @@ int lua_cocos2dx_TMXMapInfo_getLayerAttribs(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getLayerAttribs'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69632,7 +68340,6 @@ int lua_cocos2dx_TMXMapInfo_getTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69680,7 +68387,6 @@ int lua_cocos2dx_TMXMapInfo_getTileProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getTileProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69723,7 +68429,6 @@ int lua_cocos2dx_TMXMapInfo_getObjectGroups(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getObjectGroups'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -69776,7 +68481,6 @@ int lua_cocos2dx_TMXMapInfo_getTMXFileName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getTMXFileName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -69824,7 +68528,6 @@ int lua_cocos2dx_TMXMapInfo_setCurrentString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setCurrentString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69875,7 +68578,6 @@ int lua_cocos2dx_TMXMapInfo_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69926,7 +68628,6 @@ int lua_cocos2dx_TMXMapInfo_setOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -69977,7 +68678,6 @@ int lua_cocos2dx_TMXMapInfo_setTileProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setTileProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70028,7 +68728,6 @@ int lua_cocos2dx_TMXMapInfo_setMapSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setMapSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70079,7 +68778,6 @@ int lua_cocos2dx_TMXMapInfo_setStoringCharacters(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setStoringCharacters'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70130,7 +68828,6 @@ int lua_cocos2dx_TMXMapInfo_getMapSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getMapSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -70178,7 +68875,6 @@ int lua_cocos2dx_TMXMapInfo_setTilesets(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setTilesets'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70224,7 +68920,6 @@ int lua_cocos2dx_TMXMapInfo_getProperties(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -70277,7 +68972,6 @@ int lua_cocos2dx_TMXMapInfo_getCurrentString(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_getCurrentString'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -70325,7 +69019,6 @@ int lua_cocos2dx_TMXMapInfo_setLayerAttribs(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_setLayerAttribs'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70364,7 +69057,6 @@ int lua_cocos2dx_TMXMapInfo_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TMXMapInfo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -70401,7 +69093,6 @@ int lua_cocos2dx_TMXMapInfo_createWithXML(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TMXMapInfo",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_createWithXML'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -70439,7 +69130,6 @@ int lua_cocos2dx_TMXMapInfo_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXMapInfo_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -70544,7 +69234,6 @@ int lua_cocos2dx_TMXLayer_getPositionAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getPositionAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70595,7 +69284,6 @@ int lua_cocos2dx_TMXLayer_setLayerOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setLayerOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70646,7 +69334,6 @@ int lua_cocos2dx_TMXLayer_releaseMap(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_releaseMap'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -70694,7 +69381,6 @@ int lua_cocos2dx_TMXLayer_getLayerSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getLayerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -70742,7 +69428,6 @@ int lua_cocos2dx_TMXLayer_setMapTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setMapTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70793,7 +69478,6 @@ int lua_cocos2dx_TMXLayer_getLayerOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getLayerOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -70841,7 +69525,6 @@ int lua_cocos2dx_TMXLayer_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70892,7 +69575,6 @@ int lua_cocos2dx_TMXLayer_setLayerName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setLayerName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70943,7 +69625,6 @@ int lua_cocos2dx_TMXLayer_removeTileAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_removeTileAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -70994,7 +69675,6 @@ int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_initWithTilesetInfo'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -71051,7 +69731,6 @@ int lua_cocos2dx_TMXLayer_setupTiles(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setupTiles'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -71094,7 +69773,6 @@ int lua_cocos2dx_TMXLayer_setTileGID(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setTileGID'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 3) {
@@ -71167,7 +69845,6 @@ int lua_cocos2dx_TMXLayer_getMapTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getMapTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -71215,7 +69892,6 @@ int lua_cocos2dx_TMXLayer_getProperty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getProperty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71266,7 +69942,6 @@ int lua_cocos2dx_TMXLayer_setLayerSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setLayerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71317,7 +69992,6 @@ int lua_cocos2dx_TMXLayer_getLayerName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getLayerName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -71365,7 +70039,6 @@ int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_setTileSet'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71416,7 +70089,6 @@ int lua_cocos2dx_TMXLayer_getTileSet(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getTileSet'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -71459,7 +70131,6 @@ int lua_cocos2dx_TMXLayer_getProperties(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -71512,7 +70183,6 @@ int lua_cocos2dx_TMXLayer_getTileAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_getTileAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71551,7 +70221,6 @@ int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TMXLayer",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -71591,7 +70260,6 @@ int lua_cocos2dx_TMXLayer_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXLayer_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -71683,7 +70351,6 @@ int lua_cocos2dx_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_setObjectGroups'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71734,7 +70401,6 @@ int lua_cocos2dx_TMXTiledMap_getProperty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getProperty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71785,7 +70451,6 @@ int lua_cocos2dx_TMXTiledMap_setMapSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_setMapSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71836,7 +70501,6 @@ int lua_cocos2dx_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getObjectGroup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -71882,7 +70546,6 @@ int lua_cocos2dx_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getObjectGroups'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -71935,7 +70598,6 @@ int lua_cocos2dx_TMXTiledMap_getTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -71983,7 +70645,6 @@ int lua_cocos2dx_TMXTiledMap_getMapSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getMapSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -72031,7 +70692,6 @@ int lua_cocos2dx_TMXTiledMap_getProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -72079,7 +70739,6 @@ int lua_cocos2dx_TMXTiledMap_setTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_setTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72130,7 +70789,6 @@ int lua_cocos2dx_TMXTiledMap_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72181,7 +70839,6 @@ int lua_cocos2dx_TMXTiledMap_getLayer(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getLayer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72232,7 +70889,6 @@ int lua_cocos2dx_TMXTiledMap_getMapOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_getMapOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -72280,7 +70936,6 @@ int lua_cocos2dx_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_setMapOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72319,7 +70974,6 @@ int lua_cocos2dx_TMXTiledMap_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TMXTiledMap",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -72356,7 +71010,6 @@ int lua_cocos2dx_TMXTiledMap_createWithXML(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TMXTiledMap",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TMXTiledMap_createWithXML'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -72441,7 +71094,6 @@ int lua_cocos2dx_TileMapAtlas_initWithTileFile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TileMapAtlas_initWithTileFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -72501,7 +71153,6 @@ int lua_cocos2dx_TileMapAtlas_releaseMap(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TileMapAtlas_releaseMap'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -72549,7 +71200,6 @@ int lua_cocos2dx_TileMapAtlas_getTileAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TileMapAtlas_getTileAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72600,7 +71250,6 @@ int lua_cocos2dx_TileMapAtlas_setTile(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TileMapAtlas_setTile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -72642,7 +71291,6 @@ int lua_cocos2dx_TileMapAtlas_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TileMapAtlas",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TileMapAtlas_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 4)
@@ -72684,7 +71332,6 @@ int lua_cocos2dx_TileMapAtlas_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_TileMapAtlas_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -72760,7 +71407,6 @@ int lua_cocos2dx_Component_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72811,7 +71457,6 @@ int lua_cocos2dx_Component_setName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_setName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72862,7 +71507,6 @@ int lua_cocos2dx_Component_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -72910,7 +71554,6 @@ int lua_cocos2dx_Component_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -72961,7 +71604,6 @@ int lua_cocos2dx_Component_getOwner(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_getOwner'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -73009,7 +71651,6 @@ int lua_cocos2dx_Component_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -73057,7 +71698,6 @@ int lua_cocos2dx_Component_setOwner(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_setOwner'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -73108,7 +71748,6 @@ int lua_cocos2dx_Component_getName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_getName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -73144,7 +71783,6 @@ int lua_cocos2dx_Component_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Component",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_Component_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)

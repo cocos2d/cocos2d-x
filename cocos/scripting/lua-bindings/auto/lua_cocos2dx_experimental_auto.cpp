@@ -31,7 +31,6 @@ int lua_cocos2dx_experimental_TMXLayer_getPositionAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getPositionAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -82,7 +81,6 @@ int lua_cocos2dx_experimental_TMXLayer_setLayerOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setLayerOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -133,7 +131,6 @@ int lua_cocos2dx_experimental_TMXLayer_getLayerSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getLayerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -181,7 +178,6 @@ int lua_cocos2dx_experimental_TMXLayer_setMapTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setMapTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -232,7 +228,6 @@ int lua_cocos2dx_experimental_TMXLayer_getLayerOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getLayerOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -280,7 +275,6 @@ int lua_cocos2dx_experimental_TMXLayer_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -331,7 +325,6 @@ int lua_cocos2dx_experimental_TMXLayer_setLayerName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setLayerName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -382,7 +375,6 @@ int lua_cocos2dx_experimental_TMXLayer_removeTileAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_removeTileAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -428,7 +420,6 @@ int lua_cocos2dx_experimental_TMXLayer_getProperties(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -481,7 +472,6 @@ int lua_cocos2dx_experimental_TMXLayer_setupTiles(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setupTiles'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -529,7 +519,6 @@ int lua_cocos2dx_experimental_TMXLayer_setupTileSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setupTileSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -581,7 +570,6 @@ int lua_cocos2dx_experimental_TMXLayer_setTileGID(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setTileGID'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 3) {
@@ -654,7 +642,6 @@ int lua_cocos2dx_experimental_TMXLayer_getMapTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getMapTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -702,7 +689,6 @@ int lua_cocos2dx_experimental_TMXLayer_getProperty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getProperty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -753,7 +739,6 @@ int lua_cocos2dx_experimental_TMXLayer_setLayerSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setLayerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -804,7 +789,6 @@ int lua_cocos2dx_experimental_TMXLayer_getLayerName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getLayerName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -852,7 +836,6 @@ int lua_cocos2dx_experimental_TMXLayer_setTileSet(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_setTileSet'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -903,7 +886,6 @@ int lua_cocos2dx_experimental_TMXLayer_getTileSet(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getTileSet'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -951,7 +933,6 @@ int lua_cocos2dx_experimental_TMXLayer_getTileAt(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_getTileAt'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -990,7 +971,6 @@ int lua_cocos2dx_experimental_TMXLayer_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.TMXLayer",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -1030,7 +1010,6 @@ int lua_cocos2dx_experimental_TMXLayer_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXLayer_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1121,7 +1100,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_setObjectGroups(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_setObjectGroups'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1172,7 +1150,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getProperty(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getProperty'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1223,7 +1200,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_setMapSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_setMapSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1274,7 +1250,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getObjectGroup(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getObjectGroup'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1320,7 +1295,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getObjectGroups(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getObjectGroups'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -1373,7 +1347,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1421,7 +1394,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getMapSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getMapSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1469,7 +1441,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1517,7 +1488,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getPropertiesForGID(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getPropertiesForGID'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1568,7 +1538,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_setTileSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_setTileSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1619,7 +1588,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_setProperties(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_setProperties'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1670,7 +1638,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getLayer(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getLayer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1721,7 +1688,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_getMapOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_getMapOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1769,7 +1735,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_setMapOrientation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_setMapOrientation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1808,7 +1773,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.TMXTiledMap",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -1845,7 +1809,6 @@ int lua_cocos2dx_experimental_TMXTiledMap_createWithXML(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.TMXTiledMap",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_experimental_TMXTiledMap_createWithXML'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)

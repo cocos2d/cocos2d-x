@@ -30,7 +30,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setStoragePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_setStoragePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -81,7 +80,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setPackageUrl(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_setPackageUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -132,7 +130,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_checkUpdate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_checkUpdate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -180,7 +177,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getStoragePath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_getStoragePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -228,7 +224,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -276,7 +271,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setConnectionTimeout(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_setConnectionTimeout'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -327,7 +321,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_setVersionFileUrl(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_setVersionFileUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -378,7 +371,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getPackageUrl(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_getPackageUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -426,7 +418,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getConnectionTimeout(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_getConnectionTimeout'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -474,7 +465,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getVersion(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_getVersion'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -522,7 +512,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_getVersionFileUrl(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_getVersionFileUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -570,7 +559,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_deleteVersion(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_deleteVersion'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -606,7 +594,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AssetsManager",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 6)
@@ -664,7 +651,6 @@ int lua_cocos2dx_assetsmanager_AssetsManager_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManager_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -808,7 +794,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetsManagerEx(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetsManagerEx'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -856,7 +841,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetId(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getAssetId'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -904,7 +888,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLECode(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLECode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -952,7 +935,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getMessage(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getMessage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1000,7 +982,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLMCode(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getCURLMCode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1048,7 +1029,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercentByFile(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercentByFile'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1096,7 +1076,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getEventCode(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getEventCode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1144,7 +1123,6 @@ int lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercent(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_EventAssetsManagerEx_getPercent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1219,7 +1197,6 @@ int lua_cocos2dx_assetsmanager_Manifest_getManifestFileUrl(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_Manifest_getManifestFileUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1267,7 +1244,6 @@ int lua_cocos2dx_assetsmanager_Manifest_isVersionLoaded(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_Manifest_isVersionLoaded'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1315,7 +1291,6 @@ int lua_cocos2dx_assetsmanager_Manifest_isLoaded(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_Manifest_isLoaded'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1363,7 +1338,6 @@ int lua_cocos2dx_assetsmanager_Manifest_getPackageUrl(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_Manifest_getPackageUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1411,7 +1385,6 @@ int lua_cocos2dx_assetsmanager_Manifest_getVersion(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_Manifest_getVersion'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1459,7 +1432,6 @@ int lua_cocos2dx_assetsmanager_Manifest_getVersionFileUrl(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_Manifest_getVersionFileUrl'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1532,7 +1504,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1580,7 +1551,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_checkUpdate(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_checkUpdate'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1628,7 +1598,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getStoragePath(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getStoragePath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1676,7 +1645,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1724,7 +1692,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getLocalManifest(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getLocalManifest'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1772,7 +1739,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_getRemoteManifest(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_getRemoteManifest'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1820,7 +1786,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_downloadFailedAssets(lua_State* t
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_downloadFailedAssets'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1856,7 +1821,6 @@ int lua_cocos2dx_assetsmanager_AssetsManagerEx_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.AssetsManagerEx",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_assetsmanager_AssetsManagerEx_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)

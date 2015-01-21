@@ -18,7 +18,6 @@ int lua_cocos2dx_audioengine_AudioProfile_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioProfile_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -75,7 +74,6 @@ int lua_cocos2dx_audioengine_AudioEngine_lazyInit(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_lazyInit'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -110,7 +108,6 @@ int lua_cocos2dx_audioengine_AudioEngine_setCurrentTime(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_setCurrentTime'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -149,7 +146,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getVolume(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getVolume'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -186,7 +182,6 @@ int lua_cocos2dx_audioengine_AudioEngine_uncache(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_uncache'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -223,7 +218,6 @@ int lua_cocos2dx_audioengine_AudioEngine_resumeAll(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_resumeAll'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -258,7 +252,6 @@ int lua_cocos2dx_audioengine_AudioEngine_stopAll(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_stopAll'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -293,7 +286,6 @@ int lua_cocos2dx_audioengine_AudioEngine_pause(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_pause'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -330,7 +322,6 @@ int lua_cocos2dx_audioengine_AudioEngine_end(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_end'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -365,7 +356,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -400,7 +390,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getCurrentTime(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getCurrentTime'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -437,7 +426,6 @@ int lua_cocos2dx_audioengine_AudioEngine_setMaxAudioInstance(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_setMaxAudioInstance'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -474,7 +462,6 @@ int lua_cocos2dx_audioengine_AudioEngine_isLoop(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_isLoop'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -511,7 +498,6 @@ int lua_cocos2dx_audioengine_AudioEngine_pauseAll(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_pauseAll'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -546,7 +532,6 @@ int lua_cocos2dx_audioengine_AudioEngine_uncacheAll(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_uncacheAll'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -581,7 +566,6 @@ int lua_cocos2dx_audioengine_AudioEngine_setVolume(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_setVolume'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -620,7 +604,6 @@ int lua_cocos2dx_audioengine_AudioEngine_play2d(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_play2d'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -708,7 +691,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getState(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getState'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -745,7 +727,6 @@ int lua_cocos2dx_audioengine_AudioEngine_resume(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_resume'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -782,7 +763,6 @@ int lua_cocos2dx_audioengine_AudioEngine_stop(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_stop'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -819,7 +799,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getDuration(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getDuration'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -856,7 +835,6 @@ int lua_cocos2dx_audioengine_AudioEngine_setLoop(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_setLoop'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -895,7 +873,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getDefaultProfile(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getDefaultProfile'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -929,7 +906,6 @@ int lua_cocos2dx_audioengine_AudioEngine_getProfile(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_audioengine_AudioEngine_getProfile'");
     argc = lua_gettop(tolua_S)-1;
 
     do 

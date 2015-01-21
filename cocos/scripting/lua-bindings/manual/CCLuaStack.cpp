@@ -509,14 +509,6 @@ bool LuaStack::handleAssert(const char *msg, const char *cond, const char *file,
     return true;
 }
 
-void LuaStack::setCallMsg(const char *msg)
-{
-    if (msg)
-    {
-        _callMsg = msg;
-    }
-}
-
 int LuaStack::reallocateScriptHandler(int nHandler)
 {
     LUA_FUNCTION  nNewHandle = -1;

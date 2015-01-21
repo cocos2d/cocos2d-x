@@ -30,7 +30,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_moveAnimationsFromNode(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_moveAnimationsFromNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -84,7 +83,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setAutoPlaySequenceId(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setAutoPlaySequenceId'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -135,7 +133,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentCallbackNames(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentCallbackNames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -183,7 +180,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForSoundChannel(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForSoundChannel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -234,7 +230,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setBaseValue(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setBaseValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -291,7 +286,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentOutletNodes(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentOutletNodes'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -339,7 +333,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getLastCompletedSequenceName(l
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getLastCompletedSequenceName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -387,7 +380,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setRootNode(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setRootNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -438,7 +430,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_runAnimationsForSequenceNamedT
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -492,7 +483,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentOutletName(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentOutletName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -543,7 +533,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getSequences(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getSequences'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -591,7 +580,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getRootContainerSize(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getRootContainerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -639,7 +627,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setDocumentControllerName(lua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setDocumentControllerName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -690,7 +677,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setObject(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setObject'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -747,7 +733,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getContainerSize(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getContainerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -798,7 +783,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForCallbackChannel(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForCallbackChannel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -849,7 +833,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentOutletNames(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentOutletNames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -897,7 +880,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackControlEven
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackControlEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -948,7 +930,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -996,7 +977,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getKeyframeCallbacks(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getKeyframeCallbacks'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1044,7 +1024,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentCallbackControlEven
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentCallbackControlEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1092,7 +1071,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setRootContainerSize(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setRootContainerSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1143,7 +1121,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_runAnimationsForSequenceIdTwee
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_runAnimationsForSequenceIdTweenDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1197,7 +1174,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getRunningSequenceName(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getRunningSequenceName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1245,7 +1221,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getAutoPlaySequenceId(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getAutoPlaySequenceId'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1293,7 +1268,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackName(lua_St
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1344,7 +1318,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getRootNode(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getRootNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1392,7 +1365,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentOutletNode(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentOutletNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1443,7 +1415,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getSequenceDuration(lua_State*
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getSequenceDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1494,7 +1465,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackNode(lua_St
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1545,7 +1515,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_runAnimationsForSequenceNamed(
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_runAnimationsForSequenceNamed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1596,7 +1565,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getSequenceId(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getSequenceId'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1647,7 +1615,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentCallbackNodes(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentCallbackNodes'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1695,7 +1662,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setSequences(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setSequences'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1746,7 +1712,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_debug(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_debug'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1794,7 +1759,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentControllerName(lua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentControllerName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1829,7 +1793,6 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_constructor(lua_State* tolua_S
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1936,7 +1899,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_addOwnerOutletName(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_addOwnerOutletName'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1987,7 +1949,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getOwnerCallbackNames(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getOwnerCallbackNames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2035,7 +1996,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_addDocumentCallbackControlEvents(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_addDocumentCallbackControlEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2086,7 +2046,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_setCCBRootPath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_setCCBRootPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2137,7 +2096,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_addOwnerOutletNode(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_addOwnerOutletNode'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2188,7 +2146,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getOwnerCallbackNodes(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getOwnerCallbackNodes'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2236,7 +2193,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_readSoundKeyframesForSeq(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_readSoundKeyframesForSeq'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2287,7 +2243,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getCCBRootPath(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getCCBRootPath'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2335,7 +2290,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getOwnerCallbackControlEvents(lua_State*
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getOwnerCallbackControlEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2383,7 +2337,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getOwnerOutletNodes(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getOwnerOutletNodes'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2431,7 +2384,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_readUTF8(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_readUTF8'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2479,7 +2431,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_addOwnerCallbackControlEvents(lua_State*
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_addOwnerCallbackControlEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2530,7 +2481,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getOwnerOutletNames(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getOwnerOutletNames'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2578,7 +2528,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_setAnimationManager(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_setAnimationManager'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2629,7 +2578,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_readCallbackKeyframesForSeq(lua_State* t
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_readCallbackKeyframesForSeq'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2680,7 +2628,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getAnimationManagersForNodes(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getAnimationManagersForNodes'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2728,7 +2675,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getNodesWithAnimationManagers(lua_State*
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getNodesWithAnimationManagers'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2776,7 +2722,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getAnimationManager(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_getAnimationManager'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2812,7 +2757,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_setResolutionScale(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.CCBReader",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_setResolutionScale'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 1)
@@ -2845,7 +2789,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     tolua_Error tolua_err;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_cocosbuilder_CCBReader_constructor'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {

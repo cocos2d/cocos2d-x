@@ -30,7 +30,6 @@ int lua_cocos2dx_extension_Control_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -81,7 +80,6 @@ int lua_cocos2dx_extension_Control_onTouchMoved(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_onTouchMoved'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -135,7 +133,6 @@ int lua_cocos2dx_extension_Control_getState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_getState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -183,7 +180,6 @@ int lua_cocos2dx_extension_Control_onTouchEnded(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_onTouchEnded'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -237,7 +233,6 @@ int lua_cocos2dx_extension_Control_sendActionsForControlEvents(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_sendActionsForControlEvents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -288,7 +283,6 @@ int lua_cocos2dx_extension_Control_setSelected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_setSelected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -339,7 +333,6 @@ int lua_cocos2dx_extension_Control_isEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_isEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -387,7 +380,6 @@ int lua_cocos2dx_extension_Control_onTouchCancelled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_onTouchCancelled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -441,7 +433,6 @@ int lua_cocos2dx_extension_Control_needsLayout(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_needsLayout'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -489,7 +480,6 @@ int lua_cocos2dx_extension_Control_onTouchBegan(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_onTouchBegan'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -543,7 +533,6 @@ int lua_cocos2dx_extension_Control_hasVisibleParents(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_hasVisibleParents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -591,7 +580,6 @@ int lua_cocos2dx_extension_Control_isSelected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_isSelected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -639,7 +627,6 @@ int lua_cocos2dx_extension_Control_isTouchInside(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_isTouchInside'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -690,7 +677,6 @@ int lua_cocos2dx_extension_Control_setHighlighted(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_setHighlighted'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -741,7 +727,6 @@ int lua_cocos2dx_extension_Control_getTouchLocation(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_getTouchLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -792,7 +777,6 @@ int lua_cocos2dx_extension_Control_isHighlighted(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_isHighlighted'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -828,7 +812,6 @@ int lua_cocos2dx_extension_Control_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.Control",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_Control_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -911,7 +894,6 @@ int lua_cocos2dx_extension_ControlButton_isPushed(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_isPushed'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -959,7 +941,6 @@ int lua_cocos2dx_extension_ControlButton_setSelected(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setSelected'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1010,7 +991,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleLabelForState(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleLabelForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1064,7 +1044,6 @@ int lua_cocos2dx_extension_ControlButton_setAdjustBackgroundImage(lua_State* tol
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setAdjustBackgroundImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1115,7 +1094,6 @@ int lua_cocos2dx_extension_ControlButton_setHighlighted(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setHighlighted'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1166,7 +1144,6 @@ int lua_cocos2dx_extension_ControlButton_setZoomOnTouchDown(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setZoomOnTouchDown'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1217,7 +1194,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleForState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1271,7 +1247,6 @@ int lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setLabelAnchorPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1322,7 +1297,6 @@ int lua_cocos2dx_extension_ControlButton_getLabelAnchorPoint(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getLabelAnchorPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1370,7 +1344,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleTTFSizeForState(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleTTFSizeForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1421,7 +1394,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleTTFForState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleTTFForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1475,7 +1447,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleTTFSizeForState(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleTTFSizeForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -1529,7 +1500,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1580,7 +1550,6 @@ int lua_cocos2dx_extension_ControlButton_setPreferredSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setPreferredSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1631,7 +1600,6 @@ int lua_cocos2dx_extension_ControlButton_getCurrentTitleColor(lua_State* tolua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getCurrentTitleColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1679,7 +1647,6 @@ int lua_cocos2dx_extension_ControlButton_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1730,7 +1697,6 @@ int lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getBackgroundSpriteForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -1781,7 +1747,6 @@ int lua_cocos2dx_extension_ControlButton_getHorizontalOrigin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getHorizontalOrigin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1829,7 +1794,6 @@ int lua_cocos2dx_extension_ControlButton_needsLayout(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_needsLayout'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1872,7 +1836,6 @@ int lua_cocos2dx_extension_ControlButton_getCurrentTitle(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getCurrentTitle'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 0) {
@@ -1925,7 +1888,6 @@ int lua_cocos2dx_extension_ControlButton_getScaleRatio(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getScaleRatio'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -1973,7 +1935,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleTTFForState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleTTFForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2024,7 +1985,6 @@ int lua_cocos2dx_extension_ControlButton_getBackgroundSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getBackgroundSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2072,7 +2032,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleColorForState(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleColorForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2123,7 +2082,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleColorForState(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleColorForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -2177,7 +2135,6 @@ int lua_cocos2dx_extension_ControlButton_doesAdjustBackgroundImage(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_doesAdjustBackgroundImage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2225,7 +2182,6 @@ int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState(lua_St
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setBackgroundSpriteFrameForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -2279,7 +2235,6 @@ int lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setBackgroundSpriteForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -2333,7 +2288,6 @@ int lua_cocos2dx_extension_ControlButton_setScaleRatio(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setScaleRatio'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2384,7 +2338,6 @@ int lua_cocos2dx_extension_ControlButton_setBackgroundSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setBackgroundSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2435,7 +2388,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2483,7 +2435,6 @@ int lua_cocos2dx_extension_ControlButton_getPreferredSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getPreferredSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2531,7 +2482,6 @@ int lua_cocos2dx_extension_ControlButton_getVerticalMargin(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getVerticalMargin'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2579,7 +2529,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleLabelForState(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleLabelForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2630,7 +2579,6 @@ int lua_cocos2dx_extension_ControlButton_setMargins(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setMargins'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -2684,7 +2632,6 @@ int lua_cocos2dx_extension_ControlButton_setTitleBMFontForState(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_setTitleBMFontForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -2738,7 +2685,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleBMFontForState(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleBMFontForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2789,7 +2735,6 @@ int lua_cocos2dx_extension_ControlButton_getZoomOnTouchDown(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getZoomOnTouchDown'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -2837,7 +2782,6 @@ int lua_cocos2dx_extension_ControlButton_getTitleForState(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_getTitleForState'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -2875,7 +2819,6 @@ int lua_cocos2dx_extension_ControlButton_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlButton",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlButton_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -3028,7 +2971,6 @@ int lua_cocos2dx_extension_ControlHuePicker_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3079,7 +3021,6 @@ int lua_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_initWithTargetAndPos'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -3133,7 +3074,6 @@ int lua_cocos2dx_extension_ControlHuePicker_setHue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_setHue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3184,7 +3124,6 @@ int lua_cocos2dx_extension_ControlHuePicker_getStartPos(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_getStartPos'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3232,7 +3171,6 @@ int lua_cocos2dx_extension_ControlHuePicker_getHue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_getHue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3280,7 +3218,6 @@ int lua_cocos2dx_extension_ControlHuePicker_getSlider(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_getSlider'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3328,7 +3265,6 @@ int lua_cocos2dx_extension_ControlHuePicker_setBackground(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_setBackground'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3379,7 +3315,6 @@ int lua_cocos2dx_extension_ControlHuePicker_setHuePercentage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_setHuePercentage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3430,7 +3365,6 @@ int lua_cocos2dx_extension_ControlHuePicker_getBackground(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_getBackground'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3478,7 +3412,6 @@ int lua_cocos2dx_extension_ControlHuePicker_getHuePercentage(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_getHuePercentage'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3526,7 +3459,6 @@ int lua_cocos2dx_extension_ControlHuePicker_setSlider(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_setSlider'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3565,7 +3497,6 @@ int lua_cocos2dx_extension_ControlHuePicker_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlHuePicker",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -3603,7 +3534,6 @@ int lua_cocos2dx_extension_ControlHuePicker_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlHuePicker_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3686,7 +3616,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getShadow(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getShadow'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3734,7 +3663,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPo
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_initWithTargetAndPos'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -3788,7 +3716,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getStartPos'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3836,7 +3763,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getOverlay(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getOverlay'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3884,7 +3810,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -3935,7 +3860,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSlider(lua_State
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSlider'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -3983,7 +3907,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBackground(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBackground'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4031,7 +3954,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSaturation(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getSaturation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4079,7 +4001,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBrightness(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_getBrightness'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4115,7 +4036,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create(lua_State* t
     if (!tolua_isusertable(tolua_S,1,"cc.ControlSaturationBrightnessPicker",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -4153,7 +4073,6 @@ int lua_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor(lua_Sta
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSaturationBrightnessPicker_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4234,7 +4153,6 @@ int lua_cocos2dx_extension_ControlColourPicker_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4285,7 +4203,6 @@ int lua_cocos2dx_extension_ControlColourPicker_getHuePicker(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_getHuePicker'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4333,7 +4250,6 @@ int lua_cocos2dx_extension_ControlColourPicker_setColor(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_setColor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4384,7 +4300,6 @@ int lua_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged(lua_State* 
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_hueSliderValueChanged'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -4438,7 +4353,6 @@ int lua_cocos2dx_extension_ControlColourPicker_getcolourPicker(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_getcolourPicker'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4486,7 +4400,6 @@ int lua_cocos2dx_extension_ControlColourPicker_setBackground(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_setBackground'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4537,7 +4450,6 @@ int lua_cocos2dx_extension_ControlColourPicker_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4585,7 +4497,6 @@ int lua_cocos2dx_extension_ControlColourPicker_setcolourPicker(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_setcolourPicker'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4636,7 +4547,6 @@ int lua_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged(lua_Stat
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_colourSliderValueChanged'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -4690,7 +4600,6 @@ int lua_cocos2dx_extension_ControlColourPicker_setHuePicker(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_setHuePicker'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4741,7 +4650,6 @@ int lua_cocos2dx_extension_ControlColourPicker_getBackground(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_getBackground'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4777,7 +4685,6 @@ int lua_cocos2dx_extension_ControlColourPicker_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlColourPicker",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -4811,7 +4718,6 @@ int lua_cocos2dx_extension_ControlColourPicker_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlColourPicker_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -4894,7 +4800,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation(lua_State* t
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_setPreviousLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4945,7 +4850,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_setValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_setValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -4996,7 +4900,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_getProgressTimer(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_getProgressTimer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5044,7 +4947,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_getMaximumValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_getMaximumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5092,7 +4994,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoi
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
     {
@@ -5152,7 +5053,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_potentiometerBegan'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5203,7 +5103,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_setMaximumValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_setMaximumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5254,7 +5153,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_getMinimumValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_getMinimumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5302,7 +5200,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_setThumbSprite(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_setThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5353,7 +5250,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_getValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_getValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5401,7 +5297,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_getPreviousLocation(lua_State* t
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_getPreviousLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5449,7 +5344,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint(lua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_distanceBetweenPointAndPoint'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -5503,7 +5397,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_potentiometerEnded'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5554,7 +5447,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_setProgressTimer(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_setProgressTimer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5605,7 +5497,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_setMinimumValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_setMinimumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5656,7 +5547,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_getThumbSprite(lua_State* tolua_
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_getThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5704,7 +5594,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_initWithTrackSprite_ProgressTime
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_initWithTrackSprite_ProgressTimer_ThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
     {
@@ -5761,7 +5650,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_potentiometerMoved'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -5800,7 +5688,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlPotentiometer",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 3)
@@ -5840,7 +5727,6 @@ int lua_cocos2dx_extension_ControlPotentiometer_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlPotentiometer_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5930,7 +5816,6 @@ int lua_cocos2dx_extension_ControlSlider_getSelectedThumbSprite(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getSelectedThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -5978,7 +5863,6 @@ int lua_cocos2dx_extension_ControlSlider_locationFromTouch(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_locationFromTouch'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6029,7 +5913,6 @@ int lua_cocos2dx_extension_ControlSlider_setSelectedThumbSprite(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setSelectedThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6080,7 +5963,6 @@ int lua_cocos2dx_extension_ControlSlider_setProgressSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setProgressSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6131,7 +6013,6 @@ int lua_cocos2dx_extension_ControlSlider_getMaximumAllowedValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getMaximumAllowedValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6179,7 +6060,6 @@ int lua_cocos2dx_extension_ControlSlider_getMinimumAllowedValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getMinimumAllowedValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6227,7 +6107,6 @@ int lua_cocos2dx_extension_ControlSlider_getMinimumValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getMinimumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6275,7 +6154,6 @@ int lua_cocos2dx_extension_ControlSlider_setThumbSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6326,7 +6204,6 @@ int lua_cocos2dx_extension_ControlSlider_setMinimumValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setMinimumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6377,7 +6254,6 @@ int lua_cocos2dx_extension_ControlSlider_setMinimumAllowedValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setMinimumAllowedValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6428,7 +6304,6 @@ int lua_cocos2dx_extension_ControlSlider_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6479,7 +6354,6 @@ int lua_cocos2dx_extension_ControlSlider_setValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6530,7 +6404,6 @@ int lua_cocos2dx_extension_ControlSlider_setMaximumValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setMaximumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6581,7 +6454,6 @@ int lua_cocos2dx_extension_ControlSlider_needsLayout(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_needsLayout'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6629,7 +6501,6 @@ int lua_cocos2dx_extension_ControlSlider_getBackgroundSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getBackgroundSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6672,7 +6543,6 @@ int lua_cocos2dx_extension_ControlSlider_initWithSprites(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_initWithSprites'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 4) {
@@ -6753,7 +6623,6 @@ int lua_cocos2dx_extension_ControlSlider_getMaximumValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getMaximumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6801,7 +6670,6 @@ int lua_cocos2dx_extension_ControlSlider_isTouchInside(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_isTouchInside'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -6852,7 +6720,6 @@ int lua_cocos2dx_extension_ControlSlider_getValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6900,7 +6767,6 @@ int lua_cocos2dx_extension_ControlSlider_getThumbSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getThumbSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6948,7 +6814,6 @@ int lua_cocos2dx_extension_ControlSlider_getProgressSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_getProgressSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -6996,7 +6861,6 @@ int lua_cocos2dx_extension_ControlSlider_setBackgroundSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setBackgroundSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7047,7 +6911,6 @@ int lua_cocos2dx_extension_ControlSlider_setMaximumAllowedValue(lua_State* tolua
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_setMaximumAllowedValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7085,7 +6948,6 @@ int lua_cocos2dx_extension_ControlSlider_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlSlider",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -7190,7 +7052,6 @@ int lua_cocos2dx_extension_ControlSlider_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSlider_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7285,7 +7146,6 @@ int lua_cocos2dx_extension_ControlStepper_setMinusSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setMinusSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7336,7 +7196,6 @@ int lua_cocos2dx_extension_ControlStepper_getMinusLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_getMinusLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7384,7 +7243,6 @@ int lua_cocos2dx_extension_ControlStepper_setWraps(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setWraps'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7435,7 +7293,6 @@ int lua_cocos2dx_extension_ControlStepper_isContinuous(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_isContinuous'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7483,7 +7340,6 @@ int lua_cocos2dx_extension_ControlStepper_getMinusSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_getMinusSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7531,7 +7387,6 @@ int lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation(lua_Sta
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_updateLayoutUsingTouchLocation'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7582,7 +7437,6 @@ int lua_cocos2dx_extension_ControlStepper_setValueWithSendingEvent(lua_State* to
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setValueWithSendingEvent'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -7636,7 +7490,6 @@ int lua_cocos2dx_extension_ControlStepper_getPlusLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_getPlusLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7684,7 +7537,6 @@ int lua_cocos2dx_extension_ControlStepper_stopAutorepeat(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_stopAutorepeat'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7732,7 +7584,6 @@ int lua_cocos2dx_extension_ControlStepper_setMinimumValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setMinimumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7783,7 +7634,6 @@ int lua_cocos2dx_extension_ControlStepper_getPlusSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_getPlusSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -7831,7 +7681,6 @@ int lua_cocos2dx_extension_ControlStepper_setPlusSprite(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setPlusSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7882,7 +7731,6 @@ int lua_cocos2dx_extension_ControlStepper_setMinusLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setMinusLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7933,7 +7781,6 @@ int lua_cocos2dx_extension_ControlStepper_setValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -7984,7 +7831,6 @@ int lua_cocos2dx_extension_ControlStepper_setStepValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setStepValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8035,7 +7881,6 @@ int lua_cocos2dx_extension_ControlStepper_setMaximumValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setMaximumValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8086,7 +7931,6 @@ int lua_cocos2dx_extension_ControlStepper_update(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_update'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8137,7 +7981,6 @@ int lua_cocos2dx_extension_ControlStepper_startAutorepeat(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_startAutorepeat'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8185,7 +8028,6 @@ int lua_cocos2dx_extension_ControlStepper_initWithMinusSpriteAndPlusSprite(lua_S
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_initWithMinusSpriteAndPlusSprite'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -8239,7 +8081,6 @@ int lua_cocos2dx_extension_ControlStepper_getValue(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_getValue'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8287,7 +8128,6 @@ int lua_cocos2dx_extension_ControlStepper_setPlusLabel(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_setPlusLabel'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8326,7 +8166,6 @@ int lua_cocos2dx_extension_ControlStepper_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlStepper",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 2)
@@ -8364,7 +8203,6 @@ int lua_cocos2dx_extension_ControlStepper_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlStepper_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8457,7 +8295,6 @@ int lua_cocos2dx_extension_ControlSwitch_setEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_setEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8503,7 +8340,6 @@ int lua_cocos2dx_extension_ControlSwitch_setOn(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_setOn'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
@@ -8568,7 +8404,6 @@ int lua_cocos2dx_extension_ControlSwitch_isOn(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_isOn'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8611,7 +8446,6 @@ int lua_cocos2dx_extension_ControlSwitch_initWithMaskSprite(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_initWithMaskSprite'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 6) {
@@ -8704,7 +8538,6 @@ int lua_cocos2dx_extension_ControlSwitch_hasMoved(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_hasMoved'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8752,7 +8585,6 @@ int lua_cocos2dx_extension_ControlSwitch_locationFromTouch(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_locationFromTouch'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -8790,7 +8622,6 @@ int lua_cocos2dx_extension_ControlSwitch_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ControlSwitch",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -8863,7 +8694,6 @@ int lua_cocos2dx_extension_ControlSwitch_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ControlSwitch_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8941,7 +8771,6 @@ int lua_cocos2dx_extension_ScrollView_isClippingToBounds(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_isClippingToBounds'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -8989,7 +8818,6 @@ int lua_cocos2dx_extension_ScrollView_setContainer(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setContainer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9040,7 +8868,6 @@ int lua_cocos2dx_extension_ScrollView_onTouchEnded(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_onTouchEnded'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -9094,7 +8921,6 @@ int lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration(lua_State* tolu
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setContentOffsetInDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -9148,7 +8974,6 @@ int lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setZoomScaleInDuration'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -9202,7 +9027,6 @@ int lua_cocos2dx_extension_ScrollView_updateTweenAction(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_updateTweenAction'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -9256,7 +9080,6 @@ int lua_cocos2dx_extension_ScrollView_setMaxScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setMaxScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9307,7 +9130,6 @@ int lua_cocos2dx_extension_ScrollView_hasVisibleParents(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_hasVisibleParents'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9355,7 +9177,6 @@ int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_getDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9403,7 +9224,6 @@ int lua_cocos2dx_extension_ScrollView_getContainer(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_getContainer'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9451,7 +9271,6 @@ int lua_cocos2dx_extension_ScrollView_setMinScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setMinScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9502,7 +9321,6 @@ int lua_cocos2dx_extension_ScrollView_getZoomScale(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_getZoomScale'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9550,7 +9368,6 @@ int lua_cocos2dx_extension_ScrollView_updateInset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_updateInset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9598,7 +9415,6 @@ int lua_cocos2dx_extension_ScrollView_initWithViewSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_initWithViewSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9666,7 +9482,6 @@ int lua_cocos2dx_extension_ScrollView_pause(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_pause'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9717,7 +9532,6 @@ int lua_cocos2dx_extension_ScrollView_setDirection(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setDirection'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9768,7 +9582,6 @@ int lua_cocos2dx_extension_ScrollView_init(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_init'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9816,7 +9629,6 @@ int lua_cocos2dx_extension_ScrollView_setContentOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setContentOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -9884,7 +9696,6 @@ int lua_cocos2dx_extension_ScrollView_isDragging(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_isDragging'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9932,7 +9743,6 @@ int lua_cocos2dx_extension_ScrollView_isTouchEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_isTouchEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -9980,7 +9790,6 @@ int lua_cocos2dx_extension_ScrollView_isBounceable(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_isBounceable'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10028,7 +9837,6 @@ int lua_cocos2dx_extension_ScrollView_setTouchEnabled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setTouchEnabled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10079,7 +9887,6 @@ int lua_cocos2dx_extension_ScrollView_onTouchMoved(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_onTouchMoved'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -10133,7 +9940,6 @@ int lua_cocos2dx_extension_ScrollView_getContentOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_getContentOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10181,7 +9987,6 @@ int lua_cocos2dx_extension_ScrollView_resume(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_resume'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10232,7 +10037,6 @@ int lua_cocos2dx_extension_ScrollView_setClippingToBounds(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setClippingToBounds'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10283,7 +10087,6 @@ int lua_cocos2dx_extension_ScrollView_setViewSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setViewSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10334,7 +10137,6 @@ int lua_cocos2dx_extension_ScrollView_onTouchCancelled(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_onTouchCancelled'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -10388,7 +10190,6 @@ int lua_cocos2dx_extension_ScrollView_getViewSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_getViewSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10436,7 +10237,6 @@ int lua_cocos2dx_extension_ScrollView_maxContainerOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_maxContainerOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10484,7 +10284,6 @@ int lua_cocos2dx_extension_ScrollView_setBounceable(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setBounceable'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10535,7 +10334,6 @@ int lua_cocos2dx_extension_ScrollView_onTouchBegan(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_onTouchBegan'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
@@ -10589,7 +10387,6 @@ int lua_cocos2dx_extension_ScrollView_isTouchMoved(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_isTouchMoved'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10637,7 +10434,6 @@ int lua_cocos2dx_extension_ScrollView_isNodeVisible(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_isNodeVisible'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -10688,7 +10484,6 @@ int lua_cocos2dx_extension_ScrollView_minContainerOffset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_minContainerOffset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10731,7 +10526,6 @@ int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
         return 0;
     }
 #endif
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_setZoomScale'");
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -10783,7 +10577,6 @@ int lua_cocos2dx_extension_ScrollView_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.ScrollView",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_create'");
     argc = lua_gettop(tolua_S)-1;
 
     do 
@@ -10845,7 +10638,6 @@ int lua_cocos2dx_extension_ScrollView_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_ScrollView_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -10953,7 +10745,6 @@ int lua_cocos2dx_extension_TableViewCell_reset(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableViewCell_reset'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11001,7 +10792,6 @@ int lua_cocos2dx_extension_TableViewCell_getIdx(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableViewCell_getIdx'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11049,7 +10839,6 @@ int lua_cocos2dx_extension_TableViewCell_setIdx(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableViewCell_setIdx'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11088,7 +10877,6 @@ int lua_cocos2dx_extension_TableViewCell_create(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.TableViewCell",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableViewCell_create'");
     argc = lua_gettop(tolua_S) - 1;
 
     if (argc == 0)
@@ -11122,7 +10910,6 @@ int lua_cocos2dx_extension_TableViewCell_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableViewCell_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11197,7 +10984,6 @@ int lua_cocos2dx_extension_TableView_updateCellAtIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_updateCellAtIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11248,7 +11034,6 @@ int lua_cocos2dx_extension_TableView_setVerticalFillOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_setVerticalFillOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11299,7 +11084,6 @@ int lua_cocos2dx_extension_TableView_scrollViewDidZoom(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_scrollViewDidZoom'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11350,7 +11134,6 @@ int lua_cocos2dx_extension_TableView__updateContentSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView__updateContentSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11398,7 +11181,6 @@ int lua_cocos2dx_extension_TableView_getVerticalFillOrder(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_getVerticalFillOrder'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11446,7 +11228,6 @@ int lua_cocos2dx_extension_TableView_removeCellAtIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_removeCellAtIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11497,7 +11278,6 @@ int lua_cocos2dx_extension_TableView_initWithViewSize(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_initWithViewSize'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11565,7 +11345,6 @@ int lua_cocos2dx_extension_TableView_scrollViewDidScroll(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_scrollViewDidScroll'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11616,7 +11395,6 @@ int lua_cocos2dx_extension_TableView_reloadData(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_reloadData'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11664,7 +11442,6 @@ int lua_cocos2dx_extension_TableView_insertCellAtIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_insertCellAtIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11715,7 +11492,6 @@ int lua_cocos2dx_extension_TableView_cellAtIndex(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_cellAtIndex'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
@@ -11766,7 +11542,6 @@ int lua_cocos2dx_extension_TableView_dequeueCell(lua_State* tolua_S)
     }
 #endif
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_dequeueCell'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
@@ -11801,7 +11576,6 @@ int lua_cocos2dx_extension_TableView_constructor(lua_State* tolua_S)
 
 
 
-    toluafix_set_call_msg("Call from function 'lua_cocos2dx_extension_TableView_constructor'");
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
     {
