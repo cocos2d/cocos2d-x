@@ -85,7 +85,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelMultilineWithOutline),
     CL(LabelIssue9255Test),
     CL(LabelSmallDimensionsTest),
-    CL(LabelIssue10089Test)
+    CL(LabelIssue10089Test),
+    CL(LabelSystemFontColor)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1922,4 +1923,39 @@ std::string LabelIssue10089Test::title() const
 std::string LabelIssue10089Test::subtitle() const
 {
     return "Should be able to see two single-line text";
+}
+
+LabelSystemFontColor::LabelSystemFontColor()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::createWithSystemFont("Color4B::Red", "fonts/arial.ttf", 20);
+    label1->setPosition(Vec2(size.width / 2, size.height * 0.3f));
+    label1->setTextColor(Color4B::RED);
+    addChild(label1);
+
+    auto label2 = Label::createWithSystemFont("Color4B::Green", "fonts/arial.ttf", 20);
+    label2->setPosition(Vec2(size.width / 2, size.height * 0.4f));
+    label2->setTextColor(Color4B::GREEN);
+    addChild(label2);
+
+    auto label3 = Label::createWithSystemFont("Color4B::Blue", "fonts/arial.ttf", 20);
+    label3->setPosition(Vec2(size.width / 2, size.height * 0.5f));
+    label3->setTextColor(Color4B::BLUE);
+    addChild(label3);
+
+    auto label4 = Label::createWithSystemFont("Color4B(0, 0, 255, 100)", "fonts/arial.ttf", 20);
+    label4->setPosition(Vec2(size.width / 2, size.height * 0.6f));
+    label4->setTextColor(Color4B(0, 0, 255, 100));
+    addChild(label4);
+}
+
+std::string LabelSystemFontColor::title() const
+{
+    return "New Label + system font";
+}
+
+std::string LabelSystemFontColor::subtitle() const
+{
+    return "Testing text color of system font";
 }
