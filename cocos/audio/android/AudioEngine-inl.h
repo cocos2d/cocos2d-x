@@ -59,6 +59,7 @@ private:
 
     float _duration;
     int _audioID;
+    int _assetFd;
 
     std::function<void (int, const std::string &)> _finishCallback;
 
