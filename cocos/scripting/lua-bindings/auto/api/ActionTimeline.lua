@@ -5,12 +5,6 @@
 -- @parent_module ccs
 
 --------------------------------
---  Set ActionTimeline's frame event callback function 
--- @function [parent=#ActionTimeline] setFrameEventCallFunc 
--- @param self
--- @param #function listener
-        
---------------------------------
 --  add Timeline to ActionTimeline 
 -- @function [parent=#ActionTimeline] addTimeline 
 -- @param self
