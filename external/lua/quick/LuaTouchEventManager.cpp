@@ -38,6 +38,8 @@ NS_CC_BEGIN
 
 static LuaTouchEventManager* s_sharedLuaTouchEventManager = nullptr;
 
+#define SAFE_CLEAR(obj) if(s_sharedLuaTouchEventManager){(obj).clear();}
+
 LuaTouchEventManager* LuaTouchEventManager::getInstance()
 {
     if (s_sharedLuaTouchEventManager == nullptr)
@@ -292,7 +294,7 @@ void LuaTouchEventManager::onTouchesEnded(const std::vector<Touch*>& touches, Ev
         dispatchingTouchEvent(touches, event, CCTOUCHENDED);
         // remove all touching nodes
         //CCLOG("TOUCH ENDED, REMOVE ALL TOUCH TARGETS");
-        _touchingTargets.clear();
+        SAFE_CLEAR(_touchingTargets);
     }
 }
 
@@ -319,9 +321,9 @@ void LuaTouchEventManager::onTouchesCancelled(const std::vector<Touch*>& touches
     dispatchingTouchEvent(touches, event, CCTOUCHCANCELLED);
     // remove all touching nodes
     //CCLOG("TOUCH CANCELLED, REMOVE ALL TOUCH TARGETS");
-    _touchingTargets.clear();
+	SAFE_CLEAR(_touchingTargets);
     // clear all touching points
-	m_touchingIds.clear();
+	SAFE_CLEAR(m_touchingIds);
 }
 
 void LuaTouchEventManager::cleanup(void)
