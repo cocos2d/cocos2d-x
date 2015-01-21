@@ -347,6 +347,7 @@ public:
     static RotateTo* create(float duration, float dstAngle);
 
     /** creates the action with 3D rotation angles */
+    static RotateTo* create(float duration, float dstAngle3D_X, float dstAngle3D_Y, float dstAngle3D_Z);
     static RotateTo* create(float duration, const Vec3& dstAngle3D);
 
     //
@@ -363,6 +364,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** initializes the action */
     bool initWithDuration(float duration, float dstAngleX, float dstAngleY);
+    bool initWithDuration(float duration, float dstAngle3D_X, float dstAngle3D_Y, float dstAngle3D_Z);
     bool initWithDuration(float duration, const Vec3& dstAngle3D);
 
     /** calculates the start and diff angles */
@@ -387,6 +389,7 @@ public:
     static RotateBy* create(float duration, float deltaAngle);
     /** @warning The physics body contained in Node doesn't support rotate with different x and y angle. */
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    static RotateBy* create(float duration, float deltaAngle3D_X, float deltaAngle3D_Y, float deltaAngle3D_Z);
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
     //
@@ -405,6 +408,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, float deltaAngle);
     /** @warning The physics body contained in Node doesn't support rotate with different x and y angle. */
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    bool initWithDuration(float duration, float deltaAngle3D_X, float deltaAngle3D_Y, float deltaAngle3D_Z);
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
 protected:
