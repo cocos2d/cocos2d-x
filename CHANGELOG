@@ -1,5 +1,8 @@
 cocos2d-x-3.4 Jan.23 2015
+    [FIX]           GLProgram: will cause crash on some devices that don't support more than 8 atrributes
     [FIX]           ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
+    [FIX]           Label: alpha channel of text color of system font has not effect
+    [FIX]           Lua-binding:studio-support: AnimationInfo is not binded 
     [FIX]           Node: anchor point has not effect to rotation, it always rotate along (0, 0)
 
 cocos2d-x-3.4rc1 Jan.15 2015
