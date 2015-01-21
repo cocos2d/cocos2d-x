@@ -23,6 +23,7 @@
 -- @function [parent=#EaseIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseIn#EaseIn self (return value: cc.EaseIn)
         
 --------------------------------
 -- 

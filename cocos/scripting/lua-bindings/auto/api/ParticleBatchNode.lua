@@ -9,12 +9,14 @@
 -- @function [parent=#ParticleBatchNode] setTexture 
 -- @param self
 -- @param #cc.Texture2D texture
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 --  disables a particle by inserting a 0'd quad into the texture atlas 
 -- @function [parent=#ParticleBatchNode] disableParticle 
 -- @param self
 -- @param #int particleIndex
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- 
@@ -27,6 +29,7 @@
 -- @function [parent=#ParticleBatchNode] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas atlas
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- code<br>
@@ -37,12 +40,14 @@
 -- @function [parent=#ParticleBatchNode] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendFunc
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ParticleBatchNode] removeAllChildrenWithCleanup 
 -- @param self
 -- @param #bool doCleanup
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 --  Gets the texture atlas used for drawing the quads 
@@ -63,6 +68,7 @@
 -- @param self
 -- @param #cc.ParticleSystem system
 -- @param #int index
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- 
@@ -70,6 +76,7 @@
 -- @param self
 -- @param #int index
 -- @param #bool doCleanup
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 --  initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles 
@@ -95,6 +102,7 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #int tag
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
 
 --------------------------------
 -- 
@@ -103,6 +111,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- 
@@ -111,6 +120,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- 
@@ -118,6 +128,7 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
 -- 
@@ -125,5 +136,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 return nil

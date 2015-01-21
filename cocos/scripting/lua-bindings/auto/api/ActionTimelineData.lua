@@ -9,6 +9,7 @@
 -- @function [parent=#ActionTimelineData] setActionTag 
 -- @param self
 -- @param #int actionTag
+-- @return ActionTimelineData#ActionTimelineData self (return value: ccs.ActionTimelineData)
         
 --------------------------------
 -- 

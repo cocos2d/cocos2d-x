@@ -10,35 +10,41 @@
 -- @param self
 -- @param #ccui.RichElement element
 -- @param #int index
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- 
 -- @function [parent=#RichText] setAnchorPoint 
 -- @param self
 -- @param #vec2_table pt
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- 
 -- @function [parent=#RichText] pushBackElement 
 -- @param self
 -- @param #ccui.RichElement element
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- 
 -- @function [parent=#RichText] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool ignore
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- 
 -- @function [parent=#RichText] setVerticalSpace 
 -- @param self
 -- @param #float space
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- 
 -- @function [parent=#RichText] formatText 
 -- @param self
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- @overload self, ccui.RichElement         
@@ -46,6 +52,7 @@
 -- @function [parent=#RichText] removeElement
 -- @param self
 -- @param #int index
+-- @return RichText#RichText self (return value: ccui.RichText)
 
 --------------------------------
 -- 
@@ -69,5 +76,6 @@
 -- 
 -- @function [parent=#RichText] RichText 
 -- @param self
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 return nil
