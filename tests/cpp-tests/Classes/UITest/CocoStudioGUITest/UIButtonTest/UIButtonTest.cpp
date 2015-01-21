@@ -216,17 +216,27 @@ bool UIButtonTest_Scale9_State_Change::init()
         _uiLayer->addChild(alert);
 
         // Create the button
-        Button* button = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+        Button* button = Button::create("cocosui/button.png");
         // open scale9 render
         button->ignoreContentAdaptWithSize(false);
         button->setScale9Enabled(true);
-        button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        button->setContentSize(Size(200, 60));
-        button->setCapInsets(Rect(30,10,40,20));
+        button->setPosition(Vec2(widgetSize.width / 2.0f - 100, widgetSize.height / 2.0f));
+        button->setContentSize(Size(180, 60));
+        button->setTitleText("Hello Scale9");
         button->setPressedActionEnabled(false);
         button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
         _uiLayer->addChild(button);
 
+        Button* button2 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        // open scale9 render
+        button2->ignoreContentAdaptWithSize(false);
+        button2->setScale9Enabled(true);
+        button2->setTitleText("Hello scale9");
+        button2->setPosition(Vec2(widgetSize.width / 2.0f + 100, widgetSize.height / 2.0f));
+        button2->setContentSize(Size(180, 60));
+        button2->setPressedActionEnabled(true);
+        button2->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
+        _uiLayer->addChild(button2);
         return true;
     }
     return false;
