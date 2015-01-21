@@ -90,8 +90,8 @@ public class AppActivity extends Cocos2dxActivity{
                 builder.setCancelable(true);
                 builder.show();
             }
+            hostIPAdress = getHostIpAddress();
         }
-        hostIPAdress = getHostIpAddress();
     }
     private boolean isNetworkConnected() {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
