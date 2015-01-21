@@ -1112,7 +1112,7 @@
         "cocos/renderer/ccShader_PositionColorLengthTexture.frag", 
         "cocos/renderer/ccShader_PositionColorLengthTexture.vert", 
         "cocos/renderer/ccShader_PositionColorPointsize-no-gl_PointSize.vert", 
-        "cocos/renderer/ccShader_PositionColorPointsize.vert", 
+        "cocos/renderer/ccShader_PositionColorTextureAsPointsize.vert", 
         "cocos/renderer/ccShader_PositionTexture.frag", 
         "cocos/renderer/ccShader_PositionTexture.vert", 
         "cocos/renderer/ccShader_PositionTextureA8Color.frag", 
