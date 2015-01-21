@@ -5,10 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
--- 
--- @function [parent=#Animate3D] setSpeed 
+-- get & set speed, negative speed means playing reverse 
+-- @function [parent=#Animate3D] getSpeed 
 -- @param self
--- @param #float speed
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
@@ -17,10 +17,22 @@
 -- @param #float weight
         
 --------------------------------
--- get & set speed, negative speed means playing reverse 
--- @function [parent=#Animate3D] getSpeed 
+-- 
+-- @function [parent=#Animate3D] getOriginInterval 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] setSpeed 
+-- @param self
+-- @param #float speed
+        
+--------------------------------
+-- get & set origin interval
+-- @function [parent=#Animate3D] setOriginInterval 
+-- @param self
+-- @param #float interval
         
 --------------------------------
 -- get & set blend weight, weight must positive
