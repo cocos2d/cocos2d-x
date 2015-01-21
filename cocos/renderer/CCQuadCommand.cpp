@@ -24,11 +24,12 @@
 
 
 #include "renderer/CCQuadCommand.h"
-
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "xxhash.h"
 #include "CCRenderer.h"
+#include "CCNode.h"
+#include "CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +51,35 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     CCASSERT(shader, "Invalid GLProgramState");
     CCASSERT(shader->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
     
-    RenderCommand::init(globalOrder, mv, flags);
+    if (flags & Node::FLAGS_RENDER_AS_3D)
+    {
+        float depth;
+        Vec3 vertPos;
+        Vec3 cameraPos = Camera::getVisitingCamera()->getPosition3D();
+        
+        for (int i = 0; i < quadCount; i++)
+        {
+            mv.transformPoint(quads[i].tl.vertices, &vertPos);
+            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            
+            mv.transformPoint(quads[i].tr.vertices, &vertPos);
+            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            
+            mv.transformPoint(quads[i].bl.vertices, &vertPos);
+            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            
+            mv.transformPoint(quads[i].br.vertices, &vertPos);
+            depth = fmaxf(depth, cameraPos.distance(vertPos));
+        }
+        
+        
+        _globalOrder = depth;
+        set3D(true);
+    }
+    else
+    {
+        _globalOrder = globalOrder;
+    }
     
     _quadsCount = quadCount;
     _quads = quads;
