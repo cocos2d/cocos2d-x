@@ -41,7 +41,7 @@ public:
     /**
      * Constructor & Destructor.
      */
-    Frustum(): _initialized(false), _clipZ(true){}
+    Frustum(): _clipZ(true), _initialized(false) {}
     ~Frustum(){}
 
     /**

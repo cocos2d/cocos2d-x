@@ -68,11 +68,11 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
-, _rotationOffset(0)
+, _positionInitDirty(true)
 , _recordedPosition(Vec2::ZERO)
+, _rotationOffset(0)
 , _recordedRotation(0.0f)
 , _recordedAngle(0.0)
-, _positionInitDirty(true)
 {
 }
 
