@@ -122,11 +122,9 @@ void FontAtlas::purgeTexturesAtlas()
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf && _atlasTextures.size() > 1)
     {
-        _font->retain();
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
         eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
         eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
-        _font->release();
     }
 }
 
@@ -135,11 +133,9 @@ void FontAtlas::listenRendererRecreated(EventCustom *event)
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf)
     {
-        _font->retain();
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
         eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
         eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
-        _font->release();
     }
 }
 
