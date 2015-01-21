@@ -1323,8 +1323,7 @@ int lua_cocos2dx_3d_Mesh_setBlendFunc(lua_State* tolua_S)
     {
         cocos2d::BlendFunc arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc
-		ok = false;
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "cc.Mesh:setBlendFunc");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setBlendFunc'", nullptr);

@@ -36,7 +36,7 @@
 -- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -44,7 +44,7 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #int z
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  sets the TextureAtlas object 
@@ -76,7 +76,7 @@
 -- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
 -- @param self
 -- @param #cc.Sprite sprite
--- @param #long index
+-- @param #int index
         
 --------------------------------
 -- 
@@ -89,22 +89,22 @@
 -- @function [parent=#SpriteBatchNode] rebuildIndexInOrder 
 -- @param self
 -- @param #cc.Sprite parent
--- @param #long index
--- @return long#long ret (return value: long)
+-- @param #int index
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
 -- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.<br>
 -- warning Removing a child from a SpriteBatchNode is very slow
 -- @function [parent=#SpriteBatchNode] removeChildAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @param #bool doCleanup
         
 --------------------------------
@@ -120,7 +120,7 @@
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
 -- @param #string fileImage
--- @param #long capacity
+-- @param #int capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -129,7 +129,7 @@
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
--- @param #long capacity
+-- @param #int capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------

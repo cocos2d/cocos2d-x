@@ -32,7 +32,7 @@
 -- 
 -- @function [parent=#AtlasNode] getQuadsToDraw 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -44,7 +44,7 @@
 -- 
 -- @function [parent=#AtlasNode] setQuadsToDraw 
 -- @param self
--- @param #long quadsToDraw
+-- @param #int quadsToDraw
         
 --------------------------------
 --  creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render

@@ -83,7 +83,7 @@
 -- Returns the index used on the TextureAtlas.
 -- @function [parent=#Sprite] getAtlasIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Sets the batch node to sprite<br>
@@ -105,7 +105,7 @@
 -- @function [parent=#Sprite] setDisplayFrameWithAnimationName 
 -- @param self
 -- @param #string animationName
--- @param #long frameIndex
+-- @param #int frameIndex
         
 --------------------------------
 -- Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
@@ -131,7 +131,7 @@
 -- warning Don't modify this value unless you know what you are doing
 -- @function [parent=#Sprite] setAtlasIndex 
 -- @param self
--- @param #long atlasIndex
+-- @param #int atlasIndex
         
 --------------------------------
 -- Makes the Sprite to be updated in the Atlas.
