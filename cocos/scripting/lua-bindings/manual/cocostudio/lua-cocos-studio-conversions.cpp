@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "lua-coco-studio-conversions.h"
+#include "lua-cocos-studio-conversions.h"
 #include "ActionTimeline/CCActionTimeline.h"
 
 #if COCOS2D_DEBUG >=1

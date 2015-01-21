@@ -282,7 +282,7 @@
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\lua-coco-studio-conversions.cpp">
+    <ClCompile Include="..\manual\cocostudio\lua-cocos-studio-conversions.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
   </ItemGroup>
@@ -497,7 +497,7 @@
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
       <Filter>manual\cocostudio</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\lua-coco-studio-conversions.h">
+    <ClInclude Include="..\manual\cocostudio\lua-cocos-studio-conversions.h">
       <Filter>manual\cocostudio</Filter>
     </ClInclude>
   </ItemGroup>
