@@ -73,6 +73,25 @@
                "proj.ios_mac/ios/Info.plist"
             ]
          }
+      },
+      "change_orientation":{
+          "modify_files": [
+              { "file_path": "proj.android/AndroidManifest.xml",
+                "pattern": "landscape",
+                "replace_string": "portrait" },
+              { "file_path": "proj.ios_mac/ios/RootViewController.mm",
+                "pattern": "UIInterfaceOrientationIsLandscape",
+                "replace_string": "UIInterfaceOrientationIsPortrait" },
+              { "file_path": "proj.ios_mac/ios/RootViewController.mm",
+                "pattern": "UIInterfaceOrientationMaskAllButUpsideDown",
+                "replace_string": "UIInterfaceOrientationMaskPortrait" },
+              { "file_path": "proj.ios_mac/ios/Info.plist",
+                "pattern": "UIInterfaceOrientationLandscapeRight",
+                "replace_string": "UIInterfaceOrientationPortrait" },
+              { "file_path": "proj.ios_mac/ios/Info.plist",
+                "pattern": "<string>UIInterfaceOrientationLandscapeLeft</string>",
+                "replace_string": "" }
+          ]
       }
 }
 
