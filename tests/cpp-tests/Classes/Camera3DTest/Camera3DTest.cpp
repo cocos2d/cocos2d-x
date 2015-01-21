@@ -1128,7 +1128,7 @@ void CameraArcBallDemo::onEnter()
     {
         _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 100, 50));
+        _camera->setPosition3D(Vec3(0, 10, 50));
         _camera->lookAt(Vec3(0, 0, 0), Vec3(0, 1, 0));
         _camera->retain();
         _layer3D->addChild(_camera);
@@ -1252,7 +1252,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 void CameraArcBallDemo::updateCameraTransform()
 {
     Mat4 trans, rot, center;
-    Mat4::createTranslation(Vec3(0.0f, 0.0f, _distanceZ), &trans);
+    Mat4::createTranslation(Vec3(0.0f, 10.0f, _distanceZ), &trans);
     Mat4::createRotation(_rotationQuat, &rot);
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
