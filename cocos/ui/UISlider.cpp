@@ -554,7 +554,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             _progressBarRenderer->setPreferredSize(_contentSize);
-            _progressBarTextureSize = _progressBarRenderer->getContentSize();
+            _progressBarRenderer->setScale(1.0);
         }
         else
         {
