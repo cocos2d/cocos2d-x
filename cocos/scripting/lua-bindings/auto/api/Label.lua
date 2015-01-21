@@ -20,8 +20,8 @@
 --  Sets the untransformed size of the label in a more efficient way. 
 -- @function [parent=#Label] setDimensions 
 -- @param self
--- @param #unsigned int width
--- @param #unsigned int height
+-- @param #float width
+-- @param #float height
         
 --------------------------------
 -- 
@@ -33,7 +33,7 @@
 -- 
 -- @function [parent=#Label] getHeight 
 -- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  disable shadow/outline/glow rendering 
@@ -61,13 +61,13 @@
 -- The label's max line width will be equal to the same value.
 -- @function [parent=#Label] setWidth 
 -- @param self
--- @param #unsigned int width
+-- @param #float width
         
 --------------------------------
 -- 
 -- @function [parent=#Label] getMaxLineWidth 
 -- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
@@ -184,7 +184,7 @@
 -- The label's width and max line width has not always to be equal.
 -- @function [parent=#Label] setMaxLineWidth 
 -- @param self
--- @param #unsigned int maxLineWidth
+-- @param #float maxLineWidth
         
 --------------------------------
 -- 
@@ -231,13 +231,13 @@
 -- The text will display of incomplete when the size of label not enough to support display all text.
 -- @function [parent=#Label] setHeight 
 -- @param self
--- @param #unsigned int height
+-- @param #float height
         
 --------------------------------
 -- 
 -- @function [parent=#Label] getWidth 
 -- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  only support for TTF 
