@@ -76,6 +76,7 @@ static const char* Property_CColor          = "CColor";
 static const char* Property_FileData        = "FileData";
 static const char* Property_FrameEvent      = "FrameEvent";
 static const char* Property_Alpha           = "Alpha";
+static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
 
@@ -702,6 +703,13 @@ Offset<TimeLine> FlatBuffersSerialize::createTimeLine(const tinyxml2::XMLElement
                                 0, // TextureFrame
                                 0, // EventFrame
                                 intFrame);
+        }
+        else if (property == Property_AnchorPoint)
+        {
+            auto scaleFrame = createScaleFrame(frameElement);
+            frame = CreateFrame(*_builder,
+                                0, // PointFrame
+                                scaleFrame);
         }
         else if (property == Property_ZOrder)
         {
