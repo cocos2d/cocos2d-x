@@ -53,7 +53,7 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     
     if (flags & Node::FLAGS_RENDER_AS_3D)
     {
-        float depth;
+        float depth = 0;
         Vec3 vertPos;
         Vec3 cameraPos = Camera::getVisitingCamera()->getPosition3D();
         
