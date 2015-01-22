@@ -28,8 +28,8 @@
 #include "renderer/CCGLProgram.h"
 #include "xxhash.h"
 #include "CCRenderer.h"
-#include "CCNode.h"
-#include "CCCamera.h"
+#include "2d/CCNode.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
