@@ -207,7 +207,6 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     materialdatas.resetData();
     nodedatas.resetData();
 
-    // fix bug: when mtl_basepath is nullptr.
     std::string mtlPath = "";
     if (mtl_basepath)
         mtlPath = mtl_basepath;
