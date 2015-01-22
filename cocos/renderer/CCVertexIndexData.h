@@ -27,6 +27,7 @@
 
 #include "base/CCRef.h"
 #include <map>
+#include <set>
 
 NS_CC_BEGIN
 
@@ -73,10 +74,10 @@ public:
     };
     
     template <typename T = VertexData>
-    static T* create(Primitive primitive)
+    static T* create(Primitive primitive = Triangles)
     {
-        auto result = new (std::nothrow) T;
-        if (result && result->init(primitive))
+        auto result = new (std::nothrow) T(primitive);
+        if (result)
         {
             result->autorelease();
             return result;
@@ -86,8 +87,6 @@ public:
 
     virtual ~VertexData();
     
-    bool init(Primitive primitive);
-
     // @brief Return the number of vertex streams
     size_t getVertexStreamCount() const;
     
@@ -100,7 +99,7 @@ public:
     VertexStreamAttribute* getStreamAttribute(int semantic);
         
     // @brief update and draw the buffer.
-    void draw();
+    void draw(unsigned start = 0, unsigned count = 0);
     
     // @brief true/false if all vertex buffers are empty
     bool empty() const;
@@ -108,18 +107,13 @@ public:
     // @brief clears the vertex buffers associated with this vertex data
     void clear();
     
-    // @brief returns the dirty status of the data or vertex streams
-    bool isDirty() const;
-    
-    // @brief sets the dirty state of all vertex data
-    void setDirty(bool dirty);
-    
     // @brief returns the count of vertices added
     size_t count() const;
     
     template <typename T>
     void append(const T& vertex)
     {
+        ++_count;
         if (_interleaved)
         {
             for (auto& e : _vertexStreams)
@@ -148,6 +142,13 @@ protected:
     bool determineInterleave() const;
     void append(GLArrayBuffer* buffer, void* source, size_t size, size_t count = 1);
 
+    
+    // @brief returns the dirty status of the data or vertex streams
+    bool isDirty() const;
+    
+    // @brief sets the dirty state of all vertex data
+    void setDirty(bool dirty);
+    
 protected:
     
     struct BufferAttribute
@@ -157,9 +158,15 @@ protected:
     };
     std::map<int, BufferAttribute> _vertexStreams;
 
+    // unique set of buffers. For interleaved data there should be only one
+    // in theory you may be able to have two sets of interleaved data but I
+    // think in that case, using two separate VertexData instances is best.
+    typedef std::set<GLArrayBuffer*> tBuffers;
+    tBuffers _buffers;
+    
     IndexBuffer* _indices;
 
-    size_t _count;
+    unsigned _count;
     bool _interleaved;
     bool _dirty;
     int _vao;

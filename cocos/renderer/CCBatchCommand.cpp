@@ -101,10 +101,8 @@ void BatchCommand::execute()
     else if (_batch)
     {
         if (_textureID)
-        {
             GL::bindTexture2D(_textureID);
-            GL::blendFunc(_blendType.src, _blendType.dst);
-        }
+        GL::blendFunc(_blendType.src, _blendType.dst);
         _batch->draw();
     }
     else

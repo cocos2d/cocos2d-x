@@ -89,6 +89,7 @@ public:
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
+        VERTEX_ATTRIB_POINTSIZE,
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility

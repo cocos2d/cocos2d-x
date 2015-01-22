@@ -23,11 +23,13 @@
  ****************************************************************************/
 
 #include "renderer/CCVertexIndexData.h"
+#include "platform/CCGL.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
-#include "renderer/CCGLProgram.h"
 #include "base/CCConfiguration.h"
-#include "platform/CCGL.h"
+
+// TODO
+// - use buffers instead of streams for clearing to avoid duplication
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "base/CCEventType.h"
@@ -48,7 +50,7 @@ VertexData::VertexData(Primitive primitive)
 {
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glGenVertexArrays(1, &_vao);
+        glGenVertexArrays(1, (GLuint*)&_vao);
     }
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
     _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
@@ -63,7 +65,7 @@ VertexData::~VertexData()
     
     if (glIsBuffer(_vao))
     {
-        glDeleteVertexArrays(1, &_vao);
+        glDeleteVertexArrays(1, (GLuint*)&_vao);
         _vao = 0;
     }
     
@@ -76,11 +78,6 @@ bool VertexData::addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& s
 {
     if (nullptr == buffer)
         return false;
-    
-    if (_vao)
-    {
-        GL::bindVAO(_vao);
-    }
     
     auto iter = _vertexStreams.find(stream._semantic);
     if (iter == _vertexStreams.end())
@@ -98,6 +95,8 @@ bool VertexData::addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& s
         iter->second._buffer = buffer;
     }
     
+    _buffers.insert(tBuffers::value_type(buffer));
+    
     // flag whether or not this vertex data is interleaved or not.
     _interleaved = determineInterleave();
     
@@ -107,8 +106,13 @@ bool VertexData::addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& s
 void VertexData::removeStream(int semantic)
 {
     auto iter = _vertexStreams.find(semantic);
-    if(iter != _vertexStreams.end())
+    if (iter != _vertexStreams.end())
     {
+        auto buffer = iter->second._buffer;
+        auto bi = _buffers.find(buffer);
+        if (bi != _buffers.end())
+            _buffers.erase(bi);
+        
         iter->second._buffer->release();
         _vertexStreams.erase(iter);
     }
@@ -130,21 +134,17 @@ VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
     else return &iter->second._stream;
 }
 
-void VertexData::draw()
+void VertexData::draw(unsigned start, unsigned count)
 {
-    if (isDirty())
-    {
-        for (auto& e : _vertexStreams)
-        {
-            auto& ba = e.second;
-            ba._buffer->update();
-        }
-        setDirty(false);
-    }
+    if (0 == count)
+        count = _count;
     
+    CHECK_GL_ERROR_DEBUG();
+
     if (_vao)
     {
         GL::bindVAO(_vao);
+        CHECK_GL_ERROR_DEBUG();
     }
     else
     {
@@ -168,25 +168,33 @@ void VertexData::draw()
         
         CHECK_GL_ERROR_DEBUG();
     }
-
-auto _start = 0;
     
+    // if any of our buffers are dirty, then commit them at the very last possible
+    // moment, so that we could optionally transform them into a parent VBO for batching.
+    if (isDirty())
+    {
+        for (auto b : _buffers)
+            b->commit();
+        
+        setDirty(false);
+    }
+
     if (_indices!= nullptr)
     {
-        GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
-        size_t offet = _start * _indices->getSizePerIndex();
-        glDrawElements((GLenum)_drawingPrimitive, _count, type, (GLvoid*)offet);
+        intptr_t offset = start * _indices->getElementSize();
+        GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
+        glDrawElements((GLenum)_drawingPrimitive, count, type, (GLvoid*)offset);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     else
     {
-        glDrawArrays((GLenum)_drawingPrimitive, _start, _count);
+        glDrawArrays((GLenum)_drawingPrimitive, start, count);
     }
     
     CHECK_GL_ERROR_DEBUG();
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 bool VertexData::empty() const
@@ -242,24 +250,7 @@ size_t VertexData::count() const
 // @brief If all streams use the same buffer, then the data is interleaved.
 bool VertexData::determineInterleave() const
 {
-    size_t count = _vertexStreams.size();
-    if (0 == count)
-        return false;
-    void* p = nullptr;
-    for (auto& e : _vertexStreams)
-    {
-        if (nullptr == p)
-        {
-            p = e.second._buffer;
-            continue;
-        }
-        else
-        {
-            if (p != e.second._buffer)
-                return false;
-        }
-    }
-    return true;
+    return _buffers.size() == 1;
 }
 
 void VertexData::append(GLArrayBuffer* buffer, void* source, size_t size, size_t count)

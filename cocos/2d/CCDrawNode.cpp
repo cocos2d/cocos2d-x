@@ -215,27 +215,27 @@ bool DrawNode::init()
 {
     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
 
-    _vbTriangles = VertexBuffer::create(sizeof(V2F_C4B_T2F), 512, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
-    _vdTriangles = VertexData::create();
-    _vdTriangles->setStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-    _vdTriangles->setStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    _vdTriangles->setStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    _vbTriangles = VertexBuffer::create(sizeof(V2F_C4B_T2F), 2048, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _vdTriangles = VertexData::create(VertexData::Primitive::Triangles);
+    _vdTriangles->addStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    _vdTriangles->addStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    _vdTriangles->addStream(_vbTriangles, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
     CC_SAFE_RETAIN(_vdTriangles);
     CC_SAFE_RETAIN(_vbTriangles);
     
-    _vbLines = VertexBuffer::create(sizeof(V2F_C4B_T2F), 512, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
-    _vdLines = VertexData::create();
-    _vdLines->setStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-    _vdLines->setStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    _vdLines->setStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    _vbLines = VertexBuffer::create(sizeof(V2F_C4B_T2F), 2048, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _vdLines = VertexData::create(VertexData::Primitive::Lines);
+    _vdLines->addStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    _vdLines->addStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    _vdLines->addStream(_vbLines, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
     CC_SAFE_RETAIN(_vdLines);
     CC_SAFE_RETAIN(_vbLines);
 
-    _vbPoints = VertexBuffer::create(sizeof(V2F_C4B_PF), 512, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
-    _vdPoints = VertexData::create();
-    _vdPoints->setStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-    _vdPoints->setStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    _vdPoints->setStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, pointSize), GLProgram::VERTEX_ATTRIB_POINTSIZE, GL_FLOAT, 2));
+    _vbPoints = VertexBuffer::create(sizeof(V2F_C4B_PF), 2048, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _vdPoints = VertexData::create(VertexData::Primitive::Points);
+    _vdPoints->addStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    _vdPoints->addStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    _vdPoints->addStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, pointSize), GLProgram::VERTEX_ATTRIB_POINTSIZE, GL_FLOAT, 2));
     CC_SAFE_RETAIN(_vdPoints);
     CC_SAFE_RETAIN(_vbPoints);
     
@@ -322,26 +322,23 @@ bool DrawNode::init()
     return true;
 }
 
-void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void DrawNode::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     if (!_vdTriangles->empty())
     {
-        _batchTriangles.init(_vdTriangles, nullptr, GL_TRIANGLES);
-        _batchCommandTriangles.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, &_batchTriangles, _transform);
+        _batchCommandTriangles.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdTriangles, _transform);
         renderer->addCommand(&_batchCommandTriangles);
     }
     
     if (!_vdLines->empty())
     {
-        _batchLines.init(_vdLines, nullptr, GL_LINES);
-        _batchCommandLines.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, &_batchLines, _transform);
+        _batchCommandLines.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdLines, _transform);
         renderer->addCommand(&_batchCommandLines);
     }
     
     if (!_vdPoints->empty())
     {
-        _batchPoints.init(_vdPoints, nullptr, GL_POINTS);
-        _batchCommandPoints.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, &_batchPoints, _transform);
+        _batchCommandPoints.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdPoints, _transform);
         renderer->addCommand(&_batchCommandPoints);
     }
 }

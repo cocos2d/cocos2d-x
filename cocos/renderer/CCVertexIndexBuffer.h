@@ -72,9 +72,9 @@ public:
     bool updateElements(const void* elements, int count, int begin = 0, bool defer = true);
     
     // @brief if dirty, submits the client buffer to the native buffer
-    bool update(int count = 0, int begin = 0);
+    void commit(unsigned count = 0, unsigned begin = 0);
     
-    size_t getSize() const
+    unsigned getSize() const
     {
         return getElementCount() * getElementSize();
     }
@@ -84,12 +84,12 @@ public:
         return _vbo;
     }
 
-    int getElementCount() const
+    unsigned getElementCount() const
     {
         return _elementCount;
     }
     
-    int getElementSize() const
+    unsigned getElementSize() const
     {
         return _elementSize;
     }
@@ -117,25 +117,28 @@ public:
     void clear();
 
     // @brief append
-    size_t append(void* source, size_t size, size_t elements = 1);
+    unsigned append(void* source, unsigned size, unsigned elements = 1);
 
 protected:
 
     GLArrayBuffer();
 
     bool init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode);
-    void ensureCapacity(size_t capacity);
+    void ensureCapacity(unsigned capacity);
 
     void recreate() const;
     
 protected:
 
     uint32_t _vbo;
+    unsigned _vboSize;
     
     unsigned _elementSize;
     unsigned _elementCount;
     
     void* _elements;
+    unsigned _capacity;
+
     ArrayType _arrayType;
     ArrayMode _arrayMode;
     
