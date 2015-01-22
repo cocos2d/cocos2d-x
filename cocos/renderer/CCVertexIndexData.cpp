@@ -146,40 +146,53 @@ void VertexData::draw(unsigned start, unsigned count)
         GL::bindVAO(_vao);
         CHECK_GL_ERROR_DEBUG();
     }
-    else
-    {
-        uint32_t flags(0);
-        for (auto& element : _vertexStreams)
-        {
-            flags = flags | (1 << element.second._stream._semantic);
-        }
-            
-        GL::enableVertexAttribs(flags);
-        
-        for (auto& element : _vertexStreams)
-        {
-            auto vb = element.second._buffer;
-            glBindBuffer(GL_ARRAY_BUFFER, vb->getVBO());
-            auto& attrib = element.second;
-            auto& stream = attrib._stream;
-            size_t offet = attrib._stream._offset;
-            glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offet);
-        }
-        
-        CHECK_GL_ERROR_DEBUG();
-    }
     
-    // if any of our buffers are dirty, then commit them at the very last possible
-    // moment, so that we could optionally transform them into a parent VBO for batching.
-    if (isDirty())
+    if (0 == _vao || isDirty())
     {
-        for (auto b : _buffers)
-            b->commit();
+        if (_interleaved)
+        {
+            CHECK_GL_ERROR_DEBUG();
+            auto vb = _vertexStreams.begin()->second._buffer;
+            vb->commit();
+            
+            uint32_t flags(0);
+            for (auto& element : _vertexStreams)
+            {
+                flags = flags | (1 << element.second._stream._semantic);
+            }
+            GL::enableVertexAttribs(flags); // unbinds vao
+            CHECK_GL_ERROR_DEBUG();
+            
+            for (auto& element : _vertexStreams)
+            {
+                auto& attrib = element.second;
+                auto& stream = attrib._stream;
+                size_t offet = attrib._stream._offset;
+                glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offet);
+                CHECK_GL_ERROR_DEBUG();
+            }
+        }
+        else
+        {
+            CHECK_GL_ERROR_DEBUG();
+            for (auto& element : _vertexStreams)
+            {
+                auto vb = element.second._buffer;
+                vb->commit();
+                //glBindBuffer(GL_ARRAY_BUFFER, vb->getVBO());
+                auto& attrib = element.second;
+                auto& stream = attrib._stream;
+                size_t offet = attrib._stream._offset;
+                glEnableVertexAttribArray(GLint(stream._semantic));
+                glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offet);
+                CHECK_GL_ERROR_DEBUG();
+            }
+        }
         
         setDirty(false);
     }
-
-    if (_indices!= nullptr)
+    
+    if (_indices != nullptr)
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
         intptr_t offset = start * _indices->getElementSize();
@@ -194,7 +207,9 @@ void VertexData::draw(unsigned start, unsigned count)
     
     CHECK_GL_ERROR_DEBUG();
     
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
+    if (_vao)
+        GL::bindVAO(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 bool VertexData::empty() const
@@ -253,7 +268,7 @@ bool VertexData::determineInterleave() const
     return _buffers.size() == 1;
 }
 
-void VertexData::append(GLArrayBuffer* buffer, void* source, size_t size, size_t count)
+void VertexData::append(GLArrayBuffer* buffer, void* source, unsigned size, unsigned count)
 {
     _dirty = true;
     buffer->append(source, size, count);

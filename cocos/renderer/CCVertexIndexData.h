@@ -140,7 +140,7 @@ protected:
 
     void recreate() const;
     bool determineInterleave() const;
-    void append(GLArrayBuffer* buffer, void* source, size_t size, size_t count = 1);
+    void append(GLArrayBuffer* buffer, void* source, unsigned size, unsigned count = 1);
 
     
     // @brief returns the dirty status of the data or vertex streams

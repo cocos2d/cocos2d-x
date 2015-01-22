@@ -115,6 +115,8 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
         _dirty = true;
     }
     
+    CCLOG("GLArrayBuffer::insert : begin(%u) count(%u)\n", begin, count);
+
     if (false == defer)
         commit(count, begin);
         
@@ -144,8 +146,10 @@ void GLArrayBuffer::commit(unsigned count, unsigned begin)
         CHECK_GL_ERROR_DEBUG();
     }
     
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    setDirty(false);
     
+    CCLOG("GLArrayBuffer::commit : begin(%u) count(%u)\n", begin, count);
+        
     CHECK_GL_ERROR_DEBUG();
 }
 
