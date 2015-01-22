@@ -577,7 +577,7 @@ private:
         if(nullptr == instnace)
             return false;
 
-        setReadAndConnectTimeout(instnace->getTimeoutForRead(), instnace->getTimeoutForConnect());
+        setReadAndConnectTimeout(instnace->getTimeoutForRead() * 1000, instnace->getTimeoutForConnect() * 1000);
 
         setVerifySSL();
 
@@ -851,8 +851,8 @@ void HttpClient::setSSLVerification(const std::string& caFile)
 }
 
 HttpClient::HttpClient()
-: _timeoutForConnect(30*1000)
-, _timeoutForRead(60*1000)
+: _timeoutForConnect(30)
+, _timeoutForRead(60)
 {
 }
 
