@@ -223,8 +223,10 @@ void enableVertexAttribs(uint32_t flags)
     for(int i=0; i < MAX_ATTRIBUTES; i++) {
         unsigned int bit = 1 << i;
         bool enabled = flags & bit;
-        bool enabledBefore = s_attributeFlags & bit;
-        if(enabled != enabledBefore) {
+        //FIXME:
+//        bool enabledBefore = s_attributeFlags & bit;
+//        if(enabled != enabledBefore)
+        {
             if( enabled )
                 glEnableVertexAttribArray(i);
             else
