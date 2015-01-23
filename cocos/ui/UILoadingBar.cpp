@@ -194,7 +194,7 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
     _barRendererAdaptDirty = true;
-    _percent = 100;
+    setPercent(_percent);
 }
 
 void LoadingBar::setScale9Enabled(bool enabled)
@@ -251,7 +251,7 @@ void LoadingBar::setPercent(float percent)
     {
         percent = 0;
     }
-    if (_percent == percent)
+    if (_percent == percent && !_barRendererAdaptDirty)
     {
         return;
     }
