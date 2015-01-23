@@ -55,6 +55,7 @@ static const char* Property_CColor          = "CColor";
 static const char* Property_FileData        = "FileData";
 static const char* Property_FrameEvent      = "FrameEvent";
 static const char* Property_Alpha           = "Alpha";
+static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
 
@@ -533,6 +534,11 @@ Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::Ti
                 auto intFrame = frameFlatbuf->intFrame();
                 frame = loadAlphaFrameWithFlatBuffers(intFrame);
             }
+            else if (property == Property_AnchorPoint)
+            {
+                auto scaleFrame = frameFlatbuf->scaleFrame();
+                frame = loadAnchorPointFrameWithFlatBuffers(scaleFrame);
+            }
             else if (property == Property_ZOrder)
             {
                 auto intFrame = frameFlatbuf->intFrame();
@@ -736,6 +742,23 @@ Frame* ActionTimelineCache::loadAlphaFrameWithFlatBuffers(const flatbuffers::Int
     
     return frame;
 }
+    
+    Frame* ActionTimelineCache::loadAnchorPointFrameWithFlatBuffers(const flatbuffers::ScaleFrame *flatbuffers)
+    {
+        AnchorPointFrame* frame = AnchorPointFrame::create();
+        
+        auto f_scale = flatbuffers->scale();
+        Vec2 scale(f_scale->scaleX(), f_scale->scaleY());
+        frame->setAnchorPoint(scale);
+        
+        int frameIndex = flatbuffers->frameIndex();
+        frame->setFrameIndex(frameIndex);
+        
+        bool tween = flatbuffers->tween();
+        frame->setTween(tween);
+        
+        return frame;
+    }
     
 Frame* ActionTimelineCache::loadZOrderFrameWithFlatBuffers(const flatbuffers::IntFrame *flatbuffers)
 {
