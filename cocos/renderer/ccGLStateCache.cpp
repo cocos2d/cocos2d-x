@@ -224,8 +224,8 @@ void enableVertexAttribs(uint32_t flags)
         unsigned int bit = 1 << i;
         //FIXME:Cache is disabled, try to enable cache as before
         bool enabled = (flags & bit) != 0;
-        // bool enabledBefore = (s_attributeFlags & bit) != 0;
-        // if(enabled != enabledBefore) 
+        bool enabledBefore = (s_attributeFlags & bit) != 0;
+        if(enabled != enabledBefore) 
         {
             if( enabled )
                 glEnableVertexAttribArray(i);
