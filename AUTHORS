@@ -1074,6 +1074,9 @@ Developers:
         
     kompjoefriek
         Fix compiling warnings
+        
+    tmr111116
+        fix random int overflow
 
 Retired Core Developers:
     WenSheng Yang
