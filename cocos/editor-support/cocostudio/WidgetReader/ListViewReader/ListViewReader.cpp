@@ -398,10 +398,10 @@ namespace cocostudio
         ListView* listView = static_cast<ListView*>(node);
         auto options = (ListViewOptions*)listViewOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         listView->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         listView->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         
@@ -506,7 +506,7 @@ namespace cocostudio
         listView->setInnerContainerSize(innerSize);
         //         int direction = options->direction();
         //         listView->setDirection((ScrollView::Direction)direction);
-        bool bounceEnabled = options->bounceEnabled();
+        bool bounceEnabled = options->bounceEnabled() != 0;
         listView->setBounceEnabled(bounceEnabled);
         
         //         int gravityValue = options->gravity();

@@ -1103,7 +1103,7 @@ bool FileUtils::createDirectory(const std::string& path)
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
 		subpath = "";
-		for (int i = 0; i < dirs.size(); ++i)
+		for (unsigned int i = 0; i < dirs.size(); ++i)
 		{
 			subpath += dirs[i];
 			if (!isDirectoryExist(subpath))

@@ -181,11 +181,10 @@ namespace cocostudio
                 break;
         }
         
-        bool loop = options->loop();
+        bool loop = options->loop() != 0;
         audio->setLoop(loop);
         
         audio->setName(options->name()->c_str());
-        audio->setLoop(options->loop());
         
         return component;
     }

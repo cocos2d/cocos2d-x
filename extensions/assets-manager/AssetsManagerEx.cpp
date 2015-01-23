@@ -823,7 +823,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
 {
     if (customId == VERSION_ID || customId == MANIFEST_ID)
     {
-        _percent = 100 * (total - downloaded) / total;
+        _percent = 100 * downloaded / total;
         // Notify progression event
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, customId);
         return;
@@ -865,7 +865,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
             if ((int)currentPercent != (int)_percent) {
                 _percent = currentPercent;
                 // Notify progression event
-                dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
+                dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, customId);
             }
         }
     }
