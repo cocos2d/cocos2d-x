@@ -10,57 +10,57 @@ USING_NS_CC;
 #include "2d/CCCamera.h"
 #include <stdlib.h>
 static const char * vertex_shader = "\
-attribute vec4 a_position;\
-attribute vec2 a_texCoord;\
-attribute vec3 a_normal;\
-\n#ifdef GL_ES\n\
-varying mediump vec2 v_texCoord;\
-varying mediump vec3 v_normal;\
-\n#else\n\
-varying vec2 v_texCoord;\
-varying vec3 v_normal;\
-\n#endif\n\
-void main()\
-{\
-gl_Position = CC_MVPMatrix * a_position;\
-v_texCoord = a_texCoord;\
-v_normal = a_normal;\
-}\
-";
- 
-static const char * fragment_shader ="\n#ifdef GL_ES\n\
-precision lowp float;\
-\n#endif\n\
-uniform vec3 u_color;\
-varying vec2 v_texCoord;\
-varying vec3 v_normal;\
-uniform int u_has_alpha;\
-uniform sampler2D u_alphaMap;\
-uniform sampler2D u_texture0;\
-uniform sampler2D u_texture1;\
-uniform sampler2D u_texture2;\
-uniform sampler2D u_texture3;\
-uniform float u_detailSize[4];\
-void main()\
-    {\
-    vec3 light_direction = vec3(-1,-1,0);\
-    float lightFactor = dot(-light_direction,v_normal);\
-    if(u_has_alpha<=0)\
-    {\
-    gl_FragColor =  texture2D(u_texture0, v_texCoord)*lightFactor;\
-    }else\
-    {\
-    vec4 blendFactor =texture2D(u_alphaMap,v_texCoord);\
-    vec4 color = vec4(0,0,0,0);\
-    color = texture2D(u_texture0, v_texCoord*u_detailSize[0])*blendFactor.r +\
-    texture2D(u_texture1, v_texCoord*u_detailSize[1])*blendFactor.g + texture2D(u_texture2, v_texCoord*u_detailSize[2])*blendFactor.b;\n\
-    float grayFactor =dot(blendFactor.rgb, vec3(1, 1, 1));\
-    color +=texture2D(u_texture3, v_texCoord*u_detailSize[3])*(1.0-grayFactor);\
-    gl_FragColor = color*lightFactor;\
-    }\
-}";
+                                    attribute vec4 a_position;\
+                                    attribute vec2 a_texCoord;\
+                                    attribute vec3 a_normal;\
+                                    \n#ifdef GL_ES\n\
+                                    varying mediump vec2 v_texCoord;\
+                                    varying mediump vec3 v_normal;\
+                                    \n#else\n\
+                                    varying vec2 v_texCoord;\
+                                    varying vec3 v_normal;\
+                                    \n#endif\n\
+                                    void main()\
+                                    {\
+                                    gl_Position = CC_MVPMatrix * a_position;\
+                                    v_texCoord = a_texCoord;\
+                                    v_normal = a_normal;\
+                                    }\
+                                    ";
+
+static const char * fragment_shader_RGB_4_DETAIL ="\n#ifdef GL_ES\n\
+                                     precision lowp float;\
+                                     \n#endif\n\
+                                     uniform vec3 u_color;\
+                                     varying vec2 v_texCoord;\
+                                     varying vec3 v_normal;\
+                                     uniform int u_has_alpha;\
+                                     uniform sampler2D u_alphaMap;\
+                                     uniform sampler2D u_texture0;\
+                                     uniform sampler2D u_texture1;\
+                                     uniform sampler2D u_texture2;\
+                                     uniform sampler2D u_texture3;\
+                                     uniform float u_detailSize[4];\
+                                     void main()\
+                                     {\
+                                     vec3 light_direction = vec3(-1,-1,0);\
+                                     float lightFactor = dot(-light_direction,v_normal);\
+                                     if(u_has_alpha<=0)\
+                                     {\
+                                     gl_FragColor =  texture2D(u_texture0, v_texCoord)*lightFactor;\
+                                     }else\
+                                     {\
+                                     vec4 blendFactor =texture2D(u_alphaMap,v_texCoord);\
+                                     vec4 color = vec4(0,0,0,0);\
+                                     color = texture2D(u_texture0, v_texCoord*u_detailSize[0])*blendFactor.r +\
+                                     texture2D(u_texture1, v_texCoord*u_detailSize[1])*blendFactor.g + texture2D(u_texture2, v_texCoord*u_detailSize[2])*blendFactor.b;\n\
+                                     float grayFactor =dot(blendFactor.rgb, vec3(1, 1, 1));\
+                                     color +=texture2D(u_texture3, v_texCoord*u_detailSize[3])*(1.0-grayFactor);\
+                                     gl_FragColor = color*lightFactor;\
+                                     }\
+                                     }";
 NS_CC_BEGIN
-Terrain * Terrain::create(TerrainData &parameter)
+    Terrain * Terrain::create(TerrainData &parameter)
 {
     Terrain * obj = new (std::nothrow)Terrain();
     obj->_terrainData = parameter;
@@ -75,8 +75,6 @@ Terrain * Terrain::create(TerrainData &parameter)
         auto texture = new (std::nothrow)Texture2D();
         texture->initWithImage(textImage);
         obj->textures.push_back(texture);
-        obj->init();
-        obj->setAnchorPoint(Vec2(0,0));
     }else
     {
         //alpha map
@@ -93,9 +91,9 @@ Terrain * Terrain::create(TerrainData &parameter)
             obj->textures.push_back(texture);
             obj->detailSize[i] = parameter.detailMaps[i].detailMapSize;
         }
-        obj->init();
-        obj->setAnchorPoint(Vec2(0,0));
     }
+    obj->init();
+    obj->setAnchorPoint(Vec2(0,0));
     return obj;
 }
 
@@ -104,7 +102,7 @@ bool Terrain::init()
     _lodDistance[0]=96;
     _lodDistance[1]=288;
     _lodDistance[2]=480;
-    auto shader = GLProgram::createWithByteArrays(vertex_shader,fragment_shader);
+    auto shader = GLProgram::createWithByteArrays(vertex_shader,fragment_shader_RGB_4_DETAIL);
     auto state = GLProgramState::create(shader);
     setGLProgramState(state);
     setDrawWire(false);
@@ -125,6 +123,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     auto glProgram = getGLProgram();
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
+    glDepthMask(GL_TRUE);
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
     if(!_alphaMap)
@@ -172,17 +171,18 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     quad->draw();
     quad->resetNeedDraw(true);//reset it 
     glActiveTexture(GL_TEXTURE0);
+    glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
 }
 
 void Terrain::initHeightMap(const char * heightMap)
 {
-    auto image = new Image();
-    image->initWithImageFile(heightMap);
-    _data = image->getData();
-    imageWidth =image->getWidth();
-    imageHeight =image->getHeight();
-    auto format = image->getRenderFormat();
+    _heightMapImage = new Image();
+    _heightMapImage->initWithImageFile(heightMap);
+    _data = _heightMapImage->getData();
+    imageWidth =_heightMapImage->getWidth();
+    imageHeight =_heightMapImage->getHeight();
+    auto format = _heightMapImage->getRenderFormat();
     int chunk_amount_y = imageHeight/_chunkSize.height;
     int chunk_amount_x = imageWidth/_chunkSize.width;
     loadVertices();
@@ -200,7 +200,7 @@ void Terrain::initHeightMap(const char * heightMap)
     {
         for(int n =0; n<chunk_amount_x;n++)
         {
-            
+
             _chunkesArray[m][n]->_terrain = this;
             if(n-1>=0) _chunkesArray[m][n]->left = _chunkesArray[m][n-1];
             if(n+1<chunk_amount_x) _chunkesArray[m][n]->right = _chunkesArray[m][n+1];
@@ -233,10 +233,10 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
             for(int i =0;i<3;i++)
             {
                 if(dist<=_lodDistance[i])
-                  {
+                {
                     _chunkesArray[m][n]->_currentLod = i;
                     break;
-                  }
+                }
             }
         }
 }
@@ -268,7 +268,7 @@ float Terrain::getHeight(float x, float y ,float z)
     float j = (int)image_y;
     if(image_x>=imageWidth-1 || image_y >=imageHeight-1 || image_x<0 || image_y<0)
     {
-       return y;
+        return y;
     }else
     {
         float reuslt =  (1-u)*(1-v)*getImageHeight(i,j)*getScaleY() + (1-u)*v*getImageHeight(i,j+1)*getScaleY() + u*(1-v)*getImageHeight(i+1,j)*getScaleY() + u*v*getImageHeight(i+1,j+1)*getScaleY();
@@ -283,7 +283,22 @@ float Terrain::getHeight(Vec3 pos)
 
 float Terrain::getImageHeight(int pixel_x,int pixel_y)
 {
-    return _data[(pixel_y*imageWidth+pixel_x)*3]*1.0/255*_terrainData.mapHeight -0.5*_terrainData.mapHeight;
+    int byte_stride =1;
+    switch (_heightMapImage->getRenderFormat())
+    {
+    case Texture2D::PixelFormat::BGRA8888:
+        byte_stride = 4;
+        break;
+    case  Texture2D::PixelFormat::RGB888:
+        byte_stride =3;
+        break;
+    case Texture2D::PixelFormat::I8:
+        byte_stride =1;
+        break;
+    default:
+        break;
+    }
+    return _data[(pixel_y*imageWidth+pixel_x)*byte_stride]*1.0/255*_terrainData.mapHeight -0.5*_terrainData.mapHeight;
 }
 
 void Terrain::loadVertices()
@@ -294,7 +309,7 @@ void Terrain::loadVertices()
         {
             TerrainVertexData v;
             v.position = Vec3(j*_terrainData.mapScale- imageWidth/2*_terrainData.mapScale, //x
-                _data[(i*imageWidth+j)*3]*1.0/255*_terrainData.mapHeight -0.5*_terrainData.mapHeight, //y
+                getImageHeight(j,i), //y
                 i*_terrainData.mapScale - imageHeight/2*_terrainData.mapScale);//z
             v.texcoord = Tex2F(j*1.0/imageWidth,i*1.0/imageHeight);
             vertices.push_back (v);
@@ -359,6 +374,11 @@ void Terrain::setIsEnableFrustumCull(bool bool_value)
     _isEnableFrustumCull = bool_value;
 }
 
+Terrain::~Terrain()
+{
+    free(_data);
+}
+
 void Terrain::Chunk::finish()
 {
     //genearate two VBO ,the first for vertices, we just setup datas once ,won't changed at all
@@ -421,14 +441,14 @@ void Terrain::Chunk::generate(int imageWidth,int imageHeight,int m,int n,const u
 {
     pos_y = m;
     pos_x = n;
-   for(int i=_size.height*m;i<=_size.height*(m+1);i++)
+    for(int i=_size.height*m;i<=_size.height*(m+1);i++)
     {
         if(i>=imageHeight) break;
         for(int j=_size.width*n;j<=_size.width*(n+1);j++)
         {
-             if(j>=imageWidth)break;
-             auto v =_terrain->vertices[i*imageWidth + j];
-             vertices.push_back (v);
+            if(j>=imageWidth)break;
+            auto v =_terrain->vertices[i*imageWidth + j];
+            vertices.push_back (v);
         }
     }
     calculateAABB();
@@ -451,175 +471,175 @@ void Terrain::Chunk::updateIndices()
 
     int step = int(powf(2.0f, float(_currentLod)));
     if((left&&left->_currentLod > _currentLod) ||(right&&right->_currentLod > _currentLod)
-            ||(back&&back->_currentLod > _currentLod) || (front && front->_currentLod > _currentLod))
-            //need update indices.
+        ||(back&&back->_currentLod > _currentLod) || (front && front->_currentLod > _currentLod))
+        //need update indices.
+    {
+        //t-junction inner 
+        _lod[_currentLod].indices.clear();
+        for(int i =step;i<gridY-step;i+=step)
         {
-         //t-junction inner 
-            _lod[_currentLod].indices.clear();
-            for(int i =step;i<gridY-step;i+=step)
-            {
-                for(int j = step;j<gridX-step;j+=step)
-                {  
-                    int nLocIndex = i * (gridX+1) + j;
-                    _lod[_currentLod].indices.push_back (nLocIndex);
-                    _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
-                    _lod[_currentLod].indices.push_back (nLocIndex + step);
+            for(int j = step;j<gridX-step;j+=step)
+            {  
+                int nLocIndex = i * (gridX+1) + j;
+                _lod[_currentLod].indices.push_back (nLocIndex);
+                _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
+                _lod[_currentLod].indices.push_back (nLocIndex + step);
 
-                    _lod[_currentLod].indices.push_back (nLocIndex + step);
-                    _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
-                    _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1) + step);
+                _lod[_currentLod].indices.push_back (nLocIndex + step);
+                _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
+                _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1) + step);
 FINISH_INNER_INDICES_SET:
-;
-                }
+                ;
             }
-            //fix T-crack
-            int next_step = int(powf(2.0f, float(_currentLod+1)));
-            if(left&&left->_currentLod > _currentLod)//left
-            {
-                for(int i =0;i<gridY;i+=next_step)
-                {
-                        _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
-                        _lod[_currentLod].indices.push_back(i*(gridX+1));
-                        _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1));
-
-                        _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
-                        _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1));
-                        _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+step);
-
-                        _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+step);
-                        _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1));
-                        _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+step);
-                }
-            }else{
-                int start=0;
-                int end =gridY;
-                if(front&&front->_currentLod > _currentLod) end -=step;
-                if(back&&back->_currentLod > _currentLod) start +=step;
-                for(int i =start;i<end;i+=step)
-                {
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
-                    _lod[_currentLod].indices.push_back(i*(gridX+1));
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1));
-
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1));
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+step);
-                }
-                }
-
-            if(right&&right->_currentLod > _currentLod)//LEFT
-            {
-                for(int i =0;i<gridY;i+=next_step)
-                {
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX-step);
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
-
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
-                    _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+gridX-step);
-
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
-                    _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+gridX-step);
-                    _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+gridX);
-                }
-            }else{
-                int start=0;
-                int end =gridY;
-                if(front&&front->_currentLod > _currentLod) end -=step;
-                if(back&&back->_currentLod > _currentLod) start +=step;
-                for(int i =start;i<end;i+=step)
-                {
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX-step);
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
-
-                    _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
-                    _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX);
-                }
         }
-
-            if(front&&front->_currentLod > _currentLod)//front
+        //fix T-crack
+        int next_step = int(powf(2.0f, float(_currentLod+1)));
+        if(left&&left->_currentLod > _currentLod)//left
+        {
+            for(int i =0;i<gridY;i+=next_step)
             {
-                for(int i =0;i<gridX;i+=next_step)
-                {
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
+                _lod[_currentLod].indices.push_back(i*(gridX+1));
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1));
 
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+next_step);
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1));
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+step);
 
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+next_step);
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+next_step);
-                }
-            }else
-            {
-                for(int i =step;i<gridX-step;i+=step)
-                {
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
-
-                    _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+step);
-                }
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+step);
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1));
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+step);
             }
-            if(back&&back->_currentLod > _currentLod)//back
-            {
-                for(int i =0;i<gridX;i+=next_step)
-                {
-                    _lod[_currentLod].indices.push_back(i);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1) +i);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1) +i+step);
-
-                    _lod[_currentLod].indices.push_back(i);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1) +i+step);
-                    _lod[_currentLod].indices.push_back(i+next_step);
-
-                    _lod[_currentLod].indices.push_back(i+next_step);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1) +i+step);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1) +i+next_step);
-                }
-            }else{
-                for(int i =step;i<gridX-step;i+=step)
-                {
-                    _lod[_currentLod].indices.push_back(i);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1)+i);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1)+i+step);
-
-                    _lod[_currentLod].indices.push_back(i);
-                    _lod[_currentLod].indices.push_back(step*(gridX+1)+i+step);
-                    _lod[_currentLod].indices.push_back(i+step);
-                }
-            }
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLushort)*_lod[_currentLod].indices.size(),&_lod[_currentLod].indices[0],GL_STATIC_DRAW);
         }else{
-            //No lod difference, use simple method
-            _lod[_currentLod].indices.clear();
-            for(int i =0;i<gridY;i+=step)
+            int start=0;
+            int end =gridY;
+            if(front&&front->_currentLod > _currentLod) end -=step;
+            if(back&&back->_currentLod > _currentLod) start +=step;
+            for(int i =start;i<end;i+=step)
             {
-                for(int j = 0;j<gridX;j+=step)
-                { 
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
+                _lod[_currentLod].indices.push_back(i*(gridX+1));
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1));
 
-                    int nLocIndex = i * (gridX+1) + j; 
-                    _lod[_currentLod].indices.push_back (nLocIndex);
-                    _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
-                    _lod[_currentLod].indices.push_back (nLocIndex + step);
-
-                    _lod[_currentLod].indices.push_back (nLocIndex + step);
-                    _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
-                    _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1) + step);
-                }
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1));
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+step);
             }
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,vbo[1]);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLushort)*_lod[_currentLod].indices.size(),&_lod[_currentLod].indices[0],GL_STATIC_DRAW);
         }
+
+        if(right&&right->_currentLod > _currentLod)//LEFT
+        {
+            for(int i =0;i<gridY;i+=next_step)
+            {
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX-step);
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
+
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+gridX-step);
+
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+gridX-step);
+                _lod[_currentLod].indices.push_back((i+next_step)*(gridX+1)+gridX);
+            }
+        }else{
+            int start=0;
+            int end =gridY;
+            if(front&&front->_currentLod > _currentLod) end -=step;
+            if(back&&back->_currentLod > _currentLod) start +=step;
+            for(int i =start;i<end;i+=step)
+            {
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX-step);
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
+
+                _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX-step);
+                _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX);
+            }
+        }
+
+        if(front&&front->_currentLod > _currentLod)//front
+        {
+            for(int i =0;i<gridX;i+=next_step)
+            {
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
+
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+next_step);
+
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+next_step);
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+next_step);
+            }
+        }else
+        {
+            for(int i =step;i<gridX-step;i+=step)
+            {
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
+
+                _lod[_currentLod].indices.push_back((gridY-step)*(gridX+1)+i+step);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+step);
+            }
+        }
+        if(back&&back->_currentLod > _currentLod)//back
+        {
+            for(int i =0;i<gridX;i+=next_step)
+            {
+                _lod[_currentLod].indices.push_back(i);
+                _lod[_currentLod].indices.push_back(step*(gridX+1) +i);
+                _lod[_currentLod].indices.push_back(step*(gridX+1) +i+step);
+
+                _lod[_currentLod].indices.push_back(i);
+                _lod[_currentLod].indices.push_back(step*(gridX+1) +i+step);
+                _lod[_currentLod].indices.push_back(i+next_step);
+
+                _lod[_currentLod].indices.push_back(i+next_step);
+                _lod[_currentLod].indices.push_back(step*(gridX+1) +i+step);
+                _lod[_currentLod].indices.push_back(step*(gridX+1) +i+next_step);
+            }
+        }else{
+            for(int i =step;i<gridX-step;i+=step)
+            {
+                _lod[_currentLod].indices.push_back(i);
+                _lod[_currentLod].indices.push_back(step*(gridX+1)+i);
+                _lod[_currentLod].indices.push_back(step*(gridX+1)+i+step);
+
+                _lod[_currentLod].indices.push_back(i);
+                _lod[_currentLod].indices.push_back(step*(gridX+1)+i+step);
+                _lod[_currentLod].indices.push_back(i+step);
+            }
+        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLushort)*_lod[_currentLod].indices.size(),&_lod[_currentLod].indices[0],GL_STATIC_DRAW);
+    }else{
+        //No lod difference, use simple method
+        _lod[_currentLod].indices.clear();
+        for(int i =0;i<gridY;i+=step)
+        {
+            for(int j = 0;j<gridX;j+=step)
+            { 
+
+                int nLocIndex = i * (gridX+1) + j; 
+                _lod[_currentLod].indices.push_back (nLocIndex);
+                _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
+                _lod[_currentLod].indices.push_back (nLocIndex + step);
+
+                _lod[_currentLod].indices.push_back (nLocIndex + step);
+                _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
+                _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1) + step);
+            }
+        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,vbo[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLushort)*_lod[_currentLod].indices.size(),&_lod[_currentLod].indices[0],GL_STATIC_DRAW);
+    }
 }
 
 void Terrain::Chunk::calculateAABB()
@@ -651,57 +671,58 @@ void Terrain::Chunk::calculateSlope()
             highest = vertices[i].position;
         }
     }
-auto a = Vec2(lowest.x,lowest.z);
-auto b = Vec2(highest.x,highest.z);
-float dist = a.distance(b);
-slope = (highest.y - lowest.y)/dist;
+    auto a = Vec2(lowest.x,lowest.z);
+    auto b = Vec2(highest.x,highest.z);
+    float dist = a.distance(b);
+    slope = (highest.y - lowest.y)/dist;
 }
 
 void Terrain::Chunk::updateVerticesForLOD()
 {
-vertices_tmp = vertices;
-int gridY = _size.height;
-int gridX = _size.width;
-if(_currentLod>=2 && abs(slope)>1.2)
-{
-    int step = int(powf(2.0f, float(_currentLod)));
-    for(int i =step;i<gridY-step;i+=step)
-        for(int j = step; j<gridX-step;j+=step)
-        {
-            // use linear-sample adjust vertices height
-            float height = 0;
-            float count = 0;
-            for(int n = i-step/2;n<i+step/2;n++)
-            {
-                for(int m = j-step/2;m<j+step/2;m++)
-                {
-                    float weight = (step/2 - abs(n-i))*(step/2 - abs(m-j));
-                    height += vertices[m*(gridX+1)+n].position.y;
-                    count += weight;
-                }
-            }
-            vertices_tmp[i*(gridX+1)+j].position.y = height/count;
-        }
-}
+    vertices_tmp = vertices;
+    int gridY = _size.height;
+    int gridX = _size.width;
 
-glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*vertices_tmp.size(), &vertices_tmp[0], GL_STREAM_DRAW);
+    if(_currentLod>=2 && abs(slope)>1.2)
+    {
+        int step = int(powf(2.0f, float(_currentLod)));
+        for(int i =step;i<gridY-step;i+=step)
+            for(int j = step; j<gridX-step;j+=step)
+            {
+                // use linear-sample adjust vertices height
+                float height = 0;
+                float count = 0;
+                for(int n = i-step/2;n<i+step/2;n++)
+                {
+                    for(int m = j-step/2;m<j+step/2;m++)
+                    {
+                        float weight = (step/2 - abs(n-i))*(step/2 - abs(m-j));
+                        height += vertices[m*(gridX+1)+n].position.y;
+                        count += weight;
+                    }
+                }
+                vertices_tmp[i*(gridX+1)+j].position.y = height/count;
+            }
+    }
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*vertices_tmp.size(), &vertices_tmp[0], GL_STREAM_DRAW);
 
 }
 
 Terrain::QuadTree::QuadTree(int x,int y,int width,int height,Terrain * terrain)
 {
-        _needDraw = true;
-        parent = nullptr;
-        tl =nullptr;
-        tr =nullptr;
-        bl =nullptr;
-        br =nullptr;
-        pos_x = x;
-        pos_y = y;
-        this->height = height;
-        this->width = width;
+    _needDraw = true;
+    parent = nullptr;
+    tl =nullptr;
+    tr =nullptr;
+    bl =nullptr;
+    br =nullptr;
+    pos_x = x;
+    pos_y = y;
+    this->height = height;
+    this->width = width;
     if(width> terrain->_chunkSize.width &&height >terrain->_chunkSize.height) //subdivision
-     {
+    {
         _isTerminal = false;
         this->tl = new QuadTree(x,y,width/2,height/2,terrain);
         this->tl->parent = this;
@@ -791,6 +812,21 @@ Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * alpham
     this->chunkSize = chunksize;
     this->mapHeight = mapHeight;
     this->mapScale = mapScale;
+    _detailMapAmount = 4;
+}
+
+Terrain::TerrainData::TerrainData(const char* heightMapsrc ,const char * alphamap,const DetailMap& detail1,const DetailMap& detail2,const DetailMap& detail3,const Size & chunksize /*= Size(32,32)*/,float mapHeight /*= 2*/,float mapScale /*= 0.1*/)
+{
+    this->heightMapSrc = heightMapsrc;
+    this->alphaMapSrc = const_cast<char *>(alphamap);
+    this->detailMaps[0] = detail1;
+    this->detailMaps[1] = detail2;
+    this->detailMaps[2] = detail3;
+    this->detailMaps[3] = nullptr;
+    this->chunkSize = chunksize;
+    this->mapHeight = mapHeight;
+    this->mapScale = mapScale;
+    _detailMapAmount = 3;
 }
 
 Terrain::TerrainData::TerrainData()
@@ -806,7 +842,7 @@ Terrain::DetailMap::DetailMap(const char * detailMapSrc , float size /*= 35*/)
 
 Terrain::DetailMap::DetailMap()
 {
-   detailMapSrc = ""; 
-   detailMapSize = 35;
+    detailMapSrc = ""; 
+    detailMapSize = 35;
 }
 NS_CC_END
