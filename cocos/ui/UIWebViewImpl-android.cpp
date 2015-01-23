@@ -41,6 +41,39 @@
 
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
 
+static const std::string s_defaultBaseUrl = "file:///android_asset/";
+static const std::string s_sdRootBaseUrl = "file://";
+
+ static std::string getFixedBaseUrl(const std::string& baseUrl)
+{
+    std::string fixedBaseUrl;
+    if (baseUrl.empty())
+    {
+        fixedBaseUrl = s_defaultBaseUrl;
+    }
+    else if (baseUrl.find(s_sdRootBaseUrl) !=  std::string::npos)
+    {
+        fixedBaseUrl = baseUrl;
+    }
+    else if (baseUrl.c_str()[0] != '/') {
+        if(baseUrl.find("assets/") == 0) {
+            fixedBaseUrl = s_defaultBaseUrl + baseUrl.c_str()[7];
+        }
+        else {
+            fixedBaseUrl = s_defaultBaseUrl + baseUrl;
+        }
+    }
+    else {
+        fixedBaseUrl = s_sdRootBaseUrl + baseUrl;
+    }
+    
+    if (fixedBaseUrl.c_str()[fixedBaseUrl.length() - 1] != '/') {
+        fixedBaseUrl += "/";
+    }
+    
+    return fixedBaseUrl;
+}
+
 extern "C" {
     /*
      * Class:     org_cocos2dx_lib_Cocos2dxWebViewHelper
@@ -144,7 +177,7 @@ void loadDataJNI(const int index, const std::string &data, const std::string &MI
         jstring jData = t.env->NewStringUTF(data.c_str());
         jstring jMIMEType = t.env->NewStringUTF(MIMEType.c_str());
         jstring jEncoding = t.env->NewStringUTF(encoding.c_str());
-        jstring jBaseURL = t.env->NewStringUTF(baseURL.c_str());
+        jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());
         t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jData, jMIMEType, jEncoding, jBaseURL);
 
         t.env->DeleteLocalRef(jData);
@@ -158,10 +191,10 @@ void loadDataJNI(const int index, const std::string &data, const std::string &MI
 void loadHTMLStringJNI(const int index, const std::string &string, const std::string &baseURL) {
     // LOGD("error: %s,%d",__func__,__LINE__);
     cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;)V")) {
         jstring jString = t.env->NewStringUTF(string.c_str());
-        jstring jBaseURL = t.env->NewStringUTF(baseURL.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL,nullptr);
+        jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
 
         t.env->DeleteLocalRef(jString);
         t.env->DeleteLocalRef(jBaseURL);
