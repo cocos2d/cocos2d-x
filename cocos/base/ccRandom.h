@@ -44,7 +44,7 @@ public:
 
     template<typename T>
     static inline T random_int(T min, T max) {
-        std::uniform_int_distribution<> dist(min, max);
+        std::uniform_int_distribution<T> dist(min, max);
         auto &mt = RandomHelper::getEngine();
         return dist(mt);
     }
@@ -57,7 +57,7 @@ private:
 */
 template<typename T>
 inline T random(T min, T max) {
-    return RandomHelper::random_int(min, max);
+    return RandomHelper::random_int<T>(min, max);
 }
 
 template<>
