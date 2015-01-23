@@ -633,14 +633,14 @@ void EditBoxImplWin::setText(const char* pText)
 
             //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), _editSize.width, _editSize.height-12);
             //! _label->setString(strWithEllipsis.c_str());
-			_label->setString(strToShow.c_str());
-			
-			float maxWidth = _editSize.width - 2 * CC_EDIT_BOX_PADDING;
-			auto labelSize = _label->getContentSize();
-			if (labelSize.width > maxWidth)
-			{
-				_label->setDimensions(maxWidth, labelSize.height);
-			}
+            _label->setString(strToShow.c_str());
+            
+            float maxWidth = _editSize.width - 2 * CC_EDIT_BOX_PADDING;
+            auto labelSize = _label->getContentSize();
+            if (labelSize.width > maxWidth)
+            {
+                _label->setDimensions(maxWidth, labelSize.height);
+            }
         }
         else
         {
