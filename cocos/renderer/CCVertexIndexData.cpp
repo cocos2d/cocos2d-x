@@ -149,44 +149,33 @@ void VertexData::draw(unsigned start, unsigned count)
     
     if (0 == _vao || isDirty())
     {
-        if (_interleaved)
+        CHECK_GL_ERROR_DEBUG();
+        
+        uint32_t flags(0);
+        for (auto& element : _vertexStreams)
         {
-            CHECK_GL_ERROR_DEBUG();
-            auto vb = _vertexStreams.begin()->second._buffer;
+            flags = flags | (1 << element.second._stream._semantic);
+        }
+        GL::enableVertexAttribs(flags); // unbinds vao
+        CHECK_GL_ERROR_DEBUG();
+        
+        for (auto& element : _vertexStreams)
+        {
+            auto vb = element.second._buffer;
+            
+            // commit any outstanding client side geometry to the native buffers.
+            // for interleaved data this will happen only the first time through.
             vb->commit();
             
-            uint32_t flags(0);
-            for (auto& element : _vertexStreams)
-            {
-                flags = flags | (1 << element.second._stream._semantic);
-            }
-            GL::enableVertexAttribs(flags); // unbinds vao
-            CHECK_GL_ERROR_DEBUG();
+            // this is redundant for interleaved streams, but needed for non-interleaved to work.
+            // the call is trivially rejected by the GL state cache.
+            GL::bindVBO(GL_ARRAY_BUFFER, vb->getVBO());
             
-            for (auto& element : _vertexStreams)
-            {
-                auto& attrib = element.second;
-                auto& stream = attrib._stream;
-                size_t offet = attrib._stream._offset;
-                glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offet);
-                CHECK_GL_ERROR_DEBUG();
-            }
-        }
-        else
-        {
+            auto& attrib  = element.second;
+            auto& stream  = attrib._stream;
+            size_t offset = attrib._stream._offset;
+            glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offset);
             CHECK_GL_ERROR_DEBUG();
-            for (auto& element : _vertexStreams)
-            {
-                auto vb = element.second._buffer;
-                vb->commit();
-                //glBindBuffer(GL_ARRAY_BUFFER, vb->getVBO());
-                auto& attrib = element.second;
-                auto& stream = attrib._stream;
-                size_t offet = attrib._stream._offset;
-                glEnableVertexAttribArray(GLint(stream._semantic));
-                glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offet);
-                CHECK_GL_ERROR_DEBUG();
-            }
         }
         
         setDirty(false);
@@ -209,7 +198,7 @@ void VertexData::draw(unsigned start, unsigned count)
     
     if (_vao)
         GL::bindVAO(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GL::bindVBO(GL_ARRAY_BUFFER, 0);
 }
 
 bool VertexData::empty() const

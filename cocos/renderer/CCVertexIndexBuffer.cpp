@@ -101,11 +101,6 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
         ensureCapacity(count + begin);
     }
     
-    if (0 == _vbo && hasNative())
-    {
-        glGenBuffers(1, &_vbo);
-    }
-    
     if (hasClient())
     {
         intptr_t p = (intptr_t)_elements + begin * _elementSize;
@@ -117,7 +112,7 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
     
     CCLOG("GLArrayBuffer::insert : begin(%u) count(%u)\n", begin, count);
 
-    if (false == defer)
+    if (false == defer && hasNative())
         commit(count, begin);
         
     return true;
@@ -125,11 +120,19 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
 
 void GLArrayBuffer::commit(unsigned count, unsigned begin)
 {
+    if (false == isDirty() || false == hasNative())
+        return;
+    
     if (count == 0)
         count = _elementCount;
     
+    if (0 == _vbo && hasNative())
+    {
+        glGenBuffers(1, &_vbo);
+    }
+    
     CHECK_GL_ERROR_DEBUG();
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    GL::bindVBO(GL_ARRAY_BUFFER, _vbo);
     CHECK_GL_ERROR_DEBUG();
     
     const auto size = getSize();

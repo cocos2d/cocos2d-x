@@ -49,7 +49,6 @@ struct CC_DLL VertexStreamAttribute
         : _normalize(normalize), _offset(offset), _semantic(semantic), _type(type), _size(size)
     {}
     
-    bool _indexed;
     bool _normalize;
     int _offset;
     int _semantic;
