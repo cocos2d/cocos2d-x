@@ -29,7 +29,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(SchedulerDelayAndRepeat),
     CL(SchedulerIssue2268),
     CL(ScheduleCallbackTest),
-    CL(ScheduleUpdatePriority)
+    CL(ScheduleUpdatePriority),
+    CL(SchedulerMultipleFuncTypes)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1198,6 +1199,87 @@ void ScheduleUpdatePriority::onExit()
 
 void ScheduleUpdatePriority::update(float dt)
 {
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerMultipleFuncTypes
+//
+//------------------------------------------------------------------
+std::string SchedulerMultipleFuncTypes::title() const
+{
+    return "Scheduler with different call types";
+}
+
+std::string SchedulerMultipleFuncTypes::subtitle() const
+{
+    return "Using both SEL_SCHEDULE and ccSchedulerFunc in one scheduler.\n"
+        "Should not crash. Tap on items and see console";
+}
+
+void SchedulerMultipleFuncTypes::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    auto scheduler = Director::getInstance()->getScheduler();
+
+    // Use ccSchedulerFunc
+    scheduler->schedule(
+        CC_CALLBACK_1(SchedulerMultipleFuncTypes::call_1, this),
+        this, 1, kRepeatForever, 0.5f, false, "key_of_call_1");
+    // Use SEL_SCHEDULE
+    scheduler->schedule(
+        SEL_SCHEDULE(&SchedulerMultipleFuncTypes::call_2), this, 1, false);
+
+    // A menu to check
+    MenuItemFont::setFontSize(20);
+    auto item_check = MenuItemFont::create("Check isScheduled", [this, scheduler](Ref *sender) {
+        CCLOG("====================================");
+        CCLOG("Results should be \'true true false false\' before unscheduling");
+        CCLOG("and \'false false false false\' after unscheduling");
+        CCLOG(scheduler->isScheduled(SEL_SCHEDULE(&SchedulerMultipleFuncTypes::call_2), this) ?
+            "true" : "false");
+        CCLOG(this->getScheduler()->isScheduled("key_of_call_1", this) ?
+            "true" : "false");
+        CCLOG(this->getScheduler()->isScheduled("key_of_call_2", this) ?
+            "true" : "false");
+        // functions that are scheduled using CC_CALLBACKs can'e be detected
+        // using isScheduled(SEL_SCHEDULE, Ref *)
+        CCLOG(scheduler->isScheduled(SEL_SCHEDULE(&SchedulerMultipleFuncTypes::call_1), this) ?
+            "true" : "false");
+        CCLOG("====================================");
+    });
+    item_check->setNormalizedPosition(Vec2(0.5, 0.55));
+    // A menu to unschedule both
+    auto item_unschedule = MenuItemFont::create("Unschedule all", [this, scheduler](Ref *sender) {
+        CCLOG("Unscheduling. Should not crash");
+        scheduler->unschedule("key_of_call_1", this);
+        scheduler->unschedule("key_of_call_2", this);   // not found
+        scheduler->unschedule(SEL_SCHEDULE(&SchedulerMultipleFuncTypes::call_2), this);
+        scheduler->unschedule(SEL_SCHEDULE(&SchedulerMultipleFuncTypes::call_1), this); // not found
+        CCLOG("Finished");
+    });
+    item_unschedule->setNormalizedPosition(Vec2(0.5, 0.45));
+    auto menu = Menu::create(item_check, item_unschedule, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    this->addChild(menu);
+
+    CCLOG("Starting schedulers. Two methods are called every second.");
+
+}
+
+void SchedulerMultipleFuncTypes::onExit()
+{
+    Node::onExit();
+}
+
+void SchedulerMultipleFuncTypes::call_1(float dt)
+{
+    CCLOG("called ccSchedulerFunc");
+}
+
+void SchedulerMultipleFuncTypes::call_2(float dt)
+{
+    CCLOG("called SEL_SCHEDULE");
 }
 
 //------------------------------------------------------------------

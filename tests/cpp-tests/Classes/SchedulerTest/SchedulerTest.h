@@ -322,6 +322,20 @@ public:
     bool onTouchBegan(Touch* touch, Event* event);
 };
 
+class SchedulerMultipleFuncTypes : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerMultipleFuncTypes);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter();
+    void onExit();
+
+    void call_1(float dt);
+    void call_2(float dt);
+};
+
 class SchedulerTestScene : public TestScene
 {
 public:
