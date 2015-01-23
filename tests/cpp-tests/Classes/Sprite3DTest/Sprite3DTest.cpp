@@ -69,7 +69,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DWithOBBPerformanceTest),
     CL(Sprite3DMirrorTest),
     CL(QuaternionTest),
-    CL(Sprite3DEmptyTest)
+    CL(Sprite3DEmptyTest),
+    CL(UseCaseSprite3D)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2104,4 +2105,84 @@ void QuaternionTest::update(float delta)
     Quaternion quat;
     Quaternion::createFromAxisAngle(Vec3(0.f, 0.f, 1.f), _accAngle - pi * 0.5f, &quat);
     _sprite->setRotationQuat(quat);
+}
+
+UseCaseSprite3D::UseCaseSprite3D()
+: _caseIdx(0)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    _useCaseTitles[0] = "3d sprite with sprite and billboard";
+    
+    
+    auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
+                                          [&](Ref *sender) {
+                                              _caseIdx--;
+                                              if (_caseIdx < 0)
+                                                  _caseIdx = 0;
+                                              this->switchCase();
+                                          });
+    
+    auto itemNext = MenuItemImage::create("Images/f1.png", "Images/f2.png",
+                                          [&](Ref *sender) {
+                                              _caseIdx++;
+                                              if (_caseIdx >= (int)USECASE::MAX_CASE_NUM)
+                                                  _caseIdx = (int)USECASE::MAX_CASE_NUM - 1;
+                                              this->switchCase();
+                                          });
+    
+    auto menu = Menu::create(itemPrev, itemNext, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setScale(0.5);
+    menu->setAnchorPoint(Vec2(0,0));
+    menu->setPosition(Vec2(s.width/2,70));
+    
+    _label = Label::create();
+    _label->setPosition(s.width * 0.5f, s.height * 0.8f);
+    addChild(_label);
+    
+    addChild(menu);
+    
+    switchCase();
+}
+
+std::string UseCaseSprite3D::title() const
+{
+    return "Use Case For 2D + 3D";
+}
+
+std::string UseCaseSprite3D::subtitle() const
+{
+    return "";
+}
+
+void UseCaseSprite3D::switchCase()
+{
+    removeChildByTag(101);
+    auto s = Director::getInstance()->getWinSize();
+    _label->setString(_useCaseTitles[_caseIdx]);
+    if (_caseIdx == 0)
+    {
+        std::string filename = "Sprite3DTest/orc.c3b";
+        auto sprite = Sprite3D::create(filename);
+        sprite->setTag(101);
+        sprite->setRotation3D(Vec3(0.f, 180.f, 0.f));
+        addChild(sprite);
+        sprite->setScale(5.f);
+        sprite->setPosition3D(Vec3(s.width / 2.f, s.height / 3.f, -10.f));
+        auto animation = Animation3D::create(filename);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            
+            sprite->runAction(RepeatForever::create(animate));
+        }
+        
+        
+        auto sprite2d = Sprite::create("Sprite3DTest/plane.png");
+        sprite2d->setScale(0.2f, 0.2f);
+        sprite->addChild(sprite2d);
+        sprite2d->setAnchorPoint(Vec2(0.5f, 0.5f));
+//        sprite2d->setRotation3D(Vec3(100.f, 0.f, 0.f));
+    }
 }
