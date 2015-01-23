@@ -566,14 +566,14 @@ Frame* ActionTimelineCache::loadVisibleFrameWithFlatBuffers(const flatbuffers::B
 {
     VisibleFrame* frame = VisibleFrame::create();
     
-    bool visible = flatbuffers->value();
+    bool visible = flatbuffers->value() != 0;
     
     frame->setVisible(visible);
     
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -590,7 +590,7 @@ Frame* ActionTimelineCache::loadPositionFrameWithFlatBuffers(const flatbuffers::
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -608,7 +608,7 @@ Frame* ActionTimelineCache::loadScaleFrameWithFlatBuffers(const flatbuffers::Sca
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -626,7 +626,7 @@ Frame* ActionTimelineCache::loadRotationSkewFrameWithFlatBuffers(const flatbuffe
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -643,7 +643,7 @@ Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::Col
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -700,7 +700,7 @@ Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::T
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -720,7 +720,7 @@ Frame* ActionTimelineCache::loadEventFrameWithFlatBuffers(const flatbuffers::Eve
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -737,7 +737,7 @@ Frame* ActionTimelineCache::loadAlphaFrameWithFlatBuffers(const flatbuffers::Int
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -754,7 +754,7 @@ Frame* ActionTimelineCache::loadAlphaFrameWithFlatBuffers(const flatbuffers::Int
         int frameIndex = flatbuffers->frameIndex();
         frame->setFrameIndex(frameIndex);
         
-        bool tween = flatbuffers->tween();
+        bool tween = flatbuffers->tween() != 0;
         frame->setTween(tween);
         
         return frame;
@@ -771,7 +771,7 @@ Frame* ActionTimelineCache::loadZOrderFrameWithFlatBuffers(const flatbuffers::In
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     return frame;
@@ -790,7 +790,7 @@ Frame* ActionTimelineCache::loadInnerActionFrameWithFlatBuffers(const flatbuffer
     int frameIndex = flatbuffers->frameIndex();
     frame->setFrameIndex(frameIndex);
     
-    bool tween = flatbuffers->tween();
+    bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
     
     frame->setInnerActionType(innerActionType);

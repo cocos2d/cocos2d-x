@@ -397,10 +397,10 @@ namespace cocostudio
         ScrollView* scrollView = static_cast<ScrollView*>(node);
         auto options = (ScrollViewOptions*)scrollViewOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         scrollView->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         scrollView->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         
@@ -505,7 +505,7 @@ namespace cocostudio
         scrollView->setInnerContainerSize(innerSize);
         int direction = options->direction();
         scrollView->setDirection((ScrollView::Direction)direction);
-        bool bounceEnabled = options->bounceEnabled();
+        bool bounceEnabled = options->bounceEnabled() != 0;
         scrollView->setBounceEnabled(bounceEnabled);
         
         
