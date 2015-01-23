@@ -525,7 +525,7 @@ void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void InnerActionFrame::setStartFrameIndex(int frameIndex) throw()
+void InnerActionFrame::setStartFrameIndex(int frameIndex)
 {
     if(_enterWithName)
     {
@@ -536,7 +536,7 @@ void InnerActionFrame::setStartFrameIndex(int frameIndex) throw()
 }
 
 
-void InnerActionFrame::setEndFrameIndex(int frameIndex) throw()
+void InnerActionFrame::setEndFrameIndex(int frameIndex)
 {
     if(_enterWithName)
     {
@@ -546,7 +546,7 @@ void InnerActionFrame::setEndFrameIndex(int frameIndex) throw()
     _endFrameIndex = frameIndex;
 }
 
-void InnerActionFrame::setAnimationName(const std::string& animationName) throw()
+void InnerActionFrame::setAnimationName(const std::string& animationName)
 {
     if(!_enterWithName)
     {
