@@ -57,21 +57,24 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
         Vec3 vertPos;
         Vec3 cameraPos = Camera::getVisitingCamera()->getPosition3D();
         
-        for (int i = 0; i < quadCount; i++)
+        if (quadCount <= 1)
         {
-            mv.transformPoint(quads[i].tl.vertices, &vertPos);
-            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            mv.transformPoint(quads[0].tl.vertices, &vertPos);
+            depth = std::max(depth, cameraPos.distance(vertPos));
             
-            mv.transformPoint(quads[i].tr.vertices, &vertPos);
-            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            mv.transformPoint(quads[0].tr.vertices, &vertPos);
+            depth = std::max(depth, cameraPos.distance(vertPos));
             
-            mv.transformPoint(quads[i].bl.vertices, &vertPos);
-            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            mv.transformPoint(quads[0].bl.vertices, &vertPos);
+            depth = std::max(depth, cameraPos.distance(vertPos));
             
-            mv.transformPoint(quads[i].br.vertices, &vertPos);
-            depth = fmaxf(depth, cameraPos.distance(vertPos));
+            mv.transformPoint(quads[0].br.vertices, &vertPos);
+            depth = std::max(depth, cameraPos.distance(vertPos));
         }
-        
+        else
+        {
+            depth = Camera::getVisitingCamera()->getDepthInView(mv);
+        }
         
         _globalOrder = depth;
         set3D(true);
