@@ -112,6 +112,7 @@ private:
     {
         /*Constructor*/
         Chunk();
+~Chunk();
         /*vertices*/
         std::vector<TerrainVertexData> vertices;
         /*LOD indices*/
@@ -226,7 +227,7 @@ private:
     GLuint vbo[2];
     QuadTree * quad;
     int detailSize[4];
-    Chunk * _chunkesArray[256][256];
+    Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> vertices;
     std::vector<GLushort > indices;
     int imageWidth;
