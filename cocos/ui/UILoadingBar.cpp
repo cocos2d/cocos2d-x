@@ -250,10 +250,6 @@ void LoadingBar::setPercent(float percent)
     {
         percent = 0;
     }
-    if (_percent == percent)
-    {
-        return;
-    }
      _percent = percent;
     if (_totalLength <= 0)
     {
