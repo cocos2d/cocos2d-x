@@ -311,8 +311,11 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
-
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            if (!timer)
+            {
+                continue;
+            }
             if (key == timer->getKey())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
