@@ -104,7 +104,21 @@ public:
 
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Scale9_State_Change)
-        int _count;
+    int _count;
+};
+
+class UILoadingBarReloadTexture : public UIScene
+{
+public:
+    UILoadingBarReloadTexture();
+    ~UILoadingBarReloadTexture();
+    void update(float dt);
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UILoadingBarReloadTexture);
+    int _count;
+    
 };
 
 #endif /* defined(__TestCpp__UILoadingBarTest__) */
