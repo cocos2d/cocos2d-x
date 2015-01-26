@@ -9,6 +9,7 @@
 -- @function [parent=#Action] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 --  Set the original target, since target can be nil.<br>
@@ -18,6 +19,7 @@
 -- @function [parent=#Action] setOriginalTarget 
 -- @param self
 -- @param #cc.Node originalTarget
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 --  returns a clone of action 
@@ -36,6 +38,7 @@
 -- IMPORTANT: You should never call "[action stop]" manually. Instead, use: "target->stopAction(action);"
 -- @function [parent=#Action] stop 
 -- @param self
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 -- called once per frame. time a value between 0 and 1<br>
@@ -46,6 +49,7 @@
 -- @function [parent=#Action] update 
 -- @param self
 -- @param #float time
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 -- 
@@ -54,16 +58,18 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
---  called every frame with it's delta time. DON'T override unless you know what you are doing.
+--  called every frame with it's delta time, dt in seconds. DON'T override unless you know what you are doing.
 -- @function [parent=#Action] step 
 -- @param self
 -- @param #float dt
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 -- 
 -- @function [parent=#Action] setTag 
 -- @param self
 -- @param #int tag
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 -- 
@@ -76,6 +82,7 @@
 -- @function [parent=#Action] setTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
 --  return true if the action has finished

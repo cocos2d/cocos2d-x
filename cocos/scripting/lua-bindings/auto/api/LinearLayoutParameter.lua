@@ -11,6 +11,7 @@
 -- @function [parent=#LinearLayoutParameter] setGravity 
 -- @param self
 -- @param #int gravity
+-- @return LinearLayoutParameter#LinearLayoutParameter self (return value: ccui.LinearLayoutParameter)
         
 --------------------------------
 -- Gets LinearGravity parameter for LayoutParameter.<br>
@@ -38,10 +39,12 @@
 -- @function [parent=#LinearLayoutParameter] copyProperties 
 -- @param self
 -- @param #ccui.LayoutParameter model
+-- @return LinearLayoutParameter#LinearLayoutParameter self (return value: ccui.LinearLayoutParameter)
         
 --------------------------------
 -- Default constructor
 -- @function [parent=#LinearLayoutParameter] LinearLayoutParameter 
 -- @param self
+-- @return LinearLayoutParameter#LinearLayoutParameter self (return value: ccui.LinearLayoutParameter)
         
 return nil

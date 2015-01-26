@@ -24,6 +24,7 @@
 -- @function [parent=#TextAtlas] setString 
 -- @param self
 -- @param #string value
+-- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)
         
 --------------------------------
 --  initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas 
@@ -34,11 +35,13 @@
 -- @param #int itemWidth
 -- @param #int itemHeight
 -- @param #string startCharMap
+-- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)
         
 --------------------------------
 -- 
 -- @function [parent=#TextAtlas] adaptRenderers 
 -- @param self
+-- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)
         
 --------------------------------
 -- @overload self, string, string, int, int, string         
@@ -80,5 +83,6 @@
 -- Default constructor
 -- @function [parent=#TextAtlas] TextAtlas 
 -- @param self
+-- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)
         
 return nil

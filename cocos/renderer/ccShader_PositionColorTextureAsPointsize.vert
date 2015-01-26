@@ -22,11 +22,12 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionColorPointsize_vert = STRINGIFY(
+const char* ccPositionColorTextureAsPointsize_vert = STRINGIFY(
 
 attribute vec4 a_position;
 attribute vec4 a_color;
-attribute float a_pointSize;
+
+attribute vec2 a_texCoord;
 
 \n#ifdef GL_ES\n
 varying lowp vec4 v_fragmentColor;
@@ -37,7 +38,7 @@ varying vec4 v_fragmentColor;
 void main()
 {
     gl_Position = CC_MVPMatrix * a_position;
-    gl_PointSize = a_pointSize;
+    gl_PointSize = a_texCoord.x;
     v_fragmentColor = a_color;
 }
 );

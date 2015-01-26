@@ -18,10 +18,11 @@
 -- @return EaseCubicActionIn#EaseCubicActionIn ret (return value: cc.EaseCubicActionIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseCubicActionIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseCubicActionIn#EaseCubicActionIn self (return value: cc.EaseCubicActionIn)
         
 --------------------------------
 -- 

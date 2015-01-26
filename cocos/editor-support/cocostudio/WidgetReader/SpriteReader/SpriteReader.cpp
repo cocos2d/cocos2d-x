@@ -224,8 +224,8 @@ namespace cocostudio
             sprite->setColor(Color3B(red, green, blue));
         }
         
-        bool flipX   = nodeOptions->flipX();
-        bool flipY   = nodeOptions->flipY();
+        bool flipX   = nodeOptions->flipX() != 0;
+        bool flipY   = nodeOptions->flipY() != 0;
         
         if(flipX != false)
             sprite->setFlippedX(flipX);

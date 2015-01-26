@@ -127,6 +127,7 @@ namespace ui {
         bool isStretchHeightEnabled()const;
         void setStretchHeightEnabled(bool isUsed);
 
+        void setPercentOnlyEnabled(bool enable);
         void setActiveEnabled(bool enable);
         void refreshLayout();
 
@@ -158,6 +159,7 @@ namespace ui {
         bool            _usingPercentHeight;
 
         bool            _actived;
+        bool            _isPercentOnly;
     };
 }
 
