@@ -2115,13 +2115,13 @@ UseCaseSprite3D::UseCaseSprite3D()
     auto s = Director::getInstance()->getWinSize();
     
     _useCaseTitles[0] = "transparent 3d sprite and 2d sprite";
-    
+    _useCaseTitles[1] = "ui - 3d - ui";
     
     auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
                                           [&](Ref *sender) {
                                               _caseIdx--;
                                               if (_caseIdx < 0)
-                                                  _caseIdx = 0;
+                                                  _caseIdx = (int)USECASE::MAX_CASE_NUM - 1;
                                               this->switchCase();
                                           });
     
@@ -2129,7 +2129,7 @@ UseCaseSprite3D::UseCaseSprite3D()
                                           [&](Ref *sender) {
                                               _caseIdx++;
                                               if (_caseIdx >= (int)USECASE::MAX_CASE_NUM)
-                                                  _caseIdx = (int)USECASE::MAX_CASE_NUM - 1;
+                                                  _caseIdx = 0;
                                               this->switchCase();
                                           });
     
@@ -2213,6 +2213,10 @@ void UseCaseSprite3D::switchCase()
         _sprite3d->setCameraMask(2);
         _sprite2d->setCameraMask(2);
     }
+    else if (_caseIdx == 1)
+    {
+        
+    }
     
     scheduleUpdate();
     update(0.f);
@@ -2220,14 +2224,17 @@ void UseCaseSprite3D::switchCase()
 
 void UseCaseSprite3D::update(float delta)
 {
-    static float accAngle = 0.f;
-    accAngle += delta * CC_DEGREES_TO_RADIANS(60);
-    
-    float radius = 30.f;
-    float x = cosf(accAngle) * radius, z = sinf(accAngle) * radius;
-    
-    _sprite3d->setPositionX(x);
-    _sprite3d->setPositionZ(z);
-    _sprite2d->setPositionX(x);
-    _sprite2d->setPositionZ(z);
+    if (_caseIdx == 0)
+    {
+        static float accAngle = 0.f;
+        accAngle += delta * CC_DEGREES_TO_RADIANS(60);
+        
+        float radius = 30.f;
+        float x = cosf(accAngle) * radius, z = sinf(accAngle) * radius;
+        
+        _sprite3d->setPositionX(x);
+        _sprite3d->setPositionZ(z);
+        _sprite2d->setPositionX(x);
+        _sprite2d->setPositionZ(z);
+    }
 }

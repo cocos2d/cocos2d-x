@@ -471,6 +471,7 @@ protected:
     
     enum class USECASE{
         _3D_WITH_2D,
+        _UI_3D_UI,
         MAX_CASE_NUM,
     };
     cocos2d::Label*      _label;
