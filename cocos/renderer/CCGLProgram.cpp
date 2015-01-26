@@ -159,7 +159,7 @@ GLProgram::~GLProgram()
 
     for (auto e : _hashForUniforms)
     {
-        free(e.second);
+        free(e.second.first);
     }
     _hashForUniforms.clear();
 }
@@ -662,17 +662,23 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         GLvoid* value = malloc(bytes);
         memcpy(value, data, bytes );
-        _hashForUniforms.insert(std::make_pair(location, value));
+        _hashForUniforms.insert(std::make_pair(location, std::make_pair(value, bytes)));
     }
     else
     {
-        if (memcmp(element->second, data, bytes) == 0)
+        if (memcmp(element->second.first, data, bytes) == 0)
         {
             updated = false;
         }
         else
         {
-            memcpy(element->second, data, bytes);
+            if (element->second.second != bytes){
+                free(element->second.first);
+                GLvoid* value = malloc(bytes);
+                memcpy(value, data, bytes );
+                _hashForUniforms[location] = std::make_pair(value, bytes);
+            }else
+                memcpy(element->second.first, data, bytes);
         }
     }
 
@@ -933,7 +939,7 @@ void GLProgram::reset()
 
     for (auto e: _hashForUniforms)
     {
-        free(e.second);
+        free(e.second.first);
     }
     
     _hashForUniforms.clear();
