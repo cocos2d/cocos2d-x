@@ -7,6 +7,7 @@ cocos2d-x-3.4 xxx
     [FIX]           Label: alpha channel of text color of system font has not effect
     [FIX]           Label: use int for dimensions that will lose the precision
     [FIX]           Label: labels will become white block after resume from background on some Android devices, such as xiaomi3
+    [FIX]           Label: improved parsing performance of bitmap font
     [FIX]           Lua-binding:studio-support: AnimationInfo is not binded 
     [FIX]           New audio: not close file descriptor leads to that may causes game freeze if playing two many times(may be more than 1000) on Android
     [FIX]           Node: anchor point has not effect to rotation, it always rotate along (0, 0)
@@ -14,6 +15,9 @@ cocos2d-x-3.4 xxx
     [FIX]           Sprite3D: material files (.mtl) are not loaded for any object when creating from an .obj file
     [FIX]           UI::ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
     [FIX]           UI::Slider: when scale9 is enabled, the progress bar's rendering height is wrong
+    [FIX]           UI:Scale9Sprite: some position information will be lost when toggling `Scale9` state
+    [FIX]           UI::TextField: will get wrong event message if clicking `TextField` twice
+    [FIX]           UI::WebView: base URL can not work
 
 cocos2d-x-3.4rc1 Jan.15 2015
     [NEW]           C++: added CC_USE_CULLING macro to control if enable auto culling or not 
