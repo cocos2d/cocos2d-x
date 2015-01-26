@@ -194,7 +194,26 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
     _barRendererAdaptDirty = true;
-    setPercent(_percent);
+
+    do
+    {
+        if (_percent == 100.0f)
+            break;
+
+        float res = _percent / 100.0f;
+
+        if (_scale9Enabled)
+        {
+            setScale9Scale();
+        }
+        else
+        {
+            Sprite* spriteRenderer = _barRenderer->getSprite();
+            Rect rect = spriteRenderer->getTextureRect();
+            rect.size.width = _barRendererTextureSize.width * res;
+            spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
+        }
+    } while (0);
 }
 
 void LoadingBar::setScale9Enabled(bool enabled)
@@ -251,7 +270,7 @@ void LoadingBar::setPercent(float percent)
     {
         percent = 0;
     }
-    if (_percent == percent && !_barRendererAdaptDirty)
+    if (_percent == percent)
     {
         return;
     }
