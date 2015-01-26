@@ -427,18 +427,19 @@ bool UILoadingBarReloadTexture::init()
         LoadingBar* loadingBar = LoadingBar::create("cocosui/slider_bar_active_9patch.png");
         loadingBar->setTag(0);
         loadingBar->ignoreContentAdaptWithSize(false);
-        loadingBar->setScale9Enabled(true);
+//        loadingBar->setScale9Enabled(true);
         loadingBar->setCapInsets(Rect(0, 0, 0, 0));
         loadingBar->setContentSize(Size(300, 13));
         loadingBar->setName("texture0");
         loadingBar->setDirection(LoadingBar::Direction::RIGHT);
-        
+        loadingBar->setPercent(70);
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
                                      widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
         
         _uiLayer->addChild(loadingBar);
         
-        auto buttonScale9 = Button::create();
+        auto buttonScale9 = Button::create("cocosui/animationbuttonnormal.png",
+                                           "cocosui/animationbuttonpressed.png");
         buttonScale9->setTitleText("ToggleScale9");
         buttonScale9->addClickEventListener([=](Ref*){
             loadingBar->setScale9Enabled(!loadingBar->isScale9Enabled());
@@ -446,7 +447,8 @@ bool UILoadingBarReloadTexture::init()
         buttonScale9->setPosition(loadingBar->getPosition() + Vec2(-50,50));
         _uiLayer->addChild(buttonScale9);
         
-        auto buttonChangeTexture = Button::create();
+        auto buttonChangeTexture = Button::create("cocosui/animationbuttonnormal.png",
+                                                  "cocosui/animationbuttonpressed.png");
         buttonChangeTexture->setTitleText("ChangeTexture");
         buttonChangeTexture->addClickEventListener([=](Ref*){
             auto name = loadingBar->getName();

@@ -193,6 +193,8 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
 
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
+    
+    this->updateProgressBar();
     _barRendererAdaptDirty = true;
 }
 
@@ -216,7 +218,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
-    this->setPercent(_percent);
+    this->updateProgressBar();
     _barRendererAdaptDirty = true;
 }
 
