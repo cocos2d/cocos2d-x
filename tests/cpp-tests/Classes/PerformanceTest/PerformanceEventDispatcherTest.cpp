@@ -140,7 +140,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     increase->setColor(Color3B(0,200,20));
     _increase = increase;
     
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height/2+15));
     addChild(menu, 1);
@@ -150,7 +150,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
     
-    auto menuLayer = new EventDispatcherBasicLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) EventDispatcherBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
     
@@ -205,7 +205,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
         auto sched = director->getScheduler();
         
         CC_PROFILER_PURGE_ALL();
-        sched->schedule(schedule_selector(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
+        sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
         
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -223,7 +223,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->unschedule(schedule_selector(PerformanceEventDispatcherScene::dumpProfilerInfo), this);
+        sched->unschedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this);
         
         this->unscheduleUpdate();
         this->_startItem->setEnabled(true);
@@ -240,7 +240,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     stop->setPosition(VisibleRect::right() + Vec2(0, -40));
     _stopItem = stop;
     
-    auto menu2 = Menu::create(toggle, start, stop, NULL);
+    auto menu2 = Menu::create(toggle, start, stop, nullptr);
     menu2->setPosition(Vec2::ZERO);
     addChild(menu2);
     
@@ -344,7 +344,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
 
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -385,7 +385,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -426,7 +426,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -464,7 +464,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -523,7 +523,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);
@@ -578,7 +578,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
             
             for (int i = 0; i < 4; ++i)
             {
-                Touch* touch = new Touch();
+                Touch* touch = new (std::nothrow) Touch();
                 touch->autorelease();
                 touch->setTouchInfo(i, rand() % 200, rand() % 200);
                 touches.push_back(touch);

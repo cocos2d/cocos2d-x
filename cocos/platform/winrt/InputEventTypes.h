@@ -27,8 +27,8 @@ THE SOFTWARE.
 #define __INPUT_EVENT_TYPES__
 
 
-namespace PhoneDirect3DXamlAppComponent
-{
+NS_CC_BEGIN
+
 
 public enum class Cocos2dEvent
 {
@@ -46,7 +46,8 @@ public enum class Cocos2dKeyEvent : int
     Enter
 };
 
-}
+NS_CC_END
+
 
 #endif // #ifndef __INPUT_EVENT_TYPES__
 

@@ -25,15 +25,16 @@
 #ifndef __TestCpp__ScrollViewReader__
 #define __TestCpp__ScrollViewReader__
 
-#include "../LayoutReader/LayoutReader.h"
+#include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
-    class ScrollViewReader : public LayoutReader
+    class CC_STUDIO_DLL ScrollViewReader : public LayoutReader
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:
         ScrollViewReader();
         virtual ~ScrollViewReader();
         
@@ -41,7 +42,13 @@ namespace cocostudio
         static void purge();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* scrollViewOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* scrollViewOptions);
+        
+        int getResourceType(std::string key);
 
     };
 }

@@ -21,12 +21,19 @@ cocos2d-x is:
 Git user attention
 -----------------------
 
-1. After cloning the repo, please execute `download-deps.py` to download and install some dependences.
+1. clone the repo from GitHub.
+
+         $ git clone git@github.com:cocos2d/cocos2d-x.git
+
+2. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
 
          $ cd cocos2d-x
          $ python download-deps.py
 
-2. Please execute `download-deps.py` once you synchronize with this repo. If there aren't any updates, it will not download dependences again.
+3. After running `download-deps.py`.
+
+         $ cd cocos2d-x
+         $ git submodule update --init
 
 How to start a new game
 -----------------------
@@ -43,21 +50,21 @@ Example:
     $ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
     $ cd NEW_PROJECTS_DIR/MyGame
 
-### Build and run new project for android ###
+### Build and run a new project for Android ###
 
     $ cocos run -p android -j 4
 
-### Build and run new project for iOS ###
+### Build and run a new project for iOS ###
 
     $ cocos run -p ios
     
-### Build and run new project for OSX ###
+### Build and run a new project for OSX ###
 
     $ cocos run -p mac
 
-### Build and run new project for linux ###
+### Build and run a new project for Linux ###
 
-if you never run cocos2d-x on linux, you need to install all dependences by the
+if you never run cocos2d-x on Linux, you need to install all dependencies by the
 script in **cocos2d/build/install-deps-linux.sh**
 
     $ cd cocos2d-x/build
@@ -76,6 +83,12 @@ Run
 
     $ cocos run -p win32
 
+### Build and run new project for Windows 8.1 and Windows Phone 8.1 ###
+
+    $ cocos new MyGame -p com.bar.foo -l cpp -d projects
+
+With the Cocos2d-x v3.3, you can create Universal App (Two projects at the same time: Windows(Tablet) and Windows Phone 8.1 )
+See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
 
 Main features
 -------------
@@ -104,27 +117,31 @@ Main features
    * Sound Engine support (CocosDenshion library) based on OpenAL
    * Integrated Slow motion/Fast forward
    * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
-   * Resolution Independence
+   * Resolution Independent
    * Language: C++, with Lua and JavaScript bindings
-   * Open Source Commercial Friendly: Compatible with open and closed source projects
+   * Open Source Commercial Friendly(MIT): Compatible with open and closed source projects
    * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
 
 Build Requirements
 ------------------
 
-* Mac OS X 10.7+, Xcode 4.6+
+* Mac OS X 10.7+, Xcode 5.1+
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 * Python 2.7.5
+* NDK r10c+ is required to build Android games
+* Windows Phone/Store 8.0 VS 2012+
+* Windows Phone/Store 8.1 VS 2013 Update 3+
 
 
 Runtime Requirements
 --------------------
   * iOS 5.0+ for iPhone / iPad games
   * Android 2.3+ for Android games
-  * Windows Phone 8+ for Windows Phone games
+  * Windows Phone 8 and 8.1 for Windows Phone games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
+  * Windows 8+ for WinRT games (Modern Apps)
 
 
 Running Tests
@@ -168,7 +185,7 @@ Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 ```
 $ cd cocos2d-x/build
 $ python ./android-build.py cpp-empty-test -p 10
-$ adb install ../tests/cpp-empty-tst/proj.android/bin/CppEmptyTest-debug.apk
+$ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
@@ -197,7 +214,7 @@ Contact us
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
-[8]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Contribution
+[8]: https://github.com/cocos2d/cocos2d-x/blob/v3/docs/CONTRIBUTE.md
 [9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"

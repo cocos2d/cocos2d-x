@@ -5,25 +5,31 @@
 -- @parent_module cc
 
 --------------------------------
+-- creates the action<br>
+-- param duration in seconds
 -- @function [parent=#JumpTo] create 
 -- @param self
--- @param #float float
--- @param #vec2_table vec2
--- @param #float float
--- @param #int int
+-- @param #float duration
+-- @param #vec2_table position
+-- @param #float height
+-- @param #int jumps
 -- @return JumpTo#JumpTo ret (return value: cc.JumpTo)
         
 --------------------------------
+-- 
 -- @function [parent=#JumpTo] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
+-- @return JumpTo#JumpTo self (return value: cc.JumpTo)
         
 --------------------------------
+-- 
 -- @function [parent=#JumpTo] clone 
 -- @param self
 -- @return JumpTo#JumpTo ret (return value: cc.JumpTo)
         
 --------------------------------
+-- 
 -- @function [parent=#JumpTo] reverse 
 -- @param self
 -- @return JumpTo#JumpTo ret (return value: cc.JumpTo)

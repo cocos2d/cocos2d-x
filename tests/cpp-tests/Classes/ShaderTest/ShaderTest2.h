@@ -40,7 +40,7 @@ protected:
     Effect();
     virtual ~Effect();
     GLProgramState *_glprogramstate;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::string _fragSource;
     EventListenerCustom* _backgroundListener;
 #endif
@@ -59,5 +59,21 @@ protected:
     EffectSprite *_sprite;
 };
 
+class EffectSpriteLamp : public ShaderTestDemo2
+{
+public:
+    CREATE_FUNC(EffectSpriteLamp);
+    EffectSpriteLamp();
+    virtual std::string subtitle() const {return "Sprite Lamp effects";}
+    //callback
+public:
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
+protected:
+    EffectSprite *_sprite;
+    Effect* _effect;
+    Sprite* _lightSprite;
+};
 
 #endif

@@ -26,147 +26,122 @@
 #define __CCMESH_H__
 
 #include <string>
-#include <vector>
 
 #include "3d/CCBundle3DData.h"
+#include "3d/CCAABB.h"
 
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
 #include "math/CCMath.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
 
-class EventListenerCustom;
-class EventCustom;
-
-class RenderMeshData
+class Texture2D;
+class MeshSkin;
+class MeshIndexData;
+class GLProgramState;
+class GLProgram;
+/** 
+ * Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
+ */
+class CC_DLL Mesh : public Ref
 {
-    friend class Mesh;
+    friend class Sprite3D;
 public:
-    RenderMeshData(): _vertexsizeBytes(0)
-    {
-    }
-    bool hasVertexAttrib(int attrib);
-    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
+    typedef std::vector<unsigned short> IndexArray;
+    /**create mesh from positions, normals, and so on, sigle SubMesh*/
+    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices);
+    /**create mesh with vertex attributes*/
+    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount){ return create(vertices, perVertexSizeInFloat, indices, attribs); }
     
-protected:
+    static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs);
     
-    int calVertexSizeBytes();
+    /** create mesh */
+    static Mesh* create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin = nullptr);
     
-    int _vertexsizeBytes;
-    ssize_t _vertexNum;
-    std::vector<float> _vertexs;
-    std::vector<unsigned short> _indices;
-    std::vector<MeshVertexAttrib> _vertexAttribs;
-};
+    /**get vertex buffer*/
+    GLuint getVertexBuffer() const;
+    /**has vertex attribute?*/
+    bool hasVertexAttrib(int attrib) const;
+    /**get mesh vertex attribute count*/
+    ssize_t getMeshVertexAttribCount() const;
+    /**get MeshVertexAttribute by index*/
+    const MeshVertexAttrib& getMeshVertexAttribute(int idx);
+    /**get per vertex size in bytes*/
+    int getVertexSizeInBytes() const;
 
-/** Mesh: TODO, add description of Mesh */
-class Mesh : public Ref
-{
-public:
-    /** Defines supported index formats. */
-    enum class IndexFormat
-    {
-        INDEX8 = GL_UNSIGNED_BYTE,
-        INDEX16 = GL_UNSIGNED_SHORT,
-    };
-
-    /** Defines supported primitive types. */
-    enum class PrimitiveType
-    {
-        TRIANGLES = GL_TRIANGLES,
-        TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-        LINES = GL_LINES,
-        LINE_STRIP = GL_LINE_STRIP,
-        POINTS = GL_POINTS
-    };
-
-    //create
-    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
+    /**texture getter and setter*/
+    void setTexture(const std::string& texPath);
+    void setTexture(Texture2D* tex);
+    Texture2D* getTexture() const { return _texture; }
     
-    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
-
-    //get vertex buffer
-    inline GLuint getVertexBuffer() const { return _vertexBuffer; }
+    /**visible getter and setter*/
+    void setVisible(bool visible);
+    bool isVisible() const { return _visible; }
     
-    //get mesh vertex attribute count
-    ssize_t getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
-    //get MeshVertexAttribute by index
-    const MeshVertexAttrib& getMeshVertexAttribute(int idx) const { return _renderdata._vertexAttribs[idx]; }
-    //has vertex attribute?
-    bool hasVertexAttrib(int attrib) { return _renderdata.hasVertexAttrib(attrib); }
-    //get per vertex size in bytes
-    int getVertexSizeInBytes() const { return _renderdata._vertexsizeBytes; }
+    /**skin getter */
+    MeshSkin* getSkin() const { return _skin; }
     
-    PrimitiveType getPrimitiveType() const { return _primitiveType; }
-    ssize_t getIndexCount() const { return _indexCount; }
-    IndexFormat getIndexFormat() const { return _indexFormat; }
-    GLuint getIndexBuffer() const {return _indexBuffer; }
+    /**mesh index data getter */
+    MeshIndexData* getMeshIndexData() const { return _meshIndexData; }
     
-    //build vertex buffer from renderdata
-    void restore();
+    /**get GLProgramState*/
+    GLProgramState* getGLProgramState() const { return _glProgramState; }
+    
+    /**name getter */
+    const std::string& getName() const { return _name; }
+    
+    void setBlendFunc(const BlendFunc &blendFunc);
+    const BlendFunc &getBlendFunc() const;
+    
+    /** get primitive type*/
+    GLenum getPrimitiveType() const;
+    /**get index count*/
+    ssize_t getIndexCount() const;
+    /**get index format*/
+    GLenum getIndexFormat() const;
+    /**get index buffer*/
+    GLuint getIndexBuffer() const;
+    
+    /**get AABB*/
+    const AABB& getAABB() const { return _aabb; }
 
 CC_CONSTRUCTOR_ACCESS:
     
     Mesh();
     virtual ~Mesh();
-    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
     
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount);
+    GLProgram* getDefaultGLProgram(bool textured);
+    
+    void setGLProgramState(GLProgramState* glProgramState);
+    
+    MeshCommand& getMeshCommand() { return _meshCommand; }
 
-    //build buffer
-    void buildBuffer();
-    void cleanAndFreeBuffers();
-
+    /**skin setter*/
+    void setSkin(MeshSkin* skin);
+    /**Mesh index data setter*/
+    void setMeshIndexData(MeshIndexData* indexdata);
+    /**name setter*/
+    void setName(const std::string& name) { _name = name; }
+ 
+    void calcuateAABB();
+    
+    void bindMeshCommand();
 protected:
-    PrimitiveType _primitiveType;
-    IndexFormat _indexFormat;
-    GLuint _vertexBuffer;
-    GLuint _indexBuffer;
-    ssize_t _indexCount;
-
-    RenderMeshData _renderdata;
-};
-
-/**
- * MeshCache
- */
-class MeshCache
-{
-public:
-    static MeshCache* getInstance();
-    static void destroyInstance();
+    Texture2D* _texture;  //texture that submesh is using
+    MeshSkin*  _skin;     //skin
+    bool       _visible; // is the submesh visible
+    bool       _isTransparent; // is this mesh transparent, it is a property of material in fact
     
-    Mesh* getMesh(const std::string& key) const;
-    
-    bool addMesh(const std::string& key, Mesh* mesh);
-    
-    void removeAllMeshes();
-
-    void removeUnusedMesh();
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    void listenBackToForeground(EventCustom* event);
-#endif
-    
-CC_CONSTRUCTOR_ACCESS:
-    
-    MeshCache();
-    ~MeshCache();
-    
-protected:
-    
-    static MeshCache* _cacheInstance;
-    
-    std::unordered_map<std::string, Mesh*> _meshes;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    EventListenerCustom* _backToForegroundlistener;
-#endif
+    std::string  _name;
+    MeshIndexData*     _meshIndexData;
+    GLProgramState* _glProgramState;
+    MeshCommand     _meshCommand;
+    BlendFunc       _blend;
+    AABB         _aabb;
+    std::function<void()> _visibleChanged;
 };
 
 NS_CC_END
 
-#endif // __CCMESH_H_
+#endif // __CCMESH_H__

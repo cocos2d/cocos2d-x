@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "base/ccUtils.h"
 
 #include "tinyxml2.h"
 
@@ -182,7 +183,7 @@ void DataReaderHelper::loadData()
         }
 
         // generate data info
-        DataInfo *pDataInfo = new DataInfo();
+        DataInfo *pDataInfo = new (std::nothrow) DataInfo();
         pDataInfo->asyncStruct = pAsyncStruct;
         pDataInfo->filename = pAsyncStruct->filename;
         pDataInfo->baseFilePath = pAsyncStruct->baseFilePath;
@@ -220,7 +221,7 @@ DataReaderHelper *DataReaderHelper::getInstance()
 {
     if(!_dataReaderHelper)
     {
-        _dataReaderHelper = new DataReaderHelper();
+        _dataReaderHelper = new (std::nothrow) DataReaderHelper();
     }
 
     return _dataReaderHelper;
@@ -301,9 +302,9 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     // Read content from file
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-    bool isbinarysrc = str==".csb";
+    bool isbinaryfilesrc = str==".csb";
     std::string filemode("r");
-    if(isbinarysrc)
+    if(isbinaryfilesrc)
         filemode += "b";
     ssize_t filesize;
     
@@ -324,12 +325,12 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
-    else if(str == ".csb")
+    else if(isbinaryfilesrc)
     {
         DataReaderHelper::addDataFromBinaryCache(contentStr.c_str(),&dataInfo);
     }
 
-	CC_SAFE_DELETE_ARRAY(pBytes);
+	free(pBytes);
 }
 
 void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Ref *target, SEL_SCHEDULE selector)
@@ -385,7 +386,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
     if (0 == _asyncRefCount)
     {
-        Director::getInstance()->getScheduler()->schedule(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
+        Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
     }
 
     ++_asyncRefCount;
@@ -397,7 +398,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     }
 
     // generate async struct
-    AsyncStruct *data = new AsyncStruct();
+    AsyncStruct *data = new (std::nothrow) AsyncStruct();
     data->filename = filePath;
     data->baseFilePath = basefilePath;
     data->target = target;
@@ -419,7 +420,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
         filereadmode += "b";
     }
     ssize_t size;
-    // XXX fileContent is being leaked
+    // FIXME: fileContent is being leaked
     
     _dataReaderHelper->_getFileMutex.lock();
     unsigned char *pBytes = FileUtils::getInstance()->getFileData(fullPath.c_str() , filereadmode.c_str(), &size);
@@ -428,7 +429,9 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 	Data bytecpy;
     bytecpy.copy(pBytes, size);
     data->fileContent = std::string((const char*)bytecpy.getBytes(), size);
-    CC_SAFE_DELETE_ARRAY(pBytes);
+
+    // fix memory leak for v3.3
+    free(pBytes);
     
     if (str == ".xml")
     {
@@ -438,7 +441,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     {
         data->configType = CocoStudio_JSON;
     }
-    else if(str == ".csb")
+    else if(isbinaryfilesrc)
     {
         data->configType = CocoStudio_Binary;
     }
@@ -474,7 +477,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
         {
             _getFileMutex.lock();
-            ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str());
+            ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str(), pDataInfo->filename.c_str());
             _getFileMutex.unlock();
         }
 
@@ -482,7 +485,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         {
             std::string configPath = pDataInfo->configFileQueue.front();
             _getFileMutex.lock();
-            ArmatureDataManager::getInstance()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str());
+            ArmatureDataManager::getInstance()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str(),pDataInfo->filename.c_str());
             _getFileMutex.unlock();
             pDataInfo->configFileQueue.pop();
         }
@@ -506,7 +509,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         if (0 == _asyncRefCount)
         {
             _asyncRefTotalCount = 0;
-            Director::getInstance()->getScheduler()->unschedule(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this);
+            Director::getInstance()->getScheduler()->unschedule(CC_SCHEDULE_SELECTOR(DataReaderHelper::addDataAsyncCallBack), this);
         }
     }
 }
@@ -613,7 +616,7 @@ void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInf
 
 ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo)
 {
-    ArmatureData *armatureData = new ArmatureData();
+    ArmatureData *armatureData = new (std::nothrow) ArmatureData();
     armatureData->init();
 
     armatureData->name = armatureXML->Attribute(A_NAME);
@@ -654,7 +657,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
 
 BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXml, DataInfo *dataInfo)
 {
-    BoneData *boneData = new BoneData();
+    BoneData *boneData = new (std::nothrow) BoneData();
     boneData->init();
 
     std::string name = boneXML->Attribute(A_NAME);
@@ -690,19 +693,19 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displayXM
     {
         if(!_isArmature)
         {
-            displayData = new SpriteDisplayData();
+            displayData = new (std::nothrow) SpriteDisplayData();
             displayData->displayType  = CS_DISPLAY_SPRITE;
         }
         else
         {
-            displayData = new ArmatureDisplayData();
+            displayData = new (std::nothrow) ArmatureDisplayData();
             displayData->displayType  = CS_DISPLAY_ARMATURE;
         }
 
     }
     else
     {
-        displayData = new SpriteDisplayData();
+        displayData = new (std::nothrow) SpriteDisplayData();
         displayData->displayType  = CS_DISPLAY_SPRITE;
     }
 
@@ -750,7 +753,7 @@ AnimationData *DataReaderHelper::decodeAnimation(tinyxml2::XMLElement *animation
 
 MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData, DataInfo *dataInfo)
 {
-    MovementData *movementData = new MovementData();
+    MovementData *movementData = new (std::nothrow) MovementData();
 
     const char *movName = movementXML->Attribute(A_NAME);
     movementData->name = movName;
@@ -837,7 +840,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
 
 MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, BoneData *boneData, DataInfo *dataInfo)
 {
-    MovementBoneData *movBoneData = new MovementBoneData();
+    MovementBoneData *movBoneData = new (std::nothrow) MovementBoneData();
     movBoneData->init();
 
     float scale, delay;
@@ -944,7 +947,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 
     //
-    FrameData *frameData = new FrameData();
+    FrameData *frameData = new (std::nothrow) FrameData();
     frameData->copy((FrameData *)movBoneData->frameList.back());
     frameData->frameID = movBoneData->duration;
     movBoneData->addFrameData(frameData);
@@ -958,7 +961,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
     float x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y = 0, tweenRotate = 0;
     int duration = 0, displayIndex = 0, zOrder = 0, tweenEasing = 0, blendType = 0;
 
-    FrameData *frameData = new FrameData();
+    FrameData *frameData = new (std::nothrow) FrameData();
 
     if(frameXML->Attribute(A_MOVEMENT) != nullptr)
     {
@@ -1049,7 +1052,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
         {
         case BLEND_NORMAL:
             {
-                frameData->blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+                frameData->blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
             }
             break;
         case BLEND_ADD:
@@ -1153,7 +1156,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
 
 TextureData *DataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXML, DataInfo *dataInfo)
 {
-    TextureData *textureData = new TextureData();
+    TextureData *textureData = new (std::nothrow) TextureData();
     textureData->init();
 
     if( textureXML->Attribute(A_NAME) != nullptr)
@@ -1199,7 +1202,7 @@ TextureData *DataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXML, D
 
 ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo)
 {
-    ContourData *contourData = new ContourData();
+    ContourData *contourData = new (std::nothrow) ContourData();
     contourData->init();
 
     tinyxml2::XMLElement *vertexDataXML = contourXML->FirstChildElement(CONTOUR_VERTEX);
@@ -1258,7 +1261,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData);
+        ArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
         armatureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1277,7 +1280,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData);
+        ArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
         animationData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1296,7 +1299,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         {
             _dataReaderHelper->_addDataMutex.lock();
         }
-        ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData);
+        ArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
         textureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1311,7 +1314,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
         length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
         for (int i = 0; i < length; i++)
         {
-			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
+			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? nullptr : json[CONFIG_FILE_PATH][i].GetString();
             if (path == nullptr)
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
@@ -1329,8 +1332,10 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
             {
                 std::string plistPath = filePath + ".plist";
                 std::string pngPath =  filePath + ".png";
+                ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(dataInfo->baseFilePath + plistPath);
+                if (dict.find("particleLifespan") != dict.end()) continue;
 
-                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str());
+                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
             }
         }
     }
@@ -1338,7 +1343,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
 
 ArmatureData *DataReaderHelper::decodeArmature(const rapidjson::Value& json, DataInfo *dataInfo)
 {
-    ArmatureData *armatureData = new ArmatureData();
+    ArmatureData *armatureData = new (std::nothrow) ArmatureData();
     armatureData->init();
 
 	const char *name = DICTOOL->getStringValue_json(json, A_NAME);
@@ -1364,7 +1369,7 @@ ArmatureData *DataReaderHelper::decodeArmature(const rapidjson::Value& json, Dat
 
 BoneData *DataReaderHelper::decodeBone(const rapidjson::Value& json, DataInfo *dataInfo)
 {
-    BoneData *boneData = new BoneData();
+    BoneData *boneData = new (std::nothrow) BoneData();
     boneData->init();
 
     decodeNode(boneData, json, dataInfo);
@@ -1405,7 +1410,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
     {
     case CS_DISPLAY_SPRITE:
     {
-        displayData = new SpriteDisplayData();
+        displayData = new (std::nothrow) SpriteDisplayData();
 
 		const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
         if(name != nullptr)
@@ -1436,7 +1441,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
     break;
     case CS_DISPLAY_ARMATURE:
     {
-        displayData = new ArmatureDisplayData();
+        displayData = new (std::nothrow) ArmatureDisplayData();
 
         const char *name = DICTOOL->getStringValue_json(json, A_NAME);
         if(name != nullptr)
@@ -1447,7 +1452,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
     break;
     case CS_DISPLAY_PARTICLE:
     {
-        displayData = new ParticleDisplayData();
+        displayData = new (std::nothrow) ParticleDisplayData();
 
         const char *plist = DICTOOL->getStringValue_json(json, A_PLIST);
         if(plist != nullptr)
@@ -1464,7 +1469,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
     }
     break;
     default:
-        displayData = new SpriteDisplayData();
+        displayData = new (std::nothrow) SpriteDisplayData();
 
         break;
     }
@@ -1477,7 +1482,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
 
 AnimationData *DataReaderHelper::decodeAnimation(const rapidjson::Value& json, DataInfo *dataInfo)
 {
-    AnimationData *aniData = new AnimationData();
+    AnimationData *aniData = new (std::nothrow) AnimationData();
 
     const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != nullptr)
@@ -1501,7 +1506,7 @@ AnimationData *DataReaderHelper::decodeAnimation(const rapidjson::Value& json, D
 
 MovementData *DataReaderHelper::decodeMovement(const rapidjson::Value& json, DataInfo *dataInfo)
 {
-    MovementData *movementData = new MovementData();
+    MovementData *movementData = new (std::nothrow) MovementData();
 
 	movementData->loop = DICTOOL->getBooleanValue_json(json, A_LOOP, true);
 	movementData->durationTween = DICTOOL->getIntValue_json(json, A_DURATION_TWEEN, 0);
@@ -1537,7 +1542,7 @@ MovementData *DataReaderHelper::decodeMovement(const rapidjson::Value& json, Dat
 
 MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& json, DataInfo *dataInfo)
 {
-    MovementBoneData *movementBoneData = new MovementBoneData();
+    MovementBoneData *movementBoneData = new (std::nothrow) MovementBoneData();
     movementBoneData->init();
 
 	movementBoneData->delay = DICTOOL->getFloatValue_json(json, A_MOVEMENT_DELAY);
@@ -1593,7 +1598,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
     {
         if (movementBoneData->frameList.size() > 0)
         {
-            FrameData *frameData = new FrameData();
+            FrameData *frameData = new (std::nothrow) FrameData();
             frameData->copy((FrameData *)movementBoneData->frameList.back());
             movementBoneData->addFrameData(frameData);
             frameData->release();
@@ -1607,14 +1612,14 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
 
 FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo *dataInfo)
 {
-    FrameData *frameData = new FrameData();
+    FrameData *frameData = new (std::nothrow) FrameData();
 
     decodeNode(frameData, json, dataInfo);
 
 	frameData->tweenEasing = (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, cocos2d::tweenfunc::Linear));
 	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
-	frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, BlendFunc::ALPHA_NON_PREMULTIPLIED.src));
-	frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst));
+	frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, BlendFunc::ALPHA_PREMULTIPLIED.src));
+	frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, BlendFunc::ALPHA_PREMULTIPLIED.dst));
 	frameData->isTween = DICTOOL->getBooleanValue_json(json, A_TWEEN_FRAME, true);
 
 	const char *event =  DICTOOL->getStringValue_json(json, A_EVENT);
@@ -1649,7 +1654,7 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
 
 TextureData *DataReaderHelper::decodeTexture(const rapidjson::Value& json)
 {
-    TextureData *textureData = new TextureData();
+    TextureData *textureData = new (std::nothrow) TextureData();
     textureData->init();
 
 	const char *name = DICTOOL->getStringValue_json(json, A_NAME);
@@ -1677,7 +1682,7 @@ TextureData *DataReaderHelper::decodeTexture(const rapidjson::Value& json)
 
 ContourData *DataReaderHelper::decodeContour(const rapidjson::Value& json)
 {
-    ContourData *contourData = new ContourData();
+    ContourData *contourData = new (std::nothrow) ContourData();
 	contourData->init();
 
 	int length = DICTOOL->getArrayCount_json(json, VERTEX_POINT);
@@ -1750,7 +1755,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
             if (rapidjson::kObjectType  == tType)
             {
-                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray();
+                stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
                 int nCount = tpRootCocoNode->GetChildNum();
                 
                 dataInfo->contentScale = 1.0f;
@@ -1762,12 +1767,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     key = tpChildArray[i].GetName(&tCocoLoader);
                     if (key.compare(CONTENT_SCALE) == 0)
                     {
-                        std::string value = tpChildArray[i].GetValue();
-                        dataInfo->contentScale = atof(value.c_str());
+                        std::string value = tpChildArray[i].GetValue(&tCocoLoader);
+                        dataInfo->contentScale = utils::atof(value.c_str());
                     }
                     else if ( 0 == key.compare(ARMATURE_DATA))
                     {
-                        pDataArray = tpChildArray[i].GetChildArray();
+                        pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                         length = tpChildArray[i].GetChildNum();
                         ArmatureData * armatureData;
                         for (int ii = 0; ii < length; ++ii)
@@ -1787,7 +1792,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     }
                     else if ( 0 == key.compare(ANIMATION_DATA))
                     {
-                        pDataArray = tpChildArray[i].GetChildArray();
+                        pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                         length = tpChildArray[i].GetChildNum();
                         AnimationData *animationData;
                         for (int ii = 0; ii < length; ++ii)
@@ -1807,7 +1812,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     }
                     else if (key.compare(TEXTURE_DATA) == 0)
                     {
-                        pDataArray = tpChildArray[i].GetChildArray();
+                        pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
                         length = tpChildArray[i].GetChildNum();
                         for (int ii = 0; ii < length; ++ii)
                         {
@@ -1837,10 +1842,10 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             continue;
                         }
                         length = tpChildArray[i].GetChildNum();
-                        stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray();
+                        stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray(&tCocoLoader);
                         for (int ii = 0; ii < length; ii++)
                         {
-                            const char *path = pConfigFilePath[ii].GetValue();
+                            const char *path = pConfigFilePath[ii].GetValue(&tCocoLoader);
                             if (path == nullptr)
                             {
                                 CCLOG("load CONFIG_FILE_PATH error.");
@@ -1870,20 +1875,20 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     ArmatureData* DataReaderHelper::decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        ArmatureData *armatureData = new ArmatureData();
+        ArmatureData *armatureData = new (std::nothrow) ArmatureData();
         armatureData->init();
-        stExpCocoNode *pAramtureDataArray = cocoNode->GetChildArray();
-        const char *name = pAramtureDataArray[2].GetValue(); //DICTOOL->getStringValue_json(json, A_NAME);
+        stExpCocoNode *pAramtureDataArray = cocoNode->GetChildArray(cocoLoader);
+        const char *name = pAramtureDataArray[2].GetValue(cocoLoader); //DICTOOL->getStringValue_json(json, A_NAME);
         if(name != nullptr)
         {
             armatureData->name = name;
         }
         
-        float version = atof(pAramtureDataArray[1].GetValue());
+        float version = utils::atof(pAramtureDataArray[1].GetValue(cocoLoader));
         dataInfo->cocoStudioVersion = armatureData->dataVersion = version; //DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
         
         int length = pAramtureDataArray[3].GetChildNum(); //DICTOOL->getArrayCount_json(json, BONE_DATA, 0);
-        stExpCocoNode *pBoneChildren = pAramtureDataArray[3].GetChildArray();
+        stExpCocoNode *pBoneChildren = pAramtureDataArray[3].GetChildArray(cocoLoader);
         stExpCocoNode* child;
         for (int i = 0; i < length; i++)
         {
@@ -1899,13 +1904,13 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     BoneData* DataReaderHelper::decodeBone(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        BoneData *boneData = new BoneData();
+        BoneData *boneData = new (std::nothrow) BoneData();
         boneData->init();
         
         decodeNode(boneData, cocoLoader, cocoNode, dataInfo);
         
         int length = cocoNode->GetChildNum();
-        stExpCocoNode *pBoneChildren = cocoNode->GetChildArray();
+        stExpCocoNode *pBoneChildren = cocoNode->GetChildArray(cocoLoader);
         stExpCocoNode* child;
         const char *str = nullptr;
         std::string key;
@@ -1913,7 +1918,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             child = &pBoneChildren[i];
             key = child->GetName(cocoLoader);
-            str = child->GetValue();
+            str = child->GetValue(cocoLoader);
             if (key.compare(A_NAME) == 0)
             {
                 //DICTOOL->getStringValue_json(json, A_NAME);
@@ -1933,7 +1938,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             else if (key.compare(DISPLAY_DATA) == 0)
             {
                 int count = child->GetChildNum();
-                stExpCocoNode *pDisplayData = child->GetChildArray();
+                stExpCocoNode *pDisplayData = child->GetChildArray(cocoLoader);
                 for (int ii = 0; ii < count; ++ii)
                 {
                     DisplayData *displayData = decodeBoneDisplay(cocoLoader, &pDisplayData[ii], dataInfo);
@@ -1950,16 +1955,16 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     DisplayData* DataReaderHelper::decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        stExpCocoNode* children = cocoNode->GetChildArray();
+        stExpCocoNode* children = cocoNode->GetChildArray(cocoLoader);
         stExpCocoNode* child = &children[1];
         const char *str = nullptr;
         
         std::string key = child->GetName(cocoLoader);
-        str = child->GetValue();
+        str = child->GetValue(cocoLoader);
         DisplayData *displayData = nullptr;
         if (key.compare(A_DISPLAY_TYPE) == 0)
         {
-            str = child->GetValue();
+            str = child->GetValue(cocoLoader);
             DisplayType displayType = (DisplayType)(atoi(str));
             
             int length = 0;
@@ -1967,14 +1972,14 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             {
                 case CS_DISPLAY_SPRITE:
                 {
-                    displayData = new SpriteDisplayData();
+                    displayData = new (std::nothrow) SpriteDisplayData();
                     
-                    const char *name =  children[0].GetValue();
+                    const char *name =  children[0].GetValue(cocoLoader);
                     if(name != nullptr)
                     {
                         ((SpriteDisplayData *)displayData)->displayName = name;
                     }
-                    stExpCocoNode *pSkinDataArray = children[2].GetChildArray();
+                    stExpCocoNode *pSkinDataArray = children[2].GetChildArray(cocoLoader);
                     if (pSkinDataArray != nullptr)
                     {
                         stExpCocoNode *pSkinData = &pSkinDataArray[0];
@@ -1982,34 +1987,34 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                         {
                             SpriteDisplayData *sdd = (SpriteDisplayData *)displayData;
                             length = pSkinData->GetChildNum();
-                            stExpCocoNode *SkinDataValue = pSkinData->GetChildArray();
+                            stExpCocoNode *SkinDataValue = pSkinData->GetChildArray(cocoLoader);
                             for (int i = 0; i < length; ++i)
                             {
                                 key = SkinDataValue[i].GetName(cocoLoader);
-                                str = SkinDataValue[i].GetValue();
+                                str = SkinDataValue[i].GetValue(cocoLoader);
                                 if (key.compare(A_X) == 0)
                                 {
-                                    sdd->skinData.x = atof(str) * s_PositionReadScale;
+                                    sdd->skinData.x = utils::atof(str) * s_PositionReadScale;
                                 }
                                 else if (key.compare(A_Y) == 0)
                                 {
-                                    sdd->skinData.y = atof(str) * s_PositionReadScale;
+                                    sdd->skinData.y = utils::atof(str) * s_PositionReadScale;
                                 }
                                 else if (key.compare(A_SCALE_X) == 0)
                                 {
-                                    sdd->skinData.scaleX = atof(str);
+                                    sdd->skinData.scaleX = utils::atof(str);
                                 }
                                 else if (key.compare(A_SCALE_Y) == 0)
                                 {
-                                    sdd->skinData.scaleY = atof(str);
+                                    sdd->skinData.scaleY = utils::atof(str);
                                 }
                                 else if (key.compare(A_SKEW_X) == 0)
                                 {
-                                    sdd->skinData.skewX = atof(str);
+                                    sdd->skinData.skewX = utils::atof(str);
                                 }
                                 else if (key.compare(A_SKEW_Y) == 0)
                                 {
-                                    sdd->skinData.skewY = atof(str);
+                                    sdd->skinData.skewY = utils::atof(str);
                                 }
                             }
                             
@@ -2022,9 +2027,9 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     break;
                 case CS_DISPLAY_ARMATURE:
                 {
-                    displayData = new ArmatureDisplayData();
+                    displayData = new (std::nothrow) ArmatureDisplayData();
                     
-                    const char *name = cocoNode[0].GetValue();
+                    const char *name = cocoNode[0].GetValue(cocoLoader);
                     if(name != nullptr)
                     {
                         ((ArmatureDisplayData *)displayData)->displayName = name;
@@ -2033,13 +2038,13 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     break;
                 case CS_DISPLAY_PARTICLE:
                 {
-                    displayData = new ParticleDisplayData();
+                    displayData = new (std::nothrow) ParticleDisplayData();
                     length = cocoNode->GetChildNum();
-                    stExpCocoNode *pDisplayData = cocoNode->GetChildArray();
+                    stExpCocoNode *pDisplayData = cocoNode->GetChildArray(cocoLoader);
                     for (int i = 0; i < length; ++i)
                     {
                         key = pDisplayData[i].GetName(cocoLoader);
-                        str = pDisplayData[i].GetValue();
+                        str = pDisplayData[i].GetValue(cocoLoader);
                         if (key.compare(A_PLIST) == 0)
                         {
                             const char *plist = str;
@@ -2059,7 +2064,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 }
                     break;
                 default:
-                    displayData = new SpriteDisplayData();
+                    displayData = new (std::nothrow) SpriteDisplayData();
                     
                     break;
             }
@@ -2070,10 +2075,10 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     AnimationData* DataReaderHelper::decodeAnimation(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        AnimationData *aniData = new AnimationData();
+        AnimationData *aniData = new (std::nothrow) AnimationData();
         
         int length = cocoNode->GetChildNum();
-        stExpCocoNode *pAnimationData = cocoNode->GetChildArray();
+        stExpCocoNode *pAnimationData = cocoNode->GetChildArray(cocoLoader);
         const char *str = nullptr;
         std::string key;
         stExpCocoNode* child;
@@ -2082,7 +2087,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             child = &pAnimationData[i];
             key = child->GetName(cocoLoader);
-            str = child->GetValue();
+            str = child->GetValue(cocoLoader);
             if (key.compare(A_NAME) == 0)
             {
                 if(str != nullptr)
@@ -2093,7 +2098,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             else if (key.compare(MOVEMENT_DATA) == 0)
             {
                 int movcount = child->GetChildNum();
-                stExpCocoNode* movArray =  child->GetChildArray();
+                stExpCocoNode* movArray =  child->GetChildArray(cocoLoader);
                 for( int movnum =0; movnum <movcount; movnum++)
                 {
                     movementData = decodeMovement(cocoLoader, &movArray[movnum], dataInfo);
@@ -2107,11 +2112,11 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
 
     MovementData* DataReaderHelper::decodeMovement(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        MovementData *movementData = new MovementData();
+        MovementData *movementData = new (std::nothrow) MovementData();
         movementData->scale = 1.0f;
         
         int length =  cocoNode->GetChildNum();
-        stExpCocoNode *pMoveDataArray = cocoNode->GetChildArray();
+        stExpCocoNode *pMoveDataArray = cocoNode->GetChildArray(cocoLoader);
         
         const char *str = nullptr;
         std::string key;
@@ -2120,7 +2125,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             child = &pMoveDataArray[i];
             key = child->GetName(cocoLoader);
-            str = child->GetValue();
+            str = child->GetValue(cocoLoader);
             if (key.compare(A_NAME) == 0)
             {
                 if(str != nullptr)
@@ -2168,7 +2173,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 movementData->scale = 1.0;
                 if(str != nullptr)
                 {
-                    movementData->scale = atof(str);
+                    movementData->scale = utils::atof(str);
                 }
             }
             else if (key.compare(A_TWEEN_EASING) == 0)
@@ -2182,7 +2187,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             else if (key.compare(MOVEMENT_BONE_DATA) == 0)
             {
                 int count = child->GetChildNum();
-                stExpCocoNode *pMoveBoneData = child->GetChildArray();
+                stExpCocoNode *pMoveBoneData = child->GetChildArray(cocoLoader);
                 MovementBoneData *movementBoneData;
                 for (int ii = 0; ii < count; ++ii)
                 {
@@ -2197,18 +2202,18 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     MovementBoneData* DataReaderHelper::decodeMovementBone(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        MovementBoneData *movementBoneData = new MovementBoneData();
+        MovementBoneData *movementBoneData = new (std::nothrow) MovementBoneData();
         movementBoneData->init();
         
         int length = cocoNode->GetChildNum();
-        stExpCocoNode *pMovementBoneDataArray = cocoNode->GetChildArray();
+        stExpCocoNode *pMovementBoneDataArray = cocoNode->GetChildArray(cocoLoader);
         stExpCocoNode* movebonechild;
         const char *str = nullptr;
         for (int i = 0; i < length; ++i)
         {
             movebonechild = &pMovementBoneDataArray[i];
             std::string key = movebonechild->GetName(cocoLoader);
-            str = movebonechild->GetValue();
+            str = movebonechild->GetValue(cocoLoader);
             if (key.compare(A_NAME) == 0)
             {
                 if(str != nullptr)
@@ -2220,13 +2225,13 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             {
                 if(str != nullptr)
                 {
-                    movementBoneData->delay = atof(str);
+                    movementBoneData->delay = utils::atof(str);
                 }
             }
             else if (key.compare(FRAME_DATA) == 0)
             {
                 int count =movebonechild->GetChildNum();
-                stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray();
+                stExpCocoNode *pFrameDataArray = movebonechild->GetChildArray(cocoLoader);
                 for (int ii = 0; ii < count; ++ii)
                 {
                     FrameData *frameData = decodeFrame(cocoLoader, &pFrameDataArray[ii], dataInfo);
@@ -2278,7 +2283,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             if (movementBoneData->frameList.size() > 0)
             {
-                FrameData *frameData = new FrameData();
+                FrameData *frameData = new (std::nothrow) FrameData();
                 frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);
                 frameData->release();
@@ -2291,17 +2296,17 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     FrameData* DataReaderHelper::decodeFrame(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, DataInfo *dataInfo)
     {
-        FrameData *frameData = new FrameData();
+        FrameData *frameData = new (std::nothrow) FrameData();
         
         decodeNode(frameData, cocoLoader, cocoNode, dataInfo);
         
         int length = cocoNode->GetChildNum();
-        stExpCocoNode *pFrameDataArray = cocoNode->GetChildArray();
+        stExpCocoNode *pFrameDataArray = cocoNode->GetChildArray(cocoLoader);
         const char *str = nullptr;
         for (int i = 0; i < length; ++i)
         {
             std::string key = pFrameDataArray[i].GetName(cocoLoader);
-            str = pFrameDataArray[i].GetValue();
+            str = pFrameDataArray[i].GetValue(cocoLoader);
             if (key.compare(A_TWEEN_EASING) == 0)
             {
                 frameData->tweenEasing = cocos2d::tweenfunc::Linear;
@@ -2376,13 +2381,13 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 if (count != 0 )
                 {
                     frameData->easingParams = new float[count];
-                    stExpCocoNode *pFrameData = pFrameDataArray[i].GetChildArray();
+                    stExpCocoNode *pFrameData = pFrameDataArray[i].GetChildArray(cocoLoader);
                     for (int ii = 0; ii < count; ++ii)
                     {
-                        str = pFrameData[ii].GetValue();
+                        str = pFrameData[ii].GetValue(cocoLoader);
                         if (str != nullptr)
                         {
-                            frameData->easingParams[ii] = atof(str);
+                            frameData->easingParams[ii] = utils::atof(str);
                         }
                     }
                 }
@@ -2395,7 +2400,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     TextureData* DataReaderHelper::decodeTexture(CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
-        TextureData *textureData = new TextureData();
+        TextureData *textureData = new (std::nothrow) TextureData();
         textureData->init();
         
         if(cocoNode == nullptr)
@@ -2404,12 +2409,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         }
         
         int length =  cocoNode->GetChildNum();
-        stExpCocoNode *pTextureDataArray = cocoNode->GetChildArray();
+        stExpCocoNode *pTextureDataArray = cocoNode->GetChildArray(cocoLoader);
         const char *str = nullptr;
         for (int i = 0; i < length; ++i)
         {
             std::string key = pTextureDataArray[i].GetName(cocoLoader);
-            str = pTextureDataArray[i].GetValue();
+            str = pTextureDataArray[i].GetValue(cocoLoader);
             if (key.compare(A_NAME) == 0)
             {
                 if(str != nullptr)
@@ -2421,34 +2426,34 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             {
                 if(str != nullptr)
                 {
-                    textureData->width = atof(str);
+                    textureData->width = utils::atof(str);
                 }
             }
             else if (key.compare(A_HEIGHT) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
-                    textureData->height = atof(str);
+                    textureData->height = utils::atof(str);
                 }
             }
             else if (key.compare(A_PIVOT_X) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
-                    textureData->pivotX = atof(str);
+                    textureData->pivotX = utils::atof(str);
                 }
             }
             else if (key.compare(A_PIVOT_Y) == 0)
             {
-                if(str != NULL)
+                if(str != nullptr)
                 {
-                    textureData->pivotY = atof(str);
+                    textureData->pivotY = utils::atof(str);
                 }
             }
             else if (key.compare(CONTOUR_DATA) == 0)
             {
                 int count = pTextureDataArray[i].GetChildNum();
-                stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray();
+                stExpCocoNode *pContourArray = pTextureDataArray[i].GetChildArray(cocoLoader);
                 for (int ii = 0; ii < count; ++ii)
                 {
                     ContourData *contourData = decodeContour(cocoLoader, &pContourArray[ii]);
@@ -2462,27 +2467,27 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     
     ContourData* DataReaderHelper::decodeContour(CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
-        ContourData *contourData = new ContourData();
+        ContourData *contourData = new (std::nothrow) ContourData();
         contourData->init();
         
         int length = cocoNode->GetChildNum();
-        stExpCocoNode *verTexPointArray = cocoNode->GetChildArray();
+        stExpCocoNode *verTexPointArray = cocoNode->GetChildArray(cocoLoader);
         const char *str = nullptr;
         for (int i = 0; i < length; ++i)
         {
             std::string key = verTexPointArray[i].GetName(cocoLoader);
-            str = verTexPointArray[i].GetValue();
+            str = verTexPointArray[i].GetValue(cocoLoader);
             if (key.compare(VERTEX_POINT) == 0)
             {
                 int count = verTexPointArray[i].GetChildNum();
-                stExpCocoNode *pVerTexPointArray = verTexPointArray[i].GetChildArray();
+                stExpCocoNode *pVerTexPointArray = verTexPointArray[i].GetChildArray(cocoLoader);
                 stExpCocoNode *pVerTexPoint;
                 for (int ii = count - 1; ii >= 0; --ii)
                 {
-                    pVerTexPoint = pVerTexPointArray[ii].GetChildArray();
+                    pVerTexPoint = pVerTexPointArray[ii].GetChildArray(cocoLoader);
                     Vec2 vertex;
-                    vertex.x = atof(pVerTexPoint[0].GetValue());
-                    vertex.y = atof(pVerTexPoint[1].GetValue());
+                    vertex.x = utils::atof(pVerTexPoint[0].GetValue(cocoLoader));
+                    vertex.y = utils::atof(pVerTexPoint[1].GetValue(cocoLoader));
                     contourData->vertexList.push_back(vertex);                }
                 break;
             }
@@ -2493,7 +2498,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
     void DataReaderHelper::decodeNode(BaseData *node, CocoLoader *cocoLoader, stExpCocoNode* cocoNode, DataInfo *dataInfo)
     {
         int length = cocoNode->GetChildNum();
-        stExpCocoNode *NodeArray = cocoNode->GetChildArray();
+        stExpCocoNode *NodeArray = cocoNode->GetChildArray(cocoLoader);
         const char *str = nullptr;
         
         bool isVersionL = dataInfo->cocoStudioVersion < VERSION_COLOR_READING;
@@ -2502,14 +2507,14 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
         {
             child = &NodeArray[i];
             std::string key = child->GetName(cocoLoader);
-            str = child->GetValue();
+            str = child->GetValue(cocoLoader);
             if (key.compare(A_X) == 0)
             {
-                node->x = atof(str) * dataInfo->contentScale;
+                node->x = utils::atof(str) * dataInfo->contentScale;
             }
             else if (key.compare(A_Y) == 0)
             {
-                node->y = atof(str) * dataInfo->contentScale;
+                node->y = utils::atof(str) * dataInfo->contentScale;
             }
             else if (key.compare(A_Z) == 0)
             {
@@ -2517,19 +2522,19 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
             }
             else if (key.compare(A_SKEW_X) == 0)
             {
-                node->skewX = atof(str);
+                node->skewX = utils::atof(str);
             }
             else if (key.compare(A_SKEW_Y) == 0)
             {
-                node->skewY = atof(str);
+                node->skewY = utils::atof(str);
             }
             else if (key.compare(A_SCALE_X) == 0)
             {
-                node->scaleX = atof(str);
+                node->scaleX = utils::atof(str);
             }
             else if (key.compare(A_SCALE_Y) == 0)
             {
-                node->scaleY = atof(str);
+                node->scaleY = utils::atof(str);
             }
             else if (key.compare(COLOR_INFO) == 0)
             {
@@ -2539,12 +2544,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                     {
                         if(child->GetChildNum() == 4)
                         {
-                            stExpCocoNode *ChildArray = child->GetChildArray();
+                            stExpCocoNode *ChildArray = child->GetChildArray(cocoLoader);
                             
-                            node->a = atoi(ChildArray[0].GetValue());
-                            node->r = atoi(ChildArray[1].GetValue());
-                            node->g = atoi(ChildArray[2].GetValue());
-                            node->b = atoi(ChildArray[3].GetValue());
+                            node->a = atoi(ChildArray[0].GetValue(cocoLoader));
+                            node->r = atoi(ChildArray[1].GetValue(cocoLoader));
+                            node->g = atoi(ChildArray[2].GetValue(cocoLoader));
+                            node->b = atoi(ChildArray[3].GetValue(cocoLoader));
                         }
                         
                     }
@@ -2566,12 +2571,12 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                 {
                     if(NodeArray[0].GetChildNum() == 4)
                     {
-                        stExpCocoNode *ChildArray = NodeArray[0].GetChildArray();
+                        stExpCocoNode *ChildArray = NodeArray[0].GetChildArray(cocoLoader);
                         
-                        node->a = atoi(ChildArray[0].GetValue());
-                        node->r = atoi(ChildArray[1].GetValue());
-                        node->g = atoi(ChildArray[2].GetValue());
-                        node->b = atoi(ChildArray[3].GetValue());
+                        node->a = atoi(ChildArray[0].GetValue(cocoLoader));
+                        node->r = atoi(ChildArray[1].GetValue(cocoLoader));
+                        node->g = atoi(ChildArray[2].GetValue(cocoLoader));
+                        node->b = atoi(ChildArray[3].GetValue(cocoLoader));
                     }
                 }
                 

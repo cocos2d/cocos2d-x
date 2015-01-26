@@ -21,8 +21,14 @@
 #ifndef MATH_MAT4_H
 #define MATH_MAT4_H
 
+#include "base/ccMacros.h"
+
 #include "math/Vec3.h"
 #include "math/Vec4.h"
+
+#ifdef __SSE__
+#include <xmmintrin.h>
+#endif
 
 NS_CC_MATH_BEGIN
 
@@ -59,7 +65,7 @@ NS_CC_MATH_BEGIN
  *
  * @see Transform
  */
-class Mat4
+class CC_DLL Mat4
 {
 public:
     // //temp add conversion
@@ -77,7 +83,14 @@ public:
     /**
      * Stores the columns of this 4x4 matrix.
      * */
+#ifdef __SSE__
+    union {
+        __m128 col[4];
+        float m[16];
+    };
+#else
     float m[16];
+#endif
 
     /**
      * Constructs a matrix initialized to the identity matrix:
@@ -750,7 +763,7 @@ public:
      *
      * @param point The point to transform and also a vector to hold the result in.
      */
-    void transformPoint(Vec3* point) const;
+    inline void transformPoint(Vec3* point) const { GP_ASSERT(point); transformVector(point->x, point->y, point->z, 1.0f, point); }
 
     /**
      * Transforms the specified point by this matrix, and stores
@@ -759,7 +772,7 @@ public:
      * @param point The point to transform.
      * @param dst A vector to store the transformed point in.
      */
-    void transformPoint(const Vec3& point, Vec3* dst) const;
+    inline void transformPoint(const Vec3& point, Vec3* dst) const { GP_ASSERT(dst); transformVector(point.x, point.y, point.z, 1.0f, dst); }
 
     /**
      * Transforms the specified vector by this matrix by

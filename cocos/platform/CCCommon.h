@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CC_COMMON_H__
 #define __CC_COMMON_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -64,7 +64,9 @@ enum class LanguageType
     PORTUGUESE,
     ARABIC,
     NORWEGIAN,
-    POLISH
+    POLISH,
+    TURKISH,
+    UKRAINIAN
 };
 
 // END of platform group

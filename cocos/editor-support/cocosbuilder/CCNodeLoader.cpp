@@ -71,7 +71,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
 // #endif
         
         // Forward properties for sub ccb files
-        if (dynamic_cast<CCBFile*>(pNode) != NULL)
+        if (dynamic_cast<CCBFile*>(pNode) != nullptr)
         {
             CCBFile *ccbNode = (CCBFile*)pNode;
             if (ccbNode->getCCBFileNode() && isExtraProp)
@@ -80,7 +80,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 
                 // Skip properties that doesn't have a value to override
                 __Array *extraPropsNames = (__Array*)pNode->getUserObject();
-                Ref* pObj = NULL;
+                Ref* pObj = nullptr;
                 bool bFound = false;
                 CCARRAY_FOREACH(extraPropsNames, pObj)
                 {
@@ -346,7 +346,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             case CCBReader::PropertyType::BLOCK_CONTROL:
             {
                 BlockControlData * blockControlData = this->parsePropTypeBlockControl(pNode, pParent, ccbReader);
-                if(setProp && blockControlData != NULL) {
+                if(setProp && blockControlData != nullptr) {
                     this->onHandlePropTypeBlockControl(pNode, pParent, propertyName.c_str(), blockControlData, ccbReader);
                 }
                 CC_SAFE_DELETE(blockControlData);
@@ -574,14 +574,14 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
     std::string spriteSheet = ccbReader->readCachedString();
     std::string spriteFile = ccbReader->readCachedString();
     
-    SpriteFrame *spriteFrame = NULL;
+    SpriteFrame *spriteFrame = nullptr;
     if (spriteFile.length() != 0)
     {
         if (spriteSheet.length() == 0)
         {
             spriteFile = ccbReader->getCCBRootPath() + spriteFile;
             Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
-            if(texture != NULL) {
+            if(texture != nullptr) {
                 Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
             }
@@ -613,13 +613,13 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     std::string animationFile = ccbReader->getCCBRootPath() + ccbReader->readCachedString();
     std::string animation = ccbReader->readCachedString();
     
-    Animation * ccAnimation = NULL;
+    Animation * ccAnimation = nullptr;
     
     // Support for stripping relative file paths, since ios doesn't currently
     // know what to do with them, since its pulling from bundle.
     // Eventually this should be handled by a client side asset manager
     // interface which figured out what resources to load.
-    // TODO Does this problem exist in C++?
+    // TODO: Does this problem exist in C++?
     animation = CCBReader::lastPathComponent(animation.c_str());
     animationFile = CCBReader::lastPathComponent(animationFile.c_str());
     
@@ -642,7 +642,7 @@ Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBRe
     }
     else 
     {
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -687,7 +687,7 @@ Color4F * NodeLoader::parsePropTypeColor4FVar(Node * pNode, Node * pParent, CCBR
     float blueVar = ccbReader->readFloat();
     float alphaVar = ccbReader->readFloat();
     
-    Color4F * colors = new Color4F[2];
+    Color4F * colors = new (std::nothrow) Color4F[2];
     colors[0].r = red;
     colors[0].g = green;
     colors[0].b = blue;
@@ -742,7 +742,7 @@ std::string NodeLoader::parsePropTypeFontTTF(Node * pNode, Node * pParent, CCBRe
 
     // String * ttfEnding = String::create(".ttf");
 
-    // TODO Fix me if it is wrong
+    // TODO: Fix me if it is wrong
     /* If the fontTTF comes with the ".ttf" extension, prepend the absolute path. 
      * System fonts come without the ".ttf" extension and do not need the path prepended. */
     /*
@@ -761,7 +761,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
 
     if(selectorTarget != CCBReader::TargetType::NONE)
     {
-        Ref*  target = NULL;
+        Ref*  target = nullptr;
         if(!ccbReader->isJSControlled())
         {
             if(selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT)
@@ -773,7 +773,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                 target = ccbReader->getOwner();
             }
             
-            if(target != NULL)
+            if(target != nullptr)
             {
                 if(selectorName.length() > 0)
                 {
@@ -781,7 +781,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                     
                     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
                     
-                    if(targetAsCCBSelectorResolver != NULL)
+                    if(targetAsCCBSelectorResolver != nullptr)
                     {
                         selMenuHandler = targetAsCCBSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName.c_str());
                     }
@@ -789,7 +789,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                     if(selMenuHandler == 0)
                     {
                         CCBSelectorResolver * ccbSelectorResolver = ccbReader->getCCBSelectorResolver();
-                        if(ccbSelectorResolver != NULL)
+                        if(ccbSelectorResolver != nullptr)
                         {
                             selMenuHandler = ccbSelectorResolver->onResolveCCBCCMenuItemSelector(target, selectorName.c_str());
                         }
@@ -798,7 +798,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                     if(selMenuHandler == 0) {
                         CCLOG("Skipping selector '%s' since no CCBSelectorResolver is present.", selectorName.c_str());
                     } else {
-                        BlockData * blockData = new BlockData();
+                        BlockData * blockData = new (std::nothrow) BlockData();
                         blockData->mSELMenuHandler = selMenuHandler;
                         
                         blockData->_target = target;
@@ -809,7 +809,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
                     CCLOG("Unexpected empty selector.");
                 }
             } else {
-                CCLOG("Unexpected NULL target for selector.");
+                CCLOG("Unexpected nullptr target for selector.");
             }
         }
         else
@@ -831,7 +831,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pParent, CCBReader * ccbReader)
@@ -844,7 +844,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
     {
         if(!ccbReader->isJSControlled())
         {
-            Ref*  target = NULL;
+            Ref*  target = nullptr;
             if(selectorTarget == CCBReader::TargetType::DOCUMENT_ROOT)
             {
                 target = ccbReader->getAnimationManager()->getRootNode();
@@ -854,7 +854,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                 target = ccbReader->getOwner();
             }
             
-            if(target != NULL)
+            if(target != nullptr)
             {
                 if(selectorName.length() > 0)
                 {
@@ -862,7 +862,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                     
                     CCBSelectorResolver * targetAsCCBSelectorResolver = dynamic_cast<CCBSelectorResolver *>(target);
                     
-                    if(targetAsCCBSelectorResolver != NULL)
+                    if(targetAsCCBSelectorResolver != nullptr)
                     {
                         selControlHandler = targetAsCCBSelectorResolver->onResolveCCBCCControlSelector(target, selectorName.c_str());
                     }
@@ -870,7 +870,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                     if(selControlHandler == 0)
                     {
                         CCBSelectorResolver * ccbSelectorResolver = ccbReader->getCCBSelectorResolver();
-                        if(ccbSelectorResolver != NULL)
+                        if(ccbSelectorResolver != nullptr)
                         {
                             selControlHandler = ccbSelectorResolver->onResolveCCBCCControlSelector(target, selectorName.c_str());
                         }
@@ -882,7 +882,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                     }
                     else
                     {
-                        BlockControlData * blockControlData = new BlockControlData();
+                        BlockControlData * blockControlData = new (std::nothrow) BlockControlData();
                         blockControlData->mSELControlHandler = selControlHandler;
                         
                         blockControlData->_target = target;
@@ -894,7 +894,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
                     CCLOG("Unexpected empty selector.");
                 }
             } else {
-                CCLOG("Unexpected NULL target for selector.");
+                CCLOG("Unexpected nullptr target for selector.");
             }
         }
         else
@@ -914,7 +914,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader * pCCBReader) {
@@ -929,7 +929,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
 
     auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(path));
     
-    CCBReader * reader = new CCBReader(pCCBReader);
+    CCBReader * reader = new (std::nothrow) CCBReader(pCCBReader);
     reader->autorelease();
     reader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
     
@@ -960,7 +960,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         reader->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(reader->getAnimationManager()->getAutoPlaySequenceId(), 0);
     }
     
-    if (reader->isJSControlled() && pCCBReader->isJSControlled() && NULL == reader->_owner)
+    if (reader->isJSControlled() && pCCBReader->isJSControlled() && nullptr == reader->_owner)
     {
         //set variables and callback to owner
         //set callback

@@ -5,24 +5,30 @@
 -- @parent_module cc
 
 --------------------------------
+-- creates the action<br>
+-- param t in seconds
 -- @function [parent=#SkewBy] create 
 -- @param self
--- @param #float float
--- @param #float float
--- @param #float float
+-- @param #float t
+-- @param #float deltaSkewX
+-- @param #float deltaSkewY
 -- @return SkewBy#SkewBy ret (return value: cc.SkewBy)
         
 --------------------------------
+-- 
 -- @function [parent=#SkewBy] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
+-- @return SkewBy#SkewBy self (return value: cc.SkewBy)
         
 --------------------------------
+-- 
 -- @function [parent=#SkewBy] clone 
 -- @param self
 -- @return SkewBy#SkewBy ret (return value: cc.SkewBy)
         
 --------------------------------
+-- 
 -- @function [parent=#SkewBy] reverse 
 -- @param self
 -- @return SkewBy#SkewBy ret (return value: cc.SkewBy)

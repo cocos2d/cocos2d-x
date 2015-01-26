@@ -2,11 +2,6 @@
 -- @module cc
 
 --------------------------------------------------------
--- the cc Scale9Sprite
--- @field [parent=#cc] Scale9Sprite#Scale9Sprite Scale9Sprite preloaded module
-
-
---------------------------------------------------------
 -- the cc Control
 -- @field [parent=#cc] Control#Control Control preloaded module
 
@@ -67,23 +62,28 @@
 
 
 --------------------------------------------------------
--- the cc EditBox
--- @field [parent=#cc] EditBox#EditBox EditBox preloaded module
-
-
---------------------------------------------------------
 -- the cc AssetsManager
 -- @field [parent=#cc] AssetsManager#AssetsManager AssetsManager preloaded module
 
 
 --------------------------------------------------------
--- the cc CCBAnimationManager
--- @field [parent=#cc] CCBAnimationManager#CCBAnimationManager CCBAnimationManager preloaded module
+-- the cc EventAssetsManagerEx
+-- @field [parent=#cc] EventAssetsManagerEx#EventAssetsManagerEx EventAssetsManagerEx preloaded module
 
 
 --------------------------------------------------------
--- the cc CCBReader
--- @field [parent=#cc] CCBReader#CCBReader CCBReader preloaded module
+-- the cc Manifest
+-- @field [parent=#cc] Manifest#Manifest Manifest preloaded module
+
+
+--------------------------------------------------------
+-- the cc AssetsManagerEx
+-- @field [parent=#cc] AssetsManagerEx#AssetsManagerEx AssetsManagerEx preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerAssetsManagerEx
+-- @field [parent=#cc] EventListenerAssetsManagerEx#EventListenerAssetsManagerEx EventListenerAssetsManagerEx preloaded module
 
 
 return nil

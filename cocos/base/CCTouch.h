@@ -77,6 +77,7 @@ public:
         {
             _startPoint = _point;
             _startPointCaptured = true;
+            _prevPoint = _point;
         }
     }
     /**

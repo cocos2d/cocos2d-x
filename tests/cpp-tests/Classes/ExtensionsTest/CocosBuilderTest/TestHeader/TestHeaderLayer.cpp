@@ -7,12 +7,12 @@ using namespace cocosbuilder;
 SEL_MenuHandler TestHeaderLayer::onResolveCCBCCMenuItemSelector(Ref * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onBackClicked", TestHeaderLayer::onBackClicked);
 
-    return NULL;    
+    return nullptr;    
 }
 
 Control::Handler TestHeaderLayer::onResolveCCBCCControlSelector(Ref * pTarget, const char * pSelectorName) {
 
-    return NULL;
+    return nullptr;
 }
 
 void TestHeaderLayer::onNodeLoaded(cocos2d::Node * node, cocosbuilder::NodeLoader * nodeLoader)

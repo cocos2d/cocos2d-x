@@ -46,6 +46,7 @@ enum {
     TEST_EASING,
     TEST_CHANGE_ANIMATION_INTERNAL,
 	TEST_DIRECT_FROM_BINARY,
+    TEST_ARMATURE_NODE,
     
 	TEST_LAYER_COUNT
 };
@@ -272,7 +273,6 @@ public:
     virtual std::string title() const override;
     virtual void update(float delta);
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    void onDraw(const Mat4 &transform, uint32_t flags);
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -280,7 +280,7 @@ public:
     cocostudio::Armature *armature;
     cocostudio::Armature *armature2;
     
-    CustomCommand _customCommand; //new render needed this for drawing primitives
+    DrawNode *drawNode;
     cocos2d::Sprite *bullet;
 };
 #endif
@@ -298,11 +298,9 @@ public:
 
 	cocostudio::Armature *armature;
 	Rect rect;
-
+    
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
-    CustomCommand _customCommand;
+    DrawNode* _drawNode;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
@@ -413,6 +411,14 @@ private:
 	static const char*  m_binaryFilesNames[BINARYFILECOUNT];
 	static const char*  m_armatureNames[BINARYFILECOUNT];
 	int m_armatureIndex;   // index of sync loaded armature, default -1 is none
+};
+
+class TestArmatureNode : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

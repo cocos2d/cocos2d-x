@@ -7,7 +7,7 @@
 
 namespace cocosbuilder {
 
-class CCBKeyframe : public cocos2d::Ref
+class CC_DLL CCBKeyframe : public cocos2d::Ref
 {
 public:
     enum class EasingType

@@ -5,21 +5,31 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#PhysicsJointMotor] setRate 
 -- @param self
--- @param #float float
+-- @param #float rate
+-- @return PhysicsJointMotor#PhysicsJointMotor self (return value: cc.PhysicsJointMotor)
         
 --------------------------------
+-- 
 -- @function [parent=#PhysicsJointMotor] getRate 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#PhysicsJointMotor] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointMotor] construct 
 -- @param self
--- @param #cc.PhysicsBody physicsbody
--- @param #cc.PhysicsBody physicsbody
--- @param #float float
+-- @param #cc.PhysicsBody a
+-- @param #cc.PhysicsBody b
+-- @param #float rate
 -- @return PhysicsJointMotor#PhysicsJointMotor ret (return value: cc.PhysicsJointMotor)
         
 return nil

@@ -22,7 +22,7 @@ static Layer* createShaderLayer(int nIndex)
         case 9: return new ShaderGlow();
         case 10: return new ShaderMultiTexture();
     }
-    return NULL;
+    return nullptr;
 }
 
 static Layer* nextAction(void)
@@ -65,7 +65,7 @@ ShaderTestDemo::ShaderTestDemo()
 
 void ShaderTestDemo::backCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();
+    auto s = new (std::nothrow) ShaderTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -73,7 +73,7 @@ void ShaderTestDemo::backCallback(Ref* sender)
 
 void ShaderTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();//CCScene::create();
+    auto s = new (std::nothrow) ShaderTestScene();//CCScene::create();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -91,7 +91,7 @@ std::string ShaderTestDemo::subtitle() const
 
 void ShaderTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new ShaderTestScene();
+    auto s = new (std::nothrow) ShaderTestScene();
     s->addChild(restartAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -122,7 +122,7 @@ ShaderNode::~ShaderNode()
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
 {
-    auto node = new ShaderNode();
+    auto node = new (std::nothrow) ShaderNode();
     node->initWithVertex(vert, frag);
     node->autorelease();
 
@@ -132,7 +132,7 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std:
 bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
             this->setGLProgramState(nullptr);
             loadShaderVertex(_vertFileName, _fragFileName);
         });
@@ -195,7 +195,7 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
 
 void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
@@ -259,13 +259,14 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
     
@@ -292,13 +293,14 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
 
@@ -439,7 +441,7 @@ SpriteBlur::~SpriteBlur()
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
-    SpriteBlur* pRet = new SpriteBlur();
+    SpriteBlur* pRet = new (std::nothrow) SpriteBlur();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -458,7 +460,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     if( Sprite::initWithTexture(texture, rect) ) 
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+        auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
                 setGLProgram(nullptr);
                 initGLProgram();
             });
@@ -562,6 +564,7 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();
@@ -572,7 +575,7 @@ bool ShaderBlur::init()
         addChild(sprite);
 
         createSliderCtls();
-
+#endif
         return true;
     }
 

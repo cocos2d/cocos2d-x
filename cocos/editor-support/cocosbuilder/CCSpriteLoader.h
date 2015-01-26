@@ -8,7 +8,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class SpriteLoader : public NodeLoader {
+class CC_DLL SpriteLoader : public NodeLoader {
 public:
     /**
      * @js NA

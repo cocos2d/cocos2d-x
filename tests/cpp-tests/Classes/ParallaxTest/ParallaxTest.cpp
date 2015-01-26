@@ -68,7 +68,7 @@ Parallax1::Parallax1()
     auto goDown = goUp->reverse();
     auto go = MoveBy::create(8, Vec2(-1000,0) );
     auto goBack = go->reverse();
-    auto seq = Sequence::create(goUp, go, goDown, goBack, NULL);
+    auto seq = Sequence::create(goUp, go, goDown, goBack, nullptr);
     voidNode->runAction( (RepeatForever::create(seq) ));
     
     addChild( voidNode );
@@ -155,8 +155,8 @@ std::string Parallax2::title() const
 //------------------------------------------------------------------
 Issue2572::Issue2572()
 : _preListSize(0)
-, _printCount(0)
 , _moveTimer(0.0f)
+, _printCount(0)
 , _addTimer(0.0f)
 {
     _addChildStep = 1.0f;
@@ -247,7 +247,7 @@ Layer* createParallaxTestLayer(int nIndex)
         case 2: return new Issue2572();
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Layer* nextParallaxAction()
@@ -303,7 +303,7 @@ void ParallaxDemo::onEnter()
 
 void ParallaxDemo::restartCallback(Ref* sender)
 {
-    auto s = new ParallaxTestScene();
+    auto s = new (std::nothrow) ParallaxTestScene();
     s->addChild(restartParallaxAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -312,7 +312,7 @@ void ParallaxDemo::restartCallback(Ref* sender)
 
 void ParallaxDemo::nextCallback(Ref* sender)
 {
-    auto s = new ParallaxTestScene();
+    auto s = new (std::nothrow) ParallaxTestScene();
     s->addChild( nextParallaxAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -320,7 +320,7 @@ void ParallaxDemo::nextCallback(Ref* sender)
 
 void ParallaxDemo::backCallback(Ref* sender)
 {
-    auto s = new ParallaxTestScene();
+    auto s = new (std::nothrow) ParallaxTestScene();
     s->addChild( backParallaxAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

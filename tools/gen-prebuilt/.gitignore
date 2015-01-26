@@ -1,0 +1,4 @@
+.idea/*
+build/*
+prebuilt*
+cocos2d-x/*

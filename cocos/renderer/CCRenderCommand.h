@@ -28,7 +28,7 @@
 
 #include <stdint.h>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -37,7 +37,7 @@ NS_CC_BEGIN
 *
  The `Renderer` knows how to render `RenderCommands` objects.
  */
-class RenderCommand
+class CC_DLL RenderCommand
 {
 public:
 
@@ -49,13 +49,34 @@ public:
         BATCH_COMMAND,
         GROUP_COMMAND,
         MESH_COMMAND,
+        PRIMITIVE_COMMAND,
+        TRIANGLES_COMMAND
     };
 
+    /**
+     * init function, will be called by all the render commands
+     */
+    void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    
     /** Get Render Command Id */
     inline float getGlobalOrder() const { return _globalOrder; }
 
     /** Returns the Command type */
     inline Type getType() const { return _type; }
+    
+    /** Retruns whether is transparent */
+    inline bool isTransparent() const { return _isTransparent; }
+    
+    /** set transparent flag */
+    inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
+
+    inline bool isSkipBatching() const { return _skipBatching; }
+
+    inline void setSkipBatching(bool value) { _skipBatching = value; }
+    
+    inline bool is3D() const { return _is3D; }
+    
+    inline void set3D(bool value) { _is3D = value; }
 
 protected:
     RenderCommand();
@@ -68,6 +89,15 @@ protected:
 
     // commands are sort by depth
     float _globalOrder;
+    
+    // transparent flag
+    bool  _isTransparent;
+
+    // skip auto batching
+    bool _skipBatching;
+    
+    // is the command been rendered on 3D pass
+    bool _is3D;
 };
 
 NS_CC_END

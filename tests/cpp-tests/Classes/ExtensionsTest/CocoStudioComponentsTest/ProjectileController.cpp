@@ -78,7 +78,7 @@ void ProjectileController::update(float delta)
 
 ProjectileController* ProjectileController::create(void)
 {
-    ProjectileController * pRet = new ProjectileController();
+    ProjectileController * pRet = new (std::nothrow) ProjectileController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -133,7 +133,7 @@ void ProjectileController::move(float flocationX, float flocationY)
           Sequence::create(
                MoveTo::create(realMoveDuration, realDest),
                callfunc,
-               NULL)
+               nullptr)
           );
 }
 

@@ -32,7 +32,8 @@ THE SOFTWARE.
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
-#include "CCGL.h"
+#include "base/CCRef.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +43,7 @@ struct Color4F;
 /** RGB color composed of bytes 3 bytes
 @since v3.0
  */
-struct Color3B
+struct CC_DLL Color3B
 {
     Color3B();
     Color3B(GLubyte _r, GLubyte _g, GLubyte _b);
@@ -65,21 +66,21 @@ struct Color3B
     GLubyte g;
     GLubyte b;
     
-    const static Color3B WHITE;
-    const static Color3B YELLOW;
-    const static Color3B BLUE;
-    const static Color3B GREEN;
-    const static Color3B RED;
-    const static Color3B MAGENTA;
-    const static Color3B BLACK;
-    const static Color3B ORANGE;
-    const static Color3B GRAY;
+    static const Color3B WHITE;
+    static const Color3B YELLOW;
+    static const Color3B BLUE;
+    static const Color3B GREEN;
+    static const Color3B RED;
+    static const Color3B MAGENTA;
+    static const Color3B BLACK;
+    static const Color3B ORANGE;
+    static const Color3B GRAY;
 };
 
 /** RGBA color composed of 4 bytes
 @since v3.0
 */
-struct Color4B
+struct CC_DLL Color4B
 {
     Color4B();
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
@@ -98,22 +99,22 @@ struct Color4B
     GLubyte b;
     GLubyte a;
 
-    const static Color4B WHITE;
-    const static Color4B YELLOW;
-    const static Color4B BLUE;
-    const static Color4B GREEN;
-    const static Color4B RED;
-    const static Color4B MAGENTA;
-    const static Color4B BLACK;
-    const static Color4B ORANGE;
-    const static Color4B GRAY;
+    static const Color4B WHITE;
+    static const Color4B YELLOW;
+    static const Color4B BLUE;
+    static const Color4B GREEN;
+    static const Color4B RED;
+    static const Color4B MAGENTA;
+    static const Color4B BLACK;
+    static const Color4B ORANGE;
+    static const Color4B GRAY;
 };
 
 
 /** RGBA color composed of 4 floats
 @since v3.0
 */
-struct Color4F
+struct CC_DLL Color4F
 {
     Color4F();
     Color4F(float _r, float _g, float _b, float _a);
@@ -137,15 +138,15 @@ struct Color4F
     GLfloat b;
     GLfloat a;
 
-    const static Color4F WHITE;
-    const static Color4F YELLOW;
-    const static Color4F BLUE;
-    const static Color4F GREEN;
-    const static Color4F RED;
-    const static Color4F MAGENTA;
-    const static Color4F BLACK;
-    const static Color4F ORANGE;
-    const static Color4F GRAY;
+    static const Color4F WHITE;
+    static const Color4F YELLOW;
+    static const Color4F BLUE;
+    static const Color4F GREEN;
+    static const Color4F RED;
+    static const Color4F MAGENTA;
+    static const Color4F BLACK;
+    static const Color4F ORANGE;
+    static const Color4F GRAY;
 };
 
 /** A vertex composed of 2 floats: x, y
@@ -183,7 +184,7 @@ struct Color4F
 /** A texcoord composed of 2 floats: u, y
  @since v3.0
  */
-struct Tex2F {
+struct CC_DLL Tex2F {
     Tex2F(float _u, float _v): u(_u), v(_v) {}
     
     Tex2F(): u(0.f), v(0.f) {}
@@ -194,7 +195,7 @@ struct Tex2F {
 
  
 //! Vec2 Sprite component
-struct PointSprite
+struct CC_DLL PointSprite
 {
     Vec2   pos;        // 8 bytes
     Color4B    color;      // 4 bytes
@@ -202,7 +203,7 @@ struct PointSprite
 };
 
 //!    A 2D Quad. 4 * 2 floats
-struct Quad2
+struct CC_DLL Quad2
 {
     Vec2        tl;
     Vec2        tr;
@@ -212,7 +213,7 @@ struct Quad2
 
 
 //!    A 3D Quad. 4 * 3 floats
-struct Quad3 {
+struct CC_DLL Quad3 {
     Vec3        bl;
     Vec3        br;
     Vec3        tl;
@@ -230,8 +231,19 @@ struct V2F_C4B_T2F
     Tex2F          texCoords;
 };
 
+
+struct V2F_C4B_PF
+{
+    //! vertices (2F)
+    Vec2       vertices;
+    //! colors (4B)
+    Color4B        colors;
+    //! pointsize
+    float      pointSize;
+};
+
 //! a Vec2 with a vertex point, a tex coord point and a color 4F
-struct V2F_C4F_T2F
+struct CC_DLL V2F_C4F_T2F
 {
     //! vertices (2F)
     Vec2       vertices;
@@ -242,7 +254,7 @@ struct V2F_C4F_T2F
 };
 
 //! a Vec2 with a vertex point, a tex coord point and a color 4B
-struct V3F_C4B_T2F
+struct CC_DLL V3F_C4B_T2F
 {
     //! vertices (3F)
     Vec3     vertices;            // 12 bytes
@@ -254,8 +266,17 @@ struct V3F_C4B_T2F
     Tex2F        texCoords;           // 8 bytes
 };
 
+//! a Vec2 with a vertex point, a tex coord point
+struct CC_DLL V3F_T2F
+{
+    //! vertices (2F)
+    Vec3       vertices;
+    //! tex coords (2F)
+    Tex2F          texCoords;
+};
+
 //! A Triangle of V2F_C4B_T2F
-struct V2F_C4B_T2F_Triangle
+struct CC_DLL V2F_C4B_T2F_Triangle
 {
 	//! Vec2 A
 	V2F_C4B_T2F a;
@@ -266,7 +287,7 @@ struct V2F_C4B_T2F_Triangle
 };
 
 //! A Quad of V2F_C4B_T2F
-struct V2F_C4B_T2F_Quad
+struct CC_DLL V2F_C4B_T2F_Quad
 {
     //! bottom left
     V2F_C4B_T2F    bl;
@@ -279,7 +300,7 @@ struct V2F_C4B_T2F_Quad
 };
 
 //! 4 Vertex3FTex2FColor4B
-struct V3F_C4B_T2F_Quad
+struct CC_DLL V3F_C4B_T2F_Quad
 {
     //! top left
     V3F_C4B_T2F    tl;
@@ -292,7 +313,7 @@ struct V3F_C4B_T2F_Quad
 };
 
 //! 4 Vertex2FTex2FColor4F Quad
-struct V2F_C4F_T2F_Quad
+struct CC_DLL V2F_C4F_T2F_Quad
 {
     //! bottom left
     V2F_C4F_T2F    bl;
@@ -304,8 +325,20 @@ struct V2F_C4F_T2F_Quad
     V2F_C4F_T2F    tr;
 };
 
+struct CC_DLL V3F_T2F_Quad
+{
+    //! bottom left
+    V3F_T2F    bl;
+    //! bottom right
+    V3F_T2F    br;
+    //! top left
+    V3F_T2F    tl;
+    //! top right
+    V3F_T2F    tr;
+};
+
 //! Blend Function used for textures
-struct BlendFunc
+struct CC_DLL BlendFunc
 {
     //! source blend function
     GLenum src;
@@ -313,17 +346,22 @@ struct BlendFunc
     GLenum dst;
 
     //! Blending disabled. Uses {GL_ONE, GL_ZERO}
-    const static BlendFunc DISABLE;
+    static const BlendFunc DISABLE;
     //! Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
-    const static BlendFunc ALPHA_PREMULTIPLIED;
+    static const BlendFunc ALPHA_PREMULTIPLIED;
     //! Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
-    const static BlendFunc ALPHA_NON_PREMULTIPLIED;
+    static const BlendFunc ALPHA_NON_PREMULTIPLIED;
     //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
-    const static BlendFunc ADDITIVE;
+    static const BlendFunc ADDITIVE;
 
     bool operator==(const BlendFunc &a) const
     {
         return src == a.src && dst == a.dst;
+    }
+
+    bool operator!=(const BlendFunc &a) const
+    {
+        return src != a.src || dst != a.dst;
     }
 
     bool operator<(const BlendFunc &a) const
@@ -335,28 +373,28 @@ struct BlendFunc
 // Label::VAlignment
 // Label::HAlignment
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Vertical text alignment type
-enum class TextVAlignment
+enum class CC_DLL TextVAlignment
 {
     TOP,
     CENTER,
-    BOTTOM,
+    BOTTOM
 };
 
-// XXX: If any of these enums are edited and/or reordered, update Texture2D.m
+// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
 //! Horizontal text alignment type
-enum class TextHAlignment
+enum class CC_DLL TextHAlignment
 {
     LEFT,
     CENTER,
-    RIGHT,
+    RIGHT
 };
 
 // types for animation in particle systems
 
 // texture coordinates for a quad
-struct T2F_Quad
+struct CC_DLL T2F_Quad
 {
     //! bottom left
     Tex2F    bl;
@@ -369,7 +407,7 @@ struct T2F_Quad
 };
 
 // struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad
-struct AnimationFrameData
+struct CC_DLL AnimationFrameData
 {
     T2F_Quad texCoords;
     float delay;
@@ -382,7 +420,7 @@ struct AnimationFrameData
 
 
 // shadow attributes
-struct FontShadow
+struct CC_DLL FontShadow
 {
 public:
     
@@ -404,7 +442,7 @@ public:
 };
 
 // stroke attributes
-struct FontStroke
+struct CC_DLL FontStroke
 {
 public:
     
@@ -413,19 +451,22 @@ public:
 	    : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
         , _strokeSize(0)
+        , _strokeAlpha(255)
     {}
     
     // true if stroke enabled
     bool      _strokeEnabled;
     // stroke color
 	Color3B   _strokeColor;
+    // stroke alpha
+    GLubyte   _strokeAlpha;
     // stroke size
     float     _strokeSize;
     
 };
 
 // font attributes
-struct FontDefinition
+struct CC_DLL FontDefinition
 {
 public:
     /**
@@ -438,6 +479,7 @@ public:
         , _vertAlignment(TextVAlignment::TOP)
     	, _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
+        , _fontAlpha(255)
     {}
     
     // font name
@@ -452,6 +494,8 @@ public:
     Size                  _dimensions;
     // font color
     Color3B               _fontFillColor;
+    //font alpha
+    GLubyte               _fontAlpha;
     // font shadow
     FontShadow            _shadow;
     // font stroke
@@ -462,7 +506,8 @@ public:
 /**
  @brief The device accelerometer reports values for each axis in units of g-force
  */
-class Acceleration
+class CC_DLL Acceleration
+    : public Ref
 {
 public:
     double x;
@@ -474,8 +519,8 @@ public:
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
-extern const std::string STD_STRING_EMPTY;
-extern const ssize_t CC_INVALID_INDEX;
+extern const std::string CC_DLL STD_STRING_EMPTY;
+extern const ssize_t CC_DLL CC_INVALID_INDEX;
 
 NS_CC_END
 

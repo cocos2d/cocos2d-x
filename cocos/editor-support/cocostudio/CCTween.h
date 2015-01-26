@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCProcessBase.h"
 #include "2d/CCTweenFunction.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -39,7 +40,7 @@ using cocos2d::tweenfunc::TweenType;
  *  @js NA
  *  @lua NA
  */
-class  Tween : public ProcessBase
+class CC_STUDIO_DLL Tween : public ProcessBase
 {
 public:
     /**

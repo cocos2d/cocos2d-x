@@ -25,7 +25,7 @@ Developers:
     longlene
         Improve android project creation script
         
-    simpliplant
+    reneklacan
         Hardware keyboard support
     
     liuyq
@@ -108,6 +108,7 @@ Developers:
         Added support for x64 target of windows.
         Added Dutch Language support.
         Added clang support for Windows.
+        Cmake update and remove old scripts from build folder
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -367,6 +368,7 @@ Developers:
 
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
+        Added a feature that CCSSceneReader can load name properties as node names.
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
@@ -530,9 +532,11 @@ Developers:
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
         fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
         Fixed a bug that Websocket doesn't support send/receive data which larger than 4096 bytes.
+        Show detail class & function name in error message of lua-binding
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        added Turkish and Ukrainian language support
         
     hawkwood (Justin Hawkwood)
         Fixing a bug that EditBox doesn't show any text if it's initialized with text.
@@ -658,6 +662,8 @@ Developers:
         Fixed a bug that Node's anchor point was changed after being added to ScrollView.
         Added HttpClient::sendImmediate()
         Added operator == != for Value
+        Replace dynamic_cast to std::is_base_of in object_to_luaval
+        Added support normalize path on android
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -692,6 +698,7 @@ Developers:
         Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         Deleted several lines of useless code in ScrollView::deaccelerateScrolling.
         Fixed that ScrollView should implement ActionTweenDelegate.
+        Fixed LabelBMFont::getBoundingBox() position error
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -741,6 +748,7 @@ Developers:
         Corrected a few mistakes in the README file of project-creator.
         Corrected a mistake in README.
         Fixed a bug that a string which only contains CJK characters can't make a line-break when it's needed.
+        Fixed a bug that if the UISlider is faded, the slide ball won't fade together
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
@@ -797,12 +805,24 @@ Developers:
         Adds support for get response when Activity's onActivityResult is triggered
         Improve Android projects
         Android jni error clear & more readable log
+        Add support of software PVRTC v1 decompression
+        Fixed a bug that ttf font have not effect on Mac OS X
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk
+        Added Device::setKeepScreenOn()
+        Fixed Label performance problem
+        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
+        Added getAllTouches() in GLViewProtocol
+        Precompiled headers improvements
+        Added Application::openUrl for all supported platforms ecept WP8 and WinRT
+        Scale9Sprite capInsets set fix
+        Clang static analyzer crash fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
         
     aeonmine
         Fixed ActionObject memory leak in ActionManagerEx::initWithDictionary
+        Fixed memory leak in cocos studiov2.0 reader
         
     LoungeKatt
         Corrected a mistake of building android project in README.md
@@ -828,6 +848,8 @@ Developers:
         Added missing Text Font and Placeholder feature of EditBox for Mac platform
         HttpRequest uses std::function as callback
         EditBox: mac secure input
+        Fix a bug that can not get/set text in password mode on Mac OS X
+        Make sure TableView parents are visible before handling touch
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -836,6 +858,7 @@ Developers:
         Fixed memory leak in 'Image'
         Fixed loosing precision when using 'recv' in 'Console'
         Fixed link error with Xcode 6 when building with 32-bit architecture
+        Fixed CMake for Mac OS X
         
     ololomax
         Fixed a potential crash in SceneReader::createNodeWithSceneFile
@@ -882,10 +905,14 @@ Developers:
         
     kezhuw
         AutoReleasePool manager improvement
+        Fixed a bug that condition variable sleep on unrelated mutex in HttpClient
         
     zhouxiaoxiaoxujian
         Added TextField::getStringLength()
         Add shadow, outline, glow filter support for UIText
+        Fix UITextField IME can't auto detach
+        Add getChildByName method for get a node that can be cast to Type T
+        Improvement ImageViewReader don't necessary loadTexture when imageFilePath is empty
         
     QiuleiWang
         Fix the bug that calculated height of multi-line string was incorrect on iOS
@@ -895,18 +922,162 @@ Developers:
         
     kyokomi
         Fix the bug that UIButton doesn't support TTF font
-        Fix a but of TextReader
+        Fix a bug of TextReader
+        Fix a bug that UITextField doesn't support TTF font
+        Setted contentSize in CSLoader
         
     gin0606
         Add a new line at the end of a file
         Fix a bug that crash happened when try to remove videoView(STATE_PLAYBACK_COMPLETED) in android
+        Fix video scale issue in iOS
+        Fix iOS VideoPlayer memory leak
+        Added c++11 random library support
+        Added WebView widget which supports iOS and Android
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
         
     Teivaz
         Custom uniform search optimization
+        Fixed compiling error on WP8.
+        Added method for custom precompiled shader program loading on WP8
+        Enable screen orientation change handling on WP8
+        Enabled GLProgramState restoring on render recreated on WP8
+        
+    chareice
+        Make `setup.py` work on zsh
+        
+    taug
+        Could add seach path and resolution order path in front.
+        
+    CaiCQ
+        Fix a but that LabelTTF may lost chinese characters on linux
+        
+    chenguangqi
+        Fixed a compiling error on Android
+        Fixed an error when importing project using Eclipse on Android
+        
+    uorbe001
+        Allow setting bundle to use in file utils on iOS and Mac OS X
+        
+    yongkangchen
+        Fixed a bug that font size of EditBox is not scaled when glview is scaled on Mac OS X
+        Fixed a bug that Label::setTextColor does not have any effect on Mac OS X
+        
+    wagulu
+        Fixed a bug that particle effect is wrong when scaled
+        
+    reckhou
+        Optimize FPS control on Android
+        
+    dzl-ian
+        Added getter and setter for TextColor for UIText
     
+    zii
+        Added utils::gettime()
+        
+    takaken1994
+        Added function for setting min/max scale for ScrollView
+        
+    maltium 
+        Added 3D rotation support to RotateTo action
+        
+    Hamken100per
+        Added a function getAssetManager() on CCFileUtilsAndroid
+        
+    rny
+        Fixed LabelTTF::getBoundingBox() position error
+        SpriteFrameCache load from plist file content data
+        
+    AppleJDay
+        Add Feature:EventMouse should support getDelta, getDeltaX, getDeltaY functions
+        
+    GavinThornton
+        Fixed a bug that when a sprite added into SpriteBatchNod it will turn black if setting opacity
+        
+    DavidPartouche
+        Fixed the bug that video player not showing on iOS if it's not in FullScreen mode
+        
+    zaWasp
+        Added support for applicationDidEnterBackground / applicationWillEnterForeground on win32
+        
+    xiangxw
+        Fixed the bug that Console::sendPrompt() will send extra `\0`
+        
+    kaishiqi
+        Fixed a but that cursor postion is wrong on desktop.
+        
+    jagd
+        Added setSubsteps() and getSubsteps() in PhysicsWorld
+        
+    denpen
+        Fixed a bug that scroll view hidden picks up the touch events.
+        
+    joewan
+        Fixed memory leak when use menu_selector
+        
+    zhongfq
+        Optimize decompress jpg data
+        Fixed memory leak of TextureCache::reloadTexture()
+        
+    wohaaitinciu
+        WebView support on windows
+        
+    guykogus
+        Implemented Application::openUrl for WP8 and WinRT
+        
+    tttreal
+        Fixed Label::getStringNumLines()
+        
+    hongliang-goudou
+        Fixed the bug that UI animation playing crash if GUI JSON file is loaded again
+        
+    yestein
+        Add Cocostudio Armature getOffsetPoints API for Lua
+        
+    coldfog
+        Fix bug that ActionManagerEx::initWithBinary can only load one UI animation
+        
+    timur-losev
+        Fix a bug that GLProgramCache::addGLProgram() can not replace existing program
+        
+    TimothyZhang
+        Fixed a potential memory leak in GLProgram::setGLProgram()
+        
+    ahlwong
+        Fix Label Kerning on Single Characters
+        
+    Svenito
+        Add greater than operator to Vec2
+        
+    liamcindy
+        update ui button size changed logic
+        
+    vovkasm
+        Fix warnings for Xcode6.1
+        
+    nilium
+        Unignore libs dir in plugin and fix Travis script to descend into included directories
+        
+    shrimpz
+        Fix two typos in luaval_to_quaternion
+        Fix label crashed on android
+        
+    ton1517
+        Fix the issue that JumpTo can not be applied more than once
+    
+    takaokato
+        Fix wrong result in Node:getParenttoNodeTransform() if node is transformed
+    
+    AknEp
+        Fix FileUtils::fullPathForFilename return empty string if file not found
+        
+    kompjoefriek
+        Fix compiling warnings
+        
+    tmr111116
+        fix random int overflow
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
@@ -918,9 +1089,6 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
-        
-    timur-losev
-        Fix a bug that GLProgramCache::addGLProgram() can not replace existing program
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

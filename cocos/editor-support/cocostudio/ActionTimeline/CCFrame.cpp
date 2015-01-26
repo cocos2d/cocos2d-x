@@ -25,6 +25,10 @@ THE SOFTWARE.
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
+#include <exception>
+#include <iostream>
 
 USING_NS_CC;
 
@@ -34,6 +38,7 @@ NS_TIMELINE_BEGIN
 Frame::Frame()
     : _frameIndex(0)
     , _tween(true)
+    , _enterWhenPassed(false)
     , _timeline(nullptr)
     , _node(nullptr)
 {
@@ -61,14 +66,14 @@ void Frame::cloneProperty(Frame* frame)
 // VisibleFrame
 VisibleFrame* VisibleFrame::create()
 {
-    VisibleFrame* frame = new VisibleFrame();
+    VisibleFrame* frame = new (std::nothrow) VisibleFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 VisibleFrame::VisibleFrame()
@@ -76,7 +81,7 @@ VisibleFrame::VisibleFrame()
 {
 }
 
-void VisibleFrame::onEnter(Frame *nextFrame)
+void VisibleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setVisible(_visible);
 }
@@ -97,14 +102,14 @@ Frame* VisibleFrame::clone()
 // TextureFrame
 TextureFrame* TextureFrame::create()
 {
-    TextureFrame* frame = new TextureFrame();
+    TextureFrame* frame = new (std::nothrow) TextureFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 TextureFrame::TextureFrame()
@@ -119,7 +124,7 @@ void TextureFrame::setNode(Node* node)
     _sprite = dynamic_cast<Sprite*>(node);
 }
 
-void TextureFrame::onEnter(Frame *nextFrame)
+void TextureFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     if(_sprite)
     {
@@ -148,14 +153,14 @@ Frame* TextureFrame::clone()
 // RotationFrame
 RotationFrame* RotationFrame::create()
 {
-    RotationFrame* frame = new RotationFrame();
+    RotationFrame* frame = new (std::nothrow) RotationFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 RotationFrame::RotationFrame()
@@ -163,10 +168,10 @@ RotationFrame::RotationFrame()
 {
 }
 
-void RotationFrame::onEnter(Frame *nextFrame)
+void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setRotation(_rotation);
-    
+
     if(_tween)
     {
         _betwennRotation = static_cast<RotationFrame*>(nextFrame)->_rotation - _rotation;
@@ -175,7 +180,7 @@ void RotationFrame::onEnter(Frame *nextFrame)
 
 void RotationFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && _betwennRotation != 0)
+    if (_tween && _betwennRotation != 0)
     {
         float rotation = _rotation + percent * _betwennRotation;
         _node->setRotation(rotation);
@@ -197,14 +202,14 @@ Frame* RotationFrame::clone()
 // SkewFrame
 SkewFrame* SkewFrame::create()
 {
-    SkewFrame* frame = new SkewFrame();
+    SkewFrame* frame = new (std::nothrow) SkewFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 SkewFrame::SkewFrame()
@@ -213,11 +218,11 @@ SkewFrame::SkewFrame()
 {
 }
 
-void SkewFrame::onEnter(Frame *nextFrame)
+void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setSkewX(_skewX);
     _node->setSkewY(_skewY);
-    
+
     if(_tween)
     {
         _betweenSkewX = static_cast<SkewFrame*>(nextFrame)->_skewX - _skewX;
@@ -227,7 +232,7 @@ void SkewFrame::onEnter(Frame *nextFrame)
 
 void SkewFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -254,25 +259,25 @@ Frame* SkewFrame::clone()
 // RotationSkewFrame
 RotationSkewFrame* RotationSkewFrame::create()
 {
-    RotationSkewFrame* frame = new RotationSkewFrame();
+    RotationSkewFrame* frame = new (std::nothrow) RotationSkewFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 RotationSkewFrame::RotationSkewFrame()
 {
 }
 
-void RotationSkewFrame::onEnter(Frame *nextFrame)
+void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setRotationSkewX(_skewX);
     _node->setRotationSkewY(_skewY);
-    
+
     if (_tween)
     {
         _betweenSkewX = static_cast<RotationSkewFrame*>(nextFrame)->_skewX - _skewX;
@@ -282,7 +287,7 @@ void RotationSkewFrame::onEnter(Frame *nextFrame)
 
 void RotationSkewFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -307,14 +312,14 @@ Frame* RotationSkewFrame::clone()
 // PositionFrame
 PositionFrame* PositionFrame::create()
 {
-    PositionFrame* frame = new PositionFrame();
+    PositionFrame* frame = new (std::nothrow) PositionFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 PositionFrame::PositionFrame()
@@ -322,7 +327,7 @@ PositionFrame::PositionFrame()
 {
 }
 
-void PositionFrame::onEnter(Frame *nextFrame)
+void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setPosition(_position);
 
@@ -335,7 +340,7 @@ void PositionFrame::onEnter(Frame *nextFrame)
 
 void PositionFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenX != 0 || _betweenY != 0))
+    if (_tween && (_betweenX != 0 || _betweenY != 0))
     {
         Point p;
         p.x = _position.x + _betweenX * percent;
@@ -359,14 +364,14 @@ Frame* PositionFrame::clone()
 // ScaleFrame
 ScaleFrame* ScaleFrame::create()
 {
-    ScaleFrame* frame = new ScaleFrame();
+    ScaleFrame* frame = new (std::nothrow) ScaleFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ScaleFrame::ScaleFrame()
@@ -375,11 +380,11 @@ ScaleFrame::ScaleFrame()
 {
 }
 
-void ScaleFrame::onEnter(Frame *nextFrame)
+void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setScaleX(_scaleX);
     _node->setScaleY(_scaleY);
-    
+
     if(_tween)
     {
         _betweenScaleX = static_cast<ScaleFrame*>(nextFrame)->_scaleX - _scaleX;
@@ -389,7 +394,7 @@ void ScaleFrame::onEnter(Frame *nextFrame)
 
 void ScaleFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenScaleX != 0 || _betweenScaleY != 0))
+    if (_tween && (_betweenScaleX != 0 || _betweenScaleY != 0))
     {
         float scaleX = _scaleX + _betweenScaleX * percent;
         float scaleY = _scaleY + _betweenScaleY * percent;
@@ -414,14 +419,14 @@ Frame* ScaleFrame::clone()
 // AnchorPointFrame
 AnchorPointFrame* AnchorPointFrame::create()
 {
-    AnchorPointFrame* frame = new AnchorPointFrame();
+    AnchorPointFrame* frame = new (std::nothrow) AnchorPointFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 AnchorPointFrame::AnchorPointFrame()
@@ -429,7 +434,7 @@ AnchorPointFrame::AnchorPointFrame()
 {
 }
 
-void AnchorPointFrame::onEnter(Frame *nextFrame)
+void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setAnchorPoint(_anchorPoint);
 }
@@ -448,35 +453,125 @@ Frame* AnchorPointFrame::clone()
 
 
 // InnerActionFrame
+const std::string InnerActionFrame::AnimationAllName = "-- ALL --";
+
 InnerActionFrame* InnerActionFrame::create()
 {
-    InnerActionFrame* frame = new InnerActionFrame();
+    InnerActionFrame* frame = new (std::nothrow) InnerActionFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 InnerActionFrame::InnerActionFrame()
-    : _innerActionType(LoopAction)
-    , _startFrameIndex(0)
+: _innerActionType(InnerActionType::SingleFrame)
+, _startFrameIndex(0)
+, _endFrameIndex(0)
+, _singleFrameIndex(0)
+, _enterWithName(false)
+, _animationName("")
 {
+
 }
 
-void InnerActionFrame::onEnter(Frame *nextFrame)
+void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    auto innerActiontimeline = static_cast<ActionTimeline*>(_node->getActionByTag(_node->getTag()));
+    if (InnerActionType::SingleFrame == _innerActionType)
+    {
+        innerActiontimeline->gotoFrameAndPause(_singleFrameIndex);
+        return;
+    }
+    
+    int innerStart = _startFrameIndex;
+    int innerEnd = _endFrameIndex;
+    if (_enterWithName)
+    {
+        if (_animationName == AnimationAllName)
+        {
+            innerStart = 0;
+            innerEnd = innerActiontimeline->getDuration();
+        }
+        else if(innerActiontimeline->IsAnimationInfoExists(_animationName))
+        {
+            AnimationInfo info = innerActiontimeline->getAnimationInfo(_animationName);
+            innerStart = info.startIndex;
+            innerEnd = info.endIndex;
+        }
+        else
+        {
+            CCLOG("Animation %s not exists!", _animationName.c_str());
+        }
+    }
+    
+    int duration = _timeline->getActionTimeline()->getDuration();
+    int odddiff = duration - _frameIndex - innerEnd + innerStart;
+    if (odddiff < 0)
+    {
+       innerEnd += odddiff;
+    }
+    
+    if (InnerActionType::NoLoopAction == _innerActionType)
+    {
+        innerActiontimeline->gotoFrameAndPlay(innerStart, innerEnd, false);
+    }
+    else if (InnerActionType::LoopAction == _innerActionType)
+    {
+        innerActiontimeline->gotoFrameAndPlay(innerStart, innerEnd, true);
+    }
 }
 
+void InnerActionFrame::setStartFrameIndex(int frameIndex)
+{
+    if(_enterWithName)
+    {
+        CCLOG(" cannot set start when enter frame with name. setEnterWithName false firstly!");
+        throw std::exception();
+    }
+    _startFrameIndex = frameIndex;
+}
+
+
+void InnerActionFrame::setEndFrameIndex(int frameIndex)
+{
+    if(_enterWithName)
+    {
+         CCLOG(" cannot set end when enter frame with name. setEnterWithName false firstly!");
+        throw std::exception();
+    }
+    _endFrameIndex = frameIndex;
+}
+
+void InnerActionFrame::setAnimationName(const std::string& animationName)
+{
+    if(!_enterWithName)
+    {
+         CCLOG(" cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
+        throw std::exception();
+    }
+    _animationName = animationName;
+   
+}
 
 Frame* InnerActionFrame::clone()
 {
     InnerActionFrame* frame = InnerActionFrame::create();
     frame->setInnerActionType(_innerActionType);
-    frame->setStartFrameIndex(_startFrameIndex);
-
+    frame->setSingleFrameIndex(_singleFrameIndex);
+    if(_enterWithName)
+    {
+        frame->setEnterWithName(true);
+        frame->setAnimationName(_animationName);
+    }
+    else
+    {
+        frame->setStartFrameIndex(_startFrameIndex);
+        frame->setEndFrameIndex(_endFrameIndex);
+    }
     frame->cloneProperty(this);
 
     return frame;
@@ -486,14 +581,14 @@ Frame* InnerActionFrame::clone()
 // ColorFrame
 ColorFrame* ColorFrame::create()
 {
-    ColorFrame* frame = new ColorFrame();
+    ColorFrame* frame = new (std::nothrow) ColorFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ColorFrame::ColorFrame()
@@ -502,11 +597,11 @@ ColorFrame::ColorFrame()
 {
 }
 
-void ColorFrame::onEnter(Frame *nextFrame)
+void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     _node->setOpacity(_alpha);
     _node->setColor(_color);
-    
+
     if(_tween)
     {
         _betweenAlpha = static_cast<ColorFrame*>(nextFrame)->_alpha - _alpha;
@@ -516,14 +611,11 @@ void ColorFrame::onEnter(Frame *nextFrame)
         _betweenGreen = color.g - _color.g;
         _betweenBlue  = color.b - _color.b;
     }
-
-    _node->setCascadeColorEnabled(true);
-    _node->setCascadeOpacityEnabled(true);
 }
 
 void ColorFrame::apply(float percent)
 {
-    if (_tween && percent != 0 && (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
+    if (_tween && (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
     {
         GLubyte alpha = _alpha + _betweenAlpha * percent;
 
@@ -548,28 +640,90 @@ Frame* ColorFrame::clone()
     return frame;
 }
 
-
-// EventFrame
-EventFrame* EventFrame::create()
+// AlphaFrame
+AlphaFrame* AlphaFrame::create()
 {
-    EventFrame* frame = new EventFrame();
+    AlphaFrame* frame = new (std::nothrow) AlphaFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
+}
+
+AlphaFrame::AlphaFrame()
+    : _alpha(255)
+{
+}
+
+void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
+{
+    _node->setOpacity(_alpha);
+
+    if (_tween)
+    {
+        _betweenAlpha = static_cast<AlphaFrame*>(nextFrame)->_alpha - _alpha;
+    }
+}
+
+void AlphaFrame::apply(float percent)
+{
+    if (_tween)
+    {
+        GLubyte alpha = _alpha + _betweenAlpha * percent;
+        _node->setOpacity(alpha);
+    }
+}
+
+Frame* AlphaFrame::clone()
+{
+    AlphaFrame* frame = AlphaFrame::create();
+    frame->setAlpha(_alpha);
+    frame->cloneProperty(this);
+
+    return frame;
+}
+
+// EventFrame
+EventFrame* EventFrame::create()
+{
+    EventFrame* frame = new (std::nothrow) EventFrame();
+    if (frame)
+    {
+        frame->init();
+        frame->autorelease();
+        return frame;
+    }
+    CC_SAFE_DELETE(frame);
+    return nullptr;
+}
+
+void EventFrame::init()
+{
+    _enterWhenPassed = true;
 }
 
 EventFrame::EventFrame()
     : _event("")
+    , _action(nullptr)
 {
 }
 
-void EventFrame::onEnter(Frame *nextFrame)
+void EventFrame::setNode(cocos2d::Node* node)
 {
-    emitEvent();
+    Frame::setNode(node);
+    _action = _timeline->getActionTimeline();
+}
+
+void EventFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
+{
+    if(_frameIndex < _action->getStartFrame() || _frameIndex > _action->getEndFrame())
+        return;
+
+    if(currentFrameIndex >= _frameIndex)
+        emitEvent();
 }
 
 
@@ -587,14 +741,14 @@ Frame* EventFrame::clone()
 // ZOrderFrame
 ZOrderFrame* ZOrderFrame::create()
 {
-    ZOrderFrame* frame = new ZOrderFrame();
+    ZOrderFrame* frame = new (std::nothrow) ZOrderFrame();
     if (frame)
     {
         frame->autorelease();
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return NULL;
+    return nullptr;
 }
 
 ZOrderFrame::ZOrderFrame()
@@ -602,10 +756,10 @@ ZOrderFrame::ZOrderFrame()
 {
 }
 
-void ZOrderFrame::onEnter(Frame *nextFrame)
+void ZOrderFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     if(_node)
-        _node->setZOrder(_zorder);
+        _node->setLocalZOrder(_zorder);
 }
 
 

@@ -15,6 +15,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 	 virtual void update(float dt);
 private:
@@ -35,6 +36,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 	 void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 private:
@@ -56,6 +58,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;
@@ -73,6 +76,7 @@ public:
      virtual bool init();
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
+	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
      virtual void removeAll();
 private:
 	int  _tag;

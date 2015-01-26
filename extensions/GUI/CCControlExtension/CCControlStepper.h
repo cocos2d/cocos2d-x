@@ -30,6 +30,7 @@
 
 #include "CCControl.h"
 #include "2d/CCLabel.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -40,7 +41,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlStepper : public Control
+class CC_EX_DLL ControlStepper : public Control
 {
 public:
     enum class Part

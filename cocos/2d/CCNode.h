@@ -30,14 +30,11 @@
 #define __CCNODE_H__
 
 #include "base/ccMacros.h"
-#include "base/CCEventDispatcher.h"
 #include "base/CCVector.h"
-#include "base/CCScriptSupport.h"
 #include "base/CCProtocols.h"
+#include "base/CCScriptSupport.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
-#include "renderer/ccGLStateCache.h"
-#include "CCGL.h"
 
 NS_CC_BEGIN
 
@@ -52,6 +49,7 @@ class ComponentContainer;
 class EventDispatcher;
 class Scene;
 class Renderer;
+class Director;
 class GLProgram;
 class GLProgramState;
 #if CC_USE_PHYSICS
@@ -71,7 +69,7 @@ enum {
     kNodeOnCleanup
 };
 
-bool nodeComparisonLess(Node* n1, Node* n2);
+bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -110,6 +108,7 @@ public:
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
         FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+        FLAGS_RENDER_AS_3D = (1 << 3),
 
         FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
     };
@@ -153,9 +152,11 @@ public:
     virtual void setLocalZOrder(int localZOrder);
 
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    
     /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      */
-    virtual void _setLocalZOrder(int z);
+    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
+
     /**
      * Gets the local Z order of this node.
      *
@@ -293,7 +294,7 @@ public:
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
-     node->setPosition( Vec2(size.width/2, size.height/2) )
+     node->setPosition(size.width/2, size.height/2)
      @endcode
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates
@@ -542,6 +543,17 @@ public:
      * returns the rotation (X,Y,Z) in degrees.
      */
     virtual Vec3 getRotation3D() const;
+    
+    /**
+     * set rotation by quaternion
+     */
+    virtual void setRotationQuat(const Quaternion& quat);
+    
+    /**
+     * return the rotation by quaternion, Note that when _rotationZ_X == _rotationZ_Y, the returned quaternion equals to RotationZ_X * RotationY * RotationX, 
+     * it equals to RotationY * RotationX otherwise
+     */
+    virtual Quaternion getRotationQuat() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -712,25 +724,30 @@ public:
      * @since v3.2
      */
     virtual Node* getChildByName(const std::string& name) const;
+    /**
+     * Gets a child from the container with its name that can be cast to Type T
+     *
+     * @param name   An identifier to find the child node.
+     *
+     * @return a Node with the given name that can be cast to Type T
+    */
+    template <typename T>
+    inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
-     * @param name The name to search for, support c++11 regular expression
+     * @param name The name to search for, supports c++11 regular expression.
      * Search syntax options:
-     * `/` : When placed at the start of the search string, this indicates that the search should be performed on the tree's node.
-     * `//`: Can only be placed at the begin of the search string. This indicates that the search should be performed on the tree's node
-     *       and be performed recursively across the entire node tree.
+     * `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
      * `..`: The search should move up to the node's parent. Can only be placed at the end of string
-     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children
+     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
      *
      * @code
-     * enumerateChildren("/MyName", ...): This searches the root's children and matches any node with the name `MyName`.
-     * enumerateChildren("//MyName", ...): This searches the root's children recursively and matches any node with the name `MyName`.
+     * enumerateChildren("//MyName", ...): This searches the children recursively and matches any node with the name `MyName`.
      * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
-     * enumerateChildren("/MyName", ...): This searches the node tree and matches the parent node of every node named `MyName`.
      * enumerateChildren("A[[:digit:]]", ...): This searches the node's children and returns any child named `A0`, `A1`, ..., `A9`
      * enumerateChildren("Abby/Normal", ...): This searches the node's grandchildren and returns any node whose name is `Normal`
      * and whose parent is named `Abby`.
-     * enumerateChildren("//Abby/Normal", ...): This searches the node tree and returns any node whose name is `Normal` and whose
+     * enumerateChildren("//Abby/Normal", ...): This searches recursively and returns any node whose name is `Normal` and whose
      * parent is named `Abby`.
      * @endcode
      *
@@ -956,7 +973,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
 
     GLProgramState *getGLProgramState() const;
-    void setGLProgramState(GLProgramState *glProgramState);
+    virtual void setGLProgramState(GLProgramState *glProgramState);
 
     /**
      * Sets the shader program for this node
@@ -969,7 +986,7 @@ public:
      *
      * @param shaderProgram The shader program
      */
-    void setGLProgram(GLProgram *glprogram);
+    virtual void setGLProgram(GLProgram *glprogram);
     CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     /// @} end of Shader Program
 
@@ -1125,6 +1142,13 @@ public:
      * @param tag   A tag that indicates the action to be removed.
      */
     void stopActionByTag(int tag);
+    
+    /**
+     * Removes all actions from the running action list by its tag.
+     *
+     * @param tag   A tag that indicates the action to be removed.
+     */
+    void stopAllActionsByTag(int tag);
 
     /**
      * Gets an action from the running action list by its tag.
@@ -1184,6 +1208,16 @@ public:
     bool isScheduled(SEL_SCHEDULE selector);
 
     /**
+     * Checks whether a lambda function is scheduled.
+     *
+     * @param key      key of the callback
+     * @return Whether the lambda function selector is scheduled.
+     * @js NA
+     * @lua NA
+     */
+    bool isScheduled(const std::string &key);
+
+    /**
      * Schedules the "update" method.
      *
      * It will use the order number 0. This method will be called every frame.
@@ -1219,12 +1253,12 @@ public:
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
      // wrap this function into a selector via schedule_selector marco.
-     this->schedule(schedule_selector(MyNode::TickMe), 0, 0, 0);
+     this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
      * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use kRepeatForever for tick infinitely.
+     * @param repeat    The selector will be excuted (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
      * @lua NA
      */
@@ -1251,6 +1285,16 @@ public:
     void scheduleOnce(SEL_SCHEDULE selector, float delay);
 
     /**
+     * Schedules a lambda function that runs only once, with a delay of 0 or larger
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param delay         The amount of time that the first tick will wait before execution.
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void scheduleOnce(const std::function<void(float)>& callback, float delay, const std::string &key);
+
+    /**
      * Schedules a custom selector, the scheduled selector will be ticked every frame
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
@@ -1258,6 +1302,37 @@ public:
      * @lua NA
      */
     void schedule(SEL_SCHEDULE selector);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every frame
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, const std::string &key);
+
+    /**
+     * Schedules a lambda function. The scheduled lambda function will be called every "interval" seconds
+     *
+     * @param callback      The lambda function to be scheduled
+     * @param interval      Callback interval time in seconds. 0 means every frame,
+     * @param key           The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, float interval, const std::string &key);
+
+    /**
+     * Schedules a lambda function.
+     *
+     * @param callback  The lambda function to be schedule
+     * @param interval  Tick interval in seconds. 0 means tick every frame.
+     * @param repeat    The selector will be executed (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
+     * @param delay     The amount of time that the first tick will wait before execution.
+     * @param key       The key of the lambda function. To be used if you want to unschedule it
+     * @lua NA
+     */
+    void schedule(const std::function<void(float)>& callback, float interval, unsigned int repeat, float delay, const std::string &key);
 
     /**
      * Unschedules a custom selector.
@@ -1269,22 +1344,32 @@ public:
     void unschedule(SEL_SCHEDULE selector);
 
     /**
-     * Unschedule all scheduled selectors: custom selectors, and the 'update' selector.
+     * Unschedules a lambda function
+     *
+     * @param key      The key of the lambda function to be unscheduled
+     * @lua NA
+     */
+    void unschedule(const std::string &key);
+
+    /**
+     * Unschedule all scheduled selectors and lambda functions: custom selectors, and the 'update' selector and lambda functions
      * Actions are not affected by this method.
      * @lua NA
      */
-    void unscheduleAllSelectors(void);
+    void unscheduleAllCallbacks();
+
+    CC_DEPRECATED_ATTRIBUTE void unscheduleAllSelectors() { unscheduleAllCallbacks(); }
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter
      */
-    void resume(void);
+    virtual void resume(void);
     /**
      * Pauses all scheduled selectors, actions and event listeners..
      * This method is called internally by onExit
      */
-    void pause(void);
+    virtual void pause(void);
 
     /**
      * Resumes all scheduled selectors, actions and event listeners.
@@ -1428,6 +1513,10 @@ public:
      */
     virtual bool removeComponent(const std::string& name);
 
+    /** 
+     *   removes a component by its pointer      
+     */
+    virtual bool removeComponent(Component *component);
     /**
      *   removes all components
      */
@@ -1445,8 +1534,16 @@ public:
     /**
      *   get the PhysicsBody the sprite have
      */
-    PhysicsBody* getPhysicsBody() const;
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
+    
+    /**
+     *   remove this node from physics world. it will remove all the physics bodies in it's children too.
+     */
+    void removeFromPhysicsWorld();
+    
+    void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
+    virtual void updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
 #endif
     
     // overrides
@@ -1466,7 +1563,20 @@ public:
     
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
     virtual bool isOpacityModifyRGB() const { return false; };
+
+    void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
     
+    /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
+    unsigned short getCameraMask() const { return _cameraMask; }
+    void setCameraMask(unsigned short mask, bool applyChildren = true);
+
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
     Node();
@@ -1499,10 +1609,13 @@ protected:
     bool doEnumerate(std::string name, std::function<bool (Node *)> callback) const;
     bool doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const;
     
-#if CC_USE_PHYSICS
-    virtual void updatePhysicsBodyPosition(Scene* layer);
-    virtual void updatePhysicsBodyRotation(Scene* layer);
-#endif // CC_USE_PHYSICS
+    //check whether this camera mask is visible by the current visiting camera
+    bool isVisitableByVisitingCamera() const;
+    
+    // update quaternion from Rotation3D
+    void updateRotationQuat();
+    // update Rotation3D from quaternion
+    void updateRotation3D();
     
 private:
     void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
@@ -1515,6 +1628,8 @@ protected:
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    
+    Quaternion _rotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis
@@ -1524,6 +1639,7 @@ protected:
     float _positionZ;               ///< OpenGL real Z position
     Vec2 _normalizedPosition;
     bool _usingNormalizedPosition;
+    bool _normalizedPositionDirty;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
@@ -1550,7 +1666,7 @@ protected:
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
-
+    Director* _director;            //cached director pointer to improve rendering performance
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
@@ -1589,6 +1705,11 @@ protected:
 
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
+    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
+    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
+    float _physicsRotation;
+    bool _physicsTransformDirty;
+    bool _updateTransformFromPhysics;
 #endif
     
     // opacity controls
@@ -1601,6 +1722,14 @@ protected:
 
     static int s_globalOrderOfArrival;
     
+    // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
+    unsigned short _cameraMask;
+    
+    std::function<void()> _onEnterCallback;
+    std::function<void()> _onExitCallback;
+    std::function<void()> _onEnterTransitionDidFinishCallback;
+    std::function<void()> _onExitTransitionDidStartCallback;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     

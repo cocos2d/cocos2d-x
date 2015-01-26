@@ -49,7 +49,7 @@ TextBMFont::~TextBMFont()
 
 TextBMFont* TextBMFont::create()
 {
-    TextBMFont* widget = new TextBMFont();
+    TextBMFont* widget = new (std::nothrow) TextBMFont();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -61,7 +61,7 @@ TextBMFont* TextBMFont::create()
     
 TextBMFont* TextBMFont::create(const std::string &text, const std::string &filename)
 {
-    TextBMFont* widget = new TextBMFont();
+    TextBMFont* widget = new (std::nothrow) TextBMFont();
     if (widget && widget->init())
     {
         widget->setFntFile(filename);
@@ -88,20 +88,23 @@ void TextBMFont::setFntFile(const std::string& fileName)
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
     
-    _labelBMFontRenderer->setColor(this->getColor());
-    _labelBMFontRenderer->setOpacity(this->getOpacity());
     _fntFileHasInit = true;
-    setString(_stringValue);
+    updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
+    _labelBMFontRendererAdaptDirty = true;
 }
 
 void TextBMFont::setString(const std::string& value)
 {
+    if (value == _labelBMFontRenderer->getString())
+    {
+        return;
+    }
     _stringValue = value;
+    _labelBMFontRenderer->setString(value);
     if (!_fntFileHasInit)
     {
         return;
     }
-    _labelBMFontRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
     _labelBMFontRendererAdaptDirty = true;
 }
@@ -131,7 +134,7 @@ void TextBMFont::adaptRenderers()
     }
 }
 
-const Size& TextBMFont::getVirtualRendererSize() const
+Size TextBMFont::getVirtualRendererSize() const
 {
     return _labelBMFontRenderer->getContentSize();
 }

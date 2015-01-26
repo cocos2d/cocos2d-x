@@ -28,7 +28,6 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "2d/CCSpriteBatchNode.h"
-#include "base/ccTypes.h"
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCFontAtlas.h"
 
@@ -132,6 +131,7 @@ public:
     virtual void setSystemFontSize(float fontSize);
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
+    virtual void requestSystemFontRefresh() { _systemFontDirty = true;}
     /** changes the string to render
     * @warning It is as expensive as changing the string if you haven't set up TTF/BMFont/CharMap for the label.
     */
@@ -183,25 +183,25 @@ public:
      * The label's max line width be used for force line breaks if the set value not equal zero.
      * The label's width and max line width has not always to be equal.
      */
-    void setMaxLineWidth(unsigned int maxLineWidth);
-    unsigned int getMaxLineWidth() { return _maxLineWidth;}
+    void setMaxLineWidth(float maxLineWidth);
+    float getMaxLineWidth() { return _maxLineWidth; }
 
     /** Sets the untransformed size of the label.
      * The label's width be used for text align if the set value not equal zero.
      * The label's max line width will be equal to the same value.
      */
-    void setWidth(unsigned int width) { setDimensions(width,_labelHeight);}
-    unsigned int getWidth() const { return _labelWidth; }  
+    void setWidth(float width) { setDimensions(width,_labelHeight);}
+    float getWidth() const { return _labelWidth; }
 
     /** Sets the untransformed size of the label.
      * The label's height be used for text align if the set value not equal zero.
      * The text will display of incomplete when the size of label not enough to support display all text.
      */
-    void setHeight(unsigned int height){ setDimensions(_labelWidth,height);}
-    unsigned int getHeight() const { return _labelHeight;}   
+    void setHeight(float height){ setDimensions(_labelWidth, height); }
+    float getHeight() const { return _labelHeight; }
 
     /** Sets the untransformed size of the label in a more efficient way. */
-    void setDimensions(unsigned int width,unsigned int height);
+    void setDimensions(float width, float height);
     const Size& getDimensions() const{ return _labelDimensions;}
 
     /** update content immediately.*/
@@ -236,7 +236,7 @@ public:
     float getAdditionalKerning() const;
 
     // string related stuff
-    int getStringNumLines() const { return _currNumLines;}
+    int getStringNumLines() const;
     int getStringLength() const;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
@@ -273,7 +273,19 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
     CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
-    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return getLineHeight();}
+    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
+
+CC_CONSTRUCTOR_ACCESS:
+    /**
+     * @js NA
+     */
+    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT,
+      TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Label();
 
 protected:
     void onDraw(const Mat4& transform, bool transformUpdated);
@@ -293,17 +305,6 @@ protected:
         CHARMAP,
         STRING_TEXTURE
     };
-
-    /**
-    * @js NA
-    */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT, 
-        TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
-    /**
-    * @js NA
-    * @lua NA
-    */
-    virtual ~Label();
 
     virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
@@ -364,10 +365,10 @@ protected:
     bool  _lineBreakWithoutSpaces;
     int * _horizontalKernings;
 
-    unsigned int _maxLineWidth;
-    Size         _labelDimensions;
-    unsigned int _labelWidth;
-    unsigned int _labelHeight;
+    float _maxLineWidth;
+    Size  _labelDimensions;
+    float _labelWidth;
+    float _labelHeight;
     TextHAlignment _hAlignment;
     TextVAlignment _vAlignment;
 

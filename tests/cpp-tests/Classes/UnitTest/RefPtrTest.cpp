@@ -3,7 +3,8 @@
 void RefPtrTest::onEnter()
 {
     UnitTestDemo::onEnter();
-    
+
+#if DEBUG
     // TEST(constructors)
     {
         // Default constructor
@@ -313,6 +314,9 @@ void RefPtrTest::onEnter()
         CC_ASSERT(theString->getReferenceCount() == 2);
         CC_ASSERT(theString->compare("Hello world!") == 0);
     }
+#else
+    log("RefPtr tests are not executed in release mode");
+#endif
 }
 
 std::string RefPtrTest::subtitle() const

@@ -45,4 +45,31 @@ protected:
     UI_SCENE_CREATE_FUNC(UIImageViewTest_Scale9)
 };
 
+class UIImageViewTest_Scale9_State_Change : public UIScene
+{
+public:
+    bool init();
+
+protected:
+    UI_SCENE_CREATE_FUNC(UIImageViewTest_Scale9_State_Change)
+};
+
+class UIImageViewTest_ContentSize : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIImageViewTest_ContentSize)
+};
+
+class UIImageViewFlipTest : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIImageViewFlipTest)
+};
+
 #endif /* defined(__TestCpp__UIImageViewTest__) */

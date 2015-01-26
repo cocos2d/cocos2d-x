@@ -25,112 +25,86 @@
 #ifndef _COCOLOADER_H
 #define _COCOLOADER_H
 
-#include <stdio.h>
-#include <vector>
-#include <cstdio>
 #include <stdint.h>
-#include "json/rapidjson.h"
 #include "json/document.h"
+#include "cocostudio/CocosStudioExport.h"
 
 #pragma pack (4)
 
 namespace cocostudio{
         
-
-struct  stExpCocoAttribDesc
-{
-	rapidjson::Type	m_Type;
-	uint64_t m_szName;
-	uint64_t m_szDefaultValue;
-public:
-	
-	void ReBuild(char* pStringMemoryAddr)
-	{
-		m_szName = m_szName + (uint64_t)pStringMemoryAddr;
-		m_szDefaultValue = m_szDefaultValue + (uint64_t)pStringMemoryAddr;
-	}
-};
-
-struct  stExpCocoObjectDesc
-{
-	uint32_t		m_nAttribNum;
-	uint64_t		m_szName;
-	uint64_t		m_pAttribDescArray;
-
-public:
-	stExpCocoObjectDesc()
-	{
-		m_nAttribNum = 0;
-		m_szName = 0;
-		m_pAttribDescArray = 0;
-	}
-	void ReBuild(char* pAttribMemoryAddr,char* pStringMemoryAddr)
-	{
-		m_szName = m_szName + (uint64_t)pStringMemoryAddr;
-		m_pAttribDescArray = m_pAttribDescArray + (uint64_t)pAttribMemoryAddr;
-		stExpCocoAttribDesc* tpAttribDescArray = (stExpCocoAttribDesc*)m_pAttribDescArray;
-		for(uint32_t i = 0 ; i < m_nAttribNum ; i++)
-		{
-			tpAttribDescArray[i].ReBuild(pStringMemoryAddr);
-		}
-	}
-	
-};
-   
 class CocoLoader;
-
-struct stExpCocoNode
+    
+struct CC_STUDIO_DLL stExpCocoAttribDesc
 {
-protected:
-	int32_t	m_ObjIndex;
-	int32_t	m_AttribIndex;
-	uint32_t	m_ChildNum;
-	uint64_t	m_szValue;
-	uint64_t	m_ChildArray;
-    
+    char	m_cTypeName;
+    uint32_t m_szName;
 public:
-    rapidjson::Type	 GetType(CocoLoader*	pCoco);
-	char*	GetName(CocoLoader*	pCoco);
-	char*	GetValue();
-	int	GetChildNum();
-	stExpCocoNode*	GetChildArray();
-    
-public:
-	inline  void	ReBuild(char* cocoNodeAddr,char* pStringMemoryAddr);
-	void	WriteJson(CocoLoader* pCoco, void* pFileName = NULL, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
+    char* GetName(CocoLoader*	pCoco);
 };
 
-
-struct	stCocoFileHeader
+struct CC_STUDIO_DLL stExpCocoObjectDesc
 {
-	char	m_FileDesc[32];
-	char	m_Version[32];
-	uint32_t	m_nFirstUsed;
-	uint32_t	m_ObjectCount;
-	uint64_t	m_lAttribMemAddr;
-	uint64_t	m_CocoNodeMemAddr;
-	uint64_t	m_lStringMemAddr;
-	
+    unsigned char	m_cAttribNum;
+    uint32_t		m_szName;
+    uint32_t		m_pAttribDescArray;
+public:
+    char*	GetName(CocoLoader*	pCoco);
+    int		GetAttribNum();
+    stExpCocoAttribDesc*	GetAttribDescArray(CocoLoader*	pCoco);
 };
 
-
-class CocoLoader
+struct CC_STUDIO_DLL stExpCocoNode
 {
-private:
-	stCocoFileHeader*	m_pFileHeader;
-	stExpCocoNode*		m_pRootNode;
-	stExpCocoObjectDesc*	m_pObjectDescArray;
-
 public:
-	CocoLoader();
-	~CocoLoader();
-
+    int16_t			m_ObjIndex;
+    int16_t			m_AttribIndex;
+    unsigned char	m_ChildNum;
+    uint32_t		m_szValue;
+    uint32_t		m_ChildArray;
 public:
-	bool	ReadCocoBinBuff(char* pBinBuff);
-	stCocoFileHeader*	GetFileHeader(){return m_pFileHeader;}
-	stExpCocoNode*		GetRootCocoNode(){return	m_pRootNode;}
-	stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
-	stExpCocoObjectDesc*	GetCocoObjectDesc(const char* szObjDesc);
+    rapidjson::Type		GetType(CocoLoader*	pCoco);
+    char*				GetName(CocoLoader*	pCoco);
+    char*				GetValue(CocoLoader*	pCoco);
+    int					GetChildNum();
+    stExpCocoNode*		GetChildArray(CocoLoader*	pCoco);
+public:
+    void WriteJson(CocoLoader* pCoco,void* pFileName = nullptr, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
+};
+
+struct CC_STUDIO_DLL stCocoFileHeader
+{
+    char		m_FileDesc[32];
+    char		m_Version[32];
+    uint32_t	m_nDataSize;
+    uint32_t	m_nCompressSize;
+    uint32_t	m_ObjectCount;
+    uint32_t	m_lAttribMemAddr;
+    uint32_t	m_CocoNodeMemAddr;
+    uint32_t	m_lStringMemAddr;
+    
+};
+
+class CC_STUDIO_DLL CocoLoader
+{
+    stCocoFileHeader*			m_pFileHeader;
+    stExpCocoNode*				m_pRootNode;
+    stExpCocoObjectDesc*		m_pObjectDescArray;
+    char*						m_pMemoryBuff;
+    
+public:
+    CocoLoader();
+    ~CocoLoader();
+public:
+    
+    bool					ReadCocoBinBuff(char* pBinBuff);
+    stCocoFileHeader*		GetFileHeader(){return m_pFileHeader;}
+    stExpCocoNode*			GetRootCocoNode(){return	m_pRootNode;}
+    stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
+    char*					GetMemoryAddr_AttribDesc();
+    char*					GetMemoryAddr_CocoNode();
+    char*					GetMemoryAddr_String();
+    
 };
 
 }

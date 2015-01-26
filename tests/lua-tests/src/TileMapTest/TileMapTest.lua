@@ -625,6 +625,9 @@ local function TMXOrthoObjectsTest()
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
+    
+    local drawNode = cc.DrawNode:create()
+    map:addChild(drawNode, 10)
 
     --------cclog("---: Iterating over all the group objets")
     local  group   = map:getObjectGroup("Object Group 1")
@@ -641,30 +644,7 @@ local function TMXOrthoObjectsTest()
             break
         end
         --------cclog("object: %x", dict)
-    end
-
-    --------cclog("---: Fetching 1 object by name")
-    -- local  platform = group:objectNamed("platform")
-    --------cclog("platform: %x", platform)
-    return ret
-end
-
-local function draw()
-
-    local  map = tolua.cast(getChildByTag(kTagTileMap), "cc.TMXTiledMap")
-    local  group = map:getObjectGroup("Object Group 1")
-
-    local  objects = group:getObjects()
-    local  dict = nil
-    local  i = 0
-    local  len = table.getn(objects)
-    for i = 0, len-1, 1 do
-        dict = objects[i + 1]
-
-        if dict == nil then
-            break
-        end
-
+        
         local key = "x"
         local x = dict["x"]
         key = "y"
@@ -673,16 +653,19 @@ local function draw()
         local width = dict["width"]--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
         local height = dict["height"]--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
-
-        glLineWidth(3)
-
-        cc.DrawPrimitives.drawLine( cc.p(x, y), cc.p((x+width), y) )
-        cc.DrawPrimitives.drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)) )
-        cc.DrawPrimitives.drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)) )
-        cc.DrawPrimitives.drawLine( cc.p(x, (y+height)), cc.p(x, y) )
-
-        glLineWidth(1)
+        
+        local color = cc.c4f(1,1,1,1)
+        drawNode:drawLine( cc.p(x, y), cc.p((x+width), y), color)
+        drawNode:drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)), color)
+        drawNode:drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)), color)
+        drawNode:drawLine( cc.p(x, (y+height)), cc.p(x, y), color)
     end
+
+    --------cclog("---: Fetching 1 object by name")
+    -- local  platform = group:objectNamed("platform")
+    --------cclog("platform: %x", platform)
+
+    return ret
 end
 
 --------------------------------------------------------------------
@@ -701,6 +684,9 @@ local function TMXIsoObjectsTest()
 
     local  group = map:getObjectGroup("Object Group 1")
 
+    local drawNode = cc.DrawNode:create()
+    map:addChild(drawNode, 10)
+
     --UxMutableArray* objects = group:objects()
     local  objects = group:getObjects()
     --UxMutableDictionary<std:string>* dict
@@ -714,26 +700,7 @@ local function TMXIsoObjectsTest()
             break
         end
         --------cclog("object: %x", dict)
-    end
-    return ret
-end
-
-local function draw()
-
-    local map = tolua.cast(getChildByTag(kTagTileMap), "cc.TMXTiledMap")
-    local group = map:getObjectGroup("Object Group 1")
-
-    local  objects = group:getObjects()
-    local  dict = nil
-    local  i = 0
-    local  len = table.getn(objects)
-    for i = 0, len-1, 1 do
-        dict = tolua.cast(objects[i + 1], "cc.Dictionary")
-
-        if dict == nil then
-            break
-        end
-
+        
         local key = "x"
         local x = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("x")):getNumber()
         key = "y"
@@ -742,16 +709,14 @@ local function draw()
         local width = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
         local height = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
-
-        glLineWidth(3)
-
-        cc.DrawPrimitives.drawLine( cc.p(x,y), cc.p(x+width,y) )
-        cc.DrawPrimitives.drawLine( cc.p(x+width,y), cc.p(x+width,y+height) )
-        cc.DrawPrimitives.drawLine( cc.p(x+width,y+height), cc.p(x,y+height) )
-        cc.DrawPrimitives.drawLine( cc.p(x,y+height), cc.p(x,y) )
-
-        glLineWidth(1)
+        
+        local color = cc.c4f(1,1,1,1)
+        drawNode:drawLine( cc.p(x, y), cc.p((x+width), y), color)
+        drawNode:drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)), color)
+        drawNode:drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)), color)
+        drawNode:drawLine( cc.p(x, (y+height)), cc.p(x, y), color)
     end
+    return ret
 end
 
 --------------------------------------------------------------------
@@ -1106,41 +1071,40 @@ local function TMXOrthoFlipRunTimeTest()
     local  action = cc.ScaleBy:create(2, 0.5)
     map:runAction(action)
     local function flipIt(dt)
+        local map = ret:getChildByTag(kTagTileMap)
+        local layer = map:getLayer("Layer 0")
 
-        -- local map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
-        -- local layer = map:getLayer("Layer 0")
+        local tileCoord = cc.p(1, 10)
+        local flags = 0
+        local GID, flags = layer:getTileGIDAt(tileCoord, flags)
 
-        -- --blue diamond
-        -- local tileCoord = cc.p(1,10)
-        -- local flags = 0
-        -- local GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
-        -- -- Vertical
-        -- if( flags & kcc.TMXTileVerticalFlag )
-        -- flags &= ~kcc.TMXTileVerticalFlag
-        -- else
-        --     flags |= kcc.TMXTileVerticalFlag
-        --     layer:setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags)
+        if 0 ~= bit._and(flags, cc.TMX_TILE_VERTICAL_FLAG) then
+            flags = bit._and(flags, bit._not(cc.TMX_TILE_VERTICAL_FLAG))
+        else
+            flags = bit._or(flags, cc.TMX_TILE_VERTICAL_FLAG)
+        end
+        layer:setTileGID(GID, tileCoord, flags)
 
+        tileCoord = cc.p(1,8)    
+        GID, flags = layer:getTileGIDAt(tileCoord, flags)
+        if 0 ~= bit._and(flags, cc.TMX_TILE_VERTICAL_FLAG) then 
+            flags = bit._and(flags, bit._not(cc.TMX_TILE_VERTICAL_FLAG))
+        else
+            flags = bit._or(flags, cc.TMX_TILE_VERTICAL_FLAG)
+        end 
+        layer:setTileGID(GID ,tileCoord, flags)
 
-        --     tileCoord = cc.p(1,8)
-        --     GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
-        --     -- Vertical
-        --     if( flags & kcc.TMXTileVerticalFlag )
-        --     flags &= ~kcc.TMXTileVerticalFlag
-        --     else
-        --         flags |= kcc.TMXTileVerticalFlag
-        --         layer:setTileGID(GID ,tileCoord, (ccTMXTileFlags)flags)
-
-
-        --         tileCoord = cc.p(2,8)
-        --         GID = layer:getTileGIDAt(tileCoord, (ccTMXTileFlags*)&flags)
-        --         -- Horizontal
-        --         if( flags & kcc.TMXTileHorizontalFlag )
-        --         flags &= ~kcc.TMXTileHorizontalFlag
-        --         else
-        --             flags |= kcc.TMXTileHorizontalFlag
-        --             layer:setTileGID(GID, tileCoord, (ccTMXTileFlags)flags)
+        tileCoord = cc.p(2,8)
+        GID, flags = layer:getTileGIDAt(tileCoord, flags)
+        -- Horizontal
+        if 0~= bit._and(flags, cc.TMX_TILE_HORIZONTAL_FLAG) then
+            flags = bit._and(flags, bit._not(cc.TMX_TILE_HORIZONTAL_FLAG))
+        else
+            flags = bit._or(flags, cc.TMX_TILE_HORIZONTAL_FLAG)
+        end 
+        layer:setTileGID(GID, tileCoord, flags) 
     end
+
     local schedulerEntry = nil
     local function onNodeEvent(event)
         if event == "enter" then
@@ -1149,6 +1113,9 @@ local function TMXOrthoFlipRunTimeTest()
             scheduler:unscheduleScriptEntry(schedulerEntry)
         end
     end
+
+    ret:registerScriptHandler(onNodeEvent)
+
     return ret
 end
 

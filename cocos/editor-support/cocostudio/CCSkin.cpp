@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
 
 
@@ -47,7 +46,7 @@ namespace cocostudio {
 
 Skin *Skin::create()
 {
-    Skin *skin = new Skin();
+    Skin *skin = new (std::nothrow) Skin();
     if(skin && skin->init())
     {
         skin->autorelease();
@@ -59,7 +58,7 @@ Skin *Skin::create()
 
 Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 {
-    Skin *skin = new Skin();
+    Skin *skin = new (std::nothrow) Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
     {
         skin->autorelease();
@@ -71,7 +70,7 @@ Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 
 Skin *Skin::create(const std::string& pszFileName)
 {
-    Skin *skin = new Skin();
+    Skin *skin = new (std::nothrow) Skin();
     if(skin && skin->initWithFile(pszFileName))
     {
         skin->autorelease();
@@ -128,7 +127,7 @@ void Skin::setSkinData(const BaseData &var)
     setScaleY(_skinData.scaleY);
     setRotationSkewX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
     setRotationSkewY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
-    setPosition(Vec2(_skinData.x, _skinData.y));
+    setPosition(_skinData.x, _skinData.y);
 
     _skinTransform = getNodeToParentTransform();
     updateArmatureTransform();
@@ -160,6 +159,7 @@ void Skin::updateTransform()
         //
         // calculate the Quad based on the Affine Matrix
         //
+        Mat4 transform = getNodeToParentTransform();
 
         Size &size = _rect.size;
 
@@ -169,13 +169,13 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
-        float x = _transform.m[12];
-        float y = _transform.m[13];
+        float x = transform.m[12];
+        float y = transform.m[13];
 
-        float cr = _transform.m[0];
-        float sr = _transform.m[1];
-        float cr2 = _transform.m[5];
-        float sr2 = -_transform.m[4];
+        float cr = transform.m[0];
+        float sr = transform.m[1];
+        float cr2 = transform.m[5];
+        float sr2 = -transform.m[4];
         float ax = x1 * cr - y1 * sr2 + x;
         float ay = x1 * sr + y1 * cr2 + y;
 
@@ -221,10 +221,10 @@ Mat4 Skin::getNodeToWorldTransformAR() const
 
 void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Mat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    //TODO implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv);
+    //TODO: implement z order
+    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv, flags);
     renderer->addCommand(&_quadCommand);
 }
 

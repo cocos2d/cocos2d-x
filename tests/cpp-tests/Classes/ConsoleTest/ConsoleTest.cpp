@@ -104,7 +104,7 @@ void BaseTestConsole::onEnter()
 
 void BaseTestConsole::restartCallback(Ref* sender)
 {
-    auto s = new ConsoleTestScene();
+    auto s = new (std::nothrow) ConsoleTestScene();
     s->addChild(restartConsoleTest());
 
     Director::getInstance()->replaceScene(s);
@@ -113,7 +113,7 @@ void BaseTestConsole::restartCallback(Ref* sender)
 
 void BaseTestConsole::nextCallback(Ref* sender)
 {
-    auto s = new ConsoleTestScene();
+    auto s = new (std::nothrow) ConsoleTestScene();
     s->addChild( nextConsoleTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -121,7 +121,7 @@ void BaseTestConsole::nextCallback(Ref* sender)
 
 void BaseTestConsole::backCallback(Ref* sender)
 {
-    auto s = new ConsoleTestScene();
+    auto s = new (std::nothrow) ConsoleTestScene();
     s->addChild( backConsoleTest() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -165,8 +165,8 @@ ConsoleCustomCommand::ConsoleCustomCommand()
     auto label = LabelTTF::create(ss.str(), "Arial", 12);
 
     // position the label on the center of the screen
-    label->setPosition(Point(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height/2 + (label->getContentSize().height/2)));
+    label->setPosition(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height/2 + (label->getContentSize().height/2));
     
     // add the label as a child to this layer
     this->addChild(label, 1);
@@ -258,7 +258,7 @@ void ConsoleUploadFile::uploadFile()
       If socket(2) (or connect(2)) fails, we (close the socket
       and) try the next address. */
 
-    for (rp = result; rp != NULL; rp = rp->ai_next) {
+    for (rp = result; rp != nullptr; rp = rp->ai_next) {
         sfd = socket(rp->ai_family, rp->ai_socktype,
                     rp->ai_protocol);
         if (sfd == -1)
@@ -274,7 +274,7 @@ void ConsoleUploadFile::uploadFile()
 #endif
     }
 
-    if (rp == NULL) {               /* No address succeeded */
+    if (rp == nullptr) {               /* No address succeeded */
         CCLOG("ConsoleUploadFile: could not connect!");
         return;
     }
@@ -327,7 +327,7 @@ void ConsoleUploadFile::uploadFile()
     // terminate
     fclose (fp);
    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
         WSACleanup();
 #else

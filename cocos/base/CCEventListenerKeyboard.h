@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 class Event;
 
-class EventListenerKeyboard : public EventListener
+class CC_DLL EventListenerKeyboard : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
@@ -46,7 +46,7 @@ public:
     
     std::function<void(EventKeyboard::KeyCode, Event*)> onKeyPressed;
     std::function<void(EventKeyboard::KeyCode, Event*)> onKeyReleased;
-private:
+CC_CONSTRUCTOR_ACCESS:
     EventListenerKeyboard();
     bool init();
 };

@@ -5,27 +5,29 @@
 -- @parent_module cc
 
 --------------------------------
--- overload function: create(cc.ActionInterval)
---          
--- overload function: create(cc.ActionInterval, float)
---          
+-- @overload self, cc.ActionInterval         
+-- @overload self, cc.ActionInterval, float         
 -- @function [parent=#EaseElasticInOut] create
 -- @param self
--- @param #cc.ActionInterval actioninterval
--- @param #float float
--- @return EaseElasticInOut#EaseElasticInOut ret (retunr value: cc.EaseElasticInOut)
+-- @param #cc.ActionInterval action
+-- @param #float period
+-- @return EaseElasticInOut#EaseElasticInOut ret (return value: cc.EaseElasticInOut)
 
 --------------------------------
+-- 
 -- @function [parent=#EaseElasticInOut] clone 
 -- @param self
 -- @return EaseElasticInOut#EaseElasticInOut ret (return value: cc.EaseElasticInOut)
         
 --------------------------------
+-- param time in seconds
 -- @function [parent=#EaseElasticInOut] update 
 -- @param self
--- @param #float float
+-- @param #float time
+-- @return EaseElasticInOut#EaseElasticInOut self (return value: cc.EaseElasticInOut)
         
 --------------------------------
+-- 
 -- @function [parent=#EaseElasticInOut] reverse 
 -- @param self
 -- @return EaseElasticInOut#EaseElasticInOut ret (return value: cc.EaseElasticInOut)

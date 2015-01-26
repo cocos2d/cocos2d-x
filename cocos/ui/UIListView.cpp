@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "ui/UIListView.h"
 #include "ui/UIHelper.h"
-#include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -36,10 +35,10 @@ ListView::ListView():
 _model(nullptr),
 _gravity(Gravity::CENTER_VERTICAL),
 _itemsMargin(0.0f),
-_listViewEventListener(nullptr),
-_listViewEventSelector(nullptr),
 _curSelectedIndex(0),
 _refreshViewDirty(true),
+_listViewEventListener(nullptr),
+_listViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     this->setTouchEnabled(true);
@@ -55,7 +54,7 @@ ListView::~ListView()
 
 ListView* ListView::create()
 {
-    ListView* widget = new ListView();
+    ListView* widget = new (std::nothrow) ListView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -77,8 +76,9 @@ bool ListView::init()
 
 void ListView::setItemModel(Widget *model)
 {
-    if (!model)
+    if (nullptr == model)
     {
+        CCLOG("Can't set a nullptr to item model!");
         return;
     }
     CC_SAFE_RELEASE_NULL(_model);
@@ -120,133 +120,101 @@ void ListView::updateInnerContainerSize()
             break;
     }
 }
+    
+void ListView::remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex)
+{
+    CCASSERT(nullptr != layoutParameter, "Layout parameter can't be nullptr!");
+    
+    switch (_gravity)
+    {
+        case Gravity::LEFT:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
+            break;
+        case Gravity::RIGHT:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
+            break;
+        case Gravity::CENTER_HORIZONTAL:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+            break;
+        default:
+            break;
+    }
+    
+    if (0 == itemIndex)
+    {
+        layoutParameter->setMargin(Margin::ZERO);
+    }
+    else
+    {
+        layoutParameter->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
+    }
+}
+    
+void ListView::remedyHorizontalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex)
+{
+    CCASSERT(nullptr != layoutParameter, "Layout parameter can't be nullptr!");
+    
+    switch (_gravity)
+    {
+        case Gravity::TOP:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::TOP);
+            break;
+        case Gravity::BOTTOM:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
+            break;
+        case Gravity::CENTER_VERTICAL:
+            layoutParameter->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
+            break;
+        default:
+            break;
+    }
+    if (0 == itemIndex)
+    {
+        layoutParameter->setMargin(Margin::ZERO);
+    }
+    else
+    {
+        layoutParameter->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
+    }
+}
 
 void ListView::remedyLayoutParameter(Widget *item)
 {
-    if (!item)
+    CCASSERT(nullptr != item, "ListView Item can't be nullptr!");
+    
+    LinearLayoutParameter* linearLayoutParameter = (LinearLayoutParameter*)(item->getLayoutParameter());
+    bool isLayoutParameterExists = true;
+    if (!linearLayoutParameter)
     {
-        return;
+        linearLayoutParameter = LinearLayoutParameter::create();
+        isLayoutParameterExists = false;
     }
-    switch (_direction) {
+    ssize_t itemIndex = getIndex(item);
+    
+    switch (_direction)
+    {
         case Direction::VERTICAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
-            if (!llp)
-            {
-                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
-                switch (_gravity) {
-                    case Gravity::LEFT:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
-                        break;
-                    case Gravity::RIGHT:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
-                        break;
-                    case Gravity::CENTER_HORIZONTAL:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
-                        break;
-                    default:
-                        break;
-                }
-                if (getIndex(item) == 0)
-                {
-                    defaultLp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    defaultLp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
-                }
-                item->setLayoutParameter(defaultLp);
-            }
-            else
-            {
-                if (getIndex(item) == 0)
-                {
-                    llp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    llp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
-                }
-                switch (_gravity) {
-                    case Gravity::LEFT:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::LEFT);
-                        break;
-                    case Gravity::RIGHT:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::RIGHT);
-                        break;
-                    case Gravity::CENTER_HORIZONTAL:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            this->remedyVerticalLayoutParameter(linearLayoutParameter, itemIndex);
             break;
         }
         case Direction::HORIZONTAL:
         {
-            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter());
-            if (!llp)
-            {
-                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
-                switch (_gravity) {
-                    case Gravity::TOP:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
-                        break;
-                    case Gravity::BOTTOM:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
-                        break;
-                    case Gravity::CENTER_VERTICAL:
-                        defaultLp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
-                        break;
-                    default:
-                        break;
-                }
-                if (getIndex(item) == 0)
-                {
-                    defaultLp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    defaultLp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
-                }
-                item->setLayoutParameter(defaultLp);
-            }
-            else
-            {
-                if (getIndex(item) == 0)
-                {
-                    llp->setMargin(Margin::ZERO);
-                }
-                else
-                {
-                    llp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
-                }
-                switch (_gravity) {
-                    case Gravity::TOP:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::TOP);
-                        break;
-                    case Gravity::BOTTOM:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::BOTTOM);
-                        break;
-                    case Gravity::CENTER_VERTICAL:
-                        llp->setGravity(LinearLayoutParameter::LinearGravity::CENTER_VERTICAL);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            this->remedyHorizontalLayoutParameter(linearLayoutParameter, itemIndex);
             break;
         }
         default:
             break;
     }
-    
+    if (!isLayoutParameterExists)
+    {
+        item->setLayoutParameter(linearLayoutParameter);
+    }
 }
 
 void ListView::pushBackDefaultItem()
 {
-    if (!_model)
+    if (nullptr == _model)
     {
         return;
     }
@@ -258,7 +226,7 @@ void ListView::pushBackDefaultItem()
 
 void ListView::insertDefaultItem(ssize_t index)
 {
-    if (!_model)
+    if (nullptr == _model)
     {
         return;
     }
@@ -285,7 +253,7 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     ScrollView::addChild(child, zOrder, tag);
 
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget)
+    if (nullptr != widget)
     {
         _items.pushBack(widget);
     }
@@ -306,7 +274,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     ScrollView::addChild(child, zOrder, name);
     
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget)
+    if (nullptr != widget)
     {
         _items.pushBack(widget);
     }
@@ -315,7 +283,8 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
 void ListView::removeChild(cocos2d::Node *child, bool cleaup)
 {
     Widget* widget = dynamic_cast<Widget*>(child);
-    if (widget) {
+    if (nullptr != widget)
+    {
         _items.eraseObject(widget);
     }
    
@@ -345,7 +314,7 @@ void ListView::insertCustomItem(Widget* item, ssize_t index)
 void ListView::removeItem(ssize_t index)
 {
     Widget* item = getItem(index);
-    if (!item)
+    if (nullptr == item)
     {
         return;
     }
@@ -380,7 +349,7 @@ Vector<Widget*>& ListView::getItems()
 
 ssize_t ListView::getIndex(Widget *item) const
 {
-    if (!item)
+    if (nullptr == item)
     {
         return -1;
     }
@@ -448,6 +417,17 @@ void ListView::refreshView()
     updateInnerContainerSize();
 }
     
+void ListView::forceDoLayout()
+{
+    if (_refreshViewDirty)
+    {
+        refreshView();
+        _refreshViewDirty = false;
+    }
+
+    this->_innerContainer->forceDoLayout();
+}
+
 void ListView::doLayout()
 {
     Layout::doLayout();
@@ -473,6 +453,7 @@ void ListView::addEventListener(const ccListViewCallback& callback)
     
 void ListView::selectedItemEvent(TouchEventType event)
 {
+    this->retain();
     switch (event)
     {
         case TouchEventType::BEGAN:
@@ -483,6 +464,10 @@ void ListView::selectedItemEvent(TouchEventType event)
             }
             if (_eventCallback) {
                 _eventCallback(this,EventType::ON_SELECTED_ITEM_START);
+            }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_START));
             }
         }
         break;
@@ -495,10 +480,14 @@ void ListView::selectedItemEvent(TouchEventType event)
             if (_eventCallback) {
                 _eventCallback(this, EventType::ON_SELECTED_ITEM_END);
             }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_END));
+            }
         }
         break;
     }
-
+    this->release();
 }
     
 void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* touch)

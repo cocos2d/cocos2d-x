@@ -143,9 +143,9 @@ public:
     long numberOfCalls;
 };
 
-extern void ProfilingBeginTimingBlock(const char *timerName);
-extern void ProfilingEndTimingBlock(const char *timerName);
-extern void ProfilingResetTimingBlock(const char *timerName);
+extern void CC_DLL ProfilingBeginTimingBlock(const char *timerName);
+extern void CC_DLL ProfilingEndTimingBlock(const char *timerName);
+extern void CC_DLL ProfilingResetTimingBlock(const char *timerName);
 
 /*
  * cocos2d profiling categories

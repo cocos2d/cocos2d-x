@@ -54,6 +54,14 @@ public:
     void stopAction();
 };
 
+class StopAllActionsTest : public ActionManagerTest
+{
+public:
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    void stopAction(float time);
+};
+
 class ResumeTest : public ActionManagerTest
 {
 public:

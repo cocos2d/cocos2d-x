@@ -30,11 +30,11 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
-#include "base/CCPlatformMacros.h"
-#include "CCStdC.h"
-#include <list>
 #include <string>
 #include <vector>
+
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCStdC.h"
 
 struct libwebsocket;
 struct libwebsocket_context;
@@ -47,7 +47,7 @@ namespace network {
 class WsThreadHelper;
 class WsMessage;
 
-class WebSocket
+class CC_DLL WebSocket
 {
 public:
     /**

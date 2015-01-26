@@ -126,6 +126,32 @@ protected:
     UI_SCENE_CREATE_FUNC(UILayoutTest_Layout_Relative_Location)
 };
 
+class UILayoutComponentTest : public UIScene
+{
+public:
+    virtual bool init();
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+protected:
+    LayerColor* _baseLayer;
+    UI_SCENE_CREATE_FUNC(UILayoutComponentTest)
+};
+
+class UILayoutComponent_Berth_Test : public UILayoutComponentTest
+{
+public:
+    virtual bool init() override;
+protected:
+    UI_SCENE_CREATE_FUNC(UILayoutComponent_Berth_Test)
+};
+
+class UILayoutComponent_Berth_Stretch_Test : public UILayoutComponentTest
+{
+public:
+    virtual bool init() override;
+protected:
+    UI_SCENE_CREATE_FUNC(UILayoutComponent_Berth_Stretch_Test)
+};
+
 /*
 class UILayoutTest_Layout_Grid : public UIScene
 {

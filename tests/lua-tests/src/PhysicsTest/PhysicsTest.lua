@@ -16,89 +16,6 @@ local function range(from, to, step)
   end, nil, from - step
 end
 
--- bit operation
-
-bit = bit or {}
-bit.data32 = {}
-for i=1,32 do
-    bit.data32[i]=2^(32-i)
-end
-
-function    bit._b2d(arg)
-    local   nr=0
-    for i=1,32 do
-        if arg[i] ==1 then
-        nr=nr+bit.data32[i]
-        end
-    end
-    return  nr
-end
-
-function bit._d2b(arg)
-    arg = arg >= 0 and arg or (0xFFFFFFFF + arg + 1)
-    local   tr={}
-    for i=1,32 do
-        if arg >= bit.data32[i] then
-        tr[i]=1
-        arg=arg-bit.data32[i]
-        else
-        tr[i]=0
-        end
-    end
-    return   tr
-end
-
-function    bit._and(a,b)
-    local   op1=bit._d2b(a)
-    local   op2=bit._d2b(b)
-    local   r={}
-    
-    for i=1,32 do
-        if op1[i]==1 and op2[i]==1  then
-            r[i]=1
-        else
-            r[i]=0
-        end
-    end
-    return  bit._b2d(r)
-    
-end
-
-function    bit._rshift(a,n)
-    local   op1=bit._d2b(a)
-    n = n <= 32 and n or 32
-    n = n >= 0 and n or 0
-
-    for i=32, n+1, -1 do
-        op1[i] = op1[i-n]
-    end
-    for i=1, n do
-        op1[i] = 0
-    end
-    
-    return  bit._b2d(op1)
-end
-
-function    bit._not(a)
-    local   op1=bit._d2b(a)
-    local   r={}
-
-    for i=1,32 do
-        if  op1[i]==1   then
-            r[i]=0
-        else
-            r[i]=1
-        end
-    end
-    return  bit._b2d(r)
-end
-
-bit.band = bit.band or bit._and
-bit.rshift = bit.rshift or bit._rshift
-bit.bnot = bit.bnot or bit._not
-
--- bit operation end
-
 local function initWithLayer(layer, callback)
    curLayer = layer
    layer.spriteTexture = cc.SpriteBatchNode:create("Images/grossini_dance_atlas.png", 100):getTexture()
@@ -882,7 +799,7 @@ local function PhysicsDemoPump()
     sgearB:setCategoryBitmask(4);
     sgearB:setCollisionBitmask(4);
     sgearB:setTag(1);
-    world:addJoint(cc.PhysicsJointPin:construct(body, sgearB, sgearB:getPosition()));
+    world:addJoint(cc.PhysicsJointPin:construct(body, sgearB, cc.p(sgear:getPosition())));
     
     
     -- big gear
@@ -892,7 +809,7 @@ local function PhysicsDemoPump()
     bgear:setPosition(cc.p(VisibleRect:leftBottom().x + 275, VisibleRect:leftBottom().y));
     layer:addChild(bgear);
     bgearB:setCategoryBitmask(4);
-    world:addJoint(cc.PhysicsJointPin:construct(body, bgearB, bgearB:getPosition()));
+    world:addJoint(cc.PhysicsJointPin:construct(body, bgearB, cc.p(bgear:getPosition())));
     
     
     -- pump
@@ -923,7 +840,7 @@ local function PhysicsDemoPump()
     sgearB:setCollisionBitmask(5);
     world:addJoint(cc.PhysicsJointPin:construct(body, pluggerB, cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y-90)));
     world:addJoint(cc.PhysicsJointDistance:construct(pluggerB, sgearB, 
-      pluggerB:world2Local(cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y)), cc.p(44, 0)));
+      pluggerB:world2Local(cc.p(0,0)), cc.p(44, 0)));
   end
 
   initWithLayer(layer, onEnter)
@@ -1329,7 +1246,7 @@ local function PhysicsPositionRotationTest()
       local leftBall = cc.Sprite:create("Images/ball.png");
       leftBall:setPosition(-30, 0);
       leftBall:setScale(2);
-      leftBall:setPhysicsBody(cc.PhysicsBody:createCircle(leftBall:getContentSize().width/4));
+      leftBall:setPhysicsBody(cc.PhysicsBody:createCircle(leftBall:getContentSize().width));
       leftBall:getPhysicsBody():setTag(DRAG_BODYS_TAG);
       parent:addChild(leftBall);
       

@@ -47,9 +47,9 @@ typedef SSIZE_T ssize_t;
 #include <mutex>
 #include <stdarg.h>
 
+#include "base/CCRef.h"
 #include "base/ccMacros.h"
-#include "base/CCPlatformMacros.h"
-
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
@@ -71,8 +71,8 @@ void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
  ```
  */
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class CC_DLL Console
+    : public Ref
 {
 public:
     struct Command {
@@ -100,6 +100,13 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
+
+    /**
+     * set bind address
+     *
+     * @address : 127.0.0.1
+     */
+    void setBindAddress(const std::string &address);
  
 protected:
     void loop();
@@ -121,6 +128,7 @@ protected:
     void commandDirector(int fd, const std::string &args);
     void commandTouch(int fd, const std::string &args);
     void commandUpload(int fd);
+    void commandAllocator(int fd, const std::string &args);
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;
@@ -142,11 +150,12 @@ protected:
     std::vector<std::string> _DebugStrings;
 
     intptr_t _touchId;
+
+    std::string _bindAddress;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };
 
-#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) */
 NS_CC_END
 
 #endif /* defined(__CCCONSOLE_H__) */

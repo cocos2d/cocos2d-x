@@ -23,11 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "platform/CCCommon.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 #include "CCWinRTUtils.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "platform/wp8/CCGLView.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
+#include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
 
 #if defined(VLD_DEBUG_MEMORY)
@@ -42,17 +42,9 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
     // Create the message dialog and set its content
     Platform::String^ message = ref new Platform::String(CCUtf8ToUnicode(pszMsg, -1).c_str());
     Platform::String^ title = ref new Platform::String(CCUtf8ToUnicode(pszTitle, -1).c_str());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	Windows::UI::Popups::MessageDialog^ msg = ref new Windows::UI::Popups::MessageDialog(message, title);
-    // Set the command to be invoked when a user presses 'ESC'
-    msg->CancelCommandIndex = 1;
-
-    // Show the message dialog
-    msg->ShowAsync();
-#else
-    GLView::sharedOpenGLView()->ShowMessageBox(title, message);
+#ifndef WP8_SHADER_COMPILER
+    GLViewImpl::sharedOpenGLView()->ShowMessageBox(title, message);
 #endif
-
 }
 
 

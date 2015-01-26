@@ -31,20 +31,21 @@ THE SOFTWARE.
 #define __JSB_LOCALSTORAGE_H
 
 #include <string>
+#include "CCPlatformMacros.h"
 
 /** Initializes the database. If path is null, it will create an in-memory DB */
-void localStorageInit( const std::string& fullpath = "");
+void CC_DLL localStorageInit( const std::string& fullpath = "");
 
 /** Frees the allocated resources */
-void localStorageFree();
+void CC_DLL localStorageFree();
 
 /** sets an item in the LS */
-void localStorageSetItem( const std::string& key, const std::string& value);
+void CC_DLL localStorageSetItem( const std::string& key, const std::string& value);
 
 /** gets an item from the LS */
-std::string localStorageGetItem( const std::string& key );
+std::string CC_DLL localStorageGetItem( const std::string& key );
 
 /** removes an item from the LS */
-void localStorageRemoveItem( const std::string& key );
+void CC_DLL localStorageRemoveItem( const std::string& key );
 
 #endif // __JSB_LOCALSTORAGE_H

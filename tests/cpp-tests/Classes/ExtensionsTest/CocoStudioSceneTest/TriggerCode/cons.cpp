@@ -24,7 +24,7 @@ TimeElapsed::~TimeElapsed(void)
 
 bool TimeElapsed::init()
 {
-	_scheduler->schedule(schedule_selector(TimeElapsed::update), this, 0.0f , kRepeatForever, 0.0f, false);
+	_scheduler->schedule(CC_SCHEDULE_SELECTOR(TimeElapsed::update), this, 0.0f , CC_REPEAT_FOREVER, 0.0f, false);
     return true;
 }
 
@@ -47,9 +47,31 @@ void TimeElapsed::serialize(const rapidjson::Value &val)
 	}
 }
 
+void TimeElapsed::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
+	std::string key;
+	const char *str = nullptr;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
+		if (key == "TotalTime")
+		{
+			if (str != nullptr)
+			{
+				_totalTime = utils::atof(str); //DICTOOL->getFloatValue_json(subDict, "value");
+			}
+		}
+	}
+}
 void TimeElapsed::removeAll()
 {
-	_scheduler->unschedule(schedule_selector(TimeElapsed::update), this);
+	_scheduler->unschedule(CC_SCHEDULE_SELECTOR(TimeElapsed::update), this);
 }
 
 void TimeElapsed::update(float dt)
@@ -125,6 +147,50 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 	}
 }
 
+void ArmatureActionState::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
+	std::string key;
+	const char *str = nullptr;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
+		if (key == "Tag")
+		{
+			if (str != nullptr)
+			{
+				_tag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "componentName")
+		{
+			if (str != nullptr)
+			{
+				_comName = str; //DICTOOL->getStringValue_json(subDict, "value");
+			}
+			
+		}
+		else if (key == "AnimationName")
+		{
+			if (str != nullptr)
+			{
+				_aniname = str; //DICTOOL->getStringValue_json(subDict, "value");
+			}
+		}
+		else if (key == "ActionType")
+		{
+			if (str != nullptr)
+			{
+				_state = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+	}
+}
 void ArmatureActionState::removeAll()
 {
 	do 
@@ -209,6 +275,56 @@ void NodeInRect::serialize(const rapidjson::Value &val)
 	}
 }
 
+void NodeInRect::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
+	std::string key;
+	const char *str = nullptr;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
+		if (key == "Tag")
+		{
+			if (str != nullptr)
+			{
+				_tag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "originX")
+		{
+			if (str != nullptr)
+			{
+				_origin.x = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "originY")
+		{
+			if (str != nullptr)
+			{
+				_origin.y = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "sizeWidth")
+		{
+			if (str != nullptr)
+			{
+				_size.width = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "sizeHeight")
+		{
+			if (str != nullptr)
+			{
+				_size.height = atoi(str); //DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+	}
+}
 void NodeInRect::removeAll()
 {
 	CCLOG("NodeInRect::removeAll");
@@ -261,6 +377,35 @@ void NodeVisible::serialize(const rapidjson::Value &val)
 	}
 }
 
+void NodeVisible::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode)
+{
+	int length = pCocoNode->GetChildNum();
+	int count = 0;
+	stExpCocoNode *pDataItemsArray = pCocoNode->GetChildArray(pCocoLoader);
+	std::string key;
+	const char *str = nullptr;
+	for (int i = 0; i < length; ++i)
+	{
+		count = pDataItemsArray[i].GetChildNum();
+		stExpCocoNode *pDataItemArray = pDataItemsArray[i].GetChildArray(pCocoLoader);
+		key = pDataItemArray[0].GetValue(pCocoLoader);
+		str = pDataItemArray[1].GetValue(pCocoLoader);
+		if (key == "Tag")
+		{
+			if (str != nullptr)
+			{
+				_tag = atoi(str);//DICTOOL->getIntValue_json(subDict, "value");
+			}
+		}
+		else if (key == "Visible")
+		{
+			if (str != nullptr)
+			{
+				_visible = atoi(str) != 0? true:false;//DICTOOL->getIntValue_json(subDict, "value") != 0? true:false;
+			}
+		}
+	}
+}
 void NodeVisible::removeAll()
 {
 	CCLOG("NodeVisible::removeAll");

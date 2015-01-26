@@ -25,13 +25,12 @@
 #ifndef __CCEVENTLISTENER_H__
 #define __CCEVENTLISTENER_H__
 
-#include "base/CCPlatformMacros.h"
-#include "base/CCRef.h"
-
 #include <functional>
 #include <string>
 #include <memory>
-#include <set>
+
+#include "platform/CCPlatformMacros.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 
@@ -43,7 +42,7 @@ class Node;
  *  If you need custom listener which with different callback, you need to inherit this class.
  *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
  */
-class EventListener : public Ref
+class CC_DLL EventListener : public Ref
 {
 public:
     enum class Type
@@ -55,12 +54,13 @@ public:
         MOUSE,
         ACCELERATION,
         FOCUS,
+		GAME_CONTROLLER,
         CUSTOM
     };
 
     typedef std::string ListenerID;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
     EventListener();
 

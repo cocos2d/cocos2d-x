@@ -44,7 +44,7 @@ void LayerGradientLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, co
     if(strcmp(pPropertyName, PROPERTY_VECTOR) == 0) {
         ((LayerGradient *)pNode)->setVector(pPoint);
 
-        // TODO Not passed along the ccbi file.
+        // TODO: Not passed along the ccbi file.
         // ((LayerGradient *)pNode)->setCompressedInterpolation(true);
     } else {
         LayerLoader::onHandlePropTypePoint(pNode, pParent, pPropertyName, pPoint, ccbReader);

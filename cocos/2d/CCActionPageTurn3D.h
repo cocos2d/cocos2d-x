@@ -47,11 +47,15 @@ NS_CC_BEGIN
 class CC_DLL PageTurn3D : public Grid3DAction
 {
 public:
+    virtual GridBase* getGrid();
     /** create the action */
     static PageTurn3D* create(float duration, const Size& gridSize);
 
     // Overrides
 	virtual PageTurn3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
 };
 

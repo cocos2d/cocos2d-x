@@ -5,40 +5,47 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#TurnOffTiles] turnOnTile 
 -- @param self
--- @param #vec2_table vec2
+-- @param #vec2_table pos
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 --------------------------------
+-- 
 -- @function [parent=#TurnOffTiles] turnOffTile 
 -- @param self
--- @param #vec2_table vec2
+-- @param #vec2_table pos
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 --------------------------------
--- overload function: create(float, size_table, unsigned int)
---          
--- overload function: create(float, size_table)
---          
+-- @overload self, float, size_table, unsigned int         
+-- @overload self, float, size_table         
 -- @function [parent=#TurnOffTiles] create
 -- @param self
--- @param #float float
--- @param #size_table size
--- @param #unsigned int int
--- @return TurnOffTiles#TurnOffTiles ret (retunr value: cc.TurnOffTiles)
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #unsigned int seed
+-- @return TurnOffTiles#TurnOffTiles ret (return value: cc.TurnOffTiles)
 
 --------------------------------
+-- 
 -- @function [parent=#TurnOffTiles] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 --------------------------------
+-- 
 -- @function [parent=#TurnOffTiles] clone 
 -- @param self
 -- @return TurnOffTiles#TurnOffTiles ret (return value: cc.TurnOffTiles)
         
 --------------------------------
+-- 
 -- @function [parent=#TurnOffTiles] update 
 -- @param self
--- @param #float float
+-- @param #float time
+-- @return TurnOffTiles#TurnOffTiles self (return value: cc.TurnOffTiles)
         
 return nil

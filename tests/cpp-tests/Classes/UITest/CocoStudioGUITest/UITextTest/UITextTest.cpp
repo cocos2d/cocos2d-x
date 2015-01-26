@@ -40,10 +40,25 @@ bool UITextTest_LineWrap::init()
         _uiLayer->addChild(alert);
         
         // Create the line wrap
-        Text* text = Text::create("Text can line wrap","AmericanTypewriter",32);
+        Text* text = Text::create("TextArea Widget can line wrap","AmericanTypewriter",32);
         text->ignoreContentAdaptWithSize(false);
         text->setContentSize(Size(280, 150));
         text->setTextHorizontalAlignment(TextHAlignment::CENTER);
+        text->setTouchScaleChangeEnabled(true);
+        text->setTouchEnabled(true);
+        text->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type)
+        {
+            if (type == Widget::TouchEventType::ENDED)
+            {
+                if ((int)text->getContentSize().width == 280)
+                {
+                    text->setContentSize(Size(380,100));
+                }else
+                {
+                    text->setContentSize(Size(280, 150));
+                }
+            }
+        });
         text->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - text->getContentSize().height / 8.0f));
         _uiLayer->addChild(text);
         
@@ -125,6 +140,53 @@ bool UITextTest_TTF::init()
         Text* text = Text::create("Text","fonts/A Damn Mess.ttf",30);
         text->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + text->getContentSize().height / 4.0f));
         _uiLayer->addChild(text);
+        
+        return true;
+    }
+    return false;
+}
+
+// UITextTest_IgnoreConentSize
+
+bool UITextTest_IgnoreConentSize::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        Text* leftText = Text::create("ignore conent",
+                                   "fonts/Marker Felt.ttf",10);
+        leftText->setPosition(Vec2(widgetSize.width / 2.0f - 50,
+                                widgetSize.height / 2.0f));
+        leftText->ignoreContentAdaptWithSize(false);
+        leftText->setTextAreaSize(Size(60,60));
+        leftText->setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
+        leftText->setTouchScaleChangeEnabled(true);
+        leftText->setTouchEnabled(true);
+        _uiLayer->addChild(leftText);
+        
+        
+        Text* rightText = Text::create("ignore conent",
+                                      "fonts/Marker Felt.ttf",10);
+        rightText->setPosition(Vec2(widgetSize.width / 2.0f + 50,
+                                   widgetSize.height / 2.0f));
+        rightText->setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
+        //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
+        rightText->setTextAreaSize(Size(100,30));
+        rightText->ignoreContentAdaptWithSize(false);
+        _uiLayer->addChild(rightText);
+        
+        
+        auto halighButton = Button::create();
+        halighButton->setTitleText("Alignment Right");
+        halighButton->addClickEventListener([=](Ref*){
+            leftText->setTextHorizontalAlignment(TextHAlignment::RIGHT);
+            rightText->setTextHorizontalAlignment(TextHAlignment::RIGHT);
+        });
+        halighButton->setPosition(Vec2(widgetSize.width/2 - 50,
+                                       widgetSize.height/2 - 50));
+        _uiLayer->addChild(halighButton);
+        
         
         return true;
     }

@@ -202,9 +202,6 @@
     <Filter Include="Classes\FileUtilsTest">
       <UniqueIdentifier>{a4c2111f-cf9f-492c-884d-3de24715adce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\EditBoxTest">
-      <UniqueIdentifier>{18a69e7e-8ca7-475a-bfbb-7296baab16ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest">
       <UniqueIdentifier>{0ef55f53-411a-4661-b5d5-13930da52e68}</UniqueIdentifier>
     </Filter>
@@ -219,9 +216,6 @@
     </Filter>
     <Filter Include="Classes\ConfigurationTest">
       <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\Scale9SpriteTest">
-      <UniqueIdentifier>{3d73aa04-d66e-43d3-921f-b867a753c113}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioArmatureTest">
       <UniqueIdentifier>{a6e7d28e-46a3-46c4-9735-b39e96f776f0}</UniqueIdentifier>
@@ -327,6 +321,30 @@
     </Filter>
     <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
       <UniqueIdentifier>{fa88df83-76d7-4f41-ad48-801dafd44889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Camera3DTest">
+      <UniqueIdentifier>{7f85be1c-98c5-4412-afc5-6f39ae1452a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LightTest">
+      <UniqueIdentifier>{9befe67d-c725-4807-885f-edee45f95951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\BillBoardTest">
+      <UniqueIdentifier>{54a30b92-ddfb-420e-908b-886c23c21cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\AssetsManagerExTest">
+      <UniqueIdentifier>{f6c2eb6d-ad25-4287-a2a4-1c0d7382a49f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NewAudioEngineTest">
+      <UniqueIdentifier>{0ebafb87-26f5-4a07-b36f-1e4fa03afbe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\OpenURLTest">
+      <UniqueIdentifier>{fc47533b-f876-4254-b0f8-4af8f5e2837f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
+      <UniqueIdentifier>{65be3b70-58d6-47f4-bc67-fac9ee134c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\AllocatorTest">
+      <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -591,9 +609,6 @@
     <ClCompile Include="..\Classes\FileUtilsTest\FileUtilsTest.cpp">
       <Filter>Classes\FileUtilsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp">
-      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClCompile>
@@ -614,9 +629,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BaseTest.cpp">
       <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.cpp">
-      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -738,21 +750,6 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomParticleWidgetTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIButtonTest</Filter>
     </ClCompile>
@@ -845,6 +842,72 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileMapTest\TileMapTest2.cpp">
+      <Filter>Classes\TileMapTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Camera3DTest\Camera3DTest.cpp">
+      <Filter>Classes\Camera3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sprite3DTest\DrawNode3D.cpp">
+      <Filter>Classes\Sprite3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp">
+      <Filter>Classes\BillBoardTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LightTest\LightTest.cpp">
+      <Filter>Classes\LightTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
+      <Filter>Classes\OpenURLTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp">
+      <Filter>Classes\AllocatorTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1286,9 +1349,6 @@
     <ClInclude Include="..\Classes\FileUtilsTest\FileUtilsTest.h">
       <Filter>Classes\FileUtilsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h">
-      <Filter>Classes\ExtensionsTest\EditBoxTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
     </ClInclude>
@@ -1312,9 +1372,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BaseTest.h">
       <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\Scale9SpriteTest\Scale9SpriteTest.h">
-      <Filter>Classes\ExtensionsTest\Scale9SpriteTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
@@ -1454,21 +1511,6 @@
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomParticleWidgetTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIButtonTest</Filter>
     </ClInclude>
@@ -1561,6 +1603,72 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
       <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileMapTest\TileMapTest2.h">
+      <Filter>Classes\TileMapTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Camera3DTest\Camera3DTest.h">
+      <Filter>Classes\Camera3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sprite3DTest\DrawNode3D.h">
+      <Filter>Classes\Sprite3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h">
+      <Filter>Classes\BillBoardTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
+      <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LightTest\LightTest.h">
+      <Filter>Classes\LightTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
+      <Filter>Classes\OpenURLTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h">
+      <Filter>Classes\AllocatorTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

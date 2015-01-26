@@ -137,7 +137,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 	});
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height/2+15));
     addChild(menu, 1);
@@ -147,7 +147,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    auto menuLayer = new AllocBasicLayer(true, MAX_LAYER, g_curCase);
+    auto menuLayer = new (std::nothrow) AllocBasicLayer(true, MAX_LAYER, g_curCase);
     addChild(menuLayer);
     menuLayer->release();
 
@@ -197,7 +197,7 @@ void PerformceAllocScene::onExitTransitionDidStart()
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
 
-    sched->unschedule(schedule_selector(PerformceAllocScene::dumpProfilerInfo), this);
+    sched->unschedule(CC_SCHEDULE_SELECTOR(PerformceAllocScene::dumpProfilerInfo), this);
 }
 
 void PerformceAllocScene::onEnterTransitionDidFinish()
@@ -208,7 +208,7 @@ void PerformceAllocScene::onEnterTransitionDidFinish()
     auto sched = director->getScheduler();
 
     CC_PROFILER_PURGE_ALL();
-    sched->schedule(schedule_selector(PerformceAllocScene::dumpProfilerInfo), this, 2, false);
+    sched->schedule(CC_SCHEDULE_SELECTOR(PerformceAllocScene::dumpProfilerInfo), this, 2, false);
 }
 
 void PerformceAllocScene::dumpProfilerInfo(float dt)
@@ -230,7 +230,7 @@ void NodeCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Node: %lu\n", sizeof(Node));
+    log("Size of Node: %lu\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -239,7 +239,7 @@ void NodeCreateTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Node **nodes = new Node*[quantityOfNodes];
+    Node **nodes = new (std::nothrow) Node*[quantityOfNodes];
 
     CC_PROFILER_START(this->profilerName());
     for( int i=0; i<quantityOfNodes; ++i)
@@ -278,7 +278,7 @@ void NodeDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Node: %lu\n", sizeof(Node));
+    log("Size of Node: %lu\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -287,7 +287,7 @@ void NodeDeallocTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Node **nodes = new Node*[quantityOfNodes];
+    Node **nodes = new (std::nothrow) Node*[quantityOfNodes];
 
     for( int i=0; i<quantityOfNodes; ++i) {
         nodes[i] = Node::create();
@@ -331,7 +331,7 @@ void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(Sprite));
+    log("Size of Sprite: %lu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -340,7 +340,7 @@ void SpriteCreateEmptyTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Sprite **sprites = new Sprite*[quantityOfNodes];
+    Sprite **sprites = new (std::nothrow) Sprite*[quantityOfNodes];
 
     Sprite::create("Images/grossini.png");
 
@@ -381,7 +381,7 @@ void SpriteCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(Sprite));
+    log("Size of Sprite: %lu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -390,7 +390,7 @@ void SpriteCreateTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Sprite **sprites = new Sprite*[quantityOfNodes];
+    Sprite **sprites = new (std::nothrow) Sprite*[quantityOfNodes];
 
     Sprite::create("Images/grossini.png");
     
@@ -431,7 +431,7 @@ void SpriteDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of sprite: %lu\n", sizeof(Sprite));
+    log("Size of sprite: %lu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -440,7 +440,7 @@ void SpriteDeallocTest::update(float dt)
 {
     // iterate using fast enumeration protocol
 
-    Sprite **sprites = new Sprite*[quantityOfNodes];
+    Sprite **sprites = new (std::nothrow) Sprite*[quantityOfNodes];
 
     for( int i=0; i<quantityOfNodes; ++i) {
         sprites[i] = Sprite::create();

@@ -26,14 +26,14 @@ THE SOFTWARE.
 #ifndef __MATH_CCAFFINETRANSFORM_H__
 #define __MATH_CCAFFINETRANSFORM_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
 
-struct AffineTransform {
+struct CC_DLL AffineTransform {
     float a, b, c, d;
     float tx, ty;
 
@@ -62,7 +62,7 @@ CC_DLL AffineTransform AffineTransformConcat(const AffineTransform& t1, const Af
 CC_DLL bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2);
 CC_DLL AffineTransform AffineTransformInvert(const AffineTransform& t);
 
-Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
+CC_DLL Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
 
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 

@@ -26,31 +26,50 @@
 #define __CCANIMATE3D_H__
 
 #include <map>
+#include <unordered_map>
 
 #include "3d/CCAnimation3D.h"
-
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
 #include "2d/CCActionInterval.h"
 
 NS_CC_BEGIN
 
-class Animation3D;
-class Bone;
+class Bone3D;
+class Sprite3D;
 /**
- * Animate3D
+ * Animate3D, Animates a Sprite3D given with an Animation3D
  */
-class Animate3D: public ActionInterval
+class CC_DLL Animate3D: public ActionInterval
 {
 public:
     
-    //create Animate3D using Animation.
+    /**create Animate3D using Animation.*/
     static Animate3D* create(Animation3D* animation);
+    
+    /**
+     * create Animate3D
+     * @param animation used to generate animate3D
+     * @param formTime 
+     * @param duration Time the Animate3D lasts
+     * @return Animate3D created using animate
+     */
+    static Animate3D* create(Animation3D* animation, float fromTime, float duration);
+    
+    /**
+     * create Animate3D by frame section, [startFrame, endFrame)
+     * @param animation used to generate animate3D
+     * @param startFrame
+     * @param endFrame
+     * @param frameRate default is 30 per second
+     * @return Animate3D created using animate
+     */
+    static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
     
     //
     // Overrides
     //
+    virtual void stop() override;
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
     virtual Animate3D* reverse() const override;
@@ -58,23 +77,57 @@ public:
     
     virtual void update(float t) override;
     
-    float getSpeed() const { return _speed; }
-    void setSpeed(float speed) { _speed = speed; }
+    /**get & set speed, negative speed means playing reverse */
+    float getSpeed() const;
+    void setSpeed(float speed);
     
-    bool getPlayBack() const { return _playBack; }
-    void setPlayBack(bool playBack) { _playBack = playBack; }
+    /**get & set blend weight, weight must positive*/
+    float getWeight() const { return _weight; }
+    void setWeight(float weight);
+    
+    /**get & set origin interval*/
+    void setOriginInterval(float interval);
+    float getOriginInterval() const {return _originInterval; }
+    
+    /** animate transition time */
+    static float getTransitionTime() { return _transTime; }
+    
+    /**get & set play reverse, these are deprecated, use set negative speed instead*/
+    CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
+    CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
 CC_CONSTRUCTOR_ACCESS:
     
     Animate3D();
     virtual ~Animate3D();
     
-    Animation3D* _animation;
+    void removeFromMap();
+    
+protected:
+    enum class Animate3DState
+    {
+        FadeIn,
+        FadeOut,
+        Running,
+    };
+    Animate3DState _state; //animation state
+    Animation3D* _animation; //animation data
 
-    float      _speed;
-    float      _weight;
-    bool       _playBack;
-    std::map<Bone*, Animation3D::Curve*> _boneCurves; //weak ref
+    float      _absSpeed; //playing speed
+    float      _weight; //blend weight
+    float      _start; //start time 0 - 1, used to generate sub Animate3D
+    float      _last; //last time 0 - 1, used to generate sub Animate3D
+    bool       _playReverse; // is playing reverse
+    static float      _transTime; //transition time from one animate3d to another
+    float      _accTransTime; // acculate transition time
+    float      _lastTime;     // last t (0 - 1)
+    float      _originInterval;// save origin interval time
+    std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
+
+    //sprite animates
+    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeInAnimates;
+    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeOutAnimates;
+    static std::unordered_map<Sprite3D*, Animate3D*> s_runningAnimates;
 };
 
 NS_CC_END

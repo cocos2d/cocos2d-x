@@ -37,7 +37,7 @@ class Quaternion;
  * the magnitude of the vector intact. When used as a point,
  * the elements of the vector represent a position in 3D space.
  */
-class Vec3
+class CC_DLL Vec3
 {
 public:
 
@@ -419,14 +419,25 @@ public:
      */
     inline const Vec3 operator/(float s) const;
 
-    /**
-     * Determines if this vector is less than the given vector.
-     * 
-     * @param v The vector to compare against.
-     * 
-     * @return True if this vector is less than the given vector, false otherwise.
+    /** Returns true if the vector's scalar components are all greater
+     that the ones of the vector it is compared against.
      */
-    inline bool operator<(const Vec3& v) const;
+    inline bool operator < (const Vec3& rhs) const
+    {
+        if (x < rhs.x && y < rhs.y && z < rhs.z)
+            return true;
+        return false;
+    }
+
+    /** Returns true if the vector's scalar components are all smaller
+     that the ones of the vector it is compared against.
+     */
+    inline bool operator >(const Vec3& rhs) const
+    {
+        if (x > rhs.x && y > rhs.y && z > rhs.z)
+            return true;
+        return false;
+    }
 
     /**
      * Determines if this vector is equal to the given vector.

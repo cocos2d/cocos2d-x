@@ -128,6 +128,19 @@ protected:
     SchedulerTest1();
 };
 
+class SchedulerCallbackTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(SchedulerCallbackTest);
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+
+protected:
+    float _total;
+    SchedulerCallbackTest();
+};
+
+
 class NodeToWorld : public TestCocosNodeDemo
 {
 public:
@@ -295,6 +308,21 @@ protected:
     float _accum;
 };
 
+class NodeNormalizedPositionBugTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeNormalizedPositionBugTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    NodeNormalizedPositionBugTest();
+    
+    void update(float dt);
+    float _accum;
+    Sprite *sprite;
+};
+
 class NodeNameTest : public TestCocosNodeDemo
 {
 public:
@@ -303,6 +331,8 @@ public:
     virtual std::string subtitle() const override;
     
     virtual void onEnter() override;
+
+    void test(float dt);
 };
 
 

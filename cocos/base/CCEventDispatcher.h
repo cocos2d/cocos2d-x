@@ -25,16 +25,16 @@
 #ifndef __CC_EVENT_DISPATCHER_H__
 #define __CC_EVENT_DISPATCHER_H__
 
-#include "base/CCPlatformMacros.h"
-#include "base/CCEventListener.h"
-#include "base/CCEvent.h"
-#include "CCStdC.h"
-
 #include <functional>
 #include <string>
 #include <unordered_map>
-#include <list>
 #include <vector>
+#include <set>
+
+#include "platform/CCPlatformMacros.h"
+#include "base/CCEventListener.h"
+#include "base/CCEvent.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 
@@ -53,7 +53,7 @@ event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
 */
-class EventDispatcher : public Ref
+class CC_DLL EventDispatcher : public Ref
 {
 public:
     // Adds event listener

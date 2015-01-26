@@ -26,13 +26,12 @@ THE SOFTWARE.
 #ifndef __MISC_NODE_CCPROGRESS_TIMER_H__
 #define __MISC_NODE_CCPROGRESS_TIMER_H__
 
-#include "2d/CCSprite.h"
 #include "renderer/CCCustomCommand.h"
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
+
+class Sprite;
 
 /**
  * @addtogroup misc_nodes
@@ -46,9 +45,6 @@ NS_CC_BEGIN
  @since v0.99.1
  */
 class CC_DLL ProgressTimer : public Node
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** Types of progress

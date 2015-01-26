@@ -1,28 +1,29 @@
 set(APP_NAME cpp-tests)
 
 if(WIN32)
-  set(PLATFORM_SRC
-    Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp
-    Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
-    Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
-    proj.win32/main.cpp
-  )
+  set(PLATFORM_SRC proj.win32/main.cpp)
+  set(RES_PREFIX "")
+elseif(MACOSX)
+  set(PLATFORM_SRC proj.mac/main.cpp)
+
+  file(GLOB_RECURSE RES_FILES Resources/*)
+  cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+  list(APPEND PLATFORM_SRC ${RES_FILES})
+
+elseif(LINUX)
+  set(PLATFORM_SRC proj.linux/main.cpp)
+  set(RES_PREFIX "/Resources")
 else()
-  set(PLATFORM_SRC
-    proj.linux/main.cpp
-  )
+  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-set(SAMPLE_SRC
+set(TESTS_SRC
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
   Classes/ActionsTest/ActionsTest.cpp
-  Classes/Box2DTest/Box2dTest.cpp
-  Classes/Box2DTestBed/Box2dView.cpp
-  Classes/Box2DTestBed/GLES-Render.cpp
-  Classes/Box2DTestBed/Test.cpp
-  Classes/Box2DTestBed/TestEntries.cpp
+  Classes/AllocatorTest/AllocatorTest.cpp
+  Classes/BillBoardTest/BillBoardTest.cpp
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp
   Classes/BugsTest/Bug-350.cpp
@@ -35,6 +36,7 @@ set(SAMPLE_SRC
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/BugsTest.cpp
   Classes/BugsTest/Bug-Child.cpp
+  Classes/Camera3DTest/Camera3DTest.cpp
   Classes/ChipmunkTest/ChipmunkTest.cpp
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
@@ -44,6 +46,7 @@ set(SAMPLE_SRC
   Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp
+  Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
   Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp
   Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp
   Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp
@@ -80,7 +83,10 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
+  Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
+  Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
@@ -120,19 +126,24 @@ set(SAMPLE_SRC
   Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
   Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
-  Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
+  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNode.cpp
+  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNodeReader.cpp
+  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
+  Classes/NewAudioEngineTest/NewAudioEngineTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
   Classes/InputTest/MouseTest.cpp
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
+  Classes/LightTest/LightTest.cpp
   Classes/MenuTest/MenuTest.cpp
   Classes/MotionStreakTest/MotionStreakTest.cpp
   Classes/MutiTouchTest/MutiTouchTest.cpp
   Classes/NodeTest/NodeTest.cpp
+  Classes/OpenURLTest/OpenURLTest.cpp
   Classes/ParallaxTest/ParallaxTest.cpp
   Classes/ParticleTest/ParticleTest.cpp
   Classes/PerformanceTest/PerformanceAllocTest.cpp
@@ -148,6 +159,7 @@ set(SAMPLE_SRC
   Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp
   Classes/PerformanceTest/PerformanceScenarioTest.cpp
   Classes/PerformanceTest/PerformanceCallbackTest.cpp
+  Classes/PerformanceTest/PerformanceMathTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
   Classes/ReleasePoolTest/ReleasePoolTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp
@@ -158,11 +170,13 @@ set(SAMPLE_SRC
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpriteTest/SpriteTest.cpp
   Classes/Sprite3DTest/Sprite3DTest.cpp
+  Classes/Sprite3DTest/DrawNode3D.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp
   Classes/TextureCacheTest/TextureCacheTest.cpp
   Classes/TileMapTest/TileMapTest.cpp
+  Classes/TileMapTest/TileMapTest2.cpp
   Classes/TouchesTest/Ball.cpp
   Classes/TouchesTest/Paddle.cpp
   Classes/TouchesTest/TouchesTest.cpp
@@ -185,31 +199,72 @@ set(SAMPLE_SRC
   ${PLATFORM_SRC}
 )
 
+if(USE_CHIPMUNK)
+  include_directories(${CHIPMUNK_INCLUDE_DIRS})
+endif()
+
+if(USE_BOX2D)
+  list(APPEND TESTS_SRC
+    Classes/Box2DTest/Box2dTest.cpp
+    Classes/Box2DTestBed/Box2dView.cpp
+    Classes/Box2DTestBed/GLES-Render.cpp
+    Classes/Box2DTestBed/Test.cpp
+    Classes/Box2DTestBed/TestEntries.cpp
+    )
+endif()
+
+if(LINUX)
+    set(EXTENDED_TESTS_SRC
+    )
+else()
+    set(EXTENDED_TESTS_SRC
+        Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+        Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+        Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+
+        Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
+        Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
+        Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp
+        Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
+        Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
+        Classes/UITest/CocoStudioGUITest/UIScene.cpp
+        Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+        Classes/UITest/CocoStudioGUITest/UISceneManager_Editor.cpp
+        Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp
+    )
+endif()
+
+
 include_directories(
   Classes
+  ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
 # add the executable
 add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
+  ${TESTS_SRC}
+  ${EXTENDED_TESTS_SRC}
 )
 
 target_link_libraries(${APP_NAME}
-  spine
-  cocostudio
-  cocosbuilder
-  extensions
-  audio
   cocos2d
-  box2d
 )
 
-set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+if(MACOSX OR APPLE)
+  set_target_properties(${APP_NAME} PROPERTIES
+      MACOSX_BUNDLE 1
+      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+      )
 
-set_target_properties(${APP_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+else()
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
-pre_build(${APP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
-  )
+    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+
+    pre_build(${APP_NAME}
+      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
+      )
+endif()
+

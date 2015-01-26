@@ -5,32 +5,40 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
 -- @function [parent=#ShuffleTiles] getDelta 
 -- @param self
--- @param #size_table size
+-- @param #size_table pos
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+-- creates the action with a random seed, the grid size and the duration<br>
+-- param duration in seconds
 -- @function [parent=#ShuffleTiles] create 
 -- @param self
--- @param #float float
--- @param #size_table size
--- @param #unsigned int int
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #unsigned int seed
 -- @return ShuffleTiles#ShuffleTiles ret (return value: cc.ShuffleTiles)
         
 --------------------------------
+-- 
 -- @function [parent=#ShuffleTiles] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
+-- @return ShuffleTiles#ShuffleTiles self (return value: cc.ShuffleTiles)
         
 --------------------------------
+-- 
 -- @function [parent=#ShuffleTiles] clone 
 -- @param self
 -- @return ShuffleTiles#ShuffleTiles ret (return value: cc.ShuffleTiles)
         
 --------------------------------
+-- param time in seconds
 -- @function [parent=#ShuffleTiles] update 
 -- @param self
--- @param #float float
+-- @param #float time
+-- @return ShuffleTiles#ShuffleTiles self (return value: cc.ShuffleTiles)
         
 return nil

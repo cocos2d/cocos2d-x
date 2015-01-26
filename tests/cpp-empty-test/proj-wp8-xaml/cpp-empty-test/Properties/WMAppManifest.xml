@@ -1,30 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{5921fe12-7ef3-4847-8453-42ef286ddbe7}" Title="PhoneDirect3DXamlAppInterop" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneDirect3DXamlAppInterop author" Description="Sample description" Publisher="PhoneDirect3DXamlAppInterop" PublisherID="{46fd6a47-bef7-4b7f-8454-d04a73534286}">
+  <App xmlns="" ProductID="{5921fe12-7ef3-4847-8453-42ef286ddbe7}" Title="cpp-empty-test" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Microsoft Open Technologies, Inc." Description="Sample description" Publisher="Microsoft Open Technologies, Inc." PublisherID="{46fd6a47-bef7-4b7f-8454-d04a73534286}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
-      <Capability Name="ID_CAP_NETWORKING"/>
-      <Capability Name="ID_CAP_MEDIALIB_AUDIO"/>
-      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK"/>
-      <Capability Name="ID_CAP_SENSORS"/>
-      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
+      <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
+      <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
+      <Capability Name="ID_CAP_SENSORS" />
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume"/>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume" />
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="PhoneDirect3DXamlAppInteropToken" TaskName="_default">
+      <PrimaryToken TokenID="cocos2dToken" TaskName="_default">
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>PhoneDirect3DXamlAppInterop</Title>
-          <BackContent></BackContent>
-          <BackBackgroundImageURI></BackBackgroundImageURI>
-          <BackTitle></BackTitle>
-          <DeviceLockImageURI></DeviceLockImageURI>
-          <HasLarge></HasLarge>
+          <Title>cpp-empty-test</Title>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI>
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
+          <DeviceLockImageURI>
+          </DeviceLockImageURI>
+          <HasLarge>
+          </HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>

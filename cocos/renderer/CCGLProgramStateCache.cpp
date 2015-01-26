@@ -44,7 +44,7 @@ GLProgramStateCache::~GLProgramStateCache()
 GLProgramStateCache* GLProgramStateCache::getInstance()
 {
     if (s_instance == nullptr)
-        s_instance = new GLProgramStateCache();
+        s_instance = new (std::nothrow) GLProgramStateCache();
     
     return s_instance;
 }
@@ -80,7 +80,7 @@ void GLProgramStateCache::removeUnusedGLProgramState()
         if( value->getReferenceCount() == 1 ) {
             CCLOG("cocos2d: GLProgramStateCache: removing unused GLProgramState");
 
-            value->release();
+            //value->release();
             _glProgramStates.erase(it++);
         } else {
             ++it;

@@ -26,27 +26,13 @@
 #include "platform/CCFileUtils.h"
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
+#include "base/ccUTF8.h"
+#include "ui/UIHelper.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-static int _calcCharCount(const char * pszText)
-{
-    int n = 0;
-    char ch = 0;
-    while ((ch = *pszText))
-    {
-        CC_BREAK_IF(! ch);
-        
-        if (0x80 != (0xC0 & ch))
-        {
-            ++n;
-        }
-        ++pszText;
-    }
-    return n;
-}
+
     
 bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
 {
@@ -59,14 +45,14 @@ bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
     
 RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
 {
-    RichElementText* element = new RichElementText();
+    RichElementText* element = new (std::nothrow) RichElementText();
     if (element && element->init(tag, color, opacity, text, fontName, fontSize))
     {
         element->autorelease();
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
@@ -83,14 +69,14 @@ bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const
 
 RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
 {
-    RichElementImage* element = new RichElementImage();
+    RichElementImage* element = new (std::nothrow) RichElementImage();
     if (element && element->init(tag, color, opacity, filePath))
     {
         element->autorelease();
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
@@ -105,14 +91,14 @@ bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, cons
 
 RichElementCustomNode* RichElementCustomNode::create(int tag, const Color3B &color, GLubyte opacity, cocos2d::Node *customNode)
 {
-    RichElementCustomNode* element = new RichElementCustomNode();
+    RichElementCustomNode* element = new (std::nothrow) RichElementCustomNode();
     if (element && element->init(tag, color, opacity, customNode))
     {
         element->autorelease();
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity, cocos2d::Node *customNode)
@@ -142,14 +128,14 @@ RichText::~RichText()
     
 RichText* RichText::create()
 {
-    RichText* widget = new RichText();
+    RichText* widget = new (std::nothrow) RichText();
     if (widget && widget->init())
     {
         widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 bool RichText::init()
@@ -204,7 +190,7 @@ void RichText::formatText()
             for (ssize_t i=0; i<_richElements.size(); i++)
             {
                 RichElement* element = _richElements.at(i);
-                Node* elementRenderer = NULL;
+                Node* elementRenderer = nullptr;
                 switch (element->_type)
                 {
                     case RichElement::Type::TEXT:
@@ -295,20 +281,20 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     {
         float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
         std::string curText = text;
-        size_t stringLength = _calcCharCount(text.c_str());
+        size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
-        std::string leftWords = curText.substr(0, leftLength);
-        std::string cutWords = curText.substr(leftLength, curText.length()-1);
+        std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
+        std::string cutWords = Helper::getSubStringOfUTF8String(curText, leftLength, stringLength - leftLength);
         if (leftLength > 0)
         {
             Label* leftRenderer = nullptr;
             if (fileExist)
             {
-                leftRenderer = Label::createWithTTF(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
-            } 
+                leftRenderer = Label::createWithTTF(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
+            }
             else
             {
-                leftRenderer = Label::createWithSystemFont(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+                leftRenderer = Label::createWithSystemFont(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
             }
             if (leftRenderer)
             {
@@ -370,7 +356,7 @@ void RichText::formarRenderers()
         {
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
-            l->setPosition(Vec2(nextPosX, 0.0f));
+            l->setPosition(nextPosX, 0.0f);
             _elementRenderersContainer->addChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
@@ -409,7 +395,7 @@ void RichText::formarRenderers()
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(Vec2(nextPosX, nextPosY));
+                l->setPosition(nextPosX, nextPosY);
                 _elementRenderersContainer->addChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }
@@ -440,6 +426,11 @@ void RichText::formarRenderers()
     _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
     
+void RichText::adaptRenderers()
+{
+    this->formatText();
+}
+    
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
     if (_elementRenders.size() <= 0)
@@ -447,15 +438,6 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
         return;
     }
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
-}
-
-void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
-{
-    if (_enabled)
-    {
-        formatText();
-        Widget::visit(renderer, parentTransform, parentFlags);
-    }
 }
     
 void RichText::setVerticalSpace(float space)
@@ -469,7 +451,7 @@ void RichText::setAnchorPoint(const Vec2 &pt)
     _elementRenderersContainer->setAnchorPoint(pt);
 }
     
-const Size& RichText::getVirtualRendererSize() const
+Size RichText::getVirtualRendererSize() const
 {
     return _elementRenderersContainer->getContentSize();
 }

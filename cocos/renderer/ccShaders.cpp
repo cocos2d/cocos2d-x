@@ -31,11 +31,24 @@ THE SOFTWARE.
 NS_CC_BEGIN
 //
 #include "ccShader_Position_uColor.frag"
+
+#ifdef CC_NO_GL_POINTSIZE
+#include "ccShader_Position_uColor-no-gl_PointSize.vert"
+#else
 #include "ccShader_Position_uColor.vert"
+#endif
 
 //
 #include "ccShader_PositionColor.frag"
 #include "ccShader_PositionColor.vert"
+
+//
+
+#ifdef CC_NO_GL_POINTSIZE
+#include "ccShader_PositionColorPointsize-no-gl_PointSize.vert"
+#else
+#include "ccShader_PositionColorTextureAsPointsize.vert"
+#endif
 
 //
 #include "ccShader_PositionTexture.frag"
@@ -74,5 +87,8 @@ NS_CC_BEGIN
 #include "ccShader_3D_PositionTex.vert"
 #include "ccShader_3D_Color.frag"
 #include "ccShader_3D_ColorTex.frag"
+#include "ccShader_3D_PositionNormalTex.vert"
+#include "ccShader_3D_ColorNormal.frag"
+#include "ccShader_3D_ColorNormalTex.frag"
 
 NS_CC_END

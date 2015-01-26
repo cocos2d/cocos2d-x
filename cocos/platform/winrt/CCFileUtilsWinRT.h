@@ -29,7 +29,7 @@
 #include <vector>
 
 #include "platform/CCFileUtils.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN

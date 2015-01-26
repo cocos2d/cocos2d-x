@@ -1,8 +1,8 @@
-require "src/CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest"
-require "src/CocoStudioTest/CocoStudioSceneTest/CocoStudioSceneTest"
-require "src/CocoStudioTest/CocoStudioArmatureTest/CocoStudioArmatureTest"
-require "src/CocoStudioTest/CocoStudioUIEditorTest/CocoStudioUIEditorTest"
-require "src/CocoStudioTest/CocoStudioActionTimelineTest/CocoStudioActionTimelineTest"
+require "CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest"
+require "CocoStudioTest/CocoStudioSceneTest/CocoStudioSceneTest"
+require "CocoStudioTest/CocoStudioArmatureTest/CocoStudioArmatureTest"
+require "CocoStudioTest/CocoStudioUIEditorTest/CocoStudioUIEditorTest"
+require "CocoStudioTest/CocoStudioActionTimelineTest/CocoStudioActionTimelineTest"
 
 local LINE_SPACE = 40
 local ITEM_TAG_BASIC = 1000

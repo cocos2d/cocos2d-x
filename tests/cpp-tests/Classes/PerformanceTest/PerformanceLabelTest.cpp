@@ -97,7 +97,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(LabelMainScene::onIncrease, this));
     increase->setColor(Color3B(0,200,20));
 
-    auto menu = Menu::create(decrease, increase, NULL);
+    auto menu = Menu::create(decrease, increase, nullptr);
     menu->alignItemsHorizontally();
     menu->setPosition(Vec2(s.width/2, s.height-65));
     addChild(menu, 1);
@@ -108,7 +108,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    auto menuLayer = new LabelMenuLayer(true, TEST_COUNT, LabelMainScene::_s_labelCurCase);
+    auto menuLayer = new (std::nothrow) LabelMenuLayer(true, TEST_COUNT, LabelMainScene::_s_labelCurCase);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
     
@@ -121,7 +121,7 @@ void LabelMainScene::initWithSubTest(int nodes)
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(24);
     
-    MenuItemFont* autoTestItem = NULL;
+    MenuItemFont* autoTestItem = nullptr;
     if (LabelMainScene::_s_autoTest)
     {
         autoTestItem = MenuItemFont::create("Auto Test On",CC_CALLBACK_1(LabelMainScene::onAutoTest, this));
@@ -350,19 +350,19 @@ void LabelMainScene::onEnter()
     
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
-    sched->schedule(schedule_selector(LabelMainScene::updateText), this, 0.0f, false);
+    sched->schedule(CC_SCHEDULE_SELECTOR(LabelMainScene::updateText), this, 0.0f, false);
 
     _vecFPS.clear();
     _executeTimes = 0;
-    sched->schedule(schedule_selector(LabelMainScene::updateAutoTest), this, 0.2f, false);
+    sched->schedule(CC_SCHEDULE_SELECTOR(LabelMainScene::updateAutoTest), this, 0.2f, false);
 }
 
 void LabelMainScene::onExit()
 {
     auto director = Director::getInstance();
     auto sched = director->getScheduler();
-    sched->unschedule(schedule_selector(LabelMainScene::updateText), this );
-    sched->unschedule(schedule_selector(LabelMainScene::updateAutoTest), this );
+    sched->unschedule(CC_SCHEDULE_SELECTOR(LabelMainScene::updateText), this );
+    sched->unschedule(CC_SCHEDULE_SELECTOR(LabelMainScene::updateAutoTest), this );
     
     Scene::onExit();
 }
@@ -441,7 +441,7 @@ void  LabelMainScene::onAutoTest(Ref* sender)
 void runLabelTest()
 {
     LabelMainScene::_s_autoTest = false;
-    auto scene = new LabelMainScene;
+    auto scene = new (std::nothrow) LabelMainScene;
     scene->initWithSubTest(LabelMainScene::AUTO_TEST_NODE_NUM);
     Director::getInstance()->replaceScene(scene);
     scene->release();

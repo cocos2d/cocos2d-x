@@ -23,28 +23,41 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionTimelineCache.h"
-#include "CCNodeReader.h"
+#include "CSLoader.h"
 #include "CCFrame.h"
 #include "CCTimeLine.h"
 #include "CCActionTimeline.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCSpriteFrame.h"
+
+#include "cocostudio/CSParseBinary_generated.h"
+
+#include "tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
+#include "flatbuffers/util.h"
+
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include <fstream>
 
 using namespace cocos2d;
+using namespace flatbuffers;
 
 namespace cocostudio {
 namespace timeline{
 
-static const char* FrameType_VisibleFrame       = "VisibleFrame";
-static const char* FrameType_PositionFrame      = "PositionFrame";
-static const char* FrameType_ScaleFrame         = "ScaleFrame";
-static const char* FrameType_RotationFrame      = "RotationFrame";
-static const char* FrameType_SkewFrame          = "SkewFrame";
-static const char* FrameType_RotationSkewFrame  = "RotationSkewFrame";
-static const char* FrameType_AnchorFrame        = "AnchorFrame";
-static const char* FrameType_InnerActionFrame   = "InnerActionFrame";
-static const char* FrameType_ColorFrame         = "ColorFrame";
-static const char* FrameType_TextureFrame       = "TextureFrame";
-static const char* FrameType_EventFrame         = "EventFrame";
-static const char* FrameType_ZOrderFrame        = "ZOrderFrame";
+static const char* Property_VisibleForFrame = "VisibleForFrame";
+static const char* Property_Position        = "Position";
+static const char* Property_Scale           = "Scale";
+static const char* Property_RotationSkew    = "RotationSkew";
+static const char* Property_CColor          = "CColor";
+static const char* Property_FileData        = "FileData";
+static const char* Property_FrameEvent      = "FrameEvent";
+static const char* Property_Alpha           = "Alpha";
+static const char* Property_AnchorPoint     = "AnchorPoint";
+static const char* Property_ZOrder          = "ZOrder";
+static const char* Property_ActionValue     = "ActionValue";
 
 static const char* ACTION           = "action";
 static const char* DURATION         = "duration";
@@ -74,7 +87,7 @@ ActionTimelineCache* ActionTimelineCache::getInstance()
 {
     if (! _sharedActionCache)
     {
-        _sharedActionCache = new ActionTimelineCache();
+        _sharedActionCache = new (std::nothrow) ActionTimelineCache();
         _sharedActionCache->init();
     }
 
@@ -94,6 +107,7 @@ void ActionTimelineCache::purge()
 void ActionTimelineCache::init()
 {
     using namespace std::placeholders;
+    /*
     _funcs.insert(Pair(FrameType_VisibleFrame,      std::bind(&ActionTimelineCache::loadVisibleFrame,      this, _1)));
     _funcs.insert(Pair(FrameType_PositionFrame,     std::bind(&ActionTimelineCache::loadPositionFrame,     this, _1)));
     _funcs.insert(Pair(FrameType_ScaleFrame,        std::bind(&ActionTimelineCache::loadScaleFrame,        this, _1)));
@@ -106,6 +120,7 @@ void ActionTimelineCache::init()
     _funcs.insert(Pair(FrameType_TextureFrame,      std::bind(&ActionTimelineCache::loadTextureFrame,      this, _1)));
     _funcs.insert(Pair(FrameType_EventFrame,        std::bind(&ActionTimelineCache::loadEventFrame,        this, _1)));
     _funcs.insert(Pair(FrameType_ZOrderFrame,       std::bind(&ActionTimelineCache::loadZOrderFrame,       this, _1)));
+     */
 
 }
 
@@ -117,7 +132,28 @@ void ActionTimelineCache::removeAction(const std::string& fileName)
     }
 }
 
-ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
+ActionTimeline* ActionTimelineCache::createAction(const std::string& filename)
+{
+    std::string path = filename;
+    size_t pos = path.find_last_of('.');
+    std::string suffix = path.substr(pos + 1, path.length());
+    CCLOG("suffix = %s", suffix.c_str());
+    
+    ActionTimelineCache* cache = ActionTimelineCache::getInstance();
+    
+    if (suffix == "csb")
+    {
+        return cache->createActionWithFlatBuffersFile(filename);
+    }
+    else if (suffix == "json" || suffix == "ExportJson")
+    {
+        return cache->createActionFromJson(filename);
+    }
+    
+    return nullptr;
+}
+
+ActionTimeline* ActionTimelineCache::createActionFromJson(const std::string& fileName)
 {
     ActionTimeline* action = _animationActions.at(fileName);
     if (action == nullptr)
@@ -130,7 +166,7 @@ ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
 ActionTimeline* ActionTimelineCache::loadAnimationActionWithFile(const std::string& fileName)
 {
     // Read content from file
-    std::string fullPath    = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+    std::string fullPath    = FileUtils::getInstance()->fullPathForFilename(fileName);
     std::string contentStr  = FileUtils::getInstance()->getStringFromFile(fullPath);
 
     return loadAnimationActionWithContent(fileName, contentStr);
@@ -171,7 +207,6 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithContent(const std::s
 
     return action;
 }
-
 
 Timeline* ActionTimelineCache::loadTimeline(const rapidjson::Value& json)
 {
@@ -339,7 +374,7 @@ Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
         SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(path);
         if(spriteFrame == nullptr)
         {
-            std::string jsonPath = NodeReader::getInstance()->getJsonPath();
+            std::string jsonPath = CSLoader::getInstance()->getJsonPath();
             path = jsonPath + texture;
         }
 
@@ -368,6 +403,450 @@ Frame* ActionTimelineCache::loadZOrderFrame(const rapidjson::Value& json)
     frame->setZOrder(zorder);
 
     return frame;
+}
+    
+ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersFile(const std::string &fileName)
+{
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action == NULL)
+    {
+        action = loadAnimationActionWithFlatBuffersFile(fileName);
+    }
+    return action->clone();
+}
+
+ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(const std::string &fileName)
+{
+    // if already exists an action with filename, then return this action
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action)
+        return action;
+    
+    std::string path = fileName;
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+    
+    CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
+    
+    Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
+    
+    auto csparsebinary = GetCSParseBinary(buf.getBytes());
+    
+    auto nodeAction = csparsebinary->action();    
+    action = ActionTimeline::create();
+    
+    int duration = nodeAction->duration();
+    action->setDuration(duration);
+    float speed = nodeAction->speed();
+    action->setTimeSpeed(speed);
+    
+    auto animationlist = csparsebinary->animationList();
+    int animationcount = animationlist->size();
+    for (int i = 0; i < animationcount; i++)
+    {
+        auto animationdata = animationlist->Get(i);
+        AnimationInfo info;
+        info.name = animationdata->name()->c_str();
+        info.startIndex = animationdata->startIndex();
+        info.endIndex = animationdata->endIndex();
+        action->addAnimationInfo(info);
+    }
+
+    auto timelines = nodeAction->timeLines();
+    int timelineLength = timelines->size();
+    for (int i = 0; i < timelineLength; i++)
+    {
+        auto timelineFlatBuf = timelines->Get(i);
+        Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
+        
+        if (timeline)
+            action->addTimeline(timeline);
+    }
+    
+    _animationActions.insert(fileName, action);
+    
+    return action;
+}
+
+Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::TimeLine *flatbuffers)
+{
+    Timeline* timeline = nullptr;
+    
+    // property
+    std::string property = flatbuffers->property()->c_str();
+    if(property == "")
+        return nullptr;
+    
+    CCLOG("property = %s", property.c_str());
+    
+    if(property != "")
+    {
+        timeline = Timeline::create();
+        
+        int actionTag = flatbuffers->actionTag();
+        timeline->setActionTag(actionTag);
+        
+        
+        auto framesFlatbuf = flatbuffers->frames();
+        int length = framesFlatbuf->size();
+        for (int i = 0; i < length; i++)
+        {
+            auto frameFlatbuf = framesFlatbuf->Get(i);
+            Frame* frame = nullptr;
+            
+            if (property == Property_VisibleForFrame)
+            {
+                auto boolFrame = frameFlatbuf->boolFrame();
+                frame = loadVisibleFrameWithFlatBuffers(boolFrame);
+            }
+            else if (property == Property_Position)
+            {
+                auto potisionFrame = frameFlatbuf->pointFrame();
+                frame = loadPositionFrameWithFlatBuffers(potisionFrame);
+            }
+            else if (property == Property_Scale)
+            {
+                auto scaleFrame = frameFlatbuf->scaleFrame();
+                frame = loadScaleFrameWithFlatBuffers(scaleFrame);
+            }
+            else if (property == Property_RotationSkew)
+            {
+                auto scaleFrame = frameFlatbuf->scaleFrame();
+                frame = loadRotationSkewFrameWithFlatBuffers(scaleFrame);
+            }
+            else if (property == Property_CColor)
+            {
+                auto colorFrame = frameFlatbuf->colorFrame();
+                frame = loadColorFrameWithFlatBuffers(colorFrame);
+            }
+            else if (property == Property_FrameEvent)
+            {
+                auto eventFrame = frameFlatbuf->eventFrame();
+                frame = loadEventFrameWithFlatBuffers(eventFrame);
+            }
+            else if (property == Property_FileData)
+            {
+                auto textureFrame = frameFlatbuf->textureFrame();
+                frame = loadTextureFrameWithFlatBuffers(textureFrame);
+            }
+            else if (property == Property_Alpha)
+            {
+                auto intFrame = frameFlatbuf->intFrame();
+                frame = loadAlphaFrameWithFlatBuffers(intFrame);
+            }
+            else if (property == Property_AnchorPoint)
+            {
+                auto scaleFrame = frameFlatbuf->scaleFrame();
+                frame = loadAnchorPointFrameWithFlatBuffers(scaleFrame);
+            }
+            else if (property == Property_ZOrder)
+            {
+                auto intFrame = frameFlatbuf->intFrame();
+                frame = loadZOrderFrameWithFlatBuffers(intFrame);
+            }
+            else if (property == Property_ActionValue)
+            {
+                auto innerActionFrame = frameFlatbuf->innerActionFrame();
+                frame = loadInnerActionFrameWithFlatBuffers(innerActionFrame);
+            }
+            
+            if (!frame)
+            {
+                CCLOG("frame is invalid.");
+                continue;
+            }
+            timeline->addFrame(frame);
+        }
+    }
+    
+    return timeline;
+}
+    
+Frame* ActionTimelineCache::loadVisibleFrameWithFlatBuffers(const flatbuffers::BoolFrame *flatbuffers)
+{
+    VisibleFrame* frame = VisibleFrame::create();
+    
+    bool visible = flatbuffers->value() != 0;
+    
+    frame->setVisible(visible);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+    
+Frame* ActionTimelineCache::loadPositionFrameWithFlatBuffers(const flatbuffers::PointFrame *flatbuffers)
+{
+    PositionFrame* frame = PositionFrame::create();
+    
+    auto f_position = flatbuffers->postion();
+    Vec2 position(f_position->x(), f_position->y());
+    frame->setPosition(position);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadScaleFrameWithFlatBuffers(const flatbuffers::ScaleFrame *flatbuffers)
+{
+    ScaleFrame* frame = ScaleFrame::create();
+    
+    auto f_scale = flatbuffers->scale();
+    Vec2 scale(f_scale->scaleX(), f_scale->scaleY());
+    frame->setScaleX(scale.x);
+    frame->setScaleY(scale.y);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadRotationSkewFrameWithFlatBuffers(const flatbuffers::ScaleFrame *flatbuffers)
+{
+    RotationSkewFrame* frame = RotationSkewFrame::create();
+    
+    auto f_scale = flatbuffers->scale();
+    Vec2 rotationSkew(f_scale->scaleX(), f_scale->scaleY());
+    frame->setSkewX(rotationSkew.x);
+    frame->setSkewY(rotationSkew.y);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadColorFrameWithFlatBuffers(const flatbuffers::ColorFrame *flatbuffers)
+{
+    ColorFrame* frame = ColorFrame::create();
+    
+    auto f_color = flatbuffers->color();
+    Color3B color(f_color->r(), f_color->g(), f_color->b());
+    frame->setColor(color);        
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+
+Frame* ActionTimelineCache::loadTextureFrameWithFlatBuffers(const flatbuffers::TextureFrame *flatbuffers)
+{
+    std::string path = "";
+    int resourceType = 0;
+    std::string plist = "";
+    
+    TextureFrame* frame = TextureFrame::create();
+    
+    auto fileNameData = flatbuffers->textureFile();
+    
+    resourceType = fileNameData->resourceType();
+    switch (resourceType)
+    {
+        case 0:
+        {
+            path = fileNameData->path()->c_str();
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+                path = fullPath;
+            }
+            else
+            {
+                path = "";
+            }
+            break;
+        }
+            
+        case 1:
+        {
+            plist = fileNameData->plistFile()->c_str();
+            if (FileUtils::getInstance()->isFileExist(plist))
+            {
+                path = fileNameData->path()->c_str();
+            }
+            else
+            {
+                path = "";
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+    
+    frame->setTextureName(path);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+    
+Frame* ActionTimelineCache::loadEventFrameWithFlatBuffers(const flatbuffers::EventFrame *flatbuffers)
+{
+    EventFrame* frame = EventFrame::create();
+    
+    std::string event = flatbuffers->value()->c_str();
+    
+    if (event != "")
+        frame->setEvent(event);
+    
+    CCLOG("event = %s", event.c_str());
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+    
+Frame* ActionTimelineCache::loadAlphaFrameWithFlatBuffers(const flatbuffers::IntFrame *flatbuffers)
+{
+    AlphaFrame* frame = AlphaFrame::create();
+    
+    int alpha = flatbuffers->value();
+    
+    frame->setAlpha(alpha);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+    
+    Frame* ActionTimelineCache::loadAnchorPointFrameWithFlatBuffers(const flatbuffers::ScaleFrame *flatbuffers)
+    {
+        AnchorPointFrame* frame = AnchorPointFrame::create();
+        
+        auto f_scale = flatbuffers->scale();
+        Vec2 scale(f_scale->scaleX(), f_scale->scaleY());
+        frame->setAnchorPoint(scale);
+        
+        int frameIndex = flatbuffers->frameIndex();
+        frame->setFrameIndex(frameIndex);
+        
+        bool tween = flatbuffers->tween() != 0;
+        frame->setTween(tween);
+        
+        return frame;
+    }
+    
+Frame* ActionTimelineCache::loadZOrderFrameWithFlatBuffers(const flatbuffers::IntFrame *flatbuffers)
+{
+    ZOrderFrame* frame = ZOrderFrame::create();
+    
+    int zorder = flatbuffers->value();
+    
+    frame->setZOrder(zorder);
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    return frame;
+}
+    
+Frame* ActionTimelineCache::loadInnerActionFrameWithFlatBuffers(const flatbuffers::InnerActionFrame *flatbuffers)
+{
+    InnerActionFrame* frame = InnerActionFrame::create();
+    
+    InnerActionType innerActionType = (InnerActionType)flatbuffers->innerActionType();
+    
+    std::string currentAnimationFrame = flatbuffers->currentAniamtionName()->c_str();
+    
+    int singleFrameIndex = flatbuffers->singleFrameIndex();
+    
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+    
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+    
+    frame->setInnerActionType(innerActionType);
+    frame->setSingleFrameIndex(singleFrameIndex);
+    
+    frame->setEnterWithName(true);
+    frame->setAnimationName(currentAnimationFrame);
+    
+    return frame;
+}
+    
+ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(const std::string& fileName)
+{
+    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+    fbs->_isSimulator = true;
+    auto builder = fbs->createFlatBuffersWithXMLFileForSimulator(fileName);
+    
+    ActionTimeline* action = ActionTimeline::create();
+    
+    auto csparsebinary = GetCSParseBinary(builder->GetBufferPointer());
+    auto nodeAction = csparsebinary->action();
+    
+    action = ActionTimeline::create();
+    
+    int duration = nodeAction->duration();
+    action->setDuration(duration);
+    
+    float speed = nodeAction->speed();
+    action->setTimeSpeed(speed);
+    
+    auto animationlist = csparsebinary->animationList();
+    int animationcount = animationlist->size();
+    for (int i = 0; i < animationcount; i++)
+    {
+        auto animationdata = animationlist->Get(i);
+        AnimationInfo info;
+        info.name = animationdata->name()->c_str();
+        info.startIndex = animationdata->startIndex();
+        info.endIndex = animationdata->endIndex();
+        action->addAnimationInfo(info);
+    }
+
+    auto timeLines = nodeAction->timeLines();
+    int timelineLength = timeLines->size();
+    for (int i = 0; i < timelineLength; i++)
+    {
+        auto timelineFlatBuf = timeLines->Get(i);
+        Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
+        
+        if (timeline)
+            action->addTimeline(timeline);
+    }
+    
+    fbs->deleteFlatBufferBuilder();
+    
+    return action;
 }
 
 }

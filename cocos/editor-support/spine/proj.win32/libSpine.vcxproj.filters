@@ -11,15 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SlotData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\spine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\spine-cocos2dx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -56,16 +47,22 @@
     <ClInclude Include="..\EventData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\CCSkeleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCSkeletonAnimation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\extension.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\IkConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IkConstraintData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MeshAttachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PolygonBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\RegionAttachment.h">
@@ -74,96 +71,129 @@
     <ClInclude Include="..\Skeleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\SkeletonData.h">
+    <ClInclude Include="..\SkeletonAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\SkeletonBounds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\SkeletonData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\SkeletonJson.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SkeletonRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Skin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\SkinnedMeshAttachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Slot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SlotData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine-cocos2dx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Skeleton.cpp">
+    <ClCompile Include="..\Animation.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\SkeletonBounds.cpp">
+    <ClCompile Include="..\AnimationState.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\SkeletonData.cpp">
+    <ClCompile Include="..\AnimationStateData.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\SkeletonJson.cpp">
+    <ClCompile Include="..\Atlas.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Skin.cpp">
+    <ClCompile Include="..\AtlasAttachmentLoader.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Slot.cpp">
+    <ClCompile Include="..\Attachment.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\SlotData.cpp">
+    <ClCompile Include="..\AttachmentLoader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Bone.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\BoneData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\BoundingBoxAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\EventData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extension.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IkConstraint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IkConstraintData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Json.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MeshAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\RegionAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Skeleton.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonBounds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonJson.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Skin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkinnedMeshAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slot.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SlotData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PolygonBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\spine-cocos2dx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AnimationState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AnimationStateData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Atlas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AtlasAttachmentLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Attachment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\AttachmentLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Bone.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\BoundingBoxAttachment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Event.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EventData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCSkeleton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCSkeletonAnimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\extension.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Json.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\RegionAttachment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\BoneData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -188,6 +188,23 @@ bool Rect::intersectsRect(const Rect& rect) const
              rect.getMaxY() <      getMinY());
 }
 
+void Rect::merge(const Rect& rect)
+{
+    float top1    = getMaxY();
+    float left1   = getMinX();
+    float right1  = getMaxX();
+    float bottom1 = getMinY();
+    
+    float top2    = rect.getMaxY();
+    float left2   = rect.getMinX();
+    float right2  = rect.getMaxX();
+    float bottom2 = rect.getMinY();
+    origin.x = std::min(left1, left2);
+    origin.y = std::min(bottom1, bottom2);
+    size.width = std::max(right1, right2) - origin.x;
+    size.height = std::max(top1, top2) - origin.y;
+}
+
 Rect Rect::unionWithRect(const Rect & rect) const
 {
     float thisLeftX = origin.x;

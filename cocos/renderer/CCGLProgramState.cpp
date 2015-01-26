@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -47,16 +48,16 @@ NS_CC_BEGIN
 //
 
 UniformValue::UniformValue()
-: _useCallback(false)
-, _uniform(nullptr)
+: _uniform(nullptr)
 , _glprogram(nullptr)
+, _useCallback(false)
 {
 }
 
 UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
-: _useCallback(false)
-, _uniform(uniform)
+: _uniform(uniform)
 , _glprogram(glprogram)
+, _useCallback(false)
 {
 }
 
@@ -113,7 +114,7 @@ void UniformValue::apply()
 void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &callback)
 {
 	// delete previously set callback
-	// XXX TODO: memory will leak if the user does:
+	// TODO: memory will leak if the user does:
 	//    value->setCallback();
 	//    value->setFloat();
 	if (_useCallback)
@@ -181,15 +182,15 @@ void UniformValue::setMat4(const Mat4& value)
 //
 
 VertexAttribValue::VertexAttribValue()
-: _useCallback(false)
-, _vertexAttrib(nullptr)
+: _vertexAttrib(nullptr)
+, _useCallback(false)
 , _enabled(false)
 {
 }
 
 VertexAttribValue::VertexAttribValue(VertexAttrib *vertexAttrib)
-: _useCallback(false)
-, _vertexAttrib(vertexAttrib)
+: _vertexAttrib(vertexAttrib)
+, _useCallback(false)
 , _enabled(false)
 {
 }
@@ -273,22 +274,27 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgram(GLProgram *glprogram)
 }
 
 GLProgramState::GLProgramState()
-: _vertexAttribsFlags(0)
-, _glprogram(nullptr)
+: _uniformAttributeValueDirty(true)
 , _textureUnitIndex(1)
-, _uniformAttributeValueDirty(true)
+, _vertexAttribsFlags(0)
+, _glprogram(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // listen the event when app go to foreground
-    CCLOG("create _backToForegroundlistener for GLProgramState");
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*) { _uniformAttributeValueDirty = true; });
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    /** listen the event that renderer was recreated on Android/WP8 */
+    CCLOG("create rendererRecreatedListener for GLProgramState");
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, 
+        [this](EventCustom*) 
+        {
+            CCLOG("Dirty Uniform and Attributes of GLProgramState"); 
+            _uniformAttributeValueDirty = true;
+        });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
 }
 
 GLProgramState::~GLProgramState()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
     
@@ -327,6 +333,15 @@ void GLProgramState::resetGLProgram()
 
 void GLProgramState::apply(const Mat4& modelView)
 {
+    applyGLProgram(modelView);
+
+    applyAttributes();
+
+    applyUniforms();
+}
+
+void GLProgramState::updateUniformsAndAttributes()
+{
     CCASSERT(_glprogram, "invalid glprogram");
     if(_uniformAttributeValueDirty)
     {
@@ -346,23 +361,36 @@ void GLProgramState::apply(const Mat4& modelView)
         _uniformAttributeValueDirty = false;
         
     }
+}
+
+void GLProgramState::applyGLProgram(const Mat4& modelView)
+{
+    CCASSERT(_glprogram, "invalid glprogram");
+    updateUniformsAndAttributes();
     // set shader
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
-
+}
+void GLProgramState::applyAttributes(bool applyAttribFlags)
+{
     // Don't set attributes if they weren't set
     // Use Case: Auto-batching
+    updateUniformsAndAttributes();
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
-        GL::enableVertexAttribs(_vertexAttribsFlags);
+        if (applyAttribFlags)
+            GL::enableVertexAttribs(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {
             attribute.second.apply();
         }
     }
-
+}
+void GLProgramState::applyUniforms()
+{
     // set uniforms
+    updateUniformsAndAttributes();
     for(auto& uniform : _uniforms) {
         uniform.second.apply();
     }
@@ -380,6 +408,7 @@ void GLProgramState::setGLProgram(GLProgram *glprogram)
 
 UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
 {
+    updateUniformsAndAttributes();
     const auto itr = _uniforms.find(uniformLocation);
     if (itr != _uniforms.end())
         return &itr->second;
@@ -388,6 +417,7 @@ UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
 
 UniformValue* GLProgramState::getUniformValue(const std::string &name)
 {
+    updateUniformsAndAttributes();
     const auto itr = _uniformsByName.find(name);
     if (itr != _uniformsByName.end())
         return &_uniforms[itr->second];
@@ -396,6 +426,7 @@ UniformValue* GLProgramState::getUniformValue(const std::string &name)
 
 VertexAttribValue* GLProgramState::getVertexAttribValue(const std::string &name)
 {
+    updateUniformsAndAttributes();
     const auto itr = _attributes.find(name);
     if( itr != _attributes.end())
         return &itr->second;

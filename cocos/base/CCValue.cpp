@@ -25,12 +25,13 @@
 #include "base/CCValue.h"
 #include <sstream>
 #include <iomanip>
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
-const ValueVector ValueVectorNull;
-const ValueMap ValueMapNull;
-const ValueMapIntKey ValueMapIntKeyNull;
+CC_DLL const ValueVector ValueVectorNull;
+CC_DLL const ValueMap ValueMapNull;
+CC_DLL const ValueMapIntKey ValueMapIntKeyNull;
 
 const Value Value::Null;
 
@@ -90,42 +91,42 @@ Value::Value(const std::string& v)
 Value::Value(const ValueVector& v)
 : _type(Type::VECTOR)
 {
-    _field.vectorVal = new ValueVector();
+    _field.vectorVal = new (std::nothrow) ValueVector();
     *_field.vectorVal = v;
 }
 
 Value::Value(ValueVector&& v)
 : _type(Type::VECTOR)
 {
-    _field.vectorVal = new ValueVector();
+    _field.vectorVal = new (std::nothrow) ValueVector();
     *_field.vectorVal = std::move(v);
 }
 
 Value::Value(const ValueMap& v)
 : _type(Type::MAP)
 {
-    _field.mapVal = new ValueMap();
+    _field.mapVal = new (std::nothrow) ValueMap();
     *_field.mapVal = v;
 }
 
 Value::Value(ValueMap&& v)
 : _type(Type::MAP)
 {
-    _field.mapVal = new ValueMap();
+    _field.mapVal = new (std::nothrow) ValueMap();
     *_field.mapVal = std::move(v);
 }
 
 Value::Value(const ValueMapIntKey& v)
 : _type(Type::INT_KEY_MAP)
 {
-    _field.intKeyMapVal = new ValueMapIntKey();
+    _field.intKeyMapVal = new (std::nothrow) ValueMapIntKey();
     *_field.intKeyMapVal = v;
 }
 
 Value::Value(ValueMapIntKey&& v)
 : _type(Type::INT_KEY_MAP)
 {
-    _field.intKeyMapVal = new ValueMapIntKey();
+    _field.intKeyMapVal = new (std::nothrow) ValueMapIntKey();
     *_field.intKeyMapVal = std::move(v);
 }
 
@@ -177,21 +178,21 @@ Value& Value::operator= (const Value& other)
             case Type::VECTOR:
                 if (_field.vectorVal == nullptr)
                 {
-                    _field.vectorVal = new ValueVector();
+                    _field.vectorVal = new (std::nothrow) ValueVector();
                 }
                 *_field.vectorVal = *other._field.vectorVal;
                 break;
             case Type::MAP:
                 if (_field.mapVal == nullptr)
                 {
-                    _field.mapVal = new ValueMap();
+                    _field.mapVal = new (std::nothrow) ValueMap();
                 }
                 *_field.mapVal = *other._field.mapVal;
                 break;
             case Type::INT_KEY_MAP:
                 if (_field.intKeyMapVal == nullptr)
                 {
-                    _field.intKeyMapVal = new ValueMapIntKey();
+                    _field.intKeyMapVal = new (std::nothrow) ValueMapIntKey();
                 }
                 *_field.intKeyMapVal = *other._field.intKeyMapVal;
                 break;
@@ -504,7 +505,7 @@ float Value::asFloat() const
 
     if (_type == Type::STRING)
     {
-        return atof(_field.strVal->c_str());
+        return utils::atof(_field.strVal->c_str());
     }
 
     if (_type == Type::INTEGER)
@@ -540,7 +541,7 @@ double Value::asDouble() const
 
     if (_type == Type::STRING)
     {
-        return static_cast<double>(atof(_field.strVal->c_str()));
+        return static_cast<double>(utils::atof(_field.strVal->c_str()));
     }
 
     if (_type == Type::INTEGER)
@@ -815,13 +816,13 @@ void Value::reset(Type type)
             _field.strVal = new std::string();
             break;
         case Type::VECTOR:
-            _field.vectorVal = new ValueVector();
+            _field.vectorVal = new (std::nothrow) ValueVector();
             break;
         case Type::MAP:
-            _field.mapVal = new ValueMap();
+            _field.mapVal = new (std::nothrow) ValueMap();
             break;
         case Type::INT_KEY_MAP:
-            _field.intKeyMapVal = new ValueMapIntKey();
+            _field.intKeyMapVal = new (std::nothrow) ValueMapIntKey();
             break;
         default:
             break;

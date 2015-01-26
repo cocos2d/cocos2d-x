@@ -35,6 +35,7 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
+#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -45,7 +46,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class ControlHuePicker : public Control
+class CC_EX_DLL ControlHuePicker : public Control
 {
 public:
     static ControlHuePicker* create(Node* target, Vec2 pos);

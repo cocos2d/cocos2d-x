@@ -72,6 +72,26 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TestFileFuncs : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestFileFuncs);
+    
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TestDirectoryFuncs : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestDirectoryFuncs);
+    
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class TextWritePlist : public FileUtilsDemo
 {
 public:

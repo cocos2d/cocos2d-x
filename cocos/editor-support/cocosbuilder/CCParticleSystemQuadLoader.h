@@ -11,7 +11,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class ParticleSystemQuadLoader : public NodeLoader {
+class CC_DLL ParticleSystemQuadLoader : public NodeLoader {
 public:
     /**
      * @js NA

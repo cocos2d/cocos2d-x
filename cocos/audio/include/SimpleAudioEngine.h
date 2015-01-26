@@ -27,11 +27,7 @@ THE SOFTWARE.
 #ifndef _SIMPLE_AUDIO_ENGINE_H_
 #define _SIMPLE_AUDIO_ENGINE_H_
 
-#include <stddef.h>
 #include "Export.h"
-#include <typeinfo>
-#include <ctype.h>
-#include <string.h>
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))

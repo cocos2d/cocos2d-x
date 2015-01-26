@@ -28,19 +28,20 @@
 #include "WidgetReaderProtocol.h"
 #include "cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
-#include "ui/UIWidget.h"
-
+#include "cocostudio/CocosStudioExport.h"
+#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace cocostudio
 {
     class CocoLoader;
     struct stExpCocoNode;
     
-    class WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol
+    class CC_STUDIO_DLL WidgetReader : public cocos2d::Ref, public WidgetReaderProtocol, public NodeReaderProtocol
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:
         WidgetReader();
         virtual ~WidgetReader();
         
@@ -53,7 +54,16 @@ namespace cocostudio
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
         
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);        
+        
+        /* flatbuffers refactoring */
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        void setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* widgetOptions);
+        /**/
+        
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,
@@ -63,6 +73,9 @@ namespace cocostudio
         
         std::string getResourcePath(CocoLoader* cocoLoader,
                                     stExpCocoNode*	pCocoNode,
+                                    cocos2d::ui::Widget::TextureResType texType);                
+        
+        std::string getResourcePath(const std::string& path,
                                     cocos2d::ui::Widget::TextureResType texType);
 
         void beginSetBasicProperties(cocos2d::ui::Widget *widget);
@@ -174,16 +187,16 @@ namespace cocostudio
     }else if(key == P_Visbile){ \
         widget->setVisible(valueToBool(value)); \
     }else if(key == P_ZOrder){ \
-        widget->setZOrder(valueToInt(value));  \
+        widget->setLocalZOrder(valueToInt(value));  \
     }else if(key == P_LayoutParameter){ \
-        stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(); \
+        stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(cocoLoader); \
         ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();  \
         ui::RelativeLayoutParameter *relativeParameter = ui::RelativeLayoutParameter::create();  \
         ui::Margin mg;  \
         int paramType = -1;  \
         for (int j = 0; j < stChildArray[i].GetChildNum(); ++j) {  \
             std::string innerKey = layoutCocosNode[j].GetName(cocoLoader);  \
-            std::string innerValue = layoutCocosNode[j].GetValue(); \
+            std::string innerValue = layoutCocosNode[j].GetValue(cocoLoader); \
             if (innerKey == P_Type) {  \
                 paramType = valueToInt(innerValue); \
             }else if(innerKey == P_Gravity){ \

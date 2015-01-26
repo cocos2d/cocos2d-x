@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{60d53713-1675-4466-81dc-d67a031c3d21}" Title="cpp-test" RuntimeType="Silverlight" Version="3.0" Genre="apps.normal" Author="Microsoft Open Technologies, Inc." Description="Sample description" Publisher="Microsoft Open Technologies, Inc." PublisherID="{44cf94ec-6a62-4219-9be9-762ed25c7efd}">
+  <App xmlns="" ProductID="{60d53713-1675-4466-81dc-d67a031c3d21}" Title="cpp-tests" RuntimeType="Silverlight" Version="3.0" Genre="apps.normal" Author="Microsoft Open Technologies, Inc." Description="Sample description" Publisher="Microsoft Open Technologies, Inc." PublisherID="{44cf94ec-6a62-4219-9be9-762ed25c7efd}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -11,10 +11,10 @@
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume"/>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume" />
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="PhoneDirect3DXamlAppInteropToken" TaskName="_default">
+      <PrimaryToken TokenID="cocos2dToken" TaskName="_default">
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>

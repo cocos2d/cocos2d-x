@@ -30,7 +30,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void setup();
+    virtual void setup() override;
 
 	virtual Action* actionRotate();
 	virtual Action* actionScale();
@@ -219,13 +219,41 @@ class RawStencilBufferTest6 : public RawStencilBufferTestAlphaTest
 {
 public:
     CREATE_FUNC(RawStencilBufferTest6);
-    virtual void setup() override;
-    virtual std::string subtitle() const override;
+
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
+
+    // override
+    virtual void setup() override;
+    virtual std::string subtitle() const override;
 };
 
 //#endif //COCOS2D_DEBUG > 1
+
+class ClippingToRenderTextureTest : public BaseClippingNodeTest
+{
+public:
+    CREATE_FUNC(ClippingToRenderTextureTest);
+
+    void expectedBehaviour();
+    void reproduceBug();
+
+    // override
+    virtual void setup() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class ClippingRectangleNodeTest : public BaseClippingNodeTest
+{
+public:
+    CREATE_FUNC(ClippingRectangleNodeTest);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void setup();
+};
+
 
 class ClippingNodeTestScene : public TestScene
 {

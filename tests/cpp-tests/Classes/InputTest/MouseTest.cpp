@@ -74,7 +74,7 @@ void MouseTest::onMouseScroll(Event *event)
 
 void MouseTestScene::runThisTest()
 {
-    auto layer = new MouseTest();
+    auto layer = new (std::nothrow) MouseTest();
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);

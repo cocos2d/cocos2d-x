@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/CCMap.h"
 #include "base/CCValue.h"
+#include "2d/CCAnimation.h"
 
 #include <string>
 

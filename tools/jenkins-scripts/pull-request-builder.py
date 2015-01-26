@@ -1,4 +1,4 @@
-#Github pull reqest builder for Jenkins 
+#Github pull reqest builder for Jenkins
 
 import json
 import os
@@ -13,6 +13,7 @@ import platform
 import subprocess
 import codecs
 from shutil import copy
+import MySQLdb
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description
@@ -21,7 +22,7 @@ def set_description(desc, url):
     req_data = urllib.urlencode({'description': desc})
     req = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
-    req.add_header('Content-Type', 'application/x-www-form-urlencoded') 
+    req.add_header('Content-Type', 'application/x-www-form-urlencoded')
     base64string = base64.encodestring(os.environ['JENKINS_ADMIN']+ ":" + os.environ['JENKINS_ADMIN_PW']).replace('\n', '')
     req.add_header("Authorization", "Basic " + base64string)
     try:
@@ -30,6 +31,7 @@ def set_description(desc, url):
         traceback.print_exc()
 
 def check_current_3rd_libs(branch):
+    print("start backup old 3rd libs...")
     #get current_libs config
     backup_files = range(2)
     current_files = range(2)
@@ -55,16 +57,60 @@ def check_current_3rd_libs(branch):
         if os.path.isfile(backup_file):
           copy(backup_file, current_file)
     #run download-deps.py
+    print("prepare to downloading ...")
     os.system('python download-deps.py -r no')
     #backup file
     for i, backup_file in enumerate(backup_files):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
+def connect_db():
+    db_host = os.environ['db_host']
+    db_user = os.environ['db_user']
+    db_pw = os.environ['db_pw']
+    db_name=os.environ['db_name']
+    try:
+        db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
+    except:
+        traceback.print_exc()
+    return db
+
+def close_db(db):
+    try:
+        db.close()
+    except:
+        traceback.print_exc()
+
+def save_build_stats(db, pr, filename, size):
+    try:
+        cursor = db.cursor()
+        sql = "INSERT INTO `%s` (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
+        print sql
+        cursor.execute(sql)
+        db.commit()
+    except:
+        traceback.print_exc()
+
+def scan_all_libs(db, pr_num):
+    stats = {}
+    lib_path = './tests/cpp-tests/proj.android/obj/local/armeabi'
+    for root, dirs, files in os.walk(lib_path):
+      for _file in files:
+        if not _file.endswith(".a"):
+          continue
+        print _file
+        libfile = lib_path + '/' + _file
+        _filename = _file.split('.')[0]
+        filesize = os.path.getsize(libfile)/1024
+        stats[_filename]=filesize
+        save_build_stats(db, pr_num, _filename, filesize)
+    return stats
+
 http_proxy = ''
 if(os.environ.has_key('HTTP_PROXY')):
     http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http':http_proxy,'https':http_proxy}
+
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -81,11 +127,11 @@ def main():
     print 'action: ' + action
 
     #pr = payload['pull_request']
-    
+
     url = payload['html_url']
     print "url:" + url
     pr_desc = '<h3><a href='+ url + '> pr#' + str(pr_num) + ' is '+ action +'</a></h3>'
-    
+
 
 
     #get statuses url
@@ -102,11 +148,11 @@ def main():
     target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
     set_description(pr_desc, target_url)
- 
-    
+
+
     data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Build started..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
-    Headers = {"Authorization":"token " + access_token} 
+    Headers = {"Authorization":"token " + access_token}
 
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
@@ -115,23 +161,32 @@ def main():
 
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE']);
+    #pull latest code
+    os.system("git pull origin v3")
     os.system("git checkout v3")
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
-    print "Before checkout: git clean -xdf -f"    
+    print "Before checkout: git clean -xdf -f"
     os.system("git clean -xdf -f")
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     ret = os.system(git_fetch_pr)
     if(ret != 0):
         return(2)
- 
-    #checkout
-    git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
+
+    #checkout a new branch from v3
+    git_checkout = "git checkout -b " + "pull" + str(pr_num)
     os.system(git_checkout)
- 
+    #merge pull reqeust head
+    p = os.popen('git merge --no-edit FETCH_HEAD')
+    r = p.read()
+    #check if merge fail
+    if r.find('CONFLICT') > 0:
+        print r
+        return(3)
+
     # After checkout a new branch, clean workspace again
-    print "After checkout: git clean -xdf -f"    
+    print "After checkout: git clean -xdf -f"
     os.system("git clean -xdf -f")
 
     #update submodule
@@ -168,7 +223,7 @@ def main():
     print platform.system()
     if(platform.system() == 'Darwin'):
         for item in PROJECTS:
-          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"  
+          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/tests/"+item+"/proj.android/obj"
           os.system(cmd)
     elif(platform.system() == 'Windows'):
         for item in PROJECTS:
@@ -176,7 +231,7 @@ def main():
           cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"tests"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
           print cmd
           os.system(cmd)
- 
+
     #build
     #TODO: add android-linux build
     #TODO: add mac build
@@ -201,6 +256,23 @@ def main():
           local_apk = sample_dir + 'bin/CppTests-debug.apk'
           backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
           os.system('cp ' + local_apk + ' ' + backup_apk)
+          db = connect_db()
+          scan_all_libs(db, pr_num)
+          ret = os.system("python build/android-build.py -p 10 -b release cpp-empty-test")
+          if(ret == 0):
+            _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
+            filesize = os.path.getsize(_path)
+            pr_desc = pr_desc + '<h3>size of libcpp_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
+            set_description(pr_desc, target_url)
+            save_build_stats(db, pr_num, 'libcpp_empty_test', filesize/1024)
+          ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
+          if(ret == 0):
+            _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
+            filesize = os.path.getsize(_path)
+            pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize/1024) + 'kb</h3>'
+            set_description(pr_desc, target_url)
+            save_build_stats(db, pr_num, 'liblua_empty_test', filesize/1024)
+          close_db(db)
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
       elif(node_name == 'ios_mac'):
@@ -243,13 +315,13 @@ def main():
 
     #get build result
     print "build finished and return " + str(ret)
-    
+
     exit_code = 1
     if ret == 0:
         exit_code = 0
     else:
         exit_code = 1
-    
+
     #clean workspace
     os.system("cd " + os.environ['WORKSPACE'])
     os.system("git reset --hard")
@@ -262,7 +334,7 @@ def main():
 # -------------- main --------------
 if __name__ == '__main__':
     sys_ret = 0
-    try:    
+    try:
         sys_ret = main()
     except:
         traceback.print_exc()

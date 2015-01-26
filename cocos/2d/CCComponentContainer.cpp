@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
-#include "base/CCDirector.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -60,7 +60,7 @@ bool ComponentContainer::add(Component *com)
     {
         if (_components == nullptr)
         {
-            _components = new Map<std::string, Component*>();
+            _components = new (std::nothrow) Map<std::string, Component*>();
         }
         Component *component = _components->at(com->getName());
         
@@ -89,11 +89,32 @@ bool ComponentContainer::remove(const std::string& name)
         com->setOwner(nullptr);
         
         _components->erase(iter);
-        
         ret = true;
     } while(0);
     return ret;
  }
+
+bool ComponentContainer::remove(Component *com)
+{
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(!_components);
+        
+        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        {
+            if (iter->second == com)
+            {
+                com->onExit();
+                com->setOwner(nullptr);
+                _components->erase(iter);
+                break;
+            }
+        }
+        ret = true;
+    } while(0);
+    return ret;
+}
 
 void ComponentContainer::removeAll()
 {
@@ -114,7 +135,7 @@ void ComponentContainer::removeAll()
 
 void ComponentContainer::alloc(void)
 {
-    _components = new Map<std::string, Component*>();
+    _components = new (std::nothrow) Map<std::string, Component*>();
 }
 
 void ComponentContainer::visit(float delta)

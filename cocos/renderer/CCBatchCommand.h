@@ -26,21 +26,21 @@
 #define _CC_BATCHCOMMAND_H_
 
 #include "renderer/CCRenderCommand.h"
-#include "renderer/CCGLProgram.h"
-#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
 class TextureAtlas;
+class GLProgram;
 
-class BatchCommand : public RenderCommand
+class CC_DLL BatchCommand : public RenderCommand
 {
 public:
 
     BatchCommand();
     ~BatchCommand();
 
-    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
+    void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
+    CC_DEPRECATED_ATTRIBUTE void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
     void execute();
 

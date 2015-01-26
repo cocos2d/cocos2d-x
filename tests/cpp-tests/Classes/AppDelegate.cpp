@@ -43,18 +43,29 @@ AppDelegate::~AppDelegate()
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
+//if you want a different context,just modify the value of glContextAttrs
+//it will takes effect on all platforms
+void AppDelegate::initGLContextAttrs()
+{
+    //set OpenGL context attributions,now can only set six attributions:
+    //red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // As an example, load config file
-    // XXX: This should be loaded before the Director is initialized,
-    // XXX: but at this point, the director is already initialized
+    // FIXME:: This should be loaded before the Director is initialized,
+    // FIXME:: but at this point, the director is already initialized
     Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("Cpp Tests");
+        glview = GLViewImpl::create("Cpp Tests");
         director->setOpenGLView(glview);
     }
 
@@ -85,7 +96,34 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/scenetest/UIComponentTest");
         searchPaths.push_back("ccs-res/hd/scenetest/TriggerTest");
         searchPaths.push_back("ccs-res");
+        searchPaths.push_back("Manifests");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
+        
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIButton");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UICheckBox");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIImageView");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabel");
+//        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabelAtlas");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabelBMFont");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/BackgroundImage");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Color");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Layout");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Gradient_Color");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/LayoutComponent");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILoadingBar");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIPageView");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Both");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Horizontal");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Vertical");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UISlider");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UITextField");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIWidgetAddNode");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIListView/New");
+        
+        searchPaths.push_back("ccs-res/hd/cocosui/CustomTest/CustomWidgetCallbackBindTest");
+        searchPaths.push_back("hd/ActionTimeline");
+        searchPaths.push_back("ccs-res/hd/armature");
     }
     else
     {
@@ -100,29 +138,53 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/scenetest/TmxMapComponentTest");
         searchPaths.push_back("ccs-res/scenetest/UIComponentTest");
         searchPaths.push_back("ccs-res/scenetest/TriggerTest");
+        
+        
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIButton");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UICheckBox");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIImageView");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabel");
+//        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabelAtlas");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabelBMFont");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/BackgroundImage");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Color");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Layout");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Gradient_Color");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/LayoutComponent");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILoadingBar");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIPageView");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Both");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Horizontal");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UISlider");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UITextField");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIWidgetAddNode");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIListView/New");
+        
+        searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
+        searchPaths.push_back("ActionTimeline");
+        searchPaths.push_back("ccs-res/armature");
+
     }
     
     fileUtils->setSearchPaths(searchPaths);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #else
-    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #endif
 
     auto scene = Scene::create();
-    auto layer = new TestController();
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    layer->addConsoleAutoTest();
-#endif
+    auto layer = new (std::nothrow) TestController();
     layer->autorelease();
     layer->addConsoleAutoTest();
     scene->addChild(layer);
     director->runWithScene(scene);
 
     // Enable Remote Console
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     auto console = director->getConsole();
     console->listenOnTCP(5678);
     Configuration *conf = Configuration::getInstance();
@@ -131,7 +193,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         layer->startAutoRun();
     }
-#endif
     
     return true;
 }

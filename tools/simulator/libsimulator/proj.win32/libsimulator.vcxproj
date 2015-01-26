@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{001B324A-BB91-4E83-875C-C92F75C40857}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libsimulator</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\cocos\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\..\cocos\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\lib\protobuf-lite;$(ProjectDir)..\lib;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS_DEBUG;COCOS2D_DEBUG=1;GLFW_EXPOSE_NATIVE_WIN32;GLFW_EXPOSE_NATIVE_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\lib\protobuf-lite;$(ProjectDir)..\lib;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles>algorithm</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lib\cocos2dx_extra.h" />
+    <ClInclude Include="..\lib\network\CCHTTPRequest.h" />
+    <ClInclude Include="..\lib\network\CCHTTPRequestDelegate.h" />
+    <ClInclude Include="..\lib\platform\win32\PlayerEditBoxServiceWin.h" />
+    <ClInclude Include="..\lib\platform\win32\PlayerFileDialogServiceWin.h" />
+    <ClInclude Include="..\lib\platform\win32\PlayerMenuServiceWin.h" />
+    <ClInclude Include="..\lib\platform\win32\PlayerMessageBoxServiceWin.h" />
+    <ClInclude Include="..\lib\platform\win32\PlayerTaskServiceWin.h" />
+    <ClInclude Include="..\lib\platform\win32\PlayerWin.h" />
+    <ClInclude Include="..\lib\ProjectConfig\ProjectConfig.h" />
+    <ClInclude Include="..\lib\ProjectConfig\SimulatorConfig.h" />
+    <ClInclude Include="..\lib\AppEvent.h" />
+    <ClInclude Include="..\lib\AppLang.h" />
+    <ClInclude Include="..\lib\DeviceEx.h" />
+    <ClInclude Include="..\lib\PlayerEditBoxServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerFileDialogServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerMacros.h" />
+    <ClInclude Include="..\lib\PlayerMenuServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerMessageBoxServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerProtocol.h" />
+    <ClInclude Include="..\lib\PlayerServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerSettings.h" />
+    <ClInclude Include="..\lib\PlayerTaskServiceProtocol.h" />
+    <ClInclude Include="..\lib\PlayerUtils.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\io\zero_copy_stream_impl.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_arm_gcc.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_atomicword_compat.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_generic_gcc.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_macosx.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_gcc.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\lib\protobuf-lite\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\lib\runtime\ConfigParser.h" />
+    <ClInclude Include="..\lib\runtime\ConnectWaitLayer.h" />
+    <ClInclude Include="..\lib\runtime\ConsoleCommand.h" />
+    <ClInclude Include="..\lib\runtime\FileServer.h" />
+    <ClInclude Include="..\lib\runtime\lua_debugger.h" />
+    <ClInclude Include="..\lib\runtime\Protos.pb.h" />
+    <ClInclude Include="..\lib\runtime\ResData.h" />
+    <ClInclude Include="..\lib\runtime\Runtime.h" />
+    <ClInclude Include="..\lib\runtime\RuntimeCCSImpl.h" />
+    <ClInclude Include="..\lib\runtime\RuntimeLuaImpl.h" />
+    <ClInclude Include="..\lib\runtime\RuntimeProtocol.h" />
+    <ClInclude Include="..\lib\runtime\VisibleRect.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lib\network\CCHTTPRequest.cpp" />
+    <ClCompile Include="..\lib\platform\win32\DeviceEx-win32.cpp" />
+    <ClCompile Include="..\lib\platform\win32\PlayerEditBoxServiceWin.cpp" />
+    <ClCompile Include="..\lib\platform\win32\PlayerFileDialogServiceWin.cpp" />
+    <ClCompile Include="..\lib\platform\win32\PlayerMenuServiceWin.cpp" />
+    <ClCompile Include="..\lib\platform\win32\PlayerMessageBoxServiceWin.cpp" />
+    <ClCompile Include="..\lib\platform\win32\PlayerTaskServiceWin.cpp" />
+    <ClCompile Include="..\lib\platform\win32\PlayerWin.cpp" />
+    <ClCompile Include="..\lib\ProjectConfig\ProjectConfig.cpp" />
+    <ClCompile Include="..\lib\ProjectConfig\SimulatorConfig.cpp" />
+    <ClCompile Include="..\lib\AppEvent.cpp" />
+    <ClCompile Include="..\lib\AppLang.cpp" />
+    <ClCompile Include="..\lib\PlayerMenuServiceProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerServiceProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerSettings.cpp" />
+    <ClCompile Include="..\lib\PlayerTaskServiceProtocol.cpp" />
+    <ClCompile Include="..\lib\PlayerUtils.cpp" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_gcc.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\lib\protobuf-lite\google\protobuf\wire_format_lite.cc" />
+    <ClCompile Include="..\lib\runtime\ConfigParser.cpp" />
+    <ClCompile Include="..\lib\runtime\ConnectWaitLayer.cpp" />
+    <ClCompile Include="..\lib\runtime\ConsoleCommand.cpp" />
+    <ClCompile Include="..\lib\runtime\FileServer.cpp" />
+    <ClCompile Include="..\lib\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\lib\runtime\lua_debugger.c" />
+    <ClCompile Include="..\lib\runtime\PlayDisable_png.cpp" />
+    <ClCompile Include="..\lib\runtime\PlayEnable_png.cpp" />
+    <ClCompile Include="..\lib\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\lib\runtime\Protos.pb.cc" />
+    <ClCompile Include="..\lib\runtime\Runtime.cpp" />
+    <ClCompile Include="..\lib\runtime\RuntimeCCSImpl.cpp" />
+    <ClCompile Include="..\lib\runtime\RuntimeLuaImpl.cpp" />
+    <ClCompile Include="..\lib\runtime\RuntimeProtocol.cpp" />
+    <ClCompile Include="..\lib\runtime\Shine_png.cpp" />
+    <ClCompile Include="..\lib\runtime\VisibleRect.cpp" />
+    <ClCompile Include="Runtime_win32.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

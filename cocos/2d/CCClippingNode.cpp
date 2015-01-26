@@ -26,14 +26,12 @@
  */
 
 #include "2d/CCClippingNode.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "2d/CCDrawingPrimitives.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 
-#include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -84,7 +82,7 @@ ClippingNode::~ClippingNode()
 
 ClippingNode* ClippingNode::create()
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -99,7 +97,7 @@ ClippingNode* ClippingNode::create()
 
 ClippingNode* ClippingNode::create(Node *pStencil)
 {
-    ClippingNode *ret = new ClippingNode();
+    ClippingNode *ret = new (std::nothrow) ClippingNode();
     if (ret && ret->init(pStencil))
     {
         ret->autorelease();
@@ -203,17 +201,37 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
+    Vec2 vertices[] = {
+        Vec2(-1, -1),
+        Vec2(1, -1),
+        Vec2(1, 1),
+        Vec2(-1, 1)
+    };
     
-    DrawPrimitives::drawSolidRect(Vec2(-1,-1), Vec2(1,1), Color4F(1, 1, 1, 1));
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+    
+    int colorLocation = glProgram->getUniformLocation("u_color");
+    CHECK_GL_ERROR_DEBUG();
+    
+    Color4F color(1, 1, 1, 1);
+    
+    glProgram->use();
+    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+    
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
 }
 
 void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if(!_visible)
+    if (!_visible || !hasContent())
         return;
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -238,7 +256,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     renderer->addCommand(&_beforeVisitCmd);
     if (_alphaThreshold < 1)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #else
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
@@ -248,7 +266,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         program->use();
         program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
-        // XXX: we should have a way to apply shader to all nodes without having to do this
+        // FIXME: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
         
 #endif
@@ -261,6 +279,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     renderer->addCommand(&_afterDrawStencilCmd);
 
     int i = 0;
+    bool visibleByCamera = isVisitableByVisitingCamera();
     
     if(!_children.empty())
     {
@@ -276,12 +295,13 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
                 break;
         }
         // self draw
-        this->draw(renderer, _modelViewTransform, flags);
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
         
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
@@ -305,6 +325,11 @@ void ClippingNode::setStencil(Node *stencil)
     CC_SAFE_RETAIN(stencil);
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;
+}
+
+bool ClippingNode::hasContent() const
+{
+    return _children.size() > 0;
 }
 
 GLfloat ClippingNode::getAlphaThreshold() const
@@ -404,7 +429,7 @@ void ClippingNode::onBeforeVisit()
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
     if (_alphaThreshold < 1) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // manually save the alpha test state
         _currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
         glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&_currentAlphaTestFunc);
@@ -428,7 +453,7 @@ void ClippingNode::onAfterDrawStencil()
     // restore alpha test state
     if (_alphaThreshold < 1)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // manually restore the alpha test state
         glAlphaFunc(_currentAlphaTestFunc, _currentAlphaTestRef);
         if (!_currentAlphaTestEnabled)
@@ -436,7 +461,7 @@ void ClippingNode::onAfterDrawStencil()
             glDisable(GL_ALPHA_TEST);
         }
 #else
-// XXX: we need to find a way to restore the shaders of the stencil node and its childs
+// FIXME: we need to find a way to restore the shaders of the stencil node and its childs
 #endif
     }
 

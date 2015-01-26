@@ -26,18 +26,20 @@ THE SOFTWARE.
 #define __UIBUTTON_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 class Label;
 
 namespace ui{
-
+    
+    class Scale9Sprite;
 /**
 *   @js NA
 *   @lua NA
 */
-class Button : public Widget
+class CC_GUI_DLL Button : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -80,7 +82,7 @@ public:
      *
      * @param disabled    disabled state texture name.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextures(const std::string& normal,
                       const std::string& selected,
@@ -92,7 +94,7 @@ public:
      *
      * @param normal    normal state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureNormal(const std::string& normal, TextureResType texType = TextureResType::LOCAL);
 
@@ -101,7 +103,7 @@ public:
      *
      * @param selected    selected state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTexturePressed(const std::string& selected, TextureResType texType = TextureResType::LOCAL);
 
@@ -110,7 +112,7 @@ public:
      *
      * @param disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadTextureDisabled(const std::string& disabled, TextureResType texType = TextureResType::LOCAL);
 
@@ -168,10 +170,16 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
 
     //override "getVirtualRendererSize" method of widget.
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
 
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
+    
+    /**
+     * Return the inner title renderer of Button
+     * @since v3.3
+     */
+    Label* getTitleRenderer()const;
 
     /**
      * Returns the "class name" of widget.
@@ -181,11 +189,21 @@ public:
     void setTitleText(const std::string& text);
     const std::string& getTitleText() const;
     void setTitleColor(const Color3B& color);
-    const Color3B& getTitleColor() const;
+    Color3B getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
     void setTitleFontName(const std::string& fontName);
     const std::string& getTitleFontName() const;
+    /** When user pressed the button, the button will zoom to a scale.
+     * The final scale of the button  equals (button original scale + _zoomScale)
+     * @since v3.3
+     */
+    void setZoomScale(float scale);
+    /**
+     * @brief Return a zoom scale 
+     * @since v3.3
+     */
+    float getZoomScale()const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -194,6 +212,7 @@ CC_CONSTRUCTOR_ACCESS:
                       const std::string& disableImage = "",
                       TextureResType texType = TextureResType::LOCAL);
 
+    virtual Size getNormalTextureSize() const;
 
 protected:
     virtual void initRenderer() override;
@@ -202,26 +221,25 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
   
-    virtual void updateFlippedX() override;
-    virtual void updateFlippedY() override;
-    
-    void updateTexturesRGBA();
-    
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
     
     virtual void adaptRenderers() override;
     void updateTitleLocation();
+    void updateContentSize();
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
    
+    virtual Size getNormalSize() const;
 protected:
-    Node* _buttonNormalRenderer;
-    Node* _buttonClickedRenderer;
-    Node* _buttonDisableRenderer;
+    Scale9Sprite* _buttonNormalRenderer;
+    Scale9Sprite* _buttonClickedRenderer;
+    Scale9Sprite* _buttonDisableRenderer;
     Label* _titleRenderer;
+   
+    float _zoomScale;
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;

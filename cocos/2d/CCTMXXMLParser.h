@@ -33,13 +33,13 @@ THE SOFTWARE.
 #include "platform/CCSAXParser.h"
 #include "base/CCVector.h"
 #include "base/CCValue.h"
+#include "2d/CCTMXObjectGroup.h" // needed for Vector<TMXObjectGroup*> for binding
 
 #include <string>
 
 NS_CC_BEGIN
 
 class TMXLayerInfo;
-class TMXObjectGroup;
 class TMXTilesetInfo;
 
 /** @file

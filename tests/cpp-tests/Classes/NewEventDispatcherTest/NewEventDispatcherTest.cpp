@@ -28,7 +28,8 @@ std::function<Layer*()> createFunctions[] =
     CL(Issue4129),
     CL(Issue4160),
     CL(DanglingNodePointersTest),
-    CL(RegisterAndUnregisterWhileEventHanldingTest)
+    CL(RegisterAndUnregisterWhileEventHanldingTest),
+    CL(Issue9898)
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -84,7 +85,7 @@ void EventDispatcherTestDemo::onEnter()
 
 void EventDispatcherTestDemo::backCallback(Ref* sender)
 {
-    auto scene = new EventDispatcherTestScene();
+    auto scene = new (std::nothrow) EventDispatcherTestScene();
     auto layer = backAction();
     
     scene->addChild(layer);
@@ -94,7 +95,7 @@ void EventDispatcherTestDemo::backCallback(Ref* sender)
 
 void EventDispatcherTestDemo::nextCallback(Ref* sender)
 {
-    auto scene = new EventDispatcherTestScene();
+    auto scene = new (std::nothrow) EventDispatcherTestScene();
     auto layer = nextAction();
     
     scene->addChild(layer);
@@ -104,7 +105,7 @@ void EventDispatcherTestDemo::nextCallback(Ref* sender)
 
 void EventDispatcherTestDemo::restartCallback(Ref* sender)
 {
-    auto scene = new EventDispatcherTestScene();
+    auto scene = new (std::nothrow) EventDispatcherTestScene();
     auto layer = restartAction();
     
     scene->addChild(layer);
@@ -201,7 +202,7 @@ void TouchableSpriteTest::onEnter()
         nextItem->setFontSizeObj(16);
         nextItem->setPosition(VisibleRect::right() + Vec2(-100, -30));
         
-        auto menu2 = Menu::create(nextItem, NULL);
+        auto menu2 = Menu::create(nextItem, nullptr);
         menu2->setPosition(Vec2(0, 0));
         menu2->setAnchorPoint(Vec2(0, 0));
         this->addChild(menu2);
@@ -233,7 +234,7 @@ class TouchableSprite : public Sprite
 public:
     static TouchableSprite* create(int priority = 0)
     {
-        auto ret = new TouchableSprite(priority);
+        auto ret = new (std::nothrow) TouchableSprite(priority);
         if (ret && ret->init())
         {
             ret->autorelease();
@@ -405,7 +406,7 @@ void RemoveListenerWhenDispatching::onEnter()
 
             (*enable) = true;
         }
-    }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), NULL);
+    }, MenuItemFont::create("Enabled"), MenuItemFont::create("Disabled"), nullptr);
     
     toggleItem->setPosition(origin + Vec2(size.width/2, 80));
     auto menu = Menu::create(toggleItem, nullptr);
@@ -1153,7 +1154,7 @@ PauseResumeTargetTest::PauseResumeTargetTest()
         
         closeItem->setPosition(VisibleRect::center());
         
-        auto closeMenu = Menu::create(closeItem, NULL);
+        auto closeMenu = Menu::create(closeItem, nullptr);
         closeMenu->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         closeMenu->setPosition(Vec2::ZERO);
         
@@ -1216,7 +1217,7 @@ Issue4129::Issue4129()
         nextItem->setFontSizeObj(16);
         nextItem->setPosition(VisibleRect::right() + Vec2(-100, -30));
         
-        auto menu2 = Menu::create(nextItem, NULL);
+        auto menu2 = Menu::create(nextItem, nullptr);
         menu2->setPosition(Vec2(0, 0));
         menu2->setAnchorPoint(Vec2(0, 0));
         this->addChild(menu2);
@@ -1298,7 +1299,7 @@ public:
     
     static DanglingNodePointersTestSprite * create(const TappedCallback & tappedCallback)
     {
-        auto ret = new DanglingNodePointersTestSprite(tappedCallback);
+        auto ret = new (std::nothrow) DanglingNodePointersTestSprite(tappedCallback);
         
         if (ret && ret->init())
         {
@@ -1350,17 +1351,14 @@ public:
         Sprite::onExit();
     }
     
-private:
-    
-    EventListenerTouchOneByOne *    _eventListener;
-    int                             _fixedPriority;
-    TappedCallback                  _tappedCallback;
+private:    
+    EventListenerTouchOneByOne* _eventListener;
+    TappedCallback _tappedCallback;
 };
 
 DanglingNodePointersTest::DanglingNodePointersTest()
 {
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS == 1 && COCOS2D_DEBUG > 0
-    
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     Size size = Director::getInstance()->getVisibleSize();
     
@@ -1456,4 +1454,37 @@ std::string RegisterAndUnregisterWhileEventHanldingTest::title() const
 std::string RegisterAndUnregisterWhileEventHanldingTest::subtitle() const
 {
     return  "Tap the square multiple times - should not crash!";
+}
+
+Issue9898::Issue9898()
+{
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    auto size = Director::getInstance()->getVisibleSize();
+
+    auto nodeA = Node::create();
+    addChild(nodeA);
+
+    _listener = cocos2d::EventListenerCustom::create("Issue9898", [&](cocos2d::EventCustom *event){
+        _eventDispatcher->removeEventListener(_listener);
+        _eventDispatcher->dispatchCustomEvent("Issue9898");
+    });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_listener, nodeA);
+
+    auto menuItem = MenuItemFont::create("Dispatch Custom Event", [&](Ref *sender) {
+        _eventDispatcher->dispatchCustomEvent("Issue9898");
+    });
+    menuItem->setPosition(origin.x + size.width/2, origin.y + size.height/2);
+    auto menu = Menu::create(menuItem, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu);
+}
+
+std::string Issue9898::title() const
+{
+    return "";
+}
+
+std::string Issue9898::subtitle() const
+{
+    return  "Should not crash if dispatch event after remove\n event listener in callback";
 }

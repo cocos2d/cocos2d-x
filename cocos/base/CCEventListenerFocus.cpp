@@ -23,9 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerFocus.h"
-#include "CCEventFocus.h"
-#include "ccMacros.h"
+#include "base/CCEventListenerFocus.h"
+#include "base/CCEventFocus.h"
+#include "base/ccMacros.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +46,7 @@ EventListenerFocus::~EventListenerFocus()
 
 EventListenerFocus* EventListenerFocus::create()
 {
-    EventListenerFocus* ret = new EventListenerFocus;
+    EventListenerFocus* ret = new (std::nothrow) EventListenerFocus;
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -57,7 +57,7 @@ EventListenerFocus* EventListenerFocus::create()
 
 EventListenerFocus* EventListenerFocus::clone()
 {
-    EventListenerFocus* ret = new EventListenerFocus;
+    EventListenerFocus* ret = new (std::nothrow) EventListenerFocus;
     if (ret && ret->init()) {
         ret->autorelease();
         

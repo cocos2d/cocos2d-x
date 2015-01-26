@@ -34,19 +34,17 @@ THE SOFTWARE.
  * To create sprite frames and texture atlas, use this tool:
  * http://zwoptex.zwopple.com/
  */
-
+#include <set>
+#include <string>
 #include "2d/CCSpriteFrame.h"
-#include "renderer/CCTexture2D.h"
 #include "base/CCRef.h"
 #include "base/CCValue.h"
 #include "base/CCMap.h"
 
-#include <set>
-#include <string>
-
 NS_CC_BEGIN
 
 class Sprite;
+class Texture2D;
 
 /**
  * @addtogroup sprite_nodes
@@ -72,11 +70,6 @@ public:
     /** @deprecated Use destroyInstance() instead  */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
-protected:
-    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    SpriteFrameCache(){}
-
-public:
     /**
      * @js NA
      * @lua NA
@@ -84,7 +77,6 @@ public:
     virtual ~SpriteFrameCache();
     bool init();
 
-public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
      * If you want to use another texture, you should use the addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) method.
@@ -105,6 +97,12 @@ public:
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
+
+    /** Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. 
+     * @js addSpriteFrames
+     * @lua addSpriteFrames
+     */
+    void addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -135,6 +133,12 @@ public:
     */
     void removeSpriteFramesFromFile(const std::string& plist);
 
+    /** Removes multiple Sprite Frames from a plist file content.
+    * Sprite Frames stored in this file will be removed.
+    * It is convenient to call this method when a specific texture needs to be removed.
+    */
+    void removeSpriteFramesFromFileContent(const std::string& plist_content);
+
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.
      * @since v0.995.
@@ -152,7 +156,10 @@ public:
     /** @deprecated use getSpriteFrameByName() instead */
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
-private:
+protected:
+    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
+    SpriteFrameCache(){}
+
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
@@ -162,7 +169,7 @@ private:
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
-protected:
+
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;

@@ -27,27 +27,27 @@
 
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
-#include "renderer/CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
 /** Command used to render one or more Quads */
-class QuadCommand : public RenderCommand
+class CC_DLL QuadCommand : public RenderCommand
 {
 public:
-    static const int MATERIAL_ID_DO_NOT_BATCH = 0;
-
+    
     QuadCommand();
     ~QuadCommand();
-
+    
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
      * quantity of quads, and the Model View transform to be used for the quads */
-    void init(float globalOrder, GLuint texutreID, GLProgramState* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+              const Mat4& mv, uint32_t flags);
+    
+    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
-
+    
     void useMaterial() const;
-
-
+    
     inline uint32_t getMaterialID() const { return _materialID; }
     inline GLuint getTextureID() const { return _textureID; }
     inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
@@ -56,10 +56,9 @@ public:
     inline BlendFunc getBlendType() const { return _blendType; }
     inline const Mat4& getModelView() const { return _mv; }
     
-
 protected:
     void generateMaterialID();
-
+    
     uint32_t _materialID;
     GLuint _textureID;
     GLProgramState* _glProgramState;
@@ -68,6 +67,7 @@ protected:
     ssize_t _quadsCount;
     Mat4 _mv;
 };
+
 NS_CC_END
 
 #endif //_CC_QUADCOMMAND_H_

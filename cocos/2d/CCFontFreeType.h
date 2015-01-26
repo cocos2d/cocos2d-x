@@ -27,7 +27,6 @@
 #define _FontFreetype_h_
 
 #include "CCFont.h"
-#include "base/CCData.h"
 
 #include <string>
 #include <ft2build.h>

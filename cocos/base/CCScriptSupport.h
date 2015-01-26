@@ -27,8 +27,6 @@
 #define __SCRIPT_SUPPORT_H__
 
 #include "base/ccConfig.h"
-#if CC_ENABLE_SCRIPT_BINDING
-
 #include "platform/CCCommon.h"
 #include "base/CCTouch.h"
 #include "base/CCEventTouch.h"
@@ -36,6 +34,8 @@
 #include <map>
 #include <string>
 #include <list>
+
+#if CC_ENABLE_SCRIPT_BINDING
 
 typedef struct lua_State lua_State;
 
@@ -211,7 +211,8 @@ enum ScriptEventType
     kAccelerometerEvent,
     kControlEvent,
     kCommonEvent,
-    kComponentEvent
+    kComponentEvent,
+    kRestartGame
 };
 
 struct BasicScriptData

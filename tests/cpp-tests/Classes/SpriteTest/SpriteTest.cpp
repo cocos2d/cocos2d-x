@@ -109,6 +109,7 @@ static std::function<Layer*()> createFunctions[] =
 	CL(SpriteAnimationSplit),
 	CL(SpriteFrameTest),
 	CL(SpriteFrameAliasNameTest),
+	CL(SpriteFramesFromFileContent),
 	CL(SpriteBatchNodeReorder),
 	CL(SpriteBatchNodeReorderIssue744),
 	CL(SpriteBatchNodeReorderIssue766),
@@ -131,6 +132,7 @@ static std::function<Layer*()> createFunctions[] =
 	CL(AnimationCacheFile),
 	CL(SpriteCullTest1),
 	CL(SpriteCullTest2),
+    CL(Sprite3DRotationTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -193,7 +195,7 @@ void SpriteTestDemo::onEnter()
 
 void SpriteTestDemo::restartCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild(restartSpriteTestAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -202,7 +204,7 @@ void SpriteTestDemo::restartCallback(Ref* sender)
 
 void SpriteTestDemo::nextCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild( nextSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -210,7 +212,7 @@ void SpriteTestDemo::nextCallback(Ref* sender)
 
 void SpriteTestDemo::backCallback(Ref* sender)
 {
-    auto s = new SpriteTestScene();
+    auto s = new (std::nothrow) SpriteTestScene();
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -259,7 +261,7 @@ void Sprite1::addNewSpriteWithCoords(Vec2 p)
     else 
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create( action, action_back, NULL );
+    auto seq = Sequence::create( action, action_back, nullptr );
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -332,7 +334,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Vec2 p)
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction( RepeatForever::create(seq));
 }
@@ -389,19 +391,19 @@ SpriteColorOpacity::SpriteColorOpacity()
     
     auto action = FadeIn::create(2);
     auto action_back = action->reverse();
-    auto fade = RepeatForever::create( Sequence::create( action, action_back, NULL) );
+    auto fade = RepeatForever::create( Sequence::create( action, action_back, nullptr) );
     
     auto tintred = TintBy::create(2, 0, -255, -255);
     auto tintred_back = tintred->reverse();
-    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back, NULL) );
+    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back, nullptr) );
     
     auto tintgreen = TintBy::create(2, -255, 0, -255);
     auto tintgreen_back = tintgreen->reverse();
-    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back, NULL) );
+    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back, nullptr) );
     
     auto tintblue = TintBy::create(2, -255, -255, 0);
     auto tintblue_back = tintblue->reverse();
-    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back, NULL) );
+    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back, nullptr) );
     
     sprite5->runAction(red);
     sprite6->runAction(green);
@@ -418,7 +420,7 @@ SpriteColorOpacity::SpriteColorOpacity()
     addChild(sprite7, 0, kTagSprite7);
     addChild(sprite8, 0, kTagSprite8);
     
-    schedule( schedule_selector(SpriteColorOpacity::removeAndAddSprite), 2 );
+    schedule( CC_CALLBACK_1(SpriteColorOpacity::removeAndAddSprite, this), 2, "remove_add_key" );
 }
 
 // this function test if remove and add works as expected:
@@ -480,19 +482,19 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
 
     auto action = FadeIn::create(2);
     auto action_back = action->reverse();
-    auto fade = RepeatForever::create( Sequence::create( action, action_back,NULL) );
+    auto fade = RepeatForever::create( Sequence::create( action, action_back,nullptr) );
 
     auto tintred = TintBy::create(2, 0, -255, -255);
     auto tintred_back = tintred->reverse();
-    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back,NULL) );
+    auto red = RepeatForever::create( Sequence::create( tintred, tintred_back,nullptr) );
 
     auto tintgreen = TintBy::create(2, -255, 0, -255);
     auto tintgreen_back = tintgreen->reverse();
-    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back,NULL) );
+    auto green = RepeatForever::create( Sequence::create( tintgreen, tintgreen_back,nullptr) );
 
     auto tintblue = TintBy::create(2, -255, -255, 0);
     auto tintblue_back = tintblue->reverse();
-    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back,NULL) );
+    auto blue = RepeatForever::create( Sequence::create( tintblue, tintblue_back,nullptr) );
     
     
     sprite5->runAction(red);
@@ -511,7 +513,7 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     batch->addChild(sprite8, 0, kTagSprite8);
     
     
-    schedule( schedule_selector(SpriteBatchNodeColorOpacity::removeAndAddSprite), 2);
+    schedule( CC_CALLBACK_1(SpriteBatchNodeColorOpacity::removeAndAddSprite, this), 2, "remove_add_key");
 }
 
 // this function test if remove and add works as expected:
@@ -573,7 +575,7 @@ SpriteZOrder::SpriteZOrder()
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
     
-    schedule( schedule_selector(SpriteZOrder::reorderSprite), 1);        
+    schedule( CC_CALLBACK_1(SpriteZOrder::reorderSprite, this), 1, "reorder_key");
 }
 
 void SpriteZOrder::reorderSprite(float dt)
@@ -641,7 +643,7 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
     
-    schedule( schedule_selector(SpriteBatchNodeZOrder::reorderSprite), 1);        
+    schedule( CC_CALLBACK_1(SpriteBatchNodeZOrder::reorderSprite, this), 1, "reorder_key");
 }
 
 void SpriteBatchNodeZOrder::reorderSprite(float dt)
@@ -787,7 +789,7 @@ Sprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 
 void SpriteBatchNodeReorderIssue766::reorderSprite(float dt)
 {
-    unschedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite));
+    unschedule("issue_766_key");
 
     batchNode->reorderChild(sprite1, 4);
 }
@@ -807,7 +809,7 @@ SpriteBatchNodeReorderIssue766::SpriteBatchNodeReorderIssue766()
     sprite3 = makeSpriteZ(4);
     sprite3->setPosition(Vec2(328,160));
 
-    schedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite), 2);
+    schedule(CC_CALLBACK_1(SpriteBatchNodeReorderIssue766::reorderSprite, this), 2, "issue_766_key");
 }
 
 std::string SpriteBatchNodeReorderIssue766::title() const
@@ -883,7 +885,7 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
     l3b2->setPosition(Vec2(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2, 1);
 
-    schedule(schedule_selector(SpriteBatchNodeReorderIssue767::reorderSprites), 1);
+    schedule(CC_CALLBACK_1(SpriteBatchNodeReorderIssue767::reorderSprites, this), 1, "issue_767_key");
 }
 
 std::string SpriteBatchNodeReorderIssue767::title() const
@@ -1226,12 +1228,12 @@ Sprite6::Sprite6()
 
     // SpriteBatchNode actions
     auto rotate_back = rotate->reverse();
-    auto rotate_seq = Sequence::create(rotate, rotate_back, NULL);
+    auto rotate_seq = Sequence::create(rotate, rotate_back, nullptr);
     auto rotate_forever = RepeatForever::create(rotate_seq);
     
     auto scale = ScaleBy::create(5, 1.5f);
     auto scale_back = scale->reverse();
-    auto scale_seq = Sequence::create( scale, scale_back, NULL);
+    auto scale_seq = Sequence::create( scale, scale_back, nullptr);
     auto scale_forever = RepeatForever::create(scale_seq);
 
     float step = s.width/4;
@@ -1271,7 +1273,7 @@ SpriteFlip::SpriteFlip()
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
-    schedule( schedule_selector(SpriteFlip::flipSprites), 1);
+    schedule( CC_CALLBACK_1(SpriteFlip::flipSprites,this), 1, "sprite_flip_key");
 }
 
 void SpriteFlip::flipSprites(float dt)
@@ -1319,7 +1321,7 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
-    schedule( schedule_selector(SpriteBatchNodeFlip::flipSprites), 1);
+    schedule(CC_CALLBACK_1(SpriteBatchNodeFlip::flipSprites, this), 1, "flip_sprites_key");
 }
 
 void SpriteBatchNodeFlip::flipSprites(float dt)
@@ -1368,7 +1370,7 @@ SpriteAliased::SpriteAliased()
     
     auto scale = ScaleBy::create(2, 5);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create( scale, scale_back, NULL);
+    auto seq = Sequence::create( scale, scale_back, nullptr);
     auto repeat = RepeatForever::create(seq);
     
     auto repeat2 = repeat->clone();
@@ -1433,7 +1435,7 @@ SpriteBatchNodeAliased::SpriteBatchNodeAliased()
     
     auto scale = ScaleBy::create(2, 5);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create( scale, scale_back, NULL);
+    auto seq = Sequence::create( scale, scale_back, nullptr);
     auto repeat = RepeatForever::create(seq);
     
     auto repeat2 = repeat->clone();
@@ -1532,7 +1534,7 @@ void SpriteNewTexture::addNewSprite()
         action = FadeOut::create(2);
 
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -1637,7 +1639,7 @@ void SpriteBatchNodeNewTexture::addNewSprite()
     else 
         action = FadeOut::create(2);
     auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, NULL);
+    auto seq = Sequence::create(action, action_back, nullptr);
     
     sprite->runAction( RepeatForever::create(seq) );
 }
@@ -1744,7 +1746,7 @@ void SpriteFrameTest::onEnter()
     _sprite2->setFlippedX(false);
     _sprite2->setFlippedY(false);
 
-    schedule(schedule_selector(SpriteFrameTest::startIn05Secs), 0.5f);
+    schedule(CC_CALLBACK_1(SpriteFrameTest::startIn05Secs, this), 0.5f, "in_05_secs_key");
     _counter = 0;
 }
 
@@ -1769,8 +1771,8 @@ std::string SpriteFrameTest::subtitle() const
 
 void SpriteFrameTest::startIn05Secs(float dt)
 {
-    unschedule(schedule_selector(SpriteFrameTest::startIn05Secs));
-    schedule(schedule_selector(SpriteFrameTest::flipSprites), 1.0f);
+    unschedule("in_05_secs_key");
+    schedule(CC_CALLBACK_1(SpriteFrameTest::flipSprites, this), 1.0f, "flip_sprites_key");
 }
 
 void SpriteFrameTest::flipSprites(float dt)
@@ -1877,6 +1879,87 @@ std::string SpriteFrameAliasNameTest::title() const
 std::string SpriteFrameAliasNameTest::subtitle() const
 {
     return "SpriteFrames are obtained using the alias name";
+}
+
+//------------------------------------------------------------------
+//
+// SpriteFramesFromFileContent
+//
+//------------------------------------------------------------------
+void SpriteFramesFromFileContent::onEnter()
+{
+	SpriteTestDemo::onEnter();
+	auto s = Director::getInstance()->getWinSize();
+
+	std::string plist_content;
+	{
+		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.plist");
+		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
+		if (!data.isNull())
+			plist_content.assign((const char*)data.getBytes(), data.getSize());
+	}
+
+	std::string image_content;
+	{
+		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.png");
+		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
+		if (!data.isNull())
+			image_content.assign((const char*)data.getBytes(), data.getSize());
+	}
+
+	Image image;
+	image.initWithImageData((const uint8_t*)image_content.c_str(), image_content.size());
+	Texture2D* texture = new (std::nothrow) Texture2D();
+	texture->initWithImage(&image);
+	texture->autorelease();
+
+	auto cache = SpriteFrameCache::getInstance();
+	cache->addSpriteFramesWithFileContent(plist_content, texture);
+
+	//
+	// Animation using Sprite BatchNode
+	//
+	Sprite * sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
+	sprite->setPosition( Vec2( s.width/2-80, s.height/2) );
+	addChild(sprite);
+
+	Vector<SpriteFrame*> animFrames(15);
+
+	char str[100] = {0};
+	for(int i = 1; i < 15; i++) 
+	{
+		sprintf(str, "grossini_dance_%02d.png", i);
+		auto frame = cache->getSpriteFrameByName( str );
+		animFrames.pushBack(frame);
+	}
+
+	auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+	sprite->runAction( RepeatForever::create( Animate::create(animation) ) );
+}
+
+void SpriteFramesFromFileContent::onExit()
+{
+	SpriteTestDemo::onExit();
+
+	std::string plist_content;
+	{
+		std::string fullPath = FileUtils::getInstance()->fullPathForFilename("animations/grossini.plist");
+		Data data = FileUtils::getInstance()->getDataFromFile(fullPath);
+		if (!data.isNull())
+			plist_content.assign((const char*)data.getBytes(), data.getSize());
+	}
+
+	SpriteFrameCache::getInstance()->removeSpriteFramesFromFileContent(plist_content);
+}
+
+std::string SpriteFramesFromFileContent::title() const
+{
+	return "SpriteFrameCache load form file content";
+}
+
+std::string SpriteFramesFromFileContent::subtitle() const
+{
+	return "SpriteFrameCache load from plist file content";
 }
 
 //------------------------------------------------------------------
@@ -2094,7 +2177,7 @@ SpriteOffsetAnchorScale::SpriteOffsetAnchorScale()
         
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         addChild(sprite, 0);
@@ -2176,7 +2259,7 @@ SpriteBatchNodeOffsetAnchorScale::SpriteBatchNodeOffsetAnchorScale()
 
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale) );
         
         spritesheet->addChild(sprite, i);
@@ -2244,7 +2327,7 @@ SpriteAnimationSplit::SpriteAnimationSplit()
 								  FlipX::create(true),
 								  animate->clone(),
 								  FlipX::create(false),
-								  NULL);
+								  nullptr);
     
     sprite->runAction(RepeatForever::create( seq ) );
 }
@@ -2309,7 +2392,7 @@ SpriteHybrid::SpriteHybrid()
     
     _usingSpriteBatchNode = false;
     
-    schedule( schedule_selector(SpriteHybrid::reparentSprite), 2);
+    schedule(CC_CALLBACK_1(SpriteHybrid::reparentSprite, this), 2, "reparent_sprite_key");
 }
 
 void SpriteHybrid::reparentSprite(float dt)
@@ -2320,7 +2403,7 @@ void SpriteHybrid::reparentSprite(float dt)
     Vector<Node*> retArray(250);
 
     if( _usingSpriteBatchNode )
-        CC_SWAP(p1,p2, Node*);
+        std::swap(p1, p2);
 
     ////----CCLOG("New parent is: %x", p2);
     
@@ -2405,8 +2488,8 @@ SpriteBatchNodeChildren::SpriteBatchNodeChildren()
     sprite2->runAction( RepeatForever::create(seq2) );
     
     sprite1->runAction( RepeatForever::create(action_rot));
-    sprite1->runAction( RepeatForever::create(Sequence::create(action, action_back,NULL)) );
-    sprite1->runAction( RepeatForever::create(Sequence::create(action_s, action_s_back,NULL)) );
+    sprite1->runAction( RepeatForever::create(Sequence::create(action, action_back,nullptr)) );
+    sprite1->runAction( RepeatForever::create(Sequence::create(action_s, action_s_back,nullptr)) );
 
 }
 
@@ -3214,7 +3297,7 @@ SpriteBatchNodeSkewNegativeScaleChildren::SpriteBatchNodeSkewNegativeScaleChildr
             sprite->setScale(-1.0f);
         }
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         auto child1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
@@ -3273,7 +3356,7 @@ SpriteSkewNegativeScaleChildren::SpriteSkewNegativeScaleChildren()
             sprite->setScale(-1.0f);
         }
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         auto child1 = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
@@ -3314,7 +3397,7 @@ SpriteNilTexture::SpriteNilTexture()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    Sprite* sprite = NULL;
+    Sprite* sprite = nullptr;
     
     // TEST: If no texture is given, then Opacity + Color should work.
 
@@ -3426,7 +3509,7 @@ public:
 
 DoubleSprite* DoubleSprite::create(const std::string& filename)
 {
-    auto sprite = new DoubleSprite;
+    auto sprite = new (std::nothrow) DoubleSprite;
     sprite->initWithFile(filename);
     sprite->autorelease();
     return sprite;
@@ -3514,7 +3597,7 @@ SpriteDoubleResolution::SpriteDoubleResolution()
     // Actions
     auto scale = ScaleBy::create(2, 0.5);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create(scale, scale_back, NULL);
+    auto seq = Sequence::create(scale, scale_back, nullptr);
 
     auto seq_copy = seq->clone();
 
@@ -3610,7 +3693,7 @@ AnimationCacheTest::AnimationCacheTest()
     auto animG = Animate::create(dance_grey);
     auto animB = Animate::create(dance_blue);
 
-    auto seq = Sequence::create(animN, animG, animB, NULL);
+    auto seq = Sequence::create(animN, animG, animB, nullptr);
 
     // create an sprite without texture
     auto grossini = Sprite::create();
@@ -3666,7 +3749,7 @@ AnimationCacheFile::AnimationCacheFile()
     auto animG = Animate::create(dance_grey);
     auto animB = Animate::create(dance_blue);
 
-    auto seq = Sequence::create(animN, animG, animB, NULL);
+    auto seq = Sequence::create(animN, animG, animB, nullptr);
 
     // create an sprite without texture
     auto grossini = Sprite::create();
@@ -3798,7 +3881,7 @@ SpriteOffsetAnchorSkew::SpriteOffsetAnchorSkew()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         addChild(sprite, 0);
@@ -3881,7 +3964,7 @@ SpriteBatchNodeOffsetAnchorSkew::SpriteBatchNodeOffsetAnchorSkew()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         spritebatch->addChild(sprite, i);
@@ -3962,13 +4045,13 @@ SpriteOffsetAnchorSkewScale::SpriteOffsetAnchorSkewScale()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         // Scale
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
 
         addChild(sprite, 0);
@@ -4051,13 +4134,13 @@ SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
         auto skewY = SkewBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         // scale 
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
 
         spritebatch->addChild(sprite, i);
@@ -4136,7 +4219,7 @@ SpriteOffsetAnchorFlip::SpriteOffsetAnchorFlip()
         auto flip = FlipY::create(true);
         auto flip_back = FlipY::create(false);
         auto delay = DelayTime::create(1);
-        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, NULL);
+        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, nullptr);
         sprite->runAction(RepeatForever::create(seq));
 
         addChild(sprite, 0);
@@ -4218,7 +4301,7 @@ SpriteBatchNodeOffsetAnchorFlip::SpriteBatchNodeOffsetAnchorFlip()
         auto flip = FlipY::create(true);
         auto flip_back = FlipY::create(false);
         auto delay = DelayTime::create(1);
-        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, NULL);
+        auto seq = Sequence::create(delay, flip, delay->clone(), flip_back, nullptr);
         sprite->runAction(RepeatForever::create(seq));
 
         spritebatch->addChild(sprite, i);
@@ -4270,7 +4353,7 @@ NodeSort::NodeSort()
     _sprite5->setPosition(Vec2(356, 160));
     _node->addChild(_sprite5, -3, 5);
 
-    schedule(schedule_selector(NodeSort::reorderSprite));
+    schedule(CC_CALLBACK_1(NodeSort::reorderSprite, this), "reorder_sprite_key");
 }
 
 std::string NodeSort::title() const
@@ -4285,7 +4368,7 @@ std::string NodeSort::subtitle() const
 
 void NodeSort::reorderSprite(float dt)
 {
-    unschedule(schedule_selector(NodeSort::reorderSprite));
+    unschedule("reorder_sprite_key");
 
     log("Before reorder--");
     
@@ -4332,7 +4415,7 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     _batchNode->addChild(_sprite5, 6, 5);
 
 
-    scheduleOnce(schedule_selector(SpriteBatchNodeReorderSameIndex::reorderSprite), 2);
+    scheduleOnce(CC_CALLBACK_1(SpriteBatchNodeReorderSameIndex::reorderSprite, this), 2, "reorder_sprite_key");
 }
 
 std::string SpriteBatchNodeReorderSameIndex::title() const
@@ -4429,7 +4512,7 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     l3b2->setPosition(Vec2(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2);
 
-    scheduleOnce(schedule_selector(SpriteBatchNodeReorderOneChild::reorderSprite), 2.0f);
+    scheduleOnce(CC_CALLBACK_1(SpriteBatchNodeReorderOneChild::reorderSprite, this), 2.0f, "reorder_sprite_key");
 }
 
 void SpriteBatchNodeReorderOneChild::reorderSprite(float dt)
@@ -4502,7 +4585,7 @@ SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         addChild(sprite, 0);
@@ -4585,7 +4668,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotational
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         spritebatch->addChild(sprite, i);
@@ -4666,13 +4749,13 @@ SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         // Scale
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         addChild(sprite, i);
@@ -4754,13 +4837,13 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::SpriteBatchNodeOffsetAnchorRotat
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         // Scale
         auto scale = ScaleBy::create(2, 2);
         auto scale_back = scale->reverse();
-        auto seq_scale = Sequence::create(scale, scale_back, NULL);
+        auto seq_scale = Sequence::create(scale, scale_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_scale));
         
         spritebatch->addChild(sprite, i);
@@ -4820,7 +4903,7 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
             sprite->setScale(-1.0f);
         }
         
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
         
         auto child1 = Sprite::create("Images/grossini_dance_01.png");
@@ -4887,7 +4970,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
             sprite->setScale(-1.0f);
         }
 
-        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
+        auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, nullptr);
         sprite->runAction(RepeatForever::create(seq_skew));
 
         auto child1 = Sprite::create("Images/grossini_dance_01.png");
@@ -4995,3 +5078,46 @@ std::string SpriteCullTest2::subtitle() const
 {
     return "Look at the GL calls";
 }
+
+//------------------------------------------------------------------
+//
+// Sprite 3D rotation test
+//
+//------------------------------------------------------------------
+Sprite3DRotationTest::Sprite3DRotationTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    
+    //Create reference sprite that's rotating based on there anchor point
+    auto s1 = Sprite::create("Images/grossini.png");
+    s1->setPosition(s.width/4, s.height/4 * 3);
+    s1->setAnchorPoint(Vec2(0, 0));
+    s1->runAction(RepeatForever::create(RotateBy::create(6, 360)));
+    addChild(s1);
+    
+    auto s2 = Sprite::create("Images/grossini.png");
+    s2->setPosition(s.width/4 * 3, s.height/4 * 3);
+    s2->runAction(RepeatForever::create(RotateBy::create(6, 360)));
+    addChild(s2);
+    
+    sprite1 = Sprite::create("Images/grossini.png");
+    sprite1->setPosition(s.width/4, s.height/4);
+    sprite1->setAnchorPoint(Vec2(0,0));
+    
+    addChild(sprite1);
+    
+    sprite2 = Sprite::create("Images/grossini.png");
+    sprite2->setPosition(s.width/4 * 3, s.height/4);
+    
+    addChild(sprite2);
+    
+    schedule([&](float dt) {
+        rotation.y += 1;
+        sprite1->setRotation3D(rotation);
+        sprite2->setRotation3D(rotation);
+    }, "update_key");
+}
+
+
+
+

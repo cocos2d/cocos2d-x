@@ -337,6 +337,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class SpriteFramesFromFileContent : public SpriteTestDemo
+{
+public:
+	CREATE_FUNC(SpriteFramesFromFileContent);
+
+	virtual void onEnter() override;
+	virtual void onExit() override;
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+};
+
 class SpriteOffsetAnchorRotation: public SpriteTestDemo
 {
 public:
@@ -747,6 +758,21 @@ public:
     SpriteCullTest2();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class Sprite3DRotationTest : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DRotationTest);
+    Sprite3DRotationTest();
+    virtual std::string title() const override { return "3D Rotation Test"; };
+    virtual std::string subtitle() const override { return "Rotation should based on the anchor point"; };
+    
+protected:
+    Sprite* sprite1;
+    Sprite* sprite2;
+    
+    Vec3 rotation;
 };
 
 class SpriteTestScene : public TestScene

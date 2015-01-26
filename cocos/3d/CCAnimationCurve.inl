@@ -72,7 +72,7 @@ template <int componentSize>
 AnimationCurve<componentSize>* AnimationCurve<componentSize>::create(float* keytime, float* value, int count)
 {
     int floatSize = sizeof(float);
-    AnimationCurve* curve = new AnimationCurve();
+    AnimationCurve* curve = new (std::nothrow) AnimationCurve();
     curve->_keytime = new float[count];
     memcpy(curve->_keytime, keytime, count * floatSize);
     
@@ -103,8 +103,8 @@ float AnimationCurve<componentSize>::getEndTime() const
 
 template <int componentSize>
 AnimationCurve<componentSize>::AnimationCurve()
-: _keytime(nullptr)
-, _value(nullptr)
+: _value(nullptr)
+, _keytime(nullptr)
 , _count(0)
 , _componentSizeByte(0)
 , _evaluateFun(nullptr)

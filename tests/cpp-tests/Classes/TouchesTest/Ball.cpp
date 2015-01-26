@@ -17,7 +17,7 @@ float Ball::radius()
 
 Ball* Ball::ballWithTexture(Texture2D* aTexture)
 {
-    Ball* pBall = new Ball();
+    Ball* pBall = new (std::nothrow) Ball();
     pBall->initWithTexture(aTexture);
     pBall->autorelease();
 
@@ -30,12 +30,12 @@ void Ball::move(float delta)
     
     if (getPosition().x > VisibleRect::right().x - radius()) 
     {
-        setPosition( Vec2( VisibleRect::right().x - radius(), getPosition().y) );
+        setPosition(VisibleRect::right().x - radius(), getPosition().y);
         _velocity.x *= -1;
     } 
     else if (getPosition().x < VisibleRect::left().x + radius()) 
     {
-        setPosition( Vec2(VisibleRect::left().x + radius(), getPosition().y) );
+        setPosition(VisibleRect::left().x + radius(), getPosition().y);
         _velocity.x *= -1;
     }
 }
@@ -60,13 +60,13 @@ void Ball::collideWithPaddle(Paddle* paddle)
         
         if (getPosition().y > midY && getPosition().y <= highY + radius()) 
         {
-            setPosition( Vec2(getPosition().x, highY + radius()) );
+            setPosition(getPosition().x, highY + radius());
             hit = true;
             angleOffset = (float)M_PI / 2;
         }
         else if (getPosition().y < midY && getPosition().y >= lowY - radius()) 
         {
-            setPosition( Vec2(getPosition().x, lowY - radius()) );
+            setPosition(getPosition().x, lowY - radius());
             hit = true;
             angleOffset = -(float)M_PI / 2;
         }

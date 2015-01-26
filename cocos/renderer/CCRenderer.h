@@ -29,15 +29,17 @@
 #include <vector>
 #include <stack>
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
-#include "CCGL.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
 class EventListenerCustom;
 class QuadCommand;
+class TrianglesCommand;
+class MeshCommand;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
@@ -52,8 +54,12 @@ public:
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
+    ssize_t getOpaqueQueueSize() const { return _queue3DOpaque.size(); }
+    const std::vector<RenderCommand*>& getOpaqueCommands() const { return _queue3DOpaque; }
 
 protected:
+    std::vector<RenderCommand*> _queue3DOpaque;
+    std::vector<RenderCommand*> _queue3DTransparent;
     std::vector<RenderCommand*> _queueNegZ;
     std::vector<RenderCommand*> _queue0;
     std::vector<RenderCommand*> _queuePosZ;
@@ -71,16 +77,19 @@ class GroupCommandManager;
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
  */
-class Renderer
+class CC_DLL Renderer
 {
 public:
-    static const int VBO_SIZE = 65536 / 6;
+    static const int VBO_SIZE = 65536;
+    static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
+    
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
-
+    static const int MATERIAL_ID_DO_NOT_BATCH = 0;
+    
     Renderer();
     ~Renderer();
 
-    //TODO manage GLView inside Render itself
+    //TODO: manage GLView inside Render itself
     void initGLView();
 
     /** Adds a `RenderComamnd` into the renderer */
@@ -104,6 +113,11 @@ public:
     /** Cleans all `RenderCommand`s in the queue */
     void clean();
 
+    /** Clear GL buffer and screen */
+    void clear();
+
+    /** set color for clear screen */
+    void setClearColor(const Color4F& clearColor);
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) QuadCommand should update this value */
@@ -112,7 +126,16 @@ public:
     ssize_t getDrawnVertices() const { return _drawnVertices; }
     /* RenderCommands (except) QuadCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
+    /* clear draw stats */
+    void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
+    /**
+     * Enable/Disable depth test
+     * For 3D object depth test is enabled by default and can not be changed
+     * For 2D object depth test is disabled by default
+     */
+    void setDepthTest(bool enable);
+    
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** returns whether or not a rectangle is visible or not */
@@ -120,21 +143,32 @@ public:
 
 protected:
 
-    void setupIndices();
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
     void setupVBOAndVAO();
     void setupVBO();
     void mapBuffers();
-
+    void drawBatchedTriangles();
     void drawBatchedQuads();
 
     //Draw the previews queued quads and flush previous context
     void flush();
     
+    void flush2D();
+    
+    void flush3D();
+
+    void flushQuads();
+    void flushTriangles();
+
+    void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(const RenderQueue& queue);
 
-    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const Mat4& modelView);
+    void fillVerticesAndIndices(const TrianglesCommand* cmd);
+    void fillQuads(const QuadCommand* cmd);
+
+    /* clear color set outside be used in setGLDefaultValues() */
+    Color4F _clearColor;
 
     std::stack<int> _commandGroupStack;
     
@@ -142,14 +176,25 @@ protected:
 
     uint32_t _lastMaterialID;
 
-    std::vector<QuadCommand*> _batchedQuadCommands;
+    MeshCommand*              _lastBatchedMeshCommand;
+    std::vector<TrianglesCommand*> _batchedCommands;
+    std::vector<QuadCommand*> _batchQuadCommands;
 
-    V3F_C4B_T2F_Quad _quads[VBO_SIZE];
-    GLushort _indices[6 * VBO_SIZE];
-    GLuint _quadVAO;
+    //for TrianglesCommand
+    V3F_C4B_T2F _verts[VBO_SIZE];
+    GLushort _indices[INDEX_VBO_SIZE];
+    GLuint _buffersVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
-    int _numQuads;
+    int _filledVertex;
+    int _filledIndex;
+    
+    //for QuadCommand
+    V3F_C4B_T2F _quadVerts[VBO_SIZE];
+    GLushort _quadIndices[INDEX_VBO_SIZE];
+    GLuint _quadVAO;
+    GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
+    int _numberQuads;
     
     bool _glViewAssigned;
 
@@ -158,6 +203,8 @@ protected:
     ssize_t _drawnVertices;
     //the flag for checking whether renderer is rendering
     bool _isRendering;
+    
+    bool _isDepthTestFor2D;
     
     GroupCommandManager* _groupCommandManager;
     

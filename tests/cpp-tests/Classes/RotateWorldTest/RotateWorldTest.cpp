@@ -67,11 +67,11 @@ void SpriteLayer::onEnter()
     auto rot1 = RotateBy::create(4, 360*2);
     auto rot2 = rot1->reverse();
     
-    spriteSister1->runAction(Repeat::create( Sequence::create(jump2, jump1, NULL), 5 ));
-    spriteSister2->runAction(Repeat::create( Sequence::create(jump1->clone(), jump2->clone(), NULL), 5 ));
+    spriteSister1->runAction(Repeat::create( Sequence::create(jump2, jump1, nullptr), 5 ));
+    spriteSister2->runAction(Repeat::create( Sequence::create(jump1->clone(), jump2->clone(), nullptr), 5 ));
     
-    spriteSister1->runAction(Repeat::create( Sequence::create(rot1, rot2, NULL), 5 ));
-    spriteSister2->runAction(Repeat::create( Sequence::create(rot2->clone(), rot1->clone(), NULL), 5 ));
+    spriteSister1->runAction(Repeat::create( Sequence::create(rot1, rot2, nullptr), 5 ));
+    spriteSister2->runAction(Repeat::create( Sequence::create(rot2->clone(), rot1->clone(), nullptr), 5 ));
 }
 
 //------------------------------------------------------------------

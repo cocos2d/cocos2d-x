@@ -28,13 +28,14 @@
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "math/CCMath.h"
+#include "3d/CCAABB.h"
 
 #include <vector>
 #include <map>
  
 NS_CC_BEGIN
 
-//mesh vertex attribute
+/**mesh vertex attribute*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -47,20 +48,101 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+
+struct ModelData;
+/** Node data, since 3.3 */
+struct NodeData
+{
+    std::string id;
+    Mat4        transform;
+    std::vector<ModelData*> modelNodeDatas;
+    std::vector<NodeData*>  children;
+
+    virtual ~NodeData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        id.clear();
+        transform.setIdentity();
+        for (auto& it : children)
+        {
+            delete it;
+        }
+        children.clear();
+    }
+
+};
+
+/** model node data, since 3.3 */
+struct ModelData
+{
+    std::string subMeshId;
+    std::string matrialId;
+    std::vector<std::string> bones;
+    std::vector<Mat4>        invBindPose;
+    
+    virtual ~ModelData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        bones.clear();
+        invBindPose.clear();
+    }
+};
+
+/** node datas, since 3.3 */
+struct NodeDatas
+{
+    std::vector<NodeData*> skeleton; //skeleton
+    std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
+    
+    void resetData()
+    {
+        for(auto& it : skeleton)
+        {
+            delete it;
+        }
+        skeleton.clear();
+        for(auto& it : nodes)
+        {
+            delete it;
+        }
+        nodes.clear();
+    }
+};
+
+/**mesh data*/
 struct MeshData
 {
+    typedef std::vector<unsigned short> IndexArray;
     std::vector<float> vertex;
     int vertexSizeInFloat;
-    std::vector<unsigned short> indices;
+    std::vector<IndexArray> subMeshIndices;
+    std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
+    std::vector<AABB> subMeshAABB;
     int numIndex;
     std::vector<MeshVertexAttrib> attribs;
     int attribCount;
 
 public:
+    int getPerVertexSize() const
+    {
+        int vertexsize = 0;
+        for(const auto& attrib : attribs)
+        {
+            vertexsize += attrib.attribSizeBytes;
+        }
+        return vertexsize;
+    }
     void resetData()
     {
         vertex.clear();
-        indices.clear();
+        subMeshIndices.clear();
+        subMeshAABB.clear();
         attribs.clear();
         vertexSizeInFloat = 0;
         numIndex = 0;
@@ -78,41 +160,160 @@ public:
     }
 };
 
+/** mesh datas */
+struct MeshDatas
+{
+    std::vector<MeshData*> meshDatas;
+    
+    void resetData()
+    {
+        for(auto& it : meshDatas)
+        {
+            delete it;
+        }
+        meshDatas.clear();
+    }
+    ~MeshDatas()
+    {
+        resetData();
+    }
+};
+
+/**skin data*/
 struct SkinData
 {
-    std::vector<std::string> boneNames;
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of bone
+    std::vector<std::string> skinBoneNames; //skin bones affect skin
+    std::vector<std::string> nodeBoneNames; //node bones don't affect skin, all bones [skinBone, nodeBone]
+    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone, only for skin bone
+    std::vector<Mat4>        skinBoneOriginMatrices; // original bone transform, for skin bone
+    std::vector<Mat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
     
+    //bone child info, both skinbone and node bone
     std::map<int, std::vector<int> > boneChild;//key parent, value child
     int                              rootBoneIndex;
     void resetData()
     {
-        boneNames.clear();
+        skinBoneNames.clear();
+        nodeBoneNames.clear();
         inverseBindPoseMatrices.clear();
+        skinBoneOriginMatrices.clear();
+        nodeBoneOriginMatrices.clear();
         boneChild.clear();
         rootBoneIndex = -1;
     }
 
+    void addSkinBoneNames(const std::string& name)
+    {
+        auto it = std::find(skinBoneNames.begin(), skinBoneNames.end(), name);
+        if (it == skinBoneNames.end())
+            skinBoneNames.push_back(name);
+    }
+    
+    void addNodeBoneNames(const std::string& name)
+    {
+        auto it = std::find(nodeBoneNames.begin(), nodeBoneNames.end(), name);
+        if (it == nodeBoneNames.end())
+            nodeBoneNames.push_back(name);
+    }
+    
+    int getSkinBoneNameIndex(const std::string& name)const
+    {
+        int i = 0;
+        for (const auto& iter : skinBoneNames)
+        {
+            if ((iter) == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+    
     int getBoneNameIndex(const std::string& name)const
     {
-        std::vector<std::string>::const_iterator iter = boneNames.begin();
-        for (int i = 0; iter != boneNames.end(); ++iter, ++i)
+        int i = 0;
+        for (const auto& iter : skinBoneNames)
         {
-            if ((*iter) == name)
-            {
+            if ((iter) == name)
                 return i;
-            }
+            i++;
+        }
+        for(const auto& iter : nodeBoneNames)
+        {
+            if (iter == name)
+                return i;
+            i++;
         }
         return -1;
     }
 
 };
 
+/**material data, */
 struct MaterialData
 {
-    std::string texturePath;
+    std::map<int, std::string> texturePaths; //submesh id, texture path
+    void resetData()
+    {
+        texturePaths.clear();
+    }
 };
 
+
+/**new material, since 3.3 */
+struct NTextureData
+{
+    enum class Usage {
+        Unknown = 0,
+        None = 1,
+        Diffuse = 2, 
+        Emissive = 3,
+        Ambient = 4,
+        Specular = 5,
+        Shininess = 6,
+        Normal = 7,
+        Bump = 8,
+        Transparency = 9,
+        Reflection = 10
+    };
+     std::string id;
+     std::string filename;
+     Usage type;
+     GLenum wrapS;
+     GLenum wrapT;
+} ;
+struct NMaterialData
+{
+    std::vector<NTextureData> textures;
+    std::string id;
+    const NTextureData* getTextureData(const NTextureData::Usage& type) const
+    {
+        for(const auto& it : textures)
+        {
+            if (it.type == type)
+                return &it;
+        }
+        return nullptr;
+    }
+};
+/** material datas, since 3.3 */
+struct MaterialDatas
+{
+    std::vector<NMaterialData> materials;
+    void resetData()
+    {
+        materials.clear();
+    }
+    const NMaterialData* getMaterialData(const std::string& materialid) const
+    {
+        for(const auto& it : materials)
+        {
+            if (it.id == materialid)
+                return &it;
+        }
+        return nullptr;
+    }
+};
+/**animation data*/
 struct Animation3DData
 {
 public:
@@ -166,20 +367,33 @@ public:
     }
     
     Animation3DData(const Animation3DData& other)
-    : _totalTime(other._totalTime)
-    , _translationKeys(other._translationKeys)
+    : _translationKeys(other._translationKeys)
     , _rotationKeys(other._rotationKeys)
     , _scaleKeys(other._scaleKeys)
+    , _totalTime(other._totalTime)
     {
     }
     
-    void clear()
+    void resetData()
     {
         _totalTime = 0;
         _translationKeys.clear();
         _rotationKeys.clear();
         _scaleKeys.clear();
     }
+};
+
+/**reference data*/
+struct Reference
+{
+public:
+    std::string id;
+    unsigned int type;
+    unsigned int offset;
+
+    Reference(){}
+
+    ~Reference(){}
 };
 
 NS_CC_END

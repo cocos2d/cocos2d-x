@@ -37,8 +37,8 @@ void Effect1::onEnter()
 //    auto orbit = OrbitCamera::create(5, 1, 2, 0, 180, 0, -90);
 //    auto orbit_back = orbit->reverse();
 
-    //_bgNode->runAction( RepeatForever::create( Sequence::create( orbit, orbit_back, NULL)  ) );
-    _bgNode->runAction( Sequence::create(lens, delay, reuse, waves, NULL) );
+    //_bgNode->runAction( RepeatForever::create( Sequence::create( orbit, orbit_back, nullptr)  ) );
+    _bgNode->runAction( Sequence::create(lens, delay, reuse, waves, nullptr) );
 }
 
 std::string Effect1::title() const
@@ -79,7 +79,7 @@ void Effect2::onEnter()
 //    id orbit_back = [orbit reverse];
 //
 //    [target runAction: [RepeatForever::create: [Sequence actions: orbit, orbit_back, nil]]];    
-    _bgNode->runAction(Sequence::create( shaky, delay, reuse, shuffle, delay->clone(), turnoff, turnon, NULL) );
+    _bgNode->runAction(Sequence::create( shaky, delay, reuse, shuffle, delay->clone(), turnoff, turnon, nullptr) );
 }
 
 std::string Effect2::title() const
@@ -107,7 +107,7 @@ void Effect3::onEnter()
     
     // moving background. Testing issue #244
     auto move = MoveBy::create(3, Vec2(200,0) );
-    _bgNode->runAction(RepeatForever::create( Sequence::create(move, move->reverse(), NULL) ));    
+    _bgNode->runAction(RepeatForever::create( Sequence::create(move, move->reverse(), nullptr) ));    
 }
 
 std::string Effect3::title() const
@@ -137,7 +137,7 @@ public:
     
     static Lens3DTarget* create(Lens3D* pAction)
     {
-        Lens3DTarget* pRet = new Lens3DTarget();
+        Lens3DTarget* pRet = new (std::nothrow) Lens3DTarget();
         pRet->_lens3D = pAction;
         pRet->autorelease();
         return pRet;
@@ -159,7 +159,7 @@ void Effect4::onEnter()
     auto lens = Lens3D::create(10, Size(32,24), Vec2(100,180), 150);
     auto move = JumpBy::create(5, Vec2(380,0), 100, 4);
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
 
     /* In cocos2d-iphone, the type of action's target is 'id', so it supports using the instance of 'Lens3D' as its target.
         While in cocos2d-x, the target of action only supports Node or its subclass,
@@ -201,7 +201,7 @@ void Effect5::onEnter()
                                          StopGrid::create(),
                     //                     [DelayTime::create:2],
                     //                     [[effect copy] autorelease],
-                                         NULL);
+                                         nullptr);
     
     //auto bg = getChildByTag(kTagBackground);
     _bgNode->runAction(stopEffect);
@@ -228,7 +228,7 @@ void Issue631::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
         
-    auto effect = Sequence::create( DelayTime::create(2.0f), Shaky3D::create(5.0f, Size(5, 5), 16, false), NULL);
+    auto effect = Sequence::create( DelayTime::create(2.0f), Shaky3D::create(5.0f, Size(5, 5), 16, false), nullptr);
 
     // cleanup
     //auto bg = getChildByTag(kTagBackground);
@@ -238,7 +238,7 @@ void Issue631::onEnter()
     auto layer = LayerColor::create( Color4B(255,0,0,255) );
     addChild(layer, -10);
     auto sprite = Sprite::create("Images/grossini.png");
-    sprite->setPosition( Vec2(50,80) );
+    sprite->setPosition(50,80);
     layer->addChild(sprite, 10);
     
     // foreground
@@ -298,7 +298,7 @@ Layer* createEffectAdvanceLayer(int nIndex)
         case 5: return new Issue631();
     }  
 
-    return NULL;
+    return nullptr;
 }
 
 Layer* nextEffectAdvanceAction()
@@ -353,10 +353,10 @@ void EffectAdvanceTextLayer::onEnter(void)
     auto grossini = Sprite::create("Images/grossinis_sister2.png");
     _target1->addChild(grossini);
     _bgNode->addChild(_target1);
-    _target1->setPosition( Vec2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200) );
+    _target1->setPosition(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3.0f, VisibleRect::bottom().y+ 200);
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
-    _target1->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
+    _target1->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
 
 
     _target2 = NodeGrid::create();
@@ -364,10 +364,10 @@ void EffectAdvanceTextLayer::onEnter(void)
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     _target2->addChild(tamara);
     _bgNode->addChild(_target2);
-    _target2->setPosition( Vec2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200) );
+    _target2->setPosition(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3.0f,VisibleRect::bottom().y+200);
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
-    _target2->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL) ) );    
+    _target2->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr) ) );    
 
 }
 
@@ -387,7 +387,7 @@ std::string EffectAdvanceTextLayer::subtitle() const
 
 void EffectAdvanceTextLayer::restartCallback(Ref* sender)
 {
-    auto s = new EffectAdvanceScene();
+    auto s = new (std::nothrow) EffectAdvanceScene();
     s->addChild(restartEffectAdvanceAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -396,7 +396,7 @@ void EffectAdvanceTextLayer::restartCallback(Ref* sender)
 
 void EffectAdvanceTextLayer::nextCallback(Ref* sender)
 {
-    auto s = new EffectAdvanceScene();
+    auto s = new (std::nothrow) EffectAdvanceScene();
     s->addChild( nextEffectAdvanceAction() );
     Director::getInstance()->replaceScene(s);
 
@@ -405,7 +405,7 @@ void EffectAdvanceTextLayer::nextCallback(Ref* sender)
 
 void EffectAdvanceTextLayer::backCallback(Ref* sender)
 {
-    auto s = new EffectAdvanceScene();
+    auto s = new (std::nothrow) EffectAdvanceScene();
     s->addChild( backEffectAdvanceAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

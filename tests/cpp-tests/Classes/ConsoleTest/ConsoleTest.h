@@ -59,9 +59,7 @@ protected:
     ConsoleCustomCommand();
     virtual ~ConsoleCustomCommand();
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     cocos2d::Console *_console;
-#endif
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleCustomCommand);

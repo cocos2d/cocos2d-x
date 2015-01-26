@@ -33,7 +33,6 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
-#include "base/ccMacros.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCBatchCommand.h"
 
@@ -80,7 +79,7 @@ public:
 
 
     /** returns the TextureAtlas object */
-    inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
+    inline TextureAtlas* getTextureAtlas() { return _textureAtlas; }
 
     /** sets the TextureAtlas object */
     inline void setTextureAtlas(TextureAtlas* textureAtlas)

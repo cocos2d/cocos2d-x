@@ -84,7 +84,7 @@ ScrollView::~ScrollView()
 
 ScrollView* ScrollView::create()
 {
-    ScrollView* widget = new ScrollView();
+    ScrollView* widget = new (std::nothrow) ScrollView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -123,6 +123,10 @@ void ScrollView::initRenderer()
 {
     Layout::initRenderer();
     _innerContainer = Layout::create();
+    _innerContainer->setColor(Color3B(255,255,255));
+    _innerContainer->setOpacity(255);
+    _innerContainer->setCascadeColorEnabled(true);
+    _innerContainer->setCascadeOpacityEnabled(true);
     addProtectedChild(_innerContainer, 1, 1);
 }
 
@@ -699,7 +703,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
     bool scrollenabled = true;
     switch (_direction)
     {
-        case Direction::VERTICAL: // vertical
+        case Direction::VERTICAL:
         {
             if (_autoScrollDir.y > 0)
             {
@@ -721,7 +725,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
             }
             break;
         }
-        case Direction::HORIZONTAL: // horizontal
+        case Direction::HORIZONTAL:
         {
             if (_autoScrollDir.x > 0)
             {
@@ -852,7 +856,7 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
 bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
 {
     float realOffset = touchOffsetY;
-    bool scrollEnabled = false;
+    bool scrollEnabled = true;
     if (_bounceEnabled)
     {
         float icBottomPos = _innerContainer->getBottomBoundary();
@@ -894,7 +898,7 @@ bool ScrollView::scrollChildrenVertical(float touchOffsetX, float touchOffsetY)
     
 bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY)
 {
-    bool scrollenabled;
+    bool scrollenabled = true;
     float realOffset = touchOffsetX;
     if (_bounceEnabled)
     {
@@ -936,7 +940,7 @@ bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY
     
 bool ScrollView::scrollChildrenBoth(float touchOffsetX, float touchOffsetY)
 {
-    bool scrollenabled = false;
+    bool scrollenabled = true;
     float realOffsetX = touchOffsetX;
     float realOffsetY = touchOffsetY;
     if (_bounceEnabled)
@@ -1418,10 +1422,12 @@ void ScrollView::endRecordSlidAction()
         }
         float totalDis = 0.0f;
         Vec2 dir;
+        Vec2 touchEndPositionInNodeSpace = this->convertToNodeSpace(_touchEndPosition);
+        Vec2 touchBeganPositionInNodeSpace = this->convertToNodeSpace(_touchBeganPosition);
         switch (_direction)
         {
             case Direction::VERTICAL:
-                totalDis = _touchEndPosition.y - _touchBeganPosition.y;
+                totalDis = touchEndPositionInNodeSpace.y - touchBeganPositionInNodeSpace.y;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_DOWN;
@@ -1432,7 +1438,7 @@ void ScrollView::endRecordSlidAction()
                 }
                 break;
             case Direction::HORIZONTAL:
-                totalDis = _touchEndPosition.x - _touchBeganPosition.x;
+                totalDis = touchEndPositionInNodeSpace.x - touchBeganPositionInNodeSpace.x;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_LEFT;
@@ -1444,7 +1450,7 @@ void ScrollView::endRecordSlidAction()
                 break;
             case Direction::BOTH:
             {
-                Vec2 subVector = _touchEndPosition - _touchBeganPosition;
+                Vec2 subVector = touchEndPositionInNodeSpace - touchBeganPositionInNodeSpace;
                 totalDis = subVector.getLength();
                 dir = subVector.getNormalized();
                 break;
@@ -1466,7 +1472,9 @@ void ScrollView::handlePressLogic(Touch *touch)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
-    Vec2 delta = touch->getLocation() - touch->getPreviousLocation();
+    Vec2 touchPositionInNodeSpace = this->convertToNodeSpace(touch->getLocation());
+    Vec2 previousTouchPositionInNodeSpace = this->convertToNodeSpace(touch->getPreviousLocation());
+    Vec2 delta = touchPositionInNodeSpace - previousTouchPositionInNodeSpace;
     switch (_direction)
     {
         case Direction::VERTICAL: // vertical
@@ -1498,9 +1506,12 @@ void ScrollView::handleReleaseLogic(Touch *touch)
 bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
-    if (_hitted)
+    if (!_isInterceptTouch)
     {
-        handlePressLogic(touch);
+        if (_hitted)
+        {
+            handlePressLogic(touch);
+        }
     }
     return pass;
 }
@@ -1508,19 +1519,30 @@ bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
 void ScrollView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchMoved(touch, unusedEvent);
-    handleMoveLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleMoveLogic(touch);
+    }
 }
 
 void ScrollView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchEnded(touch, unusedEvent);
-    handleReleaseLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleReleaseLogic(touch);
+    }
+    _isInterceptTouch = false;
 }
 
 void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
-    handleReleaseLogic(touch);
+    if (!_isInterceptTouch)
+    {
+        handleReleaseLogic(touch);
+    }
+    _isInterceptTouch = false;
 }
 
 void ScrollView::update(float dt)
@@ -1550,128 +1572,199 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
     switch (event)
     {
         case TouchEventType::BEGAN:
+        {
+            _isInterceptTouch = true;
             _touchBeganPosition = touch->getLocation();
             handlePressLogic(touch);
-            break;
-            
+        }
+        break;
         case TouchEventType::MOVED:
         {
             float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
+            _touchMovePosition = touch->getLocation();
             if (offset > _childFocusCancelOffset)
             {
                 sender->setHighlighted(false);
-                _touchMovePosition = touch->getLocation();
                 handleMoveLogic(touch);
             }
         }
-            break;
+        break;
             
         case TouchEventType::CANCELED:
         case TouchEventType::ENDED:
+        {
             _touchEndPosition = touch->getLocation();
             handleReleaseLogic(touch);
-            break;
+            if (sender->isSwallowTouches())
+            {
+                _isInterceptTouch = false;
+            }
+        }
+        break;
     }
 }
 
 
 void ScrollView::scrollToTopEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::SCROLL_TO_TOP);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_TOP));
+    }
+    this->release();
 }
 
 void ScrollView::scrollToBottomEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::SCROLL_TO_BOTTOM);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_BOTTOM));
+    }
+    this->release();
 }
 
 void ScrollView::scrollToLeftEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::SCROLL_TO_LEFT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_LEFT));
+    }
+    this->release();
 }
 
 void ScrollView::scrollToRightEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::SCROLL_TO_RIGHT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLL_TO_RIGHT));
+    }
+    this->release();
 }
 
 void ScrollView::scrollingEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::SCROLLING);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::SCROLLING));
+    }
+    this->release();
 }
 
 void ScrollView::bounceTopEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::BOUNCE_TOP);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_TOP));
+    }
+    this->release();
 }
 
 void ScrollView::bounceBottomEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::BOUNCE_BOTTOM);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_BOTTOM));
+    }
+    this->release();
 }
 
 void ScrollView::bounceLeftEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::BOUNCE_LEFT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_LEFT));
+    }
+    this->release();
 }
 
 void ScrollView::bounceRightEvent()
 {
+    this->retain();
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this,EventType::BOUNCE_RIGHT);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::BOUNCE_RIGHT));
+    }
+    this->release();
 }
 
 void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)
@@ -1767,13 +1860,15 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _scrollViewEventListener = scrollView->_scrollViewEventListener;
         _scrollViewEventSelector = scrollView->_scrollViewEventSelector;
         _eventCallback = scrollView->_eventCallback;
+        _ccEventCallback = scrollView->_ccEventCallback;
     }
 }
     
 Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection direction, cocos2d::ui::Widget *current)
 {
     if (this->getLayoutType() == Layout::Type::VERTICAL
-        || this->getLayoutType() == Layout::Type::HORIZONTAL) {
+        || this->getLayoutType() == Layout::Type::HORIZONTAL)
+    {
         return _innerContainer->findNextFocusedWidget(direction, current);
     }
     else
@@ -1781,8 +1876,6 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
         return Widget::findNextFocusedWidget(direction, current);
     }
 }
-    
-
 }
 
 NS_CC_END

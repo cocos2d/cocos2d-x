@@ -38,10 +38,11 @@
 #include <vector>
 
 #include "2d/CCActionInterval.h"
-#include "2d/CCNode.h"
 #include "math/CCGeometry.h"
 
 NS_CC_BEGIN;
+
+class Node;
 
 /**
  * @addtogroup actions
@@ -55,12 +56,12 @@ NS_CC_BEGIN;
 class CC_DLL PointArray : public Ref, public Clonable
 {
 public:
-    
-    /** creates and initializes a Points array with capacity 
+
+    /** creates and initializes a Points array with capacity
      * @js NA
      */
     static PointArray* create(ssize_t capacity);
-    
+
     /**
      * @js NA
      * @lua NA
@@ -71,48 +72,48 @@ public:
      * @lua NA
      */
     PointArray();
-    
-    /** initializes a Catmull Rom config with a capacity hint 
+
+    /** initializes a Catmull Rom config with a capacity hint
      * @js NA
      */
     bool initWithCapacity(ssize_t capacity);
-    
-    /** appends a control point 
+
+    /** appends a control point
      * @js NA
      */
     void addControlPoint(Vec2 controlPoint);
-    
-    /** inserts a controlPoint at index 
+
+    /** inserts a controlPoint at index
      * @js NA
      */
     void insertControlPoint(Vec2 &controlPoint, ssize_t index);
-    
-    /** replaces an existing controlPoint at index 
+
+    /** replaces an existing controlPoint at index
      * @js NA
      */
     void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
-    
-    /** get the value of a controlPoint at a given index 
+
+    /** get the value of a controlPoint at a given index
      * @js NA
      */
     Vec2 getControlPointAtIndex(ssize_t index);
-    
-    /** deletes a control point at a given index 
+
+    /** deletes a control point at a given index
      * @js NA
      */
     void removeControlPointAtIndex(ssize_t index);
-    
-    /** returns the number of objects of the control point array 
+
+    /** returns the number of objects of the control point array
      * @js NA
      */
     ssize_t count() const;
-    
-    /** returns a new copy of the array reversed. User is responsible for releasing this copy 
+
+    /** returns a new copy of the array reversed. User is responsible for releasing this copy
      * @js NA
      */
     PointArray* reverse() const;
-    
-    /** reverse the current control point array inline, without generating a new one 
+
+    /** reverse the current control point array inline, without generating a new one
      * @js NA
      */
     void reverseInline();
@@ -142,7 +143,8 @@ class CC_DLL CardinalSplineTo : public ActionInterval
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension 
+    /** creates an action with a Cardinal Spline array of points and tension
+     * @param duration in seconds
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -160,8 +162,11 @@ public:
      * @lua NA
      */
     CardinalSplineTo();
-    
-    /** initializes the action with a duration and an array of points */
+
+    /** 
+     * initializes the action with a duration and an array of points
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, PointArray* points, float tension);
 
     virtual void updatePosition(Vec2 &newPos);
@@ -179,9 +184,13 @@ public:
     }
 
     // Overrides
-	virtual CardinalSplineTo *clone() const override;
+    virtual CardinalSplineTo *clone() const override;
     virtual CardinalSplineTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
+    
+    /**
+     * @param time in seconds.
+     */
     virtual void update(float time) override;
 
 protected:
@@ -197,11 +206,11 @@ protected:
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  @ingroup Actions
  */
-class CC_DLL CardinalSplineBy : public CardinalSplineTo 
+class CC_DLL CardinalSplineBy : public CardinalSplineTo
 {
 public:
-    
-    /** creates an action with a Cardinal Spline array of points and tension 
+
+    /** creates an action with a Cardinal Spline array of points and tension
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -211,11 +220,11 @@ public:
     static CardinalSplineBy* create(float duration, PointArray* points, float tension);
 
     CardinalSplineBy();
-    
+
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual void updatePosition(Vec2 &newPos) override;
-	virtual CardinalSplineBy *clone() const override;
+    virtual CardinalSplineBy *clone() const override;
     virtual CardinalSplineBy* reverse() const override;
 
 protected:
@@ -230,8 +239,9 @@ protected:
 class CC_DLL CatmullRomTo : public CardinalSplineTo
 {
 public:
-    
-    /** creates an action with a Cardinal Spline array of points and tension 
+
+    /** creates an action with a Cardinal Spline array of points and tension
+     * @param dt in seconds
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var dt,var table)
@@ -240,12 +250,15 @@ public:
      */
     static CatmullRomTo* create(float dt, PointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** 
+     * initializes the action with a duration and an array of points
+     * @param dt in seconds
+     */
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
-	virtual CatmullRomTo *clone() const override;
-	virtual CatmullRomTo *reverse() const override;
+    virtual CatmullRomTo *clone() const override;
+    virtual CatmullRomTo *reverse() const override;
 };
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -256,7 +269,8 @@ public:
 class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension 
+    /** creates an action with a Cardinal Spline array of points and tension
+     * @param dt in seconds
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var dt,var table)
@@ -269,8 +283,8 @@ public:
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
-	virtual CatmullRomBy *clone() const override;
-	virtual CatmullRomBy *reverse() const override;
+    virtual CatmullRomBy *clone() const override;
+    virtual CatmullRomBy *reverse() const override;
 
 };
 

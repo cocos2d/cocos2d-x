@@ -26,7 +26,7 @@
 #ifndef COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
 #define COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
 
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 enum class S3TCDecodeFlag
 {

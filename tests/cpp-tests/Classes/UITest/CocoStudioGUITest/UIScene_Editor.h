@@ -39,7 +39,7 @@ public: \
 static Scene* sceneWithTitle(const char * title) \
 { \
     Scene* pScene = Scene::create(); \
-    UIScene_Editor* uiLayer = new UIScene_Editor(); \
+    UIScene_Editor* uiLayer = new (std::nothrow) UIScene_Editor(); \
     if (uiLayer && uiLayer->init()) \
     { \
         uiLayer->autorelease(); \
@@ -69,7 +69,8 @@ public:
     CC_SYNTHESIZE_READONLY(Text*, _sceneTitle, SceneTitle)
     
     UI_SCENE_EDITOR_CREATE_FUNC(UIScene_Editor);
-    
+    virtual void switchLoadMethod(Ref* pSender);
+
 protected:
     Layer* _touchGroup;
     Layout* _layout;

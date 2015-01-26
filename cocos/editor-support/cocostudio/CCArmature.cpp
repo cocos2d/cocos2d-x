@@ -48,7 +48,7 @@ namespace cocostudio {
 
 Armature *Armature::create()
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init())
     {
         armature->autorelease();
@@ -61,7 +61,7 @@ Armature *Armature::create()
 
 Armature *Armature::create(const std::string& name)
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init(name))
     {
         armature->autorelease();
@@ -73,7 +73,7 @@ Armature *Armature::create(const std::string& name)
 
 Armature *Armature::create(const std::string& name, Bone *parentBone)
 {
-    Armature *armature = new Armature();
+    Armature *armature = new (std::nothrow) Armature();
     if (armature && armature->init(name, parentBone))
     {
         armature->autorelease();
@@ -116,13 +116,13 @@ bool Armature::init(const std::string& name)
         removeAllChildren();
 
         CC_SAFE_DELETE(_animation);
-        _animation = new ArmatureAnimation();
+        _animation = new (std::nothrow) ArmatureAnimation();
         _animation->init(this);
 
         _boneDic.clear();
         _topBoneList.clear();
 
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
         _name = name;
 
@@ -352,6 +352,11 @@ const Vec2& Armature::getAnchorPointInPoints() const
     return _realAnchorPointInPoints;
 }
 
+const Vec2& Armature::getOffsetPoints() const
+{
+    return _offsetPoint;
+}
+
 void Armature::setAnimation(ArmatureAnimation *animation)
 {
     _animation = animation;
@@ -402,11 +407,22 @@ void Armature::draw(cocos2d::Renderer *renderer, const Mat4 &transform, uint32_t
                 Skin *skin = static_cast<Skin *>(node);
                 skin->updateTransform();
                 
-                bool blendDirty = bone->isBlendDirty();
+                BlendFunc func = bone->getBlendFunc();
                 
-                if (blendDirty)
+                if (func.src != BlendFunc::ALPHA_PREMULTIPLIED.src || func.dst != BlendFunc::ALPHA_PREMULTIPLIED.dst)
                 {
                     skin->setBlendFunc(bone->getBlendFunc());
+                }
+                else
+                {
+                    if (_blendFunc == BlendFunc::ALPHA_PREMULTIPLIED && !skin->getTexture()->hasPremultipliedAlpha())
+                    {
+                        skin->setBlendFunc(_blendFunc.ALPHA_NON_PREMULTIPLIED);
+                    }
+                    else
+                    {
+                        skin->setBlendFunc(_blendFunc);
+                    }
                 }
                 skin->draw(renderer, transform, flags);
             }
@@ -456,7 +472,7 @@ void Armature::onExit()
 void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible)
+    if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }
@@ -475,8 +491,9 @@ void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, u
     sortAllChildren();
     draw(renderer, _modelViewTransform, flags);
 
-    // reset for next frame
-    _orderOfArrival = 0;
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // setOrderOfArrival(0);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -556,7 +573,7 @@ Bone *Armature::getParentBone() const
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 
-void CCArmature::setColliderFilter(ColliderFilter *filter)
+void Armature::setColliderFilter(ColliderFilter *filter)
 {
     for (auto& element : _boneDic)
     {
@@ -565,7 +582,7 @@ void CCArmature::setColliderFilter(ColliderFilter *filter)
 }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
 
-void CCArmature::drawContour()
+void Armature::drawContour()
 {
     for(auto& element : _boneDic)
     {
@@ -583,15 +600,29 @@ void CCArmature::drawContour()
             const std::vector<Vec2> &vertexList = body->getCalculatedVertexList();
 
             unsigned long length = vertexList.size();
-            Vec2 *points = new Vec2[length];
+            Vec2 *points = new (std::nothrow) Vec2[length];
             for (unsigned long i = 0; i<length; i++)
             {
                 Vec2 p = vertexList.at(i);
                 points[i].x = p.x;
                 points[i].y = p.y;
             }
+            
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+            
             DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
+            
             delete []points;
         }
     }

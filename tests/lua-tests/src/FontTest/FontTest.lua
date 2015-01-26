@@ -8,7 +8,7 @@ local  fontList = {
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
-    "fonts/Schwarzwald Regular.ttf",
+    "fonts/Schwarzwald.ttf",
     "fonts/Scissor Cuts.ttf"
 }
 
@@ -31,11 +31,6 @@ local function showFont(ret, pFont)
 
     local blockSize = cc.size(s.width/3, 200)
     local fontSize = 26
-
-    ret:removeChildByTag(kTagLabel1, true)
-    ret:removeChildByTag(kTagLabel2, true)
-    ret:removeChildByTag(kTagLabel3, true)
-    ret:removeChildByTag(kTagLabel4, true)
 
     local top = cc.Label:createWithTTF(pFont, pFont, 24)
     local left = cc.Label:createWithTTF("alignment left", pFont, fontSize,

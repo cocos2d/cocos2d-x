@@ -63,7 +63,7 @@ void EnemyController::update(float delta)
 
 EnemyController* EnemyController::create(void)
 {
-    EnemyController * pRet = new EnemyController();
+    EnemyController * pRet = new (std::nothrow) EnemyController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

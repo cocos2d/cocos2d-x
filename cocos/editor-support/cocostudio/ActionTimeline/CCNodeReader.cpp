@@ -45,6 +45,8 @@ static const char* ClassName_Button     = "Button";
 static const char* ClassName_CheckBox   = "CheckBox";
 static const char* ClassName_ImageView  = "ImageView";
 static const char* ClassName_TextAtlas  = "TextAtlas";
+static const char* ClassName_LabelAtlas = "LabelAtlas";
+static const char* ClassName_LabelBMFont= "LabelBMFont";
 static const char* ClassName_TextBMFont = "TextBMFont";
 static const char* ClassName_Text       = "Text";
 static const char* ClassName_LoadingBar = "LoadingBar";
@@ -102,7 +104,7 @@ NodeReader* NodeReader::getInstance()
 {
     if (! _sharedNodeReader)
     {
-        _sharedNodeReader = new NodeReader();
+        _sharedNodeReader = new (std::nothrow) NodeReader();
         _sharedNodeReader->init();
     }
 
@@ -132,7 +134,8 @@ void NodeReader::init()
     _funcs.insert(Pair(ClassName_SubGraph,  std::bind(&NodeReader::loadSubGraph,   this, _1)));
     _funcs.insert(Pair(ClassName_Sprite,    std::bind(&NodeReader::loadSprite,     this, _1)));
     _funcs.insert(Pair(ClassName_Particle,  std::bind(&NodeReader::loadParticle,   this, _1)));
-
+    _funcs.insert(Pair(ClassName_LabelAtlas,std::bind(&NodeReader::loadWidget,   this, _1)));
+    _funcs.insert(Pair(ClassName_LabelBMFont,std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Panel,     std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_Button,    std::bind(&NodeReader::loadWidget,   this, _1)));
     _funcs.insert(Pair(ClassName_CheckBox,  std::bind(&NodeReader::loadWidget,   this, _1)));
@@ -233,8 +236,20 @@ Node* NodeReader::loadNode(const rapidjson::Value& json)
         {
             const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
             Node* child = loadNode(dic);
-            if (child) 
+            if (child)
             {
+                auto widgetChild = dynamic_cast<Widget*>(child);
+                if (widgetChild
+                    && dynamic_cast<Widget*>(node)
+                    && !dynamic_cast<Layout*>(node))
+                {
+                    if (widgetChild->getPositionType() == ui::Widget::PositionType::PERCENT)
+                    {
+                        widgetChild->setPositionPercent(Vec2(widgetChild->getPositionPercent().x + node->getAnchorPoint().x, widgetChild->getPositionPercent().y + node->getAnchorPoint().y));
+                    }
+                    widgetChild->setPosition(Vec2(widgetChild->getPositionX() + node->getAnchorPointInPoints().x, widgetChild->getPositionY() + node->getAnchorPointInPoints().y));
+                }
+
                 node->addChild(child);
                 child->release();
             }
@@ -273,7 +288,7 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);
 
     if(x != 0 || y != 0)
-        node->setPosition(Point(x, y));
+        node->setPosition(x, y);
     if(scalex != 1)
         node->setScaleX(scalex);
     if(scaley != 1)
@@ -281,9 +296,9 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if (rotation != 0)
         node->setRotation(rotation);
     if(rotationSkewX != 0)
-        node->setRotationX(rotationSkewX);
+        node->setRotationSkewX(rotationSkewX);
     if(rotationSkewY != 0)
-        node->setRotationY(rotationSkewY);
+        node->setRotationSkewY(rotationSkewY);
     if(skewx != 0)
         node->setSkewX(skewx);
     if(skewy != 0)
@@ -293,19 +308,17 @@ void NodeReader::initNode(Node* node, const rapidjson::Value& json)
     if(width != 0 || height != 0)
         node->setContentSize(Size(width, height));
     if(zorder != 0)
-        node->setZOrder(zorder);
+        node->setLocalZOrder(zorder);
     if(visible != true)
         node->setVisible(visible);
 
     if(alpha != 255)
     {
         node->setOpacity(alpha);
-        node->setCascadeOpacityEnabled(true);
     }
     if(red != 255 || green != 255 || blue != 255)
     {
         node->setColor(Color3B(red, green, blue));
-        node->setCascadeColorEnabled(true);
     }
 
 
@@ -444,13 +457,15 @@ Node* NodeReader::loadWidget(const rapidjson::Value& json)
 
     WidgetReaderProtocol* reader = dynamic_cast<WidgetReaderProtocol*>(ObjectFactory::getInstance()->createObject(readerName));
 
-    WidgetPropertiesReader0300* guiReader = new WidgetPropertiesReader0300();
+    WidgetPropertiesReader0300* guiReader = new (std::nothrow) WidgetPropertiesReader0300();
     guiReader->setPropsForAllWidgetFromJsonDictionary(reader, widget, json);
     CC_SAFE_DELETE(guiReader);
     
     int actionTag = DICTOOL->getIntValue_json(json, ACTION_TAG);
-    widget->setUserObject(ActionTimelineData::create(actionTag));
-    
+    widget->setUserObject(ActionTimelineData::create(actionTag)); 
+
+    initNode(widget, json);
+
     return widget;
 }
 

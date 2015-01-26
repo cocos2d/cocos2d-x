@@ -37,10 +37,17 @@ Use any of these editors to generate BMFonts:
 #include "2d/CCLabel.h"
 #if CC_LABELBMFONT_DEBUG_DRAW
 #include "renderer/CCCustomCommand.h"
+#include "2d/CCDrawNode.h"
 #endif
 
 NS_CC_BEGIN
 
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
 /** @brief LabelBMFont is a subclass of SpriteBatchNode.
 
 Features:
@@ -129,8 +136,7 @@ public:
 
 private:
 #if CC_LABELBMFONT_DEBUG_DRAW
-    CustomCommand   _customDebugDrawCommand;
-    void drawDebugData(const Mat4& transform, bool transformUpdated);
+    DrawNode *_debugDrawNode;
 #endif
     
     // name of fntFile
@@ -143,7 +149,11 @@ private:
 // end of GUI group
 /// @}
 /// @}
-
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
 NS_CC_END
 
 #endif //__CCBITMAP_FONT_ATLAS_H__

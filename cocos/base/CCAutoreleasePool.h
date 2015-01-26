@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __AUTORELEASEPOOL_H__
 #define __AUTORELEASEPOOL_H__
 
-#include <stack>
 #include <vector>
 #include <string>
 #include "base/CCRef.h"

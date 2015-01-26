@@ -51,7 +51,7 @@ class RCPtr
 {
 public:
 	//Construct using a C pointer
-	//e.g. RCPtr< T > x = new T();
+	//e.g. RCPtr< T > x = new (std::nothrow) T();
 	RCPtr(T* ptr = nullptr)
     : _ptr(ptr)
 	{
@@ -81,7 +81,7 @@ public:
 	}
 
 	//Assign a pointer
-	//e.g. x = new T();
+	//e.g. x = new (std::nothrow) T();
 	RCPtr &operator=(T* ptr)
 	{
 //        printf("Array: operator= T*: %p\n", this);

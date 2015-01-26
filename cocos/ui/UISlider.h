@@ -26,26 +26,28 @@ THE SOFTWARE.
 #define __UISLIDER_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
 NS_CC_BEGIN
 
 class Sprite;
 
 namespace ui {
-
-CC_DEPRECATED_ATTRIBUTE typedef enum
+    class Scale9Sprite;
+    
+typedef enum
 {
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-CC_DEPRECATED_ATTRIBUTE typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
+typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 /**
 *   @js NA
 *   @lua NA
 */
-class Slider : public Widget
+class CC_GUI_DLL Slider : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -71,14 +73,18 @@ public:
      */
     static Slider* create();
     
+    static Slider* create(const std::string& barTextureName,
+                          const std::string& normalBallTextureName,
+                          TextureResType resType = TextureResType::LOCAL);
+    
     /**
      * Load texture for slider bar.
      *
      * @param fileName   file name of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
-    void loadBarTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
+    void loadBarTexture(const std::string& fileName,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Sets if slider is using scale9 renderer.
@@ -123,11 +129,11 @@ public:
      *
      * @param slider ball disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
     void loadSlidBallTextures(const std::string& normal,
-                              const std::string& pressed,
-                              const std::string& disabled,
+                              const std::string& pressed = "",
+                              const std::string& disabled = "",
                               TextureResType texType = TextureResType::LOCAL);
     
     /**
@@ -135,36 +141,36 @@ public:
      *
      * @param normal    normal state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
-    void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = TextureResType::LOCAL);
+    void loadSlidBallTextureNormal(const std::string& normal,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Load selected state texture for slider ball.
      *
      * @param selected    selected state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
-    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = TextureResType::LOCAL);
+    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider ball.
      *
      * @param disabled    dark state texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
-    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = TextureResType::LOCAL);
+    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider progress bar.
      *
      * @param fileName    file path of texture.
      *
-     * @param texType    @see UI_TEX_TYPE_LOCAL
+     * @param texType    @see TextureResType
      */
-    void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
+    void loadProgressBarTexture(const std::string& fileName, TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Changes the progress direction of slider.
@@ -192,7 +198,7 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     
     //override "getVirtualRendererSize" method of widget.
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
@@ -206,6 +212,18 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+    
+    /** When user pressed the button, the button will zoom to a scale.
+     * The final scale of the button  equals (button original scale + _zoomScale)
+     * @since v3.3
+     */
+    void setZoomScale(float scale);
+    /**
+     * @brief Return a zoom scale
+     * @since v3.3
+     */
+    float getZoomScale()const;
+
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -225,8 +243,9 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
 protected:
-    Node*  _barRenderer;
-    Node* _progressBarRenderer;
+    Scale9Sprite*  _barRenderer;
+    Scale9Sprite* _progressBarRenderer;
+    Size _barTextureSize;
     Size _progressBarTextureSize;
     
     Sprite* _slidBallNormalRenderer;
@@ -239,6 +258,11 @@ protected:
     
     bool _scale9Enabled;
     bool _prevIgnoreSize;
+    
+    float _zoomScale;
+    float _sliderBallNormalTextureScaleX;
+    float _sliderBallNormalTextureScaleY;
+    
     std::string _textureFile;
     std::string _progressBarTextureFile;
     std::string _slidBallNormalTextureFile;

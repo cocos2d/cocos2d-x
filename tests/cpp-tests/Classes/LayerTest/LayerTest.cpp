@@ -88,7 +88,7 @@ void LayerTest::onEnter()
 
 void LayerTest::restartCallback(Ref* sender)
 {
-    auto s = new LayerTestScene();
+    auto s = new (std::nothrow) LayerTestScene();
     s->addChild(restartAction());
 
     Director::getInstance()->replaceScene(s);
@@ -97,7 +97,7 @@ void LayerTest::restartCallback(Ref* sender)
 
 void LayerTest::nextCallback(Ref* sender)
 {
-    auto s = new LayerTestScene();
+    auto s = new (std::nothrow) LayerTestScene();
     s->addChild( nextAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -105,7 +105,7 @@ void LayerTest::nextCallback(Ref* sender)
 
 void LayerTest::backCallback(Ref* sender)
 {
-    auto s = new LayerTestScene();
+    auto s = new (std::nothrow) LayerTestScene();
     s->addChild( backAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -151,7 +151,7 @@ void LayerTestCascadingOpacityA::onEnter()
                 FadeTo::create(4, 0),
                 FadeTo::create(4, 255),
                 DelayTime::create(1),
-                NULL)));
+                nullptr)));
 
     sister1->runAction(
         RepeatForever::create(
@@ -161,7 +161,7 @@ void LayerTestCascadingOpacityA::onEnter()
                 FadeTo::create(2, 0),
                 FadeTo::create(2, 255),
                 DelayTime::create(1),
-                NULL)));
+                nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -203,7 +203,7 @@ void LayerTestCascadingOpacityB::onEnter()
        FadeTo::create(4, 0),
        FadeTo::create(4, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -213,7 +213,7 @@ void LayerTestCascadingOpacityB::onEnter()
        FadeTo::create(2, 0),
        FadeTo::create(2, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -256,7 +256,7 @@ void LayerTestCascadingOpacityC::onEnter()
        FadeTo::create(4, 0),
        FadeTo::create(4, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -266,7 +266,7 @@ void LayerTestCascadingOpacityC::onEnter()
        FadeTo::create(2, 0),
        FadeTo::create(2, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
 }
 
 std::string LayerTestCascadingOpacityC::subtitle() const
@@ -304,7 +304,7 @@ void LayerTestCascadingColorA::onEnter()
        TintTo::create(6, 255, 0, 255),
        TintTo::create(6, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -316,7 +316,7 @@ void LayerTestCascadingColorA::onEnter()
        TintTo::create(2, 255, 0, 255),
        TintTo::create(2, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -357,7 +357,7 @@ void LayerTestCascadingColorB::onEnter()
        TintTo::create(6, 255, 0, 255),
        TintTo::create(6, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -369,7 +369,7 @@ void LayerTestCascadingColorB::onEnter()
        TintTo::create(2, 255, 0, 255),
        TintTo::create(2, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -409,7 +409,7 @@ void LayerTestCascadingColorC::onEnter()
        TintTo::create(6, 255, 0, 255),
        TintTo::create(6, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -421,7 +421,7 @@ void LayerTestCascadingColorC::onEnter()
        TintTo::create(2, 255, 0, 255),
        TintTo::create(2, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
 }
 
 std::string LayerTestCascadingColorC::subtitle() const
@@ -508,12 +508,12 @@ void LayerTest2::onEnter()
     
     auto actionTint = TintBy::create(2, -255, -127, 0);
     auto actionTintBack = actionTint->reverse();
-    auto seq1 = Sequence::create( actionTint, actionTintBack, NULL);
+    auto seq1 = Sequence::create( actionTint, actionTintBack, nullptr);
     layer1->runAction(seq1);
 
     auto actionFade = FadeOut::create(2.0f);
     auto actionFadeBack = actionFade->reverse();
-    auto seq2 = Sequence::create(actionFade, actionFadeBack, NULL);        
+    auto seq2 = Sequence::create(actionFade, actionFadeBack, nullptr);        
     layer2->runAction(seq2);
 }
 
@@ -543,7 +543,7 @@ LayerTestBlend::LayerTestBlend()
     sister1->setPosition( Vec2( s.width*1/3, s.height/2) );
     sister2->setPosition( Vec2( s.width*2/3, s.height/2) );
 
-    schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
+    schedule( CC_SCHEDULE_SELECTOR(LayerTestBlend::newBlend), 1.0f);
 }
 
 void LayerTestBlend::newBlend(float dt)
@@ -592,9 +592,9 @@ LayerGradientTest::LayerGradientTest()
     auto label2 = Label::createWithTTF("Compressed Interpolation: Disabled", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
-    auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, NULL);
+    auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, nullptr);
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     addChild(menu);
     auto s = Director::getInstance()->getWinSize();
     menu->setPosition(Vec2(s.width / 2, 100));
@@ -690,7 +690,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     auto move = MoveBy::create(2, Vec2(100,2));
     auto back = (MoveBy *)move->reverse();
-    auto seq = Sequence::create(move, back, NULL);
+    auto seq = Sequence::create(move, back, nullptr);
     l->runAction(RepeatForever::create(seq));
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
@@ -701,7 +701,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     auto item = MenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointPos::onToggle, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -749,7 +749,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
 
     auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -787,7 +787,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     auto scale = ScaleBy::create(2, 2);
     auto back = (ScaleBy*)scale->reverse();
-    auto seq = Sequence::create(scale, back, NULL);
+    auto seq = Sequence::create(scale, back, nullptr);
 
     l->runAction(RepeatForever::create(seq));
 
@@ -800,7 +800,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -890,7 +890,7 @@ void LayerBug3162A::onEnter()
     
     this->addChild(_layer[0]);
     
-    schedule(schedule_selector(LayerBug3162A::step), 0.5, kRepeatForever, 0);
+    schedule(CC_SCHEDULE_SELECTOR(LayerBug3162A::step), 0.5, CC_REPEAT_FOREVER, 0);
 }
 
 void LayerBug3162A::step(float dt)
@@ -936,7 +936,7 @@ void LayerBug3162B::onEnter()
     _layer[1]->setCascadeColorEnabled(true);
     _layer[2]->setCascadeColorEnabled(true);
     
-    schedule(schedule_selector(LayerBug3162B::step), 0.5, kRepeatForever, 0);
+    schedule(CC_SCHEDULE_SELECTOR(LayerBug3162B::step), 0.5, CC_REPEAT_FOREVER, 0);
 }
 
 void LayerBug3162B::step(float dt)

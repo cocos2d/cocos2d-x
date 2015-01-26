@@ -5,54 +5,49 @@
 -- @parent_module cc
 
 --------------------------------
--- @function [parent=#Mesh] restore 
+-- @overload self, cc.Texture2D         
+-- @overload self, string         
+-- @function [parent=#Mesh] setTexture
 -- @param self
+-- @param #string texPath
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+
+--------------------------------
+-- 
+-- @function [parent=#Mesh] getTexture 
+-- @param self
+-- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
--- @function [parent=#Mesh] getMeshVertexAttribCount 
+-- name getter 
+-- @function [parent=#Mesh] getName 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#Mesh] getIndexFormat 
+-- 
+-- @function [parent=#Mesh] setBlendFunc 
 -- @param self
--- @return Mesh::IndexFormat#Mesh::IndexFormat ret (return value: cc.Mesh::IndexFormat)
+-- @param #cc.BlendFunc blendFunc
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
--- @function [parent=#Mesh] getVertexSizeInBytes 
+-- 
+-- @function [parent=#Mesh] getBlendFunc 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- @function [parent=#Mesh] getPrimitiveType 
+-- 
+-- @function [parent=#Mesh] isVisible 
 -- @param self
--- @return Mesh::PrimitiveType#Mesh::PrimitiveType ret (return value: cc.Mesh::PrimitiveType)
-        
---------------------------------
--- @function [parent=#Mesh] getIndexCount 
--- @param self
--- @return long#long ret (return value: long)
-        
---------------------------------
--- @function [parent=#Mesh] getVertexBuffer 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
-        
---------------------------------
--- @function [parent=#Mesh] getMeshVertexAttribute 
--- @param self
--- @param #int int
--- @return MeshVertexAttrib#MeshVertexAttrib ret (return value: cc.MeshVertexAttrib)
-        
---------------------------------
--- @function [parent=#Mesh] getIndexBuffer 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
-        
---------------------------------
--- @function [parent=#Mesh] hasVertexAttrib 
--- @param self
--- @param #int int
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- visible getter and setter
+-- @function [parent=#Mesh] setVisible 
+-- @param self
+-- @param #bool visible
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 return nil

@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 #include "cocostudio/CCActionNode.h"
 #include "cocostudio/CCActionFrameEasing.h"
-#include "cocostudio/DictionaryHelper.h"
 #include "ui/UIWidget.h"
 #include "ui/UIHelper.h"
 #include "cocostudio/CocoLoader.h"
+#include "base/ccUtils.h"
 
 using namespace cocos2d;
 using namespace ui;
@@ -96,7 +96,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         {
             float positionX = DICTOOL->getFloatValue_json(actionFrameDic, "positionx");
             float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
-            ActionMoveFrame* actionFrame = new ActionMoveFrame();
+            ActionMoveFrame* actionFrame = new (std::nothrow) ActionMoveFrame();
             actionFrame->setFrameIndex(frameInex);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
@@ -111,7 +111,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         {
             float scaleX = DICTOOL->getFloatValue_json(actionFrameDic, "scalex");
             float scaleY = DICTOOL->getFloatValue_json(actionFrameDic, "scaley");
-            ActionScaleFrame* actionFrame = new ActionScaleFrame();
+            ActionScaleFrame* actionFrame = new (std::nothrow) ActionScaleFrame();
             actionFrame->setFrameIndex(frameInex);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
@@ -126,7 +126,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         if (existRotation)
         {
             float rotation = DICTOOL->getFloatValue_json(actionFrameDic, "rotation");
-            ActionRotationFrame* actionFrame = new ActionRotationFrame();
+            ActionRotationFrame* actionFrame = new (std::nothrow) ActionRotationFrame();
             actionFrame->setFrameIndex(frameInex);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
@@ -140,7 +140,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         if (existOpacity)
         {
             int opacity = DICTOOL->getIntValue_json(actionFrameDic, "opacity");
-            ActionFadeFrame* actionFrame = new ActionFadeFrame();
+            ActionFadeFrame* actionFrame = new (std::nothrow) ActionFadeFrame();
             actionFrame->setFrameIndex(frameInex);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
@@ -156,7 +156,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
             int colorR = DICTOOL->getIntValue_json(actionFrameDic, "colorr");
             int colorG = DICTOOL->getIntValue_json(actionFrameDic, "colorg");
             int colorB = DICTOOL->getIntValue_json(actionFrameDic, "colorb");
-            ActionTintFrame* actionFrame = new ActionTintFrame();
+            ActionTintFrame* actionFrame = new (std::nothrow) ActionTintFrame();
             actionFrame->setFrameIndex(frameInex);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
@@ -184,7 +184,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     }
     float ActionNode::valueToFloat(const std::string& value)
     {
-        return atof(value.c_str());
+        return utils::atof(value.c_str());
     }
     
     void ActionNode::initWithBinary(CocoLoader *cocoLoader,
@@ -195,11 +195,11 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         stExpCocoNode *stChildNode = cocoNode;
         
         int actionNodeCount =  stChildNode->GetChildNum();
-        stChildNode = stChildNode[0].GetChildArray();
+        stChildNode = stChildNode[0].GetChildArray(cocoLoader);
         stExpCocoNode *frameListNode = nullptr;
         for (int i = 0; i < actionNodeCount; ++i) {
             std::string key = stChildNode[i].GetName(cocoLoader);
-            std::string value = stChildNode[i].GetValue();
+            std::string value = stChildNode[i].GetValue(cocoLoader);
             if (key == "ActionTag") {
                 setActionTag(valueToInt(value));
             }else if (key == "actionframelist"){
@@ -208,7 +208,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
         }
         
         int actionFrameCount = frameListNode->GetChildNum();
-        stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray();
+        stExpCocoNode *stFrameChildNode = frameListNode->GetChildArray(cocoLoader);
         for (int i=0; i<actionFrameCount; i++) {
             
             int frameIndex;
@@ -225,10 +225,10 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
             std::vector<float> frameTweenParameter;
             
             int framesCount = stFrameChildNode[i].GetChildNum();
-            stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray();
+            stExpCocoNode *innerFrameNode = stFrameChildNode[i].GetChildArray(cocoLoader);
             for (int j = 0; j < framesCount; j++) {
                 std::string key = innerFrameNode[j].GetName(cocoLoader);
-                std::string value = innerFrameNode[j].GetValue();
+                std::string value = innerFrameNode[j].GetValue(cocoLoader);
                 
                 if (key == "frameid") {
                     frameIndex = valueToInt(value);
@@ -237,17 +237,17 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
                 }else if (key == "tweenParameter"){
                     //  There are no tweenParameter args in the json file
                     int tweenParameterCount = innerFrameNode[j].GetChildNum();
-                    stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray();
+                    stExpCocoNode *tweenParameterArray = innerFrameNode[j].GetChildArray(cocoLoader);
                     for (int k = 0; k < tweenParameterCount; ++k) {
                         std::string t_key = tweenParameterArray[j].GetName(cocoLoader);
-                        std::string t_value = tweenParameterArray[j].GetValue();
+                        std::string t_value = tweenParameterArray[j].GetValue(cocoLoader);
                         frameTweenParameter.push_back(valueToFloat(t_value));
                     }
                 }else if (key == "positionx"){
                     positionX = valueToFloat(value);
                 }else if (key == "positiony"){
                     positionY = valueToFloat(value);
-                    ActionMoveFrame* actionFrame = new ActionMoveFrame();
+                    ActionMoveFrame* actionFrame = new (std::nothrow) ActionMoveFrame();
                     actionFrame->autorelease();
                     actionFrame->setEasingType(frameTweenType);
                     actionFrame->setEasingParameter(frameTweenParameter);
@@ -259,7 +259,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
                     scaleX = valueToFloat(value);
                 }else if(key == "scaley"){
                     scaleY = valueToFloat(value);
-                    ActionScaleFrame* actionFrame = new ActionScaleFrame();
+                    ActionScaleFrame* actionFrame = new (std::nothrow) ActionScaleFrame();
                     actionFrame->autorelease();
                     actionFrame->setEasingType(frameTweenType);
                     actionFrame->setEasingParameter(frameTweenParameter);
@@ -270,7 +270,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
                     cActionArray->pushBack(actionFrame);
                 }else if (key == "rotation"){
                     rotation = valueToFloat(value);
-                    ActionRotationFrame* actionFrame = new ActionRotationFrame();
+                    ActionRotationFrame* actionFrame = new (std::nothrow) ActionRotationFrame();
                     actionFrame->autorelease();
                     actionFrame->setEasingType(frameTweenType);
                     actionFrame->setEasingParameter(frameTweenParameter);
@@ -280,7 +280,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
                     cActionArray->pushBack(actionFrame);
                 }else if (key == "opacity"){
                     opacity = valueToInt(value);
-                    ActionFadeFrame* actionFrame = new ActionFadeFrame();
+                    ActionFadeFrame* actionFrame = new (std::nothrow) ActionFadeFrame();
                     actionFrame->autorelease();
                     actionFrame->setEasingType(frameTweenType);
                     actionFrame->setEasingParameter(frameTweenParameter);
@@ -295,7 +295,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
                 }else if(key == "colorr"){
                     colorR = valueToInt(value);
                     
-                    ActionTintFrame* actionFrame = new ActionTintFrame();
+                    ActionTintFrame* actionFrame = new (std::nothrow) ActionTintFrame();
                     actionFrame->autorelease();
                     actionFrame->setEasingType(frameTweenType);
                     actionFrame->setEasingParameter(frameTweenParameter);
@@ -313,18 +313,14 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     }
 
 void ActionNode::initActionNodeFromRoot(Ref* root)
-{	
-    Node* rootNode = dynamic_cast<Node*>(root);
-    if (rootNode != nullptr)
+{
+    Widget* rootWidget = dynamic_cast<Widget*>(root);
+    if (rootWidget != nullptr)
     {
-        Widget* rootWidget = dynamic_cast<Widget*>(root);
-        if (rootWidget != nullptr)
+        Widget* widget = Helper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+        if (widget != nullptr)
         {
-            Widget* widget = Helper::seekActionWidgetByActionTag(rootWidget, getActionTag());
-            if (widget != nullptr)
-            {
-                setObject(widget);
-            }
+            setObject(widget);
         }
     }
 }
@@ -366,14 +362,6 @@ Node* ActionNode::getActionNode()
     if (cNode != nullptr)
     {
         return cNode;
-    }
-    else
-    {
-        Widget* rootWidget = dynamic_cast<Widget*>(_object);
-        if (rootWidget != nullptr)
-        {
-            return rootWidget;
-        }
     }
     return nullptr;
 }
