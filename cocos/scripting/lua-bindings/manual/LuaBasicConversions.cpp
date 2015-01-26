@@ -839,7 +839,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
         
         lua_pushstring(L, "fontName");
         lua_gettable(L,lo);
-        outValue->_fontName = tolua_tocppstring(L,lo,defautlFontName);
+        outValue->_fontName = tolua_tocppstring(L, lua_gettop(L), defautlFontName);
         lua_pop(L,1);
         
         lua_pushstring(L, "fontSize");
@@ -861,7 +861,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
         lua_gettable(L,lo);
         if (!lua_isnil(L,-1))
         {
-            luaval_to_color3b(L, -1, &outValue->_fontFillColor);
+            luaval_to_color3b(L, lua_gettop(L), &outValue->_fontFillColor);
         }
         lua_pop(L,1);
         
@@ -869,7 +869,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
         lua_gettable(L,lo);
         if (!lua_isnil(L,-1))
         {
-            luaval_to_size(L, -1, &outValue->_dimensions);
+            luaval_to_size(L, lua_gettop(L), &outValue->_dimensions);
         }
         lua_pop(L,1);
         
@@ -890,7 +890,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
             lua_gettable(L,lo);
             if (!lua_isnil(L,-1))
             {
-                luaval_to_size(L, -1, &outValue->_shadow._shadowOffset);                
+                luaval_to_size(L, lua_gettop(L), &outValue->_shadow._shadowOffset);
             }
             lua_pop(L,1);
             
@@ -927,7 +927,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
                 lua_gettable(L,lo);
                 if (!lua_isnil(L,-1))
                 {
-                     luaval_to_color3b(L, -1, &outValue->_stroke._strokeColor);
+                     luaval_to_color3b(L, lua_gettop(L), &outValue->_stroke._strokeColor);
                 }
                 lua_pop(L,1);
                 
