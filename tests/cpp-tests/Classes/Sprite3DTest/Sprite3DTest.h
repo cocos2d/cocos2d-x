@@ -463,6 +463,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
+    virtual void update(float delta) override;
+    
 protected:
     
     void switchCase();
@@ -474,6 +476,9 @@ protected:
     cocos2d::Label* _label;
     int _caseIdx; // use case index
     std::string _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
+    
+    cocos2d::Sprite3D* _sprite3d;
+    cocos2d::Sprite3D*   _sprite2d;
 };
 
 class Sprite3DTestScene : public TestScene

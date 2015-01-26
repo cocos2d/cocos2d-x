@@ -2109,10 +2109,12 @@ void QuaternionTest::update(float delta)
 
 UseCaseSprite3D::UseCaseSprite3D()
 : _caseIdx(0)
+, _sprite3d(nullptr)
+, _sprite2d(nullptr)
 {
     auto s = Director::getInstance()->getWinSize();
     
-    _useCaseTitles[0] = "3d sprite with sprite and billboard";
+    _useCaseTitles[0] = "transparent 3d sprite and 2d sprite";
     
     
     auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
@@ -2143,6 +2145,13 @@ UseCaseSprite3D::UseCaseSprite3D()
     
     addChild(menu);
     
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+    
     switchCase();
 }
 
@@ -2158,18 +2167,25 @@ std::string UseCaseSprite3D::subtitle() const
 
 void UseCaseSprite3D::switchCase()
 {
-    removeChildByTag(101);
+    if (_sprite3d)
+    {
+        removeChild(_sprite3d);
+        _sprite3d = nullptr;
+    }
+    if (_sprite2d)
+    {
+        removeChild(_sprite2d);
+        _sprite2d = nullptr;
+    }
+    
     auto s = Director::getInstance()->getWinSize();
     _label->setString(_useCaseTitles[_caseIdx]);
     if (_caseIdx == 0)
     {
-        std::string filename = "Sprite3DTest/orc.c3b";
+        std::string filename = "Sprite3DTest/girl.c3b";
         auto sprite = Sprite3D::create(filename);
-        sprite->setTag(101);
-        sprite->setRotation3D(Vec3(0.f, 180.f, 0.f));
+        sprite->setScale(0.15f);
         addChild(sprite);
-        sprite->setScale(5.f);
-        sprite->setPosition3D(Vec3(s.width / 2.f, s.height / 3.f, -10.f));
         auto animation = Animation3D::create(filename);
         if (animation)
         {
@@ -2178,11 +2194,40 @@ void UseCaseSprite3D::switchCase()
             sprite->runAction(RepeatForever::create(animate));
         }
         
+        auto circleBack = Sprite3D::create();
+        auto circle = Sprite::create("Sprite3DTest/circle.png");
+        circleBack->setScale(0.5f);
+        circleBack->addChild(circle);
+        circle->runAction(RepeatForever::create(RotateBy::create(3, Vec3(0.f, 0.f, 360.f))));
         
-        auto sprite2d = Sprite::create("Sprite3DTest/plane.png");
-        sprite2d->setScale(0.2f, 0.2f);
-        sprite->addChild(sprite2d);
-        sprite2d->setAnchorPoint(Vec2(0.5f, 0.5f));
-//        sprite2d->setRotation3D(Vec3(100.f, 0.f, 0.f));
+        circleBack->setRotation3D(Vec3(90, 0, 0));
+        
+        addChild(circleBack);
+        
+        auto pos = sprite->getPosition3D();
+        circleBack->setPosition3D(Vec3(pos.x, pos.y, pos.z - 1));
+        
+        _sprite3d = sprite;
+        _sprite2d = circleBack;
+        _sprite3d->setOpacity(250);
+        _sprite3d->setCameraMask(2);
+        _sprite2d->setCameraMask(2);
     }
+    
+    scheduleUpdate();
+    update(0.f);
+}
+
+void UseCaseSprite3D::update(float delta)
+{
+    static float accAngle = 0.f;
+    accAngle += delta * CC_DEGREES_TO_RADIANS(60);
+    
+    float radius = 30.f;
+    float x = cosf(accAngle) * radius, z = sinf(accAngle) * radius;
+    
+    _sprite3d->setPositionX(x);
+    _sprite3d->setPositionZ(z);
+    _sprite2d->setPositionX(x);
+    _sprite2d->setPositionZ(z);
 }
