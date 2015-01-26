@@ -419,9 +419,10 @@ bool UILoadingBarReloadTexture::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add the alert
-        Text *alert = Text::create("LoadingBar right scale9 render", "fonts/Marker Felt.ttf", 20);
+        Text *alert = Text::create("Click button to Toggle Scale9 and switch Texture.", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 2.7f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 2.7f));
         _uiLayer->addChild(alert);
         
         LoadingBar* loadingBar = LoadingBar::create("cocosui/slider_bar_active_9patch.png");
