@@ -676,7 +676,8 @@ function LayoutComponentTest:configureGUIScene()
 
     local back_label = ccui.Helper:seekWidgetByName(root, "back")
     back_label:addTouchEventListener(function(sender, eventType)
-        self:unscheduleUpdate()
+        scheduler:unscheduleScriptEntry(schedulerEntry)
+        schedulerEntry = 0
         runCocoStudioUIEditorTestScene()
     end)
 

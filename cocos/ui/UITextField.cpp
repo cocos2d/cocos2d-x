@@ -594,15 +594,15 @@ const char* TextField::getPasswordStyleText()const
 
 void TextField::update(float dt)
 {
-    if (getAttachWithIME())
-    {
-        attachWithIMEEvent();
-        setAttachWithIME(false);
-    }
     if (getDetachWithIME())
     {
         detachWithIMEEvent();
         setDetachWithIME(false);
+    }
+    if (getAttachWithIME())
+    {
+        attachWithIMEEvent();
+        setAttachWithIME(false);
     }
     if (getInsertText())
     {

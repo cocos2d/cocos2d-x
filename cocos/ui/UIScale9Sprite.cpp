@@ -193,11 +193,22 @@ namespace ui {
         this->cleanupSlicedSprites();
         _protectedChildren.clear();
         
-        if(this->_scale9Image != sprite)
+        if(nullptr != sprite)
         {
-            CC_SAFE_RELEASE(this->_scale9Image);
-            _scale9Image = sprite;
-            CC_SAFE_RETAIN(_scale9Image);
+            if (nullptr == sprite->getSpriteFrame())
+            {
+                return false;
+            }
+            
+            if (nullptr == _scale9Image)
+            {
+                _scale9Image = sprite;
+                _scale9Image->retain();
+            }
+            else
+            {
+                _scale9Image->setSpriteFrame(sprite->getSpriteFrame());
+            }
         }
         
         if (!_scale9Image)

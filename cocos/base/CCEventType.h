@@ -36,7 +36,7 @@
 // The renderer[android:GLSurfaceView.Renderer  WP8:Cocos2dRenderer] was recreated.
 // This message is used for reloading resources before renderer is recreated on Android/WP8.
 // This message is posted in cocos/platform/android/javaactivity.cpp and cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp.
-#define EVENT_RENDERER_RECREATED "event_renderer_recreated"
+#define EVENT_RENDERER_RECREATED    "event_renderer_recreated"
 
 // The application will come to background.
 // This message is used for doing something before coming to background, such as save RenderTexture.
