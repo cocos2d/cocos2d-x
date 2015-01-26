@@ -29,6 +29,12 @@ cmake_minimum_required(VERSION 2.8)
 # also from cmake's Modules dir, to not clash with per-project files.
 cmake_policy(SET CMP0017 NEW)
 
+# Use new behaviour with cmake >= 3.0:
+# Only interpret if() arguments as variables or keywords when unquoted.
+if(CMAKE_VERSION VERSION_GREATER 3)
+    cmake_policy(SET CMP0054 NEW)
+endif()
+
 project (Cocos2d-X)
 
 # The version number
