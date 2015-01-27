@@ -131,6 +131,41 @@ void RenderQueue::clear()
     _queuePosZ.clear();
 }
 
+void RenderQueue::saveRenderState()
+{
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RenderQueue::restoreRenderState()
+{
+    if (_isCullEnabled)
+    {
+        glEnable(GL_CULL_FACE);
+    }
+    else
+    {
+        glDisable(GL_CULL_FACE);
+    }
+    
+    
+    if (_isDepthEnabled)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    glDepthMask(_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
 //
 //
 //
@@ -465,9 +500,11 @@ void Renderer::processRenderCommand(RenderCommand* command)
     }
 }
 
-void Renderer::visitRenderQueue(const RenderQueue& queue)
+void Renderer::visitRenderQueue(RenderQueue& queue)
 {
     ssize_t size = queue.size();
+    
+    queue.saveRenderState();
     
     //Process Opaque Object
     const std::vector<RenderCommand*>& opaqueQueue = queue.getOpaqueCommands();
@@ -507,6 +544,8 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         processRenderCommand(queue[index]);
     }
     flush();
+    
+    queue.restoreRenderState();
 }
 
 void Renderer::render()
