@@ -449,15 +449,9 @@ void Button::onPressStateChangedToPressed()
             _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + _zoomScale, _pressedTextureScaleYInSize + _zoomScale);
             
             _titleRenderer->stopAllActions();
+            
             Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP, 1.0f + _zoomScale, 1.0f + _zoomScale);
-            if (_unifySize)
-            {
-                _titleRenderer->runAction(zoomTitleAction);
-            }
-            else
-            {
-                _titleRenderer->runAction(zoomTitleAction->clone());
-            }
+            _titleRenderer->runAction(zoomTitleAction);
         }
     }
     else

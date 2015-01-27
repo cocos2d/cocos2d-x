@@ -193,6 +193,8 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
 
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
+    
+    this->updateProgressBar();
     _barRendererAdaptDirty = true;
 }
 
@@ -216,7 +218,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
-    setPercent(_percent);
+    this->updateProgressBar();
     _barRendererAdaptDirty = true;
 }
 
@@ -255,18 +257,24 @@ void LoadingBar::setPercent(float percent)
         return;
     }
      _percent = percent;
+    
     if (_totalLength <= 0)
     {
         return;
     }
-    float res = _percent / 100.0f;
     
+    this->updateProgressBar();
+}
+    
+void LoadingBar::updateProgressBar()
+{
     if (_scale9Enabled)
     {
         setScale9Scale();
     }
     else
     {
+        float res = _percent / 100.0f;
         Sprite* spriteRenderer = _barRenderer->getSprite();
         Rect rect = spriteRenderer->getTextureRect();
         rect.size.width = _barRendererTextureSize.width * res;
@@ -334,7 +342,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
         _totalLength = _contentSize.width;
         if (_scale9Enabled)
         {
-            setScale9Scale();
+            this->setScale9Scale();
             _barRenderer->setScale(1.0f);
         }
         else
