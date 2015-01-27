@@ -34,7 +34,17 @@ namespace cocos2d {
     class Camera;
 }
 
-
+class BillBoardRotationTest : public BaseTest
+{
+public:
+    CREATE_FUNC(BillBoardRotationTest);
+    BillBoardRotationTest();
+    virtual ~BillBoardRotationTest(void);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+};
 
 class BillBoardTest : public BaseTest
 {

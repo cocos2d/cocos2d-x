@@ -2103,6 +2103,7 @@ function UIPanelLayoutLinearHorizontalTest.create()
 end
 
 local UILayoutComponentBerthTest = class("UILayoutComponentBerthTest",UIScene)
+UILayoutComponentBerthTest._displayValueLabel = nil
 
 function UILayoutComponentBerthTest.extend(target)
     local t = tolua.getpeer(target)
@@ -2119,6 +2120,14 @@ function UILayoutComponentBerthTest:initExtend()
     self:init()
 
     local widgetSize = self._widget:getContentSize()
+
+    self._displayValueLabel = ccui.Text:create()
+    self._displayValueLabel:setString("LayoutComponent Berth Test")
+    self._displayValueLabel:setFontName(font_TextName)
+    self._displayValueLabel:setFontSize(32)
+    self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
+    self._uiLayer:addChild(self._displayValueLabel)
 
     local baseLayer = cc.LayerColor:create()
     baseLayer:setColor(cc.c3b(50, 100, 0))
@@ -2191,6 +2200,7 @@ function UILayoutComponentBerthTest.create()
 end
 
 local UILayoutComponentBerthStretchTest = class("UILayoutComponentBerthStretchTest",UIScene)
+UILayoutComponentBerthStretchTest._displayValueLabel = nil
 
 function UILayoutComponentBerthStretchTest.extend(target)
     local t = tolua.getpeer(target)
@@ -2207,6 +2217,14 @@ function UILayoutComponentBerthStretchTest:initExtend()
     self:init()
 
     local widgetSize = self._widget:getContentSize()
+    
+    self._displayValueLabel = ccui.Text:create()
+    self._displayValueLabel:setString("LayoutComponent Berth Stretch Test")
+    self._displayValueLabel:setFontName(font_TextName)
+    self._displayValueLabel:setFontSize(32)
+    self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
+    self._uiLayer:addChild(self._displayValueLabel)
 
     local baseLayer = cc.LayerColor:create()
     baseLayer:setColor(cc.c3b(50, 100, 0))
@@ -3277,7 +3295,7 @@ function UIFocusTestHorizontal:initExtend()
         self._horizontalLayout:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3427,7 +3445,7 @@ function UIFocusTestVertical:initExtend()
         self._verticalLayout:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3609,7 +3627,7 @@ function UIFocusTestNestedLayout1:initExtend()
         innerVBox:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3791,7 +3809,7 @@ function UIFocusTestNestedLayout2:initExtend()
         innerVBox:addChild(imageView)
     end
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)
@@ -3982,7 +4000,7 @@ function UIFocusTestNestedLayout3:initExtend()
 
     self._verticalLayout:addChild(bottomHBox)
 
-    self._loopText = ccui.Text:create("loop enabled", "Airal", 20)
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
     self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
     self._loopText:setColor(cc.c3b(255, 0 ,0))
     self:addChild(self._loopText)

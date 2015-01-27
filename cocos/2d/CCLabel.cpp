@@ -23,7 +23,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "2d/CCCamera.h"
 #include "2d/CCLabel.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCSprite.h"
@@ -37,7 +36,6 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
-
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN
@@ -246,10 +244,10 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
 , _horizontalKernings(nullptr)
-, _maxLineWidth(0)
+, _maxLineWidth(0.0f)
 , _labelDimensions(Size::ZERO)
-, _labelWidth(0)
-, _labelHeight(0)
+, _labelWidth(0.0f)
+, _labelHeight(0.0f)
 , _hAlignment(hAlignment)
 , _vAlignment(vAlignment)
 , _currNumLines(-1)
@@ -264,24 +262,29 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
-    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::EVENT_PURGE_TEXTURES, [this](EventCustom* event){
+    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             Node::removeAllChildrenWithCleanup(true);
             _batchNodes.clear();
             _batchNodes.push_back(this);
 
-            if (_contentDirty)
+            if (_fontAtlas)
             {
-                updateContent();
-            }
-            else
-            {
-                alignText();
+                FontAtlasCache::releaseFontAtlas(_fontAtlas);
             }
         }
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
+    
+    auto resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
+        if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
+        {
+            _fontAtlas = nullptr;
+            this->setTTFConfig(_fontConfig);
+        }
+    });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(resetTextureListener, this);
 }
 
 Label::~Label()
@@ -497,7 +500,7 @@ void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
     }
 }
 
-void Label::setMaxLineWidth(unsigned int maxLineWidth)
+void Label::setMaxLineWidth(float maxLineWidth)
 {
     if (_labelWidth == 0 && _maxLineWidth != maxLineWidth)
     {
@@ -506,7 +509,7 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
     }
 }
 
-void Label::setDimensions(unsigned int width, unsigned int height)
+void Label::setDimensions(float width, float height)
 {
     if (height != _labelHeight || width != _labelWidth)
     {
@@ -900,17 +903,8 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        if (flags & FLAGS_RENDER_AS_3D)
-        {
-            float depth = Camera::getVisitingCamera()->getDepthInView(transform);
-            _customCommand.init(depth);
-            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-        }
-        else
-        {
-            _customCommand.init(_globalZOrder);
-            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-        }
+        _customCommand.init(_globalZOrder, transform, flags);
+        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
 
         renderer->addCommand(&_customCommand);
     }
@@ -1001,6 +995,7 @@ void Label::updateContent()
             _fontDefinition._fontFillColor.r = _textColor.r;
             _fontDefinition._fontFillColor.g = _textColor.g;
             _fontDefinition._fontFillColor.b = _textColor.b;
+            _fontDefinition._fontAlpha = _textColor.a;
 
             _fontDefinition._shadow._shadowEnabled = false;
 
@@ -1011,6 +1006,7 @@ void Label::updateContent()
                 _fontDefinition._stroke._strokeColor.r = _effectColor.r;
                 _fontDefinition._stroke._strokeColor.g = _effectColor.g;
                 _fontDefinition._stroke._strokeColor.b = _effectColor.b;
+                _fontDefinition._stroke._strokeAlpha = _effectColor.a;
             }
             else
             {

@@ -9,6 +9,7 @@
 -- @function [parent=#Repeat] setInnerAction 
 -- @param self
 -- @param #cc.FiniteTimeAction action
+-- @return Repeat#Repeat self (return value: cc.Repeat)
         
 --------------------------------
 -- 
@@ -29,6 +30,7 @@
 -- @function [parent=#Repeat] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Repeat#Repeat self (return value: cc.Repeat)
         
 --------------------------------
 -- 
@@ -46,12 +48,14 @@
 -- 
 -- @function [parent=#Repeat] stop 
 -- @param self
+-- @return Repeat#Repeat self (return value: cc.Repeat)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#Repeat] update 
 -- @param self
 -- @param #float dt
+-- @return Repeat#Repeat self (return value: cc.Repeat)
         
 --------------------------------
 -- 

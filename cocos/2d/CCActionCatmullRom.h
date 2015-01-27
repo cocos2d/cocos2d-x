@@ -144,6 +144,7 @@ class CC_DLL CardinalSplineTo : public ActionInterval
 public:
 
     /** creates an action with a Cardinal Spline array of points and tension
+     * @param duration in seconds
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -162,7 +163,10 @@ public:
      */
     CardinalSplineTo();
 
-    /** initializes the action with a duration and an array of points */
+    /** 
+     * initializes the action with a duration and an array of points
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, PointArray* points, float tension);
 
     virtual void updatePosition(Vec2 &newPos);
@@ -183,6 +187,10 @@ public:
     virtual CardinalSplineTo *clone() const override;
     virtual CardinalSplineTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
+    
+    /**
+     * @param time in seconds.
+     */
     virtual void update(float time) override;
 
 protected:
@@ -233,6 +241,7 @@ class CC_DLL CatmullRomTo : public CardinalSplineTo
 public:
 
     /** creates an action with a Cardinal Spline array of points and tension
+     * @param dt in seconds
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var dt,var table)
@@ -241,7 +250,10 @@ public:
      */
     static CatmullRomTo* create(float dt, PointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** 
+     * initializes the action with a duration and an array of points
+     * @param dt in seconds
+     */
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
@@ -258,6 +270,7 @@ class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
     /** creates an action with a Cardinal Spline array of points and tension
+     * @param dt in seconds
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var dt,var table)

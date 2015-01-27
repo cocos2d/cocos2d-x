@@ -36,7 +36,8 @@ public:
     PrimitiveCommand();
     ~PrimitiveCommand();
     
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive, const Mat4& mv, uint32_t flags);
+    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
     
     inline uint32_t getMaterialID() const { return _materialID; }
     inline GLuint getTextureID() const { return _textureID; }

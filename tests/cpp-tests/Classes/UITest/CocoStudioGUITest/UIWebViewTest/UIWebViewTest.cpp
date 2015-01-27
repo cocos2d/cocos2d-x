@@ -124,11 +124,11 @@ bool WebViewTest::init()
         
         Button *loadHTMLBtn = Button::create("cocosui/animationbuttonnormal.png",
                                             "cocosui/animationbuttonpressed.png");
-        loadHTMLBtn->setTitleText("Load HTML");
+        loadHTMLBtn->setTitleText("Load Data");
         loadHTMLBtn->setPosition(Vec2(winSize/2) - Vec2( _webView->getContentSize().width/2 +
                                                        loadHTMLBtn->getContentSize().width/2 + 10,0 ));
         loadHTMLBtn->addClickEventListener([=](Ref*){
-            _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World</body>","text/html");
+            _webView->loadHTMLString("<body style=\"font-size:50px;\">Hello World <img src=\"Icon.png\"/> </body>","Images/");
         });
         this->addChild(loadHTMLBtn);
         

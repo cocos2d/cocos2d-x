@@ -52,7 +52,7 @@ size_t bufferWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
     Downloader::StreamData *streamBuffer = (Downloader::StreamData *)userdata;
     size_t written = size * nmemb;
     // Avoid pointer overflow
-    if (streamBuffer->offset + written <= streamBuffer->total)
+	if (streamBuffer->offset + written <= static_cast<size_t>(streamBuffer->total))
     {
         memcpy(streamBuffer->buffer + streamBuffer->offset, ptr, written);
         streamBuffer->offset += written;

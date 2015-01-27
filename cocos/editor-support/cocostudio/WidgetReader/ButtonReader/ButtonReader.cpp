@@ -544,7 +544,7 @@ namespace cocostudio
         Button* button = static_cast<Button*>(node);
         auto options = (ButtonOptions*)buttonOptions;
         
-        bool scale9Enabled = options->scale9Enabled();
+        bool scale9Enabled = options->scale9Enabled() != 0;
         button->setScale9Enabled(scale9Enabled);
         
         bool normalFileExist = false;
@@ -777,7 +777,7 @@ namespace cocostudio
             }
         }
         
-        bool displaystate = options->displaystate();
+        bool displaystate = options->displaystate() != 0;
         button->setBright(displaystate);
         button->setEnabled(displaystate);
         

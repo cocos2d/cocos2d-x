@@ -17,10 +17,11 @@
 -- @return ToggleVisibility#ToggleVisibility ret (return value: cc.ToggleVisibility)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ToggleVisibility] update 
 -- @param self
 -- @param #float time
+-- @return ToggleVisibility#ToggleVisibility self (return value: cc.ToggleVisibility)
         
 --------------------------------
 -- 

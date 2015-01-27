@@ -38707,12 +38707,12 @@ int lua_cocos2dx_Label_setDimensions(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        unsigned int arg0;
-        unsigned int arg1;
+        double arg0;
+        double arg1;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setDimensions");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setDimensions");
 
-        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Label:setDimensions");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Label:setDimensions");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setDimensions'", nullptr);
@@ -38812,7 +38812,7 @@ int lua_cocos2dx_Label_getHeight(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getHeight'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getHeight();
+        double ret = cobj->getHeight();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -38998,9 +38998,9 @@ int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned int arg0;
+        double arg0;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setWidth");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setWidth");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setWidth'", nullptr);
@@ -39053,7 +39053,7 @@ int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getMaxLineWidth'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getMaxLineWidth();
+        double ret = cobj->getMaxLineWidth();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -39949,9 +39949,9 @@ int lua_cocos2dx_Label_setMaxLineWidth(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned int arg0;
+        double arg0;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setMaxLineWidth");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setMaxLineWidth");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setMaxLineWidth'", nullptr);
@@ -40287,9 +40287,9 @@ int lua_cocos2dx_Label_setHeight(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned int arg0;
+        double arg0;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setHeight");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setHeight");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setHeight'", nullptr);
@@ -40342,7 +40342,7 @@ int lua_cocos2dx_Label_getWidth(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getWidth'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getWidth();
+        double ret = cobj->getWidth();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }

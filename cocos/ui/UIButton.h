@@ -212,6 +212,7 @@ CC_CONSTRUCTOR_ACCESS:
                       const std::string& disableImage = "",
                       TextureResType texType = TextureResType::LOCAL);
 
+    virtual Size getNormalTextureSize() const;
 
 protected:
     virtual void initRenderer() override;

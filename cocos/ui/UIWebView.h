@@ -72,7 +72,7 @@ public:
     * @param string The content for the main page.
     * @param baseURL The base URL for the content.
     */
-    void loadHTMLString(const std::string &string, const std::string &baseURL);
+    void loadHTMLString(const std::string &string, const std::string &baseURL = "");
 
     /**
     * Loads the given URL.

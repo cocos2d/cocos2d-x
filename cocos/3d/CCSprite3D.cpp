@@ -630,7 +630,7 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
     }
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
-    flags &= FLAGS_RENDER_AS_3D;
+    flags |= FLAGS_RENDER_AS_3D;
     
     //
     Director* director = Director::getInstance();
@@ -729,7 +729,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             //fetch the Z from the result matrix
             globalZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
         }
-        meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform);
+        meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
         
         meshCommand.setLightMask(_lightMask);
 

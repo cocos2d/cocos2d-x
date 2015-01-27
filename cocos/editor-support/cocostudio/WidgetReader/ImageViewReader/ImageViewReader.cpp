@@ -355,7 +355,7 @@ namespace cocostudio
             imageView->addChild(label);
         }
         
-        bool scale9Enabled = options->scale9Enabled();
+        bool scale9Enabled = options->scale9Enabled() != 0;
         imageView->setScale9Enabled(scale9Enabled);
         
         auto widgetReader = WidgetReader::getInstance();

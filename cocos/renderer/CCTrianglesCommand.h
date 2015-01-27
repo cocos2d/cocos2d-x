@@ -45,7 +45,9 @@ public:
     
     /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to triangles,
      * quantity of quads, and the Model View transform to be used for the quads */
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
+    
+    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv);
     
     void useMaterial() const;
     
