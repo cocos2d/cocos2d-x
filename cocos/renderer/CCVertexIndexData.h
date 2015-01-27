@@ -97,7 +97,11 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream) { return addStream(buffer, stream); }
     bool addStream(GLArrayBuffer* vertices, const VertexStreamAttribute& stream);
     void removeStream(int semantic);
-
+    
+    // @brief specify indexed drawing for vertex data
+    void setIndexBuffer(IndexBuffer* indices);
+    void removeIndexBuffer();
+    
     const VertexStreamAttribute* getStreamAttribute(int semantic) const;
     VertexStreamAttribute* getStreamAttribute(int semantic);
         

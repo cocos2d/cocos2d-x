@@ -42,7 +42,7 @@ NS_CC_BEGIN
 
 VertexData::VertexData(Primitive primitive)
     : _interleaved(false)
-    , _dirty(false)
+    , _dirty(true)
     , _count(0)
     , _vao(0)
     , _indices(nullptr)
@@ -62,6 +62,7 @@ VertexData::~VertexData()
     for (auto& element : _vertexStreams)
         element.second._buffer->release();
     _vertexStreams.clear();
+    CC_SAFE_RELEASE(_indices);
     
     if (glIsBuffer(_vao))
     {
@@ -120,6 +121,20 @@ void VertexData::removeStream(int semantic)
     _interleaved = determineInterleave();
 }
 
+// @brief specify indexed drawing for vertex data with optional precision
+void VertexData::setIndexBuffer(IndexBuffer* indices)
+{
+    CC_SAFE_RELEASE(_indices);
+    _indices = indices;
+    CC_SAFE_RETAIN(_indices);
+}
+
+void VertexData::removeIndexBuffer()
+{
+    CC_SAFE_RELEASE(_indices);
+    _indices = nullptr;
+}
+
 const VertexStreamAttribute* VertexData::getStreamAttribute(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
@@ -170,12 +185,14 @@ void VertexData::draw(unsigned start, unsigned count)
             CHECK_GL_ERROR_DEBUG();
         }
 
+        if (_indices != nullptr)
+            _indices->commit();
+
         setDirty(false);
     }
     
     if (_indices != nullptr)
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indices->getVBO());
         intptr_t offset = start * _indices->getElementSize();
         GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
         glDrawElements((GLenum)_drawingPrimitive, count, type, (GLvoid*)offset);
@@ -257,6 +274,13 @@ void VertexData::append(GLArrayBuffer* buffer, void* source, unsigned size, unsi
     
 void VertexData::recreate() const
 {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        if (glIsBuffer(_vao))
+            glDeleteVertexArrays(1, (GLuint*)&_vao);
+        glGenVertexArrays(1, (GLuint*)&_vao);
+    }
+
     for (auto b : _buffers)
         b->recreate();
 }

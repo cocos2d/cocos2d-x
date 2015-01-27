@@ -301,6 +301,7 @@ void TMXLayer::updateIndexBuffer()
     if(nullptr == _indexBuffer)
     {
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)_indices.size());
+        _vData->setIndexBuffer(_indexBuffer);
         CC_SAFE_RETAIN(_indexBuffer);
     }
     _indexBuffer->updateIndices(&_indices[0], (int)_indices.size(), 0);

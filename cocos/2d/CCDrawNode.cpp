@@ -101,9 +101,7 @@ static inline Tex2F __t(const Vec2 &v)
 // implementation of DrawNode
 
 DrawNode::DrawNode()
-    : _pointColor(1,1,1,1)
-    , _pointSize(1)
-    , _vbTriangles(nullptr)
+    : _vbTriangles(nullptr)
     , _vdTriangles(nullptr)
     , _vdPoints(nullptr)
     , _vbPoints(nullptr)

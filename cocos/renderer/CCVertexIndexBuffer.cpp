@@ -34,6 +34,7 @@ NS_CC_BEGIN
 GLArrayBuffer::GLArrayBuffer()
     : _vbo(0)
     , _vboSize(0)
+    , _target(0)
     , _elementSize(0)
     , _elementCount(0)
     , _elements(nullptr)
@@ -58,17 +59,18 @@ bool GLArrayBuffer::init(int elementSize, int maxElements, ArrayType arrayType, 
     
     _arrayType = arrayType;
     _arrayMode = arrayMode;
+    _target = nativeBindTarget();
     
     switch (_arrayMode)
     {
     case ArrayMode::Immutable:
-        _opaqueDrawMode = GL_STATIC_DRAW;
+        _usage = GL_STATIC_DRAW;
         break;
     case ArrayMode::LongLived:
-        _opaqueDrawMode = GL_DYNAMIC_DRAW;
+        _usage = GL_DYNAMIC_DRAW;
         break;
     case ArrayMode::Dynamic:
-        _opaqueDrawMode = GL_STREAM_DRAW;
+        _usage = GL_STREAM_DRAW;
         break;
     default:
         CCASSERT(false, "invalid ArrayMode");
@@ -78,28 +80,25 @@ bool GLArrayBuffer::init(int elementSize, int maxElements, ArrayType arrayType, 
     _elementSize  = elementSize;
     _elementCount = 0;
     
-    if (hasClient())
-        ensureCapacity(maxElements * getElementSize());
+    setCapacity(maxElements * getElementSize());
     
     return true;
 }
 
-bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, bool defer)
+bool GLArrayBuffer::updateElements(const void* elements, unsigned count, unsigned begin, bool defer)
 {
-    if (count <= 0 || nullptr == elements)
+    if (0 == count || nullptr == elements)
         return false;
     
-    if (begin < 0)
-    {
-        CCLOGERROR("Update vertices with begin = %d, will set begin to 0", begin);
-        begin = 0;
-    }
-    
+    setDirty(true);
+
+    // if we have no client buffer, then commit to native immediately.
+    if (false == hasClient())
+        defer = false;
+
     auto needed = getElementSize() * (count + begin);
     if (needed > _capacity)
-    {
-        ensureCapacity(needed);
-    }
+        setCapacity(needed);
     
     if (hasClient())
     {
@@ -107,44 +106,47 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
         memcpy((void*)p, elements, count * _elementSize);
     
         _elementCount += count;
-        _dirty = true;
     }
     
     if (false == defer && hasNative())
-        commit(count, begin);
-        
+        commit(elements, count, begin);
+
     return true;
 }
 
-void GLArrayBuffer::commit(unsigned count, unsigned begin)
+void GLArrayBuffer::commit(const void* elements, unsigned count, unsigned begin)
 {
     if (false == isDirty() || false == hasNative())
         return;
+    
+    if (nullptr == elements)
+        elements = _elements;
     
     if (0 == _vbo)
     {
         glGenBuffers(1, &_vbo);
         _vboSize = _capacity;
-        GL::bindVBO(GL_ARRAY_BUFFER, _vbo);
-        glBufferData(GL_ARRAY_BUFFER, _capacity, (void*)_elements, _opaqueDrawMode);
+        GL::bindVBO(_target, _vbo);
+        glBufferData(_target, _capacity, elements, _usage);
     }
     else
     {
-        GL::bindVBO(GL_ARRAY_BUFFER, _vbo);
+        GL::bindVBO(_target, _vbo);
         
         const auto size = getSize();
         if (size > _vboSize)
         {
             _vboSize = size;
-            glBufferData(GL_ARRAY_BUFFER, size, (void*)_elements, _opaqueDrawMode);
+            glBufferData(_target, size, elements, _usage);
             CHECK_GL_ERROR_DEBUG();
         }
         else
         {
             if (count == 0)
                 count = _elementCount;
-            intptr_t p = (intptr_t)_elements + begin * _elementSize;
-            glBufferSubData(GL_ARRAY_BUFFER, begin * _elementSize, count * _elementSize, (void*)p);
+            
+            intptr_t p = (intptr_t)elements + begin * _elementSize;
+            glBufferSubData(_target, begin * _elementSize, count * _elementSize, (void*)p);
             CHECK_GL_ERROR_DEBUG();
         }
     }
@@ -169,12 +171,14 @@ void GLArrayBuffer::clear()
 
 void GLArrayBuffer::recreate() const
 {
+    if (glIsBuffer(_vbo))
+        glDeleteBuffers(1, &_vbo);
     glGenBuffers(1, (GLuint*)&_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    glBindBuffer(_target, _vbo);
     if (_elements)
     {
-        glBufferData(GL_ARRAY_BUFFER, _elementSize * _elementCount, _elements, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBufferData(_target, _elementSize * _elementCount, _elements, GL_STATIC_DRAW);
+        glBindBuffer(_target, 0);
         if(!glIsBuffer(_vbo))
         {
             CCLOGERROR("Renderer::recreate() : recreate VertexBuffer Error");
@@ -182,13 +186,25 @@ void GLArrayBuffer::recreate() const
     }
 }
 
-void GLArrayBuffer::ensureCapacity(unsigned capacity)
+void GLArrayBuffer::setCapacity(unsigned capacity)
 {
+    _capacity = capacity;
     if (hasClient())
-    {
-        _capacity = capacity;
         _elements = realloc(_elements, capacity);
-    }
+}
+
+//
+// Specializations for buffer OpenGL types
+//
+
+int VertexBuffer::nativeBindTarget() const
+{
+    return GL_ARRAY_BUFFER;
+}
+
+int IndexBuffer::nativeBindTarget() const
+{
+    return GL_ELEMENT_ARRAY_BUFFER;
 }
 
 NS_CC_END

@@ -69,11 +69,13 @@ public:
     
     // @brief updates a region of the client and native buffer
     //        if defer is true, then the native buffer will not be updated.
-    bool updateElements(const void* elements, int count, int begin = 0, bool defer = true);
+    bool updateElements(const void* elements, unsigned count, unsigned begin = 0, bool defer = true);
     
-    // @brief if dirty, submits the client buffer to the native buffer
-    void commit(unsigned count = 0, unsigned begin = 0);
-    
+    // @brief if dirty, copies elements to the client buffer (if any)
+    // and optionally submits the elements to the native buffer (if any)
+    // if elements is null, then the entire client is commited to native. 
+    void commit(const void* elements = nullptr, unsigned count = 0, unsigned begin = 0);
+
     unsigned getSize() const
     {
         return getElementCount() * getElementSize();
@@ -126,23 +128,29 @@ protected:
     GLArrayBuffer();
 
     bool init(int elementSize, int maxElements, ArrayType arrayType, ArrayMode arrayMode);
-    void ensureCapacity(unsigned capacity);
+    void setCapacity(unsigned capacity);
+    
+    // @brief for OpenGL this provides the binding target of the array.
+    virtual int nativeBindTarget() const = 0;
 
 protected:
 
+    // native only
     uint32_t _vbo;
     unsigned _vboSize;
+    unsigned _target;
+    
+    // client buffer only
+    unsigned _elementCount;
+    void* _elements;
     
     unsigned _elementSize;
-    unsigned _elementCount;
-    
-    void* _elements;
     unsigned _capacity;
 
     ArrayType _arrayType;
     ArrayMode _arrayMode;
     
-    int _opaqueDrawMode;
+    unsigned _usage;
     bool _dirty;
 };
 
@@ -168,6 +176,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE int getSizePerVertex() const { return getElementSize(); }
     CC_DEPRECATED_ATTRIBUTE int getVertexNumber() const { return getElementCount(); }
     CC_DEPRECATED_ATTRIBUTE bool updateVertices(const void* vertices, int count, int begin) { return updateElements(vertices, count, begin); }
+
+protected:
+    
+    int nativeBindTarget() const;
 };
 
 
@@ -218,6 +230,9 @@ protected:
         _type = type;
         return true;
     }
+
+    // @brief for OpenGL this provides the binding target of the array.
+    int nativeBindTarget() const;
     
 protected:
 

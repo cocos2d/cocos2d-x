@@ -141,9 +141,6 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    Color4F     _pointColor;
-    int         _pointSize;
-    
     BlendFunc   _blendFunc;
     
     BatchCommand _batchCommandTriangles;
