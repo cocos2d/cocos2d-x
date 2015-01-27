@@ -455,6 +455,7 @@ protected:
     float              _accAngle;
 };
 
+// 3d + 2d use case
 class UseCaseSprite3D : public Sprite3DTestDemo
 {
 public:
@@ -465,20 +466,20 @@ public:
     
     virtual void update(float delta) override;
     
+    void menuCallback_Message(Ref* sender);
+    
 protected:
     
     void switchCase();
     
     enum class USECASE{
         _3D_WITH_2D,
+        _UI_3D_UI,
         MAX_CASE_NUM,
     };
     cocos2d::Label*      _label;
     int                  _caseIdx; // use case index
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
-    
-    cocos2d::Sprite3D*   _sprite3d;
-    cocos2d::Sprite3D*   _sprite2d;
 };
 
 class Sprite3DTestScene : public TestScene
