@@ -2109,9 +2109,6 @@ void QuaternionTest::update(float delta)
 
 UseCaseSprite3D::UseCaseSprite3D()
 : _caseIdx(0)
-, _sprite3d(nullptr)
-, _sprite2d(nullptr)
-, _layer(nullptr)
 {
     auto s = Director::getInstance()->getWinSize();
     

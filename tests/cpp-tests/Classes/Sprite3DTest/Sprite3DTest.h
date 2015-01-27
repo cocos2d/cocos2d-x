@@ -480,10 +480,6 @@ protected:
     cocos2d::Label*      _label;
     int                  _caseIdx; // use case index
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
-    
-    cocos2d::Sprite3D*   _sprite3d;
-    cocos2d::Sprite3D*   _sprite2d;
-    cocos2d::Layer*      _layer;
 };
 
 class Sprite3DTestScene : public TestScene
