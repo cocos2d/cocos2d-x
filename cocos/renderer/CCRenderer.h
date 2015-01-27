@@ -69,9 +69,8 @@ public:
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
+    inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
-    inline ssize_t getOpaqueQueueSize() const { return _commands[OPAQUE_3D].size(); }
-    inline const std::vector<RenderCommand*>& getOpaqueCommands() const { return _commands[OPAQUE_3D]; }
 
     void saveRenderState();
     void restoreRenderState();
