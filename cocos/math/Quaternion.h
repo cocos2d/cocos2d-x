@@ -363,6 +363,13 @@ public:
     inline const Quaternion operator*(const Quaternion& q) const;
 
     /**
+     * Calculates the quaternion product of this quaternion with the given vec3.
+     * @param v The vec3 to multiply.
+     * @return The vec3 product.
+     */
+    inline Vec3 operator*(const Vec3& v) const;
+
+    /**
      * Multiplies this quaternion with the given quaternion.
      * 
      * @param q The quaternion to multiply.

@@ -130,6 +130,7 @@ CameraRotationTest::CameraRotationTest()
 
     auto sp3d = Sprite3D::create();
     sp3d->setPosition(s.width/2, s.height/2);
+    sp3d->setRotation3D(Vec3(90,90,0));
     addChild(sp3d);
     
     auto lship = Label::create();
@@ -140,10 +141,10 @@ CameraRotationTest::CameraRotationTest()
     //Billboards
     //Yellow is at the back
     bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
+    bill1->setPosition3D(Vec3(50, 10, -10));
     bill1->setColor(Color3B::YELLOW);
     bill1->setScale(0.6f);
-    addChild(bill1);
+    sp3d->addChild(bill1);
     
     l1 = Label::create();
     l1->setPosition(Vec2(0,-10));
@@ -157,9 +158,9 @@ CameraRotationTest::CameraRotationTest()
     bill1->addChild(p1);
     
     bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
+    bill2->setPosition3D(Vec3(-50, -10, 10));
     bill2->setScale(0.6f);
-    addChild(bill2);
+    sp3d->addChild(bill2);
     
     l2 = Label::create();
     l2->setString("Billboard2");
@@ -1128,7 +1129,7 @@ void CameraArcBallDemo::onEnter()
     {
         _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 100, 50));
+        _camera->setPosition3D(Vec3(0, 10, 50));
         _camera->lookAt(Vec3(0, 0, 0), Vec3(0, 1, 0));
         _camera->retain();
         _layer3D->addChild(_camera);
@@ -1252,7 +1253,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 void CameraArcBallDemo::updateCameraTransform()
 {
     Mat4 trans, rot, center;
-    Mat4::createTranslation(Vec3(0.0f, 0.0f, _distanceZ), &trans);
+    Mat4::createTranslation(Vec3(0.0f, 10.0f, _distanceZ), &trans);
     Mat4::createRotation(_rotationQuat, &rot);
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;

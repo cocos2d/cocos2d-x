@@ -9,6 +9,7 @@
 -- @function [parent=#ControlHuePicker] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 
@@ -23,6 +24,7 @@
 -- @function [parent=#ControlHuePicker] setHue 
 -- @param self
 -- @param #float val
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 
@@ -47,12 +49,14 @@
 -- @function [parent=#ControlHuePicker] setBackground 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlHuePicker] setHuePercentage 
 -- @param self
 -- @param #float val
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 
@@ -71,6 +75,7 @@
 -- @function [parent=#ControlHuePicker] setSlider 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 
@@ -86,6 +91,7 @@
 -- @param self
 -- @param #cc.Touch pTouch
 -- @param #cc.Event pEvent
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 
@@ -99,5 +105,6 @@
 -- js ctor
 -- @function [parent=#ControlHuePicker] ControlHuePicker 
 -- @param self
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 return nil

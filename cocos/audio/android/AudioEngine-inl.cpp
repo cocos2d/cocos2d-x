@@ -24,6 +24,7 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "AudioEngine-inl.h"
 
+#include <unistd.h>
 // for native asset manager
 #include <sys/types.h>
 #include <android/asset_manager.h>
@@ -65,6 +66,7 @@ AudioPlayer::AudioPlayer()
     , _duration(0.0f)
     , _playOver(false)
     , _loop(false)
+    , _assetFd(0)
 {
 
 }
@@ -78,6 +80,11 @@ AudioPlayer::~AudioPlayer()
         _fdPlayerPlay = nullptr;
         _fdPlayerVolume = nullptr;
         _fdPlayerSeek = nullptr;
+    }
+    if(_assetFd > 0)
+    {
+        close(_assetFd);
+        _assetFd = 0;
     }
 }
 
@@ -110,15 +117,15 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
 
             // open asset as file descriptor
             off_t start, length;
-            int fd = AAsset_openFileDescriptor(asset, &start, &length);
-            if (fd <= 0){
+            _assetFd = AAsset_openFileDescriptor(asset, &start, &length);
+            if (_assetFd <= 0){
                 AAsset_close(asset);
                 break;
             }
             AAsset_close(asset);
 
             // configure audio source
-            loc_fd = {SL_DATALOCATOR_ANDROIDFD, fd, start, length};
+            loc_fd = {SL_DATALOCATOR_ANDROIDFD, _assetFd, start, length};
 
             audioSrc.pLocator = &loc_fd;
         }

@@ -93,18 +93,18 @@ public class Cocos2dxBitmap {
             final int fontSize, final int alignment, final int width,
             final int height) {
         
-        createTextBitmapShadowStroke( string, fontName, fontSize, 1.0f, 1.0f, 1.0f,     // text font and color
+        createTextBitmapShadowStroke( string, fontName, fontSize, 255, 255, 255, 255,   // text font and color
                                       alignment, width, height,                         // alignment and size
                                       false, 0.0f, 0.0f, 0.0f, 0.0f,                    // no shadow
-                                      false, 1.0f, 1.0f, 1.0f, 1.0f);                   // no stroke
+                                      false, 255, 255, 255, 255, 0.0f);                   // no stroke
                                      
     }
 
-    public static boolean createTextBitmapShadowStroke(String string,  final String fontName, final int fontSize,
-                                                    final float fontTintR, final float fontTintG, final float fontTintB,
-                                                    final int alignment, final int width, final int height, final boolean shadow,
-                                                    final float shadowDX, final float shadowDY, final float shadowBlur, final float shadowOpacity, final boolean stroke,
-                                                    final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
+    public static boolean createTextBitmapShadowStroke(String string,  final String fontName, int fontSize,
+                                                    int fontTintR, int fontTintG, int fontTintB, int fontTintA,
+                                                    int alignment, int width, int height, 
+                                                    boolean shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
+                                                    boolean stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize) {
 
         
         final int horizontalAlignment = alignment & 0x0F;
@@ -126,7 +126,7 @@ public class Cocos2dxBitmap {
 
         
         // set the paint color
-        paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
+        paint.setARGB(fontTintA, fontTintR, fontTintG, fontTintB);
 
         final TextProperty textProperty = Cocos2dxBitmap.computeTextProperty(string, width, height, paint);
         final int bitmapTotalHeight = (height == 0 ? textProperty.mTotalHeight: height);
@@ -158,7 +158,7 @@ public class Cocos2dxBitmap {
             final Paint paintStroke = Cocos2dxBitmap.newPaint(fontName, fontSize, horizontalAlignment);
             paintStroke.setStyle(Paint.Style.STROKE);
             paintStroke.setStrokeWidth(strokeSize);
-            paintStroke.setARGB(255, (int) (strokeR * 255), (int) (strokeG * 255), (int) (strokeB * 255));
+            paintStroke.setARGB(strokeA, strokeR, strokeG, strokeB);
             
             int x = 0;
             int y = Cocos2dxBitmap.computeY(fontMetricsInt, height, textProperty.mTotalHeight, verticalAlignment);

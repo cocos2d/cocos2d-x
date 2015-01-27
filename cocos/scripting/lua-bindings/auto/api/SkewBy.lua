@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param t in seconds
 -- @function [parent=#SkewBy] create 
 -- @param self
 -- @param #float t
@@ -18,6 +19,7 @@
 -- @function [parent=#SkewBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SkewBy#SkewBy self (return value: cc.SkewBy)
         
 --------------------------------
 -- 

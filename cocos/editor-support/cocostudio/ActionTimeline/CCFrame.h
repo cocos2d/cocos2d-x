@@ -268,13 +268,13 @@ public:
     
     inline void setEnterWithName(bool isEnterWithName) { _enterWithName = isEnterWithName;}
     
-    void setStartFrameIndex(int frameIndex)  throw();
+	void setStartFrameIndex(int frameIndex);
     inline int  getStartFrameIndex() const { return _startFrameIndex; }
 
-    void setEndFrameIndex(int frameIndex)  throw();
+	void setEndFrameIndex(int frameIndex);
     inline int  getEndFrameIndex() const { return _endFrameIndex; }
     
-    void setAnimationName(const std::string& animationNamed)  throw();
+	void setAnimationName(const std::string& animationNamed);
     
     inline void setSingleFrameIndex(int frameIndex) { _singleFrameIndex = frameIndex;}
     inline int  getSingleFrameIndex() const { return _singleFrameIndex;}

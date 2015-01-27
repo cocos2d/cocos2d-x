@@ -8,6 +8,7 @@
 -- @function [parent=#CSLoader] setJsonPath 
 -- @param self
 -- @param #string jsonPath
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -44,11 +45,13 @@
 -- 
 -- @function [parent=#CSLoader] purge 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
 -- @function [parent=#CSLoader] init 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -74,6 +77,7 @@
 -- @function [parent=#CSLoader] setRecordJsonPath 
 -- @param self
 -- @param #bool record
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -86,6 +90,7 @@
 -- 
 -- @function [parent=#CSLoader] destroyInstance 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -104,5 +109,6 @@
 -- 
 -- @function [parent=#CSLoader] CSLoader 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 return nil

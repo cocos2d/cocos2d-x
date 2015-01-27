@@ -9,6 +9,7 @@
 -- @function [parent=#ControlSwitch] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)
         
 --------------------------------
 -- @overload self, bool         
@@ -17,6 +18,7 @@
 -- @param self
 -- @param #bool isOn
 -- @param #bool animated
+-- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)
 
 --------------------------------
 -- 
@@ -69,6 +71,7 @@
 -- @param self
 -- @param #cc.Touch pTouch
 -- @param #cc.Event pEvent
+-- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)
         
 --------------------------------
 -- 
@@ -76,6 +79,7 @@
 -- @param self
 -- @param #cc.Touch pTouch
 -- @param #cc.Event pEvent
+-- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)
         
 --------------------------------
 -- 
@@ -83,6 +87,7 @@
 -- @param self
 -- @param #cc.Touch pTouch
 -- @param #cc.Event pEvent
+-- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)
         
 --------------------------------
 -- 
@@ -96,5 +101,6 @@
 -- js ctor
 -- @function [parent=#ControlSwitch] ControlSwitch 
 -- @param self
+-- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)
         
 return nil

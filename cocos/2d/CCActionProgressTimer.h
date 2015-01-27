@@ -42,7 +42,10 @@ NS_CC_BEGIN
 class CC_DLL ProgressTo : public ActionInterval
 {
 public:
-    /** Creates and initializes with a duration and a percent */
+    /** 
+     * Creates and initializes with a duration and a percent 
+     * @param duration in seconds
+     */
     static ProgressTo* create(float duration, float percent);
 
     //
@@ -51,13 +54,19 @@ public:
 	virtual ProgressTo* clone() const override;
 	virtual ProgressTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ProgressTo() {}
     virtual ~ProgressTo() {}
 
-    /** Initializes with a duration and a percent */
+    /** 
+     * Initializes with a duration and a percent 
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, float percent);
 
 protected:
@@ -75,7 +84,10 @@ private:
 class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
-    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
+    /** 
+     * Creates and initializes the action with a duration, a "from" percentage and a "to" percentage 
+     * @param duration in seconds
+     */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
     //
@@ -84,6 +96,9 @@ public:
 	virtual ProgressFromTo* clone() const override;
 	virtual ProgressFromTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:

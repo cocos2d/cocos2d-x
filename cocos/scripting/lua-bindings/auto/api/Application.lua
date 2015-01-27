@@ -38,6 +38,7 @@
 -- @function [parent=#Application] setAnimationInterval 
 -- @param self
 -- @param #double interval
+-- @return Application#Application self (return value: cc.Application)
         
 --------------------------------
 -- brief    Get current application instance.<br>

@@ -9,6 +9,7 @@
 -- @function [parent=#CCBReader] addOwnerOutletName 
 -- @param self
 -- @param #string name
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- 
@@ -21,18 +22,21 @@
 -- @function [parent=#CCBReader] addDocumentCallbackControlEvents 
 -- @param self
 -- @param #int eventType
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- 
 -- @function [parent=#CCBReader] setCCBRootPath 
 -- @param self
 -- @param #char ccbRootPath
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- 
 -- @function [parent=#CCBReader] addOwnerOutletNode 
 -- @param self
 -- @param #cc.Node node
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- 
@@ -76,6 +80,7 @@
 -- @function [parent=#CCBReader] addOwnerCallbackControlEvents 
 -- @param self
 -- @param #int type
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- 
@@ -89,6 +94,7 @@
 -- @function [parent=#CCBReader] setAnimationManager 
 -- @param self
 -- @param #cc.CCBAnimationManager pAnimationManager
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- 
@@ -121,6 +127,7 @@
 -- @function [parent=#CCBReader] setResolutionScale 
 -- @param self
 -- @param #float scale
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
         
 --------------------------------
 -- @overload self, cc.CCBReader         
@@ -132,5 +139,6 @@
 -- @param #cc.CCBMemberVariableAssigner pCCBMemberVariableAssigner
 -- @param #cc.CCBSelectorResolver pCCBSelectorResolver
 -- @param #cc.NodeLoaderListener pNodeLoaderListener
+-- @return CCBReader#CCBReader self (return value: cc.CCBReader)
 
 return nil

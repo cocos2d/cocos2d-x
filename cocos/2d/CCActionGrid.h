@@ -59,7 +59,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     GridAction() {}
     virtual ~GridAction() {}
-    /** initializes the action with size and duration */
+    /** 
+     * initializes the action with size and duration
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, const Size& gridSize);
 
 protected:
@@ -186,6 +189,9 @@ public:
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     virtual AccelDeccelAmplitude* clone() const override;
     virtual AccelDeccelAmplitude* reverse() const override;
@@ -219,6 +225,9 @@ public:
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     virtual AccelAmplitude* clone() const override;
     virtual AccelAmplitude* reverse() const override;
@@ -251,6 +260,9 @@ public:
 
     // overrides
     virtual void startWithTarget(Node *target) override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     virtual DeccelAmplitude* clone() const override;
     virtual DeccelAmplitude* reverse() const override;

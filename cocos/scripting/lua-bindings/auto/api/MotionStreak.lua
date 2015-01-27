@@ -8,12 +8,14 @@
 --  Remove all living segments of the ribbon 
 -- @function [parent=#MotionStreak] reset 
 -- @param self
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
 -- @function [parent=#MotionStreak] setTexture 
 -- @param self
 -- @param #cc.Texture2D texture
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
@@ -26,6 +28,7 @@
 -- @function [parent=#MotionStreak] tintWithColor 
 -- @param self
 -- @param #color3b_table colors
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- js NA<br>
@@ -33,12 +36,14 @@
 -- @function [parent=#MotionStreak] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendFunc
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
 -- @function [parent=#MotionStreak] setStartingPositionInitialized 
 -- @param self
 -- @param #bool bStartingPositionInitialized
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- js NA<br>
@@ -64,6 +69,7 @@
 -- @function [parent=#MotionStreak] setFastMode 
 -- @param self
 -- @param #bool bFastMode
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- @overload self, float, float, float, color3b_table, cc.Texture2D         
@@ -88,12 +94,14 @@
 -- @function [parent=#MotionStreak] setPositionY 
 -- @param self
 -- @param #float y
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
 -- @function [parent=#MotionStreak] setPositionX 
 -- @param self
 -- @param #float x
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
@@ -112,12 +120,14 @@
 -- @function [parent=#MotionStreak] setOpacity 
 -- @param self
 -- @param #unsigned char opacity
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
 -- @function [parent=#MotionStreak] setOpacityModifyRGB 
 -- @param self
 -- @param #bool value
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
@@ -132,6 +142,7 @@
 -- @param self
 -- @param #float x
 -- @param #float y
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
 
 --------------------------------
 -- @overload self, float, float         
@@ -140,5 +151,6 @@
 -- @param self
 -- @param #float x
 -- @param #float y
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
 
 return nil

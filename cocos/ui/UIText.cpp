@@ -287,6 +287,19 @@ Size Text::getVirtualRendererSize() const
     return _labelRenderer->getContentSize();
 }
 
+Size Text::getAutoRenderSize()
+{
+    Size virtualSize = _labelRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _labelRenderer->setDimensions(0, 0);
+        virtualSize = _labelRenderer->getContentSize();
+        _labelRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+
+    return virtualSize;
+}
+
 Node* Text::getVirtualRenderer()
 {
     return _labelRenderer;

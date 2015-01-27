@@ -19,6 +19,7 @@
 -- @param self
 -- @param #cc.Animation animation
 -- @param #string name
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
 -- 
@@ -35,12 +36,14 @@
 -- @param self
 -- @param #map_table dictionary
 -- @param #string plist
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
 --  Deletes a Animation from the cache.
 -- @function [parent=#AnimationCache] removeAnimation 
 -- @param self
 -- @param #string name
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
 --  Adds an animation from a plist file.<br>
@@ -51,11 +54,13 @@
 -- @function [parent=#AnimationCache] addAnimationsWithFile 
 -- @param self
 -- @param #string plist
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
 --  Purges the cache. It releases all the Animation objects and the shared instance.
 -- @function [parent=#AnimationCache] destroyInstance 
 -- @param self
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
 --  Returns the shared instance of the Animation cache 
@@ -67,5 +72,6 @@
 -- js ctor
 -- @function [parent=#AnimationCache] AnimationCache 
 -- @param self
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 return nil

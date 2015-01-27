@@ -89,6 +89,7 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
     m_fontFillColorR = textDefinition._fontFillColor.r;
     m_fontFillColorG = textDefinition._fontFillColor.g;
     m_fontFillColorB = textDefinition._fontFillColor.b;
+    m_fontFillColorA = textDefinition._fontAlpha;
 
 #if 0
     // check the cache for the font file buffer
@@ -297,6 +298,7 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
     FT_Int  i, j, p, q;
     FT_Int  x_max = x + bitmap->width;
     FT_Int  y_max = y + bitmap->rows;
+    float fontAlpha = m_fontFillColorA / 255.0f;
 
     for (i = x, p = 0; i < x_max; i++, p++)
     {
@@ -313,7 +315,7 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
                 pBuffer[index++] = m_fontFillColorR;
                 pBuffer[index++] = m_fontFillColorG;
                 pBuffer[index++] = m_fontFillColorB;
-                pBuffer[index++] = value;
+                pBuffer[index++] = value * fontAlpha;
            }
         }
     }  

@@ -5,22 +5,37 @@
 -- @parent_module cc
 
 --------------------------------
--- 
--- @function [parent=#Animate3D] setSpeed 
+-- get & set speed, negative speed means playing reverse 
+-- @function [parent=#Animate3D] getSpeed 
 -- @param self
--- @param #float speed
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] setWeight 
 -- @param self
 -- @param #float weight
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
--- get & set speed, negative speed means playing reverse 
--- @function [parent=#Animate3D] getSpeed 
+-- 
+-- @function [parent=#Animate3D] getOriginInterval 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] setSpeed 
+-- @param self
+-- @param #float speed
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- get & set origin interval
+-- @function [parent=#Animate3D] setOriginInterval 
+-- @param self
+-- @param #float interval
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- get & set blend weight, weight must positive
@@ -64,6 +79,7 @@
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
@@ -81,17 +97,20 @@
 -- 
 -- @function [parent=#Animate3D] stop 
 -- @param self
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] update 
 -- @param self
 -- @param #float t
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] step 
 -- @param self
 -- @param #float dt
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 return nil

@@ -18,10 +18,11 @@
 -- @return EaseExponentialIn#EaseExponentialIn ret (return value: cc.EaseExponentialIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseExponentialIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseExponentialIn#EaseExponentialIn self (return value: cc.EaseExponentialIn)
         
 --------------------------------
 -- 
