@@ -115,12 +115,11 @@ public:
     void clear();
     
     // @brief returns the count of vertices added
-    size_t count() const;
+    unsigned count() const;
     
     template <typename T>
     void append(const T& vertex)
     {
-        ++_count;
         if (_interleaved)
         {
             for (auto& e : _vertexStreams)
@@ -174,7 +173,6 @@ protected:
     
     IndexBuffer* _indices;
 
-    unsigned _count;
     bool _interleaved;
     bool _dirty;
     int _vao;

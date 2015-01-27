@@ -35,10 +35,14 @@ GLArrayBuffer::GLArrayBuffer()
     : _vbo(0)
     , _vboSize(0)
     , _target(0)
-    , _elementSize(0)
     , _elementCount(0)
     , _elements(nullptr)
+    , _elementSize(0)
     , _capacity(0)
+    , _arrayType(ArrayType::Invalid)
+    , _arrayMode(ArrayMode::Invalid)
+    , _usage(0)
+    , _dirty(true)
 {}
 
 GLArrayBuffer::~GLArrayBuffer()
@@ -104,18 +108,21 @@ bool GLArrayBuffer::updateElements(const void* elements, unsigned count, unsigne
     {
         intptr_t p = (intptr_t)_elements + begin * _elementSize;
         memcpy((void*)p, elements, count * _elementSize);
-    
-        _elementCount += count;
     }
     
+    _elementCount += count;
+
     if (false == defer && hasNative())
-        commit(elements, count, begin);
+        bindAndCommit(elements, count, begin);
 
     return true;
 }
 
-void GLArrayBuffer::commit(const void* elements, unsigned count, unsigned begin)
+void GLArrayBuffer::bindAndCommit(const void* elements, unsigned count, unsigned begin)
 {
+    if (_vbo)
+        GL::bindVBO(_target, _vbo);
+
     if (false == isDirty() || false == hasNative())
         return;
     
@@ -131,8 +138,6 @@ void GLArrayBuffer::commit(const void* elements, unsigned count, unsigned begin)
     }
     else
     {
-        GL::bindVBO(_target, _vbo);
-        
         const auto size = getSize();
         if (size > _vboSize)
         {

@@ -43,15 +43,14 @@ NS_CC_BEGIN
 VertexData::VertexData(Primitive primitive)
     : _interleaved(false)
     , _dirty(true)
-    , _count(0)
     , _vao(0)
     , _indices(nullptr)
     , _drawingPrimitive(primitive)
 {
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, (GLuint*)&_vao);
-    }
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glGenVertexArrays(1, (GLuint*)&_vao);
+//    }
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
     _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
 #endif
@@ -79,6 +78,8 @@ bool VertexData::addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& s
 {
     if (nullptr == buffer)
         return false;
+    
+    setDirty(true);
     
     auto iter = _vertexStreams.find(stream._semantic);
     if (iter == _vertexStreams.end())
@@ -119,6 +120,8 @@ void VertexData::removeStream(int semantic)
     }
 
     _interleaved = determineInterleave();
+
+    setDirty(true);
 }
 
 // @brief specify indexed drawing for vertex data with optional precision
@@ -152,7 +155,7 @@ VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
 void VertexData::draw(unsigned start, unsigned count)
 {
     if (0 == count)
-        count = _count;
+        count = this->count();
     
     if (_vao)
     {
@@ -170,23 +173,22 @@ void VertexData::draw(unsigned start, unsigned count)
             
             // commit any outstanding client side geometry to the native buffers.
             // for interleaved data this will happen only the first time through.
-            vb->commit();
-            
-            // this is redundant for interleaved streams, but needed for non-interleaved to work.
-            // the call is trivially rejected by the GL state cache.
-            GL::bindVBO(GL_ARRAY_BUFFER, vb->getVBO());
+            vb->bindAndCommit();
             
             auto& attrib  = element.second;
             auto& stream  = attrib._stream;
-            auto offset = attrib._stream._offset;
+            
+            auto offset = stream._offset;
             auto stride = vb->getElementSize();
+            
             glEnableVertexAttribArray(GLint(stream._semantic));
             glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, (GLsizei)stride, (GLvoid*)(size_t)offset);
+            
             CHECK_GL_ERROR_DEBUG();
         }
 
         if (_indices != nullptr)
-            _indices->commit();
+            _indices->bindAndCommit();
 
         setDirty(false);
     }
@@ -223,7 +225,6 @@ bool VertexData::empty() const
 
 void VertexData::clear()
 {
-    _count = 0;
     _dirty = false;
     for (auto& e : _vertexStreams)
     {
@@ -255,9 +256,16 @@ void VertexData::setDirty(bool dirty)
     }
 }
 
-size_t VertexData::count() const
+unsigned VertexData::count() const
 {
-    return _count;
+    unsigned count = 0;
+    for (auto b : _buffers)
+    {
+        auto c = b->getElementCount();
+        CCASSERT(0 == count || c == count, "all buffers must have the same vertex count");
+        count = c;
+    }
+    return count;
 }
 
 // @brief If all streams use the same buffer, then the data is interleaved.

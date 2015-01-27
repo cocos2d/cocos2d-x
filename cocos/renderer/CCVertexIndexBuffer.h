@@ -35,6 +35,7 @@
 NS_CC_BEGIN
 
 class EventListenerCustom;
+class VertexData;
 
 // @brief OpenGL buffer for vertices or indices or anything that you can get
 //        from the GL API that is in array format.
@@ -52,6 +53,7 @@ public:
     
     enum ArrayType
     {
+        Invalid,
         Client  = (1<<0), // Maintains a Client memory buffer to store elements.
         Native  = (1<<2), // Maintains a Native buffer to store elements.
         Default = Native,
@@ -60,6 +62,7 @@ public:
     
     enum class ArrayMode
     {
+        Invalid,
         Immutable, // GL_STATIC_DRAW
         LongLived, // GL_DYNAMIC_DRAW
         Dynamic    // GL_STREAMED_DRAW
@@ -74,7 +77,7 @@ public:
     // @brief if dirty, copies elements to the client buffer (if any)
     // and optionally submits the elements to the native buffer (if any)
     // if elements is null, then the entire client is commited to native. 
-    void commit(const void* elements = nullptr, unsigned count = 0, unsigned begin = 0);
+    void bindAndCommit(const void* elements = nullptr, unsigned count = 0, unsigned begin = 0);
 
     unsigned getSize() const
     {
