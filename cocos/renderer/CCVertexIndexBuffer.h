@@ -119,15 +119,15 @@ public:
     // @brief append
     unsigned append(void* source, unsigned size, unsigned elements = 1);
 
+    void recreate() const;
+
 protected:
 
     GLArrayBuffer();
 
-    bool init(int elementSize, int elementCount, ArrayType arrayType, ArrayMode arrayMode);
+    bool init(int elementSize, int maxElements, ArrayType arrayType, ArrayMode arrayMode);
     void ensureCapacity(unsigned capacity);
 
-    void recreate() const;
-    
 protected:
 
     uint32_t _vbo;

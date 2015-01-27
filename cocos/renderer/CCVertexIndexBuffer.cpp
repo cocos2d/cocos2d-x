@@ -51,9 +51,9 @@ GLArrayBuffer::~GLArrayBuffer()
     CC_SAFE_FREE(_elements);
 }
 
-bool GLArrayBuffer::init(int elementSize, int capacity, ArrayType arrayType, ArrayMode arrayMode)
+bool GLArrayBuffer::init(int elementSize, int maxElements, ArrayType arrayType, ArrayMode arrayMode)
 {
-    if(0 == elementSize || 0 == capacity)
+    if(0 == elementSize || 0 == maxElements)
         return false;
     
     _arrayType = arrayType;
@@ -75,12 +75,11 @@ bool GLArrayBuffer::init(int elementSize, int capacity, ArrayType arrayType, Arr
         return false;
     }
     
-    _capacity     = capacity;
     _elementSize  = elementSize;
     _elementCount = 0;
     
     if (hasClient())
-        ensureCapacity(_capacity * getElementSize());
+        ensureCapacity(maxElements * getElementSize());
     
     return true;
 }
@@ -96,9 +95,10 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
         begin = 0;
     }
     
-    if (count + begin > _capacity)
+    auto needed = getElementSize() * (count + begin);
+    if (needed > _capacity)
     {
-        ensureCapacity(count + begin);
+        ensureCapacity(needed);
     }
     
     if (hasClient())
@@ -110,8 +110,6 @@ bool GLArrayBuffer::updateElements(const void* elements, int count, int begin, b
         _dirty = true;
     }
     
-    CCLOG("GLArrayBuffer::insert : begin(%u) count(%u)\n", begin, count);
-
     if (false == defer && hasNative())
         commit(count, begin);
         
@@ -123,37 +121,37 @@ void GLArrayBuffer::commit(unsigned count, unsigned begin)
     if (false == isDirty() || false == hasNative())
         return;
     
-    if (count == 0)
-        count = _elementCount;
-    
-    if (0 == _vbo && hasNative())
+    if (0 == _vbo)
     {
         glGenBuffers(1, &_vbo);
-    }
-    
-    CHECK_GL_ERROR_DEBUG();
-    GL::bindVBO(GL_ARRAY_BUFFER, _vbo);
-    CHECK_GL_ERROR_DEBUG();
-    
-    const auto size = getSize();
-    if (size > _vboSize)
-    {
-        _vboSize = size;
-        glBufferData(GL_ARRAY_BUFFER, size, (void*)_elements, _opaqueDrawMode);
-        CHECK_GL_ERROR_DEBUG();
+        _vboSize = _capacity;
+        GL::bindVBO(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, _capacity, (void*)_elements, _opaqueDrawMode);
     }
     else
     {
-        intptr_t p = (intptr_t)_elements + begin * _elementSize;
-        glBufferSubData(GL_ARRAY_BUFFER, begin * _elementSize, count * _elementSize, (void*)p);
-        CHECK_GL_ERROR_DEBUG();
+        GL::bindVBO(GL_ARRAY_BUFFER, _vbo);
+        
+        const auto size = getSize();
+        if (size > _vboSize)
+        {
+            _vboSize = size;
+            glBufferData(GL_ARRAY_BUFFER, size, (void*)_elements, _opaqueDrawMode);
+            CHECK_GL_ERROR_DEBUG();
+        }
+        else
+        {
+            if (count == 0)
+                count = _elementCount;
+            intptr_t p = (intptr_t)_elements + begin * _elementSize;
+            glBufferSubData(GL_ARRAY_BUFFER, begin * _elementSize, count * _elementSize, (void*)p);
+            CHECK_GL_ERROR_DEBUG();
+        }
     }
     
-    setDirty(false);
-    
-    CCLOG("GLArrayBuffer::commit : begin(%u) count(%u)\n", begin, count);
-        
     CHECK_GL_ERROR_DEBUG();
+
+    setDirty(false);
 }
 
 unsigned GLArrayBuffer::append(void* source, unsigned size, unsigned elements)

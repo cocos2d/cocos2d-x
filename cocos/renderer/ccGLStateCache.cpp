@@ -231,7 +231,7 @@ void bindVBO(GLenum target, GLuint vboId)
 
 void enableVertexAttribs(uint32_t flags)
 {
-    //bindVAO(0);
+    bindVAO(0);
 
     // hardcoded!
     for(int i=0; i < MAX_ATTRIBUTES; i++) {

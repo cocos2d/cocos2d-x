@@ -38,15 +38,19 @@ class EventListenerCustom;
 struct CC_DLL VertexStreamAttribute
 {
     VertexStreamAttribute()
-        : _normalize(false), _offset(0), _semantic(0), _type(0), _size(0)
+        : _offset(0)
+        , _semantic(0)
+        , _type(0)
+        , _size(0)
+        , _normalize(false)
     {}
 
-    VertexStreamAttribute(int offset, int semantic, int type, int size)
-        : _normalize(false), _offset(offset), _semantic(semantic), _type(type), _size(size)
-    {}
-    
-    VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
-        : _normalize(normalize), _offset(offset), _semantic(semantic), _type(type), _size(size)
+    VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize = false)
+        : _offset(offset)
+        , _semantic(semantic)
+        , _type(type)
+        , _size(size)
+        , _normalize(normalize)
     {}
     
     bool _normalize;
@@ -118,7 +122,7 @@ public:
             for (auto& e : _vertexStreams)
             {
                 auto const verts = e.second._buffer;
-                append(verts, (void*)&vertex, sizeof(vertex));
+                append(verts, (void*)&vertex, 1);
                 return;
             }
         }
@@ -128,16 +132,17 @@ public:
             {
                 auto const verts = e.second._buffer;
                 intptr_t p = (intptr_t)&vertex + e.second._stream._offset;
-                append(verts, (void*)p, e.second._stream._size);
+                append(verts, (void*)p, 1);
             }
         }
     }
 
+    void recreate() const;
+
 protected:
 
     VertexData(Primitive primitive);
-
-    void recreate() const;
+    
     bool determineInterleave() const;
     void append(GLArrayBuffer* buffer, void* source, unsigned size, unsigned count = 1);
 

@@ -1,6 +1,7 @@
+
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2015 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -140,37 +141,11 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-//    void ensureCapacity(int count);
-//    void ensureCapacityGLPoint(int count);
-//    void ensureCapacityGLLine(int count);
-//
-//    GLuint      _vao;
-//    GLuint      _vbo;
-//    GLuint      _vaoGLPoint;
-//    GLuint      _vboGLPoint;
-//    GLuint      _vaoGLLine;
-//    GLuint      _vboGLLine;
-//
-//    int         _bufferCapacity;
-//    GLsizei     _bufferCount;
-//    V2F_C4B_T2F *_buffer;
-//    
-//    int         _bufferCapacityGLPoint;
-//    GLsizei     _bufferCountGLPoint;
-//    V2F_C4B_PF *_bufferGLPoint;
-
     Color4F     _pointColor;
     int         _pointSize;
     
-//    int         _bufferCapacityGLLine;
-//    int         _bufferCountGLLine;
-//    V2F_C4B_T2F *_bufferGLLine;
-
     BlendFunc   _blendFunc;
     
-//    CustomCommand _customCommand;
-//    CustomCommand _customCommandGLPoint;
-//    CustomCommand _customCommandGLLine;
     BatchCommand _batchCommandTriangles;
     VertexData*   _vdTriangles;
     VertexBuffer* _vbTriangles;
@@ -182,10 +157,6 @@ protected:
     BatchCommand _batchCommandLines;
     VertexData*   _vdLines;
     VertexBuffer* _vbLines;
-
-//    bool        _dirty;
-//    bool        _dirtyGLPoint;
-//    bool        _dirtyGLLine;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);

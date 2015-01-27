@@ -139,8 +139,6 @@ void VertexData::draw(unsigned start, unsigned count)
     if (0 == count)
         count = _count;
     
-    CHECK_GL_ERROR_DEBUG();
-
     if (_vao)
     {
         GL::bindVAO(_vao);
@@ -149,14 +147,6 @@ void VertexData::draw(unsigned start, unsigned count)
     
     if (0 == _vao || isDirty())
     {
-        CHECK_GL_ERROR_DEBUG();
-        
-        uint32_t flags(0);
-        for (auto& element : _vertexStreams)
-        {
-            flags = flags | (1 << element.second._stream._semantic);
-        }
-        GL::enableVertexAttribs(flags); // unbinds vao
         CHECK_GL_ERROR_DEBUG();
         
         for (auto& element : _vertexStreams)
@@ -173,11 +163,13 @@ void VertexData::draw(unsigned start, unsigned count)
             
             auto& attrib  = element.second;
             auto& stream  = attrib._stream;
-            size_t offset = attrib._stream._offset;
-            glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, vb->getElementSize(), (GLvoid*)offset);
+            auto offset = attrib._stream._offset;
+            auto stride = vb->getElementSize();
+            glEnableVertexAttribArray(GLint(stream._semantic));
+            glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, (GLsizei)stride, (GLvoid*)(size_t)offset);
             CHECK_GL_ERROR_DEBUG();
         }
-        
+
         setDirty(false);
     }
     
@@ -265,6 +257,8 @@ void VertexData::append(GLArrayBuffer* buffer, void* source, unsigned size, unsi
     
 void VertexData::recreate() const
 {
+    for (auto b : _buffers)
+        b->recreate();
 }
 
 NS_CC_END
