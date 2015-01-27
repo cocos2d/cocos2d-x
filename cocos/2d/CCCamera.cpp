@@ -91,13 +91,6 @@ Camera::~Camera()
     
 }
 
-void Camera::setPosition3D(const Vec3& position)
-{
-    Node::setPosition3D(position);
-    
-    _transformUpdated = _transformDirty = _inverseDirty = true;
-}
-
 const Mat4& Camera::getProjectionMatrix() const
 {
     return _projection;

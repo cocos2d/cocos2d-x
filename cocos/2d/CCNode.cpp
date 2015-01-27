@@ -609,10 +609,6 @@ void Node::setPositionZ(float positionZ)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _positionZ = positionZ;
-
-    // FIXME: BUG
-    // Global Z Order should based on the modelViewTransform
-    setGlobalZOrder(positionZ);
 }
 
 /// position getter
