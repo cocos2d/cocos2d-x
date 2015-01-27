@@ -455,6 +455,7 @@ protected:
     float              _accAngle;
 };
 
+// 3d + 2d use case
 class UseCaseSprite3D : public Sprite3DTestDemo
 {
 public:
@@ -464,6 +465,8 @@ public:
     virtual std::string subtitle() const override;
     
     virtual void update(float delta) override;
+    
+    void menuCallback_Message(Ref* sender);
     
 protected:
     
@@ -480,6 +483,7 @@ protected:
     
     cocos2d::Sprite3D*   _sprite3d;
     cocos2d::Sprite3D*   _sprite2d;
+    cocos2d::Layer*      _layer;
 };
 
 class Sprite3DTestScene : public TestScene
