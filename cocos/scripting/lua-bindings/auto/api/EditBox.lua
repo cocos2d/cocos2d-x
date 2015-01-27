@@ -255,6 +255,12 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
+-- Returns the "class name" of widget.
+-- @function [parent=#EditBox] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- 
 -- @function [parent=#EditBox] setPosition 
 -- @param self
