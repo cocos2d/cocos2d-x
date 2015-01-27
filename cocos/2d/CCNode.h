@@ -108,6 +108,8 @@ public:
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
         FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+        
+        //Indicate the Node will be rendered as 3D object
         FLAGS_RENDER_AS_3D = (1 << 3),
 
         FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),

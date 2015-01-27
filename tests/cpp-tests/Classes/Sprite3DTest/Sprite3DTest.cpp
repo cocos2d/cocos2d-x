@@ -163,12 +163,24 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
 //------------------------------------------------------------------
 Sprite3DEmptyTest::Sprite3DEmptyTest()
 {
+    auto size = Director::getInstance()->getWinSize();
     auto s = Sprite3D::create();
-    s->setNormalizedPosition(Vec2(.5,.5));
+    s->setPosition(size.width/2, size.height/4);
+    
     auto l = Label::create();
-    l->setString("Test");
+    l->setPosition(0, 120);
+    l->setString("Cocos Icon should behind the character");
     s->addChild(l);
     addChild(s);
+    
+    auto g = Sprite::create("Images/grossini.png");
+    g->setPosition3D(Vec3(0,50,2));
+    s->addChild(g);
+    
+    auto i = Sprite::create("Images/Icon.png");
+    i->setPosition3D(Vec3(0, 0, 2));
+    i->setRotation3D(Vec3(-60, 0, 0));
+    s->addChild(i);
 }
 
 std::string Sprite3DEmptyTest::title() const
