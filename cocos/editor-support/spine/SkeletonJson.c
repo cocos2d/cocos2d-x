@@ -250,7 +250,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 			int slotIndex = spSkeletonData_findSlotIndex(skeletonData, slotMap->name);
 			Json* timelineArray;
 			for (timelineArray = slotMap->child; timelineArray; timelineArray = timelineArray->next) {
-				Json* frame;
+				Json* tmpFrame;
 				int verticesCount = 0;
 				float* tempVertices;
 				spFFDTimeline *timeline;
@@ -271,8 +271,8 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 				timeline->attachment = attachment;
 
 				tempVertices = MALLOC(float, verticesCount);
-				for (frame = timelineArray->child, i = 0; frame; frame = frame->next, ++i) {
-					Json* vertices = Json_getItem(frame, "vertices");
+				for (tmpFrame = timelineArray->child, i = 0; tmpFrame; tmpFrame = tmpFrame->next, ++i) {
+					Json* vertices = Json_getItem(tmpFrame, "vertices");
 					float* frameVertices;
 					if (!vertices) {
 						if (attachment->type == SP_ATTACHMENT_MESH)
@@ -282,7 +282,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 							memset(frameVertices, 0, sizeof(float) * verticesCount);
 						}
 					} else {
-						int v, start = Json_getInt(frame, "offset", 0);
+						int v, start = Json_getInt(tmpFrame, "offset", 0);
 						Json* vertex;
 						frameVertices = tempVertices;
 						memset(frameVertices, 0, sizeof(float) * start);
@@ -300,8 +300,8 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 								frameVertices[v] += meshVertices[v];
 						}
 					}
-					spFFDTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), frameVertices);
-					readCurve(SUPER(timeline), i, frame);
+					spFFDTimeline_setFrame(timeline, i, Json_getFloat(tmpFrame, "time", 0), frameVertices);
+					readCurve(SUPER(timeline), i, tmpFrame);
 				}
 				FREE(tempVertices);
 
@@ -317,16 +317,16 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 		spDrawOrderTimeline* timeline = spDrawOrderTimeline_create(drawOrder->size, skeletonData->slotsCount);
 		for (frame = drawOrder->child, i = 0; frame; frame = frame->next, ++i) {
 			int ii;
-			int* drawOrder = 0;
+			int* tmpDrawOrder = 0;
 			Json* offsets = Json_getItem(frame, "offsets");
 			if (offsets) {
 				Json* offsetMap;
 				int* unchanged = MALLOC(int, skeletonData->slotsCount - offsets->size);
 				int originalIndex = 0, unchangedIndex = 0;
 
-				drawOrder = MALLOC(int, skeletonData->slotsCount);
+				tmpDrawOrder = MALLOC(int, skeletonData->slotsCount);
 				for (ii = skeletonData->slotsCount - 1; ii >= 0; --ii)
-					drawOrder[ii] = -1;
+					tmpDrawOrder[ii] = -1;
 
 				for (offsetMap = offsets->child; offsetMap; offsetMap = offsetMap->next) {
 					int slotIndex = spSkeletonData_findSlotIndex(skeletonData, Json_getString(offsetMap, "slot", 0));
@@ -339,7 +339,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					while (originalIndex != slotIndex)
 						unchanged[unchangedIndex++] = originalIndex++;
 					/* Set changed items. */
-					drawOrder[originalIndex + Json_getInt(offsetMap, "offset", 0)] = originalIndex;
+					tmpDrawOrder[originalIndex + Json_getInt(offsetMap, "offset", 0)] = originalIndex;
 					originalIndex++;
 				}
 				/* Collect remaining unchanged items. */
@@ -347,11 +347,11 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					unchanged[unchangedIndex++] = originalIndex++;
 				/* Fill in unchanged items. */
 				for (ii = skeletonData->slotsCount - 1; ii >= 0; ii--)
-					if (drawOrder[ii] == -1) drawOrder[ii] = unchanged[--unchangedIndex];
+					if (tmpDrawOrder[ii] == -1) tmpDrawOrder[ii] = unchanged[--unchangedIndex];
 				FREE(unchanged);
 			}
-			spDrawOrderTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), drawOrder);
-			FREE(drawOrder);
+			spDrawOrderTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), tmpDrawOrder);
+			FREE(tmpDrawOrder);
 		}
 		animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
 		duration = timeline->frames[drawOrder->size - 1];
@@ -360,24 +360,24 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 
 	/* Event timeline. */
 	if (events) {
-		Json* frame;
+		Json* tmpFrame;
 
 		spEventTimeline* timeline = spEventTimeline_create(events->size);
-		for (frame = events->child, i = 0; frame; frame = frame->next, ++i) {
+		for (tmpFrame = events->child, i = 0; tmpFrame; tmpFrame = tmpFrame->next, ++i) {
 			spEvent* event;
 			const char* stringValue;
-			spEventData* eventData = spSkeletonData_findEvent(skeletonData, Json_getString(frame, "name", 0));
+			spEventData* eventData = spSkeletonData_findEvent(skeletonData, Json_getString(tmpFrame, "name", 0));
 			if (!eventData) {
 				spAnimation_dispose(animation);
-				_spSkeletonJson_setError(self, 0, "Event not found: ", Json_getString(frame, "name", 0));
+				_spSkeletonJson_setError(self, 0, "Event not found: ", Json_getString(tmpFrame, "name", 0));
 				return 0;
 			}
 			event = spEvent_create(eventData);
 			event->intValue = Json_getInt(frame, "int", eventData->intValue);
 			event->floatValue = Json_getFloat(frame, "float", eventData->floatValue);
-			stringValue = Json_getString(frame, "string", eventData->stringValue);
+			stringValue = Json_getString(tmpFrame, "string", eventData->stringValue);
 			if (stringValue) MALLOC_STR(event->stringValue, stringValue);
-			spEventTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), event);
+			spEventTimeline_setFrame(timeline, i, Json_getFloat(tmpFrame, "time", 0), event);
 		}
 		animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
 		duration = timeline->frames[events->size - 1];
@@ -553,7 +553,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 					const char* attachmentName = Json_getString(attachmentMap, "name", skinAttachmentName);
 					const char* path = Json_getString(attachmentMap, "path", attachmentName);
 					const char* color;
-					int i;
+
 					Json* entry;
 
 					const char* typeString = Json_getString(attachmentMap, "type", "region");
