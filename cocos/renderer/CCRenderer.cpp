@@ -135,6 +135,41 @@ void RenderQueue::clear()
     }
 }
 
+void RenderQueue::saveRenderState()
+{
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RenderQueue::restoreRenderState()
+{
+    if (_isCullEnabled)
+    {
+        glEnable(GL_CULL_FACE);
+    }
+    else
+    {
+        glDisable(GL_CULL_FACE);
+    }
+    
+    
+    if (_isDepthEnabled)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    glDepthMask(_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
 //
 //
 //
@@ -469,19 +504,32 @@ void Renderer::processRenderCommand(RenderCommand* command)
     }
 }
 
-void Renderer::visitRenderQueue(const RenderQueue& queue)
+void Renderer::visitRenderQueue(RenderQueue& queue)
 {
     ssize_t visitIndex(0);
     ssize_t size = queue.size();
     ssize_t negZSize = queue.getSubQueueSize(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
     
+    queue.saveRenderState();
+    
     //Process NegZ Objects
+    if(_isDepthTestFor2D)
+    {
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(true);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+        glDepthMask(false);
+    }
     for (ssize_t index = 0; index < negZSize; ++index)
     {
         processRenderCommand(queue[index]);
     }
     flush();
     visitIndex = negZSize;
+    
     //Process Opaque Object
     const std::vector<RenderCommand*>& opaqueQueue = queue.getOpaqueCommands();
     if (opaqueQueue.size() > 0)
@@ -498,6 +546,7 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
     }
     flush();
     visitIndex += queue.getOpaqueQueueSize();
+    
     //Setup Transparent rendering
     if (opaqueQueue.size() > 0)
     {
@@ -520,6 +569,8 @@ void Renderer::visitRenderQueue(const RenderQueue& queue)
         processRenderCommand(queue[index]);
     }
     flush();
+    
+    queue.restoreRenderState();
 }
 
 void Renderer::render()
