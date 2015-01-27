@@ -57,12 +57,20 @@ public:
     ssize_t getOpaqueQueueSize() const { return _queue3DOpaque.size(); }
     const std::vector<RenderCommand*>& getOpaqueCommands() const { return _queue3DOpaque; }
 
+    void saveRenderState();
+    void restoreRenderState();
+    
 protected:
     std::vector<RenderCommand*> _queue3DOpaque;
     std::vector<RenderCommand*> _queue3DTransparent;
     std::vector<RenderCommand*> _queueNegZ;
     std::vector<RenderCommand*> _queue0;
     std::vector<RenderCommand*> _queuePosZ;
+    
+    //Render State related
+    bool _isCullEnabled;
+    bool _isDepthEnabled;
+    GLboolean _isDepthWrite;
 };
 
 struct RenderStackElement
@@ -162,7 +170,7 @@ protected:
     void flushTriangles();
 
     void processRenderCommand(RenderCommand* command);
-    void visitRenderQueue(const RenderQueue& queue);
+    void visitRenderQueue(RenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void fillQuads(const QuadCommand* cmd);
