@@ -56,6 +56,7 @@ public:
         GLOBALZ_ZERO = 3,
         GLOBALZ_POS = 4,
         QUEUE_GROUP_SIZE = 5,
+        QUEUE_COUNT,
     };
 
 public:

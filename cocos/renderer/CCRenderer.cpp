@@ -129,7 +129,7 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 void RenderQueue::clear()
 {
     _commands.clear();
-    for(int index = GLOBALZ_NEG; index <= GLOBALZ_POS; ++index)
+    for(int index = 0; index < QUEUE_COUNT; ++index)
     {
         _commands.push_back(std::vector<RenderCommand*>());
     }
