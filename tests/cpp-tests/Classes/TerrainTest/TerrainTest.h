@@ -59,6 +59,8 @@ public:
     void idle();
     cocos2d::Vec3 _targetPos;
     void updateState();
+    float _headingAngle;
+    Vec3 _headingAxis;
 private:
 Terrain * _terrain;
 Camera * _cam;

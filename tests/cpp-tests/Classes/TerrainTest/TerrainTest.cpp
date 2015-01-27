@@ -2,8 +2,8 @@
 
 
 
-Vec3 camera_offset(0,30,90);
-
+Vec3 camera_offset(0,45,60);
+#define PLAYER_HEIGHT 0
 static std::function<Layer*()> createFunctions[] =
 {
     CL(TerrainSimple),
@@ -44,7 +44,7 @@ TerrainSimple::TerrainSimple()
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
-    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,500);
     camera->setCameraFlag(CameraFlag::USER1);
     addChild(camera);
 
@@ -150,7 +150,7 @@ TerrainWalkThru::TerrainWalkThru()
     _camera->setCameraFlag(CameraFlag::USER1);
     addChild(_camera);
 
-    Terrain::TerrainData a("TerrainTest/heightmap16.jpg","TerrainTest/sand.jpg");
+    Terrain::TerrainData a("TerrainTest/heightmap16.jpg","TerrainTest/sand.jpg",Size(32,32),3);
     _terrain = Terrain::create(a);
     _terrain->setScale(20);
 
@@ -159,14 +159,21 @@ TerrainWalkThru::TerrainWalkThru()
 
     _action = new PlayerAction(_camera,_terrain);
     _action->retain();
-    _player =Sprite3D::create("Sprite3DTest/orc.c3b");
+    _player =Sprite3D::create("Sprite3DTest/girl.c3b");
     _player->runAction(_action);
     _player->setCameraMask(2);
-    //_player->setScale(0.1);
-    _player->setPositionY(_terrain->getHeight(_player->getPosition3D()));
+    _player->setScale(0.08);
+    _player->setPositionY(_terrain->getHeight(_player->getPosition3D())+PLAYER_HEIGHT);
+
+    auto animation = Animation3D::create("Sprite3DTest/girl.c3b","Take 001");
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        _player->runAction(RepeatForever::create(animate));
+    }
 
     _camera->setPosition3D(_player->getPosition3D()+camera_offset);
-    _camera->setRotation3D(Vec3(-15,0,0));
+    _camera->setRotation3D(Vec3(-45,0,0));
 
     forward = Label::create("forward","arial",22);
     forward->setPosition(0,200);
@@ -184,10 +191,6 @@ TerrainWalkThru::TerrainWalkThru()
     right = Label::create("turn right","arial",22);
     right->setPosition(0,150);
     right->setAnchorPoint(Vec2(0,0));
-    addChild(forward);
-    addChild(backward);
-    addChild(left);
-    addChild(right);
     addChild(_player);
     addChild(_terrain);
 }
@@ -216,40 +219,6 @@ void TerrainWalkThru::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches
 
 void TerrainWalkThru::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
 {
-    auto touch = touches[0];
-    Size s = left->getContentSize();
-    Rect rect = Rect(left->getPositionX(), left->getPositionY(), s.width, s.height);
-    auto location = touch->getLocation();
-    if(rect.containsPoint(location))
-    {
-        //turn left
-        _action->turnLeft();
-    }
-
-    s = right->getContentSize();
-    rect = Rect(right->getPositionX(), right->getPositionY(), s.width, s.height);
-    if(rect.containsPoint(location))
-    {
-        //turn right
-        _action->turnRight();
-    }
-
-    s = forward->getContentSize();
-    rect = Rect(forward->getPositionX(), forward->getPositionY(), s.width, s.height);
-    if(rect.containsPoint(location))
-    {
-        //forward
-        _action->forward();
-    }
-
-    s = backward->getContentSize();
-    rect = Rect(backward->getPositionX(), backward->getPositionY(), s.width, s.height);
-    if(rect.containsPoint(location))
-    {
-        //backward
-        _action->backward();
-    }
-
 }
 
 void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
@@ -296,7 +265,11 @@ void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, 
                     startPosition = middlePoint;
             } 
             Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
-
+            dir = collisionPoint - _player->getPosition3D();
+            dir.y = 0;
+            dir.normalize();
+            _action->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
+            dir.cross(dir,Vec3(0,0,-1),&_action->_headingAxis);
             _action->_targetPos=collisionPoint;
             _action->forward();
         }
@@ -326,7 +299,6 @@ void PlayerAction::step(float dt)
             Vec3 offset = newFaceDir * 25.0f * dt;
             curPos+=offset;
             player->setPosition3D(curPos);
-            player->setPositionY(_terrain->getHeight(player->getPosition3D()));
         }
         break;
     case PLAYER_STATE_BACKWARD:
@@ -335,7 +307,6 @@ void PlayerAction::step(float dt)
             player->getNodeToWorldTransform().getForwardVector(&forward_vec);
             forward_vec.normalize();
             player->setPosition3D(player->getPosition3D()-forward_vec*15*dt);
-            player->setPositionY(_terrain->getHeight(player->getPosition3D()));
         }
         break;
     case PLAYER_STATE_LEFT:
@@ -351,10 +322,21 @@ void PlayerAction::step(float dt)
     default:
         break;
     }
+    Vec3 Normal;
+    float player_h = _terrain->getHeight(player->getPosition3D(),&Normal);
+    float dot_product = Normal.dot(Vec3(0,1,0));
+
+    player->setPositionY(player_h+PLAYER_HEIGHT);
+    Quaternion q2;
+    q2.createFromAxisAngle(Vec3(0,1,0),-M_PI,&q2);
+
+    Quaternion headingQ;
+    headingQ.createFromAxisAngle(_headingAxis,_headingAngle,&headingQ);
+    player->setRotationQuat(headingQ*q2);
     auto vec_offset =Vec4(camera_offset.x,camera_offset.y,camera_offset.z,1);
     vec_offset = player->getNodeToWorldTransform()*vec_offset;
-    _cam->setRotation3D(player->getRotation3D());
-    _cam->setPosition3D(Vec3(vec_offset.x,vec_offset.y,vec_offset.z));
+    // _cam->setRotation3D(player->getRotation3D());
+     _cam->setPosition3D(player->getPosition3D() + camera_offset);
     updateState();
 }
 
@@ -375,6 +357,7 @@ void PlayerAction::idle()
 
 PlayerAction::PlayerAction(Camera * cam,Terrain * terrain)
 {
+    _headingAngle = 0;
     _playerState = PLAYER_STATE_IDLE;
     _cam = cam;
     _terrain = terrain;

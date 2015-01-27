@@ -99,9 +99,9 @@ NS_CC_BEGIN
 
 bool Terrain::init()
 {
-    _lodDistance[0]=96;
-    _lodDistance[1]=288;
-    _lodDistance[2]=480;
+    _lodDistance[0]=288;
+    _lodDistance[1]=512;
+    _lodDistance[2]=1000;
     auto shader = GLProgram::createWithByteArrays(vertex_shader,fragment_shader_RGB_4_DETAIL);
     auto state = GLProgramState::create(shader);
     setGLProgramState(state);
@@ -241,12 +241,12 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
         }
 }
 
-float Terrain::getHeight(float x, float y ,float z)
+float Terrain::getHeight(float x, float y ,float z,Vec3 * normal)
 {
     Vec2 pos = Vec2(x,z);
 
     //top-left
-    Vec2 tl = Vec2(-1*_terrainData.mapScale*imageWidth/2,-1*_terrainData.mapScale*imageWidth/2);
+    Vec2 tl = Vec2(-1*_terrainData.mapScale*imageWidth/2,-1*_terrainData.mapScale*imageHeight/2);
     auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
     tl = Vec2(result.x,result.z);
 
@@ -266,19 +266,33 @@ float Terrain::getHeight(float x, float y ,float z)
     float v =image_y - (int)image_y;
     float i = (int)image_x;
     float j = (int)image_y;
+
+
     if(image_x>=imageWidth-1 || image_y >=imageHeight-1 || image_x<0 || image_y<0)
     {
         return y;
     }else
     {
+        float a = getImageHeight(i,j)*getScaleY();
+        float b = getImageHeight(i,j+1)*getScaleY();
+        float c = getImageHeight(i+1,j)*getScaleY();
+        float d = getImageHeight(i+1,j+1)*getScaleY();
+        if(normal)
+        {
+            normal->x = c - b;
+            normal->y = 2;
+            normal->z = d - a;
+            normal->normalize();
+            //(*normal) = (1-u)*(1-v)*getNormal(i,j)+ (1-u)*v*getNormal(i,j+1) + u*(1-v)*getNormal(i+1,j)+ u*v*getNormal(i+1,j+1);
+        }
         float reuslt =  (1-u)*(1-v)*getImageHeight(i,j)*getScaleY() + (1-u)*v*getImageHeight(i,j+1)*getScaleY() + u*(1-v)*getImageHeight(i+1,j)*getScaleY() + u*v*getImageHeight(i+1,j+1)*getScaleY();
         return reuslt;
     }
 }
 
-float Terrain::getHeight(Vec3 pos)
+float Terrain::getHeight(Vec3 pos,Vec3*Normal)
 {
-    return getHeight(pos.x,pos.y,pos.z);
+    return getHeight(pos.x,pos.y,pos.z,Normal);
 }
 
 float Terrain::getImageHeight(int pixel_x,int pixel_y)
@@ -385,6 +399,20 @@ Terrain::~Terrain()
         }
     }
      free(_chunkesArray);
+}
+
+cocos2d::Vec3 Terrain::getNormal(int pixel_x,int pixel_y)
+{
+    float a = getImageHeight(pixel_x,pixel_y)*getScaleY();
+    float b = getImageHeight(pixel_x,pixel_y+1)*getScaleY();
+    float c = getImageHeight(pixel_x+1,pixel_y)*getScaleY();
+    float d = getImageHeight(pixel_x+1,pixel_y+1)*getScaleY();
+    Vec3 normal;
+    normal.x = c - b;
+    normal.y = 2;
+    normal.z = d - a;
+    normal.normalize();
+    return normal;
 }
 
 void Terrain::Chunk::finish()

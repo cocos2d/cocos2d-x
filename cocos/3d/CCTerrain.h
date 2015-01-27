@@ -193,9 +193,9 @@ public:
     /*create entry*/
     static Terrain * create(TerrainData &parameter);
     /*get specified position's height mapping to the terrain*/
-    float getHeight(float x, float y, float z);
-    float getHeight(Vec3 pos);  
-
+    float getHeight(float x, float y, float z,Vec3 * normal = NULL);
+    float getHeight(Vec3 pos,Vec3 * nromal = NULL);  
+    Vec3 getNormal(int pixel_x,int pixel_y);
     /*get height from the raw height map*/
     float getImageHeight(int pixel_x,int pixel_y);
     /*Debug Use only, show the wireline instead of the surface. only support desktop platform*/
