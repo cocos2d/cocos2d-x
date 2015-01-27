@@ -481,6 +481,9 @@ InnerActionFrame::InnerActionFrame()
 void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     auto innerActiontimeline = static_cast<ActionTimeline*>(_node->getActionByTag(_node->getTag()));
+    if( nullptr == innerActiontimeline)
+        return;
+    
     if (InnerActionType::SingleFrame == _innerActionType)
     {
         innerActiontimeline->gotoFrameAndPause(_singleFrameIndex);
