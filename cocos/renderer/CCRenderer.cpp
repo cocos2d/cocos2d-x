@@ -511,7 +511,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Global-Z < 0 Objects
     //
-    const std::vector<RenderCommand*>& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
+    const auto& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
     if (zNegQueue.size() > 0)
     {
         if(_isDepthTestFor2D)
@@ -534,7 +534,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Opaque Object
     //
-    const std::vector<RenderCommand*>& opaqueQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D);
+    const auto& opaqueQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D);
     if (opaqueQueue.size() > 0)
     {
         //Clear depth to achieve layered rendering
@@ -552,7 +552,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process 3D Transparent object
     //
-    std::vector<RenderCommand*> transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
+    const auto& transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
     if (transQueue.size() > 0)
     {
         glEnable(GL_DEPTH_TEST);
@@ -568,7 +568,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Global-Z = 0 Queue
     //
-    std::vector<RenderCommand*> zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
+    const auto& zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
     if (zZeroQueue.size() > 0)
     {
         if(_isDepthTestFor2D)
@@ -595,7 +595,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Global-Z > 0 Queue
     //
-    std::vector<RenderCommand*> zPosQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS);
+    const auto& zPosQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS);
     if (zPosQueue.size() > 0)
     {
         for (auto it = zPosQueue.cbegin(); it != zPosQueue.cend(); ++it)
