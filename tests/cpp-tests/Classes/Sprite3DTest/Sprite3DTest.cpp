@@ -2212,6 +2212,7 @@ void UseCaseSprite3D::switchCase()
     {
         auto layer = LayerColor::create(Color4B(0, 0, 100, 255), s.width / 2.f, s.height / 2.f);
         layer->setPosition(s.width * 0.25f, s.height * 0.25f);
+        layer->setGlobalZOrder(-1);
         addChild(layer);
         
         std::string filename = "Sprite3DTest/girl.c3b";
