@@ -839,7 +839,6 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         {
             node = createNodeWithFlatBuffersFile(filePath);
             action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
-            
         }
         else
         {
@@ -1171,9 +1170,8 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         cocostudio::timeline::ActionTimeline* action = nullptr;
         if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
-            node = createNodeWithFlatBuffersFile(filePath);
-            action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
-            
+            node = createNodeWithFlatBuffersForSimulator(filePath);
+            action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator(filePath);
         }
         else
         {
