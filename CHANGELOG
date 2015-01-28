@@ -11,12 +11,14 @@ cocos2d-x-3.4 xxx
     [FIX]           Lua-binding:studio-support: AnimationInfo is not binded 
     [FIX]           New audio: not close file descriptor leads to that may causes game freeze if playing two many times(may be more than 1000) on Android
     [FIX]           Node: anchor point has not effect to rotation, it always rotate along (0, 0)
+    [FIX]           Physics integration: Scale9Sprite can't run `Move` action and `Scale` action if used physical scene
     [FIX]           SpriteFrameCache: `addSpriteFramesWithFil`e may crash if plist file doesn't exist
     [FIX]           Sprite3D: material files (.mtl) are not loaded for any object when creating from an .obj file
     [FIX]           UI::ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
     [FIX]           UI::Slider: when scale9 is enabled, the progress bar's rendering height is wrong
     [FIX]           UI:Scale9Sprite: some position information will be lost when toggling `Scale9` state
     [FIX]           UI::TextField: will get wrong event message if clicking `TextField` twice
+    [FIX]           UI::TextField: result of `getContentSize` is wrong if it is invoked in insert or delete event callback
     [FIX]           UI::WebView: base URL can not work
 
 cocos2d-x-3.4rc1 Jan.15 2015
