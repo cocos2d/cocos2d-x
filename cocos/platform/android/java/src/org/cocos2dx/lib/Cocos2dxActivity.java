@@ -44,7 +44,6 @@ import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.opengl.GLSurfaceView;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
     // ===========================================================
@@ -252,17 +251,25 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onResume() {
         super.onResume();
-
-        Cocos2dxHelper.onResume();
-        this.mGLSurfaceView.onResume();
+    }
+    
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        
+        if (hasFocus) {
+            Cocos2dxHelper.onResume();
+            mGLSurfaceView.onResume();
+        }
+        else {
+            Cocos2dxHelper.onPause();
+            mGLSurfaceView.onPause();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        
-        Cocos2dxHelper.onPause();
-        this.mGLSurfaceView.onPause();
     }
     
     @Override
