@@ -327,8 +327,11 @@ cc.KeyCodeKey =
     "KEY_RETURN",
     "KEY_CAPS_LOCK",
     "KEY_SHIFT",
+    "KEY_RIGHT_SHIFT",
     "KEY_CTRL",
+    "KEY_RIGHT_CTRL",
     "KEY_ALT",
+    "KEY_RIGHT_ALT",
     "KEY_MENU",
     "KEY_HYPER",
     "KEY_INSERT",
@@ -488,6 +491,9 @@ for k,v in ipairs(cc.KeyCodeKey) do
 end
 
 cc.KeyCode.KEY_BACK = cc.KeyCode.KEY_ESCAPE
+cc.KeyCode.KEY_LEFT_SHIFT = cc.KeyCode.KEY_SHIFT
+cc.KeyCode.KEY_LEFT_CTRL  = cc.KeyCode.KEY_CTRL
+cc.KeyCode.KEY_LEFT_ALT   = cc.KeyCode.KEY_ALT
 
 cc.EventAssetsManagerEx =
 {
