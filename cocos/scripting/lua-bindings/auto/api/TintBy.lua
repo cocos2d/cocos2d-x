@@ -19,6 +19,7 @@
 -- @function [parent=#TintBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return TintBy#TintBy self (return value: cc.TintBy)
         
 --------------------------------
 -- 
@@ -37,5 +38,6 @@
 -- @function [parent=#TintBy] update 
 -- @param self
 -- @param #float time
+-- @return TintBy#TintBy self (return value: cc.TintBy)
         
 return nil

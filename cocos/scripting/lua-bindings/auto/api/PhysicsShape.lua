@@ -17,12 +17,14 @@
 -- @function [parent=#PhysicsShape] setGroup 
 -- @param self
 -- @param #int group
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsShape] setDensity 
 -- @param self
 -- @param #float density
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 --  get mass 
@@ -55,6 +57,7 @@
 -- @function [parent=#PhysicsShape] setCategoryBitmask 
 -- @param self
 -- @param #int bitmask
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- 
@@ -67,6 +70,7 @@
 -- @function [parent=#PhysicsShape] setMoment 
 -- @param self
 -- @param #float moment
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 --  Test point is in shape or not 
@@ -110,6 +114,7 @@
 -- @function [parent=#PhysicsShape] setMass 
 -- @param self
 -- @param #float mass
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- 
@@ -130,6 +135,7 @@
 -- @function [parent=#PhysicsShape] setCollisionBitmask 
 -- @param self
 -- @param #int bitmask
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 --  get moment 
@@ -154,18 +160,21 @@
 -- @function [parent=#PhysicsShape] setFriction 
 -- @param self
 -- @param #float friction
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsShape] setMaterial 
 -- @param self
 -- @param #cc.PhysicsMaterial material
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsShape] setTag 
 -- @param self
 -- @param #int tag
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- A mask that defines which categories of bodies cause intersection notifications with this physics body.<br>
@@ -174,12 +183,14 @@
 -- @function [parent=#PhysicsShape] setContactTestBitmask 
 -- @param self
 -- @param #int bitmask
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsShape] setRestitution 
 -- @param self
 -- @param #float restitution
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
         
 --------------------------------
 --  Get the body that this shape attaches 

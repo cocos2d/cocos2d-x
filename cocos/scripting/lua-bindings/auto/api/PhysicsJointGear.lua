@@ -9,6 +9,7 @@
 -- @function [parent=#PhysicsJointGear] setRatio 
 -- @param self
 -- @param #float ratchet
+-- @return PhysicsJointGear#PhysicsJointGear self (return value: cc.PhysicsJointGear)
         
 --------------------------------
 -- 
@@ -21,6 +22,7 @@
 -- @function [parent=#PhysicsJointGear] setPhase 
 -- @param self
 -- @param #float phase
+-- @return PhysicsJointGear#PhysicsJointGear self (return value: cc.PhysicsJointGear)
         
 --------------------------------
 -- 

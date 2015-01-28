@@ -19,6 +19,7 @@
 -- @function [parent=#ActionTween] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionTween#ActionTween self (return value: cc.ActionTween)
         
 --------------------------------
 -- 
@@ -31,6 +32,7 @@
 -- @function [parent=#ActionTween] update 
 -- @param self
 -- @param #float dt
+-- @return ActionTween#ActionTween self (return value: cc.ActionTween)
         
 --------------------------------
 -- 

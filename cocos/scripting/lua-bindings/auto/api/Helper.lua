@@ -21,6 +21,7 @@
 -- @function [parent=#Helper] changeLayoutSystemActiveState 
 -- @param self
 -- @param #bool bActive
+-- @return Helper#Helper self (return value: ccui.Helper)
         
 --------------------------------
 -- 
@@ -57,5 +58,6 @@
 -- @function [parent=#Helper] doLayout 
 -- @param self
 -- @param #cc.Node rootNode
+-- @return Helper#Helper self (return value: ccui.Helper)
         
 return nil

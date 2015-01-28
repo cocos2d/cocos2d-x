@@ -8,6 +8,7 @@
 -- 
 -- @function [parent=#Scale9Sprite] disableCascadeColor 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
@@ -39,6 +40,7 @@
 -- @function [parent=#Scale9Sprite] setFlippedY 
 -- @param self
 -- @param #bool flippedY
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- Sets whether the widget should be flipped horizontally or not.<br>
@@ -46,23 +48,27 @@
 -- @function [parent=#Scale9Sprite] setFlippedX 
 -- @param self
 -- @param #bool flippedX
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setScale9Enabled 
 -- @param self
 -- @param #bool enabled
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] disableCascadeOpacity 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setInsetBottom 
 -- @param self
 -- @param #float bottomInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, string         
@@ -84,6 +90,7 @@
 -- @function [parent=#Scale9Sprite] setInsetTop 
 -- @param self
 -- @param #float topInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, cc.Sprite, rect_table, bool, rect_table         
@@ -105,6 +112,7 @@
 -- @function [parent=#Scale9Sprite] setPreferredSize 
 -- @param self
 -- @param #size_table size
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -118,6 +126,7 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -177,6 +186,7 @@
 -- @function [parent=#Scale9Sprite] setInsetLeft 
 -- @param self
 -- @param #float leftInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, cc.SpriteFrame         
@@ -198,6 +208,7 @@
 -- @function [parent=#Scale9Sprite] setCapInsets 
 -- @param self
 -- @param #rect_table rect
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- Return the flag which indicates whether the widget is flipped vertically or not.<br>
@@ -221,6 +232,7 @@
 -- @function [parent=#Scale9Sprite] setInsetRight 
 -- @param self
 -- @param #float rightInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, string, rect_table, rect_table         
@@ -258,18 +270,21 @@
 -- @function [parent=#Scale9Sprite] setAnchorPoint 
 -- @param self
 -- @param #vec2_table anchorPoint
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setScaleY 
 -- @param self
 -- @param #float scaleY
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setScaleX 
 -- @param self
 -- @param #float scaleX
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -288,11 +303,13 @@
 -- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] cleanup 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, float, float         
@@ -301,18 +318,21 @@
 -- @param self
 -- @param #float scalex
 -- @param #float scaley
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] updateDisplayedColor 
 -- @param self
 -- @param #color3b_table parentColor
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setContentSize 
 -- @param self
 -- @param #size_table size
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -324,5 +344,6 @@
 -- js ctor
 -- @function [parent=#Scale9Sprite] Scale9Sprite 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 return nil

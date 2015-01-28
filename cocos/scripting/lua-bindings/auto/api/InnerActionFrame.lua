@@ -15,12 +15,14 @@
 -- @function [parent=#InnerActionFrame] setStartFrameIndex 
 -- @param self
 -- @param #int frameIndex
+-- @return InnerActionFrame#InnerActionFrame self (return value: ccs.InnerActionFrame)
         
 --------------------------------
 -- 
 -- @function [parent=#InnerActionFrame] setInnerActionType 
 -- @param self
 -- @param #int type
+-- @return InnerActionFrame#InnerActionFrame self (return value: ccs.InnerActionFrame)
         
 --------------------------------
 -- 
@@ -44,5 +46,6 @@
 -- 
 -- @function [parent=#InnerActionFrame] InnerActionFrame 
 -- @param self
+-- @return InnerActionFrame#InnerActionFrame self (return value: ccs.InnerActionFrame)
         
 return nil

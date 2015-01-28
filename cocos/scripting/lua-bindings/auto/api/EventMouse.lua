@@ -40,6 +40,7 @@
 -- @param self
 -- @param #float scrollX
 -- @param #float scrollY
+-- @return EventMouse#EventMouse self (return value: cc.EventMouse)
         
 --------------------------------
 --  returns the start touch location in screen coordinates 
@@ -58,6 +59,7 @@
 -- @function [parent=#EventMouse] setMouseButton 
 -- @param self
 -- @param #int button
+-- @return EventMouse#EventMouse self (return value: cc.EventMouse)
         
 --------------------------------
 --  returns the current touch location in screen coordinates 
@@ -95,11 +97,13 @@
 -- @param self
 -- @param #float x
 -- @param #float y
+-- @return EventMouse#EventMouse self (return value: cc.EventMouse)
         
 --------------------------------
 -- 
 -- @function [parent=#EventMouse] EventMouse 
 -- @param self
 -- @param #int mouseEventCode
+-- @return EventMouse#EventMouse self (return value: cc.EventMouse)
         
 return nil

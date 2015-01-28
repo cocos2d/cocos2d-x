@@ -26,5 +26,6 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return TransitionTurnOffTiles#TransitionTurnOffTiles self (return value: cc.TransitionTurnOffTiles)
         
 return nil

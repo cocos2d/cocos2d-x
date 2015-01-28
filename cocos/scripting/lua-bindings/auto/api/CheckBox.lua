@@ -12,6 +12,7 @@
 -- @param self
 -- @param #string backGroundSelected
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load backGroundDisabled texture for checkbox.<br>
@@ -21,18 +22,21 @@
 -- @param self
 -- @param #string backGroundDisabled
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- 
 -- @function [parent=#CheckBox] setSelected 
 -- @param self
 -- @param #bool selected
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- 
 -- @function [parent=#CheckBox] addEventListener 
 -- @param self
 -- @param #function callback
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load cross texture for checkbox.<br>
@@ -42,6 +46,7 @@
 -- @param self
 -- @param #string 
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- 
@@ -64,6 +69,7 @@
 -- @param #string backGroundDisabled
 -- @param #string frontCrossDisabled
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load backGround texture for checkbox.<br>
@@ -73,6 +79,7 @@
 -- @param self
 -- @param #string backGround
 -- @param #int type
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load frontCrossDisabled texture for checkbox.<br>
@@ -82,6 +89,7 @@
 -- @param self
 -- @param #string frontCrossDisabled
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- @overload self, string, string, string, string, string, int         
@@ -124,5 +132,6 @@
 -- Default constructor
 -- @function [parent=#CheckBox] CheckBox 
 -- @param self
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 return nil

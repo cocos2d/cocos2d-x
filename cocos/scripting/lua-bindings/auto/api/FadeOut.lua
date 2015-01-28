@@ -9,6 +9,7 @@
 -- @function [parent=#FadeOut] setReverseAction 
 -- @param self
 -- @param #cc.FadeTo ac
+-- @return FadeOut#FadeOut self (return value: cc.FadeOut)
         
 --------------------------------
 --  creates the action 
@@ -22,6 +23,7 @@
 -- @function [parent=#FadeOut] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return FadeOut#FadeOut self (return value: cc.FadeOut)
         
 --------------------------------
 -- 

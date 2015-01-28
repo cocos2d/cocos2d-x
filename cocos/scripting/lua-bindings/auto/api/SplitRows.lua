@@ -17,6 +17,7 @@
 -- @function [parent=#SplitRows] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SplitRows#SplitRows self (return value: cc.SplitRows)
         
 --------------------------------
 -- 
@@ -29,5 +30,6 @@
 -- @function [parent=#SplitRows] update 
 -- @param self
 -- @param #float time
+-- @return SplitRows#SplitRows self (return value: cc.SplitRows)
         
 return nil

@@ -9,12 +9,14 @@
 -- @function [parent=#Animate3D] setSpeed 
 -- @param self
 -- @param #float speed
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] setWeight 
 -- @param self
 -- @param #float weight
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- get & set speed, negative speed means playing reverse 
@@ -64,6 +66,7 @@
 -- @function [parent=#Animate3D] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
@@ -81,17 +84,20 @@
 -- 
 -- @function [parent=#Animate3D] stop 
 -- @param self
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] update 
 -- @param self
 -- @param #float t
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 
 -- @function [parent=#Animate3D] step 
 -- @param self
 -- @param #float dt
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 return nil

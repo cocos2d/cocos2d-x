@@ -15,6 +15,7 @@
 -- @function [parent=#EventCustom] setDataString 
 -- @param self
 -- @param #string str
+-- @return EventCustom#EventCustom self (return value: cc.EventCustom)
         
 --------------------------------
 --  Gets event name 
@@ -27,5 +28,6 @@
 -- @function [parent=#EventCustom] EventCustom 
 -- @param self
 -- @param #string eventName
+-- @return EventCustom#EventCustom self (return value: cc.EventCustom)
         
 return nil

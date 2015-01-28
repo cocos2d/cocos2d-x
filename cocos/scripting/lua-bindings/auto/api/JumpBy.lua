@@ -19,6 +19,7 @@
 -- @function [parent=#JumpBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return JumpBy#JumpBy self (return value: cc.JumpBy)
         
 --------------------------------
 -- 
@@ -37,5 +38,6 @@
 -- @function [parent=#JumpBy] update 
 -- @param self
 -- @param #float time
+-- @return JumpBy#JumpBy self (return value: cc.JumpBy)
         
 return nil

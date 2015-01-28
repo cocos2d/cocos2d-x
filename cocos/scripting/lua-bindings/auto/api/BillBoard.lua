@@ -15,6 +15,7 @@
 -- @function [parent=#BillBoard] setMode 
 -- @param self
 -- @param #int mode
+-- @return BillBoard#BillBoard self (return value: cc.BillBoard)
         
 --------------------------------
 -- @overload self, string, int         

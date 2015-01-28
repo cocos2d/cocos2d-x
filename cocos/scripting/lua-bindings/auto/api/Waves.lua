@@ -15,12 +15,14 @@
 -- @function [parent=#Waves] setAmplitude 
 -- @param self
 -- @param #float amplitude
+-- @return Waves#Waves self (return value: cc.Waves)
         
 --------------------------------
 -- 
 -- @function [parent=#Waves] setAmplitudeRate 
 -- @param self
 -- @param #float amplitudeRate
+-- @return Waves#Waves self (return value: cc.Waves)
         
 --------------------------------
 -- 
@@ -51,5 +53,6 @@
 -- @function [parent=#Waves] update 
 -- @param self
 -- @param #float time
+-- @return Waves#Waves self (return value: cc.Waves)
         
 return nil

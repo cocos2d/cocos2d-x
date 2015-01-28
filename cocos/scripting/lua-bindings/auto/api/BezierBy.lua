@@ -9,6 +9,7 @@
 -- @function [parent=#BezierBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return BezierBy#BezierBy self (return value: cc.BezierBy)
         
 --------------------------------
 -- 
@@ -27,5 +28,6 @@
 -- @function [parent=#BezierBy] update 
 -- @param self
 -- @param #float time
+-- @return BezierBy#BezierBy self (return value: cc.BezierBy)
         
 return nil

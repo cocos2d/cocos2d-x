@@ -22,6 +22,7 @@
 -- @function [parent=#EaseQuadraticActionIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseQuadraticActionIn#EaseQuadraticActionIn self (return value: cc.EaseQuadraticActionIn)
         
 --------------------------------
 -- 

@@ -21,6 +21,7 @@
 -- @function [parent=#ToggleVisibility] update 
 -- @param self
 -- @param #float time
+-- @return ToggleVisibility#ToggleVisibility self (return value: cc.ToggleVisibility)
         
 --------------------------------
 -- 

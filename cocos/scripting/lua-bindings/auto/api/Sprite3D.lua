@@ -9,6 +9,7 @@
 -- @function [parent=#Sprite3D] setCullFaceEnabled 
 -- @param self
 -- @param #bool enable
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- @overload self, cc.Texture2D         
@@ -16,6 +17,7 @@
 -- @function [parent=#Sprite3D] setTexture
 -- @param self
 -- @param #string texFile
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
 
 --------------------------------
 -- 
@@ -27,6 +29,7 @@
 -- remove all attach nodes
 -- @function [parent=#Sprite3D] removeAllAttachNode 
 -- @param self
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- get mesh
@@ -39,12 +42,14 @@
 -- @function [parent=#Sprite3D] setCullFace 
 -- @param self
 -- @param #unsigned int cullFace
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 --  light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff 
 -- @function [parent=#Sprite3D] setLightMask 
 -- @param self
 -- @param #unsigned int mask
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- 
@@ -63,6 +68,7 @@
 -- @function [parent=#Sprite3D] removeAttachNode 
 -- @param self
 -- @param #string boneName
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- 
@@ -112,11 +118,13 @@
 -- @function [parent=#Sprite3D] setGLProgramState 
 -- @param self
 -- @param #cc.GLProgramState glProgramState
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 --  just rember bind attributes 
 -- @function [parent=#Sprite3D] setGLProgram 
 -- @param self
 -- @param #cc.GLProgram glprogram
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 return nil

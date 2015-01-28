@@ -19,6 +19,7 @@
 -- @function [parent=#JumpTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return JumpTo#JumpTo self (return value: cc.JumpTo)
         
 --------------------------------
 -- 

@@ -9,6 +9,7 @@
 -- @function [parent=#PhysicsJointMotor] setRate 
 -- @param self
 -- @param #float rate
+-- @return PhysicsJointMotor#PhysicsJointMotor self (return value: cc.PhysicsJointMotor)
         
 --------------------------------
 -- 

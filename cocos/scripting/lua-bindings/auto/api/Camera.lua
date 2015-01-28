@@ -47,12 +47,14 @@
 -- @param self
 -- @param #vec3_table target
 -- @param #vec3_table up
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- 
 -- @function [parent=#Camera] setCameraFlag 
 -- @param self
 -- @param #int flag
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 --  create default camera, the camera type depends on Director::getProjection 
@@ -100,5 +102,6 @@
 -- @function [parent=#Camera] setPosition3D 
 -- @param self
 -- @param #vec3_table position
+-- @return Camera#Camera self (return value: cc.Camera)
         
 return nil

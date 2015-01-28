@@ -9,6 +9,7 @@
 -- Shall be overridden in subclasses
 -- @function [parent=#AtlasNode] updateAtlasValues 
 -- @param self
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -21,6 +22,7 @@
 -- @function [parent=#AtlasNode] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas textureAtlas
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -39,12 +41,14 @@
 -- @function [parent=#AtlasNode] setTexture 
 -- @param self
 -- @param #cc.Texture2D texture
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
 -- @function [parent=#AtlasNode] setQuadsToDraw 
 -- @param self
 -- @param #int quadsToDraw
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 --  creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render
@@ -63,6 +67,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -75,6 +80,7 @@
 -- @function [parent=#AtlasNode] setColor 
 -- @param self
 -- @param #color3b_table color
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -87,11 +93,13 @@
 -- @function [parent=#AtlasNode] setOpacityModifyRGB 
 -- @param self
 -- @param #bool isOpacityModifyRGB
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
 -- @function [parent=#AtlasNode] setOpacity 
 -- @param self
 -- @param #unsigned char opacity
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 return nil

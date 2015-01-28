@@ -21,6 +21,7 @@
 -- @function [parent=#Show] update 
 -- @param self
 -- @param #float time
+-- @return Show#Show self (return value: cc.Show)
         
 --------------------------------
 -- 

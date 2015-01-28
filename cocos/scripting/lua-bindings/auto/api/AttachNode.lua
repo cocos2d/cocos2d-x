@@ -25,5 +25,6 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return AttachNode#AttachNode self (return value: cc.AttachNode)
         
 return nil
