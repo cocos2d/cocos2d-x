@@ -341,8 +341,8 @@ void TestTimelineAnimationList::onEnter()
     ActionTimelineTestLayer::onEnter();
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-    cocostudio::timeline::AnimationInfo standinfo{"stand", 0, 40};
-    cocostudio::timeline::AnimationInfo walkinfo{"walk", 41, 81};
+    cocostudio::timeline::AnimationInfo standinfo("stand", 0, 40);
+    cocostudio::timeline::AnimationInfo walkinfo("walk", 41, 81);
     action->addAnimationInfo(standinfo);
     action->addAnimationInfo(walkinfo);
     node->runAction(action);
