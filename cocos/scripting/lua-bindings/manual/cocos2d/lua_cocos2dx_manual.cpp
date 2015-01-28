@@ -7777,7 +7777,7 @@ static int tolua_cocos2d_Mat4_decompose(lua_State* tolua_S)
             lua_rawset(tolua_S, -3);
             
             lua_pushstring(tolua_S, "translation");
-            lua_pushnil(tolua_S);
+            vec3_to_luaval(tolua_S, translation);
             lua_rawset(tolua_S, -3);
             
             return 1;
