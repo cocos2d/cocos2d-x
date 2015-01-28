@@ -617,6 +617,8 @@ void CCLabelBMFont::createFontChars()
         {
             nextFontPositionX = 0;
             nextFontPositionY -= m_pConfiguration->m_nCommonHeight;
+            if (getChildByTag(i)) // CCLabelBMFont::updateLabel() assumes tags for '\n' don't have a char sprite
+                removeChildByTag(i);
             continue;
         }
         
