@@ -153,6 +153,7 @@ void MeshCommand::setDepthTestEnabled(bool enable)
 
 void MeshCommand::setDepthWriteEnabled(bool enable)
 {
+    _forceDepthWrite = enable;
     _depthWriteEnabled = enable;
 }
 
@@ -166,7 +167,11 @@ void MeshCommand::setTransparent(bool value)
     _isTransparent = value;
     //Skip batching for transparent mesh
     _skipBatching = value;
-    setDepthWriteEnabled(!_isTransparent);
+    
+    if (!_forceDepthWrite)
+    {
+        _depthWriteEnabled = true;
+    }
 }
 
 MeshCommand::~MeshCommand()

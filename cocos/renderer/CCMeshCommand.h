@@ -127,6 +127,7 @@ protected:
     GLenum _cullFace;
     bool _depthTestEnabled;
     bool _depthWriteEnabled;
+    bool _forceDepthWrite;
     
     bool _renderStateCullFace;
     bool _renderStateDepthTest;
