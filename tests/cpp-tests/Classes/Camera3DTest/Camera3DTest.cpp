@@ -1194,6 +1194,7 @@ void CameraArcBallDemo::onTouchsMoved( const std::vector<Touch*> &touchs, Event 
             Vec3 axes;
             float angle;
             calculateArcBall(axes, angle, prelocation.x, prelocation.y, location.x, location.y);    //calculate  rotation quaternion parameters
+            CCLOG("axes is %f, %f,%f,angle is %f",axes.x, axes.y, axes.z, angle);
             Quaternion quat(axes, angle);                                                           //get rotation quaternion
             _rotationQuat = quat * _rotationQuat;
 
