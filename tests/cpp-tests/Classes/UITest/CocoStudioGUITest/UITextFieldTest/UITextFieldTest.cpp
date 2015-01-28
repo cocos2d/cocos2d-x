@@ -475,9 +475,7 @@ void UITextFieldTest_PlaceHolderColor::textFieldEvent(Ref *pSender, TextField::E
         case TextField::EventType::INSERT_TEXT:
         {
             _displayValueLabel->setString(String::createWithFormat("insert words")->getCString());
-            TextField* textField = dynamic_cast<TextField*>(pSender);
-            auto& contentSize = textField->getContentSize();
-            CCLOG("%f, %f", contentSize.width, contentSize.height);
+            CCLOG("%f, %f", dynamic_cast<TextField*>(pSender)->getContentSize().width, dynamic_cast<TextField*>(pSender)->getContentSize().height);
         }
             break;
             
