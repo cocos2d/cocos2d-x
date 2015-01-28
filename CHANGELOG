@@ -17,6 +17,7 @@ cocos2d-x-3.4 xxx
     [FIX]           UI::Slider: when scale9 is enabled, the progress bar's rendering height is wrong
     [FIX]           UI:Scale9Sprite: some position information will be lost when toggling `Scale9` state
     [FIX]           UI::TextField: will get wrong event message if clicking `TextField` twice
+    [FIX]           UI::TextField: result of `getContentSize` is wrong if it is invoked in insert or delete event callback
     [FIX]           UI::WebView: base URL can not work
 
 cocos2d-x-3.4rc1 Jan.15 2015
