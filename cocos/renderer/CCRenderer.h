@@ -55,8 +55,7 @@ public:
         TRANSPARENT_3D = 2,
         GLOBALZ_ZERO = 3,
         GLOBALZ_POS = 4,
-        QUEUE_GROUP_SIZE = 5,
-        QUEUE_COUNT,
+        QUEUE_COUNT = 5,
     };
 
 public:

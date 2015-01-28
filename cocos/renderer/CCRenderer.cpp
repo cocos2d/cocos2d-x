@@ -92,7 +92,7 @@ void RenderQueue::push_back(RenderCommand* command)
 ssize_t RenderQueue::size() const
 {
     ssize_t result(0);
-    for(int index = 0; index < QUEUE_GROUP::QUEUE_GROUP_SIZE; ++index)
+    for(int index = 0; index < QUEUE_GROUP::QUEUE_COUNT; ++index)
     {
         result += _commands[index].size();
     }
@@ -110,7 +110,7 @@ void RenderQueue::sort()
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    for(int queIndex = 0; queIndex < QUEUE_GROUP::QUEUE_GROUP_SIZE; ++queIndex)
+    for(int queIndex = 0; queIndex < QUEUE_GROUP::QUEUE_COUNT; ++queIndex)
     {
         if(index < static_cast<ssize_t>(_commands[queIndex].size()))
             return _commands[queIndex][index];
