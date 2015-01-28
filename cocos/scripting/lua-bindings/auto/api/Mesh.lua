@@ -5,6 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- get mesh vertex attribute count
+-- @function [parent=#Mesh] getMeshVertexAttribCount 
+-- @param self
+-- @return long#long ret (return value: long)
+        
+--------------------------------
 -- @overload self, cc.Texture2D         
 -- @overload self, string         
 -- @function [parent=#Mesh] setTexture
@@ -32,10 +38,23 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
+-- get per vertex size in bytes
+-- @function [parent=#Mesh] getVertexSizeInBytes 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- 
 -- @function [parent=#Mesh] getBlendFunc 
 -- @param self
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+-- get MeshVertexAttribute by index
+-- @function [parent=#Mesh] getMeshVertexAttribute 
+-- @param self
+-- @param #int idx
+-- @return MeshVertexAttrib#MeshVertexAttrib ret (return value: cc.MeshVertexAttrib)
         
 --------------------------------
 -- 
