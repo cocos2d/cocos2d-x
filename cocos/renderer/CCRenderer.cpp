@@ -53,7 +53,7 @@ static bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 
 static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 {
-    return (a->getGlobalOrder() > b->getGlobalOrder()) || (a->getGlobalOrder() == b->getGlobalOrder() && a->getDepth() > b->getDepth());
+    return  a->getDepth() > b->getDepth();
 }
 
 // queue
@@ -129,10 +129,45 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 void RenderQueue::clear()
 {
     _commands.clear();
-    for(int index = GLOBALZ_NEG; index <= GLOBALZ_POS; ++index)
+    for(int index = 0; index < QUEUE_COUNT; ++index)
     {
         _commands.push_back(std::vector<RenderCommand*>());
     }
+}
+
+void RenderQueue::saveRenderState()
+{
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RenderQueue::restoreRenderState()
+{
+    if (_isCullEnabled)
+    {
+        glEnable(GL_CULL_FACE);
+    }
+    else
+    {
+        glDisable(GL_CULL_FACE);
+    }
+    
+    
+    if (_isDepthEnabled)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    glDepthMask(_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
 }
 
 //
@@ -469,57 +504,108 @@ void Renderer::processRenderCommand(RenderCommand* command)
     }
 }
 
-void Renderer::visitRenderQueue(const RenderQueue& queue)
+void Renderer::visitRenderQueue(RenderQueue& queue)
 {
-    ssize_t visitIndex(0);
-    ssize_t size = queue.size();
-    ssize_t negZSize = queue.getSubQueueSize(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
+    queue.saveRenderState();
     
-    //Process NegZ Objects
-    for (ssize_t index = 0; index < negZSize; ++index)
+    //
+    //Process Global-Z < 0 Objects
+    //
+    const std::vector<RenderCommand*>& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
+    if (zNegQueue.size() > 0)
     {
-        processRenderCommand(queue[index]);
-    }
-    flush();
-    visitIndex = negZSize;
-    //Process Opaque Object
-    const std::vector<RenderCommand*>& opaqueQueue = queue.getOpaqueCommands();
-    if (opaqueQueue.size() > 0)
-    {
-        glDepthMask(true);
-        glEnable(GL_DEPTH_TEST);
-        
-        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it) {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+        }
+        for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
+        {
             processRenderCommand(*it);
         }
-        
-        glDisable(GL_DEPTH_TEST);
-        glDepthMask(false);
+        flush();
     }
-    flush();
-    visitIndex += queue.getOpaqueQueueSize();
-    //Setup Transparent rendering
+    
+    //
+    //Process Opaque Object
+    //
+    const std::vector<RenderCommand*>& opaqueQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D);
     if (opaqueQueue.size() > 0)
     {
-        glEnable(GL_DEPTH_TEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
-    
-    if(_isDepthTestFor2D)
-    {
-        glEnable(GL_DEPTH_TEST);
+        //Clear depth to achieve layered rendering
         glDepthMask(true);
+        glClear(GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+        
+        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
     }
     
-    //Process Transparent Object
-    for (ssize_t index = visitIndex; index < size; ++index)
+    //
+    //Process 3D Transparent object
+    //
+    std::vector<RenderCommand*> transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
+    if (transQueue.size() > 0)
     {
-        processRenderCommand(queue[index]);
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(false);
+        
+        for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
     }
-    flush();
+    
+    //
+    //Process Global-Z = 0 Queue
+    //
+    std::vector<RenderCommand*> zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
+    if (zZeroQueue.size() > 0)
+    {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+        }
+        for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+        
+        glDepthMask(true);
+        glClear(GL_DEPTH_BUFFER_BIT);
+        glDepthMask(false);
+    }
+    
+    //
+    //Process Global-Z > 0 Queue
+    //
+    std::vector<RenderCommand*> zPosQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS);
+    if (zPosQueue.size() > 0)
+    {
+        for (auto it = zPosQueue.cbegin(); it != zPosQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    queue.restoreRenderState();
 }
 
 void Renderer::render()

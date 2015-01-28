@@ -56,6 +56,7 @@ public:
         GLOBALZ_ZERO = 3,
         GLOBALZ_POS = 4,
         QUEUE_GROUP_SIZE = 5,
+        QUEUE_COUNT,
     };
 
 public:
@@ -68,17 +69,20 @@ public:
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
+    inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
-    inline ssize_t getOpaqueQueueSize() const { return _commands[OPAQUE_3D].size(); }
-    inline const std::vector<RenderCommand*>& getOpaqueCommands() const { return _commands[OPAQUE_3D]; }
 
+    void saveRenderState();
+    void restoreRenderState();
+    
 protected:
+    
     std::vector<std::vector<RenderCommand*>> _commands;
-//    std::vector<RenderCommand*> _queue3DOpaque;
-//    std::vector<RenderCommand*> _queue3DTransparent;
-//    std::vector<RenderCommand*> _queueNegZ;
-//    std::vector<RenderCommand*> _queue0;
-//    std::vector<RenderCommand*> _queuePosZ;
+    
+    //Render State related
+    bool _isCullEnabled;
+    bool _isDepthEnabled;
+    GLboolean _isDepthWrite;
 };
 
 struct RenderStackElement
@@ -178,7 +182,7 @@ protected:
     void flushTriangles();
 
     void processRenderCommand(RenderCommand* command);
-    void visitRenderQueue(const RenderQueue& queue);
+    void visitRenderQueue(RenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void fillQuads(const QuadCommand* cmd);

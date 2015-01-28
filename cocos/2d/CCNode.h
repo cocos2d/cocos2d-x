@@ -1122,7 +1122,7 @@ public:
      *
      * @return An Action pointer
      */
-    Action* runAction(Action* action);
+    virtual Action* runAction(Action* action);
 
     /**
      * Stops and removes all actions from the running action list .

@@ -47,7 +47,7 @@ static std::function<Layer*()> createFunctions[] =
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-static Layer* nextSpriteTestAction()
+static Layer* nextTest()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
@@ -56,7 +56,7 @@ static Layer* nextSpriteTestAction()
     return layer;
 }
 
-static Layer* backSpriteTestAction()
+static Layer* backTest()
 {
     sceneIdx--;
     int total = MAX_LAYER;
@@ -67,7 +67,7 @@ static Layer* backSpriteTestAction()
     return layer;
 }
 
-static Layer* restartSpriteTestAction()
+static Layer* restartTest()
 {
     auto layer = (createFunctions[sceneIdx])();
     return layer;
@@ -135,6 +135,31 @@ std::string BillBoardRotationTest::title() const
 std::string BillBoardRotationTest::subtitle() const
 {
     return "All the sprites should still facing camera";
+}
+
+void BillBoardRotationTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(restartTest());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardRotationTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardRotationTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
 }
 
 //------------------------------------------------------------------
@@ -338,9 +363,35 @@ void BillBoardTest::rotateCameraCallback(Ref* sender,float value)
     _camera->setRotation3D(rotation3D);
 }
 
+
+void BillBoardTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(restartTest());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
 void BillBoardTestScene::runThisTest()
 {
-    auto layer = nextSpriteTestAction();
+    auto layer = nextTest();
     addChild(layer);
     Director::getInstance()->replaceScene(this);
 }
