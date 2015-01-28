@@ -552,7 +552,7 @@ function CameraRotationTest:onEnter()
         camControlNode:setRotation3D(rot)
 
         local worldPos = cc.vec3(0.0, 0.0, 0.0)
-        local decompose = mat4_decompose(camNode:getNodeToWorldTransform(), nil ,nil, worldPos)
+        local decompose = cc.mat4.new(camNode:getNodeToWorldTransform()):decompose(nil, nil, worldPos)
         worldPos = decompose.translation
         cc.Camera:getDefaultCamera():setPosition3D(worldPos)
         cc.Camera:getDefaultCamera():lookAt(camControlNode:getPosition3D())
@@ -1035,7 +1035,7 @@ function CameraArcBallDemo:updateCameraTransform()
     local trans = cc.mat4.createTranslation(cc.vec3(0.0, 10.0, self._distanceZ), cc.mat4.createIdentity())
     local rot = cc.mat4.createRotation(self._rotationQuat, cc.mat4.createIdentity())
     local center = cc.mat4.createTranslation(self._center, cc.mat4.createIdentity())
-    local result = mat4_multiply(mat4_multiply(trans, rot), center)
+    local result = cc.mat4.new(center:multiply(rot)):multiply(trans)
 
     self._camera:setNodeToParentTransform(result)
 end

@@ -480,6 +480,14 @@ function cc.mat4.transformVector(self, vector, dst)
     return mat4_transformVector(self, vector, dst)
 end
 
+function cc.mat4.multiply(self, mat)
+    return mat4_multiply(self, mat)
+end
+
+function cc.mat4.decompose(self, scale, rotation, translation)
+    return mat4_decompose(self, scale ,rotation, translation)
+end
+
 function cc.mat4.createIdentity()
     return cc.mat4.new(1.0 ,0.0, 0.0, 0.0,
                        0.0, 1.0, 0.0, 0.0,
