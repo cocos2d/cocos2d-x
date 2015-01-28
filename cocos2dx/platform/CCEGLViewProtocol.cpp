@@ -360,6 +360,16 @@ void CCEGLViewProtocol::clearTouchesDict()
 {
 	// Do this when the context is destroyed.
 	s_TouchesIntergerDict.removeAllObjects();
+    s_indexBitsUsed = 0;
+    for(int touchIndex = 0; touchIndex < CC_MAX_TOUCHES; ++touchIndex)
+    {
+        CCTouch* touch = s_pTouches[touchIndex];
+        s_pTouches[touchIndex] = NULL;
+        if(touch)
+        {
+            touch->release();
+        }
+    }
 }
 
 NS_CC_END
