@@ -160,8 +160,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCVertexIndexData.h"
-#include "renderer/CCPrimitive.h"
-#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCTrianglesCommand.h"
 
 // physics

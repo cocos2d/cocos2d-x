@@ -41,7 +41,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexIndexData.h"
 #include "base/CCDirector.h"
 #include "deprecated/CCString.h"
 
@@ -135,12 +135,12 @@ TMXLayer::~TMXLayer()
     
 }
 
-void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
+void TMXLayer::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
-    updateTotalQuads();
-    
     if( flags != 0 || _dirty || _quadsDirty )
     {
+        updateTotalQuads();
+
         Size s = Director::getInstance()->getWinSize();
         auto rect = Rect(0, 0, s.width, s.height);
         
@@ -150,37 +150,14 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         
         updateTiles(rect);
         updateIndexBuffer();
-        updatePrimitives();
+        updateBatchCommands();
+        
         _dirty = false;
     }
     
-    if(_renderCommands.size() < static_cast<size_t>(_primitives.size()))
-    {
-        _renderCommands.resize(_primitives.size());
-    }
-    
-    int index = 0;
-    for(const auto& iter : _primitives)
-    {
-        if(iter.second->getCount() > 0)
-        {
-            auto& cmd = _renderCommands[index++];
-            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform, flags);
+    for (auto& cmd : _renderCommands)
+        if (cmd.getCount() > 0)
             renderer->addCommand(&cmd);
-        }
-    }
-}
-
-void TMXLayer::onDraw(Primitive *primitive)
-{
-    GL::bindTexture2D(_texture->getName());
-    getGLProgramState()->apply(_modelViewTransform);
-    
-    GL::bindVAO(0);
-    primitive->draw();
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, primitive->getCount() * 4);
 }
 
 void TMXLayer::updateTiles(const Rect& culledRect)
@@ -401,26 +378,24 @@ Mat4 TMXLayer::tileToNodeTransform()
     
 }
 
-void TMXLayer::updatePrimitives()
+void TMXLayer::updateBatchCommands()
 {
-    for(const auto& iter : _indicesVertexZNumber)
+    auto batches = _indicesVertexZNumber.size();
+    if (_renderCommands.size() < batches)
+        _renderCommands.resize(batches);
+    
+    auto batch = 0;
+    for (const auto& iter : _indicesVertexZNumber)
     {
-        int start = _indicesVertexZOffsets.at(iter.first);
+        const auto z    = iter.first;
+        const auto start = _indicesVertexZOffsets.at(iter.first);
+        const auto count = iter.second;
         
-        auto primitiveIter= _primitives.find(iter.first);
-        if(primitiveIter == _primitives.end())
-        {
-            auto primitive = Primitive::create(_vData, _indexBuffer, GL_TRIANGLES);
-            primitive->setCount(iter.second * 6);
-            primitive->setStart(start * 6);
-            
-            _primitives.insert(iter.first, primitive);
-        }
-        else
-        {
-            primitiveIter->second->setCount(iter.second * 6);
-            primitiveIter->second->setStart(start * 6);
-        }
+        auto& batchCommand = _renderCommands[batch++];
+        
+        batchCommand.init(z, getGLProgram(), BlendFunc::ALPHA_NON_PREMULTIPLIED, _texture, _vData, _modelViewTransform);
+        batchCommand.setStart(start * 6);
+        batchCommand.setCount(iter.second * 6);
     }
 }
 

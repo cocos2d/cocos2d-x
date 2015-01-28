@@ -46,19 +46,27 @@ public:
 
     void execute();
 
+    unsigned getStart() const;
+    unsigned getCount() const;
+    void setStart(unsigned start);
+    void setCount(unsigned count);
+    
 protected:
     
     //Material
-    int32_t _materialID;
-    GLuint _textureID;
+    int32_t    _materialID;
+    GLuint     _textureID;
     GLProgram* _shader;
-    BlendFunc _blendType;
+    BlendFunc  _blendType;
 
-    TextureAtlas *_textureAtlas;
+    TextureAtlas* _textureAtlas;
     VertexData* _batch;
 
     // ModelView transform
     Mat4 _mv;
+    
+    unsigned _start;
+    unsigned _count;
 };
 NS_CC_END
 

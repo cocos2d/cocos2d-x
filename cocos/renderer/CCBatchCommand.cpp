@@ -23,23 +23,30 @@
  ****************************************************************************/
 
 
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
 #include "renderer/CCBatchCommand.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCVertexIndexData.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
 BatchCommand::BatchCommand()
-    : _textureID(0)
+    : _materialID(0)
+    , _textureID(0)
+    , _shader(nullptr)
     , _blendType(BlendFunc::DISABLE)
     , _textureAtlas(nullptr)
     , _batch(nullptr)
+    , _mv()
+    , _start(0)
+    , _count(0)
 {
     _type = RenderCommand::Type::BATCH_COMMAND;
-    _shader = nullptr;
 }
 
 void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
@@ -103,12 +110,33 @@ void BatchCommand::execute()
         if (_textureID)
             GL::bindTexture2D(_textureID);
         GL::blendFunc(_blendType.src, _blendType.dst);
-        _batch->draw();
+        auto drawn = _batch->draw(_start, _count);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, drawn);
     }
     else
     {
         CCASSERT(false, "BatchCommand::execute - nothing to draw");
     }
+}
+
+unsigned  BatchCommand::getStart() const
+{
+    return _start;
+}
+
+unsigned  BatchCommand::getCount() const
+{
+    return _count;
+}
+
+void BatchCommand::setStart(unsigned start)
+{
+    _start = start;
+}
+
+void BatchCommand::setCount(unsigned count)
+{
+    _count = count;
 }
 
 NS_CC_END

@@ -106,7 +106,7 @@ public:
     VertexStreamAttribute* getStreamAttribute(int semantic);
         
     // @brief update and draw the buffer.
-    void draw(unsigned start = 0, unsigned count = 0);
+    unsigned draw(unsigned start = 0, unsigned count = 0);
     
     // @brief true/false if all vertex buffers are empty
     bool empty() const;

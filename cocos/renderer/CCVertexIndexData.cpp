@@ -152,7 +152,7 @@ VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
     else return &iter->second._stream;
 }
 
-void VertexData::draw(unsigned start, unsigned count)
+unsigned VertexData::draw(unsigned start, unsigned count)
 {
     if (0 == count)
         count = this->count();
