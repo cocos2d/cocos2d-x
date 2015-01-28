@@ -161,7 +161,7 @@ void GLArrayBuffer::bindAndCommit(const void* elements, unsigned count, unsigned
     setDirty(false);
 }
 
-unsigned GLArrayBuffer::append(void* source, unsigned size, unsigned elements)
+unsigned GLArrayBuffer::append(void* source, unsigned elements)
 {
     CCASSERT(hasClient(), "Can only append data to arrays that have client buffers");
     updateElements(source, elements, _elementCount, true);

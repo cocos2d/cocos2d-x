@@ -122,7 +122,7 @@ public:
     void clear();
 
     // @brief append
-    unsigned append(void* source, unsigned size, unsigned elements = 1);
+    unsigned append(void* source, unsigned elements = 1);
 
     void recreate() const;
 

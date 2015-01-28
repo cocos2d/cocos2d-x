@@ -41,14 +41,6 @@ NS_CC_BEGIN
 
 class VertexData;
 class VertexBuffer;
-
-/** DrawNode
- Node that draws dots, segments and polygons.
- Faster than the "drawing primitives" since they draws everything in one single batch.
- 
- @since v2.1
- */
-
 class PointArray;
 
 class CC_DLL DrawNode : public Node
@@ -68,7 +60,7 @@ public:
         return nullptr;
     }
     
-    void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
+    void drawPoint(const Vec2& point, float pointSize, const Color4F &color);
     
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color, float pointSize = 1);
     
@@ -128,7 +120,11 @@ public:
     * @js NA
     * @lua NA
     */
-    const BlendFunc& getBlendFunc() const;
+    const BlendFunc& getBlendFunc() const
+    {
+        return _blendFunc;
+    }
+    
     /**
     * @code
     * When this function bound into js or lua,the parameter will be changed
@@ -136,10 +132,13 @@ public:
     * @endcode
     * @lua NA
     */
-    void setBlendFunc(const BlendFunc &blendFunc);
+    void setBlendFunc(const BlendFunc &blendFunc)
+    {
+        _blendFunc = blendFunc;
+    }
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
     
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
@@ -148,17 +147,17 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    BlendFunc   _blendFunc;
+    BlendFunc _blendFunc;
     
-    BatchCommand _batchCommandTriangles;
+    BatchCommand  _batchCommandTriangles;
     VertexData*   _vdTriangles;
     VertexBuffer* _vbTriangles;
 
-    BatchCommand _batchCommandPoints;
+    BatchCommand  _batchCommandPoints;
     VertexData*   _vdPoints;
     VertexBuffer* _vbPoints;
 
-    BatchCommand _batchCommandLines;
+    BatchCommand  _batchCommandLines;
     VertexData*   _vdLines;
     VertexBuffer* _vbLines;
 

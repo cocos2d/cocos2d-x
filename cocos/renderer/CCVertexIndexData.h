@@ -147,7 +147,7 @@ protected:
     VertexData(Primitive primitive);
     
     bool determineInterleave() const;
-    void append(GLArrayBuffer* buffer, void* source, unsigned size, unsigned count = 1);
+    void append(GLArrayBuffer* buffer, void* source, unsigned count = 1);
 
     
     // @brief returns the dirty status of the data or vertex streams

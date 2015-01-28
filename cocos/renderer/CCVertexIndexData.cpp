@@ -276,10 +276,10 @@ bool VertexData::determineInterleave() const
     return _buffers.size() == 1;
 }
 
-void VertexData::append(GLArrayBuffer* buffer, void* source, unsigned size, unsigned count)
+void VertexData::append(GLArrayBuffer* buffer, void* source, unsigned count)
 {
     _dirty = true;
-    buffer->append(source, size, count);
+    buffer->append(source, count);
 }
     
 void VertexData::recreate() const

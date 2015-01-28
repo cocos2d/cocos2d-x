@@ -235,7 +235,16 @@ struct V2F_C4B_T2F
     Tex2F          texCoords;
 };
 
+//! a Vec2 with a vertex point, and a color 4B
+struct V2F_C4B
+{
+    //! vertices (2F)
+    Vec2       vertices;
+    //! colors (4B)
+    Color4B        colors;
+};
 
+//! a Vec2 with a vertex point, a point size and a color 4B
 struct V2F_C4B_PF
 {
     //! vertices (2F)
