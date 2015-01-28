@@ -444,6 +444,9 @@ function Camera3DTestDemo:onExit()
 end
 
 function Camera3DTestDemo:init()
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+
     self:registerScriptHandler(function (event)
     if event == "enter" then
         self:onEnter()
