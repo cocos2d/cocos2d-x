@@ -54,9 +54,20 @@ class PointArray;
 class CC_DLL DrawNode : public Node
 {
 public:
-    /** creates and initialize a DrawNode node */
-    static DrawNode* create();
-
+    
+    template <class T = DrawNode>
+    static T* create()
+    {
+        auto ret = new (std::nothrow) T;
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+    
     void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
     
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color, float pointSize = 1);
@@ -126,10 +137,6 @@ public:
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);
-
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    void onDrawGLLine(const Mat4 &transform, uint32_t flags);
-    void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;

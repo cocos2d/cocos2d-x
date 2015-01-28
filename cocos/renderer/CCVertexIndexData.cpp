@@ -210,6 +210,8 @@ unsigned VertexData::draw(unsigned start, unsigned count)
     if (_vao)
         GL::bindVAO(0);
     GL::bindVBO(GL_ARRAY_BUFFER, 0);
+    
+    return count;
 }
 
 bool VertexData::empty() const

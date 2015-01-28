@@ -184,10 +184,14 @@ struct CC_DLL Color4F
 /** A texcoord composed of 2 floats: u, y
  @since v3.0
  */
-struct CC_DLL Tex2F {
+struct CC_DLL Tex2F
+{
     Tex2F(float _u, float _v): u(_u), v(_v) {}
-    
     Tex2F(): u(0.f), v(0.f) {}
+    Tex2F(const Vec2& _v)
+    : u(_v.x)
+    , v(_v.y)
+    {}
     
     GLfloat u;
     GLfloat v;
