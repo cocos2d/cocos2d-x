@@ -741,6 +741,10 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         //support tint and fade
         meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
+        if (_forceDepthWrite)
+        {
+            meshCommand.setDepthWriteEnabled(true);
+        }
         meshCommand.setTransparent(isTransparent);
         renderer->addCommand(&meshCommand);
     }
@@ -799,6 +803,12 @@ const AABB& Sprite3D::getAABB() const
     }
     
     return _aabb;
+}
+
+Action* Sprite3D::runAction(Action *action)
+{
+    setForceDepthWrite(true);
+    return Node::runAction(action);
 }
 
 Rect Sprite3D::getBoundingBox() const

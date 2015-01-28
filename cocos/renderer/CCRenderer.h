@@ -47,25 +47,36 @@ class MeshCommand;
  are the ones that have `z < 0` and `z > 0`.
 */
 class RenderQueue {
+public:
+    enum QUEUE_GROUP
+    {
+        GLOBALZ_NEG = 0,
+        OPAQUE_3D = 1,
+        TRANSPARENT_3D = 2,
+        GLOBALZ_ZERO = 3,
+        GLOBALZ_POS = 4,
+        QUEUE_COUNT = 5,
+    };
 
 public:
+    RenderQueue()
+    {
+        clear();
+    }
     void push_back(RenderCommand* command);
     ssize_t size() const;
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
-    ssize_t getOpaqueQueueSize() const { return _queue3DOpaque.size(); }
-    const std::vector<RenderCommand*>& getOpaqueCommands() const { return _queue3DOpaque; }
+    inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
+    inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
 
     void saveRenderState();
     void restoreRenderState();
     
 protected:
-    std::vector<RenderCommand*> _queue3DOpaque;
-    std::vector<RenderCommand*> _queue3DTransparent;
-    std::vector<RenderCommand*> _queueNegZ;
-    std::vector<RenderCommand*> _queue0;
-    std::vector<RenderCommand*> _queuePosZ;
+    
+    std::vector<std::vector<RenderCommand*>> _commands;
     
     //Render State related
     bool _isCullEnabled;
