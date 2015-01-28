@@ -143,7 +143,7 @@ void HTTPRequest::setPOSTData(const char *data, size_t len)
 void HTTPRequest::addFormFile(const char *name, const char *filePath, const char *contentType)
 {
     m_postFile[string(name)] = string(filePath);
-    string str = string("Content-Type=");
+    string str = string("Content-Type:");
     str = str.append(contentType);
     m_headers.push_back(str);
 }
@@ -151,7 +151,7 @@ void HTTPRequest::addFormFile(const char *name, const char *filePath, const char
 void HTTPRequest::addFormContents(const char *name, const char *value)
 {
     m_postContent[string(name)] = string(value);
-    string str = string("Content-Type=multipart/form-data");
+    string str = string("Content-Type:multipart/form-data");
     m_headers.push_back(str);
     CCLOG("addFormContents:%d", m_headers.size());
 }
@@ -197,7 +197,7 @@ bool HTTPRequest::start(void)
     {
         string val = *it;
         int len = val.length();
-        int pos = val.find('=');
+        int pos = val.find(':');
         if (-1 == pos || pos >= len) {
             continue;
         }
