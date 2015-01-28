@@ -539,7 +539,6 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     {
         //Clear depth to achieve layered rendering
         glDepthMask(true);
-        glClear(GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
         
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
@@ -586,10 +585,6 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
             processRenderCommand(*it);
         }
         flush();
-        
-        glDepthMask(true);
-        glClear(GL_DEPTH_BUFFER_BIT);
-        glDepthMask(false);
     }
     
     //
