@@ -185,7 +185,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 
 std::string Sprite3DForceDepthTest::title() const
 {
-    return "Force Depth Write Test";
+    return "Force Depth Write Error Test";
 }
 
 std::string Sprite3DForceDepthTest::subtitle() const
