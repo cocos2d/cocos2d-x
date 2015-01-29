@@ -274,6 +274,8 @@ bool DrawNode::init()
         glGenBuffers(1, &_vboGLPoint);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
     CHECK_GL_ERROR_DEBUG();
