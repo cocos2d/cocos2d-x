@@ -137,8 +137,8 @@ void RenderQueue::clear()
 
 void RenderQueue::saveRenderState()
 {
-	_isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
-	_isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
     
     CHECK_GL_ERROR_DEBUG();

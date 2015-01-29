@@ -111,7 +111,7 @@ void Animate3D::startWithTarget(Node *target)
     auto skin = sprite->getSkeleton();
     bool hasCurve = false;
     for (int  i = 0; i < skin->getBoneCount(); i++) {
-		auto bone = skin->getBoneByIndex(static_cast<unsigned int>(i));
+        auto bone = skin->getBoneByIndex(static_cast<unsigned int>(i));
         auto curve = _animation->getBoneCurveByName(bone->getName());
         if (curve)
         {

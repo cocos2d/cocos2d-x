@@ -442,7 +442,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             if (_version != "0.3" && _version != "0.4" && _version != "0.5")
             {
                 //read mesh aabb
-                float aabb[6];		
+                float aabb[6];
                 if (_binaryReader.read(aabb, 4, 6) != 6)
                 {
                     CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
@@ -695,7 +695,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         MeshVertexAttrib tempAttrib;
         meshData->attribCount=mesh_vertex_attribute.Size();
         meshData->attribs.resize(meshData->attribCount);
-		for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
+        for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
         {
             const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
@@ -1382,7 +1382,7 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
 
     if(!id.empty())
     {
-		for (rapidjson::SizeType i = 0; i < animation_data_array.Size(); i++)
+        for (rapidjson::SizeType i = 0; i < animation_data_array.Size(); i++)
         {
             if(animation_data_array[i][ID].GetString() == id)
             {

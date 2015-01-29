@@ -170,7 +170,7 @@ std::string BundleReader::readString()
     std::string str;
     
     ssize_t validLength = _length - _position;
-	if (length > 0 && static_cast<ssize_t>(length) <= validLength)
+    if (length > 0 && static_cast<ssize_t>(length) <= validLength)
     {
         str.resize(length);
         if (read(&str[0], 1, length) != length)
