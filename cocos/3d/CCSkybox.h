@@ -32,14 +32,9 @@ NS_CC_BEGIN
 class CC_DLL Skybox : public Node
 {
 public:
-    static Skybox* create();
-
-    void drawSphere(const Vec3& origin, const float radius, const float M, const float N, const Color4F& color);
+    CREATE_FUNC(Skybox);
 
     void setTexture(Texture2D*);
-
-    /** Clear the geometry in the node's buffer. */
-    void clear();
 
     void onDraw(const Mat4& transform, uint32_t flags);
 
@@ -52,26 +47,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init();
 
 protected:
-    struct V3F_C4B
-    {
-        Vec3     vertices;
-        Color4B  colors;
-        Tex2F    texcoord;
-    };
 
-    void ensureCapacity(int count);
-	void drawSlice(Vec3* points, const Color4F& color);
+    void initBuffers();
 
     GLuint      _vao;
     GLuint      _vbo;
-
-    int         _bufferCapacity;
-    GLsizei     _bufferCount;
-    V3F_C4B*    _buffer;
+    GLuint      _vio;
 
     CustomCommand _customCommand;
-
-    bool        _dirty;
 
     Texture2D*  _texture;
 private:

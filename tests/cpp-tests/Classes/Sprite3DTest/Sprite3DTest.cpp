@@ -2374,7 +2374,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
         // config skybox 
         Skybox* box = Skybox::create();
         box->setTexture(_textureCube);
-        box->drawSphere(Vec3::ZERO, 1.6f, 20, 20, Color4F(0, 0, 0, 0));
         addChild(box);
 
         //auto rotate_action = RotateBy::create(1.5, Vec3(0, -30, 0));
