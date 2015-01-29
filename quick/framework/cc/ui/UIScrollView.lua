@@ -663,12 +663,18 @@ end
 -- 是否显示到边缘
 function UIScrollView:isSideShow()
 	local bound = self.scrollNode:getCascadeBoundingBox()
-	if bound.x > self.viewRect_.x
-		or bound.y > self.viewRect_.y
-		or bound.x + bound.width < self.viewRect_.x + self.viewRect_.width
-		or bound.y + bound.height < self.viewRect_.y + self.viewRect_.height then
-		return true
-	end
+    local localPos = self:convertToNodeSpace(cc.p(bound.x, bound.y))
+    local verticalSideShow = (localPos.y > self.viewRect_.y) 
+                           or (localPos.y + bound.height < self.viewRect_.y + self.viewRect_.height)
+    local horizontalSideShow = (localPos.x > self.viewRect_.x)
+                             or (localPos.x + bound.width < self.viewRect_.x + self.viewRect_.width)
+    if UIScrollView.DIRECTION_VERTICAL == self.direction then
+        return verticalSideShow
+    elseif UIScrollView.DIRECTION_HORIZONTAL == self.direction then
+        return horizontalSideShow
+    else
+        return (verticalSideShow or horizontalSideShow)
+    end
 
 	return false
 end
