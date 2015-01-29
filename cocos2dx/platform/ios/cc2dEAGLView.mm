@@ -200,6 +200,7 @@ static cc2dEAGLView *view = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardDidHideNotification object:nil];
+    
 }
 
 -(int) getWidth
@@ -250,6 +251,7 @@ static cc2dEAGLView *view = nil;
     if (newWindow == nil)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+        cocos2d::CCEGLView::sharedOpenGLView()->clearTouchesState();
     }
     
     [super willMoveToWindow:newWindow];
