@@ -66,6 +66,7 @@ enum
     kUILoadingBarTest_Scale9_State_Change,
     kUILoadingBarTest_Left_Scale9,
     kUILoadingBarTest_Right_Scale9,
+    kUILoadingBarReloadTexture,
     kUITextAtlasTest,
     kUITextTest,
     kUITextTest_LineWrap,

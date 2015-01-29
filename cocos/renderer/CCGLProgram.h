@@ -361,7 +361,7 @@ protected:
 
     std::unordered_map<std::string, Uniform> _userUniforms;
     std::unordered_map<std::string, VertexAttrib> _vertexAttribs;
-    std::unordered_map<GLint, GLvoid*> _hashForUniforms;
+    std::unordered_map<GLint, std::pair<GLvoid*, unsigned int>> _hashForUniforms;
     //cached director pointer for calling
     Director* _director;
 };

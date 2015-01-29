@@ -12,6 +12,11 @@
 
 
 --------------------------------------------------------
+-- the cc Sprite3DCache
+-- @field [parent=#cc] Sprite3DCache#Sprite3DCache Sprite3DCache preloaded module
+
+
+--------------------------------------------------------
 -- the cc Mesh
 -- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
 
