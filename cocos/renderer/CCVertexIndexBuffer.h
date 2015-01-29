@@ -228,7 +228,7 @@ protected:
 
     bool init(IndexType type, int number, ArrayType arrayType, ArrayMode arrayMode)
     {
-        if (!GLArrayBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == _type ? 2 : 4, number, arrayType, arrayMode))
+        if (!GLArrayBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == type ? 2 : 4, number, arrayType, arrayMode))
             return false;
         _type = type;
         return true;
