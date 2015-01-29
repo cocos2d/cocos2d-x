@@ -75,8 +75,8 @@ void CCEGLView::end()
 	// *NOTE:palange - removed the call to terminate, so we can back out of cc2d to our app.
     // terminateProcessJNI();
 
-	// *NOTE:palange - added the call to clearTouchesDict() to remove outstanding touch stuff.
-	clearTouchesDict();
+	// *NOTE:palange - added the call to clearTouchesState() to remove outstanding touch stuff.
+	clearTouchesState();
 }
 
 void CCEGLView::swapBuffers()
