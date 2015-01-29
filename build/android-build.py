@@ -37,7 +37,7 @@ def caculate_built_samples(args):
 
 def do_build(app_android_root, build_mode):
      
-    command = 'cocos compile -p android -s %s -m %s' % (app_android_root, build_mode) 
+    command = 'cocos compile -p android -s %s --ndk-mode %s' % (app_android_root, build_mode) 
     print command
 
     if os.system(command) != 0:
