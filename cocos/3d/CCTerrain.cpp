@@ -415,6 +415,41 @@ cocos2d::Vec3 Terrain::getNormal(int pixel_x,int pixel_y)
     return normal;
 }
 
+cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
+{
+    Vec3 dir = ray._direction;
+    dir.normalize();
+    Vec3 rayStep = _terrainData.chunkSize.width*0.25*dir;
+    Vec3 rayPos =  ray._origin;
+    Vec3 rayStartPosition = ray._origin;
+    Vec3 lastRayPosition =rayPos;
+    rayPos += rayStep; 
+    // Linear search - Loop until find a point inside and outside the terrain Vector3 
+    float height = getHeight(rayPos); 
+
+    while (rayPos.y > height)
+    {
+        lastRayPosition = rayPos; 
+        rayPos += rayStep; 
+        height = getHeight(rayPos); 
+    } 
+
+    Vec3 startPosition = lastRayPosition;
+    Vec3 endPosition = rayPos;
+
+    for (int i= 0; i< 32; i++) 
+    { 
+        // Binary search pass 
+        Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
+        if (middlePoint.y < height) 
+            endPosition = middlePoint; 
+        else 
+            startPosition = middlePoint;
+    } 
+    Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
+    return collisionPoint;
+}
+
 void Terrain::Chunk::finish()
 {
     //genearate two VBO ,the first for vertices, we just setup datas once ,won't changed at all
