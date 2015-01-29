@@ -291,7 +291,7 @@ namespace cocostudio
         std::string fontName = options->fontName()->c_str();
         textField->setFontName(fontName);
         
-        bool maxLengthEnabled = options->maxLengthEnabled();
+        bool maxLengthEnabled = options->maxLengthEnabled() != 0;
         textField->setMaxLengthEnabled(maxLengthEnabled);
         
         if (maxLengthEnabled)
@@ -299,7 +299,7 @@ namespace cocostudio
             int maxLength = options->maxLength();
             textField->setMaxLength(maxLength);
         }
-        bool passwordEnabled = options->passwordEnabled();
+        bool passwordEnabled = options->passwordEnabled() != 0;
         textField->setPasswordEnabled(passwordEnabled);
         if (passwordEnabled)
         {

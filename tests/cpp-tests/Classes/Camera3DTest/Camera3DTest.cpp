@@ -140,10 +140,10 @@ CameraRotationTest::CameraRotationTest()
     //Billboards
     //Yellow is at the back
     bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
+    bill1->setPosition3D(Vec3(50, 10, -10));
     bill1->setColor(Color3B::YELLOW);
     bill1->setScale(0.6f);
-    addChild(bill1);
+    sp3d->addChild(bill1);
     
     l1 = Label::create();
     l1->setPosition(Vec2(0,-10));
@@ -157,9 +157,9 @@ CameraRotationTest::CameraRotationTest()
     bill1->addChild(p1);
     
     bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
+    bill2->setPosition3D(Vec3(-50, -10, 10));
     bill2->setScale(0.6f);
-    addChild(bill2);
+    sp3d->addChild(bill2);
     
     l2 = Label::create();
     l2->setString("Billboard2");

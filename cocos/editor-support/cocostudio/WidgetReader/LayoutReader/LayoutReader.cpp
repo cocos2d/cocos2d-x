@@ -570,10 +570,10 @@ namespace cocostudio
         Layout* panel = static_cast<Layout*>(node);
         auto options = (PanelOptions*)layoutOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         panel->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         

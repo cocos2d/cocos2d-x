@@ -594,31 +594,35 @@ const char* TextField::getPasswordStyleText()const
 
 void TextField::update(float dt)
 {
-    if (getAttachWithIME())
-    {
-        attachWithIMEEvent();
-        setAttachWithIME(false);
-    }
     if (getDetachWithIME())
     {
         detachWithIMEEvent();
         setDetachWithIME(false);
     }
+    
+    if (getAttachWithIME())
+    {
+        attachWithIMEEvent();
+        setAttachWithIME(false);
+    }
+    
     if (getInsertText())
     {
+        //we update the content size first such that when user call getContentSize() in event callback won't be wrong
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        
         insertTextEvent();
         setInsertText(false);
-        
-        _textFieldRendererAdaptDirty = true;
-        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
     }
+    
     if (getDeleteBackward())
     {
-        deleteBackwardEvent();
-        setDeleteBackward(false);
-        
         _textFieldRendererAdaptDirty = true;
         updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        
+        deleteBackwardEvent();
+        setDeleteBackward(false);
     }
 }
 

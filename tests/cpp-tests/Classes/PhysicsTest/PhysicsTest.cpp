@@ -1,6 +1,7 @@
 #include "PhysicsTest.h"
 #include <cmath>
 #include "../testResource.h"
+#include "ui/CocosGUI.h"
 USING_NS_CC;
 
 namespace
@@ -23,6 +24,7 @@ namespace
         CL(Bug5482),
         CL(PhysicsFixedUpdate),
         CL(PhysicsTransformTest),
+        CL(PhysicsIssue9959)
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -1863,6 +1865,39 @@ void PhysicsTransformTest::onEnter()
 std::string PhysicsTransformTest::title() const
 {
     return "Physics transform test";
+}
+
+void PhysicsIssue9959::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    auto scale9Sprite1 = ui::Scale9Sprite::create("Images/ball.png");
+    scale9Sprite1->setPosition(origin + visibleSize/2);
+    addChild(scale9Sprite1);
+    scale9Sprite1->runAction(RepeatForever::create(Sequence::create(MoveBy::create(2.0f, Vec2(100.0f,0.0f)), MoveBy::create(2.0f, Vec2(-100.0f, 0.0f)), NULL)));
+    
+    auto scale9Sprite2 = ui::Scale9Sprite::create("Images/ball.png");
+    scale9Sprite2->setPosition(origin + visibleSize/2 + Vec2(0.0f, 50.0f));
+    addChild(scale9Sprite2);
+    scale9Sprite2->runAction(RepeatForever::create(Sequence::create(ScaleTo::create(2.0f, 1.5f), ScaleTo::create(2.0f, 1.0f), NULL)));
+    
+    auto scale9Sprite3 = ui::Scale9Sprite::create("Images/ball.png");
+    scale9Sprite3->setPosition(origin + visibleSize/2 + Vec2(0.0f, -50.0f));
+    addChild(scale9Sprite3);
+    scale9Sprite3->runAction(RepeatForever::create(RotateBy::create(2.0f, 360.0f)));
+}
+
+std::string PhysicsIssue9959::title() const
+{
+    return "Reorder issue #9959";
+}
+
+std::string PhysicsIssue9959::subtitle() const
+{
+    return "Test Scale9Sprite run scale/move/rotation action in physics scene";
 }
 
 #endif // ifndef CC_USE_PHYSICS

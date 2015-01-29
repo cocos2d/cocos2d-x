@@ -54,7 +54,7 @@ const float AudioEngine::TIME_UNKNOWN = -1.0f;
 std::unordered_map<std::string,std::list<int>> AudioEngine::_audioPathIDMap;
 //profileName,ProfileHelper
 std::unordered_map<std::string, AudioEngine::ProfileHelper> AudioEngine::_audioPathProfileHelperMap;
-int AudioEngine::_maxInstances = MAX_AUDIOINSTANCES;
+unsigned int AudioEngine::_maxInstances = MAX_AUDIOINSTANCES;
 AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper = nullptr;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;

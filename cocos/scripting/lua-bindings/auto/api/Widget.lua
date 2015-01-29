@@ -146,13 +146,6 @@
 -- @return LayoutParameter#LayoutParameter ret (return value: ccui.LayoutParameter)
         
 --------------------------------
--- Set a event handler to the widget in order to use cocostudio editor and framework
--- @function [parent=#Widget] addCCSEventListener 
--- @param self
--- @param #function callback
--- @return Widget#Widget self (return value: ccui.Widget)
-        
---------------------------------
 -- Gets the position type of the widget<br>
 -- see PositionType<br>
 -- return type  the position type of widget
@@ -404,13 +397,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#Widget] addTouchEventListener 
--- @param self
--- @param #function callback
--- @return Widget#Widget self (return value: ccui.Widget)
-        
---------------------------------
--- 
 -- @function [parent=#Widget] getTouchEndPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -422,13 +408,6 @@
 -- @function [parent=#Widget] getPositionPercent 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- Set a click event handler to the widget
--- @function [parent=#Widget] addClickEventListener 
--- @param self
--- @param #function callback
--- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
 -- Returns the flag which indicates whether the widget is flipped horizontally or not.<br>
