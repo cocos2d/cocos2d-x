@@ -356,7 +356,7 @@ float CCEGLViewProtocol::getScaleY() const
     return m_fScaleY;
 }
 
-void CCEGLViewProtocol::clearTouchesDict()
+void CCEGLViewProtocol::clearTouchesState()
 {
 	// Do this when the context is destroyed.
 	s_TouchesIntergerDict.removeAllObjects();
