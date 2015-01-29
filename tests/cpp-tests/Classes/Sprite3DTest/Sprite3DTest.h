@@ -54,6 +54,15 @@ public:
     virtual void onEnter() override;
 };
 
+class Sprite3DForceDepthTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DForceDepthTest);
+    Sprite3DForceDepthTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Sprite3DEmptyTest : public Sprite3DTestDemo
 {
 public:
