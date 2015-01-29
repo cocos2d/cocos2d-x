@@ -193,19 +193,9 @@ bool BillBoard::calculateBillbaordTransform()
         Quaternion rotationQuaternion;
         this->getNodeToWorldTransform().getRotation(&rotationQuaternion);
         
-        
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
-        ///FIXME: maybe should keep rotation along z axis
-//        if (rotationQuaternion.z > 0)
-//        {
-//            //rotate z only, keep it
-//            // fetch the rotation angle of z
-//            float rotationZ = atan2(2*(rotationQuaternion.w*rotationQuaternion.z + rotationQuaternion.x*rotationQuaternion.y),
-//                                    (1 - 2* (rotationQuaternion.y*rotationQuaternion.y + rotationQuaternion.z *rotationQuaternion.z)));
-//            rotationMatrix.rotateZ(rotationZ);
-//        }
-        
+
         Vec3 upAxis = Vec3(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
         Vec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
