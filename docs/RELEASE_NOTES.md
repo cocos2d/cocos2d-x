@@ -13,6 +13,8 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
+- [v3.4](#v34)
+  - [Bugs fixed in v3.4](#bugs-fixed-in-v34)
 - [v3.4rc1](#v34rc1)
   - [Highlights of v3.4rc1](#highlights-of-v34rc1)
   - [Features in detail](#features-in-detail)
@@ -39,7 +41,7 @@
 
 # Misc Information
 
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4rc0/CHANGELOG
+* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4/CHANGELOG)
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -124,6 +126,13 @@ Run
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
+# v3.4
+##Bugs fixed in v3.4
+* C++: crash on armeabi-v7a arch device which do not support NEON instructions
+* GLProgram: crash on low end device with no more than 8 attributes support
+* New audio: game freeze if audio played two many times on android
+* Node: anchor point has no effects on rotation
+* More bugs fixed
 
 # v3.4rc1
 
