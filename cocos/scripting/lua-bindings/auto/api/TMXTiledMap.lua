@@ -9,6 +9,7 @@
 -- @function [parent=#TMXTiledMap] setObjectGroups 
 -- @param self
 -- @param #array_table groups
+-- @return experimental::TMXTiledMap#experimental::TMXTiledMap self (return value: cc.experimental::TMXTiledMap)
         
 --------------------------------
 --  return the value for the specific property name 
@@ -22,6 +23,7 @@
 -- @function [parent=#TMXTiledMap] setMapSize 
 -- @param self
 -- @param #size_table mapSize
+-- @return experimental::TMXTiledMap#experimental::TMXTiledMap self (return value: cc.experimental::TMXTiledMap)
         
 --------------------------------
 --  return the TMXObjectGroup for the specific group 
@@ -67,12 +69,14 @@
 -- @function [parent=#TMXTiledMap] setTileSize 
 -- @param self
 -- @param #size_table tileSize
+-- @return experimental::TMXTiledMap#experimental::TMXTiledMap self (return value: cc.experimental::TMXTiledMap)
         
 --------------------------------
 -- 
 -- @function [parent=#TMXTiledMap] setProperties 
 -- @param self
 -- @param #map_table properties
+-- @return experimental::TMXTiledMap#experimental::TMXTiledMap self (return value: cc.experimental::TMXTiledMap)
         
 --------------------------------
 --  return the FastTMXLayer for the specific layer 
@@ -92,6 +96,7 @@
 -- @function [parent=#TMXTiledMap] setMapOrientation 
 -- @param self
 -- @param #int mapOrientation
+-- @return experimental::TMXTiledMap#experimental::TMXTiledMap self (return value: cc.experimental::TMXTiledMap)
         
 --------------------------------
 --  creates a TMX Tiled Map with a TMX file.

@@ -9,18 +9,21 @@
 -- @function [parent=#PhysicsJointGroove] setAnchr2 
 -- @param self
 -- @param #vec2_table anchr2
+-- @return PhysicsJointGroove#PhysicsJointGroove self (return value: cc.PhysicsJointGroove)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointGroove] setGrooveA 
 -- @param self
 -- @param #vec2_table grooveA
+-- @return PhysicsJointGroove#PhysicsJointGroove self (return value: cc.PhysicsJointGroove)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointGroove] setGrooveB 
 -- @param self
 -- @param #vec2_table grooveB
+-- @return PhysicsJointGroove#PhysicsJointGroove self (return value: cc.PhysicsJointGroove)
         
 --------------------------------
 -- 

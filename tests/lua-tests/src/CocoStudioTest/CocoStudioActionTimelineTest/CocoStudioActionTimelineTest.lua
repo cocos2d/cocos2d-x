@@ -247,6 +247,16 @@ function TestChangePlaySection:onEnter()
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
 
+    action:addAnimationInfo(ccs.AnimationInfo("stand", 0 , 40))
+    action:addAnimationInfo(ccs.AnimationInfo("walk", 41 , 81))
+    action:addAnimationInfo(ccs.AnimationInfo("killall", 174, 249))
+
+    assert(action:IsAnimationInfoExists("stand") == true, "stand animation didn't exist")
+    action:play("stand", true)
+    assert(action:getAnimationInfo("stand").endIndex == 40, "endIndex of animationInfo is not 40")
+    action:removeAnimationInfo("stand")
+    assert(action:IsAnimationInfoExists("stand") == false, "stand animation has already existed")
+
     local function onTouchesEnded(touches, event)
         if action:getStartFrame() == 0 then
             action:gotoFrameAndPlay(41, 81, true)

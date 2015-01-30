@@ -53,6 +53,9 @@ public:
 
     // Overrides
 	virtual PageTurn3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
 };
 

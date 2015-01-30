@@ -33,6 +33,13 @@ NS_TIMELINE_BEGIN
 
 struct AnimationInfo
 {
+    AnimationInfo():startIndex(0),endIndex(0){}
+    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
+    :name(otherName),
+    startIndex(otherStartIndex),
+    endIndex(otherEndIndex)
+    {
+    }
     std::string name;
     int startIndex;
     int endIndex;

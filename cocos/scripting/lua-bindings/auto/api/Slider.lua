@@ -10,6 +10,7 @@
 -- @function [parent=#Slider] setPercent 
 -- @param self
 -- @param #int percent
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load dark state texture for slider ball.<br>
@@ -19,6 +20,7 @@
 -- @param self
 -- @param #string disabled
 -- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load normal state texture for slider ball.<br>
@@ -28,6 +30,7 @@
 -- @param self
 -- @param #string normal
 -- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load texture for slider bar.<br>
@@ -37,6 +40,7 @@
 -- @param self
 -- @param #string fileName
 -- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load dark state texture for slider progress bar.<br>
@@ -46,6 +50,7 @@
 -- @param self
 -- @param #string fileName
 -- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load textures for slider ball.<br>
@@ -59,6 +64,7 @@
 -- @param #string pressed
 -- @param #string disabled
 -- @param #int texType
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Sets capinsets for slider, if slider is using scale9 renderer.<br>
@@ -66,6 +72,7 @@
 -- @function [parent=#Slider] setCapInsetProgressBarRebderer 
 -- @param self
 -- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Sets capinsets for slider, if slider is using scale9 renderer.<br>
@@ -73,6 +80,7 @@
 -- @function [parent=#Slider] setCapInsetsBarRenderer 
 -- @param self
 -- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- 
@@ -86,6 +94,7 @@
 -- @function [parent=#Slider] setScale9Enabled 
 -- @param self
 -- @param #bool able
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 --  When user pressed the button, the button will zoom to a scale.<br>
@@ -94,6 +103,7 @@
 -- @function [parent=#Slider] setZoomScale 
 -- @param self
 -- @param #float scale
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Sets capinsets for slider, if slider is using scale9 renderer.<br>
@@ -101,6 +111,7 @@
 -- @function [parent=#Slider] setCapInsets 
 -- @param self
 -- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- brief Return a zoom scale<br>
@@ -114,6 +125,7 @@
 -- @function [parent=#Slider] addEventListener 
 -- @param self
 -- @param #function callback
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Load selected state texture for slider ball.<br>
@@ -123,6 +135,7 @@
 -- @param self
 -- @param #string pressed
 -- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- 
@@ -170,6 +183,7 @@
 -- @function [parent=#Slider] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool ignore
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Returns the "class name" of widget.
@@ -194,5 +208,6 @@
 -- Default constructor
 -- @function [parent=#Slider] Slider 
 -- @param self
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 return nil

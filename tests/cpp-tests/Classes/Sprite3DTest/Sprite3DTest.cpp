@@ -69,7 +69,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DWithOBBPerformanceTest),
     CL(Sprite3DMirrorTest),
     CL(QuaternionTest),
-    CL(Sprite3DEmptyTest)
+    CL(Sprite3DEmptyTest),
+    CL(UseCaseSprite3D),
+    CL(Sprite3DForceDepthTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -153,6 +155,42 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DForceDepthTest
+//
+//------------------------------------------------------------------
+Sprite3DForceDepthTest::Sprite3DForceDepthTest()
+{
+    auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    orc->setScale(5);
+    orc->setNormalizedPosition(Vec2(.5,.3));
+    orc->setPositionZ(40);
+    orc->setRotation3D(Vec3(0,180,0));
+    orc->setGlobalZOrder(-1);
+    
+    addChild(orc);
+    
+    auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
+    ship->setScale(5);
+    ship->setTexture("Sprite3DTest/boss.png");
+    ship->setNormalizedPosition(Vec2(.5,.5));
+    ship->setRotation3D(Vec3(90,0,0));
+    ship->setForceDepthWrite(true);
+    
+    addChild(ship);
+}
+
+std::string Sprite3DForceDepthTest::title() const
+{
+    return "Force Depth Write Error Test";
+}
+
+std::string Sprite3DForceDepthTest::subtitle() const
+{
+    return "Ship should always appear behind orc";
 }
 
 //------------------------------------------------------------------
@@ -2104,4 +2142,184 @@ void QuaternionTest::update(float delta)
     Quaternion quat;
     Quaternion::createFromAxisAngle(Vec3(0.f, 0.f, 1.f), _accAngle - pi * 0.5f, &quat);
     _sprite->setRotationQuat(quat);
+}
+
+UseCaseSprite3D::UseCaseSprite3D()
+: _caseIdx(0)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    _useCaseTitles[0] = "transparent 3d sprite and 2d sprite";
+    _useCaseTitles[1] = "ui - 3d - ui";
+    
+    auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
+                                          [&](Ref *sender) {
+                                              _caseIdx--;
+                                              if (_caseIdx < 0)
+                                                  _caseIdx = (int)USECASE::MAX_CASE_NUM - 1;
+                                              this->switchCase();
+                                          });
+    
+    auto itemNext = MenuItemImage::create("Images/f1.png", "Images/f2.png",
+                                          [&](Ref *sender) {
+                                              _caseIdx++;
+                                              if (_caseIdx >= (int)USECASE::MAX_CASE_NUM)
+                                                  _caseIdx = 0;
+                                              this->switchCase();
+                                          });
+    
+    auto menu = Menu::create(itemPrev, itemNext, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setScale(0.5);
+    menu->setAnchorPoint(Vec2(0,0));
+    menu->setPosition(Vec2(s.width/2,70));
+    
+    _label = Label::create();
+    _label->setPosition(s.width * 0.5f, s.height * 0.8f);
+    addChild(_label);
+    
+    addChild(menu);
+    
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+    
+    switchCase();
+}
+
+std::string UseCaseSprite3D::title() const
+{
+    return "Use Case For 2D + 3D";
+}
+
+std::string UseCaseSprite3D::subtitle() const
+{
+    return "";
+}
+
+void UseCaseSprite3D::switchCase()
+{
+    removeChildByTag(101);
+    
+    auto s = Director::getInstance()->getWinSize();
+    _label->setString(_useCaseTitles[_caseIdx]);
+    if (_caseIdx == 0) // use case 1, 3d transparent sprite + 2d sprite
+    {
+        std::string filename = "Sprite3DTest/girl.c3b";
+        auto sprite = Sprite3D::create(filename);
+        sprite->setScale(0.15f);
+        auto animation = Animation3D::create(filename);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            
+            sprite->runAction(RepeatForever::create(animate));
+        }
+        
+        auto circleBack = Sprite3D::create();
+        auto circle = Sprite::create("Sprite3DTest/circle.png");
+        circleBack->setScale(0.5f);
+        circleBack->addChild(circle);
+        circle->runAction(RepeatForever::create(RotateBy::create(3, Vec3(0.f, 0.f, 360.f))));
+        
+        circleBack->setRotation3D(Vec3(90, 0, 0));
+        
+        auto pos = sprite->getPosition3D();
+        circleBack->setPosition3D(Vec3(pos.x, pos.y, pos.z - 1));
+        
+        sprite->setOpacity(250);
+        sprite->setCameraMask(2);
+        circleBack->setCameraMask(2);
+        sprite->setTag(3);
+        circleBack->setTag(2);
+        
+        auto node = Node::create();
+        node->addChild(sprite);
+        node->addChild(circleBack);
+        node->setTag(101);
+        addChild(node);
+        
+        scheduleUpdate();
+        update(0.f);
+    }
+    else if (_caseIdx == 1) // use case 2, ui - 3d - ui, last ui should on the top
+    {
+        auto layer = LayerColor::create(Color4B(0, 0, 100, 255), s.width / 2.f, s.height / 2.f);
+        layer->setPosition(s.width * 0.25f, s.height * 0.25f);
+        layer->setGlobalZOrder(-1);
+        addChild(layer);
+        
+        std::string filename = "Sprite3DTest/girl.c3b";
+        auto sprite = Sprite3D::create(filename);
+        sprite->setScale(0.5f);
+        auto animation = Animation3D::create(filename);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            sprite->runAction(RepeatForever::create(animate));
+        }
+        sprite->setPosition(s.width * 0.25f, s.height * 0.125f);
+        layer->addChild(sprite);
+        
+        TTFConfig ttfConfig("fonts/arial.ttf", 15);
+        auto label1 = Label::createWithTTF(ttfConfig,"Message");
+        auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
+        auto label2 = Label::createWithTTF(ttfConfig,"Message");
+        auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
+        
+        item1->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height ) );
+        item2->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height * 2.f ) );
+        
+        auto pMenu1 = CCMenu::create(item1, item2, nullptr);
+        pMenu1->setPosition(Vec2(0,0));
+        layer->addChild(pMenu1);
+        
+        layer->setTag(101);
+    }
+}
+
+void UseCaseSprite3D::menuCallback_Message(Ref* sender)
+{
+    auto layer = getChildByTag(101);
+    auto message = layer->getChildByTag(102); // message layer
+    if (message)
+        layer->removeChild(message);
+    else
+    {
+        // create a new message layer on the top
+        auto s = layer->getContentSize();
+        auto messagelayer = LayerColor::create(Color4B(100, 100, 0, 255));
+        messagelayer->setContentSize(Size(s.width * 0.5f, s.height * 0.5f));
+        messagelayer->setPosition(Vec2(s.width * 0.25f, s.height * 0.25f));
+        auto label = Label::create();
+        label->setString("This Message Layer \n Should Be On Top");
+        label->setPosition(Vec2(s.width * 0.25f, s.height * 0.25f));
+        messagelayer->addChild(label);
+        messagelayer->setTag(102);
+        layer->addChild(messagelayer);
+    }
+}
+
+void UseCaseSprite3D::update(float delta)
+{
+    if (_caseIdx == 0)
+    {
+        static float accAngle = 0.f;
+        accAngle += delta * CC_DEGREES_TO_RADIANS(60);
+        
+        float radius = 30.f;
+        float x = cosf(accAngle) * radius, z = sinf(accAngle) * radius;
+        
+        auto node = getChildByTag(101);
+        auto sprite3d = node->getChildByTag(3);
+        auto circle = node->getChildByTag(2);
+        
+        sprite3d->setPositionX(x);
+        sprite3d->setPositionZ(z);
+        circle->setPositionX(x);
+        circle->setPositionZ(z);
+    }
 }

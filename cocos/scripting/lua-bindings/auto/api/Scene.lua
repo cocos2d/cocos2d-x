@@ -9,6 +9,7 @@
 -- @function [parent=#Scene] render 
 -- @param self
 -- @param #cc.Renderer renderer
+-- @return Scene#Scene self (return value: cc.Scene)
         
 --------------------------------
 -- 
@@ -37,6 +38,7 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #int tag
+-- @return Scene#Scene self (return value: cc.Scene)
 
 --------------------------------
 -- 

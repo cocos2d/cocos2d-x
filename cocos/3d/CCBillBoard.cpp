@@ -102,6 +102,9 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     {
         return;
     }
+    bool visibleByCamera = isVisitableByVisitingCamera();
+    if (!visibleByCamera && _children.empty())
+        return;
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
@@ -119,7 +122,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    bool visibleByCamera = isVisitableByVisitingCamera();
+    
     
     int i = 0;
     
@@ -158,7 +161,7 @@ bool BillBoard::calculateBillbaordTransform()
     const Mat4& camWorldMat = camera->getNodeToWorldTransform();
     
     //TODO: use math lib to calculate math lib Make it easier to read and maintain
-    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || _transformDirty || _modeDirty)
+    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_mvTransform.m, _modelViewTransform.m, sizeof(float) * 16) != 0 || _modeDirty || true)
     {
         //Rotate based on anchor point
         Vec3 anchorPoint(_anchorPointInPoints.x , _anchorPointInPoints.y , 0.0f);
@@ -190,13 +193,9 @@ bool BillBoard::calculateBillbaordTransform()
         Quaternion rotationQuaternion;
         this->getNodeToWorldTransform().getRotation(&rotationQuaternion);
         
-        // fetch the rotation angle of z
-        float rotationZ = atan2(2*(rotationQuaternion.w*rotationQuaternion.z + rotationQuaternion.x*rotationQuaternion.y),
-                                (1 - 2* (rotationQuaternion.y*rotationQuaternion.y + rotationQuaternion.z *rotationQuaternion.z)));
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
-        rotationMatrix.rotateZ(rotationZ);
-        
+
         Vec3 upAxis = Vec3(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
         Vec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
@@ -217,7 +216,7 @@ bool BillBoard::calculateBillbaordTransform()
         billboardTransform.m[12] = localToWorld.m[12]; billboardTransform.m[13] = localToWorld.m[13]; billboardTransform.m[14] = localToWorld.m[14];
         
         billboardTransform.translate(-anchorPoint);
-        _modelViewTransform = billboardTransform;
+        _mvTransform = _modelViewTransform = billboardTransform;
         
         _camWorldMat = camWorldMat;
         

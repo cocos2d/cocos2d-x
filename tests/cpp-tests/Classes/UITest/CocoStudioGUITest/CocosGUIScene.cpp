@@ -139,7 +139,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUILoadingBarTest_Left);
             sceneManager->setMinUISceneId(kUILoadingBarTest_Left);
-            sceneManager->setMaxUISceneId(kUILoadingBarTest_Right_Scale9);
+            sceneManager->setMaxUISceneId(kUILoadingBarReloadTexture);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }

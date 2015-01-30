@@ -36,13 +36,14 @@ using namespace Windows::Graphics::Display;
 USING_NS_CC;
 
 
-Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, CoreDispatcher^ dispatcher, Panel^ panel)
+Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, DisplayOrientations orientation, CoreDispatcher^ dispatcher, Panel^ panel)
     : m_app(nullptr)
     , m_width(width)
     , m_height(height)
     , m_dpi(dpi)
     , m_dispatcher(dispatcher)
     , m_panel(panel)
+    , m_orientation(orientation)
 {
     m_app = new AppDelegate();
 }
@@ -62,7 +63,7 @@ void Cocos2dRenderer::Resume()
         GLViewImpl* glview = GLViewImpl::create("Test Cpp");
         glview->setDispatcher(m_dispatcher.Get());
         glview->setPanel(m_panel.Get());
-        glview->Create(static_cast<float>(m_width), static_cast<float>(m_height), m_dpi, DisplayOrientations::Landscape);
+        glview->Create(static_cast<float>(m_width), static_cast<float>(m_height), m_dpi, m_orientation);
         director->setOpenGLView(glview);
         CCApplication::getInstance()->run();
     }
@@ -104,8 +105,14 @@ void Cocos2dRenderer::DeviceLost()
 
 
 
-void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi)
+void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi, DisplayOrientations orientation)
 {
+    if (orientation != m_orientation)
+    {
+        m_orientation = orientation;
+        GLViewImpl::sharedOpenGLView()->UpdateOrientation(orientation);
+    }
+
     if (width != m_width || height != m_height)
     {
         m_width = width;

@@ -6718,7 +6718,7 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         unsigned int arg2;
         bool arg3;
         int arg4;
-        int arg5;
+        long arg5;
         
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setVertexAttribPointer");
         
@@ -6730,11 +6730,11 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         
         ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "cc.GLProgramState:setVertexAttribPointer");
         
-        ok &= luaval_to_int32(tolua_S, 7, (int *)&arg5, "cc.GLProgramState:setVertexAttribPointer");
+        ok &= luaval_to_long(tolua_S, 7, (long *)&arg5, "cc.GLProgramState:setVertexAttribPointer");
         
         if(!ok)
             return 0;
-        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)&arg5);
+        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
         lua_settop(tolua_S, 1);
         return 1;
     }
@@ -7527,7 +7527,7 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
             !tolua_isnumber(tolua_S, 4, 0, &tolua_err) ||
             !tolua_isnumber(tolua_S, 5, 0, &tolua_err) ||
-            !tolua_isnumber(tolua_S, 6, 0, &tolua_err))
+            !tolua_istable(tolua_S, 6, 0, &tolua_err) )
             goto tolua_lerror;
         else
 #endif
@@ -7566,10 +7566,11 @@ static int tolua_cocos2d_Mat4_decompose(lua_State* tolua_S)
 {
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
+    
     if (!tolua_istable(tolua_S, 1, 0, &tolua_err) ||
-        !tolua_istable(tolua_S, 2, 0, &tolua_err) ||
-        !tolua_istable(tolua_S, 3, 0, &tolua_err) ||
-        !tolua_istable(tolua_S, 4, 0, &tolua_err))
+        (!lua_isnil(tolua_S, 2) && !tolua_istable(tolua_S, 2, 0, &tolua_err)) ||
+        (!lua_isnil(tolua_S, 3) && !tolua_istable(tolua_S, 3, 0, &tolua_err)) ||
+        (!lua_isnil(tolua_S, 4) && !tolua_istable(tolua_S, 4, 0, &tolua_err)) )
         goto tolua_lerror;
     else
 #endif
@@ -7579,27 +7580,210 @@ static int tolua_cocos2d_Mat4_decompose(lua_State* tolua_S)
         cocos2d::Quaternion rotation;
         cocos2d::Vec3 translation;
         bool ok = true;
+        
         ok &= luaval_to_mat4(tolua_S, 1, &mat);
         if (!ok)
             return 0;
         
-        ok &= luaval_to_vec3(tolua_S, 2, &scale);
-        if (!ok)
-            return 0;
+        if (lua_isnil(tolua_S, 2) && !lua_isnil(tolua_S, 3) && !lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_quaternion(tolua_S, 3, &rotation);
+            if (!ok)
+                return 0;
+            
 
-        ok &= luaval_to_quaternion(tolua_S, 3, &rotation);
-        if (!ok)
-            return 0;
+            ok &= luaval_to_vec3(tolua_S, 4, &translation);
+            if (!ok)
+                return 0;
+            
+            
+            mat.decompose(nullptr, &rotation, &translation);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            quaternion_to_luaval(tolua_S, rotation);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            vec3_to_luaval(tolua_S, translation);
+            lua_rawset(tolua_S, -3);
+
+            return 1;
+        }
         
-        ok &= luaval_to_vec3(tolua_S, 2, &translation);
-        if (!ok)
-            return 0;
+        if (lua_isnil(tolua_S, 2) && lua_isnil(tolua_S, 3) && !lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_vec3(tolua_S, 4, &translation);
+            if (!ok)
+                return 0;
+            
+            
+            mat.decompose(nullptr, nullptr, &translation);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            vec3_to_luaval(tolua_S, translation);
+            lua_rawset(tolua_S, -3);
+            
+            return 1;
+        }
         
-        mat.decompose(&scale, &rotation, &translation);
-        vec3_to_luaval(tolua_S, scale);
-        quaternion_to_luaval(tolua_S, rotation);
-        vec3_to_luaval(tolua_S, translation);
-        return 3;
+        if (!lua_isnil(tolua_S, 2) && lua_isnil(tolua_S, 3) && !lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_vec3(tolua_S, 2, &scale);
+            if (!ok)
+                return 0;
+        
+            ok &= luaval_to_vec3(tolua_S, 4, &translation);
+            if (!ok)
+                return 0;
+            
+            mat.decompose(&scale, nullptr, &translation);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            vec3_to_luaval(tolua_S, scale);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            vec3_to_luaval(tolua_S, translation);
+            lua_rawset(tolua_S, -3);
+            
+            return 1;
+        }
+        
+        if (!lua_isnil(tolua_S, 2) && lua_isnil(tolua_S, 3) && lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_vec3(tolua_S, 2, &scale);
+            if (!ok)
+                return 0;
+            
+            
+            mat.decompose(&scale, nullptr, nullptr);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            vec3_to_luaval(tolua_S, scale);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            return 1;
+        }
+        
+        if (!lua_isnil(tolua_S, 2) && !lua_isnil(tolua_S, 3) && lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_vec3(tolua_S, 2, &scale);
+            if (!ok)
+                return 0;
+            
+            ok &= luaval_to_quaternion(tolua_S, 3, &rotation);
+            if (!ok)
+                return 0;
+            
+            mat.decompose(&scale, &rotation, nullptr);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            vec3_to_luaval(tolua_S, scale);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            quaternion_to_luaval(tolua_S, rotation);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            return 1;
+            
+        }
+        
+        if (lua_isnil(tolua_S, 2) && !lua_isnil(tolua_S, 3) && lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_quaternion(tolua_S, 3, &rotation);
+            if (!ok)
+                return 0;
+            
+            mat.decompose(nullptr, &rotation, nullptr);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            quaternion_to_luaval(tolua_S, rotation);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            lua_pushnil(tolua_S);
+            lua_rawset(tolua_S, -3);
+        }
+        
+        if (!lua_isnil(tolua_S, 2) && !lua_isnil(tolua_S, 3) && !lua_isnil(tolua_S, 4))
+        {
+            ok &= luaval_to_vec3(tolua_S, 2, &scale);
+            if (!ok)
+                return 0;
+            
+            ok &= luaval_to_quaternion(tolua_S, 3, &rotation);
+            if (!ok)
+                return 0;
+            
+            ok &= luaval_to_vec3(tolua_S, 4, &translation);
+            if (!ok)
+                return 0;
+            
+            mat.decompose(&scale, &rotation, &translation);
+            
+            lua_newtable(tolua_S);
+            
+            lua_pushstring(tolua_S, "scale");
+            vec3_to_luaval(tolua_S, scale);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "rotation");
+            quaternion_to_luaval(tolua_S, rotation);
+            lua_rawset(tolua_S, -3);
+            
+            lua_pushstring(tolua_S, "translation");
+            vec3_to_luaval(tolua_S, translation);
+            lua_rawset(tolua_S, -3);
+            
+            return 1;
+        }
+        
+        return 0;
     }
     return 0;
 #if COCOS2D_DEBUG >= 1
@@ -7617,7 +7801,7 @@ static int tolua_cocos2d_Vec3_cross(lua_State* tolua_S)
     tolua_Error tolua_err;
 #endif
     
-    if (1 == argc)
+    if (2 == argc)
     {
 #if COCOS2D_DEBUG >= 1
         if (!tolua_istable(tolua_S, 1, 0, &tolua_err) ||
@@ -7687,6 +7871,38 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_cocos2d_Mat4_multiply(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_istable(tolua_S, 1, 0, &tolua_err) ||
+        !tolua_istable(tolua_S, 2, 0, &tolua_err) )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        cocos2d::Mat4 mat1;
+        bool ok = luaval_to_mat4(tolua_S, 1, &mat1);
+        if(!ok)
+            return 0;
+        
+        cocos2d::Mat4 mat2;
+        ok = luaval_to_mat4(tolua_S, 2, &mat2);
+        if(!ok)
+            return 0;
+        
+        cocos2d::Mat4 ret = mat1 * mat2;
+        mat4_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'mat4_multiply'.",&tolua_err);
+    return 0;
+#endif
+}
+
 int register_all_cocos2dx_math_manual(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
@@ -7698,6 +7914,7 @@ int register_all_cocos2dx_math_manual(lua_State* tolua_S)
         tolua_function(tolua_S, "mat4_getInversed", tolua_cocos2d_Mat4_getInversed);
         tolua_function(tolua_S, "mat4_transformVector", tolua_cocos2d_Mat4_transformVector);
         tolua_function(tolua_S, "mat4_decompose", tolua_cocos2d_Mat4_decompose);
+        tolua_function(tolua_S, "mat4_multiply", tolua_cocos2d_Mat4_multiply);
         tolua_function(tolua_S, "vec3_cross", tolua_cocos2d_Vec3_cross);
     tolua_endmodule(tolua_S);
     return 0;

@@ -1,6 +1,7 @@
 #include "lua_cocos2dx_auto.hpp"
 #include "cocos2d.h"
 #include "CCProtectedNode.h"
+#include "CCAsyncTaskPool.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 
@@ -38707,12 +38708,12 @@ int lua_cocos2dx_Label_setDimensions(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
     {
-        unsigned int arg0;
-        unsigned int arg1;
+        double arg0;
+        double arg1;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setDimensions");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setDimensions");
 
-        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Label:setDimensions");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Label:setDimensions");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setDimensions'", nullptr);
@@ -38812,7 +38813,7 @@ int lua_cocos2dx_Label_getHeight(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getHeight'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getHeight();
+        double ret = cobj->getHeight();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -38998,9 +38999,9 @@ int lua_cocos2dx_Label_setWidth(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned int arg0;
+        double arg0;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setWidth");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setWidth");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setWidth'", nullptr);
@@ -39053,7 +39054,7 @@ int lua_cocos2dx_Label_getMaxLineWidth(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getMaxLineWidth'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getMaxLineWidth();
+        double ret = cobj->getMaxLineWidth();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -39949,9 +39950,9 @@ int lua_cocos2dx_Label_setMaxLineWidth(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned int arg0;
+        double arg0;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setMaxLineWidth");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setMaxLineWidth");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setMaxLineWidth'", nullptr);
@@ -40287,9 +40288,9 @@ int lua_cocos2dx_Label_setHeight(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned int arg0;
+        double arg0;
 
-        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Label:setHeight");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Label:setHeight");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setHeight'", nullptr);
@@ -40342,7 +40343,7 @@ int lua_cocos2dx_Label_getWidth(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getWidth'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getWidth();
+        double ret = cobj->getWidth();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -72824,6 +72825,146 @@ int lua_register_cocos2dx_Component(lua_State* tolua_S)
     g_typeCast["Component"] = "cc.Component";
     return 1;
 }
+
+int lua_cocos2dx_AsyncTaskPool_stopTasks(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::AsyncTaskPool* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.AsyncTaskPool",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::AsyncTaskPool*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_AsyncTaskPool_stopTasks'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::AsyncTaskPool::TaskType arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.AsyncTaskPool:stopTasks");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AsyncTaskPool_stopTasks'", nullptr);
+            return 0;
+        }
+        cobj->stopTasks(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AsyncTaskPool:stopTasks",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_AsyncTaskPool_stopTasks'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_AsyncTaskPool_destoryInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.AsyncTaskPool",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AsyncTaskPool_destoryInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::AsyncTaskPool::destoryInstance();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AsyncTaskPool:destoryInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_AsyncTaskPool_destoryInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_AsyncTaskPool_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.AsyncTaskPool",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AsyncTaskPool_getInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::AsyncTaskPool* ret = cocos2d::AsyncTaskPool::getInstance();
+        object_to_luaval<cocos2d::AsyncTaskPool>(tolua_S, "cc.AsyncTaskPool",(cocos2d::AsyncTaskPool*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.AsyncTaskPool:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_AsyncTaskPool_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_AsyncTaskPool_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (AsyncTaskPool)");
+    return 0;
+}
+
+int lua_register_cocos2dx_AsyncTaskPool(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.AsyncTaskPool");
+    tolua_cclass(tolua_S,"AsyncTaskPool","cc.AsyncTaskPool","",nullptr);
+
+    tolua_beginmodule(tolua_S,"AsyncTaskPool");
+        tolua_function(tolua_S,"stopTasks",lua_cocos2dx_AsyncTaskPool_stopTasks);
+        tolua_function(tolua_S,"destoryInstance", lua_cocos2dx_AsyncTaskPool_destoryInstance);
+        tolua_function(tolua_S,"getInstance", lua_cocos2dx_AsyncTaskPool_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::AsyncTaskPool).name();
+    g_luaType[typeName] = "cc.AsyncTaskPool";
+    g_typeCast["AsyncTaskPool"] = "cc.AsyncTaskPool";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -72925,6 +73066,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_Application(tolua_S);
 	lua_register_cocos2dx_DelayTime(tolua_S);
 	lua_register_cocos2dx_LabelAtlas(tolua_S);
+	lua_register_cocos2dx_AsyncTaskPool(tolua_S);
 	lua_register_cocos2dx_ParticleSnow(tolua_S);
 	lua_register_cocos2dx_EaseElasticIn(tolua_S);
 	lua_register_cocos2dx_EaseCircleActionInOut(tolua_S);

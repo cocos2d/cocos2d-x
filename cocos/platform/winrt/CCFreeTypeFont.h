@@ -132,6 +132,7 @@ private:
     int             m_fontFillColorR;
     int             m_fontFillColorG;
     int             m_fontFillColorB;
+    int             m_fontFillColorA;
 };
 
 NS_CC_END

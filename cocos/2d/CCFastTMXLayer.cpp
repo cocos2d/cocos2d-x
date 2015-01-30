@@ -154,7 +154,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _primitives.size())
+    if(_renderCommands.size() < static_cast<size_t>(_primitives.size()))
     {
         _renderCommands.resize(_primitives.size());
     }

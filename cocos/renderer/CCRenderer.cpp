@@ -53,7 +53,7 @@ static bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 
 static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 {
-    return a->getGlobalOrder() > b->getGlobalOrder();
+    return  a->getDepth() > b->getDepth();
 }
 
 // queue
@@ -61,74 +61,113 @@ static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 void RenderQueue::push_back(RenderCommand* command)
 {
     float z = command->getGlobalOrder();
-    if(command->is3D())
+    if(z < 0)
     {
-        if(command->isTransparent())
+        _commands[QUEUE_GROUP::GLOBALZ_NEG].push_back(command);
+    }
+    else if(z > 0)
+    {
+        _commands[QUEUE_GROUP::GLOBALZ_POS].push_back(command);
+    }
+    else
+    {
+        if(command->is3D())
         {
-            _queue3DTransparent.push_back(command);
+            if(command->isTransparent())
+            {
+                _commands[QUEUE_GROUP::TRANSPARENT_3D].push_back(command);
+            }
+            else
+            {
+                _commands[QUEUE_GROUP::OPAQUE_3D].push_back(command);
+            }
         }
         else
         {
-            _queue3DOpaque.push_back(command);
+            _commands[QUEUE_GROUP::GLOBALZ_ZERO].push_back(command);
         }
     }
-    else if(z < 0)
-        _queueNegZ.push_back(command);
-    else if(z > 0)
-        _queuePosZ.push_back(command);
-    else
-        _queue0.push_back(command);
 }
 
 ssize_t RenderQueue::size() const
 {
-    return _queue3DOpaque.size() + _queue3DTransparent.size() + _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
+    ssize_t result(0);
+    for(int index = 0; index < QUEUE_GROUP::QUEUE_COUNT; ++index)
+    {
+        result += _commands[index].size();
+    }
+    
+    return result;
 }
 
 void RenderQueue::sort()
 {
     // Don't sort _queue0, it already comes sorted
-    std::sort(std::begin(_queue3DTransparent), std::end(_queue3DTransparent), compare3DCommand);
-    std::sort(std::begin(_queueNegZ), std::end(_queueNegZ), compareRenderCommand);
-    std::sort(std::begin(_queuePosZ), std::end(_queuePosZ), compareRenderCommand);
+    std::sort(std::begin(_commands[QUEUE_GROUP::TRANSPARENT_3D]), std::end(_commands[QUEUE_GROUP::TRANSPARENT_3D]), compare3DCommand);
+    std::sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_NEG]), std::end(_commands[QUEUE_GROUP::GLOBALZ_NEG]), compareRenderCommand);
+    std::sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_POS]), std::end(_commands[QUEUE_GROUP::GLOBALZ_POS]), compareRenderCommand);
 }
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    if(index < static_cast<ssize_t>(_queue3DOpaque.size()))
-        return _queue3DOpaque[index];
-
-    index -= _queue3DOpaque.size();
-
-    if(index < static_cast<ssize_t>(_queue3DTransparent.size()))
-        return _queue3DTransparent[index];
+    for(int queIndex = 0; queIndex < QUEUE_GROUP::QUEUE_COUNT; ++queIndex)
+    {
+        if(index < static_cast<ssize_t>(_commands[queIndex].size()))
+            return _commands[queIndex][index];
+        else
+        {
+            index -= _commands[queIndex].size();
+        }
+    }
     
-    index -= _queue3DTransparent.size();
-    
-    if(index < static_cast<ssize_t>(_queueNegZ.size()))
-        return _queueNegZ[index];
-
-    index -= _queueNegZ.size();
-
-    if(index < static_cast<ssize_t>(_queue0.size()))
-        return _queue0[index];
-
-    index -= _queue0.size();
-
-    if(index < static_cast<ssize_t>(_queuePosZ.size()))
-        return _queuePosZ[index];
-
     CCASSERT(false, "invalid index");
     return nullptr;
+
+
 }
 
 void RenderQueue::clear()
 {
-    _queue3DOpaque.clear();
-    _queue3DTransparent.clear();
-    _queueNegZ.clear();
-    _queue0.clear();
-    _queuePosZ.clear();
+    _commands.clear();
+    for(int index = 0; index < QUEUE_COUNT; ++index)
+    {
+        _commands.push_back(std::vector<RenderCommand*>());
+    }
+}
+
+void RenderQueue::saveRenderState()
+{
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RenderQueue::restoreRenderState()
+{
+    if (_isCullEnabled)
+    {
+        glEnable(GL_CULL_FACE);
+    }
+    else
+    {
+        glDisable(GL_CULL_FACE);
+    }
+    
+    
+    if (_isDepthEnabled)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    
+    glDepthMask(_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
 }
 
 //
@@ -465,48 +504,103 @@ void Renderer::processRenderCommand(RenderCommand* command)
     }
 }
 
-void Renderer::visitRenderQueue(const RenderQueue& queue)
+void Renderer::visitRenderQueue(RenderQueue& queue)
 {
-    ssize_t size = queue.size();
+    queue.saveRenderState();
     
-    //Process Opaque Object
-    const std::vector<RenderCommand*>& opaqueQueue = queue.getOpaqueCommands();
-    if (opaqueQueue.size() > 0)
+    //
+    //Process Global-Z < 0 Objects
+    //
+    const auto& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
+    if (zNegQueue.size() > 0)
     {
-        glDepthMask(true);
-        glEnable(GL_DEPTH_TEST);
-        
-        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it) {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+        }
+        for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
+        {
             processRenderCommand(*it);
         }
-        
-        glDisable(GL_DEPTH_TEST);
-        glDepthMask(false);
+        flush();
     }
-    flush();
     
-    //Setup Transparent rendering
+    //
+    //Process Opaque Object
+    //
+    const auto& opaqueQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D);
     if (opaqueQueue.size() > 0)
     {
-        glEnable(GL_DEPTH_TEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
-    
-    if(_isDepthTestFor2D)
-    {
-        glEnable(GL_DEPTH_TEST);
+        //Clear depth to achieve layered rendering
         glDepthMask(true);
+        glEnable(GL_DEPTH_TEST);
+        
+        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
     }
     
-    //Process Transparent Object
-    for (ssize_t index = queue.getOpaqueQueueSize(); index < size; ++index)
+    //
+    //Process 3D Transparent object
+    //
+    const auto& transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
+    if (transQueue.size() > 0)
     {
-        processRenderCommand(queue[index]);
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(false);
+        
+        for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
     }
-    flush();
+    
+    //
+    //Process Global-Z = 0 Queue
+    //
+    const auto& zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
+    if (zZeroQueue.size() > 0)
+    {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+        }
+        for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    //
+    //Process Global-Z > 0 Queue
+    //
+    const auto& zPosQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS);
+    if (zPosQueue.size() > 0)
+    {
+        for (auto it = zPosQueue.cbegin(); it != zPosQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    queue.restoreRenderState();
 }
 
 void Renderer::render()

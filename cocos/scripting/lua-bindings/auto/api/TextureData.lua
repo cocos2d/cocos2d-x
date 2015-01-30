@@ -22,6 +22,7 @@
 -- @function [parent=#TextureData] addContourData 
 -- @param self
 -- @param #ccs.ContourData contourData
+-- @return TextureData#TextureData self (return value: ccs.TextureData)
         
 --------------------------------
 -- 
@@ -33,5 +34,6 @@
 -- js ctor
 -- @function [parent=#TextureData] TextureData 
 -- @param self
+-- @return TextureData#TextureData self (return value: ccs.TextureData)
         
 return nil

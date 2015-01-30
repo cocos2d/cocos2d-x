@@ -1122,7 +1122,7 @@ public:
      *
      * @return An Action pointer
      */
-    Action* runAction(Action* action);
+    virtual Action* runAction(Action* action);
 
     /**
      * Stops and removes all actions from the running action list .
@@ -1543,7 +1543,7 @@ public:
     
     void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
-    virtual void updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
+    virtual void updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
 #endif
     
     // overrides

@@ -9,6 +9,7 @@
 -- @function [parent=#SkeletonRenderer] setTimeScale 
 -- @param self
 -- @param #float scale
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
@@ -21,6 +22,7 @@
 -- @function [parent=#SkeletonRenderer] setDebugSlotsEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
@@ -32,11 +34,13 @@
 -- 
 -- @function [parent=#SkeletonRenderer] setBonesToSetupPose 
 -- @param self
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
 -- @function [parent=#SkeletonRenderer] setSlotsToSetupPose 
 -- @param self
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
@@ -55,18 +59,21 @@
 -- 
 -- @function [parent=#SkeletonRenderer] setToSetupPose 
 -- @param self
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
 -- @function [parent=#SkeletonRenderer] setOpacityModifyRGB 
 -- @param self
 -- @param #bool value
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
 -- @function [parent=#SkeletonRenderer] setDebugBonesEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
@@ -85,6 +92,7 @@
 -- @function [parent=#SkeletonRenderer] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendFunc
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
