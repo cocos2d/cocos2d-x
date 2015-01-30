@@ -168,11 +168,10 @@ private:
         void finish();
         /*use linear-sample vertices for LOD mesh*/
         void updateVerticesForLOD();
-        /*calculate the average slope of the chunk*/
-        void calculateSlope();
         /*updateIndices for every frame*/
         void updateIndices();
 
+        void Terrain::Chunk::calculateSlope();
         /*current LOD of the chunk*/
         int _currentLod;
         /*the left,right,front,back neighbors*/
@@ -226,9 +225,10 @@ public:
     void initHeightMap(const char* heightMap);
     /*create entry*/
     static Terrain * create(TerrainData &parameter);
+
     /*get specified position's height mapping to the terrain*/
-    float getHeight(float x, float y, float z,Vec3 * normal = NULL);
-    float getHeight(Vec3 pos,Vec3 * nromal = NULL);  
+    float getHeight(float x,float z,Vec3 * normal= nullptr);
+    float getHeight(Vec2 pos,Vec3*Normal = nullptr);
     Vec3 getNormal(int pixel_x,int pixel_y);
     /*get height from the raw height map*/
     float getImageHeight(int pixel_x,int pixel_y);
@@ -240,10 +240,11 @@ public:
     void setIsEnableFrustumCull(bool bool_value);
     // Overrides, internal use only
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-
     //Ray-Terrain intersection.
     Vec3 getIntersectionPoint(const Ray & ray);
-private:
+    void setMaxDetailMapAmount(int max_value);
+protected:
+    
     Terrain();
     virtual ~Terrain();
     void onDraw(const Mat4 &transform, uint32_t flags);
@@ -253,7 +254,7 @@ private:
     void loadVertices();
     //calculate Normal Line for each Vertex
     void calculateNormal();
-private:
+protected:
     TerrainData _terrainData;
     bool _isDrawWire;
     unsigned char * _data;
@@ -271,7 +272,10 @@ private:
     int imageHeight;
     Size _chunkSize;
     bool _isEnableFrustumCull;
+    int _maxDetailMapValue;
     cocos2d::Image * _heightMapImage;
+    Mat4 _oldCameraModelMatrix;
+    Mat4 _oldTerrrainModelMatrix;
 };
 NS_CC_END
 #endif

@@ -36,7 +36,15 @@ public:
     TerrainSimple();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+
+    void on127x127_1DetailMap32x32Callback(Ref* sender);
+    void on257x257_1DetailMap32x32Callback(Ref* sender);
+    void onEnableLODCallback(Ref* sender);
+    void onDisableLODCallback(Ref* sender);
+    Terrain * _terrain;
 protected:
+    Camera * _camera;
 };
 
 #define PLAYER_STATE_LEFT 0 

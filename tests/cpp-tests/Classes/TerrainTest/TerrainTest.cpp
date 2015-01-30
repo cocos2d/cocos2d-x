@@ -44,14 +44,46 @@ TerrainSimple::TerrainSimple()
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
-    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,500);
-    camera->setCameraFlag(CameraFlag::USER1);
-    addChild(camera);
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,800);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    addChild(_camera);
 
-    Terrain::TerrainData a("TerrainTest/heightmap16.jpg","TerrainTest/sand.jpg");
-    auto terrain = Terrain::create(a);
-    addChild(terrain);
-    terrain->setCameraMask(2);
+    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds"),b("TerrainTest/road.dds"),a("TerrainTest/Grass1.dds");
+
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
+    _terrain = Terrain::create(data);
+    _terrain->setMaxDetailMapAmount(4);
+    addChild(_terrain);
+    _terrain->setCameraMask(2);
+    _terrain->setDrawWire(true);
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(TerrainSimple::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 8);
+    auto label1 = Label::createWithTTF(ttfConfig,"129*129 1 DETAIL MAP 32*32 chunk Size");
+    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(TerrainSimple::on127x127_1DetailMap32x32Callback,this));
+    auto label2 = Label::createWithTTF(ttfConfig,"257*257 1 DETAIL MAP 32*32 chunk Size");
+    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(TerrainSimple::on257x257_1DetailMap32x32Callback,this));
+
+    auto label3 = Label::createWithTTF(ttfConfig,"Enable LOD");
+    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(TerrainSimple::onEnableLODCallback,this));
+
+    auto label4 = Label::createWithTTF(ttfConfig,"disable LOD");
+    auto menuItem4 = MenuItemLabel::create(label4, CC_CALLBACK_1(TerrainSimple::onDisableLODCallback,this));
+
+    auto menu = Menu::create(menuItem1, menuItem2,menuItem3,menuItem4, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    menuItem1->setPosition( Vec2(0, VisibleRect::top().y-160) );
+    menuItem1->setAnchorPoint(Vec2(0,0));
+    menuItem2->setPosition( Vec2(0, VisibleRect::top().y-190) );
+    menuItem2->setAnchorPoint(Vec2(0,0));
+    menuItem3->setPosition( Vec2(0, VisibleRect::top().y-210) );
+    menuItem3->setAnchorPoint(Vec2(0,0));
+    menuItem4->setPosition( Vec2(0, VisibleRect::top().y-240) );
+    menuItem4->setAnchorPoint(Vec2(0,0));
+    addChild(menu, 0);
 }
 
 std::string TerrainSimple::title() const 
@@ -62,6 +94,60 @@ std::string TerrainSimple::title() const
 std::string TerrainSimple::subtitle() const 
 {
     return "Drag to walkThru";
+}
+
+void TerrainSimple::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    float delta = Director::getInstance()->getDeltaTime();
+    auto touch = touches[0];
+    auto location = touch->getLocation();
+    auto PreviousLocation = touch->getPreviousLocation();
+    Point newPos = PreviousLocation - location;
+
+    Vec3 cameraDir;
+    Vec3 cameraRightDir;
+    _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+    cameraDir.normalize();
+    cameraDir.y=0;
+    _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+    cameraRightDir.normalize();
+    cameraRightDir.y=0;
+    Vec3 cameraPos=  _camera->getPosition3D();
+    cameraPos+=cameraDir*newPos.y*0.5*delta;  
+    cameraPos+=cameraRightDir*newPos.x*0.5*delta;
+    _camera->setPosition3D(cameraPos);   
+}
+
+void TerrainSimple::on127x127_1DetailMap32x32Callback(Ref* sender)
+{
+    _terrain->removeFromParent();
+    Terrain::TerrainData data("TerrainTest/heightMap129.jpg","TerrainTest/sand.jpg");
+    _terrain = Terrain::create(data);
+    _terrain->setMaxDetailMapAmount(4);
+    addChild(_terrain);
+    _terrain->setCameraMask(2);
+    _terrain->setDrawWire(true);
+}
+
+void TerrainSimple::on257x257_1DetailMap32x32Callback(Ref* sender)
+{
+    _terrain->removeFromParent();
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/sand.jpg");
+    _terrain = Terrain::create(data);
+    _terrain->setMaxDetailMapAmount(4);
+    addChild(_terrain);
+    _terrain->setCameraMask(2);
+    _terrain->setDrawWire(true);
+}
+
+void TerrainSimple::onEnableLODCallback(Ref* sender)
+{
+    _terrain->setScale(20);
+}
+
+void TerrainSimple::onDisableLODCallback(Ref* sender)
+{
+    _terrain->setScale(1);
 }
 
 
@@ -163,7 +249,7 @@ TerrainWalkThru::TerrainWalkThru()
     _player->runAction(_action);
     _player->setCameraMask(2);
     _player->setScale(0.08);
-    _player->setPositionY(_terrain->getHeight(_player->getPosition3D())+PLAYER_HEIGHT);
+    _player->setPositionY(_terrain->getHeight(_player->getPositionX(),_player->getPositionZ())+PLAYER_HEIGHT);
 
     auto animation = Animation3D::create("Sprite3DTest/girl.c3b","Take 001");
     if (animation)
@@ -186,7 +272,6 @@ TerrainWalkThru::TerrainWalkThru()
     left = Label::create("turn Left","arial",22);
     left->setPosition(0,100);
     left->setAnchorPoint(Vec2(0,0));
-
 
     right = Label::create("turn right","arial",22);
     right->setPosition(0,150);
@@ -223,7 +308,6 @@ void TerrainWalkThru::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches
 
 void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
 {
-
     auto touch = touches[0];
     auto location = touch->getLocationInView();
     if(_camera)
@@ -243,13 +327,13 @@ void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, 
             Vec3 lastRayPosition =rayPos;
             rayPos += rayStep; 
             // Linear search - Loop until find a point inside and outside the terrain Vector3 
-            float height = _terrain->getHeight(rayPos); 
+            float height = _terrain->getHeight(rayPos.x,rayPos.z); 
 
             while (rayPos.y > height)
             {
                 lastRayPosition = rayPos; 
                 rayPos += rayStep; 
-                height = _terrain->getHeight(rayPos); 
+                height = _terrain->getHeight(rayPos.x,rayPos.z); 
             } 
 
             Vec3 startPosition = lastRayPosition;
@@ -323,13 +407,13 @@ void PlayerAction::step(float dt)
         break;
     }
     Vec3 Normal;
-    float player_h = _terrain->getHeight(player->getPosition3D(),&Normal);
+    float player_h = _terrain->getHeight(player->getPositionX(),player->getPositionZ(),&Normal);
     float dot_product = Normal.dot(Vec3(0,1,0));
 
     player->setPositionY(player_h+PLAYER_HEIGHT);
     Quaternion q2;
     q2.createFromAxisAngle(Vec3(0,1,0),-M_PI,&q2);
-
+ 
     Quaternion headingQ;
     headingQ.createFromAxisAngle(_headingAxis,_headingAngle,&headingQ);
     player->setRotationQuat(headingQ*q2);

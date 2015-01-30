@@ -62,48 +62,50 @@ static const char * fragment_shader_RGB_4_DETAIL ="\n#ifdef GL_ES\n\
 NS_CC_BEGIN
     Terrain * Terrain::create(TerrainData &parameter)
 {
-    Terrain * obj = new (std::nothrow)Terrain();
-    obj->_terrainData = parameter;
+    Terrain * terrain = new (std::nothrow)Terrain();
+    terrain->_terrainData = parameter;
     //chunksize
-    obj->_chunkSize = parameter.chunkSize;
+    terrain->_chunkSize = parameter.chunkSize;
     //heightmap
-    obj->initHeightMap(parameter.heightMapSrc.c_str());
+    terrain->initHeightMap(parameter.heightMapSrc.c_str());
     if(!parameter.alphaMapSrc)
     {
         auto textImage = new (std::nothrow)Image();
         textImage->initWithImageFile(parameter.detailMaps[0].detailMapSrc);
         auto texture = new (std::nothrow)Texture2D();
         texture->initWithImage(textImage);
-        obj->textures.push_back(texture);
+        terrain->textures.push_back(texture);
     }else
     {
         //alpha map
         auto textImage = new (std::nothrow)Image(); 
         textImage->initWithImageFile(parameter.alphaMapSrc);
-        obj->_alphaMap = new (std::nothrow)Texture2D();
-        obj->_alphaMap->initWithImage(textImage);
+        terrain->_alphaMap = new (std::nothrow)Texture2D();
+        terrain->_alphaMap->initWithImage(textImage);
         for(int i =0;i<4;i++)
         {
             auto textImage = new (std::nothrow)Image();
             textImage->initWithImageFile(parameter.detailMaps[i].detailMapSrc);
             auto texture = new (std::nothrow)Texture2D();
             texture->initWithImage(textImage);
-            obj->textures.push_back(texture);
-            obj->detailSize[i] = parameter.detailMaps[i].detailMapSize;
+            terrain->textures.push_back(texture);
+            terrain->detailSize[i] = parameter.detailMaps[i].detailMapSize;
         }
     }
-    obj->init();
-    obj->setAnchorPoint(Vec2(0,0));
-    return obj;
+    terrain->init();
+    terrain->setAnchorPoint(Vec2(0,0));
+    terrain->autorelease();
+    return terrain;
 }
 
 bool Terrain::init()
 {
-    _lodDistance[0]=288;
-    _lodDistance[1]=512;
-    _lodDistance[2]=1000;
+    _lodDistance[0]=64;
+    _lodDistance[1]=128;
+    _lodDistance[2]=196;
     auto shader = GLProgram::createWithByteArrays(vertex_shader,fragment_shader_RGB_4_DETAIL);
     auto state = GLProgramState::create(shader);
+    
     setGLProgramState(state);
     setDrawWire(false);
     setIsEnableFrustumCull(true);
@@ -124,8 +126,18 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
     glDepthMask(GL_TRUE);
-    glEnable(GL_DEPTH_TEST);
+    GLboolean depthTestCheck;
+    glGetBooleanv(GL_DEPTH_TEST,&depthTestCheck);
+    if(!depthTestCheck)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }
+    GLboolean blendCheck;
+    glGetBooleanv(GL_BLEND,&blendCheck);
+    if(blendCheck)
+    {
     glDisable(GL_BLEND);
+    }
     if(!_alphaMap)
     {
         glActiveTexture(GL_TEXTURE0);
@@ -136,7 +148,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         glUniform1i(alpha_location,0);
     }else
     {
-        for(int i =0;i<4;i++)
+        for(int i =0;i<_maxDetailMapValue;i++)
         {
             glActiveTexture(GL_TEXTURE0+i);
             glBindTexture(GL_TEXTURE_2D,textures[i]->getName());
@@ -153,6 +165,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
             auto detailSizeLocation = glGetUniformLocation(glProgram->getProgram(),str);
             glUniform1f(detailSizeLocation,detailSize[i]);
         }
+
         auto alpha_location = glGetUniformLocation(glProgram->getProgram(),"u_has_alpha");
         glUniform1i(alpha_location,1);
 
@@ -171,8 +184,17 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     quad->draw();
     quad->resetNeedDraw(true);//reset it 
     glActiveTexture(GL_TEXTURE0);
-    glDisable(GL_DEPTH_TEST);
+    if(depthTestCheck)
+    {
+        glEnable(GL_DEPTH_TEST);
+    }else
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+if(blendCheck)
+{
     glEnable(GL_BLEND);
+}
 }
 
 void Terrain::initHeightMap(const char * heightMap)
@@ -187,21 +209,25 @@ void Terrain::initHeightMap(const char * heightMap)
     int chunk_amount_x = imageWidth/_chunkSize.width;
     loadVertices();
     calculateNormal();
-
+    memset(_chunkesArray, 0, sizeof(_chunkesArray));
     for(int m =0;m<chunk_amount_y;m++)
     {
         for(int n =0; n<chunk_amount_x;n++)
         {
             _chunkesArray[m][n] = new Chunk();
+            _chunkesArray[m][n]->_terrain = this;
+            if(n-1>=0) _chunkesArray[m][n]->left = _chunkesArray[m][n-1];
+            if(n+1<chunk_amount_x) _chunkesArray[m][n]->right = _chunkesArray[m][n+1];
+            if(m-1>=0) _chunkesArray[m][n]->back = _chunkesArray[m-1][n];
+            if(m+1<chunk_amount_y) _chunkesArray[m][n]->front = _chunkesArray[m+1][n];
+            _chunkesArray[m][n]->_size = _chunkSize;
+            _chunkesArray[m][n]->generate(imageWidth,imageHeight,m,n,_data);
         }
     }
-
     for(int m =0;m<chunk_amount_y;m++)
     {
         for(int n =0; n<chunk_amount_x;n++)
         {
-
-            _chunkesArray[m][n]->_terrain = this;
             if(n-1>=0) _chunkesArray[m][n]->left = _chunkesArray[m][n-1];
             if(n+1<chunk_amount_x) _chunkesArray[m][n]->right = _chunkesArray[m][n+1];
             if(m-1>=0) _chunkesArray[m][n]->back = _chunkesArray[m-1][n];
@@ -241,7 +267,7 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
         }
 }
 
-float Terrain::getHeight(float x, float y ,float z,Vec3 * normal)
+float Terrain::getHeight(float x,float z,Vec3 * normal)
 {
     Vec2 pos = Vec2(x,z);
 
@@ -270,7 +296,7 @@ float Terrain::getHeight(float x, float y ,float z,Vec3 * normal)
 
     if(image_x>=imageWidth-1 || image_y >=imageHeight-1 || image_x<0 || image_y<0)
     {
-        return y;
+        return 0;
     }else
     {
         float a = getImageHeight(i,j)*getScaleY();
@@ -290,9 +316,9 @@ float Terrain::getHeight(float x, float y ,float z,Vec3 * normal)
     }
 }
 
-float Terrain::getHeight(Vec3 pos,Vec3*Normal)
+float Terrain::getHeight(Vec2 pos,Vec3*Normal)
 {
-    return getHeight(pos.x,pos.y,pos.z,Normal);
+    return getHeight(pos.x,pos.y,Normal);
 }
 
 float Terrain::getImageHeight(int pixel_x,int pixel_y)
@@ -395,10 +421,12 @@ Terrain::~Terrain()
     {
         for(int j = 0;j<MAX_CHUNKES;j++)
         {
-            delete _chunkesArray[i][j];
+            if(_chunkesArray[i][j])
+            {
+                delete _chunkesArray[i][j];
+            }
         }
     }
-     free(_chunkesArray);
 }
 
 cocos2d::Vec3 Terrain::getNormal(int pixel_x,int pixel_y)
@@ -425,13 +453,13 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     Vec3 lastRayPosition =rayPos;
     rayPos += rayStep; 
     // Linear search - Loop until find a point inside and outside the terrain Vector3 
-    float height = getHeight(rayPos); 
+    float height = getHeight(rayPos.x,rayPos.z); 
 
     while (rayPos.y > height)
     {
         lastRayPosition = rayPos; 
         rayPos += rayStep; 
-        height = getHeight(rayPos); 
+        height = getHeight(rayPos.x,rayPos.z); 
     } 
 
     Vec3 startPosition = lastRayPosition;
@@ -448,6 +476,11 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     } 
     Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
     return collisionPoint;
+}
+
+void Terrain::setMaxDetailMapAmount(int max_value)
+{
+    _maxDetailMapValue = max_value;
 }
 
 void Terrain::Chunk::finish()
@@ -782,7 +815,7 @@ void Terrain::Chunk::updateVerticesForLOD()
 
 Terrain::Chunk::~Chunk()
 {
-    glDeleteBuffers(2,vbo);
+//    glDeleteBuffers(2,vbo);
 }
 
 Terrain::QuadTree::QuadTree(int x,int y,int width,int height,Terrain * terrain)
