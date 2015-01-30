@@ -82,7 +82,7 @@ void UniformValue::apply()
 
             case GL_SAMPLER_CUBE:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId, GL_TEXTURE_CUBE_MAP);
+                GL::bindTextureN(_value.tex.textureUnit, _value.tex.textureId, GL_TEXTURE_CUBE_MAP);
                 break;
 
             case GL_INT:

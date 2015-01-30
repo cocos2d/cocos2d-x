@@ -152,12 +152,12 @@ TextureCube::~TextureCube()
 {
 }
 
-TextureCube* TextureCube::create(const std::string& path1, const std::string& path2,
-                                 const std::string& path3, const std::string& path4,
-                                 const std::string& path5, const std::string& path6)
+TextureCube* TextureCube::create(const std::string& positive_x, const std::string& negative_x,
+                                 const std::string& positive_y, const std::string& negative_y,
+                                 const std::string& positive_z, const std::string& negative_z)
 {
     auto ret = new (std::nothrow) TextureCube();
-    if (ret && ret->init(path1, path2, path3, path4, path5, path6))
+    if (ret && ret->init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z))
     {
         ret->autorelease();
         return ret;
@@ -166,18 +166,18 @@ TextureCube* TextureCube::create(const std::string& path1, const std::string& pa
     return nullptr;
 }
 
-bool TextureCube::init(const std::string& path1, const std::string& path2,
-                       const std::string& path3, const std::string& path4,
-                       const std::string& path5, const std::string& path6)
+bool TextureCube::init(const std::string& positive_x, const std::string& negative_x,
+                       const std::string& positive_y, const std::string& negative_y,
+                       const std::string& positive_z, const std::string& negative_z)
 {
     std::vector<Image*> images(6);
 
-    images[0] = createImage(path1);
-    images[1] = createImage(path2);
-    images[2] = createImage(path3);
-    images[3] = createImage(path4);
-    images[4] = createImage(path5);
-    images[5] = createImage(path6);
+    images[0] = createImage(positive_x);
+    images[1] = createImage(negative_x);
+    images[2] = createImage(positive_y);
+    images[3] = createImage(negative_y);
+    images[4] = createImage(positive_z);
+    images[5] = createImage(negative_z);
 
     GLuint handle;
     glGenTextures(1, &handle);

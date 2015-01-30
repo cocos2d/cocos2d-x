@@ -115,12 +115,16 @@ void CC_DLL enableVertexAttribs(uint32_t flags);
  */
 void CC_DLL bindTexture2D(GLuint textureId);
 
-
 /** If the texture is not already bound to a given unit, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  @since v2.1.0
  */
-void CC_DLL bindTexture2DN(GLuint textureUnit, GLuint textureId, GLuint textureType = GL_TEXTURE_2D);
+void CC_DLL bindTexture2DN(GLuint textureUnit, GLuint textureId);
+
+/** If the texture is not already bound to a given unit, it binds it.
+If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+*/
+void CC_DLL bindTextureN(GLuint textureUnit, GLuint textureId, GLuint textureType = GL_TEXTURE_2D);
 
 /** It will delete a given texture. If the texture was bound, it will invalidate the cached.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.

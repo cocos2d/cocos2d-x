@@ -23,24 +23,25 @@
  ****************************************************************************/
 
 #include "CCSkybox.h"
+#include "CCTextureCube.h"
 
 NS_CC_BEGIN
 
 Skybox::Skybox()
     : _vao(0)
-    , _vbo(0)
-    , _vio(0)
+    , _vertexBuffer(0)
+    , _indexBuffer(0)
     ,_texture(nullptr)
 {
 }
 
 Skybox::~Skybox()
 {
-    glDeleteBuffers(1, &_vbo);
-    glDeleteBuffers(1, &_vio);
+    glDeleteBuffers(1, &_vertexBuffer);
+    glDeleteBuffers(1, &_indexBuffer);
 
-    _vbo = 0;
-    _vio = 0;
+    _vertexBuffer = 0;
+    _indexBuffer = 0;
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -89,16 +90,16 @@ void Skybox::initBuffers()
         Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
     };
 
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STREAM_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // init index buffer object
     unsigned char idxBuf[] = { 2, 1, 0, 3, 2, 0, 1, 5, 4, 1, 4, 0, 4, 5, 6, 4, 6, 7, 7, 6, 2, 7, 2, 3 };
 
-    glGenBuffers(1, &_vio);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vio);
+    glGenBuffers(1, &_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxBuf), idxBuf, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -116,10 +117,12 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     state->applyGLProgram(transform);
     state->applyUniforms();
 
+    GLboolean   depthFlag = glIsEnabled(GL_DEPTH_TEST);
+    GLint		depthFunc;
+    glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
+
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-
-    glEnable(GL_CULL_FACE);
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -129,10 +132,10 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     {
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
 
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vio);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
 
     glDrawElements(GL_TRIANGLES, (GLsizei)36, GL_UNSIGNED_BYTE, nullptr);
@@ -149,13 +152,14 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
 
-    glDisable(GL_CULL_FACE);
-    glDisable(GL_DEPTH_TEST);
+    glDepthFunc(depthFunc);
+    if (!depthFlag)
+        glDisable(GL_DEPTH_TEST);
 
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Skybox::setTexture(Texture2D* texture)
+void Skybox::setTexture(TextureCube* texture)
 {
     CCASSERT(texture != nullptr, __FUNCTION__);
 

@@ -29,12 +29,14 @@
 
 NS_CC_BEGIN
 
+class TextureCube;
+
 class CC_DLL Skybox : public Node
 {
 public:
     CREATE_FUNC(Skybox);
 
-    void setTexture(Texture2D*);
+    void setTexture(TextureCube*);
 
     void onDraw(const Mat4& transform, uint32_t flags);
 
@@ -51,12 +53,12 @@ protected:
     void initBuffers();
 
     GLuint      _vao;
-    GLuint      _vbo;
-    GLuint      _vio;
+    GLuint      _vertexBuffer;
+    GLuint      _indexBuffer;
 
     CustomCommand _customCommand;
 
-    Texture2D*  _texture;
+    TextureCube*  _texture;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Skybox);
 };
