@@ -1228,6 +1228,9 @@ void CCLabelBMFont::setFntFile(const char* fntFile)
         m_pConfiguration = newConf;
 
         this->setTexture(CCTextureCache::sharedTextureCache()->addImage(m_pConfiguration->getAtlasName()));
+        
+        CCSpriteBatchNode::initWithTexture(this->getTexture(), 0);
+        
         this->createFontChars();
     }
 }
