@@ -264,9 +264,6 @@ const std::string& AssetsManagerEx::getStoragePath() const
 
 void AssetsManagerEx::setStoragePath(const std::string& storagePath)
 {
-    if (_storagePath.size() > 0)
-        _fileUtils->removeDirectory(_storagePath);
-
     _storagePath = storagePath;
     adjustPath(_storagePath);
     _fileUtils->createDirectory(_storagePath);
