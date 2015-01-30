@@ -135,6 +135,10 @@ public:
 
     std::string getUri();
     std::string getSid();
+    
+    inline bool isConnected() {
+        return _connected;
+    }
 };
 
 
@@ -858,6 +862,10 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
             socket->addClient(path, c);
 
             socket->connectToEndpoint(path);
+        }
+        
+        if (!socket->isConnected()) {
+            socket->connect();
         }
     }
 
