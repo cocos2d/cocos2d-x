@@ -70,7 +70,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DMirrorTest),
     CL(QuaternionTest),
     CL(Sprite3DEmptyTest),
-    CL(UseCaseSprite3D)
+    CL(UseCaseSprite3D),
+    CL(Sprite3DForceDepthTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -154,6 +155,42 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
     s->addChild( backSpriteTestAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DForceDepthTest
+//
+//------------------------------------------------------------------
+Sprite3DForceDepthTest::Sprite3DForceDepthTest()
+{
+    auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    orc->setScale(5);
+    orc->setNormalizedPosition(Vec2(.5,.3));
+    orc->setPositionZ(40);
+    orc->setRotation3D(Vec3(0,180,0));
+    orc->setGlobalZOrder(-1);
+    
+    addChild(orc);
+    
+    auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
+    ship->setScale(5);
+    ship->setTexture("Sprite3DTest/boss.png");
+    ship->setNormalizedPosition(Vec2(.5,.5));
+    ship->setRotation3D(Vec3(90,0,0));
+    ship->setForceDepthWrite(true);
+    
+    addChild(ship);
+}
+
+std::string Sprite3DForceDepthTest::title() const
+{
+    return "Force Depth Write Error Test";
+}
+
+std::string Sprite3DForceDepthTest::subtitle() const
+{
+    return "Ship should always appear behind orc";
 }
 
 //------------------------------------------------------------------

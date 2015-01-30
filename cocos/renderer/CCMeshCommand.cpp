@@ -83,6 +83,10 @@ MeshCommand::MeshCommand()
 , _cullFace(GL_BACK)
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
+, _forceDepthWrite(false)
+, _renderStateCullFace(false)
+, _renderStateDepthTest(false)
+, _renderStateDepthWrite(GL_FALSE)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
@@ -168,7 +172,11 @@ void MeshCommand::setTransparent(bool value)
     //Skip batching for transparent mesh
     _skipBatching = value;
     
-    if (!_forceDepthWrite)
+    if (_isTransparent && !_forceDepthWrite)
+    {
+        _depthWriteEnabled = false;
+    }
+    else
     {
         _depthWriteEnabled = true;
     }
