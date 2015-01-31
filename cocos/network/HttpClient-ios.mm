@@ -164,7 +164,6 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
                                                cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                            timeoutInterval:HttpClient::getInstance()->getTimeoutForConnect()];
     
-    
     //set request type
     [nsrequest setHTTPMethod:requestType];
 
