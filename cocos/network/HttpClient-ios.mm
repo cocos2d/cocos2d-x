@@ -164,6 +164,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
                                                cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                            timeoutInterval:HttpClient::getInstance()->getTimeoutForConnect()];
     
+    
     //set request type
     [nsrequest setHTTPMethod:requestType];
 
@@ -190,8 +191,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
         char* requestDataBuffer = request->getRequestData();
         if (nullptr !=  requestDataBuffer && 0 != strlen(requestDataBuffer))
         {
-            NSString* requestData  = [NSString stringWithUTF8String:requestDataBuffer];
-            NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *postData = [NSData dataWithBytes:requestDataBuffer length:request->getRequestDataSize()];
             [nsrequest setHTTPBody:postData];
         }
     }
