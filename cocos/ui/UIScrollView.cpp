@@ -1551,6 +1551,9 @@ void ScrollView::update(float dt)
     {
         autoScrollChildren(dt);
     }
+    if(!_bePressed)
+           checkNeedBounce();
+
     if (_bouncing)
     {
         bounceChildren(dt);
