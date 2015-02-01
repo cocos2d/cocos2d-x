@@ -207,8 +207,14 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     materialdatas.resetData();
     nodedatas.resetData();
 
+    std::string mtlPath = "";
+    if (mtl_basepath)
+        mtlPath = mtl_basepath;
+    else
+        mtlPath = fullPath.substr(0, fullPath.find_last_of("\\/") + 1).c_str();
+    
     ObjLoader::shapes_t shapes;
-    auto ret = ObjLoader::LoadObj(shapes, fullPath.c_str(), mtl_basepath);
+    auto ret = ObjLoader::LoadObj(shapes, fullPath.c_str(), mtlPath.c_str());
     if (ret.empty())
     {
         //fill data
