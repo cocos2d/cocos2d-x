@@ -53,12 +53,12 @@ protected:
 #define PLAYER_STATE_FORWARD 3
 #define PLAYER_STATE_BACKWARD 4
 
-class PlayerAction : public Action
+class Player : public Sprite3D
 {
 public:
-    PlayerAction(Camera * cam,Terrain * terrain);
+    static Player * create(const char * file,Camera * cam,Terrain * terrain);
     virtual bool isDone() const;
-    virtual void step(float dt);
+    virtual void update(float dt);
 
     void turnLeft();
     void turnRight();
@@ -87,13 +87,13 @@ public:
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 protected:
-    PlayerAction * _action;
     Label * forward;
     Label * backward;
     Label * left;
     Label * right;
     Camera * _camera;
     Terrain * _terrain;
-    Sprite3D * _player;
+    Player * _player;
 };
+
 #endif // !TERRAIN_TESH_H

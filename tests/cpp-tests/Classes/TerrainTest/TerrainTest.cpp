@@ -243,10 +243,7 @@ TerrainWalkThru::TerrainWalkThru()
     _terrain->setCameraMask(2);
     _terrain->setDrawWire(false);
 
-    _action = new PlayerAction(_camera,_terrain);
-    _action->retain();
-    _player =Sprite3D::create("Sprite3DTest/girl.c3b");
-    _player->runAction(_action);
+    _player = Player::create("Sprite3DTest/girl.c3b",_camera,_terrain);
     _player->setCameraMask(2);
     _player->setScale(0.08);
     _player->setPositionY(_terrain->getHeight(_player->getPositionX(),_player->getPositionZ())+PLAYER_HEIGHT);
@@ -352,24 +349,24 @@ void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, 
             dir = collisionPoint - _player->getPosition3D();
             dir.y = 0;
             dir.normalize();
-            _action->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
-            dir.cross(dir,Vec3(0,0,-1),&_action->_headingAxis);
-            _action->_targetPos=collisionPoint;
-            _action->forward();
+            _player->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
+            dir.cross(dir,Vec3(0,0,-1),&_player->_headingAxis);
+            _player->_targetPos=collisionPoint;
+            _player->forward();
         }
     }
 }
 
 
-bool PlayerAction::isDone() const
+bool Player::isDone() const
 {
     return false;
 }
 
 
-void PlayerAction::step(float dt)
+void Player::update(float dt)
 {
-    auto player = (Sprite3D * )_target;
+    auto player = (Sprite3D *)this;
     switch (_playerState)
     {
     case PLAYER_STATE_IDLE:
@@ -424,42 +421,35 @@ void PlayerAction::step(float dt)
     updateState();
 }
 
-void PlayerAction::turnLeft()
+void Player::turnLeft()
 {
     _playerState = PLAYER_STATE_LEFT;
 }
 
-void PlayerAction::turnRight()
+void Player::turnRight()
 {
     _playerState = PLAYER_STATE_RIGHT;
 }
 
-void PlayerAction::idle()
+void Player::idle()
 {
     _playerState = PLAYER_STATE_IDLE;
 }
 
-PlayerAction::PlayerAction(Camera * cam,Terrain * terrain)
-{
-    _headingAngle = 0;
-    _playerState = PLAYER_STATE_IDLE;
-    _cam = cam;
-    _terrain = terrain;
-}
 
-void PlayerAction::forward()
+void Player::forward()
 {
     _playerState = PLAYER_STATE_FORWARD;
 }
 
-void PlayerAction::backward()
+void Player::backward()
 {
     _playerState = PLAYER_STATE_BACKWARD;
 }
 
-void PlayerAction::updateState()
+void Player::updateState()
 {
-    auto player = (Sprite3D * )_target;
+    auto player = (Sprite3D * )this;
     switch (_playerState)
     {
     case PLAYER_STATE_FORWARD:
@@ -476,4 +466,22 @@ void PlayerAction::updateState()
     default:
         break;
     }
+}
+
+Player * Player::create(const char * file,Camera * cam,Terrain * terrain)
+{
+    //
+    auto sprite = new (std::nothrow) Player();
+    if (sprite && sprite->initWithFile(file))
+    {
+        sprite->_headingAngle = 0;
+        sprite->_playerState = PLAYER_STATE_IDLE;
+        sprite->_cam = cam;
+        sprite->_terrain = terrain;
+        sprite->autorelease();
+        sprite->scheduleUpdate();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
 }
