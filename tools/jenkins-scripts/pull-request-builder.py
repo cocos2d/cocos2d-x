@@ -95,12 +95,12 @@ def scan_all_libs(db, pr_num):
         for _file in files:
             if not _file.endswith(".a"):
                 continue
-        print _file
-        libfile = lib_path + '/' + _file
-        _filename = _file.split('.')[0]
-        filesize = os.path.getsize(libfile) / 1024
-        stats[_filename] = filesize
-        save_build_stats(db, pr_num, _filename, filesize)
+            print _file
+            libfile = lib_path + '/' + _file
+            _filename = _file.split('.')[0]
+            filesize = os.path.getsize(libfile) / 1024
+            stats[_filename] = filesize
+            save_build_stats(db, pr_num, _filename, filesize)
     return stats
 
 http_proxy = ''
