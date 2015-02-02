@@ -37,8 +37,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Texture2D;
-class EventCustom;
-class EventListenerCustom;
+//class EventCustom;
+//class EventListenerCustom;
+class VertexData;
+class VertexBuffer;
+class IndexBuffer;
 
 /**
  * @addtogroup textures
@@ -189,14 +192,17 @@ public:
     /** draws all the Atlas's Quads
     */
     void drawQuads();
-    /** listen the event that renderer was recreated on Android
-     */
-    void listenRendererRecreated(EventCustom* event);
+    
+//    /** listen the event that renderer was recreated on Android
+//     */
+//    void listenRendererRecreated(EventCustom* event);
 
     /** whether or not the array buffer of the VBO needs to be updated*/
-    inline bool isDirty(void) { return _dirty; }
+    bool isDirty();
+    
     /** specify if the array buffer of the VBO needs to be updated */
-    inline void setDirty(bool bDirty) { _dirty = bDirty; }
+    void setDirty(bool dirty);
+    
     /**
      * @js NA
      * @lua NA
@@ -219,33 +225,38 @@ public:
     V3F_C4B_T2F_Quad* getQuads();
     
     /** Sets the quads that are going to be rendered */
-    void setQuads(V3F_C4B_T2F_Quad* quads);
+    CC_DEPRECATED_ATTRIBUTE void setQuads(V3F_C4B_T2F_Quad* quads);
     
-private:
-    void renderCommand();
-
+//private:
+//    void renderCommand();
+//
+protected:
+    
     void setupIndices();
-    void mapBuffers();
-    void setupVBOandVAO();
-    void setupVBO();
+//    void mapBuffers();
+//    void setupVBOandVAO();
+//    void setupVBO();
 
 protected:
-    GLushort*           _indices;
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-    /** quantity of quads that are going to be drawn */
-    ssize_t _totalQuads;
-    /** quantity of quads that can be stored with the current texture atlas size */
-    ssize_t _capacity;
-    /** Texture of the texture atlas */
-    Texture2D* _texture;
-    /** Quads that are going to be rendered */
-    V3F_C4B_T2F_Quad* _quads;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _rendererRecreatedListener;
-#endif
+//    GLushort*           _indices;
+//    GLuint              _VAOname;
+//    GLuint              _buffersVBO[2]; //0: vertex  1: indices
+//    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+//    /** quantity of quads that are going to be drawn */
+//    ssize_t _totalQuads;
+//    /** quantity of quads that can be stored with the current texture atlas size */
+//    ssize_t _capacity;
+//    /** Quads that are going to be rendered */
+//    V3F_C4B_T2F_Quad* _quads;
+//    
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    EventListenerCustom* _rendererRecreatedListener;
+//#endif
+
+    Texture2D*    _texture;
+    VertexData*   _vdAtlas;
+    VertexBuffer* _vbAtlas;
+    IndexBuffer*  _ibAtlas;
 };
 
 // end of textures group

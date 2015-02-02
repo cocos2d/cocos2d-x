@@ -1,5 +1,6 @@
+
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,40 +26,16 @@
 #ifndef __CC_VERTEX_INDEX_DATA_H__
 #define __CC_VERTEX_INDEX_DATA_H__
 
-#include "base/CCRef.h"
 #include <map>
 #include <set>
+#include "base/CCRef.h"
+#include "renderer/CCVertexAttribute.h"
 
 NS_CC_BEGIN
 
 class GLArrayBuffer;
 class IndexBuffer;
 class EventListenerCustom;
-
-struct CC_DLL VertexStreamAttribute
-{
-    VertexStreamAttribute()
-        : _offset(0)
-        , _semantic(0)
-        , _type(0)
-        , _size(0)
-        , _normalize(false)
-    {}
-
-    VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize = false)
-        : _offset(offset)
-        , _semantic(semantic)
-        , _type(type)
-        , _size(size)
-        , _normalize(normalize)
-    {}
-    
-    bool _normalize;
-    int _offset;
-    int _semantic;
-    int _type;
-    int _size;
-};
 
 class CC_DLL VertexData
     : public Ref
@@ -94,19 +71,19 @@ public:
     size_t getVertexStreamCount() const;
     
     // @brief add vertex stream descriptors to a buffer 
-    CC_DEPRECATED_ATTRIBUTE bool setStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream) { return addStream(buffer, stream); }
-    bool addStream(GLArrayBuffer* vertices, const VertexStreamAttribute& stream);
+    CC_DEPRECATED_ATTRIBUTE bool setStream(GLArrayBuffer* buffer, const VertexAttribute& stream) { return addStream(buffer, stream); }
+    bool addStream(GLArrayBuffer* vertices, const VertexAttribute& stream);
     void removeStream(int semantic);
     
     // @brief specify indexed drawing for vertex data
     void setIndexBuffer(IndexBuffer* indices);
     void removeIndexBuffer();
     
-    const VertexStreamAttribute* getStreamAttribute(int semantic) const;
-    VertexStreamAttribute* getStreamAttribute(int semantic);
+    const VertexAttribute* getStreamAttribute(int semantic) const;
+    VertexAttribute* getStreamAttribute(int semantic);
         
     // @brief update and draw the buffer.
-    unsigned draw(unsigned start = 0, unsigned count = 0);
+    size_t draw(size_t start = 0, size_t count = 0);
     
     // @brief true/false if all vertex buffers are empty
     bool empty() const;
@@ -115,7 +92,16 @@ public:
     void clear();
     
     // @brief returns the count of vertices added
-    unsigned count() const;
+    size_t getCount() const;
+    
+    // @brief returns the capacity of the buffer in bytes
+    size_t getCapacity() const;
+
+    // @brief returns the dirty status of the data or vertex streams
+    bool isDirty() const;
+    
+    // @brief sets the dirty state of all vertex data
+    void setDirty(bool dirty);
     
     template <typename T>
     void append(const T& vertex)
@@ -147,21 +133,15 @@ protected:
     VertexData(Primitive primitive);
     
     bool determineInterleave() const;
-    void append(GLArrayBuffer* buffer, void* source, unsigned count = 1);
+    void append(GLArrayBuffer* buffer, void* source, size_t count = 1);
+    int DataTypeToGL(DataType type);
 
-    
-    // @brief returns the dirty status of the data or vertex streams
-    bool isDirty() const;
-    
-    // @brief sets the dirty state of all vertex data
-    void setDirty(bool dirty);
-    
 protected:
     
     struct BufferAttribute
     {
         GLArrayBuffer* _buffer;
-        VertexStreamAttribute _stream;
+        VertexAttribute _stream;
     };
     std::map<int, BufferAttribute> _vertexStreams;
 

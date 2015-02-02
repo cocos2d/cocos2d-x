@@ -74,7 +74,7 @@ VertexData::~VertexData()
 #endif
 }
 
-bool VertexData::addStream(GLArrayBuffer* buffer, const VertexStreamAttribute& stream)
+bool VertexData::addStream(GLArrayBuffer* buffer, const VertexAttribute& stream)
 {
     if (nullptr == buffer)
         return false;
@@ -138,24 +138,24 @@ void VertexData::removeIndexBuffer()
     _indices = nullptr;
 }
 
-const VertexStreamAttribute* VertexData::getStreamAttribute(int semantic) const
+const VertexAttribute* VertexData::getStreamAttribute(int semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
+VertexAttribute* VertexData::getStreamAttribute(int semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-unsigned VertexData::draw(unsigned start, unsigned count)
+size_t VertexData::draw(size_t start, size_t count)
 {
     if (0 == count)
-        count = this->count();
+        count = this->getCount();
     
     if (_vao)
     {
@@ -182,7 +182,7 @@ unsigned VertexData::draw(unsigned start, unsigned count)
             auto stride = vb->getElementSize();
             
             glEnableVertexAttribArray(GLint(stream._semantic));
-            glVertexAttribPointer(GLint(stream._semantic), stream._size, stream._type, stream._normalize, (GLsizei)stride, (GLvoid*)(size_t)offset);
+            glVertexAttribPointer(GLint(stream._semantic), stream._size, DataTypeToGL(stream._type), stream._normalize, (GLsizei)stride, (GLvoid*)(size_t)offset);
             
             CHECK_GL_ERROR_DEBUG();
         }
@@ -197,12 +197,12 @@ unsigned VertexData::draw(unsigned start, unsigned count)
     {
         intptr_t offset = start * _indices->getElementSize();
         GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
-        glDrawElements((GLenum)_drawingPrimitive, count, type, (GLvoid*)offset);
+        glDrawElements((GLenum)_drawingPrimitive, (GLsizei)count, type, (GLvoid*)offset);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     else
     {
-        glDrawArrays((GLenum)_drawingPrimitive, start, count);
+        glDrawArrays((GLenum)_drawingPrimitive, (GLsizei)start, (GLsizei)count);
     }
     
     CHECK_GL_ERROR_DEBUG();
@@ -216,10 +216,9 @@ unsigned VertexData::draw(unsigned start, unsigned count)
 
 bool VertexData::empty() const
 {
-    for (auto& e : _vertexStreams)
+    for (auto b : _buffers)
     {
-        auto& bufferAttribute = e.second;
-        if (0 != bufferAttribute._buffer->getElementCount())
+        if (0 != b->getElementCount())
             return false;
     }
     return true;
@@ -227,40 +226,31 @@ bool VertexData::empty() const
 
 void VertexData::clear()
 {
-    _dirty = false;
-    for (auto& e : _vertexStreams)
-    {
-        auto& bufferAttribute = e.second;
-        bufferAttribute._buffer->clear();
-    }
+    _dirty = true;
+    for (auto& b : _buffers)
+        b->clear();
 }
 
 bool VertexData::isDirty() const
 {
     if (_dirty)
         return true;
-    for (auto& e : _vertexStreams)
-    {
-        auto& bufferAttribute = e.second;
-        if (bufferAttribute._buffer->isDirty())
+    for (auto b : _buffers)
+        if (b->isDirty())
             return true;
-    }
     return false;
 }
 
 void VertexData::setDirty(bool dirty)
 {
     _dirty = dirty;
-    for (auto& e : _vertexStreams)
-    {
-        auto& bufferAttribute = e.second;
-        bufferAttribute._buffer->setDirty(dirty);
-    }
+    for (auto b : _buffers)
+        b->setDirty(dirty);
 }
 
-unsigned VertexData::count() const
+size_t VertexData::getCount() const
 {
-    unsigned count = 0;
+    size_t count = 0;
     for (auto b : _buffers)
     {
         auto c = b->getElementCount();
@@ -270,16 +260,28 @@ unsigned VertexData::count() const
     return count;
 }
 
+size_t VertexData::getCapacity() const
+{
+    size_t capacity = 0;
+    for (auto b : _buffers)
+    {
+        auto c = b->getCapacity();
+        CCASSERT(0 == capacity || c == capacity, "all buffers must have the same capacity");
+        capacity = c;
+    }
+    return capacity;
+}
+
 // @brief If all streams use the same buffer, then the data is interleaved.
 bool VertexData::determineInterleave() const
 {
     return _buffers.size() == 1;
 }
 
-void VertexData::append(GLArrayBuffer* buffer, void* source, unsigned count)
+void VertexData::append(GLArrayBuffer* buffer, void* source, size_t count)
 {
     _dirty = true;
-    buffer->append(source, count);
+    buffer->appendElements(source, count);
 }
     
 void VertexData::recreate() const
@@ -293,6 +295,14 @@ void VertexData::recreate() const
 
     for (auto b : _buffers)
         b->recreate();
+}
+
+int VertexData::DataTypeToGL(DataType type)
+{
+    const static int gltypes[] = {GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, GL_UNSIGNED_INT, GL_FLOAT, GL_FIXED};
+    unsigned t = (int)type;
+    CCASSERT(t < sizeof(gltypes) / sizeof(gltypes[0]), "Invalid GL DataType index");
+    return gltypes[t];
 }
 
 NS_CC_END

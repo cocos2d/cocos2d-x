@@ -60,25 +60,25 @@ bool DrawNode::init()
 
     _vbTriangles = VertexBuffer::create(sizeof(V2F_C4B_T2F), 2048, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
     _vdTriangles = VertexData::create(VertexData::Primitive::Triangles);
-    _vdTriangles->addStream(_vbTriangles, VertexStreamAttribute(offsetof(V2F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 2));
-    _vdTriangles->addStream(_vbTriangles, VertexStreamAttribute(offsetof(V2F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    _vdTriangles->addStream(_vbTriangles, VertexStreamAttribute(offsetof(V2F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    _vdTriangles->addStream(_vbTriangles, VertexAttribute(offsetof(V2F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 2));
+    _vdTriangles->addStream(_vbTriangles, VertexAttribute(offsetof(V2F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true));
+    _vdTriangles->addStream(_vbTriangles, VertexAttribute(offsetof(V2F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
     CC_SAFE_RETAIN(_vdTriangles);
     CC_SAFE_RETAIN(_vbTriangles);
     
     _vbLines = VertexBuffer::create(sizeof(V2F_C4B_T2F), 2048, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
     _vdLines = VertexData::create(VertexData::Primitive::Lines);
-    _vdLines->addStream(_vbLines, VertexStreamAttribute(offsetof(V2F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 2));
-    _vdLines->addStream(_vbLines, VertexStreamAttribute(offsetof(V2F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    _vdLines->addStream(_vbLines, VertexStreamAttribute(offsetof(V2F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+    _vdLines->addStream(_vbLines, VertexAttribute(offsetof(V2F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 2));
+    _vdLines->addStream(_vbLines, VertexAttribute(offsetof(V2F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true));
+    _vdLines->addStream(_vbLines, VertexAttribute(offsetof(V2F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
     CC_SAFE_RETAIN(_vdLines);
     CC_SAFE_RETAIN(_vbLines);
 
     _vbPoints = VertexBuffer::create(sizeof(V2F_C4B_PF), 2048, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
     _vdPoints = VertexData::create(VertexData::Primitive::Points);
-    _vdPoints->addStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, vertices),  GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 2));
-    _vdPoints->addStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, colors),    GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-    _vdPoints->addStream(_vbPoints, VertexStreamAttribute(offsetof(V2F_C4B_PF, pointSize), GLProgram::VERTEX_ATTRIB_POINTSIZE, GL_FLOAT, 1));
+    _vdPoints->addStream(_vbPoints, VertexAttribute(offsetof(V2F_C4B_PF, vertices),  GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 2));
+    _vdPoints->addStream(_vbPoints, VertexAttribute(offsetof(V2F_C4B_PF, colors),    GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true));
+    _vdPoints->addStream(_vbPoints, VertexAttribute(offsetof(V2F_C4B_PF, pointSize), GLProgram::VERTEX_ATTRIB_POINTSIZE, DataType::Float, 1));
     CC_SAFE_RETAIN(_vdPoints);
     CC_SAFE_RETAIN(_vbPoints);
     
@@ -123,7 +123,7 @@ void DrawNode::drawLine(const Vec2& origin, const Vec2& destination, const Color
     _vdLines->append<V2F_C4B_T2F>({destination, Color4B(color), Tex2F()});
 }
 
-void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+void DrawNode::drawRect(const Vec2& origin, const Vec2& destination, const Color4F &color)
 {
     drawLine(Vec2(origin.x, origin.y),           Vec2(destination.x, origin.y), color);
     drawLine(Vec2(destination.x, origin.y),      Vec2(destination.x, destination.y), color);
@@ -194,7 +194,7 @@ void DrawNode::drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec
     drawPoly(vertices, segments+1, false, color);
 }
 
-void DrawNode::drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color)
+void DrawNode::drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments, const Color4F& color)
 {
     auto vertices = (Vec2*)CC_ALLOCA((segments + 1) * sizeof(Vec2));
     

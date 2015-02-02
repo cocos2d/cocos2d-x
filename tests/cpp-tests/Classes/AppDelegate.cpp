@@ -29,6 +29,7 @@
 #include "controller.h"
 #include "cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
+#include "VisibleRect.h"
 
 USING_NS_CC;
 
@@ -178,21 +179,26 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
     auto scene = Scene::create();
-    auto layer = new (std::nothrow) TestController();
-    layer->autorelease();
-    layer->addConsoleAutoTest();
-    scene->addChild(layer);
-    director->runWithScene(scene);
-
-    // Enable Remote Console
-    auto console = director->getConsole();
-    console->listenOnTCP(5678);
-    Configuration *conf = Configuration::getInstance();
-    bool isAutoRun = conf->getValue("cocos2d.x.testcpp.autorun", Value(false)).asBool();
-    if(isAutoRun)
-    {
-        layer->startAutoRun();
-    }
+    auto l = Label::createWithTTF("After 5 seconds grossini should move", "fonts/Thonburi.ttf", 16.0f);
+    l->setPosition(VisibleRect::center().x, VisibleRect::top().y-75);
+    scene->addChild(l);
+    
+//    auto scene = Scene::create();
+//    auto layer = new (std::nothrow) TestController();
+//    layer->autorelease();
+//    layer->addConsoleAutoTest();
+//    scene->addChild(layer);
+//    director->runWithScene(scene);
+//
+//    // Enable Remote Console
+//    auto console = director->getConsole();
+//    console->listenOnTCP(5678);
+//    Configuration *conf = Configuration::getInstance();
+//    bool isAutoRun = conf->getValue("cocos2d.x.testcpp.autorun", Value(false)).asBool();
+//    if(isAutoRun)
+//    {
+//        layer->startAutoRun();
+//    }
     
     return true;
 }

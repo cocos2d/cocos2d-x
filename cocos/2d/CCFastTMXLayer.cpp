@@ -260,9 +260,9 @@ void TMXLayer::updateVertexBuffer()
     {
         _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
         _vData = VertexData::create();
-        _vData->setStream(_vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
-        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
-        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+        _vData->setStream(_vertexBuffer, VertexAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, DataType::Float, 3));
+        _vData->setStream(_vertexBuffer, VertexAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, DataType::UByte, 4, true));
+        _vData->setStream(_vertexBuffer, VertexAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
         CC_SAFE_RETAIN(_vData);
         CC_SAFE_RETAIN(_vertexBuffer);
     }
