@@ -489,4 +489,24 @@ public:
     virtual void runThisTest();
 };
 
+namespace cocos2d
+{
+    class TextureCube;
+}
+class Sprite3DCubeMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DCubeMapTest);
+    Sprite3DCubeMapTest();
+    ~Sprite3DCubeMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void addNewSpriteWithCoords(Vec2);
+
+protected:
+    cocos2d::Sprite3D*      _sprite;
+    cocos2d::TextureCube*   _textureCube;
+};
+
 #endif

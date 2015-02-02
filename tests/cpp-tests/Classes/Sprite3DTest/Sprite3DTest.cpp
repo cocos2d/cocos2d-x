@@ -30,6 +30,8 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "3d/CCTextureCube.h"
+#include "3d/CCSkybox.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -70,7 +72,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DMirrorTest),
     CL(QuaternionTest),
     CL(Sprite3DEmptyTest),
-    CL(UseCaseSprite3D)
+    CL(UseCaseSprite3D),
+    CL(Sprite3DCubeMapTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2284,5 +2287,96 @@ void UseCaseSprite3D::update(float delta)
         sprite3d->setPositionZ(z);
         circle->setPositionX(x);
         circle->setPositionZ(z);
+    }
+}
+
+Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
+_sprite(nullptr),
+_textureCube(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords(Vec2(s.width / 2, s.height / 2));
+}
+
+Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
+{
+    _textureCube->release();
+}
+
+std::string Sprite3DCubeMapTest::title() const
+{
+    return "CubeMap && Skybox Test";
+}
+
+std::string Sprite3DCubeMapTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 0.1, 200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+
+    // create a teapot
+    auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
+
+    //create and set our custom shader
+    auto shader = GLProgram::createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
+    auto _state = GLProgramState::create(shader);
+
+    // create the second texture for cylinder
+    _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+    // temporary solution
+    _textureCube->retain();
+
+    //set texture parameters
+    Texture2D::TexParams tRepeatParams;
+    tRepeatParams.magFilter = GL_NEAREST;
+    tRepeatParams.minFilter = GL_NEAREST;
+    tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
+    tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+    _textureCube->setTexParameters(tRepeatParams);
+
+    // pass the texture sampler to our custom shader
+    _state->setUniformTexture("u_cubeTex", _textureCube);
+
+    teapot->setGLProgramState(_state);
+    teapot->setPosition3D(Vec3(0, -5, -20));
+    teapot->setRotation3D(Vec3(-90, 180, 0));
+
+    auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
+    teapot->runAction(RepeatForever::create(rotate_action));
+
+    //pass mesh's attribute to shader
+    long offset = 0;
+    auto attributeCount = teapot->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++)
+    {
+        auto meshattribute = teapot->getMesh()->getMeshVertexAttribute(i);
+        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            teapot->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+    addChild(teapot);
+    addChild(_camera);
+    setCameraMask(2);
+
+    {
+        // config skybox 
+        Skybox* box = Skybox::create();
+        box->setTexture(_textureCube);
+        addChild(box);
+
+        //auto rotate_action = RotateBy::create(1.5, Vec3(0, -30, 0));
+        //box->runAction(RepeatForever::create(rotate_action));
     }
 }

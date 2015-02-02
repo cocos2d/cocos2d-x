@@ -1303,6 +1303,12 @@
     <ClCompile Include="..\3d\CCAABB.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCSkybox.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCTextureCube.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2547,6 +2553,12 @@
     <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\physics\CCPhysicsHelper.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSkybox.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCTextureCube.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
