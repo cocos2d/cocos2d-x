@@ -58,6 +58,7 @@ bool Skybox::init()
     // create and set our custom shader
     auto shader = GLProgram::createWithFilenames("Sprite3DTest/skybox.vert", "Sprite3DTest/skybox.frag");
     auto state = GLProgramState::create(shader);
+    state->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
     setGLProgramState(state);
 
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -71,7 +72,7 @@ bool Skybox::init()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+        state->applyAttributes(false);
 
         GL::bindVAO(0);
     }
@@ -92,8 +93,7 @@ void Skybox::initBuffers()
 
     glGenBuffers(1, &_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STREAM_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STATIC_DRAW);
 
     // init index buffer object
     unsigned char idxBuf[] = { 2, 1, 0, 3, 2, 0, 1, 5, 4, 1, 4, 0, 4, 5, 6, 4, 6, 7, 7, 6, 2, 7, 2, 3 };
@@ -101,7 +101,6 @@ void Skybox::initBuffers()
     glGenBuffers(1, &_indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxBuf), idxBuf, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
@@ -114,8 +113,7 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 {
     auto state = getGLProgramState();
-    state->applyGLProgram(transform);
-    state->applyUniforms();
+    state->apply(transform);
 
     GLboolean   depthFlag = glIsEnabled(GL_DEPTH_TEST);
     GLint		depthFunc;
