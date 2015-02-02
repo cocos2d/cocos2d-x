@@ -144,6 +144,7 @@ Node::Node(void)
     _scheduler->retain();
     _eventDispatcher = _director->getEventDispatcher();
     _eventDispatcher->retain();
+    CCLOG("Hello World");
     
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
