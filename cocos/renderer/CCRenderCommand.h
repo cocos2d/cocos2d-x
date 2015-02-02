@@ -76,7 +76,9 @@ public:
     inline bool is3D() const { return _is3D; }
     
     inline void set3D(bool value) { _is3D = value; }
-
+    
+    inline float getDepth() const { return _depth; }
+    
 protected:
     RenderCommand();
     virtual ~RenderCommand();
@@ -97,6 +99,9 @@ protected:
     
     // is the command been rendered on 3D pass
     bool _is3D;
+    
+    // depth
+    float _depth;
 };
 
 NS_CC_END

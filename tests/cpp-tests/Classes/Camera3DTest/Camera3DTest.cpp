@@ -130,7 +130,6 @@ CameraRotationTest::CameraRotationTest()
 
     auto sp3d = Sprite3D::create();
     sp3d->setPosition(s.width/2, s.height/2);
-    sp3d->setRotation3D(Vec3(90,90,0));
     addChild(sp3d);
     
     auto lship = Label::create();

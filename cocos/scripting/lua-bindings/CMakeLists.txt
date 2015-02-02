@@ -14,6 +14,7 @@ include_directories(
   ${cocos_root}/cocos/ui
   ${cocos_root}/cocos/2d
   ${cocos_root}/cocos/3d
+  ${cocos_root}/cocos/base
   ${cocos_root}/cocos/editor-support/spine
   ${cocos_root}/cocos/editor-support/cocostudio
   ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline

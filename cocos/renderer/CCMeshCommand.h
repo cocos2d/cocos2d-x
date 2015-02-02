@@ -127,6 +127,11 @@ protected:
     GLenum _cullFace;
     bool _depthTestEnabled;
     bool _depthWriteEnabled;
+    bool _forceDepthWrite;
+    
+    bool _renderStateCullFace;
+    bool _renderStateDepthTest;
+    GLboolean _renderStateDepthWrite;
 
     // ModelView transform
     Mat4 _mv;

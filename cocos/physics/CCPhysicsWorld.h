@@ -204,6 +204,7 @@ protected:
     int _substeps;
     cpSpace* _cpSpace;
     
+    bool _updateBodyTransform;
     Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;

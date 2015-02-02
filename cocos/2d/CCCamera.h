@@ -102,10 +102,6 @@ public:
     /**get & set Camera flag*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
     void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
-    /**
-    * Sets the position (X, Y, and Z) in its parent's coordinate system
-    */
-    virtual void setPosition3D(const Vec3& position) override;
 
     /**
     * Make Camera looks at target
