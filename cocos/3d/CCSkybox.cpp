@@ -96,7 +96,13 @@ void Skybox::initBuffers()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STATIC_DRAW);
 
     // init index buffer object
-    unsigned char idxBuf[] = { 2, 1, 0, 3, 2, 0, 1, 5, 4, 1, 4, 0, 4, 5, 6, 4, 6, 7, 7, 6, 2, 7, 2, 3 };
+    unsigned char idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
+        1, 5, 4, 1, 4, 0, // right
+        4, 5, 6, 4, 6, 7, // back
+        7, 6, 2, 7, 2, 3, // left
+        2, 6, 5, 2, 5, 1, // up
+        3, 0, 4, 3, 4, 7  // down
+    };
 
     glGenBuffers(1, &_indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
