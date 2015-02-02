@@ -84,7 +84,7 @@ bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType array
     _elementSize  = elementSize;
     _elementCount = 0;
     
-    setCapacity(maxElements);
+    setCapacity(maxElements, false);
     
     return true;
 }
@@ -92,7 +92,7 @@ bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType array
 void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t begin, bool defer)
 {
     CCASSERT(hasClient() || hasNative(), "Can only update elements if there is an attached buffer");
-
+    
     if (0 == count)
         return;
     
@@ -102,8 +102,8 @@ void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t be
     if (false == hasClient())
         defer = false;
 
-    auto needed = getElementSize() * (count + begin);
-    setCapacity(needed);
+    auto needed = count + begin;
+    setCapacity(needed, false);
     
     if (hasClient())
     {
@@ -113,9 +113,11 @@ void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t be
         else
             memset((void*)p, 0, count * _elementSize);
     }
-    
-    _elementCount = begin + count > _elementCount ? begin + count : _elementCount;
 
+    // empty elements do not count towards element count, only capacity
+    if (elements)
+        _elementCount = begin + count > _elementCount ? begin + count : _elementCount;
+    
     if (false == defer && elements && hasNative())
         bindAndCommit(elements, count, begin);
 }
@@ -151,6 +153,11 @@ void GLArrayBuffer::removeElements(size_t count, size_t begin, bool defer)
     _elementCount -= count;
 }
 
+void GLArrayBuffer::addCapacity(size_t count, bool zero)
+{
+    setCapacity(count + getCapacity(), zero);
+}
+
 void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t begin)
 {
     if (_vbo)
@@ -166,12 +173,14 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
     {
         glGenBuffers(1, &_vbo);
         _vboSize = _capacity * getElementSize();
+        CCASSERT(_vboSize, "_elementCount should not be 0");
         GL::bindVBO(_target, _vbo);
         glBufferData(_target, _vboSize, elements, _usage);
     }
     else
     {
         const auto size = getSize();
+        CCASSERT(size, "_elementCount should not be 0");
         if (size > _vboSize)
         {
             _vboSize = size;
@@ -182,7 +191,6 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
         {
             if (count == 0)
                 count = _elementCount;
-            
             intptr_t p = (intptr_t)elements + begin * _elementSize;
             glBufferSubData(_target, begin * _elementSize, count * _elementSize, (void*)p);
             CHECK_GL_ERROR_DEBUG();
@@ -217,16 +225,25 @@ void GLArrayBuffer::recreate() const
     }
 }
 
-void GLArrayBuffer::setCapacity(size_t capacity)
+void GLArrayBuffer::setCapacity(size_t capacity, bool zero)
 {
     if (capacity > _capacity)
     {
-        _capacity = capacity;
         if (hasClient())
         {
-            _elements = realloc(_elements, capacity * _elementSize);
-            CCLOG("GLArrayBuffer::setCapacity : realloc client buffer esize(%zu) %p to %zu bytes", _elementSize, _elements, capacity * _elementSize);
+            auto capacityInBytes = capacity * _elementSize;
+            _elements = realloc(_elements, capacityInBytes);
+            
+            if (zero)
+            {
+                intptr_t start = (intptr_t)_elements + _capacity * _elementSize;
+                size_t count = _elementSize * (capacity - _capacity);
+                memset((void*)start, 0, count);
+            }
+
+            CCLOG("GLArrayBuffer::setCapacity : realloc client buffer esize(%zu) %p to %zu bytes", _elementSize, _elements, capacityInBytes);
         }
+        _capacity = capacity;
     }
 }
 

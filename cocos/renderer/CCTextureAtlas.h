@@ -232,7 +232,7 @@ public:
 //
 protected:
     
-    void setupIndices();
+    void setupIndices(size_t count, size_t begin = 0);
 //    void mapBuffers();
 //    void setupVBOandVAO();
 //    void setupVBO();

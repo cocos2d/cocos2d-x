@@ -87,6 +87,10 @@ public:
     //        if defer is true, then the native buffer is not updated.
     void removeElements(size_t count, size_t begin, bool defer = true);
     
+    // @brief increases the capacity of the buffer by count elements
+    //        optionally zeroes out the elements.
+    void addCapacity(size_t count, bool zero = false);
+    
     // @brief if dirty, copies elements to the client buffer (if any)
     // and optionally submits the elements to the native buffer (if any)
     // if elements is null, then the entire client is commited to native. 
@@ -102,6 +106,12 @@ public:
         return _vbo;
     }
 
+    void setElementCount(size_t count)
+    {
+        CCASSERT(count <= _capacity, "element count cannot exceed capacity");
+        _elementCount = count;
+    }
+    
     size_t getElementCount() const
     {
         return _elementCount;
@@ -143,7 +153,7 @@ public:
     
     // @brief returns the client array if present, otherwise nullptr
     template <typename T = void>
-    T* getElements() const
+    T* getElementsT() const
     {
         return hasClient() ? static_cast<T*>(_elements) : nullptr;
     }
@@ -182,12 +192,20 @@ public:
         removeElements(mult * count, mult * begin, defer);
     }
     
+    template <typename T>
+    void addCapacityT(size_t count, bool zero = false)
+    {
+        CCASSERT(0 == sizeof(T) % getElementSize(), "elements must divide evenly into elementSize");
+        auto mult = sizeof(T) / getElementSize();
+        addCapacity(mult * count, zero);
+    }
+    
 protected:
 
     GLArrayBuffer();
 
     bool init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode);
-    void setCapacity(size_t capacity);
+    void setCapacity(size_t capacity, bool zero);
     
     // @brief for OpenGL this provides the binding target of the array.
     virtual int nativeBindTarget() const = 0;

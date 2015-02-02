@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCTexture2D.h"
+#include "base/allocator/CCAllocatorMacros.h"
 
 //#include <stdlib.h>
 //
@@ -40,7 +41,7 @@ THE SOFTWARE.
 //#include "base/CCEventListenerCustom.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
-//#include "renderer/ccGLStateCache.h"
+#include "renderer/ccGLStateCache.h"
 //#include "renderer/CCRenderer.h"
 //#include "platform/CCGL.h"
 #include "deprecated/CCString.h"
@@ -120,13 +121,12 @@ V3F_C4B_T2F_Quad* TextureAtlas::getQuads()
     //if someone accesses the quads directly, presume that changes will be made
     // jag. ugh really? surely the burden should be on the changer of verts?
     _vdAtlas->setDirty(true);
-    return _vbAtlas->getElements<V3F_C4B_T2F_Quad>();
+    return _vbAtlas->getElementsT<V3F_C4B_T2F_Quad>();
 }
 
 void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 {
-    // deprecated
-    //_quads = quads;
+    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quads, _vbAtlas->getElementCount() / 4, 0);
 }
 
 // TextureAtlas - alloc & init
@@ -182,7 +182,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 
     _vdAtlas->addStream(_vbAtlas, VertexAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 3));
     _vdAtlas->addStream(_vbAtlas, VertexAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true));
-    _vdAtlas->addStream(_vbAtlas, VertexAttribute(offsetof(V2F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
+    _vdAtlas->addStream(_vbAtlas, VertexAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
     
     CC_SAFE_RETAIN(_vdAtlas);
     CC_SAFE_RETAIN(_vbAtlas);
@@ -224,7 +224,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 //    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 //#endif
     
-    setupIndices();
+    setupIndices(getCapacity());
 
 //    if (Configuration::getInstance()->supportsShareableVAO())
 //    {
@@ -260,16 +260,17 @@ std::string TextureAtlas::getDescription() const
     return StringUtils::format("<TextureAtlas | totalQuads = %d>", static_cast<int>(_vbAtlas->getElementCount()));
 }
 
-
-void TextureAtlas::setupIndices()
+// count and begin are both quad indices
+void TextureAtlas::setupIndices(size_t count, size_t begin)
 {
-    auto capacity = _vbAtlas->getCapacity() / 4; // total quads
-    if (0 == capacity)
+    if (0 == count)
         return;
 
-    auto indices = _ibAtlas->getElements<uint16_t>();
+    auto indices = 6 * begin + _ibAtlas->getElementsT<uint16_t>();
+    auto end = begin + count;
     
-    for (auto i = 0; i < capacity; ++i)
+    // count is in quads, begin is in indices, so quads * 6
+    for (auto i = begin; i < end; ++i)
     {
         *indices++ = i*4+0;
         *indices++ = i*4+1;
@@ -279,6 +280,9 @@ void TextureAtlas::setupIndices()
         *indices++ = i*4+1;
     }
     
+    // manually set the count since we are modifying
+    // the element array outside of the buffer.
+    _ibAtlas->setElementCount(6 * end);
     _ibAtlas->setDirty(true);
 }
 
@@ -413,8 +417,13 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 
 void TextureAtlas::increaseTotalQuadsWith(ssize_t amount)
 {
-    CCASSERT(amount>=0, "amount >= 0");
-    _vbAtlas->appendElementsT<V3F_C4B_T2F_Quad>(nullptr, amount);
+    CCASSERT(amount >= 0, "increaseTotalQuadsWith amount >= 0");
+    
+    auto begin = _ibAtlas->getCapacity() / 6;     // determine first quad to update
+    _ibAtlas->addCapacityT<uint16_t>(6 * amount); // add capacity 6 indices per quad
+    setupIndices(amount, begin);                  // update new indices for quads
+    
+    _vbAtlas->addCapacityT<V3F_C4B_T2F_Quad>(amount);
 }
 
 void TextureAtlas::moveQuadsFromIndex(ssize_t oldIndex, ssize_t amount, ssize_t newIndex)
@@ -466,6 +475,7 @@ void TextureAtlas::fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount)
 
 void TextureAtlas::drawQuads()
 {
+    GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw();
 }
 
