@@ -197,7 +197,6 @@ Node::~Node()
     setPhysicsBody(nullptr);
 
 #endif
-    CCLOG("hehe");
     
     CC_SAFE_RELEASE_NULL(_actionManager);
     CC_SAFE_RELEASE_NULL(_scheduler);
