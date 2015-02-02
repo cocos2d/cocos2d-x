@@ -9,6 +9,7 @@
 -- Shall be overridden in subclasses
 -- @function [parent=#AtlasNode] updateAtlasValues 
 -- @param self
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -21,12 +22,31 @@
 -- @function [parent=#AtlasNode] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas textureAtlas
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- endcode<br>
+-- lua NA
+-- @function [parent=#AtlasNode] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
 -- @function [parent=#AtlasNode] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#AtlasNode] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- 
@@ -39,12 +59,14 @@
 -- @function [parent=#AtlasNode] setTexture 
 -- @param self
 -- @param #cc.Texture2D texture
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
 -- @function [parent=#AtlasNode] setQuadsToDraw 
 -- @param self
 -- @param #long quadsToDraw
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 --  creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render
@@ -63,6 +85,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -75,6 +98,7 @@
 -- @function [parent=#AtlasNode] setColor 
 -- @param self
 -- @param #color3b_table color
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
@@ -87,11 +111,13 @@
 -- @function [parent=#AtlasNode] setOpacityModifyRGB 
 -- @param self
 -- @param #bool isOpacityModifyRGB
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
 -- 
 -- @function [parent=#AtlasNode] setOpacity 
 -- @param self
 -- @param #unsigned char opacity
+-- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 return nil

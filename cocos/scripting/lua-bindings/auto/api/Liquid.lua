@@ -15,12 +15,14 @@
 -- @function [parent=#Liquid] setAmplitude 
 -- @param self
 -- @param #float amplitude
+-- @return Liquid#Liquid self (return value: cc.Liquid)
         
 --------------------------------
 -- 
 -- @function [parent=#Liquid] setAmplitudeRate 
 -- @param self
 -- @param #float amplitudeRate
+-- @return Liquid#Liquid self (return value: cc.Liquid)
         
 --------------------------------
 -- 
@@ -45,9 +47,10 @@
 -- @return Liquid#Liquid ret (return value: cc.Liquid)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Liquid] update 
 -- @param self
 -- @param #float time
+-- @return Liquid#Liquid self (return value: cc.Liquid)
         
 return nil

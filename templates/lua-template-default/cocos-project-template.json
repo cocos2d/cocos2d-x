@@ -1,81 +1,258 @@
 {
-      "do_default":{
-         "exclude_from_template":[
-            "frameworks/runtime-src"
-         ],
-         "append_dir": [
+    "do_default": {
+        "exclude_from_template": [
+            "frameworks/runtime-src",
+            "runtime/config.json",
+            "runtime/version.json"
+        ],
+        "project_replace_project_name": {
+            "src_project_name": "HelloLua",
+            "files": [
+                "config.json",
+                ".project"
+            ]
+        },
+        "append_dir": [
             {
                 "from": "cocos/scripting/lua-bindings/script",
                 "to": "src/cocos",
                 "exclude": []
+            },
+            {
+                "from": "templates/lua-template-default/src",
+                "to": "src",
+                "exclude": []
+            },
+            {
+                "from": "templates/lua-template-default/res",
+                "to": "res",
+                "exclude": []
+            },
+            {
+                "from": "external/win32-specific/gles/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/icon/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/MP3Decoder/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/OggDecoder/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/OpenalSoft/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/win32-specific/zlib/prebuilt",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/curl/prebuilt/win32",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/lua/luajit/prebuilt/win32",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/websockets/prebuilt/win32",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/sqlite3/libraries/win32",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            },
+            {
+                "from": "external/tiff/prebuilt/win32",
+                "to": "runtime/win32",
+                "include": [
+                    "*.dll"
+                ]
+            }
+
+        ]
+    },
+    "do_add_native_support": {
+        "append_from_template": {
+            "from": "frameworks/runtime-src",
+            "to": "frameworks/runtime-src",
+            "exclude": [
+                "proj.android/bin",
+                "proj.android/assets",
+                "proj.android/libs",
+                "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
+                "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
+                "proj.win32/Debug.win32",
+                "proj.win32/Release.win32",
+                "proj.win32/HelloLua.sdf"
+            ]
+        },
+        "append_x_engine": {
+            "from": ".",
+            "to": "frameworks/cocos2d-x"
+        },
+        "append_dir": [
+            {
+                "from": "tools/simulator/libsimulator",
+                "to": "frameworks/cocos2d-x/tools/simulator/libsimulator",
+                "exclude": [
+                    "proj.win32/Debug",
+                    "proj.win32/Release"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/lang",
+                "to": "frameworks/runtime-src/Classes/ide-support",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+                "to": "frameworks/runtime-src/proj.ios_mac/ios",
+                "exclude": [
+                    "RootViewController.*",
+                    "Info.plist"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+                "to": "frameworks/runtime-src/proj.ios_mac/mac",
+                "exclude": [
+                    "Info.plist",
+                    "Icon.icns",
+                    "build-cfg.json"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/build-cfg.json",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/game.rc",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.cpp",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.h",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/res",
+                "to": "frameworks/runtime-src/proj.win32/res",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/resource.h",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.cpp",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.h",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            }
+        ],
+        "project_rename": {
+            "src_project_name": "HelloLua",
+            "files": [
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
+                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
+            ]
+        },
+        "project_replace_project_name": {
+            "src_project_name": "HelloLua",
+            "files": [
+                "config.json",
+                ".project",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+                "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
+                "frameworks/runtime-src/proj.win32/main.cpp",
+                "frameworks/runtime-src/proj.android/.project",
+                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+                "frameworks/runtime-src/proj.android/build.xml",
+                "frameworks/runtime-src/proj.android/res/values/strings.xml",
+                "frameworks/runtime-src/proj.ios_mac/ios/main.m",
+                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
+                "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
+                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj"
+            ]
+        },
+        "project_replace_package_name": {
+            "src_package_name": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+            ]
+        },
+        "project_replace_mac_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
+            ]
+        },
+        "project_replace_ios_bundleid": {
+            "src_bundle_id": "org.cocos2dx.hellolua",
+            "files": [
+                "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
+            ]
+        },
+        "modify_files":[
+            {
+                "file_path": "frameworks/runtime-src/Classes/ide-support/CodeIDESupport.h",
+                "pattern": "#define CC_CODE_IDE_DEBUG_SUPPORT 1",
+                "replace_string": "#define CC_CODE_IDE_DEBUG_SUPPORT 0"
             }
          ]
-      },
-      "do_add_native_support":{
-         "append_from_template":{
-            "from":"frameworks/runtime-src",
-            "to":"frameworks/runtime-src",
-            "exclude":[
-               "proj.android/bin",
-               "proj.android/assets",
-               "proj.android/libs",
-               "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
-               "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
-               "proj.win32/Debug.win32",
-               "proj.win32/Release.win32",
-               "proj.win32/HelloLua.sdf"
-            ]
-         },
-         "append_x_engine":{
-            "from":".",
-            "to":"frameworks/cocos2d-x"
-         },
-         "project_rename":{
-            "src_project_name":"HelloLua",
-            "files":[
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
-               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
-            ]
-         },
-         "project_replace_project_name":{
-            "src_project_name":"HelloLua",
-            "files":[
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
-               "frameworks/runtime-src/proj.win32/main.cpp",
-               "frameworks/runtime-src/proj.android/.project",
-               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-               "frameworks/runtime-src/proj.android/build.xml",
-               "frameworks/runtime-src/proj.android/res/values/strings.xml",
-               "frameworks/runtime-src/proj.ios_mac/ios/main.m",
-               "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
-               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-               "frameworks/runtime-src/Classes/AppDelegate.cpp"
-            ]
-         },
-         "project_replace_package_name":{
-            "src_package_name":"org.cocos2dx.hellolua",
-            "files":[
-               "frameworks/runtime-src/proj.android/AndroidManifest.xml"
-            ]
-         },
-         "project_replace_mac_bundleid": {
-            "src_bundle_id": "org.cocos2dx.hellolua",
-            "files": [
-               "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
-            ]
-         },
-         "project_replace_ios_bundleid": {
-            "src_bundle_id": "org.cocos2dx.hellolua",
-            "files": [
-               "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
-            ]
-         }
     }
 }
-

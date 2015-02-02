@@ -51,7 +51,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DBasicTest),
     CL(Sprite3DHitTest),
     CL(AsyncLoadSprite3DTest),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
     CL(Sprite3DUVAnimationTest),
@@ -60,15 +60,18 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DLightMapTest),
 #endif
     CL(Sprite3DWithSkinTest),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     CL(Sprite3DWithSkinOutlineTest),
 #endif
     CL(Animate3DTest),
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
-    CL(Sprite3DWithOBBPerfromanceTest),
+    CL(Sprite3DWithOBBPerformanceTest),
     CL(Sprite3DMirrorTest),
-    CL(QuaternionTest)
+    CL(QuaternionTest),
+    CL(Sprite3DEmptyTest),
+    CL(UseCaseSprite3D),
+    CL(Sprite3DForceDepthTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -154,6 +157,66 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
     s->release();
 }
 
+//------------------------------------------------------------------
+//
+// Sprite3DForceDepthTest
+//
+//------------------------------------------------------------------
+Sprite3DForceDepthTest::Sprite3DForceDepthTest()
+{
+    auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    orc->setScale(5);
+    orc->setNormalizedPosition(Vec2(.5,.3));
+    orc->setPositionZ(40);
+    orc->setRotation3D(Vec3(0,180,0));
+    orc->setGlobalZOrder(-1);
+    
+    addChild(orc);
+    
+    auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
+    ship->setScale(5);
+    ship->setTexture("Sprite3DTest/boss.png");
+    ship->setNormalizedPosition(Vec2(.5,.5));
+    ship->setRotation3D(Vec3(90,0,0));
+    ship->setForceDepthWrite(true);
+    
+    addChild(ship);
+}
+
+std::string Sprite3DForceDepthTest::title() const
+{
+    return "Force Depth Write Error Test";
+}
+
+std::string Sprite3DForceDepthTest::subtitle() const
+{
+    return "Ship should always appear behind orc";
+}
+
+//------------------------------------------------------------------
+//
+// Sprite3DEmptyTest
+//
+//------------------------------------------------------------------
+Sprite3DEmptyTest::Sprite3DEmptyTest()
+{
+    auto s = Sprite3D::create();
+    s->setNormalizedPosition(Vec2(.5,.5));
+    auto l = Label::create();
+    l->setString("Test");
+    s->addChild(l);
+    addChild(s);
+}
+
+std::string Sprite3DEmptyTest::title() const
+{
+    return "Testing Sprite3D Container";
+}
+
+std::string Sprite3DEmptyTest::subtitle() const
+{
+    return "Sprite3D can act as containers for 2D objects";
+}
 
 //------------------------------------------------------------------
 //
@@ -246,7 +309,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
-    auto camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    auto camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     camera->setCameraFlag(CameraFlag::USER1);
 
     //create cylinder
@@ -368,7 +431,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     auto layer = Layer::create();
     addChild(layer,0);
     //create Camera
-    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
     _camera->setPosition3D(Vec3(0,20,25));
     _camera->setRotation3D(Vec3(-60,0,0));
@@ -410,7 +473,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
     //create the orc
     _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
-    _orc->setScale(0.2);
+    _orc->setScale(0.2f);
     _orc->setRotation3D(Vec3(0,180,0));
     _orc->setPosition3D(Vec3(0,0,10));
     _targetPos = _orc->getPosition3D();
@@ -621,7 +684,7 @@ void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, 
 Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    auto _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    auto _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
     // create a teapot
     auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
@@ -692,12 +755,12 @@ Sprite3DLightMapTest::Sprite3DLightMapTest()
     //the assets are from the OpenVR demo
     //get the visible size.
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
     _camera->setPosition3D(Vec3(0,25,15));
     _camera->setRotation3D(Vec3(-35,0,0));
     auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
-    LightMapScene->setScale(0.1); 
+    LightMapScene->setScale(0.1f); 
     addChild(LightMapScene);
     addChild(_camera); 
     setCameraMask(2); 
@@ -1112,7 +1175,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
     }
     else
     {
-        _command.init(_globalZOrder);
+        _command.init(_globalZOrder, transform, flags);
         _command.func = CC_CALLBACK_0(Effect3D::draw, _defaultEffect, transform);
         renderer->addCommand(&_command);
     }
@@ -1712,12 +1775,12 @@ void Sprite3DReskinTest::applyCurSkin()
     }
 }
 
-Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
+Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesBegan, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesEnded, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerfromanceTest::onTouchesMoved, this);
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesEnded, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     auto s = Director::getInstance()->getWinSize();
     initDrawBox();
@@ -1725,9 +1788,9 @@ Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
     addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::delOBBCallback, this));
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::delOBBCallback, this));
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerfromanceTest::addOBBCallback, this));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::addOBBCallback, this));
     increase->setColor(Color3B(0,200,20));
     
     auto menu = Menu::create(decrease, increase, nullptr);
@@ -1744,15 +1807,15 @@ Sprite3DWithOBBPerfromanceTest::Sprite3DWithOBBPerfromanceTest()
     addOBBCallback(nullptr);
     scheduleUpdate();
 }
-std::string Sprite3DWithOBBPerfromanceTest::title() const
+std::string Sprite3DWithOBBPerformanceTest::title() const
 {
-    return "OBB Collison Perfromance Test";
+    return "OBB Collison Performance Test";
 }
-std::string Sprite3DWithOBBPerfromanceTest::subtitle() const
+std::string Sprite3DWithOBBPerformanceTest::subtitle() const
 {
     return "";
 }
-void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
+void Sprite3DWithOBBPerformanceTest::addNewOBBWithCoords(Vec2 p)
 {
     Vec3 extents = Vec3(10, 10, 10);
     AABB aabb(-extents, extents);
@@ -1761,7 +1824,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewOBBWithCoords(Vec2 p)
     _obb.push_back(obb);
 }
 
-void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DWithOBBPerformanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 {
     for (const auto& touch: touches)
     {
@@ -1784,12 +1847,12 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesBegan(const std::vector<Touch*>& t
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DWithOBBPerformanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     
 }
 
-void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
     for (const auto& touch: touches)
     {
@@ -1804,7 +1867,7 @@ void Sprite3DWithOBBPerfromanceTest::onTouchesMoved(const std::vector<Touch*>& t
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::update(float dt)
+void Sprite3DWithOBBPerformanceTest::update(float dt)
 {
     char szText[16];
     sprintf(szText,"%lu cubes",_obb.size());
@@ -1843,13 +1906,13 @@ void Sprite3DWithOBBPerfromanceTest::update(float dt)
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::initDrawBox()
+void Sprite3DWithOBBPerformanceTest::initDrawBox()
 {
     _drawOBB = DrawNode3D::create();
     addChild(_drawOBB);
 }
 
-void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
+void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
 {
     std::string fileName = "Sprite3DTest/tortoise.c3b";
     auto sprite = Sprite3D::create(fileName);
@@ -1867,7 +1930,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
     
     _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
     _moveAction->retain();
-    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
     sprite->runAction(seq);
     
@@ -1878,7 +1941,7 @@ void Sprite3DWithOBBPerfromanceTest::addNewSpriteWithCoords(Vec2 p)
     addChild(_drawDebug);
 }
 
-void Sprite3DWithOBBPerfromanceTest::reachEndCallBack()
+void Sprite3DWithOBBPerformanceTest::reachEndCallBack()
 {
     _sprite->stopActionByTag(100);
     auto inverse = (MoveTo*)_moveAction->reverse();
@@ -1886,17 +1949,17 @@ void Sprite3DWithOBBPerfromanceTest::reachEndCallBack()
     _moveAction->release();
     _moveAction = inverse;
     auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
-    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerfromanceTest::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
     _sprite->runAction(seq);
 }
 
-void Sprite3DWithOBBPerfromanceTest::addOBBCallback(Ref* sender)
+void Sprite3DWithOBBPerformanceTest::addOBBCallback(Ref* sender)
 {
     addOBBWithCount(10);
 }
 
-void Sprite3DWithOBBPerfromanceTest::addOBBWithCount(float value)
+void Sprite3DWithOBBPerformanceTest::addOBBWithCount(float value)
 {
     for(int i = 0; i < value; i++)
     {
@@ -1909,12 +1972,12 @@ void Sprite3DWithOBBPerfromanceTest::addOBBWithCount(float value)
     }
 }
 
-void Sprite3DWithOBBPerfromanceTest::delOBBCallback(Ref* sender)
+void Sprite3DWithOBBPerformanceTest::delOBBCallback(Ref* sender)
 {
     delOBBWithCount(10);
 }
 
-void Sprite3DWithOBBPerfromanceTest::delOBBWithCount(float value)
+void Sprite3DWithOBBPerformanceTest::delOBBWithCount(float value)
 {
     if(_obb.size() >= 10)
     {
@@ -1924,7 +1987,7 @@ void Sprite3DWithOBBPerfromanceTest::delOBBWithCount(float value)
     else
         return;
 }
-void Sprite3DWithOBBPerfromanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
+void Sprite3DWithOBBPerformanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
 {
     assert(dst);
     
@@ -1947,7 +2010,7 @@ void Sprite3DWithOBBPerfromanceTest::unproject(const Mat4& viewProjection, const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Sprite3DWithOBBPerfromanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
+void Sprite3DWithOBBPerformanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
@@ -2079,4 +2142,184 @@ void QuaternionTest::update(float delta)
     Quaternion quat;
     Quaternion::createFromAxisAngle(Vec3(0.f, 0.f, 1.f), _accAngle - pi * 0.5f, &quat);
     _sprite->setRotationQuat(quat);
+}
+
+UseCaseSprite3D::UseCaseSprite3D()
+: _caseIdx(0)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    _useCaseTitles[0] = "transparent 3d sprite and 2d sprite";
+    _useCaseTitles[1] = "ui - 3d - ui";
+    
+    auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
+                                          [&](Ref *sender) {
+                                              _caseIdx--;
+                                              if (_caseIdx < 0)
+                                                  _caseIdx = (int)USECASE::MAX_CASE_NUM - 1;
+                                              this->switchCase();
+                                          });
+    
+    auto itemNext = MenuItemImage::create("Images/f1.png", "Images/f2.png",
+                                          [&](Ref *sender) {
+                                              _caseIdx++;
+                                              if (_caseIdx >= (int)USECASE::MAX_CASE_NUM)
+                                                  _caseIdx = 0;
+                                              this->switchCase();
+                                          });
+    
+    auto menu = Menu::create(itemPrev, itemNext, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setScale(0.5);
+    menu->setAnchorPoint(Vec2(0,0));
+    menu->setPosition(Vec2(s.width/2,70));
+    
+    _label = Label::create();
+    _label->setPosition(s.width * 0.5f, s.height * 0.8f);
+    addChild(_label);
+    
+    addChild(menu);
+    
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+    
+    switchCase();
+}
+
+std::string UseCaseSprite3D::title() const
+{
+    return "Use Case For 2D + 3D";
+}
+
+std::string UseCaseSprite3D::subtitle() const
+{
+    return "";
+}
+
+void UseCaseSprite3D::switchCase()
+{
+    removeChildByTag(101);
+    
+    auto s = Director::getInstance()->getWinSize();
+    _label->setString(_useCaseTitles[_caseIdx]);
+    if (_caseIdx == 0) // use case 1, 3d transparent sprite + 2d sprite
+    {
+        std::string filename = "Sprite3DTest/girl.c3b";
+        auto sprite = Sprite3D::create(filename);
+        sprite->setScale(0.15f);
+        auto animation = Animation3D::create(filename);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            
+            sprite->runAction(RepeatForever::create(animate));
+        }
+        
+        auto circleBack = Sprite3D::create();
+        auto circle = Sprite::create("Sprite3DTest/circle.png");
+        circleBack->setScale(0.5f);
+        circleBack->addChild(circle);
+        circle->runAction(RepeatForever::create(RotateBy::create(3, Vec3(0.f, 0.f, 360.f))));
+        
+        circleBack->setRotation3D(Vec3(90, 0, 0));
+        
+        auto pos = sprite->getPosition3D();
+        circleBack->setPosition3D(Vec3(pos.x, pos.y, pos.z - 1));
+        
+        sprite->setOpacity(250);
+        sprite->setCameraMask(2);
+        circleBack->setCameraMask(2);
+        sprite->setTag(3);
+        circleBack->setTag(2);
+        
+        auto node = Node::create();
+        node->addChild(sprite);
+        node->addChild(circleBack);
+        node->setTag(101);
+        addChild(node);
+        
+        scheduleUpdate();
+        update(0.f);
+    }
+    else if (_caseIdx == 1) // use case 2, ui - 3d - ui, last ui should on the top
+    {
+        auto layer = LayerColor::create(Color4B(0, 0, 100, 255), s.width / 2.f, s.height / 2.f);
+        layer->setPosition(s.width * 0.25f, s.height * 0.25f);
+        layer->setGlobalZOrder(-1);
+        addChild(layer);
+        
+        std::string filename = "Sprite3DTest/girl.c3b";
+        auto sprite = Sprite3D::create(filename);
+        sprite->setScale(0.5f);
+        auto animation = Animation3D::create(filename);
+        if (animation)
+        {
+            auto animate = Animate3D::create(animation);
+            sprite->runAction(RepeatForever::create(animate));
+        }
+        sprite->setPosition(s.width * 0.25f, s.height * 0.125f);
+        layer->addChild(sprite);
+        
+        TTFConfig ttfConfig("fonts/arial.ttf", 15);
+        auto label1 = Label::createWithTTF(ttfConfig,"Message");
+        auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
+        auto label2 = Label::createWithTTF(ttfConfig,"Message");
+        auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
+        
+        item1->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height ) );
+        item2->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height * 2.f ) );
+        
+        auto pMenu1 = CCMenu::create(item1, item2, nullptr);
+        pMenu1->setPosition(Vec2(0,0));
+        layer->addChild(pMenu1);
+        
+        layer->setTag(101);
+    }
+}
+
+void UseCaseSprite3D::menuCallback_Message(Ref* sender)
+{
+    auto layer = getChildByTag(101);
+    auto message = layer->getChildByTag(102); // message layer
+    if (message)
+        layer->removeChild(message);
+    else
+    {
+        // create a new message layer on the top
+        auto s = layer->getContentSize();
+        auto messagelayer = LayerColor::create(Color4B(100, 100, 0, 255));
+        messagelayer->setContentSize(Size(s.width * 0.5f, s.height * 0.5f));
+        messagelayer->setPosition(Vec2(s.width * 0.25f, s.height * 0.25f));
+        auto label = Label::create();
+        label->setString("This Message Layer \n Should Be On Top");
+        label->setPosition(Vec2(s.width * 0.25f, s.height * 0.25f));
+        messagelayer->addChild(label);
+        messagelayer->setTag(102);
+        layer->addChild(messagelayer);
+    }
+}
+
+void UseCaseSprite3D::update(float delta)
+{
+    if (_caseIdx == 0)
+    {
+        static float accAngle = 0.f;
+        accAngle += delta * CC_DEGREES_TO_RADIANS(60);
+        
+        float radius = 30.f;
+        float x = cosf(accAngle) * radius, z = sinf(accAngle) * radius;
+        
+        auto node = getChildByTag(101);
+        auto sprite3d = node->getChildByTag(3);
+        auto circle = node->getChildByTag(2);
+        
+        sprite3d->setPositionX(x);
+        sprite3d->setPositionZ(z);
+        circle->setPositionX(x);
+        circle->setPositionZ(z);
+    }
 }

@@ -267,6 +267,8 @@ namespace cocostudio
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
+        labelAtlas->ignoreContentAdaptWithSize(true);
+        
     }
     
     Node* TextAtlasReader::createNodeWithFlatBuffers(const flatbuffers::Table *textAtlasOptions)

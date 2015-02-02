@@ -15,12 +15,14 @@
 -- @function [parent=#Frame] setNode 
 -- @param self
 -- @param #cc.Node node
+-- @return Frame#Frame self (return value: ccs.Frame)
         
 --------------------------------
 -- 
 -- @function [parent=#Frame] setTimeline 
 -- @param self
 -- @param #ccs.Timeline timeline
+-- @return Frame#Frame self (return value: ccs.Frame)
         
 --------------------------------
 -- 
@@ -39,6 +41,7 @@
 -- @function [parent=#Frame] apply 
 -- @param self
 -- @param #float percent
+-- @return Frame#Frame self (return value: ccs.Frame)
         
 --------------------------------
 -- 
@@ -51,12 +54,14 @@
 -- @function [parent=#Frame] setFrameIndex 
 -- @param self
 -- @param #unsigned int frameIndex
+-- @return Frame#Frame self (return value: ccs.Frame)
         
 --------------------------------
 -- 
 -- @function [parent=#Frame] setTween 
 -- @param self
 -- @param #bool tween
+-- @return Frame#Frame self (return value: ccs.Frame)
         
 --------------------------------
 -- 

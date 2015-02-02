@@ -6,6 +6,12 @@
 
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointFixed] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointFixed] construct 
 -- @param self
 -- @param #cc.PhysicsBody a

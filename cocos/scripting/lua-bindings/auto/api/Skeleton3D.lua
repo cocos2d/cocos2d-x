@@ -22,6 +22,7 @@
 -- refresh bone world matrix
 -- @function [parent=#Skeleton3D] updateBoneMatrix 
 -- @param self
+-- @return Skeleton3D#Skeleton3D self (return value: cc.Skeleton3D)
         
 --------------------------------
 -- get bone

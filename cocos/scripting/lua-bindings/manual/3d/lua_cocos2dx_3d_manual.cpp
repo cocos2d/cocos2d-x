@@ -26,33 +26,37 @@
 #include "LuaBasicConversions.h"
 #include "CCLuaEngine.h"
 
-int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L)
+extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
+
+CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_3d_Sprite3D_setBlendFunc01(lua_State* L)
 {
     int argc = 0;
     cocos2d::Sprite3D* cobj = nullptr;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
     
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(L,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
-#endif
+    if (!tolua_isusertype(L,1,"cc.Sprite3D",0,&tolua_err))
+        goto tolua_lerror;
     
     cobj = (cocos2d::Sprite3D*)tolua_tousertype(L,1,0);
     
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc'", nullptr);
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc01'", nullptr);
         return 0;
     }
 #endif
     
     argc = lua_gettop(L)-1;
-    if (argc == 2)
+    if (argc != 2)
     {
+        goto tolua_lerror;
+    }
+    else
+    {
+        CCLOG("setBlendFunc of cc.Sprite3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
+        
         GLenum src, dst;
         if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.Sprite3D:setBlendFunc"))
             return 0;
@@ -62,16 +66,13 @@ int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L)
         
         BlendFunc blendFunc = {src, dst};
         cobj->setBlendFunc(blendFunc);
-        return 0;
-    }
-    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setBlendFunc",argc, 2);
-    return 0;
     
-#if COCOS2D_DEBUG >= 1
+        lua_settop(L, 1);
+        return 1;
+    }
+
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_setBlendFunc'.",&tolua_err);
-#endif
-    return 0;
+    return lua_cocos2dx_3d_Sprite3D_setBlendFunc(L);
 }
 
 int lua_cocos2dx_3d_Sprite3D_getAABB(lua_State* L)
@@ -115,14 +116,98 @@ tolua_lerror:
     return 0;
 }
 
+int lua_cocos2dx_3d_Sprite3D_createAsync(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    
+    do
+    {
+        if (argc == 3)
+        {
+            std::string modelPath;
+            ok &= luaval_to_std_string(tolua_S, 2,&modelPath, "cc.Sprite3D:createAsync");
+            if (!ok)
+                break;
+            std::string texturePath;
+            ok &= luaval_to_std_string(tolua_S, 3,&texturePath, "cc.Sprite3D:createAsync");
+            if (!ok)
+                break;
+            
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(tolua_S,4,"LUA_FUNCTION",0,&tolua_err)) {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION handler = toluafix_ref_function(tolua_S,4,0);
+            
+            cocos2d::Sprite3D::createAsync(modelPath, texturePath, [=](cocos2d::Sprite3D* sprite, void* callbackparam){
+                int id = (sprite) ? (int)sprite->_ID : -1;
+                int* luaID = (sprite) ? &sprite->_luaID : nullptr;
+                toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)sprite,"cc.Sprite3D");
+                LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
+            }, nullptr);
+            
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do
+    {
+        if (argc == 2)
+        {
+            std::string modelPath;
+            ok &= luaval_to_std_string(tolua_S, 2,&modelPath, "cc.Sprite3D:createAsync");
+            if (!ok)
+                break;
+            
+#if COCOS2D_DEBUG >= 1
+            if (!toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err)) {
+                goto tolua_lerror;
+            }
+#endif
+            LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 3, 0);
+            
+            cocos2d::Sprite3D::createAsync(modelPath, [=](cocos2d::Sprite3D* sprite, void* callbackparam){
+                int id = (sprite) ? (int)sprite->_ID : -1;
+                int* luaID = (sprite) ? &sprite->_luaID : nullptr;
+                toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)sprite,"cc.Sprite3D");
+                LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
+            }, nullptr);
+            
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Sprite3D:createAsync",argc, 3);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_createAsync'.",&tolua_err);
+#endif
+    return 0;
+}
+
 static void extendSprite3D(lua_State* L)
 {
     lua_pushstring(L, "cc.Sprite3D");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
-        tolua_function(L, "setBlendFunc", lua_cocos2dx_3d_Sprite3D_setBlendFunc);
+        tolua_function(L, "setBlendFunc", lua_cocos2dx_3d_Sprite3D_setBlendFunc01);
         tolua_function(L, "getAABB", lua_cocos2dx_3d_Sprite3D_getAABB);
+        tolua_function(L, "createAsync", lua_cocos2dx_3d_Sprite3D_createAsync);
     }
     lua_pop(L, 1);
 }
@@ -167,7 +252,8 @@ int lua_cocos2dx_3d_AABB_reset(lua_State* L)
         if(!ok)
             return 0;
         cobj->reset();
-        return 0;
+        lua_settop(L, 1);
+        return 1;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:reset",argc, 0);
     return 0;
@@ -746,7 +832,8 @@ int lua_cocos2dx_3d_OBB_reset(lua_State* L)
         if(!ok)
             return 0;
         cobj->reset();
-        return 0;
+        lua_settop(L, 1);
+        return 1;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.OBB:reset",argc, 0);
     return 0;

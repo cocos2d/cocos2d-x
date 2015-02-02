@@ -9,11 +9,13 @@
 -- @function [parent=#Menu] setEnabled 
 -- @param self
 -- @param #bool value
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 --  align items vertically 
 -- @function [parent=#Menu] alignItemsVertically 
 -- @param self
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- 
@@ -27,6 +29,7 @@
 -- @function [parent=#Menu] alignItemsHorizontallyWithPadding 
 -- @param self
 -- @param #float padding
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 --  align items vertically with padding<br>
@@ -34,11 +37,13 @@
 -- @function [parent=#Menu] alignItemsVerticallyWithPadding 
 -- @param self
 -- @param #float padding
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 --  align items horizontally 
 -- @function [parent=#Menu] alignItemsHorizontally 
 -- @param self
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- @overload self, cc.Node, int         
@@ -50,6 +55,7 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #string name
+-- @return Menu#Menu self (return value: cc.Menu)
 
 --------------------------------
 -- 
@@ -68,6 +74,7 @@
 -- @function [parent=#Menu] setOpacityModifyRGB 
 -- @param self
 -- @param #bool bValue
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- 
@@ -75,5 +82,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return Menu#Menu self (return value: cc.Menu)
         
 return nil

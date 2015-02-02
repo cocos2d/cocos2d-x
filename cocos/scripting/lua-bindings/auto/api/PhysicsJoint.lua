@@ -26,6 +26,7 @@
 -- @function [parent=#PhysicsJoint] setMaxForce 
 -- @param self
 -- @param #float force
+-- @return PhysicsJoint#PhysicsJoint self (return value: cc.PhysicsJoint)
         
 --------------------------------
 -- 
@@ -38,12 +39,14 @@
 -- @function [parent=#PhysicsJoint] setEnable 
 -- @param self
 -- @param #bool enable
+-- @return PhysicsJoint#PhysicsJoint self (return value: cc.PhysicsJoint)
         
 --------------------------------
 --  Enable/disable the collision between two bodies 
 -- @function [parent=#PhysicsJoint] setCollisionEnable 
 -- @param self
 -- @param #bool enable
+-- @return PhysicsJoint#PhysicsJoint self (return value: cc.PhysicsJoint)
         
 --------------------------------
 -- 
@@ -56,11 +59,13 @@
 -- @function [parent=#PhysicsJoint] setTag 
 -- @param self
 -- @param #int tag
+-- @return PhysicsJoint#PhysicsJoint self (return value: cc.PhysicsJoint)
         
 --------------------------------
 --  Remove the joint from the world 
 -- @function [parent=#PhysicsJoint] removeFormWorld 
 -- @param self
+-- @return PhysicsJoint#PhysicsJoint self (return value: cc.PhysicsJoint)
         
 --------------------------------
 -- 
@@ -73,11 +78,5 @@
 -- @function [parent=#PhysicsJoint] getTag 
 -- @param self
 -- @return int#int ret (return value: int)
-        
---------------------------------
---  Distory the joint
--- @function [parent=#PhysicsJoint] destroy 
--- @param self
--- @param #cc.PhysicsJoint joint
         
 return nil

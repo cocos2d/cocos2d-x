@@ -69,26 +69,6 @@ namespace cocostudio
         auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string filename = "";
-        bool isloop = true;
-        bool isAutoPlay = true;
-
-        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
-        while (attribute)
-        {
-            std::string attriname = attribute->Name();
-            std::string value = attribute->Value();
-
-            if (attriname == "IsLoop")
-            {
-                isloop = (value == "True") ? true : false;
-            }
-            else if (attriname == "IsAutoPlay")
-            {
-                isAutoPlay = (value == "True") ? true : false;
-            }
-
-            attribute = attribute->Next();
-        }
 
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
@@ -98,12 +78,12 @@ namespace cocostudio
             
             if (name == "FileData")
             {
-                const tinyxml2::XMLAttribute* attributeFileData = child->FirstAttribute();
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
                 
-                while (attributeFileData)
+                while (attribute)
                 {
-                    name = attributeFileData->Name();
-                    std::string value = attributeFileData->Value();
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
                     
                     if (name == "Path")
                     {
@@ -112,7 +92,7 @@ namespace cocostudio
                         filename = convert;
                     }
                     
-                    attributeFileData = attributeFileData->Next();
+                    attribute = attribute->Next();
                 }
             }
             
@@ -121,9 +101,7 @@ namespace cocostudio
         
         auto options = CreateProjectNodeOptions(*builder,
                                                 nodeOptions,
-                                                builder->CreateString(filename),
-                                                isloop,
-                                                isAutoPlay);
+                                                builder->CreateString(filename));
         
         return *(Offset<Table>*)(&options);
     }

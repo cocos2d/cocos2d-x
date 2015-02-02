@@ -282,6 +282,9 @@
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua-cocos-studio-conversions.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
@@ -492,6 +495,9 @@
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua-cocos-studio-conversions.h">
       <Filter>manual\cocostudio</Filter>
     </ClInclude>
   </ItemGroup>

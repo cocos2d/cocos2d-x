@@ -57,7 +57,7 @@ local function checkResolution(r)
 end
 
 local function setDesignResolution(r, framesize)
-   if r.autoscale == "FILL_ALL" then
+    if r.autoscale == "FILL_ALL" then
         view:setDesignResolutionSize(framesize.width, framesize.height, cc.ResolutionPolicy.FILL_ALL)
     else
         local scaleX, scaleY = framesize.width / r.width, framesize.height / r.height
@@ -65,13 +65,20 @@ local function setDesignResolution(r, framesize)
         if r.autoscale == "FIXED_WIDTH" then
             width = framesize.width / scaleX
             height = framesize.height / scaleX
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
         elseif r.autoscale == "FIXED_HEIGHT" then
             width = framesize.width / scaleY
             height = framesize.height / scaleY
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
+        elseif r.autoscale == "EXACT_FIT" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.EXACT_FIT)
+        elseif r.autoscale == "NO_BORDER" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.NO_BORDER)
+        elseif r.autoscale == "SHOW_ALL" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.SHOW_ALL)
         else
             printError(string.format("display - invalid r.autoscale \"%s\"", r.autoscale))
         end
-        view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
     end
 end
 
@@ -370,7 +377,7 @@ function display.newSprite(source, x, y, params)
                 sprite = spriteClass:create(source, params.rect, params.capInsets)
             end
             if display.TEXTURES_PIXEL_FORMAT[source] then
-                cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2D_PIXEL_FORMAT_RGBA8888)
+                cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_BGR_A8888)
             end
             break
         elseif sourceType ~= "userdata" then
@@ -495,7 +502,7 @@ function display.loadSpriteFrames(dataFilename, imageFilename, callback)
         spriteFrameCache:addSpriteFramesAsync(dataFilename, imageFilename, callback)
     end
     if display.TEXTURES_PIXEL_FORMAT[imageFilename] then
-        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2D_PIXEL_FORMAT_RGBA8888)
+        cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_BGR_A8888)
     end
 end
 

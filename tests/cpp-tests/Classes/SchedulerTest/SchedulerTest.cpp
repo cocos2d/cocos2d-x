@@ -29,7 +29,8 @@ static std::function<Layer*()> createFunctions[] = {
     CL(SchedulerDelayAndRepeat),
     CL(SchedulerIssue2268),
     CL(ScheduleCallbackTest),
-    CL(ScheduleUpdatePriority)
+    CL(ScheduleUpdatePriority),
+    CL(SchedulerIssue10232)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1211,4 +1212,30 @@ void SchedulerTestScene::runThisTest()
     addChild(layer);
 
     Director::getInstance()->replaceScene(this);
+}
+
+void SchedulerIssue10232::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    this->scheduleOnce(SEL_SCHEDULE(&SchedulerIssue2268::update), 0.25f);
+
+    this->scheduleOnce([](float dt){
+        log("SchedulerIssue10232:Schedules a lambda function");
+    }, 0.25f,"SchedulerIssue10232");
+}
+
+void SchedulerIssue10232::update(float dt)
+{
+    log("SchedulerIssue10232:Schedules a selector");
+}
+
+std::string SchedulerIssue10232::title() const
+{
+    return "Issue #10232";
+}
+
+std::string SchedulerIssue10232::subtitle() const
+{
+    return "Should not crash";
 }

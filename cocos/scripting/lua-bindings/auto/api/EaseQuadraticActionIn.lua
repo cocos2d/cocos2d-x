@@ -18,10 +18,11 @@
 -- @return EaseQuadraticActionIn#EaseQuadraticActionIn ret (return value: cc.EaseQuadraticActionIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseQuadraticActionIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseQuadraticActionIn#EaseQuadraticActionIn self (return value: cc.EaseQuadraticActionIn)
         
 --------------------------------
 -- 

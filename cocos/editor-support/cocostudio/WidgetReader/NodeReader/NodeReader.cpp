@@ -472,7 +472,7 @@ namespace cocostudio
         int zorder		    = options->zOrder();
         int tag             = options->tag();
         int actionTag       = options->actionTag();
-        bool visible        = options->visible();
+        bool visible        = options->visible() != 0;
         float w             = options->size()->width();
         float h             = options->size()->height();
         int alpha           = options->alpha();
@@ -521,16 +521,16 @@ namespace cocostudio
 
         auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
 
-        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
-        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
+        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled() != 0;
+        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled() != 0;
         float positionXPercent = layoutComponentTable->positionXPercent();
         float positionYPercent = layoutComponentTable->positionYPercent();
-        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable();
-        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable();
+        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable() != 0;
+        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable() != 0;
         float sizeXPercent = layoutComponentTable->sizeXPercent();
         float sizeYPercent = layoutComponentTable->sizeYPercent();
-        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled();
-        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled();
+        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled() != 0;
+        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled() != 0;
         std::string horizontalEdge = layoutComponentTable->horizontalEdge()->c_str();
         std::string verticalEdge = layoutComponentTable->verticalEdge()->c_str();
         float leftMargin = layoutComponentTable->leftMargin();

@@ -36,7 +36,7 @@ class EventListenerCustom;
 class CC_DLL VertexBuffer : public Ref
 {
 public:
-    static VertexBuffer* create(int sizePerVertex, int vertexNumber);
+    static VertexBuffer* create(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
     
     int getSizePerVertex() const;
     int getVertexNumber() const;
@@ -50,7 +50,7 @@ protected:
     VertexBuffer();
     virtual ~VertexBuffer();
     
-    bool init(int sizePerVertex, int vertexNumber);
+    bool init(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
 protected:
     //event listener for foreground
     void recreateVBO() const;
@@ -61,6 +61,7 @@ protected:
     int _vertexNumber;
     //buffer used for shadow copy
     std::vector<unsigned char> _shadowCopy;
+    GLenum _usage;
 protected:
     static bool _enableShadowCopy;
 public:
@@ -78,7 +79,7 @@ public:
     };
     
 public:
-    static IndexBuffer* create(IndexType type, int number);
+    static IndexBuffer* create(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
     
     IndexType getType() const;
     int getSizePerIndex() const;
@@ -93,7 +94,7 @@ protected:
     IndexBuffer();
     virtual ~IndexBuffer();
     
-    bool init(IndexType type, int number);
+    bool init(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
     
 protected:
     mutable GLuint _vbo;
@@ -106,6 +107,7 @@ protected:
     EventListenerCustom* _recreateVBOEventListener;
     //buffer used for shadow copy
     std::vector<unsigned char> _shadowCopy;
+    GLenum _usage;
 protected:
     static bool _enableShadowCopy;
 public:
