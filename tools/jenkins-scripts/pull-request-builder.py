@@ -23,8 +23,7 @@ def set_description(desc, url):
     req = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
     req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-    base64string = base64.encodestring(os.environ['JENKINS_ADMIN'] + ":"
-                                       + os.environ['JENKINS_ADMIN_PW']).replace('\n', '')
+    base64string = base64.encodestring(os.environ['JENKINS_ADMIN'] + ":" + os.environ['JENKINS_ADMIN_PW']).replace('\n', '')
     req.add_header("Authorization", "Basic " + base64string)
     try:
         urllib2.urlopen(req)
@@ -211,14 +210,12 @@ def main():
     print platform.system()
     if(platform.system() == 'Darwin'):
         for item in PROJECTS:
-            cmd = "ln -s " + os.environ['WORKSPACE'] + "/android_build_objs/ " + os.environ['WORKSPACE']
-            + "/tests/" + item + "/proj.android/obj"
+            cmd = "ln -s " + os.environ['WORKSPACE'] + "/android_build_objs/ " + os.environ['WORKSPACE'] + "/tests/" + item + "/proj.android/obj"
             os.system(cmd)
     elif(platform.system() == 'Windows'):
         for item in PROJECTS:
             p = item.replace("/", os.sep)
-            cmd = "mklink /J " + os.environ['WORKSPACE'] + os.sep + "tests" + os.sep + p + os.sep
-            + "proj.android" + os.sep + "obj " + os.environ['WORKSPACE'] + os.sep + "android_build_objs"
+            cmd = "mklink /J " + os.environ['WORKSPACE'] + os.sep + "tests" + os.sep + p + os.sep + "proj.android" + os.sep + "obj " + os.environ['WORKSPACE'] + os.sep + "android_build_objs"
             print cmd
             os.system(cmd)
 
@@ -238,8 +235,7 @@ def main():
             #modify tests/cpp-empty-test/proj.android/AndroidManifest.xml to support Console
             modify_file = 'tests/cpp-empty-test/proj.android/AndroidManifest.xml'
             data = codecs.open(modify_file, encoding='UTF-8').read()
-            data = re.sub('<uses-feature android:glEsVersion="0x00020000" />',
-                          '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
+            data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
             codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
             print "Start build android..."
             ret = os.system("python build/android-build.py -p 10 all")
