@@ -2,10 +2,15 @@
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
-#include "CodeIDESupport.h"
-#include "lua_module_register.h"
+#include "ide-support/CodeIDESupport.h"
 
 #include "runtime/Runtime.h"
+
+// Lua
+#include "ide-support/RuntimeLuaImpl.h"
+
+// Js
+#include "ide-support/RuntimeJsImpl.h"
 
 
 using namespace CocosDenshion;
@@ -40,28 +45,23 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // set default FPS
     Director::getInstance()->setAnimationInterval(1.0 / 60.0f);
-   
-    // register lua module
-    auto engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    lua_State* L = engine->getLuaStack()->getLuaState();
-    lua_module_register(L);
+    
+    auto runtimeEngine = RuntimeEngine::getInstance();
+    runtimeEngine->setEventTrackingEnable(true);
+    runtimeEngine->addRuntime(RuntimeLuaImpl::create(), kRuntimeEngineLua);
+    auto jsRuntime = RuntimeJsImpl::create();
+    runtimeEngine->addRuntime(jsRuntime, kRuntimeEngineJs);
+    runtimeEngine->start();
+    
+    // js need special debug port
+    if (runtimeEngine->getProjectConfig().getDebuggerType() != kCCRuntimeDebuggerNone)
+    {
+        jsRuntime->startWithDebugger();
+    }
 
-    // If you want to use Quick-Cocos2d-X, please uncomment below code
-    // register_all_quick_manual(L);
 
-    LuaStack* stack = engine->getLuaStack();
-    stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
-    
-    //register custom function
-    //LuaStack* stack = engine->getLuaStack();
-    //register_custom_function(stack->getLuaState());
-    
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    RuntimeEngine::getInstance()->setEventTrackingEnable(true);
-    RuntimeEngine::getInstance()->start();
-    
-	cocos2d::log("iShow!");
+    // Runtime end
+    cocos2d::log("iShow!");
     return true;
 }
 

@@ -106,7 +106,13 @@
                 ]
             }
 
-        ]
+        ],
+        "append_file":[
+            {
+               "from":"tools/simulator/frameworks/runtime-src/Classes/ide-support/lang",
+               "to":"runtime/win32/lang"
+            }
+         ]
     },
     "do_add_native_support": {
         "append_from_template": {
@@ -137,9 +143,11 @@
                 ]
             },
             {
-                "from": "tools/simulator/frameworks/runtime-src/Classes/lang",
-                "to": "frameworks/runtime-src/Classes/ide-support/",
-                "exclude": []
+                "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
+                "to": "frameworks/runtime-src/Classes/ide-support",
+                "exclude": [
+                    "RuntimeJsImpl.*"
+                ]
             },
             {
                 "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",

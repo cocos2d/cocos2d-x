@@ -16,13 +16,13 @@
 #include <objidl.h>
 #include <shlguid.h>
 #include <shellapi.h>
+#include <Winuser.h>
 
 #include "SimulatorWin.h"
 
 #include "glfw3.h"
 #include "glfw3native.h"
 
-#include "CCLuaEngine.h"
 #include "AppEvent.h"
 #include "AppLang.h"
 #include "runtime/ConfigParser.h"
@@ -31,15 +31,30 @@
 #include "platform/win32/PlayerWin.h"
 #include "platform/win32/PlayerMenuServiceWin.h"
 
+#include "resource.h"
+
 USING_NS_CC;
 
 static WNDPROC g_oldWindowProc = NULL;
 INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    LOGFONT lf;
+    HFONT hFont;
+
     UNREFERENCED_PARAMETER(lParam);
     switch (message)
     {
     case WM_INITDIALOG:
+        ZeroMemory(&lf, sizeof(LOGFONT));
+        lf.lfHeight = 24;
+        lf.lfWeight = 200;
+        _tcscpy(lf.lfFaceName, _T("Arial"));
+
+        hFont = CreateFontIndirect(&lf);
+        if ((HFONT)0 != hFont)
+        {
+            SendMessage(GetDlgItem(hDlg, IDC_ABOUT_TITLE), WM_SETFONT, (WPARAM)hFont, (LPARAM)TRUE);
+        }
         return (INT_PTR)TRUE;
 
     case WM_COMMAND:
@@ -54,10 +69,10 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
 }
 void onHelpAbout()
 {
-    DialogBox(GetModuleHandle(NULL), 
-        MAKEINTRESOURCE(IDD_DIALOG_ABOUT), 
-        Director::getInstance()->getOpenGLView()->getWin32Window(), 
-        AboutDialogCallback);
+    DialogBox(GetModuleHandle(NULL),
+              MAKEINTRESOURCE(IDD_DIALOG_ABOUT),
+              Director::getInstance()->getOpenGLView()->getWin32Window(),
+              AboutDialogCallback);
 }
 
 void shutDownApp()
@@ -69,7 +84,7 @@ void shutDownApp()
 
 std::string getCurAppPath(void)
 {
-    TCHAR szAppDir[MAX_PATH] = { 0 };
+    TCHAR szAppDir[MAX_PATH] = {0};
     if (!GetModuleFileName(NULL, szAppDir, MAX_PATH))
         return "";
     int nEnd = 0;
@@ -85,9 +100,18 @@ std::string getCurAppPath(void)
     std::string strPath = chRtn;
     delete[] chRtn;
     chRtn = NULL;
-    char fuldir[MAX_PATH] = { 0 };
+    char fuldir[MAX_PATH] = {0};
     _fullpath(fuldir, strPath.c_str(), MAX_PATH);
     return fuldir;
+}
+
+static void initGLContextAttrs()
+{
+    //set OpenGL context attributions,now can only set six attributions:
+    //red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
 }
 
 SimulatorWin *SimulatorWin::_instance = nullptr;
@@ -146,7 +170,7 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     commandLine.append(getApplicationExePath());
     commandLine.append(" ");
     commandLine.append(config.makeCommandLine());
-    
+
     CCLOG("SimulatorWin::openNewPlayerWithProjectConfig(): %s", commandLine.c_str());
 
     // http://msdn.microsoft.com/en-us/library/windows/desktop/ms682499(v=vs.85).aspx
@@ -299,7 +323,7 @@ int SimulatorWin::run()
     }
     CCLOG("SCREEN DPI = %d, SCREEN SCALE = %0.2f", dpi, screenScale);
 
-    // create opengl view
+    // check scale
     Size frameSize = _project.getFrameSize();
     float frameScale = 1.0f;
     if (_project.isRetinaDisplay())
@@ -312,11 +336,41 @@ int SimulatorWin::run()
         frameScale = screenScale;
     }
 
+    // check screen workarea
+    RECT workareaSize;
+    if (SystemParametersInfo(SPI_GETWORKAREA, NULL, &workareaSize, NULL))
+    {
+        float workareaWidth = fabsf(workareaSize.right - workareaSize.left);
+        float workareaHeight = fabsf(workareaSize.bottom - workareaSize.top);
+        float frameBorderCX = GetSystemMetrics(SM_CXSIZEFRAME);
+        float frameBorderCY = GetSystemMetrics(SM_CYSIZEFRAME);
+        workareaWidth -= frameBorderCX * 2;
+        workareaHeight -= (frameBorderCY * 2 + GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYMENU));
+        CCLOG("WORKAREA WIDTH %0.2f, HEIGHT %0.2f", workareaWidth, workareaHeight);
+        while (true && frameScale > 0.25f)
+        {
+            if (frameSize.width * frameScale > workareaWidth || frameSize.height * frameScale > workareaHeight)
+            {
+                frameScale = frameScale - 0.25f;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (frameScale < 0.25f) frameScale = 0.25f;
+    }
+    _project.setFrameScale(frameScale);
+    CCLOG("FRAME SCALE = %0.2f", frameScale);
+
+    // create opengl view
     const Rect frameRect = Rect(0, 0, frameSize.width, frameSize.height);
     ConfigParser::getInstance()->setInitViewSize(frameSize);
     const bool isResize = _project.isResizeWindow();
     std::stringstream title;
-    title << "Cocos Simulator - " << ConfigParser::getInstance()->getInitViewName();
+    title << "Cocos Simulator (" << _project.getFrameScale() * 100 << "%)";
+    initGLContextAttrs();
     auto glview = GLViewImpl::createWithRect(title.str(), frameRect, frameScale);
     _hwnd = glview->getWin32Window();
     player::PlayerWin::createWithHwnd(_hwnd);
@@ -333,7 +387,7 @@ int SimulatorWin::run()
     // set window position
     if (_project.getProjectDir().length())
     {
-        setZoom(_project.getFrameScale()); 
+        setZoom(_project.getFrameScale());
     }
     Vec2 pos = _project.getWindowOffset();
     if (pos.x != 0 && pos.y != 0)
@@ -401,12 +455,33 @@ void SimulatorWin::setupUI()
 
     menuBar->addItem("VIEW_SCALE_MENU_SEP", "-", "VIEW_MENU");
     std::vector<player::PlayerMenuItem*> scaleMenuVector;
+    auto scale200Menu = menuBar->addItem("VIEW_SCALE_MENU_200", tr("Zoom Out").append(" (200%)"), "VIEW_MENU");
+    auto scale175Menu = menuBar->addItem("VIEW_SCALE_MENU_175", tr("Zoom Out").append(" (175%)"), "VIEW_MENU");
+    auto scale150Menu = menuBar->addItem("VIEW_SCALE_MENU_150", tr("Zoom Out").append(" (150%)"), "VIEW_MENU");
+    auto scale125Menu = menuBar->addItem("VIEW_SCALE_MENU_125", tr("Zoom Out").append(" (125%)"), "VIEW_MENU");
     auto scale100Menu = menuBar->addItem("VIEW_SCALE_MENU_100", tr("Zoom Out").append(" (100%)"), "VIEW_MENU");
     auto scale75Menu = menuBar->addItem("VIEW_SCALE_MENU_75", tr("Zoom Out").append(" (75%)"), "VIEW_MENU");
     auto scale50Menu = menuBar->addItem("VIEW_SCALE_MENU_50", tr("Zoom Out").append(" (50%)"), "VIEW_MENU");
     auto scale25Menu = menuBar->addItem("VIEW_SCALE_MENU_25", tr("Zoom Out").append(" (25%)"), "VIEW_MENU");
     int frameScale = int(_project.getFrameScale() * 100);
-    if (frameScale == 100)
+
+    if (frameScale == 200)
+    {
+        scale200Menu->setChecked(true);
+    }
+    else if (frameScale == 175)
+    {
+        scale175Menu->setChecked(true);
+    }
+    else if (frameScale == 150)
+    {
+        scale150Menu->setChecked(true);
+    }
+    else if (frameScale == 125)
+    {
+        scale125Menu->setChecked(true);
+    }
+    else if (frameScale == 100)
     {
         scale100Menu->setChecked(true);
     }
@@ -427,6 +502,10 @@ void SimulatorWin::setupUI()
         scale100Menu->setChecked(true);
     }
 
+    scaleMenuVector.push_back(scale200Menu);
+    scaleMenuVector.push_back(scale175Menu);
+    scaleMenuVector.push_back(scale150Menu);
+    scaleMenuVector.push_back(scale125Menu);
     scaleMenuVector.push_back(scale100Menu);
     scaleMenuVector.push_back(scale75Menu);
     scaleMenuVector.push_back(scale50Menu);
@@ -484,11 +563,16 @@ void SimulatorWin::setupUI()
                             }
                             menuItem->setChecked(true);
 
+                            // update window title
+                            std::stringstream title;
+                            title << "Cocos Simulator (" << project.getFrameScale() * 100 << "%)";
+                            SetWindowTextA(hwnd, title.str().c_str());
+
                             // update window size
                             RECT rect;
                             GetWindowRect(hwnd, &rect);
                             MoveWindow(hwnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + GetSystemMetrics(SM_CYMENU), FALSE);
-                        
+
                             // fix: can not update window on some windows system 
                             ::SendMessage(hwnd, WM_MOVE, NULL, NULL);
                         }
@@ -752,15 +836,15 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
     }
 
     case WM_COPYDATA:
+    {
+        PCOPYDATASTRUCT pMyCDS = (PCOPYDATASTRUCT)lParam;
+        if (pMyCDS->dwData == 1)
         {
-            PCOPYDATASTRUCT pMyCDS = (PCOPYDATASTRUCT) lParam;
-            if (pMyCDS->dwData == 1)
-            {
-                const char *szBuf = (const char*)(pMyCDS->lpData);
-                SimulatorWin::getInstance()->writeDebugLog(szBuf);
-                break;
-            }
+            const char *szBuf = (const char*)(pMyCDS->lpData);
+            SimulatorWin::getInstance()->writeDebugLog(szBuf);
+            break;
         }
+    }
 
     case WM_DESTROY:
     {
@@ -773,7 +857,7 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         HDROP hDrop = (HDROP)wParam;
 
         const int count = DragQueryFileW(hDrop, 0xffffffff, NULL, 0);
-        
+
         if (count > 0)
         {
             int fileIndex = 0;
