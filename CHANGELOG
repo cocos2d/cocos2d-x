@@ -1,4 +1,4 @@
-cocos2d-x-3.4 xxx
+cocos2d-x-3.4 Jan.30 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
     [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions
     [FIX]           C++: may crash if VAO is not supported
