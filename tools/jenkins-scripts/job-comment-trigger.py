@@ -11,7 +11,7 @@ import urllib2
 http_proxy = ''
 if(os.environ.has_key('HTTP_PROXY')):
     http_proxy = os.environ['HTTP_PROXY']
-proxyDict = {'http':http_proxy,'https':http_proxy}
+proxyDict = {'http': http_proxy, 'https': http_proxy}
 
 def main():
     #get payload from os env
