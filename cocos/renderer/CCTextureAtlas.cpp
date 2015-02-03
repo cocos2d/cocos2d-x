@@ -57,12 +57,12 @@ TextureAtlas::~TextureAtlas()
 
 ssize_t TextureAtlas::getTotalQuads() const
 {
-    return _vdAtlas->getCount() / 4;
+    return _vbAtlas->getElementCount() >> 2;
 }
 
 ssize_t TextureAtlas::getCapacity() const
 {
-    return _vdAtlas->getCapacity() / 4;
+    return _vbAtlas->getCapacity() >> 2;
 }
 
 Texture2D* TextureAtlas::getTexture() const
@@ -88,7 +88,7 @@ V3F_C4B_T2F_Quad* TextureAtlas::getQuads()
 
 void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 {
-    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quads, _vbAtlas->getElementCount() / 4, 0);
+    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quads, _vbAtlas->getElementCount() >> 2, 0);
 }
 
 // TextureAtlas - alloc & init
@@ -160,7 +160,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 
 std::string TextureAtlas::getDescription() const
 {
-    return StringUtils::format("<TextureAtlas | totalQuads = %d>", static_cast<int>(_vbAtlas->getElementCount()));
+    return StringUtils::format("<TextureAtlas | totalQuads = %zu>", _quadCount);
 }
 
 // count and begin are both quad indices
@@ -182,11 +182,6 @@ void TextureAtlas::setupIndices(size_t count, size_t begin)
         *indices++ = i*4+2;
         *indices++ = i*4+1;
     }
-    
-    // manually set the count since we are modifying
-    // the element array outside of the buffer.
-    _ibAtlas->setElementCount(6 * end);
-    _ibAtlas->setDirty(true);
 }
 
 // TextureAtlas - Update, Insert, Move & Remove
@@ -247,7 +242,6 @@ void TextureAtlas::removeQuadsAtIndex(ssize_t index, ssize_t amount)
 
 void TextureAtlas::removeAllQuads()
 {
-    //_totalQuads = 0;
     _vdAtlas->clear();
 }
 
@@ -321,6 +315,7 @@ void TextureAtlas::fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount)
 
 void TextureAtlas::drawNumberOfQuads(ssize_t n)
 {
+    _ibAtlas->setElementCount(6 * getTotalQuads());
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw(0, n);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, n);
@@ -328,6 +323,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t n)
 
 void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 {
+    _ibAtlas->setElementCount(6 * getTotalQuads());
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw(start, numberOfQuads);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfQuads);
@@ -335,6 +331,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
 void TextureAtlas::drawQuads()
 {
+    _ibAtlas->setElementCount(6 * getTotalQuads());
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw();
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _vbAtlas->getElementCount());
