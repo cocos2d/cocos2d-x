@@ -47,10 +47,6 @@ VertexData::VertexData(Primitive primitive)
     , _indices(nullptr)
     , _drawingPrimitive(primitive)
 {
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, (GLuint*)&_vao);
-    }
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
     _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
 #endif
@@ -66,6 +62,7 @@ VertexData::~VertexData()
     if (glIsBuffer(_vao))
     {
         glDeleteVertexArrays(1, (GLuint*)&_vao);
+        GL::bindVAO(0);
         _vao = 0;
     }
     
@@ -168,6 +165,12 @@ size_t VertexData::draw(size_t start, size_t count)
     
     if (0 == _vao || isDirty())
     {
+        if (0 == _vao && Configuration::getInstance()->supportsShareableVAO())
+        {
+            glGenVertexArrays(1, (GLuint*)&_vao);
+            GL::bindVAO(_vao);
+        }
+
         CHECK_GL_ERROR_DEBUG();
         
         for (auto& element : _vertexStreams)

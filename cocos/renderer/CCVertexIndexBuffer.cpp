@@ -28,6 +28,7 @@
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
 #include "platform/CCGL.h"
+#include "base/allocator/CCAllocatorMacros.h"
 
 NS_CC_BEGIN
 
@@ -50,6 +51,7 @@ GLArrayBuffer::~GLArrayBuffer()
     if (glIsBuffer(_vbo))
     {
         glDeleteBuffers(1, &_vbo);
+        GL::bindVBO(_target, 0);
         _vbo = 0;
     }
     
@@ -161,8 +163,10 @@ void GLArrayBuffer::addCapacity(size_t count, bool zero)
 void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t begin)
 {
     if (_vbo)
+    {
         GL::bindVBO(_target, _vbo);
-
+    }
+    
     if (false == isDirty() || false == hasNative())
         return;
     
@@ -172,10 +176,11 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
     if (0 == _vbo)
     {
         glGenBuffers(1, &_vbo);
-        _vboSize = _capacity * getElementSize();
+        _vboSize = getSize();
         CCASSERT(_vboSize, "_vboSize should not be 0");
         GL::bindVBO(_target, _vbo);
         glBufferData(_target, _vboSize, elements, _usage);
+        CHECK_GL_ERROR_DEBUG();
     }
     else
     {
@@ -197,8 +202,6 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
         }
     }
     
-    CHECK_GL_ERROR_DEBUG();
-
     setDirty(false);
 }
 
@@ -211,13 +214,16 @@ void GLArrayBuffer::clear()
 void GLArrayBuffer::recreate() const
 {
     if (glIsBuffer(_vbo))
+    {
         glDeleteBuffers(1, &_vbo);
+        GL::bindVBO(_target, 0);
+    }
     glGenBuffers(1, (GLuint*)&_vbo);
-    glBindBuffer(_target, _vbo);
+    GL::bindVBO(_target, _vbo);
     if (_elements)
     {
         glBufferData(_target, _elementSize * _elementCount, _elements, GL_STATIC_DRAW);
-        glBindBuffer(_target, 0);
+        GL::bindVBO(_target, _vbo);
         if(!glIsBuffer(_vbo))
         {
             CCLOGERROR("Renderer::recreate() : recreate VertexBuffer Error");
@@ -240,6 +246,7 @@ void GLArrayBuffer::setCapacity(size_t capacity, bool zero)
                 size_t count = _elementSize * (capacity - _capacity);
                 memset((void*)start, 0, count);
             }
+            _dirty = true;
         }
         _capacity = capacity;
     }
