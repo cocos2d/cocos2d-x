@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 //#include <stdlib.h>
 //
-//#include "base/ccMacros.h"
+#include "base/ccMacros.h"
 //#include "base/CCEventType.h"
 #include "base/CCDirector.h"
 //#include "base/CCConfiguration.h"
@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
-//#include "renderer/CCRenderer.h"
+#include "renderer/CCRenderer.h"
 //#include "platform/CCGL.h"
 #include "deprecated/CCString.h"
 
@@ -410,20 +410,23 @@ void TextureAtlas::removeAllQuads()
 
 bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 {
-    if (newCapacity > getCapacity())
-        increaseTotalQuadsWith(newCapacity - getCapacity());
+    auto amount = newCapacity - getCapacity();
+    if (amount > 0)
+    {
+        auto begin = _ibAtlas->getCapacity() / 6;     // determine first quad to update
+        _ibAtlas->addCapacityT<uint16_t>(6 * amount); // add capacity 6 indices per quad
+        setupIndices(amount, begin);                  // update new indices for quads
+        
+        _vbAtlas->addCapacityT<V3F_C4B_T2F_Quad>(amount);
+    }
     return true;
 }
 
 void TextureAtlas::increaseTotalQuadsWith(ssize_t amount)
 {
     CCASSERT(amount >= 0, "increaseTotalQuadsWith amount >= 0");
-    
-    auto begin = _ibAtlas->getCapacity() / 6;     // determine first quad to update
-    _ibAtlas->addCapacityT<uint16_t>(6 * amount); // add capacity 6 indices per quad
-    setupIndices(amount, begin);                  // update new indices for quads
-    
-    _vbAtlas->addCapacityT<V3F_C4B_T2F_Quad>(amount);
+    auto count = _vbAtlas->getElementCount();
+    _vbAtlas->setElementCount(count + amount);
 }
 
 void TextureAtlas::moveQuadsFromIndex(ssize_t oldIndex, ssize_t amount, ssize_t newIndex)
@@ -477,6 +480,7 @@ void TextureAtlas::drawQuads()
 {
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw();
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _vbAtlas->getElementCount());
 }
 
 //

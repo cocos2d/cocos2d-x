@@ -173,14 +173,14 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
     {
         glGenBuffers(1, &_vbo);
         _vboSize = _capacity * getElementSize();
-        CCASSERT(_vboSize, "_elementCount should not be 0");
+        CCASSERT(_vboSize, "_vboSize should not be 0");
         GL::bindVBO(_target, _vbo);
         glBufferData(_target, _vboSize, elements, _usage);
     }
     else
     {
         const auto size = getSize();
-        CCASSERT(size, "_elementCount should not be 0");
+        CCASSERT(size, "size should not be 0");
         if (size > _vboSize)
         {
             _vboSize = size;

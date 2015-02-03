@@ -47,10 +47,10 @@ VertexData::VertexData(Primitive primitive)
     , _indices(nullptr)
     , _drawingPrimitive(primitive)
 {
-//    if (Configuration::getInstance()->supportsShareableVAO())
-//    {
-//        glGenVertexArrays(1, (GLuint*)&_vao);
-//    }
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glGenVertexArrays(1, (GLuint*)&_vao);
+    }
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
     _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
 #endif
@@ -201,7 +201,6 @@ size_t VertexData::draw(size_t start, size_t count)
         intptr_t offset = start * _indices->getElementSize();
         GLenum type = (_indices->getType() == IndexBuffer::IndexType::INDEX_TYPE_SHORT_16) ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT;
         glDrawElements((GLenum)_drawingPrimitive, (GLsizei)count, type, (GLvoid*)offset);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     else
     {
@@ -213,7 +212,8 @@ size_t VertexData::draw(size_t start, size_t count)
     if (_vao)
         GL::bindVAO(0);
     GL::bindVBO(GL_ARRAY_BUFFER, 0);
-    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
     return count;
 }
 
