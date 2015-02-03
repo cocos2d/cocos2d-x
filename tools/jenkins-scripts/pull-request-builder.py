@@ -223,6 +223,7 @@ def main():
     # TODO: add wp8.1 universal build
     #TODO: add mac build
     node_name = os.environ['NODE_NAME']
+    jenkins_script_path = 'tools/jenkins-scripts/'
     if(branch == 'v3' or branch == 'v4-develop'):
         if(node_name == 'android_mac') or (node_name == 'android_win7'):
             #modify tests/cpp-empty-test/Classes/AppDelegate.cpp to support Console
@@ -266,7 +267,9 @@ def main():
     elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
     elif(node_name == 'ios_mac'):
-        ret = os.system("tools/jenkins-scripts/ios-build.sh")
+        ret = os.system(jenkins_script_path + "ios-build.sh")
+    elif(node_name == 'mac_mac'):
+        ret = os.system(jenkins_script_path + "mac-build.sh")
     elif(node_name == 'linux_centos'):
         os.chdir("build/")
         ret = os.system("cmake ../")
