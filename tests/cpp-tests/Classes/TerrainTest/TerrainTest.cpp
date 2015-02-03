@@ -243,6 +243,7 @@ TerrainWalkThru::TerrainWalkThru()
     _terrain->setCameraMask(2);
     _terrain->setDrawWire(false);
 
+    _terrain->setLODDistance(150,220,300);
     _player = Player::create("Sprite3DTest/girl.c3b",_camera,_terrain);
     _player->setCameraMask(2);
     _player->setScale(0.08);
