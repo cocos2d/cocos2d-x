@@ -1275,7 +1275,7 @@ AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
     auto s = Director::getInstance()->getWinSize();
     item1->setPosition( s.width * .5f, s.height * .8f);
     
-    auto pMenu1 = CCMenu::create(item1, nullptr);
+    auto pMenu1 = Menu::create(item1, nullptr);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
     
@@ -1681,7 +1681,7 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     item3->setUserData((void*)SkinType::UPPER_BODY);
     item4->setUserData((void*)SkinType::PANTS);
     item5->setUserData((void*)SkinType::SHOES);
-    auto pMenu1 = CCMenu::create(item1, item2, item3, item4, item5, nullptr);
+    auto pMenu1 = Menu::create(item1, item2, item3, item4, item5, nullptr);
     pMenu1->setPosition(Vec2(0,0));
     this->addChild(pMenu1, 10);
     
@@ -2273,7 +2273,7 @@ void UseCaseSprite3D::switchCase()
         item1->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height ) );
         item2->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height * 2.f ) );
         
-        auto pMenu1 = CCMenu::create(item1, item2, nullptr);
+        auto pMenu1 = Menu::create(item1, item2, nullptr);
         pMenu1->setPosition(Vec2(0,0));
         layer->addChild(pMenu1);
         

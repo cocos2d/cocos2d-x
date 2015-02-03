@@ -88,6 +88,6 @@ void ControlPotentiometerTest::valueChanged(Ref *sender, Control::EventType cont
 {
     ControlPotentiometer* pControl = (ControlPotentiometer*)sender;
 	// Change value of label.
-    _displayValueLabel->setString(String::createWithFormat("%.02f", pControl->getValue())->getCString());	
+    _displayValueLabel->setString(StringUtils::format("%.02f", pControl->getValue()));
 }
 
