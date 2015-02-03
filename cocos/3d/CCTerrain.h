@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+Copyright (c) 2015 Chukong Technologies Inc.
 
- http://www.cocos2d-x.org
+http://www.cocos2d-x.org
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #ifndef CC_TERRAIN_H
 #define CC_TERRAIN_H
 
@@ -29,27 +29,61 @@
 #include "renderer/CCCustomCommand.h"
 #include "3d/CCAABB.h"
 #include "2d/CCCamera.h"
+#include "3d/CCRay.h"
 #include <vector>
 NS_CC_BEGIN
-/*
- *the maximum amount of the chunkes
- **/
+    /*
+    * the maximum amount of the chunkes
+    **/
 #define MAX_CHUNKES 256
 
-/*
- *Terrain
- *use to render outdoor or large scene via heightMap
- **/
+
+    /*
+    * Terrain
+    * Defines a Terrain that is capable of rendering large landscapes from 2D heightmap images.
+    * Terrains can be constructed from several different internal formats heightmap sources:
+    *  1. RGB888
+    *  2. RGBA8888
+    *  3. Luminance(gray-scale)8
+    *  
+    *  Terrain use TerrainData struct to initialize.the TerrainData struct warp 
+    *  all parameters that Terrain initialization need.
+    *  TerrainData provide several handy constructor for users
+    *  
+    * Surface detail is provided via texture splatting, where multiple Detail texture layers can be added
+    * along with alpha map to define how different Detail texture blend with each other. These DetailTexture
+    * can be defined in TerrainData. The number of supported Detail texture is Four. although typically 2-3 levels is
+    * sufficient. For simple usage ,surface detail also is provided via simple Texture.
+    * 
+    * Internally, Terrain is divide into smaller, more manageable chunks, which can be culled
+    * separately for more efficient rendering. The size of the terrain chunks can be controlled
+    * via the chunkSize property in TerrainData.
+    * 
+    * Chunks are managed under the QuadTree.As DE FACTO terminal Node of the QuadTree;
+    * let us cull chunks efficientlly to reduce drawCall amount And reduce the VBOs'Size that pass to the GPU.
+    * 
+    * Level of detail (LOD) is supported using a technique that is similar to texture mipmapping -- called GeoMapping.
+    * A distance-to-camera based test used to decide
+    * the appropriate LOD for a terrain chunk. The number of LOD levels is 0 by default (which
+    * means only the base level is used),the maxium number of LOD levels is 4. Of course ,you can hack the value individually.
+    * 
+    * Finally, when LOD is enabled, cracks can begin to appear between terrain Chunks of
+    * different LOD levels. An acceptable solution might be to simply reduce the lower LOD(high detail,smooth) chunks border,
+    * And let the higher LOD(rough) chunks to seamlessly connect it.
+    * 
+    * We can use ray-terrain intersection to pick a point of the terrain;
+    * Also we can get an arbitrary point of the terrain's height and normal vector for convenience .
+    **/
 class CC_DLL Terrain :public Node{
 public:
 
-/*
- *DetailMap
- *this struct maintain a detail map data ,including source file ,detail size.
- *the DetailMap can use for terrain splatting
- **/
-     struct CC_DLL DetailMap{
-         /*Constructors*/
+    /*
+    *DetailMap
+    *this struct maintain a detail map data ,including source file ,detail size.
+    *the DetailMap can use for terrain splatting
+    **/
+    struct CC_DLL DetailMap{
+        /*Constructors*/
         DetailMap();
         DetailMap(const char * detailMapSrc , float size = 35);
         /*detail Image source file path*/
@@ -58,20 +92,20 @@ public:
         float detailMapSize;
     };
 
-/*
- *TerrainData
- *This TerrainData struct warp all parameter that Terrain need to create
- */
-     struct CC_DLL TerrainData
+    /*
+    *TerrainData
+    *This TerrainData struct warp all parameter that Terrain need to create
+    */
+    struct CC_DLL TerrainData
     {
         /*Constructors*/
         TerrainData();
         TerrainData(const char* heightMapsrc ,const char * textureSrc,const Size & chunksize = Size(32,32),float mapHeight = 2,float mapScale = 0.1);
         TerrainData(const char* heightMapsrc ,const char * alphamap,const DetailMap& detail1,const DetailMap& detail2,const DetailMap& detail3,const DetailMap& detail4,const Size & chunksize = Size(32,32),float mapHeight = 2,float mapScale = 0.1);
-
+        TerrainData(const char* heightMapsrc ,const char * alphamap,const DetailMap& detail1,const DetailMap& detail2,const DetailMap& detail3,const Size & chunksize = Size(32,32),float mapHeight = 2,float mapScale = 0.1);
         /*
-         *deterimine the chunk size,chunk is the minimal subdivision of the Terrain
-         */
+        *deterimine the chunk size,chunk is the minimal subdivision of the Terrain
+        */
         Size chunkSize;
         /*height Map source path*/
         std::string heightMapSrc;
@@ -83,12 +117,13 @@ public:
         float mapHeight;
         /*terrain scale factor*/
         float mapScale;
+        int _detailMapAmount;
     };
 private:
 
-/*
- *terrain vertices internal data format
- **/
+    /*
+    *terrain vertices internal data format
+    **/
     struct TerrainVertexData
     {
         /*constructor*/
@@ -104,18 +139,19 @@ private:
         cocos2d::Vec3 normal;
     };
 
-/*
- *the terminal node of quad, use to subdivision terrain mesh and LOD
- **/
+    /*
+    *the terminal node of quad, use to subdivision terrain mesh and LOD
+    **/
     struct Chunk
     {
         /*Constructor*/
         Chunk();
+        ~Chunk();
         /*vertices*/
         std::vector<TerrainVertexData> vertices;
         /*LOD indices*/
         struct LOD{
-        std::vector<GLushort> indices;
+            std::vector<GLushort> indices;
         };
         GLuint vbo[2];
         /*we now have four levels of detail*/
@@ -132,11 +168,10 @@ private:
         void finish();
         /*use linear-sample vertices for LOD mesh*/
         void updateVerticesForLOD();
-        /*calculate the average slope of the chunk*/
-        void calculateSlope();
         /*updateIndices for every frame*/
         void updateIndices();
 
+        void Terrain::Chunk::calculateSlope();
         /*current LOD of the chunk*/
         int _currentLod;
         /*the left,right,front,back neighbors*/
@@ -157,10 +192,10 @@ private:
         std::vector<TerrainVertexData> vertices_tmp;
     };
 
-/*
- *QuadTree
- *use to frustum culling and set LOD
- **/
+    /*
+    *QuadTree
+    *use to frustum culling and set LOD
+    **/
     struct QuadTree
     {
         QuadTree(int x,int y,int width,int height,Terrain * terrain);
@@ -182,7 +217,6 @@ private:
         bool _needDraw;
     };
 
-
     friend QuadTree;
     friend Chunk;
 public:
@@ -191,10 +225,11 @@ public:
     void initHeightMap(const char* heightMap);
     /*create entry*/
     static Terrain * create(TerrainData &parameter);
-    /*get specified position's height mapping to the terrain*/
-    float getHeight(float x,float y, float z);
-    float getHeight(Vec3 pos);  
 
+    /*get specified position's height mapping to the terrain*/
+    float getHeight(float x,float z,Vec3 * normal= nullptr);
+    float getHeight(Vec2 pos,Vec3*Normal = nullptr);
+    Vec3 getNormal(int pixel_x,int pixel_y);
     /*get height from the raw height map*/
     float getImageHeight(int pixel_x,int pixel_y);
     /*Debug Use only, show the wireline instead of the surface. only support desktop platform*/
@@ -205,8 +240,13 @@ public:
     void setIsEnableFrustumCull(bool bool_value);
     // Overrides, internal use only
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-private:
+    //Ray-Terrain intersection.
+    Vec3 getIntersectionPoint(const Ray & ray);
+    void setMaxDetailMapAmount(int max_value);
+protected:
+    
     Terrain();
+    virtual ~Terrain();
     void onDraw(const Mat4 &transform, uint32_t flags);
     //set each chunk's LOD
     void setChunksLOD(Vec3 cameraPos);
@@ -214,7 +254,7 @@ private:
     void loadVertices();
     //calculate Normal Line for each Vertex
     void calculateNormal();
-private:
+protected:
     TerrainData _terrainData;
     bool _isDrawWire;
     unsigned char * _data;
@@ -225,13 +265,17 @@ private:
     GLuint vbo[2];
     QuadTree * quad;
     int detailSize[4];
-    Chunk * _chunkesArray[256][256];
+    Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> vertices;
     std::vector<GLushort > indices;
     int imageWidth;
     int imageHeight;
     Size _chunkSize;
     bool _isEnableFrustumCull;
+    int _maxDetailMapValue;
+    cocos2d::Image * _heightMapImage;
+    Mat4 _oldCameraModelMatrix;
+    Mat4 _oldTerrrainModelMatrix;
 };
 NS_CC_END
 #endif

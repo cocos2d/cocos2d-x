@@ -346,6 +346,9 @@
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\TerrainTest">
+      <UniqueIdentifier>{3f5069e6-78e5-4388-b614-04c0ea943b4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -908,6 +911,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TerrainTest\TerrainTest.cpp">
+      <Filter>Classes\TerrainTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1669,6 +1675,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TerrainTest\TerrainTest.h">
+      <Filter>Classes\TerrainTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
