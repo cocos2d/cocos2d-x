@@ -73,6 +73,8 @@ public:
     /** get all cameras */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
+    Camera* getDefaultCamera() const { return _defaultCamera; }
+
     const std::vector<BaseLight*>& getLights() const { return _lights; }
     
     /** render the scene */
@@ -108,7 +110,6 @@ private:
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
-    virtual void update(float delta) override;
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     static Scene *createWithPhysics();
     

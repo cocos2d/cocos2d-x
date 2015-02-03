@@ -35,6 +35,7 @@ static std::function<Layer*()> createFunctions[] = {
 
     CL(ActionManual),
     CL(ActionMove),
+    CL(ActionMove3D),
     CL(ActionRotate),
     CL(ActionRotateBy3D),
     CL(ActionScale),
@@ -297,6 +298,36 @@ void ActionMove::onEnter()
 std::string ActionMove::subtitle() const
 {
     return "MoveTo / MoveBy";
+}
+
+//------------------------------------------------------------------
+//
+//    ActionMove3D
+//
+//------------------------------------------------------------------
+void ActionMove3D::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    centerSprites(3);
+    
+    auto s = Director::getInstance()->getWinSize();
+    
+    _tamara->setPosition3D(Vec3(s.width-40, s.height-40, 0));
+    _kathia->setPosition3D(Vec3(40, 40, 0));
+    
+    auto actionTo = MoveTo::create(2, Vec3(s.width-40, s.height-40, -100));
+    auto actionBy = MoveBy::create(2, Vec3(80, 80, -100));
+    auto actionByBack = actionBy->reverse();
+    
+    _tamara->runAction(actionTo);
+    _grossini->runAction(Sequence::create(actionBy, actionByBack, nullptr));
+    _kathia->runAction(MoveTo::create(1, Vec3(40, 40, -100)));
+}
+
+std::string ActionMove3D::subtitle() const
+{
+    return "MoveTo / MoveBy 3D";
 }
 
 //------------------------------------------------------------------

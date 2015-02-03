@@ -159,7 +159,7 @@ public:
     /**
      * Updates the quad according the rotation, position, scale values.
      */
-    virtual void updateTransform(void);
+    virtual void updateTransform();
 
     /**
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
@@ -232,7 +232,7 @@ public:
     /**
      * Returns whether or not a SpriteFrame is being displayed
      */
-    virtual bool isFrameDisplayed(SpriteFrame *pFrame) const;
+    virtual bool isFrameDisplayed(SpriteFrame *frame) const;
 
     /**
      * Returns the current displayed frame.
@@ -264,7 +264,7 @@ public:
      *
      * @return true if the sprite needs to be updated in the Atlas, false otherwise.
      */
-    virtual bool isDirty(void) const { return _dirty; }
+    virtual bool isDirty() const { return _dirty; }
 
     /**
      * Makes the Sprite to be updated in the Atlas.
@@ -276,17 +276,17 @@ public:
      * @js  NA
      * @lua NA
      */
-    inline V3F_C4B_T2F_Quad getQuad(void) const { return _quad; }
+    inline V3F_C4B_T2F_Quad getQuad() const { return _quad; }
 
     /**
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated(void) const { return _rectRotated; }
+    inline bool isTextureRectRotated() const { return _rectRotated; }
 
     /**
      * Returns the index used on the TextureAtlas.
      */
-    inline ssize_t getAtlasIndex(void) const { return _atlasIndex; }
+    inline ssize_t getAtlasIndex() const { return _atlasIndex; }
 
     /**
      * Sets the index used on the TextureAtlas.
@@ -297,22 +297,22 @@ public:
     /**
      * Returns the rect of the Sprite in points
      */
-    inline const Rect& getTextureRect(void) { return _rect; }
+    inline const Rect& getTextureRect() const { return _rect; }
 
     /**
      * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
      */
-    inline TextureAtlas* getTextureAtlas(void) { return _textureAtlas; }
+    inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
 
     /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
      */
-    inline void setTextureAtlas(TextureAtlas *pobTextureAtlas) { _textureAtlas = pobTextureAtlas; }
+    inline void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
 
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Vec2& getOffsetPosition(void) const { return _offsetPosition; }
+    inline const Vec2& getOffsetPosition() const { return _offsetPosition; }
 
 
     /**
@@ -325,7 +325,7 @@ public:
      *
      * @return true if the sprite is flipped horizontally, false otherwise.
      */
-    bool isFlippedX(void) const;
+    bool isFlippedX() const;
     /**
      * Sets whether the sprite should be flipped horizontally or not.
      *
@@ -351,7 +351,7 @@ public:
      *
      * @return true if the sprite is flipped vertically, false otherwise.
      */
-    bool isFlippedY(void) const;
+    bool isFlippedY() const;
     /**
      * Sets whether the sprite should be flipped vertically or not.
      *
@@ -418,16 +418,16 @@ public:
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
-    virtual bool isOpacityModifyRGB(void) const override;
+    virtual bool isOpacityModifyRGB() const override;
     /// @}
 
 CC_CONSTRUCTOR_ACCESS:
 
-    Sprite(void);
-    virtual ~Sprite(void);
+    Sprite();
+    virtual ~Sprite();
 
     /* Initializes an empty sprite with nothing init. */
-    virtual bool init(void);
+    virtual bool init();
 
     /**
      * Initializes a sprite with a texture.
@@ -471,7 +471,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect
      * @return  true if the sprite is initialized properly, false otherwise.
      */
-    virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
+    virtual bool initWithSpriteFrame(SpriteFrame *spriteFrame);
 
     /**
      * Initializes a sprite with an sprite frame name.
@@ -515,11 +515,11 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    void updateColor(void);
+    void updateColor();
     virtual void setTextureCoords(Rect rect);
-    virtual void updateBlendFunc(void);
-    virtual void setReorderChildDirtyRecursively(void);
-    virtual void setDirtyRecursively(bool bValue);
+    virtual void updateBlendFunc();
+    virtual void setReorderChildDirtyRecursively();
+    virtual void setDirtyRecursively(bool value);
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -538,6 +538,7 @@ protected:
     //
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
+    SpriteFrame*     _spriteFrame;
     QuadCommand      _quadCommand;          /// quad command
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;

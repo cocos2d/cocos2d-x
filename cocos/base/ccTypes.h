@@ -231,6 +231,17 @@ struct V2F_C4B_T2F
     Tex2F          texCoords;
 };
 
+
+struct V2F_C4B_PF
+{
+    //! vertices (2F)
+    Vec2       vertices;
+    //! colors (4B)
+    Color4B        colors;
+    //! pointsize
+    float      pointSize;
+};
+
 //! a Vec2 with a vertex point, a tex coord point and a color 4F
 struct CC_DLL V2F_C4F_T2F
 {
@@ -440,12 +451,15 @@ public:
 	    : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
         , _strokeSize(0)
+        , _strokeAlpha(255)
     {}
     
     // true if stroke enabled
     bool      _strokeEnabled;
     // stroke color
 	Color3B   _strokeColor;
+    // stroke alpha
+    GLubyte   _strokeAlpha;
     // stroke size
     float     _strokeSize;
     
@@ -465,6 +479,7 @@ public:
         , _vertAlignment(TextVAlignment::TOP)
     	, _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
+        , _fontAlpha(255)
     {}
     
     // font name
@@ -479,6 +494,8 @@ public:
     Size                  _dimensions;
     // font color
     Color3B               _fontFillColor;
+    //font alpha
+    GLubyte               _fontAlpha;
     // font shadow
     FontShadow            _shadow;
     // font stroke

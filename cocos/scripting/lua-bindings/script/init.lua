@@ -1,37 +1,64 @@
+--[[
+
+Copyright (c) 2011-2015 chukong-incc.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+]]
 
 require "cocos.cocos2d.Cocos2d"
 require "cocos.cocos2d.Cocos2dConstants"
-require "cocos.cocos2d.extern"
-require "cocos.cocos2d.bitExtend"
-require "cocos.cocos2d.DrawPrimitives"
+require "cocos.cocos2d.functions"
 
--- opengl
-require "cocos.cocos2d.Opengl"
-require "cocos.cocos2d.OpenglConstants"
+if CC_USE_FRAMEWORK then
+    require "cocos.framework.init"
+else
+    -- opengl
+    require "cocos.cocos2d.Opengl"
+    require "cocos.cocos2d.OpenglConstants"
+    -- audio
+    require "cocos.cocosdenshion.AudioEngine"
+    -- cocosstudio
+    if nil ~= ccs then
+        require "cocos.cocostudio.CocoStudio"
+    end
+    -- ui
+    if nil ~= ccui then
+        require "cocos.ui.GuiConstants"
+        require "cocos.ui.experimentalUIConstants"
+    end
 
--- cocosbuilder
-require "cocos.cocosbuilder.CCBReaderLoad"
+    -- extensions
+    require "cocos.extension.ExtensionConstants"
+    -- network
+    require "cocos.network.NetworkConstants"
+    -- Spine
+    if nil ~= sp then
+        require "cocos.spine.SpineConstants"
+    end
 
--- cocosdenshion
-require "cocos.cocosdenshion.AudioEngine"
+    require "cocos.cocos2d.deprecated"
+    require "cocos.cocos2d.DrawPrimitives"
 
--- cocosstudio
-require "cocos.cocostudio.CocoStudio"
+    -- Lua extensions
+    require "cocos.cocos2d.bitExtend"
 
--- ui
-require "cocos.ui.GuiConstants"
-require "cocos.ui.experimentalUIConstants"
-
--- extensions
-require "cocos.extension.ExtensionConstants"
-
--- network
-require "cocos.network.NetworkConstants"
-
--- Spine
-require "cocos.spine.SpineConstants"
-
-if CC_USE_DEPRECATED_API then
     -- CCLuaEngine
     require "cocos.cocos2d.DeprecatedCocos2dClass"
     require "cocos.cocos2d.DeprecatedCocos2dEnum"
@@ -39,8 +66,11 @@ if CC_USE_DEPRECATED_API then
     require "cocos.cocos2d.DeprecatedOpenglEnum"
 
     -- register_cocostudio_module
-    require "cocos.cocostudio.DeprecatedCocoStudioClass"
-    require "cocos.cocostudio.DeprecatedCocoStudioFunc"
+    if nil ~= ccs then
+        require "cocos.cocostudio.DeprecatedCocoStudioClass"
+        require "cocos.cocostudio.DeprecatedCocoStudioFunc"
+    end
+
 
     -- register_cocosbuilder_module
     require "cocos.cocosbuilder.DeprecatedCocosBuilderClass"
@@ -60,6 +90,11 @@ if CC_USE_DEPRECATED_API then
     require "cocos.network.DeprecatedNetworkFunc"
 
     -- register_ui_moudle
-    require "cocos.ui.DeprecatedUIEnum"
-    require "cocos.ui.DeprecatedUIFunc"
+    if nil ~= ccui then
+        require "cocos.ui.DeprecatedUIEnum"
+        require "cocos.ui.DeprecatedUIFunc"
+    end
+
+    -- cocosbuilder
+    require "cocos.cocosbuilder.CCBReaderLoad"
 end

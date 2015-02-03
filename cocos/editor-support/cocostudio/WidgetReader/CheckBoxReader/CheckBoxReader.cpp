@@ -7,7 +7,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -429,39 +429,334 @@ namespace cocostudio
         CheckBox* checkBox = static_cast<CheckBox*>(node);
         
         //load background image
+        bool backGroundFileExist = false;
+        std::string backGroundErrorFilePath = "";
         auto backGroundDic = options->backGroundBoxData();
         int backGroundType = backGroundDic->resourceType();
         std::string backGroundTexturePath = backGroundDic->path()->c_str();
-        checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
+        switch (backGroundType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(backGroundTexturePath))
+                {
+                    backGroundFileExist = true;
+                }
+                else
+                {
+                    backGroundErrorFilePath = backGroundTexturePath;
+                    backGroundFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = backGroundDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(backGroundTexturePath);
+                if (spriteFrame)
+                {
+                    backGroundFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            backGroundErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        backGroundErrorFilePath = plist;
+                    }
+                    backGroundFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (backGroundFileExist)
+        {
+            checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", backGroundErrorFilePath.c_str())->getCString());
+            checkBox->addChild(label);
+        }
         
         //load background selected image
+        bool backGroundSelectedfileExist = false;
+        std::string backGroundSelectedErrorFilePath = "";
         auto backGroundSelectedDic = options->backGroundBoxSelectedData();
         int backGroundSelectedType = backGroundSelectedDic->resourceType();
         std::string backGroundSelectedTexturePath = backGroundSelectedDic->path()->c_str();
-        checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
+        switch (backGroundSelectedType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(backGroundSelectedTexturePath))
+                {
+                    backGroundSelectedfileExist = true;
+                }
+                else
+                {
+                    backGroundSelectedErrorFilePath = backGroundSelectedTexturePath;
+                    backGroundSelectedfileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = backGroundSelectedDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(backGroundSelectedTexturePath);
+                if (spriteFrame)
+                {
+                    backGroundSelectedfileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            backGroundSelectedErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        backGroundSelectedErrorFilePath = plist;
+                    }
+                    backGroundSelectedfileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (backGroundSelectedfileExist)
+        {
+            checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", backGroundSelectedErrorFilePath.c_str())->getCString());
+            checkBox->addChild(label);
+        }
         
         //load frontCross image
+        bool frontCrossFileExist = false;
+        std::string frontCrossErrorFilePath = "";
         auto frontCrossDic = options->frontCrossData();
         int frontCrossType = frontCrossDic->resourceType();
         std::string frontCrossFileName = frontCrossDic->path()->c_str();
-        checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
+        switch (frontCrossType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(frontCrossFileName))
+                {
+                    frontCrossFileExist = true;
+                }
+                else
+                {
+                    frontCrossErrorFilePath = frontCrossFileName;
+                    frontCrossFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = frontCrossDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frontCrossFileName);
+                if (spriteFrame)
+                {
+                    frontCrossFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            frontCrossErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        frontCrossErrorFilePath = plist;
+                    }
+                    frontCrossFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (frontCrossFileExist)
+        {
+            checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", frontCrossErrorFilePath.c_str())->getCString());
+            checkBox->addChild(label);
+        }
         
         //load backGroundBoxDisabledData
+        bool backGroundBoxDisabledFileExist = false;
+        std::string backGroundBoxDisabledErrorFilePath = "";
         auto backGroundDisabledDic = options->backGroundBoxDisabledData();
         int backGroundDisabledType = backGroundDisabledDic->resourceType();
         std::string backGroundDisabledFileName = backGroundDisabledDic->path()->c_str();
-        checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
+        switch (backGroundDisabledType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(backGroundDisabledFileName))
+                {
+                    backGroundBoxDisabledFileExist = true;
+                }
+                else
+                {
+                    backGroundBoxDisabledErrorFilePath = backGroundDisabledFileName;
+                    backGroundBoxDisabledFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = backGroundDisabledDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(backGroundDisabledFileName);
+                if (spriteFrame)
+                {
+                    backGroundBoxDisabledFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            backGroundBoxDisabledErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        backGroundBoxDisabledErrorFilePath = plist;
+                    }
+                    backGroundBoxDisabledFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (backGroundBoxDisabledFileExist)
+        {
+            checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", backGroundBoxDisabledErrorFilePath.c_str())->getCString());
+            checkBox->addChild(label);
+        }
         
         ///load frontCrossDisabledData
+        bool frontCrossDisabledFileExist = false;
+        std::string frontCrossDisabledErrorFilePath = "";
         auto frontCrossDisabledDic = options->frontCrossDisabledData();
         int frontCrossDisabledType = frontCrossDisabledDic->resourceType();
         std::string frontCrossDisabledFileName = frontCrossDisabledDic->path()->c_str();
-        checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
+        switch (frontCrossDisabledType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(frontCrossDisabledFileName))
+                {
+                    frontCrossDisabledFileExist = true;
+                }
+                else
+                {
+                    frontCrossDisabledErrorFilePath = frontCrossDisabledFileName;
+                    frontCrossDisabledFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = frontCrossDisabledDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(frontCrossDisabledFileName);
+                if (spriteFrame)
+                {
+                    frontCrossDisabledFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            frontCrossDisabledErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        frontCrossDisabledErrorFilePath = plist;
+                    }
+                    frontCrossDisabledFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (frontCrossDisabledFileExist)
+        {
+            checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", frontCrossDisabledErrorFilePath.c_str())->getCString());
+            checkBox->addChild(label);
+        }
         
-        bool selectedstate = options->selectedState();
+        bool selectedstate = options->selectedState() != 0;
         checkBox->setSelected(selectedstate);
         
-        bool displaystate = options->displaystate();
+        bool displaystate = options->displaystate() != 0;
         checkBox->setBright(displaystate);
         checkBox->setEnabled(displaystate);
         
@@ -481,12 +776,20 @@ namespace cocostudio
     }
 
     int CheckBoxReader::getResourceType(std::string key)
-	{
-		if(key == "Normal" || key == "Default" || key == "MarkedSubImage")
-		{
-			return 	0;	
-		}
-	
-		return 1;
-	}
+    {
+        if(key == "Normal" || key == "Default")
+        {
+            return 	0;
+        }
+        
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
+        {
+            if(key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
 }

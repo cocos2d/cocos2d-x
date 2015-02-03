@@ -18,10 +18,11 @@
 -- @return EaseQuinticActionIn#EaseQuinticActionIn ret (return value: cc.EaseQuinticActionIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseQuinticActionIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseQuinticActionIn#EaseQuinticActionIn self (return value: cc.EaseQuinticActionIn)
         
 --------------------------------
 -- 

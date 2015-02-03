@@ -177,7 +177,7 @@ g_guisTests[] =
             UISceneManager_Editor* pManager = UISceneManager_Editor::sharedUISceneManager_Editor();
             pManager->setCurrentUISceneId(kUILayoutTest_Editor);
             pManager->setMinUISceneId(kUILayoutTest_Editor);
-            pManager->setMaxUISceneId(kUILayoutTest_BackGroundImage_Scale9_Editor);
+            pManager->setMaxUISceneId(kUILayoutComponentTest_Editor);
 //            pManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location_Editor);
             Scene* pScene = pManager->currentUIScene();
             Director::getInstance()->replaceScene(pScene);

@@ -341,4 +341,3 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
 }
 
 NS_CC_END
-

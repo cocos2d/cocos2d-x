@@ -9,6 +9,7 @@
 -- While paused, the draw rate will be 4 FPS to reduce CPU consumption
 -- @function [parent=#Director] pause 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Sets the EventDispatcher associated with this director <br>
@@ -16,6 +17,7 @@
 -- @function [parent=#Director] setEventDispatcher 
 -- @param self
 -- @param #cc.EventDispatcher dispatcher
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  The size in pixels of the surface. It could be different than the screen size.<br>
@@ -25,6 +27,7 @@
 -- @function [parent=#Director] setContentScaleFactor 
 -- @param self
 -- @param #float scaleFactor
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
@@ -48,6 +51,7 @@
 --  sets the OpenGL default values 
 -- @function [parent=#Director] setGLDefaultValues 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Sets the ActionManager associated with this director<br>
@@ -55,12 +59,14 @@
 -- @function [parent=#Director] setActionManager 
 -- @param self
 -- @param #cc.ActionManager actionManager
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  enables/disables OpenGL alpha blending 
 -- @function [parent=#Director] setAlphaBlending 
 -- @param self
 -- @param #bool on
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Pops out all scenes from the stack until the root scene in the queue.<br>
@@ -68,6 +74,7 @@
 -- Internally it will call `popToSceneStackLevel(1)`
 -- @function [parent=#Director] popToRootScene 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
@@ -75,6 +82,7 @@
 -- @param self
 -- @param #int type
 -- @param #mat4_table mat
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  This object will be visited after the main scene is visited.<br>
@@ -116,12 +124,14 @@
 -- 
 -- @function [parent=#Director] mainLoop 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  enables/disables OpenGL depth test 
 -- @function [parent=#Director] setDepthTest 
 -- @param self
 -- @param #bool on
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- get Frame Rate
@@ -139,6 +149,7 @@
 -- 
 -- @function [parent=#Director] resetMatrixStack 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  converts an OpenGL coordinate to a UIKit coordinate<br>
@@ -153,11 +164,13 @@
 -- @function [parent=#Director] pushMatrix 
 -- @param self
 -- @param #int type
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  sets the default values based on the Configuration info 
 -- @function [parent=#Director] setDefaultValues 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
@@ -171,6 +184,14 @@
 -- @function [parent=#Director] setScheduler 
 -- @param self
 -- @param #cc.Scheduler scheduler
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+-- 
+-- @function [parent=#Director] getMatrix 
+-- @param self
+-- @param #int type
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 --  The main loop is triggered again.<br>
@@ -178,6 +199,7 @@
 -- warning Don't call this function to start the main loop. To run the main loop call runWithScene
 -- @function [parent=#Director] startAnimation 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Get the GLView, where everything is rendered<br>
@@ -197,12 +219,14 @@
 --  Sets the glViewport
 -- @function [parent=#Director] setViewport 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.<br>
 -- If you don't want to pause your animation call [pause] instead.
 -- @function [parent=#Director] stopAnimation 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Pops out all scenes from the stack until it reaches `level`.<br>
@@ -212,6 +236,7 @@
 -- @function [parent=#Director] popToSceneStackLevel 
 -- @param self
 -- @param #int level
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Resumes the paused scene<br>
@@ -219,6 +244,7 @@
 -- The "delta time" will be 0 (as if the game wasn't paused)
 -- @function [parent=#Director] resume 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
@@ -227,17 +253,26 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  set clear values for the color buffers, value range of each element is [0.0, 1.0] 
+-- @function [parent=#Director] setClearColor 
+-- @param self
+-- @param #color4f_table clearColor
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
 --  Ends the execution, releases the running scene.<br>
 -- It doesn't remove the OpenGL view from its parent. You have to do it manually.<br>
 -- lua endToLua
 -- @function [parent=#Director] end 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
 -- @function [parent=#Director] setOpenGLView 
 -- @param self
 -- @param #cc.GLView openGLView
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  converts a UIKit coordinate to an OpenGL coordinate<br>
@@ -253,6 +288,7 @@
 -- since v0.99.3
 -- @function [parent=#Director] purgeCachedData 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  How many frames were called since the director started 
@@ -268,25 +304,27 @@
 -- @function [parent=#Director] runWithScene 
 -- @param self
 -- @param #cc.Scene scene
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
 -- @function [parent=#Director] setNotificationNode 
 -- @param self
 -- @param #cc.Node node
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Draw the scene.<br>
 -- This method is called every frame. Don't call it manually.
 -- @function [parent=#Director] drawScene 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
--- 
--- @function [parent=#Director] getMatrix 
+--  Restart the director
+-- @function [parent=#Director] restart 
 -- @param self
--- @param #int type
--- @return mat4_table#mat4_table ret (return value: mat4_table)
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Pops out a scene from the stack.<br>
@@ -295,12 +333,14 @@
 -- ONLY call it if there is a running scene.
 -- @function [parent=#Director] popScene 
 -- @param self
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
 -- @function [parent=#Director] loadIdentityMatrix 
 -- @param self
 -- @param #int type
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Whether or not to display the FPS on the bottom-left corner 
@@ -313,6 +353,7 @@
 -- @function [parent=#Director] setProjection 
 -- @param self
 -- @param #int projection
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Returns the Console <br>
@@ -327,6 +368,7 @@
 -- @param self
 -- @param #int type
 -- @param #mat4_table mat
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- / FIXME: missing description 
@@ -339,12 +381,14 @@
 -- @function [parent=#Director] setNextDeltaTimeZero 
 -- @param self
 -- @param #bool nextDeltaTimeZero
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 -- 
 -- @function [parent=#Director] popMatrix 
 -- @param self
 -- @param #int type
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  returns visible size of the OpenGL view in points.<br>
@@ -369,6 +413,7 @@
 -- @function [parent=#Director] pushScene 
 -- @param self
 -- @param #cc.Scene scene
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Get the FPS value 
@@ -387,6 +432,7 @@
 -- @function [parent=#Director] setDisplayStats 
 -- @param self
 -- @param #bool displayStats
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Gets the EventDispatcher associated with this director <br>
@@ -401,12 +447,14 @@
 -- @function [parent=#Director] replaceScene 
 -- @param self
 -- @param #cc.Scene scene
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Set the FPS value. 
 -- @function [parent=#Director] setAnimationInterval 
 -- @param self
 -- @param #double interval
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Gets the ActionManager associated with this director<br>

@@ -64,7 +64,9 @@ enum class LanguageType
     PORTUGUESE,
     ARABIC,
     NORWEGIAN,
-    POLISH
+    POLISH,
+    TURKISH,
+    UKRAINIAN
 };
 
 // END of platform group

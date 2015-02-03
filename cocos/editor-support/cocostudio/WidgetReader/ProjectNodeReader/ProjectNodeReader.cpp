@@ -27,7 +27,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -69,7 +69,7 @@ namespace cocostudio
         auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string filename = "";
-        
+
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
@@ -90,48 +90,6 @@ namespace cocostudio
                         size_t pos = value.find_last_of('.');
                         std::string convert = value.substr(0, pos).append(".csb");
                         filename = convert;
-                    }
-                    
-                    attribute = attribute->Next();
-                }
-            }
-            
-            child = child->NextSiblingElement();
-        }
-        
-        auto options = CreateProjectNodeOptions(*builder,
-                                                nodeOptions,
-                                                builder->CreateString(filename));
-        
-        return *(Offset<Table>*)(&options);
-    }
-    
-    Offset<Table> ProjectNodeReader::createOptionsWithFlatBuffersForSimulator(const tinyxml2::XMLElement *objectData,
-                                                                              flatbuffers::FlatBufferBuilder *builder)
-    {
-        auto temp = NodeReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
-        
-        std::string filename = "";
-        
-        // FileData
-        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
-        while (child)
-        {
-            std::string name = child->Name();
-            
-            if (name == "FileData")
-            {
-                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
-                
-                while (attribute)
-                {
-                    name = attribute->Name();
-                    std::string value = attribute->Value();
-                    
-                    if (name == "Path")
-                    {
-                        filename = value;
                     }
                     
                     attribute = attribute->Next();

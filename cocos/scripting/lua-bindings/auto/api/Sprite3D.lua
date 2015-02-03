@@ -6,9 +6,16 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Sprite3D] isForceDepthWrite 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite3D] setCullFaceEnabled 
 -- @param self
 -- @param #bool enable
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- @overload self, cc.Texture2D         
@@ -16,6 +23,7 @@
 -- @function [parent=#Sprite3D] setTexture
 -- @param self
 -- @param #string texFile
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
 
 --------------------------------
 -- 
@@ -27,6 +35,14 @@
 -- remove all attach nodes
 -- @function [parent=#Sprite3D] removeAllAttachNode 
 -- @param self
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- get mesh
@@ -39,12 +55,14 @@
 -- @function [parent=#Sprite3D] setCullFace 
 -- @param self
 -- @param #unsigned int cullFace
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 --  light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff 
 -- @function [parent=#Sprite3D] setLightMask 
 -- @param self
 -- @param #unsigned int mask
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- 
@@ -63,6 +81,7 @@
 -- @function [parent=#Sprite3D] removeAttachNode 
 -- @param self
 -- @param #string boneName
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- 
@@ -76,6 +95,13 @@
 -- @param self
 -- @param #int index
 -- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+-- Force to write to depth buffer, this is useful if you want to achieve effects like fading.
+-- @function [parent=#Sprite3D] setForceDepthWrite 
+-- @param self
+-- @param #bool value
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
 -- get Mesh by Name, it returns the first one if there are more than one mesh with the same name 
@@ -92,8 +118,9 @@
 -- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
         
 --------------------------------
--- @overload self, string, string         
 -- @overload self, string         
+-- @overload self         
+-- @overload self, string, string         
 -- @function [parent=#Sprite3D] create
 -- @param self
 -- @param #string modelPath
@@ -112,11 +139,23 @@
 -- @function [parent=#Sprite3D] setGLProgramState 
 -- @param self
 -- @param #cc.GLProgramState glProgramState
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.<br>
+-- This node becomes the action's target. Refer to Action::getTarget()<br>
+-- warning Actions don't retain their target.<br>
+-- return An Action pointer
+-- @function [parent=#Sprite3D] runAction 
+-- @param self
+-- @param #cc.Action action
+-- @return Action#Action ret (return value: cc.Action)
         
 --------------------------------
 --  just rember bind attributes 
 -- @function [parent=#Sprite3D] setGLProgram 
 -- @param self
 -- @param #cc.GLProgram glprogram
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 return nil

@@ -347,7 +347,7 @@ std::string AudioEngineTestDemo::title() const
 bool AudioControlTest::init()
 {
     auto ret = AudioEngineTestDemo::init();
-    _audioID = AudioEngine::INVAILD_AUDIO_ID;
+    _audioID = AudioEngine::INVALID_AUDIO_ID;
     _loopEnabled = false;
     _volume = 1.0f;
     _duration = AudioEngine::TIME_UNKNOWN;
@@ -359,13 +359,13 @@ bool AudioControlTest::init()
     auto& layerSize = this->getContentSize();
     
     auto playItem = TextButton::create("play", [&](TextButton* button){
-        if (_audioID == AudioEngine::INVAILD_AUDIO_ID) {
+        if (_audioID == AudioEngine::INVALID_AUDIO_ID) {
             _audioID = AudioEngine::play2d("background.mp3", _loopEnabled, _volume);
             
-            if(_audioID != AudioEngine::INVAILD_AUDIO_ID) {
+            if(_audioID != AudioEngine::INVALID_AUDIO_ID) {
                 button->setEnabled(false);
                 AudioEngine::setFinishCallback(_audioID, [&](int id, const std::string& filePath){
-                    _audioID = AudioEngine::INVAILD_AUDIO_ID;
+                    _audioID = AudioEngine::INVALID_AUDIO_ID;
                     ((TextButton*)_playItem)->setEnabled(true);
                     
                     _timeRatio = 0.0f;
@@ -379,10 +379,10 @@ bool AudioControlTest::init()
     addChild(playItem);
     
     auto stopItem = TextButton::create("stop", [&](TextButton* button){
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::stop(_audioID);
             
-            _audioID = AudioEngine::INVAILD_AUDIO_ID;
+            _audioID = AudioEngine::INVALID_AUDIO_ID;
             ((TextButton*)_playItem)->setEnabled(true);
         }
     });
@@ -390,7 +390,7 @@ bool AudioControlTest::init()
     addChild(stopItem);
     
     auto pauseItem = TextButton::create("pause", [&](TextButton* button){
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::pause(_audioID);
         }
     });
@@ -398,7 +398,7 @@ bool AudioControlTest::init()
     addChild(pauseItem);
     
     auto resumeItem = TextButton::create("resume", [&](TextButton* button){
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::resume(_audioID);
         }
     });
@@ -408,7 +408,7 @@ bool AudioControlTest::init()
     auto loopItem = TextButton::create("enable-loop", [&](TextButton* button){
         _loopEnabled = !_loopEnabled;
         
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::setLoop(_audioID, _loopEnabled);
         }
         if(_loopEnabled){
@@ -424,7 +424,7 @@ bool AudioControlTest::init()
     auto uncacheItem = TextButton::create("uncache", [&](TextButton* button){
         AudioEngine::uncache("background.mp3");
         
-        _audioID = AudioEngine::INVAILD_AUDIO_ID;
+        _audioID = AudioEngine::INVALID_AUDIO_ID;
         ((TextButton*)_playItem)->setEnabled(true);
     });
     uncacheItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.5f);
@@ -434,7 +434,7 @@ bool AudioControlTest::init()
     volumeSlider->setPercent(100);
     volumeSlider->setCallBack([&](SliderEx* sender,float ratio,SliderEx::TouchEvent event){
         _volume = ratio;
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::setVolume(_audioID, _volume);
         }
     });
@@ -449,7 +449,7 @@ bool AudioControlTest::init()
                 _updateTimeSlider = false;
                 break;
             case SliderEx::TouchEvent::UP:
-                if (_audioID != AudioEngine::INVAILD_AUDIO_ID && _duration != AudioEngine::TIME_UNKNOWN) {
+                if (_audioID != AudioEngine::INVALID_AUDIO_ID && _duration != AudioEngine::TIME_UNKNOWN) {
                     AudioEngine::setCurrentTime(_audioID,_duration * ratio);
                 }
             case SliderEx::TouchEvent::CANCEL:
@@ -481,7 +481,7 @@ bool AudioControlTest::init()
 
 void AudioControlTest::update(float dt)
 {
-    if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+    if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
         if(_duration == AudioEngine::TIME_UNKNOWN){
             _duration = AudioEngine::getDuration(_audioID);
         }
@@ -524,7 +524,7 @@ bool PlaySimultaneouslyTest::init()
         auto startTime = utils::gettime();
         for(int index = 0; index < TEST_COUNT; ++index){
             audioId = AudioEngine::play2d(_files[index]);
-            if(audioId != AudioEngine::INVAILD_AUDIO_ID){
+            if(audioId != AudioEngine::INVALID_AUDIO_ID){
                 _playingcount += 1;
                 
                 AudioEngine::setFinishCallback(audioId, [&](int id, const std::string& filePath){
@@ -584,7 +584,7 @@ bool AudioProfileTest::init()
         auto playItem = TextButton::create(text, [&](TextButton* button){
             int index = button->getTag();
             auto id = AudioEngine::play2d(_files[index], false, 1.0f, &_audioProfile);
-            if(id != AudioEngine::INVAILD_AUDIO_ID){
+            if(id != AudioEngine::INVALID_AUDIO_ID){
                 _time = _minDelay;
                 _audioCount += 1;
                 char show[30];

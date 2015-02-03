@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with the number of columns to split and the duration 
+-- creates the action with the number of columns to split and the duration <br>
+-- param duration in seconds
 -- @function [parent=#SplitCols] create 
 -- @param self
 -- @param #float duration
@@ -17,6 +18,7 @@
 -- @function [parent=#SplitCols] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SplitCols#SplitCols self (return value: cc.SplitCols)
         
 --------------------------------
 -- 
@@ -25,9 +27,10 @@
 -- @return SplitCols#SplitCols ret (return value: cc.SplitCols)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#SplitCols] update 
 -- @param self
 -- @param #float time
+-- @return SplitCols#SplitCols self (return value: cc.SplitCols)
         
 return nil

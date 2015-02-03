@@ -20,6 +20,7 @@
 -- @function [parent=#RotateTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return RotateTo#RotateTo self (return value: cc.RotateTo)
         
 --------------------------------
 -- 
@@ -34,9 +35,10 @@
 -- @return RotateTo#RotateTo ret (return value: cc.RotateTo)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#RotateTo] update 
 -- @param self
 -- @param #float time
+-- @return RotateTo#RotateTo self (return value: cc.RotateTo)
         
 return nil

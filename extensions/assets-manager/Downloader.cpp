@@ -36,6 +36,7 @@ NS_CC_EXT_BEGIN
 #define MAX_REDIRS          2
 #define DEFAULT_TIMEOUT     5
 #define HTTP_CODE_SUPPORT_RESUME    206
+#define MAX_WAIT_MSECS 30*1000 /* Wait max. 30 seconds */
 
 #define TEMP_EXT            ".temp"
 
@@ -51,7 +52,7 @@ size_t bufferWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
     Downloader::StreamData *streamBuffer = (Downloader::StreamData *)userdata;
     size_t written = size * nmemb;
     // Avoid pointer overflow
-    if (streamBuffer->offset + written <= streamBuffer->total)
+	if (streamBuffer->offset + written <= static_cast<size_t>(streamBuffer->total))
     {
         memcpy(streamBuffer->buffer + streamBuffer->offset, ptr, written);
         streamBuffer->offset += written;
@@ -626,8 +627,13 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             FD_ZERO(&fdread);
             FD_ZERO(&fdwrite);
             FD_ZERO(&fdexcep);
+// FIXME: when jenkins migrate to ubuntu, we should remove this hack code
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
             curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
             rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &select_tv);
+#else          
+            rc = curl_multi_wait(multi_handle,nullptr, 0, MAX_WAIT_MSECS, &maxfd);
+#endif            
             
             switch(rc)
             {

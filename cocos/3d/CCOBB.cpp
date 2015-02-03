@@ -215,6 +215,8 @@ OBB::OBB(const AABB& aabb)
     
     _extents = aabb._max - aabb._min;
     _extents.scale(0.5f);
+    
+    computeExtAxis();
 }
 
 OBB::OBB(const Vec3* verts, int num)
@@ -259,6 +261,8 @@ OBB::OBB(const Vec3* verts, int num)
     _zAxis.normalize();
     
     _extents = 0.5f * (vecMax - vecMin);
+    
+    computeExtAxis();
 }
 
 bool OBB::containPoint(const Vec3& point) const
@@ -296,19 +300,15 @@ void OBB::reset()
 
 void OBB::getCorners(Vec3* verts) const
 {
-    Vec3 extX = _xAxis * _extents.x;
-    Vec3 extY = _yAxis * _extents.y;
-    Vec3 extZ = _zAxis * _extents.z;
+    verts[0] = _center - _extentX + _extentY + _extentZ;     // left top front
+    verts[1] = _center - _extentX - _extentY + _extentZ;     // left bottom front
+    verts[2] = _center + _extentX - _extentY + _extentZ;     // right bottom front
+    verts[3] = _center + _extentX + _extentY + _extentZ;     // right top front
     
-    verts[0] = _center - extX + extY + extZ;     // left top front
-    verts[1] = _center - extX - extY + extZ;     // left bottom front
-    verts[2] = _center + extX - extY + extZ;     // right bottom front
-    verts[3] = _center + extX + extY + extZ;     // right top front
-    
-    verts[4] = _center + extX + extY - extZ;     // right top back
-    verts[5] = _center + extX - extY - extZ;     // right bottom back
-    verts[6] = _center - extX - extY - extZ;     // left bottom back
-    verts[7] = _center - extX + extY - extZ;     // left top back
+    verts[4] = _center + _extentX + _extentY - _extentZ;     // right top back
+    verts[5] = _center + _extentX - _extentY - _extentZ;     // right bottom back
+    verts[6] = _center - _extentX - _extentY - _extentZ;     // left bottom back
+    verts[7] = _center - _extentX + _extentY - _extentZ;     // left top back
 }
 
 float OBB::projectPoint(const Vec3& point, const Vec3& axis)const
@@ -447,6 +447,8 @@ void OBB::transform(const Mat4& mat)
     _extents.x *= scale.x;
     _extents.y *= scale.y;
     _extents.z *= scale.z;
+    
+    computeExtAxis();
 }
 
 NS_CC_END

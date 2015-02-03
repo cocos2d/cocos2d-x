@@ -36,7 +36,8 @@ bool UIButtonTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the button
-        Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
         CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
               button->getContentSize().height);
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
@@ -180,6 +181,98 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
             
         default:
             break;
+    }
+}
+
+// UIButtonTest_Scale9_State_Change
+UIButtonTest_Scale9_State_Change::UIButtonTest_Scale9_State_Change()
+    : _displayValueLabel(nullptr)
+{
+
+}
+
+UIButtonTest_Scale9_State_Change::~UIButtonTest_Scale9_State_Change()
+{
+
+}
+
+bool UIButtonTest_Scale9_State_Change::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("Button scale9 render", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        _uiLayer->addChild(alert);
+
+        // Create the button
+        Button* button = Button::create("cocosui/button.png");
+        // open scale9 render
+        button->ignoreContentAdaptWithSize(false);
+        button->setScale9Enabled(true);
+        button->setPosition(Vec2(widgetSize.width / 2.0f - 100, widgetSize.height / 2.0f));
+        button->setContentSize(Size(180, 60));
+        button->setTitleText("Hello Scale9");
+        button->setPressedActionEnabled(false);
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
+        _uiLayer->addChild(button);
+
+        Button* button2 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        // open scale9 render
+        button2->ignoreContentAdaptWithSize(false);
+        button2->setScale9Enabled(true);
+        button2->setTitleText("Hello scale9");
+        button2->setPosition(Vec2(widgetSize.width / 2.0f + 100, widgetSize.height / 2.0f));
+        button2->setContentSize(Size(180, 60));
+        button2->setPressedActionEnabled(true);
+        button2->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
+        _uiLayer->addChild(button2);
+        return true;
+    }
+    return false;
+}
+
+void UIButtonTest_Scale9_State_Change::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    switch (type)
+    {
+    case Widget::TouchEventType::BEGAN:
+        _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+        break;
+
+    case Widget::TouchEventType::MOVED:
+        _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+        break;
+
+    case Widget::TouchEventType::ENDED:
+    {
+        _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+        Button *btn = (Button*)pSender;
+        if (btn->isScale9Enabled())
+        {
+            btn->setScale9Enabled(false);
+        }
+        else
+            btn->setScale9Enabled(true);
+    }
+        break;
+
+    case Widget::TouchEventType::CANCELED:
+        _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+        break;
+
+    default:
+        break;
     }
 }
 
@@ -760,7 +853,7 @@ bool UIButtonFlipTest::init()
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("Button X Flipped", "fonts/Marker Felt.ttf",20);
-        _displayValueLabel->setNormalizedPosition(Vec2(0.3, 0.7));
+        _displayValueLabel->setNormalizedPosition(Vec2(0.3f, 0.7f));
         _uiLayer->addChild(_displayValueLabel);
         
         
@@ -787,8 +880,127 @@ bool UIButtonFlipTest::init()
         _uiLayer->addChild(button2);
         
         auto titleLabel = Text::create("Button Y flipped", "Arial", 20);
-        titleLabel->setNormalizedPosition(Vec2(0.8, 0.7));
+        titleLabel->setNormalizedPosition(Vec2(0.8f, 0.7f));
         this->addChild(titleLabel);
+        
+        return true;
+    }
+    return false;
+}
+
+// UIButtonNormalDefaultTest
+UIButtonNormalDefaultTest::UIButtonNormalDefaultTest()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIButtonNormalDefaultTest::~UIButtonNormalDefaultTest()
+{
+}
+
+bool UIButtonNormalDefaultTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("Button should scale when clicked","fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button
+        Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f - 80, widgetSize.height / 2.0f + 40));
+        button->setZoomScale(0.4f);
+        button->setPressedActionEnabled(true);
+        _uiLayer->addChild(button);
+        
+        // Create the button
+        Button* buttonScale9 = Button::create("cocosui/button.png");
+        // open scale9 render
+        buttonScale9->setScale9Enabled(true);
+        buttonScale9->setPosition(Vec2(widgetSize.width / 2.0f + 50, widgetSize.height / 2.0f + 40));
+        buttonScale9->setContentSize(Size(150, 70));
+        buttonScale9->setPressedActionEnabled(true);
+        _uiLayer->addChild(buttonScale9);
+
+        
+        
+        
+        return true;
+    }
+    return false;
+}
+
+
+// UIButtonDisableDefaultTest
+UIButtonDisableDefaultTest::UIButtonDisableDefaultTest()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+UIButtonDisableDefaultTest::~UIButtonDisableDefaultTest()
+{
+}
+
+bool UIButtonDisableDefaultTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("Left button will turn normal when clicked","fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button
+        Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f - 80, widgetSize.height / 2.0f + 40));
+        button->setZoomScale(0.4f);
+        button->setPressedActionEnabled(true);
+        button->setBright(false);
+        button->addClickEventListener([=](Ref*){
+            button->setBright(true);
+        });
+        _uiLayer->addChild(button);
+        
+        // Create the button
+        Button* buttonScale9 = Button::create("cocosui/button.png");
+        // open scale9 render
+        buttonScale9->setScale9Enabled(true);
+        buttonScale9->setPosition(Vec2(widgetSize.width / 2.0f + 50, widgetSize.height / 2.0f + 40));
+        buttonScale9->setContentSize(Size(150, 70));
+        buttonScale9->setPressedActionEnabled(true);
+        buttonScale9->setEnabled(false);
+        buttonScale9->setBright(false);
+        _uiLayer->addChild(buttonScale9);
+        
+        
+        
         
         return true;
     }

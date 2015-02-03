@@ -28,6 +28,10 @@ LabelFNTColorAndOpacity.__index = LabelFNTColorAndOpacity
 function LabelFNTColorAndOpacity.onNodeEvent(tag)
     if tag == "exit" then
         LabelFNTColorAndOpacity.layer:unscheduleUpdate()
+    elseif tag == "enter" then
+        if nil ~= LabelFNTColorAndOpacity.layer then
+            LabelFNTColorAndOpacity.layer:scheduleUpdateWithPriorityLua(LabelFNTColorAndOpacity.step, 0)
+        end
     end
 end
 
@@ -73,7 +77,6 @@ function LabelFNTColorAndOpacity.create()
     label3:setPosition( VisibleRect:rightTop() )
 
     layer:registerScriptHandler(LabelFNTColorAndOpacity.onNodeEvent)
-    layer:scheduleUpdateWithPriorityLua(LabelFNTColorAndOpacity.step, 0)
 
     Helper.titleLabel:setString( "New Label + .FNT file" )
     Helper.subtitleLabel:setString( "Testing opacity + tint" )

@@ -24,10 +24,12 @@
 
 #include "GameMapReader.h"
 
+#include "2d/CCTMXXMLParser.h"
+
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -134,17 +136,22 @@ namespace cocostudio
         auto options = (GameMapOptions*)gameMapOptions;
         auto fileNameData = options->fileNameData();
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
+        std::string path = fileNameData->path()->c_str();
         int resourceType = fileNameData->resourceType();
         switch (resourceType)
         {
             case 0:
             {
-                std::string path = fileNameData->path()->c_str();
-                const char* tmxFile = path.c_str();
-                
-                if (tmxFile && strcmp("", tmxFile) != 0)
+                if (FileUtils::getInstance()->isFileExist(path))
                 {
-                    tmx = TMXTiledMap::create(tmxFile);
+                    fileExist = true;
+                }
+                else
+                {
+                    errorFilePath = path;
+                    fileExist = false;
                 }
                 break;
             }
@@ -152,10 +159,93 @@ namespace cocostudio
             default:
                 break;
         }
-        
-        if (tmx)
+        if (fileExist)
         {
-            setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
+            /* Whether tileset is valid. */
+            auto mapInfo = TMXMapInfo::create(path);
+            auto& layers = mapInfo->getLayers();
+            bool valid = false;
+            std::string layerName = "";
+            for (const auto &layerInfo : layers)
+            {
+                valid = false;
+                
+                if (layerInfo->_visible)
+                {
+                    Size size = layerInfo->_layerSize;
+                    auto& tilesets = mapInfo->getTilesets();
+                    if (tilesets.size()>0)
+                    {
+                        TMXTilesetInfo* tileset = nullptr;
+                        for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
+                        {
+                            tileset = *iter;
+                            if (tileset)
+                            {
+                                for( int y=0; y < size.height; y++ )
+                                {
+                                    for( int x=0; x < size.width; x++ )
+                                    {
+                                        int pos = static_cast<int>(x + size.width * y);
+                                        int gid = layerInfo->_tiles[ pos ];
+                                        
+                                        if( gid != 0 )
+                                        {
+                                            if( (gid & kTMXFlippedMask) >= tileset->_firstGid )
+                                            {
+                                                valid = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    
+                                    if (valid)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!valid)
+                    {
+                        layerName = layerInfo->_name;
+                        break;
+                    }
+                }
+                else
+                {
+                    valid = true;
+                }
+            }
+            
+            if (!valid)
+            {
+                Node* node = Node::create();
+                setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
+                auto label = Label::create();
+                label->setString(__String::createWithFormat("Some error of gid are in TMX Layer '%s'", layerName.c_str())->getCString());
+                node->setScale(1.0f);
+                node->addChild(label);
+                return node;
+            }
+            /**/
+            
+            tmx = TMXTiledMap::create(path);
+            if (tmx)
+            {
+                setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
+            }
+        }
+        else
+        {
+            Node* node = Node::create();
+            setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            node->addChild(label);
+            return node;
         }
         
         return tmx;

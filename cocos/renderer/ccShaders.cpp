@@ -43,6 +43,14 @@ NS_CC_BEGIN
 #include "ccShader_PositionColor.vert"
 
 //
+
+#ifdef CC_NO_GL_POINTSIZE
+#include "ccShader_PositionColorPointsize-no-gl_PointSize.vert"
+#else
+#include "ccShader_PositionColorTextureAsPointsize.vert"
+#endif
+
+//
 #include "ccShader_PositionTexture.frag"
 #include "ccShader_PositionTexture.vert"
 

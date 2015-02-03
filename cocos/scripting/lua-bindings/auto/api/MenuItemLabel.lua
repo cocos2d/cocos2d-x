@@ -15,18 +15,21 @@
 -- @function [parent=#MenuItemLabel] setString 
 -- @param self
 -- @param #string label
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
 --  Sets the label that is rendered. 
 -- @function [parent=#MenuItemLabel] setLabel 
 -- @param self
 -- @param #cc.Node node
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
 --  Sets the color that will be used to disable the item 
 -- @function [parent=#MenuItemLabel] setDisabledColor 
 -- @param self
 -- @param #color3b_table color
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
 --  Gets the label that is rendered. 
@@ -39,20 +42,24 @@
 -- @function [parent=#MenuItemLabel] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
 -- 
 -- @function [parent=#MenuItemLabel] activate 
 -- @param self
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
 -- 
 -- @function [parent=#MenuItemLabel] unselected 
 -- @param self
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
 -- 
 -- @function [parent=#MenuItemLabel] selected 
 -- @param self
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 return nil

@@ -13,6 +13,7 @@
 -- @param self
 -- @param #int externalKeyCode
 -- @param #bool receive
+-- @return Controller#Controller self (return value: cc.Controller)
         
 --------------------------------
 -- 
@@ -38,6 +39,7 @@
 -- @function [parent=#Controller] setTag 
 -- @param self
 -- @param #int tag
+-- @return Controller#Controller self (return value: cc.Controller)
         
 --------------------------------
 -- Returns a tag that is used to identify the controller easily.<br>
@@ -51,12 +53,14 @@
 -- warning The API only work on the IOS platform.Empty implementation on Android
 -- @function [parent=#Controller] startDiscoveryController 
 -- @param self
+-- @return Controller#Controller self (return value: cc.Controller)
         
 --------------------------------
 --  End the discovery process<br>
 -- warning The API only work on the IOS platform.Empty implementation on Android
 -- @function [parent=#Controller] stopDiscoveryController 
 -- @param self
+-- @return Controller#Controller self (return value: cc.Controller)
         
 --------------------------------
 --  Gets a controller with its tag<br>

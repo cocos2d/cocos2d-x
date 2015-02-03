@@ -74,11 +74,11 @@ bool ShakyTiles3D::initWithDuration(float duration, const Size& gridSize, int ra
 
 ShakyTiles3D* ShakyTiles3D::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) ShakyTiles3D();
+    // no copy constructor    
+    auto a = new (std::nothrow) ShakyTiles3D();
     a->initWithDuration(_duration, _gridSize, _randrange, _shakeZ);
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 void ShakyTiles3D::update(float time)
@@ -154,11 +154,11 @@ bool ShatteredTiles3D::initWithDuration(float duration, const Size& gridSize, in
 
 ShatteredTiles3D* ShatteredTiles3D::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) ShatteredTiles3D();
-	a->initWithDuration(_duration, _gridSize, _randrange, _shatterZ);
-	a->autorelease();
-	return a;
+    // no copy constructor    
+    auto a = new (std::nothrow) ShatteredTiles3D();
+    a->initWithDuration(_duration, _gridSize, _randrange, _shatterZ);
+    a->autorelease();
+    return a;
 }
 
 void ShatteredTiles3D::update(float time)
@@ -239,11 +239,11 @@ bool ShuffleTiles::initWithDuration(float duration, const Size& gridSize, unsign
 
 ShuffleTiles* ShuffleTiles::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) ShuffleTiles();
-	a->initWithDuration(_duration, _gridSize, _seed);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) ShuffleTiles();
+    a->initWithDuration(_duration, _gridSize, _seed);
+    a->autorelease();
+    return a;
 }
 
 ShuffleTiles::~ShuffleTiles()
@@ -371,11 +371,11 @@ FadeOutTRTiles* FadeOutTRTiles::create(float duration, const Size& gridSize)
 
 FadeOutTRTiles* FadeOutTRTiles::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) FadeOutTRTiles();
-	a->initWithDuration(_duration, _gridSize);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) FadeOutTRTiles();
+    a->initWithDuration(_duration, _gridSize);
+    a->autorelease();
+    return a;
 }
 
 float FadeOutTRTiles::testFunc(const Size& pos, float time)
@@ -467,11 +467,11 @@ FadeOutBLTiles* FadeOutBLTiles::create(float duration, const Size& gridSize)
 
 FadeOutBLTiles* FadeOutBLTiles::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) FadeOutBLTiles();
-	a->initWithDuration(_duration, _gridSize);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) FadeOutBLTiles();
+    a->initWithDuration(_duration, _gridSize);
+    a->autorelease();
+    return a;
 }
 
 float FadeOutBLTiles::testFunc(const Size& pos, float time)
@@ -508,11 +508,11 @@ FadeOutUpTiles* FadeOutUpTiles::create(float duration, const Size& gridSize)
 
 FadeOutUpTiles* FadeOutUpTiles::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) FadeOutUpTiles();
-	a->initWithDuration(_duration, _gridSize);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) FadeOutUpTiles();
+    a->initWithDuration(_duration, _gridSize);
+    a->autorelease();
+    return a;
 }
 
 float FadeOutUpTiles::testFunc(const Size& pos, float time)
@@ -562,11 +562,11 @@ FadeOutDownTiles* FadeOutDownTiles::create(float duration, const Size& gridSize)
 
 FadeOutDownTiles* FadeOutDownTiles::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) FadeOutDownTiles();
-	a->initWithDuration(_duration, _gridSize);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) FadeOutDownTiles();
+    a->initWithDuration(_duration, _gridSize);
+    a->autorelease();
+    return a;
 }
 
 float FadeOutDownTiles::testFunc(const Size& pos, float time)
@@ -630,11 +630,11 @@ bool TurnOffTiles::initWithDuration(float duration, const Size& gridSize, unsign
 
 TurnOffTiles* TurnOffTiles::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) TurnOffTiles();
+    // no copy constructor
+    auto a = new (std::nothrow) TurnOffTiles();
     a->initWithDuration(_duration, _gridSize, _seed );
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 TurnOffTiles::~TurnOffTiles(void)
@@ -744,11 +744,11 @@ bool WavesTiles3D::initWithDuration(float duration, const Size& gridSize, unsign
 
 WavesTiles3D* WavesTiles3D::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) WavesTiles3D();
+    // no copy constructor
+    auto a = new (std::nothrow) WavesTiles3D();
     a->initWithDuration(_duration, _gridSize, _waves, _amplitude);
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 void WavesTiles3D::update(float time)
@@ -807,11 +807,11 @@ bool JumpTiles3D::initWithDuration(float duration, const Size& gridSize, unsigne
 
 JumpTiles3D* JumpTiles3D::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) JumpTiles3D();
+    // no copy constructor
+    auto a = new (std::nothrow) JumpTiles3D();
     a->initWithDuration(_duration, _gridSize, _jumps, _amplitude);
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 void JumpTiles3D::update(float time)
@@ -875,11 +875,11 @@ bool SplitRows::initWithDuration(float duration, unsigned int rows)
 
 SplitRows* SplitRows::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) SplitRows();
+    // no copy constructor
+    auto a = new (std::nothrow) SplitRows();
     a->initWithDuration(_duration, _rows);
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 void SplitRows::startWithTarget(Node *target)
@@ -938,11 +938,11 @@ bool SplitCols::initWithDuration(float duration, unsigned int cols)
 
 SplitCols* SplitCols::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) SplitCols();
+    // no copy constructor    
+    auto a = new (std::nothrow) SplitCols();
     a->initWithDuration(_duration, _cols);
-	a->autorelease();
-	return a;
+    a->autorelease();
+    return a;
 }
 
 void SplitCols::startWithTarget(Node *target)

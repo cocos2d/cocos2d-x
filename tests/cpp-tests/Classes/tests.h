@@ -79,5 +79,6 @@
 #include "LightTest/LightTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
+#include "AllocatorTest/AllocatorTest.h"
 
 #endif

@@ -29,5 +29,6 @@
 --  Stops propagation for current event 
 -- @function [parent=#Event] stopPropagation 
 -- @param self
+-- @return Event#Event self (return value: cc.Event)
         
 return nil

@@ -95,9 +95,9 @@ bool Text::init(const std::string &textContent, const std::string &fontName, int
             ret = false;
             break;
         }
-        this->setString(textContent);
         this->setFontName(fontName);
         this->setFontSize(fontSize);
+        this->setString(textContent);
     } while (0);
     return ret;
 }
@@ -287,6 +287,19 @@ Size Text::getVirtualRendererSize() const
     return _labelRenderer->getContentSize();
 }
 
+Size Text::getAutoRenderSize()
+{
+    Size virtualSize = _labelRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _labelRenderer->setDimensions(0, 0);
+        virtualSize = _labelRenderer->getContentSize();
+        _labelRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+
+    return virtualSize;
+}
+
 Node* Text::getVirtualRenderer()
 {
     return _labelRenderer;
@@ -324,22 +337,24 @@ std::string Text::getDescription() const
     return "Label";
 }
     
-
-    
-void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurRadius) {
+void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurRadius)
+{
     _labelRenderer->enableShadow(shadowColor, offset, blurRadius);
 }
 
-void Text::enableOutline(const Color4B& outlineColor,int outlineSize) {
+void Text::enableOutline(const Color4B& outlineColor,int outlineSize)
+{
     _labelRenderer->enableOutline(outlineColor, outlineSize);
 }
     
-void Text::enableGlow(const Color4B& glowColor) {
+void Text::enableGlow(const Color4B& glowColor)
+{
     if (_type == Type::TTF)
         _labelRenderer->enableGlow(glowColor);
 }
 
-void Text::disableEffect() {
+void Text::disableEffect()
+{
     _labelRenderer->disableEffect();
 }
 

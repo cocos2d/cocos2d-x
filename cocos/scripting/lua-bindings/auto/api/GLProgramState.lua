@@ -13,6 +13,7 @@
 -- @param self
 -- @param #int uniformLocation
 -- @param #unsigned int textureId
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- @overload self, int, mat4_table         
@@ -21,17 +22,20 @@
 -- @param self
 -- @param #string uniformName
 -- @param #mat4_table value
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- 
 -- @function [parent=#GLProgramState] applyUniforms 
 -- @param self
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
 -- 
 -- @function [parent=#GLProgramState] applyGLProgram 
 -- @param self
 -- @param #mat4_table modelView
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
 -- 
@@ -44,6 +48,7 @@
 -- param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not
 -- @function [parent=#GLProgramState] applyAttributes 
 -- @param self
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
 -- @overload self, int, float         
@@ -52,6 +57,7 @@
 -- @param self
 -- @param #string uniformName
 -- @param #float value
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- @overload self, int, vec3_table         
@@ -60,6 +66,7 @@
 -- @param self
 -- @param #string uniformName
 -- @param #vec3_table value
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- @overload self, int, int         
@@ -68,6 +75,7 @@
 -- @param self
 -- @param #string uniformName
 -- @param #int value
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- 
@@ -82,12 +90,14 @@
 -- @param self
 -- @param #string uniformName
 -- @param #vec4_table value
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- 
 -- @function [parent=#GLProgramState] setGLProgram 
 -- @param self
 -- @param #cc.GLProgram glprogram
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
 -- @overload self, int, vec2_table         
@@ -96,6 +106,7 @@
 -- @param self
 -- @param #string uniformName
 -- @param #vec2_table value
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- 
@@ -108,6 +119,7 @@
 -- @function [parent=#GLProgramState] apply 
 -- @param self
 -- @param #mat4_table modelView
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
 -- 

@@ -71,11 +71,9 @@ extern "C"
 #include "base/pvr.h"
 #include "base/TGAlib.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #if CC_USE_WEBP
 #include "decode.h"
 #endif // CC_USE_WEBP
-#endif
 
 #include "base/ccMacros.h"
 #include "CCCommon.h"
@@ -2041,6 +2039,9 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
         _width    = config.input.width;
         _height   = config.input.height;
+        
+        //webp doesn't have premultipliedAlpha
+        _hasPremultipliedAlpha = false;
         
         _dataLen = _width * _height * 4;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));

@@ -136,6 +136,7 @@
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp" />
     <ClCompile Include="..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp" />
@@ -324,6 +325,7 @@
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h" />
     <ClInclude Include="..\Classes\BaseTest.h" />
     <ClInclude Include="..\Classes\BillBoardTest\BillBoardTest.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConvexHull.h" />

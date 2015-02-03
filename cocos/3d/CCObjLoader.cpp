@@ -161,7 +161,7 @@ static ssize_t updateVertex( std::map<vertex_index, ssize_t>& vertexCache, std::
         return it->second;
     }
     
-    assert(in_positions.size() > (3*i.v_idx+2));
+    assert(in_positions.size() > static_cast<size_t>(3*i.v_idx+2));
     
     positions.push_back(in_positions[3*i.v_idx+0]);
     positions.push_back(in_positions[3*i.v_idx+1]);
@@ -289,7 +289,7 @@ std::string LoadMtl ( std::map<std::string, ObjLoader::material_t>& material_map
         filepath = std::string(filename);
     }
     
-    std::ifstream ifs(filepath.c_str());
+    std::istringstream ifs(FileUtils::getInstance()->getStringFromFile(filepath));
     if (!ifs) 
     {
         err << "Cannot open file [" << filepath << "]" << std::endl;

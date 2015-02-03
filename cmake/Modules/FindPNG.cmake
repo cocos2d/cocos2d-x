@@ -48,24 +48,6 @@ if(PNG_FIND_QUIETLY)
 endif()
 find_package(ZLIB ${_FIND_ZLIB_ARG})
 
-if(USE_PREBUILT_LIBS)
-  find_path(PNG_PNG_INCLUDE_DIR png.h
-    PATH_SUFFIXES include/${PLATFORM_FOLDER} include
-    PATHS ${COCOS_EXTERNAL_DIR}/png NO_DEFAULT_PATH
-    )
-  find_library(PNG_LIBRARY NAMES png libpng
-    PATH_SUFFIXES
-      prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-      prebuilt/${PLATFORM_FOLDER}
-    PATHS ${COCOS_EXTERNAL_DIR}/png NO_DEFAULT_PATH
-    )
-  # cleanup if not found (prevent from mix prebuilt include paths and system installed libraries)
-  if(NOT PNG_PNG_INCLUDE_DIR OR NOT PNG_LIBRARY)
-    unset(PNG_PNG_INCLUDE_DIR CACHE)
-    unset(PNG_LIBRARY CACHE)
-  endif()
-endif()
-
 if(ZLIB_FOUND)
   find_path(PNG_PNG_INCLUDE_DIR png.h
     HINTS ENV PNG_DIR

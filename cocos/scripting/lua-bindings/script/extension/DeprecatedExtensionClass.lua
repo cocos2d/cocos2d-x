@@ -1,5 +1,8 @@
--- This is the DeprecatedExtensionClass
+if nil == cc.Control then
+    return
+end
 
+-- This is the DeprecatedExtensionClass
 DeprecatedExtensionClass = {} or DeprecatedExtensionClass
 
 --tip
@@ -14,21 +17,6 @@ function DeprecatedExtensionClass.CCControl()
 end
 _G["CCControl"] = DeprecatedExtensionClass.CCControl()
 --CCControl class will be Deprecated,end
-
---CCEditBox class will be Deprecated,begin
-function DeprecatedExtensionClass.CCEditBox()
-    deprecatedTip("CCEditBox","ccui.EditBox")
-    return ccui.EditBox
-end
-_G["CCEditBox"] = DeprecatedExtensionClass.CCEditBox()
-
-function DeprecatedExtensionClass.CCUIEditBox()
-    deprecatedTip("cc.EditBox","ccui.EditBox")
-    return ccui.EditBox
-end
-_G["cc"]["EditBox"] = DeprecatedExtensionClass.CCUIEditBox()
-
---CCEditBox class will be Deprecated,end
 
 --CCScrollView class will be Deprecated,begin
 function DeprecatedExtensionClass.CCScrollView()
@@ -102,6 +90,34 @@ end
 _G["CCControlButton"] = DeprecatedExtensionClass.CCControlButton()
 --CCControlButton class will be Deprecated,end
 
+--CCControlColourPicker class will be Deprecated,begin
+function DeprecatedExtensionClass.CCControlColourPicker()
+    deprecatedTip("CCControlColourPicker","cc.ControlColourPicker")
+    return cc.ControlColourPicker
+end
+_G["CCControlColourPicker"] = DeprecatedExtensionClass.CCControlColourPicker()
+--CCControlColourPicker class will be Deprecated,end
+
+
+if nil == ccui then
+    return
+end
+
+--CCEditBox class will be Deprecated,begin
+function DeprecatedExtensionClass.CCEditBox()
+    deprecatedTip("CCEditBox","ccui.EditBox")
+    return ccui.EditBox
+end
+_G["CCEditBox"] = DeprecatedExtensionClass.CCEditBox()
+
+function DeprecatedExtensionClass.CCUIEditBox()
+    deprecatedTip("cc.EditBox","ccui.EditBox")
+    return ccui.EditBox
+end
+_G["cc"]["EditBox"] = DeprecatedExtensionClass.CCUIEditBox()
+
+--CCEditBox class will be Deprecated,end
+
 --CCScale9Sprite class will be Deprecated,begin
 function DeprecatedExtensionClass.CCScale9Sprite()
     deprecatedTip("CCScale9Sprite","ccui.Scale9Sprite")
@@ -115,12 +131,4 @@ function DeprecatedExtensionClass.UIScale9Sprite()
 end
 _G["cc"]["Scale9Sprite"] = DeprecatedExtensionClass.UIScale9Sprite()
 --CCScale9Sprite class will be Deprecated,end
-
---CCControlColourPicker class will be Deprecated,begin
-function DeprecatedExtensionClass.CCControlColourPicker()
-    deprecatedTip("CCControlColourPicker","cc.ControlColourPicker")
-    return cc.ControlColourPicker
-end
-_G["CCControlColourPicker"] = DeprecatedExtensionClass.CCControlColourPicker()
---CCControlColourPicker class will be Deprecated,end
 

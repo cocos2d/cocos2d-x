@@ -28,6 +28,7 @@
 #include "CCLuaEngine.h"
 #include "ActionTimeline/CCActionTimeline.h"
 #include "ActionTimeline/CSLoader.h"
+#include "ActionTimeline/CCActionTimelineNode.h"
 
 int lua_cocos2dx_csloader_CSLoader_createTimeline(lua_State* tolua_S)
 {

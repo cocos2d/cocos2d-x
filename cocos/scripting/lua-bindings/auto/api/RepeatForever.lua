@@ -9,6 +9,7 @@
 -- @function [parent=#RepeatForever] setInnerAction 
 -- @param self
 -- @param #cc.ActionInterval action
+-- @return RepeatForever#RepeatForever self (return value: cc.RepeatForever)
         
 --------------------------------
 -- 
@@ -28,6 +29,7 @@
 -- @function [parent=#RepeatForever] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return RepeatForever#RepeatForever self (return value: cc.RepeatForever)
         
 --------------------------------
 -- 
@@ -48,9 +50,10 @@
 -- @return RepeatForever#RepeatForever ret (return value: cc.RepeatForever)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#RepeatForever] step 
 -- @param self
 -- @param #float dt
+-- @return RepeatForever#RepeatForever self (return value: cc.RepeatForever)
         
 return nil

@@ -50,11 +50,30 @@ struct NodeData;
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
+    /**
+     * Creates an empty sprite3D without 3D model and texture.
+     *
+     * @return An autoreleased sprite3D object.
+     */
+    static Sprite3D* create();
+    
     /** creates a Sprite3D*/
     static Sprite3D* create(const std::string &modelPath);
   
     // creates a Sprite3D. It only supports one texture, and overrides the internal texture with 'texturePath'
     static Sprite3D* create(const std::string &modelPath, const std::string &texturePath);
+    
+    /** create 3d sprite asynchronously
+     * If the 3d model was previously loaded, it will create a new 3d sprite and the callback will be called at once.
+     * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the created Sprite3D and a userdefined parameter.
+     * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
+     * @param modelPath model to be loaded
+     * @param callback callback after loading
+     * @param callbackparam user defined parameter for the callback
+     */
+    static void createAsync(const std::string &modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
+    
+    static void createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam);
     
     /**set texture, set the first if multiple textures exist*/
     void setTexture(const std::string& texFile);
@@ -108,6 +127,22 @@ public:
     const AABB& getAABB() const;
     
     /**
+     * Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
+     *
+     * This node becomes the action's target. Refer to Action::getTarget()
+     * @warning Actions don't retain their target.
+     *
+     * @return An Action pointer
+     */
+    virtual Action* runAction(Action* action) override;
+    
+    /**
+     * Force to write to depth buffer, this is useful if you want to achieve effects like fading.
+     */
+    void setForceDepthWrite(bool value) { _forceDepthWrite = value; }
+    bool isForceDepthWrite() const { return _forceDepthWrite;};
+    
+    /**
      * Returns 2d bounding-box
      * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
      */
@@ -126,6 +161,9 @@ CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();
     virtual ~Sprite3D();
+    
+    bool init();
+    
     bool initWithFile(const std::string &path);
     
     bool initFrom(const NodeDatas& nodedatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas);
@@ -133,12 +171,15 @@ CC_CONSTRUCTOR_ACCESS:
     /**load sprite3d from cache, return true if succeed, false otherwise*/
     bool loadFromCache(const std::string& path);
     
-    /**.mtl file should at the same directory with the same name if exist*/
-    bool loadFromObj(const std::string& path);
-    
-    /**load from .c3b or .c3t*/
-    bool loadFromC3x(const std::string& path);
+    /** load file and set it to meshedatas, nodedatas and materialdatas, obj file .mtl file should be at the same directory if exist */
+    bool loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshDatas* meshdatas,  MaterialDatas* materialdatas);
 
+    /**
+     * Visits this Sprite3D's children and draw them recursively.
+     * Note: all its children will rendered as 3D objects
+     */
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
@@ -155,6 +196,8 @@ CC_CONSTRUCTOR_ACCESS:
     void  addMesh(Mesh* mesh);
     
     void onAABBDirty() { _aabbDirty = true; }
+    
+    void afterAsyncLoad(void* param);
     
 protected:
 
@@ -173,10 +216,24 @@ protected:
     bool                         _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
+    bool                         _forceDepthWrite; // Always write to depth buffer
+    
+    struct AsyncLoadParam
+    {
+        std::function<void(Sprite3D*, void*)> afterLoadCallback; // callback after load
+        void*                           callbackParam;
+        bool                            result; // sprite load result
+        std::string                     modlePath;
+        std::string                     texPath; //
+        MeshDatas* meshdatas;
+        MaterialDatas* materialdatas;
+        NodeDatas*   nodeDatas;
+    };
+    AsyncLoadParam             _asyncLoadParam;
 };
 
 ///////////////////////////////////////////////////////
-class Sprite3DCache
+class CC_DLL Sprite3DCache
 {
 public:
     struct Sprite3DData

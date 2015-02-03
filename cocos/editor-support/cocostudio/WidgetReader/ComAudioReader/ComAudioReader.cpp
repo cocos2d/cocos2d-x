@@ -28,7 +28,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -181,11 +181,10 @@ namespace cocostudio
                 break;
         }
         
-        bool loop = options->loop();
+        bool loop = options->loop() != 0;
         audio->setLoop(loop);
         
         audio->setName(options->name()->c_str());
-        audio->setLoop(options->loop());
         
         return component;
     }

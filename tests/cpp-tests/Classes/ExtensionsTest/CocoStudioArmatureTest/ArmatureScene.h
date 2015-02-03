@@ -46,6 +46,7 @@ enum {
     TEST_EASING,
     TEST_CHANGE_ANIMATION_INTERNAL,
 	TEST_DIRECT_FROM_BINARY,
+    TEST_ARMATURE_NODE,
     
 	TEST_LAYER_COUNT
 };
@@ -410,6 +411,14 @@ private:
 	static const char*  m_binaryFilesNames[BINARYFILECOUNT];
 	static const char*  m_armatureNames[BINARYFILECOUNT];
 	int m_armatureIndex;   // index of sync loaded armature, default -1 is none
+};
+
+class TestArmatureNode : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

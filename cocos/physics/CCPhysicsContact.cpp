@@ -25,11 +25,8 @@
 #if CC_USE_PHYSICS
 #include "chipmunk.h"
 
-#include "physics/CCPhysicsBody.h"
-
-#include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
-#include "chipmunk/CCPhysicsHelper_chipmunk.h"
-
+#include "CCPhysicsBody.h"
+#include "CCPhysicsHelper.h"
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
@@ -42,7 +39,6 @@ PhysicsContact::PhysicsContact()
 , _shapeA(nullptr)
 , _shapeB(nullptr)
 , _eventCode(EventCode::NONE)
-, _info(nullptr)
 , _notificationEnable(true)
 , _result(true)
 , _data(nullptr)
@@ -55,7 +51,6 @@ PhysicsContact::PhysicsContact()
 
 PhysicsContact::~PhysicsContact()
 {
-    CC_SAFE_DELETE(_info);
     CC_SAFE_DELETE(_contactData);
     CC_SAFE_DELETE(_preContactData);
 }
@@ -77,8 +72,6 @@ bool PhysicsContact::init(PhysicsShape* a, PhysicsShape* b)
     do
     {
         CC_BREAK_IF(a == nullptr || b == nullptr);
-        
-        CC_BREAK_IF(!(_info = new (std::nothrow) PhysicsContactInfo(this)));
         
         _shapeA = a;
         _shapeB = b;

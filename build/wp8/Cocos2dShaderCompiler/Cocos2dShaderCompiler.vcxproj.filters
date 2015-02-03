@@ -59,6 +59,18 @@
     <Filter Include="libcoco2d\deprecated">
       <UniqueIdentifier>{e33e50a3-b742-4f4f-ae01-b233f27764c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libcoco2d\3d">
+      <UniqueIdentifier>{bbb9abc2-fcf3-4341-8a22-20443e57d702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libcoco2d\base\allocator">
+      <UniqueIdentifier>{50bc6348-a253-45c5-a2f2-160932464451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libcoco2d\ui">
+      <UniqueIdentifier>{1db52ff3-68ce-4833-9dcc-2b9397b439e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libcoco2d\ui\shaders">
+      <UniqueIdentifier>{62560478-8dbb-41e1-be0b-fdfed8d1b0c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -582,6 +594,75 @@
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\2d\CCLight.cpp">
       <Filter>libcoco2d\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCAABB.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCAnimate3D.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCAnimation3D.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCAttachNode.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCBillBoard.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCBundle3D.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCBundleReader.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCFrustum.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCMesh.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCMeshSkin.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCMeshVertexIndexData.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCOBB.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCObjLoader.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCPlane.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCRay.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCSkeleton3D.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCSprite3D.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCSprite3DMaterial.cpp">
+      <Filter>libcoco2d\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\allocator\CCAllocatorDiagnostics.cpp">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\allocator\CCAllocatorGlobal.cpp">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\allocator\CCAllocatorGlobalNewDelete.cpp">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCAsyncTaskPool.cpp">
+      <Filter>libcoco2d\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\ui\shaders\UIShaders.cpp">
+      <Filter>libcoco2d\ui\shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1155,6 +1236,102 @@
     <ClInclude Include="..\..\..\cocos\2d\CCLight.h">
       <Filter>libcoco2d\2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAABB.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAnimate3D.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAnimation3D.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAnimationCurve.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCAttachNode.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBillBoard.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBundle3D.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBundle3DData.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBundleReader.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCFrustum.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCMesh.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCMeshSkin.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCMeshVertexIndexData.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCOBB.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCObjLoader.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCPlane.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCRay.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCSkeleton3D.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCSprite3D.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCSprite3DMaterial.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\cocos3d.h">
+      <Filter>libcoco2d\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorBase.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorDiagnostics.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorGlobal.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorMacros.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorMutex.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorStrategyDefault.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorStrategyFixedBlock.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\allocator\CCAllocatorStrategyPool.h">
+      <Filter>libcoco2d\base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCAsyncTaskPool.h">
+      <Filter>libcoco2d\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\ui\shaders\UIShaders.h">
+      <Filter>libcoco2d\ui\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -1165,6 +1342,9 @@
     <None Include="$(AngleBinPath)libGLESv2.dll" />
     <None Include="..\..\..\cocos\math\MathUtil.inl">
       <Filter>libcoco2d\math</Filter>
+    </None>
+    <None Include="..\..\..\cocos\3d\CCAnimationCurve.inl">
+      <Filter>libcoco2d\3d</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

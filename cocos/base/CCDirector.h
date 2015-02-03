@@ -287,6 +287,10 @@ public:
      The "delta time" will be 0 (as if the game wasn't paused)
      */
     void resume();
+    
+    /** Restart the director
+     */
+    void restart();
 
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
      If you don't want to pause your animation call [pause] instead.
@@ -322,6 +326,9 @@ public:
 
     /** enables/disables OpenGL alpha blending */
     void setAlphaBlending(bool on);
+    
+    /** set clear values for the color buffers, value range of each element is [0.0, 1.0] */
+    void setClearColor(const Color4F& clearColor);
 
     /** enables/disables OpenGL depth test */
     void setDepthTest(bool on);
@@ -393,8 +400,13 @@ public:
     void resetMatrixStack();
 
 protected:
+    void reset();
+    
     void purgeDirector();
     bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
+    
+    void restartDirector();
+    bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
     
     void setNextScene();
     

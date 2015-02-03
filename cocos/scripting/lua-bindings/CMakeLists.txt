@@ -14,6 +14,7 @@ include_directories(
   ${cocos_root}/cocos/ui
   ${cocos_root}/cocos/2d
   ${cocos_root}/cocos/3d
+  ${cocos_root}/cocos/base
   ${cocos_root}/cocos/editor-support/spine
   ${cocos_root}/cocos/editor-support/cocostudio
   ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline
@@ -93,6 +94,7 @@ set(lua_bindings_manual_files
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/cocostudio/CustomGUIReader.cpp
     manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp
+    manual/cocostudio/lua-cocos-studio-conversions.cpp
     manual/cocostudio/lua_cocos2dx_csloader_manual.cpp
     manual/controller/lua_cocos2dx_controller_manual.cpp
     manual/extension/lua_cocos2dx_extension_manual.cpp

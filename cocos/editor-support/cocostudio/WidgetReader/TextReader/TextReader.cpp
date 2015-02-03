@@ -6,7 +6,7 @@
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -292,8 +292,9 @@ namespace cocostudio
         Text* label = static_cast<Text*>(node);
         auto options = (TextOptions*)textOptions;
         
-        bool touchScaleEnabled = options->touchScaleEnable();
+        bool touchScaleEnabled = options->touchScaleEnable() != 0;
         label->setTouchScaleChangeEnabled(touchScaleEnabled);
+        
         std::string text = options->text()->c_str();
         label->setString(text);
         
@@ -315,11 +316,31 @@ namespace cocostudio
         TextVAlignment v_alignment = (TextVAlignment)options->vAlignment();
         label->setTextVerticalAlignment((TextVAlignment)v_alignment);
         
+        bool fileExist = false;
+        std::string errorFilePath = "";
         auto resourceData = options->fontResource();
         std::string path = resourceData->path()->c_str();
         if (path != "")
         {
-            label->setFontName(path);
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                fileExist = true;
+            }
+            else
+            {
+                errorFilePath = path;
+                fileExist = false;
+            }
+            if (fileExist)
+            {
+                label->setFontName(path);
+            }
+            else
+            {
+                auto alert = Label::create();
+                alert->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                label->addChild(alert);
+            }
         }
         
         auto widgetReader = WidgetReader::getInstance();
@@ -327,7 +348,7 @@ namespace cocostudio
         
         label->setUnifySizeEnabled(false);
         
-        bool IsCustomSize = options->isCustomSize();
+        bool IsCustomSize = options->isCustomSize() != 0;
         label->ignoreContentAdaptWithSize(!IsCustomSize);
         
         auto widgetOptions = options->widgetOptions();
@@ -336,6 +357,7 @@ namespace cocostudio
             Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
             label->setContentSize(contentSize);
         }
+        
     }
     
     Node* TextReader::createNodeWithFlatBuffers(const flatbuffers::Table *textOptions)
