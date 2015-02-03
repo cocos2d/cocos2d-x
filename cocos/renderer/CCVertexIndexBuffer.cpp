@@ -240,8 +240,6 @@ void GLArrayBuffer::setCapacity(size_t capacity, bool zero)
                 size_t count = _elementSize * (capacity - _capacity);
                 memset((void*)start, 0, count);
             }
-
-            CCLOG("GLArrayBuffer::setCapacity : realloc client buffer esize(%zu) %p to %zu bytes", _elementSize, _elements, capacityInBytes);
         }
         _capacity = capacity;
     }

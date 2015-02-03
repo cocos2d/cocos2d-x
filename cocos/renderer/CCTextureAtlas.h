@@ -37,8 +37,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Texture2D;
-//class EventCustom;
-//class EventListenerCustom;
 class VertexData;
 class VertexBuffer;
 class IndexBuffer;
@@ -56,9 +54,6 @@ Supported features:
 * Quads can be removed in runtime
 * Quads can be re-ordered in runtime
 * The TextureAtlas capacity can be increased or decreased in runtime
-* OpenGL component: V3F, C4B, T2F.
-The quads are rendered using an OpenGL ES VBO.
-To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
 
 @warning If you want to use TextureAtlas, you'd better setup GL status before it's rendered.
          Otherwise, the effect of TextureAtlas will be affected by the GL status of other nodes.
@@ -136,6 +131,7 @@ public:
         @since 1.1
      */
     void removeQuadsAtIndex(ssize_t index, ssize_t amount);
+    
     /** removes all Quads.
     The TextureAtlas capacity remains untouched. No memory is freed.
     The total number of quads to be drawn will be 0
@@ -193,10 +189,6 @@ public:
     */
     void drawQuads();
     
-//    /** listen the event that renderer was recreated on Android
-//     */
-//    void listenRendererRecreated(EventCustom* event);
-
     /** whether or not the array buffer of the VBO needs to be updated*/
     bool isDirty();
     
@@ -225,33 +217,13 @@ public:
     V3F_C4B_T2F_Quad* getQuads();
     
     /** Sets the quads that are going to be rendered */
-    CC_DEPRECATED_ATTRIBUTE void setQuads(V3F_C4B_T2F_Quad* quads);
+    void setQuads(V3F_C4B_T2F_Quad* quads);
     
-//private:
-//    void renderCommand();
-//
 protected:
     
     void setupIndices(size_t count, size_t begin = 0);
-//    void mapBuffers();
-//    void setupVBOandVAO();
-//    void setupVBO();
 
 protected:
-//    GLushort*           _indices;
-//    GLuint              _VAOname;
-//    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-//    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-//    /** quantity of quads that are going to be drawn */
-//    ssize_t _totalQuads;
-//    /** quantity of quads that can be stored with the current texture atlas size */
-//    ssize_t _capacity;
-//    /** Quads that are going to be rendered */
-//    V3F_C4B_T2F_Quad* _quads;
-//    
-//#if CC_ENABLE_CACHE_TEXTURE_DATA
-//    EventListenerCustom* _rendererRecreatedListener;
-//#endif
 
     Texture2D*    _texture;
     VertexData*   _vdAtlas;
