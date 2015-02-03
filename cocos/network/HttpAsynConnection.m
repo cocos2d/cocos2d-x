@@ -87,13 +87,13 @@
     | “205”  ; Reset Content
     | “206”  ; Partial Content
     */
-    if (responseCode < 200 || responseCode >= 300)
-    {// something went wrong, abort the whole thing
+    // if (responseCode < 200 || responseCode >= 300)
+    // {// something went wrong, abort the whole thing
         
-        [connection cancel];
-        finish = true;
-        return;
-    }
+    //     [connection cancel];
+    //     finish = true;
+    //     return;
+    // }
     
     [responseData setLength:0];
 }
