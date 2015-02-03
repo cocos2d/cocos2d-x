@@ -71,6 +71,7 @@ static const char* s_testArray[] =
     "UILoadingBarTest_Scale9_State_Change",
     "UILoadingBarTest_Left_Scale9",
     "UILoadingBarTest_Right_Scale9",
+    "UILoadingBarReloadTexture",
   
     "UITextAtlasTest",
     "UITextTest",
@@ -284,6 +285,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUILoadingBarTest_Right_Scale9:
             return UILoadingBarTest_Right_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUILoadingBarReloadTexture:
+            return UILoadingBarReloadTexture::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUITextAtlasTest:
             return UITextAtlasTest::sceneWithTitle(s_testArray[_currentUISceneId]);

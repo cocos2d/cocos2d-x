@@ -833,19 +833,22 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         auto projectNodeOptions = (ProjectNodeOptions*)options->data();
         std::string filePath = projectNodeOptions->fileName()->c_str();
         CCLOG("filePath = %s", filePath.c_str());
+        
+        cocostudio::timeline::ActionTimeline* action = nullptr;
         if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
-            
             node = createNodeWithFlatBuffersFile(filePath);
-            reader->setPropsWithFlatBuffers(node, options->data());
-            
-            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
-            if (action)
-            {
-                node->runAction(action);
-                action->gotoFrameAndPause(0);
-            }
-            
+            action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
+        }
+        else
+        {
+            node = Node::create();
+        }
+        reader->setPropsWithFlatBuffers(node, options->data());
+        if (action)
+        {
+            node->runAction(action);
+            action->gotoFrameAndPause(0);
         }
     }
     else if (classname == "SimpleAudio")
@@ -1164,17 +1167,21 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         std::string filePath = projectNodeOptions->fileName()->c_str();
         CCLOG("filePath = %s", filePath.c_str());
         
+        cocostudio::timeline::ActionTimeline* action = nullptr;
         if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
         {
             node = createNodeWithFlatBuffersForSimulator(filePath);
-            reader->setPropsWithFlatBuffers(node, options->data());
-            
-            cocostudio::timeline::ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator(filePath);
-            if (action)
-            {
-                node->runAction(action);
-                action->gotoFrameAndPause(0);
-            }
+            action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator(filePath);
+        }
+        else
+        {
+            node = Node::create();
+        }
+        reader->setPropsWithFlatBuffers(node, options->data());
+        if (action)
+        {
+            node->runAction(action);
+            action->gotoFrameAndPause(0);
         }
     }
     else if (classname == "SimpleAudio")

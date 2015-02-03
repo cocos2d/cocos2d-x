@@ -25,7 +25,10 @@ enum {
     TEST_CHANGE_PLAY_SECTION,
 //    TEST_TIMELINE_FRAME_EVENT,
     TEST_TIMELINE_PERFORMACE,
-
+    TEST_TIMELINEACTION_ANIMATIONLIST,
+    TEST_TIMELINEPROJECTNODE,
+    TEST_PROJECTNODEFORSIMALATOR,
+    
     TEST_ANIMATION_LAYER_COUNT
 };
 
@@ -79,6 +82,27 @@ public:
 };
 
 class TestTimelinePerformance : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+};
+
+class TestTimelineAnimationList : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+};
+
+class TestTimelineProjectNode : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+};
+
+class TestProjectNodeForSimulator : public ActionTimelineTestLayer
 {
 public:
     virtual void onEnter();

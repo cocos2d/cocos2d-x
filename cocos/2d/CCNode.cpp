@@ -126,6 +126,7 @@ Node::Node(void)
 , _physicsScaleStartY(1.0f)
 , _physicsRotation(0.0f)
 , _physicsTransformDirty(true)
+, _updateTransformFromPhysics(true)
 #endif
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -330,6 +331,11 @@ void Node::setRotation(float rotation)
     
     _rotationZ_X = _rotationZ_Y = rotation;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
     
     updateRotationQuat();
 }
@@ -466,6 +472,11 @@ void Node::setScale(float scale)
     
     _scaleX = _scaleY = _scaleZ = scale;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 /// scaleX getter
@@ -483,6 +494,11 @@ void Node::setScale(float scaleX,float scaleY)
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 /// scaleX setter
@@ -493,6 +509,11 @@ void Node::setScaleX(float scaleX)
     
     _scaleX = scaleX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 /// scaleY getter
@@ -532,6 +553,11 @@ void Node::setScaleY(float scaleY)
     
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 
@@ -563,6 +589,11 @@ void Node::setPosition(float x, float y)
     
     _transformUpdated = _transformDirty = _inverseDirty = true;
     _usingNormalizedPosition = false;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 void Node::setPosition3D(const Vec3& position)
@@ -609,10 +640,6 @@ void Node::setPositionZ(float positionZ)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _positionZ = positionZ;
-
-    // FIXME: BUG
-    // Global Z Order should based on the modelViewTransform
-    setGlobalZOrder(positionZ);
 }
 
 /// position getter
@@ -631,6 +658,11 @@ void Node::setNormalizedPosition(const Vec2& position)
     _usingNormalizedPosition = true;
     _normalizedPositionDirty = true;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 ssize_t Node::getChildrenCount() const
@@ -1270,9 +1302,16 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 
     if(flags & FLAGS_DIRTY_MASK)
         _modelViewTransform = this->transform(parentTransform);
-
+    
+#if CC_USE_PHYSICS
+    if (_updateTransformFromPhysics) {
+        _transformUpdated = false;
+        _contentSizeDirty = false;
+    }
+#else
     _transformUpdated = false;
     _contentSizeDirty = false;
+#endif
 
     return flags;
 }
@@ -2021,7 +2060,7 @@ void Node::setPhysicsBody(PhysicsBody* body)
     }
 }
 
-void Node::updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY)
+void Node::updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY)
 {
     _updateTransformFromPhysics = false;
     auto flags = processParentFlags(parentTransform, parentFlags);
@@ -2046,7 +2085,7 @@ void Node::updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform,
 
     for (auto node : _children)
     {
-        node->updatePhysicsBodyTransform(scene, _modelViewTransform, flags, scaleX, scaleY);
+        node->updatePhysicsBodyTransform(_modelViewTransform, flags, scaleX, scaleY);
     }
 }
 

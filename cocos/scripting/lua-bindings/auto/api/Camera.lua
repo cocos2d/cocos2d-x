@@ -115,11 +115,4 @@
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
         
---------------------------------
--- Sets the position (X, Y, and Z) in its parent's coordinate system
--- @function [parent=#Camera] setPosition3D 
--- @param self
--- @param #vec3_table position
--- @return Camera#Camera self (return value: cc.Camera)
-        
 return nil

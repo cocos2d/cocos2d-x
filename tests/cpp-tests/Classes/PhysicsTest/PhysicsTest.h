@@ -278,5 +278,16 @@ public:
     bool onTouchBegan(Touch* touch, Event* event);
     
 };
+
+class PhysicsIssue9959 : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsIssue9959);
+    
+    void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
 #endif
