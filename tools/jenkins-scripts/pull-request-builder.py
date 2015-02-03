@@ -271,10 +271,7 @@ def main():
     elif(node_name == 'mac_mac'):
         ret = os.system(jenkins_script_path + "mac-build.sh")
     elif(node_name == 'linux_centos'):
-        os.chdir("build/")
-        ret = os.system("cmake ../")
-        ret = os.system("make -j10")
-        os.chdir("../")
+        ret = os.system(jenkins_script_path + "linux-build.sh")
 
     #get build result
     print "build finished and return " + str(ret)
