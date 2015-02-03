@@ -236,6 +236,9 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
 
 void Camera::project(const Size& viewport, Vec3* src, Vec2* dst) const
 {
+    GP_ASSERT(src);
+    GP_ASSERT(dst);
+    
     Vec4 clipPos;
     getViewProjectionMatrix().transformVector(Vec4(src->x, src->y, src->z, 1.0f), &clipPos);
     
@@ -249,7 +252,9 @@ void Camera::project(const Size& viewport, Vec3* src, Vec2* dst) const
 
 void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
 {
-    assert(dst);
+    GP_ASSERT(src);
+    GP_ASSERT(dst);
+    
     Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
