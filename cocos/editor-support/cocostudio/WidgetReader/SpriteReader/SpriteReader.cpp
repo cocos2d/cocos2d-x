@@ -199,7 +199,7 @@ namespace cocostudio
         if (!fileExist)
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            label->setString(errorFilePath + " missed");
             sprite->addChild(label);
         }
         
