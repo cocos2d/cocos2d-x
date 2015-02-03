@@ -73,7 +73,6 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 // FIXME::test Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 int Node::s_globalOrderOfArrival = 1;
 
-// MARK: Constructor, Destructor, Init
 
 Node::Node(void)
 : _rotationX(0.0f)
