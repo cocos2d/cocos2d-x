@@ -257,14 +257,15 @@ def main():
                     set_description(pr_desc, target_url)
                     save_build_stats(db, pr_num, 'libcpp_empty_test', filesize / 1024)
                     
-            ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
-            if(ret == 0):
-                _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
-                filesize = os.path.getsize(_path)
-                pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize / 1024) + 'kb</h3>'
-                set_description(pr_desc, target_url)
-                save_build_stats(db, pr_num, 'liblua_empty_test', filesize / 1024)
-            close_db(db)
+                ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
+                if(ret == 0):
+                    _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
+                    filesize = os.path.getsize(_path)
+                    pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize / 1024) + 'kb</h3>'
+                    set_description(pr_desc, target_url)
+                    save_build_stats(db, pr_num, 'liblua_empty_test', filesize / 1024)
+                    
+                close_db(db)
         elif(node_name == 'win32_win7'):
             ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
         elif(node_name == 'ios_mac'):
