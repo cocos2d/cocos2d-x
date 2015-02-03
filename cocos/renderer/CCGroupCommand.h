@@ -26,6 +26,7 @@
 #ifndef _CC_GROUPCOMMAND_H_
 #define _CC_GROUPCOMMAND_H_
 
+#include <vector>
 #include <unordered_map>
 
 #include "base/CCRef.h"
@@ -45,6 +46,7 @@ protected:
     ~GroupCommandManager();
     bool init();
     std::unordered_map<int, bool> _groupMapping;
+    std::vector<int> _unusedIDs;
 };
 
 class CC_DLL GroupCommand : public RenderCommand
