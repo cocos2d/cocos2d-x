@@ -122,6 +122,7 @@ DrawNode::DrawNode()
 , _dirty(false)
 , _dirtyGLPoint(false)
 , _dirtyGLLine(false)
+, _lineWidth(2.0f)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
@@ -392,7 +393,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
         // texcood
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
-    glLineWidth(2);
+    glLineWidth(_lineWidth);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
     
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -446,24 +447,21 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Color4F &color)
+void DrawNode::drawPoint(const Vec2& position,  const Color4F &color)
 {
     ensureCapacityGLPoint(1);
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
-    V2F_C4B_T2F a = {position, Color4B(color), Tex2F(pointSize,0)};
+	V2F_C4B_T2F a = { position, Color4B(color), Tex2F(_lineWidth, 0) };
     *point = a;
     
     _bufferCountGLPoint += 1;
     _dirtyGLPoint = true;
 }
 
-void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
-{
-    drawPoints(position, numberOfPoints, 1.0, color);
-}
 
-void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color)
+
+void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints,  const Color4F &color)
 {
     ensureCapacityGLPoint(numberOfPoints);
     
@@ -471,7 +469,7 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     
     for(unsigned int i=0; i < numberOfPoints; i++,point++)
     {
-        V2F_C4B_T2F a = {position[i], Color4B(color), Tex2F(pointSize,0)};
+		V2F_C4B_T2F a = { position[i], Color4B(color), Tex2F(_lineWidth, 0) };
         *point = a;
     }
     
@@ -479,7 +477,7 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     _dirtyGLPoint = true;
 }
 
-void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+void DrawNode::drawLine(const Point& origin, const Point& destination, const Color4F& color)
 {
     ensureCapacityGLLine(2);
     
