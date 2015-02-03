@@ -131,11 +131,22 @@ public:
     /**get view projection matrix*/
     const Mat4& getViewProjectionMatrix() const;
 
-	void project(const Rect& viewport, const Vec3& position, Vec2* out) const;
-
     /**
-    * Convert the specified point of viewport from screenspace coordinate into the worldspace coordinate.
-    */
+     * convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
+     *
+     * @param viewport The viewport size to use.
+     * @param src The world-space position.
+     * @param dst The screen-space position.
+     */
+    void project(const Size& viewport, Vec3* src, Vec2* dst) const;
+    
+    /**
+     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+     *
+     * @param viewport The viewport size to use.
+     * @param src The screen-space position.
+     * @param dst The world-space position.
+     */
     void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
     
     /**

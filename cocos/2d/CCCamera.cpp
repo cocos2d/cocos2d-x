@@ -234,21 +234,17 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     return true;
 }
 
-void Camera::project(const Rect& viewport, const Vec3& position, Vec2* out) const
+void Camera::project(const Size& viewport, Vec3* src, Vec2* dst) const
 {
-
-    // Transform the point to clip-space.
     Vec4 clipPos;
-    getViewProjectionMatrix().transformVector(Vec4(position.x, position.y, position.z, 1.0f), &clipPos);
-
-    // Compute normalized device coordinates.
+    getViewProjectionMatrix().transformVector(Vec4(src->x, src->y, src->z, 1.0f), &clipPos);
+    
     GP_ASSERT(clipPos.w != 0.0f);
     float ndcX = clipPos.x / clipPos.w;
     float ndcY = clipPos.y / clipPos.w;
-
-    // Compute screen coordinates by applying our viewport transformation.
-	out->x = viewport.origin.x + (ndcX + 1.0f) * 0.5f * viewport.size.width;
-    out->y = viewport.origin.y + (1.0f - (ndcY + 1.0f) * 0.5f) * viewport.size.height;
+    
+    dst->x = (ndcX + 1.0f) * 0.5f * viewport.width;
+    dst->y = (1.0f - (ndcY + 1.0f) * 0.5f) * viewport.height;
 }
 
 void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
