@@ -171,7 +171,7 @@ private:
         /*updateIndices for every frame*/
         void updateIndices();
 
-        void Terrain::Chunk::calculateSlope();
+        void calculateSlope();
         /*current LOD of the chunk*/
         int _currentLod;
         /*the left,right,front,back neighbors*/

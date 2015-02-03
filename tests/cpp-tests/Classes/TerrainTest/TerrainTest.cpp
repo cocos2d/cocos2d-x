@@ -405,7 +405,6 @@ void Player::update(float dt)
     }
     Vec3 Normal;
     float player_h = _terrain->getHeight(player->getPositionX(),player->getPositionZ(),&Normal);
-    float dot_product = Normal.dot(Vec3(0,1,0));
 
     player->setPositionY(player_h+PLAYER_HEIGHT);
     Quaternion q2;
