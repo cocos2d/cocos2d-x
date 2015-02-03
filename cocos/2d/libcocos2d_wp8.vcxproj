@@ -72,18 +72,18 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <TargetName>libcocos2d_v3.3_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <TargetName>libcocos2d_v3.3_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>libcocos2d_v3.3_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>libcocos2d_v3.3_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,7 +93,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -114,7 +114,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -135,7 +135,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -156,7 +156,7 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -224,21 +224,34 @@
     <ClInclude Include="..\3d\CCBundle3D.h" />
     <ClInclude Include="..\3d\CCBundle3DData.h" />
     <ClInclude Include="..\3d\CCBundleReader.h" />
+    <ClInclude Include="..\3d\CCFrustum.h" />
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
     <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
+    <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\3d\CCRay.h" />
     <ClInclude Include="..\3d\CCSkeleton3D.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\Export.h" />
     <ClInclude Include="..\audio\include\SimpleAudioEngine.h" />
     <ClInclude Include="..\audio\wp8\Audio.h" />
     <ClInclude Include="..\audio\wp8\MediaStreamer.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorBase.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorDiagnostics.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorGlobal.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorMacros.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorMutex.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyDefault.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyFixedBlock.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h" />
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyPool.h" />
     <ClInclude Include="..\base\atitc.h" />
     <ClInclude Include="..\base\base64.h" />
+    <ClInclude Include="..\base\CCAsyncTaskPool.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
     <ClInclude Include="..\base\ccCArray.h" />
     <ClInclude Include="..\base\ccConfig.h" />
@@ -331,6 +344,7 @@
     <ClInclude Include="..\editor-support\cocosbuilder\CocosBuilder.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h" />
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
@@ -376,6 +390,8 @@
     <ClInclude Include="..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerObj.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
@@ -419,15 +435,10 @@
     <ClInclude Include="..\network\WebSocket.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
+    <ClInclude Include="..\physics\CCPhysicsHelper.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
     <ClInclude Include="..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\physics\CCPhysicsWorld.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h" />
     <ClInclude Include="..\platform\CCApplication.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
@@ -454,6 +465,7 @@
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
     <ClInclude Include="..\platform\winrt\DirectXHelper.h" />
     <ClInclude Include="..\platform\winrt\inet_ntop_winrt.h" />
+    <ClInclude Include="..\platform\winrt\inet_pton_winrt.h" />
     <ClInclude Include="..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\platform\winrt\InputEventTypes.h" />
     <ClInclude Include="..\platform\winrt\pch.h" />
@@ -485,6 +497,7 @@
     <ClInclude Include="..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
+    <ClInclude Include="..\ui\shaders\UIShaders.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
@@ -659,11 +672,13 @@
     <ClCompile Include="..\3d\CCBillBoard.cpp" />
     <ClCompile Include="..\3d\CCBundle3D.cpp" />
     <ClCompile Include="..\3d\CCBundleReader.cpp" />
+    <ClCompile Include="..\3d\CCFrustum.cpp" />
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
     <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCRay.cpp" />
     <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
@@ -710,8 +725,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorDiagnostics.cpp" />
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobal.cpp" />
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp" />
     <ClCompile Include="..\base\atitc.cpp" />
     <ClCompile Include="..\base\base64.cpp" />
+    <ClCompile Include="..\base\CCAsyncTaskPool.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
     <ClCompile Include="..\base\ccCArray.cpp" />
     <ClCompile Include="..\base\CCConfiguration.cpp" />
@@ -810,6 +829,7 @@
     <ClCompile Include="..\editor-support\cocosbuilder\CCSpriteLoader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimeline.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
@@ -851,6 +871,7 @@
     <ClCompile Include="..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerObj.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
@@ -892,11 +913,6 @@
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
     <ClCompile Include="..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCGLView.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
@@ -912,6 +928,7 @@
     <ClCompile Include="..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="..\platform\winrt\inet_ntop_winrt.cpp" />
+    <ClCompile Include="..\platform\winrt\inet_pton_winrt.cpp" />
     <ClCompile Include="..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\platform\winrt\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -946,6 +963,7 @@
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\ui\CocosGUI.cpp" />
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="..\ui\UIButton.cpp" />
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
@@ -1052,6 +1070,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\3d\CCAnimationCurve.inl" />
     <None Include="..\math\Mat4.inl" />
     <None Include="..\math\MathUtil.inl" />
     <None Include="..\math\MathUtilNeon.inl" />
@@ -1068,6 +1087,7 @@
     <None Include="..\renderer\ccShader_PositionColor.vert" />
     <None Include="..\renderer\ccShader_PositionColorLengthTexture.frag" />
     <None Include="..\renderer\ccShader_PositionColorLengthTexture.vert" />
+    <None Include="..\renderer\ccShader_PositionColorPointsize.vert" />
     <None Include="..\renderer\ccShader_PositionTexture.frag" />
     <None Include="..\renderer\ccShader_PositionTexture.vert" />
     <None Include="..\renderer\ccShader_PositionTextureA8Color.frag" />
@@ -1081,6 +1101,7 @@
     <None Include="..\renderer\ccShader_PositionTexture_uColor.vert" />
     <None Include="..\renderer\ccShader_Position_uColor.frag" />
     <None Include="..\renderer\ccShader_Position_uColor.vert" />
+    <None Include="..\ui\shaders\ccShader_grayscale.frag" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Box2D\proj.wp8\Box2D.vcxproj">

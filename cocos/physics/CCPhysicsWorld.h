@@ -34,16 +34,18 @@
 #include "physics/CCPhysicsBody.h"
 #include <list>
 
+struct cpSpace;
+
 NS_CC_BEGIN
 
 class PhysicsBody;
 class PhysicsJoint;
-class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
 
 typedef Vec2 Vect;
 
+class Director;
 class Node;
 class Sprite;
 class Scene;
@@ -187,12 +189,9 @@ protected:
     
     virtual void doAddBody(PhysicsBody* body);
     virtual void doRemoveBody(PhysicsBody* body);
-    virtual void doAddJoint(PhysicsJoint* joint);
     virtual void doRemoveJoint(PhysicsJoint* joint);
     virtual void addBodyOrDelay(PhysicsBody* body);
     virtual void removeBodyOrDelay(PhysicsBody* body);
-    virtual void addJointOrDelay(PhysicsJoint* joint);
-    virtual void removeJointOrDelay(PhysicsJoint* joint);
     virtual void updateBodies();
     virtual void updateJoints();
     
@@ -203,13 +202,13 @@ protected:
     int _updateRateCount;
     float _updateTime;
     int _substeps;
-    PhysicsWorldInfo* _info;
+    cpSpace* _cpSpace;
     
+    bool _updateBodyTransform;
     Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     
-    bool _delayDirty;
     bool _autoStep;
     PhysicsDebugDraw* _debugDraw;
     int _debugDrawMask;
@@ -227,6 +226,7 @@ protected:
     friend class Node;
     friend class Sprite;
     friend class Scene;
+    friend class Director;
     friend class PhysicsBody;
     friend class PhysicsShape;
     friend class PhysicsJoint;

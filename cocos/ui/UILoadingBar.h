@@ -67,6 +67,10 @@ public:
      **/
     static LoadingBar* create(const std::string& textureName, float percentage = 0);
     
+    static LoadingBar* create(const std::string& textureName,
+                              TextureResType texType,
+                              float percentage = 0);
+    
     /**
      * Changes the progress direction of loadingbar.
      *
@@ -144,6 +148,7 @@ protected:
     virtual void onSizeChanged() override;
    
     void setScale9Scale();
+    void updateProgressBar();
     void barRendererScaleChangedWithSize();
     
     virtual void adaptRenderers() override;

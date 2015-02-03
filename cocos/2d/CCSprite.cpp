@@ -264,6 +264,7 @@ Sprite::Sprite(void)
 : _batchNode(nullptr)
 , _shouldBeHidden(false)
 , _texture(nullptr)
+, _spriteFrame(nullptr)
 , _insideBounds(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
@@ -274,6 +275,7 @@ Sprite::Sprite(void)
 
 Sprite::~Sprite(void)
 {
+    CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
 }
 
@@ -562,7 +564,7 @@ void Sprite::updateTransform(void)
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
-		{
+        {
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
         }
 
@@ -585,13 +587,16 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+#if CC_USE_CULLING
     // Don't do calculate the culling if the transform was not updated
     _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds)
+#endif
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
         renderer->addCommand(&_quadCommand);
+        
 #if CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
         Vec2 vertices[4] = {
@@ -877,11 +882,11 @@ void Sprite::updateColor(void)
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
     
     // special opacity for premultiplied textures
-	if (_opacityModifyRGB)
+    if (_opacityModifyRGB)
     {
-		color4.r *= _displayedOpacity/255.0f;
-		color4.g *= _displayedOpacity/255.0f;
-		color4.b *= _displayedOpacity/255.0f;
+        color4.r *= _displayedOpacity/255.0f;
+        color4.g *= _displayedOpacity/255.0f;
+        color4.b *= _displayedOpacity/255.0f;
     }
 
     _quad.bl.colors = color4;
@@ -936,6 +941,14 @@ void Sprite::setSpriteFrame(const std::string &spriteFrameName)
 
 void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 {
+    // retain the sprite frame
+    // do not removed by SpriteFrameCache::removeUnusedSpriteFrames
+    if (_spriteFrame != spriteFrame)
+    {
+        CC_SAFE_RELEASE(_spriteFrame);
+        _spriteFrame = spriteFrame;
+        spriteFrame->retain();
+    }
     _unflippedOffsetPositionFromCenter = spriteFrame->getOffset();
 
     Texture2D *texture = spriteFrame->getTexture();

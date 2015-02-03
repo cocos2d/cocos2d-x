@@ -11,17 +11,19 @@
 -- @param #vec2_table origin
 -- @param #vec2_table destination
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 -- @overload self, vec2_table, vec2_table, vec2_table, vec2_table, color4f_table         
 -- @overload self, vec2_table, vec2_table, color4f_table         
 -- @function [parent=#DrawNode] drawRect
 -- @param self
--- @param #vec2_table lb
--- @param #vec2_table lt
--- @param #vec2_table rt
--- @param #vec2_table rb
+-- @param #vec2_table p1
+-- @param #vec2_table p2
+-- @param #vec2_table p3
+-- @param #vec2_table p4
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
 
 --------------------------------
 -- @overload self, vec2_table, float, float, unsigned int, color4f_table         
@@ -35,6 +37,7 @@
 -- @param #float scaleX
 -- @param #float scaleY
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
 
 --------------------------------
 -- 
@@ -42,6 +45,7 @@
 -- @param self
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 --  draw a dot at a position, with a given radius and color 
@@ -50,6 +54,7 @@
 -- @param #vec2_table pos
 -- @param #float radius
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 --  draw a segment with a radius and color 
@@ -59,6 +64,14 @@
 -- @param #vec2_table to
 -- @param #float radius
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#DrawNode] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- 
@@ -66,6 +79,7 @@
 -- @param self
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 -- @overload self, vec2_table, float, float, unsigned int, bool, color4f_table         
@@ -80,6 +94,7 @@
 -- @param #float scaleX
 -- @param #float scaleY
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
 
 --------------------------------
 -- 
@@ -90,6 +105,7 @@
 -- @param #vec2_table destination
 -- @param #unsigned int segments
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 -- 
@@ -97,6 +113,7 @@
 -- @param self
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 --  draw a triangle with color 
@@ -106,11 +123,24 @@
 -- @param #vec2_table p2
 -- @param #vec2_table p3
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- endcode<br>
+-- lua NA
+-- @function [parent=#DrawNode] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 --  Clear the geometry in the node's buffer. 
 -- @function [parent=#DrawNode] clear 
 -- @param self
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 -- 
@@ -119,6 +149,7 @@
 -- @param #vec2_table origin
 -- @param #vec2_table destination
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 -- 
@@ -127,6 +158,7 @@
 -- @param #vec2_table point
 -- @param #float pointSize
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 --  draw a cubic bezier curve with color and number of segments 
@@ -138,6 +170,7 @@
 -- @param #vec2_table destination
 -- @param #unsigned int segments
 -- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
 --  creates and initialize a DrawNode node 
@@ -152,5 +185,6 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 return nil

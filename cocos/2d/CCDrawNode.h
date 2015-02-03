@@ -53,11 +53,16 @@ public:
     /** creates and initialize a DrawNode node */
     static DrawNode* create();
 
-    void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
+	//width for the line and size for the point
+	void setLineWidth(float width){
+		_lineWidth = width;
+	}
+
+    void drawPoint(const Vec2& point, const Color4F &color);
     
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color);
     
-    void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
+	void drawLine(const Point& origin, const Point& destination,const Color4F& color);
     
     void drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
@@ -79,7 +84,7 @@ public:
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const Vec2 &pos, float radius, const Color4F &color);
     
-    void drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Vec2& rb, const Color4F &color);
+    void drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color);
     
     void drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
@@ -155,7 +160,8 @@ protected:
     GLsizei     _bufferCountGLPoint;
     V2F_C4B_T2F *_bufferGLPoint;
     Color4F     _pointColor;
-    int         _pointSize;
+
+	float		_lineWidth;
     
     int         _bufferCapacityGLLine;
     GLsizei     _bufferCountGLLine;

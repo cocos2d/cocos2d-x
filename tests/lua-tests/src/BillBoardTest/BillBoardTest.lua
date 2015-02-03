@@ -26,7 +26,6 @@ function BillBoardTest:addNewBillBoradWithCoords(p)
         local billborad = cc.BillBoard:create(imgs[math.ceil(math.random() + 0.5)])
         billborad:setScale(0.5)
         billborad:setPosition3D(cc.vec3(p.x, p.y,  -150.0 + 30 * i))
-        billborad:setBlendFunc(gl.SRC_ALPHA , gl.ONE_MINUS_SRC_ALPHA)
         billborad:setOpacity(math.random() * 128 + 128)
         self._layerBillBorad:addChild(billborad)
         table.insert(self._billboards, billborad)
@@ -52,7 +51,6 @@ function BillBoardTest:addNewAniBillBoradWithCoords(p)
 
         local action = cc.Animate:create(animation)
         billboradAni:runAction(cc.RepeatForever:create(action))
-        billboradAni:setBlendFunc(gl.SRC_ALPHA , gl.ONE_MINUS_SRC_ALPHA)
         billboradAni:setOpacity( math.random() * 128 + 128)
         table.insert(self._billboards, billboradAni)
     end
@@ -77,9 +75,9 @@ function BillBoardTest:init()
             cameraDir = cc.vec3normalize(cameraDir)
             cameraDir.y = 0
             transformMat = self._camera:getNodeToWorldTransform()
-            cameraRightDir.x = -transformMat[1]
-            cameraRightDir.y = -transformMat[2]
-            cameraRightDir.z = -transformMat[3]
+            cameraRightDir.x = transformMat[1]
+            cameraRightDir.y = transformMat[2]
+            cameraRightDir.z = transformMat[3]
             cameraRightDir = cc.vec3normalize(cameraRightDir)
             cameraRightDir.y=0
 
@@ -111,12 +109,11 @@ function BillBoardTest:init()
         local billboard = cc.BillBoard:create(imgs[math.ceil((math.random() + 0.5))])
         billboard:setScale(0.5)
         billboard:setPosition3D(cc.vec3(0.0, 0.0,  math.random(-1, 1) * 150.0))
-        billboard:setBlendFunc(gl.SRC_ALPHA , gl.ONE_MINUS_SRC_ALPHA)
         billboard:setOpacity(math.random() * 128 + 128)
         table.insert(self._billboards, billboard)
         layer:addChild(billboard)
         self._layerBillBorad:addChild(layer)
-        layer:runAction( cc.RepeatForever:create( cc.RotateBy:create( math.random(), cc.vec3(0.0, 45.0, 0.0) ) ) )
+        layer:runAction( cc.RepeatForever:create( cc.RotateBy:create( math.random() * 10, cc.vec3(0.0, 45.0, 0.0) ) ) )
     end
 
     local billboard = cc.BillBoard:create("Images/Icon.png")

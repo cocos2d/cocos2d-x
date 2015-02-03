@@ -18,10 +18,11 @@
 -- @return EaseBackIn#EaseBackIn ret (return value: cc.EaseBackIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseBackIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseBackIn#EaseBackIn self (return value: cc.EaseBackIn)
         
 --------------------------------
 -- 

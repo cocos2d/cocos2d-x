@@ -42,6 +42,7 @@
 #define bzero(a, b) memset(a, 0, b);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "inet_ntop_winrt.h"
+#include "inet_pton_winrt.h"
 #include "CCWinRTUtils.h"
 #endif
 #else
@@ -63,6 +64,7 @@
 #include "renderer/CCTextureCache.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
+#include "base/allocator/CCAllocatorDiagnostics.h"
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion(void);
@@ -160,14 +162,14 @@ static void printFileUtils(int fd)
     FileUtils* fu = FileUtils::getInstance();
 
     mydprintf(fd, "\nSearch Paths:\n");
-    auto list = fu->getSearchPaths();
+    auto& list = fu->getSearchPaths();
     for( const auto &item : list) {
         mydprintf(fd, "%s\n", item.c_str());
     }
 
     mydprintf(fd, "\nResolution Order:\n");
-    list = fu->getSearchResolutionsOrder();
-    for( const auto &item : list) {
+    auto& list1 = fu->getSearchResolutionsOrder();
+    for( const auto &item : list1) {
         mydprintf(fd, "%s\n", item.c_str());
     }
 
@@ -175,7 +177,7 @@ static void printFileUtils(int fd)
     mydprintf(fd, "%s\n", fu->getWritablePath().c_str());
 
     mydprintf(fd, "\nFull Path Cache:\n");
-    auto cache = fu->getFullPathCache();
+    auto& cache = fu->getFullPathCache();
     for( const auto &item : cache) {
         mydprintf(fd, "%s -> %s\n", item.first.c_str(), item.second.c_str());
     }
@@ -200,6 +202,29 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+static const int CCLOG_STRING_TAG = 1;
+void SendLogToWindow(const char *log)
+{
+    // Send data as a message
+    COPYDATASTRUCT myCDS;
+    myCDS.dwData = CCLOG_STRING_TAG;
+    myCDS.cbData = (DWORD)strlen(log) + 1;
+    myCDS.lpData = (PVOID)log;
+    if (Director::getInstance()->getOpenGLView())
+    {
+        HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
+        SendMessage(hwnd,
+            WM_COPYDATA,
+            (WPARAM)(HWND)hwnd,
+            (LPARAM)(LPVOID)&myCDS);
+    }
+}
+#else
+void SendLogToWindow(const char *log)
+{
+}
+#endif
 
 //
 // Free functions to log
@@ -221,6 +246,7 @@ static void _log(const char *format, va_list args)
     OutputDebugStringW(wszBuf);
     WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), nullptr, FALSE);
     printf("%s", buf);
+    SendLogToWindow(buf);
     fflush(stdout);
 #else
     // Linux, Mac, iOS, etc
@@ -258,9 +284,11 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
+, _bindAddress("")
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
+        { "allocator", "Display allocator diagnostics for all allocators", std::bind(&Console::commandAllocator, this, std::placeholders::_1, std::placeholders::_2) },
         { "config", "Print the Configuration object", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
         { "debugmsg", "Whether or not to forward the debug messages on the console. Args: [on | off]", [&](int fd, const std::string& args) {
             if( args.compare("on")==0 || args.compare("off")==0) {
@@ -343,6 +371,22 @@ bool Console::listenOnTCP(int port)
             continue;       /* error, try next one */
 
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
+
+        // bind address
+        if (_bindAddress.length() > 0)
+        {
+            if (res->ai_family == AF_INET)
+            {
+                struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
+                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin_addr);
+            }
+            else if (res->ai_family == AF_INET6)
+            {
+                struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
+                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin6_addr);
+            }
+        }
+
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
@@ -771,6 +815,16 @@ void Console::commandTouch(int fd, const std::string& args)
     }
 }
 
+void Console::commandAllocator(int fd, const std::string& args)
+{
+#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
+    auto info = allocator::AllocatorDiagnostics::instance()->diagnostics();
+    mydprintf(fd, info.c_str());
+#else
+    mydprintf(fd, "allocator diagnostics not available. CC_ENABLE_ALLOCATOR_DIAGNOSTICS must be set to 1 in ccConfig.h");
+#endif
+}
+
 static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', '"', '|', '\r', '\n', '\t'};
 
 void Console::commandUpload(int fd)
@@ -1128,6 +1182,9 @@ void Console::loop()
     _running = false;
 }
 
-
+void Console::setBindAddress(const std::string &address)
+{
+    _bindAddress = address;
+}
 
 NS_CC_END

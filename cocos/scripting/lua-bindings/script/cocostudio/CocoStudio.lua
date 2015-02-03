@@ -1,9 +1,10 @@
+if nil == ccs then
+    return
+end
 
 if not json then
     require "cocos.cocos2d.json"
 end
-
-ccs = ccs or {}
 
 require "cocos.cocostudio.StudioConstants"
 
@@ -380,4 +381,9 @@ function __onParseConfig(configType,jasonStr)
     if configType == cc.ConfigType.COCOSTUDIO then
         ccs.TriggerMng.getInstance():parse(jasonStr)
     end
+end
+
+function ccs.AnimationInfo(_name, _startIndex, _endIndex)
+    assert(nil ~= _name and type(_name) == "string" and _startIndex ~= nil and type(_startIndex) == "number" and _endIndex ~= nil and  type(_endIndex) == "number", "ccs.AnimationInfo() - invalid input parameters")
+    return { name = _name, startIndex = _startIndex,  endIndex = _endIndex}
 end

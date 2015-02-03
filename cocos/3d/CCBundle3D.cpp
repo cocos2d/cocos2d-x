@@ -87,6 +87,7 @@ static const char* TRANSLATION =  "translation";
 static const char* ROTATION =  "rotation";
 static const char* SCALE =  "scale";
 static const char* KEYTIME =  "keytime";
+static const char* AABBS = "aabb";
 
 NS_CC_BEGIN
 
@@ -146,24 +147,15 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
     }
 }
 
-Bundle3D* Bundle3D::_instance = nullptr;
-
-void Bundle3D::setBundleInstance(Bundle3D* bundleInstance)
+Bundle3D* Bundle3D::createBundle()
 {
-    CC_SAFE_DELETE(_instance);
-    _instance = bundleInstance;
+    auto bundle = new (std::nothrow) Bundle3D();
+    return bundle;
 }
 
-Bundle3D* Bundle3D::getInstance()
+void Bundle3D::destroyBundle(Bundle3D* bundle)
 {
-    if (_instance == nullptr)
-        _instance = new (std::nothrow) Bundle3D();
-    return _instance;
-}
-
-void Bundle3D::destroyInstance()
-{
-    CC_SAFE_DELETE(_instance);
+    delete bundle;
 }
 
 void Bundle3D::clear()
@@ -215,8 +207,14 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     materialdatas.resetData();
     nodedatas.resetData();
 
+    std::string mtlPath = "";
+    if (mtl_basepath)
+        mtlPath = mtl_basepath;
+    else
+        mtlPath = fullPath.substr(0, fullPath.find_last_of("\\/") + 1).c_str();
+    
     ObjLoader::shapes_t shapes;
-    auto ret = ObjLoader::LoadObj(shapes, fullPath.c_str(), mtl_basepath);
+    auto ret = ObjLoader::LoadObj(shapes, fullPath.c_str(), mtlPath.c_str());
     if (ret.empty())
     {
         //fill data
@@ -269,7 +267,6 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         }
         meshdatas.meshDatas.push_back(meshdata);
 
-        NMaterialData materialdata;
         int i = 0;
         char str[20];
         std::string dir = "";
@@ -279,8 +276,10 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
         for (const auto& it : shapes.shapes)
         {
+            NMaterialData materialdata;
+            
             NTextureData tex;
-            tex.filename = dir + it.material.diffuse_texname;
+            tex.filename = it.material.diffuse_texname.empty() ? it.material.diffuse_texname : dir + it.material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
             tex.wrapS = GL_CLAMP_TO_EDGE;
             tex.wrapT = GL_CLAMP_TO_EDGE;
@@ -439,7 +438,22 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
-            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            if (_version != "0.3" && _version != "0.4" && _version != "0.5")
+            {
+                //read mesh aabb
+                float aabb[6];		
+                if (_binaryReader.read(aabb, 4, 6) != 6)
+                {
+                    CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
+                    return false;
+                }
+                meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
+            }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -718,7 +732,19 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
-            meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+
+            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
+            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+            {
+                Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                meshData->subMeshAABB.push_back(AABB(min, max));
+            }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -855,7 +881,7 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
                 return false;
             }
 
-            textureData.filename = _modelPath + texturePath;
+            textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
             float  uvdata[4];
             _binaryReader.read(&uvdata,sizeof(float), 4);
             textureData.type  = parseGLTextureType(_binaryReader.readString());
@@ -882,7 +908,7 @@ bool Bundle3D::loadMaterialsBinary_0_1(MaterialDatas& materialdatas)
     }
 
     NTextureData textureData;
-    textureData.filename = _modelPath + texturePath;
+    textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
     textureData.type= NTextureData::Usage::Diffuse;
     textureData.id="";
     materialData.textures.push_back(textureData);
@@ -910,7 +936,7 @@ bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
         }
 
         NTextureData textureData;
-        textureData.filename = _modelPath + texturePath;
+        textureData.filename = texturePath.empty() ? texturePath : _modelPath + texturePath;
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);
@@ -936,7 +962,7 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 NTextureData  textureData;
                 const rapidjson::Value& texture_val = testure_array[j];
                 std::string filename = texture_val[FILENAME].GetString();
-                textureData.filename = _modelPath + filename;
+                textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
                 textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
                 textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
@@ -1207,6 +1233,10 @@ bool Bundle3D::loadSkinDataBinary(SkinData* skindata)
         return false;
     }
     
+    // Fix bug: check if the bone number is 0.
+    if (boneNum == 0)
+        return false;
+    
     // bone names and bind pos
     float bindpos[16];
     for (unsigned int i = 0; i < boneNum; i++)
@@ -1301,7 +1331,8 @@ bool Bundle3D::loadMaterialDataJson_0_1(MaterialDatas& materialdatas)
             const rapidjson::Value& material_data_base_array_0 = material_data_base_array[(rapidjson::SizeType)0];
             NTextureData  textureData;
             // set texture
-            textureData.filename =_modelPath + material_data_base_array_0[FILENAME].GetString();
+            std::string filename = material_data_base_array_0[FILENAME].GetString();
+            textureData.filename = filename.empty() ? filename : _modelPath + filename;
             textureData.type= NTextureData::Usage::Diffuse;
             textureData.id="";
             materialData.textures.push_back(textureData);
@@ -1325,7 +1356,8 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
         const rapidjson::Value& material_val = material_array[i];
 
         // set texture
-        textureData.filename = _modelPath + material_val[TEXTURES].GetString();
+        std::string filename = material_val[TEXTURES].GetString();
+        textureData.filename = filename.empty() ? filename : _modelPath + filename;
         textureData.type= NTextureData::Usage::Diffuse;
         textureData.id="";
         materialData.textures.push_back(textureData);
@@ -1765,7 +1797,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                 CCLOG("warning: Failed to read nodedata: uvMapping '%s'.", _path.c_str());
                 return nullptr;
             }
-            for( int j = 0 ;j < uvMapping ; j++ )
+            for(int j = 0 ; j < uvMapping ; j++)
             {
                 unsigned int textureIndexSize=0;
                 if (_binaryReader.read(&textureIndexSize, 4, 1) != 1)
@@ -1773,7 +1805,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                     CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
                     return nullptr;
                 }
-                for(int k =0; k < textureIndexSize ; k++ )
+                for(unsigned int k = 0; k < textureIndexSize ; k++)
                 {
                     unsigned int index=0;
                     if (_binaryReader.read(&index, 4, 1) != 1)

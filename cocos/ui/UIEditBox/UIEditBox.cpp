@@ -385,6 +385,11 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
     }
 }
 
+std::string EditBox::getDescription() const
+{
+    return "EditBox";
+}
+
 void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     Widget::visit(renderer, parentTransform, parentFlags);

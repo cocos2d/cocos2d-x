@@ -9,11 +9,20 @@
 -- @function [parent=#EventFrame] setEvent 
 -- @param self
 -- @param #string event
+-- @return EventFrame#EventFrame self (return value: ccs.EventFrame)
         
 --------------------------------
 -- 
 -- @function [parent=#EventFrame] init 
 -- @param self
+-- @return EventFrame#EventFrame self (return value: ccs.EventFrame)
+        
+--------------------------------
+-- 
+-- @function [parent=#EventFrame] setNode 
+-- @param self
+-- @param #cc.Node node
+-- @return EventFrame#EventFrame self (return value: ccs.EventFrame)
         
 --------------------------------
 -- 
@@ -37,5 +46,6 @@
 -- 
 -- @function [parent=#EventFrame] EventFrame 
 -- @param self
+-- @return EventFrame#EventFrame self (return value: ccs.EventFrame)
         
 return nil

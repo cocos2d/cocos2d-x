@@ -189,7 +189,7 @@ public:
     void setTitleText(const std::string& text);
     const std::string& getTitleText() const;
     void setTitleColor(const Color3B& color);
-    const Color3B& getTitleColor() const;
+    Color3B getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
     void setTitleFontName(const std::string& fontName);
@@ -212,6 +212,7 @@ CC_CONSTRUCTOR_ACCESS:
                       const std::string& disableImage = "",
                       TextureResType texType = TextureResType::LOCAL);
 
+    virtual Size getNormalTextureSize() const;
 
 protected:
     virtual void initRenderer() override;

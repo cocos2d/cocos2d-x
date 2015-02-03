@@ -9,6 +9,7 @@
 -- @function [parent=#Control] setEnabled 
 -- @param self
 -- @param #bool bEnabled
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- 
@@ -16,6 +17,7 @@
 -- @param self
 -- @param #cc.Touch touch
 -- @param #cc.Event event
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- 
@@ -29,6 +31,7 @@
 -- @param self
 -- @param #cc.Touch touch
 -- @param #cc.Event event
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- Sends action messages for the given control events.<br>
@@ -37,12 +40,14 @@
 -- @function [parent=#Control] sendActionsForControlEvents 
 -- @param self
 -- @param #int controlEvents
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 --  A Boolean value that determines the control selected state. 
 -- @function [parent=#Control] setSelected 
 -- @param self
 -- @param #bool bSelected
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- 
@@ -56,11 +61,13 @@
 -- @param self
 -- @param #cc.Touch touch
 -- @param #cc.Event event
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- Updates the control layout using its current internal state.
 -- @function [parent=#Control] needsLayout 
 -- @param self
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- 
@@ -97,6 +104,7 @@
 -- @function [parent=#Control] setHighlighted 
 -- @param self
 -- @param #bool bHighlighted
+-- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- Returns a point corresponding to the touh location converted into the<br>
@@ -130,5 +138,6 @@
 -- @function [parent=#Control] setOpacityModifyRGB 
 -- @param self
 -- @param #bool bOpacityModifyRGB
+-- @return Control#Control self (return value: cc.Control)
         
 return nil

@@ -1,10 +1,89 @@
-cocos2d-x-3.3 Dec.12
+cocos2d-x-3.4 Jan.30 2015
+    [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
+    [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions
+    [FIX]           C++: may crash if VAO is not supported
+    [FIX]           EditBox: content is not clipped correctly on windows
+    [FIX]           GLProgram: will cause crash on some devices that don't support more than 8 atrributes
+    [FIX]           HttpClient: not set response code when connecting failed on Android
+    [FIX]           Label: alpha channel of text color of system font has not effect
+    [FIX]           Label: use int for dimensions that will lose the precision
+    [FIX]           Label: labels will become white block after resume from background on some Android devices, such as xiaomi3
+    [FIX]           Label: improved parsing performance of bitmap font
+    [FIX]           Label: can not display `&` if using system font on windows
+    [FIX]           Lua-binding:studio-support: AnimationInfo is not binded 
+    [FIX]           New audio: not close file descriptor leads to that may causes game freeze if playing two many times(may be more than 1000) on Android
+    [FIX]           Node: anchor point has not effect to rotation, it always rotate along (0, 0)
+    [FIX]           Physics integration: Scale9Sprite can't run `Move` action and `Scale` action if used physical scene
+    [FIX]           SpriteFrameCache: `addSpriteFramesWithFil`e may crash if plist file doesn't exist
+    [FIX]           Sprite3D: material files (.mtl) are not loaded for any object when creating from an .obj file
+    [FIX]           UI::ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
+    [FIX]           UI::Slider: when scale9 is enabled, the progress bar's rendering height is wrong
+    [FIX]           UI:Scale9Sprite: some position information will be lost when toggling `Scale9` state
+    [FIX]           UI::TextField: will get wrong event message if clicking `TextField` twice
+    [FIX]           UI::TextField: result of `getContentSize` is wrong if it is invoked in insert or delete event callback
+    [FIX]           UI::WebView: base URL can not work
+
+cocos2d-x-3.4rc1 Jan.15 2015
+    [NEW]           C++: added CC_USE_CULLING macro to control if enable auto culling or not 
+    [NEW]           FileUtils::fullPathForFilename will return empty string when file can not be found
+    [NEW]           VertexBuffer&IndexBuffer: allow setting usage(GL_STATIC_DRAW or GL_DYNAMIC_DRAW) in create method
+    [NEW]           Renderer: 3D rendering support for 2d objects
+    
+    [FIX]           DrawNode: fix random crash because of init opengl buffer wrongly 
+    [FIX]           DrawNode: drawPoints() can not set ponit size
+    [FIX]           EventDispatcher: crash if adding/removing event listeners and dispatching event in event callback function
+    [FIX]           GLProgramState: may cause GL_INVALID_VALUE error at start up on Android
+    [FIX]           LUA: 0x80000000 can not be converted by lua_tonumber correctly on some devices
+    [FIX]           PhysicsBody: can't get correct position in the same frame of adding PhysicsBody to PhysicsWorld
+    [FIX]           UI: fix crash when navigation controller is null
+
+cocos2d-x-3.4rc0  Jan.9 2015
+    [NEW]           3rd: update libcurl to v7.39
+    [NEW]           3rd: update luajit to v2.0.3
+    
+    [FIX]           C++: crash when run clang static analyzer in Xcode
+    [FIX]           DrawNode: can not set color when DrawPoints, wrong behavior of drawRect
+    [FIX]           FileUtils: getData() can't get data from file when file was using by other application on windows
+    [FIX]           FileUtils: getData() will cause memory leak if file size is 0 on windows
+    [FIX]           GLProgram: when there is a shader compile error in shader, it will crash on windows
+    [FIX]           GLProgramState: Assert error because uniforms and attribute is not refreshed when come to foreground on android
+    [FIX]           HttpClient: http requests will be lost in immediately mode on iOS
+    [FIX]           JumpTo: can not be applied more than once
+    [FIX]           Label: may cause infinite loop if using system font on Android
+    [FIX]           Particle: GL_INVALID_OPERATION error because VAO and VBOs is not reset when come to foreground on android
+    [FIX]           Physics integration: physics body is not still after disabling gravitational force by PhysicsBody::setGravityEnable()
+    [FIX]           Sprite3DTest: Sprite3DUVAnimationTest, Sprite3DFakeShadowTest, Sprite3DLightMapTest, Sprite3DBasicToonShaderTest will crash on android when switch to foreground from background
+    [FIX]           Template: multiple dex files define error on Android if using Eclipse to build new generated application
+    [FIX]           VideoPlayer: can not play video if passing path returned from FileUtils::fullPathForFilename() on Android
+    [FIX]           WP8: compiling error on ARM architecture
+
+cocos2d-x-3.4beta0  Dec.31 2014
+    [NEW]           3D: support frustum culling
+    [NEW]           Action: MoveTo and MoveBy support Vec3
+    [NEW]           Allocator: add custom allocator support, global, default, fixed block, object pool
+    [NEW]           Application: added Turkish and Ukrainian language support
+    [NEW]           UI:LoadingBar: add TextureResType to LoadingBar's create method
+    [NEW]           Director: add setClearColor() to set clear values for the color buffers
+    [NEW]           Node: rotation representation using quaternion
+    [NEW]           UI: Added new layout functionality for Cocos Studio, keeps widget margins a fixed set and adjusts the widget size according to the margins.
+    [NEW]           UI: Add gray shader to ui::Button, ui::CheckBox and ui::Slider when the disable state resources are not provided
+    [NEW]           UI: Modify the default behavior when ui::Button, ui::CheckBox and ui::Slider's selected state resources are not provided, the new behavior is scale the normal state texture when the selected state texture are missing.
+    [NEW]           3rd party libraries: Add prebuilt version of libcurl to Mac and upgrade iOS,Android,Mac and Win32 libcurl to 7.39.0.
+    [NEW]           Replace network module implementation from libcurl to system network API on IOS and Android
+
+    [FIX]           ui::Button: fix setTitleColor calls method setColor instead of setTextColor of title label.
+    [FIX]           AssetsManagerEx: Fix assetManager can't download file on Win32
+    [FIX]           FileUtils: WebP format with alpha channel displayed wrong
+    [FIX]           Label: content size of Label is incorrect if the string is set to empty string
+    [FIX]           GLProgramState: fix assert error caused by outdated uniform and attribute cache
+
+cocos2d-x-3.3 Dec.12 2014
     [FIX]           Billboard: allow billboard rotate along z axis
     [FIX]           Bundle3D: create aabb for mesh whose aabb does not exist (user custom mesh)
     [FIX]           EditBox: text position and move animation error on iPhone6 Plus
     [FIX]           FileUtils: createDirectory(): doesn't invoke closedir() after opendir on platforms other than WP8/WinRT/Windows
 
-cocos2d-x-3.3-rc2  Dec.5
+cocos2d-x-3.3-rc2  Dec.5 2014
     [FIX]           C++: use 100% of one core on Windows
     [FIX]           Label: when a label is added to a invisible parent node, app will crash if switching from background
     [FIX]           Label: label will not be shown when using system font on Mac

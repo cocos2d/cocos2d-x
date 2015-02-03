@@ -37,6 +37,7 @@ THE SOFTWARE.
 NS_TIMELINE_BEGIN
 
 class Timeline;
+class ActionTimeline;
 
 class CC_STUDIO_DLL Frame : public cocos2d::Ref
 {
@@ -254,6 +255,8 @@ enum InnerActionType
 class CC_STUDIO_DLL InnerActionFrame : public Frame
 {
 public:
+    static const std::string AnimationAllName;
+    
     static InnerActionFrame* create();
     InnerActionFrame();
 
@@ -262,13 +265,27 @@ public:
 
     inline void setInnerActionType(InnerActionType type) { _innerActionType = type; }
     inline InnerActionType getInnerActionType() const { return _innerActionType; }
-
-    inline void setStartFrameIndex(int frameIndex) { _startFrameIndex = frameIndex; }
+    
+    inline void setEnterWithName(bool isEnterWithName) { _enterWithName = isEnterWithName;}
+    
+	void setStartFrameIndex(int frameIndex);
     inline int  getStartFrameIndex() const { return _startFrameIndex; }
+
+	void setEndFrameIndex(int frameIndex);
+    inline int  getEndFrameIndex() const { return _endFrameIndex; }
+    
+	void setAnimationName(const std::string& animationNamed);
+    
+    inline void setSingleFrameIndex(int frameIndex) { _singleFrameIndex = frameIndex;}
+    inline int  getSingleFrameIndex() const { return _singleFrameIndex;}
 
 protected:
     InnerActionType _innerActionType;
     int _startFrameIndex;
+    int _endFrameIndex;
+    int _singleFrameIndex;
+    std::string _animationName;
+    bool _enterWithName;
 };
 
 
@@ -298,6 +315,23 @@ protected:
     int _betweenBlue;
 };
 
+class CC_STUDIO_DLL AlphaFrame : public Frame
+{
+public:
+    static AlphaFrame* create();
+    AlphaFrame();
+
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
+    virtual Frame* clone() override;
+
+    inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
+    inline GLubyte getAlpha() const { return _alpha; }
+
+protected:
+    GLubyte _alpha;
+    int _betweenAlpha;
+};
 
 class CC_STUDIO_DLL EventFrame : public Frame
 {
@@ -307,6 +341,8 @@ public:
 
     EventFrame();
 
+    virtual void setNode(cocos2d::Node* node);
+    
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
 
@@ -315,6 +351,7 @@ public:
 
 protected:
     std::string _event;
+    ActionTimeline* _action;
 };
 
 class CC_STUDIO_DLL ZOrderFrame : public Frame

@@ -51,7 +51,6 @@ typedef SSIZE_T ssize_t;
 #include "base/ccMacros.h"
 #include "platform/CCPlatformMacros.h"
 
-
 NS_CC_BEGIN
 
 /// The max length of CCLog message.
@@ -101,6 +100,13 @@ public:
     void addCommand(const Command& cmd);
     /** log something in the console */
     void log(const char *buf);
+
+    /**
+     * set bind address
+     *
+     * @address : 127.0.0.1
+     */
+    void setBindAddress(const std::string &address);
  
 protected:
     void loop();
@@ -122,6 +128,7 @@ protected:
     void commandDirector(int fd, const std::string &args);
     void commandTouch(int fd, const std::string &args);
     void commandUpload(int fd);
+    void commandAllocator(int fd, const std::string &args);
     // file descriptor: socket, console, etc.
     int _listenfd;
     int _maxfd;
@@ -143,6 +150,8 @@ protected:
     std::vector<std::string> _DebugStrings;
 
     intptr_t _touchId;
+
+    std::string _bindAddress;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Console);
 };

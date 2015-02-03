@@ -22,6 +22,7 @@
 -- @function [parent=#DirectionLight] setDirection 
 -- @param self
 -- @param #vec3_table dir
+-- @return DirectionLight#DirectionLight self (return value: cc.DirectionLight)
         
 --------------------------------
 -- Creates a direction light.<br>

@@ -34,7 +34,7 @@ namespace cocostudio {
 class CC_STUDIO_DLL ComRender : public cocos2d::Component
 {
     DECLARE_CLASS_COMPONENT_INFO
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      *  @js ctor
      */

@@ -1,3 +1,6 @@
+if nil == ccs then
+    return
+end
 -- This is the DeprecatedExtensionClass
 
 DeprecatedExtensionClass = {} or DeprecatedExtensionClass

@@ -121,7 +121,22 @@ bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName)
     
     if (ok)
     {
-        *outValue = (int)tolua_tonumber(L, lo, 0);
+        /**
+         When we want to convert the number value from the Lua to int, we would call lua_tonumber to implement.It would
+         experience two phase conversion: int -> double, double->int.But,for the 0x80000000 which the min value of int, the
+         int cast may return an undefined result,like 0x7fffffff.So we must use the (int)(unsigned int)lua_tonumber() to get
+         predictable results for 0x80000000.In this place,we didn't use lua_tointeger, because it may produce differen results
+         depending on the compiler,e.g:for iPhone4s,it also get wrong value for 0x80000000.
+         */
+        unsigned int estimateValue = (unsigned int)lua_tonumber(L, lo);
+        if (estimateValue == std::numeric_limits<int>::min())
+        {
+            *outValue = (int)estimateValue;
+        }
+        else
+        {
+            *outValue = (int)lua_tonumber(L, lo);
+        }
     }
     
     return ok;
@@ -414,6 +429,7 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, con
     return ok;
 }
 
+#if CC_USE_PHYSICS
 bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue, const char* funcName)
 {
     if (NULL == L || NULL == outValue)
@@ -450,6 +466,7 @@ bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue, c
     }
     return ok;
 }
+#endif //#if CC_USE_PHYSICS
 
 bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* funcName)
 {
@@ -822,7 +839,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
         
         lua_pushstring(L, "fontName");
         lua_gettable(L,lo);
-        outValue->_fontName = tolua_tocppstring(L,lo,defautlFontName);
+        outValue->_fontName = tolua_tocppstring(L, lua_gettop(L), defautlFontName);
         lua_pop(L,1);
         
         lua_pushstring(L, "fontSize");
@@ -844,7 +861,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
         lua_gettable(L,lo);
         if (!lua_isnil(L,-1))
         {
-            luaval_to_color3b(L, -1, &outValue->_fontFillColor);
+            luaval_to_color3b(L, lua_gettop(L), &outValue->_fontFillColor);
         }
         lua_pop(L,1);
         
@@ -852,7 +869,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
         lua_gettable(L,lo);
         if (!lua_isnil(L,-1))
         {
-            luaval_to_size(L, -1, &outValue->_dimensions);
+            luaval_to_size(L, lua_gettop(L), &outValue->_dimensions);
         }
         lua_pop(L,1);
         
@@ -873,7 +890,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
             lua_gettable(L,lo);
             if (!lua_isnil(L,-1))
             {
-                luaval_to_size(L, -1, &outValue->_shadow._shadowOffset);                
+                luaval_to_size(L, lua_gettop(L), &outValue->_shadow._shadowOffset);
             }
             lua_pop(L,1);
             
@@ -910,7 +927,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , c
                 lua_gettable(L,lo);
                 if (!lua_isnil(L,-1))
                 {
-                     luaval_to_color3b(L, -1, &outValue->_stroke._strokeColor);
+                     luaval_to_color3b(L, lua_gettop(L), &outValue->_stroke._strokeColor);
                 }
                 lua_pop(L,1);
                 
@@ -2103,6 +2120,7 @@ void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4)
     lua_rawset(L, -3);
 }
 
+#if CC_USE_PHYSICS
 void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm)
 {
     if (nullptr  == L)
@@ -2179,6 +2197,7 @@ void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data)
     lua_pushnumber(L, data->POINT_MAX);
     lua_rawset(L, -3);
 }
+#endif //#if CC_USE_PHYSICS
 
 void size_to_luaval(lua_State* L,const Size& sz)
 {

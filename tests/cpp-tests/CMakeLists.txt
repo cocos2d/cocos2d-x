@@ -22,6 +22,7 @@ set(TESTS_SRC
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
   Classes/ActionsTest/ActionsTest.cpp
+  Classes/AllocatorTest/AllocatorTest.cpp
   Classes/BillBoardTest/BillBoardTest.cpp
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp

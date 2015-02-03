@@ -62,8 +62,8 @@ function TimelineTestLayer.title(idx)
         return "Test ActionTimeline"
     elseif TimelineTestIndex.TEST_CHANGE_PLAY_SECTION == idx then
         return "Test Change Play Section"
-    -- elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
-    --     return "Test Frame Event"
+    --elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
+    --    return "Test Frame Event"
     elseif TimelineTestIndex.TEST_TIMELINE_PERFORMACE == idx then
         return "Test ActionTimeline performance"
     end
@@ -158,6 +158,7 @@ function TimelineTestLayer:createToExtensionMenu()
 end
 
 function TimelineTestLayer:creatTitleAndSubTitle(idx)
+    print("set title")
     local title = cc.Label:createWithTTF(TimelineTestLayer.title(idx), "fonts/Thonburi.ttf", 18)
     title:setColor(cc.c3b(255,0,0))
     self:addChild(title, 1, 10000)
@@ -185,11 +186,11 @@ function TestActionTimeline.extend(target)
 end
 
 function TestActionTimeline:onEnter()
+
     local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
     local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
-
     node:runAction(action)
-    action:gotoFrameAndPlay(0, 40, true)
+    action:gotoFrameAndPlay(0)
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
@@ -239,18 +240,28 @@ function TestChangePlaySection:onEnter()
 
     local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
     local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
-
     node:runAction(action)
-    action:gotoFrameAndPlay(41, action:getDuration(), true)
+    action:gotoFrameAndPlay(41)
+
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
 
+    action:addAnimationInfo(ccs.AnimationInfo("stand", 0 , 40))
+    action:addAnimationInfo(ccs.AnimationInfo("walk", 41 , 81))
+    action:addAnimationInfo(ccs.AnimationInfo("killall", 174, 249))
+
+    assert(action:IsAnimationInfoExists("stand") == true, "stand animation didn't exist")
+    action:play("stand", true)
+    assert(action:getAnimationInfo("stand").endIndex == 40, "endIndex of animationInfo is not 40")
+    action:removeAnimationInfo("stand")
+    assert(action:IsAnimationInfoExists("stand") == false, "stand animation has already existed")
+
     local function onTouchesEnded(touches, event)
         if action:getStartFrame() == 0 then
-            action:gotoFrameAndPlay(70, action:getDuration(), true)
+            action:gotoFrameAndPlay(41, 81, true)
         else
-            action:gotoFrameAndPlay(0, 60, true)
+            action:gotoFrameAndPlay(0, 40, true)
         end
     end
 
@@ -302,16 +313,14 @@ function TestTimelineFrameEvent.extend(target)
 end
 
 function TestTimelineFrameEvent:onEnter()
-    cc.SpriteFrameCache:getInstance():addSpriteFrames("armature/Cowboy0.plist", "armature/Cowboy0.png")
 
-    local node = cc.CSLoader:createNode("ActionTimeline/boy_1.csb")
-    local action = cc.CSLoader:createTimeline("ActionTimeline/boy_1.csb")
-
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
     node:runAction(action)
-    action:gotoFrameAndPlay(0, 60, true)
+    action:gotoFrameAndPlay(0)
 
     node:setScale(0.2)
-    node:setPosition(150, 100)
+    node:setPosition(VisibleRect:center())
     self:addChild(node)
 
     local function onFrameEvent(frame)
@@ -374,9 +383,8 @@ function TestTimelinePerformance:onEnter()
     for i = 1,100 do
         local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
         local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
-
         node:runAction(action)
-        action:gotoFrameAndPlay(70, action:getDuration(), true)
+        action:gotoFrameAndPlay(41)
 
         node:setScale(0.1)
         node:setPosition((i - 1) * 2, 100)

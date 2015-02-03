@@ -134,9 +134,9 @@ const char * Application::getCurrentLanguageCode()
 LanguageType Application::getCurrentLanguage()
 {
     LanguageType ret = LanguageType::ENGLISH;
-
+    
     const char* code = getCurrentLanguageCode();
-
+    
     if (strncmp(code, "zh", 2) == 0)
     {
         ret = LanguageType::CHINESE;
@@ -184,8 +184,23 @@ LanguageType Application::getCurrentLanguage()
     else if (strncmp(code, "ar", 2) == 0)
     {
         ret = LanguageType::ARABIC;
-    } 
-
+    }
+    else if (strncmp(code, "nb", 2) == 0)
+    {
+        ret = LanguageType::NORWEGIAN;
+    }
+    else if (strncmp(code, "pl", 2) == 0)
+    {
+        ret = LanguageType::POLISH;
+    }
+    else if (strncmp(code, "tr", 2) == 0)
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (strncmp(code, "uk", 2) == 0)
+    {
+        ret = LanguageType::UKRAINIAN;
+    }
     return ret;
 }
 

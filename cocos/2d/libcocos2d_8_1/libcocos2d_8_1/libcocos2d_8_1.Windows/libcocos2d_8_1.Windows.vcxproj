@@ -113,38 +113,38 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.3_Windows_8.1</TargetName>
+    <TargetName>libcocos2d_v3.4_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.3_Windows_8.1</TargetName>
+    <TargetName>libcocos2d_v3.4_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.3_Windows_8.1</TargetName>
+    <TargetName>libcocos2d_v3.4_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.3_Windows_8.1</TargetName>
+    <TargetName>libcocos2d_v3.4_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.3_Windows_8.1</TargetName>
+    <TargetName>libcocos2d_v3.4_Windows_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.3_Windows_8.1</TargetName>
+    <TargetName>libcocos2d_v3.4_Windows_8.1</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(EngineRoot)external\winrt_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\winrt_8.1;$(EngineRoot)external\websockets\include\winrt_8.1;$(EngineRoot)external\curl\include\winrt_8.1;$(EngineRoot)external\tiff\include\winrt_8.1;$(EngineRoot)external\jpeg\include\winrt_8.1;$(EngineRoot)external\png\include\winrt_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -162,7 +162,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(EngineRoot)external\winrt_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\winrt_8.1;$(EngineRoot)external\websockets\include\winrt_8.1;$(EngineRoot)external\curl\include\winrt_8.1;$(EngineRoot)external\tiff\include\winrt_8.1;$(EngineRoot)external\jpeg\include\winrt_8.1;$(EngineRoot)external\png\include\winrt_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -180,7 +180,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(EngineRoot)external\winrt_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\winrt_8.1;$(EngineRoot)external\websockets\include\winrt_8.1;$(EngineRoot)external\curl\include\winrt_8.1;$(EngineRoot)external\tiff\include\winrt_8.1;$(EngineRoot)external\jpeg\include\winrt_8.1;$(EngineRoot)external\png\include\winrt_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -198,7 +198,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(EngineRoot)external\winrt_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\winrt_8.1;$(EngineRoot)external\websockets\include\winrt_8.1;$(EngineRoot)external\curl\include\winrt_8.1;$(EngineRoot)external\tiff\include\winrt_8.1;$(EngineRoot)external\jpeg\include\winrt_8.1;$(EngineRoot)external\png\include\winrt_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -216,7 +216,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(EngineRoot)external\winrt_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\winrt_8.1;$(EngineRoot)external\websockets\include\winrt_8.1;$(EngineRoot)external\curl\include\winrt_8.1;$(EngineRoot)external\tiff\include\winrt_8.1;$(EngineRoot)external\jpeg\include\winrt_8.1;$(EngineRoot)external\png\include\winrt_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -234,7 +234,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm384 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(EngineRoot)external\winrt_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\winrt_8.1;$(EngineRoot)external\websockets\include\winrt_8.1;$(EngineRoot)external\curl\include\winrt_8.1;$(EngineRoot)external\tiff\include\winrt_8.1;$(EngineRoot)external\jpeg\include\winrt_8.1;$(EngineRoot)external\png\include\winrt_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

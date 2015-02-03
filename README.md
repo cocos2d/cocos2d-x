@@ -129,7 +129,7 @@ Build Requirements
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 * Python 2.7.5
-* NDK r9d is required to build Android games
+* NDK r10c+ is required to build Android games
 * Windows Phone/Store 8.0 VS 2012+
 * Windows Phone/Store 8.1 VS 2013 Update 3+
 
@@ -185,7 +185,7 @@ Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 ```
 $ cd cocos2d-x/build
 $ python ./android-build.py cpp-empty-test -p 10
-$ adb install ../tests/cpp-empty-tst/proj.android/bin/CppEmptyTest-debug.apk
+$ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.

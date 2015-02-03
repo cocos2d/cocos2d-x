@@ -919,6 +919,113 @@ function Sprite3DMirrorTest.create()
     return layer
 end
 
+
+----------------------------------------
+----AsyncLoadSprite3DTest
+----------------------------------------
+local AsyncLoadSprite3DTest = class("AsyncLoadSprite3DTest", function ()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    return layer
+end)
+
+function AsyncLoadSprite3DTest:ctor()
+    -- body
+    self:init()
+end
+
+function AsyncLoadSprite3DTest:init()
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+
+    self:registerScriptHandler(function (event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end)
+end
+
+function AsyncLoadSprite3DTest:title()
+    return "Testing Sprite3D:createAsync"
+end
+
+function AsyncLoadSprite3DTest:subtitle()
+    return ""
+end
+
+function AsyncLoadSprite3DTest:onEnter()
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize = 15
+
+    local paths = {"Sprite3DTest/boss.obj", "Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
+
+    local label1 = cc.Label:createWithTTF(ttfConfig,"AsyncLoad Sprite3D")
+    local item1 = cc.MenuItemLabel:create(label1)
+
+    function menuCallback_asyncLoadSprite(tag, sender)
+        --Note that you must stop the tasks before leaving the scene.
+        cc.AsyncTaskPool:getInstance():stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO)
+    
+        local node = self:getChildByTag(101)
+        --remove all loaded sprite
+        node:removeAllChildren()
+    
+        --remove cache data
+        cc.Sprite3DCache:getInstance():removeAllSprite3DData()
+
+        local function callback(sprite, index)
+            local node = self:getChildByTag(101)
+            local s = cc.Director:getInstance():getWinSize()
+            local width = s.width / (#paths)
+            local point = cc.p(width * (0.5 + index), s.height / 2.0)
+            sprite:setPosition(point)
+            node:addChild(sprite)
+        end
+
+        cc.Sprite3D:createAsync(paths[1], function(sprite)
+            callback(sprite, 0)
+        end)
+
+        cc.Sprite3D:createAsync(paths[2], function(sprite)
+            callback(sprite, 1)
+        end)
+
+        cc.Sprite3D:createAsync(paths[3], function(sprite)
+            callback(sprite, 2)
+        end)
+
+        cc.Sprite3D:createAsync(paths[4], function(sprite)
+            callback(sprite, 3)
+        end)
+
+        cc.Sprite3D:createAsync(paths[5], function(sprite)
+            callback(sprite, 4)
+        end)
+    end
+    item1:registerScriptTapHandler(menuCallback_asyncLoadSprite)
+    
+    local s = cc.Director:getInstance():getWinSize()
+    item1:setPosition( s.width * 0.5, s.height * 0.8)
+    
+    local menu = cc.Menu:create(item1)
+    menu:setPosition(cc.p(0,0))
+    self:addChild(menu, 10)
+    
+    local node = cc.Node:create()
+    node:setTag(101)
+    self:addChild(node)
+    
+    menuCallback_asyncLoadSprite()
+end
+
+function AsyncLoadSprite3DTest:onExit()
+
+end
+
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
@@ -932,6 +1039,7 @@ function Sprite3DTest()
         Sprite3DReskinTest.create,
         Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
+        AsyncLoadSprite3DTest.create
     }
 
     scene:addChild(Sprite3DBasicTest.create())

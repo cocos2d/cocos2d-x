@@ -15,12 +15,20 @@
 -- @function [parent=#PhysicsJointRatchet] setAngle 
 -- @param self
 -- @param #float angle
+-- @return PhysicsJointRatchet#PhysicsJointRatchet self (return value: cc.PhysicsJointRatchet)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsJointRatchet] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointRatchet] setPhase 
 -- @param self
 -- @param #float phase
+-- @return PhysicsJointRatchet#PhysicsJointRatchet self (return value: cc.PhysicsJointRatchet)
         
 --------------------------------
 -- 
@@ -33,6 +41,7 @@
 -- @function [parent=#PhysicsJointRatchet] setRatchet 
 -- @param self
 -- @param #float ratchet
+-- @return PhysicsJointRatchet#PhysicsJointRatchet self (return value: cc.PhysicsJointRatchet)
         
 --------------------------------
 -- 

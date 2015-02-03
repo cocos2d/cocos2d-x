@@ -21,6 +21,7 @@
 -- @function [parent=#ComController] setEnabled 
 -- @param self
 -- @param #bool b
+-- @return ComController#ComController self (return value: ccs.ComController)
         
 --------------------------------
 -- 
@@ -33,6 +34,7 @@
 -- @function [parent=#ComController] update 
 -- @param self
 -- @param #float delta
+-- @return ComController#ComController self (return value: ccs.ComController)
         
 --------------------------------
 -- 
@@ -44,5 +46,6 @@
 -- js ctor
 -- @function [parent=#ComController] ComController 
 -- @param self
+-- @return ComController#ComController self (return value: ccs.ComController)
         
 return nil

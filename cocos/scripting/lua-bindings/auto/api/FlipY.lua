@@ -18,10 +18,11 @@
 -- @return FlipY#FlipY ret (return value: cc.FlipY)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#FlipY] update 
 -- @param self
 -- @param #float time
+-- @return FlipY#FlipY self (return value: cc.FlipY)
         
 --------------------------------
 -- 

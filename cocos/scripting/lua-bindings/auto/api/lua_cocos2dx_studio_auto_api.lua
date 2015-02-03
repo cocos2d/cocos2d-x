@@ -237,6 +237,11 @@
 
 
 --------------------------------------------------------
+-- the ccs AlphaFrame
+-- @field [parent=#ccs] AlphaFrame#AlphaFrame AlphaFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs EventFrame
 -- @field [parent=#ccs] EventFrame#EventFrame EventFrame preloaded module
 
@@ -259,6 +264,11 @@
 --------------------------------------------------------
 -- the ccs ActionTimeline
 -- @field [parent=#ccs] ActionTimeline#ActionTimeline ActionTimeline preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionTimelineNode
+-- @field [parent=#ccs] ActionTimelineNode#ActionTimelineNode ActionTimelineNode preloaded module
 
 
 return nil

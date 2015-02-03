@@ -19,6 +19,16 @@
                 "exclude": []
             },
             {
+                "from": "templates/lua-template-default/src",
+                "to": "src",
+                "exclude": []
+            },
+            {
+                "from": "templates/lua-template-default/res",
+                "to": "res",
+                "exclude": []
+            },
+            {
                 "from": "external/win32-specific/gles/prebuilt",
                 "to": "runtime/win32",
                 "include": [
@@ -95,11 +105,12 @@
                     "*.dll"
                 ]
             }
+
         ]
     },
     "do_add_native_support": {
         "append_from_template": {
-            "from": "frameworks/runtime-src",
+            "from": "../lua-template-default/frameworks/runtime-src",
             "to": "frameworks/runtime-src",
             "exclude": [
                 "proj.android/bin",
@@ -116,6 +127,78 @@
             "from": ".",
             "to": "frameworks/cocos2d-x"
         },
+        "append_dir": [
+            {
+                "from": "tools/simulator/libsimulator",
+                "to": "frameworks/cocos2d-x/tools/simulator/libsimulator",
+                "exclude": [
+                    "proj.win32/Debug",
+                    "proj.win32/Release"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/lang",
+                "to": "frameworks/runtime-src/Classes/ide-support/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+                "to": "frameworks/runtime-src/proj.ios_mac/ios",
+                "exclude": [
+                    "RootViewController.*",
+                    "Info.plist"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+                "to": "frameworks/runtime-src/proj.ios_mac/mac",
+                "exclude": [
+                    "Info.plist",
+                    "Icon.icns",
+                    "build-cfg.json"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/build-cfg.json",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/game.rc",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.cpp",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.h",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/res",
+                "to": "frameworks/runtime-src/proj.win32/res",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/resource.h",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.cpp",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.h",
+                "to": "frameworks/runtime-src/proj.win32/",
+                "exclude": []
+            }
+        ],
         "project_rename": {
             "src_project_name": "HelloLua",
             "files": [
@@ -136,7 +219,6 @@
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                 "frameworks/runtime-src/proj.win32/main.cpp",
-                "frameworks/runtime-src/proj.win32/Runtime_win32.cpp",
                 "frameworks/runtime-src/proj.android/.project",
                 "frameworks/runtime-src/proj.android/AndroidManifest.xml",
                 "frameworks/runtime-src/proj.android/build.xml",
@@ -144,9 +226,7 @@
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
-                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-                "frameworks/runtime-src/Classes/AppDelegate.cpp",
-                "frameworks/runtime-src/Classes/ConfigParser.cpp"
+                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj"
             ]
         },
         "project_replace_package_name": {

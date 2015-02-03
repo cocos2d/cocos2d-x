@@ -79,7 +79,7 @@ public:
     */
     virtual void stop();
 
-    //! called every frame with it's delta time. DON'T override unless you know what you are doing.
+    //! called every frame with it's delta time, dt in seconds. DON'T override unless you know what you are doing.
     virtual void step(float dt);
 
     /** 
@@ -202,6 +202,9 @@ public:
     virtual Speed* reverse() const override;
     virtual void startWithTarget(Node* target) override;
     virtual void stop() override;
+    /**
+     * @param dt in seconds.
+     */
     virtual void step(float dt) override;
     virtual bool isDone() const  override;
     
@@ -252,6 +255,9 @@ public:
     //
     virtual Follow* clone() const override;
     virtual Follow* reverse() const override;
+    /**
+     * @param dt in seconds.
+     */
     virtual void step(float dt) override;
     virtual bool isDone() const override;
     virtual void stop() override;

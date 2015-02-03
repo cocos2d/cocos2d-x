@@ -2,11 +2,12 @@
 
 #include "TextBMFontReader.h"
 
+#include "2d/CCFontAtlasCache.h"
 #include "ui/UITextBMFont.h"
 #include "cocostudio/CocoLoader.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -190,22 +191,49 @@ namespace cocostudio
         auto options = (TextBMFontOptions*)textBMFontOptions;
         
         auto cmftDic = options->fileNameData();
+        bool fileExist = false;
+        std::string errorFilePath = "";
+        std::string errorContent = "";
+        std::string path = cmftDic->path()->c_str();
         int cmfType = cmftDic->resourceType();
         switch (cmfType)
         {
             case 0:
             {
-                const char* cmfPath = cmftDic->path()->c_str();
-                labelBMFont->setFntFile(cmfPath);
+                if (FileUtils::getInstance()->isFileExist(path))
+                {
+                    FontAtlas* newAtlas = FontAtlasCache::getFontAtlasFNT(path);
+                    if (newAtlas)
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        errorContent = "has problem";
+                        fileExist = false;
+                    }
+                }
+                else
+                {
+                    errorContent = "missed";
+                    fileExist = false;
+                }
                 break;
             }
                 
-            case 1:
-                CCLOG("Wrong res type of LabelAtlas!");
-                break;
-                
             default:
                 break;
+        }
+        if (fileExist)
+        {
+            labelBMFont->setFntFile(path);
+        }
+        else
+        {
+            errorFilePath = path;
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s %s", errorFilePath.c_str(), errorContent.c_str())->getCString());
+            labelBMFont->addChild(label);
         }
         
         std::string text = options->text()->c_str();
@@ -213,6 +241,8 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        labelBMFont->ignoreContentAdaptWithSize(true);
     }
     
     Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)

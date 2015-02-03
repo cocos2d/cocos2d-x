@@ -41,9 +41,6 @@
     <Filter Include="physics">
       <UniqueIdentifier>{a7501f5e-4fef-4f37-a646-ffe633008d9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics\chipmunk">
-      <UniqueIdentifier>{12ce37e2-709d-416e-a592-1c60b33fd6ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="platform">
       <UniqueIdentifier>{1850cae0-9e70-47af-87d5-c90f8343c06a}</UniqueIdentifier>
     </Filter>
@@ -241,6 +238,15 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\GameMapReader">
       <UniqueIdentifier>{02d389d5-8f57-4bd6-b12a-95af86c5b356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
+      <UniqueIdentifier>{939d9d3e-06b3-494e-affd-070c2c1cbe1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\shaders">
+      <UniqueIdentifier>{f6df0f43-3b03-4746-b786-4323895be3b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\allocator">
+      <UniqueIdentifier>{b870ea4f-2751-4a44-92f5-a7fb3b3672cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -711,21 +717,6 @@
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp">
       <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
@@ -1299,9 +1290,6 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\CSParseBinary.pb.cc">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -1310,6 +1298,36 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCAsyncTaskPool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp">
+      <Filter>ui\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\inet_pton_winrt.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorDiagnostics.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobal.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
+      <Filter>base\allocator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1834,24 +1852,6 @@
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCApplication.h">
       <Filter>platform</Filter>
@@ -2541,6 +2541,63 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
       <Filter>cocostudio\reader\WidgetReader\GameMapReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\base\CCAsyncTaskPool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\shaders\UIShaders.h">
+      <Filter>ui\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\cocos3d.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\inet_pton_winrt.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorBase.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorDiagnostics.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorGlobal.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorMacros.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorMutex.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyDefault.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyFixedBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyPool.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\CCPhysicsHelper.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -2628,6 +2685,15 @@
       <Filter>renderer\shaders</Filter>
     </None>
     <None Include="..\renderer\ccShader_Position_uColor.vert">
+      <Filter>renderer\shaders</Filter>
+    </None>
+    <None Include="..\ui\shaders\ccShader_grayscale.frag">
+      <Filter>ui\shaders</Filter>
+    </None>
+    <None Include="..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
+    </None>
+    <None Include="..\renderer\ccShader_PositionColorPointsize.vert">
       <Filter>renderer\shaders</Filter>
     </None>
   </ItemGroup>

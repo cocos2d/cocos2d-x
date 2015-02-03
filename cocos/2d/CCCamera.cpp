@@ -30,7 +30,19 @@ NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
 
-Camera* Camera::create()
+
+Camera* Camera::getDefaultCamera()
+{
+    auto scene = Director::getInstance()->getRunningScene();
+    if(scene)
+    {
+        return scene->getDefaultCamera();
+    }
+
+    return nullptr;
+}
+
+    Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
@@ -69,20 +81,14 @@ Camera::Camera()
 : _scene(nullptr)
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
+, _frustumDirty(true)
 {
-    
+    _frustum.setClipZ(true);
 }
 
 Camera::~Camera()
 {
     
-}
-
-void Camera::setPosition3D(const Vec3& position)
-{
-    Node::setPosition3D(position);
-    
-    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 const Mat4& Camera::getProjectionMatrix() const
@@ -96,6 +102,7 @@ const Mat4& Camera::getViewMatrix() const
     if (memcmp(viewInv.m, _viewInv.m, count) != 0)
     {
         _viewProjectionDirty = true;
+        _frustumDirty = true;
         _viewInv = viewInv;
         _view = viewInv.getInversed();
     }
@@ -205,6 +212,7 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     }
 #endif
     _viewProjectionDirty = true;
+    _frustumDirty = true;
     
     return true;
 }
@@ -225,6 +233,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     }
 #endif
     _viewProjectionDirty = true;
+    _frustumDirty = true;
     
     return true;
 }
@@ -246,6 +255,24 @@ void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
     }
     
     dst->set(screen.x, screen.y, screen.z);
+}
+
+bool Camera::isVisibleInFrustum(const AABB* aabb) const
+{
+    if (_frustumDirty)
+    {
+        _frustum.initFrustum(this);
+        _frustumDirty = false;
+    }
+    return !_frustum.isOutOfFrustum(*aabb);
+}
+
+float Camera::getDepthInView(const Mat4& transform) const
+{
+    Mat4 camWorldMat = getNodeToWorldTransform();
+    const Mat4 &viewMat = camWorldMat.getInversed();
+    float depth = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
+    return depth;
 }
 
 void Camera::onEnter()

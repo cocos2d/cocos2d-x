@@ -8,6 +8,7 @@
 -- 
 -- @function [parent=#Scale9Sprite] disableCascadeColor 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
@@ -28,41 +29,64 @@
 -- Also, flipping the texture doesn't alter the anchorPoint.<br>
 -- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
 -- widget->setScaleX(sprite->getScaleX() * -1);<br>
--- return true if the widget is flipped horizaontally, false otherwise.
+-- return true if the widget is flipped horizontally, false otherwise.
 -- @function [parent=#Scale9Sprite] isFlippedX 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- Sets whether the widget should be flipped vertically or not.<br>
--- param bFlippedY true if the widget should be flipped vertically, flase otherwise.
--- @function [parent=#Scale9Sprite] setFlippedY 
--- @param self
--- @param #bool flippedY
-        
---------------------------------
--- Sets whether the widget should be flipped horizontally or not.<br>
--- param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
--- @function [parent=#Scale9Sprite] setFlippedX 
--- @param self
--- @param #bool flippedX
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setScale9Enabled 
 -- @param self
 -- @param #bool enabled
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- Sets whether the widget should be flipped vertically or not.<br>
+-- param bFlippedY true if the widget should be flipped vertically, false otherwise.
+-- @function [parent=#Scale9Sprite] setFlippedY 
+-- @param self
+-- @param #bool flippedY
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- Sets whether the widget should be flipped horizontally or not.<br>
+-- param bFlippedX true if the widget should be flipped horizontally, false otherwise.
+-- @function [parent=#Scale9Sprite] setFlippedX 
+-- @param self
+-- @param #bool flippedX
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- Creates and returns a new sprite object with the specified cap insets.<br>
+-- You use this method to add cap insets to a sprite or to change the existing<br>
+-- cap insets of a sprite. In both cases, you get back a new image and the<br>
+-- original sprite remains untouched.<br>
+-- param capInsets The values to use for the cap insets.
+-- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 
+-- @param self
+-- @param #rect_table capInsets
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] disableCascadeOpacity 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- since v3.4
+-- @function [parent=#Scale9Sprite] setState 
+-- @param self
+-- @param #int state
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setInsetBottom 
 -- @param self
 -- @param #float bottomInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, string         
@@ -84,6 +108,7 @@
 -- @function [parent=#Scale9Sprite] setInsetTop 
 -- @param self
 -- @param #float topInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, cc.Sprite, rect_table, bool, rect_table         
@@ -105,12 +130,7 @@
 -- @function [parent=#Scale9Sprite] setPreferredSize 
 -- @param self
 -- @param #size_table size
-        
---------------------------------
--- 
--- @function [parent=#Scale9Sprite] getInsetRight 
--- @param self
--- @return float#float ret (return value: float)
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -118,6 +138,7 @@
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -126,15 +147,10 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Creates and returns a new sprite object with the specified cap insets.<br>
--- You use this method to add cap insets to a sprite or to change the existing<br>
--- cap insets of a sprite. In both cases, you get back a new image and the<br>
--- original sprite remains untouched.<br>
--- param capInsets The values to use for the cap insets.
--- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 
+-- 
+-- @function [parent=#Scale9Sprite] getCapInsets 
 -- @param self
--- @param #rect_table capInsets
--- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- 
@@ -144,9 +160,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Scale9Sprite] getCapInsets 
+-- @function [parent=#Scale9Sprite] getInsetRight 
 -- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
@@ -177,6 +193,7 @@
 -- @function [parent=#Scale9Sprite] setInsetLeft 
 -- @param self
 -- @param #float leftInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, cc.SpriteFrame         
@@ -198,6 +215,7 @@
 -- @function [parent=#Scale9Sprite] setCapInsets 
 -- @param self
 -- @param #rect_table rect
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- Return the flag which indicates whether the widget is flipped vertically or not.<br>
@@ -221,6 +239,7 @@
 -- @function [parent=#Scale9Sprite] setInsetRight 
 -- @param self
 -- @param #float rightInset
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, string, rect_table, rect_table         
@@ -258,18 +277,21 @@
 -- @function [parent=#Scale9Sprite] setAnchorPoint 
 -- @param self
 -- @param #vec2_table anchorPoint
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setScaleY 
 -- @param self
 -- @param #float scaleY
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setScaleX 
 -- @param self
 -- @param #float scaleX
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -288,31 +310,36 @@
 -- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] cleanup 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- @overload self, float, float         
 -- @overload self, float         
 -- @function [parent=#Scale9Sprite] setScale
 -- @param self
--- @param #float scalex
--- @param #float scaley
+-- @param #float scaleX
+-- @param #float scaleY
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
 
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] updateDisplayedColor 
 -- @param self
 -- @param #color3b_table parentColor
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] setContentSize 
 -- @param self
 -- @param #size_table size
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 
@@ -324,5 +351,6 @@
 -- js ctor
 -- @function [parent=#Scale9Sprite] Scale9Sprite 
 -- @param self
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 return nil

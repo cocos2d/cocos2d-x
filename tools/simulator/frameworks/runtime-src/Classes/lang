@@ -1,0 +1,20 @@
+{
+  "zh-CN": {
+    "View": "视图(&V)",
+    "Exit": "退出(&X)",
+    "File": "文件(&F)",
+    "Portrait": "竖屏",
+    "Landscape": "横屏",
+    "Refresh": "刷新(重启)",
+    "Zoom Out": "缩放"
+  },
+  "zh-Hans": {
+    "View": "视图",
+    "Exit": "退出",
+    "File": "文件",
+    "Portrait": "竖屏",
+    "Landscape": "横屏",
+    "Refresh": "刷新(重启)",
+    "Zoom Out": "缩放"
+  }
+}

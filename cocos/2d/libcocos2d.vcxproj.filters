@@ -4,9 +4,6 @@
     <Filter Include="physics">
       <UniqueIdentifier>{08593631-5bf5-46aa-9436-62595c4f7bf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics\chipmunk">
-      <UniqueIdentifier>{aeadfa95-9c89-4212-98ae-89ad57db596a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="deprecated">
       <UniqueIdentifier>{0b1152b1-c732-4560-8629-87843b0fbd7c}</UniqueIdentifier>
     </Filter>
@@ -238,6 +235,15 @@
     <Filter Include="cocostudio\reader\WidgetReader\SpriteReader">
       <UniqueIdentifier>{9aee531c-f935-4836-bf84-be42e78e38bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\allocator">
+      <UniqueIdentifier>{92ff4e66-3943-47da-a439-c8f182bb871a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
+      <UniqueIdentifier>{e1848cce-b225-42c4-bb6e-6430b6da123b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\shaders">
+      <UniqueIdentifier>{e6eaa24a-a21e-4c1d-b6b2-19326d129af2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -254,21 +260,6 @@
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp">
       <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
-      <Filter>physics\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\xxhash\xxhash.c">
       <Filter>external\xxhash</Filter>
@@ -756,9 +747,6 @@
     </ClCompile>
     <ClCompile Include="..\base\ccRandom.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCAABB.cpp">
-      <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\3d\CCAnimate3D.cpp">
       <Filter>3d</Filter>
@@ -1289,6 +1277,32 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCAsyncTaskPool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorDiagnostics.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobal.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
+      <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\shaders\UIShaders.cpp">
+      <Filter>ui\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCFrustum.cpp" />
+    <ClCompile Include="..\3d\CCPlane.cpp" />
+    <ClCompile Include="..\3d\CCAABB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1305,24 +1319,6 @@
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
-      <Filter>physics\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\xxhash\xxhash.h">
       <Filter>external\xxhash</Filter>
@@ -2505,6 +2501,53 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
+      <Filter>cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCAsyncTaskPool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorGlobal.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorBase.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorDiagnostics.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorMacros.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorMutex.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyDefault.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyFixedBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\allocator\CCAllocatorStrategyPool.h">
+      <Filter>base\allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\shaders\UIShaders.h">
+      <Filter>ui\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCFrustum.h" />
+    <ClInclude Include="..\3d\CCPlane.h" />
+    <ClInclude Include="..\physics\CCPhysicsHelper.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
@@ -2531,6 +2574,9 @@
     <None Include="cocos2d.def" />
     <None Include="..\3d\CCAnimationCurve.inl">
       <Filter>3d</Filter>
+    </None>
+    <None Include="..\ui\shaders\ccShader_grayscale.frag">
+      <Filter>ui\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

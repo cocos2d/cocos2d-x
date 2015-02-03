@@ -13,11 +13,13 @@
 -- @param #cc.Node child
 -- @param #int localZOrder
 -- @param #int tag
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
 
 --------------------------------
 -- 
 -- @function [parent=#ProtectedNode] disableCascadeColor 
 -- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter<br>
@@ -27,6 +29,7 @@
 -- @param self
 -- @param #int tag
 -- @param #bool cleanup
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- Reorders a child according to a new z value.<br>
@@ -36,6 +39,7 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int localZOrder
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.<br>
@@ -45,11 +49,13 @@
 -- @function [parent=#ProtectedNode] removeAllProtectedChildrenWithCleanup 
 -- @param self
 -- @param #bool cleanup
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ProtectedNode] disableCascadeOpacity 
 -- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
@@ -57,6 +63,7 @@
 -- note Don't call this manually unless a child added needs to be removed in the same frame
 -- @function [parent=#ProtectedNode] sortAllProtectedChildren 
 -- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- Gets a child from the container with its tag<br>
@@ -75,12 +82,14 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- Removes all children from the container with a cleanup.<br>
 -- see `removeAllChildrenWithCleanup(bool)`
 -- @function [parent=#ProtectedNode] removeAllProtectedChildren 
 -- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- 
@@ -95,22 +104,26 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ProtectedNode] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ProtectedNode] updateDisplayedColor 
 -- @param self
 -- @param #color3b_table parentColor
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ProtectedNode] cleanup 
 -- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 return nil

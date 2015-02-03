@@ -536,6 +536,7 @@ Developers:
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        added Turkish and Ukrainian language support
         
     hawkwood (Justin Hawkwood)
         Fixing a bug that EditBox doesn't show any text if it's initialized with text.
@@ -814,6 +815,7 @@ Developers:
         Precompiled headers improvements
         Added Application::openUrl for all supported platforms ecept WP8 and WinRT
         Scale9Sprite capInsets set fix
+        Clang static analyzer crash fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -1060,7 +1062,22 @@ Developers:
     shrimpz
         Fix two typos in luaval_to_quaternion
         Fix label crashed on android
+        
+    ton1517
+        Fix the issue that JumpTo can not be applied more than once
     
+    takaokato
+        Fix wrong result in Node:getParenttoNodeTransform() if node is transformed
+    
+    AknEp
+        Fix FileUtils::fullPathForFilename return empty string if file not found
+        
+    kompjoefriek
+        Fix compiling warnings
+        
+    tmr111116
+        fix random int overflow
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

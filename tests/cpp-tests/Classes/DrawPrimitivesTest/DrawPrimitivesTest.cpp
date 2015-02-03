@@ -262,21 +262,27 @@ DrawNodeTest::DrawNodeTest()
     auto s = Director::getInstance()->getWinSize();
     
     auto draw = DrawNode::create();
+	auto draw2 = DrawNode::create();
+
     addChild(draw, 10);
+	addChild(draw2, 10);
+	draw->setLineWidth(10);
+    draw->drawPoint(Vec2(s.width/2-120, s.height/2-120), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     
-    draw->drawPoint(Vec2(s.width/2-120, s.height/2-120), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-    
-    draw->drawPoint(Vec2(s.width/2+120, s.height/2+120), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    draw->drawPoint(Vec2(s.width/2+120, s.height/2+120),  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     
     // draw 4 small points
+	draw->setLineWidth(5);
     Vec2 position[] = { Vec2(60,60), Vec2(70,70), Vec2(60,70), Vec2(70,60) };
-    draw->drawPoints( position, 4,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+	draw2->drawPoints(position, 4,Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
  
     // draw a line
     draw->drawLine(Vec2(0,0), Vec2(s.width, s.height), Color4F(1.0, 0.0, 0.0, 0.5));
     
     // draw a rectangle
     draw->drawRect(Vec2(23,23), Vec2(7,7), Color4F(1,1,0,1));
+    
+    draw->drawRect(Vec2(15,30), Vec2(30,15), Vec2(15,0), Vec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     
     // draw a circle
     draw->drawCircle(VisibleRect::center() + Vec2(140,0), 100, CC_DEGREES_TO_RADIANS(90), 50, true, 1.0f, 2.0f, Color4F(1.0, 0.0, 0.0, 0.5));
@@ -377,7 +383,8 @@ DrawNodeTest::DrawNodeTest()
     draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
     
     for (int i = 0; i < 100; i++) {
-        draw->drawPoint(Vec2(i*7, 5), 5, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+		draw->setLineWidth((float)i / 5 + 1);
+        draw->drawPoint(Vec2(i*7, 5), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
 }
 

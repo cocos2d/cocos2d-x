@@ -1,5 +1,5 @@
-#ifndef HEADER_CURL_INET_NTOP_H
-#define HEADER_CURL_INET_NTOP_H
+#ifndef HEADER_CURL_INET_NTOP_WINRT_H
+#define HEADER_CURL_INET_NTOP_WINRT_H
 /***************************************************************************
  *                                  _   _ ____  _
  *  Project                     ___| | | |  _ \| |

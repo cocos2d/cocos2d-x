@@ -19,10 +19,11 @@
 -- @return EaseOut#EaseOut ret (return value: cc.EaseOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseOut#EaseOut self (return value: cc.EaseOut)
         
 --------------------------------
 -- 

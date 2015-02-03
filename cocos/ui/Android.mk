@@ -36,6 +36,7 @@ UIWebViewImpl-android.cpp \
 UIEditBox/UIEditBox.cpp \
 UIEditBox/UIEditBoxImpl-android.cpp \
 UILayoutComponent.cpp \
+shaders/UIShaders.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../editor-support
 

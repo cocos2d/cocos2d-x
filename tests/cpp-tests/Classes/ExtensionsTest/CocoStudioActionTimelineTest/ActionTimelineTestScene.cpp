@@ -34,7 +34,17 @@ Layer *CreateAnimationLayer(int index)
     case TEST_TIMELINE_PERFORMACE:
         pLayer = new (std::nothrow) TestTimelinePerformance();
         break;
+    case TEST_TIMELINEACTION_ANIMATIONLIST:
+        pLayer = new (std::nothrow) TestTimelineAnimationList();
+        break;
+    case TEST_TIMELINEPROJECTNODE:
+        pLayer = new (std::nothrow) TestTimelineProjectNode();
+        break;
+    case TEST_PROJECTNODEFORSIMALATOR:
+        pLayer = new (std::nothrow) TestProjectNodeForSimulator;
+        break;
     default:
+        CCLOG("NONE OF THIS TEST LAYER");
         break;
     }
 
@@ -185,7 +195,8 @@ void ActionTimelineTestLayer::nextCallback(Ref *pSender)
 void ActionTimelineTestLayer::backCallback(Ref *pSender)
 {
     Scene *s = new (std::nothrow) ActionTimelineTestScene();
-    s->addChild( BackAnimationTest() );
+    auto a = BackAnimationTest();
+    s->addChild( a);
     Director::getInstance()->replaceScene(s);
     s->release();
 }
@@ -199,9 +210,9 @@ void TestActionTimeline::onEnter()
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-
     node->runAction(action);
-    action->gotoFrameAndPlay(0, 40, true);
+    action->gotoFrameAndPlay(0);
+//    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
 
     node->setScale(0.2f);
     node->setPosition(VisibleRect::center());
@@ -223,9 +234,12 @@ void TestChangePlaySection::onEnter()
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-
     node->runAction(action);
-    action->gotoFrameAndPlay(41, action->getDuration(), true);
+    action->gotoFrameAndPlay(41);
+    /*
+    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
+    action = node->getActionTimeline();
+     */
 
     node->setScale(0.2f);
     node->setPosition(VisibleRect::center());
@@ -247,7 +261,7 @@ std::string TestChangePlaySection::title() const
 void TestChangePlaySection::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     if(action->getStartFrame() == 0)
-        action->gotoFrameAndPlay(41, action->getDuration(), true);
+        action->gotoFrameAndPlay(41, 81, true);
     else
         action->gotoFrameAndPlay(0, 40, true);
 }
@@ -257,13 +271,14 @@ void TestTimelineFrameEvent::onEnter()
 {
     ActionTimelineTestLayer::onEnter();
 
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("armature/Cowboy0.plist", "armature/Cowboy0.png");
-
-    Node* node = CSLoader::createNode("ActionTimeline/boy_1.csb");
-    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/boy_1.csb");
-
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
     node->runAction(action);
-    action->gotoFrameAndPlay(0, 60, true);
+    action->gotoFrameAndPlay(0);
+    /*
+    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
+    ActionTimeline* action = node->getActionTimeline();
+     */
 
     node->setScale(0.2f);
     node->setPosition(150,100);
@@ -305,9 +320,9 @@ void TestTimelinePerformance::onEnter()
     {
         Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
         ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
-
         node->runAction(action);
-        action->gotoFrameAndPlay(41, action->getDuration(), true);
+        action->gotoFrameAndPlay(41);
+//        ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
 
         node->setScale(0.1f);
         node->setPosition(i*2,100);
@@ -320,3 +335,73 @@ std::string TestTimelinePerformance::title() const
     return "Test ActionTimeline performance";
 }
 
+// TestTimelineAnimationList
+void TestTimelineAnimationList::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
+    cocostudio::timeline::AnimationInfo standinfo("stand", 0, 40);
+    cocostudio::timeline::AnimationInfo walkinfo("walk", 41, 81);
+    action->addAnimationInfo(standinfo);
+    action->addAnimationInfo(walkinfo);
+    node->runAction(action);
+    action->play("walk", true);
+    
+    node->setScale(0.2f);
+    node->setPosition(150,100);
+    addChild(node);
+}
+
+std::string TestTimelineAnimationList::title() const
+{
+    return "Test ActionTimeline AnimationList";
+}
+
+
+//TestTimelineProjectNode
+//InnerActionFrame make InnerAction Play until action's duration or next InnerActionFrame
+void TestTimelineProjectNode::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/TestAnimation.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/TestAnimation.csb");
+    
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, true);
+    
+    node->setPosition(-300, -300);
+    addChild(node);
+}
+
+std::string TestTimelineProjectNode::title() const
+{
+    return "Test ActionTimeline ProjectNode";
+}
+
+//TestProjectNodeForSimulator
+//InnerActionFrame make InnerAction Play until action's duration or next InnerActionFrame
+void TestProjectNodeForSimulator::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+    Node* node = CSLoader::getInstance()->createNodeWithFlatBuffersForSimulator("ActionTimeline/TestAnimation.csd");
+    ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator("ActionTimeline/TestAnimation.csd");
+    
+    node->runAction(action);
+    action->gotoFrameAndPlay(0, true);
+    
+    node->setPosition(-300, -300);
+    addChild(node);
+    
+    // test for when ProjectNode file lost
+    Node* lackProjectNodefileNode = CSLoader::getInstance()->createNodeWithFlatBuffersForSimulator("ActionTimeline/TestNullProjectNode.csd");
+    ActionTimeline* lackProjectNodefileAction = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator("ActionTimeline/TestNullProjectNode.csd");
+    lackProjectNodefileNode->runAction(lackProjectNodefileAction);
+    lackProjectNodefileAction->gotoFrameAndPlay(0);
+    addChild(lackProjectNodefileNode);
+}
+
+std::string TestProjectNodeForSimulator::title() const
+{
+    return "Test ProjectNode for Simalator";
+}

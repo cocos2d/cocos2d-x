@@ -45,8 +45,10 @@ public:
 
     MeshCommand();
     ~MeshCommand();
-
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
+    
+    void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
+    
+    CC_DEPRECATED_ATTRIBUTE void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
     
     void setCullFaceEnabled(bool enable);
     
@@ -63,6 +65,8 @@ public:
     void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
 
     void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
+    
+    void setTransparent(bool value);
     
     void execute();
     
@@ -123,6 +127,11 @@ protected:
     GLenum _cullFace;
     bool _depthTestEnabled;
     bool _depthWriteEnabled;
+    bool _forceDepthWrite;
+    
+    bool _renderStateCullFace;
+    bool _renderStateDepthTest;
+    GLboolean _renderStateDepthWrite;
 
     // ModelView transform
     Mat4 _mv;

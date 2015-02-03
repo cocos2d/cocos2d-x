@@ -10,11 +10,13 @@
 -- @function [parent=#ActionObject] setCurrentTime 
 -- @param self
 -- @param #float fTime
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Pause the action.
 -- @function [parent=#ActionObject] pause 
 -- @param self
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Sets name for object<br>
@@ -22,6 +24,7 @@
 -- @function [parent=#ActionObject] setName 
 -- @param self
 -- @param #char name
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Sets the time interval of frame.<br>
@@ -29,6 +32,7 @@
 -- @function [parent=#ActionObject] setUnitTime 
 -- @param self
 -- @param #float fTime
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Gets the total time of frame.<br>
@@ -48,6 +52,7 @@
 -- Stop the action.
 -- @function [parent=#ActionObject] stop 
 -- @param self
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- @overload self, cc.CallFunc         
@@ -55,6 +60,7 @@
 -- @function [parent=#ActionObject] play
 -- @param self
 -- @param #cc.CallFunc func
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
 
 --------------------------------
 -- Gets the current time of frame.<br>
@@ -69,6 +75,7 @@
 -- @function [parent=#ActionObject] removeActionNode 
 -- @param self
 -- @param #ccs.ActionNode node
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Gets if the action will loop play.<br>
@@ -83,6 +90,7 @@
 -- @function [parent=#ActionObject] addActionNode 
 -- @param self
 -- @param #ccs.ActionNode node
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Gets the time interval of frame.<br>
@@ -103,6 +111,7 @@
 -- @function [parent=#ActionObject] updateToFrameByTime 
 -- @param self
 -- @param #float fTime
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Sets if the action will loop play.<br>
@@ -110,16 +119,19 @@
 -- @function [parent=#ActionObject] setLoop 
 -- @param self
 -- @param #bool bLoop
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- 
 -- @function [parent=#ActionObject] simulationActionUpdate 
 -- @param self
 -- @param #float dt
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 --------------------------------
 -- Default constructor
 -- @function [parent=#ActionObject] ActionObject 
 -- @param self
+-- @return ActionObject#ActionObject self (return value: ccs.ActionObject)
         
 return nil

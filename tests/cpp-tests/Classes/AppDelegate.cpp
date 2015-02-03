@@ -110,6 +110,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Layout");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Gradient_Color");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage");
+        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/LayoutComponent");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILoadingBar");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIPageView");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIScrollView/Both");
@@ -122,6 +123,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         
         searchPaths.push_back("ccs-res/hd/cocosui/CustomTest/CustomWidgetCallbackBindTest");
         searchPaths.push_back("hd/ActionTimeline");
+        searchPaths.push_back("ccs-res/hd/armature");
     }
     else
     {
@@ -149,6 +151,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Layout");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Gradient_Color");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage");
+        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/LayoutComponent");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILoadingBar");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIPageView");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIScrollView/Both");
@@ -161,6 +164,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         
         searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
         searchPaths.push_back("ActionTimeline");
+        searchPaths.push_back("ccs-res/armature");
+
     }
     
     fileUtils->setSearchPaths(searchPaths);

@@ -1826,7 +1826,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
 {
     TextureDemo::draw(renderer, transform, flags);
     
-    _renderCmd.init(_globalZOrder);
+    _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
@@ -1869,7 +1869,7 @@ void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t
 {
     TextureDemo::draw(renderer, transform, flags);
 
-    _renderCmd.init(_globalZOrder);
+    _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }

@@ -12,15 +12,23 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointRotaryLimit] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointRotaryLimit] setMin 
 -- @param self
 -- @param #float min
+-- @return PhysicsJointRotaryLimit#PhysicsJointRotaryLimit self (return value: cc.PhysicsJointRotaryLimit)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointRotaryLimit] setMax 
 -- @param self
 -- @param #float max
+-- @return PhysicsJointRotaryLimit#PhysicsJointRotaryLimit self (return value: cc.PhysicsJointRotaryLimit)
         
 --------------------------------
 -- 

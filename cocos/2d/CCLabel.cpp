@@ -36,7 +36,6 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
-
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN
@@ -245,10 +244,10 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
 , _horizontalKernings(nullptr)
-, _maxLineWidth(0)
+, _maxLineWidth(0.0f)
 , _labelDimensions(Size::ZERO)
-, _labelWidth(0)
-, _labelHeight(0)
+, _labelWidth(0.0f)
+, _labelHeight(0.0f)
 , _hAlignment(hAlignment)
 , _vAlignment(vAlignment)
 , _currNumLines(-1)
@@ -263,24 +262,29 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
-    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::EVENT_PURGE_TEXTURES, [this](EventCustom* event){
+    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             Node::removeAllChildrenWithCleanup(true);
             _batchNodes.clear();
             _batchNodes.push_back(this);
 
-            if (_contentDirty)
+            if (_fontAtlas)
             {
-                updateContent();
-            }
-            else
-            {
-                alignText();
+                FontAtlasCache::releaseFontAtlas(_fontAtlas);
             }
         }
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
+    
+    auto resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
+        if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
+        {
+            _fontAtlas = nullptr;
+            this->setTTFConfig(_fontConfig);
+        }
+    });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(resetTextureListener, this);
 }
 
 Label::~Label()
@@ -496,7 +500,7 @@ void Label::setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment)
     }
 }
 
-void Label::setMaxLineWidth(unsigned int maxLineWidth)
+void Label::setMaxLineWidth(float maxLineWidth)
 {
     if (_labelWidth == 0 && _maxLineWidth != maxLineWidth)
     {
@@ -505,7 +509,7 @@ void Label::setMaxLineWidth(unsigned int maxLineWidth)
     }
 }
 
-void Label::setDimensions(unsigned int width, unsigned int height)
+void Label::setDimensions(float width, float height)
 {
     if (height != _labelHeight || width != _labelWidth)
     {
@@ -583,6 +587,7 @@ void Label::alignText()
 {
     if (_fontAtlas == nullptr || _currentUTF16String.empty())
     {
+        setContentSize(Size::ZERO);
         return;
     }
 
@@ -591,12 +596,12 @@ void Label::alignText()
         batchNode->getTextureAtlas()->removeAllQuads();
     }
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
-    auto textures = _fontAtlas->getTextures();
+    auto& textures = _fontAtlas->getTextures();
     if (textures.size() > _batchNodes.size())
     {
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
-            auto batchNode = SpriteBatchNode::createWithTexture(textures[index]);
+            auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
             batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
             batchNode->setPosition(Vec2::ZERO);
             Node::addChild(batchNode,0,Node::INVALID_TAG);
@@ -629,9 +634,9 @@ void Label::alignText()
                 uvRect.origin.x    = _lettersInfo[tag].def.U;
                 uvRect.origin.y    = _lettersInfo[tag].def.V;
 
-                letterSprite->setTexture(textures[_lettersInfo[tag].def.textureID]);
+                letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
                 letterSprite->setTextureRect(uvRect);
-            }          
+            }
         }
     }
 
@@ -891,12 +896,16 @@ void Label::drawShadowWithoutBlur()
 void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // Don't do calculate the culling if the transform was not updated
+#if CC_USE_CULLING
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
     _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
-    if(_insideBounds) {
-        _customCommand.init(_globalZOrder);
+    if(_insideBounds)
+#endif
+    {
+        _customCommand.init(_globalZOrder, transform, flags);
         _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+
         renderer->addCommand(&_customCommand);
     }
 }
@@ -986,6 +995,7 @@ void Label::updateContent()
             _fontDefinition._fontFillColor.r = _textColor.r;
             _fontDefinition._fontFillColor.g = _textColor.g;
             _fontDefinition._fontFillColor.b = _textColor.b;
+            _fontDefinition._fontAlpha = _textColor.a;
 
             _fontDefinition._shadow._shadowEnabled = false;
 
@@ -996,6 +1006,7 @@ void Label::updateContent()
                 _fontDefinition._stroke._strokeColor.r = _effectColor.r;
                 _fontDefinition._stroke._strokeColor.g = _effectColor.g;
                 _fontDefinition._stroke._strokeColor.b = _effectColor.b;
+                _fontDefinition._stroke._strokeAlpha = _effectColor.a;
             }
             else
             {

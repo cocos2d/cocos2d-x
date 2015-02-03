@@ -15,12 +15,14 @@
 -- @function [parent=#SkewFrame] setSkewX 
 -- @param self
 -- @param #float skewx
+-- @return SkewFrame#SkewFrame self (return value: ccs.SkewFrame)
         
 --------------------------------
 -- 
 -- @function [parent=#SkewFrame] setSkewY 
 -- @param self
 -- @param #float skewy
+-- @return SkewFrame#SkewFrame self (return value: ccs.SkewFrame)
         
 --------------------------------
 -- 
@@ -39,6 +41,7 @@
 -- @function [parent=#SkewFrame] apply 
 -- @param self
 -- @param #float percent
+-- @return SkewFrame#SkewFrame self (return value: ccs.SkewFrame)
         
 --------------------------------
 -- 
@@ -50,5 +53,6 @@
 -- 
 -- @function [parent=#SkewFrame] SkewFrame 
 -- @param self
+-- @return SkewFrame#SkewFrame self (return value: ccs.SkewFrame)
         
 return nil
