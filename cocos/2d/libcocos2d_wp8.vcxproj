@@ -258,7 +258,6 @@
     <ClInclude Include="..\base\CCConfiguration.h" />
     <ClInclude Include="..\base\CCConsole.h" />
     <ClInclude Include="..\base\CCData.h" />
-    <ClInclude Include="..\base\CCDataVisitor.h" />
     <ClInclude Include="..\base\CCDirector.h" />
     <ClInclude Include="..\base\CCEvent.h" />
     <ClInclude Include="..\base\CCEventAcceleration.h" />
@@ -305,16 +304,7 @@
     <ClInclude Include="..\base\uthash.h" />
     <ClInclude Include="..\base\utlist.h" />
     <ClInclude Include="..\base\ZipUtils.h" />
-    <ClInclude Include="..\deprecated\CCArray.h" />
-    <ClInclude Include="..\deprecated\CCBool.h" />
     <ClInclude Include="..\deprecated\CCDeprecated.h" />
-    <ClInclude Include="..\deprecated\CCDictionary.h" />
-    <ClInclude Include="..\deprecated\CCDouble.h" />
-    <ClInclude Include="..\deprecated\CCFloat.h" />
-    <ClInclude Include="..\deprecated\CCInteger.h" />
-    <ClInclude Include="..\deprecated\CCNotificationCenter.h" />
-    <ClInclude Include="..\deprecated\CCSet.h" />
-    <ClInclude Include="..\deprecated\CCString.h" />
     <ClInclude Include="..\editor-support\cocosbuilder\CCBAnimationManager.h" />
     <ClInclude Include="..\editor-support\cocosbuilder\CCBFileLoader.h" />
     <ClInclude Include="..\editor-support\cocosbuilder\CCBKeyframe.h" />
@@ -736,7 +726,6 @@
     <ClCompile Include="..\base\CCConfiguration.cpp" />
     <ClCompile Include="..\base\CCConsole.cpp" />
     <ClCompile Include="..\base\CCData.cpp" />
-    <ClCompile Include="..\base\CCDataVisitor.cpp" />
     <ClCompile Include="..\base\CCDirector.cpp" />
     <ClCompile Include="..\base\CCEvent.cpp" />
     <ClCompile Include="..\base\CCEventAcceleration.cpp" />
@@ -799,12 +788,6 @@
     <ClCompile Include="..\base\TGAlib.cpp" />
     <ClCompile Include="..\base\ZipUtils.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
-    <ClCompile Include="..\deprecated\CCArray.cpp" />
-    <ClCompile Include="..\deprecated\CCDeprecated.cpp" />
-    <ClCompile Include="..\deprecated\CCDictionary.cpp" />
-    <ClCompile Include="..\deprecated\CCNotificationCenter.cpp" />
-    <ClCompile Include="..\deprecated\CCSet.cpp" />
-    <ClCompile Include="..\deprecated\CCString.cpp" />
     <ClCompile Include="..\editor-support\cocosbuilder\CCBAnimationManager.cpp" />
     <ClCompile Include="..\editor-support\cocosbuilder\CCBFileLoader.cpp" />
     <ClCompile Include="..\editor-support\cocosbuilder\CCBKeyframe.cpp" />
