@@ -1,230 +1,451 @@
 # CocosUsePrebuiltLibs - sets external libs variables to link with
 
-# START CONFIG
-set(_box2d_inc Box2D.h)
-set(_box2d_inc_paths box2d)
-set(_box2d_libs box2d libbox2d)
+# if(_COCOS_USE_PREBUILT_LIBS_CMAKE)
+#     return()
+# endif()
+# set(_COCOS_USE_PREBUILT_LIBS_CMAKE TRUE)
 
-set(_tinyxml2_inc tinyxml2.h)
-set(_tinyxml2_inc_paths tinyxml2)
-set(_tinyxml2_libs tinyxml2 libtinyxml2)
+# This file use some macros defined in Cocosbuildhelpers.cmake.
+#if(NOT _COCOS_BUILD_HELPERS_CMAKE)
+#    message(AUTHOR_WARNING "Include CocosBuildHelpers first.")
+#endif()
 
-set(_minizip_inc unzip.h)
-set(_minizip_inc_paths minizip)
-set(_minizip_libs minizip libminizip)
+# This file define all prebuilt libraries as target.
+# Each prebuilt library has:
+# TARGET: target name of this library, upper case.
+# <TARGET>_INCLUDE_DIR
+# <TARGET>_LIBRARY
+# <TARGET>_RUNTIME:  If is a dll library, has this variable.
 
-set(_edtaa3func_inc edtaa3func.h)
-set(_edtaa3func_inc_paths edtaa3func)
-set(_edtaa3func_libs edtaa3func libedtaa3func)
+#===============================================================================
+# Define some useful macro for simplify the code.
 
-set(_convertutf_inc ConvertUTF.h)
-set(_convertutf_inc_paths convertutf)
-set(_convertutf_libs convertutf libconvertutf)
-
-set(_xxhash_inc xxhash.h)
-set(_xxhash_inc_paths xxhash)
-set(_xxhash_libs xxhash libxxhash)
-
-set(_xxtea_inc xxtea.h)
-set(_xxtea_inc_paths xxtea)
-set(_xxtea_libs xxtea libxxtea)
-
-set(_flatbuffers_inc flatbuffers.h)
-set(_flatbuffers_inc_paths flatbuffers)
-set(_flatbuffers_libs flatbuffer libflatbuffer)
-
-set(_chipmunk_inc chipmunk.h)
-set(_chipmunk_inc_paths chipmunk)
-set(_chipmunk_libs chipmunk libchipmunk)
-
-set(_zlib_inc zlib.h)
-set(_zlib_inc_paths zlib)
-set(_zlib_libs z libz)
-
-set(_curl_inc curl/curl.h)
-set(_curl_inc_paths curl)
-set(_curl_libs crypto ssl libeay32 ssleay32 curl libcurl_imp libcurl)
-
-set(_freetype2_prefix FREETYPE)
-set(_freetype2_inc ft2build.h freetype.h)
-set(_freetype2_inc_paths freetype)
-set(_freetype2_libs freetype freetype250)
-
-set(_jpeg_inc jpeglib.h)
-set(_jpeg_inc_paths jpeg)
-set(_jpeg_libs jpeg libjpeg)
-
-set(_png_inc png.h)
-set(_png_inc_paths png)
-set(_png_libs png libpng)
-
-set(_tiff_inc tiff.h)
-set(_tiff_inc_paths tiff)
-set(_tiff_libs tiff libtiff)
-
-set(_webp_inc decode.h)
-set(_webp_inc_paths webp)
-set(_webp_libs webp libwebp)
-
-set(_websockets_inc libwebsockets.h)
-set(_websockets_inc_paths websockets)
-set(_websockets_libs websockets libwebsockets)
-
-set(_glfw3_inc glfw3.h)
-set(_glfw3_inc_paths glfw)
-set(_glfw3_libs glfw libglfw)
-
-set(_sqlite3_inc sqlite3.h)
-set(_sqlite3_inc_paths sqlite3)
-set(_sqlite3_libs sqlite3)
-
-set(_gles_prefix GLEW)
-set(_gles_inc GL/glew.h)
-set(_gles_libs glew32)
-
-set(_icon_prefix ICONV)
-set(_icon_inc iconv.h)
-set(_icon_inc_paths iconv)
-set(_icon_libs libiconv)
-
-set(_MP3Decoder_prefix MPG123)
-set(_MP3Decoder_inc mpg123.h)
-set(_MP3Decoder_inc_paths Mp3Decoder)
-set(_MP3Decoder_libs libmpg123)
-
-set(_OggDecoder_prefix VORBIS)
-set(_OggDecoder_inc ogg/ogg.h)
-set(_OggDecoder_libs libogg libvorbis libvorbisfile)
-
-set(_OpenalSoft_prefix OPENAL)
-set(_OpenalSoft_inc al.h)
-set(_OpenalSoft_inc_paths AL)
-set(_OpenalSoft_libs OpenAL32)
-
-set(_fmod_prefix FMODEX)
-set(_fmod_inc fmod.h)
-set(_fmod_inc_paths fmod)
-set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
-
-#for lua
-set(_cjson_inc lua_cjson.h)
-set(_cjson_inc_paths cjson)
-set(_cjson_libs cjson libcjson)
-
-set(_luajit_inc lua.h)
-set(_luajit_inc_paths luajit)
-set(_luajit_libs luajit libluajit)
-
-set(_luasocket_inc luasocket.h)
-set(_luasocket_inc_paths luasocket)
-set(_luasocket_libs luasocket libluasocket)
-
-set(all_prebuilt_libs
-  chipmunk
-  curl
-  freetype2
-  jpeg
-  png
-  tiff
-  webp
-  websockets
-  box2d
-  tinyxml2
-  minizip
-  xxhash
-  xxtea
-  flatbuffers
-  convertutf
-  edtaa3func
-  cjson
-  luasocket
-  luajit
-  zlib
-)
-
-
-if(MACOSX)
-  list(APPEND all_prebuilt_libs glfw3)
-endif()
-
-# We use MSVC instead of WINDOWS because it can be mingw that can't use our prebuilt libs
-if(MSVC)
-  list(APPEND all_prebuilt_libs glfw3 sqlite3 gles icon MP3Decoder OggDecoder OpenalSoft zlib)
-endif()
-
-if(LINUX)
-  list(APPEND all_prebuilt_libs fmod glfw3)
-endif()
-
-# END CONFIG
-
-foreach(_lib ${all_prebuilt_libs})
-  if(_${_lib}_prefix)
-    set(_prefix ${_${_lib}_prefix})
-  else()
-    # auto-prefix is uppercased name
-    string(TOUPPER ${_lib} _prefix)
-  endif()
-
-  set(roots ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER})
-  set(include_dir_candidates
-    ${roots}/include  #for ios & mac only
-    ${roots}/${ARCH_DIR}/include)
-
-  set(include_dirs)
-  foreach(_dir ${include_dir_candidates})
-    if(EXISTS ${_dir})
-      # find all include paths
-      if(_${_lib}_inc_paths)
-        set(_suffixes ${_${_lib}_inc_paths})
-      else()
-        set(_suffixes include)
-      endif()
-      foreach(_inc_name ${_${_lib}_inc})
-        unset(_inc_tmp CACHE)
-        find_path(_inc_tmp ${_inc_name} PATH_SUFFIXES ${_suffixes} PATHS ${_dir} NO_DEFAULT_PATH)
-        if(_inc_tmp)
-          list(APPEND include_dirs ${_inc_tmp})
-        endif()
-      endforeach()
-    endif(EXISTS ${_dir})
-  endforeach()
-
-  if(include_dirs)
-    set(${_prefix}_INCLUDE_DIRS ${include_dirs} CACHE PATH "Path to includes for ${_prefix}" FORCE)
-    # message(STATUS "${_lib} include path found")
-  endif()
-  # message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
-
-  set(lib_dir_candidates
-    ${roots}/${ARCH_DIR}/libs
-    ${roots}/${ARCH_DIR}/libs/Debug
-    ${roots}/${ARCH_DIR}/libs/Release
-    ${roots}/libs #for ios&mac only
+# Helper variable, indicated the <cocos>/external directory.
+get_filename_component(external_dir 
+    "${CMAKE_CURRENT_LIST_DIR}/../../external" ABSOLUTE
     )
-  set(libs)
-  foreach(_dir ${lib_dir_candidates})
-    if(EXISTS ${_dir})
-      # find all libs
-      foreach(_lib_name ${_${_lib}_libs})
-        unset(_lib_tmp CACHE)
-        # message(STATUS "Found ${_lib_name} ${_dir}")
-        find_library(_lib_tmp ${_lib_name} PATH ${_dir} NO_DEFAULT_PATH)
-        if(_lib_tmp)
-          list(APPEND libs ${_lib_tmp})
-        endif()
-      endforeach()
-    endif(EXISTS ${_dir})
-  endforeach()
-  if(libs)
-    set(${_prefix}_LIBRARIES ${libs} CACHE STRING "Libraries to link for ${_prefix}" FORCE)
-    # message(STATUS "${_lib} library path found")
-  endif()
-  # message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
 
-  if(${_prefix}_LIBRARIES AND ${_prefix}_INCLUDE_DIRS)
-    # message(STATUS "${_prefix} found")
-    set(${_prefix}_FOUND YES)
-  endif()
-      
-endforeach()
+# Output some message if some prebuilt lib found.
+macro(COCOS_FOUND_PREBUILT)
+    set(${_target}_USE_PREBUILT TRUE)
+    set(${_target}_FOUND TRUE)
+    message(STATUS "Found prebuilt '${_target}::${_target}': "
+        "${${_target}_RUNTIME} ${${_target}_LIBRARY} ${${_target}_INCLUDE_DIR}"
+        )
+endmacro()
+
+# Output some message if there is no prebuilt lib found.
+macro(COCOS_NOT_FOUND_PREBUILT)
+    message(AUTHOR_WARNING "There is no prebuilt '${_target}' for target system "
+        "'${CMAKE_SYSTEM_NAME}' in directory '${_path}'."
+        )
+endmacro()
+
+# 'B'efore 'C'heck the 'P'rebuilt library exists or not, define some local variables.
+# _target: the target name
+# _path: the location which prebuilt library in external folder.
+# _header: the include header file in source file. 
+macro(_BCP _name _path _header_file)
+    string(TOUPPER ${_name} _target)
+    if(TARGET ${_target} OR ${_target}_FOUND})
+        return()
+    endif()
+    set(_path "${external_dir}/${_path}")
+    set(_header ${_header_file})
+endmacro()
+
+# 'C'heck the 'P'ribuilt 'L'ibrary exists or not for given include path and lib path by
+# need predefined vars:
+# _target
+# _path
+# _header
+macro(_CPL _inc_path_surffix _lib_name _lib_path_surffix)
+    set(_old_mode_include ${CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
+    set(_old_mode_library ${CMAKE_FIND_ROOT_PATH_MODE_LIBRARY})
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
+    set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
+    find_path(${_target}_INCLUDE_DIR ${_header}
+        HINTS ${_path}
+        PATH_SUFFIXES ${_inc_path_surffix}
+        NO_DEFAULT_PATH
+        )
+    #message("_path:${_path}/${_inc_path_surffix}/${_header}")
+    find_library(${_target}_LIBRARY ${_lib_name}
+        HINTS ${_path}
+        PATH_SUFFIXES ${_lib_path_surffix}
+        NO_DEFAULT_PATH
+        )
+    if(NOT ${_target}_INCLUDE_DIR OR NOT ${_target}_LIBRARY)
+        COCOS_NOT_FOUND_PREBUILT()
+        set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ${_old_mode_library})
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_old_mode_include})
+        return()
+    endif()
+    # Add target.
+    add_library(${_target}::${_target} UNKNOWN IMPORTED)
+    set_target_properties(${_target}::${_target} PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${${_target}_INCLUDE_DIR}
+        IMPORTED_LOCATION ${${_target}_LIBRARY}
+    )
+    COCOS_FOUND_PREBUILT()
+    mark_as_advanced(${_target}_INCLUDE_DIR ${_target}_LIBRARY)
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ${_old_mode_library})
+    set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_old_mode_include})
+endmacro()
+
+# Check the prebuilt library with dll.
+macro(_CPLD _inc_path_surffix _lib_name _lib_path_surffix _dll_path)
+    #message("_path:${_path}")
+    #message("_header:${_header}")
+    find_path(${_target}_INCLUDE_DIR ${_header}
+        HINTS ${_path}
+        PATH_SUFFIXES ${_inc_path_surffix}
+        NO_DEFAULT_PATH
+        )
+    find_library(${_target}_LIBRARY ${_lib_name}
+        HINTS ${_path}
+        PATH_SUFFIXES ${_lib_path_surffix}
+        NO_DEFAULT_PATH
+        )
+    find_file(${_target}_RUNTIME ${_dll_path}
+        HINTS ${_path}
+        NO_DEFAULT_PATH
+        )
+    if(NOT ${_target}_INCLUDE_DIR OR
+            NOT ${_target}_LIBRARY OR
+            NOT ${_target}_RUNTIME)
+        COCOS_NOT_FOUND_PREBUILT()
+        return()
+    endif()
+    # Add target.
+    add_library(${_target}::${_target} SHARED IMPORTED)
+    set_target_properties(${_target}::${_target} PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${${_target}_INCLUDE_DIR}
+        IMPORTED_LOCATION ${${_target}_RUNTIME}
+        IMPORTED_IMPLIB ${${_target}_LIBRARY}
+    )
+    COCOS_FOUND_PREBUILT()
+    mark_as_advanced(${_target}_INCLUDE_DIR ${_target}_LIBRARY)
+    mark_as_advanced(${_target}_RUNTIME)
+endmacro()
+
+#===============================================================================
+# chipmunk
+function(load_prebuilt_chipmunk)
+    _BCP(chipmunk "chipmunk" "chipmunk.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/chipmunk" "chipmunk" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPL("include/chipmunk" "libchipmunk" "prebuilt/win32/release-lib")
+        find_library(CHIPMUNK_LIBRARY_DEBUG "libchipmunk"
+            HINTS ${_path}
+            PATH_SUFFIXES "prebuilt/win32/debug-lib"
+            NO_DEFAULT_PATH
+            )
+        set_target_properties(${_target}::${_target} PROPERTIES
+            IMPORTED_LOCATION_RELEASE ${CHIPMUNK_LIBRARY}
+            IMPORTED_LOCATION_DEBUG ${CHIPMUNK_LIBRARY_DEBUG}
+            )
+        mark_as_advanced(CHIPMUNK_LIBRARY_DEBUG)
+    elseif(COCOS_TARGET_SYSTEM_LINUX)
+        _CPL("include/chipmunk" "chipmunk" "prebuilt/linux/${COCOS_ARCH_FOLDER_SUFFIX}")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/chipmunk" "chipmunk" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/chipmunk" "chipmunk" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+endfunction()
+load_prebuilt_chipmunk()
+
+#===============================================================================
+# curl
+function(load_prebuilt_curl)
+    _BCP(curl "curl" "curl/curl.h") 
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "curl" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include/win32" "libcurl_imp" "prebuilt/win32" "prebuilt/win32/libcurl.dll")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "curl" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "curl" "prebuilt/android/${ANDROID_ABI}")
+    else()
+        return()
+    endif()
+    # Load crypto and ssl.
+    _BCP(crypto "curl" "curl/easy.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "crypto" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include/win32" "libcurl_imp" "prebuilt/win32" "prebuilt/win32/libeay32.dll")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "crypto" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "crypto" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+
+    _BCP(OpenSSL "curl" "curl/easy.h")
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "ssl" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include/win32" "libcurl_imp" "prebuilt/win32" "prebuilt/win32/ssleay32.dll")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "ssl" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "ssl" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+    message(STATUS "Target 'CURL' depends: CRYPTO, OPENSSL.")
+endfunction()
+load_prebuilt_curl()
+
+#===============================================================================
+# fmodex
+function(load_prebuilt_fmodex)
+    _BCP(fmodex "linux-specific/fmod" "fmod.h") 
+
+    if(COCOS_TARGET_SYSTEM_LINUX)
+        set(_path "${external_dir}/linux-specific/fmod")
+        if(BUILD_TARGET_ARCHITECTURE MATCHES "x86_64")
+            _CPL("include/${COCOS_ARCH_FOLDER_SUFFIX}" "fmodex64" "prebuilt/${COCOS_ARCH_FOLDER_SUFFIX}")
+        else()
+            _CPL("include/${COCOS_ARCH_FOLDER_SUFFIX}" "fmodex" "prebuilt/${COCOS_ARCH_FOLDER_SUFFIX}")
+        endif()
+    endif()
+endfunction()
+load_prebuilt_fmodex()
+
+#===============================================================================
+# freetype2
+function(load_prebuilt_freetype)
+    _BCP(freetype "freetype2" "ft2build.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "freetype" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPL("include/win32" "freetype250" "prebuilt/win32")
+    elseif(COCOS_TARGET_SYSTEM_LINUX)
+        _CPL("include/linux" "freetype" "prebuilt/linux/${COCOS_ARCH_FOLDER_SUFFIX}")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "freetype" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "freetype" "prebuilt/android/${ANDROID_ABI}")
+        get_target_property(_inc_dir ${_target}::${_target} INTERFACE_INCLUDE_DIRECTORIES)
+        set_target_properties(${_target}::${_target} PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_inc_dir};${${_target}_INCLUDE_DIR}/freetype2"
+            )
+    endif()
+endfunction()
+load_prebuilt_freetype()
+
+#===============================================================================
+# glew
+function(load_prebuilt_glew)
+    _BCP(glew "win32-specific/gles" "GL/glew.h")
+
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include/OGLES" "glew32" "prebuilt" "prebuilt/glew32.dll")
+    endif()
+endfunction()
+load_prebuilt_glew()
+
+#===============================================================================
+# glfw3
+function(load_prebuilt_glfw3)
+    _BCP(glfw3 "glfw3" "glfw3.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "glfw3" "prebuilt/mac")
+        set_target_properties(${_target}::${_target} PROPERTIES
+            INTERFACE_LINK_LIBRARIES "-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo"
+            )
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPL("include/win32" "glfw3" "prebuilt/win32")
+        find_package(OpenGL REQUIRED)
+        set_target_properties(${_target}::${_target} PROPERTIES
+            INTERFACE_LINK_LIBRARIES "${OPENGL_gl_LIBRARY}"
+            )
+    endif()
+endfunction()
+load_prebuilt_glfw3()
+
+#===============================================================================
+# jpeg
+function(load_prebuilt_jpeg)
+    _BCP(jpeg "jpeg" "jpeglib.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "jpeg" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPL("include/win32" "libjpeg" "prebuilt/win32")
+    elseif(COCOS_TARGET_SYSTEM_LINUX)
+        _CPL("include/linux" "jpeg" "prebuilt/linux/${COCOS_ARCH_FOLDER_SUFFIX}")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "jpeg" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "jpeg" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+endfunction()
+load_prebuilt_jpeg()
+
+#===============================================================================
+#luajit
+function(load_prebuilt_luajit)
+    _BCP(luajit "lua/luajit" "lua.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include" "luajit" "prebuilt/mac")
+        # luajit works on apple need special link options.
+        set_target_properties(${_target}::${_target} PROPERTIES
+            IMPORTED_LINK_INTERFACE_LIBRARIES "-pagezero_size 10000 -image_base 100000000"
+            )
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include" "lua51" "prebuilt/win32" "prebuilt/win32/lua51.dll")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include" "luajit" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include" "luajit" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+endfunction()
+load_prebuilt_luajit()
+
+#===============================================================================
+# mpg123
+function(load_prebuilt_mpg123)
+    _BCP(mpg123 "win32-specific/MP3Decoder" "mpg123.h")
+
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include" "libmpg123" "prebuilt" "prebuilt/libmpg123.dll")
+    endif()
+endfunction()
+load_prebuilt_mpg123()
+
+#===============================================================================
+# ogg
+function(load_prebuilt_ogg)
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        _BCP(ogg "win32-specific/OggDecoder" "ogg/ogg.h")
+        _CPLD("include" "libogg" "prebuilt" "prebuilt/libogg.dll")
+        _BCP(vorbis "win32-specific/OggDecoder" "vorbis/codec.h")
+        _CPLD("include" "libvorbis" "prebuilt" "prebuilt/libvorbis.dll")
+        _BCP(vorbisfile "win32-specific/OggDecoder" "vorbis/vorbisfile.h")
+        _CPLD("include" "libvorbisfile" "prebuilt" "prebuilt/libvorbisfile.dll")
+        message(STATUS "Target '${_target}' depends: VORBIS, VORBISFILE.")
+    endif()
+endfunction()
+load_prebuilt_ogg()
+
+#===============================================================================
+# OpenAL
+function(load_prebuilt_openal)
+    _BCP(OpenAL "win32-specific/OpenalSoft" "AL/al.h")
+
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include" "OpenAL32" "prebuilt" "prebuilt/OpenAL32.dll")
+    endif()
+endfunction()
+load_prebuilt_openal()
+
+#===============================================================================
+# png
+function(load_prebuilt_png)
+    _BCP(png "png" "png.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "png" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPL("include/win32" "libpng" "prebuilt/win32")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "png" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "png" "prebuilt/android/${ANDROID_ABI}")
+    else()
+        return()
+    endif()
+    message(STATUS "Target '${_target}' depends: ZLIB.")
+endfunction()
+load_prebuilt_png()
+
+#===============================================================================
+# sqlite3
+function(load_prebuilt_sqlite3)
+    _BCP(sqlite3 "sqlite3" "sqlite3.h")
+
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include" "sqlite3" "libraries/win32" "libraries/win32/sqlite3.dll")
+    endif()
+endfunction()
+load_prebuilt_sqlite3()
+
+#===============================================================================
+# tiff
+function(load_prebuilt_tiff)
+    _BCP(tiff "tiff" "tiff.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "tiff" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include/win32" "libtiff" "prebuilt/win32" "prebuilt/win32/libtiff.dll")
+    elseif(COCOS_TARGET_SYSTEM_LINUX)
+        _CPL("include/linux" "tiff" "prebuilt/linux/${COCOS_ARCH_FOLDER_SUFFIX}")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "tiff" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "tiff" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+endfunction()
+load_prebuilt_tiff()
+
+#===============================================================================
+# webp
+function(load_prebuilt_webp)
+    _BCP(webp "webp" "decode.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "webp" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPL("include/win32" "libwebp" "prebuilt/win32")
+    elseif(COCOS_TARGET_SYSTEM_LINUX)
+        _CPL("include/linux" "webp" "prebuilt/linux/${COCOS_ARCH_FOLDER_SUFFIX}")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "webp" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "webp" "prebuilt/android/${ANDROID_ABI}")
+        message(STATUS "Target '${_target}' depends: cpufeatures.")
+    endif()
+endfunction()
+load_prebuilt_webp()
+
+#===============================================================================
+# websockets
+function(load_prebuilt_websockets)
+    _BCP(websockets "websockets" "libwebsockets.h")
+
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        _CPL("include/mac" "websockets" "prebuilt/mac")
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include/win32" "websockets" "prebuilt/win32" "prebuilt/win32/websockets.dll")
+    elseif(COCOS_TARGET_SYSTEM_LINUX)
+        _CPL("include/linux" "websockets" "prebuilt/linux/${COCOS_ARCH_FOLDER_SUFFIX}")
+    elseif(COCOS_TARGET_SYSTEM_IOS)
+        _CPL("include/ios" "websockets" "prebuilt/ios")
+    elseif(COCOS_TARGET_SYSTEM_ANDROID)
+        _CPL("include/android" "websockets" "prebuilt/android/${ANDROID_ABI}")
+    endif()
+endfunction()
+load_prebuilt_websockets()
+
+#===============================================================================
+# zlib
+function(load_prebuilt_zlib)
+    _BCP(zlib "win32-specific/zlib" "zlib.h")
+    
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        _CPLD("include" "libzlib" "prebuilt" "prebuilt/zlib1.dll")
+    endif()
+endfunction()
+load_prebuilt_zlib()
+
+#===============================================================================

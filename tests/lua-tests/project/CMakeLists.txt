@@ -1,69 +1,246 @@
-set(APP_NAME lua-tests)
-set(cocos_root ${Cocos2d-X_SOURCE_DIR})
+project(LUA_TESTS)
 
-set(SAMPLE_SRC
-    Classes/AppDelegate.cpp
-    Classes/lua_assetsmanager_test_sample.cpp
-    Classes/lua_test_bindings.cpp
-)
+#===============================================================================
+# Define executable target 'lua-empty-test'.
+set(app_name lua-tests)
 
-if(LINUX)
-    set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
-elseif(WINDOWS)
-    list(APPEND SAMPLE_SRC proj.win32/main.cpp)
-    set(RES_PREFIX "")
-elseif(MACOSX)
-    set(SAMPLE_SRC ${SAMPLE_SRC} proj.ios_mac/mac/main.cpp)
-
-    file(GLOB_RECURSE APP_RESOURCES ../res/*)
-    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
-    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
-    cocos_mark_resources(FILES ${APP_SCRIPTS} BASEDIR ../src RESOURCEBASE Resources/src)
-    file(GLOB_RECURSE COCOS_SCRIPTS ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/*)
-    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script RESOURCEBASE Resources/src/cocos)
-    file(GLOB_RECURSE TEST_RESOURCES ${CMAKE_SOURCE_DIR}/tests/cpp-tests/Resources/*)
-    cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${CMAKE_SOURCE_DIR}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
-
-    list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
-endif()
-
-include_directories(
-  Classes
-  ../../../cocos/scripting/lua-bindings/manual
-  ../../../cocos/scripting/lua-bindings/manual/tolua
-  ../../../cocos/scripting/lua-bindings/auto
-  ${cocos_root}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
-  ${cocos_root}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include/luajit
-)
-
-# add the executable
-add_executable(${APP_NAME} ${SAMPLE_SRC})
-
-if(MACOSX OR APPLE)
-set(lua_other_linker_flags  "-pagezero_size 10000 -image_base 100000000")
-endif()
-
-target_link_libraries(${APP_NAME} luacocos2d cocos2d ${lua_other_linker_flags})
-
-if(MACOSX OR APPLE)
-  set_target_properties(${APP_NAME} PROPERTIES
-      MACOSX_BUNDLE 1
-      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-      )
-
+if(COCOS_TARGET_SYSTEM_ANDROID)
+    add_library(${app_name} SHARED ${CMAKE_CURRENT_LIST_FILE})
 else()
+    add_executable(${app_name} ${CMAKE_CURRENT_LIST_FILE})
+endif()
+cocos_tweak_target_output_directory(${app_name})
+set_target_properties(${app_name} PROPERTIES
+    FOLDER "tests"
+    )
 
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+#===============================================================================
+# Set include directories.
+target_include_directories(${app_name} PRIVATE
+    "Classes"
+    "../../.."
+    "../../../external"
+    )
 
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+#===============================================================================
+# Add sources.
+cocos_target_sources(${app_name} GROUP "Classes" FILES
+    "Classes/AppDelegate.cpp"
+    "Classes/AppDelegate.h"
+    "Classes/lua_assetsmanager_test_sample.cpp"
+    "Classes/lua_assetsmanager_test_sample.h"
+    "Classes/lua_test_bindings.cpp"
+    "Classes/lua_test_bindings.h"
+)
 
-    pre_build(${APP_NAME}
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}${RES_PREFIX}/res
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}${RES_PREFIX}/src
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}/Resources/src/cocos
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/cpp-tests/Resources ${APP_BIN_DIR}${RES_PREFIX}/res
-      )
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    set(app_src
+        "proj.ios_mac/mac/LuaObjectCBridgeTest.h"
+        "proj.ios_mac/mac/LuaObjectCBridgeTest.mm"
+        "proj.ios_mac/mac/main.cpp"
+        )
+elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    set(app_src
+        "proj.win32/main.cpp"
+        )
+elseif(COCOS_TARGET_SYSTEM_LINUX)
+    set(app_src
+        "proj.linux/main.cpp"
+        )
+elseif(COCOS_TARGET_SYSTEM_IOS)
+    set(app_src
+        "proj.ios_mac/ios/AppController.h"
+        "proj.ios_mac/ios/AppController.mm"
+        "proj.ios_mac/ios/main.m"
+        "proj.ios_mac/ios/RootViewController.h"
+        "proj.ios_mac/ios/RootViewController.mm"
+        )
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    set(app_src
+        "proj.android/jni/main.cpp"
+        )
+else()
+    message(FATAL_ERROR "${CMAKE_CURRENT_LIST_FILE} build on unsupport system.")
+endif()
+cocos_target_sources(${app_name} GROUP "proj" FILES ${app_src})
 
+#===============================================================================
+# Get cpp-tests resources list.
+file(GLOB_RECURSE cpp_res "${CPP_TESTS_SOURCE_DIR}/Resources/*")
+
+#===============================================================================
+# Link dependent libraries.
+target_link_libraries(${app_name} ${LUACOCOS2D_TARGET} ${SPINE_TARGET})
+
+#===============================================================================
+# Specific settings and copy resources.
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    # Add resources to xcodeproj.
+    file(GLOB_RECURSE app_resources "../res/*")
+    cocos_target_resource(${app_name} GROUP "Resources\\res"
+        LOCATION "Resources"
+        FILES ${app_resources}
+        BASEDIR "../res"
+        )
+
+    file(GLOB_RECURSE app_scripts "../src/*")
+    cocos_target_resource(${app_name} GROUP "Resources\\src"
+        LOCATION "Resources/src"
+        FILES ${app_scripts}
+        BASEDIR "../src"
+        )
+
+    file(GLOB_RECURSE cocos_scripts "${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/*")
+    cocos_target_resource(${app_name} GROUP "Resources\\src\\cocos"
+        LOCATION "Resources/src/cocos"
+        FILES ${cocos_scripts}
+        BASEDIR "${COCOS2D_SOURCE_DIR}/scripting/lua-bindings/script"
+        )
+    # Add cpp-tests resources.
+    cocos_target_resource(${app_name} GROUP "Resources\\res"
+        LOCATION "Resources"
+        FILES ${cpp_res}
+        BASEDIR "${CPP_TESTS_SOURCE_DIR}/Resources"
+        )
+    set_target_properties(${app_name} PROPERTIES
+        MACOSX_BUNDLE_BUNDLE_NAME "${app_name}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${COCOS2D_X_VERSION}"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "org.cocos.$(PRODUCT_NAME)"
+        MACOSX_BUNDLE_ICON_FILE "${CMAKE_CURRENT_LIST_DIR}/proj.ios_mac/mac/Icon.icns"
+        )
+elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    set_target_properties(${app_name} PROPERTIES 
+        LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+        )
+elseif(COCOS_TARGET_SYSTEM_LINUX)
+    # Nothing to do.
+elseif(COCOS_TARGET_SYSTEM_IOS)
+    # Add resources to xcodeproj.
+    file(GLOB_RECURSE app_resources "../res/*")
+    cocos_target_resource(${app_name} GROUP "Resources\\res"
+        LOCATION "."
+        FILES ${app_resources}
+        BASEDIR "../res"
+        )
+
+    file(GLOB_RECURSE app_scripts "../src/*")
+    cocos_target_resource(${app_name} GROUP "Resources\\src"
+        LOCATION "src"
+        FILES ${app_scripts}
+        BASEDIR "../src"
+        )
+
+    file(GLOB_RECURSE cocos_scripts "${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/*")
+    cocos_target_resource(${app_name} GROUP "Resources\\src\\cocos"
+        LOCATION "src/cocos"
+        FILES ${cocos_scripts}
+        BASEDIR "${COCOS2D_SOURCE_DIR}/scripting/lua-bindings/script"
+        )
+    # Add cpp-tests resources.
+    cocos_target_resource(${app_name} GROUP "Resources\\res"
+        LOCATION "."
+        FILES ${cpp_res}
+        BASEDIR "${CPP_TESTS_SOURCE_DIR}/Resources"
+        )
+    set(ios_res
+        "proj.ios_mac/ios/Default-568h@2x.png"
+        "proj.ios_mac/ios/Default-667h@2x.png"
+        "proj.ios_mac/ios/Default-736h@3x.png"
+        "proj.ios_mac/ios/Default.png"
+        "proj.ios_mac/ios/Default@2x.png"
+        "proj.ios_mac/ios/Icon-114.png"
+        "proj.ios_mac/ios/Icon-120.png"
+        "proj.ios_mac/ios/Icon-144.png"
+        "proj.ios_mac/ios/Icon-152.png"
+        "proj.ios_mac/ios/Icon-57.png"
+        "proj.ios_mac/ios/Icon-72.png"
+        "proj.ios_mac/ios/Icon-76.png"
+        )
+    cocos_target_resource(${app_name} GROUP "proj"
+        LOCATION "."
+        FLAT_TO_LOCATION TRUE
+        FILES ${ios_res}
+        )
+
+    set_target_properties(${app_name} PROPERTIES
+        MACOSX_BUNDLE_BUNDLE_NAME "${app_name}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${COCOS2D_X_VERSION}"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "org.cocos.$(PRODUCT_NAME)"
+        MACOSX_BUNDLE_ICON_FILE "Icon-57.png"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_LIST_DIR}/proj.ios_mac/ios/InfoCMake.plist"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${COCOS2D_X_VERSION}"
+        )
+endif()
+
+if(XCODE_VERSION)
+    # Nothing to do.
+elseif(MSVC_IDE)
+    # Copy cocos2d dll to OUTPUT_DIRECTORY
+    if(BUILD_SHARED_LIBS)
+        add_custom_command(TARGET ${app_name} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "\"$(SolutionDir)cocos\\$(Configuration)\\${COCOS2D_TARGET}.dll\""
+            "\"$(ProjectDir)$(Configuration)\""
+            )
+    endif()
+
+    # Copy all 'cocos2d' depends Dlls to OUTPUT_DIRECTORY.
+    get_target_property(libs cocos2d INTERFACE_LINK_LIBRARIES)
+    foreach(lib ${libs})
+        if(TARGET ${lib})
+            get_target_property(location ${lib} IMPORTED_LOCATION)
+            get_target_property(implib ${lib} IMPORTED_IMPLIB)
+            if(implib)
+                string(REPLACE "/" "\\" loc_dos ${location})
+                add_custom_command(TARGET ${app_name} POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "\"${loc_dos}\""
+                    "\"$(ProjectDir)$(Configuration)\""
+                    )
+            endif()
+        endif()
+    endforeach()
+
+    # Copy resource folders to WorkingDir(is $(ProjectDir) in VS).
+    file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/../res" res_dir)
+    file(TO_NATIVE_PATH "${CPP_TESTS_SOURCE_DIR}/Resources" cpp_res)
+    file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/../src" src_dir)
+    file(TO_NATIVE_PATH
+        "${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script" 
+        cocos_src_dir
+        )
+
+    add_custom_command(TARGET ${app_name} POST_BUILD
+        COMMAND xcopy /Y /Q /E
+        "\"${res_dir}\""
+        "\"$(ProjectDir)res\\\""
+        COMMAND xcopy /Y /Q /E
+        "\"${cpp_res}\""
+        "\"$(ProjectDir)res\\\""
+        COMMAND xcopy /Y /Q /E
+        "\"${src_dir}\""
+        "\"$(ProjectDir)src\\\""
+        COMMAND xcopy /Y /Q /E
+        "\"${cocos_src_dir}\""
+        "\"$(ProjectDir)src\\cocos\\\""
+        )
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    # TODO
+else()
+    # Copy resource to executable directory.
+    add_custom_command(TARGET ${app_name} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../res"
+        "$<TARGET_FILE_DIR:${app_name}>/Resources/res"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CPP_TESTS_SOURCE_DIR}/Resources"
+        "$<TARGET_FILE_DIR:${app_name}>/Resources/res"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+        "$<TARGET_FILE_DIR:${app_name}>/Resources/src"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script"
+        "$<TARGET_FILE_DIR:${app_name}>/Resources/src/cocos"
+        )
 endif()
 
