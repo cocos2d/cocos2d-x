@@ -238,7 +238,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     return true;
 }
 
-void Camera::project(const Size& viewport, Vec3* src, Vec2* dst) const
+void Camera::project(const Size& viewport, const Vec3* src, Vec2* dst) const
 {
     GP_ASSERT(src);
     GP_ASSERT(dst);
@@ -254,7 +254,7 @@ void Camera::project(const Size& viewport, Vec3* src, Vec2* dst) const
     dst->y = (1.0f - (ndcY + 1.0f) * 0.5f) * viewport.height;
 }
 
-void Camera::unproject(const Size& viewport, Vec3* src, Vec3* dst) const
+void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
 {
     GP_ASSERT(src);
     GP_ASSERT(dst);
