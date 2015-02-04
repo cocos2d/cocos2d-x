@@ -23,128 +23,72 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-cmake_minimum_required(VERSION 2.8)
-# It ensures that when Find*.cmake files included from cmake's Modules dir
-# include another *.cmake file with relative path, that file will be included
-# also from cmake's Modules dir, to not clash with per-project files.
-cmake_policy(SET CMP0017 NEW)
+cmake_minimum_required(VERSION 3.1)
 
-# Use new behaviour with cmake >= 3.0:
-# Only interpret if() arguments as variables or keywords when unquoted.
-if(CMAKE_VERSION VERSION_GREATER 3)
-    cmake_policy(SET CMP0054 NEW)
-endif()
-
-project (Cocos2d-X)
+project(COCOS2D-X)
 
 # The version number
-set(COCOS2D_X_VERSION 4.0alpha0)
+set(COCOS2D_X_VERSION 3.5beta0)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
+# Specify the project cmake module path and include CocosBuildHelpers.
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules")
+set(COCOS_EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 include(CocosBuildHelpers)
 
-message(${BUILDING_STRING})
+#===============================================================================
+# CMake settings for entire project.
 
-set(USE_WEBP_DEFAULT ON)
-if(WINRT OR WP8)
-  set(USE_WEBP_DEFAULT OFF)
+#set(CMAKE_USE_RELATIVE_PATHS TRUE)
+set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
+
+# For multi-config IDE(e.g. VS, Xcode), set debug and release as default.
+if(CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES
+        "Debug;Release"
+        CACHE STRING ""
+        FORCE
+        )
+else()
+    # For single config generator(e.g. Makefile), set release as default.
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
 endif()
 
-set(USE_PREBUILT_LIBS_DEFAULT ON)
-if(MINGW)
-  set(USE_PREBUILT_LIBS_DEFAULT OFF)
+#===============================================================================
+# Add all project targets.
+
+# Include 'cocos' directory for library target 'cocos2d'.
+add_subdirectory("cocos")
+
+# Include tests.
+option(BUILD_TESTS_CPP "Build TestCpp samples" ON)
+if(BUILD_TESTS_CPP)
+    add_subdirectory("tests/cpp-empty-test")
+    add_subdirectory("tests/cpp-tests")
 endif()
 
-set(BUILD_CPP_EMPTY_TESTS_DEFAULT ON)
-set(BUILD_CPP_TESTS_DEFAULT ON)
-set(BUILD_LUA_LIBS_DEFAULT ON)
-set(BUILD_LUA_TESTS_DEFAULT ON)
-# TODO: fix test samples for MSVC
-if(MSVC)
-  set(BUILD_CPP_TESTS_DEFAULT OFF)
-  set(BUILD_LUA_LIBS_DEFAULT OFF)
-  set(BUILD_LUA_TESTS_DEFAULT OFF)
+option(BUILD_LUA_LIBS "Build lua libraries" ON)
+if(BUILD_LUA_LIBS)
+    add_subdirectory("cocos/scripting/lua-bindings")
 endif()
+
+include(CMakeDependentOption)
+CMAKE_DEPENDENT_OPTION(BUILD_TESTS_LUA
+    "Build TestLua samples"
+    ON "BUILD_LUA_LIBS"
+    OFF
+    )
+if(BUILD_TESTS_LUA)
+    add_subdirectory("tests/lua-empty-test/project")
+    add_subdirectory("tests/lua-tests/project")
+endif()
+
+return()
+
+#===============================================================================
+# TODO: Install step.
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
-option(USE_BOX2D "Use box2d for physics library" OFF)
-option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-option(DEBUG_MODE "Debug or release?" ON)
 option(BUILD_EXTENSIONS "Build extension library" ON)
-option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
-option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
-option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-option(BUILD_CPP_TESTS "Build TestCpp samples" ${BUILD_CPP_TESTS_DEFAULT})
-option(BUILD_CPP_EMPTY_TESTS_DEFAULT "Build CppEmptyTest samples" ${BUILD_CPP_EMPTY_TESTS_DEFAULT})
-option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
-option(BUILD_LUA_TESTS "Build TestLua samples" ${BUILD_LUA_TESTS_DEFAULT})
-option(BUILD_JS_LIBS "Build js libraries" OFF)
-option(BUILD_JS_TESTS "Build TestJs samples" OFF)
-option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
-
-if(USE_PREBUILT_LIBS AND MINGW)
-  message(FATAL_ERROR "Prebuilt windows libs can't be used with mingw, please use packages.")
-endif()
-
-if(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE DEBUG)
-else(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE RELEASE)
-endif(DEBUG_MODE)
-
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
-set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-
-# Compiler options
-if(MSVC)
-  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
-                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
-                  -wd4514 -wd4056 -wd4996 -wd4099)
-
-  # Use inline debug info (/Z7) format. Or internal error may occur.
-  # Errors looks like: "xmemory0(592): error C3130: Internal Compiler Error: failed to write injected code block to PDB"
-  foreach(lang C CXX)
-    string(REGEX REPLACE "/Z[iI7]" "" CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG}")
-    set(CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG} /Z7")
-  endforeach()
-
-else()
-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
-  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-  if(CLANG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  endif()
-endif(MSVC)
-
-set(COCOS_EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
-
-# Some macro definitions
-if(WINDOWS)
-
-  if(BUILD_SHARED_LIBS)
-    ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
-  else()
-    ADD_DEFINITIONS (-DCC_STATIC)
-  endif()
-
-  ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32 -D_WIN32)
-  set(PLATFORM_FOLDER win32)
-elseif(MACOSX OR APPLE)
-  ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER mac)
-elseif(LINUX)
-  ADD_DEFINITIONS(-DLINUX)
-  set(PLATFORM_FOLDER linux)
-elseif(ANDROID)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER android)
-else()
-  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
-endif()
 
 if(MINGW)
   #add_definitions(-DGLEW_STATIC)
@@ -156,162 +100,27 @@ if(MINGW)
   endif()
 endif()
 
-# architecture
-if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-  set(ARCH_DIR "x86-64")
-elseif ( CMAKE_SIZEOF_VOID_P EQUAL 4 )
-  set(ARCH_DIR "i386")
-else()
-  message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
-endif()
 
-include_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/deprecated
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform
-  ${CMAKE_CURRENT_SOURCE_DIR}/extensions
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include/luajit
-  ${CMAKE_CURRENT_SOURCE_DIR}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include/spidermonkey
-)
 
-if(USE_PREBUILT_LIBS)
-  include(CocosUsePrebuiltLibs)
-endif()
-
-# desktop platforms
-if(LINUX OR MACOSX OR WINDOWS)
-  cocos_find_package(OpenGL OPENGL REQUIRED)
-
-  if(LINUX OR WINDOWS)
-    cocos_find_package(GLEW GLEW REQUIRED)
-    #TODO: implement correct schema for pass cocos2d specific requirements to projects
-    include_directories(${GLEW_INCLUDE_DIRS})
-  endif()
-
-  cocos_find_package(GLFW3 GLFW3 REQUIRED)
-  include_directories(${GLFW3_INCLUDE_DIRS})
-
-  if(LINUX)
-    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-    find_package(Threads REQUIRED)
-    set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
-
-    cocos_find_package(FMODEX FMODEX REQUIRED)
-    cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
-  endif()
-
-  if(WINDOWS)
-    cocos_find_package(Vorbis VORBIS REQUIRED)
-    cocos_find_package(MPG123 MPG123 REQUIRED)
-    cocos_find_package(OpenAL OPENAL REQUIRED)
     # because FindOpenAL.cmake set include dir for '#include <al.h>' for portability (not for '#include <AL/al.h>'
     set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
   endif()
-endif(LINUX OR MACOSX OR WINDOWS)
 
-# Freetype required on all platforms
-cocos_find_package(Freetype FREETYPE REQUIRED)
 
-# WebP required if used
-if(USE_WEBP)
-  cocos_find_package(WebP WEBP REQUIRED)
-endif(USE_WEBP)
-
-# Chipmunk
-if(USE_CHIPMUNK)
-  cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
-  add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
-  if(IOS OR MACOSX)
-    # without this chipmunk will try to use apple defined geometry types, that conflicts with cocos
-    add_definitions(-DCP_USE_CGPOINTS=0)
-  endif()
-else(USE_CHIPMUNK)
-  add_definitions(-DCC_USE_PHYSICS=0)
-endif(USE_CHIPMUNK)
-
-# Box2d (not prebuilded, exists as source)
-if(USE_BOX2D)
-  cocos_find_package(BOX2D BOX2D REQUIRED)
-  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
-else()
-  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
-endif(USE_BOX2D)
-
-# Tinyxml2 (not prebuilded, exists as source)
-cocos_find_package(TINYXML2 TINYXML2 REQUIRED)
-message(STATUS "TinyXML2 include dirs: ${TINYXML2_INCLUDE_DIRS}")
-
-# libjpeg
-cocos_find_package(JPEG JPEG REQUIRED)
-cocos_find_package(ZLIB ZLIB REQUIRED)
-
-# minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
-# only msys2 currently provides package for this variant, all other
-# dists have packages from zlib, thats very old for us.
-# moreover our embedded version modified to quick provide
-# functionality needed by cocos.
-cocos_find_package(MINIZIP MINIZIP REQUIRED)
-# double check that we have needed functions
-# include(CheckLibraryExists)
-# check_library_exists(${MINIZIP_LIBRARIES} "_unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
-# if(NOT MINIZIP_HAS_GOTOFIRSTFILE2)
-#   message(FATAL_ERROR "Minizip library on you system very old. Please use recent version from https://github.com/nmoinvaz/minizip or enable USE_PREBUILT_LIBS")
-# endif()
-
-cocos_find_package(PNG PNG REQUIRED)
-cocos_find_package(TIFF TIFF REQUIRED)
-cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
-cocos_find_package(CURL CURL REQUIRED)
-
-cocos_find_package(FLATBUFFERS FLATBUFFERS REQUIRED)
+# flatbuffers (not prebuilded, exists as source)
+# TODO: for now we can't use upstream flatbuffers because these files:
+#  cocos/editor-support/cocostudio/CSParseBinary_generated.h
+# was generated by concrete version of flatbuffers compiler
+# and source file not provided. So these files can be
+# compiled only with our in-source version of flatbuffers
+## if(USE_PREBUILT_LIBS)
+  add_subdirectory(external/flatbuffers)
+  set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
+  set(FLATBUFFERS_LIBRARIES flatbuffers)
+## else()
+##  cocos_find_package(Flatbuffers REQUIRED FLATBUFFERS_LIBRARIES)
+##  set(FLATBUFFERS_INCLUDE_DIRS ${FLATBUFFERS_INCLUDE_DIRS})
+## endif()
+message(STATUS "Flatbuffers libs: ${FLATBUFFERS_LIBRARIES}")
 message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
-
-cocos_find_package(XXHASH XXHASH REQUIRED)
-cocos_find_package(XXTEA XXTEA REQUIRED)
-cocos_find_package(EDTAA3FUNC EDTAA3FUNC REQUIRED)
-cocos_find_package(CONVERTUTF CONVERTUTF REQUIRED)
-
-# for luacocos2d
-cocos_find_package(CJSON CJSON REQUIRED)
-cocos_find_package(LUASOCKET LUASOCKET REQUIRED)
-cocos_find_package(LUAJIT LUAJIT REQUIRED)
-
-# libcocos2d.a
-add_subdirectory(cocos)
-
-# build cpp tests
-if(BUILD_CPP_TESTS)
-  add_subdirectory(tests/cpp-tests)
-endif(BUILD_CPP_TESTS)
-
-if(BUILD_CPP_EMPTY_TESTS_DEFAULT)
-  add_subdirectory(tests/cpp-empty-test)
-endif()
-
-## Scripting
-if(BUILD_LUA_LIBS)
-    add_subdirectory(cocos/scripting/lua-bindings)
-
-  # build lua tests
-  if(BUILD_LUA_TESTS)
-    add_subdirectory(tests/lua-tests/project)
-    add_subdirectory(tests/lua-empty-test/project)
-  endif(BUILD_LUA_TESTS)
-
-endif(BUILD_LUA_LIBS)
-
-if(BUILD_JS_LIBS)
-  link_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  )
-    add_subdirectory(cocos/scripting/js-bindings)
-
-  # build js tests
-  if(BUILD_JS_TESTS)
-    add_subdirectory(tests/js-tests/project)
-  endif(BUILD_JS_TESTS)
-
-endif(BUILD_JS_LIBS)
 
