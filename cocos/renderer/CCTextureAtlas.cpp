@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "deprecated/CCString.h"
+#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -44,6 +45,8 @@ TextureAtlas::TextureAtlas()
     , _vdAtlas(nullptr)
     , _vbAtlas(nullptr)
     , _ibAtlas(nullptr)
+    , _quadCount(0)
+    , _quadCapacity(0)
 {}
 
 TextureAtlas::~TextureAtlas()
@@ -55,14 +58,14 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_RELEASE(_ibAtlas);
 }
 
-ssize_t TextureAtlas::getTotalQuads() const
+size_t TextureAtlas::getTotalQuads() const
 {
-    return _vbAtlas->getElementCount() >> 2;
+    return _quadCount;
 }
 
-ssize_t TextureAtlas::getCapacity() const
+size_t TextureAtlas::getCapacity() const
 {
-    return _vbAtlas->getCapacity() >> 2;
+    return _quadCapacity;
 }
 
 Texture2D* TextureAtlas::getTexture() const
@@ -82,18 +85,18 @@ V3F_C4B_T2F_Quad* TextureAtlas::getQuads()
     // return _quads;
     // if someone accesses the quads directly, presume that changes will be made
     // jag. ugh really? surely the burden should be on the changer of verts?
-    _vdAtlas->setDirty(true);
+    _vbAtlas->setDirty(true);
     return _vbAtlas->getElementsT<V3F_C4B_T2F_Quad>();
 }
 
 void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 {
-    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quads, _vbAtlas->getElementCount() >> 2, 0);
+    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quads, _quadCount, 0);
 }
 
 // TextureAtlas - alloc & init
 
-TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
+TextureAtlas * TextureAtlas::create(const std::string& file, size_t capacity)
 {
     TextureAtlas * textureAtlas = new (std::nothrow) TextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))
@@ -105,7 +108,7 @@ TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
     return nullptr;
 }
 
-TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capacity)
+TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, size_t capacity)
 {
     TextureAtlas * textureAtlas = new (std::nothrow) TextureAtlas();
     if (textureAtlas && textureAtlas->initWithTexture(texture, capacity))
@@ -117,7 +120,7 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capac
     return nullptr;
 }
 
-bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
+bool TextureAtlas::initWithFile(const std::string& file, size_t capacity)
 {
     // retained in property
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
@@ -133,7 +136,7 @@ bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
     }
 }
 
-bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
+bool TextureAtlas::initWithTexture(Texture2D *texture, size_t capacity)
 {
     CCASSERT(capacity >= 0, "Capacity must be >= 0");
     
@@ -153,14 +156,15 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     this->_texture = texture;
     CC_SAFE_RETAIN(_texture);
     
-    setupIndices(getCapacity());
+    _quadCapacity = capacity;
+    setupIndices(_quadCapacity);
 
     return true;
 }
 
 std::string TextureAtlas::getDescription() const
 {
-    return StringUtils::format("<TextureAtlas | totalQuads = %zu>", _quadCount);
+    return StringUtils::format("<TextureAtlas | totalQuads = %zu>", getTotalQuads());
 }
 
 // count and begin are both quad indices
@@ -186,22 +190,25 @@ void TextureAtlas::setupIndices(size_t count, size_t begin)
 
 // TextureAtlas - Update, Insert, Move & Remove
 
-void TextureAtlas::updateQuad(V3F_C4B_T2F_Quad *quad, ssize_t index)
+void TextureAtlas::updateQuad(V3F_C4B_T2F_Quad *quad, size_t index)
 {
+    _quadCount = std::max(index + 1, _quadCount);
     _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quad, 1, index);
 }
 
-void TextureAtlas::insertQuad(V3F_C4B_T2F_Quad *quad, ssize_t index)
+void TextureAtlas::insertQuad(V3F_C4B_T2F_Quad *quad, size_t index)
 {
+    ++_quadCount;
     _vbAtlas->insertElementsT<V3F_C4B_T2F_Quad>(quad, 1, index);
 }
 
-void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, ssize_t index, ssize_t amount)
+void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, size_t index, size_t amount)
 {
+    _quadCount += amount;
     _vbAtlas->insertElementsT<V3F_C4B_T2F_Quad>(quads, amount, index);
 }
 
-//void TextureAtlas::insertQuadFromIndex(ssize_t oldIndex, ssize_t newIndex)
+//void TextureAtlas::insertQuadFromIndex(size_t oldIndex, size_t newIndex)
 //{
 //    CCASSERT( newIndex >= 0 && newIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
 //    CCASSERT( oldIndex >= 0 && oldIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
@@ -230,22 +237,25 @@ void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, ssize_t index, ssize_t a
 //    _dirty = true;
 //}
 
-void TextureAtlas::removeQuadAtIndex(ssize_t index)
+void TextureAtlas::removeQuadAtIndex(size_t index)
 {
+    --_quadCount;
     _vbAtlas->removeElementsT<V3F_C4B_T2F_Quad>(1, index);
 }
 
-void TextureAtlas::removeQuadsAtIndex(ssize_t index, ssize_t amount)
+void TextureAtlas::removeQuadsAtIndex(size_t index, size_t amount)
 {
+    _quadCount -= amount;
     _vbAtlas->removeElementsT<V3F_C4B_T2F_Quad>(amount, index);
 }
 
 void TextureAtlas::removeAllQuads()
 {
+    _quadCount = 0;
     _vdAtlas->clear();
 }
 
-bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
+bool TextureAtlas::resizeCapacity(size_t newCapacity)
 {
     auto amount = newCapacity - getCapacity();
     if (amount > 0)
@@ -255,18 +265,21 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
         setupIndices(amount, begin);                  // update new indices for quads
         
         _vbAtlas->addCapacityT<V3F_C4B_T2F_Quad>(amount);
+        
+        _quadCapacity = newCapacity;
     }
     return true;
 }
 
-void TextureAtlas::increaseTotalQuadsWith(ssize_t amount)
+void TextureAtlas::increaseTotalQuadsWith(size_t amount)
 {
     CCASSERT(amount >= 0, "increaseTotalQuadsWith amount >= 0");
     auto count = _vbAtlas->getElementCount();
     _vbAtlas->setElementCount(count + amount);
+    _quadCount += amount;
 }
 
-void TextureAtlas::moveQuadsFromIndex(ssize_t oldIndex, ssize_t amount, ssize_t newIndex)
+void TextureAtlas::moveQuadsFromIndex(size_t oldIndex, size_t amount, size_t newIndex)
 {
 //    CCASSERT(oldIndex>=0 && amount>=0 && newIndex>=0, "values must be >= 0");
 //    CCASSERT(newIndex + amount <= _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
@@ -298,7 +311,7 @@ void TextureAtlas::moveQuadsFromIndex(ssize_t oldIndex, ssize_t amount, ssize_t 
 //    _dirty = true;
 }
 
-void TextureAtlas::moveQuadsFromIndex(ssize_t index, ssize_t newIndex)
+void TextureAtlas::moveQuadsFromIndex(size_t index, size_t newIndex)
 {
 //    CCASSERT(index>=0 && newIndex>=0, "values must be >= 0");
 //    CCASSERT(newIndex + (_totalQuads - index) <= _capacity, "moveQuadsFromIndex move is out of bounds");
@@ -306,24 +319,24 @@ void TextureAtlas::moveQuadsFromIndex(ssize_t index, ssize_t newIndex)
 //    memmove(_quads + newIndex,_quads + index, (_totalQuads - index) * sizeof(_quads[0]));
 }
 
-void TextureAtlas::fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount)
+void TextureAtlas::fillWithEmptyQuadsFromIndex(size_t index, size_t amount)
 {
     _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(nullptr, amount, index);
 }
 
 // TextureAtlas - Drawing
 
-void TextureAtlas::drawNumberOfQuads(ssize_t n)
+void TextureAtlas::drawNumberOfQuads(size_t n)
 {
-    _ibAtlas->setElementCount(6 * getTotalQuads());
+    _ibAtlas->setElementCount(6 * _quadCount);
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw(0, n);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, n);
 }
 
-void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
+void TextureAtlas::drawNumberOfQuads(size_t numberOfQuads, size_t start)
 {
-    _ibAtlas->setElementCount(6 * getTotalQuads());
+    _ibAtlas->setElementCount(6 * _quadCount);
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw(start, numberOfQuads);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfQuads);
@@ -331,7 +344,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
 void TextureAtlas::drawQuads()
 {
-    _ibAtlas->setElementCount(6 * getTotalQuads());
+    _ibAtlas->setElementCount(6 * _quadCount);
     GL::bindTexture2D(_texture->getName()); // ugh, have to have this here for now until I get rid of Label custom commands
     _vdAtlas->draw();
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _vbAtlas->getElementCount());
