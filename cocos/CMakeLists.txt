@@ -38,7 +38,6 @@ include(physics/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
 include(base/CMakeLists.txt)
-include(deprecated/CMakeLists.txt)
 include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
@@ -72,7 +71,6 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_BASE_SRC}
     ${COCOS_AUDIO_SRC}
     ${COCOS_UI_SRC}
-    ${COCOS_DEPRECATED_SRC}
     ${COCOS_NETWORK_SRC}
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}

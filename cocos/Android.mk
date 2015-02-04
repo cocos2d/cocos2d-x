@@ -109,7 +109,6 @@ base/CCAutoreleasePool.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
 base/CCData.cpp \
-base/CCDataVisitor.cpp \
 base/CCDirector.cpp \
 base/CCEvent.cpp \
 base/CCEventAcceleration.cpp \
@@ -178,12 +177,6 @@ renderer/CCVertexIndexData.cpp \
 renderer/CCPrimitive.cpp \
 renderer/CCPrimitiveCommand.cpp \
 renderer/CCTrianglesCommand.cpp \
-deprecated/CCArray.cpp \
-deprecated/CCSet.cpp \
-deprecated/CCString.cpp \
-deprecated/CCDictionary.cpp \
-deprecated/CCDeprecated.cpp \
-deprecated/CCNotificationCenter.cpp \
 physics/CCPhysicsBody.cpp \
 physics/CCPhysicsContact.cpp \
 physics/CCPhysicsJoint.cpp \
