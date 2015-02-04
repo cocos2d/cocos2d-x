@@ -579,7 +579,7 @@ AttachNode* Sprite3D::getAttachNode(const std::string& boneName)
     {
         auto bone = _skeleton->getBoneByName(boneName);
         if (bone)
-		{
+        {
             auto attachNode = AttachNode::create(bone);
             addChild(attachNode);
             _attachments[boneName] = attachNode;
