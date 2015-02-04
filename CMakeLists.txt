@@ -61,6 +61,8 @@ option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_CPP_TESTS "Build TestCpp samples" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" ON)
 option(BUILD_LUA_TESTS "Build TestLua samples" ON)
+option(BUILD_JS_LIBS "Build js libraries" ON)
+option(BUILD_JS_TESTS "Build TestJs samples" ON)
 option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
 
 if(USE_PREBUILT_LIBS AND MINGW)
@@ -286,3 +288,18 @@ if(BUILD_LUA_LIBS)
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)
+
+if(BUILD_JS_LIBS)
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  )
+    add_subdirectory(cocos/scripting/js-bindings)
+
+  # build js tests
+  if(BUILD_JS_TESTS)
+    add_subdirectory(tests/js-tests/project)
+    add_subdirectory(tests/js-moonwarriors/project)
+  endif(BUILD_JS_TESTS)
+
+endif(BUILD_JS_LIBS)
+

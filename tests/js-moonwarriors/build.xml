@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<project name="Javascript compress project" basedir="." default="compile_test_advanced">
+
+    <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
+             classpath="${basedir}/../../../tools/compiler/compiler.jar"/>
+
+    <target name="compile_test_advanced">
+        <jscomp compilationLevel="advanced" warning="quiet"
+                debug="false" output="MoonWarriors-compress.js">
+                <!--sourceMapOutputFile="sourcemap"
+                sourceMapFormat="V3">-->
+            <externs dir="${basedir}/../../../cocos2d">
+                <file name="core/cocos2d_externs.js"/>
+            </externs>
+            <sources dir="${basedir}/../../../cocos2d">
+                <file name="core/platform/CCClass.js"/>
+                <file name="core/cocoa/CCGeometry.js"/>
+                <file name="core/platform/Sys.js"/>
+                <file name="core/platform/CCConfig.js"/>
+                <file name="core/platform/miniFramework.js"/>
+                <file name="core/platform/CCCommon.js"/>
+                <file name="core/platform/CCMacro.js"/>
+                <file name="core/platform/CCFileUtils.js"/>
+                <file name="core/platform/CCTypes.js"/>
+                <file name="core/platform/CCEGLView.js"/>
+                <file name="core/platform/CCScreen.js"/>
+                <file name="core/platform/CCVisibleRect.js"/>
+                <file name="core/cocoa/CCNS.js"/>
+                <file name="core/cocoa/CCAffineTransform.js"/>
+                <file name="core/support/CCPointExtension.js"/>
+                <file name="core/support/CCVertex.js"/>
+                <file name="core/support/TransformUtils.js"/>
+                <file name="core/base_nodes/CCNode.js"/>
+                <file name="core/base_nodes/CCAtlasNode.js"/>
+                <file name="core/textures/CCTexture2D.js"/>
+                <file name="core/textures/CCTextureCache.js"/>
+                <file name="core/textures/CCTextureAtlas.js"/>
+                <file name="core/scenes_nodes/CCScene.js"/>
+                <file name="core/layers_nodes/CCLayer.js"/>
+                <file name="core/sprite_nodes/CCSprite.js"/>
+                <file name="core/sprite_nodes/CCAnimation.js"/>
+                <file name="core/sprite_nodes/CCAnimationCache.js"/>
+                <file name="core/sprite_nodes/CCSpriteFrame.js"/>
+                <file name="core/sprite_nodes/CCSpriteFrameCache.js"/>
+                <file name="core/sprite_nodes/CCSpriteBatchNode.js"/>
+                <file name="core/CCConfiguration.js"/>
+                <file name="core/CCDirector.js"/>
+                <file name="core/CCCamera.js"/>
+                <file name="core/CCScheduler.js"/>
+                <file name="core/CCLoader.js"/>
+                <!--<file name="core/CCDrawingPrimitives.js"/> -->
+                <file name="core/platform/CCSAXParser.js"/>
+                <file name="core/labelTTF/CCLabelTTF.js"/>
+                <file name="core/CCActionManager.js"/>
+                <!--<file name="kazmath/utility.js"/>
+                <file name="kazmath/vec2.js"/>
+                <file name="kazmath/vec3.js"/>
+                <file name="kazmath/vec4.js"/>
+                <file name="kazmath/ray2.js"/>
+                <file name="kazmath/mat3.js"/>
+                <file name="kazmath/mat4.js"/>
+                <file name="kazmath/plane.js"/>
+                <file name="kazmath/quaternion.js"/>
+                <file name="kazmath/aabb.js"/>
+                <file name="kazmath/GL/mat4stack.js"/>
+                <file name="kazmath/GL/matrix.js"/>
+                <file name="shaders/CCShaders.js"/>
+                <file name="shaders/CCShaderCache.js"/>
+                <file name="shaders/CCGLProgram.js"/>
+                <file name="shaders/CCGLStateCache.js"/>
+                <file name="render_texture/CCRenderTexture.js"/>
+                <file name="shape_nodes/CCDrawNode.js"/>-->
+                <file name="actions/CCAction.js"/>
+                <file name="actions/CCActionInterval.js"/>
+                <file name="actions/CCActionInstant.js"/>
+                <file name="actions/CCActionCamera.js"/>
+                <file name="actions/CCActionEase.js"/>
+                <file name="actions/CCActionCatmullRom.js"/>
+                <file name="actions/CCActionTween.js"/>
+                <file name="transitions_nodes/CCTransition.js"/>
+                <file name="transitions_nodes/CCTransitionProgress.js"/>
+                <file name="transitions_nodes/CCTransitionPageTurn.js"/>
+                <file name="label_nodes/CCLabelAtlas.js"/>
+                <file name="label_nodes/CCLabelBMFont.js"/>
+                <file name="touch_dispatcher/CCTouchDelegateProtocol.js"/>
+                <file name="touch_dispatcher/CCTouchHandler.js"/>
+                <file name="touch_dispatcher/CCTouchDispatcher.js"/>
+                <file name="touch_dispatcher/CCMouseDispatcher.js"/>
+                <file name="keyboard_dispatcher/CCKeyboardDelegate.js"/>
+                <file name="keyboard_dispatcher/CCKeyboardDispatcher.js"/>
+                <file name="menu_nodes/CCMenuItem.js"/>
+                <file name="menu_nodes/CCMenu.js"/>
+                <file name="audio/SimpleAudioEngine.js"/>
+            </sources>
+            <sources dir="${basedir}">
+                <file name="src/Resource.js"/>
+                <file name="src/config/GameConfig.js"/>
+                <file name="src/config/EnemyType.js"/>
+                <file name="src/config/Level.js"/>
+                <file name="src/Effect.js"/>
+                <file name="src/Bullet.js"/>
+                <file name="src/Enemy.js"/>
+                <file name="src/Explosion.js"/>
+                <file name="src/Ship.js"/>
+                <file name="src/LevelManager.js"/>
+                <file name="src/GameController.js"/>
+                <file name="src/GameControlMenu.js"/>
+                <file name="src/GameLayer.js"/>
+                <file name="src/GameOver.js"/>
+                <file name="src/AboutLayer.js"/>
+                <file name="src/SettingsLayer.js"/>
+                <file name="src/SysMenu.js"/>
+                <file name="src/HitEffect.js"/>
+                <file name="src/SparkEffect.js"/>
+                <file name="src/Background.js"/>
+                <file name="main.js"/>
+            </sources>
+        </jscomp>
+    </target>
+</project>

@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
-    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)../../../../runtime/win32</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)/Resource</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WindowsLocalDebugger</DebuggerFlavor>
     <DebuggerFlavor Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
@@ -10,9 +10,5 @@
     <LocalDebuggerWorkingDirectory>$(OutDir)../../../../runtime/win32</LocalDebuggerWorkingDirectory>
     <LocalDebuggerCommand>$(OutDir)../../../../runtime/win32/$(TargetFileName)</LocalDebuggerCommand>
     <LocalDebuggerCommandArguments>-workdir $(ProjectDir)../../../</LocalDebuggerCommandArguments>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>-workdir $(ProjectDir)../../../</LocalDebuggerCommandArguments>
-    <LocalDebuggerCommand>$(OutDir)../../../../runtime/win32/$(TargetFileName)</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>

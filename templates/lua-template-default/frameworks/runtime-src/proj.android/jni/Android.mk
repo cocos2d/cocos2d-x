@@ -6,19 +6,18 @@ LOCAL_MODULE := cocos2dlua_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dlua
 
-LOCAL_SRC_FILES := \
-../../Classes/AppDelegate.cpp \
-../../Classes/ide-support/SimpleConfigParser.cpp \
-hellolua/main.cpp
+FILE_LIST := hellolua/main.cpp
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/ide-support/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/ide-support/*.c)
+
+LOCAL_SRC_FILES := $(FILE_LIST:$(LOCAL_PATH)/%=%)
 
 LOCAL_C_INCLUDES := \
-$(LOCAL_PATH)/../../Classes/protobuf-lite \
-$(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../../cocos2d-x/external \
-$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib
-
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib \
+$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib/protobuf-lite
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END

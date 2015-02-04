@@ -306,7 +306,7 @@ To enable set it to a value different than 0. Disabled by default.
  protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS protected
+#define CC_CONSTRUCTOR_ACCESS public
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR
