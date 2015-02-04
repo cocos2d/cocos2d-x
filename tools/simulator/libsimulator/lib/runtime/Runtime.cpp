@@ -28,20 +28,14 @@ THE SOFTWARE.
 #include "ConsoleCommand.h"
 #include "cocos2d.h"
 #include "ConfigParser.h"
-#include "lua_debugger.h"
-#include "CCLuaEngine.h"
-#include "LuaBasicConversions.h"
 
-#include "RuntimeLuaImpl.h"
-#include "RuntimeCCSImpl.h"
+#include "RuntimeCCSImpl.h" // TODO: move to ide-support
 
 #if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
 #include "DeviceEx.h"
 #include "network/CCHTTPRequest.h"
 #include "xxhash/xxhash.h"
 #endif
-
-#include <vector>
 
 std::string g_projectPath;
 
@@ -125,13 +119,13 @@ RuntimeEngine* RuntimeEngine::getInstance()
     if (!instance)
     {
         instance = new RuntimeEngine();
+        instance->addRuntime(RuntimeCCSImpl::create(), kRuntimeEngineCCS);
     }
     return instance;
 }
 
 void RuntimeEngine::setupRuntime()
 {
-    CC_SAFE_DELETE(_runtime);
     //
     // 1. get project type fron config.json
     // 2. init Lua / Js runtime
@@ -149,25 +143,26 @@ void RuntimeEngine::setupRuntime()
         (entryFile.rfind(".luac") != std::string::npos))
     {
         _launchEvent = "lua";
-        _runtime = RuntimeLuaImpl::create();
+        _runtime = _runtimes[kRuntimeEngineLua];
     }
     // Js
     else if ((entryFile.rfind(".js") != std::string::npos) ||
              (entryFile.rfind(".jsc") != std::string::npos))
     {
         _launchEvent = "js";
+        _runtime = _runtimes[kRuntimeEngineJs];
     }
     // csb
     else if ((entryFile.rfind(".csb") != std::string::npos))
     {
         _launchEvent = "ccs";
-        _runtime = RuntimeCCSImpl::create();
+        _runtime = _runtimes[kRuntimeEngineCCS];
     }
     // csd
     else if ((entryFile.rfind(".csd") != std::string::npos))
     {
         _launchEvent = "ccs";
-        _runtime = RuntimeCCSImpl::create();
+        _runtime = _runtimes[kRuntimeEngineCCS];
     }
 }
 
@@ -231,7 +226,13 @@ void RuntimeEngine::start()
 #endif
 
     // set search path
+    bool flagRunningSimulator = false;
     string path = FileUtils::getInstance()->fullPathForFilename(_project.getScriptFileRealPath().c_str());
+    if (path.empty())
+    {
+        flagRunningSimulator = true;
+        path = FileUtils::getInstance()->fullPathForFilename("config.json");
+    }
     size_t pos;
     while ((pos = path.find_first_of("\\")) != std::string::npos)
     {
@@ -243,6 +244,11 @@ void RuntimeEngine::start()
     {
         workdir = path.substr(0, p);
         FileUtils::getInstance()->addSearchPath(workdir);
+        if (flagRunningSimulator)
+        {
+            workdir.append("/src");
+            FileUtils::getInstance()->addSearchPath(workdir);
+        }
     }
 
     // update search pathes
@@ -253,10 +259,10 @@ void RuntimeEngine::start()
         FileUtils::getInstance()->addSearchPath(path);
     }
 
+    setupRuntime();
     //
     if (_project.getDebuggerType() == kCCRuntimeDebuggerNone)
     {
-        setupRuntime();
         startScript(_project.getScriptFileRealPath());
     }
     else
@@ -271,6 +277,11 @@ void RuntimeEngine::end()
     {
         _runtime->end();
     }
+    // delete all runtimes
+    for (auto it = _runtimes.begin(); it != _runtimes.end(); it++)
+    {
+        CC_SAFE_DELETE(it->second);
+    }
     ConsoleCommand::purge();
     FileServer::getShareInstance()->stop();
     ConfigParser::purge();
@@ -280,6 +291,18 @@ void RuntimeEngine::end()
 void RuntimeEngine::setEventTrackingEnable(bool enable)
 {
     _eventTrackingEnable = enable;
+}
+
+void RuntimeEngine::addRuntime(RuntimeProtocol *runtime, int type)
+{
+    if (_runtimes.find(type) == _runtimes.end())
+    {
+        _runtimes.insert(std::make_pair(type, runtime));
+    }
+    else
+    {
+        CCLOG("RuntimeEngine already has Runtime type %d.", type);
+    }
 }
 
 RuntimeProtocol* RuntimeEngine::getRuntime()
@@ -370,3 +393,22 @@ void RuntimeEngine::trackLaunchEvent()
 {
     trackEvent(_launchEvent);
 }
+
+int RuntimeEngine::getRunTimeType()
+{
+    if(0 == _launchEvent.compare("empty")) {
+        setupRuntime();
+    }
+
+    if(0 == _launchEvent.compare("lua")) {
+        return 1;
+    } else if(0 == _launchEvent.compare("js")) {
+        return 2;
+    } else if(0 == _launchEvent.compare("ccs")) {
+        return 3;
+    } else {
+        return 0;
+    }
+}
+
+

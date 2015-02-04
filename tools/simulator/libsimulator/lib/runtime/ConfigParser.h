@@ -32,6 +32,7 @@ public:
     void setUploadPort(int port);
     int getConsolePort();
     int getUploadPort();
+    int getDebugPort();
     bool isLanscape();
     bool isWindowTop();
     
@@ -51,6 +52,7 @@ private:
     bool _isWindowTop;
     int _consolePort;
     int _uploadPort;
+    int _debugPort;
     string _bindAddress;
     
     rapidjson::Document _docRootjson;

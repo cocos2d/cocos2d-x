@@ -1,0 +1,33 @@
+{
+    "debugMode" : 1,
+    "showFPS" : true,
+    "frameRate" : 60,
+    "id" : "gameCanvas",
+    "renderMode" : 0,
+    "engineDir":"../../frameworks/cocos2d-html5",
+
+    "modules" : ["cocos2d"],
+
+    "jsList" : [
+        "src/Resource.js",
+        "src/config/GameConfig.js",
+        "src/config/EnemyType.js",
+        "src/config/Level.js",
+        "src/Effect.js",
+        "src/Bullet.js",
+        "src/Enemy.js",
+        "src/Explosion.js",
+        "src/Ship.js",
+        "src/LevelManager.js",
+        "src/GameController.js",
+        "src/GameControlMenu.js",
+        "src/GameLayer.js",
+        "src/GameOver.js",
+        "src/AboutLayer.js",
+        "src/SettingsLayer.js",
+        "src/SysMenu.js",
+        "src/HitEffect.js",
+        "src/SparkEffect.js",
+        "src/Background.js"
+    ]
+}
