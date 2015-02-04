@@ -375,31 +375,39 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
     for(int i = 0; i < meshSize ; i++ )
     {
         MeshData*   meshData = new (std::nothrow) MeshData();
-         unsigned int attribSize=0;
+        unsigned int attribSize=0;
         // read mesh data
         if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
         {
             CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
             return false;
         }
-        meshData->attribCount = attribSize;
-        meshData->attribs.resize(meshData->attribCount);
-        for (ssize_t j = 0; j < meshData->attribCount; j++)
+        
+        for (ssize_t j = 0; j < attribSize; j++)
         {
-            std::string attribute="";
             unsigned int vSize;
             if (_binaryReader.read(&vSize, 4, 1) != 1)
             {
                 CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
                 return false;
             }
+            
+            MeshVertexAttrib attrib;
             std::string type = _binaryReader.readString();
-            attribute=_binaryReader.readString();
-            meshData->attribs[j].size = vSize;
-            meshData->attribs[j].attribSizeBytes = meshData->attribs[j].size * 4;
-            meshData->attribs[j].type =  parseGLType(type);
-            meshData->attribs[j].vertexAttrib = parseGLProgramAttribute(attribute);
+            std::string attribute = _binaryReader.readString();
+            attrib.size = vSize;
+            attrib.attribSizeBytes = attrib.size * 4;
+            attrib.type = parseGLType(type);
+            
+            // check whether the vertex-attribute is valide
+            attrib.vertexAttrib = parseGLProgramAttribute(attribute);
+            if (attrib.vertexAttrib < 0)
+                continue;
+            
+            meshData->attribs.push_back(attrib);
         }
+        meshData->attribCount = (int)meshData->attribs.size();
+        
         unsigned int vertexSizeInFloat = 0;
         // Read vertex data
         if (_binaryReader.read(&vertexSizeInFloat, 4, 1) != 1 || vertexSizeInFloat == 0)
@@ -692,13 +700,11 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
         const rapidjson::Value& mesh_data = mesh_data_array[index];
         // mesh_vertex_attribute
         const rapidjson::Value& mesh_vertex_attribute = mesh_data[ATTRIBUTES];
-        MeshVertexAttrib tempAttrib;
-        meshData->attribCount=mesh_vertex_attribute.Size();
-        meshData->attribs.resize(meshData->attribCount);
-        for (int i = 0; i < mesh_vertex_attribute.Size(); i++)
+        unsigned int attributeCount = mesh_vertex_attribute.Size();
+        for (int i = 0; i < attributeCount; i++)
         {
+            MeshVertexAttrib tempAttrib;
             const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
-
             int size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetInt();
             std::string type = mesh_vertex_attribute_val[TYPE].GetString();
             std::string attribute = mesh_vertex_attribute_val[ATTRIBUTE].GetString();
@@ -706,9 +712,16 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             tempAttrib.size = size;
             tempAttrib.attribSizeBytes = sizeof(float) * size;
             tempAttrib.type = parseGLType(type);
+            
+            // check whether the vertex-attribute is valide
             tempAttrib.vertexAttrib = parseGLProgramAttribute(attribute);
-            meshData->attribs[i]=tempAttrib;
+            if (tempAttrib.vertexAttrib < 0)
+                continue;
+            
+            meshData->attribs.push_back(tempAttrib);
         }
+        meshData->attribCount = (int)meshData->attribs.size();
+        
         // mesh vertices
         ////////////////////////////////////////////////////////////////////////////////////////////////
         const rapidjson::Value& mesh_data_vertex_array = mesh_data[VERTICES];
@@ -1079,17 +1092,23 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 
     // mesh_vertex_attribute
     const rapidjson::Value& mesh_vertex_attribute = mesh_data_val[ATTRIBUTES];
-    meshdata->attribCount = mesh_vertex_attribute.Size();
-    meshdata->attribs.resize(meshdata->attribCount);
-    for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
+    unsigned int attribCount = mesh_vertex_attribute.Size();
+    for (rapidjson::SizeType i = 0; i < attribCount; i++)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
-
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
-        meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
+        MeshVertexAttrib tempAttrib;
+        tempAttrib.size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
+        tempAttrib.attribSizeBytes = tempAttrib.size * 4;
+        tempAttrib.type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
+        
+        // check whether the vertex-attribute is valide
+        tempAttrib.vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
+        if (tempAttrib.vertexAttrib < 0)
+            continue;
+        
+        meshdata->attribs.push_back(tempAttrib);
     }
+    meshdata->attribCount = (int)meshdata->attribs.size();
 
     // vertices
     meshdata->vertexSizeInFloat = mesh_data_body_array_0[VERTEXSIZE].GetInt();
@@ -1124,17 +1143,23 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
 
     // mesh_vertex_attribute
     const rapidjson::Value& mesh_vertex_attribute = mesh_array_0[ATTRIBUTES];
-    meshdata->attribCount = mesh_vertex_attribute.Size();
-    meshdata->attribs.resize(meshdata->attribCount);
-    for (rapidjson::SizeType i = 0; i < mesh_vertex_attribute.Size(); i++)
+    unsigned int attribCount = mesh_vertex_attribute.Size();
+    for (rapidjson::SizeType i = 0; i < attribCount; i++)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
-
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
-        meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
+        MeshVertexAttrib tempAttrib;
+        tempAttrib.size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
+        tempAttrib.attribSizeBytes = tempAttrib.size * 4;
+        tempAttrib.type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
+        
+        // check whether the vertex-attribute is valide
+        tempAttrib.vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
+        if (tempAttrib.vertexAttrib < 0)
+            continue;
+        
+        meshdata->attribs.push_back(tempAttrib);
     }
+    meshdata->attribCount = (int)meshdata->attribs.size();
 
     // vertices
     const rapidjson::Value& mesh_data_vertex = mesh_array_0[VERTEX];
@@ -1152,7 +1177,6 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
     for (rapidjson::SizeType i = 0; i < mesh_submesh_array.Size(); i++)
     {
         const rapidjson::Value& mesh_submesh_val = mesh_submesh_array[i];
-        //std::string id = mesh_submesh_val[ID].GetString();
 
         // index_number
         unsigned int indexnum = mesh_submesh_val[INDEXNUM].GetUint();
@@ -1927,7 +1951,7 @@ NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
         return NTextureData::Usage::Unknown;
     }
 }
-unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
+int Bundle3D::parseGLProgramAttribute(const std::string& str)
 {
     if (str == "VERTEX_ATTRIB_POSITION")
     {
@@ -1984,7 +2008,7 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
     }
     else
     {
-        CCASSERT(false, "Wrong Attribute type");
+        CCLOG("warning: can not parse the attribute type:'%s'", str.c_str());
         return -1;
     }
 }
@@ -2023,14 +2047,14 @@ Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
 }
 
 Bundle3D::Bundle3D()
-    : _modelPath(""),
-    _path(""),
-    _version(""),
-    _jsonBuffer(nullptr),
-    _binaryBuffer(nullptr),
-    _referenceCount(0),
-    _references(nullptr),
-    _isBinary(false)
+: _modelPath(""),
+_path(""),
+_version(""),
+_jsonBuffer(nullptr),
+_binaryBuffer(nullptr),
+_referenceCount(0),
+_references(nullptr),
+_isBinary(false)
 {
 
 }
