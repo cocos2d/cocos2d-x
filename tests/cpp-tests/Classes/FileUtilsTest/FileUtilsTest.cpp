@@ -122,9 +122,9 @@ void TestResolutionDirectories::onEnter()
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
     
     for( int i=1; i<7; i++) {
-        auto filename = String::createWithFormat("test%d.txt", i);
-        ret = sharedFileUtils->fullPathForFilename(filename->getCString());
-        log("%s -> %s", filename->getCString(), ret.c_str());
+        auto filename = StringUtils::format("test%d.txt", i);
+        ret = sharedFileUtils->fullPathForFilename(filename);
+        log("%s -> %s", filename.c_str(), ret.c_str());
     }
 }
 
@@ -185,9 +185,9 @@ void TestSearchPath::onEnter()
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
     
     for( int i=1; i<3; i++) {
-        auto filename = String::createWithFormat("file%d.txt", i);
-        ret = sharedFileUtils->fullPathForFilename(filename->getCString());
-        log("%s -> %s", filename->getCString(), ret.c_str());
+        auto filename = StringUtils::format("file%d.txt", i);
+        ret = sharedFileUtils->fullPathForFilename(filename);
+        log("%s -> %s", filename.c_str(), ret.c_str());
     }
     
     // Gets external.txt from writable path
@@ -476,53 +476,47 @@ std::string TestDirectoryFuncs::subtitle() const
 void TextWritePlist::onEnter()
 {
     FileUtilsDemo::onEnter();
-    auto root = Dictionary::create();
-    auto string = String::create("string element value");
-    root->setObject(string, "string element key");
+    auto root = ValueMap();
+    root["string element key"] = "string element value";
     
-    auto array = Array::create();
+    auto array = ValueVector();
     
-    auto dictInArray = Dictionary::create();
-    dictInArray->setObject(String::create("string in dictInArray value 0"), "string in dictInArray key 0");
-    dictInArray->setObject(String::create("string in dictInArray value 1"), "string in dictInArray key 1");
-    array->addObject(dictInArray);
+    auto dictInArray = ValueMap();
+    dictInArray["string in dictInArray key 0"] = "string in dictInArray value 0";
+    dictInArray["string in dictInArray key 1"] = "string in dictInArray value 1";
+    array.push_back(Value(dictInArray));
     
-    array->addObject(String::create("string in array"));
+    array.push_back(Value("string in array"));
     
-    auto arrayInArray = Array::create();
-    arrayInArray->addObject(String::create("string 0 in arrayInArray"));
-    arrayInArray->addObject(String::create("string 1 in arrayInArray"));
-    array->addObject(arrayInArray);
+    auto arrayInArray = ValueVector();
+    arrayInArray.push_back(Value("string 0 in arrayInArray"));
+    arrayInArray.push_back(Value("string 1 in arrayInArray"));
+    array.push_back(Value(arrayInArray));
     
-    root->setObject(array, "array");
+    root["array"] = array;
     
-    auto dictInDict = Dictionary::create();
-    dictInDict->setObject(String::create("string in dictInDict value"), "string in dictInDict key");
+    auto dictInDict = ValueMap();
+    dictInDict["string in dictInDict key"] = "string in dictInDict value";
    
     //add boolean to the plist
-    auto booleanObject = Bool::create(true);
-    dictInDict->setObject(booleanObject, "bool");
+    dictInDict["bool"] = true;
     
     //add interger to the plist
-    auto intObject = Integer::create(1024);
-    dictInDict->setObject(intObject, "integer");
+    dictInDict["integer"] = 1024;
     
     //add float to the plist
-    auto floatObject = Float::create(1024.1024f);
-    dictInDict->setObject(floatObject, "float");
+    dictInDict["float"] = 1024.1024f;
     
     //add double to the plist
-    auto doubleObject = Double::create(1024.123);
-    dictInDict->setObject(doubleObject, "double");
+    dictInDict["double"] = 1024.123;
     
-    
-    
-    root->setObject(dictInDict, "dictInDict, Hello World");
+    root["dictInDict, Hello World"] = dictInDict;
     
     // end with /
-    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    auto fileInstance = FileUtils::getInstance();
+    std::string writablePath = fileInstance->getWritablePath();
     std::string fullPath = writablePath + "text.plist";
-    if(root->writeToFile(fullPath.c_str()))
+    if( fileInstance->writeToFile(root, fullPath))
         log("see the plist file at %s", fullPath.c_str());
     else
         log("write plist file failed");
@@ -532,17 +526,13 @@ void TextWritePlist::onEnter()
     auto winSize = Director::getInstance()->getWinSize();
     label->setPosition(winSize.width/2, winSize.height/3);
     
-    auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
-    auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
-    auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
-    log("%s",boolValue->getCString());
-    auto floatValue = (__String*)loadDictInDict->objectForKey("float");
-    log("%s",floatValue->getCString());
-    auto intValue = (__String*)loadDictInDict->objectForKey("integer");
-    log("%s",intValue->getCString());
-    auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
-    log("%s",doubleValue->getCString());
-
+    auto loadDict = fileInstance->getValueMapFromFile(fullPath);
+    auto& loadDictInDict = loadDict["dictInDict, Hello World"].asValueMap();
+  
+    log("%s",loadDictInDict["bool"].asString().c_str());
+    log("%s",loadDictInDict["float"].asString().c_str());
+    log("%s",loadDictInDict["integer"].asString().c_str());
+    log("%s",loadDictInDict["double"].asString().c_str());
 }
 
 void TextWritePlist::onExit()

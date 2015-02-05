@@ -70,7 +70,7 @@ CocostudioParserJsonScene::CocostudioParserJsonScene(std::string jsonFile)
 
 void CocostudioParserJsonScene::onEnter()
 {
-    CCScene::onEnter();
+    Scene::onEnter();
     
     auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
@@ -90,7 +90,7 @@ void CocostudioParserJsonScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    CCDirector::getInstance()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 void CocostudioParserJsonScene::BackCallback(Ref* pSender)

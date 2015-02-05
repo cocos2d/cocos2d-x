@@ -523,7 +523,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", imageErrorFilePath.c_str())->getCString());
+            label->setString(imageErrorFilePath + " missed");
             slider->addChild(label);
         }
         
@@ -588,7 +588,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", normalErrorFilePath.c_str())->getCString());
+            label->setString(normalErrorFilePath + " missed");
             slider->addChild(label);
         }
         
@@ -653,7 +653,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", pressedErrorFilePath.c_str())->getCString());
+            label->setString(pressedErrorFilePath + " missed");
             slider->addChild(label);
         }
         
@@ -718,7 +718,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", disabledErrorFilePath.c_str())->getCString());
+            label->setString(disabledErrorFilePath + " missed");
             slider->addChild(label);
         }
         
@@ -783,7 +783,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", progressErrorFilePath.c_str())->getCString());
+            label->setString(progressErrorFilePath + " missed");
             slider->addChild(label);
         }
         

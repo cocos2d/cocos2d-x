@@ -69,10 +69,7 @@ extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMate
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue, const char* funcName = "");
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , const char* funcName = "");
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
-extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcName = "");
-extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, const char* funcName = "");
 extern bool luaval_to_array_of_vec2(lua_State* L,int lo,cocos2d::Vec2 **points, int *numPoints, const char* funcName = "");
-extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* funcName = "");
 extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const char* funcName = "");
@@ -256,8 +253,6 @@ extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData
 #endif //#if CC_USE_PHYSICS
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
-extern void array_to_luaval(lua_State* L, __Array* inValue);
-extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
 extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
 extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
 extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);

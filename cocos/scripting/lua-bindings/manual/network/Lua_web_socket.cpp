@@ -223,47 +223,6 @@ tolua_lerror:
 #endif //#ifndef TOLUA_DISABLE
 
 /* method: createByAProtocol of class WebSocket */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_createByProtocolArray00
-static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertable(tolua_S,1,"cc.WebSocket",0,&tolua_err) ||
-        !tolua_isstring(tolua_S,2,0,&tolua_err)  ||
-        !tolua_isusertable(tolua_S,3,"CCArray",0,&tolua_err)  ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        const char *urlName  = ((const char*)  tolua_tostring(tolua_S,2,0));
-        __Array*    protocolArray = ((__Array*)  tolua_tousertype(tolua_S,3,0));
-        std::vector<std::string> protocols;
-        if (NULL != protocolArray) {
-            Ref* pObj = NULL;
-            CCARRAY_FOREACH(protocolArray, pObj)
-            {
-                __String* pStr = static_cast<__String*>(pObj);
-                if (NULL != pStr) {
-                    protocols.push_back(pStr->getCString());
-                }
-            }
-        }
-        LuaWebSocket *wSocket = new (std::nothrow) LuaWebSocket();
-        wSocket->init(*wSocket, urlName,&protocols);
-        tolua_pushusertype(tolua_S,(void*)wSocket,"cc.WebSocket");
-        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-    }
-    return 1;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'createByProtocolArray'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
 
 /* method: getReadyState of class WebSocket */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_WebSocket_getReadyState00
@@ -377,7 +336,6 @@ TOLUA_API int tolua_web_socket_open(lua_State* tolua_S){
       tolua_beginmodule(tolua_S,"WebSocket");
         tolua_function(tolua_S, "create", tolua_Cocos2d_WebSocket_create00);
         tolua_function(tolua_S, "createByAProtocol", tolua_Cocos2d_WebSocket_createByAProtocol00);
-        tolua_function(tolua_S, "createByProtocolArray", tolua_Cocos2d_WebSocket_createByProtocolArray00);
         tolua_function(tolua_S, "getReadyState", tolua_Cocos2d_WebSocket_getReadyState00);
         tolua_function(tolua_S, "close", tolua_Cocos2d_WebSocket_close00);
         tolua_function(tolua_S, "sendString", tolua_Cocos2d_WebSocket_sendString00);

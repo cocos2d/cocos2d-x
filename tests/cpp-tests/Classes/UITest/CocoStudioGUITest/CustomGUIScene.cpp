@@ -128,7 +128,7 @@ void CustomGUITestMainLayer::onTouchesMoved(const std::vector<Touch *> &touches,
 
 void CustomGUITestScene::onEnter()
 {
-    CCScene::onEnter();
+    Scene::onEnter();
     
     auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
@@ -148,7 +148,7 @@ void CustomGUITestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    CCDirector::getInstance()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 void CustomGUITestScene::BackCallback(Ref* pSender)

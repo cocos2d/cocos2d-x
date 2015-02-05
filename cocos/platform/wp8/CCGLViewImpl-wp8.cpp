@@ -24,14 +24,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCGLViewImpl-wp8.h"
-#include "deprecated/CCSet.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCIMEDispatcher.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
-#include "deprecated/CCNotificationCenter.h"
 
 using namespace Platform;
 using namespace Windows::Foundation;

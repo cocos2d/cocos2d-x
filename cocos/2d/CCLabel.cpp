@@ -36,7 +36,6 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
-#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

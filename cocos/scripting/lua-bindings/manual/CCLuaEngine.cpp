@@ -112,17 +112,6 @@ int LuaEngine::executeMenuItemEvent(MenuItem* pMenuItem)
     return 0;
 }
 
-int LuaEngine::executeNotificationEvent(__NotificationCenter* pNotificationCenter, const char* pszName)
-{
-    int nHandler = pNotificationCenter->getObserverHandlerByName(pszName);
-    if (!nHandler) return 0;
-    
-    _stack->pushString(pszName);
-    int ret = _stack->executeFunctionByHandler(nHandler, 1);
-    _stack->clean();
-    return ret;
-}
-
 int LuaEngine::executeCallFuncActionEvent(CallFunc* pAction, Ref* pTarget/* = NULL*/)
 {
     return 0;
