@@ -36,12 +36,13 @@ USING_NS_CC_EXT;
 
 namespace
 {
-    class DelegateHandler : public Ref
+    template <class DataType>
+    class RefFactory : public Ref
     {
     public:
-        static DelegateHandler* create()
+        static RefFactory<DataType>* create()
         {
-            auto ret = new (std::nothrow) DelegateHandler();
+            auto ret = new (std::nothrow) RefFactory<DataType>();
             if (ret)
             {
                 ret->autorelease();
@@ -50,8 +51,13 @@ namespace
             return ret;
         }
 
-        Map<const char*, Ref*> delegates;
+        DataType data;
+
+    protected:
+        RefFactory<DataType>() {}
     };
+
+    typedef RefFactory<Map<const char*, Ref*>> DelegateMap;
 }
 
 class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
@@ -619,16 +625,16 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         if (nullptr == delegate)
             return 0;
         
-        auto userDict = static_cast<DelegateHandler*>(self->getUserObject());
+        auto userDict = static_cast<DelegateMap*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = DelegateHandler::create();
+            userDict = DelegateMap::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
         }
-        userDict->delegates.insert(KEY_TABLEVIEW_DELEGATE, delegate);
+        userDict->data.insert(KEY_TABLEVIEW_DELEGATE, delegate);
         
         self->setDelegate(delegate);
         delegate->release();
@@ -755,17 +761,17 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         if (nullptr == dataSource)
             return 0;
         
-        auto userDict = static_cast<DelegateHandler*>(self->getUserObject());
+        auto userDict = static_cast<DelegateMap*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = DelegateHandler::create();
+            userDict = DelegateMap::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
         }
         
-        userDict->delegates.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
+        userDict->data.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         
         self->setDataSource(dataSource);
         
@@ -825,8 +831,8 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        auto userDict = DelegateHandler::create();
-        userDict->delegates.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
+        auto userDict = DelegateMap::create();
+        userDict->data.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         ret->setUserObject(userDict);
         
         dataSource->release();

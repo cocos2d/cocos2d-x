@@ -13,12 +13,13 @@ using namespace cocos2d::extension;
 
 namespace 
 {
-    class StringVectorHandler : public Ref
+    template <class DataType>
+    class RefFactory : public Ref
     {
     public:
-        static StringVectorHandler* create()
+        static RefFactory<DataType>* create()
         {
-            auto ret = new (std::nothrow) StringVectorHandler();
+            auto ret = new (std::nothrow) RefFactory<DataType>();
             if (ret)
             {
                 ret->autorelease();
@@ -27,7 +28,10 @@ namespace
             return ret;
         }
 
-        std::vector<std::string> array;
+        DataType data;
+
+    protected:
+        RefFactory<DataType>() {}
     };
 }
 
@@ -100,9 +104,9 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 pNode = ccbNode->getCCBFileNode();
                 
                 // Skip properties that doesn't have a value to override
-                auto extraPropsNames = (StringVectorHandler*)pNode->getUserObject();
+                auto extraPropsNames = (RefFactory<std::vector<std::string>>*)pNode->getUserObject();
                 bool bFound = false;
-                for (auto& name : extraPropsNames->array)
+                for (auto& name : extraPropsNames->data)
                 {
                     if (0 == name.compare(propertyName.c_str()))
                     {
@@ -115,13 +119,13 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         }
         else if (isExtraProp && pNode == ccbReader->getAnimationManager()->getRootNode())
         {
-            auto extraPropsNames = (StringVectorHandler*)(pNode->getUserObject());
+            auto extraPropsNames = (RefFactory<std::vector<std::string>>*)(pNode->getUserObject());
             if (! extraPropsNames)
             {
-                extraPropsNames = StringVectorHandler::create();
+                extraPropsNames = RefFactory<std::vector<std::string>>::create();
                 pNode->setUserObject(extraPropsNames);
             }
-            extraPropsNames->array.push_back(propertyName);
+            extraPropsNames->data.push_back(propertyName);
         }
 
         switch(type) 
