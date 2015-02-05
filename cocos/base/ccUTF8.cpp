@@ -34,7 +34,7 @@ namespace StringUtils {
     
 std::string format(const char* format, ...)
 {
-#define CC_MAX_STRING_LENGTH (1024*100)
+#define CC_MAX_STRING_LENGTH (102400)
         
     std::string ret;
         
@@ -49,7 +49,7 @@ std::string format(const char* format, ...)
         free(buf);
     }
     va_end(ap);
-        
+#undef CC_MAX_STRING_LENGTH 
     return ret;
 }
 

@@ -34,13 +34,25 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class __DelegateHandler : public Map<const char*,Ref*>, public Ref
+namespace
 {
-public:
-    __DelegateHandler()
+    class DelegateHandler : public Ref
     {
-    }
-};
+    public:
+        static DelegateHandler* create()
+        {
+            auto ret = new (std::nothrow) DelegateHandler();
+            if (ret)
+            {
+                ret->autorelease();
+            }
+
+            return ret;
+        }
+
+        Map<const char*, Ref*> delegates;
+    };
+}
 
 class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
 {
@@ -607,17 +619,16 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         if (nullptr == delegate)
             return 0;
         
-        auto userDict = static_cast<__DelegateHandler*>(self->getUserObject());
+        auto userDict = static_cast<DelegateHandler*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new (std::nothrow) __DelegateHandler();
+            userDict = DelegateHandler::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
-            userDict->release();
         }
-        userDict->insert(KEY_TABLEVIEW_DELEGATE, delegate);
+        userDict->delegates.insert(KEY_TABLEVIEW_DELEGATE, delegate);
         
         self->setDelegate(delegate);
         delegate->release();
@@ -744,18 +755,17 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         if (nullptr == dataSource)
             return 0;
         
-        auto userDict = static_cast<__DelegateHandler*>(self->getUserObject());
+        auto userDict = static_cast<DelegateHandler*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new (std::nothrow) __DelegateHandler();
+            userDict = DelegateHandler::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
-            userDict->release();
         }
         
-        userDict->insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
+        userDict->delegates.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         
         self->setDataSource(dataSource);
         
@@ -815,13 +825,11 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        auto userDict = new (std::nothrow) __DelegateHandler();
-        userDict->insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
+        auto userDict = DelegateHandler::create();
+        userDict->delegates.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         ret->setUserObject(userDict);
-        userDict->release();
         
         dataSource->release();
-        
         
         int  nID = (int)ret->_ID;
         int* pLuaID =  &ret->_luaID;

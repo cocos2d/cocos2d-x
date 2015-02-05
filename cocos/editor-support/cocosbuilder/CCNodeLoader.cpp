@@ -11,11 +11,26 @@ using namespace std;
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-class __StringArray : public Ref
+namespace 
 {
-public:
-    std::vector<std::string> array;
-};
+    class StringVectorHandler : public Ref
+    {
+    public:
+        static StringVectorHandler* create()
+        {
+            auto ret = new (std::nothrow) StringVectorHandler();
+            if (ret)
+            {
+                ret->autorelease();
+            }
+
+            return ret;
+        }
+
+        std::vector<std::string> array;
+    };
+}
+
 
 namespace cocosbuilder {
 
@@ -85,7 +100,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 pNode = ccbNode->getCCBFileNode();
                 
                 // Skip properties that doesn't have a value to override
-                auto extraPropsNames = (__StringArray*)pNode->getUserObject();
+                auto extraPropsNames = (StringVectorHandler*)pNode->getUserObject();
                 bool bFound = false;
                 for (auto& name : extraPropsNames->array)
                 {
@@ -100,10 +115,10 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         }
         else if (isExtraProp && pNode == ccbReader->getAnimationManager()->getRootNode())
         {
-            auto extraPropsNames = (__StringArray*)(pNode->getUserObject());
+            auto extraPropsNames = (StringVectorHandler*)(pNode->getUserObject());
             if (! extraPropsNames)
             {
-                extraPropsNames = new (std::nothrow) __StringArray();
+                extraPropsNames = StringVectorHandler::create();
                 pNode->setUserObject(extraPropsNames);
             }
             extraPropsNames->array.push_back(propertyName);
