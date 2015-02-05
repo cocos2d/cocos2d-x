@@ -34,6 +34,14 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+class __DelegateHandler : public Map<const char*,Ref*>, public Ref
+{
+public:
+    __DelegateHandler()
+    {
+    }
+};
+
 class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
 {
 public:
@@ -599,18 +607,18 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         if (nullptr == delegate)
             return 0;
         
-        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
+        auto userDict = static_cast<__DelegateHandler*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __DelegateHandler();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
             userDict->release();
         }
+        userDict->insert(KEY_TABLEVIEW_DELEGATE, delegate);
         
-        userDict->setObject(delegate, KEY_TABLEVIEW_DELEGATE);
         self->setDelegate(delegate);
         delegate->release();
         
@@ -736,10 +744,10 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         if (nullptr == dataSource)
             return 0;
         
-        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
+        auto userDict = static_cast<__DelegateHandler*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __DelegateHandler();
             if (NULL == userDict)
                 return 0;
             
@@ -747,7 +755,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
             userDict->release();
         }
         
-        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        userDict->insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         
         self->setDataSource(dataSource);
         
@@ -807,8 +815,8 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
-        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        auto userDict = new (std::nothrow) __DelegateHandler();
+        userDict->insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         ret->setUserObject(userDict);
         userDict->release();
         

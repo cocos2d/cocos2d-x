@@ -116,10 +116,6 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
     if (NULL != dynamic_cast<Layer*>(pNode)) {
         return "cc.Layer";
     }
-
-    if (NULL != dynamic_cast<__String*>(pNode)) {
-        return "cc.String";
-    }
     
     if (NULL != dynamic_cast<ParticleSystemQuad*>(pNode)) {
         return "cc.ParticleSystemQuad";

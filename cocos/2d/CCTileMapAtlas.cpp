@@ -29,8 +29,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureAtlas.h"
 #include "base/TGAlib.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
-
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 

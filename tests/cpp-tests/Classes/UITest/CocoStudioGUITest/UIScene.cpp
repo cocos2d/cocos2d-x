@@ -21,7 +21,7 @@ UIScene::~UIScene()
 
 bool UIScene::init()
 {
-    if (CCLayer::init())
+    if (Layer::init())
     {
         _uiLayer = Layer::create();
         addChild(_uiLayer);
@@ -29,7 +29,7 @@ bool UIScene::init()
         _widget = dynamic_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _uiLayer->addChild(_widget);
         
-        Size screenSize = CCDirector::getInstance()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
         Size rootSize = _widget->getContentSize();
         _uiLayer->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                     (screenSize.height - rootSize.height) / 2));
@@ -92,7 +92,7 @@ void UIScene::previousCallback(Ref* sender, Widget::TouchEventType type)
 {
     if (type == Widget::TouchEventType::ENDED)
     {
-        CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
+        Director::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
     }
 }
 
@@ -100,7 +100,7 @@ void UIScene::restartCallback(Ref* sender, Widget::TouchEventType type)
 {
     if (type == Widget::TouchEventType::ENDED)
     {
-        CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
+        Director::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
     }
 }
 
@@ -108,6 +108,6 @@ void UIScene::nextCallback(Ref* sender, Widget::TouchEventType type)
 {
     if (type == Widget::TouchEventType::ENDED)
     {
-        CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
+        Director::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
     }
 }

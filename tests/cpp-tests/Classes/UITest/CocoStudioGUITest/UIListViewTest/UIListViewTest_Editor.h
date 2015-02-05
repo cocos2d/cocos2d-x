@@ -41,7 +41,7 @@ protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Vertical_Editor)
     Text* _displayValueLabel;
     
-    __Array* _array;
+    //Vector<Ref*> _array;
 };
 
 
@@ -58,7 +58,7 @@ protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Horizontal_Editor)
     Text* _displayValueLabel;
     
-    __Array* _array;
+    //__Array* _array;
 };
 
 #endif /* defined(__TestCpp__UIListViewTest_Editor__) */
