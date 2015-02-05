@@ -2,24 +2,37 @@
     "xcode_proj_info" : {
         "build/cocos2d_libs.xcodeproj" : {
             "outputdir" : "prebuilt",
-            "targets" :[ "build all libs" ]
+            "targets" :[ "libcocos2d" ]
         },
         "cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj" : {
             "outputdir" : "prebuilt",
-            "targets" : [ "build all lualibs" ]
+            "targets" : [ "libluacocos2d" ]
+        },
+        "cocos/scripting/js-bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj" : {
+            "outputdir" : "prebuilt",
+            "targets" : [ "libjscocos2d" ]
+        },
+        "tools/simulator/libsimulator/proj.ios_mac/libsimulator.xcodeproj" : {
+            "outputdir" : "prebuilt",
+            "targets" : [ "libsimulator" ]
         }
     },
     "win32_proj_info" : {
         "build/cocos2d-win32.vc2012.sln" : {
             "outputdir" : "prebuilt/win32",
             "targets" : [
-                "libcocosdenshion", "libbox2d", "libchipmunk",
-                "libcocos2d", "libcocosbuilder", "libcocostudio",
-                "libextension", "libui", "libnetwork", "libspine",
-                "libluacocos2d", "libluacocosbuilder", "libluacocosdenshion",
-                "libluacocostudio", "libluaextension", "libluanetwork",
-                "libluaspine", "libluaui"
+                "libcocos2d", "libluacocos2d", "libjscocos2d"
+            ]
+        },
+        "tools/simulator/frameworks/runtime-src/proj.win32/simulator.sln" : {
+            "outputdir" : "prebuilt/win32",
+            "targets" : [
+                "libsimulator"
             ]
         }
+    },
+    "android_proj_info" : {
+        "ABIs" : [ "armeabi", "armeabi-v7a" ],
+        "languages" : [ "lua", "js" ]
     }
 }
