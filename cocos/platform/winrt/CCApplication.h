@@ -80,18 +80,6 @@ public:
         m_openURLDelegate = del;
     }
 
-    /**
-     *  Sets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
-
-    /** 
-     *  Gets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead. 
-     */
-    CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
-
     void setStartupScriptFilename(const std::string& startupScriptFile);
 
     const std::string& getStartupScriptFilename(void)
@@ -101,7 +89,6 @@ public:
 
 protected:
     LARGE_INTEGER       m_nAnimationInterval;
-    std::string         m_resourceRootPath;
     std::string         m_startupScriptFilename;
 
     std::function<void(::Platform::String^)> m_openURLDelegate;
