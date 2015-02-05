@@ -492,15 +492,11 @@ function display.removeImage(imageFilename)
     textureCache:removeTextureForKey(imageFilename)
 end
 
-function display.loadSpriteFrames(dataFilename, imageFilename, callback)
+function display.loadSpriteFrames(dataFilename, imageFilename)
     if display.TEXTURES_PIXEL_FORMAT[imageFilename] then
         cc.Texture2D:setDefaultAlphaPixelFormat(display.TEXTURES_PIXEL_FORMAT[imageFilename])
     end
-    if not callback then
-        spriteFrameCache:addSpriteFrames(dataFilename, imageFilename)
-    else
-        spriteFrameCache:addSpriteFramesAsync(dataFilename, imageFilename, callback)
-    end
+    spriteFrameCache:addSpriteFrames(dataFilename, imageFilename)
     if display.TEXTURES_PIXEL_FORMAT[imageFilename] then
         cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_BGR_A8888)
     end
