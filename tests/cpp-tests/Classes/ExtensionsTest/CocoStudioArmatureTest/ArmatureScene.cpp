@@ -633,8 +633,8 @@ void TestParticleDisplay::onEnter()
     addChild(armature);
 
 
-    ParticleSystem *p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
-    ParticleSystem *p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    ParticleSystem *p1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
+    ParticleSystem *p2 = ParticleSystemQuad::create("Particles/SmallSun.plist");
 
     cocostudio::Bone *bone  = cocostudio::Bone::create("p1");
     bone->addDisplay(p1, 0);
@@ -794,7 +794,7 @@ void TestColliderDetector::onFrameEvent(cocostudio::Bone *bone, const std::strin
     bullet->setPosition(p.x + 60, p.y);
 
     bullet->stopAllActions();
-    bullet->runAction(CCMoveBy::create(1.5f, Vec2(350, 0)));
+    bullet->runAction(MoveBy::create(1.5f, Vec2(350, 0)));
 }
 
 
@@ -1293,14 +1293,14 @@ void TestArmatureNesting2::onEnter()
     touchedMenu = false;
 
     auto label = Label::createWithTTF("Change Mount", "fonts/arial.ttf", 20);
-    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
+    MenuItemLabel* menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
 
-    Menu* pMenu =Menu::create(pMenuItem, nullptr);
+    Menu* menu =Menu::create(menuItem, nullptr);
 
-    pMenu->setPosition( Vec2() );
-    pMenuItem->setPosition(VisibleRect::right().x - 67, VisibleRect::bottom().y + 50);
+    menu->setPosition( Vec2() );
+    menuItem->setPosition(VisibleRect::right().x - 67, VisibleRect::bottom().y + 50);
 
-    addChild(pMenu, 2);
+    addChild(menu, 2);
 
     //Create a hero
     hero = Hero::create("hero");
@@ -1345,7 +1345,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
         armature->setScaleX(1);
     }
 
-    ActionInterval *move = CCMoveTo::create(2, point);
+    ActionInterval *move = MoveTo::create(2, point);
     armature->stopAllActions();
     armature->runAction(Sequence::create(move, nullptr));
 }

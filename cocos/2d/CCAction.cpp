@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCActionInterval.h"
 #include "2d/CCNode.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 //

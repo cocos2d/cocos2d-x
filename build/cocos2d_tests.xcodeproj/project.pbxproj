@@ -261,8 +261,6 @@
 		1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359A318CECF0B00F37B72 /* CurlTest.cpp */; };
 		1AC35B5D18CECF0C00F37B72 /* CurrentLanguageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359A618CECF0B00F37B72 /* CurrentLanguageTest.cpp */; };
 		1AC35B5E18CECF0C00F37B72 /* CurrentLanguageTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359A618CECF0B00F37B72 /* CurrentLanguageTest.cpp */; };
-		1AC35B5F18CECF0C00F37B72 /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359A918CECF0B00F37B72 /* DataVisitorTest.cpp */; };
-		1AC35B6018CECF0C00F37B72 /* DataVisitorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359A918CECF0B00F37B72 /* DataVisitorTest.cpp */; };
 		1AC35B6118CECF0C00F37B72 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359AC18CECF0B00F37B72 /* DrawPrimitivesTest.cpp */; };
 		1AC35B6218CECF0C00F37B72 /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359AC18CECF0B00F37B72 /* DrawPrimitivesTest.cpp */; };
 		1AC35B6318CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC359AF18CECF0B00F37B72 /* EffectsAdvancedTest.cpp */; };
@@ -327,8 +325,6 @@
 		1AC35BF818CECF0C00F37B72 /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8018CECF0B00F37B72 /* SocketIOTest.cpp */; };
 		1AC35BF918CECF0C00F37B72 /* WebSocketTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8218CECF0B00F37B72 /* WebSocketTest.cpp */; };
 		1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8218CECF0B00F37B72 /* WebSocketTest.cpp */; };
-		1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */; };
-		1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */; };
 		1AC35BFF18CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8B18CECF0B00F37B72 /* CustomTableViewCell.cpp */; };
 		1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8B18CECF0B00F37B72 /* CustomTableViewCell.cpp */; };
 		1AC35C0118CECF0C00F37B72 /* TableViewTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A8D18CECF0B00F37B72 /* TableViewTestScene.cpp */; };
@@ -1590,8 +1586,6 @@
 		1AC359A418CECF0B00F37B72 /* CurlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurlTest.h; sourceTree = "<group>"; };
 		1AC359A618CECF0B00F37B72 /* CurrentLanguageTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CurrentLanguageTest.cpp; sourceTree = "<group>"; };
 		1AC359A718CECF0B00F37B72 /* CurrentLanguageTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentLanguageTest.h; sourceTree = "<group>"; };
-		1AC359A918CECF0B00F37B72 /* DataVisitorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataVisitorTest.cpp; sourceTree = "<group>"; };
-		1AC359AA18CECF0B00F37B72 /* DataVisitorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVisitorTest.h; sourceTree = "<group>"; };
 		1AC359AC18CECF0B00F37B72 /* DrawPrimitivesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawPrimitivesTest.cpp; sourceTree = "<group>"; };
 		1AC359AD18CECF0B00F37B72 /* DrawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPrimitivesTest.h; sourceTree = "<group>"; };
 		1AC359AF18CECF0B00F37B72 /* EffectsAdvancedTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectsAdvancedTest.cpp; sourceTree = "<group>"; };
@@ -1671,8 +1665,6 @@
 		1AC35A8118CECF0B00F37B72 /* SocketIOTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketIOTest.h; sourceTree = "<group>"; };
 		1AC35A8218CECF0B00F37B72 /* WebSocketTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketTest.cpp; sourceTree = "<group>"; };
 		1AC35A8318CECF0B00F37B72 /* WebSocketTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketTest.h; sourceTree = "<group>"; };
-		1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotificationCenterTest.cpp; sourceTree = "<group>"; };
-		1AC35A8618CECF0B00F37B72 /* NotificationCenterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCenterTest.h; sourceTree = "<group>"; };
 		1AC35A8B18CECF0B00F37B72 /* CustomTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomTableViewCell.cpp; sourceTree = "<group>"; };
 		1AC35A8C18CECF0B00F37B72 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		1AC35A8D18CECF0B00F37B72 /* TableViewTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTestScene.cpp; sourceTree = "<group>"; };
@@ -2718,7 +2710,6 @@
 				1AC359A118CECF0B00F37B72 /* controller.h */,
 				1AC359A218CECF0B00F37B72 /* CurlTest */,
 				1AC359A518CECF0B00F37B72 /* CurrentLanguageTest */,
-				1AC359A818CECF0B00F37B72 /* DataVisitorTest */,
 				1AC359AB18CECF0B00F37B72 /* DrawPrimitivesTest */,
 				1AC359AE18CECF0B00F37B72 /* EffectsAdvancedTest */,
 				1AC359B118CECF0B00F37B72 /* EffectsTest */,
@@ -2999,15 +2990,6 @@
 			path = CurrentLanguageTest;
 			sourceTree = "<group>";
 		};
-		1AC359A818CECF0B00F37B72 /* DataVisitorTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC359A918CECF0B00F37B72 /* DataVisitorTest.cpp */,
-				1AC359AA18CECF0B00F37B72 /* DataVisitorTest.h */,
-			);
-			path = DataVisitorTest;
-			sourceTree = "<group>";
-		};
 		1AC359AB18CECF0B00F37B72 /* DrawPrimitivesTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -3048,7 +3030,6 @@
 				1AC35A7B18CECF0B00F37B72 /* ExtensionsTest.cpp */,
 				1AC35A7C18CECF0B00F37B72 /* ExtensionsTest.h */,
 				1AC35A7D18CECF0B00F37B72 /* NetworkTest */,
-				1AC35A8418CECF0B00F37B72 /* NotificationCenterTest */,
 				1AC35A8A18CECF0B00F37B72 /* TableViewTest */,
 			);
 			path = ExtensionsTest;
@@ -3301,15 +3282,6 @@
 				1AC35A8318CECF0B00F37B72 /* WebSocketTest.h */,
 			);
 			path = NetworkTest;
-			sourceTree = "<group>";
-		};
-		1AC35A8418CECF0B00F37B72 /* NotificationCenterTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35A8518CECF0B00F37B72 /* NotificationCenterTest.cpp */,
-				1AC35A8618CECF0B00F37B72 /* NotificationCenterTest.h */,
-			);
-			path = NotificationCenterTest;
 			sourceTree = "<group>";
 		};
 		1AC35A8A18CECF0B00F37B72 /* TableViewTest */ = {
@@ -5890,7 +5862,6 @@
 				292CF01419A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */,
 				D0FD03641A3B546400825BB5 /* AllocatorTest.cpp in Sources */,
 				29080DBF191B595E0066F8DF /* UIPageViewTest_Editor.cpp in Sources */,
-				1AC35B5F18CECF0C00F37B72 /* DataVisitorTest.cpp in Sources */,
 				1AC35B5D18CECF0C00F37B72 /* CurrentLanguageTest.cpp in Sources */,
 				1AC35B3B18CECF0C00F37B72 /* Bug-350.cpp in Sources */,
 				1AC35C4718CECF0C00F37B72 /* SchedulerTest.cpp in Sources */,
@@ -5980,7 +5951,6 @@
 				1AC35CA618CECF1E00F37B72 /* main.cpp in Sources */,
 				1AC35BE918CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
 				1AC35B7318CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
-				1AC35BFB18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				1AC35C3518CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
 				1AC35C3B18CECF0C00F37B72 /* PerformanceTouchesTest.cpp in Sources */,
 				29080D8F191B595E0066F8DF /* CocoStudioGUITest.cpp in Sources */,
@@ -6097,7 +6067,6 @@
 				29080DCC191B595E0066F8DF /* UIScrollViewTest.cpp in Sources */,
 				1AC35BE818CECF0C00F37B72 /* CCControlScene.cpp in Sources */,
 				29080DAA191B595E0066F8DF /* UICheckBoxTest_Editor.cpp in Sources */,
-				1AC35B6018CECF0C00F37B72 /* DataVisitorTest.cpp in Sources */,
 				1AC35B5E18CECF0C00F37B72 /* CurrentLanguageTest.cpp in Sources */,
 				29080DE2191B595E0066F8DF /* UITextTest_Editor.cpp in Sources */,
 				29080DA8191B595E0066F8DF /* UICheckBoxTest.cpp in Sources */,
@@ -6185,7 +6154,6 @@
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
 				1AC35B7418CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
 				29080D9E191B595E0066F8DF /* CustomParticleWidgetReader.cpp in Sources */,
-				1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */,
 				1AC35C3618CECF0C00F37B72 /* PerformanceSpriteTest.cpp in Sources */,
 				B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */,

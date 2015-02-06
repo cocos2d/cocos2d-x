@@ -60,7 +60,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\controller.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsTest\EffectsTest.cpp" />
@@ -95,7 +94,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
@@ -303,7 +301,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\controller.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsTest\EffectsTest.h" />
@@ -353,7 +350,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.h" />

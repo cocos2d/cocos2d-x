@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "base/CCIMEDispatcher.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
-#include "deprecated/CCNotificationCenter.h"
 
 using namespace Platform;
 using namespace Concurrency;

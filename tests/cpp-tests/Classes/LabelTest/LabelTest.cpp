@@ -1057,7 +1057,7 @@ const char* LabelTTFTest::getCurrentAlignment()
             break;
     }
 
-    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal).c_str();
 }
 
 std::string LabelTTFTest::title() const

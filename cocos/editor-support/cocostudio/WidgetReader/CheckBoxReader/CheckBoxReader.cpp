@@ -489,7 +489,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", backGroundErrorFilePath.c_str())->getCString());
+            label->setString(backGroundErrorFilePath + " missed");
             checkBox->addChild(label);
         }
         
@@ -554,7 +554,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", backGroundSelectedErrorFilePath.c_str())->getCString());
+            label->setString(backGroundSelectedErrorFilePath + " missed");
             checkBox->addChild(label);
         }
         
@@ -619,7 +619,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", frontCrossErrorFilePath.c_str())->getCString());
+            label->setString(frontCrossErrorFilePath + " missed");
             checkBox->addChild(label);
         }
         
@@ -684,7 +684,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", backGroundBoxDisabledErrorFilePath.c_str())->getCString());
+            label->setString(backGroundBoxDisabledErrorFilePath + " missed");
             checkBox->addChild(label);
         }
         
@@ -749,7 +749,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", frontCrossDisabledErrorFilePath.c_str())->getCString());
+            label->setString(frontCrossDisabledErrorFilePath + " missed");
             checkBox->addChild(label);
         }
         

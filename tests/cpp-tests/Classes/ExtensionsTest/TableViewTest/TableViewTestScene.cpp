@@ -70,7 +70,7 @@ Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    auto string = String::createWithFormat("%ld", idx);
+    auto string = StringUtils::format("%ld", idx);
     TableViewCell *cell = table->dequeueCell();
     if (!cell) {
         cell = new (std::nothrow) CustomTableViewCell();
@@ -80,7 +80,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
         sprite->setPosition(Vec2(0, 0));
         cell->addChild(sprite);
 
-        auto label = Label::createWithSystemFont(string->getCString(), "Helvetica", 20.0);
+        auto label = Label::createWithSystemFont(string, "Helvetica", 20.0);
         label->setPosition(Vec2::ZERO);
 		label->setAnchorPoint(Vec2::ZERO);
         label->setTag(123);
@@ -89,7 +89,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
     else
     {
         auto label = (Label*)cell->getChildByTag(123);
-        label->setString(string->getCString());
+        label->setString(string);
     }
 
 
