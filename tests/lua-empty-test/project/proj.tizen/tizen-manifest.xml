@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.tizen.lua-empty-test" version="1.0.0">
+	<profile name="mobile" />
+	<ui-application appid="org.tizen.lua-empty-test" exec="lua-empty-test" type="capp" multiple="false" taskmanage="true" nodisplay="false">
+		<icon>lua-empty-test.png</icon>
+		<label>lua-empty-test</label>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/systemsettings</privilege>
+	</privileges>
+</manifest>

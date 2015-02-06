@@ -38,6 +38,12 @@
 #include <unordered_map>
 #include <vector>
 
+#ifdef TIZEN
+#ifdef basename
+#undef basename
+#endif
+#endif
+
 NS_CC_EXT_BEGIN
 
 /**

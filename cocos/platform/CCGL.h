@@ -40,6 +40,8 @@ THE SOFTWARE.
 #include "platform/winrt/CCGL.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCGL-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "platform/tizen/CCGL-tizen.h"
 #endif
 
 #endif /* __PLATFORM_CCPLATFORMDEFINE_H__*/
