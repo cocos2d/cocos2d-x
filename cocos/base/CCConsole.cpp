@@ -53,6 +53,9 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <sys/ioctl.h>
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+#include <dlog.h>
+#endif
 #endif
 
 #include "base/CCDirector.h"

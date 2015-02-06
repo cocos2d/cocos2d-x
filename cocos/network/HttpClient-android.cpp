@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #include "HttpClient.h"
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <thread>
 #include <queue>
 #include <sstream>
@@ -969,5 +969,5 @@ void HttpClient::dispatchResponseCallbacks()
 }
 
 NS_CC_END
-
+#endif
 

@@ -40,6 +40,8 @@ THE SOFTWARE.
 #include "platform/winrt/CCApplication.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCApplication-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "platform/tizen/CCApplication-tizen.h"
 #endif
 
 #endif /* __PLATFORM_CCAPPLICATION_H__*/
