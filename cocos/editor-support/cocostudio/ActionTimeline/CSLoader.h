@@ -73,7 +73,7 @@ public:
     void purge();
     
     void init();
-    
+   
     static cocos2d::Node* createNode(const std::string& filename, cocos2d::Node* deleget = nullptr);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
 
