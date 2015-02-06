@@ -60,8 +60,7 @@ GLArrayBuffer::~GLArrayBuffer()
 
 bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode)
 {
-    if(0 == elementSize || 0 == maxElements)
-        return false;
+    CCASSERT(0 != elementSize, "Vertex size cannot be 0");
     
     _arrayType = arrayType;
     _arrayMode = arrayMode;
@@ -144,20 +143,48 @@ void GLArrayBuffer::appendElements(const void* elements, size_t count, bool defe
 
 void GLArrayBuffer::removeElements(size_t count, size_t begin, bool defer)
 {
-    CCASSERT(hasClient(), "can only remove from a client buffer");
-
     const auto ec = getElementCount();
-    CCASSERT(begin < ec, "removeElements begin must be within range");
-    CCASSERT(begin + count < ec, "removeElements count must be within range");
-    
-    const intptr_t dst = (intptr_t)_elements + begin * getElementSize();
-    updateElements((void*)dst, count, begin + count, defer);
+    CCASSERT(hasClient(),         "can only remove from a client buffer");
+    CCASSERT(begin < ec,          "removeElements begin must be within range");
+    CCASSERT(begin + count <= ec, "removeElements count must be within range");
     _elementCount -= count;
+    const intptr_t src = (intptr_t)_elements + (begin + count) * getElementSize();
+    updateElements((void*)src, _elementCount - begin, begin, defer);
 }
 
 void GLArrayBuffer::addCapacity(size_t count, bool zero)
 {
     setCapacity(count + getCapacity(), zero);
+}
+
+void GLArrayBuffer::swapElements(size_t source, size_t dest, size_t count)
+{
+    const auto ec = getElementCount();
+    CCASSERT(hasClient(),          "can only swap elements in a client buffer");
+    CCASSERT(source < ec,          "swapElements source must be within range");
+    CCASSERT(source + count <= ec, "swapElements source + count must be within range");
+    CCASSERT(dest < ec,            "swapElements dest must be within range");
+    CCASSERT(dest + count <= ec,   "swapElements dest + count must be within range");
+    const ssize_t s1 = source;
+    const ssize_t s2 = s1 + count;
+    const ssize_t d1 = dest;
+    const ssize_t d2 = d1 + count;
+    const ssize_t overlap = s1 < d1 ? s2 - d1 : d2 - s1;
+    const ssize_t count2 = overlap > 0 ? count - overlap : count;
+    const auto es = getElementSize();
+    const auto tmpptr = CC_ALLOCA(count2 * es);
+    const auto srcptr = (void*)((intptr_t)_elements + s1 * es);
+    const auto dstptr = (void*)((intptr_t)_elements + d1 * es);
+    memcpy (tmpptr, dstptr, count2 * es);
+    memmove(dstptr, srcptr, count );
+    memmove(srcptr, tmpptr, count2);
+}
+
+void GLArrayBuffer::moveElements(size_t source, size_t dest, size_t count)
+{
+    const auto es = getElementSize();
+    const auto srcptr = (void*)((intptr_t)_elements + source * es);
+    updateElements(srcptr, count, dest);
 }
 
 void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t begin)

@@ -150,7 +150,7 @@ VertexAttribute* VertexData::getStreamAttribute(int semantic)
 }
 
 size_t VertexData::draw(size_t start, size_t count)
-{
+{    
     if (0 == count)
     {
         // if we are drawing indexed, then use the count of indices to draw

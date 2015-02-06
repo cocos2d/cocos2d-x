@@ -208,34 +208,10 @@ void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, size_t index, size_t amo
     _vbAtlas->insertElementsT<V3F_C4B_T2F_Quad>(quads, amount, index);
 }
 
-//void TextureAtlas::insertQuadFromIndex(size_t oldIndex, size_t newIndex)
-//{
-//    CCASSERT( newIndex >= 0 && newIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
-//    CCASSERT( oldIndex >= 0 && oldIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
-//
-//    if( oldIndex == newIndex )
-//    {
-//        return;
-//    }
-//    // because it is ambiguous in iphone, so we implement abs ourselves
-//    // unsigned int howMany = abs( oldIndex - newIndex);
-//    auto howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
-//    auto dst = oldIndex;
-//    auto src = oldIndex + 1;
-//    if( oldIndex > newIndex)
-//    {
-//        dst = newIndex+1;
-//        src = newIndex;
-//    }
-//
-//    // texture coordinates
-//    V3F_C4B_T2F_Quad quadsBackup = _quads[oldIndex];
-//    memmove( &_quads[dst],&_quads[src], sizeof(_quads[0]) * howMany );
-//    _quads[newIndex] = quadsBackup;
-//
-//
-//    _dirty = true;
-//}
+void TextureAtlas::insertQuadFromIndex(size_t oldIndex, size_t newIndex)
+{
+    _vbAtlas->swapElementsT<V3F_C4B_T2F_Quad>(oldIndex, newIndex, 1);
+}
 
 void TextureAtlas::removeQuadAtIndex(size_t index)
 {
@@ -275,48 +251,19 @@ void TextureAtlas::increaseTotalQuadsWith(size_t amount)
 {
     CCASSERT(amount >= 0, "increaseTotalQuadsWith amount >= 0");
     auto count = _vbAtlas->getElementCount();
-    _vbAtlas->setElementCount(count + amount);
+    _vbAtlas->setElementCount(count + 4 * amount);
     _quadCount += amount;
 }
 
 void TextureAtlas::moveQuadsFromIndex(size_t oldIndex, size_t amount, size_t newIndex)
 {
-//    CCASSERT(oldIndex>=0 && amount>=0 && newIndex>=0, "values must be >= 0");
-//    CCASSERT(newIndex + amount <= _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
-//    CCASSERT(oldIndex < _totalQuads, "insertQuadFromIndex:atIndex: Invalid index");
-//
-//    if( oldIndex == newIndex )
-//    {
-//        return;
-//    }
-//    //create buffer
-//    size_t quadSize = sizeof(V3F_C4B_T2F_Quad);
-//    V3F_C4B_T2F_Quad* tempQuads = (V3F_C4B_T2F_Quad*)malloc( quadSize * amount);
-//    memcpy( tempQuads, &_quads[oldIndex], quadSize * amount );
-//
-//    if (newIndex < oldIndex)
-//    {
-//        // move quads from newIndex to newIndex + amount to make room for buffer
-//        memmove( &_quads[newIndex], &_quads[newIndex+amount], (oldIndex-newIndex)*quadSize);
-//    }
-//    else
-//    {
-//        // move quads above back
-//        memmove( &_quads[oldIndex], &_quads[oldIndex+amount], (newIndex-oldIndex)*quadSize);
-//    }
-//    memcpy( &_quads[newIndex], tempQuads, amount*quadSize);
-//
-//    free(tempQuads);
-//
-//    _dirty = true;
+    _vbAtlas->swapElementsT<V3F_C4B_T2F_Quad>(oldIndex, newIndex, amount);
 }
 
 void TextureAtlas::moveQuadsFromIndex(size_t index, size_t newIndex)
 {
-//    CCASSERT(index>=0 && newIndex>=0, "values must be >= 0");
-//    CCASSERT(newIndex + (_totalQuads - index) <= _capacity, "moveQuadsFromIndex move is out of bounds");
-//
-//    memmove(_quads + newIndex,_quads + index, (_totalQuads - index) * sizeof(_quads[0]));
+    CCASSERT(newIndex + (_quadCount - index) <= _vbAtlas->getCapacity(), "moveQuadsFromIndex move is out of bounds");
+    _vbAtlas->moveElementsT<V3F_C4B_T2F_Quad>(index, newIndex, _quadCount - index);
 }
 
 void TextureAtlas::fillWithEmptyQuadsFromIndex(size_t index, size_t amount)

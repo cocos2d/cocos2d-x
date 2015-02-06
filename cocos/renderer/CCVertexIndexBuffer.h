@@ -91,6 +91,14 @@ public:
     //        optionally zeroes out the elements.
     void addCapacity(size_t count, bool zero = false);
     
+    // @brief swaps elements in the buffer without resizing the buffer
+    //        if defer is true, then the native buffer is not updated.
+    void swapElements(size_t source, size_t dest, size_t count);
+
+    // @brief moves elements in the buffer to the dest index.
+    //        if defer is true, then the native buffer is not updated.
+    void moveElements(size_t source, size_t dest, size_t count);
+
     // @brief if dirty, copies elements to the client buffer (if any)
     // and optionally submits the elements to the native buffer (if any)
     // if elements is null, then the entire client is commited to native. 
@@ -198,6 +206,22 @@ public:
         CCASSERT(0 == sizeof(T) % getElementSize(), "elements must divide evenly into elementSize");
         auto mult = sizeof(T) / getElementSize();
         addCapacity(mult * count, zero);
+    }
+    
+    template <typename T>
+    void swapElementsT(size_t source, size_t dest, size_t count)
+    {
+        CCASSERT(0 == sizeof(T) % getElementSize(), "elements must divide evenly into elementSize");
+        auto mult = sizeof(T) / getElementSize();
+        swapElements(mult * source, mult * dest, mult * count);
+    }
+
+    template <typename T>
+    void moveElementsT(size_t source, size_t dest, size_t count)
+    {
+        CCASSERT(0 == sizeof(T) % getElementSize(), "elements must divide evenly into elementSize");
+        auto mult = sizeof(T) / getElementSize();
+        moveElements(mult * source, mult * dest, mult * count);
     }
     
 protected:
