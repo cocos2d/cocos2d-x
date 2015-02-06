@@ -36,6 +36,7 @@ USING_NS_CC_EXT;
 
 namespace
 {
+    //Designed for make data type has an associated reference count 
     template <class DataType>
     class RefFactory : public Ref
     {

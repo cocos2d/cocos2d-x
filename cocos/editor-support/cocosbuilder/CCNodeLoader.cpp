@@ -13,6 +13,7 @@ using namespace cocos2d::extension;
 
 namespace 
 {
+    //Designed for make data type has an associated reference count 
     template <class DataType>
     class RefFactory : public Ref
     {
