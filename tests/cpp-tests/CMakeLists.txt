@@ -65,7 +65,6 @@ set(TESTS_SRC
   Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
   Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
   Classes/ExtensionsTest/ExtensionsTest.cpp
-  Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
   Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
   Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp
@@ -185,7 +184,6 @@ set(TESTS_SRC
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/FileUtilsTest/FileUtilsTest.cpp
   Classes/SpineTest/SpineTest.cpp
-  Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
   Classes/UnitTest/RefPtrTest.cpp

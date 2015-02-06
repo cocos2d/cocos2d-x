@@ -85,8 +85,8 @@ void ControlSliderTest::valueChanged(Ref *sender, Control::EventType controlEven
     ControlSlider* pSlider = (ControlSlider*)sender;
     // Change value of label.
 	if(pSlider->getTag() == 1)
-		_displayValueLabel->setString(String::createWithFormat("Upper slider value = %.02f", pSlider->getValue())->getCString());  
+		_displayValueLabel->setString(StringUtils::format("Upper slider value = %.02f", pSlider->getValue()));
 	if(pSlider->getTag() == 2)
-		_displayValueLabel->setString(String::createWithFormat("Lower slider value = %.02f", pSlider->getValue())->getCString());  
+		_displayValueLabel->setString(StringUtils::format("Lower slider value = %.02f", pSlider->getValue()));
 }
 

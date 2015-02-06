@@ -91,6 +91,6 @@ void ControlStepperTest::valueChanged(Ref *sender, Control::EventType controlEve
 {
     ControlStepper* pControl = (ControlStepper*)sender;
     // Change value of label.
-    _displayValueLabel->setString(String::createWithFormat("%0.02f", (float)pControl->getValue())->getCString());	
+    _displayValueLabel->setString(StringUtils::format("%0.02f", (float)pControl->getValue()));
 }
 

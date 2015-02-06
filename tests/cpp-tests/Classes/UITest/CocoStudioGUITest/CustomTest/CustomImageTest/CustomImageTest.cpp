@@ -34,7 +34,7 @@ void CustomImageLayer::onEnter()
 
 void CustomImageScene::onEnter()
 {
-    CCScene::onEnter();
+    Scene::onEnter();
     
     auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
@@ -54,7 +54,7 @@ void CustomImageScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    CCDirector::getInstance()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 void CustomImageScene::BackCallback(Ref* pSender)

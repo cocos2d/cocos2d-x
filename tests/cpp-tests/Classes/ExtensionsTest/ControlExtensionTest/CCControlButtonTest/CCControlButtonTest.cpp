@@ -178,47 +178,47 @@ bool ControlButtonTest_Event::init()
 
 void ControlButtonTest_Event::touchBitmaskAction(Ref *senderz, Control::EventType controlEvent)
 {
-    _displayBitmaskLabel->setString(String::createWithFormat("using bitmask (%d)", controlEvent)->getCString());
+    _displayBitmaskLabel->setString(StringUtils::format("using bitmask (%d)", controlEvent));
 }
 
 void ControlButtonTest_Event::touchDownAction(Ref *senderz, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Down"));
 }
 
 void ControlButtonTest_Event::touchDragInsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Inside")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Inside"));
 }
 
 void ControlButtonTest_Event::touchDragOutsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Outside")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Outside"));
 }
 
 void ControlButtonTest_Event::touchDragEnterAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Enter")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Enter"));
 }
 
 void ControlButtonTest_Event::touchDragExitAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Exit")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Exit"));
 }
 
 void ControlButtonTest_Event::touchUpInsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Up Inside.")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Up Inside."));
 }
 
 void ControlButtonTest_Event::touchUpOutsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Up Outside.")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Up Outside."));
 }
 
 void ControlButtonTest_Event::touchCancelAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Cancel")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Cancel"));
 }
 
 
@@ -241,7 +241,7 @@ bool ControlButtonTest_Styling::init()
             for (int j = 0; j < 3; j++)
             {
                 // Add the buttons
-                ControlButton *button = standardButtonWithTitle(String::createWithFormat("%d",rand() % 30)->getCString());
+                ControlButton *button = standardButtonWithTitle(StringUtils::format("%d",rand() % 30).c_str());
                 button->setAdjustBackgroundImage(false);  // Tells the button that the background image must not be adjust
                                                     // It'll use the prefered size of the background image
                 button->setPosition(button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,

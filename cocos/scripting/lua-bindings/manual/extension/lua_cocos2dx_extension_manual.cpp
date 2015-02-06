@@ -34,6 +34,33 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+namespace
+{
+    //Designed for make data type has an associated reference count 
+    template <class DataType>
+    class RefFactory : public Ref
+    {
+    public:
+        static RefFactory<DataType>* create()
+        {
+            auto ret = new (std::nothrow) RefFactory<DataType>();
+            if (ret)
+            {
+                ret->autorelease();
+            }
+
+            return ret;
+        }
+
+        DataType data;
+
+    protected:
+        RefFactory<DataType>() {}
+    };
+
+    typedef RefFactory<Map<const char*, Ref*>> DelegateMap;
+}
+
 class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
 {
 public:
@@ -599,18 +626,17 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         if (nullptr == delegate)
             return 0;
         
-        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
+        auto userDict = static_cast<DelegateMap*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = DelegateMap::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
-            userDict->release();
         }
+        userDict->data.insert(KEY_TABLEVIEW_DELEGATE, delegate);
         
-        userDict->setObject(delegate, KEY_TABLEVIEW_DELEGATE);
         self->setDelegate(delegate);
         delegate->release();
         
@@ -736,18 +762,17 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         if (nullptr == dataSource)
             return 0;
         
-        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
+        auto userDict = static_cast<DelegateMap*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = DelegateMap::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
-            userDict->release();
         }
         
-        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        userDict->data.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         
         self->setDataSource(dataSource);
         
@@ -807,13 +832,11 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
-        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        auto userDict = DelegateMap::create();
+        userDict->data.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         ret->setUserObject(userDict);
-        userDict->release();
         
         dataSource->release();
-        
         
         int  nID = (int)ret->_ID;
         int* pLuaID =  &ret->_luaID;

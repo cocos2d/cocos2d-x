@@ -92,7 +92,7 @@ ControlColourPickerTest::~ControlColourPickerTest()
 void ControlColourPickerTest::colourValueChanged(Ref *sender, Control::EventType controlEvent)
 {
     ControlColourPicker* pPicker = (ControlColourPicker*)sender;
-    _colorLabel->setString(String::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
+    _colorLabel->setString(StringUtils::format("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b));
 }
 
 
