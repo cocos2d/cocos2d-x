@@ -97,8 +97,7 @@
 									<listOptionValue builtIn="false" value="-mthumb"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.2127199034" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx}&quot;"/>
-									<listOptionValue builtIn="false" value="/home/sukwonsuh/workspace/_work/40.git/cocos2d-x-3.4/"/>
+									<listOptionValue builtIn="false" value="../../../../"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external/chipmunk/include/chipmunk}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
