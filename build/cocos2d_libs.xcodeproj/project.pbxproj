@@ -3137,7 +3137,6 @@
 				1A01C67518F57BE800EFE3A6 /* deprecated */,
 				1AD71CF7180E26E600808F54 /* editor-support */,
 				46A167981807AF4D005B8026 /* extensions */,
-				1A57033E180BD0490088DEC7 /* external */,
 				1551A341158F2AB200E66CFE /* Frameworks */,
 				46A170851807CE87005B8026 /* math */,
 				1AAF5360180E3374000584C8 /* network */,
@@ -3180,6 +3179,7 @@
 		1A01C67518F57BE800EFE3A6 /* deprecated */ = {
 			isa = PBXGroup;
 			children = (
+				1A57033E180BD0490088DEC7 /* external */,
 				1A01C67618F57BE800EFE3A6 /* CCArray.cpp */,
 				1A01C67718F57BE800EFE3A6 /* CCArray.h */,
 				1A01C67818F57BE800EFE3A6 /* CCBool.h */,
@@ -3576,6 +3576,7 @@
 				1AAF537A180E354D000584C8 /* websockets */,
 			);
 			name = external;
+			path = ../../build;
 			sourceTree = "<group>";
 		};
 		1A57033F180BD0540088DEC7 /* glfw3 */ = {
