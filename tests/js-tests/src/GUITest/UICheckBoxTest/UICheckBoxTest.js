@@ -34,11 +34,11 @@ var UICheckBoxTest = UIScene.extend({
             // Create the checkbox
             var checkBox = new ccui.CheckBox();
             checkBox.setTouchEnabled(true);
-            checkBox.loadTextures("res/cocosui/check_box_normal.png",
-                "res/cocosui/check_box_normal_press.png",
-                "res/cocosui/check_box_active.png",
-                "res/cocosui/check_box_normal_disable.png",
-                "res/cocosui/check_box_active_disable.png");
+            checkBox.loadTextures("res/ccs-res/cocosui/check_box_normal.png",
+                "res/ccs-res/cocosui/check_box_normal_press.png",
+                "res/ccs-res/cocosui/check_box_active.png",
+                "res/ccs-res/cocosui/check_box_normal_disable.png",
+                "res/ccs-res/cocosui/check_box_active_disable.png");
             checkBox.x = widgetSize.width / 2.0;
 	        checkBox.y = widgetSize.height / 2.0;
             checkBox.addEventListener(this.selectedStateEvent, this);

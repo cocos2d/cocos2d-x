@@ -59,40 +59,97 @@ var s_tcc_issue_2 = "res/animations/tcc_issue_2.png";
 var s_tcc_issue_1_plist = "res/animations/tcc_issue_1.plist";
 var s_tcc_issue_2_plist = "res/animations/tcc_issue_2.plist";
 
-var s_Cowboy_json = "res/armatures/Cowboy.ExportJson";
-var s_Cowboy_plist = "res/armatures/Cowboy0.plist";
-var s_Cowboy_png = "res/armatures/Cowboy0.png";
-var s_hero_json = "res/armatures/hero.ExportJson";
-var s_hero0_plist = "res/armatures/hero0.plist";
-var s_hero0_png = "res/armatures/hero0.png";
-var s_horse_json = "res/armatures/horse.ExportJson";
-var s_horse0_plist = "res/armatures/horse0.plist";
-var s_horse0_png = "res/armatures/horse0.png";
-var s_bear_json = "res/armatures/bear.ExportJson";
-var s_bear0_plist = "res/armatures/bear0.plist";
-var s_bear0_png = "res/armatures/bear0.png";
-var s_blood_plist = "res/armatures/blood.plist";
-var s_HeroAnimation_json = "res/armatures/HeroAnimation.ExportJson";
-var s_HeroAnimation0_plist = "res/armatures/HeroAnimation0.plist";
-var s_HeroAnimation0_png = "res/armatures/HeroAnimation0.png";
-var s_cyborg_plist = "res/armatures/cyborg.plist";
-var s_cyborg_png = "res/armatures/cyborg.png";
-var s_cyborg_xml = "res/armatures/cyborg.xml";
-var s_Dragon_plist = "res/armatures/Dragon.plist";
-var s_Dragon_png = "res/armatures/Dragon.png";
-var s_Dragon_xml = "res/armatures/Dragon.xml";
-var s_knight_plist = "res/armatures/knight.plist";
-var s_knight_png = "res/armatures/knight.png";
-var s_knight_xml = "res/armatures/knight.xml";
-var s_robot_plist = "res/armatures/robot.plist";
-var s_robot_png = "res/armatures/robot.png";
-var s_robot_xml = "res/armatures/robot.xml";
-var s_weapon_plist = "res/armatures/weapon.plist";
-var s_weapon_png = "res/armatures/weapon.png";
-var s_weapon_xml = "res/armatures/weapon.xml";
-var s_testEasing_json = "res/armatures/testEasing.ExportJson";
-var s_testEasing0_plist = "res/armatures/testEasing0.plist";
-var s_testEasing0_png = "res/armatures/testEasing0.png";
+var s_Cowboy_json = "res/ccs-res/armature/Cowboy.ExportJson";
+var s_Cowboy_plist = "res/ccs-res/armature/Cowboy0.plist";
+var s_Cowboy_png = "res/ccs-res/armature/Cowboy0.png";
+var s_hero_json = "res/ccs-res/armature/hero.ExportJson";
+var s_hero0_plist = "res/ccs-res/armature/hero0.plist";
+var s_hero0_png = "res/ccs-res/armature/hero0.png";
+var s_horse_json = "res/ccs-res/armature/horse.ExportJson";
+var s_horse0_plist = "res/ccs-res/armature/horse0.plist";
+var s_horse0_png = "res/ccs-res/armature/horse0.png";
+var s_bear_json = "res/ccs-res/armature/bear.ExportJson";
+var s_bear0_plist = "res/ccs-res/armature/bear0.plist";
+var s_bear0_png = "res/ccs-res/armature/bear0.png";
+var s_blood_plist = "res/ccs-res/armature/blood.plist";
+var s_HeroAnimation_json = "res/ccs-res/armature/HeroAnimation.ExportJson";
+var s_HeroAnimation0_plist = "res/ccs-res/armature/HeroAnimation0.plist";
+var s_HeroAnimation0_png = "res/ccs-res/armature/HeroAnimation0.png";
+var s_cyborg_plist = "res/ccs-res/armature/cyborg.plist";
+var s_cyborg_png = "res/ccs-res/armature/cyborg.png";
+var s_cyborg_xml = "res/ccs-res/armature/cyborg.xml";
+var s_Dragon_plist = "res/ccs-res/armature/Dragon.plist";
+var s_Dragon_png = "res/ccs-res/armature/Dragon.png";
+var s_Dragon_xml = "res/ccs-res/armature/Dragon.xml";
+var s_knight_plist = "res/ccs-res/armature/knight.plist";
+var s_knight_png = "res/ccs-res/armature/knight.png";
+var s_knight_xml = "res/ccs-res/armature/knight.xml";
+var s_robot_plist = "res/ccs-res/armature/robot.plist";
+var s_robot_png = "res/ccs-res/armature/robot.png";
+var s_robot_xml = "res/ccs-res/armature/robot.xml";
+var s_weapon_plist = "res/ccs-res/armature/weapon.plist";
+var s_weapon_png = "res/ccs-res/armature/weapon.png";
+var s_weapon_xml = "res/ccs-res/armature/weapon.xml";
+var s_testEasing_json = "res/ccs-res/armature/testEasing.ExportJson";
+var s_testEasing0_plist = "res/ccs-res/armature/testEasing0.plist";
+var s_testEasing0_png = "res/ccs-res/armature/testEasing0.png";
+
+var s_button_editor_json = "res/ccs-res/cocosui/UIEditorTest/UIButton/windows_UIButton_Editor_1.json";
+var s_checkbox_editor_json = "res/ccs-res/cocosui/UIEditorTest/UICheckBox/windows_ui_checkbox_editor_1.json";
+var s_imageView_editor_json = "res/ccs-res/cocosui/UIEditorTest/UIImageView/windows_ui_ImageView_editor_1.json";
+var s_loadingBar_editor_json = "res/ccs-res/cocosui/UIEditorTest/UILoadingBar/windows_ui_loadingbar_editor_1.json";
+var s_widget_add_node_editor_json = "res/ccs-res/cocosui/UIEditorTest/UIWidgetAddNode/windows_ui_widget_add_node_editor.json";
+var s_pageView_json = "res/ccs-res/cocosui/UIEditorTest/UIPageView/windows_ui_pageview_editor_1.json";
+var s_animation_button_normal_png = "res/ccs-res/cocosui/animationbuttonnormal.png";
+var s_animation_button_pressed_png = "res/ccs-res/cocosui/animationbuttonpressed.png";
+var s_sliderball_normal_png = "res/ccs-res/cocosui/sliderballnormal.png";
+var s_100_armature_json = "res/ccs-res/cocosui/100/100.ExportJson";
+var s_slider_editor_json = "res/ccs-res/cocosui/UIEditorTest/UISlider/windows_ui_slider_editor_1.json";
+var LAYOUT_RES = [
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Layout/windows_ui_layout_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Color/windows_ui_color.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Gradient_Color/windows_ui_gradient_color.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/BackgroundImage/windows_ui_backgroundimage.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/windows_ui_scale9_backgroundimage.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/windows_ui_linear_vertical_layout.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/windows_ui_linear_horizontal_layout.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Relative_Align_Parent/windows_ui_relative_align_parent.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout/Relative_Align_Location/windows_ui_relative_align_location.json"
+];
+var LISTVIEW_RES = [
+    "res/ccs-res/cocosui/UIEditorTest/UIListView/Vertical/windows_ui_listview_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView/Horizontal/windows_ui_listview_horizontal_editor_1.json"
+];
+var SCROLLVIEW_RES = [
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical/windows_ui_scrollview_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView/Horizontal/windows_ui_scrollview_horizontal_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView/Both/windows_ui_scrollview_both_editor_1.json"
+];
+var s_labelAtlas_editor_json = "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas/windows_ui_labelatlas_editor_1.json";
+var s_labelBMFont_editor_json = "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont/windows_ui_labelbmfont_editor_1.json";
+var s_textfield_editor_json = "res/ccs-res/cocosui/UIEditorTest/UITextField/windows_ui_textfield_editor_1.json";
+var s_label_editor_json = "res/ccs-res/cocosui/UIEditorTest/UILabel/windows_ui_label_editor_1.json";
+
+var s_fishjoy2_json =  "res/ccs-res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";
+var s_sprite_component_json = "res/ccs-res/scenetest/SpriteComponentTest/SpriteComponentTest.json";
+var s_armature_component_json = "res/ccs-res/scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
+var s_ui_component_json = "res/ccs-res/scenetest/UIComponentTest/UIComponentTest.json";
+var s_tmx_component_json = "res/ccs-res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
+var s_particle_component_json = "res/ccs-res/scenetest/ParticleComponentTest/ParticleComponentTest.json";
+var s_effect_component_json = "res/ccs-res/scenetest/EffectComponentTest/EffectComponentTest.json";
+var s_background_component_json = "res/ccs-res/scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
+var s_attribute_component_json = "res/ccs-res/scenetest/AttributeComponentTest/AttributeComponentTest.json";
+var s_trriger_json = "res/ccs-res/scenetest/TriggerTest/TriggerTest.json";
+
+var s_ccs_1_3_json = "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson";
+var s_ccs_1_4_json = "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson";
+var s_ccs_1_5_json = "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson";
+
+var s_uitest_json = "res/ccs-res/cocosui/UITest/UITest.json";
+var s_ui_button_png = "res/ccs-res/cocosui/button.png";
+var s_ui_button_highlighted_png = "res/ccs-res/cocosui/buttonHighlighted.png";
+var s_ui_backtotop_normal_png = "res/ccs-res/cocosui/backtotopnormal.png";
+var s_ui_backtotop_pressed_png = "res/ccs-res/cocosui/backtotoppressed.png";
 
 var s_s9s_blocks9 = "res/Images/blocks9ss.png";
 var s_s9s_blocks9_plist = "res/Images/blocks9ss.plist";
@@ -585,191 +642,191 @@ var g_cocoStudio = [
     "res/Images/b2.png",
     "res/Images/f1.png",
     "res/Images/f2.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/buttonHighlighted.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/background.png",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.json",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/buttonHighlighted.png",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json",
-    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/GUI/labelatlasimg.png",
-    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.json",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.json",
-    "res/cocosui/UIEditorTest/UILabel_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILabel_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILabel_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILabel_Editor/ui_label_editor_1.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/Hello.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/slider_bar.png",
-    "res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/GUI/button.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ui_listview_horizontal_editor_1.json",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/GUI/button.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.json",
-    "res/cocosui/UIEditorTest/UILoadingBar_Editor/background.png",
-    "res/cocosui/UIEditorTest/UILoadingBar_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UILoadingBar_Editor/GUI/loadingbar.png",
-    "res/cocosui/UIEditorTest/UILoadingBar_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json",
-    "res/cocosui/UIEditorTest/UIPageView_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIPageView_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIPageView_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UIPageView_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/button_n.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/button_p.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/GUI/image.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/selected01.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/selected02.png",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json",
-    "res/cocosui/UIEditorTest/UISlider_Editor/2014-1-26 11-42-09.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/2014-1-26 11-43-52.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/background.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/silder_progressBar.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/slider_bar.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/slider_bar_button.png",
-    "res/cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json",
-    "res/cocosui/UIEditorTest/UITextField_Editor/background.png",
-    "res/cocosui/UIEditorTest/UITextField_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UITextField_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.json",
-    "res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/background.png",
-    "res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/buttonBackground.png",
-    "res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/ribbon.png",
-    "res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/buttonHighlighted.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/ui_checkbox_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/buttonHighlighted.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas_Editor/GUI/labelatlasimg.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas_Editor/ui_labelatlas_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILabel_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabel_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabel_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILabel_Editor/ui_label_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/Hello.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/slider_bar.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/GUI/button.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Horizontal_Editor/ui_listview_horizontal_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/GUI/button.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIListView_Editor/UIListView_Vertical_Editor/ui_listview_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UILoadingBar_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILoadingBar_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILoadingBar_Editor/GUI/loadingbar.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILoadingBar_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIPageView_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIPageView_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIPageView_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIPageView_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/button_n.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/button_p.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/GUI/image.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/selected01.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/selected02.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/2014-1-26 11-42-09.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/2014-1-26 11-43-52.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/silder_progressBar.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/slider_bar.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/slider_bar_button.png",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UITextField_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UITextField_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UITextField_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UITextField_Editor/ui_textfield_editor_1.json",
+    "res/ccs-res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/background.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/buttonBackground.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/ribbon.png",
+    "res/ccs-res/cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json",
     "res/Sound/background-music-aac.wav",
     "res/Sound/pew-pew-lei.wav",
     //Components
@@ -850,83 +907,83 @@ var g_cocoStudio = [
     "res/scenetest/UIComponentTest/UIComponentTest.json",
 
     //parser
-    "res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson",
-    "res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_30.plist",
-    "res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_30.png",
-    "res/cocosui/UIEditorTest/cocostudio1_3/SmallSun.plist",
-    "res/cocosui/UIEditorTest/cocostudio1_3/GUI/labelatlasimg.png",
-    "res/cocosui/UIEditorTest/cocostudio1_3/GUI/missing-font.fnt",
-    "res/cocosui/UIEditorTest/cocostudio1_3/GUI/missing-font.png",
-    "res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson",
-    "res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_40.plist",
-    "res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_40.png",
-    "res/cocosui/UIEditorTest/cocostudio1_4/SmallSun.plist",
-    "res/cocosui/UIEditorTest/cocostudio1_4/GUI/labelatlasimg.png",
-    "res/cocosui/UIEditorTest/cocostudio1_4/GUI/missing-font.fnt",
-    "res/cocosui/UIEditorTest/cocostudio1_4/GUI/missing-font.png",
-    "res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson",
-    "res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_50.plist",
-    "res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_50.png",
-    "res/cocosui/UIEditorTest/cocostudio1_5/SmallSun.plist",
-    "res/cocosui/UIEditorTest/cocostudio1_5/GUI/labelatlasimg.png",
-    "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.fnt",
-    "res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_30.plist",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_30.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/SmallSun.plist",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/GUI/labelatlasimg.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/GUI/missing-font.fnt",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_3/GUI/missing-font.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_40.plist",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_40.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/SmallSun.plist",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/GUI/labelatlasimg.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/GUI/missing-font.fnt",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_4/GUI/missing-font.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_50.plist",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_50.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/SmallSun.plist",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/GUI/labelatlasimg.png",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.fnt",
+    "res/ccs-res/cocosui/UIEditorTest/cocostudio1_5/GUI/missing-font.png",
 
     "res/Particles/BoilingFoam.plist",
-    "res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
-    "res/cocosui/CustomImageViewTest/NewProject_20.plist",
-    "res/cocosui/CustomImageViewTest/NewProject_20.png"
+    "res/ccs-res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
+    "res/ccs-res/cocosui/CustomImageViewTest/NewProject_20.plist",
+    "res/ccs-res/cocosui/CustomImageViewTest/NewProject_20.png"
 ];
 
 var g_ui = [
-    "res/cocosui/animationbuttonnormal.png",
-    "res/cocosui/animationbuttonpressed.png",
-    "res/cocosui/arrow.png",
-    "res/cocosui/b11.png",
-    "res/cocosui/backtotopnormal.png",
-    "res/cocosui/backtotoppressed.png",
-    "res/cocosui/bitmapFontTest2.fnt",
-    "res/cocosui/bitmapFontTest2.png",
-    "res/cocosui/button.png",
-    "res/cocosui/buttonHighlighted.png",
-    "res/cocosui/ccicon.png",
-    "res/cocosui/check_box_active.png",
-    "res/cocosui/check_box_active_disable.png",
-    "res/cocosui/check_box_active_press.png",
-    "res/cocosui/check_box_normal.png",
-    "res/cocosui/check_box_normal_disable.png",
-    "res/cocosui/check_box_normal_press.png",
-    "res/cocosui/CloseNormal.png",
-    "res/cocosui/CloseSelected.png",
-    "res/cocosui/green_edit.png",
-    "res/cocosui/grossini-aliases.png",
-    "res/cocosui/Hello.png",
-    "res/cocosui/labelatlas.png",
-    "res/cocosui/loadingbar.png",
-    {type:"font", name:"Marker Felt", srcs:["res/cocosui/Marker Felt.ttf"]},
-    "res/cocosui/scrollviewbg.png",
-    "res/cocosui/slidbar.png",
-    "res/cocosui/sliderballnormal.png",
-    "res/cocosui/sliderballpressed.png",
-    "res/cocosui/sliderProgress.png",
-    "res/cocosui/sliderProgress2.png",
-    "res/cocosui/sliderThumb.png",
-    "res/cocosui/sliderTrack.png",
-    "res/cocosui/sliderTrack2.png",
-    "res/cocosui/slider_bar_active_9patch.png",
-    "res/cocosui/UITest/b1.png",
-    "res/cocosui/UITest/b2.png",
-    "res/cocosui/UITest/background.png",
-    "res/cocosui/UITest/buttonBackground.png",
-    "res/cocosui/UITest/f1.png",
-    "res/cocosui/UITest/f2.png",
-    "res/cocosui/UITest/r1.png",
-    "res/cocosui/UITest/r2.png",
-    "res/cocosui/UITest/ribbon.png",
-    "res/cocosui/UITest/UITest.json",
-    "res/cocosui/100/100.ExportJson",
-    "res/cocosui/100/1000.plist",
-    "res/cocosui/100/1000.png"
+    "res/ccs-res/cocosui/animationbuttonnormal.png",
+    "res/ccs-res/cocosui/animationbuttonpressed.png",
+    "res/ccs-res/cocosui/arrow.png",
+    "res/ccs-res/cocosui/b11.png",
+    "res/ccs-res/cocosui/backtotopnormal.png",
+    "res/ccs-res/cocosui/backtotoppressed.png",
+    "res/ccs-res/cocosui/bitmapFontTest2.fnt",
+    "res/ccs-res/cocosui/bitmapFontTest2.png",
+    "res/ccs-res/cocosui/button.png",
+    "res/ccs-res/cocosui/buttonHighlighted.png",
+    "res/ccs-res/cocosui/ccicon.png",
+    "res/ccs-res/cocosui/check_box_active.png",
+    "res/ccs-res/cocosui/check_box_active_disable.png",
+    "res/ccs-res/cocosui/check_box_active_press.png",
+    "res/ccs-res/cocosui/check_box_normal.png",
+    "res/ccs-res/cocosui/check_box_normal_disable.png",
+    "res/ccs-res/cocosui/check_box_normal_press.png",
+    "res/ccs-res/cocosui/CloseNormal.png",
+    "res/ccs-res/cocosui/CloseSelected.png",
+    "res/ccs-res/cocosui/green_edit.png",
+    "res/ccs-res/cocosui/grossini-aliases.png",
+    "res/ccs-res/cocosui/Hello.png",
+    "res/ccs-res/cocosui/labelatlas.png",
+    "res/ccs-res/cocosui/loadingbar.png",
+    {type:"font", name:"Marker Felt", srcs:["res/ccs-res/cocosui/Marker Felt.ttf"]},
+    "res/ccs-res/cocosui/scrollviewbg.png",
+    "res/ccs-res/cocosui/slidbar.png",
+    "res/ccs-res/cocosui/sliderballnormal.png",
+    "res/ccs-res/cocosui/sliderballpressed.png",
+    "res/ccs-res/cocosui/sliderProgress.png",
+    "res/ccs-res/cocosui/sliderProgress2.png",
+    "res/ccs-res/cocosui/sliderThumb.png",
+    "res/ccs-res/cocosui/sliderTrack.png",
+    "res/ccs-res/cocosui/sliderTrack2.png",
+    "res/ccs-res/cocosui/slider_bar_active_9patch.png",
+    "res/ccs-res/cocosui/UITest/b1.png",
+    "res/ccs-res/cocosui/UITest/b2.png",
+    "res/ccs-res/cocosui/UITest/background.png",
+    "res/ccs-res/cocosui/UITest/buttonBackground.png",
+    "res/ccs-res/cocosui/UITest/f1.png",
+    "res/ccs-res/cocosui/UITest/f2.png",
+    "res/ccs-res/cocosui/UITest/r1.png",
+    "res/ccs-res/cocosui/UITest/r2.png",
+    "res/ccs-res/cocosui/UITest/ribbon.png",
+    "res/ccs-res/cocosui/UITest/UITest.json",
+    "res/ccs-res/cocosui/100/100.ExportJson",
+    "res/ccs-res/cocosui/100/1000.plist",
+    "res/ccs-res/cocosui/100/1000.png"
 ];
 
 var g_performace = [
@@ -1053,18 +1110,18 @@ var g_spine = [
 ];
 
 var g_ccs2 = [
-    "res/cocosui/UIEditorTest/UIButton_Editor/crossplatform_UIButton_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UICheckBox_Editor/crossplatform_UICheckBox_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UILabel_Editor/crossplatform_UILabel_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/crossplatform_UILabelBMFont_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UISlider_Editor/crossplatform_UISlider_Editor_1.csb",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UIButton_Editor/crossplatform_UIButton_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UICheckBox_Editor/crossplatform_UICheckBox_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UIImageView_Editor/crossplatform_UIImageView_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UILabel_Editor/crossplatform_UILabel_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelAtlas_Editor/crossplatform_UILabelAtlas_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/crossplatform_UILabelBMFont_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UILoadingBar_Editor/crossplatform_UILoadingBar_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UIPageView_Editor/crossplatform_UIPageView_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UISlider_Editor/crossplatform_UISlider_Editor_1.csb",
+    "res/ccs-res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/crossplatform_UIScrollView_Both_Editor_1.csb",
     "res/ActionTimeline/boy_1.csb",
     "res/ActionTimeline/armature/Cowboy0.plist",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
-    "res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
+    "res/ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
 ];

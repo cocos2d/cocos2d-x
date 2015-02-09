@@ -34,9 +34,9 @@ var UISliderTest = UIScene.extend({
             // Create the slider
             var slider = new ccui.Slider();
             slider.setTouchEnabled(true);
-            slider.loadBarTexture("res/cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+            slider.loadBarTexture("res/ccs-res/cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("res/ccs-res/cocosui/sliderThumb.png", "res/ccs-res/cocosui/sliderThumb.png", "");
+            slider.loadProgressBarTexture("res/ccs-res/cocosui/sliderProgress.png");
             slider.x = widgetSize.width / 2.0;
             slider.y = widgetSize.height / 2.0;
             slider.addEventListener(this.sliderEvent, this);
@@ -72,9 +72,9 @@ var UISliderTest_Scale9 = UIScene.extend({
             var slider = new ccui.Slider();
             slider.setTouchEnabled(true);
             slider.setScale9Enabled(true);
-            slider.loadBarTexture("res/cocosui/sliderTrack2.png");
-            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosui/slider_bar_active_9patch.png");
+            slider.loadBarTexture("res/ccs-res/cocosui/sliderTrack2.png");
+            slider.loadSlidBallTextures("res/ccs-res/cocosui/sliderThumb.png", "res/ccs-res/cocosui/sliderThumb.png", "");
+            slider.loadProgressBarTexture("res/ccs-res/cocosui/slider_bar_active_9patch.png");
             slider.setCapInsets(cc.rect(0, 0, 0, 0));
             slider.setContentSize(cc.size(250, 10));
             slider.x = widgetSize.width / 2.0;

@@ -30,7 +30,7 @@ var UILoadingBarEditorTest = UIBaseLayer.extend({
     _loadingBar_right_to_left:null,
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile("res/cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json");
+        var root = ccs.uiReader.widgetFromJsonFile(s_loadingBar_editor_json);
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");
