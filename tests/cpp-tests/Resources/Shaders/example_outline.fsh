@@ -25,7 +25,7 @@ void main()
     
     accum *= u_threshold;
     accum.rgb =  u_outlineColor * accum.a;
-    accum.a = 1.0;
+    //accum.a = 1.0; why set to 1.0 ?
     
     normal = ( accum * (1.0 - normal.a)) + (normal * normal.a);
     
