@@ -59,8 +59,8 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _blendType = blendType;
     _shader = shader;
 
-    CC_SAFE_RELEASE(_textureAtlas);
-    CC_SAFE_RELEASE(_batch);
+    CC_SAFE_RELEASE_NULL(_textureAtlas);
+    CC_SAFE_RELEASE_NULL(_batch);
     _textureAtlas = textureAtlas;
     _textureAtlas->retain();
     
@@ -78,8 +78,8 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _blendType = blendType;
     _shader = shader;
     
-    CC_SAFE_RELEASE(_textureAtlas);
-    CC_SAFE_RELEASE(_batch);
+    CC_SAFE_RELEASE_NULL(_textureAtlas);
+    CC_SAFE_RELEASE_NULL(_batch);
     _batch = batch;
     _batch->retain();
 

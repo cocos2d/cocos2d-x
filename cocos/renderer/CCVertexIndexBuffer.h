@@ -117,7 +117,11 @@ public:
     void setElementCount(size_t count)
     {
         CCASSERT(count <= _capacity, "element count cannot exceed capacity");
-        _elementCount = count;
+        if (count != _elementCount)
+        {
+            _elementCount = count;
+            setDirty(true);
+        }
     }
     
     size_t getElementCount() const
