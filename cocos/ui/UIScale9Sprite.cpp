@@ -1329,4 +1329,21 @@ y+=ytranslate;         \
         return this->getScaleX();
     }
     
+    void Scale9Sprite::setGLProgram(cocos2d::GLProgram *glProgram)
+    {
+        Node::setGLProgram(glProgram);
+        
+        if(_scale9Image)
+        {
+            _scale9Image->setGLProgram(glProgram);
+        }
+        
+        if(_scale9Enabled)
+        {
+            for(auto& child : _protectedChildren)
+            {
+                child->setGLProgram(glProgram);
+            }
+        }
+    }
 }}

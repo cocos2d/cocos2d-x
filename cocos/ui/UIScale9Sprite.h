@@ -376,6 +376,21 @@ namespace ui {
         virtual float getScaleY() const override;
         virtual float getScale() const override;
         using Node::getScaleZ;
+        /**
+         * Sets the shader program for this node and its renderables
+         *
+         * HIMEX: Added to fix stencil clipping bug
+         *
+         * Since v2.0, each rendering node must set its shader program.
+         * It should be set in initialize phase.
+         @code
+         node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+         @endcode
+         *
+         * @param shaderProgram The shader program
+         */
+        virtual void setGLProgram(cocos2d::GLProgram *glProgram) override;
+        
     protected:
         void updateCapInset();
         void updatePositions();
