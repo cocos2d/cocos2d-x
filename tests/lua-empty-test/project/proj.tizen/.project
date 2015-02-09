@@ -29,6 +29,13 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>org.tizen.nativecore.apichecker.core.tizenCppNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Classes</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1420696205212</id>
