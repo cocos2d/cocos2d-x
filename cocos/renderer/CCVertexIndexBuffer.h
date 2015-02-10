@@ -109,6 +109,11 @@ public:
         return getElementCount() * getElementSize();
     }
     
+    size_t getCapacityInBytes() const
+    {
+        return getCapacity() * getElementSize();
+    }
+    
     CC_DEPRECATED_ATTRIBUTE uint32_t getVBO() const
     {
         return _vbo;

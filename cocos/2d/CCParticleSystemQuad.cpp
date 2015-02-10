@@ -363,7 +363,7 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2&
 
 void ParticleSystemQuad::postStep()
 {
-    // Does nothing
+    _vbParticles->setDirty(true);
 }
 
 // overriding draw method

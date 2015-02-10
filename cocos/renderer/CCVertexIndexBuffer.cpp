@@ -189,21 +189,23 @@ void GLArrayBuffer::moveElements(size_t source, size_t dest, size_t count)
 
 void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t begin)
 {
-    if (_vbo)
-    {
-        GL::bindVBO(_target, _vbo);
-    }
+    CCASSERT(true == hasNative(), "GLArrayBuffer::bindAndCommit : array has no native buffer");
     
-    if (false == isDirty() || false == hasNative())
+    if (false == isDirty())
         return;
     
+    // default to all elements
     if (nullptr == elements)
         elements = _elements;
     
+    // default to all elements
+    if (0 == count)
+        count = _elementCount;
+
     if (0 == _vbo)
     {
         glGenBuffers(1, &_vbo);
-        _vboSize = getSize();
+        _vboSize = getCapacityInBytes();
         CCASSERT(_vboSize, "_vboSize should not be 0");
         GL::bindVBO(_target, _vbo);
         glBufferData(_target, _vboSize, elements, _usage);
@@ -211,7 +213,8 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
     }
     else
     {
-        const auto size = getSize();
+        GL::bindVBO(_target, _vbo);
+        const auto size = getCapacityInBytes();
         CCASSERT(size, "size should not be 0");
         if (size > _vboSize)
         {
@@ -221,8 +224,6 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
        }
         else
         {
-            if (count == 0)
-                count = _elementCount;
             intptr_t p = (intptr_t)elements + begin * _elementSize;
             glBufferSubData(_target, begin * _elementSize, count * _elementSize, (void*)p);
             CHECK_GL_ERROR_DEBUG();

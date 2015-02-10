@@ -130,31 +130,8 @@ ParticleSystem::ParticleSystem()
     modeB.rotatePerSecond = 0;
     modeB.rotatePerSecondVar = 0;
 }
-// implementation ParticleSystem
 
-//ParticleSystem * ParticleSystem::create(const std::string& plistFile)
-//{
-//    ParticleSystem *ret = new (std::nothrow) ParticleSystem();
-//    if (ret && ret->initWithFile(plistFile))
-//    {
-//        ret->autorelease();
-//        return ret;
-//    }
-//    CC_SAFE_DELETE(ret);
-//    return ret;
-//}
-//
-//ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
-//{
-//    ParticleSystem *ret = new (std::nothrow) ParticleSystem();
-//    if (ret && ret->initWithTotalParticles(numberOfParticles))
-//    {
-//        ret->autorelease();
-//        return ret;
-//    }
-//    CC_SAFE_DELETE(ret);
-//    return ret;
-//}
+// implementation ParticleSystem
 
 bool ParticleSystem::init()
 {
@@ -665,12 +642,12 @@ void ParticleSystem::update(float dt)
             _emitCounter += dt;
         }
         
-        while (_particleCount < _totalParticles && _emitCounter > rate) 
+        while (_particleCount < _totalParticles && _emitCounter > rate)
         {
             this->addParticle();
             _emitCounter -= rate;
         }
-
+        
         _elapsed += dt;
         if (_duration != -1 && _duration < _elapsed)
         {
@@ -793,7 +770,6 @@ void ParticleSystem::update(float dt)
                 }
 
                 updateQuadWithParticle(p, newPos);
-                //updateParticleImp(self, updateParticleSel, p, newPos);
 
                 // update particle counter
                 ++_particleIdx;
@@ -814,7 +790,6 @@ void ParticleSystem::update(float dt)
                     //switch indexes
                     _particles[_particleCount-1].atlasIndex = currentIndex;
                 }
-
 
                 --_particleCount;
 
