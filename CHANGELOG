@@ -1,5 +1,6 @@
 cocos2d-x-4.0alph0 ??
 
+    [FIX]           C++: remove deprecated functions that are deprecated in v2.x
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
 
 cocos2d-x-3.4 Jan.30 2015
