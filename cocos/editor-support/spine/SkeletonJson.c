@@ -129,7 +129,6 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 
 	animation = spAnimation_create(root->name, timelinesCount);
 	animation->timelinesCount = 0;
-	skeletonData->animations[skeletonData->animationsCount++] = animation;
 
 	/* Slot timelines. */
 	for (slotMap = slots ? slots->child : 0; slotMap; slotMap = slotMap->next) {
@@ -383,7 +382,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 		duration = timeline->frames[events->size - 1];
 		if (duration > animation->duration) animation->duration = duration;
 	}
-
+	skeletonData->animations[skeletonData->animationsCount++] = animation;
 	return animation;
 }
 
