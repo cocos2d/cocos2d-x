@@ -232,7 +232,7 @@ protected:
 
     GLArrayBuffer();
 
-    bool init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode);
+    bool init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode, bool zero);
     void setCapacity(size_t capacity, bool zero);
     
     // @brief for OpenGL this provides the binding target of the array.
@@ -266,10 +266,10 @@ class CC_DLL VertexBuffer
 public:
     
     template <class T = VertexBuffer>
-    static T* create(size_t size, size_t count, ArrayType arrayType = ArrayType::Default, ArrayMode arrayMode = ArrayMode::LongLived)
+    static T* create(size_t size, size_t count, ArrayType arrayType = ArrayType::Default, ArrayMode arrayMode = ArrayMode::LongLived, bool zero = false)
     {
         auto result = new (std::nothrow) T;
-        if (result && result->init(size, count, arrayType, arrayMode))
+        if (result && result->init(size, count, arrayType, arrayMode, zero))
         {
             result->autorelease();
             return result;
@@ -300,10 +300,10 @@ public:
     };
     
     template <class T = IndexBuffer>
-    static IndexBuffer* create(IndexType type, size_t count, ArrayType arrayType = ArrayType::Default, ArrayMode arrayMode = ArrayMode::LongLived)
+    static IndexBuffer* create(IndexType type, size_t count, ArrayType arrayType = ArrayType::Default, ArrayMode arrayMode = ArrayMode::LongLived, bool zero = false)
     {
         auto result = new (std::nothrow) T;
-        if (result && result->init(type, count, arrayType, arrayMode))
+        if (result && result->init(type, count, arrayType, arrayMode, zero))
         {
             result->autorelease();
             return result;
@@ -327,9 +327,9 @@ protected:
         : _type(IndexType::INDEX_TYPE_NONE)
     {}
 
-    bool init(IndexType type, size_t count, ArrayType arrayType, ArrayMode arrayMode)
+    bool init(IndexType type, size_t count, ArrayType arrayType, ArrayMode arrayMode, bool zero)
     {
-        if (!GLArrayBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == type ? 2 : 4, count, arrayType, arrayMode))
+        if (!GLArrayBuffer::init(IndexType::INDEX_TYPE_SHORT_16 == type ? 2 : 4, count, arrayType, arrayMode, zero))
             return false;
         _type = type;
         return true;

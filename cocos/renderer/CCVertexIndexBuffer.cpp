@@ -58,7 +58,7 @@ GLArrayBuffer::~GLArrayBuffer()
     CC_SAFE_FREE(_elements);
 }
 
-bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode)
+bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode, bool zero)
 {
     CCASSERT(0 != elementSize, "Vertex size cannot be 0");
     
@@ -85,7 +85,7 @@ bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType array
     _elementSize  = elementSize;
     _elementCount = 0;
     
-    setCapacity(maxElements, false);
+    setCapacity(maxElements, zero);
     
     return true;
 }
@@ -218,7 +218,7 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
             _vboSize = size;
             glBufferData(_target, size, elements, _usage);
             CHECK_GL_ERROR_DEBUG();
-        }
+       }
         else
         {
             if (count == 0)

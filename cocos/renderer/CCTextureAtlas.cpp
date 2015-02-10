@@ -186,6 +186,8 @@ void TextureAtlas::setupIndices(size_t count, size_t begin)
         *indices++ = i*4+2;
         *indices++ = i*4+1;
     }
+    
+    _ibAtlas->setDirty(true);
 }
 
 // TextureAtlas - Update, Insert, Move & Remove

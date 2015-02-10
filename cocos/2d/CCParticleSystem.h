@@ -174,10 +174,10 @@ public:
     http://particledesigner.71squared.com/
     @since v2.0
     */
-    static ParticleSystem * create(const std::string& plistFile);
-
-    //! create a system with a fixed number of particles
-    static ParticleSystem* createWithTotalParticles(int numberOfParticles);
+//    static ParticleSystem * create(const std::string& plistFile);
+//
+//    //! create a system with a fixed number of particles
+//    static ParticleSystem* createWithTotalParticles(int numberOfParticles);
 
     //! Add a particle to the emitter
     bool addParticle();
@@ -191,9 +191,9 @@ public:
     bool isFull();
 
     //! should be overridden by subclasses
-    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition);
+    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) = 0;
     //! should be overridden by subclasses
-    virtual void postStep();
+    virtual void postStep() = 0;
 
     virtual void updateWithNoTime(void);
 
@@ -230,11 +230,6 @@ public:
     virtual void setRotatePerSecond(float degrees);
     virtual float getRotatePerSecondVar() const;
     virtual void setRotatePerSecondVar(float degrees);
-
-    virtual void setScale(float s);
-    virtual void setRotation(float newRotation);
-    virtual void setScaleX(float newScaleX);
-    virtual void setScaleY(float newScaleY);
 
     virtual bool isActive() const;
     virtual bool isBlendAdditive() const;
