@@ -42,19 +42,19 @@ enum class DataType
 struct CC_DLL VertexAttribute
 {
     VertexAttribute()
-    : _offset(0)
+    : _normalize(false)
+    , _offset(0)
     , _semantic(0)
     , _type(DataType::Invalid)
     , _size(0)
-    , _normalize(false)
     {}
     
     VertexAttribute(int offset, int semantic, DataType type, int size, bool normalize = false)
-    : _offset(offset)
+    : _normalize(normalize)
+    , _offset(offset)
     , _semantic(semantic)
     , _type(type)
     , _size(size)
-    , _normalize(normalize)
     {}
     
     bool _normalize;

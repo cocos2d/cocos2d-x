@@ -41,10 +41,10 @@
 NS_CC_BEGIN
 
 VertexData::VertexData(Primitive primitive)
-    : _interleaved(false)
+    : _indices(nullptr)
+    , _interleaved(false)
     , _dirty(true)
     , _vao(0)
-    , _indices(nullptr)
     , _drawingPrimitive(primitive)
 {
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
@@ -305,7 +305,7 @@ void VertexData::recreate() const
 
 int VertexData::DataTypeToGL(DataType type)
 {
-    const static int gltypes[] = {GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, GL_UNSIGNED_INT, GL_FLOAT, GL_FIXED};
+    const static int gltypes[] = {GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, GL_UNSIGNED_INT, GL_FLOAT/*, GL_FIXED*/};
     unsigned t = (int)type;
     CCASSERT(t < sizeof(gltypes) / sizeof(gltypes[0]), "Invalid GL DataType index");
     return gltypes[t];
