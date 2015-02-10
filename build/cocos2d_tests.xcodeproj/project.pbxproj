@@ -774,6 +774,76 @@
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
+		42AE83491A8922DE009476C9 /* Manifests in CopyFiles */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
+		42AE834A1A8922DE009476C9 /* background.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		42AE834B1A8922DE009476C9 /* audio in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		42AE834C1A8922DE009476C9 /* ActionTimeline in CopyFiles */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
+		42AE834D1A8922DE009476C9 /* Shaders3D in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		42AE834E1A8922DE009476C9 /* Sprite3DTest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
+		42AE834F1A8922DE009476C9 /* cocosvideo.mp4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
+		42AE83501A8922DE009476C9 /* animations in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
+		42AE83511A8922DE009476C9 /* ccb in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
+		42AE83521A8922DE009476C9 /* ccs-res in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
+		42AE83531A8922DE009476C9 /* components in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
+		42AE83541A8922DE009476C9 /* configs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
+		42AE83551A8922DE009476C9 /* extensions in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
+		42AE83561A8922DE009476C9 /* fonts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
+		42AE83571A8922DE009476C9 /* hd in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBC18CED84500F37B72 /* hd */; };
+		42AE83581A8922DE009476C9 /* Images in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBE18CED84500F37B72 /* Images */; };
+		42AE83591A8922DE009476C9 /* Misc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
+		42AE835A1A8922DE009476C9 /* Particles in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
+		42AE835B1A8922DE009476C9 /* Shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
+		42AE835C1A8922DE009476C9 /* spine in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
+		42AE835D1A8922DE009476C9 /* TileMaps in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
+		42AE835E1A8922DE009476C9 /* zwoptex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
+		42AE835F1A8922DE009476C9 /* background.caf in CopyFiles */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
+		42AE83601A8922DE009476C9 /* CocosBuilderExample.ccbproj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
+		42AE83611A8922DE009476C9 /* CocosBuilderExample.ccbresourcelog in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
+		42AE83621A8922DE009476C9 /* music.mid in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
+		42AE83631A8922DE009476C9 /* background.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
+		42AE83641A8922DE009476C9 /* background.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
+		42AE83651A8922DE009476C9 /* effect2.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB718CED84500F37B72 /* effect2.ogg */; };
+		42AE83661A8922DE009476C9 /* fileLookup.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB918CED84500F37B72 /* fileLookup.plist */; };
+		42AE83671A8922DE009476C9 /* Hello.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBD18CED84500F37B72 /* Hello.png */; };
+		42AE83681A8922DE009476C9 /* effect1.raw in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
+		42AE83691A8922DE009476C9 /* effect1.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
+		42AE836A1A8922DE009476C9 /* pew-pew-lei.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
+		42AE836B1A8922DE009476C9 /* Test.html in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
+		42AE83741A89A275009476C9 /* Manifests in CopyFiles */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
+		42AE83751A89A275009476C9 /* background.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
+		42AE83761A89A275009476C9 /* audio in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
+		42AE83771A89A275009476C9 /* ActionTimeline in CopyFiles */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
+		42AE83781A89A275009476C9 /* Shaders3D in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		42AE83791A89A275009476C9 /* Sprite3DTest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
+		42AE837A1A89A275009476C9 /* cocosvideo.mp4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
+		42AE837B1A89A275009476C9 /* animations in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
+		42AE837C1A89A275009476C9 /* ccb in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
+		42AE837D1A89A275009476C9 /* ccs-res in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
+		42AE837E1A89A275009476C9 /* components in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
+		42AE837F1A89A275009476C9 /* configs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
+		42AE83801A89A275009476C9 /* extensions in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
+		42AE83811A89A275009476C9 /* fonts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
+		42AE83821A89A275009476C9 /* hd in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBC18CED84500F37B72 /* hd */; };
+		42AE83831A89A275009476C9 /* Images in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBE18CED84500F37B72 /* Images */; };
+		42AE83841A89A275009476C9 /* Misc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
+		42AE83851A89A275009476C9 /* Particles in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
+		42AE83861A89A275009476C9 /* Shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
+		42AE83871A89A275009476C9 /* spine in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
+		42AE83881A89A275009476C9 /* TileMaps in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
+		42AE83891A89A275009476C9 /* zwoptex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
+		42AE838A1A89A275009476C9 /* background.caf in CopyFiles */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
+		42AE838B1A89A275009476C9 /* CocosBuilderExample.ccbproj in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
+		42AE838C1A89A275009476C9 /* CocosBuilderExample.ccbresourcelog in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
+		42AE838D1A89A275009476C9 /* music.mid in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
+		42AE838E1A89A275009476C9 /* background.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
+		42AE838F1A89A275009476C9 /* background.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
+		42AE83901A89A275009476C9 /* effect2.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB718CED84500F37B72 /* effect2.ogg */; };
+		42AE83911A89A275009476C9 /* fileLookup.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB918CED84500F37B72 /* fileLookup.plist */; };
+		42AE83921A89A275009476C9 /* Hello.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CBD18CED84500F37B72 /* Hello.png */; };
+		42AE83931A89A275009476C9 /* effect1.raw in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
+		42AE83941A89A275009476C9 /* effect1.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
+		42AE83951A89A275009476C9 /* pew-pew-lei.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
+		42AE83961A89A275009476C9 /* Test.html in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
 		527B1F3019EF9819000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */; };
 		527B1F3119EF9819000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */; };
 		527B1F3419EF9CF8000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */; };
@@ -819,7 +889,6 @@
 		AC1C83921A7F4F07006DCCB1 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		AC1C88EA1A7F5109006DCCB1 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83981A7F4F52006DCCB1 /* main.js */; };
 		AC1C88EB1A7F5109006DCCB1 /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83E41A7F4F52006DCCB1 /* project.json */; };
-		AC1C88EC1A7F5109006DCCB1 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
 		AC1C88ED1A7F5109006DCCB1 /* src in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E91A7F507D006DCCB1 /* src */; };
 		AC1C88EE1A7F5158006DCCB1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83D11A7F4F52006DCCB1 /* InfoPlist.strings */; };
 		AC1C88EF1A7F5167006DCCB1 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83D51A7F4F52006DCCB1 /* Icon.icns */; };
@@ -831,7 +900,6 @@
 		AC1C89131A7F533A006DCCB1 /* script in Resources */ = {isa = PBXBuildFile; fileRef = AC1C89111A7F532A006DCCB1 /* script */; };
 		AC1C8A0E1A7F547A006DCCB1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		AC1C8A2E1A7F56B2006DCCB1 /* script in Resources */ = {isa = PBXBuildFile; fileRef = AC1C89111A7F532A006DCCB1 /* script */; };
-		AC1C8A2F1A7F56B2006DCCB1 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
 		AC1C8A301A7F56B2006DCCB1 /* src in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E91A7F507D006DCCB1 /* src */; };
 		AC1C8A311A7F56ED006DCCB1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83BD1A7F4F52006DCCB1 /* Default-568h@2x.png */; };
 		AC1C8A321A7F56ED006DCCB1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83BE1A7F4F52006DCCB1 /* Default.png */; };
@@ -1295,6 +1363,97 @@
 			remoteInfo = "js-moonwarriors iOS";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		42AE83481A8922B3009476C9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = res;
+			dstSubfolderSpec = 7;
+			files = (
+				42AE83491A8922DE009476C9 /* Manifests in CopyFiles */,
+				42AE834A1A8922DE009476C9 /* background.wav in CopyFiles */,
+				42AE834B1A8922DE009476C9 /* audio in CopyFiles */,
+				42AE834C1A8922DE009476C9 /* ActionTimeline in CopyFiles */,
+				42AE834D1A8922DE009476C9 /* Shaders3D in CopyFiles */,
+				42AE834E1A8922DE009476C9 /* Sprite3DTest in CopyFiles */,
+				42AE834F1A8922DE009476C9 /* cocosvideo.mp4 in CopyFiles */,
+				42AE83501A8922DE009476C9 /* animations in CopyFiles */,
+				42AE83511A8922DE009476C9 /* ccb in CopyFiles */,
+				42AE83521A8922DE009476C9 /* ccs-res in CopyFiles */,
+				42AE83531A8922DE009476C9 /* components in CopyFiles */,
+				42AE83541A8922DE009476C9 /* configs in CopyFiles */,
+				42AE83551A8922DE009476C9 /* extensions in CopyFiles */,
+				42AE83561A8922DE009476C9 /* fonts in CopyFiles */,
+				42AE83571A8922DE009476C9 /* hd in CopyFiles */,
+				42AE83581A8922DE009476C9 /* Images in CopyFiles */,
+				42AE83591A8922DE009476C9 /* Misc in CopyFiles */,
+				42AE835A1A8922DE009476C9 /* Particles in CopyFiles */,
+				42AE835B1A8922DE009476C9 /* Shaders in CopyFiles */,
+				42AE835C1A8922DE009476C9 /* spine in CopyFiles */,
+				42AE835D1A8922DE009476C9 /* TileMaps in CopyFiles */,
+				42AE835E1A8922DE009476C9 /* zwoptex in CopyFiles */,
+				42AE835F1A8922DE009476C9 /* background.caf in CopyFiles */,
+				42AE83601A8922DE009476C9 /* CocosBuilderExample.ccbproj in CopyFiles */,
+				42AE83611A8922DE009476C9 /* CocosBuilderExample.ccbresourcelog in CopyFiles */,
+				42AE83621A8922DE009476C9 /* music.mid in CopyFiles */,
+				42AE83631A8922DE009476C9 /* background.mp3 in CopyFiles */,
+				42AE83641A8922DE009476C9 /* background.ogg in CopyFiles */,
+				42AE83651A8922DE009476C9 /* effect2.ogg in CopyFiles */,
+				42AE83661A8922DE009476C9 /* fileLookup.plist in CopyFiles */,
+				42AE83671A8922DE009476C9 /* Hello.png in CopyFiles */,
+				42AE83681A8922DE009476C9 /* effect1.raw in CopyFiles */,
+				42AE83691A8922DE009476C9 /* effect1.wav in CopyFiles */,
+				42AE836A1A8922DE009476C9 /* pew-pew-lei.wav in CopyFiles */,
+				42AE836B1A8922DE009476C9 /* Test.html in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42AE83731A89A258009476C9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = res;
+			dstSubfolderSpec = 7;
+			files = (
+				42AE83741A89A275009476C9 /* Manifests in CopyFiles */,
+				42AE83751A89A275009476C9 /* background.wav in CopyFiles */,
+				42AE83761A89A275009476C9 /* audio in CopyFiles */,
+				42AE83771A89A275009476C9 /* ActionTimeline in CopyFiles */,
+				42AE83781A89A275009476C9 /* Shaders3D in CopyFiles */,
+				42AE83791A89A275009476C9 /* Sprite3DTest in CopyFiles */,
+				42AE837A1A89A275009476C9 /* cocosvideo.mp4 in CopyFiles */,
+				42AE837B1A89A275009476C9 /* animations in CopyFiles */,
+				42AE837C1A89A275009476C9 /* ccb in CopyFiles */,
+				42AE837D1A89A275009476C9 /* ccs-res in CopyFiles */,
+				42AE837E1A89A275009476C9 /* components in CopyFiles */,
+				42AE837F1A89A275009476C9 /* configs in CopyFiles */,
+				42AE83801A89A275009476C9 /* extensions in CopyFiles */,
+				42AE83811A89A275009476C9 /* fonts in CopyFiles */,
+				42AE83821A89A275009476C9 /* hd in CopyFiles */,
+				42AE83831A89A275009476C9 /* Images in CopyFiles */,
+				42AE83841A89A275009476C9 /* Misc in CopyFiles */,
+				42AE83851A89A275009476C9 /* Particles in CopyFiles */,
+				42AE83861A89A275009476C9 /* Shaders in CopyFiles */,
+				42AE83871A89A275009476C9 /* spine in CopyFiles */,
+				42AE83881A89A275009476C9 /* TileMaps in CopyFiles */,
+				42AE83891A89A275009476C9 /* zwoptex in CopyFiles */,
+				42AE838A1A89A275009476C9 /* background.caf in CopyFiles */,
+				42AE838B1A89A275009476C9 /* CocosBuilderExample.ccbproj in CopyFiles */,
+				42AE838C1A89A275009476C9 /* CocosBuilderExample.ccbresourcelog in CopyFiles */,
+				42AE838D1A89A275009476C9 /* music.mid in CopyFiles */,
+				42AE838E1A89A275009476C9 /* background.mp3 in CopyFiles */,
+				42AE838F1A89A275009476C9 /* background.ogg in CopyFiles */,
+				42AE83901A89A275009476C9 /* effect2.ogg in CopyFiles */,
+				42AE83911A89A275009476C9 /* fileLookup.plist in CopyFiles */,
+				42AE83921A89A275009476C9 /* Hello.png in CopyFiles */,
+				42AE83931A89A275009476C9 /* effect1.raw in CopyFiles */,
+				42AE83941A89A275009476C9 /* effect1.wav in CopyFiles */,
+				42AE83951A89A275009476C9 /* pew-pew-lei.wav in CopyFiles */,
+				42AE83961A89A275009476C9 /* Test.html in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		150F918619DA409E00B89F57 /* lua_test_bindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_test_bindings.cpp; sourceTree = "<group>"; };
@@ -4732,9 +4891,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC1C83371A7F46CC006DCCB1 /* Build configuration list for PBXNativeTarget "js-tests Mac" */;
 			buildPhases = (
-				AC1C824B1A7F46CC006DCCB1 /* Resources */,
 				AC1C82701A7F46CC006DCCB1 /* Sources */,
 				AC1C832C1A7F46CC006DCCB1 /* Frameworks */,
+				42AE83481A8922B3009476C9 /* CopyFiles */,
+				AC1C824B1A7F46CC006DCCB1 /* Resources */,
+				42AE836E1A892492009476C9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4752,6 +4913,8 @@
 			buildConfigurationList = AC1C8A1B1A7F547A006DCCB1 /* Build configuration list for PBXNativeTarget "js-tests iOS" */;
 			buildPhases = (
 				AC1C89171A7F547A006DCCB1 /* Resources */,
+				42AE83731A89A258009476C9 /* CopyFiles */,
+				42AE83971A89A2A4009476C9 /* ShellScript */,
 				AC1C894D1A7F547A006DCCB1 /* Sources */,
 				AC1C8A0D1A7F547A006DCCB1 /* Frameworks */,
 			);
@@ -5309,7 +5472,6 @@
 				AC1C88EE1A7F5158006DCCB1 /* InfoPlist.strings in Resources */,
 				AC1C88EA1A7F5109006DCCB1 /* main.js in Resources */,
 				AC1C88EB1A7F5109006DCCB1 /* project.json in Resources */,
-				AC1C88EC1A7F5109006DCCB1 /* res in Resources */,
 				AC1C88ED1A7F5109006DCCB1 /* src in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5332,7 +5494,6 @@
 				AC1C8A391A7F56ED006DCCB1 /* Icon-72.png in Resources */,
 				AC1C8A3A1A7F56ED006DCCB1 /* Icon-76.png in Resources */,
 				AC1C8A2E1A7F56B2006DCCB1 /* script in Resources */,
-				AC1C8A2F1A7F56B2006DCCB1 /* res in Resources */,
 				AC1C8A301A7F56B2006DCCB1 /* src in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5445,6 +5606,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "find ${SRCROOT}/../tests/lua-tests/src/ -name \"*\" -exec touch -cm {} \\;";
+		};
+		42AE836E1A892492009476C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "content_path=$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH\nresource_path=$SRCROOT/../tests/js-tests/res\n\ncp -R \"$resource_path/\" \"$content_path/Resources/res\"";
+		};
+		42AE83971A89A2A4009476C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "content_path=$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH\nresource_path=$SRCROOT/../tests/js-tests/res\n\ncp -R \"$resource_path/\" \"$content_path/res\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6749,7 +6936,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk/**",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -6780,7 +6967,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk/**",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
