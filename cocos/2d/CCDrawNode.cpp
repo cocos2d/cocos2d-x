@@ -133,10 +133,15 @@ void DrawNode::drawPoint(const Vec2& position, float pointSize, const Color4F& c
     _vdPoints->append<V2F_C4B_PF>({position, Color4B(color), pointSize});
 }
 
-void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color, float pointSize)
+void DrawNode::drawPoints(const Vec2* position, unsigned int numberOfPoints, const Color4F &color, float pointSize)
 {
     for (auto i = 0; i < numberOfPoints; ++i)
         _vdPoints->append<V2F_C4B_PF>({position[i], Color4B(color), pointSize});
+}
+
+CC_DEPRECATED_ATTRIBUTE void DrawNode::drawPoints(const Vec2* position, unsigned int numberOfPoints, double pointSize, const Color4F& color)
+{
+    drawPoints(position, numberOfPoints, color, pointSize);
 }
 
 void DrawNode::drawLine(const Vec2& origin, const Vec2& destination, const Color4F& color)
