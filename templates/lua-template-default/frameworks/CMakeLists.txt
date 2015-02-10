@@ -101,9 +101,9 @@ include_directories(
   runtime-src/Classes
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual
+  ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual/tolua
   ${COCOS2D_ROOT}/external/lua/lua
   ${COCOS2D_ROOT}/external/
-  ${COCOS2D_ROOT}/external/lua/tolua
   ${COCOS2D_ROOT}/cocos/audio/include
 )
 
