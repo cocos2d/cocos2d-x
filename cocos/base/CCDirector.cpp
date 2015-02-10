@@ -905,8 +905,7 @@ void Director::popToSceneStackLevel(int level)
     if (level >= c)
         return;
 
-    auto fisrtOnStackScene = _scenesStack.back();
-    if (fisrtOnStackScene == _runningScene)
+    if (_scenesStack.back() == _runningScene)
     {
         _scenesStack.popBack();
         --c;

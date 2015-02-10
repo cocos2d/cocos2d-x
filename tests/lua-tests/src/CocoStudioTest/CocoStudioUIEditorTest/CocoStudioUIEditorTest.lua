@@ -57,7 +57,7 @@ end
 
 function UIButtonTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")  
@@ -97,14 +97,14 @@ function UIButtonTest:initExtend()
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
-    -- local widgetSize = self._widget:getSize()
+    -- local widgetSize = self._widget:getContentSize()
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
-                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
+                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -135,7 +135,7 @@ end
 
 function UICheckBoxEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -165,14 +165,14 @@ function UICheckBoxEditorTest:initExtend()
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
-    -- local widgetSize = self._widget:getSize()
+    -- local widgetSize = self._widget:getContentSize()
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
-                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
+                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -204,7 +204,7 @@ end
 
 function UISliderEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -242,8 +242,8 @@ function UISliderEditorTest:initExtend()
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
-                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
+                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -274,7 +274,7 @@ end
 
 function UIImageViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -321,7 +321,7 @@ end
 
 function LoadingBarEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")    
@@ -394,7 +394,7 @@ end
 
 function LabelAtalsEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -442,7 +442,7 @@ end
 
 function LabelEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -490,7 +490,7 @@ end
 
 function LabelBMFontEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -538,7 +538,7 @@ end
 
 function TextFieldEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel") 
@@ -584,8 +584,8 @@ function TextFieldEditorTest:initExtend()
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
-                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
+                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -616,7 +616,7 @@ end
 
 function LayoutEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")  
@@ -919,7 +919,7 @@ end
 
 function ScrollViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")    
@@ -967,7 +967,7 @@ end
 
 function PageViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel") 
@@ -1015,7 +1015,7 @@ end
 
 function ListViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -1068,7 +1068,7 @@ end
 
 function WidgetAddNodeEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getSize()
+    local rootSize = self._layout:getContentSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
