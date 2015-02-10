@@ -587,7 +587,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h" />
-    <ClInclude Include="..\3d\3dExport.h" />
     <ClInclude Include="..\3d\CCAABB.h" />
     <ClInclude Include="..\3d\CCAnimate3D.h" />
     <ClInclude Include="..\3d\CCAnimation3D.h" />
@@ -658,8 +657,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNS.h" />
-    <ClInclude Include="..\base\CCPlatformConfig.h" />
-    <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProtocols.h" />
     <ClInclude Include="..\base\ccRandom.h" />
@@ -825,6 +822,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\platform\CCFileUtils.h" />
     <ClInclude Include="..\platform\CCGLView.h" />
     <ClInclude Include="..\platform\CCImage.h" />
+    <ClInclude Include="..\platform\CCPlatformConfig.h" />
+    <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
     <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h" />
