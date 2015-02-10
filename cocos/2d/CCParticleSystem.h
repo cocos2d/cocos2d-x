@@ -189,9 +189,9 @@ public:
     bool isFull();
 
     //! should be overridden by subclasses
-    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) = 0;
+    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) {CCASSERT(false, "override me");}
     //! should be overridden by subclasses
-    virtual void postStep() = 0;
+    virtual void postStep() {CCASSERT(false, "override me");}
 
     virtual void updateWithNoTime(void);
 
