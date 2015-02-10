@@ -106,6 +106,28 @@ void DrawNode::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
     }
 }
 
+// deprecated access method for DrawPrimitives to use DrawNode
+CC_DEPRECATED_ATTRIBUTE void DrawNode::drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags)
+{
+    if (!_vdTriangles->empty())
+    {
+        _batchCommandTriangles.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdTriangles, _transform);
+        _batchCommandTriangles.execute();
+    }
+    
+    if (!_vdLines->empty())
+    {
+        _batchCommandLines.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdLines, _transform);
+        _batchCommandLines.execute();
+    }
+    
+    if (!_vdPoints->empty())
+    {
+        _batchCommandPoints.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdPoints, _transform);
+        _batchCommandPoints.execute();
+    }
+}
+
 void DrawNode::drawPoint(const Vec2& position, float pointSize, const Color4F& color)
 {
     _vdPoints->append<V2F_C4B_PF>({position, Color4B(color), pointSize});
