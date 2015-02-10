@@ -245,6 +245,7 @@ Camera3DTestDemo::Camera3DTestDemo(void)
 , _bZoomIn(false)
 , _bRotateLeft(false)
 , _bRotateRight(false)
+, _cameraType(CameraType::Free)
 {
 }
 Camera3DTestDemo::~Camera3DTestDemo(void)

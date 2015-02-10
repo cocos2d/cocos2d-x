@@ -1,13 +1,15 @@
-cocos2d-x-3.4 xxx
+cocos2d-x-3.4 Jan.30 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
     [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions
     [FIX]           C++: may crash if VAO is not supported
     [FIX]           EditBox: content is not clipped correctly on windows
     [FIX]           GLProgram: will cause crash on some devices that don't support more than 8 atrributes
+    [FIX]           HttpClient: not set response code when connecting failed on Android
     [FIX]           Label: alpha channel of text color of system font has not effect
     [FIX]           Label: use int for dimensions that will lose the precision
     [FIX]           Label: labels will become white block after resume from background on some Android devices, such as xiaomi3
     [FIX]           Label: improved parsing performance of bitmap font
+    [FIX]           Label: can not display `&` if using system font on windows
     [FIX]           Lua-binding:studio-support: AnimationInfo is not binded 
     [FIX]           New audio: not close file descriptor leads to that may causes game freeze if playing two many times(may be more than 1000) on Android
     [FIX]           Node: anchor point has not effect to rotation, it always rotate along (0, 0)
