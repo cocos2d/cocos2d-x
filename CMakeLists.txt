@@ -298,7 +298,6 @@ if(BUILD_JS_LIBS)
   # build js tests
   if(BUILD_JS_TESTS)
     add_subdirectory(tests/js-tests/project)
-    add_subdirectory(tests/js-moonwarriors/project)
   endif(BUILD_JS_TESTS)
 
 endif(BUILD_JS_LIBS)
