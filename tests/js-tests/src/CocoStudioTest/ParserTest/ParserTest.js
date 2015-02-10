@@ -27,17 +27,17 @@ var g_parsersTests = [
     {
         title: "cocostudio 1.3",
         test: function(){
-            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson").runThisTest();
+            new CocostudioParserJsonScene(s_ccs_1_3_json).runThisTest();
         }
     },{
         title: "cocostudio 1.4",
         test: function(){
-            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson").runThisTest();
+            new CocostudioParserJsonScene(s_ccs_1_4_json).runThisTest();
         }
     },{
         title: "cocostudio 1.5",
         test: function(){
-            new CocostudioParserJsonScene("res/cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson").runThisTest();
+            new CocostudioParserJsonScene(s_ccs_1_5_json).runThisTest();
         }
     }
 ];

@@ -52,7 +52,7 @@ var UIPageViewTest = UIScene.extend({
                 var imageView = new ccui.ImageView();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
-                imageView.loadTexture("res/cocosui/scrollviewbg.png");
+                imageView.loadTexture("res/ccs-res/cocosui/scrollviewbg.png");
                 imageView.setContentSize(cc.size(240, 130));
                 imageView.x = layoutRect.width / 2;
                 imageView.y = layoutRect.height / 2;

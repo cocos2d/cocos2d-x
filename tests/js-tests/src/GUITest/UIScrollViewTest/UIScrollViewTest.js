@@ -48,7 +48,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/ccicon.png");
+            imageView.loadTexture("res/ccs-res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.width;
             var innerHeight = scrollView.height + imageView.height;
@@ -57,14 +57,14 @@ var UIScrollViewTest_Vertical = UIScene.extend({
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("res/ccs-res/cocosui/animationbuttonnormal.png", "res/ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = innerWidth / 2;
             button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
             var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            textButton.loadTextures("res/ccs-res/cocosui/backtotopnormal.png", "res/ccs-res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
             textButton.x = innerWidth / 2;
             textButton.y = button.getBottomBoundary() - button.height;
@@ -73,7 +73,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             var button_scale9 = new ccui.Button();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
-            button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            button_scale9.loadTextures("res/ccs-res/cocosui/button.png", "res/ccs-res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
 	        button_scale9.height = 32;
             button_scale9.x = innerWidth / 2;
@@ -117,7 +117,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/ccicon.png");
+            imageView.loadTexture("res/ccs-res/cocosui/ccicon.png");
 
             var innerWidth = scrollViewRect.width + imageView.getContentSize().width;
             var innerHeight = scrollViewRect.height;
@@ -126,14 +126,14 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("res/ccs-res/cocosui/animationbuttonnormal.png", "res/ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = button.width / 2;
             button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
             var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            textButton.loadTextures("res/ccs-res/cocosui/backtotopnormal.png", "res/ccs-res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
             textButton.x = button.getRightBoundary() + button.width / 2;
             textButton.y = button.getBottomBoundary() - button.height;
@@ -142,7 +142,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             var button_scale9 = new ccui.Button();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
-            button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            button_scale9.loadTextures("res/ccs-res/cocosui/button.png", "res/ccs-res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
             button_scale9.height = 32;
             button_scale9.x = textButton.getRightBoundary() + textButton.width / 2;
@@ -179,7 +179,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundImageScale9Enabled(true);
-            scrollView.setBackGroundImage("res/cocosui/green_edit.png");
+            scrollView.setBackGroundImage("res/ccs-res/cocosui/green_edit.png");
             scrollView.setContentSize(cc.size(210, 122));
             var scrollViewSize = scrollView.getContentSize();
 
@@ -188,7 +188,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/b11.png");
+            imageView.loadTexture("res/ccs-res/cocosui/b11.png");
             scrollView.addChild(imageView);
 
             scrollView.setInnerContainerSize(cc.size(imageView.width, imageView.height));
@@ -230,7 +230,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/Hello.png");
+            imageView.loadTexture("res/ccs-res/cocosui/Hello.png");
             imageView.x = 240;
             imageView.y = 160;
             scrollView.addChild(imageView);
@@ -271,7 +271,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/Hello.png");
+            imageView.loadTexture("res/ccs-res/cocosui/Hello.png");
             imageView.x = 240;
             imageView.y = 160;
             scrollView.addChild(imageView);

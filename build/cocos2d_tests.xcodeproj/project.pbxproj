@@ -772,6 +772,8 @@
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
+		42AE83AA1A89D201009476C9 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
+		42AE83AB1A89D279009476C9 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
 		527B1F3019EF9819000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */; };
 		527B1F3119EF9819000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */; };
 		527B1F3419EF9CF8000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */; };
@@ -817,7 +819,6 @@
 		AC1C83921A7F4F07006DCCB1 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		AC1C88EA1A7F5109006DCCB1 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83981A7F4F52006DCCB1 /* main.js */; };
 		AC1C88EB1A7F5109006DCCB1 /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83E41A7F4F52006DCCB1 /* project.json */; };
-		AC1C88EC1A7F5109006DCCB1 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
 		AC1C88ED1A7F5109006DCCB1 /* src in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E91A7F507D006DCCB1 /* src */; };
 		AC1C88EE1A7F5158006DCCB1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83D11A7F4F52006DCCB1 /* InfoPlist.strings */; };
 		AC1C88EF1A7F5167006DCCB1 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83D51A7F4F52006DCCB1 /* Icon.icns */; };
@@ -829,7 +830,6 @@
 		AC1C89131A7F533A006DCCB1 /* script in Resources */ = {isa = PBXBuildFile; fileRef = AC1C89111A7F532A006DCCB1 /* script */; };
 		AC1C8A0E1A7F547A006DCCB1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		AC1C8A2E1A7F56B2006DCCB1 /* script in Resources */ = {isa = PBXBuildFile; fileRef = AC1C89111A7F532A006DCCB1 /* script */; };
-		AC1C8A2F1A7F56B2006DCCB1 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
 		AC1C8A301A7F56B2006DCCB1 /* src in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E91A7F507D006DCCB1 /* src */; };
 		AC1C8A311A7F56ED006DCCB1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83BD1A7F4F52006DCCB1 /* Default-568h@2x.png */; };
 		AC1C8A321A7F56ED006DCCB1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83BE1A7F4F52006DCCB1 /* Default.png */; };
@@ -4618,9 +4618,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC1C83371A7F46CC006DCCB1 /* Build configuration list for PBXNativeTarget "js-tests Mac" */;
 			buildPhases = (
-				AC1C824B1A7F46CC006DCCB1 /* Resources */,
 				AC1C82701A7F46CC006DCCB1 /* Sources */,
 				AC1C832C1A7F46CC006DCCB1 /* Frameworks */,
+				AC1C824B1A7F46CC006DCCB1 /* Resources */,
+				42AE836E1A892492009476C9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4638,6 +4639,7 @@
 			buildConfigurationList = AC1C8A1B1A7F547A006DCCB1 /* Build configuration list for PBXNativeTarget "js-tests iOS" */;
 			buildPhases = (
 				AC1C89171A7F547A006DCCB1 /* Resources */,
+				42AE83971A89A2A4009476C9 /* ShellScript */,
 				AC1C894D1A7F547A006DCCB1 /* Sources */,
 				AC1C8A0D1A7F547A006DCCB1 /* Frameworks */,
 			);
@@ -5155,8 +5157,8 @@
 				AC1C88EE1A7F5158006DCCB1 /* InfoPlist.strings in Resources */,
 				AC1C88EA1A7F5109006DCCB1 /* main.js in Resources */,
 				AC1C88EB1A7F5109006DCCB1 /* project.json in Resources */,
-				AC1C88EC1A7F5109006DCCB1 /* res in Resources */,
 				AC1C88ED1A7F5109006DCCB1 /* src in Resources */,
+				42AE83AA1A89D201009476C9 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5178,8 +5180,8 @@
 				AC1C8A391A7F56ED006DCCB1 /* Icon-72.png in Resources */,
 				AC1C8A3A1A7F56ED006DCCB1 /* Icon-76.png in Resources */,
 				AC1C8A2E1A7F56B2006DCCB1 /* script in Resources */,
-				AC1C8A2F1A7F56B2006DCCB1 /* res in Resources */,
 				AC1C8A301A7F56B2006DCCB1 /* src in Resources */,
+				42AE83AB1A89D279009476C9 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5277,6 +5279,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "find ${SRCROOT}/../tests/lua-tests/src/ -name \"*\" -exec touch -cm {} \\;";
+		};
+		42AE836E1A892492009476C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "content_path=$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH\nresource_path=$SRCROOT/../tests/cpp-tests/Resources\n\ncp -R \"$resource_path/\" \"$content_path/Resources/res\"";
+		};
+		42AE83971A89A2A4009476C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "content_path=$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH\nresource_path=$SRCROOT/../tests/cpp-tests/Resources\n\ncp -R \"$resource_path/\" \"$content_path/res\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6537,7 +6565,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk/**",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -6568,7 +6596,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../plugin/plugins/facebook/proj.ios/sdk/**",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;

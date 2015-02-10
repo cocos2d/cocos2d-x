@@ -24,11 +24,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var SCROLLVIEW_RES = [
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json",
-    "res/cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"
-];
 var SCROLLVIEW_INDEX = 0;
 var UIScrollViewEditorTest = UIBaseLayer.extend({
     ctor: function () {
