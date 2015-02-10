@@ -61,7 +61,7 @@ public:
 	/**
 	* Purges ActionManager point.
 	* @js purge
-	* @lua destroyActionManager
+	* @lua destroyInstance
 	*/
 	static void destroyInstance();
 
