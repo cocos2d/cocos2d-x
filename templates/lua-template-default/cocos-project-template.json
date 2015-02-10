@@ -137,9 +137,11 @@
                 ]
             },
             {
-                "from": "tools/simulator/frameworks/runtime-src/Classes/lang",
+                "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
                 "to": "frameworks/runtime-src/Classes/ide-support",
-                "exclude": []
+                "exclude": [
+                    "RuntimeJsImpl.*"
+                ]
             },
             {
                 "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",

@@ -188,7 +188,7 @@ namespace cocostudio
         bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
         if (adaptScrenn)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
+            auto& screenSize = Director::getInstance()->getWinSize();
             w = screenSize.width;
             h = screenSize.height;
         }
@@ -660,7 +660,7 @@ namespace cocostudio
             else
             {
                 auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                label->setString(errorFilePath + " missed");
                 panel->addChild(label);
             }
         }

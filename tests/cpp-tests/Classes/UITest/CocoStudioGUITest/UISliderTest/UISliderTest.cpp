@@ -54,7 +54,7 @@ void UISliderTest::sliderEvent(Ref *pSender, Slider::EventType type)
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
-        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+        _displayValueLabel->setString(StringUtils::format("Percent %d", percent));
     }
 }
 
@@ -112,7 +112,7 @@ void UISliderTest_Scale9::sliderEvent(Ref *pSender, Slider::EventType type)
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
-        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+        _displayValueLabel->setString(StringUtils::format("Percent %d", percent));
     }
 }
 
@@ -180,7 +180,7 @@ void UISliderTest_Scale9_State_Change::sliderEvent(Ref *pSender, Slider::EventTy
     {
         Slider* slider = dynamic_cast<Slider*>(pSender);
         int percent = slider->getPercent();
-        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+        _displayValueLabel->setString(StringUtils::format("Percent %d", percent));
     }
 }
 

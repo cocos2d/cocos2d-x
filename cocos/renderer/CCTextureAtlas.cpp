@@ -29,14 +29,19 @@ THE SOFTWARE.
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCTexture2D.h"
-#include "base/ccMacros.h"
-#include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "deprecated/CCString.h"
-#include <algorithm>
+#include "renderer/CCTexture2D.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "base/ccUTF8.h"
+#include "platform/CCGL.h"
+
+//According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
+
+// implementation TextureAtlas
 
 NS_CC_BEGIN
 

@@ -7,7 +7,9 @@
 #define IDR_MENU_COCOS                  201
 #define IDD_DIALOG1                     202
 #define IDD_DIALOG_ABOUT                202
+#define IDC_ABOUT_TITLE                 1000
 #define IDC_EDIT2                       1001
+#define IDC_ABOUT_VERSION               1001
 #define ID_VIEW_SIZE                    30001
 #define ID_FILE_NEW_WINDOW              32771
 #define ID_VIEW_PORTRAIT                32775
@@ -32,7 +34,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32794
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

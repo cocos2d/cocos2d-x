@@ -21,7 +21,7 @@ UIScene_Editor::~UIScene_Editor()
 
 bool UIScene_Editor::init()
 {
-    if (CCLayer::init())
+    if (Layer::init())
     {
         _touchGroup = Layer::create();
         addChild(_touchGroup);                
@@ -72,7 +72,7 @@ void UIScene_Editor::previousCallback(Ref* sender, Widget::TouchEventType event)
     switch (event)
     {
         case Widget::TouchEventType::ENDED:
-            CCDirector::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->previousUIScene());
+            Director::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->previousUIScene());
             break;
             
         default:
@@ -85,7 +85,7 @@ void UIScene_Editor::nextCallback(Ref* sender, Widget::TouchEventType event)
     switch (event)
     {
         case Widget::TouchEventType::ENDED:
-            CCDirector::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->nextUIScene());
+            Director::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->nextUIScene());
             break;
             
         default:

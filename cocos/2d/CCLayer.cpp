@@ -40,9 +40,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
-
-
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"

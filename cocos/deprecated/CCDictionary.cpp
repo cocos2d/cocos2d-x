@@ -28,6 +28,7 @@
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "CCBool.h"
 #include "CCInteger.h"
 #include "CCFloat.h"

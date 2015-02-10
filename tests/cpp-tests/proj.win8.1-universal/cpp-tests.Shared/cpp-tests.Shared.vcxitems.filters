@@ -261,9 +261,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.h">
       <Filter>Classes\CurrentLanguageTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.h">
-      <Filter>Classes\DataVisitorTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h">
       <Filter>Classes\DrawPrimitivesTest</Filter>
     </ClInclude>
@@ -413,9 +410,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h">
       <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h">
-      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.h">
       <Filter>Classes\FileUtilsTest</Filter>
@@ -876,9 +870,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp">
       <Filter>Classes\CurrentLanguageTest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.cpp">
-      <Filter>Classes\DataVisitorTest</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp">
       <Filter>Classes\DrawPrimitivesTest</Filter>
     </ClCompile>
@@ -983,9 +974,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp">
       <Filter>Classes\ExtensionsTest\TableViewTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp">
-      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.cpp">
       <Filter>Classes\FileUtilsTest</Filter>
@@ -1374,9 +1362,6 @@
     <Filter Include="Classes\CurrentLanguageTest">
       <UniqueIdentifier>{6047df81-7dab-4501-9c53-c256ee288cc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\DataVisitorTest">
-      <UniqueIdentifier>{ab724fe2-63cd-428d-9a10-237acc3cf3f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\DrawPrimitivesTest">
       <UniqueIdentifier>{116f5c58-3bb4-4245-aef4-f4f01259813c}</UniqueIdentifier>
     </Filter>
@@ -1409,9 +1394,6 @@
     </Filter>
     <Filter Include="Classes\ExtensionsTest\NetworkTest">
       <UniqueIdentifier>{7ccc51aa-fc85-46ba-83d9-3138031e6034}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\NotificationCenterTest">
-      <UniqueIdentifier>{7a56806d-9273-4d1d-8514-abfe13ecd43e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ExtensionsTest\TableViewTest">
       <UniqueIdentifier>{0cdc1974-166f-45c8-807f-11240d3bc9eb}</UniqueIdentifier>

@@ -85,7 +85,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 
 void UIScrollViewTest_Vertical_Editor::configureGUIScene()
 {
-    Size screenSize = CCDirector::getInstance()->getWinSize();
+    Size screenSize = Director::getInstance()->getWinSize();
     Size rootSize = _layout->getContentSize();
     _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                   (screenSize.height - rootSize.height) / 2));
@@ -224,7 +224,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 
 void UIScrollViewTest_Horizontal_Editor::configureGUIScene()
 {
-    Size screenSize = CCDirector::getInstance()->getWinSize();
+    Size screenSize = Director::getInstance()->getWinSize();
     Size rootSize = _layout->getContentSize();
     _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                   (screenSize.height - rootSize.height) / 2));
@@ -364,7 +364,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 
 void UIScrollViewTest_Both_Editor::configureGUIScene()
 {
-    Size screenSize = CCDirector::getInstance()->getWinSize();
+    Size screenSize = Director::getInstance()->getWinSize();
     Size rootSize = _layout->getContentSize();
     _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                   (screenSize.height - rootSize.height) / 2));
@@ -441,7 +441,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Editor::init()
 //        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UITest/UITest.csb"));
         _touchGroup->addChild(_layout);
-        Size screenSize = CCDirector::getInstance()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
         Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));
@@ -488,7 +488,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor::init()
 //        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UITest/UITest.csb"));
         _touchGroup->addChild(_layout);
-        Size screenSize = CCDirector::getInstance()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
         Size rootSize = _layout->getContentSize();
         _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                         (screenSize.height - rootSize.height) / 2));

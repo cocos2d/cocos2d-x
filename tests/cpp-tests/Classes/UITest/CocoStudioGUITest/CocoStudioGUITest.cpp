@@ -74,14 +74,14 @@ void CocoStudioGUIMainLayer::onEnter()
 {
     using namespace ui;
     
-    CCLayer::onEnter();
+    Layer::onEnter();
     
     Size s = Director::getInstance()->getWinSize();
     
-    _itemMenu = CCMenu::create();
+    _itemMenu = Menu::create();
     _itemMenu->setPosition(Vec2::ZERO);
-    CCMenuItemFont::setFontName("fonts/arial.ttf");
-    CCMenuItemFont::setFontSize(24);
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
@@ -113,7 +113,7 @@ void CocoStudioGUIMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, 
 
 void CocoStudioGUITestScene::onEnter()
 {
-    CCScene::onEnter();
+    Scene::onEnter();
     
     auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
@@ -133,7 +133,7 @@ void CocoStudioGUITestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    CCDirector::getInstance()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 void CocoStudioGUITestScene::BackCallback(Ref* pSender)
