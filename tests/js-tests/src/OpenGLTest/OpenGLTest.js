@@ -872,7 +872,7 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
                 this.shader.updateUniforms();
             }
             else{
-                this.shader = new cc.GLProgram("res/Shaders/example_Outline.vsh", "res/Shaders/example_Outline.fsh");
+                this.shader = new cc.GLProgram("res/Shaders/example_outline.vsh", "res/Shaders/example_outline.fsh");
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR);
