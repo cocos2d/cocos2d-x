@@ -143,6 +143,11 @@ public:
     // deprecated access method for DrawPrimitives to use DrawNode
     CC_DEPRECATED_ATTRIBUTE virtual void drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags);
     
+    // need these for Lua bindings to keep functioning
+    CC_DEPRECATED_ATTRIBUTE void onDraw(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED_ATTRIBUTE void onDrawGLLine(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED_ATTRIBUTE void onDrawGLPoint(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
     virtual ~DrawNode();

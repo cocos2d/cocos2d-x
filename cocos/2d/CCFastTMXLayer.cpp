@@ -118,8 +118,8 @@ TMXLayer::TMXLayer()
 , _useAutomaticVertexZ(false)
 , _quadsDirty(true)
 , _dirty(true)
-, _vertexBuffer(nullptr)
 , _vData(nullptr)
+, _vertexBuffer(nullptr)
 , _indexBuffer(nullptr)
 {
 }
@@ -389,7 +389,6 @@ void TMXLayer::updateBatchCommands()
     {
         const auto z    = iter.first;
         const auto start = _indicesVertexZOffsets.at(iter.first);
-        const auto count = iter.second;
         
         auto& batchCommand = _renderCommands[batch++];
         

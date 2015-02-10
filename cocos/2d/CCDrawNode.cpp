@@ -34,8 +34,8 @@
 NS_CC_BEGIN
 
 DrawNode::DrawNode()
-    : _vbTriangles(nullptr)
-    , _vdTriangles(nullptr)
+    : _vdTriangles(nullptr)
+    , _vbTriangles(nullptr)
     , _vdPoints(nullptr)
     , _vbPoints(nullptr)
     , _vdLines(nullptr)
