@@ -289,7 +289,7 @@ std::string LoadMtl ( std::map<std::string, ObjLoader::material_t>& material_map
         filepath = std::string(filename);
     }
     
-    std::ifstream ifs(filepath.c_str());
+    std::istringstream ifs(FileUtils::getInstance()->getStringFromFile(filepath));
     if (!ifs) 
     {
         err << "Cannot open file [" << filepath << "]" << std::endl;

@@ -687,6 +687,7 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
     {
         response->setSucceed(false);
         response->setErrorBuffer("connect failed");
+        response->setResponseCode(responseCode);
         return;
     }
 

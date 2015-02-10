@@ -145,7 +145,6 @@ end
 function ParallaxTestMain()
     cclog("ParallaxMain")
     Helper.index = 1
-    cc.Director:getInstance():setDepthTest(true)
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {

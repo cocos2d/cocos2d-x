@@ -83,6 +83,10 @@ MeshCommand::MeshCommand()
 , _cullFace(GL_BACK)
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
+, _forceDepthWrite(false)
+, _renderStateCullFaceEnabled(false)
+, _renderStateDepthTest(false)
+, _renderStateDepthWrite(GL_FALSE)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
@@ -168,7 +172,11 @@ void MeshCommand::setTransparent(bool value)
     //Skip batching for transparent mesh
     _skipBatching = value;
     
-    if (!_forceDepthWrite)
+    if (_isTransparent && !_forceDepthWrite)
+    {
+        _depthWriteEnabled = false;
+    }
+    else
     {
         _depthWriteEnabled = true;
     }
@@ -184,48 +192,55 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
-    _renderStateCullFace = glIsEnabled(GL_CULL_FACE);
+    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE);
     _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST);
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
+    GLint cullface;
+    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
+    _renderStateCullFace = (GLenum)cullface;
     
-    if (_cullFaceEnabled && !_renderStateCullFace)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
+        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
     
-    glCullFace(_cullFace);
-    
-    if (_depthTestEnabled && !_renderStateDepthTest)
+    if (_cullFace != _renderStateCullFace)
     {
-        glEnable(GL_DEPTH_TEST);
+        glCullFace(_cullFace);
     }
-    if (_depthWriteEnabled && !_renderStateDepthWrite)
+    
+    if (_depthTestEnabled != _renderStateDepthTest)
     {
-        glDepthMask(GL_TRUE);
+        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_depthWriteEnabled);
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (_renderStateCullFace)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
-    }
-    else
-    {
-        glDisable(GL_CULL_FACE);
+        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
     
-    if (_renderStateDepthTest)
+    if (_cullFace != _renderStateCullFace)
     {
-        glEnable(GL_DEPTH_TEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
+        glCullFace(_renderStateCullFace);
     }
     
-    glDepthMask(_renderStateDepthTest);
+    if (_depthTestEnabled != _renderStateDepthTest)
+    {
+        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_renderStateDepthWrite);
+    }
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)
