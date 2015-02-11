@@ -32,7 +32,7 @@
 
 using namespace cocos2d::network;
 
-class JSB_SIOEvent : public cocos2d::Object {
+class JSB_SIOEvent : public cocos2d::Ref {
 public:
     JSB_SIOEvent();
     virtual ~JSB_SIOEvent();
