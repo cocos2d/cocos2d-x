@@ -65,7 +65,7 @@ enum {
  If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
  @since v2.0.0
  */
-void CC_DLL invalidateStateCache(void);
+void CC_DLL invalidateStateCache(bool resetMatrixStack = true);
 
 /** Uses the GL program in case program is different than the current one.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.

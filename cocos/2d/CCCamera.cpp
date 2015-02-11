@@ -196,6 +196,8 @@ bool Camera::initDefault()
             lookAt(center, up);
             break;
         }
+        case Director::Projection::CUSTOM:
+            break;
         default:
             CCLOG("unrecognized projection");
             break;
